@@ -1,6 +1,8 @@
 overwrite: true
 schema: 'https://api.serlo-staging.dev/graphql'
-documents: 'src/**/*.ts'
+documents:
+  - 'src/fetcher/query.ts'
+  - 'src/fetcher/query-fragments.ts'
 generates:
   src/fetcher/graphql-types/operations.ts:
     plugins:

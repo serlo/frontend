@@ -1,8 +1,8 @@
 import { AuthorizationPayload, Scope } from '@serlo/authorization'
-import request from 'graphql-request'
+import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
-import { UserUuidQuery } from '../graphql-types/operations'
+import { User } from '../query-types'
 import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage } from '@/data-types'
@@ -12,14 +12,16 @@ export async function requestUser(
   instance: string
 ): Promise<UserPage | PageNotFound> {
   const { uuid, authorization } = await request<{
-    uuid: UserUuidQuery['uuid']
+    uuid: User
     authorization: AuthorizationPayload
   }>(endpoint, userQuery, {
     path,
     instance,
   })
 
-  if (!uuid) return { kind: 'not-found' }
+  if (!uuid) {
+    return { kind: 'not-found' }
+  }
 
   if (uuid.__typename === 'User') {
     return {
@@ -47,9 +49,7 @@ export async function requestUser(
   }
 }
 
-function getDescription(
-  uuid: Extract<UserUuidQuery['uuid'], { __typename: 'User' }>
-) {
+function getDescription(uuid: User) {
   return uuid.description === null || uuid.description === 'NULL'
     ? undefined
     : convertState(uuid.description)
