@@ -59,6 +59,8 @@ export async function requestPage(
     }
   }
 
+  if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
+
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages.filter(
       (page) => page.currentRevision !== null
@@ -211,8 +213,6 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
-
   const content = convertState(uuid.currentRevision?.content)
 
   if (uuid.__typename === 'Event') {
@@ -267,6 +267,8 @@ export async function requestPage(
     }
   }
 
+  const licenseData = uuid.license
+
   if (uuid.__typename === 'Article') {
     return {
       kind: 'single-entity',
@@ -278,7 +280,7 @@ export async function requestPage(
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        licenseData: uuid.license,
+        licenseData,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -329,7 +331,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData: uuid.license,
+        licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -367,7 +369,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData: uuid.license,
+        licenseData,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -421,7 +423,7 @@ export async function requestPage(
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseData: uuid.license,
+        licenseData,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

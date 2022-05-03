@@ -152,7 +152,6 @@ export function createExerciseGroup(
     uuid.exercises.forEach((exercise) => {
       if (!exercise.currentRevision) return
       if (exercise.trashed) return
-      if (!exercise.__typename) return
       const exerciseNode = createExercise(exercise)
       exerciseNode.grouped = true
       exerciseNode.positionInGroup = groupIndex++
