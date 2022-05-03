@@ -15,6 +15,13 @@ type TaxonomyTerm = Extract<
   { __typename: 'TaxonomyTerm' }
 >
 
+type TaxonomyTermChildrenLevel1 = TaxonomyTerm['children']['nodes'][0]
+
+type TaxonomyTermChildrenLevel2 = Extract<
+  TaxonomyTerm['children']['nodes'][0],
+  { __typename: 'TaxonomyTerm' }
+>['children']['nodes'][0]
+
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
 
@@ -38,27 +45,13 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   }
 }
 
-// maybe use infer for the element type? but this is easier
-function isActive(child: TaxonomyTerm['children']['nodes'][0]) {
+function isActive(child: TaxonomyTermChildrenLevel1) {
   return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
 }
 
-// maybe use infer for the element type? but this is easier
-function isActive_for_subchildren(
-  child: Extract<
-    TaxonomyTerm['children']['nodes'][0],
-    { __typename: 'TaxonomyTerm' }
-  >['children']['nodes'][0]
-) {
+function isActive_for_subchildren(child: TaxonomyTermChildrenLevel2) {
   return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
 }
-
-type TaxonomyTermChildrenLevel1 = TaxonomyTerm['children']['nodes'][0]
-
-type TaxonomyTermChildrenLevel2 = Extract<
-  TaxonomyTerm['children']['nodes'][0],
-  { __typename: 'TaxonomyTerm' }
->['children']['nodes'][0]
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   let index = 0
