@@ -2,15 +2,11 @@ import clsx from 'clsx'
 
 import { PageSpecialContentPluginProps } from '.'
 import { PageSpecialContentRenderer, supportedTypes } from './renderer'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export const PageSpecialContentEditor: React.FunctionComponent<
   PageSpecialContentPluginProps
 > = (props) => {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
   const { type, data } = props.state
 
   const hasNoType = type.value === ''
