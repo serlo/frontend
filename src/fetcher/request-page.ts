@@ -10,8 +10,12 @@ import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
+import {
+  Instance,
+  MainPageQuery,
+  MainPageQueryVariables,
+} from './graphql-types/operations'
 import { dataQuery } from './query'
-import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
@@ -22,12 +26,15 @@ export async function requestPage(
   alias: string,
   instance: Instance
 ): Promise<RequestPageData> {
-  const { uuid, authorization } = await request<{
-    uuid: QueryResponse
-    authorization: AuthorizationPayload
-  }>(endpoint, dataQuery, {
-    alias: { instance, path: alias },
-  })
+  const response = await request<MainPageQuery, MainPageQueryVariables>(
+    endpoint,
+    dataQuery,
+    {
+      alias: { instance, path: alias },
+    }
+  )
+  const uuid = response.uuid
+  const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
   // Can be deleted if CFWorker redirects those for us
   if (
@@ -204,6 +211,8 @@ export async function requestPage(
     }
   }
 
+  if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
+
   const content = convertState(uuid.currentRevision?.content)
 
   if (uuid.__typename === 'Event') {
@@ -258,8 +267,6 @@ export async function requestPage(
     }
   }
 
-  const licenseData = uuid.license
-
   if (uuid.__typename === 'Article') {
     return {
       kind: 'single-entity',
@@ -271,7 +278,7 @@ export async function requestPage(
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
-        licenseData,
+        licenseData: uuid.license,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,
@@ -322,7 +329,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseData: uuid.license,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -360,7 +367,7 @@ export async function requestPage(
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
-        licenseData,
+        licenseData: uuid.license,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -414,7 +421,7 @@ export async function requestPage(
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
         content,
-        licenseData,
+        licenseData: uuid.license,
         schemaData: {
           wrapWithItemType: 'http://schema.org/Article',
           useArticleTag: true,

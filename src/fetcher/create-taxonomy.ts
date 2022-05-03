@@ -1,12 +1,6 @@
 import { convertState } from './convert-state'
 import { createExercise, createExerciseGroup } from './create-exercises'
-import {
-  TaxonomyTerm,
-  TaxonomyTermChild,
-  TaxonomyTermChildOnX,
-  TaxonomyTermChildrenLevel2,
-  TaxonomyTermChildrenLevel1,
-} from './query-types'
+import { MainPageQuery } from './graphql-types/operations'
 import {
   TaxonomyData,
   FrontendExerciseNode,
@@ -15,6 +9,11 @@ import {
   TaxonomySubTerm,
 } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+
+type TaxonomyTerm = Extract<
+  MainPageQuery['uuid'],
+  { __typename: 'TaxonomyTerm' }
+>
 
 export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   const children = uuid.children.nodes.filter(isActive)
@@ -39,16 +38,36 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
   }
 }
 
-function isActive(child: TaxonomyTermChild) {
-  return child.trashed === false && child.__typename !== 'UnsupportedUuid'
+// maybe use infer for the element type? but this is easier
+function isActive(child: TaxonomyTerm['children']['nodes'][0]) {
+  return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
 }
+
+// maybe use infer for the element type? but this is easier
+function isActive_for_subchildren(
+  child: Extract<
+    TaxonomyTerm['children']['nodes'][0],
+    { __typename: 'TaxonomyTerm' }
+  >['children']['nodes'][0]
+) {
+  return child.trashed === false // && child.__typename !== 'UnsupportedUuid' <---- this has no effect
+}
+
+type TaxonomyTermChildrenLevel1 = TaxonomyTerm['children']['nodes'][0]
+
+type TaxonomyTermChildrenLevel2 = Extract<
+  TaxonomyTerm['children']['nodes'][0],
+  { __typename: 'TaxonomyTerm' }
+>['children']['nodes'][0]
 
 function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   let index = 0
   const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
   children.forEach((child) => {
     if (child.__typename === 'Exercise' && child.currentRevision) {
-      result.push(createExercise(child, index++))
+      result.push(
+        createExercise({ ...child, revisions: { totalCount: 0 } }, index++)
+      )
     }
     if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
       if (children.length === 1) result.push(createExerciseGroup(child))
@@ -60,7 +79,7 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
 
 function collectType(
   children: (TaxonomyTermChildrenLevel1 | TaxonomyTermChildrenLevel2)[],
-  typename: TaxonomyTermChildOnX['__typename']
+  typename: 'Applet' | 'Article' | 'Video' | 'Course' | 'Event'
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
@@ -113,7 +132,7 @@ function collectNestedTaxonomyTerms(
       child.type !== 'topicFolder' &&
       child.type !== 'curriculumTopicFolder'
     ) {
-      const subChildren = child.children.nodes.filter(isActive)
+      const subChildren = child.children.nodes.filter(isActive_for_subchildren)
       result.push({
         id: child.id,
         title: child.name,

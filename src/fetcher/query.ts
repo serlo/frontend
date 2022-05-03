@@ -8,7 +8,7 @@ import {
 } from './query-fragments'
 
 export const dataQuery = gql`
-  query uuid($id: Int, $alias: AliasInput) {
+  query MainPage($id: Int, $alias: AliasInput) {
     authorization
     uuid(id: $id, alias: $alias) {
       __typename
@@ -206,9 +206,18 @@ export const dataQuery = gql`
               instance
               currentRevision {
                 content
+                id
+                date
+                cohesive
               }
               exercises {
                 ...exercise
+                revisions(unrevised: true) {
+                  totalCount
+                }
+              }
+              revisions(unrevised: true) {
+                totalCount
               }
               ...license
             }

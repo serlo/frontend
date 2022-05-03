@@ -3,7 +3,7 @@ import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
 import { createExercise, createSolution } from '../create-exercises'
-import { createTitle } from '../create-title'
+import { createTitle_with_old_types_for_revision } from '../create-title'
 import {
   Instance,
   ArticleRevision,
@@ -30,7 +30,7 @@ export async function requestRevision(
   }>(endpoint, revisionQuery, variables)
 
   const cacheKey = `/${instance}/${revisionId}`
-  const title = createTitle(uuid, instance)
+  const title = createTitle_with_old_types_for_revision(uuid, instance)
 
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -56,9 +56,10 @@ export async function requestRevision(
             license: uuid.repository.license,
             currentRevision: {
               content: uuid.content,
-              id: uuid.id,
+              /*id: uuid.id,*/
               date: uuid.date,
             },
+            revisions: { totalCount: 0 },
           }),
         ]
       : null
@@ -70,6 +71,7 @@ export async function requestRevision(
               ...uuid,
               license: uuid.repository.license,
               currentRevision: uuid.repository.currentRevision,
+              revisions: { totalCount: 0 },
             }),
           ]
         : null

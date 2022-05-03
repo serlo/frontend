@@ -1,6 +1,7 @@
 import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
-import { Solution, BareExercise, BareExerciseGroup } from './query-types'
+import { MainPageQuery } from './graphql-types/operations'
+import { Solution } from './query-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -13,7 +14,13 @@ import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 
 export function createExercise(
-  uuid: BareExercise,
+  uuid: Omit<
+    Extract<
+      NonNullable<MainPageQuery['uuid']>,
+      { __typename: 'Exercise' | 'GroupedExercise' }
+    >,
+    'exerciseGroup' | '__typename'
+  >,
   index?: number
 ): FrontendExerciseNode {
   let taskLegacy: FrontendContentNode[] | undefined = undefined
@@ -70,7 +77,12 @@ export function createExercise(
   }
 }
 
-function createSolutionData(solution: BareExercise['solution']) {
+function createSolutionData(
+  solution: Extract<
+    NonNullable<MainPageQuery['uuid']>,
+    { __typename: 'Exercise' | 'GroupedExercise' }
+  >['solution']
+) {
   let solutionLegacy: FrontendContentNode[] | undefined = undefined
   let solutionEdtrState: SolutionEdtrState | undefined = undefined
   const content = solution?.currentRevision?.content
@@ -125,15 +137,22 @@ export function createSolution(uuid: Solution): FrontendSolutionNode {
 }
 
 export function createExerciseGroup(
-  uuid: BareExerciseGroup,
+  uuid: Omit<
+    Extract<
+      NonNullable<MainPageQuery['uuid']>,
+      { __typename: 'ExerciseGroup' }
+    >,
+    'date' | 'taxonomyTerms'
+  >,
   pageIndex?: number
 ): FrontendExerciseGroupNode {
   const children: FrontendExerciseNode[] = []
   let groupIndex = 0
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach((exercise: BareExercise) => {
+    uuid.exercises.forEach((exercise) => {
       if (!exercise.currentRevision) return
       if (exercise.trashed) return
+      if (!exercise.__typename) return
       const exerciseNode = createExercise(exercise)
       exerciseNode.grouped = true
       exerciseNode.positionInGroup = groupIndex++

@@ -1,6 +1,6 @@
 import { request } from 'graphql-request'
 
-import { createBreadcrumbs } from './create-breadcrumbs'
+import { createBreadcrumbs_with_old_types_for_revision } from './create-breadcrumbs'
 import { dataQuery } from './query'
 import { QueryResponse, QueryResponseRevision } from './query-types'
 import { revisionQuery } from './revision/query'
@@ -63,7 +63,7 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  const breadcrumbsData = createBreadcrumbs(data)
+  const breadcrumbsData = createBreadcrumbs_with_old_types_for_revision(data)
 
   const isSandbox =
     breadcrumbsData &&

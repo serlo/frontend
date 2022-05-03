@@ -22,4 +22,3 @@ config:
   declarationKind: interface
   scalars:
     DateTime: string
-    JSON: string

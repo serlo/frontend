@@ -5,7 +5,7 @@ import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SubscriptionData } from '@/data-types'
-import { getRawTitle } from '@/fetcher/create-title'
+import { getRawTitle_with_old_types_for_revision } from '@/fetcher/create-title'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
@@ -55,7 +55,8 @@ export function ManageSubscriptions({
   function renderLine({ object, sendEmail }: SubscriptionData) {
     if (hidden.includes(object.id)) return null
     const entityString = getEntityStringByTypename(object.__typename, strings)
-    const title = getRawTitle(object, 'de') ?? entityString
+    const title =
+      getRawTitle_with_old_types_for_revision(object, 'de') ?? entityString
     const icon = getIconByTypename(object.__typename)
     const sendEmailOverwrite = mailOverwrite[object.id] ?? sendEmail
 
