@@ -1,6 +1,7 @@
 import { request } from 'graphql-request'
 
-import { createBreadcrumbs_with_old_types_for_revision } from './create-breadcrumbs'
+import { createBreadcrumbs } from './create-breadcrumbs'
+import { MainPageQuery } from './graphql-types/operations'
 import { dataQuery } from './query'
 import { QueryResponse, QueryResponseRevision } from './query-types'
 import { revisionQuery } from './revision/query'
@@ -63,7 +64,10 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  const breadcrumbsData = createBreadcrumbs_with_old_types_for_revision(data)
+  // TODO: improve this by fixing this type (and of this whole file)
+  const breadcrumbsData = createBreadcrumbs(
+    data as NonNullable<MainPageQuery['uuid']>
+  )
 
   const isSandbox =
     breadcrumbsData &&
