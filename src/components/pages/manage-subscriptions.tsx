@@ -105,7 +105,17 @@ function generateTitle(
   if (object.__typename == 'Exercise' || object.__typename == 'ExerciseGroup') {
     return object.taxonomyTerms.nodes[0].navigation?.path.nodes[0].label // is this useful?
   }
-  // TODO: Complete this (can't test at the moment because of https://github.com/serlo/api.serlo.org/issues/614)
+  if (
+    object.__typename == 'Page' ||
+    object.__typename == 'Article' ||
+    object.__typename == 'Video' ||
+    object.__typename == 'Applet' ||
+    object.__typename == 'CoursePage' ||
+    object.__typename == 'Course' ||
+    object.__typename == 'Event'
+  ) {
+    return object.currentRevision?.title
+  }
 
   return null
 }
