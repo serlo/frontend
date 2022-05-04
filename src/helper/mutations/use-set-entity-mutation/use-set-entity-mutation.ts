@@ -56,18 +56,9 @@ export const setEntityMutationRunner = async function ({
 
   if (!data.__typename) return false
 
-  const childrenResult = await loopNestedChildren({
-    auth,
-    data,
-    needsReview,
-    loggedInData,
-    initialState,
-  })
-  console.log('childrenResult:')
-  console.log(childrenResult)
-
   try {
     const genericInput = getGenericInputData(loggedInData, data, needsReview)
+    console.log(genericInput.entityId ? undefined : parentId)
     const additionalInput = getAdditionalInputData(loggedInData, data)
     const input = {
       ...genericInput,
@@ -75,24 +66,35 @@ export const setEntityMutationRunner = async function ({
       parentId: genericInput.entityId ? undefined : parentId,
     }
 
-    console.log(data.__typename)
+    console.log(`saving ${input.title ?? '?'}`)
     console.log(input)
-
-    const success = await mutationFetch(
+    const savedId = await mutationFetch(
       auth,
       getSetMutation(data.__typename),
       input,
       loggedInData?.strings.mutations.errors
     )
 
-    if (success && childrenResult) {
-      if (!isRecursiveCall) {
-        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        window.location.href = `/entity/repository/history/${data.id}`
-      }
-      return true
+    if (!Number.isInteger(savedId)) return false
+
+    console.log(`savedId: ${savedId}`)
+
+    // check for children
+    const childrenResult = await loopNestedChildren({
+      auth,
+      data,
+      needsReview,
+      loggedInData,
+      initialState,
+      parentId: savedId as number,
+    })
+
+    if (!isRecursiveCall && childrenResult) {
+      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+      //window.location.href = `/entity/repository/history/${data.id}`
     }
-    return false
+
+    return true
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log('probably missing value?')
@@ -106,6 +108,7 @@ const loopNestedChildren = async ({
   needsReview,
   loggedInData,
   initialState,
+  parentId,
 }: SetEntityMutationRunnerData): Promise<boolean> => {
   if (!data.__typename) return false
 
@@ -178,7 +181,7 @@ const loopNestedChildren = async ({
           needsReview,
           loggedInData,
           isRecursiveCall: true,
-          parentId: data.id,
+          parentId,
           initialState,
         })
         return success
@@ -211,7 +214,7 @@ function getGenericInputData(
   return {
     changes: getRequiredString(loggedInData, 'changes', data.changes),
     content: getRequiredString(loggedInData, 'content', content),
-    entityId: data.id,
+    entityId: data.id ? data.id : undefined,
     needsReview: needsReview,
     subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //simplify when old code is removed
     subscribeThisByEmail:
