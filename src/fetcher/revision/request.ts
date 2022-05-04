@@ -91,21 +91,19 @@ export async function requestRevision(
         : null
 
     const thisSolution =
-      uuid.__typename === 'SolutionRevision' ? [createSolution(uuid)] : null
-    const currentSolution =
       uuid.__typename === 'SolutionRevision'
         ? [
             createSolution({
-              __typename: 'Solution',
-              id: uuid.id,
-              trashed: uuid.trashed,
-              license: uuid.license,
-              instance: uuid.instance,
-              currentRevision: uuid.repository.currentRevision,
-              exercise: { id: -1 },
+              ...uuid,
+              repository: {
+                ...uuid.repository,
+                currentRevision: { content: uuid.content, id: uuid.id },
+              },
             }),
           ]
         : null
+    const currentSolution =
+      uuid.__typename === 'SolutionRevision' ? [createSolution(uuid)] : null
 
     const getParentId = () => {
       if (uuid.__typename === 'GroupedExerciseRevision')

@@ -185,6 +185,12 @@ export const revisionQuery = gql`
               content
             }
           }
+          revisions(unrevised: false) {
+            nodes {
+              id
+              trashed
+            }
+          }
         }
       }
       ... on GroupedExerciseRevision {
