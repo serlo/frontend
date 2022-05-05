@@ -90,7 +90,7 @@ export const setEntityMutationRunner = async function ({
 
     if (!isRecursiveCall && childrenResult) {
       showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      //window.location.href = `/entity/repository/history/${data.id}`
+      window.location.href = `/entity/repository/history/${data.id}`
     }
 
     return true
