@@ -58,7 +58,6 @@ export const setEntityMutationRunner = async function ({
 
   try {
     const genericInput = getGenericInputData(loggedInData, data, needsReview)
-    console.log(genericInput.entityId ? undefined : parentId)
     const additionalInput = getAdditionalInputData(loggedInData, data)
     const input = {
       ...genericInput,
@@ -66,8 +65,8 @@ export const setEntityMutationRunner = async function ({
       parentId: genericInput.entityId ? undefined : parentId,
     }
 
-    console.log(`saving ${input.title ?? '?'}`)
-    console.log(input)
+    console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
+
     const savedId = await mutationFetch(
       auth,
       getSetMutation(data.__typename),
@@ -76,8 +75,6 @@ export const setEntityMutationRunner = async function ({
     )
 
     if (!Number.isInteger(savedId)) return false
-
-    console.log(`savedId: ${savedId}`)
 
     // check for children
     const childrenResult = await loopNestedChildren({
@@ -128,13 +125,16 @@ const loopNestedChildren = async ({
       success &&
       (await mapField(
         data['grouped-text-exercise'],
-        'Exercise',
+        'GroupedExercise',
         (initialState.state as TextExerciseGroupSerializedState)[
           'grouped-text-exercise'
         ]
       ))
   }
-  if (data.__typename === 'Exercise' && data['text-solution']) {
+  if (
+    (data.__typename === 'Exercise' || data.__typename === 'GroupedExercise') &&
+    data['text-solution']
+  ) {
     success =
       success &&
       (await mapField(
@@ -164,6 +164,11 @@ const loopNestedChildren = async ({
         const oldVersion = childrenInitialArray.find(
           (oldChild) => oldChild?.id === child.id
         )
+
+        // TODO: version from API uses "" for no solution, edtr state uses null
+        // if (oldVersion?.__typename === 'Exercise' || oldVersion?.__typename === 'GroupedExercise') {
+        //   if(!oldVersion?.['text-solution'] && )
+        // }
 
         if (equals(oldVersion, child)) return true // no changes
 

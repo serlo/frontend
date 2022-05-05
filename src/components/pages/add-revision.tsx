@@ -93,8 +93,8 @@ export function AddRevision({
               const success = await setEntityMutation(
                 {
                   ...data,
-                  // @ts-expect-error temporary
-                  __typename: type === 'GroupedExercise' ? 'Exercise' : type,
+                  //@ts-expect-error resolve, when old code is removed
+                  __typename: type,
                 },
                 _needsReview,
                 initialState
