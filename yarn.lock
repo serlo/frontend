@@ -3285,14 +3285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.30.0":
-  version: 0.30.0
-  resolution: "@serlo/api@npm:0.30.0"
-  checksum: 8dddad0d715b74e1af5a39b7a3b5e92e219ddda4cc3f8b87756defbd7b7b7c96cbff1efc1636cd5a1a472849105fa2ab771dbf79fdfa7163e9a05c9c3b503a97
-  languageName: node
-  linkType: hard
-
-"@serlo/api@npm:^0.30.2":
+"@serlo/api@npm:^0.30.0, @serlo/api@npm:^0.30.2":
   version: 0.30.2
   resolution: "@serlo/api@npm:0.30.2"
   checksum: 03e8e9ac136a87f94234d54fd392fa958c29d0a1f5f7dd6498a823624d0deb44bc5a42379e2e740c417f2ebd33a05fa39a69cdabcb9bfa04b4cda682dc2f85e1
