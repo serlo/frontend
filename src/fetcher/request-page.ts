@@ -12,8 +12,8 @@ import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import {
   Instance,
-  MainPageQuery,
-  MainPageQueryVariables,
+  MainUuidQuery,
+  MainUuidQueryVariables,
 } from './graphql-types/operations'
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
@@ -26,7 +26,7 @@ export async function requestPage(
   alias: string,
   instance: Instance
 ): Promise<RequestPageData> {
-  const response = await request<MainPageQuery, MainPageQueryVariables>(
+  const response = await request<MainUuidQuery, MainUuidQueryVariables>(
     endpoint,
     dataQuery,
     {

@@ -8,7 +8,7 @@ import {
 } from './query-fragments'
 
 export const dataQuery = gql`
-  query MainPage($id: Int, $alias: AliasInput) {
+  query mainUuid($id: Int, $alias: AliasInput) {
     authorization
     uuid(id: $id, alias: $alias) {
       __typename

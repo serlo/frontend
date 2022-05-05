@@ -1,14 +1,12 @@
-import { Instance, MainPageQuery } from './graphql-types/operations'
+import { Instance } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
 import {
   getServerSideStrings,
   getInstanceDataByLang,
 } from '@/helper/feature-i18n'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
-export function createTitle(
-  uuid: NonNullable<MainPageQuery['uuid']>,
-  instance: Instance
-): string {
+export function createTitle(uuid: MainUuidType, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
   const suffix = ` - ${instanceData.title}`
 
@@ -20,7 +18,7 @@ export function createTitle(
 }
 
 export function getRawTitle(
-  uuid: NonNullable<MainPageQuery['uuid']>,
+  uuid: MainUuidType,
   instance: Instance
 ): string | null {
   const { strings } = getInstanceDataByLang(instance)

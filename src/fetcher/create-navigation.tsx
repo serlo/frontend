@@ -1,4 +1,4 @@
-import { MainPageQuery } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
 import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {
@@ -9,7 +9,7 @@ interface NavigationData {
 }
 
 export function createNavigation(
-  uuid: NonNullable<MainPageQuery['uuid']>
+  uuid: MainUuidType
 ): SecondaryNavigationData | undefined {
   if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
     return undefined

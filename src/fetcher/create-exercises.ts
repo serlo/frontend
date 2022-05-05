@@ -1,6 +1,7 @@
 import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
-import { MainPageQuery, RevisionUuidQuery } from './graphql-types/operations'
+import { RevisionUuidQuery } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -12,14 +13,13 @@ import {
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 
+type BareExercise = Omit<
+  Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
+  'exerciseGroup' | '__typename' | 'instance'
+>
+
 export function createExercise(
-  uuid: Omit<
-    Extract<
-      NonNullable<MainPageQuery['uuid']>,
-      { __typename: 'Exercise' | 'GroupedExercise' }
-    >,
-    'exerciseGroup' | '__typename' | 'instance'
-  >,
+  uuid: BareExercise,
   index?: number
 ): FrontendExerciseNode {
   let taskLegacy: FrontendContentNode[] | undefined = undefined
@@ -76,12 +76,7 @@ export function createExercise(
   }
 }
 
-function createSolutionData(
-  solution: Extract<
-    NonNullable<MainPageQuery['uuid']>,
-    { __typename: 'Exercise' | 'GroupedExercise' }
-  >['solution']
-) {
+function createSolutionData(solution: BareExercise['solution']) {
   let solutionLegacy: FrontendContentNode[] | undefined = undefined
   let solutionEdtrState: SolutionEdtrState | undefined = undefined
   const content = solution?.currentRevision?.content
@@ -148,10 +143,7 @@ export function createSolution(
 
 export function createExerciseGroup(
   uuid: Omit<
-    Extract<
-      NonNullable<MainPageQuery['uuid']>,
-      { __typename: 'ExerciseGroup' }
-    >,
+    Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
     'date' | 'taxonomyTerms'
   >,
   pageIndex?: number

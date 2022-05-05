@@ -4,15 +4,18 @@ import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SubscriptionQuery } from '@/fetcher/graphql-types/operations'
+import { GetSubscriptionsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 
+export type SubscriptionNode =
+  GetSubscriptionsQuery['subscription']['getSubscriptions']['nodes'][0]
+
 export function ManageSubscriptions({
   subscriptions,
 }: {
-  subscriptions: SubscriptionQuery['subscription']['getSubscriptions']['nodes']
+  subscriptions: SubscriptionNode[]
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -51,10 +54,7 @@ export function ManageSubscriptions({
     if (subscribe) setMailOverwrite({ ...mailOverwrite, [id]: sendEmail })
   }
 
-  function renderLine({
-    object,
-    sendEmail,
-  }: SubscriptionQuery['subscription']['getSubscriptions']['nodes'][0]) {
+  function renderLine({ object, sendEmail }: SubscriptionNode) {
     if (hidden.includes(object.id)) return null
     const entityString = getEntityStringByTypename(object.__typename, strings)
     const title = generateTitle(object) ?? entityString
@@ -93,9 +93,7 @@ export function ManageSubscriptions({
   }
 }
 
-function generateTitle(
-  object: SubscriptionQuery['subscription']['getSubscriptions']['nodes'][0]['object']
-) {
+function generateTitle(object: SubscriptionNode['object']) {
   if (object.__typename == 'User') {
     return object.username
   }

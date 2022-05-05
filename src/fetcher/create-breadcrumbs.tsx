@@ -1,7 +1,7 @@
-import { MainPageQuery } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
 import { BreadcrumbsData } from '@/data-types'
 
-export function createBreadcrumbs(uuid: NonNullable<MainPageQuery['uuid']>) {
+export function createBreadcrumbs(uuid: MainUuidType) {
   if (uuid.__typename === 'TaxonomyTerm') {
     if (uuid.navigation?.path.nodes) {
       return compat(uuid.navigation?.path.nodes)
@@ -25,7 +25,7 @@ export function createBreadcrumbs(uuid: NonNullable<MainPageQuery['uuid']>) {
   function buildFromTaxTerms(
     taxonomyPaths:
       | Extract<
-          NonNullable<MainPageQuery['uuid']>,
+          MainUuidType,
           { __typename: 'Article' }
         >['taxonomyTerms']['nodes']
       | undefined

@@ -1,6 +1,6 @@
 import { convertState } from './convert-state'
 import { createExercise, createExerciseGroup } from './create-exercises'
-import { MainPageQuery } from './graphql-types/operations'
+import { MainUuidQuery } from './graphql-types/operations'
 import {
   TaxonomyData,
   FrontendExerciseNode,
@@ -11,7 +11,7 @@ import {
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 
 type TaxonomyTerm = Extract<
-  MainPageQuery['uuid'],
+  MainUuidQuery['uuid'],
   { __typename: 'TaxonomyTerm' }
 >
 
