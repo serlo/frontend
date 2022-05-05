@@ -57,14 +57,11 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     return (
       <Fragment key={colIndex}>
         {isHead ? (
-          <th
-            scope={scope}
-            className="serlo-th px-0 min-w-[4rem] min-h-[1rem] align-top"
-          >
+          <th scope={scope} className="serlo-th px-0 align-top">
             {cell}
           </th>
         ) : (
-          <td className="serlo-td px-0 min-h-[1rem]">{cell}</td>
+          <td className="serlo-td px-0">{cell}</td>
         )}
       </Fragment>
     )

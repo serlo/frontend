@@ -57,10 +57,13 @@
     @apply mx-side border-collapse whitespace-nowrap mobile:whitespace-normal break-normal special-hyphens-auto;
   }
   .serlo-th {
-    @apply p-2.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;
+    @apply p-1.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;
   }
   .serlo-td {
-    @apply p-2.5 align-top border-3 border-brand-150;
+    @apply p-1.5 align-top border-3 border-brand-150;
+    > p.serlo-p {
+      @apply mx-0;
+    }
   }
   .serlo-ul {
     @apply mx-side mb-block mt-4 pl-5 list-none;
