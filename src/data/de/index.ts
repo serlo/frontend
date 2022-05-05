@@ -441,7 +441,7 @@ export const loggedInData = {
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
         reject: "Bearbeitung wurde abgelehnt ❌",
-        save: "Bearbeiten erfolgreich gespeichert ✅"
+        save: "Bearbeitung erfolgreich gespeichert ✅"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
