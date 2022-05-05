@@ -65,6 +65,8 @@ export const setEntityMutationRunner = async function ({
       parentId: genericInput.entityId ? undefined : parentId,
     }
 
+    // while testing
+    // eslint-disable-next-line no-console
     console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
 
     const savedId = await mutationFetch(
