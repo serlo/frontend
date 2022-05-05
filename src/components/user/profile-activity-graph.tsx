@@ -57,7 +57,7 @@ export function ProfileActivityGraph({
       }
     >
       <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
-      {!isLegendary ? renderLegendary() : renderGraphInProgress()}
+      {isLegendary ? renderLegendary() : renderGraphInProgress()}
     </figure>
   )
 
