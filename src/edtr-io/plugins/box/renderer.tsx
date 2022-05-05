@@ -1,3 +1,5 @@
+import { useScopedStore } from '@edtr-io/core'
+import { isEmpty } from '@edtr-io/store'
 import clsx from 'clsx'
 
 import { BoxProps } from '.'
@@ -24,7 +26,7 @@ export function BoxRenderer(props: BoxProps) {
     ? style.colorClass
     : defaultStyle.colorClass
   const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
-
+  const store = useScopedStore()
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -48,6 +50,7 @@ export function BoxRenderer(props: BoxProps) {
           </>
         )}
       </figure>
+      {renderWarning()}
       {renderSettings()}
     </>
   )
@@ -130,5 +133,26 @@ export function BoxRenderer(props: BoxProps) {
 
   function generateAnchorId() {
     anchorId.set(`box${Math.floor(10000 + Math.random() * 90000)}`)
+  }
+
+  function renderWarning() {
+    return hackedIsEmpty() ? (
+      <div className="text-right mt-1">
+        <span className="bg-amber-100 p-0.5 text-sm">
+          ⚠️ {editorStrings.box.emptyContentWarning}
+        </span>
+      </div>
+    ) : null
+  }
+
+  function hackedIsEmpty() {
+    // workaround for https://github.com/edtr-io/edtr-io/issues/384
+    // unfortunately only updates when user clicks outside of any editor component
+
+    const rowState = store.getState().documents[content.id].state as []
+    const rowChildrenValues = rowState.map(
+      (child: { id: string; value: string }) => child.value
+    )
+    return rowChildrenValues.every((valId) => isEmpty(valId)(store.getState()))
   }
 }
