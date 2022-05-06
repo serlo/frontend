@@ -2,7 +2,11 @@ import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
 import { dataQuery } from './query'
-import { QueryResponse, QueryResponseRevision } from './query-types'
+import {
+  MainUuidType,
+  QueryResponse,
+  QueryResponseRevision,
+} from './query-types'
 import { revisionQuery } from './revision/query'
 import { endpoint } from '@/api/endpoint'
 import { BreadcrumbsData } from '@/data-types'
@@ -63,7 +67,8 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  const breadcrumbsData = createBreadcrumbs(data)
+  // TODO: improve this by fixing this type (and of this whole file)
+  const breadcrumbsData = createBreadcrumbs(data as MainUuidType)
 
   const isSandbox =
     breadcrumbsData &&

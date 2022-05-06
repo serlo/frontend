@@ -10,8 +10,12 @@ import { getMetaImage, getMetaDescription } from './create-meta-data'
 import { createNavigation } from './create-navigation'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
+import {
+  Instance,
+  MainUuidQuery,
+  MainUuidQueryVariables,
+} from './graphql-types/operations'
 import { dataQuery } from './query'
-import { QueryResponse, Instance } from './query-types'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
 import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
@@ -22,12 +26,15 @@ export async function requestPage(
   alias: string,
   instance: Instance
 ): Promise<RequestPageData> {
-  const { uuid, authorization } = await request<{
-    uuid: QueryResponse
-    authorization: AuthorizationPayload
-  }>(endpoint, dataQuery, {
-    alias: { instance, path: alias },
-  })
+  const response = await request<MainUuidQuery, MainUuidQueryVariables>(
+    endpoint,
+    dataQuery,
+    {
+      alias: { instance, path: alias },
+    }
+  )
+  const uuid = response.uuid
+  const authorization = response.authorization as AuthorizationPayload
   if (!uuid) return { kind: 'not-found' }
   // Can be deleted if CFWorker redirects those for us
   if (
@@ -51,6 +58,8 @@ export async function requestPage(
           : `/entity/repository/compare/0/${uuid.id}`,
     }
   }
+
+  if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
 
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages.filter(

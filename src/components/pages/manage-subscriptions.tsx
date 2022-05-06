@@ -4,16 +4,22 @@ import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SubscriptionData } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
+import {
+  GetSubscriptionsQuery,
+  Instance,
+} from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 
+export type SubscriptionNode =
+  GetSubscriptionsQuery['subscription']['getSubscriptions']['nodes'][0]
+
 export function ManageSubscriptions({
   subscriptions,
 }: {
-  subscriptions: SubscriptionData[]
+  subscriptions: SubscriptionNode[]
 }) {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -52,10 +58,10 @@ export function ManageSubscriptions({
     if (subscribe) setMailOverwrite({ ...mailOverwrite, [id]: sendEmail })
   }
 
-  function renderLine({ object, sendEmail }: SubscriptionData) {
+  function renderLine({ object, sendEmail }: SubscriptionNode) {
     if (hidden.includes(object.id)) return null
     const entityString = getEntityStringByTypename(object.__typename, strings)
-    const title = getRawTitle(object, 'de') ?? entityString
+    const title = getRawTitle(object, Instance.De) ?? entityString
     const icon = getIconByTypename(object.__typename)
     const sendEmailOverwrite = mailOverwrite[object.id] ?? sendEmail
 
