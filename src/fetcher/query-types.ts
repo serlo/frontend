@@ -1,6 +1,11 @@
+import * as GraphQL from '@serlo/api'
+
+import type { MainUuidQuery } from './graphql-types/operations'
 // Keep this file in sync with the graphQL schema.
 
-import * as GraphQL from '@serlo/api'
+// some helpers for our codegen types
+
+export type MainUuidType = NonNullable<MainUuidQuery['uuid']>
 
 // Maybe automate this one day.
 export type Instance = 'de' | 'en' | 'fr' | 'es' | 'ta' | 'hi'

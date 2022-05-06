@@ -13,7 +13,7 @@ export function useSetNotificationStateMutation() {
   const { cache } = useSWRConfig()
 
   const mutation = gql`
-    mutation setState($input: NotificationSetStateInput!) {
+    mutation notificationSetState($input: NotificationSetStateInput!) {
       notification {
         setState(input: $input) {
           success

@@ -1,6 +1,7 @@
 import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
-import { Solution, BareExercise, BareExerciseGroup } from './query-types'
+import { RevisionUuidQuery } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -11,6 +12,11 @@ import {
 } from '@/data-types'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
+
+type BareExercise = Omit<
+  Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
+  'exerciseGroup' | '__typename' | 'instance'
+>
 
 export function createExercise(
   uuid: BareExercise,
@@ -112,26 +118,40 @@ function createSolutionData(solution: BareExercise['solution']) {
   }
 }
 
-export function createSolution(uuid: Solution): FrontendSolutionNode {
+export function createSolution(
+  uuid: Extract<
+    NonNullable<RevisionUuidQuery['uuid']>,
+    { __typename: 'SolutionRevision' }
+  >
+): FrontendSolutionNode {
   return {
     type: 'solution',
-    solution: createSolutionData(uuid),
+    solution: createSolutionData({
+      __typename: 'Solution',
+      license: uuid.repository.license,
+      id: uuid.id,
+      trashed: uuid.trashed,
+      currentRevision: uuid.repository.currentRevision,
+    }),
     context: {
       id: uuid.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
-    unrevisedRevisions: uuid.unrevisedRevisions,
+    href: uuid.repository.alias ? uuid.repository.alias : undefined,
+    /* not part of the schema anymore, obsolete? unrevisedRevisions: uuid.unrevisedRevisions, */
   }
 }
 
 export function createExerciseGroup(
-  uuid: BareExerciseGroup,
+  uuid: Omit<
+    Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
+    'date' | 'taxonomyTerms'
+  >,
   pageIndex?: number
 ): FrontendExerciseGroupNode {
   const children: FrontendExerciseNode[] = []
   let groupIndex = 0
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach((exercise: BareExercise) => {
+    uuid.exercises.forEach((exercise) => {
       if (!exercise.currentRevision) return
       if (exercise.trashed) return
       const exerciseNode = createExercise(exercise)

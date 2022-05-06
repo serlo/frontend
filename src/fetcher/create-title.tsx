@@ -1,33 +1,31 @@
-import {
-  QueryResponseNoRevision,
-  QueryResponse,
-  QueryResponseRevision,
-  Instance,
-} from './query-types'
+import { Instance } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
+import { SubscriptionNode } from '@/components/pages/manage-subscriptions'
 import {
   getServerSideStrings,
   getInstanceDataByLang,
 } from '@/helper/feature-i18n'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
-export function createTitle(uuid: QueryResponse, instance: Instance): string {
+export function createTitle(uuid: MainUuidType, instance: Instance): string {
   const instanceData = getServerSideStrings(instance)
   const suffix = ` - ${instanceData.title}`
 
   const title = getRawTitle(uuid, instance)
 
   if (!title) return 'Serlo'
-  if (isRevision(uuid)) return title
+  if (uuid.__typename.endsWith('Revision')) return title
   return title + suffix
 }
 
+// subscriptions need the raw title, so it's easier to reuse their type
 export function getRawTitle(
-  uuid: QueryResponse,
+  uuid: SubscriptionNode['object'],
   instance: Instance
 ): string | null {
   const { strings } = getInstanceDataByLang(instance)
 
-  if (isRevision(uuid)) {
+  if (uuid.__typename.endsWith('Revision')) {
     //good enough for now
     return (
       'Revision: ' +
@@ -78,10 +76,4 @@ export function getRawTitle(
 
   //fallback
   return null
-}
-
-function isRevision(
-  _uuid: QueryResponseNoRevision | QueryResponseRevision
-): _uuid is QueryResponseRevision {
-  return (_uuid as QueryResponseRevision).__typename.endsWith('Revision')
 }

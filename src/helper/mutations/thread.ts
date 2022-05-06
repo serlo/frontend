@@ -20,7 +20,7 @@ export function useThreadArchivedMutation() {
   const loggedInData = useLoggedInData()
 
   const mutation = gql`
-    mutation setState($input: ThreadSetThreadArchivedInput!) {
+    mutation threadSetArchived($input: ThreadSetThreadArchivedInput!) {
       thread {
         setThreadArchived(input: $input) {
           success
@@ -58,7 +58,7 @@ export function useSetThreadStateMutation() {
   const loggedInData = useLoggedInData()
 
   const mutation = gql`
-    mutation setState($input: ThreadSetThreadStateInput!) {
+    mutation threadSetState($input: ThreadSetThreadStateInput!) {
       thread {
         setThreadState(input: $input) {
           success
@@ -91,7 +91,7 @@ export function useSetCommentStateMutation() {
   const loggedInData = useLoggedInData()
 
   const mutation = gql`
-    mutation setState($input: ThreadSetCommentStateInput!) {
+    mutation threadSetCommentState($input: ThreadSetCommentStateInput!) {
       thread {
         setCommentState(input: $input) {
           success
