@@ -4,7 +4,11 @@ import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { GetSubscriptionsQuery } from '@/fetcher/graphql-types/operations'
+import { getRawTitle } from '@/fetcher/create-title'
+import {
+  GetSubscriptionsQuery,
+  Instance,
+} from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
@@ -57,7 +61,7 @@ export function ManageSubscriptions({
   function renderLine({ object, sendEmail }: SubscriptionNode) {
     if (hidden.includes(object.id)) return null
     const entityString = getEntityStringByTypename(object.__typename, strings)
-    const title = generateTitle(object) ?? entityString
+    const title = getRawTitle(object, Instance.De) ?? entityString
     const icon = getIconByTypename(object.__typename)
     const sendEmailOverwrite = mailOverwrite[object.id] ?? sendEmail
 
@@ -91,29 +95,4 @@ export function ManageSubscriptions({
       </tr>
     )
   }
-}
-
-function generateTitle(object: SubscriptionNode['object']) {
-  if (object.__typename == 'User') {
-    return object.username
-  }
-  if (object.__typename == 'TaxonomyTerm') {
-    return object.name
-  }
-  if (object.__typename == 'Exercise' || object.__typename == 'ExerciseGroup') {
-    return object.taxonomyTerms.nodes[0].navigation?.path.nodes[0].label // is this useful?
-  }
-  if (
-    object.__typename == 'Page' ||
-    object.__typename == 'Article' ||
-    object.__typename == 'Video' ||
-    object.__typename == 'Applet' ||
-    object.__typename == 'CoursePage' ||
-    object.__typename == 'Course' ||
-    object.__typename == 'Event'
-  ) {
-    return object.currentRevision?.title
-  }
-
-  return null
 }

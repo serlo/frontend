@@ -1,5 +1,6 @@
 import { Instance } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
+import { SubscriptionNode } from '@/components/pages/manage-subscriptions'
 import {
   getServerSideStrings,
   getInstanceDataByLang,
@@ -17,8 +18,9 @@ export function createTitle(uuid: MainUuidType, instance: Instance): string {
   return title + suffix
 }
 
+// subscriptions need the raw title, so it's easier to reuse their type
 export function getRawTitle(
-  uuid: MainUuidType,
+  uuid: SubscriptionNode['object'],
   instance: Instance
 ): string | null {
   const { strings } = getInstanceDataByLang(instance)
