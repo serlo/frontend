@@ -112,7 +112,7 @@ function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => {
           return (
-            <div className="pr-2" key={cell.content.id}>
+            <div className="pr-2 min-h-[2rem]" key={cell.content.id}>
               {!isEmpty(cell.content.id)(store.getState()) &&
                 cell.content.render()}
             </div>
@@ -184,7 +184,7 @@ function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2 pb-6"
+              className="hackdiv pr-2 pb-6 min-h-[3.5rem]"
             >
               {renderRemoveButtons(rowIndex, colIndex)}
               {cell.content.render({
@@ -228,7 +228,7 @@ function SerloTableEditor(props: SerloTableProps) {
         onClick={() => {
           cell.content.replace(isImage ? 'text' : 'image')
         }}
-        className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm ml-auto block absolute"
+        className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm block absolute"
         title={
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
