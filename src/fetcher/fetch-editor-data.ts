@@ -1,7 +1,6 @@
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { MainUuidQuery } from './graphql-types/operations'
 import { dataQuery } from './query'
 import {
   MainUuidType,
