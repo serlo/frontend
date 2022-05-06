@@ -643,7 +643,8 @@ export const loggedInData = {
       box: {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
-        anchorId: 'Anchor ID'
+        anchorId: 'Anchor ID',
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: 'To make the content draggable, convert them for the new editor:',

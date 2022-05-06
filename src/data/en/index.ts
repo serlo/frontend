@@ -698,7 +698,6 @@ export const loggedInData = {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
         anchorId: 'Anchor ID',
-        emptyContentWarning: 'Boxes without content will not be displayed',
       },
       layout: {
         toDragConvert:

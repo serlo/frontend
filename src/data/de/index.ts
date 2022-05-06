@@ -643,7 +643,8 @@ export const loggedInData = {
       box: {
         type: "Art der Box",
         titlePlaceholder: "(optionaler Titel)",
-        anchorId: "Sprungmarke (anchor id)"
+        anchorId: "Sprungmarke (anchor id)",
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
