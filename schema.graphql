@@ -129,103 +129,22 @@ type AbstractUuidCursor {
   node: AbstractUuid!
 }
 
-input AddAppletRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  metaDescription: String!
-  metaTitle: String!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-  title: String!
-  url: String!
-}
-
-input AddArticleRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  metaDescription: String!
-  metaTitle: String!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-  title: String!
-}
-
-input AddCoursePageRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-  title: String!
-}
-
-input AddCourseRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  metaDescription: String!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-  title: String!
-}
-
-input AddEventRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  metaDescription: String!
-  metaTitle: String!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-  title: String!
-}
-
-input AddExerciseGroupRevisionInput {
-  changes: String!
-  cohesive: Boolean!
-  content: String!
-  entityId: Int!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-}
-
-input AddGenericRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-}
-
 type AddRevisionResponse {
   query: Query!
   revisionId: Int
   success: Boolean!
 }
 
-input AddVideoRevisionInput {
-  changes: String!
-  content: String!
-  entityId: Int!
-  needsReview: Boolean!
-  subscribeThis: Boolean!
-  subscribeThisByEmail: Boolean!
-  title: String!
-  url: String!
-}
-
 input AliasInput {
   instance: Instance!
   path: String!
+}
+
+type AllThreadsConnection {
+  edges: [ThreadsCursor!]!
+  nodes: [Thread!]!
+  pageInfo: HasNextPageInfo!
+  totalCount: Int!
 }
 
 type Applet implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
@@ -563,18 +482,18 @@ type EntityMetadataCursor {
 }
 
 type EntityMutation {
-  addAppletRevision(input: AddAppletRevisionInput!): AddRevisionResponse!
-  addArticleRevision(input: AddArticleRevisionInput!): AddRevisionResponse!
-  addCoursePageRevision(input: AddCoursePageRevisionInput!): AddRevisionResponse!
-  addCourseRevision(input: AddCourseRevisionInput!): AddRevisionResponse!
-  addEventRevision(input: AddEventRevisionInput!): AddRevisionResponse!
-  addExerciseGroupRevision(input: AddExerciseGroupRevisionInput!): AddRevisionResponse!
-  addExerciseRevision(input: AddGenericRevisionInput!): AddRevisionResponse!
-  addGroupedExerciseRevision(input: AddGenericRevisionInput!): AddRevisionResponse!
-  addSolutionRevision(input: AddGenericRevisionInput!): AddRevisionResponse!
-  addVideoRevision(input: AddVideoRevisionInput!): AddRevisionResponse!
   checkoutRevision(input: CheckoutRevisionInput!): CheckoutRevisionResponse!
   rejectRevision(input: RejectRevisionInput!): RejectRevisionResponse!
+  setApplet(input: SetAppletInput!): SetEntityResponse!
+  setArticle(input: SetArticleInput!): SetEntityResponse!
+  setCourse(input: SetCourseInput!): SetEntityResponse!
+  setCoursePage(input: SetCoursePageInput!): SetEntityResponse!
+  setEvent(input: SetEventInput!): SetEntityResponse!
+  setExercise(input: SetGenericEntityInput!): SetEntityResponse!
+  setExerciseGroup(input: SetExerciseGroupInput!): SetEntityResponse!
+  setGroupedExercise(input: SetGenericEntityInput!): SetEntityResponse!
+  setSolution(input: SetGenericEntityInput!): SetEntityResponse!
+  setVideo(input: SetVideoInput!): SetEntityResponse!
 }
 
 type Event implements AbstractEntity & AbstractRepository & AbstractTaxonomyTermChild & AbstractUuid & InstanceAware & ThreadAware {
@@ -794,6 +713,7 @@ type Mutation {
   notification: NotificationMutation!
   page: PageMutation!
   subscription: SubscriptionMutation!
+  taxonomyTerm: TaxonomyTermMutation!
   thread: ThreadMutation!
   user: UserMutation!
   uuid: UuidMutation!
@@ -931,6 +851,7 @@ type Query {
   notifications(after: String, before: String, first: Int, last: Int, unread: Boolean): NotificationConnection!
   subject: SubjectQuery!
   subscription: SubscriptionQuery!
+  thread: ThreadQuery!
   user: UserQuery!
   uuid(alias: AliasInput, id: Int): AbstractUuid
 }
@@ -1004,6 +925,96 @@ type ScopedRoleCursor {
   node: ScopedRole!
 }
 
+input SetAppletInput {
+  changes: String!
+  content: String!
+  entityId: Int
+  metaDescription: String
+  metaTitle: String
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+  url: String!
+}
+
+input SetArticleInput {
+  changes: String!
+  content: String!
+  entityId: Int
+  metaDescription: String
+  metaTitle: String
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input SetCourseInput {
+  changes: String!
+  content: String
+  entityId: Int
+  metaDescription: String
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input SetCoursePageInput {
+  changes: String!
+  content: String!
+  entityId: Int
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+type SetEntityResponse {
+  query: Query!
+  record: AbstractEntity
+  success: Boolean!
+}
+
+input SetEventInput {
+  changes: String!
+  content: String!
+  entityId: Int
+  metaDescription: String
+  metaTitle: String
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+}
+
+input SetExerciseGroupInput {
+  changes: String!
+  cohesive: Boolean!
+  content: String!
+  entityId: Int
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+}
+
+input SetGenericEntityInput {
+  changes: String!
+  content: String!
+  entityId: Int
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+}
+
 type SetLicenseNotificationEvent implements AbstractNotificationEvent & InstanceAware {
   actor: User!
   date: DateTime!
@@ -1051,6 +1062,18 @@ type SetUuidStateNotificationEvent implements AbstractNotificationEvent & Instan
   object: AbstractUuid!
   objectId: Int!
   trashed: Boolean!
+}
+
+input SetVideoInput {
+  changes: String!
+  content: String!
+  entityId: Int
+  needsReview: Boolean!
+  parentId: Int
+  subscribeThis: Boolean!
+  subscribeThisByEmail: Boolean!
+  title: String!
+  url: String!
 }
 
 type Solution implements AbstractEntity & AbstractRepository & AbstractUuid & InstanceAware & ThreadAware {
@@ -1165,9 +1188,49 @@ type TaxonomyTermConnection {
   totalCount: Int!
 }
 
+input TaxonomyTermCreateInput {
+  description: String
+  name: String!
+  parentId: Int!
+  taxonomyType: TaxonomyTypeCreateOptions!
+}
+
+type TaxonomyTermCreateResponse {
+  query: Query!
+  record: TaxonomyTerm
+  success: Boolean!
+}
+
 type TaxonomyTermEdge {
   cursor: String!
   node: TaxonomyTerm!
+}
+
+input TaxonomyTermMoveInput {
+  childrenIds: [Int!]!
+  destination: Int!
+}
+
+type TaxonomyTermMoveResponse {
+  query: Query!
+  success: Boolean!
+}
+
+type TaxonomyTermMutation {
+  create(input: TaxonomyTermCreateInput!): TaxonomyTermCreateResponse!
+  move(input: TaxonomyTermMoveInput!): TaxonomyTermMoveResponse!
+  setNameAndDescription(input: TaxonomyTermSetNameAndDescriptionInput!): TaxonomyTermSetNameAndDescriptionResponse!
+}
+
+input TaxonomyTermSetNameAndDescriptionInput {
+  description: String
+  id: Int!
+  name: String!
+}
+
+type TaxonomyTermSetNameAndDescriptionResponse {
+  query: Query!
+  success: Boolean!
 }
 
 enum TaxonomyTermType {
@@ -1180,6 +1243,11 @@ enum TaxonomyTermType {
   locale
   root
   subject
+  topic
+  topicFolder
+}
+
+enum TaxonomyTypeCreateOptions {
   topic
   topicFolder
 }
@@ -1231,6 +1299,10 @@ type ThreadMutation {
   setCommentState(input: ThreadSetCommentStateInput!): ThreadSetCommentStateResponse
   setThreadArchived(input: ThreadSetThreadArchivedInput!): ThreadSetThreadArchivedResponse
   setThreadState(input: ThreadSetThreadStateInput!): ThreadSetThreadStateResponse
+}
+
+type ThreadQuery {
+  allThreads(after: String, first: Int): AllThreadsConnection!
 }
 
 input ThreadSetCommentStateInput {
