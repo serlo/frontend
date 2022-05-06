@@ -9,15 +9,16 @@ import { CsrfContext } from './csrf-context'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
+import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RevisionAddMutationData } from '@/helper/mutations/use-revision-add-mutation'
+import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
   getCsrfToken(): string
   children?: React.ReactNode
   needsReview: boolean
-  onSave: (data: RevisionAddMutationData) => Promise<void>
+  onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
   type: string
@@ -89,6 +90,7 @@ export function SerloEditor({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <CsrfContext.Provider value={getCsrfToken}>
       <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
+        <MathSpan formula="" /> {/* preload formula plugin */}
         <Editor
           DocumentEditor={DocumentEditor}
           onError={onError}

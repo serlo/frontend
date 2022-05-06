@@ -7,7 +7,7 @@ import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentAreaProps } from '@/components/comments/comment-area'
+import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -21,8 +21,10 @@ export interface ExerciseProps {
   path?: NodePath
 }
 
-const CommentArea = dynamic<CommentAreaProps>(() =>
-  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
+  import('@/components/comments/comment-area-entity').then(
+    (mod) => mod.CommentAreaEntity
+  )
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
@@ -114,7 +116,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {license && <div className="px-side">{license}</div>}
         {node.context.solutionId && (
           <Lazy>
-            <CommentArea entityId={node.context.solutionId} />
+            <CommentAreaEntity entityId={node.context.solutionId} />
           </Lazy>
         )}
       </div>

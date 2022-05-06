@@ -1,13 +1,17 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
-import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
+import {
+  AbstractUuid,
+  Comment as CommentType,
+  Thread as ThreadType,
+} from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
-import { useState, useRef, useEffect } from 'react'
+import { Fragment, useState } from 'react'
 
 import { Lazy } from '../content/lazy'
+import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
-import { Guard } from '../guard'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
@@ -15,32 +19,42 @@ import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
+import { getTranslatedType } from '@/helper/get-translated-type'
+import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
 } from '@/helper/mutations/thread'
-import { scrollToPrevious } from '@/helper/scroll'
-import { useCommentData } from '@/helper/use-comment-data'
 
 export interface CommentAreaProps {
-  entityId: number
+  commentData: {
+    active: ThreadType[] | undefined
+    archived: ThreadType[] | undefined
+  }
+  commentCount?: number
+  entityId?: number
   noForms?: boolean
+  isDiscussionsPage?: boolean
 }
 
 export type CommentsData = CommentType[]
 export type ThreadsData = ThreadType[]
 
-export function CommentArea({ entityId, noForms }: CommentAreaProps) {
+export function CommentArea({
+  commentData,
+  commentCount,
+  entityId,
+  noForms,
+  isDiscussionsPage,
+}: CommentAreaProps) {
   const [highlightedCommentId, setHighlightedCommentId] = useState<
     number | undefined
   >(undefined)
-  const container = useRef<HTMLDivElement>(null)
   const { strings } = useInstanceData()
   const auth = useAuthentication()
   const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()
-  const { commentData, commentCount, error } = useCommentData(entityId)
 
   const canDo = useCanDo()
 
@@ -48,42 +62,30 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
     typeof window !== 'undefined' &&
     window.location.hash.startsWith('#comment-')
 
-  useEffect(() => {
-    if (showAll && highlightedCommentId === undefined) {
-      if (container.current) scrollToPrevious(container.current)
-      const id = parseInt(window.location.hash.replace('#comment-', ''))
-      if (!isNaN(id)) setHighlightedCommentId(id)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showAll, container, entityId])
-
   return (
-    <div ref={container} className="print:hidden">
-      <Guard data={commentData} error={error}>
-        <>
-          {renderStartThreadForm()}
-          {renderContent()}
-        </>
-      </Guard>
-    </div>
+    <>
+      {renderStartThreadForm()}
+      {renderContent()}
+    </>
   )
 
   function renderContent() {
-    if (commentCount === undefined || (!auth.current && commentCount == 0))
-      return null
+    if (!auth.current && commentCount == 0) return null
 
     return (
       <>
-        {commentCount > 0 && (
+        {(commentCount === undefined || commentCount > 0) && (
           <>
-            {renderHeading(
-              faComments,
-              ` ${commentCount} ${
-                commentCount === 1
-                  ? strings.comments.commentsOne
-                  : strings.comments.commentsMany
-              }`
-            )}
+            {commentCount &&
+              commentCount > 0 &&
+              renderHeading(
+                faComments,
+                ` ${commentCount} ${
+                  commentCount === 1
+                    ? strings.comments.commentsOne
+                    : strings.comments.commentsMany
+                }`
+              )}
             <Lazy>
               {renderThreads()}
               {renderArchive()}
@@ -95,7 +97,7 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
   }
 
   function renderStartThreadForm() {
-    if (noForms) return null
+    if (noForms || !entityId) return null
     return (
       <>
         {renderHeading(faQuestionCircle, ` ${strings.comments.question}`)}
@@ -115,16 +117,38 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
 
   function renderThreads() {
     return commentData.active?.map((thread) => (
-      <Thread
-        key={thread.id}
-        thread={thread}
-        showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
-        highlightedCommentId={highlightedCommentId}
-        renderReplyForm={renderReplyForm}
-        highlight={setHighlightedCommentId}
-        onShowChildren={onShowThreadChildren}
-      />
+      <Fragment key={thread.id}>
+        {renderSeperator(thread.object)}
+        <Thread
+          thread={thread}
+          showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
+          highlightedCommentId={highlightedCommentId}
+          renderReplyForm={renderReplyForm}
+          highlight={setHighlightedCommentId}
+          onShowChildren={onShowThreadChildren}
+        />
+      </Fragment>
     ))
+  }
+
+  function renderSeperator(object?: AbstractUuid) {
+    if (!isDiscussionsPage || !object) return null
+
+    const { id, alias, __typename } = object as AbstractUuid & {
+      __typename: string
+    }
+    const href = alias ?? `/${id}`
+    return (
+      <div className="border-b-2 mt-5 mb-5 mx-side">
+        <b>
+          <Link href={href}>
+            <FaIcon icon={getIconByTypename(__typename)} />{' '}
+            {getTranslatedType(strings, __typename)}
+          </Link>
+        </b>{' '}
+        ( <Link href={href}>{alias ?? id}</Link>)
+      </div>
+    )
   }
 
   function renderReplyForm(threadId: string) {
@@ -177,13 +201,15 @@ export function CommentArea({ entityId, noForms }: CommentAreaProps) {
         sendEmail: false,
       })
     } else {
-      return createThread({
-        title: '',
-        content,
-        objectId: entityId,
-        subscribe: true,
-        sendEmail: false,
-      })
+      if (entityId) {
+        return createThread({
+          title: '',
+          content,
+          objectId: entityId,
+          subscribe: true,
+          sendEmail: false,
+        })
+      } else return false
     }
   }
 }

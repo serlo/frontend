@@ -6,9 +6,12 @@ import { createExercise, createSolution } from '../create-exercises'
 import { createTitle } from '../create-title'
 import {
   Instance,
+  RevisionUuidQuery,
+  RevisionUuidQueryVariables,
+} from '../graphql-types/operations'
+import {
   ArticleRevision,
   VideoRevision,
-  QueryResponseRevision,
   GroupedExercise,
   Exercise,
 } from '../query-types'
@@ -24,13 +27,22 @@ export async function requestRevision(
     id: revisionId,
   }
 
-  const { uuid, authorization } = await request<{
-    uuid: QueryResponseRevision
-    authorization: AuthorizationPayload
-  }>(endpoint, revisionQuery, variables)
+  const response = await request<RevisionUuidQuery, RevisionUuidQueryVariables>(
+    endpoint,
+    revisionQuery,
+    variables
+  )
+
+  const uuid = response.uuid
+
+  if (!uuid)
+    return {
+      kind: 'not-found',
+    }
+
+  const authorization = response.authorization as AuthorizationPayload
 
   const cacheKey = `/${instance}/${revisionId}`
-  const title = createTitle(uuid, instance)
 
   if (
     uuid.__typename === 'ArticleRevision' ||
@@ -49,6 +61,8 @@ export async function requestRevision(
       uuid.__typename === 'ExerciseRevision' ||
       uuid.__typename === 'GroupedExerciseRevision'
 
+    const title = createTitle(uuid, instance)
+
     const thisExercise = isExercise
       ? [
           createExercise({
@@ -56,9 +70,10 @@ export async function requestRevision(
             license: uuid.repository.license,
             currentRevision: {
               content: uuid.content,
-              id: uuid.id,
+              /*id: uuid.id,*/
               date: uuid.date,
             },
+            revisions: { totalCount: 0 },
           }),
         ]
       : null
@@ -70,6 +85,7 @@ export async function requestRevision(
               ...uuid,
               license: uuid.repository.license,
               currentRevision: uuid.repository.currentRevision,
+              revisions: { totalCount: 0 },
             }),
           ]
         : null
@@ -78,30 +94,16 @@ export async function requestRevision(
       uuid.__typename === 'SolutionRevision'
         ? [
             createSolution({
-              __typename: 'Solution',
-              id: uuid.id,
-              trashed: uuid.trashed,
-              license: uuid.license,
-              instance: uuid.instance,
-              currentRevision: { content: uuid.content, id: uuid.id },
-              exercise: { id: -1 },
+              ...uuid,
+              repository: {
+                ...uuid.repository,
+                currentRevision: { content: uuid.content, id: uuid.id },
+              },
             }),
           ]
         : null
     const currentSolution =
-      uuid.__typename === 'SolutionRevision'
-        ? [
-            createSolution({
-              __typename: 'Solution',
-              id: uuid.id,
-              trashed: uuid.trashed,
-              license: uuid.license,
-              instance: uuid.instance,
-              currentRevision: uuid.repository.currentRevision,
-              exercise: { id: -1 },
-            }),
-          ]
-        : null
+      uuid.__typename === 'SolutionRevision' ? [createSolution(uuid)] : null
 
     const getParentId = () => {
       if (uuid.__typename === 'GroupedExerciseRevision')

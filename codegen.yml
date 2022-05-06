@@ -1,0 +1,26 @@
+overwrite: true
+schema: 'https://api.serlo-staging.dev/graphql'
+documents:
+  - 'src/fetcher/query.ts'
+  - 'src/fetcher/query-fragments.ts'
+  - 'src/fetcher/revision/query.ts'
+  - 'src/pages/subscriptions/manage.tsx'
+generates:
+  src/fetcher/graphql-types/operations.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - add:
+          content: '/* eslint-disable */'
+      - add:
+          content: '/* THIS FILE IS GENERATED – run `yarn codegen` to update */'
+  ./graphql.schema.json:
+    plugins:
+      - 'introspection'
+config:
+  gqlImport: graphql-request#gql
+  onlyOperationTypes: true
+  preResolveTypes: true
+  declarationKind: interface
+  scalars:
+    DateTime: string
