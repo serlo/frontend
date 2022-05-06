@@ -643,7 +643,8 @@ export const loggedInData = {
       box: {
         type: "Tipo de caja",
         titlePlaceholder: "(título opcional)",
-        anchorId: "ID de Ancla (marca de posición)"
+        anchorId: "ID de Ancla (marca de posición)",
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
