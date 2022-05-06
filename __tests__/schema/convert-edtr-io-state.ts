@@ -80,7 +80,15 @@ describe('edtr io plugins', () => {
       {
         type: 'important',
         children: [
-          { type: 'p', children: [{ type: 'text', text: '"Merksatz"' }] },
+          {
+            type: 'slate-container',
+            children: [
+              {
+                type: 'slate-p',
+                children: [{ type: 'text', text: '"Merksatz"' }],
+              },
+            ],
+          },
         ],
       },
     ])
@@ -108,7 +116,13 @@ describe('edtr io plugins', () => {
       expect(result).toEqual([
         {
           type: 'row',
-          children: [{ type: 'col', size: 6, children: [] }],
+          children: [
+            {
+              type: 'col',
+              size: 6,
+              children: [{ type: 'slate-container', children: [] }],
+            },
+          ],
         },
       ])
     })
@@ -131,7 +145,15 @@ describe('edtr io plugins', () => {
       {
         type: 'blockquote',
         children: [
-          { type: 'p', children: [{ type: 'text', text: 'A quote' }] },
+          {
+            type: 'slate-container',
+            children: [
+              {
+                type: 'slate-p',
+                children: [{ type: 'text', text: 'A quote' }],
+              },
+            ],
+          },
         ],
       },
     ])
@@ -212,7 +234,7 @@ describe('edtr io plugins', () => {
           mediaWidth: 20,
           float: 'right',
           media: [{ type: 'img', src: 'test.jpg', alt: '' }],
-          children: [],
+          children: [{ type: 'slate-container', children: [] }],
         },
       ])
     })
@@ -266,7 +288,10 @@ describe('edtr io plugins', () => {
       ],
     })
     expect(result).toEqual([
-      { type: 'h', level: 2, children: [] },
+      {
+        type: 'slate-container',
+        children: [{ type: 'h', level: 2, children: [] }],
+      },
       {
         type: 'img',
         src: 'bild.jpg',
@@ -354,8 +379,15 @@ describe('edtr io plugins', () => {
     const result = convert({
       plugin: 'text',
       state: {
-        plugin: 'text',
-        state: [
+        type: 'h',
+        level: 2,
+        children: [],
+      },
+    })
+    expect(result).toEqual([
+      {
+        type: 'slate-container',
+        children: [
           {
             type: 'h',
             level: 2,
@@ -363,8 +395,7 @@ describe('edtr io plugins', () => {
           },
         ],
       },
-    })
-    expect(result).toEqual([{ type: 'h', level: 2, children: [] }])
+    ])
   })
 
   test('plugin: video', () => {
@@ -446,12 +477,13 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         {
-          type: 'p',
+          type: 'slate-p',
           children: [{ type: 'text', text: 'test' }],
         },
       ])
     })
-    describe('compat: unwrap math from p if math is only child', () => {
+    // no automagic anymore
+    /*describe('compat: unwrap math from p if math is only child', () => {
       test('is only child', () => {
         const result = convert({
           type: 'p',
@@ -466,37 +498,24 @@ describe('text types', () => {
           },
         ])
       })
-      test('has sibling', () => {
-        const result = convert({
-          type: 'p',
-          children: [{ type: 'math', src: '123' }, { text: 'brother' }],
-        })
-        expect(result).toEqual([
-          {
-            type: 'math',
-            formula: '123',
-            formulaSource: '123',
-            alignCenter: true,
-          },
-          {
-            type: 'p',
-            children: [{ type: 'text', text: 'brother' }],
-          },
-        ])
-      })
-    })
+    })*/
 
     //compat: unwrap ul/ol from p if only child
 
-    describe('compat: handle newlines in text and math', () => {
+    describe('compat: handle newlines in text and math in list items', () => {
       test('text with breaks', () => {
         const result = convert({
-          type: 'p',
+          type: 'list-item',
           children: [{ text: 'line1\nline2' }],
         })
         expect(result).toEqual([
-          { type: 'p', children: [{ type: 'text', text: 'line1' }] },
-          { type: 'p', children: [{ type: 'text', text: 'line2' }] },
+          {
+            type: 'li',
+            children: [
+              { type: 'slate-p', children: [{ type: 'text', text: 'line1' }] },
+              { type: 'slate-p', children: [{ type: 'text', text: 'line2' }] },
+            ],
+          },
         ])
       })
     })
@@ -690,11 +709,11 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         {
-          type: 'p',
+          type: 'slate-p',
           children: [{ type: 'text', text: 'text' }],
         },
         {
-          type: 'p',
+          type: 'slate-p',
           children: [{ type: 'text', text: 'text' }],
         },
       ])
@@ -730,7 +749,7 @@ describe('text types', () => {
           type: 'li',
           children: [
             {
-              type: 'p',
+              type: 'slate-p',
               children: [
                 {
                   type: 'a',

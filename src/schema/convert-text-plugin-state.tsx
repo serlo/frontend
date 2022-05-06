@@ -125,14 +125,10 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     ]
   }
   if (node.type === 'list-item') {
-    const children: FrontendContentNode[] = [
-      {
-        type: 'slate-container',
-        children: handleSemistructedContentOfPForListItems(
-          convertTextPluginState(node.children)
-        ),
-      },
-    ]
+    const children: FrontendContentNode[] =
+      handleSemistructedContentOfPForListItems(
+        convertTextPluginState(node.children)
+      )
 
     return [
       {
