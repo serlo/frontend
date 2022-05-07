@@ -1,11 +1,6 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
-import {
-  AbstractUuid,
-  Comment as CommentType,
-  Thread as ThreadType,
-} from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 
@@ -19,6 +14,7 @@ import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
+import { GetCommentsNode } from '@/fetcher/use-comment-data'
 import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -28,9 +24,9 @@ import {
   useCreateCommentMutation,
 } from '@/helper/mutations/thread'
 
-export type ThreadsData = ThreadType[] | GetAllThreadsNode[]
+export type ThreadsData = GetCommentsNode[] | GetAllThreadsNode[]
 export type CommentsData =
-  | CommentType[]
+  | GetCommentsNode['comments']['nodes']
   | GetAllThreadsNode['comments']['nodes']
 
 export interface CommentAreaProps {
@@ -122,7 +118,7 @@ export function CommentArea({
   function renderThreads() {
     return commentData.active?.map((thread) => (
       <Fragment key={thread.id}>
-        {renderSeperator(thread.object)}
+        {renderSeperator(thread as GetAllThreadsNode)}
         <Thread
           thread={thread}
           showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
@@ -135,14 +131,17 @@ export function CommentArea({
     ))
   }
 
-  function renderSeperator(
-    object?: GetAllThreadsNode['object'] | AbstractUuid
-  ) {
+  function renderSeperator(object?: GetAllThreadsNode) {
+    // only for CommentAreaAllThreads
     if (!isDiscussionsPage || !object) return null
-    if (!hasOwnPropertyTs(object, '__typename')) return null
+    if (!hasOwnPropertyTs(object, '__typename') || !object.__typename)
+      return null
 
-    const { id, alias, __typename } = object
-    const href = alias ?? `/${id}`
+    const { id, __typename } = object
+    const href = hasOwnPropertyTs(object, 'alias')
+      ? (object.alias as string)
+      : `/${id}`
+
     return (
       <div className="border-b-2 mt-5 mb-5 mx-side">
         <b>
@@ -151,7 +150,7 @@ export function CommentArea({
             {getTranslatedType(strings, __typename)}
           </Link>
         </b>{' '}
-        ( <Link href={href}>{alias ?? id}</Link>)
+        ( <Link href={href}>{href}</Link>)
       </div>
     )
   }

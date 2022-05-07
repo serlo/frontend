@@ -5,6 +5,7 @@ documents:
   - 'src/fetcher/query-fragments.ts'
   - 'src/fetcher/revision/query.ts'
   - 'src/fetcher/use-comment-data-all.ts'
+  - 'src/fetcher/use-comment-data.ts'
   - 'src/pages/subscriptions/manage.tsx'
 generates:
   src/fetcher/graphql-types/operations.ts:
@@ -20,8 +21,9 @@ generates:
       - 'introspection'
 config:
   gqlImport: graphql-request#gql
-  onlyOperationTypes: true
-  preResolveTypes: true
+  exportFragmentSpreadSubTypes: true
+  preResolveTypes: false
   declarationKind: interface
+  inlineFragmentTypes: combine
   scalars:
     DateTime: string
