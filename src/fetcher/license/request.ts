@@ -22,7 +22,7 @@ export async function requestLicensePage(
   if (!license) {
     return { kind: 'not-found' }
   }
-  license
+
   return {
     kind: 'license-detail',
     licenseData: {
