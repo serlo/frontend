@@ -189,6 +189,11 @@ export interface SubscriptionSetInput {
   subscribe: Scalars['Boolean'];
 }
 
+export interface TaxonomyEntityLinksInput {
+  entityIds: Array<Scalars['Int']>;
+  taxonomyTermId: Scalars['Int'];
+}
+
 export interface TaxonomyTermCreateInput {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
@@ -277,6 +282,13 @@ export interface UuidSetStateInput {
   id: Array<Scalars['Int']>;
   trashed: Scalars['Boolean'];
 }
+
+export type LicenseDetailsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type LicenseDetailsQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', license?: { __typename?: 'License', title: string, content: string, iconHref: string } | null } };
 
 export type ArticleRevisionFragment = { __typename?: 'ArticleRevision', id: number, title: string, content: string, metaTitle: string, metaDescription: string, date: string };
 
