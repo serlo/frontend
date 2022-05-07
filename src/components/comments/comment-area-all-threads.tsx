@@ -1,13 +1,8 @@
-import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
-
 import { Guard } from '../guard'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { CommentArea } from './comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useCommentDataAll } from '@/helper/use-comment-data-all'
-
-export type CommentsData = CommentType[]
-export type ThreadsData = ThreadType[]
+import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
 
 export function CommentAreaAllThreads() {
   // eslint-disable-next-line @typescript-eslint/unbound-method

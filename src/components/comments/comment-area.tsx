@@ -19,26 +19,30 @@ import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
+import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
 } from '@/helper/mutations/thread'
 
+export type ThreadsData = ThreadType[] | GetAllThreadsNode[]
+export type CommentsData =
+  | CommentType[]
+  | GetAllThreadsNode['comments']['nodes']
+
 export interface CommentAreaProps {
   commentData: {
-    active: ThreadType[] | undefined
-    archived: ThreadType[] | undefined
+    active?: ThreadsData
+    archived?: ThreadsData
   }
   commentCount?: number
   entityId?: number
   noForms?: boolean
   isDiscussionsPage?: boolean
 }
-
-export type CommentsData = CommentType[]
-export type ThreadsData = ThreadType[]
 
 export function CommentArea({
   commentData,
@@ -131,12 +135,13 @@ export function CommentArea({
     ))
   }
 
-  function renderSeperator(object?: AbstractUuid) {
+  function renderSeperator(
+    object?: GetAllThreadsNode['object'] | AbstractUuid
+  ) {
     if (!isDiscussionsPage || !object) return null
+    if (!hasOwnPropertyTs(object, '__typename')) return null
 
-    const { id, alias, __typename } = object as AbstractUuid & {
-      __typename: string
-    }
+    const { id, alias, __typename } = object
     const href = alias ?? `/${id}`
     return (
       <div className="border-b-2 mt-5 mb-5 mx-side">
