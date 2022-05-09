@@ -6,6 +6,7 @@ documents:
   - 'src/fetcher/revision/query.ts'
   - 'src/fetcher/use-comment-data-all.ts'
   - 'src/fetcher/use-comment-data.ts'
+  - 'src/fetcher/license/query.ts'
   - 'src/pages/subscriptions/manage.tsx'
 generates:
   src/fetcher/graphql-types/operations.ts:

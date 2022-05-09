@@ -8,6 +8,11 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
+  discussionsPage: {
+    cookieName: 'useDiscussionsPage',
+    isActive: false,
+    activeInDev: true,
+  },
   boxPlugin: { cookieName: 'useBoxPlugin', isActive: false, activeInDev: true },
   tablePlugin: {
     cookieName: 'useTablePlugin',
@@ -90,10 +95,21 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
+      {features.discussionsPage && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('discussionsPage')} Page: /discussions im
+            Frontend 💬
+          </h3>
+          <p className="serlo-p">
+            Alte oder neue <Link href="/discussions">/discussions</Link> Seite.
+          </p>
+        </div>
+      )}
       {features.boxPlugin && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            ⬛ Editor: Box Plugin {renderFeatureButton('boxPlugin')}
+            {renderFeatureButton('boxPlugin')} Editor: Box Plugin ⬛
           </h3>
           <p className="serlo-p">Das neue Box Plugin zum testen.</p>
         </div>
@@ -101,7 +117,7 @@ export function ProfileExperimental() {
       {features.tablePlugin && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            📋 Editor: New Table Plugin {renderFeatureButton('tablePlugin')}
+            {renderFeatureButton('tablePlugin')} Editor: New Table Plugin 📋
           </h3>
           <p className="serlo-p">Das neue Table Plugin zum testen.</p>
         </div>
@@ -109,8 +125,8 @@ export function ProfileExperimental() {
       {features.addRevisionMutation && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            ⚠️ Revisions Speichern über die neue Infrastruktur{' '}
-            {renderFeatureButton('addRevisionMutation')}
+            {renderFeatureButton('addRevisionMutation')} Revisions Speichern
+            über die neue Infrastruktur ⚠️
           </h3>
           <p className="serlo-p">
             Bearbeitungen werden direkt über die API gespeichert. Vorsicht: Noch
@@ -118,17 +134,12 @@ export function ProfileExperimental() {
           </p>
         </div>
       )}
+      <hr className="mx-side mb-4 -mt-2" />
       {features.legacyDesign && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            👻 Frontend: Altes Design{' '}
-            <Link
-              unstyled
-              href="/disable-frontend"
-              className="serlo-button serlo-make-interactive-primary"
-            >
-              aktivieren{' '}
-            </Link>
+            {renderFeatureButton('legacyDesign', '/disable-frontend')} Frontend:
+            Altes Design 👻
           </h3>
           <p className="serlo-p">
             Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
@@ -139,7 +150,7 @@ export function ProfileExperimental() {
       {features.legacyEditor && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            ⚠️ Legacy-Editor {renderFeatureButton('legacyEditor')}
+            {renderFeatureButton('legacyEditor')} Legacy-Editor ⚠️
           </h3>
           <p className="serlo-p">
             Wenn du Probleme mit dem Editor hast, kannst du hier den alten
@@ -157,20 +168,30 @@ export function ProfileExperimental() {
     </section>
   )
 
-  function renderFeatureButton(feature: FeatureKey) {
+  function renderFeatureButton(feature: FeatureKey, href?: string) {
     if (!features[feature]) return null
+
+    const isActive = features[feature]!.isActive
     return (
       <button
-        onClick={() => handleButtonClick(feature)}
-        className={clsx(
-          'serlo-button',
-          features[feature]!.isActive
-            ? 'serlo-make-interactive-light'
-            : 'serlo-make-interactive-primary'
-        )}
-        onPointerUp={(e) => e.currentTarget.blur()}
+        className="inline-block cursor-pointer align-bottom"
+        onClick={() =>
+          href ? (window.location.href = href) : handleButtonClick(feature)
+        }
       >
-        {features[feature]!.isActive ? 'deaktivieren' : 'aktivieren'}{' '}
+        <div
+          className={clsx(
+            'w-12 h-6 flex bg-gray-300 rounded-full p-1 duration-300 ease-in-out',
+            isActive && 'bg-green-400'
+          )}
+        >
+          <div
+            className={clsx(
+              'bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out',
+              isActive && 'translate-x-6'
+            )}
+          ></div>
+        </div>
       </button>
     )
   }

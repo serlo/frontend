@@ -2780,6 +2780,22 @@ export interface _CacheMutationUpdateArgs {
   input: CacheUpdateInput;
 }
 
+export type LicenseDetailsQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type LicenseDetailsQuery = (
+  { __typename?: 'Query' }
+  & { license: (
+    { __typename?: 'LicenseQuery' }
+    & { license?: Maybe<(
+      { __typename?: 'License' }
+      & Pick<License, 'title' | 'content' | 'iconHref'>
+    )> }
+  ) }
+);
+
 export type ArticleRevisionFragment = (
   { __typename?: 'ArticleRevision' }
   & Pick<ArticleRevision, 'id' | 'title' | 'content' | 'metaTitle' | 'metaDescription' | 'date'>
