@@ -73,7 +73,6 @@ export function useSetThreadStateMutation() {
   const setThreadStateMutation = async function (
     input: ThreadSetThreadStateInput
   ) {
-    console.log('setThreadStateMutation')
     const success = await mutationFetch(
       auth,
       mutation,
