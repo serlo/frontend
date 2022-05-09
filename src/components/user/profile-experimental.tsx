@@ -3,10 +3,16 @@ import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { Link } from '../content/link'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
+  discussionsPage: {
+    cookieName: 'useDiscussionsPage',
+    isActive: false,
+    activeInDev: true,
+  },
   boxPlugin: { cookieName: 'useBoxPlugin', isActive: false, activeInDev: true },
   tablePlugin: {
     cookieName: 'useTablePlugin',
@@ -89,6 +95,17 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
+      {features.discussionsPage && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('discussionsPage')} Page: /discussions im
+            Frontend 💬
+          </h3>
+          <p className="serlo-p">
+            Alte oder neue <Link href="/discussions">/discussions</Link> Seite.
+          </p>
+        </div>
+      )}
       {features.boxPlugin && (
         <div>
           <h3 className="serlo-h3 mb-3">
