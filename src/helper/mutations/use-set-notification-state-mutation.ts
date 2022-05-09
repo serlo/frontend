@@ -9,7 +9,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 export function useSetNotificationStateMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-assignment
   const { cache } = useSWRConfig()
 
   const mutation = gql`
