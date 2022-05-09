@@ -55,7 +55,6 @@ export function isLegacyLink(_href: string) {
     legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
-    _href.startsWith('/discussions') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/math/wiki/') || //temporary
     _href.startsWith('/ref/') || // temporary
