@@ -22,9 +22,6 @@ generates:
       - 'introspection'
 config:
   gqlImport: graphql-request#gql
-  exportFragmentSpreadSubTypes: true
-  preResolveTypes: false
   declarationKind: interface
-  inlineFragmentTypes: combine
   scalars:
     DateTime: string
