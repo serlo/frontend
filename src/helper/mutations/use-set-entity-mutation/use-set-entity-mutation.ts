@@ -1,6 +1,6 @@
 import { SetGenericEntityInput } from '@serlo/api'
 // eslint-disable-next-line import/no-internal-modules
-import equals from 'ramda/src/equals'
+import { eqBy, mapObjIndexed } from 'ramda'
 
 import { showToastNotice } from '../../show-toast-notice'
 import { mutationFetch } from '../helper'
@@ -18,6 +18,24 @@ import {
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+
+const equalsWithEmptyStringIsNull = eqBy(
+  mapObjIndexed((v) => (v === '' || v === undefined ? null : v))
+)
+
+const hasNoChanges = (
+  oldVersion?: ChildFieldsData | Record<string, unknown>,
+  currentVersion?: ChildFieldsData | Record<string, unknown>
+) => {
+  return (
+    oldVersion &&
+    currentVersion &&
+    equalsWithEmptyStringIsNull(
+      oldVersion as Record<string, unknown>,
+      currentVersion as Record<string, unknown>
+    )
+  )
+}
 
 export function useSetEntityMutation() {
   const auth = useAuthentication()
@@ -167,12 +185,12 @@ const loopNestedChildren = async ({
           (oldChild) => oldChild?.id === child.id
         )
 
-        // TODO: version from API uses "" for no solution, edtr state uses null
-        // if (oldVersion?.__typename === 'Exercise' || oldVersion?.__typename === 'GroupedExercise') {
-        //   if(!oldVersion?.['text-solution'] && )
-        // }
-
-        if (equals(oldVersion, child)) return true // no changes
+        // only request new revision when entity changed
+        if (hasNoChanges(oldVersion, child)) {
+          // while testing we rely on the API to not create a new revision
+          console.log('should not create a new revision')
+          //return true
+        }
 
         const input = {
           ...child,
