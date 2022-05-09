@@ -18,9 +18,9 @@ const query = gql`
           id
           archived
           object {
+            __typename
             id
             alias
-            __typename
           }
           comments {
             nodes {

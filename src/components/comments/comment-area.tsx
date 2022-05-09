@@ -5,7 +5,6 @@ import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 
 import { Lazy } from '../content/lazy'
-import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
@@ -16,9 +15,6 @@ import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { GetCommentsNode } from '@/fetcher/use-comment-data'
 import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
-import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
@@ -37,7 +33,7 @@ export interface CommentAreaProps {
   commentCount?: number
   entityId?: number
   noForms?: boolean
-  isDiscussionsPage?: boolean
+  renderSeparator?: (thread: GetAllThreadsNode) => JSX.Element | null
 }
 
 export function CommentArea({
@@ -45,7 +41,7 @@ export function CommentArea({
   commentCount,
   entityId,
   noForms,
-  isDiscussionsPage,
+  renderSeparator,
 }: CommentAreaProps) {
   const [highlightedCommentId, setHighlightedCommentId] = useState<
     number | undefined
@@ -118,7 +114,7 @@ export function CommentArea({
   function renderThreads() {
     return commentData.active?.map((thread) => (
       <Fragment key={thread.id}>
-        {renderSeperator(thread as GetAllThreadsNode)}
+        {renderSeparator ? renderSeparator(thread as GetAllThreadsNode) : null}
         <Thread
           thread={thread}
           showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
@@ -129,30 +125,6 @@ export function CommentArea({
         />
       </Fragment>
     ))
-  }
-
-  function renderSeperator(object?: GetAllThreadsNode) {
-    // only for CommentAreaAllThreads
-    if (!isDiscussionsPage || !object) return null
-    if (!hasOwnPropertyTs(object, '__typename') || !object.__typename)
-      return null
-
-    const { id, __typename } = object
-    const href = hasOwnPropertyTs(object, 'alias')
-      ? (object.alias as string)
-      : `/${id}`
-
-    return (
-      <div className="border-b-2 mt-5 mb-5 mx-side">
-        <b>
-          <Link href={href}>
-            <FaIcon icon={getIconByTypename(__typename)} />{' '}
-            {getTranslatedType(strings, __typename)}
-          </Link>
-        </b>{' '}
-        ( <Link href={href}>{href}</Link>)
-      </div>
-    )
   }
 
   function renderReplyForm(threadId: string) {
