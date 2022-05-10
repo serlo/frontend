@@ -486,6 +486,7 @@ export interface FrontendImgNode {
   href?: string
   alt: string
   maxWidth?: number
+  caption?: FrontendContentNode[]
   children?: undefined
 }
 
