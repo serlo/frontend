@@ -188,6 +188,7 @@ const loopNestedChildren = async ({
         // only request new revision when entity changed
         if (hasNoChanges(oldVersion, child)) {
           // while testing we rely on the API to not create a new revision
+          // eslint-disable-next-line no-console
           console.log('should not create a new revision')
           //return true
         }
