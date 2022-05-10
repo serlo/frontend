@@ -7,6 +7,7 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 export function revisionResponseToResponse(
   uuid: QueryResponseRevision
 ): QueryResponseNoRevision | null {
+  if (!uuid) return null
   const { license, trashed, instance, id } = uuid.repository
   const repositoryFields = {
     license,
