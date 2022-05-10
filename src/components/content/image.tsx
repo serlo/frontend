@@ -8,7 +8,7 @@ import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 interface ImageProps {
   element: FrontendImgNode
   path: NodePath
-  extraInfo: JSX.Element
+  extraInfo?: JSX.Element
   renderNested: RenderNestedFunction
 }
 
