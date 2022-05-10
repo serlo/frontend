@@ -61,7 +61,7 @@ export function Comment({
 
     if (commentRef.current) {
       commentRef.current.style.backgroundColor = isHighlight
-        ? 'rgb(251, 243, 243)'
+        ? '#fdf5e4'
         : 'transparent'
     }
   }, [isHighlight])

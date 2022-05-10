@@ -33,7 +33,8 @@ export interface CommentAreaProps {
   commentCount?: number
   entityId?: number
   noForms?: boolean
-  renderSeparator?: (thread: GetAllThreadsNode) => JSX.Element | null
+  highlightedCommentId?: number
+  setHighlightedCommentId?: (id: number) => void
 }
 
 export function CommentArea({
@@ -41,11 +42,9 @@ export function CommentArea({
   commentCount,
   entityId,
   noForms,
-  renderSeparator,
+  highlightedCommentId,
+  setHighlightedCommentId,
 }: CommentAreaProps) {
-  const [highlightedCommentId, setHighlightedCommentId] = useState<
-    number | undefined
-  >(undefined)
   const { strings } = useInstanceData()
   const auth = useAuthentication()
   const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
@@ -64,6 +63,10 @@ export function CommentArea({
       {renderContent()}
     </>
   )
+
+  function highlight(id: number) {
+    if (setHighlightedCommentId) setHighlightedCommentId(id)
+  }
 
   function renderContent() {
     if (!auth.current && commentCount == 0) return null
@@ -114,13 +117,12 @@ export function CommentArea({
   function renderThreads() {
     return commentData.active?.map((thread) => (
       <Fragment key={thread.id}>
-        {renderSeparator ? renderSeparator(thread as GetAllThreadsNode) : null}
         <Thread
           thread={thread}
           showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
           highlightedCommentId={highlightedCommentId}
           renderReplyForm={renderReplyForm}
-          highlight={setHighlightedCommentId}
+          highlight={highlight}
           onShowChildren={onShowThreadChildren}
         />
       </Fragment>
@@ -146,7 +148,7 @@ export function CommentArea({
         show={showAll}
         data={commentData.archived}
         highlightedCommentId={highlightedCommentId}
-        highlight={setHighlightedCommentId}
+        highlight={highlight}
       />
     )
   }

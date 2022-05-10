@@ -5,7 +5,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
-  <FrontendClientBase entityId={3}>
+  <FrontendClientBase>
     <Content />
   </FrontendClientBase>
 ))

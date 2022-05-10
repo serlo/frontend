@@ -41,6 +41,8 @@ export function CommentAreaEntity({
           commentCount={commentCount}
           entityId={entityId}
           noForms={noForms}
+          highlightedCommentId={highlightedCommentId}
+          setHighlightedCommentId={setHighlightedCommentId}
         />
       </Guard>
     </div>
