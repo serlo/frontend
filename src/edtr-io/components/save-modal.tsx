@@ -1,7 +1,7 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
 import { SaveContext } from '../serlo-editor'
@@ -36,14 +36,27 @@ export function SaveModal({
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [autoCheckout, setAutoCheckout] = useState(false)
+  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  const [fireSave, setFireSave] = useState(false)
 
   const licenseAccepted = !license || agreement
-  const changesFilled = !changes || changes.value
+  const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
   const buttonDisabled = !maySave || pending
   const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
 
-  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  useEffect(() => {
+    if (fireSave) {
+      handleSave(notificationSubscription, emailSubscription, autoCheckout)
+      setFireSave(false)
+    }
+  }, [
+    autoCheckout,
+    emailSubscription,
+    fireSave,
+    handleSave,
+    notificationSubscription,
+  ])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -91,11 +104,7 @@ export function SaveModal({
         <button
           onClick={() => {
             changes?.set(changesText)
-            handleSave(
-              notificationSubscription,
-              emailSubscription,
-              autoCheckout
-            )
+            setFireSave(true)
           }}
           className={clsx(
             'serlo-button',
