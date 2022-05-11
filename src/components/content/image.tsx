@@ -8,7 +8,7 @@ import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 interface ImageProps {
   element: FrontendImgNode
   path: NodePath
-  extraInfo: JSX.Element
+  extraInfo?: JSX.Element
   renderNested: RenderNestedFunction
 }
 
@@ -58,6 +58,6 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
 
   function renderCaption() {
     if (!element.caption) return null
-    return <p className="italic">{renderNested(element.caption)}</p>
+    return <p className="italic">{renderNested(element.caption, 'caption')}</p>
   }
 }
