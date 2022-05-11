@@ -60,7 +60,11 @@ export function renderNested(
   previousPath: NodePath,
   pathPrefix: NodePath
 ) {
-  return _renderArticle(value, false, previousPath.concat(pathPrefix))
+  return _renderArticle(
+    value,
+    false,
+    previousPath.concat(pathPrefix.length == 0 ? ['nested'] : pathPrefix)
+  )
 }
 
 function _renderArticle(
