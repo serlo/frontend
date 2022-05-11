@@ -9,6 +9,7 @@ import { Event, EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
+import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 
 export interface NotificationData {
   id: number
@@ -32,6 +33,7 @@ export const Notifications = ({
 }: NotificationProps) => {
   const auth = useAuthentication()
   const setNotificationToRead = useSetNotificationStateMutation()
+  const setSubscription = useSubscriptionSetMutation()
   const [hidden, setHidden] = useState<number[]>([])
 
   const { strings } = useInstanceData()
@@ -75,6 +77,7 @@ export const Notifications = ({
           unread={node.unread}
           loggedInStrings={loggedInStrings}
           setToRead={setToRead}
+          mute={mute}
         />
       )
     })
@@ -87,6 +90,10 @@ export const Notifications = ({
     })
     // hide immediately
     setHidden([...hidden, id])
+  }
+
+  function mute(id: number) {
+    void setSubscription({ id: [id], subscribe: false, sendEmail: false })
   }
 
   function setAllToRead() {
