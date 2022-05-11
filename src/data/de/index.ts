@@ -406,7 +406,7 @@ export const loggedInData = {
       directLink: "Direkter Link zu diesem Inhalt"
     },
     notifications: {
-      hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
+      hide: 'Deactivate new notifications for this content.',
       setToRead: "Benachrichtigung als gelesen markieren.",
       setAllToRead: "Alle sichtbaren gelesen",
       showNew: "Neu",
