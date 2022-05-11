@@ -58,6 +58,8 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
 
   function renderCaption() {
     if (!element.caption) return null
-    return <p className="italic">{renderNested(element.caption)}</p>
+    return (
+      <div className="italic">{renderNested(element.caption, 'caption')}</div>
+    )
   }
 }
