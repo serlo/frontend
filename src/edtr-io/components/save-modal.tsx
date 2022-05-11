@@ -43,8 +43,6 @@ export function SaveModal({
   const buttonDisabled = !maySave || pending
   const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
 
-  const [changesText, setChangesText] = useState(changes?.value ?? '')
-
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const { edtrIo } = loggedInData.strings.editor
@@ -90,7 +88,6 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            changes?.set(changesText)
             handleSave(
               notificationSubscription,
               emailSubscription,
@@ -141,10 +138,10 @@ export function SaveModal({
       <label className="font-bold">
         {edtrIo.changes}
         <textarea
-          value={changesText}
+          value={changes.value}
           onChange={(e) => {
             const { value } = e.target as HTMLTextAreaElement
-            setChangesText(value)
+            changes.set(value)
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
