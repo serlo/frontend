@@ -164,6 +164,7 @@ export const instanceData = {
       error: "Désolé, les commentaires n'ont pas pu être chargés, veuille réessayer plus tard",
       showMoreReply: "Afficher un commentaire de plus",
       showMoreReplies: "Afficher %number% commentaires supplémentaires",
+      hideReplies: 'Hide',
       showArchived: "Afficher les %threads% affichés",
       copyLink: "Copier le lien du commentaire"
     },
