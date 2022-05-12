@@ -13,7 +13,6 @@ export const features = {
     isActive: false,
     activeInDev: true,
   },
-  boxPlugin: { cookieName: 'useBoxPlugin', isActive: false, activeInDev: true },
   tablePlugin: {
     cookieName: 'useTablePlugin',
     isActive: false,
@@ -104,14 +103,6 @@ export function ProfileExperimental() {
           <p className="serlo-p">
             Alte oder neue <Link href="/discussions">/discussions</Link> Seite.
           </p>
-        </div>
-      )}
-      {features.boxPlugin && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('boxPlugin')} Editor: Box Plugin ⬛
-          </h3>
-          <p className="serlo-p">Das neue Box Plugin zum testen.</p>
         </div>
       )}
       {features.tablePlugin && (
