@@ -166,8 +166,7 @@ export const instanceData = {
       showMoreReplies: "Mostrar %number% respuestas más",
       hideReplies: 'Hide',
       showArchived: "Mostrar  %threads% archivados",
-      copyLink: "Copiar el vínculo del comentario",
-      confirm: 'Sure?'
+      copyLink: "Copiar el vínculo del comentario"
     },
     revisions: {
       toOverview: "Volver a Vista general",
