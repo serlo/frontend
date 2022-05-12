@@ -7,15 +7,12 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { CompBaseProps } from '@/data-types'
-import {
-  QueryResponseRevisionNoPage,
-  UnrevisedEntityData,
-} from '@/fetcher/query-types'
+import type { CompBaseProps, UnrevisedRevisionsData } from '@/data-types'
+import { QueryResponseRevisionNoPage } from '@/fetcher/query-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export interface UnrevisedEntityProps {
-  entity: UnrevisedEntityData
+  entity: UnrevisedRevisionsData['subjects'][number]['unrevisedEntities']['nodes'][number]
   isOwn?: boolean
 }
 
