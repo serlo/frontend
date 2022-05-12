@@ -17,6 +17,7 @@ const query = gql`
         nodes {
           id
           archived
+          trashed
           object {
             __typename
             id
@@ -62,5 +63,17 @@ export function useCommentDataAll() {
   })
 
   const { data, error } = resp
-  return { commentData: data?.nodes, error, ...resp }
+  return {
+    commentData: data?.nodes.map((node) => {
+      const commentNodes = node.comments.nodes.filter(
+        (comment) => !comment.trashed
+      )
+      return {
+        ...node,
+        comments: { nodes: commentNodes },
+      }
+    }),
+    error,
+    ...resp,
+  }
 }
