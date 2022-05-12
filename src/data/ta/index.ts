@@ -164,8 +164,10 @@ export const instanceData = {
       error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: 'Show one more reply',
       showMoreReplies: 'Show %number% more replies',
+      hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
-      copyLink: 'Copy comment link'
+      copyLink: 'Copy comment link',
+      confirm: 'Sure?'
     },
     revisions: {
       toOverview: 'Back to overview',
