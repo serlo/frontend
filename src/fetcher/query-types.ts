@@ -374,23 +374,6 @@ export interface VideoRevision
   __typename: 'VideoRevision'
 }
 
-export type QueryResponseNoRevision =
-  | Page
-  | Article
-  | Video
-  | Applet
-  | CoursePage
-  | Exercise
-  | GroupedExercise
-  | ExerciseGroup
-  | Solution
-  | Event
-  | Course
-  | TaxonomyTerm
-  | User
-
-export type QueryResponse = QueryResponseNoRevision | QueryResponseRevision
-
 export type QueryResponseRevisionNoPage = Exclude<
   QueryResponseRevision,
   PageRevision

@@ -1,6 +1,7 @@
 import { PluginToolbarButton } from '@edtr-io/core'
 import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
+import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState } from 'react'
 
@@ -15,7 +16,10 @@ import {
   isError,
 } from '@/edtr-io/editor-response-to-state'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
-import { QueryResponseRevision } from '@/fetcher/query-types'
+import {
+  RevisionUuidQuery,
+  RevisionUuidQueryVariables,
+} from '@/fetcher/graphql-types/operations'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -106,41 +110,30 @@ export function RevisionHistoryLoader<T>(
   function fetchRevisionData(id: number) {
     NProgress.start()
 
-    // can we use graphql-fetch here?
-    void fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: revisionQuery,
-        variables: {
+    void (async () => {
+      try {
+        const data = await request<
+          RevisionUuidQuery,
+          RevisionUuidQueryVariables
+        >(endpoint, revisionQuery, {
           id,
-        },
-      }),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        try {
-          const { uuid } = (
-            result as unknown as { data: { uuid: QueryResponseRevision } }
-          ).data
-          const prepared = revisionResponseToResponse(uuid)
-          const converted = editorResponseToState(prepared!)
+        })
+        const { uuid } = data
+        const prepared = revisionResponseToResponse(uuid)
+        const converted = editorResponseToState(prepared!)
 
-          if (isError(converted)) {
-            handleError(`editor: revision conversion | ${converted.error}`)
-          } else {
-            props.onSwitchRevision(converted.initialState.state as T)
-            setShowRevisions(false)
-          }
-        } catch (e) {
-          handleError('editor: revision conversion failed')
+        if (isError(converted)) {
+          handleError(`editor: revision conversion | ${converted.error}`)
+        } else {
+          props.onSwitchRevision(converted.initialState.state as T)
+          setShowRevisions(false)
         }
-      })
-      .finally(() => {
+      } catch (e) {
+        handleError('editor: revision conversion failed')
+      } finally {
         NProgress.done()
-      })
+      }
+    })()
   }
 }
 
