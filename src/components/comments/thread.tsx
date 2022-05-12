@@ -10,7 +10,7 @@ interface ThreadProps {
   showChildren: boolean
   highlightedCommentId?: number
   renderReplyForm?: (threadId: string) => ReactNode
-  onShowChildren?: (threadId: string) => void
+  toggleChildren?: (threadId: string) => void
   highlight: (o: number) => void
 }
 
@@ -19,48 +19,60 @@ export function Thread({
   showChildren,
   renderReplyForm,
   highlight,
-  onShowChildren,
+  toggleChildren,
   highlightedCommentId,
 }: ThreadProps) {
   const { strings } = useInstanceData()
 
+  const threadComment = thread.comments.nodes[0]
+  const comments = thread.comments.nodes.slice(1)
+
   return (
     <div className="mb-11" key={thread.id}>
-      {renderComments([thread.comments.nodes[0]], thread.id, true)}
-      {renderThreadComments(thread.comments.nodes.slice(1), thread.id)}
+      {renderComments([threadComment], thread.id, true)}
+      {renderThreadComments(comments)}
     </div>
   )
 
-  function renderThreadComments(comments: CommentsData, threadId: string) {
-    const length = comments.length
+  function renderThreadComments(comments: CommentsData) {
     //only show first reply by default
-    if (length < 2 || showChildren)
+    if (comments.length < 2)
       return (
         <>
-          {length > 0 && renderComments(comments, threadId)}
-          {renderReplyForm && renderReplyForm(threadId)}
+          {comments.length > 0 && renderComments(comments, thread.id)}
+          {renderReplyForm && renderReplyForm(thread.id)}
         </>
       )
 
     return (
       <>
-        {renderComments([comments[0]], threadId)}
-        <p className="serlo-p">
-          <button
-            className="serlo-button serlo-make-interactive-light"
-            onClick={() => {
-              if (onShowChildren) onShowChildren(threadId)
-            }}
-          >
-            {length === 2
-              ? strings.comments.showMoreReply
-              : replacePlaceholders(strings.comments.showMoreReplies, {
-                  number: (length - 1).toString(),
-                })}{' '}
-            ▾
-          </button>
-        </p>
+        {renderComments(showChildren ? comments : [comments[0]], thread.id)}
+        {showChildren && renderReplyForm ? renderReplyForm(thread.id) : null}
+        <p className="serlo-p">{renderMoreToggle()}</p>
       </>
+    )
+  }
+
+  function renderMoreToggle() {
+    const text = showChildren
+      ? strings.comments.hideReplies
+      : comments.length === 2
+      ? strings.comments.showMoreReply
+      : replacePlaceholders(strings.comments.showMoreReplies, {
+          number: (comments.length - 1).toString(),
+        })
+
+    const icon = showChildren ? '▴' : '▾'
+
+    return (
+      <button
+        className="serlo-button serlo-make-interactive-light"
+        onClick={() => {
+          if (toggleChildren) toggleChildren(thread.id)
+        }}
+      >
+        {text} {icon}
+      </button>
     )
   }
 

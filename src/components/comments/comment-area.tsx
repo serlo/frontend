@@ -123,7 +123,7 @@ export function CommentArea({
           highlightedCommentId={highlightedCommentId}
           renderReplyForm={renderReplyForm}
           highlight={highlight}
-          onShowChildren={onShowThreadChildren}
+          toggleChildren={onToggleThreadChildren}
         />
       </Fragment>
     ))
@@ -153,8 +153,12 @@ export function CommentArea({
     )
   }
 
-  function onShowThreadChildren(threadId: string) {
-    setShowThreadChildren([...showThreadChildren, threadId])
+  function onToggleThreadChildren(threadId: string) {
+    setShowThreadChildren(
+      showThreadChildren.includes(threadId)
+        ? showThreadChildren.filter((id) => id !== threadId)
+        : [...showThreadChildren, threadId]
+    )
   }
 
   function renderHeading(icon: IconDefinition, text: string) {
