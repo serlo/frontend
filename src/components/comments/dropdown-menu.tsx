@@ -6,12 +6,14 @@ import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
+import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
   useThreadArchivedMutation,
 } from '@/helper/mutations/thread'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface DropdownMenuProps {
   isParent?: boolean
@@ -44,6 +46,8 @@ export function DropdownMenu({
     ? canDo(Thread.setThreadState)
     : canDo(Thread.setCommentState)
   const canArchive = isParent && canDo(Thread.setThreadArchived)
+
+  const entityId = useEntityId()
 
   return (
     <div
@@ -85,10 +89,12 @@ export function DropdownMenu({
   )
 
   function onLinkToComment() {
+    const isOnEntity = window.location.href.includes(entityId.toString())
     onAnyClick()
-    highlight(id)
-    history.replaceState(null, '', `#comment-${id}`)
+    if (isOnEntity) highlight(id)
+    history.replaceState(null, '', `/${entityId}/#comment-${id}`)
     copyToClipboad(window.location.href)
+    showToastNotice('👌 ' + strings.share.copySuccess, 'success')
   }
 
   function copyToClipboad(text: string) {
@@ -103,18 +109,24 @@ export function DropdownMenu({
   function onDelete() {
     onAnyClick()
     if (!isParent) {
-      void setCommentState({ id: [id], trashed: true })
+      if (window.confirm(strings.comments.deleteComment + '?')) {
+        void setCommentState({ id: [id], trashed: true })
+      }
       return
     }
     if (isParent && threadId) {
-      void setThreadState({ id: [threadId], trashed: true })
+      if (window.confirm(strings.comments.deleteThread + '?')) {
+        void setThreadState({ id: [threadId], trashed: true })
+      }
     }
   }
 
   function onArchiveThread() {
     onAnyClick()
     if (isParent && threadId) {
-      void setThreadArchived({ id: [threadId], archived: !archived })
+      if (window.confirm(strings.comments.archiveThread + '?')) {
+        void setThreadArchived({ id: [threadId], archived: !archived })
+      }
     }
   }
 

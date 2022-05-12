@@ -293,3 +293,15 @@ export const sharedLicenseFragments = gql`
     }
   }
 `
+
+export const sharedPathFragments = gql`
+  fragment path on Navigation {
+    path {
+      nodes {
+        label
+        url
+        id
+      }
+    }
+  }
+`

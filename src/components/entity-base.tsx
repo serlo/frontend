@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
 
+import { CommentAreaEntityProps } from './comments/comment-area-entity'
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
@@ -10,7 +11,6 @@ import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { MetaMenu } from './navigation/meta-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
-import { CommentAreaProps } from '@/components/comments/comment-area'
 import { EntityPageBase, SingleEntityPage, TaxonomyPage } from '@/data-types'
 
 export interface EntityBaseProps {
@@ -19,8 +19,10 @@ export interface EntityBaseProps {
   entityId: number
 }
 
-const CommentArea = dynamic<CommentAreaProps>(() =>
-  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
+  import('@/components/comments/comment-area-entity').then(
+    (mod) => mod.CommentAreaEntity
+  )
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
@@ -53,7 +55,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
             <>
               <div id="comment-area-begin-scrollpoint" />
               <Lazy>
-                <CommentArea entityId={entityId} />
+                <CommentAreaEntity entityId={entityId} />
               </Lazy>
             </>
           )}

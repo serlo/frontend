@@ -171,8 +171,10 @@ export const instanceData = {
       error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: 'Show one more reply',
       showMoreReplies: 'Show %number% more replies',
+      hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
+      confirm: 'Sure?'
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -436,7 +438,7 @@ export const loggedInData = {
       directLink: 'Direct link to this content',
     },
     notifications: {
-      hide: 'Hide notifications for this content.',
+      hide: 'Deactivate new notifications for this content.',
       setToRead: 'Set notification to read.',
       setAllToRead: 'Set all visible to read',
       showNew: 'New',
@@ -698,6 +700,7 @@ export const loggedInData = {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
         anchorId: 'Anchor ID',
+        emptyContentWarning: 'Boxes without content will not be displayed',
       },
       layout: {
         toDragConvert:

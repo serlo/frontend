@@ -608,7 +608,7 @@ function toEdtr(content: EditorState): Edtr {
 
   // fixes https://github.com/serlo/frontend/issues/1563
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const sanitized = JSON.parse(JSON.stringify(content).replaceAll('```', ''))
+  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return convert(sanitized)
 }

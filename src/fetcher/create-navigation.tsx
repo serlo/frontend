@@ -1,4 +1,4 @@
-import { QueryResponse } from './query-types'
+import { MainUuidType } from './query-types'
 import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
 
 interface NavigationData {
@@ -9,7 +9,7 @@ interface NavigationData {
 }
 
 export function createNavigation(
-  uuid: QueryResponse
+  uuid: MainUuidType
 ): SecondaryNavigationData | undefined {
   if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
     return undefined

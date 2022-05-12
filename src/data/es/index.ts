@@ -406,7 +406,7 @@ export const loggedInData = {
       directLink: "Enlace directo a este contenido"
     },
     notifications: {
-      hide: "Ocultar notificaciones para este contenido.",
+      hide: 'Deactivate new notifications for this content.',
       setToRead: "Marcar notificaciones para leer.",
       setAllToRead: "Poner todas visibles para leer",
       showNew: "Nueva",
@@ -643,7 +643,8 @@ export const loggedInData = {
       box: {
         type: "Tipo de caja",
         titlePlaceholder: "(título opcional)",
-        anchorId: "ID de Ancla (marca de posición)"
+        anchorId: "ID de Ancla (marca de posición)",
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",

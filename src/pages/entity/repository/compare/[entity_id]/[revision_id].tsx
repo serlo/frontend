@@ -1,9 +1,9 @@
-import { Instance } from '@serlo/api'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Revision } from '@/components/author/revision/revision'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { RevisionProps, RevisionPage } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestRevision } from '@/fetcher/revision/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

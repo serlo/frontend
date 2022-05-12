@@ -38,7 +38,7 @@ export const instanceData = {
       event: "Veranstaltung",
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabe mit Teilaufgaben",
-      folder: "Bereich",
+      folder: "Themenbereich",
       groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
@@ -406,7 +406,7 @@ export const loggedInData = {
       directLink: "Direkter Link zu diesem Inhalt"
     },
     notifications: {
-      hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
+      hide: "Neue Benachrichtigungen für diesen Inhalt deaktivieren.",
       setToRead: "Benachrichtigung als gelesen markieren.",
       setAllToRead: "Alle sichtbaren gelesen",
       showNew: "Neu",
@@ -441,7 +441,7 @@ export const loggedInData = {
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
         reject: "Bearbeitung wurde abgelehnt ❌",
-        save: "Bearbeiten erfolgreich gespeichert ✅"
+        save: "Bearbeitung erfolgreich gespeichert ✅"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -643,7 +643,8 @@ export const loggedInData = {
       box: {
         type: "Art der Box",
         titlePlaceholder: "(optionaler Titel)",
-        anchorId: "Sprungmarke (anchor id)"
+        anchorId: "Sprungmarke (anchor id)",
+        emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
       },
       layout: {
         toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",

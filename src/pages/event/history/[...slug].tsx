@@ -9,7 +9,7 @@ import { Events } from '@/components/user/events'
 import { UserUnrevisedRevisions } from '@/components/user/user-unrevised-revisions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EventHistoryProps } from '@/data-types'
-import { Instance } from '@/fetcher/query-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

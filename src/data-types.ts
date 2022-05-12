@@ -455,6 +455,16 @@ export interface FrontendPNode {
   children?: FrontendContentNode[]
 }
 
+export interface FrontendSlatePNode {
+  type: 'slate-p'
+  children?: FrontendContentNode[]
+}
+
+export interface FrontendSlateContainerNode {
+  type: 'slate-container'
+  children?: FrontendContentNode[]
+}
+
 export interface FrontendHNode {
   type: 'h'
   level: 1 | 2 | 3 | 4 | 5
@@ -776,6 +786,8 @@ export type FrontendElementNode =
   | FrontendThNode
   | FrontendTdNode
   | FrontendSerloTdNode
+  | FrontendSlatePNode
+  | FrontendSlateContainerNode
 
 export type FrontendRestrictedElementNode =
   | FrontendArticleNode

@@ -1,10 +1,10 @@
-import { Comment as CommentType } from '@serlo/api'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef } from 'react'
 
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
+import { CommentsData } from './comment-area'
 import { MetaBar } from './meta-bar'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
@@ -13,7 +13,7 @@ interface CommentProps {
   threadId: string
   isParent?: boolean
   isHighlight?: boolean
-  data: CommentType
+  data: CommentsData[number]
   highlight: (id: number) => void
 }
 
@@ -61,7 +61,7 @@ export function Comment({
 
     if (commentRef.current) {
       commentRef.current.style.backgroundColor = isHighlight
-        ? 'rgb(251, 243, 243)'
+        ? '#fdf5e4'
         : 'transparent'
     }
   }, [isHighlight])
