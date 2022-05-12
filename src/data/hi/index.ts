@@ -166,8 +166,7 @@ export const instanceData = {
       showMoreReplies: " %number% और उत्तर दिखाएं",
       hideReplies: 'Hide',
       showArchived: "संग्रहीत दिखाएँ %threads%",
-      copyLink: "टिप्पणी लिंक कॉपी करें",
-      confirm: 'Sure?'
+      copyLink: "टिप्पणी लिंक कॉपी करें"
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
