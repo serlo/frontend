@@ -6,8 +6,10 @@ import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ArticleAddModalProps {
   open: boolean
@@ -24,6 +26,7 @@ export function ArticleAddModal({
     undefined
   )
 
+  const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
@@ -88,18 +91,16 @@ export function ArticleAddModal({
       <h3 className="serlo-h3 mt-5 mb-4">{articleStrings.addModal.title}</h3>
       <div className="mx-side">
         <p>
-          After reading the article, what could help out learners next?
-          <br />
-          Here you can add some <b>Exercises</b> or link to a single{' '}
-          <b>Exercise Folder.</b>
-          <br />
-          Or you can suggest <b>Articles</b>, <b>Courses</b> or <b>Videos</b> to
-          follow up with.
+          {replacePlaceholders(articleStrings.addModal.introText, {
+            break: <br />,
+            exercises: strings.categories.exercises,
+            topicFolder: strings.entities.topicFolder,
+            articles: strings.categories.articles,
+            courses: strings.categories.courses,
+            videos: strings.categories.videos,
+          })}
         </p>
-        <p className="mt-4">
-          You can either paste an Serlo ID or URL or choose content from the
-          parent folder below.
-        </p>
+        <p className="mt-4">{articleStrings.addModal.introText2}</p>
         <ArticleRelatedMagicInput
           addEntry={addEntry}
           showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
