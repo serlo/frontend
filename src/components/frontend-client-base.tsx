@@ -81,12 +81,12 @@ export function FrontendClientBase({
     )
     sessionStorage.setItem('currentPathname', window.location.href)
     // scroll to comment area to start lazy loading
-    if (window.location.href.includes('#comment-')) {
+    if (window.location.hash.startsWith('#comment-')) {
       setTimeout(() => {
         document
           .querySelector('#comment-area-begin-scrollpoint')
           ?.scrollIntoView()
-      }, 1000)
+      }, 800)
     }
   })
 

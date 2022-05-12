@@ -30,7 +30,11 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setSolutionVisible] = useState(
-    printModeSolutionVisible
+    isPrintMode
+      ? printModeSolutionVisible
+      : typeof window === 'undefined'
+      ? false
+      : window.location.href.includes('#comment-')
   )
   const [randomId] = useState(Math.random().toString())
 
