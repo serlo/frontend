@@ -305,19 +305,6 @@ export type TaxonomyTermChildrenLevel2 =
 
 // Revision types inherit all the GraphQL fields
 
-export type QueryResponseRevision =
-  | AppletRevision
-  | ArticleRevision
-  | CourseRevision
-  | CoursePageRevision
-  | EventRevision
-  | ExerciseRevision
-  | ExerciseGroupRevision
-  | GroupedExerciseRevision
-  | PageRevision
-  | SolutionRevision
-  | VideoRevision
-
 export interface AppletRevision
   extends EntityWithTaxonomyTerms,
     GraphQL.AppletRevision {
@@ -372,33 +359,4 @@ export interface VideoRevision
   extends EntityWithTaxonomyTerms,
     GraphQL.VideoRevision {
   __typename: 'VideoRevision'
-}
-
-export type QueryResponseRevisionNoPage = Exclude<
-  QueryResponseRevision,
-  PageRevision
->
-
-export interface UnrevisedEntityData extends GraphQL.AbstractEntity {
-  currentRevision: {
-    id: number
-    title?: string
-  } | null
-  __typename:
-    | 'Applet'
-    | 'Article'
-    | 'Course'
-    | 'CoursePage'
-    | 'Event'
-    | 'Exercise'
-    | 'ExerciseGroup'
-    | 'GroupedExercise'
-    | 'Video'
-    | 'Solution'
-  revisions?: {
-    nodes: QueryResponseRevisionNoPage[]
-  }
-  solutionRevisions?: {
-    nodes: QueryResponseRevisionNoPage[]
-  }
 }
