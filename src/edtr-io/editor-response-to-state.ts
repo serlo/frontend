@@ -33,11 +33,11 @@ import {
   BareExercise,
   ExerciseGroup,
   Page,
-  QueryResponse,
   Solution,
   TaxonomyTerm,
   User,
   Video,
+  MainUuidType,
 } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -45,7 +45,7 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
 // converts query response to deserialized editor state
-export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
+export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   const stack: { id: number; type: string }[] = []
 
   const config: Record<
@@ -86,11 +86,11 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
     currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
-      ? (currentRev.metaTitle as string)
+      ? currentRev.metaTitle
       : ''
   const meta_description =
     currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
-      ? (currentRev.metaDescription as string)
+      ? currentRev.metaDescription
       : ''
   const revision =
     currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0

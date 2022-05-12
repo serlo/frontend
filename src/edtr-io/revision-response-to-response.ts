@@ -1,12 +1,10 @@
-import {
-  QueryResponseRevision,
-  QueryResponseNoRevision,
-} from '@/fetcher/query-types'
+import { RevisionUuidQuery } from '@/fetcher/graphql-types/operations'
+import { MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export function revisionResponseToResponse(
-  uuid: QueryResponseRevision
-): QueryResponseNoRevision | null {
+  uuid: RevisionUuidQuery['uuid']
+): MainUuidType | null {
   if (!uuid) return null
   const { license, trashed, instance, id } = uuid.repository
   const repositoryFields = {
