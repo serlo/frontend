@@ -6,6 +6,9 @@ export function revisionResponseToResponse(
   uuid: RevisionUuidQuery['uuid']
 ): MainUuidType | null {
   if (!uuid) return null
+
+  if (!hasOwnPropertyTs(uuid, 'repository')) return null
+
   const { license, trashed, instance, id } = uuid.repository
   const repositoryFields = {
     license,
@@ -42,6 +45,7 @@ export function revisionResponseToResponse(
       ...repositoryFields,
       taxonomyTerms,
       revisions: uuid.repository.revisions,
+      date,
     }
   }
 
@@ -68,13 +72,9 @@ export function revisionResponseToResponse(
     uuid.__typename
     return {
       __typename: 'Course',
-      currentRevision: {
-        id: uuid.id,
-        title,
-      },
       ...repositoryFields,
-      revisions: uuid.repository.revisions,
       pages: uuid.repository.pages,
+      taxonomyTerms,
     }
   }
 
@@ -91,6 +91,7 @@ export function revisionResponseToResponse(
       ...repositoryFields,
       revisions: uuid.repository.revisions,
       course: uuid.repository.course,
+      date,
     }
   }
 
@@ -104,6 +105,7 @@ export function revisionResponseToResponse(
         content,
       },
       ...repositoryFields,
+      taxonomyTerms,
     }
   }
 
@@ -112,13 +114,13 @@ export function revisionResponseToResponse(
     return {
       __typename: 'Exercise',
       currentRevision: {
-        id: uuid.id,
         content,
         date,
       },
       taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
+      date,
     }
   }
 
@@ -136,6 +138,7 @@ export function revisionResponseToResponse(
       taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
+      date,
     }
   }
 
@@ -144,13 +147,13 @@ export function revisionResponseToResponse(
     return {
       __typename: 'GroupedExercise',
       currentRevision: {
-        id: uuid.id,
         content,
         date,
       },
       exerciseGroup: uuid.repository.exerciseGroup,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
+      date,
     }
   }
 
@@ -173,7 +176,6 @@ export function revisionResponseToResponse(
     return {
       __typename: 'Solution',
       currentRevision: {
-        id: uuid.id,
         content,
       },
       exercise: uuid.repository.exercise,
@@ -191,7 +193,6 @@ export function revisionResponseToResponse(
         url: uuid.url,
         title,
         content,
-        date,
       },
       taxonomyTerms,
       ...repositoryFields,
