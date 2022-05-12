@@ -9,16 +9,6 @@ const Container = styled.div({
   position: 'relative',
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _BackgroundIcon = styled.div({
-  position: 'absolute',
-  top: 0,
-  right: 0,
-  color: 'rgba(0,0,0,0.1)',
-  transform: 'translate(-15px, 10px)',
-  zIndex: 0,
-})
-
 export function SemanticSection(props: SemanticSectionProps) {
   const { children, editable } = props
   if (!editable) return <>{children}</>
