@@ -10,6 +10,10 @@ import { PageLayoutEditor } from './editor'
 
 export const pageLayoutState = object({
   widthPercent: number(), // first column defined second
+
+  //TODO: add testing to production
+
+  //TODO: maybe dont allow nesting somehow
   column1: editorContent('rows'),
   column2: editorContent('rows'),
 })
