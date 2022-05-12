@@ -1,5 +1,5 @@
+import { Instance } from './graphql-types/operations'
 import { prettifyLinks } from './prettify-links'
-import { Instance } from './query-types'
 import { requestPage } from './request-page'
 import { RequestPageData } from '@/data-types'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'

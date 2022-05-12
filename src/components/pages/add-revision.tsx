@@ -8,10 +8,8 @@ import { shouldUseFeature } from '../user/profile-experimental'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import {
-  RevisionAddMutationData,
-  useRevisionAddMutation,
-} from '@/helper/mutations/use-revision-add-mutation'
+import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
+import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
 
 export function AddRevision({
   initialState,
@@ -27,7 +25,7 @@ export function AddRevision({
     url: `/${id}`,
   }
 
-  const addRevisionMutation = useRevisionAddMutation()
+  const setEntityMutation = useSetEntityMutation()
 
   const [cookieReady, setCookieReady] = useState(false)
 
@@ -80,7 +78,7 @@ export function AddRevision({
             return cookies['CSRF']
           }}
           needsReview={needsReview}
-          onSave={async (data: RevisionAddMutationData) => {
+          onSave={async (data: SetEntityMutationData) => {
             if (
               shouldUseFeature('addRevisionMutation') &&
               supportedTypes.includes(type)
@@ -92,11 +90,11 @@ export function AddRevision({
               const skipReview = data.controls.checkout
               const _needsReview = skipReview ? false : needsReview
 
-              const success = await addRevisionMutation(
+              const success = await setEntityMutation(
                 {
                   ...data,
-                  // @ts-expect-error temporary
-                  __typename: type === 'GroupedExercise' ? 'Exercise' : type,
+                  //@ts-expect-error resolve, when old code is removed
+                  __typename: type,
                 },
                 _needsReview,
                 initialState

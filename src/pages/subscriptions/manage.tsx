@@ -6,10 +6,12 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
-import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
+import {
+  ManageSubscriptions,
+  SubscriptionNode,
+} from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SubscriptionData } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -107,7 +109,7 @@ function Content() {
 }
 
 function useFetch() {
-  return useGraphqlSwrPaginationWithAuth<SubscriptionData>({
+  return useGraphqlSwrPaginationWithAuth<SubscriptionNode>({
     query: subscriptionsQuery,
     variables: { first: 300 },
     config: {
@@ -121,7 +123,7 @@ function useFetch() {
 }
 
 export const subscriptionsQuery = gql`
-  query subscription($first: Int!, $after: String) {
+  query getSubscriptions($first: Int!, $after: String) {
     subscription {
       getSubscriptions(first: $first, after: $after) {
         totalCount

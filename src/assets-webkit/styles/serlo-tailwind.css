@@ -57,10 +57,13 @@
     @apply mx-side border-collapse whitespace-nowrap mobile:whitespace-normal break-normal special-hyphens-auto;
   }
   .serlo-th {
-    @apply p-2.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;
+    @apply p-1.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;
   }
   .serlo-td {
-    @apply p-2.5 align-top border-3 border-brand-150;
+    @apply p-1.5 align-top border-3 border-brand-150;
+    > p.serlo-p {
+      @apply mx-0;
+    }
   }
   .serlo-ul {
     @apply mx-side mb-block mt-4 pl-5 list-none;
@@ -107,9 +110,9 @@
     @apply h-auto inline max-w-full;
   }
   .serlo-math-wrapper {
-    @apply px-4 text-left mb-block py-0.5;
+    @apply px-4 text-left py-0.5;
     @apply text-lg leading-browser overflow-x-auto overflow-y-hidden;
-    @apply px-side;
+    @apply px-side my-[1em];
   }
   .serlo-important {
     @apply border-l-6 border-brand p-2.5 mb-block mx-4;
@@ -171,11 +174,12 @@
     /* this feels really hacky */
     @apply break-words;
 
-    & p + ul {
+    & p:not(.slate-p) + ul {
       @apply -mt-3.5;
     }
 
-    & li > p {
+    & li > p,
+    & li > .slate-container > p {
       @apply mx-0 mb-2;
     }
 
@@ -188,6 +192,7 @@
     & .serlo-spoiler-body,
     & .serlo-solution-box,
     & .serlo-styled-label,
+    & .slate-container,
     & li,
     & th,
     & td {
@@ -196,8 +201,13 @@
       > ul:last-child,
       > ol:last-child,
       > .serlo-image-centered:last-child,
-      > .serlo-exercise-wrapper:last-child {
+      > .serlo-exercise-wrapper:last-child,
+      > .slate-container:last-child {
         @apply mb-0;
+      }
+
+      > .serlo-math-wrapper:first-child {
+        @apply mt-0;
       }
 
       /* fixed in postcss-nested 5.0.6 */

@@ -17,6 +17,7 @@ export function LightBox(props: LightBoxProps) {
   if (!open) return null
 
   const pictureString = strings.content.picture
+  const isVector = src.endsWith('.svg')
 
   return (
     <>
@@ -29,7 +30,10 @@ export function LightBox(props: LightBoxProps) {
           onClick={onClose}
           src={src}
           alt={label ?? pictureString}
-          className="my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]"
+          className={clsx(
+            'my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]',
+            isVector && 'w-[80vw]'
+          )}
         />
         <p className="pointer-events-auto">{label}</p>
       </Modal>

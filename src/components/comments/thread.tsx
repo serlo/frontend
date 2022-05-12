@@ -1,13 +1,12 @@
-import { Thread as ThreadType } from '@serlo/api'
 import { ReactNode } from 'react'
 
 import { Comment } from './comment'
-import { CommentsData } from './comment-area'
+import { CommentsData, ThreadsData } from './comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ThreadProps {
-  thread: ThreadType
+  thread: ThreadsData[number]
   showChildren: boolean
   highlightedCommentId?: number
   renderReplyForm?: (threadId: string) => ReactNode

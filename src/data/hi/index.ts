@@ -406,7 +406,7 @@ export const loggedInData = {
       directLink: 'Direct link to this content'
     },
     notifications: {
-      hide: "इस सामग्री के लिए सूचनाएं छिपाएँ।",
+      hide: 'Deactivate new notifications for this content.',
       setToRead: 'Set notification to read.',
       setAllToRead: 'Set all visible to read',
       showNew: 'New',
@@ -643,7 +643,8 @@ export const loggedInData = {
       box: {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
-        anchorId: 'Anchor ID'
+        anchorId: 'Anchor ID',
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: 'To make the content draggable, convert them for the new editor:',
