@@ -164,7 +164,7 @@ export const instanceData = {
       error: "Die Kommentare konnten leider nicht geladen werden. Bitte versuch es später noch einmal.",
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
-      hideReplies: 'Hide',
+      hideReplies: "Einklappen",
       showArchived: "Archivierte %threads% anzeigen",
       copyLink: "Kommentarlink kopieren",
       confirm: 'Sure?'
