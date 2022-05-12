@@ -164,8 +164,10 @@ export const instanceData = {
       error: "क्षमा करें, टिप्पणियां लोड नहीं की जा सकीं, कृपया बाद में पुनः प्रयास करें।",
       showMoreReply: "एक और उत्तर दिखाओ",
       showMoreReplies: " %number% और उत्तर दिखाएं",
+      hideReplies: 'Hide',
       showArchived: "संग्रहीत दिखाएँ %threads%",
-      copyLink: "टिप्पणी लिंक कॉपी करें"
+      copyLink: "टिप्पणी लिंक कॉपी करें",
+      confirm: 'Sure?'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
