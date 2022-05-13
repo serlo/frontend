@@ -10,7 +10,6 @@ export function PageLayoutAdapter({
 }: FrontendPageLayoutNode & {
   renderNested: RenderNestedFunction
 }) {
-  //TODO: add check if widthPercent is 0 in conversion
   return (
     <PageLayoutRenderer
       widthPercent={widthPercent}

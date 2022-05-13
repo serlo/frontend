@@ -288,6 +288,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   }
 
   if (node.plugin === 'pageLayout') {
+    if (node.state.widthPercent === 0) return []
     return [
       {
         type: 'pageLayout',
