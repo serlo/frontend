@@ -1,11 +1,8 @@
 import { Link } from '@/components/content/link'
 import { getAvatarUrl } from '@/components/user/user-link'
 
-export const supportedTypes = ['team-overview']
-
 export interface PageTeamRendererProps {
-  type: string
-  data: string
+  data: TeamDataEntry[]
 }
 
 export interface TeamDataEntry {
@@ -19,15 +16,12 @@ export interface TeamDataEntry {
 }
 
 // for now this is just used for the teampage plugin
-export const PageTeamRenderer = ({ type, data }: PageTeamRendererProps) => {
-  if (!supportedTypes.includes(type)) return null
-  if (!data) return null
-
-  const teamData = JSON.parse(data) as TeamDataEntry[]
+export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
+  if (!data || !data.length) return null
 
   return (
     <div className="mobile: grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14">
-      {teamData.map(renderEntry)}
+      {data.map(renderEntry)}
     </div>
   )
 
@@ -40,10 +34,10 @@ export const PageTeamRenderer = ({ type, data }: PageTeamRendererProps) => {
     extraLinkUrl,
     photo,
   }: TeamDataEntry) {
-    if (!user) return
+    if (!user) return null
 
     return (
-      <div className="mb-10 text-center">
+      <div key={user} className="mb-10 text-center">
         <img
           className="rounded-full mb-5 max-w-[11rem] mx-auto"
           alt={`${firstName} ${lastName}`}

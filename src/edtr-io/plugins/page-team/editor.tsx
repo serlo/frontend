@@ -1,9 +1,8 @@
-import clsx from 'clsx'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 
 import { PageTeamPluginProps } from '.'
-import { PageTeamRenderer, supportedTypes } from './renderer'
+import { PageTeamRenderer } from './renderer'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 const TeamDataDecoder = t.array(
@@ -21,57 +20,44 @@ const TeamDataDecoder = t.array(
 export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
   props
 ) => {
-  const { type, data } = props.state
+  const { data } = props.state
+  const noData = !data || data.length === 0
 
-  const hasNoType = type.value === ''
+  const rendererData = data.map((entry) => {
+    return {
+      firstName: entry.firstName.value,
+      lastName: entry.lastName.value,
+      user: entry.user.value,
+      position: entry.position.value,
+      extraLinkUrl: entry.extraLinkUrl.value,
+      extraLinkText: entry.extraLinkText.value,
+      photo: entry.photo.value,
+    }
+  })
 
   return (
     <>
-      {hasNoType ? (
-        renderTypeChooser()
-      ) : (
-        <div>
-          {data.value === '' ? (
-            renderDataImport()
-          ) : (
-            <PageTeamRenderer type={type.value} data={data.value} />
-          )}
-        </div>
-      )}
-      {renderIntoSettingsModal()}
+      <div>
+        {noData ? renderDataImport() : <PageTeamRenderer data={rendererData} />}
+      </div>
+      {props.renderIntoSettings(renderDataImport())}
     </>
   )
 
-  function renderIntoSettingsModal() {
-    return props.renderIntoSettings(
-      <>
-        {renderTypeChooser()}
-        {renderDataImport()}
-      </>
-    )
-  }
-
-  function renderTypeChooser() {
-    return (
-      <>
-        <b className="serlo-h4 block mt-6 ml-0 mb-4">Choose a type</b>
-        <ul className="pb-8 unstyled-list flex">
-          {supportedTypes.map(renderLi)}
-        </ul>
-      </>
-    )
-  }
-
   function renderDataImport() {
     return (
-      <>
+      <div className="bg-amber-50 p-4">
         <b className="serlo-h4 block ml-0 mb-4">Supply data to plugin</b>
-        <p className="mb-2">
+        <p className="mb-4">
           Make your changes in{' '}
-          <a href="https://docs.google.com/spreadsheets/d/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/edit#gid=0">
+          <a
+            target="_blank"
+            href="https://docs.google.com/spreadsheets/d/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/edit#gid=0"
+            rel="noreferrer"
+          >
             this spreadsheet
           </a>{' '}
-          first and then import data here.
+          first and afterwards use this button.
         </p>
         <button
           className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
@@ -85,7 +71,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
               )
 
               if (E.isRight(teamData)) {
-                data.set(JSON.stringify(teamData.right))
+                data.set(() => teamData.right)
                 showToastNotice('👍 Imported', 'success')
               } else {
                 throw new Error(
@@ -101,29 +87,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
         >
           Import Data
         </button>
-      </>
-    )
-  }
-
-  function renderLi(title: typeof supportedTypes[number]) {
-    const active = type.value === title
-
-    return (
-      <li key={title}>
-        <button
-          onClick={(event) => {
-            event.preventDefault()
-            type.set(title)
-          }}
-          className={clsx(
-            'bg-amber-200 rounded-lg flex flex-row w-24 mr-2 p-1',
-            'hover:bg-amber-300 capitalize',
-            active && 'bg-amber-300  font-bold'
-          )}
-        >
-          {title}
-        </button>
-      </li>
+      </div>
     )
   }
 }

@@ -3,13 +3,23 @@ import {
   object,
   EditorPluginProps,
   string,
+  list,
 } from '@edtr-io/plugin'
 
 import { PageTeamEditor } from './editor'
 
 export const PageTeamState = object({
-  type: string(),
-  data: string(),
+  data: list(
+    object({
+      firstName: string(),
+      lastName: string(),
+      user: string(),
+      position: string(),
+      extraLinkUrl: string(),
+      extraLinkText: string(),
+      photo: string(),
+    })
+  ),
 })
 
 export type PageTeamPluginState = typeof PageTeamState
