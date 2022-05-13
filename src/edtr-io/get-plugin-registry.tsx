@@ -131,7 +131,7 @@ export function getPluginRegistry(
           },
         ]
       : []),
-    ...(isPage
+    ...(isPage && shouldUseFeature('pagePlugins')
       ? [
           {
             name: 'pageLayout',

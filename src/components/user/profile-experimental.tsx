@@ -17,6 +17,11 @@ export const features = {
     isActive: false,
     activeInDev: true,
   },
+  pagePlugins: {
+    cookieName: 'usePagePlugins',
+    isActive: false,
+    activeInDev: true,
+  },
   legacyEditor: {
     cookieName: 'useLegacyEditor',
     isActive: faHourglassEmpty,
@@ -136,6 +141,16 @@ export function ProfileExperimental() {
             </a>
             , weil wir den Legacy-Editor in absehbarer Zeit ganz abschalten
             werden. Danke!
+          </p>
+        </div>
+      )}
+      {features.pagePlugins && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('pagePlugins')} Plugins für Statische Seiten ⚠️
+          </h3>
+          <p className="serlo-p">
+            Teamplugin und Layoutplugin. Bitte nur auf Anfrage testen.
           </p>
         </div>
       )}

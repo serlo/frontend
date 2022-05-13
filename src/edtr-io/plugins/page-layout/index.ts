@@ -3,26 +3,60 @@ import {
   number,
   object,
   EditorPluginProps,
+  child,
 } from '@edtr-io/plugin'
 
-import { editorContent } from '../types/common/common'
 import { PageLayoutEditor } from './editor'
+import { LoggedInData } from '@/data-types'
+import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 
-export const pageLayoutState = object({
-  widthPercent: number(), // first column defined second
+export function createPageLayoutState(
+  editorStrings: LoggedInData['strings']['editor']
+) {
+  const plugins = getPluginRegistry('box', editorStrings, [
+    'text',
+    'blockquote',
+    'box',
+    'geogebra',
+    'highlight',
+    'anchor',
+    'equations',
+    'image',
+    'important',
+    'injection',
+    'multimedia',
+    'spoiler',
+    'table',
+    'serloTable',
+    'video',
+  ])
 
-  //TODO: add testing to production
+  return object({
+    widthPercent: number(), // first column defines second
+    column1: child({
+      plugin: 'rows',
+      config: {
+        plugins,
+      },
+    }),
+    column2: child({
+      plugin: 'rows',
+      config: {
+        plugins,
+      },
+    }),
+  })
+}
 
-  //TODO: maybe dont allow nesting somehow
-  column1: editorContent('rows'),
-  column2: editorContent('rows'),
-})
-
-export type PageLayoutPluginState = typeof pageLayoutState
+export type PageLayoutPluginState = ReturnType<typeof createPageLayoutState>
 export type PageLayoutPluginProps = EditorPluginProps<PageLayoutPluginState>
 
-export const pageLayoutPlugin: EditorPlugin<PageLayoutPluginState> = {
-  Component: PageLayoutEditor,
-  state: pageLayoutState,
-  config: {},
+export function createPageLayoutPlugin(
+  editorStrings: LoggedInData['strings']['editor']
+): EditorPlugin<PageLayoutPluginState> {
+  return {
+    Component: PageLayoutEditor,
+    config: {},
+    state: createPageLayoutState(editorStrings),
+  }
 }
