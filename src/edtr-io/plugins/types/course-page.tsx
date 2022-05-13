@@ -3,14 +3,12 @@ import * as React from 'react'
 
 import { entity, editorContent, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
-import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export const coursePageTypeState = entityType(
   {
     ...entity,
-    icon: string('explanation'),
     title: string(''),
     content: editorContent(),
   },
@@ -34,13 +32,7 @@ function CoursePageTypeEditor(
     { skipControls: boolean }
   >
 ) {
-  const { title, icon, content } = props.state
-
-  React.useEffect(() => {
-    if (!['explanation', 'play', 'question'].includes(icon.value)) {
-      icon.set('explanation')
-    }
-  }, [icon])
+  const { title, content } = props.state
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -54,28 +46,6 @@ function CoursePageTypeEditor(
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
         />
-      )}
-      {props.renderIntoSettings(
-        <Settings>
-          <Settings.Select
-            label="Icon"
-            state={icon}
-            options={[
-              {
-                label: editorStrings.coursePage.explanation,
-                value: 'explanation',
-              },
-              {
-                label: editorStrings.coursePage.video,
-                value: 'play',
-              },
-              {
-                label: editorStrings.coursePage.question,
-                value: 'question',
-              },
-            ]}
-          />
-        </Settings>
       )}
       <h1>
         {props.editable ? (

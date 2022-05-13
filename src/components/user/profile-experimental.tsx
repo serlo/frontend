@@ -7,7 +7,6 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
-  boxPlugin: { cookieName: 'useBoxPlugin', isActive: false, activeInDev: true },
   tablePlugin: {
     cookieName: 'useTablePlugin',
     isActive: false,
@@ -89,14 +88,6 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {features.boxPlugin && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('boxPlugin')} Editor: Box Plugin ⬛
-          </h3>
-          <p className="serlo-p">Das neue Box Plugin zum testen.</p>
-        </div>
-      )}
       {features.tablePlugin && (
         <div>
           <h3 className="serlo-h3 mb-3">
