@@ -251,8 +251,12 @@ function SerloTableEditor(props: SerloTableProps) {
     )
 
     function renderRemoveButton(isRow: boolean, show: boolean) {
-      if (isRow && rows.length === 1) return
-      if (!isRow && rows[0].columns.length === 1) return
+      if (isRow && rows.length === 2) return null
+      if (!isRow && rows[0].columns.length === 2) return null
+
+      if (isRow && showColumnHeader && focusedRowIndex === 0) return null
+      if (!isRow && showRowHeader && focusedColIndex === 0) return null
+
       const confirmString = replaceWithType(tableStrings.confirmDelete, isRow)
 
       const onClickHandler = () => {
