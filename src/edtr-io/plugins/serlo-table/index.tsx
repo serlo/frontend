@@ -31,7 +31,7 @@ const headerTextPlugins = {
   colors: false,
   headings: false,
   katex: true,
-  links: false,
+  links: true,
   lists: false,
   math: true,
   paragraphs: false,
