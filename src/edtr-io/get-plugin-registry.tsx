@@ -30,6 +30,7 @@ export function getPluginRegistry(
     'text-exercise',
     'text-exercise-group',
   ].includes(type)
+  const isPage = type === 'Page'
 
   const registry = [
     {
@@ -130,6 +131,22 @@ export function getPluginRegistry(
           },
         ]
       : []),
+    ...(isPage
+      ? [
+          {
+            name: 'pageLayout',
+            title: 'Layout Column for Pages',
+            description: "The plugin the people want but don't get 🤫",
+            icon: createIcon(faGripLinesVertical),
+          },
+          {
+            name: 'pageTeam',
+            title: 'Team Overview',
+            description: 'Only for the teampages',
+            icon: createIcon(faUsers),
+          },
+        ]
+      : []),
   ]
 
   const filteredRegistry = include
@@ -148,25 +165,5 @@ export function getPluginRegistry(
     ? boxFiltered.filter((plugin) => plugin.name !== 'table')
     : boxFiltered.filter((plugin) => plugin.name !== 'serloTable')
 
-  // Add special plugin for pages
-  const withPagePlugins =
-    type === 'Page'
-      ? [
-          ...tableFiltered,
-          {
-            name: 'pageLayout',
-            title: 'Layout Column for Pages',
-            description: "The plugin the people want but don't get 🤫",
-            icon: createIcon(faGripLinesVertical),
-          },
-          {
-            name: 'pageTeam',
-            title: 'Team Overview',
-            description: 'Only for Teampage!',
-            icon: createIcon(faUsers),
-          },
-        ]
-      : tableFiltered
-
-  return withPagePlugins
+  return tableFiltered
 }

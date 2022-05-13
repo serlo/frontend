@@ -278,7 +278,16 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-  // TODO: Add pageTeam
+
+  if (node.plugin === 'pageTeam') {
+    return [
+      {
+        type: 'pageTeam',
+        data: node.state.data,
+      },
+    ]
+  }
+
   if (node.plugin === 'pageLayout') {
     return [
       {

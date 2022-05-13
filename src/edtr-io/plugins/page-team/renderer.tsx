@@ -15,7 +15,6 @@ export interface TeamDataEntry {
   photo: string
 }
 
-// for now this is just used for the teampage plugin
 export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
   if (!data || !data.length) return null
 
@@ -47,7 +46,7 @@ export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
           {firstName} {lastName}
         </b>
         <br />
-        <a href={`/user/profile/${user}`}>{user}</a>
+        <Link href={`/user/profile/${user}`}>{user}</Link>
         <p className="mt-4">{position}</p>
 
         {extraLinkUrl && extraLinkText ? (
