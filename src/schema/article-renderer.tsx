@@ -504,14 +504,7 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'pageTeam') {
-    return (
-      <PageTeamAdapter
-        {...element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
-  }
+  if (element.type === 'pageTeam') return <PageTeamAdapter {...element} />
   return null
 }
 
