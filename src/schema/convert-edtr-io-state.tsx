@@ -279,12 +279,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   }
 
   if (node.plugin === 'pageTeam') {
-    return [
-      {
-        type: 'pageTeam',
-        data: node.state.data,
-      },
-    ]
+    return [{ type: 'pageTeam', data: node.state.data }]
   }
 
   if (node.plugin === 'pageLayout') {
