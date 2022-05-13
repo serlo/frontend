@@ -12,6 +12,8 @@ export const pageSpecialContentState = object({
   data: string(),
 })
 
+// TODO: rename to Teamplugin…
+
 export type PageSpecialContentPluginState = typeof pageSpecialContentState
 export type PageSpecialContentPluginProps =
   EditorPluginProps<PageSpecialContentPluginState>
