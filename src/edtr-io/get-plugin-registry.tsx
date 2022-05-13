@@ -160,9 +160,9 @@ export function getPluginRegistry(
             icon: createIcon(faGripLinesVertical),
           },
           {
-            name: 'pageSpecialContent',
-            title: 'Special Content for Pages',
-            description: 'Only Teampage for now',
+            name: 'pageTeam',
+            title: 'Team Overview',
+            description: 'Only for Teampage!',
             icon: createIcon(faUsers),
           },
         ]

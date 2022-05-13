@@ -3,7 +3,7 @@ import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
 import { BoxType } from './edtr-io/plugins/box/renderer'
-import { PageSpecialContentRendererProps } from './edtr-io/plugins/page-special-content/renderer'
+import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
 import { Instance, QueryResponse, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
@@ -760,8 +760,8 @@ export interface FrontendPageLayoutNode {
   children?: undefined
 }
 
-export type FrontendPageSpecialContentNode = PageSpecialContentRendererProps & {
-  type: 'pageSpecialContent'
+export type FrontendPageTeamNode = PageTeamRendererProps & {
+  type: 'pageTeam'
   children?: undefined
 }
 
@@ -809,7 +809,7 @@ export type FrontendRestrictedElementNode =
   | FrontendTrNode
   | FrontendExerciseGroupNode
   | FrontendPageLayoutNode
-  | FrontendPageSpecialContentNode
+  | FrontendPageTeamNode
 
 export type FrontendContentNode =
   | FrontendTextNode

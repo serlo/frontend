@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 
-import { PageSpecialContentPluginProps } from '.'
-import { PageSpecialContentRenderer, supportedTypes } from './renderer'
+import { PageTeamPluginProps } from '.'
+import { PageTeamRenderer, supportedTypes } from './renderer'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 const TeamDataDecoder = t.array(
@@ -18,9 +18,9 @@ const TeamDataDecoder = t.array(
   })
 )
 
-export const PageSpecialContentEditor: React.FunctionComponent<
-  PageSpecialContentPluginProps
-> = (props) => {
+export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
+  props
+) => {
   const { type, data } = props.state
 
   const hasNoType = type.value === ''
@@ -34,7 +34,7 @@ export const PageSpecialContentEditor: React.FunctionComponent<
           {data.value === '' ? (
             renderDataImport()
           ) : (
-            <PageSpecialContentRenderer type={type.value} data={data.value} />
+            <PageTeamRenderer type={type.value} data={data.value} />
           )}
         </div>
       )}

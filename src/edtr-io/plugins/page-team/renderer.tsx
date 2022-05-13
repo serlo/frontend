@@ -3,7 +3,7 @@ import { getAvatarUrl } from '@/components/user/user-link'
 
 export const supportedTypes = ['team-overview']
 
-export interface PageSpecialContentRendererProps {
+export interface PageTeamRendererProps {
   type: string
   data: string
 }
@@ -19,10 +19,7 @@ export interface TeamDataEntry {
 }
 
 // for now this is just used for the teampage plugin
-export const PageSpecialContentRenderer = ({
-  type,
-  data,
-}: PageSpecialContentRendererProps) => {
+export const PageTeamRenderer = ({ type, data }: PageTeamRendererProps) => {
   if (!supportedTypes.includes(type)) return null
   if (!data) return null
 
