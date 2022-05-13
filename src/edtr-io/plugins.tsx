@@ -26,6 +26,7 @@ import { createImportantPlugin } from './plugins/important'
 import { injectionPlugin } from './plugins/injection'
 import { layoutPlugin } from './plugins/layout'
 import { pageLayoutPlugin } from './plugins/page-layout'
+import { pageTeamPlugin } from './plugins/page-team'
 import { separatorPlugin } from './plugins/separator'
 import { serloTablePlugin } from './plugins/serlo-table'
 import { solutionPlugin } from './plugins/solution'
@@ -256,6 +257,7 @@ export function createPlugins({
     }),
     layout: layoutPlugin,
     pageLayout: pageLayoutPlugin,
+    pageTeam: pageTeamPlugin,
     multimedia: createMultimediaExplanationPlugin({
       explanation: { plugin: 'rows' },
       plugins: [
