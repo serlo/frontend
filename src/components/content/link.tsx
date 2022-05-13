@@ -3,6 +3,7 @@ import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
+import { shouldUseFeature } from '../user/profile-experimental'
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { NodePath } from '@/schema/article-renderer'
@@ -45,17 +46,13 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/entity/repository/add-revision/') ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
-    return (
-      typeof window !== 'undefined' &&
-      document.cookie.includes('useLegacyEditor=1')
-    )
+    return shouldUseFeature('legacyEditor')
   }
 
   return (
     legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
-    _href.startsWith('/discussions') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/math/wiki/') || //temporary
     _href.startsWith('/ref/') || // temporary

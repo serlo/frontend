@@ -136,12 +136,10 @@ export function getPluginRegistry(
     ? registry.filter((plugin) => include.includes(plugin.name))
     : registry
 
-  // Testing new box plugin
-  const boxFiltered = shouldUseFeature('boxPlugin')
-    ? filteredRegistry.filter(
-        (plugin) => !['blockquote', 'important'].includes(plugin.name)
-      )
-    : filteredRegistry.filter((plugin) => plugin.name !== 'box')
+  // Filter old plugins, will be removed completely after migration is done
+  const boxFiltered = filteredRegistry.filter(
+    (plugin) => !['blockquote', 'important'].includes(plugin.name)
+  )
 
   // Testing new table plugin
   const showNewTable = shouldUseFeature('tablePlugin')

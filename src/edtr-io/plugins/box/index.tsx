@@ -18,6 +18,7 @@ export function createBoxState(
     'image',
     'equations',
     'table',
+    'serloTable',
   ])
 
   return object({

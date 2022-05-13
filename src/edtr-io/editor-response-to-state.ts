@@ -244,7 +244,6 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
           revision,
           changes: '',
           title: uuid.currentRevision?.title || '',
-          icon: 'explanation',
           content: serializeEditorState(
             toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
           ),
@@ -608,7 +607,7 @@ function toEdtr(content: EditorState): Edtr {
 
   // fixes https://github.com/serlo/frontend/issues/1563
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const sanitized = JSON.parse(JSON.stringify(content).replaceAll('```', ''))
+  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
   // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return convert(sanitized)
 }

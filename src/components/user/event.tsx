@@ -59,6 +59,7 @@ interface EventProps {
   unread: boolean
   loggedInStrings?: LoggedInData['strings']['notifications']
   setToRead?: (id: number) => void
+  mute?: (id: number) => void
   slim?: boolean
   noPrivateContent?: boolean
 }
@@ -69,6 +70,7 @@ export function Event({
   unread,
   loggedInStrings,
   setToRead,
+  mute,
   slim,
   noPrivateContent,
 }: EventProps) {
@@ -328,17 +330,18 @@ export function Event({
         placement="bottom"
         content={renderTooltip(loggedInStrings?.setToRead)}
       >
-        <a
+        <button
           className="serlo-button serlo-make-interactive-transparent-blue text-base"
-          /*StyledButton*/ onClick={() => setToRead(eventId)}
+          onClick={() => setToRead(eventId)}
         >
           <FaIcon icon={faCheck} />
-        </a>
+        </button>
       </Tippy>
     )
   }
 
   function renderMuteButton() {
+    if (!mute || !setToRead) return null
     return (
       <Tippy
         duration={[300, 250]}
@@ -346,12 +349,15 @@ export function Event({
         placement="bottom"
         content={renderTooltip(loggedInStrings?.hide)}
       >
-        <a
+        <button
           className="serlo-button serlo-make-interactive-transparent-blue text-base mr-3"
-          /*StyledButton*/ href={`/unsubscribe/${event.objectId.toString()}`}
+          onClick={() => {
+            void mute(event.objectId)
+            if (unread) void setToRead(eventId)
+          }}
         >
           <FaIcon icon={faBellSlash} />
-        </a>
+        </button>
       </Tippy>
     )
   }

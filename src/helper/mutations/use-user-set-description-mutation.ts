@@ -31,8 +31,9 @@ export function useUserSetDescriptionMutation() {
     )
 
     if (success) {
-      if (!loggedInData) return
+      if (!loggedInData || !auth.current) return
       showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+      window.location.href = `/user/${auth.current.id}/${auth.current.username}`
     }
 
     return success

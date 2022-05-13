@@ -7,7 +7,7 @@ import {
 } from '@serlo/api'
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
-import { mutate } from 'swr'
+import { mutate, useSWRConfig } from 'swr'
 
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -18,9 +18,10 @@ export function useThreadArchivedMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
   const loggedInData = useLoggedInData()
+  const { cache } = useSWRConfig()
 
   const mutation = gql`
-    mutation setState($input: ThreadSetThreadArchivedInput!) {
+    mutation threadSetArchived($input: ThreadSetThreadArchivedInput!) {
       thread {
         setThreadArchived(input: $input) {
           success
@@ -43,6 +44,7 @@ export function useThreadArchivedMutation() {
 
     if (success) {
       await mutate(`comments::${entityId}`)
+      resetAllThreadsCache(cache)
       NProgress.done()
     }
     return success
@@ -56,9 +58,10 @@ export function useSetThreadStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
   const loggedInData = useLoggedInData()
+  const { cache } = useSWRConfig()
 
   const mutation = gql`
-    mutation setState($input: ThreadSetThreadStateInput!) {
+    mutation threadSetState($input: ThreadSetThreadStateInput!) {
       thread {
         setThreadState(input: $input) {
           success
@@ -78,6 +81,7 @@ export function useSetThreadStateMutation() {
     )
 
     if (success) await mutate(`comments::${entityId}`)
+    resetAllThreadsCache(cache)
     return success
   }
 
@@ -89,9 +93,10 @@ export function useSetCommentStateMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
   const loggedInData = useLoggedInData()
+  const { cache } = useSWRConfig()
 
   const mutation = gql`
-    mutation setState($input: ThreadSetCommentStateInput!) {
+    mutation threadSetCommentState($input: ThreadSetCommentStateInput!) {
       thread {
         setCommentState(input: $input) {
           success
@@ -111,6 +116,7 @@ export function useSetCommentStateMutation() {
     )
 
     if (success) await mutate(`comments::${entityId}`)
+    resetAllThreadsCache(cache)
     return success
   }
 
@@ -121,6 +127,7 @@ export function useSetCommentStateMutation() {
 export function useCreateThreadMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const { cache } = useSWRConfig()
 
   const mutation = gql`
     mutation createThread($input: ThreadCreateThreadInput!) {
@@ -140,6 +147,7 @@ export function useCreateThreadMutation() {
     )
 
     if (success) await mutate(`comments::${input.objectId}`)
+    resetAllThreadsCache(cache)
     return success
   }
 
@@ -151,6 +159,7 @@ export function useCreateCommentMutation() {
   const auth = useAuthentication()
   const entityId = useEntityId()
   const loggedInData = useLoggedInData()
+  const { cache } = useSWRConfig()
 
   const mutation = gql`
     mutation createComment($input: ThreadCreateCommentInput!) {
@@ -173,9 +182,33 @@ export function useCreateCommentMutation() {
     )
 
     if (success) await mutate(`comments::${entityId}`)
+    resetAllThreadsCache(cache)
+
     return success
   }
 
   return async (input: ThreadCreateCommentInput) =>
     await createCommentMutation(input)
+}
+
+function resetAllThreadsCache(cache: unknown) {
+  if (!(cache instanceof Map)) {
+    throw new Error(
+      'matchMutate requires the cache provider to be a Map instance'
+    )
+  }
+
+  const keys = []
+  for (const key of cache.keys() as IterableIterator<string>) {
+    const shouldBeMutated =
+      key.startsWith('$inf$') && key.includes('query getAllThreads')
+
+    if (shouldBeMutated) {
+      keys.push(key)
+    }
+  }
+
+  keys.forEach((key) => {
+    void mutate(key)
+  })
 }

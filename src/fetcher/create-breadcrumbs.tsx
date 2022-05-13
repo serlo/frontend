@@ -1,7 +1,7 @@
-import { QueryResponse, TaxonomyTerms } from './query-types'
+import { MainUuidType } from './query-types'
 import { BreadcrumbsData } from '@/data-types'
 
-export function createBreadcrumbs(uuid: QueryResponse) {
+export function createBreadcrumbs(uuid: MainUuidType) {
   if (uuid.__typename === 'TaxonomyTerm') {
     if (uuid.navigation?.path.nodes) {
       return compat(uuid.navigation?.path.nodes)
@@ -22,7 +22,14 @@ export function createBreadcrumbs(uuid: QueryResponse) {
     return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
   }
 
-  function buildFromTaxTerms(taxonomyPaths: TaxonomyTerms | undefined) {
+  function buildFromTaxTerms(
+    taxonomyPaths:
+      | Extract<
+          MainUuidType,
+          { __typename: 'Article' }
+        >['taxonomyTerms']['nodes']
+      | undefined
+  ) {
     if (taxonomyPaths === undefined) return undefined
     let breadcrumbs
     let backup

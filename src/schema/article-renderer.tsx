@@ -243,6 +243,12 @@ function renderElement({
   if (element.type === 'p') {
     return <p className="serlo-p">{children}</p>
   }
+  if (element.type === 'slate-p') {
+    return <p className="serlo-p mb-0 slate-p min-h-[1.33em]">{children}</p>
+  }
+  if (element.type === 'slate-container') {
+    return <div className="mb-block slate-container">{children}</div>
+  }
   if (element.type === 'h') {
     const classNames = {
       1: 'serlo-h1',
