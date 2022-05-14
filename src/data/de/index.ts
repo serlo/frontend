@@ -578,7 +578,7 @@ export const loggedInData = {
         row: "Zeile",
         column: "Spalte",
         addType: "%type% hinzufügen",
-        addTypeBefore: 'Add %type% before',
+        addTypeBefore: "%type% davor hinzufügen",
         deleteType: "%type% löschen",
         confirmDelete: "Sicher, dass diese %type% und ihren Inhalt löschen willst?"
       },
@@ -654,7 +654,7 @@ export const loggedInData = {
         multimediaTitle: "Erklärung mit Multimedia-Inhalt"
       },
       pageLayoutColums: {
-        chooseRatio: 'Choose column ratio'
+        chooseRatio: "Spaltenverhältnis auswählen"
       },
       solution: {
         optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
