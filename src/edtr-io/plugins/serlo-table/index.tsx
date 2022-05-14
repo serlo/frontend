@@ -196,7 +196,8 @@ function SerloTableEditor(props: SerloTableProps) {
               {renderSwitchButton(cell, isHead, isClear)}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
-                .serlo-td {
+                .serlo-td,
+                .serlo-th {
                   height: 1rem;
                   min-width: 3rem;
                 }
@@ -318,6 +319,7 @@ function SerloTableEditor(props: SerloTableProps) {
       row.columns.remove(colIndex)
     }
   }
+
   function removeRow(rowIndex: number) {
     rows.remove(rowIndex)
   }
