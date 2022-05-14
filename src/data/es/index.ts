@@ -578,6 +578,7 @@ export const loggedInData = {
         row: "row",
         column: "column",
         addType: 'Add %type%',
+        addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
         confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
@@ -651,6 +652,9 @@ export const loggedInData = {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
         oneColumnLayout: "Diseño con una columna",
         multimediaTitle: "Contenido multimedia asociado con el texto"
+      },
+      pageLayoutColums: {
+        chooseRatio: 'Choose column ratio'
       },
       solution: {
         optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
