@@ -15,6 +15,7 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
@@ -29,6 +30,7 @@ export function getPluginRegistry(
     'text-exercise',
     'text-exercise-group',
   ].includes(type)
+  const isPage = type === 'Page'
 
   const registry = [
     {
@@ -126,6 +128,22 @@ export function getPluginRegistry(
             name: 'separator',
             title: editorStrings.edtrIo.solutionSeparator,
             description: editorStrings.edtrIo.solutionSeparatorDesc,
+          },
+        ]
+      : []),
+    ...(isPage && shouldUseFeature('pagePlugins')
+      ? [
+          {
+            name: 'pageLayout',
+            title: 'Layout Column for Pages',
+            description: "The plugin the people want but don't get 🤫",
+            icon: createIcon(faGripLinesVertical),
+          },
+          {
+            name: 'pageTeam',
+            title: 'Team Overview',
+            description: 'Only for the teampages',
+            icon: createIcon(faUsers),
           },
         ]
       : []),
