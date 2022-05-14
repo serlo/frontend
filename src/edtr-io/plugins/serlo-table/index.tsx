@@ -184,7 +184,7 @@ function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2 pb-6 min-h-[3.5rem]"
+              className="hackdiv pr-2 pb-6 min-h-[3.5rem] h-full"
             >
               {renderRemoveButtons(rowIndex, colIndex)}
               {cell.content.render({
@@ -196,6 +196,10 @@ function SerloTableEditor(props: SerloTableProps) {
               {renderSwitchButton(cell, isHead, isClear)}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
+                .serlo-td {
+                  height: 1rem;
+                  min-width: 3rem;
+                }
                 .hackdiv {
                   > div > div > div {
                     margin-bottom: 0;
