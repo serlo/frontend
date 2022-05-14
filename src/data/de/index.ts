@@ -578,6 +578,7 @@ export const loggedInData = {
         row: "Zeile",
         column: "Spalte",
         addType: "%type% hinzufügen",
+        addTypeBefore: 'Add %type% before',
         deleteType: "%type% löschen",
         confirmDelete: "Sicher, dass diese %type% und ihren Inhalt löschen willst?"
       },
@@ -651,6 +652,9 @@ export const loggedInData = {
         toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
         oneColumnLayout: "Einspaltiges Layout",
         multimediaTitle: "Erklärung mit Multimedia-Inhalt"
+      },
+      pageLayoutColums: {
+        chooseRatio: 'Choose column ratio'
       },
       solution: {
         optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
