@@ -8,6 +8,7 @@ documents:
   - 'src/fetcher/use-comment-data.ts'
   - 'src/fetcher/license/query.ts'
   - 'src/pages/subscriptions/manage.tsx'
+  - 'src/pages/uuid/recycle-bin.tsx'
 generates:
   src/fetcher/graphql-types/operations.ts:
     plugins:

@@ -67,6 +67,7 @@ export const instanceData = {
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
       editProfile: 'Edit Profile & Settings',
+      recycleBin: 'Recycle Bin',
     },
     roles: {
       donor: 'Donor',
@@ -332,6 +333,9 @@ export const instanceData = {
     actions: {
       loadMore: 'Load more',
     },
+    bin: {
+      trashed: 'Trashed…'
+    }
   },
 }
 export const instanceLandingData = {
