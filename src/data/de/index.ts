@@ -64,7 +64,8 @@ export const instanceData = {
       unrevisedRevisions: "Ungeprüfte Bearbeitungen",
       userEdits: "Bearbeitungen von %user%",
       userEditsMine: "Meine ungeprüften Bearbeitungen",
-      editProfile: "Profil bearbeiten & Einstellungen"
+      editProfile: "Profil bearbeiten & Einstellungen",
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: "Spender*in",
@@ -786,6 +787,12 @@ export const loggedInData = {
         text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
         deleteAccount: "Account löschen"
       }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
     }
   }
 };
