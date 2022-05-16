@@ -1,11 +1,15 @@
-import { Role, Subject, TaxonomyTermType } from '@serlo/api'
+import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
 import { BoxType } from './edtr-io/plugins/box/renderer'
 import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
-import { Instance, User } from './fetcher/query-types'
+import {
+  Instance,
+  UnrevisedRevisionsQuery,
+} from './fetcher/graphql-types/operations'
+import { User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 // exact props of /[...slug] page
@@ -348,9 +352,9 @@ export interface UnrevisedRevisionsPage extends EntityPageBase {
   revisionsData: UnrevisedRevisionsData
 }
 
-export interface UnrevisedRevisionsData {
-  subjects: Subject[]
-}
+export type UnrevisedRevisionsData = NonNullable<
+  UnrevisedRevisionsQuery['subject']
+>
 
 // Entities each should have an translated string and a corresponding icon
 

@@ -1,5 +1,3 @@
-import { Subject } from '@serlo/api'
-
 import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -20,7 +18,7 @@ export function UnrevisedRevisionsOverview({
         {renderHelp()}
         {renderQuicklinks()}
       </div>
-      {data.subjects.map((subject: Subject) => (
+      {data.subjects.map((subject) => (
         <UnrevisedSubject key={subject.id} subject={subject} />
       ))}
     </>
@@ -49,7 +47,7 @@ export function UnrevisedRevisionsOverview({
       <div>
         <h2 className="serlo-h2">Quicklinks</h2>
         <ul className="serlo-ul">
-          {data.subjects.map((subject: Subject) => {
+          {data.subjects.map((subject) => {
             if (subject.unrevisedEntities.totalCount === 0) return null
             const name = subject.taxonomyTerm.name
             return (
