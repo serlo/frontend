@@ -90,3 +90,9 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/27469',
   donationHref: '/spenden',
 }
+
+export const subjectMenus: InstanceData['subjectMenus'] = {
+  math: null,
+}
+
+export const pageMenus: InstanceData['pageMenus'] = []

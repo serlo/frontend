@@ -1,8 +1,11 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data'
+
+import { headerData, footerData, landingSubjectsData,subjectMenus, pageMenus } from './menu-data'
 export const instanceData = {
   lang: 'en',
   headerData: headerData,
   footerData: footerData,
+  subjectMenus: subjectMenus,
+  pageMenus: pageMenus,
   strings: {
     header: {
       slogan: 'The Open Learning Platform',

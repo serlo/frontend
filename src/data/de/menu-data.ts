@@ -125,3 +125,34 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/mitmachen',
   donationHref: '/spenden',
 }
+
+export const subjectMenus: InstanceData['subjectMenus'] = {
+  mathe: null,
+  48492: [
+    //informatik
+    { title: 'Alle Themen', url: '/informatik/47899/informatik', id: 47899 },
+    {
+      title: 'Programmieren lernen',
+      url: '/75274/programmieren-lernen',
+      id: 75274,
+    },
+    { title: 'Gymnasium', url: '/informatik/60396/gymnasium', id: 60396 },
+    {
+      title: 'Bei Serlo-Informatik mitarbeiten',
+      url: '/49982/mitmachen-in-informatik',
+      id: 49982,
+    },
+  ],
+}
+
+export const pageMenus: InstanceData['pageMenus'] = [
+  [
+    { title: 'So funktioniert die Lernplattform', url: '/81862', id: 81862 },
+    { title: 'Wirkung', url: '/21406', id: 21406 },
+    { title: 'Team', url: '/21439', id: 21439 },
+    { title: 'Die Geschichte von Serlo', url: '/21413', id: 21413 },
+    { title: 'Partner und Förderer', url: '/21456', id: 21456 },
+    { title: 'Transparenz', url: '/21468', id: 21468 },
+    { title: 'Spenden', url: '/spenden' },
+  ],
+]

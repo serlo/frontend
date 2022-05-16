@@ -1,53 +1,35 @@
-import { MainUuidType } from './query-types'
-import { SecondaryNavigationData, SecondaryNavigationEntry } from '@/data-types'
-
-interface NavigationData {
-  label: string
-  id?: number
-  url?: string
-  children?: NavigationData[]
-}
+import { Instance, MainUuidType } from './query-types'
+import { SecondaryNavigationData } from '@/data-types'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export function createNavigation(
-  uuid: MainUuidType
+  uuid: MainUuidType,
+  instance: Instance
 ): SecondaryNavigationData | undefined {
   if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
     return undefined
 
-  if (
-    uuid.__typename === 'TaxonomyTerm' &&
-    (uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder')
-  ) {
-    return undefined
-  }
+  const instanceData = getInstanceDataByLang(instance)
 
-  if (uuid.navigation?.data) {
-    const data = uuid.navigation?.data as NavigationData
-    return data.children?.flatMap((child) => {
-      if (child.children) {
-        return child.children.map(convertEntry)
-      }
-      return convertEntry(child)
+  if (uuid.__typename === 'Page') {
+    const { pageMenus } = instanceData
+    if (!pageMenus) return undefined
+
+    return pageMenus.find((menuArray) => {
+      return menuArray.some((entry) => entry.id === uuid.id)
     })
   }
 
-  function convertEntry(entry: NavigationData): SecondaryNavigationEntry {
-    return {
-      title: entry.label,
-      url: getUrl(),
-      active: entry.id === uuid.id,
+  if (uuid.__typename === 'TaxonomyTerm') {
+    if (uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder')
+      return undefined
+
+    const { subjectMenus } = instanceData
+    const rootId = uuid.navigation?.path.nodes[0].id
+    if (!rootId) return undefined
+    if (Object.keys(subjectMenus).includes(rootId.toString())) {
+      return subjectMenus[rootId] ?? undefined
     }
-
-    function getUrl(): string {
-      if (entry.url) {
-        return entry.url
-      }
-
-      if (entry.id) {
-        return `/${entry.id}`
-      }
-
-      return '#'
-    }
+    return undefined
   }
 }

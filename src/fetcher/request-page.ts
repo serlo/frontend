@@ -108,7 +108,7 @@ export async function requestPage(
     return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
-  const secondaryNavigationData = createNavigation(uuid)
+  const secondaryNavigationData = createNavigation(uuid, instance)
   const breadcrumbsData = createBreadcrumbs(uuid)
   const horizonData = instance == 'de' ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
