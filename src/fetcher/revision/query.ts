@@ -40,8 +40,10 @@ export const revisionQuery = gql`
             ...articleRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -82,8 +84,10 @@ export const revisionQuery = gql`
             ...appletRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }
@@ -112,6 +116,7 @@ export const revisionQuery = gql`
           pages {
             id
             currentRevision {
+              id
               title
               content
             }
@@ -132,13 +137,30 @@ export const revisionQuery = gql`
             ...coursePageRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }
           course {
             ...taxonomyTerms
+            revisions(unrevised: true) {
+              totalCount
+            }
+            id
+            currentRevision {
+              title
+            }
+            pages(trashed: false, hasCurrentRevision: true) {
+              alias
+              id
+              currentRevision {
+                title
+                trashed
+              }
+            }
           }
         }
       }
@@ -186,6 +208,7 @@ export const revisionQuery = gql`
             }
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
               trashed
@@ -219,6 +242,7 @@ export const revisionQuery = gql`
             date
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
               trashed
@@ -246,6 +270,7 @@ export const revisionQuery = gql`
             ...exerciseGroupRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
               trashed
@@ -310,8 +335,10 @@ export const revisionQuery = gql`
             ...videoRevision
           }
           revisions(unrevised: false) {
+            totalCount
             nodes {
               id
+              title
               trashed
             }
           }

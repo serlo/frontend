@@ -5,7 +5,7 @@ import { CSSProperties, FunctionComponent } from 'react'
 import { BoxType } from './edtr-io/plugins/box/renderer'
 import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
-import { Instance, QueryResponse, User } from './fetcher/query-types'
+import { Instance, User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 // exact props of /[...slug] page
@@ -936,13 +936,6 @@ export enum UserRoles {
   PageBuilder = 'page-builder',
   Admin = 'admin',
   SysAdmin = 'sys-admin',
-}
-
-// Subscription Management Page
-
-export interface SubscriptionData {
-  object: QueryResponse
-  sendEmail: boolean
 }
 
 export type CompBaseProps<T = {}> = FunctionComponent<
