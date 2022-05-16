@@ -65,7 +65,7 @@ export const instanceData = {
       userEdits: "Bearbeitungen von %user%",
       userEditsMine: "Meine ungeprüften Bearbeitungen",
       editProfile: "Profil bearbeiten & Einstellungen",
-      diagon: 'Diagon Alley'
+      diagon: "Winkelgasse"
     },
     roles: {
       donor: "Spender*in",
@@ -789,10 +789,10 @@ export const loggedInData = {
       }
     },
     backend: {
-      pages: 'Static Pages',
-      authorization: 'Authorization',
+      pages: "Statische Seiten",
+      authorization: "Rechtevergabe",
       navigation: 'Navigation',
-      recycleBin: 'Recycle Bin'
+      recycleBin: "Papierkorb"
     }
   }
 };
