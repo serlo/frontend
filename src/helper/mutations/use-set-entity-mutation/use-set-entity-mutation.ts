@@ -217,7 +217,7 @@ const loopNestedChildren = async ({
   }
 }
 
-function getRequiredString(
+export function getRequiredString(
   loggedInData: LoggedInData,
   name: string,
   value?: string

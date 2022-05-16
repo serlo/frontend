@@ -3,6 +3,7 @@ import {
   EntityMutation,
   NotificationMutation,
   NotificationSetStateInput,
+  PageAddRevisionInput,
   RejectRevisionInput,
   SetEntityResponse,
   SubscriptionSetInput,
@@ -43,6 +44,7 @@ type MutationInput =
   | UserDeleteBotsInput
   | UserSetDescriptionInput
   | SetEntityInputTypes
+  | PageAddRevisionInput
 
 type MutationResponse =
   | ThreadMutation

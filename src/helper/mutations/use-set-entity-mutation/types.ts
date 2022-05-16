@@ -18,6 +18,7 @@ import {
   CoursePageSerializedState,
   CourseSerializedState,
   EventSerializedState,
+  PageSerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
   TextSolutionSerializedState,
@@ -65,6 +66,9 @@ export type SupportedTypesSerializedState =
   | TextGroupedExerciseSerilizedState
 
 export type SetEntityMutationData = SupportedTypesSerializedState & OnSaveData
+export type AddPageRevisionMutationData = PageSerializedState & {
+  __typename?: 'Page'
+}
 
 export interface SetEntityMutationRunnerData {
   auth: RefObject<AuthenticationPayload>
