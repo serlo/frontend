@@ -15,6 +15,7 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData } from '@/data-types'
@@ -29,6 +30,7 @@ export function getPluginRegistry(
     'text-exercise',
     'text-exercise-group',
   ].includes(type)
+  const isPage = type === 'Page'
 
   const registry = [
     {
@@ -129,18 +131,32 @@ export function getPluginRegistry(
           },
         ]
       : []),
+    ...(isPage && shouldUseFeature('pagePlugins')
+      ? [
+          {
+            name: 'pageLayout',
+            title: 'Layout Column for Pages',
+            description: "The plugin the people want but don't get 🤫",
+            icon: createIcon(faGripLinesVertical),
+          },
+          {
+            name: 'pageTeam',
+            title: 'Team Overview',
+            description: 'Only for the teampages',
+            icon: createIcon(faUsers),
+          },
+        ]
+      : []),
   ]
 
   const filteredRegistry = include
     ? registry.filter((plugin) => include.includes(plugin.name))
     : registry
 
-  // Testing new box plugin
-  const boxFiltered = shouldUseFeature('boxPlugin')
-    ? filteredRegistry.filter(
-        (plugin) => !['blockquote', 'important'].includes(plugin.name)
-      )
-    : filteredRegistry.filter((plugin) => plugin.name !== 'box')
+  // Filter old plugins, will be removed completely after migration is done
+  const boxFiltered = filteredRegistry.filter(
+    (plugin) => !['blockquote', 'important'].includes(plugin.name)
+  )
 
   // Testing new table plugin
   const showNewTable = shouldUseFeature('tablePlugin')

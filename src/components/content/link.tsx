@@ -49,8 +49,6 @@ export function isLegacyLink(_href: string) {
     return shouldUseFeature('legacyEditor')
   }
 
-  if (_href == '/discussions') return !shouldUseFeature('discussionsPage')
-
   return (
     legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||

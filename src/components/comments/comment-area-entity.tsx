@@ -1,18 +1,14 @@
-import { Comment as CommentType, Thread as ThreadType } from '@serlo/api'
 import { useState, useRef, useEffect } from 'react'
 
 import { Guard } from '../guard'
 import { CommentArea } from './comment-area'
+import { useCommentData } from '@/fetcher/use-comment-data'
 import { scrollToPrevious } from '@/helper/scroll'
-import { useCommentData } from '@/helper/use-comment-data'
 
 export interface CommentAreaEntityProps {
   entityId: number
   noForms?: boolean
 }
-
-export type CommentsData = CommentType[]
-export type ThreadsData = ThreadType[]
 
 export function CommentAreaEntity({
   entityId,
@@ -45,6 +41,8 @@ export function CommentAreaEntity({
           commentCount={commentCount}
           entityId={entityId}
           noForms={noForms}
+          highlightedCommentId={highlightedCommentId}
+          setHighlightedCommentId={setHighlightedCommentId}
         />
       </Guard>
     </div>

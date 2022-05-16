@@ -1,16 +1,10 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
-import {
-  AbstractUuid,
-  Comment as CommentType,
-  Thread as ThreadType,
-} from '@serlo/api'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 
 import { Lazy } from '../content/lazy'
-import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
@@ -19,37 +13,38 @@ import { Thread } from './thread'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
-import { getTranslatedType } from '@/helper/get-translated-type'
-import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { GetCommentsNode } from '@/fetcher/use-comment-data'
+import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
 } from '@/helper/mutations/thread'
 
+export type ThreadsData = GetCommentsNode[] | GetAllThreadsNode[]
+export type CommentsData =
+  | GetCommentsNode['comments']['nodes']
+  | GetAllThreadsNode['comments']['nodes']
+
 export interface CommentAreaProps {
   commentData: {
-    active: ThreadType[] | undefined
-    archived: ThreadType[] | undefined
+    active?: ThreadsData
+    archived?: ThreadsData
   }
   commentCount?: number
   entityId?: number
   noForms?: boolean
-  isDiscussionsPage?: boolean
+  highlightedCommentId?: number
+  setHighlightedCommentId?: (id: number) => void
 }
-
-export type CommentsData = CommentType[]
-export type ThreadsData = ThreadType[]
 
 export function CommentArea({
   commentData,
   commentCount,
   entityId,
   noForms,
-  isDiscussionsPage,
+  highlightedCommentId,
+  setHighlightedCommentId,
 }: CommentAreaProps) {
-  const [highlightedCommentId, setHighlightedCommentId] = useState<
-    number | undefined
-  >(undefined)
   const { strings } = useInstanceData()
   const auth = useAuthentication()
   const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
@@ -68,6 +63,10 @@ export function CommentArea({
       {renderContent()}
     </>
   )
+
+  function highlight(id: number) {
+    if (setHighlightedCommentId) setHighlightedCommentId(id)
+  }
 
   function renderContent() {
     if (!auth.current && commentCount == 0) return null
@@ -118,37 +117,16 @@ export function CommentArea({
   function renderThreads() {
     return commentData.active?.map((thread) => (
       <Fragment key={thread.id}>
-        {renderSeperator(thread.object)}
         <Thread
           thread={thread}
           showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
           highlightedCommentId={highlightedCommentId}
           renderReplyForm={renderReplyForm}
-          highlight={setHighlightedCommentId}
-          onShowChildren={onShowThreadChildren}
+          highlight={highlight}
+          toggleChildren={onToggleThreadChildren}
         />
       </Fragment>
     ))
-  }
-
-  function renderSeperator(object?: AbstractUuid) {
-    if (!isDiscussionsPage || !object) return null
-
-    const { id, alias, __typename } = object as AbstractUuid & {
-      __typename: string
-    }
-    const href = alias ?? `/${id}`
-    return (
-      <div className="border-b-2 mt-5 mb-5 mx-side">
-        <b>
-          <Link href={href}>
-            <FaIcon icon={getIconByTypename(__typename)} />{' '}
-            {getTranslatedType(strings, __typename)}
-          </Link>
-        </b>{' '}
-        ( <Link href={href}>{alias ?? id}</Link>)
-      </div>
-    )
   }
 
   function renderReplyForm(threadId: string) {
@@ -170,13 +148,17 @@ export function CommentArea({
         show={showAll}
         data={commentData.archived}
         highlightedCommentId={highlightedCommentId}
-        highlight={setHighlightedCommentId}
+        highlight={highlight}
       />
     )
   }
 
-  function onShowThreadChildren(threadId: string) {
-    setShowThreadChildren([...showThreadChildren, threadId])
+  function onToggleThreadChildren(threadId: string) {
+    setShowThreadChildren(
+      showThreadChildren.includes(threadId)
+        ? showThreadChildren.filter((id) => id !== threadId)
+        : [...showThreadChildren, threadId]
+    )
   }
 
   function renderHeading(icon: IconDefinition, text: string) {

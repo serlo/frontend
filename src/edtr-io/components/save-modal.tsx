@@ -1,7 +1,7 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
 import { SaveContext } from '../serlo-editor'
@@ -36,12 +36,27 @@ export function SaveModal({
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [autoCheckout, setAutoCheckout] = useState(false)
+  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  const [fireSave, setFireSave] = useState(false)
 
   const licenseAccepted = !license || agreement
-  const changesFilled = !changes || changes.value
+  const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
   const buttonDisabled = !maySave || pending
   const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
+
+  useEffect(() => {
+    if (fireSave) {
+      handleSave(notificationSubscription, emailSubscription, autoCheckout)
+      setFireSave(false)
+    }
+  }, [
+    autoCheckout,
+    emailSubscription,
+    fireSave,
+    handleSave,
+    notificationSubscription,
+  ])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -88,11 +103,8 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            handleSave(
-              notificationSubscription,
-              emailSubscription,
-              autoCheckout
-            )
+            changes?.set(changesText)
+            setFireSave(true)
           }}
           className={clsx(
             'serlo-button',
@@ -138,10 +150,10 @@ export function SaveModal({
       <label className="font-bold">
         {edtrIo.changes}
         <textarea
-          value={changes.value}
+          value={changesText}
           onChange={(e) => {
             const { value } = e.target as HTMLTextAreaElement
-            changes.set(value)
+            setChangesText(value)
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',

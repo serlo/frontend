@@ -23,6 +23,8 @@ import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import type { FrontendContentNode } from '@/data-types'
+import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
+import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
 
 export type NodePath = (number | string)[]
 
@@ -494,6 +496,15 @@ function renderElement({
       </>
     )
   }
+  if (element.type === 'pageLayout') {
+    return (
+      <PageLayoutAdapter
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
+  }
+  if (element.type === 'pageTeam') return <PageTeamAdapter {...element} />
   return null
 }
 

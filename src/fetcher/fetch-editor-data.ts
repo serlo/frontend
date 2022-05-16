@@ -36,10 +36,7 @@ export async function fetchEditorData(
   localeString: string,
   ids?: string[]
 ): Promise<EditorPageData | EditorFetchErrorData> {
-  if (!ids)
-    return {
-      errorType: 'failed-fetch',
-    }
+  if (!ids) return { errorType: 'failed-fetch' }
   let data = null
   const repoId = parseInt(ids[0])
   const revisionId = parseInt(ids[1])

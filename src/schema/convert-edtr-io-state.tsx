@@ -277,5 +277,21 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
+
+  if (node.plugin === 'pageTeam') {
+    return [{ type: 'pageTeam', data: node.state.data }]
+  }
+
+  if (node.plugin === 'pageLayout') {
+    if (node.state.widthPercent === 0) return []
+    return [
+      {
+        type: 'pageLayout',
+        column1: convert(node.state.column1 as EdtrState),
+        column2: convert(node.state.column2 as EdtrState),
+        widthPercent: node.state.widthPercent,
+      },
+    ]
+  }
   return []
 }
