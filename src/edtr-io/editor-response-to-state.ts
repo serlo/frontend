@@ -244,7 +244,6 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
           revision,
           changes: '',
           title: uuid.currentRevision?.title || '',
-          icon: 'explanation',
           content: serializeEditorState(
             toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
           ),

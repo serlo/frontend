@@ -79,7 +79,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
-    return convert(node.state)
+    return [{ type: 'slate-container', children: convert(node.state) }]
   }
   if (node.plugin === 'image') {
     // remove images without source
@@ -274,6 +274,22 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         steps,
         firstExplanation: convert(firstExplanation),
         transformationTarget,
+      },
+    ]
+  }
+
+  if (node.plugin === 'pageTeam') {
+    return [{ type: 'pageTeam', data: node.state.data }]
+  }
+
+  if (node.plugin === 'pageLayout') {
+    if (node.state.widthPercent === 0) return []
+    return [
+      {
+        type: 'pageLayout',
+        column1: convert(node.state.column1 as EdtrState),
+        column2: convert(node.state.column2 as EdtrState),
+        widthPercent: node.state.widthPercent,
       },
     ]
   }

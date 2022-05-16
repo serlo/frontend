@@ -23,6 +23,8 @@ import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import type { FrontendContentNode } from '@/data-types'
+import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
+import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
 
 export type NodePath = (number | string)[]
 
@@ -240,6 +242,12 @@ function renderElement({
   }
   if (element.type === 'p') {
     return <p className="serlo-p">{children}</p>
+  }
+  if (element.type === 'slate-p') {
+    return <p className="serlo-p mb-0 slate-p min-h-[1.33em]">{children}</p>
+  }
+  if (element.type === 'slate-container') {
+    return <div className="mb-block slate-container">{children}</div>
   }
   if (element.type === 'h') {
     const classNames = {
@@ -488,6 +496,15 @@ function renderElement({
       </>
     )
   }
+  if (element.type === 'pageLayout') {
+    return (
+      <PageLayoutAdapter
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
+  }
+  if (element.type === 'pageTeam') return <PageTeamAdapter {...element} />
   return null
 }
 

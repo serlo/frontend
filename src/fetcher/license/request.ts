@@ -1,7 +1,10 @@
-import * as GraphQL from '@serlo/api'
 import { request } from 'graphql-request'
 
 import { convertState } from '../convert-state'
+import {
+  LicenseDetailsQuery,
+  LicenseDetailsQueryVariables,
+} from '../graphql-types/operations'
 import { licenseDetailsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { LicenseDetailPage, PageNotFound } from '@/data-types'
@@ -9,12 +12,14 @@ import { LicenseDetailPage, PageNotFound } from '@/data-types'
 export async function requestLicensePage(
   id: number
 ): Promise<LicenseDetailPage | PageNotFound> {
-  const { license } = await request<{ license: GraphQL.License }>(
-    endpoint,
-    licenseDetailsQuery(id)
-  )
+  const result = await request<
+    LicenseDetailsQuery,
+    LicenseDetailsQueryVariables
+  >(endpoint, licenseDetailsQuery, { id })
 
-  if (license === null) {
+  const license = result.license.license
+
+  if (!license) {
     return { kind: 'not-found' }
   }
 

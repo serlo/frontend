@@ -4,7 +4,6 @@ import { sanitizeLatex } from './sanitize-latex'
 import type {
   FrontendContentNode,
   FrontendLiNode,
-  FrontendMathNode,
   FrontendTextColor,
   FrontendTextNode,
 } from '@/data-types'
@@ -31,7 +30,9 @@ export function convertTextPluginState(
 
 export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'p') {
-    return handleSemistructedContentOfP(convertTextPluginState(node.children))
+    return [
+      { type: 'slate-p', children: convertTextPluginState(node.children) },
+    ]
   }
   if (node.type === 'a') {
     const children = convertTextPluginState(node.children)
@@ -124,9 +125,11 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     ]
   }
   if (node.type === 'list-item') {
-    const children = handleSemistructedContentOfP(
-      convertTextPluginState(node.children)
-    )
+    const children: FrontendContentNode[] =
+      handleSemistructedContentOfPForListItems(
+        convertTextPluginState(node.children)
+      )
+
     return [
       {
         type: 'li',
@@ -155,22 +158,9 @@ export function convertTextNode(node: NewText): FrontendContentNode[] {
   ]
 }
 
-export function unwrapSingleMathInline(children: FrontendContentNode[]) {
-  return children.map((child) => {
-    if (
-      child.type == 'p' &&
-      child.children?.length == 1 &&
-      child.children[0].type == 'inline-math'
-    ) {
-      // force conversion
-      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
-      return child.children[0]
-    }
-    return child
-  })
-}
-
-export function handleSemistructedContentOfP(input: FrontendContentNode[]) {
+function handleSemistructedContentOfPForListItems(
+  input: FrontendContentNode[]
+) {
   // generate children, split text blocks at new lines
   const children = input.flatMap((child) => {
     if (child.type == 'text' && child.text.includes('\n')) {
@@ -202,10 +192,10 @@ export function handleSemistructedContentOfP(input: FrontendContentNode[]) {
         resultAppendable = false
         return
       }
-      if (resultAppendable && last && last.type == 'p') {
+      if (resultAppendable && last && last.type == 'slate-p') {
         last.children!.push(child)
       } else {
-        result.push({ type: 'p', children: [child] })
+        result.push({ type: 'slate-p', children: [child] })
         resultAppendable = true
       }
     } else {
@@ -214,5 +204,5 @@ export function handleSemistructedContentOfP(input: FrontendContentNode[]) {
     }
   })
 
-  return unwrapSingleMathInline(result)
+  return result
 }

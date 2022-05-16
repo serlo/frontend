@@ -173,12 +173,6 @@ export const featuredContent = {
       url: '/informatik/65009/bauernhof',
       img: 'https://assets.serlo.org/legacy/58b81febf334a_aab028f7c60aed6f8d489045726e2fd37fada38c.svg',
     },
-    {
-      title: 'Binärsysteme',
-      type: 'article',
-      url: '/informatik/181058/bin%C3%A4rsystem',
-      img: 'https://assets.serlo.org/5f9d77d9acff9_f59d8f47cd0eef27051dffa75abd123f3805d080.png',
-    },
   ] as FeaturedContentData[],
   mathe: [
     {
