@@ -12,6 +12,7 @@ import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -32,7 +33,7 @@ function Content() {
   const { strings } = useInstanceData()
 
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
+  if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.backend
 
   function getMenuData(): Entry[] {
