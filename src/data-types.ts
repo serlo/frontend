@@ -4,8 +4,11 @@ import { CSSProperties, FunctionComponent } from 'react'
 
 import { BoxType } from './edtr-io/plugins/box/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
-import { UnrevisedRevisionsQuery } from './fetcher/graphql-types/operations'
-import { Instance, User } from './fetcher/query-types'
+import {
+  Instance,
+  UnrevisedRevisionsQuery,
+} from './fetcher/graphql-types/operations'
+import { User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 // exact props of /[...slug] page

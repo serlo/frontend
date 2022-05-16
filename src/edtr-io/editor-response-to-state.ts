@@ -23,22 +23,7 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
-import {
-  Applet,
-  Article,
-  Course,
-  CoursePage,
-  Event,
-  Exercise,
-  BareExercise,
-  ExerciseGroup,
-  Page,
-  Solution,
-  TaxonomyTerm,
-  User,
-  Video,
-  MainUuidType,
-} from '@/fetcher/query-types'
+import { User, MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -122,7 +107,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertApplet(
-    uuid: Applet
+    uuid: Extract<MainUuidType, { __typename: 'Applet' }>
   ): DeserializedState<typeof appletTypeState> {
     stack.push({ id: uuid.id, type: 'applet' })
     return {
@@ -144,7 +129,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertArticle(
-    uuid: Article
+    uuid: Extract<MainUuidType, { __typename: 'Article' }>
   ): DeserializedState<typeof articleTypeState> {
     stack.push({ id: uuid.id, type: 'article' })
     return {
@@ -197,7 +182,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertCourse(
-    uuid: Course
+    uuid: Extract<MainUuidType, { __typename: 'Course' }>
   ): DeserializedState<typeof courseTypeState> {
     stack.push({ id: uuid.id, type: 'course' })
     return {
@@ -232,7 +217,10 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertCoursePage(
-    uuid: Pick<CoursePage, 'id' | 'currentRevision'>
+    uuid: Pick<
+      Extract<MainUuidType, { __typename: 'CoursePage' }>,
+      'id' | 'currentRevision'
+    >
   ): DeserializedState<typeof coursePageTypeState> {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
@@ -255,7 +243,9 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
   }
 
-  function convertEvent(uuid: Event): DeserializedState<typeof eventTypeState> {
+  function convertEvent(
+    uuid: Extract<MainUuidType, { __typename: 'Event' }>
+  ): DeserializedState<typeof eventTypeState> {
     stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
@@ -274,7 +264,9 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     }
   }
 
-  function convertPage(uuid: Page): DeserializedState<typeof pageTypeState> {
+  function convertPage(
+    uuid: Extract<MainUuidType, { __typename: 'Page' }>
+  ): DeserializedState<typeof pageTypeState> {
     stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
@@ -290,7 +282,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertTaxonomy(
-    uuid: TaxonomyTerm
+    uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
   ): DeserializedState<typeof taxonomyTypeState> {
     stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
@@ -298,7 +290,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
         plugin: 'type-taxonomy',
         state: {
           id: uuid.id,
-          parent: uuid.parent.id,
+          parent: uuid.parent?.id ?? 0,
           position: uuid.weight,
           taxonomy: uuid.taxonomyId,
           term: {
@@ -314,7 +306,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertTextExercise(
-    uuid: Exercise | BareExercise
+    uuid: Extract<MainUuidType, { __typename: 'Exercise' }>
   ): DeserializedState<typeof textExerciseTypeState> {
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
@@ -329,7 +321,12 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           'text-solution':
             uuid.solution && !uuid.solution.trashed
-              ? convertTextSolution(uuid.solution).initialState.state
+              ? convertTextSolution({
+                  ...uuid.solution,
+                  __typename: 'Solution',
+                  instance: uuid.instance,
+                  exercise: uuid,
+                }).initialState.state
               : '',
           content: getContent(),
         },
@@ -361,14 +358,28 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertTextExerciseGroup(
-    uuid: ExerciseGroup
+    uuid: Extract<MainUuidType, { __typename: 'ExerciseGroup' }>
   ): DeserializedState<typeof textExerciseGroupTypeState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
     const exercises = uuid.exercises
       .filter((exercise) => exercise.trashed === false)
       .map((exercise) => {
-        return convertTextExercise(exercise).initialState.state
+        return convertTextExercise({
+          ...exercise,
+          __typename: 'Exercise',
+          taxonomyTerms: { nodes: [] },
+          revisions: {
+            __typename: 'ExerciseRevisionConnection',
+            totalCount: -1,
+          },
+          currentRevision: {
+            ...exercise.currentRevision,
+            __typename: 'ExerciseRevision',
+            content: exercise.currentRevision?.content ?? '',
+            date: '',
+          },
+        }).initialState.state
       })
 
     return {
@@ -388,7 +399,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   }
 
   function convertTextSolution(
-    uuid: Pick<Solution, 'id' | 'currentRevision'>
+    uuid: Extract<MainUuidType, { __typename: 'Solution' }>
   ): DeserializedState<typeof textSolutionTypeState> {
     stack.push({ id: uuid.id, type: 'text-solution' })
 
@@ -431,7 +442,9 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     return convertUserByDescription(uuid.description)
   }
 
-  function convertVideo(uuid: Video): DeserializedState<typeof videoTypeState> {
+  function convertVideo(
+    uuid: Extract<MainUuidType, { __typename: 'Video' }>
+  ): DeserializedState<typeof videoTypeState> {
     stack.push({ id: uuid.id, type: 'video' })
     return {
       initialState: {
