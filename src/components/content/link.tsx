@@ -49,19 +49,20 @@ export function isLegacyLink(_href: string) {
     return shouldUseFeature('legacyEditor')
   }
 
-  if (_href == '/discussions') return !shouldUseFeature('discussionsPage')
-
   return (
     legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
+    _href.startsWith('/authorization') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/math/wiki/') || //temporary
     _href.startsWith('/ref/') || // temporary
-    _href.startsWith('/page') ||
+    _href.startsWith('/page') || // also '/pages'
     _href.startsWith('/taxonomy') ||
+    _href.startsWith('/navigation') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
+    _href.startsWith('/uuid/recycle-bin') ||
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/entity/repository/add-revision-old/') ||
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language

@@ -56,7 +56,7 @@ export function Comment({
     if (isHighlight) {
       setTimeout(() => {
         scrollIfNeeded(commentRef.current)
-      }, 500)
+      }, 900)
     }
 
     if (commentRef.current) {

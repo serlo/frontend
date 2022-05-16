@@ -67,6 +67,7 @@ export const instanceData = {
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
       editProfile: 'Edit Profile & Settings',
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: 'Donor',
@@ -174,7 +175,6 @@ export const instanceData = {
       hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
-      confirm: 'Sure?'
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -631,6 +631,7 @@ export const loggedInData = {
         row: "row",
         column: "column",
         addType: 'Add %type%',
+        addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
         confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
@@ -709,6 +710,9 @@ export const loggedInData = {
         multimediaTitle:
           'Multimedia content associated with text',
       },
+      pageLayoutColums: {
+        chooseRatio: 'Choose column ratio'
+      },
       solution: {
         optionalExplanation:
           'Optionally explain the solution strategy here',
@@ -730,39 +734,35 @@ export const loggedInData = {
         seoDesc: 'Description for search engines',
         title: 'Title',
         writeShortIntro: 'Write a short introduction',
-        exercises: 'Exercises',
-        dragTheExercise: 'Drag the exercise',
-        removeExercise: 'Remove exercise',
-        addOptionalExercise: 'Add optional exercise',
         stillWantMore: 'Still want more?',
         moreOnTopic:
-          'You can find more content on this topic here',
-        articles: 'Articles',
-        addArticle: 'Add article',
-        idArticle: 'ID of an article, e.g. 1855',
-        openArticleTab: 'Open the article in a new tab:',
-        dragTheArticle: 'Drag the article',
-        courses: 'Courses',
-        addCourse: 'Add course',
-        idCourse: 'ID of a course, e.g. 51979',
-        openCourseTab: 'Open the course in a new tab:',
-        dragTheCourse: 'Drag the course',
-        videos: 'Videos',
-        addVideo: 'Add video',
-        idVideo: 'ID of a video, e.g. 40744',
-        openVideoTab: 'Open the video in a new tab:',
-        dragTheVideo: 'Drag the video',
-        linkTitle: 'Title of the link',
-        sources: 'Sources',
-        linkUrl: 'URL of the link',
-        openInNewTab: 'Open the link in a new tab:',
-        dragTheSource: 'Drag the source',
+        'You can find more content on this topic here',
         addSource: 'Add source',
+        removeLabel: 'Remove',
+        dragLabel: 'Drag to change order',
+        openInTab: 'Open in new tab',
+        sources: 'Sources',
+        sourceText: 'Source Text',
+        sourceUrl: 'Optional URL',
         moreInFolder:
           'You can find more exercises in the following folder',
-        exFolderId: 'ID of an exercise folder, e.g. 30560',
-        openExerciseTab:
-          'Open the exercise folder in a new tab:',
+        addModal: {
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %topicFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+          buttonEx: 'Add exercises',
+          buttonExFolder: 'Select exercise folder',
+          buttonContent: 'Add content',
+          buttonAddType: 'Add %type%',
+          title: 'Add related Content or Exercises',
+          invalidInput: 'Invalid id or url',
+          fetchError: 'Something went wrong, please try later',
+          loading: 'Loading…',
+          notFound: 'Could not find that content',
+          unsupportedType: 'Sorry, type [%type%] is not supported here',
+          addFromFolderTitle: 'From the folder',
+          placeholder: 'Paste Serlo ID or URL here',
+          topicFolderNote: 'Only one can be selected here'
+        }
       },
       coursePage: {
         explanation: 'Explanation',
@@ -853,6 +853,12 @@ export const loggedInData = {
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
         deleteAccount: 'Delete Account',
       }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
     }
   },
 }
