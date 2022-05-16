@@ -13,8 +13,10 @@ import { useAddPageRevision } from '@/helper/mutations/use-add-page-revision-mut
 import {
   AddPageRevisionMutationData,
   SetEntityMutationData,
+  TaxonomyCreateOrUpdateMutationData,
 } from '@/helper/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
+import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
 
 export function AddRevision({
   initialState,
@@ -32,6 +34,7 @@ export function AddRevision({
 
   const setEntityMutation = useSetEntityMutation()
   const addPageRevision = useAddPageRevision()
+  const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 
   const [cookieReady, setCookieReady] = useState(false)
 
@@ -62,8 +65,8 @@ export function AddRevision({
     'ExerciseGroup',
     'GroupedExercise',
     'Page',
+    'TaxonomyTerm',
   ]
-  // 'Taxonomy'
   // 'User'
 
   return (
@@ -85,7 +88,10 @@ export function AddRevision({
           }}
           needsReview={needsReview}
           onSave={async (
-            data: SetEntityMutationData | AddPageRevisionMutationData
+            data:
+              | SetEntityMutationData
+              | AddPageRevisionMutationData
+              | TaxonomyCreateOrUpdateMutationData
           ) => {
             if (
               shouldUseFeature('addRevisionMutation') &&
@@ -109,6 +115,10 @@ export function AddRevision({
                 type === 'Page'
                   ? //@ts-expect-error resolve when old code is removed
                     await addPageRevision(dataWithType)
+                  : type === 'TaxonomyTerm'
+                  ? await taxonomyCreateOrUpdateMutation(
+                      dataWithType as TaxonomyCreateOrUpdateMutationData
+                    )
                   : await setEntityMutation(
                       //@ts-expect-error resolve when old code is removed
                       dataWithType,

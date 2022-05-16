@@ -34,7 +34,8 @@ export function useAddPageRevision() {
 
       if (success) {
         showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        window.location.href = `/entity/repository/history/${data.id}`
+        // window.location.href = `/entity/repository/history/${data.id}`
+        // TODO: fix redirect
         return true
       }
       return false

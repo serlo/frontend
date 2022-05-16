@@ -7,6 +7,8 @@ import {
   RejectRevisionInput,
   SetEntityResponse,
   SubscriptionSetInput,
+  TaxonomyTermCreateInput,
+  TaxonomyTermSetNameAndDescriptionInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -45,6 +47,8 @@ type MutationInput =
   | UserSetDescriptionInput
   | SetEntityInputTypes
   | PageAddRevisionInput
+  | TaxonomyTermCreateInput
+  | TaxonomyTermSetNameAndDescriptionInput
 
 type MutationResponse =
   | ThreadMutation
