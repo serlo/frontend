@@ -145,6 +145,6 @@ export const pageMenus: InstanceData['pageMenus'] = [
   ],
   [
     { title: 'Participa', id: 112252 },
-    { title: ' Contacto y ubicación', id: 181414 },
+    { title: 'Contacto y ubicación', id: 181414 },
   ],
 ]
