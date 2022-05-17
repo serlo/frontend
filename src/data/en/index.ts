@@ -1,10 +1,10 @@
 
-import { headerData, footerData, landingSubjectsData,subjectMenus, pageMenus } from './menu-data'
+import { headerData, footerData, landingSubjectsData,taxonomyMenus, pageMenus } from './menu-data'
 export const instanceData = {
   lang: 'en',
   headerData: headerData,
   footerData: footerData,
-  subjectMenus: subjectMenus,
+  taxonomyMenus: taxonomyMenus,
   pageMenus: pageMenus,
   strings: {
     header: {

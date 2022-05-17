@@ -44,7 +44,7 @@ export interface InstanceData {
   strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
-  subjectMenus: SubjectMenuData
+  taxonomyMenus: TaxonomyMenuData
   pageMenus: PageMenuData
 }
 
@@ -103,11 +103,12 @@ export type FooterIcon = 'newsletter' | 'github' | 'job'
 
 export interface SideMenuLink {
   title: string
-  url: string
+  url?: string
   id?: number
+  active?: boolean
 }
 
-export type SubjectMenuData = Record<string, SideMenuLink[] | null>
+export type TaxonomyMenuData = Record<string, SideMenuLink[] | null>
 export type PageMenuData = SideMenuLink[][]
 
 // We have different types of pages, each with its own set of data:

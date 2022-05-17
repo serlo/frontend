@@ -62,7 +62,7 @@ export function MetaMenu({ data }: MetaMenuProps) {
         <ul>
           {data.map((entry, i) => {
             return (
-              <li className="mb-3.5" key={entry.url}>
+              <li className="mb-3.5" key={entry.title}>
                 <Link
                   href={entry.url}
                   path={[`metamenu${i}`]}
