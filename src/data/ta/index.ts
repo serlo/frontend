@@ -64,7 +64,8 @@ export const instanceData = {
       unrevisedRevisions: 'Unrevised Revisions',
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
-      editProfile: 'Edit Profile & Settings'
+      editProfile: 'Edit Profile & Settings',
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: 'Donor',
@@ -786,6 +787,12 @@ export const loggedInData = {
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
         deleteAccount: 'Delete Account'
       }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
     }
   }
 };

@@ -299,7 +299,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   function renderNewEntity() {
     const shouldRenderEvents =
-      (lang === 'de' && router.asPath === '/community/veranstaltungen') ||
+      (lang === 'de' &&
+        router.asPath === '/community/142215/veranstaltungen') ||
       (lang !== 'de' && router.asPath.startsWith('/community'))
 
     if (data.taxonomyFolder || data.taxonomyTopic)

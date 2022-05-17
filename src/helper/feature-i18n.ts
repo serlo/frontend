@@ -38,9 +38,9 @@ import {
   loggedInData as taLoggedInData,
   instanceLandingData as taInstanceLandingData,
 } from '@/data/ta'
-import { Instance } from '@/fetcher/query-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
-export const languages: Instance[] = ['de', 'en', 'es', 'fr', 'hi', 'ta']
+export const languages: Instance[] = Object.values(Instance)
 
 export function parseLanguageSubfolder(alias: string) {
   for (const lang of languages) {
