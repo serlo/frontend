@@ -24,7 +24,12 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 interface UuidUrlInputProps {
   supportedEntityTypes: string[]
   supportedTaxonomyTypes: string[]
-  renderButtons: (type: string, id: number, title: string) => JSX.Element
+  renderButtons: (
+    typename: string,
+    id: number,
+    title: string,
+    taxType?: string
+  ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
 }
@@ -131,7 +136,8 @@ export function UuidUrlInput({
         {renderButtons(
           uuid.__typename,
           id,
-          title ?? getTranslatedType(strings, uuid.__typename)
+          title ?? getTranslatedType(strings, uuid.__typename),
+          hasOwnPropertyTs(uuid, 'type') ? uuid.type : undefined
         )}
       </>
     )

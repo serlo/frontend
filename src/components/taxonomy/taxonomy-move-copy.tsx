@@ -1,4 +1,4 @@
-import { faCopy, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
@@ -6,11 +6,18 @@ import { useEffect, useState } from 'react'
 import { UuidUrlInput } from '../author/uuid-url-input'
 import { PageTitle } from '../content/page-title'
 import { FaIcon } from '../fa-icon'
+import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { TaxonomyData, TaxonomyLink } from '@/data-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import {
+  useCreateEntityLinkMutation,
+  useDeleteEntityLinkMutation,
+} from '@/helper/mutations/taxonomyTerm'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface TaxonomyMoveCopyProps {
   taxonomyData: TaxonomyData
@@ -24,22 +31,35 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
 
     if (shouldBeOn && !buttonsActive) setButtonsActive(true)
     if (!shouldBeOn && buttonsActive) setButtonsActive(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entityIds])
+
+  const createEntityLink = useCreateEntityLinkMutation()
+  const deleteEntityLink = useDeleteEntityLinkMutation()
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
   if (!loggedInData) return <PleaseLogIn />
-  const loggedInStrings = loggedInData.strings.subscriptions
+  const loggedInStrings = loggedInData.strings.taxonomyTermTools.copyMove
 
   return (
     <>
-      <PageTitle title="Move or Copy TaxonomyTerms" headTitle />
+      <Breadcrumbs
+        data={[
+          {
+            label: taxonomyData.title ?? strings.revisions.toContent,
+            url: taxonomyData.alias ?? `/${taxonomyData.id}`,
+          },
+        ]}
+        asBackButton
+      />
+      <PageTitle title={loggedInStrings.title} headTitle />
 
       <div className="mx-side">
-        <h2 className="font-bold">Select entities to move or copy:</h2>
+        <h2 className="font-bold">{loggedInStrings.select}</h2>
         {renderList()}
-        <h2 className="mt-6 mb-3 font-bold">Target term:</h2>
+        <h2 className="mt-6 mb-3 font-bold">{loggedInStrings.target}</h2>
         {renderInput()}
       </div>
     </>
@@ -94,7 +114,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
           rel="noreferrer"
           className="serlo-link"
         >
-          Link
+          {loggedInStrings.link}
         </a>{' '}
         )
       </div>
@@ -112,32 +132,65 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     )
   }
 
-  function renderButtons(_type: string, id: number) {
+  function renderButtons(
+    _typename: string,
+    id: number,
+    _title: string,
+    taxType?: string
+  ) {
     const buttonClass = clsx(
       'text-base serlo-button serlo-make-interactive-light mr-3',
-      !buttonsActive && 'bg-gray-200 cursor-not-allowed'
+      !buttonsActive &&
+        'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
     )
+
+    const buttonText = (isMove: boolean) => {
+      return loggedInStrings[
+        isMove ? 'moveButtonText' : 'copyButtonText'
+      ].replace('%type%', getTranslatedType(strings, taxType))
+    }
+
+    const onButtonClick = async (isMove: boolean) => {
+      const createSuccess = await createEntityLink({
+        entityIds,
+        taxonomyTermId: id,
+      })
+
+      const removeSuccess = isMove
+        ? createSuccess
+          ? await deleteEntityLink({
+              entityIds,
+              taxonomyTermId: taxonomyData.id,
+            })
+          : false
+        : true
+
+      if (createSuccess && removeSuccess) {
+        showToastNotice(
+          loggedInStrings[isMove ? 'moveSuccess' : 'copySuccess'],
+          'success'
+        )
+      }
+    }
+
     return (
       <div className="mt-4">
-        <button
-          className={buttonClass}
-          disabled={!buttonsActive}
-          onClick={() => {
-            console.log(id)
-          }}
-        >
-          <FaIcon icon={faArrowRight} /> Move to folder
-        </button>
-        <button
-          className={buttonClass}
-          disabled={!buttonsActive}
-          onClick={() => {
-            console.log(id)
-          }}
-        >
-          <FaIcon icon={faCopy} /> Copy to folder
-        </button>
+        {renderButton('move')}
+        {renderButton('copy')}
       </div>
     )
+
+    function renderButton(copyOrMove: 'copy' | 'move') {
+      const isMove = copyOrMove === 'move'
+      return (
+        <button
+          className={buttonClass}
+          disabled={!buttonsActive}
+          onClick={() => onButtonClick(isMove)}
+        >
+          <FaIcon icon={isMove ? faArrowRight : faCopy} /> {buttonText(isMove)}
+        </button>
+      )
+    }
   }
 }

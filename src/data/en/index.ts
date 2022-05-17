@@ -480,7 +480,7 @@ export const loggedInData = {
         UNAUTHENTICATED: 'You have to log in to use this function!',
         FORBIDDEN:'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
         valueMissing: 'Please fill all required fields'
       }
@@ -860,6 +860,18 @@ export const loggedInData = {
       authorization: 'Authorization',
       navigation: 'Navigation',
       recycleBin: 'Recycle Bin'
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied",
+      }
     }
   },
 }

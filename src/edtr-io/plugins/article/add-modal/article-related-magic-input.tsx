@@ -36,10 +36,10 @@ export function ArticleRelatedMagicInput({
     />
   )
 
-  function renderButtons(type: string, id: number, title: string) {
+  function renderButtons(typename: string, id: number, title: string) {
     return (
       <>
-        {type === 'TaxonomyTerm' ? (
+        {typename === 'TaxonomyTerm' ? (
           <button
             className="serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser mr-2"
             onClick={() => {
@@ -54,7 +54,7 @@ export function ArticleRelatedMagicInput({
             <Icon icon={faSearch} />
           </button>
         ) : null}
-        <SerloAddButton text="" onClick={() => addEntry(id, type, title)} />
+        <SerloAddButton text="" onClick={() => addEntry(id, typename, title)} />
       </>
     )
   }

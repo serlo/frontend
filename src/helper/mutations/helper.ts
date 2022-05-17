@@ -6,6 +6,7 @@ import {
   RejectRevisionInput,
   SetEntityResponse,
   SubscriptionSetInput,
+  TaxonomyEntityLinksInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -43,6 +44,7 @@ type MutationInput =
   | UserDeleteBotsInput
   | UserSetDescriptionInput
   | SetEntityInputTypes
+  | TaxonomyEntityLinksInput
 
 type MutationResponse =
   | ThreadMutation
