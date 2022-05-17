@@ -349,18 +349,20 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                   </>
                 )}
 
-                {data.taxonomyTopic && canDo(TaxonomyTerm.change) && (
-                  <>
-                    {renderLi(
-                      `/taxonomy/term/create/4/${data.id}`,
-                      entities.folder
-                    )}
-                    {renderLi(
-                      `/taxonomy/term/create/9/${data.id}`,
-                      entities.topicFolder
-                    )}
-                  </>
-                )}
+                {data.taxonomyTopic &&
+                  lang == 'de' &&
+                  canDo(TaxonomyTerm.change) && (
+                    <>
+                      {renderLi(
+                        `/taxonomy/term/create/4/${data.id}`,
+                        entities.folder
+                      )}
+                      {renderLi(
+                        `/taxonomy/term/create/9/${data.id}`,
+                        entities.topicFolder
+                      )}
+                    </>
+                  )}
               </ul>
             }
           >
