@@ -6,6 +6,7 @@ import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { GetTrashedEntitiesQuery } from '@/fetcher/graphql-types/operations'
@@ -20,7 +21,7 @@ export default renderedPageNoHooks(() => (
 
 function Content() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error, loadMore } = useFetch()
+  const { data, error, loadMore, loading } = useFetch()
   const { strings } = useInstanceData()
 
   return (
@@ -42,6 +43,7 @@ function Content() {
   )
 
   function renderLoadMore() {
+    if (loading) return <LoadingSpinner noText />
     if (data === undefined || data?.totalCount === data.nodes.length)
       return null
 
