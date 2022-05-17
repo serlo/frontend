@@ -299,7 +299,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   function renderNewEntity() {
     const shouldRenderEvents =
-      (lang === 'de' && router.asPath === '/community/veranstaltungen') ||
+      (lang === 'de' &&
+        router.asPath === '/community/142215/veranstaltungen') ||
       (lang !== 'de' && router.asPath.startsWith('/community'))
 
     if (data.taxonomyFolder || data.taxonomyTopic)
@@ -348,18 +349,20 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                   </>
                 )}
 
-                {data.taxonomyTopic && canDo(TaxonomyTerm.change) && (
-                  <>
-                    {renderLi(
-                      `/taxonomy/term/create/4/${data.id}`,
-                      entities.folder
-                    )}
-                    {renderLi(
-                      `/taxonomy/term/create/9/${data.id}`,
-                      entities.topicFolder
-                    )}
-                  </>
-                )}
+                {data.taxonomyTopic &&
+                  lang == 'de' &&
+                  canDo(TaxonomyTerm.change) && (
+                    <>
+                      {renderLi(
+                        `/taxonomy/term/create/4/${data.id}`,
+                        entities.folder
+                      )}
+                      {renderLi(
+                        `/taxonomy/term/create/9/${data.id}`,
+                        entities.topicFolder
+                      )}
+                    </>
+                  )}
               </ul>
             }
           >

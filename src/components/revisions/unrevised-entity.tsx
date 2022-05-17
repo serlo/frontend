@@ -7,26 +7,51 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { CompBaseProps } from '@/data-types'
-import {
-  QueryResponseRevisionNoPage,
-  UnrevisedEntityData,
-} from '@/fetcher/query-types'
+import type { CompBaseProps, UnrevisedRevisionsData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+
+export type UnrevisedRevisionEntity =
+  UnrevisedRevisionsData['subjects'][number]['unrevisedEntities']['nodes'][number]
 
 export interface UnrevisedEntityProps {
-  entity: UnrevisedEntityData
+  entity: UnrevisedRevisionEntity
   isOwn?: boolean
+}
+
+function getNodes(entity: UnrevisedRevisionEntity) {
+  if (hasOwnPropertyTs(entity, 'revisions')) {
+    return entity.revisions?.nodes
+  }
+  if (hasOwnPropertyTs(entity, 'solutionRevisions')) {
+    return entity.solutionRevisions.nodes
+  }
+  return []
+}
+
+function getTitle(entity: UnrevisedRevisionEntity) {
+  if (hasOwnPropertyTs(entity, 'currentRevision') && entity.currentRevision) {
+    if (hasOwnPropertyTs(entity.currentRevision, 'title')) {
+      return entity.currentRevision.title
+    }
+  }
+
+  if (hasOwnPropertyTs(entity, 'revisions')) {
+    const node = entity.revisions.nodes[0]
+    if (node && hasOwnPropertyTs(node, 'title')) {
+      return node.title
+    }
+  }
+
+  return entity.id.toString()
 }
 
 export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   const { strings } = useInstanceData()
 
-  const nodes = entity.revisions?.nodes ?? entity.solutionRevisions?.nodes ?? []
+  const nodes = getNodes(entity)
 
-  // @ts-expect-error I'm okay with just trying if it's there
-  const revisionTitle = entity.revisions?.nodes[0]?.title as string | undefined
-  const title = entity.currentRevision?.title ?? revisionTitle ?? entity.id
+  const title = getTitle(entity)
 
   const isProbablyNew = entity.currentRevision === null
 
@@ -56,7 +81,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     )
   }
 
-  function renderRevision(revision: QueryResponseRevisionNoPage) {
+  function renderRevision(revision: ReturnType<typeof getNodes>[number]) {
     if (!revision) return null
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
     const isProbablyWIP = checkWIP(revision.changes)

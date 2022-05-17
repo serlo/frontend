@@ -9,7 +9,7 @@ import {
   UnrevisedRevisionsPage,
   UnrevisedRevisionsProps,
 } from '@/data-types'
-import { Instance } from '@/fetcher/query-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestUnrevisedRevisionsBySubjects } from '@/fetcher/unrevised-revisions/request'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
