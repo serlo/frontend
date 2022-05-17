@@ -1,11 +1,7 @@
 import { TopicCategories } from './topic-categories'
 import { Link } from '@/components/content/link'
-import { TaxonomyData, TaxonomySubTerm } from '@/data-types'
+import { TaxonomySubTerm } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
-
-export interface TopicProps {
-  data: TaxonomyData
-}
 
 export interface SubTopicProps {
   data: TaxonomySubTerm

@@ -759,6 +759,7 @@ export const loggedInData = {
           loading: 'Loading…',
           notFound: 'Could not find that content',
           unsupportedType: 'Sorry, type [%type%] is not supported here',
+          unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
           topicFolderNote: 'Only one can be selected here'
