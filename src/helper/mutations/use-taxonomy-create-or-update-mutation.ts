@@ -1,5 +1,6 @@
 import { TaxonomyTypeCreateOptions } from '@serlo/api'
 import { gql } from 'graphql-request'
+import { useRouter } from 'next/router'
 
 import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
@@ -11,6 +12,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 export function useTaxonomyCreateOrUpdateMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const router = useRouter()
 
   return async (data: TaxonomyCreateOrUpdateMutationData) => {
     if (!auth || !loggedInData) {
@@ -32,9 +34,8 @@ export function useTaxonomyCreateOrUpdateMutation() {
 
       // reafactor as soon as we don't rely on legacy any more…
       // only for create
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [_a, _b, c_, _d, typeNumberString, parentIdString] =
-        window.location.pathname.split('/') // taxonomy/term/create/4/1390
+      const [, , , , typeNumberString, parentIdString] =
+        router.asPath.split('/') // taxonomy/term/create/4/1390
 
       const success = data.id
         ? await mutationFetch(
