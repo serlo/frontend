@@ -30,16 +30,11 @@ export function useTaxonomyCreateOrUpdateMutation() {
         ),
       }
 
-      //only for create
+      // reafactor as soon as we don't rely on legacy any more…
+      // only for create
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_a, _b, c_, _d, typeNumberString, parentIdString] =
         window.location.pathname.split('/') // taxonomy/term/create/4/1390
-
-      // console.log('parent')
-      // console.log(parseInt(parentIdString))
-
-      // console.log('getTaxonomyType')
-      // console.log(getTaxonomyType(typeNumberString))
 
       const success = data.id
         ? await mutationFetch(
@@ -61,7 +56,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
 
       if (success) {
         showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        //window.location.href = `/${data.id}` // TODO: if id is undef
+        window.location.href = `/${data.id ?? parentIdString}`
         return true
       }
       return false
