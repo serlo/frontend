@@ -60,13 +60,15 @@ function Content() {
   function renderTable(nodes: TrashedEntitiesNode[]) {
     return (
       <table className="serlo-table">
-        <tr>
-          <th className="serlo-th">ID</th>
-          <th className="serlo-th">Alias</th>
-          <th className="serlo-th">Type</th>
-          <th className="serlo-th">{strings.bin.trashed}</th>
-        </tr>
-        {nodes.map(renderRow)}
+        <thead>
+          <tr>
+            <th className="serlo-th">ID</th>
+            <th className="serlo-th">Alias</th>
+            <th className="serlo-th">Type</th>
+            <th className="serlo-th">{strings.bin.trashed}</th>
+          </tr>
+        </thead>
+        <tbody>{nodes.map(renderRow)}</tbody>
       </table>
     )
   }
