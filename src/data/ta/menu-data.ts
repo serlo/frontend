@@ -92,3 +92,12 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/27469',
   donationHref: '/spenden',
 }
+
+export const taxonomyMenus: InstanceData['taxonomyMenus'] = {
+  140527: [
+    { title: 'இலக்கணம்', id: 140522 },
+    { title: 'பாடங்கள்', id: 140527 },
+  ],
+}
+
+export const pageMenus: InstanceData['pageMenus'] = []

@@ -39,3 +39,21 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/112518',
   donationHref: '/spenden',
 }
+
+export const taxonomyMenus: InstanceData['taxonomyMenus'] = {}
+
+export const pageMenus: InstanceData['pageMenus'] = [
+  [
+    { title: 'सेर्लो के बारे में', id: 112510 },
+    { title: 'सर्लो के साथ कैसे सीखें?', id: 185252 },
+    { title: 'प्रभाव', id: 185250 },
+    { title: 'टीम', id: 206300 },
+    { title: 'भागीदार और दाता', id: 185257 },
+    { title: 'अन्य भाषाओं में सेर्लो', id: 185259 },
+  ],
+  [
+    { title: 'समुदाय', id: 195674 },
+    { title: 'सैंडबॉक्स', id: 197295 },
+    { title: 'सामुदायिक मूल्यों', id: 197268 },
+  ],
+]

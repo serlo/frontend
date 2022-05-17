@@ -1,8 +1,10 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { headerData, footerData, landingSubjectsData, taxonomyMenus, pageMenus } from './menu-data';
 export const instanceData = {
   lang: "fr",
   headerData: headerData,
   footerData: footerData,
+  taxonomyMenus: taxonomyMenus,
+  pageMenus: pageMenus,
   strings: {
     header: {
       slogan: "La plateforme d'apprentissage libre",
