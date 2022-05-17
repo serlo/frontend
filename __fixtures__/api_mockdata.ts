@@ -97,6 +97,7 @@ export const taxonomyTermUuidMock = {
         {
           label: 'Mathematik',
           url: '/mathe',
+          id: 19767,
         },
         {
           label: 'Alle Themen',

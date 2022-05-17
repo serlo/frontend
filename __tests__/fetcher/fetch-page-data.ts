@@ -39,18 +39,12 @@ describe('check all supported typenames with stored api-data', () => {
     givenApiReturnsUuid(pageUuidMock)
     const pageData = (await fetchPageData('/de/serlo')) as SingleEntityPage
 
-    expect(pageData.secondaryNavigationData).toEqual([
-      {
-        title: 'So funktioniert die Lernplattform',
-        url: '/81862',
-        active: false,
-      },
-      {
-        title: 'Wirkung',
-        url: '/21406',
-        active: false,
-      },
-    ])
+    expect(pageData.secondaryNavigationData?.[0]).toEqual({
+      title: 'Über Serlo',
+      id: 18922,
+      url: '/serlo',
+      active: true,
+    })
 
     expect(pageData.metaData?.title).toBe('Über Serlo - lernen mit Serlo!')
 
@@ -234,51 +228,16 @@ describe('check all supported typenames with stored api-data', () => {
       {
         label: 'Mathematik',
         url: '/mathe',
+        id: 19767,
       },
     ])
 
-    expect(pageData.secondaryNavigationData).toEqual([
-      {
-        title: 'Alle Themen',
-        url: '/5',
-        active: true,
-      },
-      {
-        title: 'Gymnasium',
-        url: '/16042',
-        active: false,
-      },
-      {
-        title: 'Realschule',
-        url: '/16157',
-        active: false,
-      },
-      {
-        title: 'Mittelschule (Hauptschule)',
-        url: '/16259',
-        active: false,
-      },
-      {
-        title: 'FOS & BOS',
-        url: '/16033',
-        active: false,
-      },
-      {
-        title: 'Hochschule',
-        url: '/44323',
-        active: false,
-      },
-      {
-        title: 'Prüfungen',
-        url: '/83249',
-        active: false,
-      },
-      {
-        title: 'Inhalte bearbeiten und neue Inhalte hinzufügen',
-        url: '/19880',
-        active: false,
-      },
-    ])
+    expect(pageData.secondaryNavigationData?.[0]).toEqual({
+      title: 'Alle Themen',
+      url: '/5',
+      id: 5,
+      active: true,
+    })
 
     expect(pageData.metaData?.title).toBe('Mathe - Fach - lernen mit Serlo!')
     expect(pageData.metaData?.contentType).toBe('topic')

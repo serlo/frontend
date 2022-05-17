@@ -1,4 +1,6 @@
-import { Instance, MainUuidType } from './query-types'
+import { Instance } from '@serlo/api'
+
+import { MainUuidType } from './query-types'
 import { SecondaryNavigationData } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
