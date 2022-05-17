@@ -54,44 +54,6 @@ export const taxonomyTermUuidMock = {
   alias: '/mathe/5',
   instance: 'de',
   navigation: {
-    data: {
-      children: [
-        {
-          label: 'Alle Themen',
-          id: 5,
-        },
-        {
-          label: 'Gymnasium',
-          id: 16042,
-        },
-        {
-          label: 'Realschule',
-          id: 16157,
-        },
-        {
-          label: 'Mittelschule (Hauptschule)',
-          id: 16259,
-        },
-        {
-          label: 'FOS & BOS',
-          id: 16033,
-        },
-        {
-          label: 'Hochschule',
-          id: 44323,
-        },
-        {
-          label: 'Prüfungen',
-          id: 83249,
-        },
-        {
-          label: 'Inhalte bearbeiten und neue Inhalte hinzufügen',
-          id: 19880,
-        },
-      ],
-      label: 'Mathematik',
-      id: 19767,
-    },
     path: {
       nodes: [
         {
@@ -1664,20 +1626,6 @@ export const pageUuidMock = {
       '[[{"col":24,"content":"Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler\\\\*innen und Studierende nach ihrem eigenen Bedarf und in ihrem eigenen Tempo lernen können. Die Lernplattform ist komplett kostenlos und werbefrei. \\n\\nSerlo.org wird von dem gemeinnützigen Verein Serlo Education e.V. betrieben. Wir sind Autor\\\\*innen, Softwareentwickler\\\\*innen und Projektmanager\\\\*innen mit der Vision hochwertige Bildung weltweit frei verfügbar zu machen. Gemeinsam bauen wir eine **Wikipedia fürs Lernen**."}],[{"col":24,"content":"![Lernen mit Serlo](https://assets.serlo.org/legacy/573a12d3a07fa_8279eaedfe19a52b5fa133962ea4902c4e0da24d.png)"}],[{"col":24,"content":"## Mit Serlo lernen"}],[{"col":12,"content":"![Schüler lernen mit serlo.org](https://assets.serlo.org/legacy/58de620cc81f5_3a32032a78442ac70f769077482f4209378a3396.jpg)"},{"col":12,"content":"Mit serlo.org helfen wir Dir, selbständig und im eigenen Tempo zu lernen ([So funktioniert die Lernplattform](/81862)).  Dafür findest Du 15.000 einfache Erklärungen, Aufgaben mit Musterlösungen, Lernvideos und Kurse für [Mathematik](/19767) und [weitere Schulfächer](/19863).\\n\\nAlle Inhalte sind nach Themen sortiert, Lehrplänen zugeordnet und in unser [pädagogisches Konzept](/21423) integriert.\\n\\nAktuell lernen **eine Million Personen pro Monat** mit Serlo. ([Details zur Nutzung](/21406))\\n\\n"}],[{"col":12,"content":"![Creative Commons](https://assets.serlo.org/legacy/58e14d95c33e9_6b9472b330a800a91151aa15d565d8c37c9a4b2b.png)"},{"col":12,"content":"\\n\\nSerlo.org ist komplett kostenlos und werbefrei. Unsere Inhalte stehen unter einer\\n[freien Lizenz](https://creativecommons.org/licenses/by-sa/4.0/) - sie dürfen kopiert, verändert und verbreitet werden."}],[{"col":24,"content":"## Serlo in der Schule\\n\\n\\n\\n"}],[{"col":24,"content":"Seit 2016 sind wir mit den [Serlo Lab Schools](/labschool) in das Nachmittagsangebot von Schulen integriert und begleiten Schüler\\\\*innen direkt vor Ort beim selbstständigen Lernen mit serlo.org.\\n\\nWie Du als Lehrkraft serlo.org gewinnbringend für Deinen Unterricht einsetzen kannst, erfährst Du bei unseren [Ressourcen für Pädagog\\\\*innen](/88061).\\n\\n>[Lernen mit Serlo Video](/120011)"}],[{"col":24,"content":"## Inhalte erstellen\\n\\n"}],[{"col":12,"content":"\\n\\n![Serlo Editor](https://assets.serlo.org/legacy/56d9f1fc85966_f629c642ea0cd1e1e7877f48f600d28222a3bd86.png)"},{"col":12,"content":"Wir sind eine [Autor\\\\*innen-Community](/19869) nach dem Vorbild der Wikipedia. Die Community erstellt, verlinkt, sortiert und übersetzt alle Inhalte auf serlo.org.\\n\\nDie Überprüfung durch erfahrene Mitglieder der Community und das Feedback der Nutzer\\\\*innen sorgen für die Qualitätssicherung."}],[{"col":24,"content":"## Weitere Projekte von Serlo"}],[{"col":24,"content":"* **Serlo Hochschulmathematik**: Die freie [Lehrbuchreihe für Hochschulmathematik](https://de.wikibooks.org/wiki/Mathe_f%C3%BCr_Nicht-Freaks) verzeichnet über 2 Million Seitenaufrufe pro Jahr. Das Projekt hat sich 2016 Serlo Education angeschlossen."}],[{"col":16,"content":"* **Serlo ABC:** Mit der neuen Sprach-Lernapplikation [Serlo ABC](/abc) lernen Geflüchtete intuitiv und selbständig das lateinische Alphabet. Die Entwicklung von *Serlo ABC* begann 2015."},{"col":8,"content":"![Serlo abc Logo](https://assets.serlo.org/legacy/5836d099e4c37_ea9b78edb8bcab7acf6ea79509914cc6408a7d0a.png)"}],[{"col":24,"content":"* **Serlo Nachhaltigkeit:** Ziel von [Serlo Nachhaltigkeit](/nachhaltigkeit) ist es, ökologisches Bewusstsein sowie Wissen und Fähigkeiten rund um eine nachhaltige Lebensführung mithilfe digitaler Technologie in die Breite zu tragen. Serlo Nachhaltigkeit startete 2014."}],[{"col":24,"content":"## Auszeichnungen\\n"}],[{"col":12,"content":"- **Bundesverdienstkreuz** für Serlo-Gründer Simon und Aeneas\\n\\n- Gewinner des **SWM Bildungsstiftung Förderpreis 2019**\\n\\n- **Ashoka Fellowship** für Serlo-Gründer Simon ab 2018 \\n\\n- Gewinner des **Pädagogischen Medienpreis 2017**\\n\\n- Gewinner des **OER Award 2016** in den Kategorien \\"Bestes Hochschulprojekt\\" und \\"Größter Impact\\"\\n\\n- **LMU Forscherpreis für exzellente Studierende** an Serlo-Mitgründer Aeneas für seine Arbeit an der Software von Serlo\\n"},{"col":12,"content":"\\n![Simon Köhl, Aeneas Rekkas, Bundesverdienstkreuz](https://assets.serlo.org/5e821f7496857_b3df4108c4c549f4e318d1433bfd30e4ccab08dc.JPG)"}],[{"col":24,"content":"## Die Geschichte"}],[{"col":12,"content":"![Klosterschüler in Serlo](https://assets.serlo.org/legacy/56d9f598ebea2_1581a51d8fbbce8e4abac1cb6793c714febe5a48.png)"},{"col":12,"content":"Serlo Education wurde von den Schülern Simon und Aeneas gegründet um Schule zu verändern und die Welt gerechter zu machen. Alles begann 2009 mit einem Besuch in Nepal. [Lies unsere einzigartige Geschichte](/21413)."}],[{"col":24,"content":"## Das Team"}],[{"col":12,"content":"Serlo Education wird von ehrenamtlichen [Autor\\\\*innen](/19882) und dem haupt- und ehrenamtlichen [Team](/21439) aufgebaut. Wir sind Studierende, Lehrer\\\\*innen, Softwareentwickler\\\\*innen und viele weitere Menschen, die einen Beitrag zu mehr Bildungsgerechtigkeit leisten wollen."},{"col":12,"content":"\\n\\n![Demokratische Organisation](https://assets.serlo.org/legacy/58e14f0ab5075_a536c62f74b70c2f6a3cee393993037fb0e174d2.jpg)\\n\\n"}],[{"col":24,"content":"## Vortrag von Serlo-Gründer Simon\\n\\n>[Ansatz und Vision von Serlo](/94680)"}],[{"col":24,"content":"## Finanzierung\\n\\n"}],[{"col":16,"content":"Serlo Education wird durch die großzügige Unterstützung unserer [Partner und Förderer](/21456) ermöglicht. Details zu unseren Einnahmen mit denen wir die Softwareentwicklung, die Betreuung der Ehrenamtlichen und den Aufbau der Organisation bezahlen, sind [hier transparent dargestellt](/transparenz#7angabenzurmittelherkunft).\\n\\nWir freuen uns sehr, wenn Du uns mit einer [Spende](/spenden) unterstützt. "},{"col":8,"content":"![Serlo Partner](https://assets.serlo.org/legacy/576bf8ebb9a1c_0d19b7c4804172fd6c8ac4c8a8eb178514aded40.PNG)"}],[{"col":24,"content":"## Presse"}],[{"col":24,"content":"![](https://assets.serlo.org/legacy/5750330b9dc38_6b82d89481b0a7e1eb0ef2efb596c02198c9b724.png)\\n\\n- **Norddeutscher Rundfunk:** [Radiobeitrag anhören](https://soundcloud.com/serlo/ndr-radiointerview)\\n\\n- **TheChanger:** [Interview mit Serlo-Gründer und Vorstand Simon Köhl](http://www.thechanger.org/de/blog-de/lernplattform-serlo-interview-simon-kohl/)\\n\\n- **Bertelsmann Stiftung**: [\\"Mehr Bildungsgerechtigkeit durch freie Bildungsmaterialien\\"](http://blog.aus-und-weiterbildung.eu/mehr-bildungsgerechtigkeit-durch-freie-bildungsmaterialien-lernplattform-serlo-legt-in-ersten-wirkungsbericht-beeindruckenden-zahlen/)\\n\\n- **Ashoka Deutschland und McKinsey Company**: [\\"Wenn aus klein systemisch wird. Das Milliardenpotenzial sozialer Innovationen\\"](https://www.mckinsey.de/~/media/mckinsey/locations/europe%20and%20middle%20east/deutschland/news/presse/2019/2019-03-15%20ashoka-studie%20-%20wenn%20aus%20klein%20systemisch%20wird/2019_ashoka_mckinsey_studie_wenn%20aus%20klein%20systemisch%20wird.ashx) "}],[{"col":24,"content":"## Mehr Infos\\n\\n\\n[Abonnieren Sie unseren Newsletter](http://serlo.us7.list-manage2.com/subscribe?u=23f4b04bf70ea485a766e532d&id=a7bb2bbc4f)\\n\\n[Detaillierte Information zu unseren Zielgruppen, was wir bewirken wollen und was wir bereits erreicht haben.](/wirkung)"}]]',
   },
   navigation: {
-    data: {
-      children: [
-        {
-          label: 'So funktioniert die Lernplattform',
-          id: 81862,
-        },
-        {
-          label: 'Wirkung',
-          id: 21406,
-        },
-      ],
-      label: 'Über Serlo',
-      id: 18922,
-    },
     path: {
       nodes: [
         {
