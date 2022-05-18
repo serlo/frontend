@@ -67,6 +67,7 @@ export const instanceData = {
       userEdits: "Bearbeitungen von %user%",
       userEditsMine: "Meine ungeprüften Bearbeitungen",
       editProfile: "Profil bearbeiten & Einstellungen",
+      recycleBin: "Papierkorb",
       diagon: "Winkelgasse"
     },
     roles: {
@@ -318,6 +319,9 @@ export const instanceData = {
     },
     actions: {
       loadMore: "Weitere laden"
+    },
+    bin: {
+      trashed: "Gelöscht…"
     }
   }
 };

@@ -70,6 +70,7 @@ export const instanceData = {
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
       editProfile: 'Edit Profile & Settings',
+      recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley'
     },
     roles: {
@@ -336,6 +337,9 @@ export const instanceData = {
     actions: {
       loadMore: 'Load more',
     },
+    bin: {
+      trashed: 'Trashed…'
+    }
   },
 }
 export const instanceLandingData = {

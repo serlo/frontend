@@ -62,7 +62,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/navigation') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
-    _href.startsWith('/uuid/recycle-bin') ||
+    // _href.startsWith('/uuid/recycle-bin') || disable temporary to allow testing on staging
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/entity/repository/add-revision-old/') ||
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language

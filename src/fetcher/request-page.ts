@@ -61,6 +61,29 @@ export async function requestPage(
 
   if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
 
+  if (uuid.__typename === 'Solution') {
+    return await requestPage(`/${uuid.exercise.id}`, instance)
+  }
+
+  const secondaryNavigationData = createNavigation(uuid)
+  const breadcrumbsData = createBreadcrumbs(uuid)
+  const horizonData = instance == 'de' ? createHorizon() : undefined
+  const cacheKey = `/${instance}${alias}`
+  const title = createTitle(uuid, instance)
+  const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
+
+  // Special case for event history, User profiles are requested in user/request.ts
+  if (uuid.__typename === 'User') {
+    return {
+      kind: 'user/events',
+      userData: {
+        id: uuid.id,
+        title: uuid.username,
+        alias: uuid.alias ?? undefined,
+      },
+    }
+  }
+
   if (uuid.__typename === 'Course') {
     const firstPage = uuid.pages.filter(
       (page) => page.currentRevision !== null
@@ -100,30 +123,8 @@ export async function requestPage(
           contentType: 'course',
         },
         authorization,
+        breadcrumbsData,
       }
-    }
-  }
-
-  if (uuid.__typename === 'Solution') {
-    return await requestPage(`/${uuid.exercise.id}`, instance)
-  }
-
-  const secondaryNavigationData = createNavigation(uuid, instance)
-  const breadcrumbsData = createBreadcrumbs(uuid)
-  const horizonData = instance == 'de' ? createHorizon() : undefined
-  const cacheKey = `/${instance}${alias}`
-  const title = createTitle(uuid, instance)
-  const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
-
-  // Special case for event history, User profiles are requested in user/request.ts
-  if (uuid.__typename === 'User') {
-    return {
-      kind: 'user/events',
-      userData: {
-        id: uuid.id,
-        title: uuid.username,
-        alias: uuid.alias ?? undefined,
-      },
     }
   }
 
