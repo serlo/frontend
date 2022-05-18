@@ -1,9 +1,9 @@
-import { headerData, footerData, landingSubjectsData, sideMenus } from './menu-data';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "de",
   headerData: headerData,
   footerData: footerData,
-  sideMenus: sideMenus,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "Die freie Lernplattform",

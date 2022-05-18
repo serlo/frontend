@@ -93,7 +93,7 @@ export const footerData: InstanceData['footerData'] = {
   donationHref: '/spenden',
 }
 
-export const sideMenus: InstanceData['sideMenus'] = [
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     //grammar
     rootId: 140527,

@@ -40,7 +40,7 @@ export const footerData: InstanceData['footerData'] = {
   donationHref: '/spenden',
 }
 
-export const sideMenus: InstanceData['sideMenus'] = [
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     entries: [
       { title: 'सेर्लो के बारे में', id: 112510 },

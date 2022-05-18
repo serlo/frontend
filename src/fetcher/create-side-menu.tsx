@@ -1,17 +1,17 @@
 import { Instance } from '@serlo/api'
 
 import { MainUuidType } from './query-types'
-import { SecondaryNavigationData } from '@/data-types'
+import { SecondaryMenuData } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
-export function createSideMenu(
+export function createSecondaryMenu(
   uuid: MainUuidType,
   instance: Instance
-): SecondaryNavigationData | undefined {
+): SecondaryMenuData['entries'] | undefined {
   if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
     return undefined
 
-  const { sideMenus } = getInstanceDataByLang(instance)
+  const { secondaryMenus } = getInstanceDataByLang(instance)
 
   return getMenu()?.entries.map((entry) => {
     return {
@@ -28,7 +28,7 @@ export function createSideMenu(
   }
 
   function getMenu() {
-    if (!sideMenus) return undefined
+    if (!secondaryMenus) return undefined
 
     if (uuid.__typename === 'TaxonomyTerm') {
       if (uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder')
@@ -41,13 +41,15 @@ export function createSideMenu(
       const byRootId = findMenuByRootId(uuid.id)
       if (byRootId) return byRootId
 
-      return sideMenus.find((menu) =>
+      return secondaryMenus.find((menu) =>
         menu.entries.some((entry) => entry.id === uuid.id)
       )
     }
   }
 
   function findMenuByRootId(rootId?: number) {
-    return rootId ? sideMenus.find((menu) => menu.rootId === rootId) : undefined
+    return rootId
+      ? secondaryMenus.find((menu) => menu.rootId === rootId)
+      : undefined
   }
 }

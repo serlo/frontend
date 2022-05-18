@@ -39,7 +39,7 @@ describe('check all supported typenames with stored api-data', () => {
     givenApiReturnsUuid(pageUuidMock)
     const pageData = (await fetchPageData('/de/serlo')) as SingleEntityPage
 
-    expect(pageData.secondaryNavigationData?.[0]).toEqual({
+    expect(pageData.secondaryMenuData?.[0]).toEqual({
       title: 'Über Serlo',
       id: 18922,
       url: '/serlo',
@@ -232,7 +232,7 @@ describe('check all supported typenames with stored api-data', () => {
       },
     ])
 
-    expect(pageData.secondaryNavigationData?.[0]).toEqual({
+    expect(pageData.secondaryMenuData?.[0]).toEqual({
       title: 'Alle Themen',
       url: '/5',
       id: 5,

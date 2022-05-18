@@ -91,7 +91,7 @@ export const footerData: InstanceData['footerData'] = {
   donationHref: '/spenden',
 }
 
-export const sideMenus: InstanceData['sideMenus'] = [
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     subject: 'math',
     rootId: 23591,

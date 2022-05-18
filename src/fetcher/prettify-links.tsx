@@ -10,8 +10,8 @@ export async function prettifyLinks(pageData: RequestPageData) {
   const callbacks: { id: number; callback: (alias: string) => void }[] = []
 
   if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
-    if (pageData.secondaryNavigationData) {
-      pageData.secondaryNavigationData.forEach((entry) => {
+    if (pageData.secondaryMenuData) {
+      pageData.secondaryMenuData.forEach((entry) => {
         if (entry.url) {
           const id = getId(entry.url)
           if (id) {

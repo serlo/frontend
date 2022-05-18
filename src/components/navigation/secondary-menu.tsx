@@ -2,13 +2,13 @@ import clsx from 'clsx'
 import { useRef, useEffect } from 'react'
 
 import { Link } from '../content/link'
-import { SecondaryNavigationData } from '@/data-types'
+import { SecondaryMenuData } from '@/data-types'
 
-export interface MetaMenuProps {
-  data: SecondaryNavigationData
+export interface SecondaryMenuProps {
+  data: SecondaryMenuData['entries']
 }
 
-export function MetaMenu({ data }: MetaMenuProps) {
+export function SecondaryMenu({ data }: SecondaryMenuProps) {
   const activeRef = useRef<HTMLLIElement>(null)
   const containerRef = useRef<HTMLUListElement>(null)
 

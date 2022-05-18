@@ -56,7 +56,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         />
       )}
       <div className="relative">
-        <MaxWidthDiv showNav={!!pageData.secondaryNavigationData}>
+        <MaxWidthDiv showNav={!!pageData.secondaryMenuData}>
           <main>{page}</main>
         </MaxWidthDiv>
       </div>
