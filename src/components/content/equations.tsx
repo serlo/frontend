@@ -146,7 +146,7 @@ function renderSignToString(sign: Sign): string {
   }
 }
 
-function hasContent(content: FrontendContentNode[]): boolean {
+export function hasContent(content: FrontendContentNode[]): boolean {
   if (content[0]?.type == 'slate-container')
     return hasContent(content[0].children ?? [])
   return content.some((node) => node?.children?.length || node.type == 'math')

@@ -5,6 +5,7 @@ import { faCheckSquare } from '@fortawesome/free-solid-svg-icons/faCheckSquare'
 import clsx from 'clsx'
 import { useState, Fragment } from 'react'
 
+import { hasContent } from '../equations'
 import { Feedback } from './feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
@@ -124,9 +125,7 @@ export function ScMcExercise({
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
-            const hasFeedback =
-              answer.feedback[0]?.children &&
-              answer.feedback[0].children.length > 0
+            const hasFeedback = hasContent(answer.feedback)
 
             return (
               <Fragment key={i}>
