@@ -128,7 +128,7 @@ export const footerData: InstanceData['footerData'] = {
 
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
-    subject: 'mathe',
+    // subject: 'mathe',
     rootId: 19767,
     entries: [
       { title: 'Alle Themen', id: 5 },
@@ -146,7 +146,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'informatik',
+    // subject: 'informatik',
     rootId: 48492,
     entries: [
       { title: 'Alle Themen', url: '/informatik/47899/informatik', id: 47899 },
@@ -164,7 +164,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'physik',
+    // subject: 'physik',
     rootId: 41108,
     entries: [
       { title: 'Themen', id: 41107 },
@@ -173,7 +173,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'lerntipps',
+    // subject: 'lerntipps',
     rootId: 182154,
     entries: [
       { title: 'Alle Themen', id: 181883 },
@@ -181,7 +181,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'chemie',
+    // subject: 'chemie',
     rootId: 24706,
     entries: [
       { title: 'Themen', id: 18230 },
@@ -189,7 +189,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'nachhaltigkeit',
+    // subject: 'nachhaltigkeit',
     rootId: 58771,
     entries: [
       { title: 'Alle Themen', id: 17744 },
@@ -201,7 +201,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'biologie',
+    // subject: 'biologie',
     rootId: 23950,
     entries: [
       { title: 'Themen', id: 23362 },
@@ -209,7 +209,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'englisch',
+    // subject: 'englisch',
     rootId: 25985,
     entries: [
       { title: 'Themen', id: 25979 },
@@ -217,11 +217,12 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'politik',
+    // subject: 'politik',
     rootId: 79157,
     entries: [{ title: 'Alle Themen', id: 79159 }],
   },
   {
+    // community
     rootId: 19882,
     entries: [
       { title: 'Community', id: 19882 },

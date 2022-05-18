@@ -114,7 +114,6 @@ export interface SecondaryMenuLink {
 
 export interface SecondaryMenuData {
   rootId?: number
-  subject?: string
   entries: SecondaryMenuLink[]
 }
 

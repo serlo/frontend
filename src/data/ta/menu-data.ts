@@ -95,7 +95,7 @@ export const footerData: InstanceData['footerData'] = {
 
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
-    //grammar
+    // grammar
     rootId: 140527,
     entries: [
       { title: 'இலக்கணம்', id: 140522 },

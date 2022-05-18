@@ -7,7 +7,7 @@ import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
 import { createInlineLicense } from './create-inline-license'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
-import { createSecondaryMenu } from './create-side-menu'
+import { createSecondaryMenu } from './create-secondary-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import {

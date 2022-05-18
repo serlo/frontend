@@ -85,7 +85,7 @@ export const footerData: InstanceData['footerData'] = {
 
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
-    subject: 'conseils-pour-apprendre',
+    // subject: 'conseils-pour-apprendre',
     rootId: 148617,
     entries: [{ title: 'Tous les thèmes', id: 204968 }],
   },

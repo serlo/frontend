@@ -93,7 +93,7 @@ export const footerData: InstanceData['footerData'] = {
 
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
-    subject: 'math',
+    // subject: 'math',
     rootId: 23591,
     entries: [
       { title: 'Topics', id: 23593 },
@@ -103,7 +103,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'music',
+    // subject: 'music',
     rootId: 48415,
     entries: [
       { title: 'Music', id: 48404 },
@@ -111,7 +111,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'sustainability',
+    // subject: 'sustainability',
     rootId: 63179,
     entries: [
       { title: 'Topics', id: 112089 },
@@ -121,7 +121,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'sex-education',
+    // subject: 'sex-education',
     rootId: 78339,
     entries: [
       { title: 'Sex Education', id: 78337 },

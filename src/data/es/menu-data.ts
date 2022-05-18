@@ -111,7 +111,7 @@ export const footerData: InstanceData['footerData'] = {
 
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
-    subject: 'estudios en diásporas africanas para la escuela',
+    // subject: 'estudios en diásporas africanas para la escuela',
     rootId: 229701,
     entries: [
       { title: 'Todos los temas', id: 242308 },
@@ -119,12 +119,12 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    subject: 'sostenibilidad aplicada',
+    // subject: 'sostenibilidad aplicada',
     rootId: 242851,
     entries: [{ title: '¿Eres nuevo aquí?', id: 180775 }],
   },
   {
-    subject: "matemáticas'",
+    // subject: "matemáticas'",
     rootId: 169578,
     entries: [
       { title: 'Todos los temas', id: 169580 },
@@ -132,7 +132,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    //comunidad
+    // comunidad
     rootId: 112258,
     entries: [
       { title: 'Páginas de ayuda', id: 170539 },
@@ -144,7 +144,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    //about serlo
+    // about serlo
     entries: [
       { title: 'A cerca de Serlo', id: 112249 },
       { title: 'Así funciona la plataforma de aprendizaje', id: 195620 },
@@ -156,7 +156,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    //get involved
+    // get involved
     entries: [
       { title: 'Participa', id: 112252 },
       { title: 'Contacto y ubicación', id: 181414 },
