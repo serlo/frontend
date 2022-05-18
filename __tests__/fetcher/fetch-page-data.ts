@@ -42,7 +42,7 @@ describe('check all supported typenames with stored api-data', () => {
     expect(pageData.secondaryMenuData?.[0]).toEqual({
       title: 'Über Serlo',
       id: 18922,
-      url: '/serlo',
+      url: '/18922',
       active: true,
     })
 
