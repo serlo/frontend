@@ -19,7 +19,7 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
         <MaxWidthDiv>
           <main>
             <AddRevision
-              type="taxonomy" /* type is mostly irrelevant? */
+              type="TaxonomyTerm"
               needsReview={false}
               id={parent}
               initialState={{
