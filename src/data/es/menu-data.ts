@@ -109,42 +109,57 @@ export const footerData: InstanceData['footerData'] = {
   donationHref: '/spenden',
 }
 
-export const taxonomyMenus: InstanceData['taxonomyMenus'] = {
-  //Estudios en Diásporas Africanas para la Escuela
-  229701: [
-    { title: 'Todos los temas', id: 242308 },
-    { title: '¿Eres nuevo aquí?', id: 180775 },
-  ],
-  //Sostenibilidad Aplicada
-  242851: [{ title: '¿Eres nuevo aquí?', id: 180775 }],
-  //Matemáticas'
-  169578: [
-    { title: 'Todos los temas', id: 169580 },
-    { title: ' ¿Eres nuevo aquí?', id: 180775 },
-  ],
-  //Comunidad
-  112258: [
-    { title: 'Páginas de ayuda', id: 170539 },
-    { title: ' Recursos para educadores', id: 182103 },
-    { title: 'Sandbox', id: 164237 },
-    { title: 'Todas las actividades en Serlo', url: '/event/history' },
-    { title: 'Todos los comentarios en Serlo', url: '/discussions' },
-    { title: 'Operaciones en revisión', url: '/entity/unrevised' },
-  ],
-}
-
-export const pageMenus: InstanceData['pageMenus'] = [
-  [
-    { title: 'A cerca de Serlo', id: 112249 },
-    { title: 'Así funciona la plataforma de aprendizaje', id: 195620 },
-    { title: 'Concepto pedagógico', id: 170419 },
-    { title: 'Equipo', id: 181476 },
-    { title: 'Socios y Patrocinadores', id: 198326 },
-    { title: 'Impacto', id: 209934 },
-    { title: 'Transparencia', id: 209929 },
-  ],
-  [
-    { title: 'Participa', id: 112252 },
-    { title: 'Contacto y ubicación', id: 181414 },
-  ],
+export const sideMenus: InstanceData['sideMenus'] = [
+  {
+    subject: 'estudios en diásporas africanas para la escuela',
+    rootId: 229701,
+    entries: [
+      { title: 'Todos los temas', id: 242308 },
+      { title: '¿Eres nuevo aquí?', id: 180775 },
+    ],
+  },
+  {
+    subject: 'sostenibilidad aplicada',
+    rootId: 242851,
+    entries: [{ title: '¿Eres nuevo aquí?', id: 180775 }],
+  },
+  {
+    subject: "matemáticas'",
+    rootId: 169578,
+    entries: [
+      { title: 'Todos los temas', id: 169580 },
+      { title: ' ¿Eres nuevo aquí?', id: 180775 },
+    ],
+  },
+  {
+    //comunidad
+    rootId: 112258,
+    entries: [
+      { title: 'Páginas de ayuda', id: 170539 },
+      { title: ' Recursos para educadores', id: 182103 },
+      { title: 'Sandbox', id: 164237 },
+      { title: 'Todas las actividades en Serlo', url: '/event/history' },
+      { title: 'Todos los comentarios en Serlo', url: '/discussions' },
+      { title: 'Operaciones en revisión', url: '/entity/unrevised' },
+    ],
+  },
+  {
+    //about serlo
+    entries: [
+      { title: 'A cerca de Serlo', id: 112249 },
+      { title: 'Así funciona la plataforma de aprendizaje', id: 195620 },
+      { title: 'Concepto pedagógico', id: 170419 },
+      { title: 'Equipo', id: 181476 },
+      { title: 'Socios y Patrocinadores', id: 198326 },
+      { title: 'Impacto', id: 209934 },
+      { title: 'Transparencia', id: 209929 },
+    ],
+  },
+  {
+    //get involved
+    entries: [
+      { title: 'Participa', id: 112252 },
+      { title: 'Contacto y ubicación', id: 181414 },
+    ],
+  },
 ]

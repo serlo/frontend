@@ -83,8 +83,10 @@ export const footerData: InstanceData['footerData'] = {
   donationHref: '/spenden',
 }
 
-export const taxonomyMenus: InstanceData['taxonomyMenus'] = {
-  148617: [{ title: 'Tous les thèmes', id: 204968 }],
-}
-
-export const pageMenus: InstanceData['pageMenus'] = []
+export const sideMenus: InstanceData['sideMenus'] = [
+  {
+    subject: 'conseils-pour-apprendre',
+    rootId: 148617,
+    entries: [{ title: 'Tous les thèmes', id: 204968 }],
+  },
+]

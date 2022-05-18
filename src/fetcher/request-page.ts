@@ -7,7 +7,7 @@ import { createExercise, createExerciseGroup } from './create-exercises'
 import { createHorizon } from './create-horizon'
 import { createInlineLicense } from './create-inline-license'
 import { getMetaImage, getMetaDescription } from './create-meta-data'
-import { createNavigation } from './create-navigation'
+import { createSideMenu } from './create-side-menu'
 import { buildTaxonomyData } from './create-taxonomy'
 import { createTitle } from './create-title'
 import {
@@ -65,7 +65,7 @@ export async function requestPage(
     return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
-  const secondaryNavigationData = createNavigation(uuid, instance)
+  const secondaryNavigationData = createSideMenu(uuid, instance)
   const breadcrumbsData = createBreadcrumbs(uuid)
   const horizonData = instance == 'de' ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`

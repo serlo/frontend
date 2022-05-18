@@ -1,10 +1,9 @@
-import { headerData, footerData, landingSubjectsData, taxonomyMenus, pageMenus } from './menu-data';
+import { headerData, footerData, landingSubjectsData, sideMenus } from './menu-data';
 export const instanceData = {
   lang: "ta",
   headerData: headerData,
   footerData: footerData,
-  taxonomyMenus: taxonomyMenus,
-  pageMenus: pageMenus,
+  sideMenus: sideMenus,
   strings: {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",
