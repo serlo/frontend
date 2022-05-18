@@ -93,8 +93,6 @@ export function AddRevision({
               | AddPageRevisionMutationData
               | TaxonomyCreateOrUpdateMutationData
           ) => {
-            console.log(data)
-
             if (
               shouldUseFeature('addRevisionMutation') &&
               supportedTypes.includes(type)
