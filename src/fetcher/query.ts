@@ -174,6 +174,7 @@ export const dataQuery = gql`
           content
           metaDescription
         }
+        ...taxonomyTerms
       }
 
       ... on TaxonomyTerm {

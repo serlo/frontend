@@ -17,7 +17,8 @@ export function createBreadcrumbs(uuid: MainUuidType) {
     uuid.__typename === 'Video' ||
     uuid.__typename === 'Applet' ||
     uuid.__typename === 'Exercise' ||
-    uuid.__typename === 'ExerciseGroup'
+    uuid.__typename === 'ExerciseGroup' ||
+    uuid.__typename === 'Course'
   ) {
     return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
   }
