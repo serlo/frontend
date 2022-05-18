@@ -65,6 +65,7 @@ export const instanceData = {
       userEdits: "Ediciones por %user%",
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
+      recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley'
     },
     roles: {
@@ -316,6 +317,9 @@ export const instanceData = {
     },
     actions: {
       loadMore: "Cargar más"
+    },
+    bin: {
+      trashed: 'Trashed…'
     }
   }
 };
