@@ -25,6 +25,7 @@ interface TaxonomyMoveCopyProps {
 export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   const [buttonsActive, setButtonsActive] = useState(false)
   const [entityIds, setEntityIds] = useState<number[]>([])
+  const [removedEntityIds, setRemovedEntityIds] = useState<number[]>([])
 
   useEffect(() => {
     const shouldBeOn = entityIds.length > 0
@@ -91,6 +92,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   }
 
   function renderLi(node: TaxonomyLink, type: string) {
+    if (removedEntityIds.includes(node.id)) return null
     const isChecked = entityIds.includes(node.id)
 
     return (
@@ -171,6 +173,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
           'success'
         )
       }
+
+      if (isMove && removeSuccess)
+        setRemovedEntityIds([...removedEntityIds, ...entityIds])
     }
 
     return (
