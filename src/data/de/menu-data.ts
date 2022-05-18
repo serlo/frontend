@@ -222,7 +222,7 @@ export const pageMenus: InstanceData['pageMenus'] = [
   ],
   [
     { title: 'Mitmachen', id: 19869 },
-    { title: 'Engagement, Praktika & Jobs', id: 21563 },
+    { title: 'Jobs, Engagement & Praktika', id: 21563 },
     { title: 'Kontakt und Standorte', id: 21657 },
     { title: 'Spenden', url: '/spenden' },
   ],
