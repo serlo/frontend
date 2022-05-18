@@ -12,17 +12,14 @@ export async function prettifyLinks(pageData: RequestPageData) {
   if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
     if (pageData.secondaryMenuData) {
       pageData.secondaryMenuData.forEach((entry) => {
-        if (entry.url) {
-          const id = getId(entry.url)
-          if (id) {
-            ids.push(id)
-            callbacks.push({
-              id,
-              callback: (alias) => {
-                entry.url = alias
-              },
-            })
-          }
+        if (entry.id && !entry.url) {
+          ids.push(entry.id)
+          callbacks.push({
+            id: entry.id,
+            callback: (alias) => {
+              entry.url = alias
+            },
+          })
         }
       })
     }

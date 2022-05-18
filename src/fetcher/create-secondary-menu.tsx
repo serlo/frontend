@@ -17,15 +17,8 @@ export function createSecondaryMenu(
     return {
       ...entry,
       active: entry.id === uuid.id ? true : undefined,
-      url: buildUrl(entry.url, entry.id),
     }
   })
-
-  function buildUrl(url?: string, id?: number): string {
-    if (url) return url
-    if (id) return `/${id}`
-    return ''
-  }
 
   function getMenu() {
     if (!secondaryMenus) return undefined

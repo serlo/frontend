@@ -239,7 +239,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     entries: [
-      { title: 'Über Serlo', id: 18922, url: '/serlo' },
+      { title: 'Über Serlo', id: 18922 },
       { title: 'So funktioniert die Lernplattform', id: 81862 },
       { title: 'Wirkung', id: 21406 },
       { title: 'Team', id: 21439 },
