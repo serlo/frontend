@@ -1,8 +1,11 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
+import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -14,8 +17,14 @@ import {
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
 } from '@/fetcher/graphql-types/operations'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import {
+  useCreateEntityLinkMutation,
+  useDeleteEntityLinkMutation,
+} from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface UpdateTaxonomyLinksProps {
   id: number
@@ -34,26 +43,58 @@ export default renderedPageNoHooks<UpdateTaxonomyLinksProps>((props) => {
 })
 
 function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
+  const createEntityLink = useCreateEntityLinkMutation()
+  const deleteEntityLink = useDeleteEntityLinkMutation()
+  const router = useRouter()
+  const [removedTaxIds, setRemovedTaxIds] = useState<number[]>([])
+
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return <PleaseLogIn />
-  const loggedInStrings = loggedInData.strings
+  const loggedInStrings = loggedInData.strings.taxonomyTermTools.deleteAdd
+
+  const onDelete = async (taxonomyTermId: number) => {
+    if (window.confirm(loggedInStrings.confirmDelete)) {
+      const success = await deleteEntityLink({
+        entityIds: [id],
+        taxonomyTermId,
+      })
+      if (success) {
+        setRemovedTaxIds([...removedTaxIds, taxonomyTermId])
+      }
+    }
+  }
+
+  const onAdd = async (taxonomyTermId: number) => {
+    const success = await createEntityLink({ entityIds: [id], taxonomyTermId })
+    if (success) showToastNotice(loggedInStrings.addSuccess, 'success')
+    setTimeout(() => {
+      router.reload()
+    }, 600)
+  }
 
   return (
     <>
       {renderBackButton()}
-      <PageTitle title={loggedInStrings.authorMenu.editAssignments} />
-      <div className="mx-side border-t-2">{taxonomyTerms.map(renderTerm)}</div>
+      <PageTitle title={loggedInData.strings.authorMenu.editAssignments} />
+      <div className="mx-side border-t-2">
+        {taxonomyTerms.map(renderTerm)}
+        <h2 className="mt-12 mb-3 font-bold">{loggedInStrings.addNewTitle}</h2>
+        {renderInput()}
+      </div>
     </>
   )
 
   function renderTerm(term: UpdateTaxonomyLinksProps['taxonomyTerms'][number]) {
     const nodes = term.navigation?.path.nodes
-    if (!nodes) return null
+    if (!nodes || removedTaxIds.includes(term.id)) return null
 
     return (
       <p className="py-3 border-b-2">
-        <button className="serlo-button serlo-make-interactive-transparent-blue mr-2">
+        <button
+          onClick={() => onDelete(term.id)}
+          className="serlo-button serlo-make-interactive-transparent-blue mr-2 text-brand-lighter"
+        >
           <FaIcon icon={faTrashAlt} />
         </button>
         {nodes.slice(0, -1).map((crumb) => (
@@ -85,6 +126,41 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
         ]}
         asBackButton
       />
+    )
+  }
+
+  function renderInput() {
+    const existingIds = taxonomyTerms
+      .map((term) => term.id)
+      .filter((id) => !removedTaxIds.includes(id))
+
+    return (
+      <UuidUrlInput
+        supportedEntityTypes={['TaxonomyTerm']}
+        supportedTaxonomyTypes={['topic', 'topicFolder', 'curriculumTopic']}
+        unsupportedIds={existingIds}
+        renderButtons={renderAddButton}
+        inlineFeedback
+      />
+    )
+  }
+
+  function renderAddButton(
+    _typename: string,
+    taxId: number,
+    _title: string,
+    taxType?: string
+  ) {
+    return (
+      <>
+        ({getTranslatedType(strings, taxType)}){' '}
+        <button
+          onClick={() => onAdd(taxId)}
+          className="'text-base serlo-button serlo-make-interactive-light ml-3"
+        >
+          {loggedInStrings.addButtonText}
+        </button>
+      </>
     )
   }
 }

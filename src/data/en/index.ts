@@ -875,6 +875,12 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
+      },
+      deleteAdd: {
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign",
       }
     }
   },
