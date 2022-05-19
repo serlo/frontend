@@ -10,6 +10,7 @@ export const coursePageTypeState = entityType(
   {
     ...entity,
     title: string(''),
+    icon: string('explanation'),
     content: editorContent(),
   },
   {}
@@ -32,7 +33,13 @@ function CoursePageTypeEditor(
     { skipControls: boolean }
   >
 ) {
-  const { title, content } = props.state
+  const { title, content, icon } = props.state
+
+  React.useEffect(() => {
+    if (!['explanation', 'play', 'question'].includes(icon.value)) {
+      icon.set('explanation')
+    }
+  }, [icon])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null

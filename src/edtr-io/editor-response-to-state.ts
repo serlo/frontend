@@ -231,6 +231,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           license: license!, // there could be cases where this is not correct
           revision,
           changes: '',
+          icon: 'explanation',
           title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
             toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
