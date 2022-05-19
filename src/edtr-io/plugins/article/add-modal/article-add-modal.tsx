@@ -110,12 +110,14 @@ export function ArticleAddModal({
           addEntry={addEntry}
           showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
         />
-        {topicFolderId ? (
-          <ArticleRelatedExercises
-            topicFolderId={topicFolderId}
-            addEntry={addEntry}
-          />
-        ) : null}
+        <div id="topicFolderScroll" className="min-h-[8rem]">
+          {topicFolderId ? (
+            <ArticleRelatedExercises
+              topicFolderId={topicFolderId}
+              addEntry={addEntry}
+            />
+          ) : null}
+        </div>
       </div>
     </ModalWithCloseButton>
   )

@@ -9,6 +9,7 @@ import {
   SubscriptionSetInput,
   TaxonomyTermCreateInput,
   TaxonomyTermSetNameAndDescriptionInput,
+  TaxonomyEntityLinksInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -49,6 +50,7 @@ type MutationInput =
   | PageAddRevisionInput
   | TaxonomyTermCreateInput
   | TaxonomyTermSetNameAndDescriptionInput
+  | TaxonomyEntityLinksInput
 
 type MutationResponse =
   | ThreadMutation
