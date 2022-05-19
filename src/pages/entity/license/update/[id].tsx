@@ -6,7 +6,9 @@ import { useState } from 'react'
 import { endpoint } from '@/api/endpoint'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   LicensesForInstaceQuery,
@@ -30,17 +32,19 @@ function Content({ id, licenses }: UpdateLicenseProps) {
   const setLicense = useEntitySetLicenseMutation()
   const [licenseId, setLicenseId] = useState<number>(licenses[0].id)
   const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
   if (!loggedInData)
     return (
       <div className="mt-12">
         <PleaseLogIn />
       </div>
     )
-  const { strings } = loggedInData
+  const loggendInStrings = loggedInData.strings
 
   return (
     <>
-      <PageTitle title={strings.authorMenu.changeLicense} headTitle />
+      {renderBackButton()}
+      <PageTitle title={loggendInStrings.authorMenu.changeLicense} headTitle />
 
       <div className="mx-side flex">
         <select
@@ -64,6 +68,15 @@ function Content({ id, licenses }: UpdateLicenseProps) {
       <option key={license.id} value={license.id}>
         {license.id} {license.title}
       </option>
+    )
+  }
+
+  function renderBackButton() {
+    return (
+      <Breadcrumbs
+        data={[{ label: strings.revisions.toContent, url: `/${id}` }]}
+        asBackButton
+      />
     )
   }
 }

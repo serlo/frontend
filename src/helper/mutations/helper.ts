@@ -85,6 +85,7 @@ export async function mutationFetch(
     const result = await executeQuery()
     if (hasOwnPropertyTs(result, 'entity')) {
       const entity = result.entity as EntityMutation
+      if (Object.keys(entity)[0] === 'setLicense') return !!result //see https://github.com/serlo/api.serlo.org/issues/639
       if (Object.keys(entity)[0].startsWith('set')) {
         const entityResponse = Object.values(entity)[0] as SetEntityResponse
         return entityResponse.record?.id ?? false
