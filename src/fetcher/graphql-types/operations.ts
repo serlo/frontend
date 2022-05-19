@@ -917,6 +917,7 @@ export interface EntityMutation {
   setExercise: SetEntityResponse;
   setExerciseGroup: SetEntityResponse;
   setGroupedExercise: SetEntityResponse;
+  setLicense: EntitySetLicenseResponse;
   setSolution: SetEntityResponse;
   setVideo: SetEntityResponse;
 }
@@ -972,6 +973,11 @@ export interface EntityMutationSetGroupedExerciseArgs {
 }
 
 
+export interface EntityMutationSetLicenseArgs {
+  input: EntitySetLicenseInput;
+}
+
+
 export interface EntityMutationSetSolutionArgs {
   input: SetGenericEntityInput;
 }
@@ -991,6 +997,17 @@ export interface EntityQueryDeletedEntitiesArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   instance?: InputMaybe<Instance>;
+}
+
+export interface EntitySetLicenseInput {
+  entityId: Scalars['Int'];
+  licenseId: Scalars['Int'];
+}
+
+export interface EntitySetLicenseResponse {
+  __typename?: 'EntitySetLicenseResponse';
+  query: Query;
+  success: Scalars['Boolean'];
 }
 
 export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
@@ -3093,6 +3110,13 @@ type GetCommentsThreads_Video_Fragment = { __typename?: 'Video', threads: { __ty
 type GetCommentsThreads_VideoRevision_Fragment = { __typename?: 'VideoRevision', threads: { __typename?: 'ThreadsConnection', nodes: Array<{ __typename?: 'Thread', id: string, archived: boolean, comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number, trashed: boolean, content: string, archived: boolean, createdAt: string, author: { __typename?: 'User', username: string, alias?: string | null, id: number, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } }> } }> } };
 
 export type GetCommentsThreadsFragment = GetCommentsThreads_Applet_Fragment | GetCommentsThreads_AppletRevision_Fragment | GetCommentsThreads_Article_Fragment | GetCommentsThreads_ArticleRevision_Fragment | GetCommentsThreads_Course_Fragment | GetCommentsThreads_CoursePage_Fragment | GetCommentsThreads_CoursePageRevision_Fragment | GetCommentsThreads_CourseRevision_Fragment | GetCommentsThreads_Event_Fragment | GetCommentsThreads_EventRevision_Fragment | GetCommentsThreads_Exercise_Fragment | GetCommentsThreads_ExerciseGroup_Fragment | GetCommentsThreads_ExerciseGroupRevision_Fragment | GetCommentsThreads_ExerciseRevision_Fragment | GetCommentsThreads_GroupedExercise_Fragment | GetCommentsThreads_GroupedExerciseRevision_Fragment | GetCommentsThreads_Page_Fragment | GetCommentsThreads_PageRevision_Fragment | GetCommentsThreads_Solution_Fragment | GetCommentsThreads_SolutionRevision_Fragment | GetCommentsThreads_TaxonomyTerm_Fragment | GetCommentsThreads_User_Fragment | GetCommentsThreads_Video_Fragment | GetCommentsThreads_VideoRevision_Fragment;
+
+export type LicensesForInstaceQueryVariables = Exact<{
+  instance: Instance;
+}>;
+
+
+export type LicensesForInstaceQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', licenses: Array<{ __typename?: 'License', id: number, default: boolean, title: string }> } };
 
 export type GetSubscriptionsQueryVariables = Exact<{
   first: Scalars['Int'];

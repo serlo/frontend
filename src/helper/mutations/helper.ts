@@ -1,6 +1,7 @@
 import {
   CheckoutRevisionInput,
   EntityMutation,
+  EntitySetLicenseInput,
   NotificationMutation,
   NotificationSetStateInput,
   PageAddRevisionInput,
@@ -49,6 +50,7 @@ type MutationInput =
   | PageAddRevisionInput
   | TaxonomyTermCreateInput
   | TaxonomyTermSetNameAndDescriptionInput
+  | EntitySetLicenseInput
 
 type MutationResponse =
   | ThreadMutation
