@@ -299,8 +299,8 @@ export const instanceData = {
       createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
-      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
-      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
+      createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
+      removeEntityLink: "%actor% hat die Zuweisung von %child% zu %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
       rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",
@@ -813,10 +813,10 @@ export const loggedInData = {
         copySuccess: "Erfolgreich kopiert"
       },
       deleteAdd: {
-        confirmDelete: "Bist du sicher, dass du diese Verknüpfung löschen möchtest?",
-        addSuccess: "Erfolgreich verknüpft, Seite wird neu geladen …",
-        addNewTitle: "Neue Verknüpfung hinzufügen",
-        addButtonText: "Verknüpfen"
+        confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
+        addSuccess: "Erfolgreich zugewiesen, Seite wird neu geladen …",
+        addNewTitle: "Neue Zuweisung hinzufügen",
+        addButtonText: "Zuweisen"
       }
     }
   }
