@@ -1,8 +1,9 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "es",
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
@@ -447,13 +448,14 @@ export const loggedInData = {
         restore: "Restablecido con éxito ♻️",
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
-        save: "Edición guardada con éxito ✅"
+        save: "Edición guardada con éxito ✅",
+        updated: 'Successfully updated ✅'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
         UNKNOWN: "Un error desconocido…",
         valueMissing: "Por favor complete todos los campos requeridos"
       }
@@ -703,6 +705,7 @@ export const loggedInData = {
           loading: 'Loading…',
           notFound: 'Could not find that content',
           unsupportedType: 'Sorry, type [%type%] is not supported here',
+          unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
           topicFolderNote: 'Only one can be selected here'
@@ -797,6 +800,24 @@ export const loggedInData = {
       authorization: 'Authorization',
       navigation: 'Navigation',
       recycleBin: 'Recycle Bin'
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied"
+      },
+      deleteAdd: {
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign"
+      }
     }
   }
 };
