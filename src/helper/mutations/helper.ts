@@ -51,11 +51,8 @@ type MutationInput =
   | PageAddRevisionInput
   | TaxonomyTermCreateInput
   | TaxonomyTermSetNameAndDescriptionInput
-<<<<<<< HEAD
   | TaxonomyEntityLinksInput
-=======
   | EntitySetLicenseInput
->>>>>>> staging
 
 type MutationResponse =
   | ThreadMutation
