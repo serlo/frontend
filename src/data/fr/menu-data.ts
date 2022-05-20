@@ -82,3 +82,11 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/141581',
   donationHref: '/spenden',
 }
+
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
+  {
+    // subject: 'conseils-pour-apprendre',
+    rootId: 148617,
+    entries: [{ title: 'Tous les thèmes', id: 204968 }],
+  },
+]

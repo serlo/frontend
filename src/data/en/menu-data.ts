@@ -90,3 +90,72 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/27469',
   donationHref: '/spenden',
 }
+
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
+  {
+    // subject: 'math',
+    rootId: 23591,
+    entries: [
+      { title: 'Topics', id: 23593 },
+      { title: 'New here?', id: 49386 },
+      { title: 'Guidelines', id: 48345 },
+      { title: 'Edit Taxonomy', url: '/taxonomy/term/organize/23593' },
+    ],
+  },
+  {
+    // subject: 'music',
+    rootId: 48415,
+    entries: [
+      { title: 'Music', id: 48404 },
+      { title: 'Topics', id: 48415 },
+    ],
+  },
+  {
+    // subject: 'sustainability',
+    rootId: 63179,
+    entries: [
+      { title: 'Topics', id: 112089 },
+      { title: 'New here?', id: 56861 },
+      { title: 'Guidelines', id: 56677 },
+      { title: 'Edit Taxonomy', url: '/taxonomy/term/organiid8416' },
+    ],
+  },
+  {
+    // subject: 'sex-education',
+    rootId: 78339,
+    entries: [
+      { title: 'Sex Education', id: 78337 },
+      { title: 'Topics', id: 78339 },
+    ],
+  },
+  {
+    rootId: 35587,
+    entries: [
+      { title: 'Community', id: 35587 },
+      { title: 'Help for Editors', id: 84500 },
+      { title: 'New Subjects and Topics', id: 106103 },
+      { title: 'Sandbox for Authors', id: 106102 },
+      { title: 'All Activities on Serlo', url: '/event/history' },
+      { title: 'All Discussions', url: '/discussions' },
+      { title: 'Start new Serlo teams', id: 48538 },
+      { title: 'Community Values', id: 48210 },
+      { title: 'Community Overview', id: 48537 },
+    ],
+  },
+  {
+    entries: [
+      { title: 'About Serlo', id: 23727 },
+      { title: 'How to learn with serlo.org', id: 110332 },
+      { title: 'Impact', id: 110335 },
+      { title: 'Team', id: 32840 },
+      { title: 'Partners and Donors', id: 110337 },
+      { title: 'Serlo.org in other languages', id: 93321 },
+    ],
+  },
+  {
+    entries: [
+      { title: 'Get Involved!', id: 27469 },
+      { title: 'Contact', id: 41043 },
+    ],
+  },
+]
