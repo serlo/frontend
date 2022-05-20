@@ -35,11 +35,21 @@ const legacyLinks = [
 
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
-  if (_href == '/user/notifications') return false
-  if (_href == '/user/settings') return false
-  if (_href == '/entity/unrevised') return false
-  if (_href.startsWith('/entity/repository/history')) return false
-  if (_href.startsWith('/entity/repository/compare')) return false
+  if (
+    _href == '/user/notifications' ||
+    _href == '/user/settings' ||
+    _href == '/entity/unrevised' ||
+    _href == '/uuid/recycle-bin' ||
+    _href.startsWith('/entity/repository/history') ||
+    _href.startsWith('/entity/repository/compare') ||
+    _href.startsWith('/entity/license/update/') ||
+    _href.startsWith('/entity/taxonomy/update/') ||
+    _href.startsWith('/entity/license/update/') ||
+    _href.startsWith('/taxonomy/term/move/batch/') ||
+    _href.startsWith('/taxonomy/term/copy/batch/')
+  ) {
+    return false
+  }
 
   // exerimental feature: useLegacyEditor
   if (
@@ -62,7 +72,6 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/navigation') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
-    // _href.startsWith('/uuid/recycle-bin') || disable temporary to allow testing on staging
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/entity/repository/add-revision-old/') ||
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language

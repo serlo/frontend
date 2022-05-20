@@ -48,6 +48,7 @@ export interface InstanceData {
   strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
+  secondaryMenus: SecondaryMenuData[]
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -100,6 +101,21 @@ export interface FooterLink {
 }
 
 export type FooterIcon = 'newsletter' | 'github' | 'job'
+
+// Menu shown on the left (desktop) or between header and content (mobile)
+// Links can be active
+
+export interface SecondaryMenuLink {
+  title: string
+  url?: string
+  id?: number
+  active?: boolean
+}
+
+export interface SecondaryMenuData {
+  rootId?: number
+  entries: SecondaryMenuLink[]
+}
 
 // We have different types of pages, each with its own set of data:
 
@@ -208,7 +224,7 @@ export interface Redirect {
 
 export interface EntityPageBase {
   breadcrumbsData?: BreadcrumbsData
-  secondaryNavigationData?: SecondaryNavigationData
+  secondaryMenuData?: SecondaryMenuData['entries']
   metaData?: HeadData
   horizonData?: HorizonData
   newsletterPopup: boolean
@@ -233,17 +249,6 @@ export interface BreadcrumbLinkEntry {
 export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
   label: ''
   ellipsis: true
-}
-
-// Menu shown on the left (desktop) or between header and content (mobile)
-// Links can be active, urls are already prettified.
-
-export type SecondaryNavigationData = SecondaryNavigationEntry[]
-
-export interface SecondaryNavigationEntry {
-  url?: string
-  title: string
-  active?: boolean
 }
 
 // Populate some head tags (e.g. open graph)
