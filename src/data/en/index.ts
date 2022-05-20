@@ -884,6 +884,10 @@ export const loggedInData = {
         addSuccess: "Sucessfully assigned, reloading …",
         addNewTitle: "Add new assignment",
         addButtonText: "Assign",
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   },

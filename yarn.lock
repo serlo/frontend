@@ -3789,6 +3789,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
     algebra.js: ^0.2.0
+    array-move: ^4.0.0
     autoprefixer: ^10.0.0
     babel-jest: ^27.0.0
     clsx: ^1.0.0
@@ -5155,6 +5156,13 @@ __metadata:
     get-intrinsic: ^1.1.1
     is-string: ^1.0.7
   checksum: 69967c38c52698f84b50a7aed5554aadc89c6ac6399b6d92ad061a5952f8423b4bba054c51d40963f791dfa294d7247cdd7988b6b1f2c5861477031c6386e1c0
+  languageName: node
+  linkType: hard
+
+"array-move@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "array-move@npm:4.0.0"
+  checksum: 307e6716e83567918cf8dd0050cdb44ce500d9969cd734ecbf1f8ae547df151dbf10713255a9db6a8950ca917f4817a778f0116f6d13944c3f3cd1fd1845f13f
   languageName: node
   linkType: hard
 
