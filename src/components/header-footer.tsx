@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 
 import { Footer } from './navigation/footer'
 import { Header } from './navigation/header'
-import { PleaseLogIn } from './user/please-log-in'
 
 export interface HeaderFooterProps {
   children: ReactNode
@@ -18,9 +17,7 @@ export function HeaderFooter({ children }: HeaderFooterProps) {
       >
         {children}
       </div>
-      <div id="footerfake" className="bg-brand py-12">
-        1
-      </div>
+      <Footer />
     </>
   )
 }
