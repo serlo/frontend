@@ -40,6 +40,7 @@ export function isLegacyLink(_href: string) {
   if (_href == '/entity/unrevised') return false
   if (_href.startsWith('/entity/repository/history')) return false
   if (_href.startsWith('/entity/repository/compare')) return false
+  if (_href.startsWith('/entity/license/update/')) return false
 
   // exerimental feature: useLegacyEditor
   if (
