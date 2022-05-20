@@ -1,8 +1,10 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data'
+
+import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
 export const instanceData = {
   lang: 'en',
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: 'The Open Learning Platform',
@@ -479,6 +481,7 @@ export const loggedInData = {
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
+        updated: 'Successfully updated ✅'
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',

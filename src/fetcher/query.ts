@@ -30,7 +30,6 @@ export const dataQuery = gql`
           ...pageRevision
         }
         navigation {
-          data
           ...path
         }
       }
@@ -190,7 +189,6 @@ export const dataQuery = gql`
           id
         }
         navigation {
-          data
           ...path
         }
         children {
