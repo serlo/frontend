@@ -449,13 +449,13 @@ export const loggedInData = {
         accept: "Bearbeitung wurde akzeptiert ✅",
         reject: "Bearbeitung wurde abgelehnt ❌",
         save: "Bearbeitung erfolgreich gespeichert ✅",
-        updated: 'Successfully updated ✅'
+        updated: "Erfolgreich aktualisiert"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
         FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
+        BAD_USER_INPUT: "Sorry, das ist so nicht unterstützt…",
         UNKNOWN: "Ein unbekannter Fehler…",
         valueMissing: "Bitte alle Pflichtfelder ausfüllen"
       }
@@ -705,7 +705,7 @@ export const loggedInData = {
           loading: "Wird geladen …",
           notFound: "Inhalt konnte nicht gefunden werden",
           unsupportedType: "Sorry, der Typ [%type%] wird hier nicht unterstützt",
-          unsupportedId: 'Sorry, this ID is not supported here',
+          unsupportedId: "Sorry, diese ID ist hier nicht erlaubt.",
           addFromFolderTitle: "Aus dem Ordner",
           placeholder: "Eine Serlo Id oder URL hier einfügen",
           topicFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
@@ -803,20 +803,20 @@ export const loggedInData = {
     },
     taxonomyTermTools: {
       copyMove: {
-        title: "Move / Copy Entities in Taxonomy",
-        select: "Select entities to move or copy:",
-        target: "Target term:",
+        title: "Inhalte in Ordner verschieben / kopieren",
+        select: "Inhalte zum kopieren oder verschieben auswählen:",
+        target: "Zielordner:",
         link: "Link",
-        moveButtonText: "Move to %type%",
-        copyButtonText: "Copy to %type%",
-        moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied"
+        moveButtonText: "In den %type% verschieben",
+        copyButtonText: "In den %type% kopieren",
+        moveSuccess: "Erfolgreich verschoben",
+        copySuccess: "Erfolgreich kopiert"
       },
       deleteAdd: {
-        confirmDelete: "Are you sure you want to remove this assignment?",
-        addSuccess: "Sucessfully assigned, reloading …",
-        addNewTitle: "Add new assignment",
-        addButtonText: "Assign"
+        confirmDelete: "Bist du sicher, dass du diese Verknüpfung löschen möchtest?",
+        addSuccess: "Erfolgreich verknüpft, Seite wird neu geladen …",
+        addNewTitle: "Neue Verknüpfung hinzufügen",
+        addButtonText: "Verknüpfen"
       }
     }
   }
