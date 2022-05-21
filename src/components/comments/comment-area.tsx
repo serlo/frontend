@@ -4,7 +4,6 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCi
 import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 
-import { Lazy } from '../content/lazy'
 import { FaIcon } from '../fa-icon'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
@@ -85,10 +84,8 @@ export function CommentArea({
                     : strings.comments.commentsMany
                 }`
               )}
-            <Lazy>
-              {renderThreads()}
-              {renderArchive()}
-            </Lazy>
+            {renderThreads()}
+            {renderArchive()}
           </>
         )}
       </>
