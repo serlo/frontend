@@ -3810,7 +3810,7 @@ __metadata:
     jest: ^27.0.0
     js-cookie: ^3.0.0
     jwt-decode: ^3.0.0
-    katex: ^0.15.0
+    katex: ^0.15.5
     msw: ^0.39.0
     next: ^12.1.0
     npm-run-all: ^4.0.0
@@ -9845,7 +9845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.15.0, katex@npm:^0.15.3":
+"katex@npm:^0.15.3":
   version: 0.15.3
   resolution: "katex@npm:0.15.3"
   dependencies:
@@ -9853,6 +9853,17 @@ __metadata:
   bin:
     katex: cli.js
   checksum: 12bec82d9ae9f122b9aeafaf2de476e702d12ae19bb9bdd9c8c24126fd81e752047bb856254af98ca54fc51f3bb7f149b3902d65dcdafb5e3deeb691ec4d3db2
+  languageName: node
+  linkType: hard
+
+"katex@npm:^0.15.5":
+  version: 0.15.6
+  resolution: "katex@npm:0.15.6"
+  dependencies:
+    commander: ^8.0.0
+  bin:
+    katex: cli.js
+  checksum: 2da808bbd1d3be27715006cd86767dd3fcce3e317fb3bbd64d407328d2d90de17b5d83062b2cfd0e0d0de32e340efbac214862bc96892a5d1492462e553728d4
   languageName: node
   linkType: hard
 

@@ -71,7 +71,7 @@
     "io-ts": "^2.2.16",
     "js-cookie": "^3.0.0",
     "jwt-decode": "^3.0.0",
-    "katex": "^0.15.0",
+    "katex": "^0.15.5",
     "next": "^12.1.0",
     "nprogress": "^0.2.0",
     "polished": "^4.0.0",
