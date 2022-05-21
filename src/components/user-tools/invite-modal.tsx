@@ -37,7 +37,11 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
       <p className="serlo-p border-t-[1px] pt-8 mt-24 mb-0 text-base">
         {replacePlaceholders(modalStrings.psText, {
           link: (
-            <Link href={modalStrings.psLinkUrl}>{modalStrings.psLinkText}</Link>
+            <a onClick={onClose}>
+              <Link href={modalStrings.psLinkUrl}>
+                {modalStrings.psLinkText}
+              </Link>
+            </a>
           ),
         })}
       </p>
@@ -51,6 +55,7 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
         <a
           onClick={() => {
             submitEvent('invite2edit-click-login')
+            onClose()
           }}
         >
           <Link
@@ -63,6 +68,7 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
         <a
           onClick={() => {
             submitEvent('invite2edit-click-register')
+            onClose()
           }}
         >
           <Link
