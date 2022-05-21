@@ -19,6 +19,7 @@ export function createBoxState(
     'equations',
     'table',
     'serloTable',
+    'highlight',
   ])
 
   return object({
