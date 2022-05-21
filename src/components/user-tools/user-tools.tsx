@@ -23,6 +23,7 @@ import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
 interface UserToolsProps {
   id: number
   onShare?: () => void
+  onInvite?: () => void
   hideEdit?: boolean
   hideEditProfile?: boolean
   data: AuthorToolsData
@@ -37,6 +38,7 @@ export interface UserToolsData {
 export function UserTools({
   id,
   onShare,
+  onInvite,
   hideEdit,
   data,
   unrevisedRevisions,
@@ -130,7 +132,7 @@ export function UserTools({
     return (
       <>
         {isRevision && renderRevisionTools()}
-        {(!hideEdit || auth.current) && renderEdit()}
+        {hideEdit ? null : auth.current ? renderEdit() : renderInvite()}
         {renderShare()}
         {auth.current && renderExtraTools()}
       </>
@@ -211,6 +213,16 @@ export function UserTools({
           </Link>
         )}
       </>
+    )
+  }
+
+  function renderInvite() {
+    if (auth.current || onInvite === undefined) return null
+
+    return (
+      <button className={buttonClassName()} onClick={onInvite}>
+        {renderInner(strings.edit.button, faPencilAlt)}
+      </button>
     )
   }
 
