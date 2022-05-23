@@ -96,7 +96,6 @@ export const instanceData = {
         registerButton: 'Register new account',
         psText: 'You can find out in what ways you can contribute %link%.',
         psLinkText: 'here',
-        psLinkUrl: 'https://de.serlo.org/mitmachen'
       },
     },
     license: {
