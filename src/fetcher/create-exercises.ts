@@ -10,6 +10,7 @@ import {
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
 } from '@/data-types'
+import { hasVisibleContent } from '@/helper/check-content-is-empty'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 
@@ -93,15 +94,7 @@ function createSolutionData(solution: BareExercise['solution']) {
         const solutionState = contentJson.state
         solutionState.strategy = convert(solutionState.strategy)
         // compat: (probably quite fragile) if strategy is empty, we ignore it
-        if (
-          solutionState.strategy.length == 1 &&
-          solutionState.strategy[0].type == 'slate-container' &&
-          solutionState.strategy[0].children?.length === 1 &&
-          solutionState.strategy[0].children[0].type == 'slate-p' &&
-          solutionState.strategy[0].children[0].children?.every(
-            (child) => child.type !== 'text' || child.text.trim().length == 0
-          )
-        ) {
+        if (!hasVisibleContent(solutionState.strategy)) {
           solutionState.strategy = []
         }
         solutionState.steps = convert(solutionState.steps)
