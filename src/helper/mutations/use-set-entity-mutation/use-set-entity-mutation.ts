@@ -1,6 +1,6 @@
 import { SetGenericEntityInput } from '@serlo/api'
 // eslint-disable-next-line import/no-internal-modules
-import { eqBy, mapObjIndexed, trim } from 'ramda'
+import { eqBy, mapObjIndexed } from 'ramda'
 
 import { showToastNotice } from '../../show-toast-notice'
 import { mutationFetch } from '../helper'
