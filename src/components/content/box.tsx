@@ -80,20 +80,27 @@ export function Box({
   )
 
   function renderHeader() {
+    const unwrappedTitle = title?.[0].children
+
     return (
       <figcaption className="px-side pb-3 pt-1 text-lg">
         <a className="no-underline" href={'#' + anchorId}>
           {isBlank ? null : (
             <>
               <span
-                className={clsx(title && !isBlank ? 'mr-1.5' : '', colorClass)}
+                className={clsx(
+                  unwrappedTitle && !isBlank ? 'mr-1.5' : '',
+                  colorClass
+                )}
               >
                 {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
                 {strings.content.boxTypes[boxType]}
               </span>
             </>
           )}
-          {title ? <b>{renderNested(title, 'title')}</b> : null}
+          {unwrappedTitle ? (
+            <b>{renderNested(unwrappedTitle, 'title')}</b>
+          ) : null}
         </a>
       </figcaption>
     )
