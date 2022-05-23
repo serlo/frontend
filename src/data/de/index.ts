@@ -85,7 +85,15 @@ export const instanceData = {
     },
     edit: {
       button: "Inhalt überarbeiten",
-      unrevised: "Zeige neue Bearbeitungen"
+      unrevised: "Zeige neue Bearbeitungen",
+      inviteModal: {
+        title: "Erstelle mit uns!",
+        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        loginButton: "Jetzt einloggen",
+        registerButton: "Neues Konto anlegen",
+        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psLinkText: "Hier"
+      }
     },
     license: {
       readMore: "Was bedeutet das?",
