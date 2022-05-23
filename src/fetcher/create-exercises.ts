@@ -98,7 +98,9 @@ function createSolutionData(solution: BareExercise['solution']) {
           solutionState.strategy[0].type == 'slate-container' &&
           solutionState.strategy[0].children?.length === 1 &&
           solutionState.strategy[0].children[0].type == 'slate-p' &&
-          solutionState.strategy[0].children[0].children?.length === 0
+          solutionState.strategy[0].children[0].children?.every(
+            (child) => child.type !== 'text' || child.text.trim().length == 0
+          )
         ) {
           solutionState.strategy = []
         }
