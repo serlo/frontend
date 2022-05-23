@@ -10,7 +10,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
-import { hasVisibleContent } from '@/helper/check-content-is-empty'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {

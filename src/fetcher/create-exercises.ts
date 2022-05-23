@@ -10,7 +10,7 @@ import {
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
 } from '@/data-types'
-import { hasVisibleContent } from '@/helper/check-content-is-empty'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
 
