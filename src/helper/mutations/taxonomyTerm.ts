@@ -1,4 +1,4 @@
-import { TaxonomyEntityLinksInput } from '@serlo/api'
+import { TaxonomyEntityLinksInput, TaxonomySortInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { mutationFetch } from './helper'
@@ -61,4 +61,30 @@ export function useDeleteEntityLinkMutation() {
 
   return async (input: TaxonomyEntityLinksInput) =>
     await taxonomyTermDeleteEntityLink(input)
+}
+
+export function useTermSortMutation() {
+  const auth = useAuthentication()
+  const loggedInData = useLoggedInData()
+
+  const mutation = gql`
+    mutation taxonomyTermSort($input: TaxonomySortInput!) {
+      taxonomyTerm {
+        sort(input: $input) {
+          success
+        }
+      }
+    }
+  `
+  const taxonomyTermSort = async function (input: TaxonomySortInput) {
+    const success = await mutationFetch(
+      auth,
+      mutation,
+      input,
+      loggedInData?.strings.mutations.errors
+    )
+    return success
+  }
+
+  return async (input: TaxonomySortInput) => await taxonomyTermSort(input)
 }

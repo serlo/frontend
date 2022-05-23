@@ -23,7 +23,9 @@ import {
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
+import { useTermSortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
   return (
@@ -36,10 +38,7 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
 // TODO: handle taxonomy ("folders")
 
 function Content({ pageData }: { pageData: TaxonomyPage }) {
-  // const createEntityLink = useCreateEntityLinkMutation()
-  // const deleteEntityLink = useDeleteEntityLinkMutation()
-  // const router = useRouter()
-  // const [removedTaxIds, setRemovedTaxIds] = useState<number[]>([])
+  const sortTerm = useTermSortMutation()
 
   const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
 
@@ -47,6 +46,26 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   const loggedInData = useLoggedInData()
   if (!loggedInData) return <PleaseLogIn />
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
+
+  const onSave = async () => {
+    const allIds = allCategories.reduce<number[]>((idArray, category) => {
+      if (
+        category === 'folders' ||
+        !taxonomyData[category] ||
+        !taxonomyData[category].length
+      )
+        return idArray
+
+      return [...idArray, ...taxonomyData[category].map((entity) => entity.id)]
+    }, [])
+
+    const success = await sortTerm({
+      childrenIds: allIds,
+      taxonomyTermId: taxonomyData.id,
+    })
+    if (success)
+      showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
+  }
 
   return (
     <>
@@ -180,24 +199,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     return (
       <button
         className="mt-12 serlo-button serlo-make-interactive-primary"
-        onClick={() => {
-          const allIds = allCategories.reduce<number[]>((idArray, category) => {
-            if (
-              category === 'folders' ||
-              !taxonomyData[category] ||
-              !taxonomyData[category].length
-            )
-              return idArray
-
-            return [
-              ...idArray,
-              ...taxonomyData[category].map((entity) => entity.id),
-            ]
-          }, [])
-
-          console.log(allIds)
-          //TODO: run mutation
-        }}
+        onClick={onSave}
       >
         {loggedInStrings.saveButtonText}
       </button>

@@ -21,6 +21,7 @@ import {
   UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
+  TaxonomySortInput,
 } from '@serlo/api'
 import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
@@ -53,6 +54,7 @@ type MutationInput =
   | TaxonomyTermSetNameAndDescriptionInput
   | TaxonomyEntityLinksInput
   | EntitySetLicenseInput
+  | TaxonomySortInput
 
 type MutationResponse =
   | ThreadMutation
