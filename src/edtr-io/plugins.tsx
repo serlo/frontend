@@ -45,6 +45,7 @@ import { userTypePlugin } from './plugins/types/user'
 import { videoTypePlugin } from './plugins/types/video'
 import { SerializedDocument } from './serialized-document'
 import { LoggedInData } from '@/data-types'
+import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 
 type PluginType =
   | SerializedDocument['plugin']
@@ -65,10 +66,12 @@ export function createPlugins({
   getCsrfToken,
   editorStrings,
   registry,
+  type,
 }: {
   getCsrfToken: () => string
   editorStrings: LoggedInData['strings']['editor']
   registry: RowsConfig['plugins']
+  type: string
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
   const textPluginI18n = {
@@ -259,7 +262,19 @@ export function createPlugins({
     pageLayout: createPageLayoutPlugin(editorStrings),
     pageTeam: pageTeamPlugin,
     multimedia: createMultimediaExplanationPlugin({
-      explanation: { plugin: 'rows' },
+      explanation: {
+        plugin: 'rows',
+        config: {
+          plugins: getPluginRegistry(type, editorStrings, [
+            'text',
+            'highlight',
+            'anchor',
+            'equations',
+            'image',
+            'serloTable',
+          ]),
+        },
+      },
       plugins: [
         {
           name: 'image',
