@@ -57,7 +57,7 @@ export function Multimedia({
       return null
     }
 
-    // TODO: simplify after deploy, db-migration and api cache updates
+    // simplify after deploy, db-migration and api cache updates
     const label =
       hasOwnPropertyTs(mediaChild, 'caption') && mediaChild.caption
         ? renderNested(mediaChild.caption) ?? undefined
