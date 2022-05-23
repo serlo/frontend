@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
 import { ModalClsx } from '../modal-with-close-button'
@@ -8,12 +9,12 @@ export interface LightBoxProps {
   open: boolean
   onClose: () => void
   src: string
-  label?: string
+  alt?: string
+  label?: JSX.Element | ReactNode[]
 }
 
-export function LightBox(props: LightBoxProps) {
+export function LightBox({ open, onClose, label, src, alt }: LightBoxProps) {
   const { strings } = useInstanceData()
-  const { open, onClose, label, src } = props
   if (!open) return null
 
   const pictureString = strings.content.picture
@@ -29,7 +30,7 @@ export function LightBox(props: LightBoxProps) {
         <img
           onClick={onClose}
           src={src}
-          alt={label ?? pictureString}
+          alt={alt ?? pictureString}
           className={clsx(
             'my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]',
             isVector && 'w-[80vw]'

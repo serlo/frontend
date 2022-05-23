@@ -8,6 +8,7 @@ import type {
   FrontendImgNode,
   FrontendContentNode,
 } from '@/data-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
@@ -56,12 +57,19 @@ export function Multimedia({
       return null
     }
 
+    // TODO: simplify after deploy, db-migration and api cache updates
+    const label =
+      hasOwnPropertyTs(mediaChild, 'caption') && mediaChild.caption
+        ? renderNested(mediaChild.caption) ?? undefined
+        : undefined
+
     return (
       open && (
         <LightBox
           open={open}
           onClose={() => setOpen(false)}
-          label={mediaChild.alt}
+          alt={mediaChild.alt}
+          label={label}
           src={mediaChild.src}
         />
       )
