@@ -87,13 +87,12 @@ export const instanceData = {
       button: "Inhalt überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
-        title: 'Create with us!',
-        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
-        loginButton: 'Login now',
-        registerButton: 'Register new account',
-        psText: 'You can find out in what ways you can contribute %link%.',
-        psLinkText: 'here',
-        psLinkUrl: 'https://de.serlo.org/mitmachen'
+        title: "Erstelle mit uns!",
+        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        loginButton: "Jetzt einloggen",
+        registerButton: "Neues Konto anlegen",
+        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psLinkText: "Hier"
       }
     },
     license: {
