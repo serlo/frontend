@@ -35,8 +35,6 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
   )
 })
 
-// TODO: handle taxonomy ("folders")
-
 function Content({ pageData }: { pageData: TaxonomyPage }) {
   const sortTerm = useTermSortMutation()
 
@@ -49,15 +47,22 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
   const onSave = async () => {
     const allIds = allCategories.reduce<number[]>((idArray, category) => {
+      const categoryAdapted = category === 'folders' ? 'subterms' : category
       if (
-        category === 'folders' ||
-        !taxonomyData[category] ||
-        !taxonomyData[category].length
+        !taxonomyData[categoryAdapted] ||
+        !taxonomyData[categoryAdapted].length
       )
         return idArray
 
-      return [...idArray, ...taxonomyData[category].map((entity) => entity.id)]
+      return [
+        ...idArray,
+        ...taxonomyData[categoryAdapted].map((entity) => entity.id),
+      ]
     }, [])
+
+    console.log(allIds)
+
+    console.log(pageData.taxonomyData)
 
     const success = await sortTerm({
       childrenIds: allIds,
@@ -93,7 +98,9 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   }
 
   function renderCategories() {
-    return allCategories.map((category) => {
+    return (
+      [...allCategories, 'subterms'] as (TopicCategoryTypes | 'subterms')[]
+    ).map((category) => {
       if (!(category in taxonomyData) || category === 'folders') return null
       const links = taxonomyData[category]
       if (!links || typeof links == 'boolean') return null
@@ -101,7 +108,10 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     })
   }
 
-  function renderCategory(category: TopicCategoryTypes, links: TaxonomyLink[]) {
+  function renderCategory(
+    category: TopicCategoryTypes | 'subterms',
+    links: TaxonomyLink[]
+  ) {
     if (
       links.length === 0 ||
       links.filter((link) => !link.unrevised).length === 0
@@ -129,6 +139,9 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       >
         <Droppable droppableId={category}>
           {(provided) => {
+            const categoryAdapted =
+              category === 'subterms' ? 'folders' : category
+
             return (
               <ul
                 key={category}
@@ -137,8 +150,8 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
                 {...provided.droppableProps}
               >
                 <h4 className="text-truegray-900 text-lg mb-4 font-bold">
-                  {strings.categories[category]}{' '}
-                  <FaIcon icon={categoryIconMapping[category]} />
+                  {strings.categories[categoryAdapted]}{' '}
+                  <FaIcon icon={categoryIconMapping[categoryAdapted]} />
                 </h4>
 
                 {links.map(renderLink)}
