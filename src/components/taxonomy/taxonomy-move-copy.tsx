@@ -76,6 +76,36 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
           {taxonomyData.exercises.map((node) => renderLi(node, 'exercise'))}
         </p>
         <p className="mt-4">
+          {taxonomyData.exercisesContent.map((node) => {
+            const titleState =
+              node.type === 'exercise'
+                ? node.task.edtrState?.content[0].children?.[0]
+                : node.content[0].children?.[0]
+
+            const titleString =
+              titleState &&
+              titleState?.type === 'slate-p' &&
+              titleState?.children?.[0].type === 'text'
+                ? titleState?.children?.[0].text
+                : ''
+
+            const title = `${getTranslatedType(strings, node.type)}: "${
+              titleString.length < 50
+                ? titleString
+                : titleString.substring(0, 50) + '…'
+            }"`
+
+            return renderLi(
+              {
+                id: node.context.id,
+                title,
+                url: node.href ?? `/${node.context.id}`,
+              },
+              'exercise'
+            )
+          })}
+        </p>
+        <p className="mt-4">
           {taxonomyData.videos.map((node) => renderLi(node, 'video'))}
         </p>
         <p className="mt-4">
@@ -94,7 +124,6 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   function renderLi(node: TaxonomyLink, type: string) {
     if (removedEntityIds.includes(node.id)) return null
     const isChecked = entityIds.includes(node.id)
-
     return (
       <div>
         <label className="cursor-pointer">

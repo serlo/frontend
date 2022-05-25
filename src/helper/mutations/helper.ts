@@ -146,5 +146,8 @@ function handleError(
   }
 
   showToastNotice(message, 'warning')
+  if (e && hasOwnPropertyTs(e, 'message')) {
+    showToastNotice(`"${e.message as string}"`)
+  }
   return false
 }
