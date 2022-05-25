@@ -129,7 +129,6 @@ export function Topic({ data }: TopicProps) {
     return (
       <UserTools
         onShare={() => setModalOpen(true)}
-        hideEdit
         data={{
           type: 'Taxonomy',
           id: data.id,

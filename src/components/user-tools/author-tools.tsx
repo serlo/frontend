@@ -80,12 +80,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       renderer: abo,
       canDo: canDo(Subscription.set),
     },
-    convert: {
-      url: `/page/revision/create/${entityId}/${data.revisionId || ''}`,
-      canDo: false, // we should remove this?
-    },
     pageConvert: {
-      url: `/page/revision/create/${entityId}/${data.revisionId || ''}`,
+      url: `/entity/repository/add-revision/${entityId}/${
+        data.revisionId || ''
+      }`,
       title: loggedInStrings.authorMenu.convert,
       canDo: canDo(Uuid.create('PageRevision')),
     },
