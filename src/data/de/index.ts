@@ -815,8 +815,8 @@ export const loggedInData = {
         select: "Inhalte zum kopieren oder verschieben auswählen:",
         target: "Zielordner:",
         link: "Link",
-        moveButtonText: "In den %type% verschieben",
-        copyButtonText: "In den %type% kopieren",
+        moveButtonText: "Verschieben zu: %type%",
+        copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
         copySuccess: "Erfolgreich kopiert"
       },
