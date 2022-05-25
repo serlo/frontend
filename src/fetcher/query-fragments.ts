@@ -72,6 +72,13 @@ export const sharedEventFragments = gql`
         id
       }
       repository {
+        ... on ExerciseGroup {
+          taxonomyTerms {
+            nodes {
+              name
+            }
+          }
+        }
         ...withTitle
       }
       reason
@@ -99,6 +106,14 @@ export const sharedEventFragments = gql`
       parent {
         id
         alias
+        ... on ExerciseGroup {
+          __typename
+          taxonomyTerms {
+            nodes {
+              name
+            }
+          }
+        }
       }
       child {
         id
@@ -110,6 +125,13 @@ export const sharedEventFragments = gql`
         id
       }
       entity {
+        ... on ExerciseGroup {
+          taxonomyTerms {
+            nodes {
+              name
+            }
+          }
+        }
         ...withTitle
       }
     }

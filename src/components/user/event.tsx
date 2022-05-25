@@ -279,11 +279,38 @@ export function Event({
   function renderObject(object: AbstractUuid & { __typename?: string }) {
     return (
       <Link href={object.alias ?? `/${object.id}`}>
-        {hasObject(object)
+        {hasTitle(object)
           ? object.currentRevision.title
-          : getEntityStringByTypename(object.__typename, strings)}
+          : getEntityStringForType(object.__typename, object)}
       </Link>
     )
+  }
+
+  function getEntityStringForType(
+    typename: string | undefined,
+    object: AbstractUuid & { __typename?: string }
+  ) {
+    if (
+      typename === 'ExerciseGroup' &&
+      hasTaxonomyTerms(object) &&
+      object.taxonomyTerms.nodes.length > 0 &&
+      object.taxonomyTerms.nodes[0].name.length > 0
+    )
+      return (
+        getEntityStringByTypename(typename, strings) +
+        ' | ' +
+        object.taxonomyTerms.nodes[0].name
+      )
+
+    return getEntityStringByTypename(typename, strings)
+  }
+
+  function hasTaxonomyTerms(
+    object: AbstractUuid & { __typename?: string }
+  ): object is AbstractUuid & { __typename?: string } & {
+    taxonomyTerms: { nodes: { name: string }[] }
+  } {
+    return hasPath(['taxonomyTerms', 'nodes'], object)
   }
 
   function renderTax(taxonomy: TaxonomyTerm) {
@@ -305,7 +332,7 @@ export function Event({
     )
   }
 
-  function hasObject(
+  function hasTitle(
     object: unknown
   ): object is { currentRevision: { title: string } } {
     return hasPath(['currentRevision', 'title'], object)
