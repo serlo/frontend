@@ -67,7 +67,6 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   )
 
   function renderList() {
-    console.log(taxonomyData.exercises)
     return (
       <>
         <p className="mt-4">
@@ -125,7 +124,6 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   function renderLi(node: TaxonomyLink, type: string) {
     if (removedEntityIds.includes(node.id)) return null
     const isChecked = entityIds.includes(node.id)
-    console.log(type)
     return (
       <div>
         <label className="cursor-pointer">
