@@ -713,7 +713,7 @@ export const loggedInData = {
           loading: "Wird geladen …",
           notFound: "Inhalt konnte nicht gefunden werden",
           unsupportedType: "Sorry, der Typ [%type%] wird hier nicht unterstützt",
-          unsupportedId: "Sorry, diese ID ist hier nicht erlaubt.",
+          unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
           addFromFolderTitle: "Aus dem Ordner",
           placeholder: "Eine Serlo Id oder URL hier einfügen",
           topicFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
