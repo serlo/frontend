@@ -24,7 +24,6 @@ interface UserToolsProps {
   id: number
   onShare?: () => void
   onInvite?: () => void
-  hideEdit?: boolean
   hideEditProfile?: boolean
   data: AuthorToolsData
   unrevisedRevisions?: number
@@ -39,7 +38,6 @@ export function UserTools({
   id,
   onShare,
   onInvite,
-  hideEdit,
   data,
   unrevisedRevisions,
   aboveContent,
@@ -132,20 +130,26 @@ export function UserTools({
     return (
       <>
         {isRevision && renderRevisionTools()}
-        {hideEdit ? null : auth.current ? renderEdit() : renderInvite()}
+        {renderEditOrInvite()}
         {renderShare()}
         {auth.current && renderExtraTools()}
       </>
     )
   }
 
-  function renderEdit() {
-    const hasUnrevised =
-      unrevisedRevisions !== undefined && unrevisedRevisions > 0
-    if (hasUnrevised) return renderUnrevised()
+  function renderEditOrInvite() {
+    const showInvite = !['Page', 'Event', 'TaxonomyTerm', 'User'].includes(
+      data.type
+    )
+
+    if (!auth.current && showInvite) return renderInvite()
 
     const editHref = getEditHref()
     if (!editHref) return null
+
+    const hasUnrevised =
+      unrevisedRevisions !== undefined && unrevisedRevisions > 0
+    if (hasUnrevised) return renderUnrevised()
 
     return (
       <Link href={editHref} className={buttonClassName()}>
@@ -154,26 +158,33 @@ export function UserTools({
     )
   }
 
+  function renderInvite() {
+    if (auth.current || onInvite === undefined) return null
+
+    return (
+      <button className={buttonClassName()} onClick={onInvite}>
+        {renderInner(strings.edit.button, faPencilAlt)}
+      </button>
+    )
+  }
+
   function getEditHref(): string | undefined {
-    if (data.type == 'Page') {
-      if (canDo(Uuid.create('PageRevision'))) {
-        return `/page/revision/create-old/${data.id}/${data.revisionId || ''}`
-      }
-    } else if (data.type == 'Taxonomy') {
-      if (canDo(TaxonomyTerm.set)) {
-        return `/taxonomy/term/update/${id}`
-      }
-    } else {
-      if (data.type === 'PageRevision' && canDo(Uuid.create('PageRevision'))) {
-        return getRevisionEditUrl(true, data.id, id)
-      }
-      if (canDo(Uuid.create('EntityRevision'))) {
-        return isRevision
-          ? getRevisionEditUrl(false, data.id, id)
-          : `/entity/repository/add-revision/${id}`
-      }
+    const revisionId = data.revisionId
+    const { type, id } = data
+
+    if (type.startsWith('Page')) {
+      return canDo(Uuid.create('PageRevision'))
+        ? getRevisionEditUrl(true, id, revisionId)
+        : undefined
     }
-    return
+
+    if (type == 'Taxonomy') {
+      return canDo(TaxonomyTerm.set) ? `/taxonomy/term/update/${id}` : undefined
+    }
+
+    return isRevision
+      ? getRevisionEditUrl(false, id, revisionId)
+      : `/entity/repository/add-revision/${id}`
   }
 
   function renderUnrevised() {
@@ -213,16 +224,6 @@ export function UserTools({
           </Link>
         )}
       </>
-    )
-  }
-
-  function renderInvite() {
-    if (auth.current || onInvite === undefined) return null
-
-    return (
-      <button className={buttonClassName()} onClick={onInvite}>
-        {renderInner(strings.edit.button, faPencilAlt)}
-      </button>
     )
   }
 
