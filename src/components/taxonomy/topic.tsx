@@ -134,6 +134,7 @@ export function Topic({ data }: TopicProps) {
           id: data.id,
           taxonomyFolder: isFolder,
           taxonomyTopic: isTopic,
+          alias: data.alias,
         }}
         id={data.id}
         aboveContent={setting?.aboveContent}
