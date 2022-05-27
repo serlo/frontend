@@ -73,10 +73,7 @@ const AnalyticsEventEval = () => {
   const importAndParse = async (file: File) => {
     try {
       const input = await file.text()
-      // Currently there is a but in the exported data from simple analytics. This workaround does the trick for now.
-      // support is informed
-      const inputFix = input.replace(/}{/g, '},{')
-      const inputData = JSON.parse(inputFix) as InputJsonData
+      const inputData = JSON.parse(input) as InputJsonData
       setData(inputData)
     } catch (error) {
       // eslint-disable-next-line no-console
