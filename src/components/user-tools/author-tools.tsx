@@ -41,6 +41,7 @@ export enum Tool {
   SortEntities = 'sortEntities',
   Trash = 'trash',
   DirectLink = 'directLink',
+  AnalyticsLink = 'analyticsLink',
 }
 
 interface ToolConfig {
@@ -177,6 +178,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       title: loggedInStrings.authorMenu.directLink,
       url: `/${data.id}`,
       canDo: true,
+    },
+    analyticsLink: {
+      title: loggedInStrings.authorMenu.analyticsLink,
+      url: `https://simpleanalytics.com/${lang}.serlo.org${data.alias ?? ''}`,
+      canDo: canDo(Entity.checkoutRevision) && data.alias,
     },
   } as ToolsConfig
 
