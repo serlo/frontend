@@ -163,13 +163,15 @@ const AnalyticsEventEval = () => {
 
     data.datapoints.forEach((point) => {
       const name = point.datapoint
-      if (
-        name.startsWith('legacy_serlo_org') ||
-        name.startsWith('invite2edit')
-      ) {
-        if (!datapointsByName[name]) datapointsByName[name] = []
-        datapointsByName[name].push(point)
-      }
+      if (name)
+        if (
+          name &&
+          (name.startsWith('legacy_serlo_org') ||
+            name.startsWith('invite2edit'))
+        ) {
+          if (!datapointsByName[name]) datapointsByName[name] = []
+          datapointsByName[name].push(point)
+        }
     })
     return (
       <>
