@@ -418,7 +418,8 @@ export const loggedInData = {
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
       editProfile: "Modifier profil",
-      directLink: "Lien direct vers ce contenu"
+      directLink: "Lien direct vers ce contenu",
+      analyticsLink: 'See analytics data'
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
