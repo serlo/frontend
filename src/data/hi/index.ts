@@ -418,7 +418,8 @@ export const loggedInData = {
       sortEntities: "सामग्री को क्रमबद्ध करें",
       newEntity: "नई इकाई",
       editProfile: "प्रोफ़ाइल संपादित करें",
-      directLink: 'Direct link to this content'
+      directLink: 'Direct link to this content',
+      analyticsLink: 'See analytics data'
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
