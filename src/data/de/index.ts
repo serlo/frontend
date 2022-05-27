@@ -419,7 +419,7 @@ export const loggedInData = {
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
       directLink: "Direkter Link zu diesem Inhalt",
-      analyticsLink: 'See analytics data'
+      analyticsLink: "Analytics Daten anschauen"
     },
     notifications: {
       hide: "Neue Benachrichtigungen für diesen Inhalt deaktivieren.",
