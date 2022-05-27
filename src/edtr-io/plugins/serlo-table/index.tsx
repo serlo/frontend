@@ -133,7 +133,14 @@ function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <div className="flex pt-3">
-        <div className="flex flex-col">
+        <div
+          className="flex flex-col"
+          onClick={(e) => {
+            //@ts-expect-error another hack to make focus ux ok
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            e.target.querySelector('.hackdiv')?.focus()
+          }}
+        >
           <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
           {renderAddButton(true)}
         </div>
@@ -141,6 +148,11 @@ function SerloTableEditor(props: SerloTableProps) {
         {renderAddButton(false)}
       </div>
     )
+  }
+
+  function updateHack() {
+    store.dispatch(focusNext())
+    store.dispatch(focusPrevious())
   }
 
   function renderActiveCellsIntoObject() {
@@ -155,10 +167,7 @@ function SerloTableEditor(props: SerloTableProps) {
             colIndex === rows[0].columns.length - 1
           const dispatchFocus = () => store.dispatch(focus(cell.content.id))
           const isClear = isEmpty(cell.content.id)(store.getState())
-          const updateHack = () => {
-            store.dispatch(focusNext())
-            store.dispatch(focusPrevious())
-          }
+
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
             if (e.key === 'Delete' || e.key === 'Backspace') {
@@ -181,11 +190,10 @@ function SerloTableEditor(props: SerloTableProps) {
             <div
               key={colIndex}
               tabIndex={0} // capture tab
-              onMouseUp={updateHack} // hack: focus slate directly on click
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2 pb-6 min-h-[3.5rem] h-full"
+              className="hackdiv pr-2 pb-6 min-h-[3.5rem]"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
