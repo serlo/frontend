@@ -155,6 +155,7 @@ export function Entity({ data }: EntityProps) {
         data={{
           type: data.typename,
           id: data.id,
+          alias: data.alias,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,
