@@ -72,9 +72,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         <p className="mt-4">
           {taxonomyData.articles.map((node) => renderLi(node, 'article'))}
         </p>
-        <p className="mt-4">
+        {/* <p className="mt-4"> //those are actually folders
           {taxonomyData.exercises.map((node) => renderLi(node, 'exercise'))}
-        </p>
+        </p> */}
         <p className="mt-4">
           {taxonomyData.exercisesContent.map((node) => {
             const titleState =
