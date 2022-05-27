@@ -1,9 +1,11 @@
+import { faTrashArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 import Head from 'next/head'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
+import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -11,6 +13,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { GetTrashedEntitiesQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -20,6 +23,7 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Content() {
+  const setUuidState = useSetUuidStateMutation()
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useFetch()
   const { strings } = useInstanceData()
@@ -68,6 +72,7 @@ function Content() {
             <th className="serlo-th">Alias</th>
             <th className="serlo-th">Type</th>
             <th className="serlo-th">{strings.bin.trashed}</th>
+            <th className="serlo-th"></th>
           </tr>
         </thead>
         <tbody>{nodes.map(renderRow)}</tbody>
@@ -95,6 +100,17 @@ function Content() {
         <td className="serlo-td">{getTranslatedType(strings, __typename)}</td>
         <td className="serlo-td">
           <TimeAgo datetime={new Date(node.dateOfDeletion)} dateAsTitle />
+        </td>
+        <td className="serlo-td">
+          <button
+            title="Restore"
+            className="serlo-button serlo-make-interactive-transparent-blue text-brand-300"
+            onClick={() => {
+              void setUuidState({ id: [id], trashed: false })
+            }}
+          >
+            <FaIcon icon={faTrashArrowUp} />
+          </button>
         </td>
       </tr>
     )
