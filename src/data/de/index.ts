@@ -456,7 +456,7 @@ export const loggedInData = {
         trash: "Erfolgreich gelöscht 🗑",
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
-        reject: "Bearbeitung wurde abgelehnt ❌",
+        reject: "Bearbeitung wurde nicht akzeptiert ❌",
         save: "Bearbeitung erfolgreich gespeichert ✅",
         updated: "Erfolgreich aktualisiert"
       },
