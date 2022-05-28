@@ -87,6 +87,7 @@ export const setEntityMutationRunner = async function ({
     // eslint-disable-next-line no-console
     console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
 
+    //here we rely on the api not to create an empty revision
     const savedId = await mutationFetch(
       auth,
       getSetMutation(data.__typename),
