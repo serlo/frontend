@@ -415,7 +415,7 @@ export const loggedInData = {
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
-      sortEntities: "Inhalt sortieren",
+      sortEntities: "Inhalte sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
       directLink: "Direkter Link zu diesem Inhalt",
