@@ -917,9 +917,9 @@ export interface EntityMutation {
   setExercise: SetEntityResponse;
   setExerciseGroup: SetEntityResponse;
   setGroupedExercise: SetEntityResponse;
-  setLicense: EntitySetLicenseResponse;
   setSolution: SetEntityResponse;
   setVideo: SetEntityResponse;
+  updateLicense: EntityUpdateLicenseResponse;
 }
 
 
@@ -973,11 +973,6 @@ export interface EntityMutationSetGroupedExerciseArgs {
 }
 
 
-export interface EntityMutationSetLicenseArgs {
-  input: EntitySetLicenseInput;
-}
-
-
 export interface EntityMutationSetSolutionArgs {
   input: SetGenericEntityInput;
 }
@@ -985,6 +980,11 @@ export interface EntityMutationSetSolutionArgs {
 
 export interface EntityMutationSetVideoArgs {
   input: SetVideoInput;
+}
+
+
+export interface EntityMutationUpdateLicenseArgs {
+  input: EntityUpdateLicenseInput;
 }
 
 export interface EntityQuery {
@@ -999,13 +999,13 @@ export interface EntityQueryDeletedEntitiesArgs {
   instance?: InputMaybe<Instance>;
 }
 
-export interface EntitySetLicenseInput {
+export interface EntityUpdateLicenseInput {
   entityId: Scalars['Int'];
   licenseId: Scalars['Int'];
 }
 
-export interface EntitySetLicenseResponse {
-  __typename?: 'EntitySetLicenseResponse';
+export interface EntityUpdateLicenseResponse {
+  __typename?: 'EntityUpdateLicenseResponse';
   query: Query;
   success: Scalars['Boolean'];
 }
@@ -2300,6 +2300,7 @@ export interface TaxonomyTermMutation {
   deleteEntityLinks: TaxonomyEntityLinksResponse;
   move: TaxonomyTermMoveResponse;
   setNameAndDescription: TaxonomyTermSetNameAndDescriptionResponse;
+  sort: TaxonomyTermSortResponse;
 }
 
 
@@ -2327,6 +2328,11 @@ export interface TaxonomyTermMutationSetNameAndDescriptionArgs {
   input: TaxonomyTermSetNameAndDescriptionInput;
 }
 
+
+export interface TaxonomyTermMutationSortArgs {
+  input: TaxonomyTermSortInput;
+}
+
 export interface TaxonomyTermSetNameAndDescriptionInput {
   description?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
@@ -2335,6 +2341,17 @@ export interface TaxonomyTermSetNameAndDescriptionInput {
 
 export interface TaxonomyTermSetNameAndDescriptionResponse {
   __typename?: 'TaxonomyTermSetNameAndDescriptionResponse';
+  query: Query;
+  success: Scalars['Boolean'];
+}
+
+export interface TaxonomyTermSortInput {
+  childrenIds: Array<Scalars['Int']>;
+  taxonomyTermId: Scalars['Int'];
+}
+
+export interface TaxonomyTermSortResponse {
+  __typename?: 'TaxonomyTermSortResponse';
   query: Query;
   success: Scalars['Boolean'];
 }

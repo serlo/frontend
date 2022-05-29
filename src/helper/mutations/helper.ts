@@ -1,7 +1,7 @@
 import {
   CheckoutRevisionInput,
   EntityMutation,
-  EntitySetLicenseInput,
+  EntityUpdateLicenseInput,
   NotificationMutation,
   NotificationSetStateInput,
   PageAddRevisionInput,
@@ -21,7 +21,7 @@ import {
   UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
-  TaxonomySortInput,
+  TaxonomyTermSortInput,
 } from '@serlo/api'
 import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
@@ -53,8 +53,8 @@ type MutationInput =
   | TaxonomyTermCreateInput
   | TaxonomyTermSetNameAndDescriptionInput
   | TaxonomyEntityLinksInput
-  | EntitySetLicenseInput
-  | TaxonomySortInput
+  | EntityUpdateLicenseInput
+  | TaxonomyTermSortInput
 
 type MutationResponse =
   | ThreadMutation
@@ -89,7 +89,6 @@ export async function mutationFetch(
     const result = await executeQuery()
     if (hasOwnPropertyTs(result, 'entity')) {
       const entity = result.entity as EntityMutation
-      if (Object.keys(entity)[0] === 'setLicense') return !!result //see https://github.com/serlo/api.serlo.org/issues/639
       if (Object.keys(entity)[0].startsWith('set')) {
         const entityResponse = Object.values(entity)[0] as SetEntityResponse
         return entityResponse.record?.id ?? false

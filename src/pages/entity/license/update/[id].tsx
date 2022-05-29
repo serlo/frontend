@@ -14,7 +14,7 @@ import {
   LicensesForInstaceQuery,
   LicensesForInstaceQueryVariables,
 } from '@/fetcher/graphql-types/operations'
-import { useEntitySetLicenseMutation } from '@/helper/mutations/use-entity-set-license-mutation'
+import { useEntityUpdateLicenseMutation } from '@/helper/mutations/use-entity-update-license-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 interface UpdateLicenseProps {
@@ -29,7 +29,7 @@ export default renderedPageNoHooks<UpdateLicenseProps>((props) => (
 ))
 
 function Content({ id, licenses }: UpdateLicenseProps) {
-  const setLicense = useEntitySetLicenseMutation()
+  const updateLicense = useEntityUpdateLicenseMutation()
   const [licenseId, setLicenseId] = useState<number>(licenses[0].id)
   const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
@@ -55,7 +55,7 @@ function Content({ id, licenses }: UpdateLicenseProps) {
         </select>
         <button
           className="ml-4 serlo-button serlo-make-interactive-primary"
-          onClick={() => void setLicense({ entityId: id, licenseId })}
+          onClick={() => void updateLicense({ entityId: id, licenseId })}
         >
           Update
         </button>
