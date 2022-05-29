@@ -3,6 +3,7 @@ import { Instance } from '@serlo/api'
 import { arrayMoveImmutable } from 'array-move'
 import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
@@ -37,8 +38,9 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
 
 function Content({ pageData }: { pageData: TaxonomyPage }) {
   const sortTerm = useTermSortMutation()
-
+  const router = useRouter()
   const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
+  const taxUrl = `/${taxonomyData.id}`
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -60,16 +62,16 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       ]
     }, [])
 
-    console.log(allIds)
-
-    console.log(pageData.taxonomyData)
-
     const success = await sortTerm({
       childrenIds: allIds,
       taxonomyTermId: taxonomyData.id,
     })
-    if (success)
+    if (success) {
       showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
+      setTimeout(() => {
+        void router.push(taxUrl)
+      }, 500)
+    }
   }
 
   return (
@@ -89,7 +91,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
         data={[
           {
             label: strings.revisions.toContent,
-            url: `/${taxonomyData.id}`,
+            url: taxUrl,
           },
         ]}
         asBackButton
