@@ -124,6 +124,7 @@ export const sharedEventFragments = gql`
         }
       }
       child {
+        __typename
         id
         alias
       }
