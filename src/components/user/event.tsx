@@ -295,14 +295,25 @@ export function Event({
       hasTaxonomyTerms(object) &&
       object.taxonomyTerms.nodes.length > 0 &&
       object.taxonomyTerms.nodes[0].name.length > 0
-    )
+    ) {
       return (
         getEntityStringByTypename(typename, strings) +
         ' | ' +
         object.taxonomyTerms.nodes[0].name
       )
+    }
+
+    if (typename === 'TaxonomyTerm' && hasName(object)) {
+      return object.name
+    }
 
     return getEntityStringByTypename(typename, strings)
+  }
+
+  function hasName(
+    object: AbstractUuid & { __typename?: string }
+  ): object is AbstractUuid & { __typename?: string } & { name: string } {
+    return hasPath(['name'], object)
   }
 
   function hasTaxonomyTerms(

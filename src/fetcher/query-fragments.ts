@@ -100,6 +100,14 @@ export const sharedEventFragments = gql`
       entity {
         id
         alias
+        ... on ExerciseGroup {
+          __typename
+          taxonomyTerms {
+            nodes {
+              name
+            }
+          }
+        }
       }
     }
     ... on CreateEntityLinkNotificationEvent {
@@ -147,6 +155,7 @@ export const sharedEventFragments = gql`
         ...withTitle
       }
       parent {
+        __typename
         id
         alias
         name
@@ -199,6 +208,13 @@ export const sharedEventFragments = gql`
     }
     ... on SetLicenseNotificationEvent {
       repository {
+        ... on ExerciseGroup {
+          taxonomyTerms {
+            nodes {
+              name
+            }
+          }
+        }
         ...withTitle
       }
     }
