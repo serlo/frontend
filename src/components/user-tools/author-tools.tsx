@@ -41,6 +41,7 @@ export enum Tool {
   SortEntities = 'sortEntities',
   Trash = 'trash',
   DirectLink = 'directLink',
+  AnalyticsLink = 'analyticsLink',
 }
 
 interface ToolConfig {
@@ -80,12 +81,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       renderer: abo,
       canDo: canDo(Subscription.set),
     },
-    convert: {
-      url: `/page/revision/create/${entityId}/${data.revisionId || ''}`,
-      canDo: false, // we should remove this?
-    },
     pageConvert: {
-      url: `/page/revision/create/${entityId}/${data.revisionId || ''}`,
+      url: `/entity/repository/add-revision/${entityId}/${
+        data.revisionId || ''
+      }`,
       title: loggedInStrings.authorMenu.convert,
       canDo: canDo(Uuid.create('PageRevision')),
     },
@@ -179,6 +178,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       title: loggedInStrings.authorMenu.directLink,
       url: `/${data.id}`,
       canDo: true,
+    },
+    analyticsLink: {
+      title: loggedInStrings.authorMenu.analyticsLink,
+      url: `https://simpleanalytics.com/${lang}.serlo.org${data.alias ?? ''}`,
+      canDo: canDo(Entity.checkoutRevision) && data.alias,
     },
   } as ToolsConfig
 

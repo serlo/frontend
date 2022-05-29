@@ -300,7 +300,6 @@ export interface EntityData {
   categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
-  inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number

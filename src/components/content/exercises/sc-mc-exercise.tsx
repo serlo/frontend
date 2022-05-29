@@ -5,12 +5,12 @@ import { faCheckSquare } from '@fortawesome/free-solid-svg-icons/faCheckSquare'
 import clsx from 'clsx'
 import { useState, Fragment } from 'react'
 
-import { hasContent } from '../equations'
 import { Feedback } from './feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
@@ -125,7 +125,7 @@ export function ScMcExercise({
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
-            const hasFeedback = hasContent(answer.feedback)
+            const hasFeedback = hasVisibleContent(answer.feedback)
 
             return (
               <Fragment key={i}>

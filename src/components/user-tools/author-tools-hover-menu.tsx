@@ -8,6 +8,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 export interface AuthorToolsData {
   type: string
   id: number
+  alias?: string
   taxonomyFolder?: boolean
   taxonomyTopic?: boolean
   revisionId?: number
@@ -67,18 +68,27 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           // Tool.PageConvert,
           Tool.History,
           Tool.Log,
-          Tool.PageSetting,
+          Tool.AnalyticsLink,
+          // Tool.PageSetting,
         ]
       case 'Article':
       case 'Video':
       case 'Applet':
       case 'Event':
-        return [Tool.Abo, Tool.History, Tool.Curriculum, Tool.Log, Tool.Trash]
+        return [
+          Tool.Abo,
+          Tool.History,
+          Tool.Curriculum,
+          Tool.Log,
+          Tool.AnalyticsLink,
+          Tool.Trash,
+        ]
       case 'Taxonomy':
         return [
           Tool.Abo,
           Tool.Organize,
           Tool.Log,
+          Tool.AnalyticsLink,
           Tool.NewEntitySubmenu,
           Tool.SortEntities,
           Tool.CopyItems,
@@ -109,6 +119,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   Tool.History,
                   Tool.MoveCoursePage,
                   Tool.Log,
+                  Tool.AnalyticsLink,
                   Tool.Trash,
                 ]}
               />

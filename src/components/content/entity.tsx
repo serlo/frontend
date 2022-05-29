@@ -8,6 +8,7 @@ import { useState, MouseEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
+import { InviteModalProps } from '../user-tools/invite-modal'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license-notice'
@@ -29,9 +30,14 @@ const ShareModal = dynamic<ShareModalProps>(() =>
   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
 )
 
+const InviteModal = dynamic<InviteModalProps>(() =>
+  import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
+)
+
 export function Entity({ data }: EntityProps) {
   // state@/components/comments/comment-area
-  const [open, setOpen] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
+  const [inviteOpen, setInviteOpen] = useState(false)
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
@@ -63,6 +69,7 @@ export function Entity({ data }: EntityProps) {
       <HSpace amount={20} />
       {renderUserTools()}
       {renderShareModal()}
+      {renderInviteModal()}
       {data.licenseData && (
         <LicenseNotice data={data.licenseData} path={['license']} />
       )}
@@ -140,14 +147,15 @@ export function Entity({ data }: EntityProps) {
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
-        onShare={() => setOpen(true)}
+        onShare={() => setShareOpen(true)}
+        onInvite={() => setInviteOpen(true)}
         aboveContent={setting?.aboveContent}
         id={data.id}
-        hideEdit={!data.inviteToEdit}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
           id: data.id,
+          alias: data.alias,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,
@@ -169,10 +177,16 @@ export function Entity({ data }: EntityProps) {
     ].includes(data.typename)
     return (
       <ShareModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={shareOpen}
+        onClose={() => setShareOpen(false)}
         showPdf={showPdf}
       />
+    )
+  }
+
+  function renderInviteModal() {
+    return (
+      <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
     )
   }
 

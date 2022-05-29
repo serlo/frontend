@@ -89,6 +89,14 @@ export const instanceData = {
     edit: {
       button: 'Edit',
       unrevised: 'Show unrevised revisions',
+      inviteModal: {
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here',
+      },
     },
     license: {
       readMore: 'Info',
@@ -442,6 +450,7 @@ export const loggedInData = {
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
       directLink: 'Direct link to this content',
+      analyticsLink: 'See analytics data',
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',

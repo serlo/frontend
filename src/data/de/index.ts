@@ -85,7 +85,15 @@ export const instanceData = {
     },
     edit: {
       button: "Inhalt überarbeiten",
-      unrevised: "Zeige neue Bearbeitungen"
+      unrevised: "Zeige neue Bearbeitungen",
+      inviteModal: {
+        title: "Erstelle mit uns!",
+        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        loginButton: "Jetzt einloggen",
+        registerButton: "Neues Konto anlegen",
+        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psLinkText: "Hier"
+      }
     },
     license: {
       readMore: "Was bedeutet das?",
@@ -299,8 +307,8 @@ export const instanceData = {
       createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
-      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
-      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
+      createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
+      removeEntityLink: "%actor% hat die Zuweisung von %child% zu %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
       rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",
@@ -410,7 +418,8 @@ export const loggedInData = {
       sortEntities: "Inhalt sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
-      directLink: "Direkter Link zu diesem Inhalt"
+      directLink: "Direkter Link zu diesem Inhalt",
+      analyticsLink: "Analytics Daten anschauen"
     },
     notifications: {
       hide: "Neue Benachrichtigungen für diesen Inhalt deaktivieren.",
@@ -447,14 +456,15 @@ export const loggedInData = {
         trash: "Erfolgreich gelöscht 🗑",
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
-        reject: "Bearbeitung wurde abgelehnt ❌",
-        save: "Bearbeitung erfolgreich gespeichert ✅"
+        reject: "Bearbeitung wurde nicht akzeptiert ❌",
+        save: "Bearbeitung erfolgreich gespeichert ✅",
+        updated: "Erfolgreich aktualisiert"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
         FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: "Sorry, das ist so nicht unterstützt…",
         UNKNOWN: "Ein unbekannter Fehler…",
         valueMissing: "Bitte alle Pflichtfelder ausfüllen"
       }
@@ -704,6 +714,7 @@ export const loggedInData = {
           loading: "Wird geladen …",
           notFound: "Inhalt konnte nicht gefunden werden",
           unsupportedType: "Sorry, der Typ [%type%] wird hier nicht unterstützt",
+          unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
           addFromFolderTitle: "Aus dem Ordner",
           placeholder: "Eine Serlo Id oder URL hier einfügen",
           topicFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
@@ -798,6 +809,24 @@ export const loggedInData = {
       authorization: "Rechtevergabe",
       navigation: 'Navigation',
       recycleBin: "Papierkorb"
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Inhalte in Ordner verschieben / kopieren",
+        select: "Inhalte zum kopieren oder verschieben auswählen:",
+        target: "Zielordner:",
+        link: "Link",
+        moveButtonText: "Verschieben zu: %type%",
+        copyButtonText: "Kopieren zu %type% ",
+        moveSuccess: "Erfolgreich verschoben",
+        copySuccess: "Erfolgreich kopiert"
+      },
+      deleteAdd: {
+        confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
+        addSuccess: "Erfolgreich zugewiesen, Seite wird neu geladen …",
+        addNewTitle: "Neue Zuweisung hinzufügen",
+        addButtonText: "Zuweisen"
+      }
     }
   }
 };

@@ -70,6 +70,7 @@ export function SerloEditor({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     getCsrfToken: getCsrfToken,
     registry: getPluginRegistry(type, editorStrings),
+    type,
     editorStrings,
   })
 
