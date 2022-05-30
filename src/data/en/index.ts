@@ -888,6 +888,7 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",
