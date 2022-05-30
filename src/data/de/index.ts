@@ -821,7 +821,7 @@ export const loggedInData = {
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
         copySuccess: "Erfolgreich kopiert",
-        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        topicFolderNotice: "Kopieren oder verschieben von \"%topicFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
       },
       deleteAdd: {
         confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
