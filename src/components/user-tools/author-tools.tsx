@@ -157,7 +157,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     changeLicense: {
       url: `/entity/license/update/${data.id}`,
-      canDo: canDo(Entity.setLicense),
+      canDo: canDo(Entity.updateLicense),
     },
     moveItems: {
       url: `/taxonomy/term/move/batch/${data.id}`,
