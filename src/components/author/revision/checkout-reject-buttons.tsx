@@ -49,25 +49,8 @@ export function CheckoutRejectButtons({
 
   return (
     <>
-      <button
-        className={buttonStyle}
-        onClick={() => setModalMode('checkout')}
-        onPointerUp={(e) => e.currentTarget.blur()}
-      >
-        <FaIcon icon={faCheck} className="lg:mr-0.5" />{' '}
-        {strings.revisions.checkout.action}
-      </button>
-      {!isRejected && !isPage && (
-        <button
-          className={buttonStyle}
-          onClick={() => setModalMode('reject')}
-          onPointerUp={(e) => e.currentTarget.blur()}
-        >
-          &nbsp;
-          <FaIcon icon={faTimes} className="lg:mr-0.5" />{' '}
-          {strings.revisions.reject.action}
-        </button>
-      )}
+      {renderButton('checkout')}
+      {!isRejected && !isPage ? renderButton('reject') : null}
 
       <ModalWithCloseButton
         isOpen={modalMode != null}
@@ -80,6 +63,24 @@ export function CheckoutRejectButtons({
       </ModalWithCloseButton>
     </>
   )
+
+  function renderButton(mode: 'reject' | 'checkout') {
+    const isCheckout = mode === 'checkout'
+    return (
+      <button
+        className={buttonStyle}
+        onClick={() => setModalMode(mode)}
+        onPointerUp={(e) => e.currentTarget.blur()}
+      >
+        &nbsp;
+        <FaIcon
+          icon={isCheckout ? faCheck : faTimes}
+          className="lg:mr-0.5"
+        />{' '}
+        {strings.revisions[mode].action}
+      </button>
+    )
+  }
 
   function renderModalContent() {
     if (!modalMode) return null
