@@ -1,4 +1,4 @@
-import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
@@ -7,6 +7,7 @@ import { UuidUrlInput } from '../author/uuid-url-input'
 import { PageTitle } from '../content/page-title'
 import { FaIcon } from '../fa-icon'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
+import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -17,6 +18,7 @@ import {
   useCreateEntityLinkMutation,
   useDeleteEntityLinkMutation,
 } from '@/helper/mutations/taxonomyTerm'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface TaxonomyMoveCopyProps {
@@ -72,9 +74,6 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         <p className="mt-4">
           {taxonomyData.articles.map((node) => renderLi(node, 'article'))}
         </p>
-        {/* <p className="mt-4"> //those are actually folders
-          {taxonomyData.exercises.map((node) => renderLi(node, 'exercise'))}
-        </p> */}
         <p className="mt-4">
           {taxonomyData.exercisesContent.map((node) => {
             const titleState =
@@ -117,6 +116,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         <p className="mt-4">
           {taxonomyData.events.map((node) => renderLi(node, 'event'))}
         </p>
+        {renderFolderNotice()}
       </>
     )
   }
@@ -226,5 +226,17 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         </button>
       )
     }
+  }
+
+  function renderFolderNotice() {
+    if (!taxonomyData.exercises.length) return null
+    return (
+      <StaticInfoPanel type="info" icon={faInfoCircle}>
+        {replacePlaceholders(loggedInStrings.topicFolderNotice, {
+          break: <br />,
+          topicFolder: strings.entities.topicFolder,
+        })}
+      </StaticInfoPanel>
+    )
   }
 }
