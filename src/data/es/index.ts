@@ -458,7 +458,8 @@ export const loggedInData = {
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
         save: "Edición guardada con éxito ✅",
-        updated: 'Successfully updated ✅'
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -819,13 +820,18 @@ export const loggedInData = {
         moveButtonText: "Move to %type%",
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied"
+        copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",
         addSuccess: "Sucessfully assigned, reloading …",
         addNewTitle: "Add new assignment",
         addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

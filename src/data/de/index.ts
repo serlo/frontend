@@ -458,7 +458,8 @@ export const loggedInData = {
         accept: "Bearbeitung wurde akzeptiert ✅",
         reject: "Bearbeitung wurde nicht akzeptiert ❌",
         save: "Bearbeitung erfolgreich gespeichert ✅",
-        updated: "Erfolgreich aktualisiert"
+        updated: "Erfolgreich aktualisiert",
+        generic: "Hat geklappt 🎉"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -819,13 +820,18 @@ export const loggedInData = {
         moveButtonText: "Verschieben zu: %type%",
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
-        copySuccess: "Erfolgreich kopiert"
+        copySuccess: "Erfolgreich kopiert",
+        topicFolderNotice: "Kopieren oder verschieben von \"%topicFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
       },
       deleteAdd: {
         confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
         addSuccess: "Erfolgreich zugewiesen, Seite wird neu geladen …",
         addNewTitle: "Neue Zuweisung hinzufügen",
         addButtonText: "Zuweisen"
+      },
+      sort: {
+        title: "Inhalte sortieren",
+        saveButtonText: "Reihenfolge speichern"
       }
     }
   }
