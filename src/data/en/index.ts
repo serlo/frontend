@@ -490,7 +490,8 @@ export const loggedInData = {
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
-        updated: 'Successfully updated ✅'
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -893,6 +894,10 @@ export const loggedInData = {
         addSuccess: "Sucessfully assigned, reloading …",
         addNewTitle: "Add new assignment",
         addButtonText: "Assign",
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   },
