@@ -3843,26 +3843,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.30.2":
-  version: 0.30.2
-  resolution: "@serlo/api@npm:0.30.2"
-  checksum: 03e8e9ac136a87f94234d54fd392fa958c29d0a1f5f7dd6498a823624d0deb44bc5a42379e2e740c417f2ebd33a05fa39a69cdabcb9bfa04b4cda682dc2f85e1
+"@serlo/api@npm:^0.35.1":
+  version: 0.35.1
+  resolution: "@serlo/api@npm:0.35.1"
+  checksum: 8992937e38dcd666909ba617529bb55d0bc0452f93823873310d5f8541a08fe396fe0d629e36f3f0377670a5b9c8bad854cfca11bc82fea9c0460a83d50a001e
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.34.0":
-  version: 0.34.0
-  resolution: "@serlo/api@npm:0.34.0"
-  checksum: e8de94579880ef6a8f4dbcd3a8034794ba8514eb61eca86a563eb51751c86be4582118cd5eceace795c738f081413c0b4526623d244ee5879a75d8d20697533f
-  languageName: node
-  linkType: hard
-
-"@serlo/authorization@npm:^0.30.2":
-  version: 0.30.2
-  resolution: "@serlo/authorization@npm:0.30.2"
+"@serlo/authorization@npm:^0.35.1":
+  version: 0.35.1
+  resolution: "@serlo/authorization@npm:0.35.1"
   dependencies:
-    "@serlo/api": ^0.30.2
-  checksum: 517d061f45f9ca2c318016ef49cf4053a097f584987f990d09137494df07a712a90330a74981801023faf8632656e69d3e0f595388ceaf2835e3e0f1aeb23e54
+    "@serlo/api": ^0.35.1
+  checksum: 7437894b4d10a3d0ffb01331397a53abb6a473efe695ebebdf5a4d0e786bf1f6d8867651a2e1371e9fb04d34854664083d404d57e8820590afc8be187fda7ecd
   languageName: node
   linkType: hard
 
@@ -3906,8 +3899,8 @@ __metadata:
     "@graphql-codegen/typescript-graphql-request": ^4.4.5
     "@graphql-codegen/typescript-operations": 2.3.5
     "@next/bundle-analyzer": ^12.0.0
-    "@serlo/api": ^0.34.0
-    "@serlo/authorization": ^0.30.2
+    "@serlo/api": ^0.35.1
+    "@serlo/authorization": ^0.35.1
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
     "@serlo/markdown": Entkenntnis/tmp-serlo-markdown
     "@svgr/webpack": ^6.0.0
@@ -3937,6 +3930,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
     algebra.js: ^0.2.0
+    array-move: ^4.0.0
     autoprefixer: ^10.0.0
     babel-jest: ^27.0.0
     clsx: ^1.0.0
@@ -5303,6 +5297,13 @@ __metadata:
     get-intrinsic: ^1.1.1
     is-string: ^1.0.7
   checksum: 69967c38c52698f84b50a7aed5554aadc89c6ac6399b6d92ad061a5952f8423b4bba054c51d40963f791dfa294d7247cdd7988b6b1f2c5861477031c6386e1c0
+  languageName: node
+  linkType: hard
+
+"array-move@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "array-move@npm:4.0.0"
+  checksum: 307e6716e83567918cf8dd0050cdb44ce500d9969cd734ecbf1f8ae547df151dbf10713255a9db6a8950ca917f4817a778f0116f6d13944c3f3cd1fd1845f13f
   languageName: node
   linkType: hard
 
