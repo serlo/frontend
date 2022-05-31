@@ -12,7 +12,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
-import { allCategories } from '@/components/taxonomy/topic-categories'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -20,13 +19,26 @@ import {
   SlugProps,
   TaxonomyLink,
   TaxonomyPage,
+  TaxonomyData,
   TopicCategoryTypes,
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { useTermSortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
+
+export const allCategories = [
+  'articles',
+  'courses',
+  'videos',
+  'applets',
+  'exercises',
+  'events',
+  'subterms', //TaxonomySubTerm[]
+  'exercisesContent', //(FrontendExerciseNode | FrontendExerciseGroupNode)[]
+] as const
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
   return (
@@ -48,22 +60,24 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
   const onSave = async () => {
-    const allIds = allCategories.reduce<number[]>((idArray, category) => {
-      const categoryAdapted = category === 'folders' ? 'subterms' : category
-      if (
-        !taxonomyData[categoryAdapted] ||
-        !taxonomyData[categoryAdapted].length
-      )
+    const childrenIds = allCategories.reduce<number[]>((idArray, category) => {
+      if (!taxonomyData[category] || !taxonomyData[category].length)
         return idArray
 
       return [
         ...idArray,
-        ...taxonomyData[categoryAdapted].map((entity) => entity.id),
+        ...taxonomyData[category].map((entity) => {
+          if (hasOwnPropertyTs(entity, 'id')) {
+            return entity.id
+          }
+
+          return entity.context.id
+        }),
       ]
     }, [])
 
     const success = await sortTerm({
-      childrenIds: allIds,
+      childrenIds,
       taxonomyTermId: taxonomyData.id,
     })
     if (success) {
@@ -100,18 +114,36 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   }
 
   function renderCategories() {
-    return (
-      [...allCategories, 'subterms'] as (TopicCategoryTypes | 'subterms')[]
-    ).map((category) => {
-      if (!(category in taxonomyData) || category === 'folders') return null
+    return [...allCategories].map((category) => {
+      if (!(category in taxonomyData)) return null
       const links = taxonomyData[category]
-      if (!links || typeof links == 'boolean') return null
-      return renderCategory(category, links)
+      if (!links || !links.length || typeof links == 'boolean') return null
+
+      if (
+        hasOwnPropertyTs(links[0], 'type') &&
+        links[0].type.startsWith('exercise')
+      ) {
+        return renderCategory(
+          category,
+          (links as unknown as TaxonomyData['exercisesContent']).map(
+            (exNode) => {
+              const href = exNode.href ?? `/${exNode.context.id}`
+              return {
+                title: `${href} (pos ${exNode.positionOnPage ?? ''})`,
+                url: href,
+                id: exNode.context.id,
+              }
+            }
+          )
+        )
+      } else {
+        return renderCategory(category, links as TaxonomyLink[])
+      }
     })
   }
 
   function renderCategory(
-    category: TopicCategoryTypes | 'subterms',
+    category: typeof allCategories[number],
     links: TaxonomyLink[]
   ) {
     if (
@@ -142,7 +174,11 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
         <Droppable droppableId={category}>
           {(provided) => {
             const categoryAdapted =
-              category === 'subterms' ? 'folders' : category
+              category === 'subterms'
+                ? 'folders'
+                : category === 'exercisesContent'
+                ? 'exercises'
+                : category
 
             return (
               <ul
