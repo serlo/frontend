@@ -30,10 +30,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   const [removedEntityIds, setRemovedEntityIds] = useState<number[]>([])
 
   useEffect(() => {
-    const shouldBeOn = entityIds.length > 0
+    const shouldBeActive = entityIds.length > 0
 
-    if (shouldBeOn && !buttonsActive) setButtonsActive(true)
-    if (!shouldBeOn && buttonsActive) setButtonsActive(false)
+    if (shouldBeActive && !buttonsActive) setButtonsActive(true)
+    if (!shouldBeActive && buttonsActive) setButtonsActive(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entityIds])
 
@@ -203,8 +203,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         )
       }
 
-      if (isMove && removeSuccess)
+      if (isMove && removeSuccess) {
         setRemovedEntityIds([...removedEntityIds, ...entityIds])
+        setEntityIds([])
+      }
     }
 
     return (
