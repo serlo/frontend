@@ -79,7 +79,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
             const titleState =
               node.type === 'exercise'
                 ? node.task.edtrState?.content[0].children?.[0]
-                : node.content[0].children?.[0]
+                : node.content[0].children?.[0].children?.[0]
 
             const titleString =
               titleState &&
