@@ -11,7 +11,13 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { TaxonomyData, TaxonomyLink } from '@/data-types'
+import {
+  FrontendExerciseGroupNode,
+  FrontendExerciseNode,
+  InstanceData,
+  TaxonomyData,
+  TaxonomyLink,
+} from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {
@@ -76,23 +82,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         </p>
         <p className="mt-4">
           {taxonomyData.exercisesContent.map((node) => {
-            const titleState =
-              node.type === 'exercise'
-                ? node.task.edtrState?.content[0].children?.[0]
-                : node.content[0].children?.[0].children?.[0]
-
-            const titleString =
-              titleState &&
-              titleState?.type === 'slate-p' &&
-              titleState?.children?.[0].type === 'text'
-                ? titleState?.children?.[0].text
-                : ''
-
-            const title = `${getTranslatedType(strings, node.type)}: "${
-              titleString.length < 50
-                ? titleString
-                : titleString.substring(0, 50) + '…'
-            }"`
+            const title = getPreviewStringFromExercise(node, strings)
 
             return renderLi(
               {
@@ -241,4 +231,33 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
       </StaticInfoPanel>
     )
   }
+}
+
+export function getPreviewStringFromExercise(
+  node: FrontendExerciseNode | FrontendExerciseGroupNode,
+  strings: InstanceData['strings']
+) {
+  const typeString = getTranslatedType(strings, node.type)
+
+  const titleState =
+    node.type === 'exercise'
+      ? node.task.edtrState?.content[0].children?.[0]
+      : node.content[0].children?.[0]
+
+  if (!titleState) return typeString
+
+  const titleString =
+    (titleState.type === 'slate-p' &&
+      titleState.children?.[0].type === 'text' &&
+      titleState.children?.[0].text) ||
+    (titleState.type === 'slate-container' &&
+      titleState.children?.[0].children?.[0].type === 'text' &&
+      titleState.children?.[0].children?.[0].text)
+
+  if (!titleString) return typeString
+
+  const title = `${typeString}: "${
+    titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
+  }"`
+  return title
 }

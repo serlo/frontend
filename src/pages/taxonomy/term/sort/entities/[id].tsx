@@ -12,6 +12,7 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
+import { getPreviewStringFromExercise } from '@/components/taxonomy/taxonomy-move-copy'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -127,12 +128,16 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
           category,
           (links as unknown as TaxonomyData['exercisesContent']).map(
             (exNode) => {
-              const href = exNode.href ?? `/${exNode.context.id}`
-              return {
-                title: `${href} (pos ${exNode.positionOnPage ?? ''})`,
-                url: href,
-                id: exNode.context.id,
-              }
+              const url = exNode.href ?? `/${exNode.context.id}`
+              const pos =
+                exNode.positionOnPage !== undefined
+                  ? exNode.positionOnPage + 1
+                  : ''
+              const title = `(${pos}) ${getPreviewStringFromExercise(
+                exNode,
+                strings
+              )}`
+              return { title, url, id: exNode.context.id }
             }
           )
         )
