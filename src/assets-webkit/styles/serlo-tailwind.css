@@ -274,6 +274,10 @@
       @apply text-brand no-underline break-words hover:underline special-hyphens-auto;
     }
 
+    code {
+      @apply bg-brand-100 text-brand p-1 rounded-sm text-base;
+    }
+
     /* 
     good for some, bad for others
     [data-slate-object='block'] {
