@@ -151,11 +151,11 @@ export function Entity({ data }: EntityProps) {
         onInvite={() => setInviteOpen(true)}
         aboveContent={setting?.aboveContent}
         id={data.id}
-        hideEdit={!data.inviteToEdit}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
           id: data.id,
+          alias: data.alias,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,

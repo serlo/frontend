@@ -13,7 +13,7 @@ export interface InviteModalProps {
 }
 
 export function InviteModal({ isOpen, onClose }: InviteModalProps) {
-  const { strings } = useInstanceData()
+  const { lang, strings, footerData } = useInstanceData()
   const modalStrings = strings.edit.inviteModal
   const id = useContext(EntityIdContext)
 
@@ -38,7 +38,11 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
         {replacePlaceholders(modalStrings.psText, {
           link: (
             <a onClick={onClose}>
-              <Link href={modalStrings.psLinkUrl}>
+              <Link
+                href={
+                  lang === 'de' ? '/community' : footerData.participationHref
+                }
+              >
                 {modalStrings.psLinkText}
               </Link>
             </a>

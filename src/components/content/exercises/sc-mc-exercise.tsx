@@ -5,12 +5,12 @@ import { faCheckSquare } from '@fortawesome/free-solid-svg-icons/faCheckSquare'
 import clsx from 'clsx'
 import { useState, Fragment } from 'react'
 
-import { hasContent } from '../equations'
 import { Feedback } from './feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/data-types'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
@@ -86,7 +86,7 @@ export function ScMcExercise({
                       )}
                     </Feedback>
                   )}
-                {isRevisionView && renderRevisionExtra(answer)}
+                {isRevisionView && renderRevisionExtra(answer, true)}
               </Fragment>
             )
           })}
@@ -125,7 +125,7 @@ export function ScMcExercise({
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
-            const hasFeedback = hasContent(answer.feedback)
+            const hasFeedback = hasVisibleContent(answer.feedback)
 
             return (
               <Fragment key={i}>
@@ -184,15 +184,20 @@ export function ScMcExercise({
     answer: EdtrPluginScMcExercise['state']['answers'][0],
     hasFeedback?: boolean
   ) {
-    if (!answer.isCorrect && !hasFeedback) return null
+    if (
+      !hasFeedback ||
+      !hasVisibleContent(answer.feedback) ||
+      !answer.feedback[0].children
+    )
+      return null
     return (
-      <div className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
+      <div className="bg-amber-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
             [{strings.content.right}]
           </span>
         )}
-        {renderNested(answer.feedback, `mcfeedbackrevision`)}
+        {renderNested(answer.feedback[0].children, `mcfeedbackrevision`)}
       </div>
     )
   }

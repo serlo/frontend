@@ -85,7 +85,15 @@ export const instanceData = {
     },
     edit: {
       button: "Modifier",
-      unrevised: "Afficher les révisions non révisées"
+      unrevised: "Afficher les révisions non révisées",
+      inviteModal: {
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
+      }
     },
     license: {
       readMore: "Information",
@@ -410,7 +418,8 @@ export const loggedInData = {
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
       editProfile: "Modifier profil",
-      directLink: "Lien direct vers ce contenu"
+      directLink: "Lien direct vers ce contenu",
+      analyticsLink: 'See analytics data'
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
@@ -449,7 +458,8 @@ export const loggedInData = {
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
-        updated: 'Successfully updated ✅'
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -600,13 +610,14 @@ export const loggedInData = {
         closeSubMenu: "Fermer le sous-menu",
         heading: "Titre",
         headings: "Titres",
-        linkStrgK: "Lien (Strg + K)",
+        link: "Lien (%ctrlOrCmd% + K)",
         enterUrl: "Saisir l'URL",
         openInNewTab: "Ouvrir dans un nouvel onglet",
         orderedList: "Liste ordonnée",
         unorderedList: "Liste non ordonnée",
         lists: "Listes",
-        mathFormula: "Formule mathématique (Strg + M)",
+        mathFormula: "Formule mathématique (%ctrlOrCmd% + M)",
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "Afficher comme un bloc",
         formula: '[formula]',
         visual: "visuel",
@@ -621,8 +632,8 @@ export const loggedInData = {
         mathSymbols: "Symboles mathématiques",
         eG: "par ex.",
         functions: "Fonctions",
-        bold: "Gras (Ctrl + B)",
-        italic: "Italique (Ctrl + I)",
+        bold: "Gras (%ctrlOrCmd% + B)",
+        italic: "Italique (%ctrlOrCmd% + I)",
         noItemsFound: "Aucun élément trouvé"
       },
       video: {
@@ -810,13 +821,18 @@ export const loggedInData = {
         moveButtonText: "Move to %type%",
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied"
+        copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",
         addSuccess: "Sucessfully assigned, reloading …",
         addNewTitle: "Add new assignment",
         addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

@@ -725,7 +725,7 @@ export const featuredContent = {
       img: 'https://images.pexels.com/photos/6237990/pexels-photo-6237990.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     },
     {
-      title: 'Virtuelles Lernen',
+      title: 'Visuelles Lernen',
       type: 'course',
       url: '/lerntipps/120637/%C3%BCbersicht',
       img: 'https://assets.serlo.org/5bbdcd8fdd6fc_a9048ddcdb5dc5abdc61598b5a6eb9c560964e27.jpg',

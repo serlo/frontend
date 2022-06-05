@@ -1,11 +1,11 @@
 import {
+  faBookJournalWhills,
   faBookSkull,
-  faMap,
-  faTrashAlt,
-  faUserAstronaut,
+  faCubesStacked,
+  faEraser,
+  faHatWizard,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import Head from 'next/head'
 
 import { Link } from '@/components/content/link'
@@ -38,21 +38,25 @@ function Content() {
 
   function getMenuData(): Entry[] {
     return [
-      { url: '/pages', title: loggedInStrings.pages, icon: faFile },
+      {
+        url: '/pages',
+        title: loggedInStrings.pages,
+        icon: faBookJournalWhills,
+      },
       {
         url: '/authorization/roles',
         title: loggedInStrings.authorization,
-        icon: faUserAstronaut,
+        icon: faHatWizard,
       },
       {
         url: '/navigation/manage',
         title: loggedInStrings.navigation,
-        icon: faMap,
+        icon: faCubesStacked,
       },
       {
         url: '/uuid/recycle-bin',
         title: loggedInStrings.recycleBin,
-        icon: faTrashAlt,
+        icon: faEraser,
       },
       { url: '/___bot_or_not', title: 'Bot Or Not', icon: faBookSkull },
     ]
@@ -63,7 +67,7 @@ function Content() {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
-      <PageTitle title={strings.pageTitles.diagon} headTitle />
+      <PageTitle title={`🧙‍♀️ ${strings.pageTitles.diagon} 🔮`} headTitle />
       {renderMenu()}
     </>
   )

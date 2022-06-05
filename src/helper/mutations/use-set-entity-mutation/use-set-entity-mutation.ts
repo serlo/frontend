@@ -87,6 +87,7 @@ export const setEntityMutationRunner = async function ({
     // eslint-disable-next-line no-console
     console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
 
+    //here we rely on the api not to create an empty revision
     const savedId = await mutationFetch(
       auth,
       getSetMutation(data.__typename),
@@ -179,8 +180,8 @@ const loopNestedChildren = async ({
       ? childrenInitialData
       : [childrenInitialData]
 
-    const results = await Promise.all(
-      childrenArray.map(async (child) => {
+    async function syncLoop() {
+      for (const child of childrenArray) {
         const oldVersion = childrenInitialArray.find(
           (oldChild) => oldChild?.id === child.id
         )
@@ -210,10 +211,19 @@ const loopNestedChildren = async ({
           parentId,
           initialState,
         })
-        return success
-      })
-    )
-    return results.every((result) => result === true)
+        if (!success) throw 'revision of one child could not be saved'
+      }
+      return true
+    }
+
+    try {
+      const result = await syncLoop()
+      return result
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error)
+      return false
+    }
   }
 }
 
@@ -222,7 +232,7 @@ export function getRequiredString(
   name: string,
   value?: string
 ) {
-  if (!value) {
+  if (!value || !value.trim()) {
     const msg = `${loggedInData.strings.mutations.errors.valueMissing} ("${name}")`
     showToastNotice(msg, 'warning')
     throw msg

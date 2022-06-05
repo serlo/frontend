@@ -90,28 +90,30 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
     if (!nodes || removedTaxIds.includes(term.id)) return null
 
     return (
-      <p className="py-3 border-b-2">
+      <div className="py-3 border-b-2 flex">
         <button
           onClick={() => onDelete(term.id)}
           className="serlo-button serlo-make-interactive-transparent-blue mr-2 text-brand-lighter"
         >
           <FaIcon icon={faTrashAlt} />
         </button>
-        {nodes.slice(0, -1).map((crumb) => (
-          <>
-            {crumb.label}
-            {' > '}
-          </>
-        ))}
-        <a
-          className="text-brand font-bold"
-          href={term.alias ?? `/${term.id}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {term.name}
-        </a>
-      </p>
+        <div>
+          {nodes.slice(0, -1).map((crumb) => (
+            <>
+              {crumb.label}
+              {' > '}
+            </>
+          ))}
+          <a
+            className="text-brand font-bold"
+            href={term.alias ?? `/${term.id}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {term.name}
+          </a>
+        </div>
+      </div>
     )
   }
 

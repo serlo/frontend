@@ -109,7 +109,6 @@ export async function requestPage(
           typename: uuid.__typename,
           title: uuid.currentRevision?.title ?? '',
           categoryIcon: 'course',
-          inviteToEdit: true,
           isUnrevised: !uuid.currentRevision,
           courseData: {
             id: uuid.id,
@@ -158,7 +157,6 @@ export async function requestPage(
         typename: uuid.__typename,
         trashed: uuid.trashed,
         content: exercise,
-        inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -196,7 +194,6 @@ export async function requestPage(
         alias: uuid.alias ?? undefined,
         typename: uuid.__typename,
         content: exercise,
-        inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -288,7 +285,6 @@ export async function requestPage(
           setContentAsSection: true,
         },
         categoryIcon: 'article',
-        inviteToEdit: true,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -328,7 +324,6 @@ export async function requestPage(
           ...content,
         ],
         categoryIcon: 'video',
-        inviteToEdit: true,
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -366,7 +361,6 @@ export async function requestPage(
           },
           ...content,
         ],
-        inviteToEdit: true,
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -431,7 +425,6 @@ export async function requestPage(
           setContentAsSection: true,
         },
         categoryIcon: 'coursePage',
-        inviteToEdit: true,
         courseData: {
           id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',

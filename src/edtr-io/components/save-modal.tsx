@@ -183,6 +183,11 @@ export function SaveModal({
 
   function renderLicense() {
     if (!license) return null
+
+    const licenseAgreement = license.agreement.value.replace(
+      /<a href/g,
+      '<a target="_blank" href'
+    )
     return (
       <label className="block pb-2">
         <input
@@ -195,7 +200,7 @@ export function SaveModal({
         />{' '}
         <span
           className="license-wrapper"
-          dangerouslySetInnerHTML={{ __html: license.agreement.value }}
+          dangerouslySetInnerHTML={{ __html: licenseAgreement }}
         />
         <style jsx global>
           {`

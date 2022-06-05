@@ -129,12 +129,12 @@ export function Topic({ data }: TopicProps) {
     return (
       <UserTools
         onShare={() => setModalOpen(true)}
-        hideEdit
         data={{
           type: 'Taxonomy',
           id: data.id,
           taxonomyFolder: isFolder,
           taxonomyTopic: isTopic,
+          alias: data.alias,
         }}
         id={data.id}
         aboveContent={setting?.aboveContent}
