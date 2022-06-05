@@ -616,7 +616,7 @@ export const loggedInData = {
         orderedList: "Lista ordenada",
         unorderedList: "Lista sin ordenar",
         lists: "Listas",
-        mathFormula: 'Math formula (%ctrlOrCmd% + A)',
+        mathFormula: 'Math formula (%ctrlOrCmd% + M)',
         code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "Mostrar en bloque",
         formula: "[fórmula]",
