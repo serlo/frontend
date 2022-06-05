@@ -282,36 +282,60 @@ export function Event({
       <Link href={object.alias ?? `/${object.id}`}>
         {hasTitle(object)
           ? object.currentRevision.title
-          : getEntityStringForType(object.__typename, object)}
+          : getEntityStringIncludingFolder(object)}
       </Link>
     )
   }
 
+  // Gets localized entity name (for example "Solution") and containing folder (for example "Exercises about topic X")
+  // Full example: "Solution | Exercises about topic X"
+  function getEntityStringIncludingFolder(
+    object: AbstractUuid & { __typename?: string }
+  ) {
+    const taxonomyTerms = getTaxonomyTerms(object)
+
+    if (taxonomyTerms.length == 0) {
+      return getEntityStringByTypename(object.__typename, strings)
+    }
+
+    const topicFolder = taxonomyTerms.find(
+      (term) => term.type === TaxonomyTermType.TopicFolder
+    )
+    if (topicFolder === undefined) {
+      return (
+        getEntityStringByTypename(object.__typename, strings) +
+        ' | ' +
+        taxonomyTerms[0].name // Give at least some context.
+      )
+    }
+
+    return (
+      getEntityStringByTypename(object.__typename, strings) +
+      ' | ' +
+      topicFolder.name
+    )
+  }
+
   function getTaxonomyTerms(
-    typename: string | undefined,
     object: AbstractUuid & { __typename?: string }
   ): { name: string; type: TaxonomyTermType }[] {
-    if (typename === 'Exercise' && hasTaxonomyTerms(object)) {
+    if (object.__typename === 'Exercise' && hasTaxonomyTerms(object)) {
       return object.taxonomyTerms.nodes
     }
 
-    if (typename === 'ExerciseGroup' && hasTaxonomyTerms(object)) {
+    if (object.__typename === 'ExerciseGroup' && hasTaxonomyTerms(object)) {
       return object.taxonomyTerms.nodes
     }
 
     if (
-      typename === 'GroupedExercise' &&
+      object.__typename === 'GroupedExercise' &&
       hasExerciseGroup(object) &&
       hasTaxonomyTerms(object.exerciseGroup)
     ) {
       return object.exerciseGroup.taxonomyTerms.nodes
     }
 
-    if (typename === 'TaxonomyTerm' && hasName(object) && hasType(object)) {
-      return [{ name: object.name, type: object.type }]
-    }
-
-    if (typename === 'Solution' && hasExercise(object)) {
+    if (object.__typename === 'Solution' && hasExercise(object)) {
       if (
         object.exercise.__typename === 'Exercise' &&
         hasTaxonomyTerms(object.exercise)
@@ -326,38 +350,15 @@ export function Event({
       }
     }
 
-    return []
-  }
-
-  function getEntityStringForType(
-    typename: string | undefined,
-    object: AbstractUuid & { __typename?: string }
-  ) {
-    const taxonomyTerms = getTaxonomyTerms(typename, object)
-
-    if (taxonomyTerms.length > 0 && taxonomyTerms[0].name.length > 0) {
-      const topicFolder = taxonomyTerms.find(
-        (term) => term.type === TaxonomyTermType.TopicFolder
-      )
-      if (topicFolder === undefined) {
-        return (
-          getEntityStringByTypename(typename, strings) +
-          ' | ' +
-          taxonomyTerms[0].name
-        )
-      } else
-        return (
-          getEntityStringByTypename(typename, strings) +
-          ' | ' +
-          topicFolder.name
-        )
-
-      // let taxonomyString = ''
-      // taxonomyTerms.forEach((term) => (taxonomyString += ' | ' + term.name))
-      // return getEntityStringByTypename(typename, strings) + taxonomyString
+    if (
+      object.__typename === 'TaxonomyTerm' &&
+      hasName(object) &&
+      hasType(object)
+    ) {
+      return [{ name: object.name, type: object.type }]
     }
 
-    return getEntityStringByTypename(typename, strings)
+    return []
   }
 
   function hasExercise(
@@ -367,14 +368,6 @@ export function Event({
   } {
     return hasPath(['exercise'], object)
   }
-
-  // function hasGroupedExercise(
-  //   object: AbstractUuid & { __typename?: string }
-  // ): object is AbstractUuid & { __typename?: string } & {
-  //   groupedExercise: AbstractUuid & { __typename?: string }
-  // } {
-  //   return hasPath(['groupedExercise'], object)
-  // }
 
   function hasExerciseGroup(
     object: AbstractUuid & { __typename?: string }
@@ -412,6 +405,12 @@ export function Event({
     )
   }
 
+  function hasTitle(
+    object: unknown
+  ): object is { currentRevision: { title: string } } {
+    return hasPath(['currentRevision', 'title'], object)
+  }
+
   function renderRevision(id: number) {
     return <Link href={`/${id}`}>{`${strings.entities.revision} ${id}`}</Link>
   }
@@ -423,12 +422,6 @@ export function Event({
         {`${strings.entities.thread} ${id}`}
       </Link>
     )
-  }
-
-  function hasTitle(
-    object: unknown
-  ): object is { currentRevision: { title: string } } {
-    return hasPath(['currentRevision', 'title'], object)
   }
 
   function renderButtons() {

@@ -72,56 +72,7 @@ export const sharedEventFragments = gql`
         id
       }
       repository {
-        ... on Exercise {
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on ExerciseGroup {
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on GroupedExercise {
-          exerciseGroup {
-            taxonomyTerms {
-              nodes {
-                name
-                type
-              }
-            }
-          }
-        }
-        ... on Solution {
-          exercise {
-            ... on Exercise {
-              __typename
-              taxonomyTerms {
-                nodes {
-                  name
-                  type
-                }
-              }
-            }
-            ... on GroupedExercise {
-              __typename
-              exerciseGroup {
-                taxonomyTerms {
-                  nodes {
-                    name
-                    type
-                  }
-                }
-              }
-            }
-          }
-        }
+        ...withTaxonomyTerms
         ...withTitle
       }
       reason
@@ -145,25 +96,7 @@ export const sharedEventFragments = gql`
         __typename
         id
         alias
-        ... on ExerciseGroup {
-          __typename
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on GroupedExercise {
-          exerciseGroup {
-            taxonomyTerms {
-              nodes {
-                name
-                type
-              }
-            }
-          }
-        }
+        ...withTaxonomyTerms
       }
     }
     ... on CreateEntityLinkNotificationEvent {
@@ -171,38 +104,13 @@ export const sharedEventFragments = gql`
         __typename
         id
         alias
-        ... on Exercise {
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on ExerciseGroup {
-          __typename
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on GroupedExercise {
-          exerciseGroup {
-            taxonomyTerms {
-              nodes {
-                name
-                type
-              }
-            }
-          }
-        }
+        ...withTaxonomyTerms
       }
       child {
         __typename
         id
         alias
+        ...withTaxonomyTerms
       }
     }
     ... on CreateEntityRevisionNotificationEvent {
@@ -210,56 +118,7 @@ export const sharedEventFragments = gql`
         id
       }
       entity {
-        ... on Exercise {
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on ExerciseGroup {
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on GroupedExercise {
-          exerciseGroup {
-            taxonomyTerms {
-              nodes {
-                name
-                type
-              }
-            }
-          }
-        }
-        ... on Solution {
-          exercise {
-            ... on Exercise {
-              __typename
-              taxonomyTerms {
-                nodes {
-                  name
-                  type
-                }
-              }
-            }
-            ... on GroupedExercise {
-              __typename
-              exerciseGroup {
-                taxonomyTerms {
-                  nodes {
-                    name
-                    type
-                  }
-                }
-              }
-            }
-          }
-        }
+        ...withTaxonomyTerms
         ...withTitle
       }
     }
@@ -272,6 +131,7 @@ export const sharedEventFragments = gql`
     }
     ... on CreateTaxonomyLinkNotificationEvent {
       child {
+        ...withTaxonomyTerms
         ...withTitle
       }
       parent {
@@ -299,6 +159,7 @@ export const sharedEventFragments = gql`
       repository {
         id
         alias
+        ...withTaxonomyTerms
       }
       revision {
         id
@@ -310,14 +171,17 @@ export const sharedEventFragments = gql`
       parent {
         id
         alias
+        ...withTaxonomyTerms
       }
       child {
         id
         alias
+        ...withTaxonomyTerms
       }
     }
     ... on RemoveTaxonomyLinkNotificationEvent {
       child {
+        ...withTaxonomyTerms
         ...withTitle
       }
       parent {
@@ -328,24 +192,7 @@ export const sharedEventFragments = gql`
     }
     ... on SetLicenseNotificationEvent {
       repository {
-        ... on ExerciseGroup {
-          taxonomyTerms {
-            nodes {
-              name
-              type
-            }
-          }
-        }
-        ... on GroupedExercise {
-          exerciseGroup {
-            taxonomyTerms {
-              nodes {
-                name
-                type
-              }
-            }
-          }
-        }
+        ...withTaxonomyTerms
         ...withTitle
       }
     }
@@ -418,6 +265,59 @@ export const sharedEventFragments = gql`
     ... on Page {
       currentRevision {
         title
+      }
+    }
+  }
+
+  fragment withTaxonomyTerms on AbstractUuid {
+    ... on Exercise {
+      taxonomyTerms {
+        nodes {
+          name
+          type
+        }
+      }
+    }
+    ... on ExerciseGroup {
+      taxonomyTerms {
+        nodes {
+          name
+          type
+        }
+      }
+    }
+    ... on GroupedExercise {
+      exerciseGroup {
+        taxonomyTerms {
+          nodes {
+            name
+            type
+          }
+        }
+      }
+    }
+    ... on Solution {
+      exercise {
+        ... on Exercise {
+          __typename
+          taxonomyTerms {
+            nodes {
+              name
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          __typename
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                name
+                type
+              }
+            }
+          }
+        }
       }
     }
   }
