@@ -669,7 +669,7 @@ export const loggedInData = {
         orderedList: 'Ordered list',
         unorderedList: 'Unordered list',
         lists: 'Lists',
-        mathFormula: 'Math formula (%ctrlOrCmd% + A)',
+        mathFormula: 'Math formula (%ctrlOrCmd% + M)',
         code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: 'Display as block',
         formula: '[formula]',
