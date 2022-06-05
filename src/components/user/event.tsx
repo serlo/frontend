@@ -18,6 +18,7 @@ import {
   SetThreadStateNotificationEvent,
   SetUuidStateNotificationEvent,
   TaxonomyTerm,
+  TaxonomyTermType,
   AbstractUuid,
   Thread,
 } from '@serlo/api'
@@ -286,28 +287,101 @@ export function Event({
     )
   }
 
+  function getTaxonomyTerms(
+    typename: string | undefined,
+    object: AbstractUuid & { __typename?: string }
+  ): { name: string; type: TaxonomyTermType }[] {
+    if (typename === 'Exercise' && hasTaxonomyTerms(object)) {
+      return object.taxonomyTerms.nodes
+    }
+
+    if (typename === 'ExerciseGroup' && hasTaxonomyTerms(object)) {
+      return object.taxonomyTerms.nodes
+    }
+
+    if (
+      typename === 'GroupedExercise' &&
+      hasExerciseGroup(object) &&
+      hasTaxonomyTerms(object.exerciseGroup)
+    ) {
+      return object.exerciseGroup.taxonomyTerms.nodes
+    }
+
+    if (typename === 'TaxonomyTerm' && hasName(object) && hasType(object)) {
+      return [{ name: object.name, type: object.type }]
+    }
+
+    if (typename === 'Solution' && hasExercise(object)) {
+      if (
+        object.exercise.__typename === 'Exercise' &&
+        hasTaxonomyTerms(object.exercise)
+      ) {
+        return object.exercise.taxonomyTerms.nodes
+      } else if (
+        object.exercise.__typename === 'GroupedExercise' &&
+        hasExerciseGroup(object.exercise) &&
+        hasTaxonomyTerms(object.exercise.exerciseGroup)
+      ) {
+        return object.exercise.exerciseGroup.taxonomyTerms.nodes
+      }
+    }
+
+    return []
+  }
+
   function getEntityStringForType(
     typename: string | undefined,
     object: AbstractUuid & { __typename?: string }
   ) {
-    if (
-      typename === 'ExerciseGroup' &&
-      hasTaxonomyTerms(object) &&
-      object.taxonomyTerms.nodes.length > 0 &&
-      object.taxonomyTerms.nodes[0].name.length > 0
-    ) {
-      return (
-        getEntityStringByTypename(typename, strings) +
-        ' | ' +
-        object.taxonomyTerms.nodes[0].name
-      )
-    }
+    const taxonomyTerms = getTaxonomyTerms(typename, object)
 
-    if (typename === 'TaxonomyTerm' && hasName(object)) {
-      return object.name
+    if (taxonomyTerms.length > 0 && taxonomyTerms[0].name.length > 0) {
+      const topicFolder = taxonomyTerms.find(
+        (term) => term.type === TaxonomyTermType.TopicFolder
+      )
+      if (topicFolder === undefined) {
+        return (
+          getEntityStringByTypename(typename, strings) +
+          ' | ' +
+          taxonomyTerms[0].name
+        )
+      } else
+        return (
+          getEntityStringByTypename(typename, strings) +
+          ' | ' +
+          topicFolder.name
+        )
+
+      // let taxonomyString = ''
+      // taxonomyTerms.forEach((term) => (taxonomyString += ' | ' + term.name))
+      // return getEntityStringByTypename(typename, strings) + taxonomyString
     }
 
     return getEntityStringByTypename(typename, strings)
+  }
+
+  function hasExercise(
+    object: AbstractUuid & { __typename?: string }
+  ): object is AbstractUuid & { __typename?: string } & {
+    exercise: AbstractUuid & { __typename?: string }
+  } {
+    return hasPath(['exercise'], object)
+  }
+
+  // function hasGroupedExercise(
+  //   object: AbstractUuid & { __typename?: string }
+  // ): object is AbstractUuid & { __typename?: string } & {
+  //   groupedExercise: AbstractUuid & { __typename?: string }
+  // } {
+  //   return hasPath(['groupedExercise'], object)
+  // }
+
+  function hasExerciseGroup(
+    object: AbstractUuid & { __typename?: string }
+  ): object is AbstractUuid & { __typename?: string } & {
+    exerciseGroup: AbstractUuid & { __typename?: string }
+  } {
+    return hasPath(['exerciseGroup'], object)
   }
 
   function hasName(
@@ -316,10 +390,18 @@ export function Event({
     return hasPath(['name'], object)
   }
 
+  function hasType(
+    object: AbstractUuid & { __typename?: string }
+  ): object is AbstractUuid & { __typename?: string } & {
+    type: TaxonomyTermType
+  } {
+    return hasPath(['type'], object)
+  }
+
   function hasTaxonomyTerms(
     object: AbstractUuid & { __typename?: string }
   ): object is AbstractUuid & { __typename?: string } & {
-    taxonomyTerms: { nodes: { name: string }[] }
+    taxonomyTerms: { nodes: { name: string; type: TaxonomyTermType }[] }
   } {
     return hasPath(['taxonomyTerms', 'nodes'], object)
   }

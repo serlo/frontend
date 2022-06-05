@@ -72,10 +72,53 @@ export const sharedEventFragments = gql`
         id
       }
       repository {
+        ... on Exercise {
+          taxonomyTerms {
+            nodes {
+              name
+              type
+            }
+          }
+        }
         ... on ExerciseGroup {
           taxonomyTerms {
             nodes {
               name
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                name
+                type
+              }
+            }
+          }
+        }
+        ... on Solution {
+          exercise {
+            ... on Exercise {
+              __typename
+              taxonomyTerms {
+                nodes {
+                  name
+                  type
+                }
+              }
+            }
+            ... on GroupedExercise {
+              __typename
+              exerciseGroup {
+                taxonomyTerms {
+                  nodes {
+                    name
+                    type
+                  }
+                }
+              }
             }
           }
         }
@@ -89,6 +132,7 @@ export const sharedEventFragments = gql`
       }
       thread {
         id
+        title
         comments(first: 1) {
           nodes {
             id
@@ -98,6 +142,7 @@ export const sharedEventFragments = gql`
     }
     ... on CreateEntityNotificationEvent {
       entity {
+        __typename
         id
         alias
         ... on ExerciseGroup {
@@ -105,6 +150,17 @@ export const sharedEventFragments = gql`
           taxonomyTerms {
             nodes {
               name
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                name
+                type
+              }
             }
           }
         }
@@ -112,13 +168,33 @@ export const sharedEventFragments = gql`
     }
     ... on CreateEntityLinkNotificationEvent {
       parent {
+        __typename
         id
         alias
+        ... on Exercise {
+          taxonomyTerms {
+            nodes {
+              name
+              type
+            }
+          }
+        }
         ... on ExerciseGroup {
           __typename
           taxonomyTerms {
             nodes {
               name
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                name
+                type
+              }
             }
           }
         }
@@ -134,10 +210,53 @@ export const sharedEventFragments = gql`
         id
       }
       entity {
+        ... on Exercise {
+          taxonomyTerms {
+            nodes {
+              name
+              type
+            }
+          }
+        }
         ... on ExerciseGroup {
           taxonomyTerms {
             nodes {
               name
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                name
+                type
+              }
+            }
+          }
+        }
+        ... on Solution {
+          exercise {
+            ... on Exercise {
+              __typename
+              taxonomyTerms {
+                nodes {
+                  name
+                  type
+                }
+              }
+            }
+            ... on GroupedExercise {
+              __typename
+              exerciseGroup {
+                taxonomyTerms {
+                  nodes {
+                    name
+                    type
+                  }
+                }
+              }
             }
           }
         }
@@ -213,6 +332,17 @@ export const sharedEventFragments = gql`
           taxonomyTerms {
             nodes {
               name
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                name
+                type
+              }
             }
           }
         }
