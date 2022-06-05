@@ -616,7 +616,7 @@ export const loggedInData = {
         orderedList: "Nummerierte Liste",
         unorderedList: "Aufzählung",
         lists: "Listen",
-        mathFormula: 'Math formula (%ctrlOrCmd% + M)',
+        mathFormula: "Matheformel (%ctrlOrCmd% + M)",
         code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "eigene Zeile",
         formula: "[neue Formel]",
@@ -632,8 +632,8 @@ export const loggedInData = {
         mathSymbols: "Mathematische Symbole",
         eG: "z.B.",
         functions: "Funktionen",
-        bold: 'Bold (%ctrlOrCmd% + B)',
-        italic: 'Italic (%ctrlOrCmd% + I)',
+        bold: "Fett (%ctrlOrCmd% + B)",
+        italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
       video: {
