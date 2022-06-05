@@ -413,14 +413,14 @@ export function Event({
   }
 
   function renderRevision(id: number) {
-    return <Link href={`/${id}`}>{strings.entities.revision}</Link>
+    return <Link href={`/${id}`}>{`${strings.entities.revision} ${id}`}</Link>
   }
 
   function renderThread(thread: Thread) {
     const id = thread.comments?.nodes[0]?.id
     return (
       <Link href={`/${id}`} forceNoCSR>
-        {strings.entities.thread}
+        {`${strings.entities.thread} ${id}`}
       </Link>
     )
   }
