@@ -39,6 +39,11 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   }, [query, data, subject])
 
   useEffect(() => {
+    //reset data when subject changes
+    setData(null)
+  }, [subject])
+
+  useEffect(() => {
     setSel(0)
     setOpen(!!(query && data))
   }, [query, data])
