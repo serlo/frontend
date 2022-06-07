@@ -47,7 +47,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/entity/license/update/') ||
     _href.startsWith('/taxonomy/term/move/batch/') ||
     _href.startsWith('/taxonomy/term/copy/batch/')
-    //_href.startsWith('/taxonomy/term/sort/entities/')
+    //_href.startsWith('/taxonomy/term/sort/entities/') waiting for https://github.com/serlo/api.serlo.org/issues/643
   ) {
     return false
   }
