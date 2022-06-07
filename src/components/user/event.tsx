@@ -146,7 +146,7 @@ export function Event({
           thread: renderThread(event.thread),
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
-              {strings.entities.comment}
+              {`${strings.entities.comment} ${event.comment.id}`}
             </Link>
           ),
         })
@@ -399,16 +399,16 @@ export function Event({
     return hasPath(['taxonomyTerms', 'nodes'], object)
   }
 
-  function renderTax(taxonomy: TaxonomyTerm) {
-    return (
-      <Link href={taxonomy.alias ?? `/${taxonomy.id}`}>{taxonomy.name}</Link>
-    )
-  }
-
   function hasTitle(
     object: unknown
   ): object is { currentRevision: { title: string } } {
     return hasPath(['currentRevision', 'title'], object)
+  }
+
+  function renderTax(taxonomy: TaxonomyTerm) {
+    return (
+      <Link href={taxonomy.alias ?? `/${taxonomy.id}`}>{taxonomy.name}</Link>
+    )
   }
 
   function renderRevision(id: number) {

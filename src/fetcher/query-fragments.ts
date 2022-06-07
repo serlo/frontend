@@ -97,6 +97,7 @@ export const sharedEventFragments = gql`
         id
         alias
         ...withTaxonomyTerms
+        ...withTitle
       }
     }
     ... on CreateEntityLinkNotificationEvent {
@@ -105,12 +106,14 @@ export const sharedEventFragments = gql`
         id
         alias
         ...withTaxonomyTerms
+        ...withTitle
       }
       child {
         __typename
         id
         alias
         ...withTaxonomyTerms
+        ...withTitle
       }
     }
     ... on CreateEntityRevisionNotificationEvent {
@@ -160,6 +163,7 @@ export const sharedEventFragments = gql`
         id
         alias
         ...withTaxonomyTerms
+        ...withTitle
       }
       revision {
         id
@@ -172,11 +176,13 @@ export const sharedEventFragments = gql`
         id
         alias
         ...withTaxonomyTerms
+        ...withTitle
       }
       child {
         id
         alias
         ...withTaxonomyTerms
+        ...withTitle
       }
     }
     ... on RemoveTaxonomyLinkNotificationEvent {
@@ -227,6 +233,7 @@ export const sharedEventFragments = gql`
     ... on SetUuidStateNotificationEvent {
       object {
         ...withTitle
+        ...withTaxonomyTerms
       }
       trashed
     }
