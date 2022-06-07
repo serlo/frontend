@@ -1,5 +1,4 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import { PageInfo } from '@serlo/api'
 import { useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
@@ -8,6 +7,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event, EventData } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 
@@ -18,10 +18,7 @@ export interface NotificationData {
 }
 
 interface NotificationProps {
-  data: {
-    nodes: NotificationData[]
-    pageInfo: PageInfo
-  }
+  data: GetNotificationsQuery['notifications']
   loadMore: () => void
   isLoading: boolean
 }
@@ -66,7 +63,7 @@ export const Notifications = ({
     </>
   )
 
-  function renderNotifications(nodes: NotificationData[]) {
+  function renderNotifications(nodes: NotificationProps['data']['nodes']) {
     return nodes.map((node) => {
       if (hidden.includes(node.id)) return null
       return (
