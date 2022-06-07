@@ -4,18 +4,12 @@ import { useState } from 'react'
 import { useAuthentication } from '@/auth/use-authentication'
 import { FaIcon } from '@/components/fa-icon'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { Event, EventData } from '@/components/user/event'
+import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
-
-export interface NotificationData {
-  id: number
-  event: EventData
-  unread: boolean
-}
 
 interface NotificationProps {
   data: GetNotificationsQuery['notifications']
