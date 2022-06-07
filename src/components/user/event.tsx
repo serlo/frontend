@@ -1,27 +1,5 @@
 import { faBellSlash } from '@fortawesome/free-solid-svg-icons/faBellSlash'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import {
-  CheckoutRevisionNotificationEvent,
-  CreateCommentNotificationEvent,
-  CreateEntityNotificationEvent,
-  CreateEntityLinkNotificationEvent,
-  CreateEntityRevisionNotificationEvent,
-  CreateTaxonomyTermNotificationEvent,
-  CreateTaxonomyLinkNotificationEvent,
-  CreateThreadNotificationEvent,
-  RejectRevisionNotificationEvent,
-  RemoveEntityLinkNotificationEvent,
-  RemoveTaxonomyLinkNotificationEvent,
-  SetLicenseNotificationEvent,
-  SetTaxonomyParentNotificationEvent,
-  SetTaxonomyTermNotificationEvent,
-  SetThreadStateNotificationEvent,
-  SetUuidStateNotificationEvent,
-  TaxonomyTerm,
-  TaxonomyTermType,
-  AbstractUuid,
-  Thread,
-} from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import { hasPath } from 'ramda'
@@ -33,29 +11,20 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
+import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
-export type EventData =
-  | CheckoutRevisionNotificationEvent
-  | CreateCommentNotificationEvent
-  | CreateEntityNotificationEvent
-  | CreateEntityLinkNotificationEvent
-  | CreateEntityRevisionNotificationEvent
-  | CreateTaxonomyTermNotificationEvent
-  | CreateTaxonomyLinkNotificationEvent
-  | CreateThreadNotificationEvent
-  | RejectRevisionNotificationEvent
-  | RemoveEntityLinkNotificationEvent
-  | RemoveTaxonomyLinkNotificationEvent
-  | SetLicenseNotificationEvent
-  | SetTaxonomyParentNotificationEvent
-  | SetTaxonomyTermNotificationEvent
-  | SetThreadStateNotificationEvent
-  | SetUuidStateNotificationEvent
+type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
+
+type EventThread = Extract<Event, { thread: any }>['thread']
+
+type EventAbstractUuid = Extract<Event, { __typename: string }>
+
+// TODO: work in progress
 
 interface EventProps {
-  event: EventData
+  event: Event
   eventId: number
   unread: boolean
   loggedInStrings?: LoggedInData['strings']['notifications']
@@ -415,7 +384,7 @@ export function Event({
     return <Link href={`/${id}`}>{`${strings.entities.revision} ${id}`}</Link>
   }
 
-  function renderThread(thread: Thread) {
+  function renderThread(thread: EventThread) {
     const id = thread.comments?.nodes[0]?.id
     return (
       <Link href={`/${id}`} forceNoCSR>

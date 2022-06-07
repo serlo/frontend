@@ -1,12 +1,11 @@
 import { gql } from 'graphql-request'
 
 import { Guard } from '../guard'
-import { EventData } from './event'
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
+import { GetEventDataQuery, Instance } from '@/fetcher/graphql-types/operations'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
 
 interface EventsProps {
@@ -91,7 +90,9 @@ function useEventsFetch(
   oldest?: boolean,
   instance?: Instance
 ) {
-  return useGraphqlSwrPaginationWithAuth<EventData>({
+  return useGraphqlSwrPaginationWithAuth<
+    GetEventDataQuery['events']['nodes'][number]
+  >({
     query: eventsQuery,
     variables: {
       actorId,
