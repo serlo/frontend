@@ -36,7 +36,7 @@ export function SearchInput() {
   useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
     if (onSearchPage) {
-      submitEvent('search-page-loaded')
+      submitEvent('search-showing-results')
       activateSearch()
     }
     // I only want to run this the first time the page loads
@@ -45,7 +45,6 @@ export function SearchInput() {
 
   useEffect(() => {
     if (consentJustGiven) activateSearch()
-    submitEvent('search-consented')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [consentJustGiven])
 
@@ -67,8 +66,6 @@ export function SearchInput() {
       searchFormRef.current?.focus()
       return
     }
-
-    submitEvent('search-input-active')
 
     if (!searchLoaded) {
       const gcse = document.createElement('script')
@@ -94,6 +91,7 @@ export function SearchInput() {
   }
 
   function onConsentButtonAction() {
+    submitEvent('search-consented')
     giveConsent(ExternalProvider.GoogleSearch)
     setConsentJustGiven(true)
   }
