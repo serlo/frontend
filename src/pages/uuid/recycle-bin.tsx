@@ -1,6 +1,7 @@
 import { faTrashArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 import Head from 'next/head'
+import { useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { Link } from '@/components/content/link'
@@ -26,6 +27,7 @@ function Content() {
   const setUuidState = useSetUuidStateMutation()
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore, loading } = useFetch()
+  const [restored, setRestored] = useState<number[]>([])
   const { strings } = useInstanceData()
 
   return (
@@ -83,6 +85,8 @@ function Content() {
   function renderRow(node: TrashedEntitiesNode) {
     if (!node.entity || !node.dateOfDeletion) return null
     const { id, alias, __typename } = node.entity
+    if (restored.includes(id)) return null
+
     const aliasString = alias ?? ''
     const href = alias ?? `/${id}`
 
@@ -105,8 +109,9 @@ function Content() {
           <button
             title="Restore"
             className="serlo-button serlo-make-interactive-transparent-blue text-brand-300"
-            onClick={() => {
-              void setUuidState({ id: [id], trashed: false })
+            onClick={async () => {
+              const success = await setUuidState({ id: [id], trashed: false })
+              if (success) setRestored([...restored, id])
             }}
           >
             <FaIcon icon={faTrashArrowUp} />
