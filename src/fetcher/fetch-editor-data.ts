@@ -1,12 +1,13 @@
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
-import { dataQuery } from './query'
 import {
-  MainUuidType,
-  QueryResponse,
-  QueryResponseRevision,
-} from './query-types'
+  MainUuidQuery,
+  RevisionUuidQuery,
+  RevisionUuidQueryVariables,
+} from './graphql-types/operations'
+import { dataQuery } from './query'
+import { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
 import { endpoint } from '@/api/endpoint'
 import { BreadcrumbsData } from '@/data-types'
@@ -37,14 +38,15 @@ export async function fetchEditorData(
   ids?: string[]
 ): Promise<EditorPageData | EditorFetchErrorData> {
   if (!ids) return { errorType: 'failed-fetch' }
-  let data = null
+  let data: MainUuidType | undefined | null = null
   const repoId = parseInt(ids[0])
   const revisionId = parseInt(ids[1])
 
   if (revisionId && !isNaN(revisionId)) {
-    const { uuid } = await request<{
-      uuid: QueryResponseRevision
-    }>(endpoint, revisionQuery, {
+    const { uuid } = await request<
+      RevisionUuidQuery,
+      RevisionUuidQueryVariables
+    >(endpoint, revisionQuery, {
       id: revisionId,
     })
     data = revisionResponseToResponse(uuid)
@@ -52,9 +54,7 @@ export async function fetchEditorData(
     const raw_alias = '/' + localeString + '/' + repoId.toString()
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
 
-    const { uuid } = await request<{
-      uuid: QueryResponse
-    }>(endpoint, dataQuery, {
+    const { uuid } = await request<MainUuidQuery>(endpoint, dataQuery, {
       alias: { instance, path: alias },
     })
     data = uuid
@@ -64,8 +64,7 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  // TODO: improve this by fixing this type (and of this whole file)
-  const breadcrumbsData = createBreadcrumbs(data as MainUuidType)
+  const breadcrumbsData = createBreadcrumbs(data)
 
   const isSandbox =
     breadcrumbsData &&

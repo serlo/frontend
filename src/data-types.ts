@@ -1,11 +1,15 @@
-import { Role, Subject, TaxonomyTermType } from '@serlo/api'
+import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
 import { BoxType } from './edtr-io/plugins/box/renderer'
 import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
-import { Instance, QueryResponse, User } from './fetcher/query-types'
+import {
+  Instance,
+  UnrevisedRevisionsQuery,
+} from './fetcher/graphql-types/operations'
+import { User } from './fetcher/query-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 
 // exact props of /[...slug] page
@@ -44,6 +48,7 @@ export interface InstanceData {
   strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
+  secondaryMenus: SecondaryMenuData[]
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -96,6 +101,21 @@ export interface FooterLink {
 }
 
 export type FooterIcon = 'newsletter' | 'github' | 'job'
+
+// Menu shown on the left (desktop) or between header and content (mobile)
+// Links can be active
+
+export interface SecondaryMenuLink {
+  title: string
+  url?: string
+  id?: number
+  active?: boolean
+}
+
+export interface SecondaryMenuData {
+  rootId?: number
+  entries: SecondaryMenuLink[]
+}
 
 // We have different types of pages, each with its own set of data:
 
@@ -204,7 +224,7 @@ export interface Redirect {
 
 export interface EntityPageBase {
   breadcrumbsData?: BreadcrumbsData
-  secondaryNavigationData?: SecondaryNavigationData
+  secondaryMenuData?: SecondaryMenuData['entries']
   metaData?: HeadData
   horizonData?: HorizonData
   newsletterPopup: boolean
@@ -229,17 +249,6 @@ export interface BreadcrumbLinkEntry {
 export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
   label: ''
   ellipsis: true
-}
-
-// Menu shown on the left (desktop) or between header and content (mobile)
-// Links can be active, urls are already prettified.
-
-export type SecondaryNavigationData = SecondaryNavigationEntry[]
-
-export interface SecondaryNavigationEntry {
-  url?: string
-  title: string
-  active?: boolean
 }
 
 // Populate some head tags (e.g. open graph)
@@ -291,7 +300,6 @@ export interface EntityData {
   categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
-  inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
@@ -348,9 +356,9 @@ export interface UnrevisedRevisionsPage extends EntityPageBase {
   revisionsData: UnrevisedRevisionsData
 }
 
-export interface UnrevisedRevisionsData {
-  subjects: Subject[]
-}
+export type UnrevisedRevisionsData = NonNullable<
+  UnrevisedRevisionsQuery['subject']
+>
 
 // Entities each should have an translated string and a corresponding icon
 
@@ -487,6 +495,7 @@ export interface FrontendImgNode {
   href?: string
   alt: string
   maxWidth?: number
+  caption?: FrontendContentNode[]
   children?: undefined
 }
 
@@ -935,13 +944,6 @@ export enum UserRoles {
   PageBuilder = 'page-builder',
   Admin = 'admin',
   SysAdmin = 'sys-admin',
-}
-
-// Subscription Management Page
-
-export interface SubscriptionData {
-  object: QueryResponse
-  sendEmail: boolean
 }
 
 export type CompBaseProps<T = {}> = FunctionComponent<

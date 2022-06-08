@@ -5,7 +5,7 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { UnrevisedEntity } from '@/components/revisions/unrevised-entity'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UnrevisedEntityData } from '@/fetcher/query-types'
+import { UserRevisionQuery } from '@/fetcher/graphql-types/operations'
 import { unrevisedEntitiesFragment } from '@/fetcher/unrevised-revisions/query'
 
 interface UserUnrevisedRevisionsProps {
@@ -63,7 +63,12 @@ export function UserUnrevisedRevisions({
 }
 
 function useUserRevisionsFetch(userId?: number) {
-  return useGraphqlSwrPaginationWithAuth<UnrevisedEntityData>({
+  return useGraphqlSwrPaginationWithAuth<
+    Extract<
+      UserRevisionQuery['uuid'],
+      { unrevisedEntities: any }
+    >['unrevisedEntities']['nodes'][number]
+  >({
     query: userRevisionsQuery,
     variables: {
       userId,
@@ -71,15 +76,17 @@ function useUserRevisionsFetch(userId?: number) {
     config: {
       refreshInterval: 1 * 60 * 1000, //1min
     },
-    getConnection(data) {
-      return (data.uuid as { unrevisedEntities: object }).unrevisedEntities
+    getConnection(data?: {
+      uuid?: Extract<UserRevisionQuery['uuid'], { unrevisedEntities: any }>
+    }) {
+      return data?.uuid?.unrevisedEntities
     },
     noAuth: true,
   })
 }
 
 const userRevisionsQuery = gql`
-  query uuid($userId: Int) {
+  query userRevision($userId: Int) {
     uuid(id: $userId) {
       ... on User {
         unrevisedEntities {

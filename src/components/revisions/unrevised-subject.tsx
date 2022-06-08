@@ -1,13 +1,12 @@
-import { Subject } from '@serlo/api'
 import { useState } from 'react'
 
 import { getSubjectSlug } from '../pages/unrevised-revisions'
 import { UnrevisedEntity } from './unrevised-entity'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UnrevisedEntityData } from '@/fetcher/query-types'
+import { UnrevisedRevisionsData } from '@/data-types'
 
 export interface UnrevisedSubjectProps {
-  subject: Subject
+  subject: UnrevisedRevisionsData['subjects'][number]
 }
 
 const limiter = 3
@@ -30,10 +29,7 @@ export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
       </h2>
 
       {visibleNodes.map((entity) => (
-        <UnrevisedEntity
-          key={entity.id}
-          entity={entity as UnrevisedEntityData}
-        />
+        <UnrevisedEntity key={entity.id} entity={entity} />
       ))}
       {renderShowAll()}
     </section>

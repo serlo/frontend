@@ -91,6 +91,9 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         alt: node.state.alt || '',
         maxWidth: node.state.maxWidth,
         href: node.state.link?.href,
+        caption: node.state.caption
+          ? convert(node.state.caption as EdtrState)
+          : undefined,
       },
     ]
   }

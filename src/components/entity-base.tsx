@@ -9,7 +9,7 @@ import { HeadTags } from './head-tags'
 import { JsonLd } from './json-ld'
 import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { MetaMenu } from './navigation/meta-menu'
+import { SecondaryMenu } from './navigation/secondary-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
 import { EntityPageBase, SingleEntityPage, TaxonomyPage } from '@/data-types'
 
@@ -33,8 +33,8 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
 
   return (
     <>
-      {page.secondaryNavigationData && (
-        <MetaMenu data={page.secondaryNavigationData} />
+      {page.secondaryMenuData && (
+        <SecondaryMenu data={page.secondaryMenuData} />
       )}
       {page.metaData && (
         <HeadTags
@@ -48,16 +48,14 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       ) : null}
       {page.newsletterPopup && <NewsletterPopup />}
       <div className="relative">
-        <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
+        <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           {renderBreadcrumbs()}
           <main>{children}</main>
           <div id="comment-area-begin-scrollpoint" />
           {!noComments && (
-            <>
-              <Lazy>
-                <CommentAreaEntity entityId={entityId} />
-              </Lazy>
-            </>
+            <Lazy>
+              <CommentAreaEntity entityId={entityId} />
+            </Lazy>
           )}
           <HSpace amount={40} />
           {page.horizonData && (

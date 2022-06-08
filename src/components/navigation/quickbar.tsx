@@ -1,10 +1,11 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
-import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
+import { submitEvent } from '@/helper/submit-event'
 
 interface QuickbarDataEntry {
   title: string
@@ -29,96 +30,49 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
-
+  const router = useRouter()
   const [sel, setSel] = useState(-1)
 
-  const host =
-    typeof window === 'undefined'
-      ? 'https://de.serlo.org'
-      : window.location.host
-
   useEffect(() => {
-    if (query && !data) {
-      void fetch('https://de.serlo.org/api/stats/quickbar.json')
-        .then((res) => res.json())
-        .then((data: QuickbarData) => {
-          data.forEach((entry) => {
-            entry.pathLower = entry.path.map((x) => x.toLowerCase())
-            entry.titleLower = entry.title.toLowerCase()
-          })
-
-          const subjectLower = subject?.toLowerCase() ?? ''
-
-          const filteredData = subject
-            ? data.filter((entry) =>
-                entry.root?.toLowerCase().startsWith(subjectLower)
-              )
-            : data
-          setData(filteredData)
-        })
-    }
+    if (query && !data) fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, data, subject])
 
   useEffect(() => {
+    //reset data when subject changes
+    setData(null)
+  }, [subject])
+
+  useEffect(() => {
     setSel(0)
-    setOpen(query && data ? true : false)
+    setOpen(!!(query && data))
   }, [query, data])
 
   let results: { entry: QuickbarDataEntry; score: number }[] = []
 
-  if (data && query) {
-    const keywords = query.toLowerCase().split(' ')
-    for (const entry of data) {
-      let score = 0
-      const preparedQuery = query.toLowerCase().trim()
-      if (entry.titleLower.includes(preparedQuery)) {
-        score += 100
-        if (entry.titleLower.startsWith(preparedQuery)) {
-          score += 10
-        } else if (entry.titleLower.includes(' ' + preparedQuery)) {
-          score += 8
-        }
-      } else {
-        let noHit = 0
-        let kwCount = 0
-        for (const keyword of keywords) {
-          if (keyword) {
-            kwCount++
-            if (entry.titleLower.includes(keyword)) {
-              score += 10
-              continue
-            }
-            let hitContinue = false
-            for (const p of entry.pathLower) {
-              if (p.includes(keyword)) {
-                score += 2
-                hitContinue = true
-                break
-              }
-            }
-            if (hitContinue) continue
-            noHit++
-          }
-        }
-        if (kwCount > 0) {
-          if (noHit >= kwCount / 2) {
-            score = 0
-          } else {
-            score *= 1 - noHit / kwCount
-          }
-        }
-      }
-      if (score > 0) {
-        score += Math.log10(entry.count)
-        results.push({ entry, score })
-        results.sort((a, b) => b.score - a.score)
-        results = results.slice(0, 7)
-      }
-    }
+  void findResults()
+
+  const close = () => setOpen(false)
+
+  const goToSearch = () => {
+    submitEvent('quickbar-to-search')
+    // not using router since the hacky search component does not refresh easily
+    window.location.href = `/search?q=${encodeURIComponent(query)}`
   }
 
-  function close() {
-    setOpen(false)
+  const goToResult = (
+    id: string,
+    event:
+      | KeyboardEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    submitEvent('quickbar-direct-hit')
+    const url = `/${id}`
+
+    if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
+      window.open(url)
+    } else void router.push(url)
+    //`//${host}/${results[sel].entry.id}`
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -134,16 +88,9 @@ export function Quickbar({ subject, className }: QuickbarProps) {
           setSel(sel - 1)
         }
         if (e.key == 'Enter') {
-          if (sel == results.length) {
-            window.location.href = `//${host}/search?q=${encodeURIComponent(
-              query
-            )}`
-          }
+          if (sel == results.length) goToSearch()
           if (sel >= 0 && sel < results.length) {
-            const url = `//${host}/${results[sel].entry.id}`
-            if ((isMac && e.metaKey) || (!isMac && e.ctrlKey)) {
-              window.open(url)
-            } else window.location.href = url
+            goToResult(results[sel].entry.id, e)
           }
         }
         e.preventDefault()
@@ -207,10 +154,10 @@ export function Quickbar({ subject, className }: QuickbarProps) {
     return (
       <div className="px-5 pb-2 border rounded-xl shadow absolute top-14 w-full bg-white z-20">
         {results.map((x, i) => (
-          <Link
+          <a
             key={i}
-            className="hover:no-underline group"
-            href={`/${x.entry.id}`}
+            className="serlo-link cursor-pointer hover:no-underline group"
+            onClick={(e) => goToResult(x.entry.id, e)}
           >
             <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
               <span className="text-sm text-gray-700">
@@ -222,26 +169,92 @@ export function Quickbar({ subject, className }: QuickbarProps) {
                 {x.entry.isTax ? <>{x.entry.title}&nbsp;&gt;</> : x.entry.title}
               </span>
             </p>
-          </Link>
+          </a>
         ))}
         <p
           className={clsx('text-lg mt-2 text-gray-800', {
             'bg-brand-50': sel == results.length,
           })}
         >
-          <a
-            href={`//${host}/search?q=${encodeURIComponent(query)}`}
-            rel="noreferrer"
-            className="cursor-pointer hover:text-black"
-          >
-            Auf Serlo nach{' '}
-            <i>
-              <strong>{query}</strong>
-            </i>{' '}
-            suchen ...
+          <a className="cursor-pointer hover:text-black" onClick={goToSearch}>
+            Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
           </a>
         </p>
       </div>
     )
+  }
+
+  function fetchData() {
+    void fetch('https://de.serlo.org/api/stats/quickbar.json')
+      .then((res) => res.json())
+      .then((data: QuickbarData) => {
+        data.forEach((entry) => {
+          entry.pathLower = entry.path.map((x) => x.toLowerCase())
+          entry.titleLower = entry.title.toLowerCase()
+        })
+
+        const subjectLower = subject?.toLowerCase() ?? ''
+
+        const filteredData = subject
+          ? data.filter((entry) =>
+              entry.root?.toLowerCase().startsWith(subjectLower)
+            )
+          : data
+        submitEvent('quickbar-activated')
+        setData(filteredData)
+      })
+  }
+  function findResults() {
+    if (!data || !query) return
+
+    const keywords = query.toLowerCase().split(' ')
+
+    for (const entry of data) {
+      let score = 0
+      const preparedQuery = query.toLowerCase().trim()
+      if (entry.titleLower.includes(preparedQuery)) {
+        score += 100
+        if (entry.titleLower.startsWith(preparedQuery)) {
+          score += 10
+        } else if (entry.titleLower.includes(' ' + preparedQuery)) {
+          score += 8
+        }
+      } else {
+        let noHit = 0
+        let kwCount = 0
+        for (const keyword of keywords) {
+          if (keyword) {
+            kwCount++
+            if (entry.titleLower.includes(keyword)) {
+              score += 10
+              continue
+            }
+            let hitContinue = false
+            for (const p of entry.pathLower) {
+              if (p.includes(keyword)) {
+                score += 2
+                hitContinue = true
+                break
+              }
+            }
+            if (hitContinue) continue
+            noHit++
+          }
+        }
+        if (kwCount > 0) {
+          if (noHit >= kwCount / 2) {
+            score = 0
+          } else {
+            score *= 1 - noHit / kwCount
+          }
+        }
+      }
+      if (score > 0) {
+        score += Math.log10(entry.count)
+        results.push({ entry, score })
+        results.sort((a, b) => b.score - a.score)
+        results = results.slice(0, 7)
+      }
+    }
   }
 }

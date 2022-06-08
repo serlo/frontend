@@ -92,3 +92,14 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/27469',
   donationHref: '/spenden',
 }
+
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
+  {
+    // grammar
+    rootId: 140527,
+    entries: [
+      { title: 'இலக்கணம்', id: 140522 },
+      { title: 'பாடங்கள்', id: 140527 },
+    ],
+  },
+]

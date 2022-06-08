@@ -1,7 +1,7 @@
 import { TopicCategory } from './topic-category'
 import { TaxonomyData, TaxonomySubTerm, TopicCategoryTypes } from '@/data-types'
 
-const allCategories = [
+export const allCategories = [
   'articles',
   'exercises',
   'videos',

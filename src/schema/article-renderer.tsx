@@ -7,6 +7,7 @@ import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license-notice'
 import { Link } from '../components/content/link'
 import { theme } from '../theme'
+import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { Article } from '@/components/content/article'
 import { Box } from '@/components/content/box'
 import type { CodeProps } from '@/components/content/code'
@@ -14,6 +15,7 @@ import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
+import { Image } from '@/components/content/image'
 import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathSpanProps } from '@/components/content/math-span'
@@ -60,7 +62,11 @@ export function renderNested(
   previousPath: NodePath,
   pathPrefix: NodePath
 ) {
-  return _renderArticle(value, false, previousPath.concat(pathPrefix))
+  return _renderArticle(
+    value,
+    false,
+    previousPath.concat(pathPrefix.length == 0 ? ['nested'] : pathPrefix)
+  )
 }
 
 function _renderArticle(
@@ -200,7 +206,7 @@ function renderElement({
         <Link href={element.href} path={path} unreviewed={isOnProfile}>
           {children}
         </Link>
-        {renderRevisionExtra(isRevisionView, element)}
+        {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </>
     )
   }
@@ -267,55 +273,17 @@ function renderElement({
     )
   }
   if (element.type === 'img') {
-    const wrapInA = (comp: ReactNode) => {
-      if (element.href) {
-        // needs investigation if this could be simplified
-        return (
-          <>
-            <Link
-              className="w-full block"
-              href={element.href}
-              path={path}
-              noExternalIcon
-            >
-              {comp}
-            </Link>
-          </>
-        )
-      }
-      return comp
-    }
-
-    /*
-
-    export const ImgMaxWidthDiv = styled.div<{ maxWidth: number }>`
-  ${(props) => (props.maxWidth > 0 ? `max-width: ${props.maxWidth}px` : '')}
-`
-
-*/
     return (
-      <div
-        className="serlo-image-centered"
-        itemScope
-        itemType="http://schema.org/ImageObject"
-      >
-        <div
-          style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
-          className="mx-auto"
-        >
-          {wrapInA(
-            <Lazy>
-              <img
-                className="serlo-img"
-                src={element.src}
-                alt={element.alt || 'Bild'}
-                itemProp="contentUrl"
-              />
-            </Lazy>
-          )}
-          {renderRevisionExtra(isRevisionView, element)}
-        </div>
-      </div>
+      <Image
+        element={element}
+        path={path}
+        extraInfo={
+          isRevisionView ? (
+            <ExtraRevisionViewInfo element={element} />
+          ) : undefined
+        }
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
     )
   }
   if (element.type === 'spoiler-container') {
@@ -413,7 +381,7 @@ function renderElement({
     return (
       <>
         <a id={element.id} />
-        {renderRevisionExtra(isRevisionView, element)}
+        {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </>
     )
   }
@@ -428,7 +396,7 @@ function renderElement({
             }
           />
         ) : null}
-        {renderRevisionExtra(isRevisionView, element)}
+        {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </>
     )
   }
@@ -492,7 +460,7 @@ function renderElement({
           language={element.language}
           showLineNumbers={element.showLineNumbers}
         />
-        {renderRevisionExtra(isRevisionView, element)}
+        {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </>
     )
   }
@@ -506,38 +474,4 @@ function renderElement({
   }
   if (element.type === 'pageTeam') return <PageTeamAdapter {...element} />
   return null
-}
-
-function renderRevisionExtra(
-  isRevisionView: boolean,
-  element: FrontendContentNode
-) {
-  if (
-    !isRevisionView &&
-    ['a', 'img', 'anchor', 'injection', 'exercise', 'code'].includes(
-      element.type
-    )
-  )
-    return null
-
-  return (
-    <span className="text-sm px-1 bg-yellow-200">
-      {(element.type === 'a' || element.type === 'injection') && element.href}
-      {element.type === 'anchor' && element.id}
-      {element.type === 'code' &&
-        `${element.language || '(no language)'} ${
-          element.showLineNumbers ? '(with line numbers)' : ''
-        }`}
-      {element.type === 'img' && (
-        <>
-          {element.alt}{' '}
-          {element.href && (
-            <>
-              <b>href:</b> {element.href}
-            </>
-          )}
-        </>
-      )}
-    </span>
-  )
 }

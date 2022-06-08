@@ -1,8 +1,9 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "de",
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "Die freie Lernplattform",
@@ -64,7 +65,9 @@ export const instanceData = {
       unrevisedRevisions: "Ungeprüfte Bearbeitungen",
       userEdits: "Bearbeitungen von %user%",
       userEditsMine: "Meine ungeprüften Bearbeitungen",
-      editProfile: "Profil bearbeiten & Einstellungen"
+      editProfile: "Profil bearbeiten & Einstellungen",
+      recycleBin: "Papierkorb",
+      diagon: "Winkelgasse"
     },
     roles: {
       donor: "Spender*in",
@@ -82,7 +85,15 @@ export const instanceData = {
     },
     edit: {
       button: "Inhalt überarbeiten",
-      unrevised: "Zeige neue Bearbeitungen"
+      unrevised: "Zeige neue Bearbeitungen",
+      inviteModal: {
+        title: "Erstelle mit uns!",
+        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        loginButton: "Jetzt einloggen",
+        registerButton: "Neues Konto anlegen",
+        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psLinkText: "Hier"
+      }
     },
     license: {
       readMore: "Was bedeutet das?",
@@ -296,8 +307,8 @@ export const instanceData = {
       createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
-      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
-      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
+      createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
+      removeEntityLink: "%actor% hat die Zuweisung von %child% zu %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
       rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",
@@ -315,6 +326,9 @@ export const instanceData = {
     },
     actions: {
       loadMore: "Weitere laden"
+    },
+    bin: {
+      trashed: "Gelöscht…"
     }
   }
 };
@@ -401,10 +415,11 @@ export const loggedInData = {
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
-      sortEntities: "Inhalt sortieren",
+      sortEntities: "Inhalte sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
-      directLink: "Direkter Link zu diesem Inhalt"
+      directLink: "Direkter Link zu diesem Inhalt",
+      analyticsLink: "Analytics Daten anschauen"
     },
     notifications: {
       hide: "Neue Benachrichtigungen für diesen Inhalt deaktivieren.",
@@ -441,14 +456,16 @@ export const loggedInData = {
         trash: "Erfolgreich gelöscht 🗑",
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
-        reject: "Bearbeitung wurde abgelehnt ❌",
-        save: "Bearbeitung erfolgreich gespeichert ✅"
+        reject: "Bearbeitung wurde nicht akzeptiert ❌",
+        save: "Bearbeitung erfolgreich gespeichert ✅",
+        updated: "Erfolgreich aktualisiert",
+        generic: "Hat geklappt 🎉"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
         FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: "Sorry, das ist so nicht unterstützt…",
         UNKNOWN: "Ein unbekannter Fehler…",
         valueMissing: "Bitte alle Pflichtfelder ausfüllen"
       }
@@ -593,13 +610,14 @@ export const loggedInData = {
         closeSubMenu: "Untermenü schließen",
         heading: "Überschrift",
         headings: "Überschriften",
-        linkStrgK: 'Link (Strg + K)',
+        link: 'Link (%ctrlOrCmd% + K)',
         enterUrl: "Hier Link einfügen",
         openInNewTab: "Öffne den Link in einem neuen Tab",
         orderedList: "Nummerierte Liste",
         unorderedList: "Aufzählung",
         lists: "Listen",
-        mathFormula: "Matheformel (Strg + M)",
+        mathFormula: "Matheformel (%ctrlOrCmd% + M)",
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "eigene Zeile",
         formula: "[neue Formel]",
         visual: "visuell",
@@ -614,8 +632,8 @@ export const loggedInData = {
         mathSymbols: "Mathematische Symbole",
         eG: "z.B.",
         functions: "Funktionen",
-        bold: "Fett (Strg + B)",
-        italic: "Kursiv (Strg + I)",
+        bold: "Fett (%ctrlOrCmd% + B)",
+        italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
       video: {
@@ -698,6 +716,7 @@ export const loggedInData = {
           loading: "Wird geladen …",
           notFound: "Inhalt konnte nicht gefunden werden",
           unsupportedType: "Sorry, der Typ [%type%] wird hier nicht unterstützt",
+          unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
           addFromFolderTitle: "Aus dem Ordner",
           placeholder: "Eine Serlo Id oder URL hier einfügen",
           topicFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
@@ -785,6 +804,35 @@ export const loggedInData = {
         heading: "So kannst du dein Konto löschen",
         text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
         deleteAccount: "Account löschen"
+      }
+    },
+    backend: {
+      pages: "Statische Seiten",
+      authorization: "Rechtevergabe",
+      navigation: 'Navigation',
+      recycleBin: "Papierkorb"
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Inhalte in Ordner verschieben / kopieren",
+        select: "Inhalte zum kopieren oder verschieben auswählen:",
+        target: "Zielordner:",
+        link: "Link",
+        moveButtonText: "Verschieben zu: %type%",
+        copyButtonText: "Kopieren zu %type% ",
+        moveSuccess: "Erfolgreich verschoben",
+        copySuccess: "Erfolgreich kopiert",
+        topicFolderNotice: "Kopieren oder verschieben von \"%topicFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
+      },
+      deleteAdd: {
+        confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
+        addSuccess: "Erfolgreich zugewiesen, Seite wird neu geladen …",
+        addNewTitle: "Neue Zuweisung hinzufügen",
+        addButtonText: "Zuweisen"
+      },
+      sort: {
+        title: "Inhalte sortieren",
+        saveButtonText: "Reihenfolge speichern"
       }
     }
   }

@@ -6,8 +6,8 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
-import { Instance } from '@/fetcher/query-types'
 
 interface EventsProps {
   userId?: number

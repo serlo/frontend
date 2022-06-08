@@ -30,7 +30,6 @@ export const dataQuery = gql`
           ...pageRevision
         }
         navigation {
-          data
           ...path
         }
       }
@@ -174,6 +173,7 @@ export const dataQuery = gql`
           content
           metaDescription
         }
+        ...taxonomyTerms
       }
 
       ... on TaxonomyTerm {
@@ -189,7 +189,6 @@ export const dataQuery = gql`
           id
         }
         navigation {
-          data
           ...path
         }
         children {

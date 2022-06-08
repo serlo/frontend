@@ -1,8 +1,9 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "hi",
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
@@ -64,7 +65,9 @@ export const instanceData = {
       unrevisedRevisions: 'Unrevised Revisions',
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
-      editProfile: 'Edit Profile & Settings'
+      editProfile: 'Edit Profile & Settings',
+      recycleBin: 'Recycle Bin',
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: "दाताओं",
@@ -82,7 +85,15 @@ export const instanceData = {
     },
     edit: {
       button: "संपादित करें",
-      unrevised: "अप्रकाशित संशोधन दिखाएं"
+      unrevised: "अप्रकाशित संशोधन दिखाएं",
+      inviteModal: {
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
+      }
     },
     license: {
       readMore: "सूचना",
@@ -315,6 +326,9 @@ export const instanceData = {
     },
     actions: {
       loadMore: 'Load more'
+    },
+    bin: {
+      trashed: 'Trashed…'
     }
   }
 };
@@ -404,7 +418,8 @@ export const loggedInData = {
       sortEntities: "सामग्री को क्रमबद्ध करें",
       newEntity: "नई इकाई",
       editProfile: "प्रोफ़ाइल संपादित करें",
-      directLink: 'Direct link to this content'
+      directLink: 'Direct link to this content',
+      analyticsLink: 'See analytics data'
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
@@ -442,13 +457,15 @@ export const loggedInData = {
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
-        save: 'Edit successfully saved ✅'
+        save: 'Edit successfully saved ✅',
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
         FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
         valueMissing: 'Please fill all required fields'
       }
@@ -593,13 +610,14 @@ export const loggedInData = {
         closeSubMenu: 'Close sub menu',
         heading: 'Heading',
         headings: 'Headings',
-        linkStrgK: 'Link (Strg + K)',
+        link: 'Link (%ctrlOrCmd% + K)',
         enterUrl: 'Enter URL',
         openInNewTab: 'Open in new tab',
         orderedList: 'Ordered list',
         unorderedList: 'Unordered list',
         lists: 'Lists',
-        mathFormula: 'Math formula (Strg + M)',
+        mathFormula: 'Math formula (%ctrlOrCmd% + M)',
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: 'Display as block',
         formula: '[formula]',
         visual: 'visual',
@@ -614,8 +632,8 @@ export const loggedInData = {
         mathSymbols: 'Math symbols',
         eG: 'e.g.',
         functions: 'Functions',
-        bold: 'Bold (Strg + B)',
-        italic: 'Italic (Strg + I)',
+        bold: 'Bold (%ctrlOrCmd% + B)',
+        italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found'
       },
       video: {
@@ -698,6 +716,7 @@ export const loggedInData = {
           loading: 'Loading…',
           notFound: 'Could not find that content',
           unsupportedType: 'Sorry, type [%type%] is not supported here',
+          unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
           topicFolderNote: 'Only one can be selected here'
@@ -785,6 +804,35 @@ export const loggedInData = {
         heading: 'How to delete your account',
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
         deleteAccount: 'Delete Account'
+      }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+      },
+      deleteAdd: {
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

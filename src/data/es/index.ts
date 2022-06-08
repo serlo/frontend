@@ -1,8 +1,9 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: "es",
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
@@ -64,7 +65,9 @@ export const instanceData = {
       unrevisedRevisions: "Revisiones no revisadas",
       userEdits: "Ediciones por %user%",
       userEditsMine: "Mi trabajo aún sin revisar",
-      editProfile: "Editar perfil y ajustes"
+      editProfile: "Editar perfil y ajustes",
+      recycleBin: 'Recycle Bin',
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: "Donante",
@@ -82,7 +85,15 @@ export const instanceData = {
     },
     edit: {
       button: "Editar",
-      unrevised: "Mostrar revisiones sin revisar"
+      unrevised: "Mostrar revisiones sin revisar",
+      inviteModal: {
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
+      }
     },
     license: {
       readMore: "Información",
@@ -315,6 +326,9 @@ export const instanceData = {
     },
     actions: {
       loadMore: "Cargar más"
+    },
+    bin: {
+      trashed: 'Trashed…'
     }
   }
 };
@@ -404,7 +418,8 @@ export const loggedInData = {
       sortEntities: "Ordenar contenido",
       newEntity: "Nueva Entidad",
       editProfile: "Editar perfil",
-      directLink: "Enlace directo a este contenido"
+      directLink: "Enlace directo a este contenido",
+      analyticsLink: 'See analytics data'
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
@@ -442,13 +457,15 @@ export const loggedInData = {
         restore: "Restablecido con éxito ♻️",
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
-        save: "Edición guardada con éxito ✅"
+        save: "Edición guardada con éxito ✅",
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
         UNKNOWN: "Un error desconocido…",
         valueMissing: "Por favor complete todos los campos requeridos"
       }
@@ -593,13 +610,14 @@ export const loggedInData = {
         closeSubMenu: "Cerrar sub-menú",
         heading: "Encabezado",
         headings: "Encabezados",
-        linkStrgK: "Enlace (ctrl + K)",
+        link: "Enlace (%ctrlOrCmd% + K)",
         enterUrl: "Introducir URL",
         openInNewTab: "Abrir en una nueva pestaña",
         orderedList: "Lista ordenada",
         unorderedList: "Lista sin ordenar",
         lists: "Listas",
-        mathFormula: "Fórmula matemática (ctrl + M)",
+        mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "Mostrar en bloque",
         formula: "[fórmula]",
         visual: 'visual',
@@ -614,8 +632,8 @@ export const loggedInData = {
         mathSymbols: "Símbolos matemáticos",
         eG: "por ejemplo,",
         functions: "Funciones",
-        bold: "Negrilla (ctrl + B)",
-        italic: "Itálica (ctrl + I)",
+        bold: "Negrilla (%ctrlOrCmd% + B)",
+        italic: "Itálica (%ctrlOrCmd% + I)",
         noItemsFound: "Elementos no encontrados"
       },
       video: {
@@ -698,6 +716,7 @@ export const loggedInData = {
           loading: 'Loading…',
           notFound: 'Could not find that content',
           unsupportedType: 'Sorry, type [%type%] is not supported here',
+          unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
           topicFolderNote: 'Only one can be selected here'
@@ -785,6 +804,35 @@ export const loggedInData = {
         heading: "¿Cómo eliminar mi cuenta?",
         text: "Si quieres eliminar tu cuenta, escríbenos a  %mailLink%.%break% Asegúrate de utilizar tu dirección de correo electrónico registrada y  %subjectLine% en el espacio para el asunto.",
         deleteAccount: "Eliminar cuenta"
+      }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+      },
+      deleteAdd: {
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

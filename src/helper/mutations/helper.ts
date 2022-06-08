@@ -1,11 +1,16 @@
 import {
   CheckoutRevisionInput,
   EntityMutation,
+  EntityUpdateLicenseInput,
   NotificationMutation,
   NotificationSetStateInput,
+  PageAddRevisionInput,
   RejectRevisionInput,
   SetEntityResponse,
   SubscriptionSetInput,
+  TaxonomyTermCreateInput,
+  TaxonomyTermSetNameAndDescriptionInput,
+  TaxonomyEntityLinksInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -16,6 +21,7 @@ import {
   UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
+  TaxonomyTermSortInput,
 } from '@serlo/api'
 import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
@@ -43,6 +49,12 @@ type MutationInput =
   | UserDeleteBotsInput
   | UserSetDescriptionInput
   | SetEntityInputTypes
+  | PageAddRevisionInput
+  | TaxonomyTermCreateInput
+  | TaxonomyTermSetNameAndDescriptionInput
+  | TaxonomyEntityLinksInput
+  | EntityUpdateLicenseInput
+  | TaxonomyTermSortInput
 
 type MutationResponse =
   | ThreadMutation
@@ -135,5 +147,8 @@ function handleError(
   }
 
   showToastNotice(message, 'warning')
+  if (e && hasOwnPropertyTs(e, 'message')) {
+    showToastNotice(`"${e.message as string}"`)
+  }
   return false
 }
