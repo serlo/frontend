@@ -162,9 +162,11 @@ const AnalyticsEventEval = () => {
       const name = point.datapoint
       if (name)
         if (
-          name &&
-          (name.startsWith('legacy_serlo_org') ||
-            name.startsWith('invite2edit'))
+          (name &&
+            (name.startsWith('legacy_serlo_org') ||
+              name.startsWith('invite2edit'))) ||
+          name.startsWith('quickbar_') ||
+          name.startsWith('search_')
         ) {
           if (!datapointsByName[name]) datapointsByName[name] = []
           datapointsByName[name].push(point)
