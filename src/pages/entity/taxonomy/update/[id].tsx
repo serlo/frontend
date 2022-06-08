@@ -139,7 +139,12 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
     return (
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
-        supportedTaxonomyTypes={['topic', 'topicFolder', 'curriculumTopic']}
+        supportedTaxonomyTypes={[
+          'topic',
+          'topicFolder',
+          'curriculumTopic',
+          'curriculumTopicFolder',
+        ]}
         unsupportedIds={existingIds}
         renderButtons={renderAddButton}
         inlineFeedback
