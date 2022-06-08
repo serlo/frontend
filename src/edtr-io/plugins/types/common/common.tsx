@@ -18,14 +18,11 @@ import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
 import * as R from 'ramda'
 import * as React from 'react'
 
-// TODO: check if we should remove this file
-
 export const licenseState = object({
   id: number(),
   title: string(),
   url: string(),
   agreement: string(),
-  iconHref: string(), // outdated
 })
 
 export const uuid = {
