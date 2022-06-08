@@ -2859,7 +2859,7 @@ export type LicenseDetailsQueryVariables = Exact<{
 }>;
 
 
-export type LicenseDetailsQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', license?: { __typename?: 'License', title: string, content: string } | null } };
+export type LicenseDetailsQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', license?: { __typename?: 'License', default: boolean, title: string, content: string } | null } };
 
 export type ArticleRevisionFragment = { __typename?: 'ArticleRevision', id: number, title: string, content: string, metaTitle: string, metaDescription: string, date: string };
 

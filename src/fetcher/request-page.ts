@@ -265,7 +265,7 @@ export async function requestPage(
     }
   }
 
-  const licenseData = uuid.license
+  const licenseData = { ...uuid.license, isDefault: uuid.license.default }
 
   if (uuid.__typename === 'Article') {
     return {

@@ -178,9 +178,10 @@ export interface LicenseDetailPage {
 }
 
 export interface LicenseDetailData {
+  id: number
   title: string
   content: FrontendContentNode[]
-  id: number
+  isDefault: boolean
 }
 
 export interface HistoryRevisionData {
@@ -831,7 +832,7 @@ export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
-  default: boolean
+  isDefault: boolean
   shortTitle?: string // show this if not default
 }
 
