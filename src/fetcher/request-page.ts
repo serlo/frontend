@@ -94,7 +94,7 @@ export async function requestPage(
       const pages = uuid.pages.map((page) => {
         return {
           title: page.currentRevision?.title ?? '',
-          url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
           noCurrentRevision: !page.currentRevision,
         }
       })
@@ -404,7 +404,7 @@ export async function requestPage(
       }
       return {
         title: page.currentRevision?.title ?? '',
-        url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+        url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
         active,
       }
     })

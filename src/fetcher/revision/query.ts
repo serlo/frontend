@@ -14,6 +14,7 @@ export const revisionQuery = gql`
       ... on AbstractRevision {
         __typename
         id
+        alias
         trashed
         date
         author {
@@ -114,6 +115,7 @@ export const revisionQuery = gql`
             }
           }
           pages {
+            alias
             id
             currentRevision {
               id
@@ -154,8 +156,8 @@ export const revisionQuery = gql`
               title
             }
             pages(trashed: false, hasCurrentRevision: true) {
-              alias
               id
+              alias
               currentRevision {
                 title
                 trashed
@@ -227,6 +229,7 @@ export const revisionQuery = gql`
           alias
           exerciseGroup {
             id
+            alias
             exercises {
               id
             }
@@ -358,6 +361,7 @@ export const revisionQuery = gql`
   }
 
   fragment courseRevision on CourseRevision {
+    alias
     content
     title
     metaDescription
