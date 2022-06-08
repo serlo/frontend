@@ -79,7 +79,7 @@ export function Video({ src, path, license }: VideoProps) {
             )}
           </div>
         </PrivacyWrapper>
-        {license && !license.default && (
+        {license && !license.isDefault && (
           <p className="serlo-p">
             <LicenseNotice minimal data={license} type="video" path={path} />
           </p>

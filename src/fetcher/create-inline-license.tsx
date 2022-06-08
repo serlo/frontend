@@ -1,7 +1,7 @@
 import { License } from './query-types'
 import { LicenseData } from '@/data-types'
 
-// 4, 5, 6, 7, 10, 16, 19
+// TODO: replace with shortTitle from API
 
 const shortTitles: { [key: number]: string } = {
   4: '123mathe.de',
@@ -13,7 +13,7 @@ const shortTitles: { [key: number]: string } = {
 }
 
 export function createInlineLicense(license: License): LicenseData {
-  const output: LicenseData = license
+  const output: LicenseData = { ...license, isDefault: license.default }
   output.shortTitle = shortTitles[output.id]
   return output
 }

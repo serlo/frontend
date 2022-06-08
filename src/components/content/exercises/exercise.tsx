@@ -88,9 +88,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderSolution() {
-    const license = node.solution.license && !node.solution.license.default && (
-      <LicenseNotice minimal data={node.solution.license} type="solution" />
-    )
+    const license = node.solution.license &&
+      !node.solution.license.isDefault && (
+        <LicenseNotice minimal data={node.solution.license} type="solution" />
+      )
     const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     const authorTools = ExerciseAuthorTools && loaded && auth.current && (
       <ExerciseAuthorTools

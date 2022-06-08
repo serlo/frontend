@@ -147,10 +147,11 @@ export function Topic({ data }: TopicProps) {
       const content = data.exercisesContent[i]
 
       if (content.type === 'exercise-group') {
-        if (content.license?.default) return content.license
+        if (content.license?.isDefault) return content.license
       } else {
-        if (content.task?.license?.default) return content.task.license
-        if (content.solution?.license?.default) return content.solution.license
+        if (content.task?.license?.isDefault) return content.task.license
+        if (content.solution?.license?.isDefault)
+          return content.solution.license
       }
     }
     //no part of collection has default license so don't show default notice.
