@@ -65,7 +65,7 @@ export function createExercise(
     task: {
       legacy: taskLegacy,
       edtrState: taskEdtrState,
-      license: uuid.license && createInlineLicense(uuid.license),
+      license: createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
     context: {
@@ -108,10 +108,7 @@ function createSolutionData(solution: BareExercise['solution']) {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
     trashed: solution?.trashed ? true : false,
-    license:
-      solution && solution.license
-        ? createInlineLicense(solution.license)
-        : undefined,
+    license: (solution && createInlineLicense(solution.license)) ?? undefined,
   }
 }
 
@@ -164,7 +161,7 @@ export function createExerciseGroup(
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
-    license: uuid.license && createInlineLicense(uuid.license),
+    license: createInlineLicense(uuid.license),
     children,
     context: {
       id: uuid.id,

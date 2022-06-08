@@ -57,6 +57,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       ? {
           id: uuid.license.id,
           title: uuid.license.title,
+          shortTitle: uuid.license.shortTitle,
           url: uuid.license.url,
           agreement: uuid.license.agreement,
         }
