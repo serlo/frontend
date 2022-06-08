@@ -49,11 +49,6 @@ function Content() {
         icon: faHatWizard,
       },
       {
-        url: '/navigation/manage',
-        title: loggedInStrings.navigation,
-        icon: faCubesStacked,
-      },
-      {
         url: '/uuid/recycle-bin',
         title: loggedInStrings.recycleBin,
         icon: faEraser,
