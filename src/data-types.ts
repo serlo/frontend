@@ -292,7 +292,7 @@ export interface SingleEntityPage extends EntityPageBase {
 
 export interface EntityData {
   id: number
-  alias?: string
+  alias: string
   typename: string
   trashed?: boolean
   revisionId?: number
@@ -319,7 +319,7 @@ export interface RevisionData {
   user: FrontendUserData
   repository: {
     id: number
-    alias?: string
+    alias: string
     parentId?: number
     previousRevisionId?: number
     positionInGroup?: number
@@ -885,7 +885,7 @@ export interface UserEventsPage {
   userData: {
     id: number
     title: string
-    alias?: string
+    alias: string
   }
 }
 
@@ -919,7 +919,7 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
-  alias?: string
+  alias: string
   title: string
   trashed: boolean
   taxonomyType: TaxonomyTermType

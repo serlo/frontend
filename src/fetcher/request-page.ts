@@ -70,7 +70,7 @@ export async function requestPage(
   const horizonData = instance == 'de' ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
-  const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
+  const metaImage = getMetaImage(uuid.alias)
 
   // Special case for event history, User profiles are requested in user/request.ts
   if (uuid.__typename === 'User') {
@@ -79,7 +79,7 @@ export async function requestPage(
       userData: {
         id: uuid.id,
         title: uuid.username,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
       },
     }
   }
@@ -105,7 +105,7 @@ export async function requestPage(
         newsletterPopup: false,
         entityData: {
           id: uuid.id,
-          alias: uuid.alias ?? undefined,
+          alias: uuid.alias,
           typename: uuid.__typename,
           title: uuid.currentRevision?.title ?? '',
           categoryIcon: 'course',
@@ -153,7 +153,7 @@ export async function requestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         typename: uuid.__typename,
         trashed: uuid.trashed,
         content: exercise,
@@ -191,7 +191,7 @@ export async function requestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         typename: uuid.__typename,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -218,7 +218,7 @@ export async function requestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         content,
@@ -243,7 +243,7 @@ export async function requestPage(
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         revisionId: uuid.currentRevision?.id,
@@ -273,7 +273,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
@@ -311,7 +311,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
@@ -350,7 +350,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
@@ -413,7 +413,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',

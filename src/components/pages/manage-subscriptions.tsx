@@ -72,7 +72,7 @@ export function ManageSubscriptions({
             {' '}
             <FaIcon className="text-brand" icon={icon} />{' '}
           </span>
-          <Link href={object.alias ?? ''}>{title}</Link>
+          <Link href={object.alias}>{title}</Link>
         </td>
         <td className="serlo-td text-center">
           <button

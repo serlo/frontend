@@ -36,9 +36,9 @@ export function CommentAreaAllThreads() {
 
   function renderThreads() {
     return commentData?.map((thread) => {
-      const { id, __typename } = thread.object
+      const { __typename } = thread.object
 
-      const href = thread.object.alias ?? `/${id}`
+      const href = thread.object.alias
 
       return (
         <EntityIdProvider key={thread.id} value={thread.object.id}>

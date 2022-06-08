@@ -47,7 +47,6 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = useState<DisplayModes>(
     DisplayModes.This
   )
-  const repositoryAlias = data.repository.alias ?? `/${data.repository.id}`
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -100,7 +99,7 @@ export function Revision({ data }: RevisionProps) {
       <RevisionHeader
         data={data}
         isCurrentRevision={isCurrentRevision}
-        repositoryAlias={repositoryAlias}
+        repositoryAlias={data.repository.alias}
         renderUserTools={renderUserTools}
         isRejected={isRejected}
         displayMode={displayMode}

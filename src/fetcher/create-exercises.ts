@@ -72,7 +72,7 @@ export function createExercise(
       id: uuid.id,
       solutionId: uuid.solution?.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
+    href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }
@@ -133,7 +133,7 @@ export function createSolution(
     context: {
       id: uuid.id,
     },
-    href: uuid.repository.alias ? uuid.repository.alias : undefined,
+    href: uuid.repository.alias,
     /* not part of the schema anymore, obsolete? unrevisedRevisions: uuid.unrevisedRevisions, */
   }
 }
@@ -169,7 +169,7 @@ export function createExerciseGroup(
     context: {
       id: uuid.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
+    href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }
