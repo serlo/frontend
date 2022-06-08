@@ -289,7 +289,6 @@ export const sharedLicenseFragments = gql`
       title
       default
       agreement
-      iconHref
     }
   }
 `

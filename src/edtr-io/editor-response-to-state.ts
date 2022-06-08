@@ -59,7 +59,6 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           title: uuid.license.title,
           url: uuid.license.url,
           agreement: uuid.license.agreement,
-          iconHref: uuid.license.iconHref,
         }
       : undefined
   const { id } = uuid

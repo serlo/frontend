@@ -6,7 +6,6 @@ export const licenseDetailsQuery = gql`
       license(id: $id) {
         title
         content
-        iconHref
       }
     }
   }

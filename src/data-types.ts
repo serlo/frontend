@@ -180,7 +180,6 @@ export interface LicenseDetailPage {
 export interface LicenseDetailData {
   title: string
   content: FrontendContentNode[]
-  iconHref: string
   id: number
 }
 
