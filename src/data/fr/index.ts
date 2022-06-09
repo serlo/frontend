@@ -812,6 +812,9 @@ export const loggedInData = {
       navigation: 'Navigation',
       recycleBin: 'Recycle Bin'
     },
+    pages: {
+      deletedPages: 'Deleted Pages'
+    },
     taxonomyTermTools: {
       copyMove: {
         title: "Move / Copy Entities in Taxonomy",
