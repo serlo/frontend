@@ -51,26 +51,10 @@ export function Event({
 
   return (
     <>
-      <style jsx>{`
-        .unread {
-          font-weight: bold;
-          &:before {
-            content: '';
-            display: inline-block;
-            @apply bg-brand;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            margin-right: 7px;
-          }
-        }
-      `}</style>
       <div
         className={clsx(
-          'py-6 px-side',
-          slim && 'pt-1 pb-1',
-          'relative my-2.5',
-          'odd:bg-brand-100'
+          'relative my-2.5 py-6 px-side odd:bg-brand-100',
+          slim && 'pt-1 pb-1'
         )}
       >
         <TimeAgo
@@ -78,7 +62,8 @@ export function Event({
           datetime={eventDate}
           dateAsTitle
         />
-        <div className={clsx('mb-2 mt-0.25', unread && 'unread')}>
+        <div className={clsx('mb-2 mt-0.25', unread && 'font-bold')}>
+          {unread && <span className="text-brand">● </span>}
           {renderText()}
         </div>
         {renderReason()}
@@ -250,10 +235,10 @@ export function Event({
     title,
     __typename,
   }: EventObject | EventParent) {
-    return <Link href={alias}>{getTitleString(title, __typename)}</Link>
+    return <Link href={alias}>{renderTitle(title, __typename)}</Link>
   }
 
-  function getTitleString(title: string, type: string) {
+  function renderTitle(title: string, type: string) {
     const typeString = getEntityStringByTypename(type, strings)
     const preposition = ['Exercise', 'GroupedExercise', 'Solution'].includes(
       type
