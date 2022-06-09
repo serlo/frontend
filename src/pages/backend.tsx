@@ -1,7 +1,6 @@
 import {
   faBookJournalWhills,
   faBookSkull,
-  faCubesStacked,
   faEraser,
   faHatWizard,
   IconDefinition,
