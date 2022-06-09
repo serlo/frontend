@@ -1,24 +1,14 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
 
 import { isLegacyLink } from '../content/link'
-import { FaIcon } from '../fa-icon'
-import { LazyTippy } from './lazy-tippy'
-import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
-/*
-This components starts with only a placeholder that looks like a searchbar (basically a button).
-When activated (by click) it loads the Google Custom Search scrips that generate the real input button and alot of markup.
-We style this markup and use it to silenty replace the placeholder.
-From this point on it's a styled GSC that loads /search to display the results.
-It's a very hacky, but it's free and works … okay.
-*/
+/* Uses Google Custom Search */
 
 export function SearchInput() {
   const [searchLoaded, setSearchLoaded] = useState(false)
@@ -31,17 +21,11 @@ export function SearchInput() {
   // const [isSearchPage, setIsSearchPage] = useState(false)
   const { lang, strings } = useInstanceData()
   const router = useRouter()
-  const onSearchPage = router.route === '/search'
 
   useEffect(() => {
-    // note: find a better way to tell search input that it should activate itself
-    if (onSearchPage) {
-      submitEvent('search-showing-results')
-      activateSearch()
-    }
-    // I only want to run this the first time the page loads
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    submitEvent('search-showing-results')
+    activateSearch()
+  })
 
   useEffect(() => {
     if (consentJustGiven) activateSearch()
@@ -61,11 +45,7 @@ export function SearchInput() {
   }
 
   function activateSearch() {
-    if (searchActive) return
-    if (!consentGiven) {
-      searchFormRef.current?.focus()
-      return
-    }
+    if (searchActive || !consentGiven) return
 
     if (!searchLoaded) {
       const gcse = document.createElement('script')
@@ -83,17 +63,11 @@ export function SearchInput() {
       const input = element as HTMLInputElement
       input.setAttribute('placeholder', strings.header.search)
       input.focus()
-      setSearchActive(true)
-
       const resultsContainer = document.getElementById('gcs-results')
       setupLinkCatcher(resultsContainer)
-    })
-  }
 
-  function onConsentButtonAction() {
-    submitEvent('search-consented')
-    giveConsent(ExternalProvider.GoogleSearch)
-    setConsentJustGiven(true)
+      setSearchActive(true)
+    })
   }
 
   function setupLinkCatcher(container: HTMLElement | null) {
@@ -153,53 +127,13 @@ export function SearchInput() {
 
   return (
     <>
-      <LazyTippy
-        content={renderConsentPop()}
-        trigger="focus click"
-        interactive
-        placement="bottom-start"
-        onLoaded={() => {
-          if (onSearchPage && !consentGiven) {
-            searchFormRef.current?.focus()
-          }
-        }}
-      >
-        <div /*SearchForm*/
-          className="serlo-search-input-hack"
+      {consentGiven ? (
+        <div
+          className={clsx('max-w-md mb-8')}
           id="searchform"
           ref={searchFormRef}
-          onClick={activateSearch}
-          onKeyDown={(e) => {
-            if (e.key == 'Enter') {
-              activateSearch()
-            }
-          }}
           tabIndex={searchActive ? -1 : 0}
         >
-          {!searchActive && (
-            <>
-              <div className="grow shrink" /*PlaceholderText*/>
-                <input
-                  className="gsc-input outline-none mt-2 !ml-0"
-                  placeholder={strings.header.search}
-                ></input>
-              </div>
-              <button
-                style={{ fill: 'white' }}
-                className="gsc-search-button" /*PlaceholderButton*/
-              >
-                {!searchLoaded ? (
-                  <SearchIcon /*PlaceholderIcon*/ className="-mt-1" />
-                ) : (
-                  <FaIcon
-                    /*LoadingIcon*/ icon={faSpinner}
-                    className="text-white animate-spin-slow"
-                  />
-                )}
-              </button>
-            </>
-          )}
-
           {/* Note: This exact classname is important for gcse to work!*/}
           <div
             className="gcse-searchbox-only"
@@ -208,34 +142,25 @@ export function SearchInput() {
             data-enablehistory="true"
           />
         </div>
-      </LazyTippy>
+      ) : (
+        renderConsentBanner()
+      )}
     </>
   )
-  function renderConsentPop() {
-    if (searchActive || consentGiven) return null
+  function renderConsentBanner() {
+    if (consentGiven) return
     return (
       <div
         className={clsx(
-          'w-[88vw] sm:w-[277px] bg-brand text-white',
-          'rounded-[10px] shadow-md',
+          'text-brand',
+          'rounded-[10px] border-2',
           'px-side py-3 z-10 outline-none'
-        )} /*ConsentPop*/
+        )}
       >
-        <button
-          className="serlo-button mt-1 mb-2 mx-auto block bg-white hover:bg-brand-300 text-brand text-base py-0.5" /*ConsentButton*/
-          onClick={onConsentButtonAction}
-          onKeyDown={(e) => {
-            if (e.key == 'Enter') {
-              onConsentButtonAction()
-            }
-          }}
-        >
-          {strings.search.agree}
-        </button>
         {replacePlaceholders(strings.search.privacy, {
           privacypolicy: (
             <a
-              className="text-white font-bold hover:no-underline"
+              className="text-brand serlo-link font-bold hover:no-underline"
               href="/privacy"
               target="_blank"
             >
@@ -243,6 +168,16 @@ export function SearchInput() {
             </a>
           ),
         })}
+        <button
+          className="serlo-button serlo-make-interactive-primary mt-2 mb-1 block py-0.5"
+          onClick={() => {
+            submitEvent('search-consented')
+            giveConsent(ExternalProvider.GoogleSearch)
+            setConsentJustGiven(true)
+          }}
+        >
+          {strings.search.agree}
+        </button>
       </div>
     )
   }

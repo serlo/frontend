@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 
 import { HeadTags } from '../head-tags'
 import { MaxWidthDiv } from '../navigation/max-width-div'
+import { SearchInput } from '../navigation/search-input'
 import { useInstanceData } from '@/contexts/instance-context'
 
 interface GoogleSearchGlobal {
@@ -47,7 +48,11 @@ export function Search() {
 
         .gsc-control-cse {
           border: 0;
-          padding: 0;
+          padding: 0 !important;
+        }
+
+        .gsc-refinementHeader {
+          font-size: 1.125rem !important;
         }
 
         .gsc-results-wrapper-overlay {
@@ -84,6 +89,7 @@ export function Search() {
           }
 
           div.gs-title {
+            margin-top: 10px;
             margin-bottom: 4px;
           }
         }
@@ -93,20 +99,20 @@ export function Search() {
           .gs-spelling,
           .gs-result .gs-title,
           .gs-result .gs-title * {
-            font-size: 1.125rem;
+            font-size: 1.125rem !important;
             text-decoration: none;
           }
 
           &,
           .gsc-table-result {
-            font-size: 1rem;
+            font-size: 1.125rem !important;
             @apply !font-serlo tracking-slightly-tighter;
-            line-height: 1.33rem;
+            line-height: 1.7rem !important;
           }
         }
 
         .gsc-webResult .gsc-result {
-          padding-bottom: 15px;
+          padding-bottom: 22px;
         }
 
         .gsc-table-cell-thumbnail.gsc-thumbnail {
@@ -117,11 +123,12 @@ export function Search() {
         data={{ title: `Serlo.org - ${strings.header.search}` }}
         noindex
       />
-      <MaxWidthDiv>
-        <div className="py-12 px-0 mx-side">
+      <div className="mx-side">
+        <MaxWidthDiv>
+          <SearchInput />
           <div id="gcs-results"></div>
-        </div>
-      </MaxWidthDiv>
+        </MaxWidthDiv>
+      </div>
     </>
   )
 }

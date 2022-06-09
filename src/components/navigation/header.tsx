@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Router } from 'next/router'
+import { Router, useRouter } from 'next/router'
 import { useState } from 'react'
 
 import { Link } from '../content/link'
@@ -14,6 +14,9 @@ export function Header() {
   const [isOpen, setOpen] = useState(false)
   const auth = useAuthentication()
   const { strings, headerData } = useInstanceData()
+  const router = useRouter()
+
+  const onSearchPage = router.route === '/search'
 
   // compat: close mobile menu on client side navigation, we need the global Router instance
   Router.events.on('routeChangeStart', () => {
@@ -48,16 +51,17 @@ export function Header() {
               <Menu data={headerData} auth={auth.current} />
             </div>
             <div className="hidden md:block lg:hidden basis-full h-0" />
-            <Quickbar
-              className={clsx(
-                'mt-7 mx-auto text-left font-normal',
-                'mobile:max-w-sm mobile:ml-4 mobile:mr-0',
-                'mobile:mt-5 mobile:px-2 mobile:flex-grow', //mobile:flex-grow mobile:px-8
-                'md:mt-0 md:max-w-xs',
-                'lg:mt-6 lg:max-w-sm'
-              )}
-              placeholder={strings.header.search}
-            />
+            {onSearchPage ? null : (
+              <Quickbar
+                className={clsx(
+                  'mt-7 mx-auto text-left font-normal',
+                  'mobile:max-w-sm mobile:ml-4 mobile:mr-0 mobile:mt-5 mobile:px-2 mobile:flex-grow',
+                  'md:mt-0 md:max-w-xs',
+                  'lg:mt-6 lg:max-w-sm'
+                )}
+                placeholder={strings.header.search}
+              />
+            )}
           </div>
         </div>
         {isOpen && <MobileMenu data={headerData} auth={auth.current} />}
