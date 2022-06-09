@@ -74,7 +74,7 @@ export const sharedEventFragments = gql`
       }
       repository {
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
       reason
     }
@@ -94,27 +94,18 @@ export const sharedEventFragments = gql`
     }
     ... on CreateEntityNotificationEvent {
       entity {
-        __typename
-        id
-        alias
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on CreateEntityLinkNotificationEvent {
       parent {
-        __typename
-        id
-        alias
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
       child {
-        __typename
-        id
-        alias
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on CreateEntityRevisionNotificationEvent {
@@ -123,26 +114,21 @@ export const sharedEventFragments = gql`
       }
       entity {
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on CreateTaxonomyTermNotificationEvent {
       taxonomyTerm {
-        id
-        name
-        alias
+        ...entityInfo
       }
     }
     ... on CreateTaxonomyLinkNotificationEvent {
       child {
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
       parent {
-        __typename
-        id
-        alias
-        name
+        ...entityInfo
       }
     }
     ... on CreateThreadNotificationEvent {
@@ -156,15 +142,13 @@ export const sharedEventFragments = gql`
         }
       }
       object {
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on RejectRevisionNotificationEvent {
       repository {
-        id
-        alias
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
       revision {
         id
@@ -174,50 +158,43 @@ export const sharedEventFragments = gql`
     }
     ... on RemoveEntityLinkNotificationEvent {
       parent {
-        id
-        alias
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
       child {
-        id
-        alias
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on RemoveTaxonomyLinkNotificationEvent {
       child {
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
       parent {
-        id
-        alias
-        name
+        ...entityInfo
       }
     }
     ... on SetLicenseNotificationEvent {
       repository {
         ...withTaxonomyTerms
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on SetTaxonomyParentNotificationEvent {
       child {
-        id
-        alias
+        ...entityInfo
       }
       previousParent {
-        id
-        alias
+        ...entityInfo
+      }
+      optionalParent: parent {
+        ...entityInfo
       }
     }
     ... on SetTaxonomyTermNotificationEvent {
       taxonomyTerm {
-        id
-        alias
-        name
+        ...entityInfo
       }
     }
     ... on SetThreadStateNotificationEvent {
@@ -233,55 +210,24 @@ export const sharedEventFragments = gql`
     }
     ... on SetUuidStateNotificationEvent {
       object {
-        ...withTitle
+        ...entityInfo
         ...withTaxonomyTerms
       }
       trashed
     }
   }
 
-  fragment withTitle on AbstractUuid {
+  fragment entityInfo on AbstractUuid {
     __typename
     id
+    title
     alias
-
-    ... on Applet {
-      currentRevision {
-        title
-      }
-    }
-    ... on Article {
-      currentRevision {
-        title
-      }
-    }
-    ... on Course {
-      currentRevision {
-        title
-      }
-    }
-    ... on CoursePage {
-      currentRevision {
-        title
-      }
-    }
-    ... on Video {
-      currentRevision {
-        title
-      }
-    }
-    ... on Page {
-      currentRevision {
-        title
-      }
-    }
   }
 
   fragment withTaxonomyTerms on AbstractUuid {
     ... on Exercise {
       taxonomyTerms {
         nodes {
-          name
           type
         }
       }
@@ -289,7 +235,6 @@ export const sharedEventFragments = gql`
     ... on ExerciseGroup {
       taxonomyTerms {
         nodes {
-          name
           type
         }
       }
@@ -298,7 +243,6 @@ export const sharedEventFragments = gql`
       exerciseGroup {
         taxonomyTerms {
           nodes {
-            name
             type
           }
         }
@@ -310,7 +254,6 @@ export const sharedEventFragments = gql`
           __typename
           taxonomyTerms {
             nodes {
-              name
               type
             }
           }
@@ -320,7 +263,6 @@ export const sharedEventFragments = gql`
           exerciseGroup {
             taxonomyTerms {
               nodes {
-                name
                 type
               }
             }

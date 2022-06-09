@@ -2,7 +2,6 @@ import { faBellSlash } from '@fortawesome/free-solid-svg-icons/faBellSlash'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
-import { hasPath } from 'ramda'
 
 import { FaIcon } from '../fa-icon'
 import { UserLink } from './user-link'
@@ -18,13 +17,13 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
 
 type EventThread = Extract<Event, { thread: any }>['thread']
+type EventObject = Extract<Event, { object: any }>['object']
+type EventParent = Extract<Event, { parent: any }>['parent']
 
 type EventAbstractUuid = Extract<Event, { __typename: string }>
 
-// TODO: work in progress
-
 interface EventProps {
-  event: Event
+  event: EventAbstractUuid
   eventId: number
   unread: boolean
   loggedInStrings?: LoggedInData['strings']['notifications']
@@ -67,7 +66,7 @@ export function Event({
         }
       `}</style>
       <div
-        /*Item*/ className={clsx(
+        className={clsx(
           'py-6 px-side',
           slim && 'pt-1 pb-1',
           'relative my-2.5',
@@ -76,10 +75,10 @@ export function Event({
       >
         <TimeAgo
           className="text-sm text-truegray-500"
-          /*StyledTimeAgo*/ datetime={eventDate}
+          datetime={eventDate}
           dateAsTitle
         />
-        <div className={clsx('mb-2 mt-0.25', unread && 'unread')} /*Title*/>
+        <div className={clsx('mb-2 mt-0.25', unread && 'unread')}>
           {renderText()}
         </div>
         {renderReason()}
@@ -192,36 +191,36 @@ export function Event({
       case 'RemoveTaxonomyLinkNotificationEvent':
         return parseString(strings.events.removeTaxonomyLink, {
           child: renderObject(event.child),
-          parent: renderTax(event.parent),
+          parent: renderObject(event.parent),
         })
 
       case 'CreateTaxonomyTermNotificationEvent':
         return parseString(strings.events.createTaxonomyTerm, {
-          term: renderTax(event.taxonomyTerm),
+          term: renderObject(event.taxonomyTerm),
         })
 
       case 'SetTaxonomyTermNotificationEvent':
         return parseString(strings.events.setTaxonomyTerm, {
-          term: renderTax(event.taxonomyTerm),
+          term: renderObject(event.taxonomyTerm),
         })
 
       case 'SetTaxonomyParentNotificationEvent':
-        if (!event.parent) {
+        if (!event.optionalParent) {
           //deleted
           return parseString(strings.events.setTaxonomyParentDeleted, {
-            child: renderTax(event.child),
+            child: renderObject(event.child),
           })
         }
         if (event.previousParent) {
           return parseString(strings.events.setTaxonomyParentChangedFrom, {
-            child: renderTax(event.child),
-            previousparent: renderTax(event.previousParent),
-            parent: renderTax(event.parent),
+            child: renderObject(event.child),
+            previousparent: renderObject(event.previousParent),
+            parent: renderObject(event.optionalParent),
           })
         }
         return parseString(strings.events.setTaxonomyParentChanged, {
-          child: renderTax(event.child),
-          parent: renderTax(event.parent),
+          child: renderObject(event.child),
+          parent: renderObject(event.optionalParent),
         })
 
       case 'SetUuidStateNotificationEvent':
@@ -246,136 +245,25 @@ export function Event({
     }
   }
 
-  function renderObject(object: AbstractUuid & { __typename?: string }) {
-    return (
-      <Link href={object.alias ?? `/${object.id}`}>
-        {hasTitle(object)
-          ? object.currentRevision.title
-          : getEntityStringIncludingFolder(object)}
-      </Link>
+  function renderObject({
+    alias,
+    title,
+    __typename,
+  }: EventObject | EventParent) {
+    return <Link href={alias}>{getTitleString(title, __typename)}</Link>
+  }
+
+  function getTitleString(title: string, type: string) {
+    const typeString = getEntityStringByTypename(type, strings)
+    const preposition = ['Exercise', 'GroupedExercise', 'Solution'].includes(
+      type
     )
-  }
+      ? strings.events.entityInParentPreposition
+      : ['Thread', 'Comment'].includes(type)
+      ? strings.events.commentInParentPreposition
+      : ''
 
-  // Gets localized entity name (for example "Solution") and containing folder (for example "Exercises about topic X")
-  // Full example: "Solution | Exercises about topic X"
-  function getEntityStringIncludingFolder(
-    object: AbstractUuid & { __typename?: string }
-  ) {
-    const taxonomyTerms = getTaxonomyTerms(object)
-
-    if (taxonomyTerms.length == 0) {
-      return getEntityStringByTypename(object.__typename, strings)
-    }
-
-    const topicFolder = taxonomyTerms.find(
-      (term) => term.type === TaxonomyTermType.TopicFolder
-    )
-    if (topicFolder === undefined) {
-      return (
-        getEntityStringByTypename(object.__typename, strings) +
-        ' | ' +
-        taxonomyTerms[0].name // Give at least some context.
-      )
-    }
-
-    return (
-      getEntityStringByTypename(object.__typename, strings) +
-      ' | ' +
-      topicFolder.name
-    )
-  }
-
-  function getTaxonomyTerms(
-    object: AbstractUuid & { __typename?: string }
-  ): { name: string; type: TaxonomyTermType }[] {
-    if (object.__typename === 'Exercise' && hasTaxonomyTerms(object)) {
-      return object.taxonomyTerms.nodes
-    }
-
-    if (object.__typename === 'ExerciseGroup' && hasTaxonomyTerms(object)) {
-      return object.taxonomyTerms.nodes
-    }
-
-    if (
-      object.__typename === 'GroupedExercise' &&
-      hasExerciseGroup(object) &&
-      hasTaxonomyTerms(object.exerciseGroup)
-    ) {
-      return object.exerciseGroup.taxonomyTerms.nodes
-    }
-
-    if (object.__typename === 'Solution' && hasExercise(object)) {
-      if (
-        object.exercise.__typename === 'Exercise' &&
-        hasTaxonomyTerms(object.exercise)
-      ) {
-        return object.exercise.taxonomyTerms.nodes
-      } else if (
-        object.exercise.__typename === 'GroupedExercise' &&
-        hasExerciseGroup(object.exercise) &&
-        hasTaxonomyTerms(object.exercise.exerciseGroup)
-      ) {
-        return object.exercise.exerciseGroup.taxonomyTerms.nodes
-      }
-    }
-
-    if (
-      object.__typename === 'TaxonomyTerm' &&
-      hasName(object) &&
-      hasType(object)
-    ) {
-      return [{ name: object.name, type: object.type }]
-    }
-
-    return []
-  }
-
-  function hasExercise(
-    object: AbstractUuid & { __typename?: string }
-  ): object is AbstractUuid & { __typename?: string } & {
-    exercise: AbstractUuid & { __typename?: string }
-  } {
-    return hasPath(['exercise'], object)
-  }
-
-  function hasExerciseGroup(
-    object: AbstractUuid & { __typename?: string }
-  ): object is AbstractUuid & { __typename?: string } & {
-    exerciseGroup: AbstractUuid & { __typename?: string }
-  } {
-    return hasPath(['exerciseGroup'], object)
-  }
-
-  function hasName(
-    object: AbstractUuid & { __typename?: string }
-  ): object is AbstractUuid & { __typename?: string } & { name: string } {
-    return hasPath(['name'], object)
-  }
-
-  function hasType(
-    object: AbstractUuid & { __typename?: string }
-  ): object is AbstractUuid & { __typename?: string } & {
-    type: TaxonomyTermType
-  } {
-    return hasPath(['type'], object)
-  }
-
-  function hasTaxonomyTerms(
-    object: AbstractUuid & { __typename?: string }
-  ): object is AbstractUuid & { __typename?: string } & {
-    taxonomyTerms: { nodes: { name: string; type: TaxonomyTermType }[] }
-  } {
-    return hasPath(['taxonomyTerms', 'nodes'], object)
-  }
-
-  function hasTitle(
-    object: unknown
-  ): object is { currentRevision: { title: string } } {
-    return hasPath(['currentRevision', 'title'], object)
-  }
-
-  function renderTax(taxonomy: TaxonomyTerm) {
-    return <Link href={taxonomy.alias}>{taxonomy.name}</Link>
+    return preposition ? `${typeString} (${preposition} ${title})` : title
   }
 
   function renderRevision(id: number) {

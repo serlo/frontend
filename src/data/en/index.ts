@@ -315,6 +315,8 @@ export const instanceData = {
       globalDescription: 'All events that happen somewhere on %lang%.serlo.org',
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: '%actor% archived %thread%.',
       setThreadStateUnarchived: '%actor% restored %thread%.',
       createComment: '%actor% commented in %thread%: %comment%.',
