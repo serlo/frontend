@@ -42,7 +42,23 @@ export const headerData: InstanceData['headerData'] = [
       },
     ],
   },
-  { url: '/serlo', title: 'Über Serlo', icon: 'about' },
+  {
+    url: '/serlo',
+    title: 'Über Uns',
+    icon: 'about',
+    //as of now this is a duplicate of the secondary menu, but this might change?
+    children: [
+      { title: 'Über Serlo', url: '/serlo' },
+      { title: 'So funktioniert die Lernplattform', url: '/features' },
+      { title: 'Team', url: '/team' },
+      { title: 'Jobs', url: '/jobs' },
+      { title: 'Partner & Förderer', url: '/partner' },
+      { title: 'Spenden', url: '/spenden' },
+      { title: 'Wirkung', url: '/wirkung' },
+      { title: 'Transparenz', url: '/transparenz' },
+      { title: 'Die Geschichte von Serlo', url: '/geschichte' },
+    ],
+  },
   { url: '/mitmachen', title: 'Mitmachen', icon: 'participate' },
   { url: '/spenden', title: 'Spenden', icon: 'donate' },
   {
