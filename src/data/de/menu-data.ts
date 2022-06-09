@@ -268,7 +268,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     entries: [
-      { title: 'Community & Team', id: 19869 },
+      { title: 'Mitmachen', id: 19869 },
       { title: 'Jobs & Ehrenamt', id: 21563 },
       { title: 'Kontakt und Standorte', id: 21657 },
       { title: 'Spenden', url: '/spenden' },
