@@ -57,9 +57,9 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       ? {
           id: uuid.license.id,
           title: uuid.license.title,
+          shortTitle: uuid.license.shortTitle,
           url: uuid.license.url,
           agreement: uuid.license.agreement,
-          iconHref: uuid.license.iconHref,
         }
       : undefined
   const { id } = uuid
@@ -204,6 +204,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
                 ...page,
                 currentRevision: {
                   id: page.id,
+                  alias: page.alias,
                   title: page.currentRevision?.title ?? '',
                   content: page.currentRevision?.content ?? '',
                   date: '', // not used
@@ -324,6 +325,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             uuid.solution && !uuid.solution.trashed
               ? convertTextSolution({
                   ...uuid.solution,
+                  alias: uuid.alias,
                   __typename: 'Solution',
                   instance: uuid.instance,
                   exercise: uuid,

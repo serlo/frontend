@@ -59,7 +59,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     <div className="mx-side mb-10">
       <Link
         title={strings.revisionHistory.viewLabel}
-        href={entity.alias ?? undefined}
+        href={entity.alias}
         className="font-bold"
       >
         <b>{title}</b>

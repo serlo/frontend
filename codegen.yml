@@ -11,6 +11,7 @@ documents:
   - 'src/pages/subscriptions/manage.tsx'
   - 'src/pages/entity/taxonomy/update/[id].tsx'
   - 'src/pages/uuid/recycle-bin.tsx'
+  - 'src/pages/pages.tsx'
   - 'src/fetcher/unrevised-revisions/query.ts'
   - 'src/components/user/user-unrevised-revisions.tsx'
   - 'src/components/user/events.tsx'

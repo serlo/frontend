@@ -35,6 +35,7 @@ export const sharedRevisionFragments = gql`
 
   fragment coursePageRevision on CoursePageRevision {
     id
+    alias
     content
     title
     date
@@ -363,9 +364,9 @@ export const sharedLicenseFragments = gql`
       id
       url
       title
+      shortTitle
       default
       agreement
-      iconHref
     }
   }
 `

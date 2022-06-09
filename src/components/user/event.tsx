@@ -375,9 +375,7 @@ export function Event({
   }
 
   function renderTax(taxonomy: TaxonomyTerm) {
-    return (
-      <Link href={taxonomy.alias ?? `/${taxonomy.id}`}>{taxonomy.name}</Link>
-    )
+    return <Link href={taxonomy.alias}>{taxonomy.name}</Link>
   }
 
   function renderRevision(id: number) {

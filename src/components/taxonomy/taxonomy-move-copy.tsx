@@ -58,7 +58,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         data={[
           {
             label: taxonomyData.title ?? strings.revisions.toContent,
-            url: taxonomyData.alias ?? `/${taxonomyData.id}`,
+            url: taxonomyData.alias,
           },
         ]}
         asBackButton

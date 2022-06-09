@@ -812,6 +812,9 @@ export const loggedInData = {
       navigation: 'Navigation',
       recycleBin: "Papierkorb"
     },
+    pages: {
+      deletedPages: "Gelöschte Seiten"
+    },
     taxonomyTermTools: {
       copyMove: {
         title: "Inhalte in Ordner verschieben / kopieren",

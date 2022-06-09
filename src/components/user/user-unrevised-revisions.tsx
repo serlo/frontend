@@ -10,7 +10,6 @@ import { unrevisedEntitiesFragment } from '@/fetcher/unrevised-revisions/query'
 
 interface UserUnrevisedRevisionsProps {
   userId: number
-  alias?: string
   isOwn: boolean
 }
 
