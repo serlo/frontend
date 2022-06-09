@@ -1657,6 +1657,16 @@ export interface PageMutationRejectRevisionArgs {
   input: RejectRevisionInput;
 }
 
+export interface PageQuery {
+  __typename?: 'PageQuery';
+  pages: Array<Page>;
+}
+
+
+export interface PageQueryPagesArgs {
+  instance?: InputMaybe<Instance>;
+}
+
 export interface PageRevision extends AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'PageRevision';
   alias: Scalars['String'];
@@ -1717,6 +1727,7 @@ export interface Query {
   metadata: MetadataQuery;
   notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
+  page: PageQuery;
   subject: SubjectQuery;
   subscription: SubscriptionQuery;
   thread: ThreadQuery;
@@ -2282,23 +2293,11 @@ export interface TaxonomyTermEdge {
   node: TaxonomyTerm;
 }
 
-export interface TaxonomyTermMoveInput {
-  childrenIds: Array<Scalars['Int']>;
-  destination: Scalars['Int'];
-}
-
-export interface TaxonomyTermMoveResponse {
-  __typename?: 'TaxonomyTermMoveResponse';
-  query: Query;
-  success: Scalars['Boolean'];
-}
-
 export interface TaxonomyTermMutation {
   __typename?: 'TaxonomyTermMutation';
   create: TaxonomyTermCreateResponse;
   createEntityLinks: TaxonomyEntityLinksResponse;
   deleteEntityLinks: TaxonomyEntityLinksResponse;
-  move: TaxonomyTermMoveResponse;
   setNameAndDescription: TaxonomyTermSetNameAndDescriptionResponse;
   sort: TaxonomyTermSortResponse;
 }
@@ -2316,11 +2315,6 @@ export interface TaxonomyTermMutationCreateEntityLinksArgs {
 
 export interface TaxonomyTermMutationDeleteEntityLinksArgs {
   input: TaxonomyEntityLinksInput;
-}
-
-
-export interface TaxonomyTermMutationMoveArgs {
-  input: TaxonomyTermMoveInput;
 }
 
 
@@ -3141,6 +3135,13 @@ export type GetUuidPathsQueryVariables = Exact<{
 
 
 export type GetUuidPathsQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'AppletRevision' } | { __typename?: 'Article', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User' } | { __typename?: 'Video', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', name: string, alias: string, id: number, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'VideoRevision' } | null };
+
+export type PagesQueryVariables = Exact<{
+  instance: Instance;
+}>;
+
+
+export type PagesQuery = { __typename?: 'Query', page: { __typename?: 'PageQuery', pages: Array<{ __typename?: 'Page', id: number, alias: string, trashed: boolean, currentRevision?: { __typename?: 'PageRevision', title: string } | null }> } };
 
 export type GetSubscriptionsQueryVariables = Exact<{
   first: Scalars['Int'];

@@ -1,4 +1,4 @@
-import { faTrashArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faTrashRestore } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 import Head from 'next/head'
 
@@ -108,7 +108,7 @@ function Content() {
               if (success) window.location.href = alias
             }}
           >
-            <FaIcon icon={faTrashArrowUp} />
+            <FaIcon icon={faTrashRestore} />
           </button>
         </td>
       </tr>

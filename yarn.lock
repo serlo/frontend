@@ -3843,19 +3843,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.37.0":
-  version: 0.37.0
-  resolution: "@serlo/api@npm:0.37.0"
-  checksum: 1566ed0025a868ca39029834fe8733fff9ef5323fc6374506f94f69d149b057c386cc8323bf10a7a5cf08d9f3a97153229708cfd8f77384b6de50f05bc93a313
+"@serlo/api@npm:^0.38.0":
+  version: 0.38.0
+  resolution: "@serlo/api@npm:0.38.0"
+  checksum: e8e7605290eeac28a9b8fa0faca32f7e5daeadd78a07cade0601c0ee8c5fb4ac80d90c3f954fda7fb53d1e3c2f62008b21d5d0cb050622fe7ecb6bd4a67fc00e
   languageName: node
   linkType: hard
 
-"@serlo/authorization@npm:^0.37.0":
-  version: 0.37.0
-  resolution: "@serlo/authorization@npm:0.37.0"
+"@serlo/authorization@npm:^0.38.0":
+  version: 0.38.0
+  resolution: "@serlo/authorization@npm:0.38.0"
   dependencies:
-    "@serlo/api": ^0.37.0
-  checksum: 6af43c94ab867ad4fed1924a2e9f4e923386820b45f19b7997e77a5921b5f5e62242bd6966348f5f1526db7f4bf3d06837f8510342ea7ceaade0d65ee8079e99
+    "@serlo/api": ^0.38.0
+  checksum: 330c442a0536d8492eb32327782c34a1b028094dabd5b1bea0a93b046d77bc0a534230c473ac9cd05006db2424289a5caebdfa3aa35fc9b178d25c0c12e34c80
   languageName: node
   linkType: hard
 
@@ -3899,8 +3899,8 @@ __metadata:
     "@graphql-codegen/typescript-graphql-request": ^4.4.5
     "@graphql-codegen/typescript-operations": 2.3.5
     "@next/bundle-analyzer": ^12.0.0
-    "@serlo/api": ^0.37.0
-    "@serlo/authorization": ^0.37.0
+    "@serlo/api": ^0.38.0
+    "@serlo/authorization": ^0.38.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
     "@serlo/markdown": Entkenntnis/tmp-serlo-markdown
     "@svgr/webpack": ^6.0.0
