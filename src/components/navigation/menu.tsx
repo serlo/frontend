@@ -6,10 +6,10 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
-import { FaIcon } from '../fa-icon'
-import { MenuSubButtonLink } from '../user-tools/menu-sub-button-link'
 import { getAvatarUrl } from '../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
+import { FaIcon } from '@/components/fa-icon'
+import { MenuSubButtonLink } from '@/components/user-tools/menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -94,7 +94,7 @@ function MenuInner({
   }
 
   return (
-    <nav className="min-h-[50px] hidden sm:block">
+    <nav className="min-h-[50px] hidden md:block mt-[1.7rem] md:mt-7">
       {Tippy && (
         <Tippy.default
           singleton={source}
@@ -166,7 +166,7 @@ function MenuInner({
 
     const styledLinkCls = /* className={ */ clsx(
       'serlo-button serlo-make-interactive-transparent-blue',
-      'text-base leading-tight block transition mx-[3px] my-0 text-brand-light',
+      'text-[0.9rem] leading-tight block transition mx-[3px] my-0 text-brand-light',
       hasIcon ? '-mt-[5px] p-[7px]' : 'mt-[11px] py-0.5 px-[7px]',
       'serlo-menu-entry-special'
     )
@@ -246,6 +246,7 @@ function MenuInner({
                   `/user/${auth.id}/${auth.username}`
                 )
               : entry.url
+
             return (
               <li key={entry.title} onClick={onSubMenuInnerClick}>
                 <MenuSubButtonLink href={href} path={['menu', i!, i2]}>

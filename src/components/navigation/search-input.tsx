@@ -111,20 +111,22 @@ export function SearchInput() {
 
         const absoluteHref = link?.dataset.ctorig
         const relativeHref = absoluteHref?.replace(langDomain, '')
-        if (
-          !e.metaKey &&
-          !e.ctrlKey &&
+        const isFrontendResultsLink =
           link &&
           link.classList.contains(className) &&
           typeof absoluteHref !== 'undefined' &&
           absoluteHref.startsWith(langDomain) &&
           relativeHref !== undefined &&
           !isLegacyLink(relativeHref)
-        ) {
-          e.preventDefault()
-          void router.push('/[[...slug]]', relativeHref).then(() => {
-            if (window.location.hash.length < 1) window.scrollTo(0, 0)
-          })
+
+        if (isFrontendResultsLink) {
+          submitEvent('search-result-click')
+          if (!e.metaKey && !e.ctrlKey) {
+            e.preventDefault()
+            void router.push('/[[...slug]]', relativeHref).then(() => {
+              if (window.location.hash.length < 1) window.scrollTo(0, 0)
+            })
+          }
         }
       },
       false

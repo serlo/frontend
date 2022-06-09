@@ -80,6 +80,13 @@ export default class MyDocument extends Document {
             type="font/woff2"
             crossOrigin=""
           />
+          <link
+            rel="preload"
+            href="/_assets/fonts/caveat/caveat-bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin=""
+          />
           {process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined && (
             // script is very small and bootstraps sentry
             // eslint-disable-next-line @next/next/no-sync-scripts

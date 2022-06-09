@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
-import { HeaderNew } from '../landing/rework/header-new'
 import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
+import { Header } from '../navigation/header'
 import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
@@ -22,14 +22,6 @@ export function LandingDE({ data }: LandingDEProps) {
   return (
     <>
       <style jsx>{`
-        @font-face {
-          font-family: 'Caveat';
-          font-style: bold;
-          font-weight: 700;
-          src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
-            url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
-          font-display: swap;
-        }
         @font-face {
           font-family: 'Karmilla';
           font-style: bolder;
@@ -124,9 +116,9 @@ export function LandingDE({ data }: LandingDEProps) {
       `}</style>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <LandingJsonLd />
-      <HeaderNew />
+      <Header />
       <main className="text-truegray-700">
-        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
+        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
             <WelcomeMessage />
           </p>

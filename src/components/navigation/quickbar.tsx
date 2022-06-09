@@ -22,10 +22,11 @@ type QuickbarData = QuickbarDataEntry[]
 
 interface QuickbarProps {
   subject?: string
+  placeholder?: string
   className?: string
 }
 
-export function Quickbar({ subject, className }: QuickbarProps) {
+export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
@@ -100,12 +101,7 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   }
 
   return (
-    <div
-      className={clsx(
-        'max-w-2xl mx-auto px-4 text-left font-normal',
-        className
-      )}
-    >
+    <div className={className}>
       <div className="relative">
         {renderInput()}
         {query && renderResetButton()}
@@ -118,10 +114,10 @@ export function Quickbar({ subject, className }: QuickbarProps) {
     return (
       <input
         type="text"
-        className="border-2 rounded-3xl pl-5 pr-12 h-12 w-full text-lg hover:shadow focus:shadow outline-none"
+        className="border-2 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
-        placeholder="... heute lerne ich"
+        placeholder={placeholder ?? '... heute lerne ich'}
         ref={inputRef}
         onBlur={() => {
           setTimeout(() => {
