@@ -27,6 +27,7 @@ export interface AbstractEntity {
   instance: Instance;
   license: License;
   subject?: Maybe<Subject>;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -61,6 +62,7 @@ export interface AbstractEntityRevision {
   date: Scalars['DateTime'];
   events: AbstractNotificationEventConnection;
   id: Scalars['Int'];
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -83,6 +85,7 @@ export interface AbstractExercise {
   instance: Instance;
   license: License;
   solution?: Maybe<Solution>;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -104,6 +107,7 @@ export interface AbstractExerciseRevision {
   date: Scalars['DateTime'];
   events: AbstractNotificationEventConnection;
   id: Scalars['Int'];
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -150,6 +154,7 @@ export interface AbstractRepository {
   instance: Instance;
   license: License;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -181,6 +186,7 @@ export interface AbstractRevision {
   events: AbstractNotificationEventConnection;
   id: Scalars['Int'];
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -212,6 +218,7 @@ export interface AbstractTaxonomyTermChild {
   instance: Instance;
   license: License;
   taxonomyTerms: TaxonomyTermConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -237,6 +244,7 @@ export interface AbstractUuid {
   alias: Scalars['String'];
   events: AbstractNotificationEventConnection;
   id: Scalars['Int'];
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -297,6 +305,7 @@ export interface Applet extends AbstractEntity, AbstractRepository, AbstractTaxo
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -402,6 +411,7 @@ export interface Article extends AbstractEntity, AbstractRepository, AbstractTax
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -598,6 +608,7 @@ export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxo
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -657,6 +668,7 @@ export interface CoursePage extends AbstractEntity, AbstractRepository, Abstract
   revisions: CoursePageRevisionConnection;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1023,6 +1035,7 @@ export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxon
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1128,6 +1141,7 @@ export interface Exercise extends AbstractEntity, AbstractExercise, AbstractRepo
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1182,6 +1196,7 @@ export interface ExerciseGroup extends AbstractEntity, AbstractRepository, Abstr
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1234,6 +1249,7 @@ export interface ExerciseGroupRevision extends AbstractEntityRevision, AbstractR
   id: Scalars['Int'];
   repository: ExerciseGroup;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1282,6 +1298,7 @@ export interface ExerciseRevision extends AbstractEntityRevision, AbstractExerci
   id: Scalars['Int'];
   repository: Exercise;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1333,6 +1350,7 @@ export interface GroupedExercise extends AbstractEntity, AbstractExercise, Abstr
   solution?: Maybe<Solution>;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1376,6 +1394,7 @@ export interface GroupedExerciseRevision extends AbstractEntityRevision, Abstrac
   id: Scalars['Int'];
   repository: GroupedExercise;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -1576,6 +1595,7 @@ export interface Page extends AbstractNavigationChild, AbstractRepository, Abstr
   navigation?: Maybe<Navigation>;
   revisions: PageRevisionConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -2036,6 +2056,7 @@ export interface Solution extends AbstractEntity, AbstractRepository, AbstractUu
   revisions: SolutionRevisionConnection;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -2079,6 +2100,7 @@ export interface SolutionRevision extends AbstractEntityRevision, AbstractRevisi
   id: Scalars['Int'];
   repository: Solution;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -2232,6 +2254,7 @@ export interface TaxonomyTerm extends AbstractNavigationChild, AbstractUuid, Ins
   parent?: Maybe<TaxonomyTerm>;
   taxonomyId: Scalars['Int'];
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
   type: TaxonomyTermType;
   weight: Scalars['Int'];
@@ -2542,6 +2565,7 @@ export interface User extends AbstractUuid, ThreadAware {
   motivation?: Maybe<Scalars['String']>;
   roles: ScopedRoleConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
   unrevisedEntities: AbstractEntityConnection;
   username: Scalars['String'];
@@ -2729,6 +2753,7 @@ export interface Video extends AbstractEntity, AbstractRepository, AbstractTaxon
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
+  title: Scalars['String'];
   trashed: Scalars['Boolean'];
 }
 
@@ -3158,4 +3183,4 @@ export type GetTrashedEntitiesQueryVariables = Exact<{
 }>;
 
 
-export type GetTrashedEntitiesQuery = { __typename?: 'Query', entity?: { __typename?: 'EntityQuery', deletedEntities: { __typename?: 'DeletedEntitiesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'DeletedEntity', dateOfDeletion?: string | null, entity?: { __typename: 'Applet', id: number, alias: string } | { __typename: 'Article', id: number, alias: string } | { __typename: 'Course', id: number, alias: string } | { __typename: 'CoursePage', id: number, alias: string } | { __typename: 'Event', id: number, alias: string } | { __typename: 'Exercise', id: number, alias: string } | { __typename: 'ExerciseGroup', id: number, alias: string } | { __typename: 'GroupedExercise', id: number, alias: string } | { __typename: 'Solution', id: number, alias: string } | { __typename: 'Video', id: number, alias: string } | null }> } } | null };
+export type GetTrashedEntitiesQuery = { __typename?: 'Query', entity?: { __typename?: 'EntityQuery', deletedEntities: { __typename?: 'DeletedEntitiesConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'DeletedEntity', dateOfDeletion?: string | null, entity?: { __typename: 'Applet', id: number, alias: string, title: string } | { __typename: 'Article', id: number, alias: string, title: string } | { __typename: 'Course', id: number, alias: string, title: string } | { __typename: 'CoursePage', id: number, alias: string, title: string } | { __typename: 'Event', id: number, alias: string, title: string } | { __typename: 'Exercise', id: number, alias: string, title: string } | { __typename: 'ExerciseGroup', id: number, alias: string, title: string } | { __typename: 'GroupedExercise', id: number, alias: string, title: string } | { __typename: 'Solution', id: number, alias: string, title: string } | { __typename: 'Video', id: number, alias: string, title: string } | null }> } } | null };

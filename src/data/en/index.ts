@@ -345,6 +345,7 @@ export const instanceData = {
       loadMore: 'Load more',
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   },
