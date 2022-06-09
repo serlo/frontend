@@ -21,6 +21,7 @@ import * as React from 'react'
 export const licenseState = object({
   id: number(),
   title: string(),
+  shortTitle: string(),
   url: string(),
   agreement: string(),
 })

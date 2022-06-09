@@ -106,7 +106,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
           ))}
           <a
             className="text-brand font-bold"
-            href={term.alias ?? `/${term.id}`}
+            href={term.alias}
             target="_blank"
             rel="noreferrer"
           >
