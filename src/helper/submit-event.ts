@@ -4,7 +4,7 @@ export function submitEvent(name: string, callback?: () => void) {
       sa_event?: (arg1: string, arg2?: unknown) => void
     }
     if (window_local.sa_event) {
-      //console.log('event', name)
+      // console.log('event', name)
       window_local.sa_event(name, callback)
       //@ts-expect-error unknown
       if (window_local.sa_event.q) {

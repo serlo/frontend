@@ -44,8 +44,9 @@ import { textSolutionTypePlugin } from './plugins/types/text-solution'
 import { userTypePlugin } from './plugins/types/user'
 import { videoTypePlugin } from './plugins/types/video'
 import { SerializedDocument } from './serialized-document'
-import { LoggedInData } from '@/data-types'
+import { InstanceData, LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
+import { isMac } from '@/helper/client-detection'
 
 type PluginType =
   | SerializedDocument['plugin']
@@ -65,45 +66,51 @@ type PluginType =
 export function createPlugins({
   getCsrfToken,
   editorStrings,
+  strings,
   registry,
   type,
 }: {
   getCsrfToken: () => string
   editorStrings: LoggedInData['strings']['editor']
+  strings: InstanceData['strings']
   registry: RowsConfig['plugins']
   type: string
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
+  const replaceKeyStrings = (input: string) => {
+    return input.replace('%ctrlOrCmd%', isMac ? '⌘' : strings.keys.ctrl)
+  }
+
   const textPluginI18n = {
     blockquote: {
-      toggleTitle: editorStrings.text.quote,
+      toggleTitle: replaceKeyStrings(editorStrings.text.quote),
     },
     colors: {
-      setColorTitle: editorStrings.text.setColor,
+      setColorTitle: replaceKeyStrings(editorStrings.text.setColor),
       resetColorTitle: editorStrings.text.resetColor,
       openMenuTitle: editorStrings.text.colors,
       closeMenuTitle: editorStrings.text.closeSubMenu,
     },
     headings: {
       setHeadingTitle(level: number) {
-        return `${editorStrings.text.heading} ${level}`
+        return `${replaceKeyStrings(editorStrings.text.heading)} ${level}`
       },
       openMenuTitle: editorStrings.text.headings,
       closeMenuTitle: editorStrings.text.closeSubMenu,
     },
     link: {
-      toggleTitle: editorStrings.text.linkStrgK,
+      toggleTitle: replaceKeyStrings(editorStrings.text.link),
       placeholder: editorStrings.text.enterUrl,
       openInNewTabTitle: editorStrings.text.openInNewTab,
     },
     list: {
-      toggleOrderedList: editorStrings.text.orderedList,
-      toggleUnorderedList: editorStrings.text.unorderedList,
+      toggleOrderedList: replaceKeyStrings(editorStrings.text.orderedList),
+      toggleUnorderedList: replaceKeyStrings(editorStrings.text.unorderedList),
       openMenuTitle: editorStrings.text.lists,
       closeMenuTitle: editorStrings.text.closeSubMenu,
     },
     math: {
-      toggleTitle: editorStrings.text.mathFormula,
+      toggleTitle: replaceKeyStrings(editorStrings.text.mathFormula),
       displayBlockLabel: editorStrings.text.displayAsBlock,
       placeholder: editorStrings.text.formula,
       editors: {
@@ -158,6 +165,9 @@ export function createPlugins({
     },
     suggestions: {
       noResultsMessage: editorStrings.text.noItemsFound,
+    },
+    code: {
+      toggleTitle: replaceKeyStrings(editorStrings.text.code),
     },
   }
 

@@ -39,7 +39,7 @@ function Content({ title, id, alias, isUser }: EventHistoryProps['pageData']) {
 
   const hasTitle = title && title.length > 1
   const label = hasTitle ? title : strings.revisions.toContent
-  const url = alias ? alias : id ? `/${id}` : undefined
+  const url = alias
 
   const anyUserString = strings.pageTitles.userEdits.replace(
     '%user%',
@@ -78,7 +78,7 @@ function Content({ title, id, alias, isUser }: EventHistoryProps['pageData']) {
     )
 
     function renderEdits() {
-      return <UserUnrevisedRevisions userId={id} alias={alias} isOwn={isOwn} />
+      return <UserUnrevisedRevisions userId={id} isOwn={isOwn} />
     }
   }
 }

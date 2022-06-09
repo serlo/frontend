@@ -106,7 +106,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
           ))}
           <a
             className="text-brand font-bold"
-            href={term.alias ?? `/${term.id}`}
+            href={term.alias}
             target="_blank"
             rel="noreferrer"
           >
@@ -139,7 +139,12 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
     return (
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
-        supportedTaxonomyTypes={['topic', 'topicFolder', 'curriculumTopic']}
+        supportedTaxonomyTypes={[
+          'topic',
+          'topicFolder',
+          'curriculumTopic',
+          'curriculumTopicFolder',
+        ]}
         unsupportedIds={existingIds}
         renderButtons={renderAddButton}
         inlineFeedback

@@ -24,16 +24,18 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     tableType === TableType.ColumnAndRowHeader
 
   return (
-    <table className="serlo-table overflow-x-scroll mb-8">
-      {showColumnHeader ? (
-        <>
-          <thead>{renderRows([rows[0]])}</thead>
-          <tbody>{renderRows(rows.slice(1), 1)}</tbody>
-        </>
-      ) : (
-        <tbody>{renderRows(rows)}</tbody>
-      )}
-    </table>
+    <div className="overflow-x-scroll">
+      <table className="serlo-table mb-8">
+        {showColumnHeader ? (
+          <>
+            <thead>{renderRows([rows[0]])}</thead>
+            <tbody>{renderRows(rows.slice(1), 1)}</tbody>
+          </>
+        ) : (
+          <tbody>{renderRows(rows)}</tbody>
+        )}
+      </table>
+    </div>
   )
 
   function renderRows(rows: SerloTableRendererProps['rows'], startIndex = 0) {

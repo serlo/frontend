@@ -1,4 +1,4 @@
-import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
@@ -7,16 +7,24 @@ import { UuidUrlInput } from '../author/uuid-url-input'
 import { PageTitle } from '../content/page-title'
 import { FaIcon } from '../fa-icon'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
+import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { TaxonomyData, TaxonomyLink } from '@/data-types'
+import {
+  FrontendExerciseGroupNode,
+  FrontendExerciseNode,
+  InstanceData,
+  TaxonomyData,
+  TaxonomyLink,
+} from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {
   useCreateEntityLinkMutation,
   useDeleteEntityLinkMutation,
 } from '@/helper/mutations/taxonomyTerm'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 interface TaxonomyMoveCopyProps {
@@ -28,10 +36,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   const [removedEntityIds, setRemovedEntityIds] = useState<number[]>([])
 
   useEffect(() => {
-    const shouldBeOn = entityIds.length > 0
+    const shouldBeActive = entityIds.length > 0
 
-    if (shouldBeOn && !buttonsActive) setButtonsActive(true)
-    if (!shouldBeOn && buttonsActive) setButtonsActive(false)
+    if (shouldBeActive && !buttonsActive) setButtonsActive(true)
+    if (!shouldBeActive && buttonsActive) setButtonsActive(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entityIds])
 
@@ -50,7 +58,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         data={[
           {
             label: taxonomyData.title ?? strings.revisions.toContent,
-            url: taxonomyData.alias ?? `/${taxonomyData.id}`,
+            url: taxonomyData.alias,
           },
         ]}
         asBackButton
@@ -73,27 +81,8 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
           {taxonomyData.articles.map((node) => renderLi(node, 'article'))}
         </p>
         <p className="mt-4">
-          {taxonomyData.exercises.map((node) => renderLi(node, 'exercise'))}
-        </p>
-        <p className="mt-4">
           {taxonomyData.exercisesContent.map((node) => {
-            const titleState =
-              node.type === 'exercise'
-                ? node.task.edtrState?.content[0].children?.[0]
-                : node.content[0].children?.[0]
-
-            const titleString =
-              titleState &&
-              titleState?.type === 'slate-p' &&
-              titleState?.children?.[0].type === 'text'
-                ? titleState?.children?.[0].text
-                : ''
-
-            const title = `${getTranslatedType(strings, node.type)}: "${
-              titleString.length < 50
-                ? titleString
-                : titleString.substring(0, 50) + '…'
-            }"`
+            const title = getPreviewStringFromExercise(node, strings)
 
             return renderLi(
               {
@@ -117,6 +106,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         <p className="mt-4">
           {taxonomyData.events.map((node) => renderLi(node, 'event'))}
         </p>
+        {renderFolderNotice()}
       </>
     )
   }
@@ -203,8 +193,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         )
       }
 
-      if (isMove && removeSuccess)
+      if (isMove && removeSuccess) {
         setRemovedEntityIds([...removedEntityIds, ...entityIds])
+        setEntityIds([])
+      }
     }
 
     return (
@@ -227,4 +219,45 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
       )
     }
   }
+
+  function renderFolderNotice() {
+    if (!taxonomyData.exercises.length) return null
+    return (
+      <StaticInfoPanel type="info" icon={faInfoCircle}>
+        {replacePlaceholders(loggedInStrings.topicFolderNotice, {
+          break: <br />,
+          topicFolder: strings.entities.topicFolder,
+        })}
+      </StaticInfoPanel>
+    )
+  }
+}
+
+export function getPreviewStringFromExercise(
+  node: FrontendExerciseNode | FrontendExerciseGroupNode,
+  strings: InstanceData['strings']
+) {
+  const typeString = getTranslatedType(strings, node.type)
+
+  const titleState =
+    node.type === 'exercise'
+      ? node.task.edtrState?.content[0].children?.[0]
+      : node.content[0].children?.[0]
+
+  if (!titleState) return typeString
+
+  const titleString =
+    (titleState.type === 'slate-p' &&
+      titleState.children?.[0].type === 'text' &&
+      titleState.children?.[0].text) ||
+    (titleState.type === 'slate-container' &&
+      titleState.children?.[0].children?.[0].type === 'text' &&
+      titleState.children?.[0].children?.[0].text)
+
+  if (!titleString) return typeString
+
+  const title = `${typeString}: "${
+    titleString.length < 60 ? titleString : titleString.substring(0, 50) + '…'
+  }"`
+  return title
 }

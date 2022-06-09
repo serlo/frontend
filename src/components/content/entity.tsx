@@ -11,7 +11,7 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { InviteModalProps } from '../user-tools/invite-modal'
 import { HSpace } from './h-space'
 import { Link } from './link'
-import { LicenseNotice } from '@/components/content/license-notice'
+import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
@@ -155,6 +155,7 @@ export function Entity({ data }: EntityProps) {
         data={{
           type: data.typename,
           id: data.id,
+          alias: data.alias,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,

@@ -9,6 +9,7 @@ import { LazyTippy } from './lazy-tippy'
 import SearchIcon from '@/assets-webkit/img/search-icon.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 /*
@@ -35,6 +36,7 @@ export function SearchInput() {
   useEffect(() => {
     // note: find a better way to tell search input that it should activate itself
     if (onSearchPage) {
+      submitEvent('search-showing-results')
       activateSearch()
     }
     // I only want to run this the first time the page loads
@@ -89,6 +91,7 @@ export function SearchInput() {
   }
 
   function onConsentButtonAction() {
+    submitEvent('search-consented')
     giveConsent(ExternalProvider.GoogleSearch)
     setConsentJustGiven(true)
   }

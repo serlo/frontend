@@ -7,7 +7,7 @@ import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
-import { LicenseNotice } from '@/components/content/license-notice'
+import { LicenseNotice } from '@/components/content/license/license-notice'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -134,6 +134,7 @@ export function Topic({ data }: TopicProps) {
           id: data.id,
           taxonomyFolder: isFolder,
           taxonomyTopic: isTopic,
+          alias: data.alias,
         }}
         id={data.id}
         aboveContent={setting?.aboveContent}
@@ -146,10 +147,11 @@ export function Topic({ data }: TopicProps) {
       const content = data.exercisesContent[i]
 
       if (content.type === 'exercise-group') {
-        if (content.license?.default) return content.license
+        if (content.license?.isDefault) return content.license
       } else {
-        if (content.task?.license?.default) return content.task.license
-        if (content.solution?.license?.default) return content.solution.license
+        if (content.task?.license?.isDefault) return content.task.license
+        if (content.solution?.license?.isDefault)
+          return content.solution.license
       }
     }
     //no part of collection has default license so don't show default notice.

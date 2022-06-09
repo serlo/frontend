@@ -418,7 +418,8 @@ export const loggedInData = {
       sortEntities: "Ordenar contenido",
       newEntity: "Nueva Entidad",
       editProfile: "Editar perfil",
-      directLink: "Enlace directo a este contenido"
+      directLink: "Enlace directo a este contenido",
+      analyticsLink: 'See analytics data'
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
@@ -457,7 +458,8 @@ export const loggedInData = {
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
         save: "Edición guardada con éxito ✅",
-        updated: 'Successfully updated ✅'
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -608,13 +610,14 @@ export const loggedInData = {
         closeSubMenu: "Cerrar sub-menú",
         heading: "Encabezado",
         headings: "Encabezados",
-        linkStrgK: "Enlace (ctrl + K)",
+        link: "Enlace (%ctrlOrCmd% + K)",
         enterUrl: "Introducir URL",
         openInNewTab: "Abrir en una nueva pestaña",
         orderedList: "Lista ordenada",
         unorderedList: "Lista sin ordenar",
         lists: "Listas",
-        mathFormula: "Fórmula matemática (ctrl + M)",
+        mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "Mostrar en bloque",
         formula: "[fórmula]",
         visual: 'visual',
@@ -629,8 +632,8 @@ export const loggedInData = {
         mathSymbols: "Símbolos matemáticos",
         eG: "por ejemplo,",
         functions: "Funciones",
-        bold: "Negrilla (ctrl + B)",
-        italic: "Itálica (ctrl + I)",
+        bold: "Negrilla (%ctrlOrCmd% + B)",
+        italic: "Itálica (%ctrlOrCmd% + I)",
         noItemsFound: "Elementos no encontrados"
       },
       video: {
@@ -818,13 +821,18 @@ export const loggedInData = {
         moveButtonText: "Move to %type%",
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied"
+        copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",
         addSuccess: "Sucessfully assigned, reloading …",
         addNewTitle: "Add new assignment",
         addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

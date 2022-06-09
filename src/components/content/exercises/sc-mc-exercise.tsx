@@ -86,7 +86,7 @@ export function ScMcExercise({
                       )}
                     </Feedback>
                   )}
-                {isRevisionView && renderRevisionExtra(answer)}
+                {isRevisionView && renderRevisionExtra(answer, true)}
               </Fragment>
             )
           })}
@@ -184,15 +184,20 @@ export function ScMcExercise({
     answer: EdtrPluginScMcExercise['state']['answers'][0],
     hasFeedback?: boolean
   ) {
-    if (!answer.isCorrect && !hasFeedback) return null
+    if (
+      !hasFeedback ||
+      !hasVisibleContent(answer.feedback) ||
+      !answer.feedback[0].children
+    )
+      return null
     return (
-      <div className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
+      <div className="bg-amber-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
             [{strings.content.right}]
           </span>
         )}
-        {renderNested(answer.feedback, `mcfeedbackrevision`)}
+        {renderNested(answer.feedback[0].children, `mcfeedbackrevision`)}
       </div>
     )
   }

@@ -450,6 +450,7 @@ export const loggedInData = {
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
       directLink: 'Direct link to this content',
+      analyticsLink: 'See analytics data',
     },
     notifications: {
       hide: 'Deactivate new notifications for this content.',
@@ -489,7 +490,8 @@ export const loggedInData = {
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
-        updated: 'Successfully updated ✅'
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -661,13 +663,14 @@ export const loggedInData = {
         closeSubMenu: 'Close sub menu',
         heading: 'Heading',
         headings: 'Headings',
-        linkStrgK: 'Link (Strg + K)',
+        link: 'Link (%ctrlOrCmd% + K)',
         enterUrl: 'Enter URL',
         openInNewTab: 'Open in new tab',
         orderedList: 'Ordered list',
         unorderedList: 'Unordered list',
         lists: 'Lists',
-        mathFormula: 'Math formula (Strg + M)',
+        mathFormula: 'Math formula (%ctrlOrCmd% + M)',
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: 'Display as block',
         formula: '[formula]',
         visual: 'visual',
@@ -682,8 +685,8 @@ export const loggedInData = {
         mathSymbols: 'Math symbols',
         eG: 'e.g.',
         functions: 'Functions',
-        bold: 'Bold (Strg + B)',
-        italic: 'Italic (Strg + I)',
+        bold: 'Bold (%ctrlOrCmd% + B)',
+        italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found',
       },
       video: {
@@ -886,12 +889,17 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
+        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",
         addSuccess: "Sucessfully assigned, reloading …",
         addNewTitle: "Add new assignment",
         addButtonText: "Assign",
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   },
