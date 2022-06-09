@@ -246,8 +246,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Partner & Förderer', id: 21456 },
       { title: 'Spenden', url: '/spenden' },
       { title: 'Wirkung', id: 21406 },
-      // { title: 'Die Geschichte von Serlo', id: 21413 },
       { title: 'Transparenz', id: 21468 },
+      { title: 'Die Geschichte von Serlo', id: 21413 },
     ],
   },
   {
