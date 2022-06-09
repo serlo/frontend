@@ -813,7 +813,7 @@ export const loggedInData = {
       recycleBin: "Papierkorb"
     },
     pages: {
-      deletedPages: 'Deleted Pages'
+      deletedPages: "Gelöschte Seiten"
     },
     taxonomyTermTools: {
       copyMove: {
