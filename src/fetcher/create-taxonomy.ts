@@ -29,7 +29,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     description: uuid.description ? convertState(uuid.description) : undefined,
     title: uuid.name,
     id: uuid.id,
-    alias: uuid.alias ?? undefined,
+    alias: uuid.alias,
     taxonomyType: uuid.type,
     trashed: uuid.trashed,
 
@@ -93,6 +93,7 @@ function collectType(
 }
 
 function getAlias(child: { alias?: string | null; id: number }) {
+  // TODO: do we still need this?
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }

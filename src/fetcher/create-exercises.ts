@@ -65,14 +65,14 @@ export function createExercise(
     task: {
       legacy: taskLegacy,
       edtrState: taskEdtrState,
-      license: uuid.license && createInlineLicense(uuid.license),
+      license: createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
+    href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }
@@ -108,10 +108,7 @@ function createSolutionData(solution: BareExercise['solution']) {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
     trashed: solution?.trashed ? true : false,
-    license:
-      solution && solution.license
-        ? createInlineLicense(solution.license)
-        : undefined,
+    license: (solution && createInlineLicense(solution.license)) ?? undefined,
   }
 }
 
@@ -133,7 +130,7 @@ export function createSolution(
     context: {
       id: uuid.id,
     },
-    href: uuid.repository.alias ? uuid.repository.alias : undefined,
+    href: uuid.repository.alias,
     /* not part of the schema anymore, obsolete? unrevisedRevisions: uuid.unrevisedRevisions, */
   }
 }
@@ -164,12 +161,12 @@ export function createExerciseGroup(
     type: 'exercise-group',
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
-    license: uuid.license && createInlineLicense(uuid.license),
+    license: createInlineLicense(uuid.license),
     children,
     context: {
       id: uuid.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
+    href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }

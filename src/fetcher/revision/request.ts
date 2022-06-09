@@ -163,7 +163,7 @@ export async function requestRevision(
         type,
         repository: {
           id: uuid.repository.id,
-          alias: uuid.repository.alias || undefined,
+          alias: uuid.repository.alias,
           parentId: getParentId(),
           previousRevisionId: getPreviousRevisionId(),
           positionInGroup: getPositionInGroup(),
