@@ -1,7 +1,6 @@
 import {
   faBookJournalWhills,
   faBookSkull,
-  faCubesStacked,
   faEraser,
   faHatWizard,
   IconDefinition,
@@ -47,11 +46,6 @@ function Content() {
         url: '/authorization/roles',
         title: loggedInStrings.authorization,
         icon: faHatWizard,
-      },
-      {
-        url: '/navigation/manage',
-        title: loggedInStrings.navigation,
-        icon: faCubesStacked,
       },
       {
         url: '/uuid/recycle-bin',

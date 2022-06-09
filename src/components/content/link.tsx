@@ -40,6 +40,7 @@ export function isLegacyLink(_href: string) {
     _href == '/user/settings' ||
     _href == '/entity/unrevised' ||
     _href == '/uuid/recycle-bin' ||
+    _href == '/pages' ||
     _href.startsWith('/entity/repository/history') ||
     _href.startsWith('/entity/repository/compare') ||
     _href.startsWith('/entity/license/update/') ||
@@ -47,7 +48,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/entity/license/update/') ||
     _href.startsWith('/taxonomy/term/move/batch/') ||
     _href.startsWith('/taxonomy/term/copy/batch/')
-    //_href.startsWith('/taxonomy/term/sort/entities/')
+    //_href.startsWith('/taxonomy/term/sort/entities/') waiting for https://github.com/serlo/api.serlo.org/issues/643
   ) {
     return false
   }

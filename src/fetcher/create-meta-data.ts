@@ -21,8 +21,8 @@ import { serloDomain } from '@/helper/serlo-domain'
   return contentType.toLowerCase()
 }*/
 
-export function getMetaImage(alias?: string) {
-  const subject = alias ? alias.split('/')[1] : 'default'
+export function getMetaImage(alias: string) {
+  const subject = alias.split('/')[1]
   let imageSrc = 'serlo.jpg'
 
   switch (subject) {

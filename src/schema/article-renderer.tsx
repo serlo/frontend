@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { ReactNode, Fragment, createElement } from 'react'
 
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
-import { LicenseNotice } from '../components/content/license-notice'
+import { LicenseNotice } from '../components/content/license/license-notice'
 import { Link } from '../components/content/link'
 import { theme } from '../theme'
 import { ExtraRevisionViewInfo } from './extra-revision-view-info'

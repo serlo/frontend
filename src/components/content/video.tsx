@@ -1,7 +1,7 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
 
 import { FaIcon } from '../fa-icon'
-import { LicenseNotice } from './license-notice'
+import { LicenseNotice } from './license/license-notice'
 import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
@@ -79,7 +79,7 @@ export function Video({ src, path, license }: VideoProps) {
             )}
           </div>
         </PrivacyWrapper>
-        {license && !license.default && (
+        {license && !license.isDefault && (
           <p className="serlo-p">
             <LicenseNotice minimal data={license} type="video" path={path} />
           </p>
