@@ -26,9 +26,10 @@ export async function requestLicensePage(
   return {
     kind: 'license-detail',
     licenseData: {
-      content: convertState(license.content),
-      title: license.title,
       id,
+      title: license.title,
+      content: convertState(license.content),
+      isDefault: license.default,
     },
   }
 }

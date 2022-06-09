@@ -84,19 +84,16 @@ function Content() {
     if (!node.entity || !node.dateOfDeletion) return null
     const { id, alias, __typename } = node.entity
 
-    const aliasString = alias ?? ''
-    const href = alias ?? `/${id}`
-
     //replace with title when available: https://github.com/serlo/api.serlo.org/issues/627
-    const aliasText =
-      aliasString.length > 25 ? ` …${aliasString.slice(-25)}` : aliasString
+    const aliasText = alias.length > 25 ? ` …${alias.slice(-25)}` : alias
+
     return (
       <tr key={id}>
         <td className="serlo-td">
-          <Link href={href}>{id}</Link>
+          <Link href={alias}>{id}</Link>
         </td>
         <td className="serlo-td">
-          <Link href={href}>{aliasText}</Link>
+          <Link href={alias}>{aliasText}</Link>
         </td>
         <td className="serlo-td">{getTranslatedType(strings, __typename)}</td>
         <td className="serlo-td">
@@ -108,7 +105,7 @@ function Content() {
             className="serlo-button serlo-make-interactive-transparent-blue text-brand-300"
             onClick={async () => {
               const success = await setUuidState({ id: [id], trashed: false })
-              if (success) window.location.href = alias ?? `/${id}`
+              if (success) window.location.href = alias
             }}
           >
             <FaIcon icon={faTrashRestore} />

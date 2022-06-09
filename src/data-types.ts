@@ -178,9 +178,10 @@ export interface LicenseDetailPage {
 }
 
 export interface LicenseDetailData {
+  id: number
   title: string
   content: FrontendContentNode[]
-  id: number
+  isDefault: boolean
 }
 
 export interface HistoryRevisionData {
@@ -291,7 +292,7 @@ export interface SingleEntityPage extends EntityPageBase {
 
 export interface EntityData {
   id: number
-  alias?: string
+  alias: string
   typename: string
   trashed?: boolean
   revisionId?: number
@@ -318,7 +319,7 @@ export interface RevisionData {
   user: FrontendUserData
   repository: {
     id: number
-    alias?: string
+    alias: string
     parentId?: number
     previousRevisionId?: number
     positionInGroup?: number
@@ -831,7 +832,7 @@ export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
-  default: boolean
+  isDefault: boolean
   shortTitle?: string // show this if not default
 }
 
@@ -884,7 +885,7 @@ export interface UserEventsPage {
   userData: {
     id: number
     title: string
-    alias?: string
+    alias: string
   }
 }
 
@@ -918,7 +919,7 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
-  alias?: string
+  alias: string
   title: string
   trashed: boolean
   taxonomyType: TaxonomyTermType

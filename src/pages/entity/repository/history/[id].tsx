@@ -31,7 +31,7 @@ function Content({ id }: HistoryRevisionProps) {
             label:
               response.data?.uuid.currentRevision?.title ??
               strings.revisions.toContent,
-            url: response.data?.uuid.alias ?? undefined,
+            url: response.data?.uuid.alias,
           },
         ]}
         asBackButton
