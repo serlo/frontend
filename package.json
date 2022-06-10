@@ -9,6 +9,7 @@
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
   "scripts": {
+    "start": "next start",
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
@@ -22,10 +23,10 @@
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
     "lint:next": "yarn _eslint --config .eslintrc-next.js",
-    "start": "next start",
     "test": "jest",
-    "tailwind:status": "node ./scripts/tailwind-status.js",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "check:api": "node ./scripts/check-api-version.mjs",
+    "check:tailwind": "node ./scripts/check-tailwind.js"
   },
   "dependencies": {
     "@edtr-io/core": "^2.6.0",
@@ -150,6 +151,7 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^27.0.0",
     "msw": "^0.39.0",
+    "node-fetch": "^3.2.6",
     "npm-run-all": "^4.0.0",
     "postcss-flexbugs-fixes": "^5.0.0",
     "postcss-nested": "^5.0.6",
