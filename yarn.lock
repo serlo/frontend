@@ -3912,7 +3912,7 @@ __metadata:
     "@types/jest": ^27.0.0
     "@types/js-cookie": ^3.0.0
     "@types/katex": ^0.14.0
-    "@types/node": ^14.0.0
+    "@types/node": ^16.0.0
     "@types/nprogress": ^0.2.0
     "@types/prismjs": ^1.16.6
     "@types/qrcode.react": ^1.0.2
@@ -4592,10 +4592,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.0":
-  version: 14.18.12
-  resolution: "@types/node@npm:14.18.12"
-  checksum: 8a0273caa0584020adb8802784fc7d4f18f05e6c205335b7f3818a91d6b0c22736b9f51da3428d5bc54076ad47f1a4d6d57990a3ce8489a520ac66b2b3ff24bc
+"@types/node@npm:^16.0.0":
+  version: 16.11.39
+  resolution: "@types/node@npm:16.11.39"
+  checksum: bc97b9773ac6b3194800f990b349fad7f66c6126dacef59291b10a2c8b6813d6f67f947b7e12a6c9952790f7065d576fe38355b8fe034a6af60f317cfc570f69
   languageName: node
   linkType: hard
 
