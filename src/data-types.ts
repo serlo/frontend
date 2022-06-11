@@ -48,7 +48,6 @@ export interface InstanceData {
   strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
-  rootFolderId: number
   secondaryMenus: SecondaryMenuData[]
 }
 

@@ -3,7 +3,6 @@ export const instanceData = {
   lang: "es",
   headerData: headerData,
   footerData: footerData,
-  rootFolderId: 140438,
   secondaryMenus: secondaryMenus,
   strings: {
     header: {
