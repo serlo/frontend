@@ -4,7 +4,9 @@ on:
     branches:
       - staging
       - production
-  pull_request:
+    pull_request:
+      #branches:
+      #  - staging
 jobs:
   build:
     runs-on: ubuntu-latest

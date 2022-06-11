@@ -1,17 +1,37 @@
 // Use `yarn check:api` in root to run this script.
-import fetch from 'node-fetch'
+import { request, gql } from 'graphql-request'
 import { createRequire } from 'module'
+
+// const query = gql`
+//   query getAPIVersion() {
+//     metadata {
+//       version
+//     }
+//   }
+// `
+const query = gql`
+  query getAPIVersion {
+    subject {
+      subject(id: "czU=") {
+        taxonomyTerm {
+          name
+        }
+      }
+    }
+  }
+`
 
 const require = createRequire(import.meta.url)
 const { devDependencies } = require('../package.json')
 
-const getVersion = async () => {
-  const response = await fetch('http://api.serlo-staging.dev/')
-  return await response.text()
+const getVersion = async (domain) => {
+  const response = await request(`https://api.${domain}/graphql`, query)
+  // return response.metadata.version
+  return response.subject.subject.taxonomyTerm.name
 }
 
-const stagingVersion = await getVersion('http://api.serlo-staging.dev/')
-const productionVersion = await getVersion('http://api.serlo.org/')
+const stagingVersion = await getVersion('serlo-staging.dev')
+const productionVersion = await getVersion('serlo.org')
 const dependencyVersion = devDependencies['@serlo/api'].replace('^', '')
 
 console.log(`frontend needs: \x1b[32m ${dependencyVersion}\x1b[0m`)
