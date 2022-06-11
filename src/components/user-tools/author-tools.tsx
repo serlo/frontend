@@ -333,7 +333,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       if (entityType === 'event' && !shouldRenderEvents) return null
 
       if (['subject', 'folder', 'topicFolder'].includes(entityType)) {
-        if (!canDo(TaxonomyTerm.change) || lang !== 'de') return null //TODO: only on de for now until we figure this endpoint out
+        if (!canDo(TaxonomyTerm.change)) return null
 
         const createId = entityType === 'topicFolder' ? 9 : 4
         return renderLi(

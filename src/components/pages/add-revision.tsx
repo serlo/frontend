@@ -65,7 +65,7 @@ export function AddRevision({
     'ExerciseGroup',
     'GroupedExercise',
     'Page',
-    // 'TaxonomyTerm',
+    'TaxonomyTerm',
   ]
 
   return (
