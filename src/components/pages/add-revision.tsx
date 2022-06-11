@@ -62,9 +62,7 @@ export function AddRevision({
       */
 
       try {
-        const result = await fetch(
-          `https://${serloDomain}/auth/password/change`
-        )
+        const result = await fetch(`/auth/password/change`)
         const resultHtml = await result.text()
         return resultHtml.includes('<a href="/auth/logout"')
       } catch (error) {
