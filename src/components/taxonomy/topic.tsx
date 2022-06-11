@@ -33,8 +33,6 @@ export function Topic({ data }: TopicProps) {
   const isTopic =
     data.taxonomyType === 'topic' || data.taxonomyType === 'curriculumTopic'
 
-  const isSubject = data.taxonomyType === 'subject'
-
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
 
@@ -53,7 +51,7 @@ export function Topic({ data }: TopicProps) {
 
         {renderExercises()}
 
-        {(isTopic || isSubject) && <TopicCategories data={data} full />}
+        {isTopic && <TopicCategories data={data} full />}
 
         {isFolder && data.events && (
           <TopicCategories data={data} categories={['events']} full />
@@ -138,9 +136,11 @@ export function Topic({ data }: TopicProps) {
             ? 'folder'
             : isTopic
             ? 'topic'
-            : isSubject
+            : data.taxonomyType === 'subject'
             ? 'subject'
-            : 'topic', //TODO: handle TaxonomyTermType.Blog
+            : data.taxonomyType === 'root'
+            ? 'root'
+            : 'topic',
           alias: data.alias,
         }}
         id={data.id}

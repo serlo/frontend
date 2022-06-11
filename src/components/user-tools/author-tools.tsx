@@ -302,82 +302,73 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
+    if (data.type !== 'Taxonomy' || !data.taxonomyType) return null
+
+    type EntityTypes = keyof typeof entities
+
+    const allowedTypes: Record<
+      NonNullable<AuthorToolsData['taxonomyType']>,
+      EntityTypes[]
+    > = {
+      topic: [
+        'article',
+        'course',
+        'video',
+        'applet',
+        'event',
+        'folder',
+        'topicFolder',
+      ],
+      folder: ['exercise', 'exerciseGroup'],
+      subject: ['folder'],
+      root: ['subject'],
+    }
+
     const shouldRenderEvents =
       (lang === 'de' &&
         router.asPath === '/community/142215/veranstaltungen') ||
       (lang !== 'de' && router.asPath.startsWith('/community'))
-    console.log(data)
-    if (data.type === 'taxonomyTerm')
-      return (
-        <li className="block">
-          <Tippy
-            {...tippyDefaultProps}
-            content={
-              <ul className="serlo-sub-list-hover">
-                {data.taxonomyType === 'folder' && (
-                  <>
-                    {renderLi(
-                      `/entity/create/text-exercise?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.exercise
-                    )}
-                    {renderLi(
-                      `/entity/create/text-exercise-group?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.exerciseGroup
-                    )}
-                  </>
-                )}
 
-                {data.taxonomyType === 'topic' && (
-                  <>
-                    {renderLi(
-                      `/entity/create/article?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.article
-                    )}
-                    {renderLi(
-                      `/entity/create/course?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.course
-                    )}
-                    {renderLi(
-                      `/entity/create/video?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.video
-                    )}
-                    {renderLi(
-                      `/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.applet
-                    )}
-                    {shouldRenderEvents &&
-                      renderLi(
-                        `/entity/create/event?taxonomy%5Bterm%5D=${data.id}`,
-                        entities.event
-                      )}
-                  </>
-                )}
+    const entries = allowedTypes[data.taxonomyType].map((entityType) => {
+      if (entityType === 'event' && !shouldRenderEvents) return null
 
-                {data.taxonomyType === 'topic' &&
-                  lang == 'de' &&
-                  canDo(TaxonomyTerm.change) && (
-                    <>
-                      {renderLi(
-                        `/taxonomy/term/create/4/${data.id}`,
-                        entities.folder
-                      )}
-                      {renderLi(
-                        `/taxonomy/term/create/9/${data.id}`,
-                        entities.topicFolder
-                      )}
-                    </>
-                  )}
-              </ul>
-            }
-          >
-            <div>
-              <MenuSubButtonLink tabIndex={0}>
-                ◂ {loggedInStrings.authorMenu.newEntity}
-              </MenuSubButtonLink>
-            </div>
-          </Tippy>
-        </li>
+      if (['subject', 'folder', 'topicFolder'].includes(entityType)) {
+        if (!canDo(TaxonomyTerm.change) || lang !== 'de') return null //TODO: only on de for now until we figure this endpoint out
+
+        const createId = entityType === 'topicFolder' ? 9 : 4
+        return renderLi(
+          `/taxonomy/term/create/${createId}/${data.id}`,
+          entities[entityType]
+        )
+      }
+
+      const urlTypeString =
+        entityType === 'exercise'
+          ? 'text-exercise'
+          : entityType === 'exerciseGroup'
+          ? 'text-exercise-group'
+          : entityType
+
+      return renderLi(
+        `/entity/create/${urlTypeString}?taxonomy%5Bterm%5D=${data.id}`,
+        entities[entityType]
       )
+    })
+
+    return (
+      <li className="block">
+        <Tippy
+          {...tippyDefaultProps}
+          content={<ul className="serlo-sub-list-hover">{entries}</ul>}
+        >
+          <div>
+            <MenuSubButtonLink tabIndex={0}>
+              ◂ {loggedInStrings.authorMenu.newEntity}
+            </MenuSubButtonLink>
+          </div>
+        </Tippy>
+      </li>
+    )
   }
 
   function renderLi(href: string, text: string) {
