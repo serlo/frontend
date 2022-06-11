@@ -20,7 +20,6 @@ import {
 } from '@/helper/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
-import { serloDomain } from '@/helper/serlo-domain'
 
 export function AddRevision({
   initialState,
