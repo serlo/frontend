@@ -306,15 +306,15 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang === 'de' &&
         router.asPath === '/community/142215/veranstaltungen') ||
       (lang !== 'de' && router.asPath.startsWith('/community'))
-
-    if (data.taxonomyFolder || data.taxonomyTopic)
+    console.log(data)
+    if (data.type === 'taxonomyTerm')
       return (
         <li className="block">
           <Tippy
             {...tippyDefaultProps}
             content={
               <ul className="serlo-sub-list-hover">
-                {data.taxonomyFolder && (
+                {data.taxonomyType === 'folder' && (
                   <>
                     {renderLi(
                       `/entity/create/text-exercise?taxonomy%5Bterm%5D=${data.id}`,
@@ -327,7 +327,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                   </>
                 )}
 
-                {data.taxonomyTopic && (
+                {data.taxonomyType === 'topic' && (
                   <>
                     {renderLi(
                       `/entity/create/article?taxonomy%5Bterm%5D=${data.id}`,
@@ -353,7 +353,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
                   </>
                 )}
 
-                {data.taxonomyTopic &&
+                {data.taxonomyType === 'topic' &&
                   lang == 'de' &&
                   canDo(TaxonomyTerm.change) && (
                     <>
