@@ -34,6 +34,9 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const router = useRouter()
   const [sel, setSel] = useState(-1)
 
+  const wrapper = useRef<HTMLDivElement>(null)
+  const overlayWrapper = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (query && !data) fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +50,18 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   useEffect(() => {
     setSel(0)
     setOpen(!!(query && data))
+    setOverlayPosition()
   }, [query, data])
+
+  const setOverlayPosition = () => {
+    if (overlayWrapper.current && wrapper.current) {
+      overlayWrapper.current.style.left = `${
+        wrapper.current.getBoundingClientRect().left
+      }px`
+    }
+  }
+
+  setOverlayPosition()
 
   let results: { entry: QuickbarDataEntry; score: number }[] = []
 
@@ -101,12 +115,12 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   }
 
   return (
-    <div className={className}>
+    <div className={className} ref={wrapper}>
       <div className="relative">
         {renderInput()}
         {query && renderResetButton()}
-        {open && renderOverlay()}
       </div>
+      {renderOverlay()}
     </div>
   )
 
@@ -148,34 +162,52 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   }
   function renderOverlay() {
     return (
-      <div className="px-5 pb-2 border rounded-xl shadow absolute top-14 w-full bg-white z-20">
-        {results.map((x, i) => (
-          <a
-            key={i}
-            className="serlo-link cursor-pointer hover:no-underline group"
-            onClick={(e) => goToResult(x.entry.id, e)}
-          >
-            <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
-              <span className="text-sm text-gray-700">
-                {x.entry.path.join(' > ')}
-                {x.entry.path.length > 0 ? ' > ' : ''}
-              </span>
+      <div
+        ref={overlayWrapper}
+        className={clsx(
+          'absolute left-side right-side mt-2 ml-2 max-w-2xl',
+          'px-5 pb-2 border rounded-xl shadow bg-white z-20',
+          open ? '' : 'hidden'
+        )}
+      >
+        {open && (
+          <>
+            {results.map((x, i) => (
+              <a
+                key={i}
+                className="serlo-link cursor-pointer hover:no-underline group"
+                onClick={(e) => goToResult(x.entry.id, e)}
+              >
+                <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
+                  <span className="text-sm text-gray-700">
+                    {x.entry.path.join(' > ')}
+                    {x.entry.path.length > 0 ? ' > ' : ''}
+                  </span>
 
-              <span className="text-lg text-brand group-hover:underline">
-                {x.entry.isTax ? <>{x.entry.title}&nbsp;&gt;</> : x.entry.title}
-              </span>
+                  <span className="text-lg text-brand group-hover:underline">
+                    {x.entry.isTax ? (
+                      <>{x.entry.title}&nbsp;&gt;</>
+                    ) : (
+                      x.entry.title
+                    )}
+                  </span>
+                </p>
+              </a>
+            ))}
+            <p
+              className={clsx('text-lg mt-2 text-gray-800', {
+                'bg-brand-50': sel == results.length,
+              })}
+            >
+              <a
+                className="cursor-pointer hover:text-black"
+                onClick={goToSearch}
+              >
+                Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
+              </a>
             </p>
-          </a>
-        ))}
-        <p
-          className={clsx('text-lg mt-2 text-gray-800', {
-            'bg-brand-50': sel == results.length,
-          })}
-        >
-          <a className="cursor-pointer hover:text-black" onClick={goToSearch}>
-            Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
-          </a>
-        </p>
+          </>
+        )}
       </div>
     )
   }
