@@ -66,7 +66,7 @@ export const instanceData = {
       userEdits: "Ediciones por %user%",
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
-      recycleBin: 'Recycle Bin',
+      recycleBin: "Papelera de reciclaje",
       diagon: 'Diagon Alley'
     },
     roles: {
@@ -89,7 +89,7 @@ export const instanceData = {
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
-        loginButton: 'Login now',
+        loginButton: "Iniciar sesión ahora",
         registerButton: 'Register new account',
         psText: 'You can find out in what ways you can contribute %link%.',
         psLinkText: 'here'
@@ -122,18 +122,18 @@ export const instanceData = {
       relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
       sourcesTitle: "Fuentes",
       exercises: {
-        prerequisite: 'For this task you need the following basic knowledge:',
-        task: 'Task',
-        correct: 'Correct',
-        missedSome: 'Almost! You missed at least one correct answer.',
-        wrong: 'Wrong',
-        feedback: 'Feedback',
-        answer: 'Answer',
-        check: 'Check',
-        yourAnswer: 'Your answer…',
-        chooseOption: 'Click on one of the options.',
-        printModeChooseOption: 'Check one of the options.',
-        strategy: 'Solution Strategy'
+        prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
+        task: "Tarea",
+        correct: "Correcto",
+        missedSome: "¡Casi! Al menos una respuesta no es correcta.",
+        wrong: "Incorrecto",
+        feedback: "Sugerencias",
+        answer: "Respuesta",
+        check: "Comprobar",
+        yourAnswer: "Tu respuesta...",
+        chooseOption: "Elige una de las opciones.",
+        printModeChooseOption: "Elige una de las opciones.",
+        strategy: "Estrategia de solución"
       },
       boxTypes: {
         blank: "Espacio en blanco",
@@ -178,7 +178,7 @@ export const instanceData = {
       error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
-      hideReplies: 'Hide',
+      hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario"
     },
