@@ -302,7 +302,7 @@ export const instanceData = {
     },
     events: {
       entityInParentPreposition: 'in',
-      commentInParentPreposition: 'on',
+      commentInParentPreposition: "zu",
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
@@ -330,7 +330,7 @@ export const instanceData = {
       loadMore: "Weitere laden"
     },
     bin: {
-      title: 'Title',
+      title: "Titel",
       trashed: "Gelöscht…"
     }
   }
