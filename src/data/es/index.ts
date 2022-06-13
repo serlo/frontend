@@ -66,7 +66,7 @@ export const instanceData = {
       userEdits: "Ediciones por %user%",
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
-      recycleBin: 'Recycle Bin',
+      recycleBin: "Papelera de reciclaje",
       diagon: 'Diagon Alley'
     },
     roles: {
@@ -89,7 +89,7 @@ export const instanceData = {
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
-        loginButton: 'Login now',
+        loginButton: "Iniciar sesión ahora",
         registerButton: 'Register new account',
         psText: 'You can find out in what ways you can contribute %link%.',
         psLinkText: 'here'
@@ -111,20 +111,9 @@ export const instanceData = {
     content: {
       show: "mostrar",
       hide: "ocultar",
-      prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
-      task: "Tarea",
-      right: "Correcto",
-      wrong: "Incorrecto",
-      feedback: "Sugerencias",
-      answer: "Respuesta",
-      check: "Revisa tu respuesta",
-      yourAnswer: "Tu respuesta...",
-      chooseOption: "Elige una de las opciones.",
-      printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
       emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
-      strategy: "Estrategia de solución",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
       exercisesTitle: "Ejercicios",
@@ -132,6 +121,20 @@ export const instanceData = {
       relatedContentTitle: "¿Todavía quieres más?",
       relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
       sourcesTitle: "Fuentes",
+      exercises: {
+        prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
+        task: "Tarea",
+        correct: "Correcto",
+        missedSome: "¡Casi! Al menos una respuesta no es correcta.",
+        wrong: "Incorrecto",
+        feedback: "Sugerencias",
+        answer: "Respuesta",
+        check: "Comprobar",
+        yourAnswer: "Tu respuesta...",
+        chooseOption: "Elige una de las opciones.",
+        printModeChooseOption: "Elige una de las opciones.",
+        strategy: "Estrategia de solución"
+      },
       boxTypes: {
         blank: "Espacio en blanco",
         example: "Ejemplo",
@@ -175,7 +178,7 @@ export const instanceData = {
       error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
-      hideReplies: 'Hide',
+      hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario"
     },
@@ -301,6 +304,8 @@ export const instanceData = {
       globalDescription: "Todos los eventos que ocurrieron en algún momento en %lang%.serlo.org"
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: "%actor% archivó %thread%.",
       setThreadStateUnarchived: "%actor% restauró %thread%.",
       createComment: "%actor% comentó en %thread%: %comment%.",
@@ -328,6 +333,7 @@ export const instanceData = {
       loadMore: "Cargar más"
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   }
@@ -554,8 +560,6 @@ export const loggedInData = {
         addAnswer: "Añadir respuesta",
         enterTheValue: "Introduzca el valor",
         yourSolution: "Tu solución",
-        correct: "Correcto",
-        wrong: "Incorrecto",
         number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")"
       },
@@ -580,10 +584,7 @@ export const loggedInData = {
         singleChoice: "Elección única",
         multipleChoice: "Múltiple elección",
         chooseType: "Elige el tipo de ejercicio",
-        addAnswer: "Añadir respuesta",
-        wrong: "Incorrecto",
-        missedSome: "¡Casi! Al menos una respuesta no es correcta.",
-        correct: "Correcto"
+        addAnswer: "Añadir respuesta"
       },
       serloTable: {
         mode: "Modalidad",
@@ -811,6 +812,9 @@ export const loggedInData = {
       authorization: 'Authorization',
       navigation: 'Navigation',
       recycleBin: 'Recycle Bin'
+    },
+    pages: {
+      deletedPages: 'Deleted Pages'
     },
     taxonomyTermTools: {
       copyMove: {

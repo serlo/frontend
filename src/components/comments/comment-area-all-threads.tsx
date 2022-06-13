@@ -22,10 +22,7 @@ export function CommentAreaAllThreads() {
           {loading ? (
             <LoadingSpinner noText />
           ) : (
-            <button
-              className="serlo-button serlo-make-interactive-primary mt-5 mb-12"
-              onClick={loadMore}
-            >
+            <button className="serlo-button-blue mt-5 mb-12" onClick={loadMore}>
               {strings.actions.loadMore}
             </button>
           )}

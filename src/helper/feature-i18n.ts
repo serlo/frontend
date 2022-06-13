@@ -156,6 +156,7 @@ export function getEntityStringByTypename(
     TaxonomyTerm: strings.entities.taxonomyTerm,
     Solution: strings.entities.solution,
     User: strings.entities.user,
+    Comment: strings.entities.comment,
     fallback: strings.entities.content,
   }
 

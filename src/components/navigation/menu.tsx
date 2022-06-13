@@ -165,7 +165,7 @@ function MenuInner({
       menuIconMapping[link.icon] !== undefined
 
     const styledLinkCls = /* className={ */ clsx(
-      'serlo-button serlo-make-interactive-transparent-blue',
+      'serlo-button-blue-transparent',
       'text-[0.9rem] leading-tight block transition mx-[3px] my-0 text-brand-light',
       hasIcon ? '-mt-[5px] p-[7px]' : 'mt-[11px] py-0.5 px-[7px]',
       'serlo-menu-entry-special'

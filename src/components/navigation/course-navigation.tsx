@@ -32,7 +32,7 @@ export function CourseNavigation({
       {data.pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}
-          className="serlo-button ml-2 serlo-make-interactive-light"
+          className="serlo-button-light ml-2"
         >
           {strings.course.pages}{' '}
           <span

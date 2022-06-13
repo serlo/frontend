@@ -134,7 +134,7 @@ export function DropdownMenu({
     return (
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-transparent-blue',
+          'serlo-button-blue-transparent',
           'mb-1 text-base font-normal leading-browser'
         )}
         onClick={onClick}

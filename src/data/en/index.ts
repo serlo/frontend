@@ -115,22 +115,11 @@ export const instanceData = {
     content: {
       show: 'show',
       hide: 'hide',
-      prerequisite: 'For this task you need the following basic knowledge:',
-      task: 'Task',
-      right: 'Right',
-      wrong: 'Wrong',
-      feedback: 'Feedback',
-      answer: 'Answer',
-      check: 'Check',
-      yourAnswer: 'Your answer…',
-      chooseOption: 'Click on one of the options.',
-      printModeChooseOption: 'Check one of the options.',
       trashedNotice: 'This content is marked for deletion.',
       unrevisedNotice:
         'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice:
         'There is no content here. Please edit or delete.',
-      strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
       exercisesTitle: 'Exercises',
@@ -138,6 +127,20 @@ export const instanceData = {
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: 'For this task you need the following basic knowledge:',
+        task: 'Task',
+        correct: 'Correct',
+        missedSome: 'Almost! You missed at least one correct answer.',
+        wrong: 'Wrong',
+        feedback: 'Feedback',
+        answer: 'Answer',
+        check: 'Check',
+        yourAnswer: 'Your answer…',
+        chooseOption: 'Click on one of the options.',
+        printModeChooseOption: 'Check one of the options.',
+        strategy: 'Solution Strategy',
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -315,6 +318,8 @@ export const instanceData = {
       globalDescription: 'All events that happen somewhere on %lang%.serlo.org',
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: '%actor% archived %thread%.',
       setThreadStateUnarchived: '%actor% restored %thread%.',
       createComment: '%actor% commented in %thread%: %comment%.',
@@ -345,6 +350,7 @@ export const instanceData = {
       loadMore: 'Load more',
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   },
@@ -603,8 +609,6 @@ export const loggedInData = {
         addAnswer: 'Add answer',
         enterTheValue: 'Enter the value',
         yourSolution: 'Your solution',
-        correct: 'Correct',
-        wrong: 'Wrong',
         number:
           "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
         mathematicalExpressionSolution:
@@ -633,10 +637,6 @@ export const loggedInData = {
         multipleChoice: 'Multiple-choice',
         chooseType: 'Choose the exercise type',
         addAnswer: 'Add answer',
-        wrong: 'Wrong',
-        missedSome:
-          'Almost! You missed at least one correct answer',
-        correct: 'Correct',
       },
       serloTable: {
         mode: 'Mode',

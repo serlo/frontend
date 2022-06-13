@@ -63,10 +63,10 @@ function Content() {
             onPointerUp={(e) => e.currentTarget.blur()}
             onClick={() => setShowTypename(typename)}
             className={clsx(
-              'serlo-button mr-2 mb-2.5',
+              'mr-2 mb-2.5',
               showTypename == typename
-                ? 'serlo-make-interactive-primary'
-                : 'serlo-make-interactive-light'
+                ? 'serlo-button-blue'
+                : 'serlo-button-light'
             )}
           >
             {getEntityStringByTypename(typename, strings)}

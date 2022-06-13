@@ -95,7 +95,7 @@ export function RevisionHistory({
         >
           {(isActiveEditorLink || !isEditorLink) && (
             <Link
-              className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+              className="serlo-button-light my-0 mx-auto text-base"
               title={strings.revisionHistory.viewLabel}
               href={isEditorLink ? undefined : viewUrl}
             >
@@ -106,7 +106,7 @@ export function RevisionHistory({
         {!hideEdit && (
           <td className="serlo-td">
             <Link
-              className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+              className="serlo-button-light my-0 mx-auto text-base"
               title={strings.revisionHistory.editLabel}
               href={editUrl}
             >
