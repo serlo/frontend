@@ -9,18 +9,6 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
-// interface GoogleSearchGlobal {
-//   google: {
-//     search: {
-//       cse: {
-//         element: {
-//           render: (arg0: { div: string; tag: string }) => void
-//         }
-//       }
-//     }
-//   }
-// }
-
 export function Search() {
   const { strings } = useInstanceData()
   const { checkConsent, giveConsent } = useConsent()
