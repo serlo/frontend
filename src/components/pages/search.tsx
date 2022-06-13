@@ -124,7 +124,7 @@ export function Search() {
       <div className="text-brand rounded-xl border-2 mx-side px-side py-3">
         {explanation}
         <button
-          className="serlo-button serlo-button-primary mt-2 mb-1 block py-0.5"
+          className="serlo-button serlo-make-interactive-primary mt-2 mb-1 block py-0.5"
           onClick={() => {
             submitEvent('search-consented')
             giveConsent(ExternalProvider.GoogleSearch)
