@@ -160,7 +160,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     taxType?: string
   ) {
     const buttonClass = clsx(
-      'text-base serlo-button serlo-make-interactive-light mr-3',
+      'text-base serlo-button-light mr-3',
       !buttonsActive &&
         'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
     )

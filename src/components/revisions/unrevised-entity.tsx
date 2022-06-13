@@ -105,7 +105,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
         </Td>
         <Td centered className="w-1/6">
           <Link
-            className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+            className="serlo-button-light my-0 mx-auto text-base"
             title={strings.revisionHistory.viewLabel}
             href={viewUrl}
           >
@@ -136,7 +136,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   function renderLabel(text: string, note?: string) {
     return (
       <span
-        className="serlo-button serlo-make-interactive-light cursor-default text-base"
+        className="serlo-button-light cursor-default text-base"
         title={note}
       >
         {text}

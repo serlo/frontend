@@ -83,9 +83,7 @@ export function ToolbarMain({
       <button
         className={clsx(
           'serlo-button',
-          disabled
-            ? 'text-gray-300 cursor-default'
-            : 'serlo-make-interactive-light'
+          disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
         )}
         onClick={() => {
           dispatch(action())
@@ -104,9 +102,7 @@ export function ToolbarMain({
       <button
         className={clsx(
           'serlo-button ml-2',
-          isDisabled
-            ? 'text-gray-300 cursor-default'
-            : 'serlo-make-interactive-green'
+          isDisabled ? 'text-gray-300 cursor-default' : 'serlo-button-green'
         )}
         onClick={() => setVisibility(true)}
         disabled={isDisabled}

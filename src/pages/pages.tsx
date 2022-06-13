@@ -82,14 +82,14 @@ function Content({ pages }: PagesProps) {
           </Link>
           <span className="ml-3">
             <Link
-              className="serlo-button serlo-make-interactive-transparent-blue"
+              className="serlo-button-blue-transparent"
               title={loggedInStrings.authorMenu.edit}
               href={editHref}
             >
               <FaIcon icon={faPencil} />
             </Link>
             <button
-              className="serlo-button serlo-make-interactive-transparent-blue"
+              className="serlo-button-blue-transparent"
               title={
                 loggedInStrings.authorMenu[
                   trashed ? 'restoreContent' : 'moveToTrash'

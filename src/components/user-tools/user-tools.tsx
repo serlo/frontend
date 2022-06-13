@@ -70,13 +70,10 @@ export function UserTools({
   function buttonClassName() {
     // no autocomplete here yet
     if (aboveContent) {
-      return clsx(
-        'serlo-button serlo-make-interactive-green',
-        'text-sm m-0.5 ml-1 leading-browser'
-      )
+      return clsx('serlo-button-green', 'text-sm m-0.5 ml-1 leading-browser')
     } else {
       return clsx(
-        'serlo-button serlo-make-interactive-transparent-green',
+        'serlo-button-green-transparent',
         'py-1 m-1 text-base leading-browser'
       )
     }
