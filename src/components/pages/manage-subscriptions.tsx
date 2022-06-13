@@ -76,7 +76,7 @@ export function ManageSubscriptions({
         </td>
         <td className="serlo-td text-center">
           <button
-            className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
+            className="serlo-button-light mx-0 my-auto text-base"
             onClick={() => onAction(object.id, true, !sendEmailOverwrite)}
           >
             {sendEmailOverwrite
@@ -86,7 +86,7 @@ export function ManageSubscriptions({
         </td>
         <td className="serlo-td text-center">
           <button
-            className="serlo-button serlo-make-interactive-light mx-0 my-auto text-base"
+            className="serlo-button-light mx-0 my-auto text-base"
             onClick={() => onAction(object.id, false, false)}
           >
             {loggedInStrings.noNotifications}

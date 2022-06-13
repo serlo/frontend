@@ -57,10 +57,10 @@ function Content() {
     return (
       <button
         className={clsx(
-          'serlo-button mr-5 mb-5',
+          'mr-5 mb-5',
           showUnread === setShowUnreadTo
-            ? 'serlo-make-interactive-primary'
-            : 'serlo-make-interactive-light'
+            ? 'serlo-button-blue'
+            : 'serlo-button-light'
         )}
         onPointerUp={(e) => e.currentTarget.blur()}
         onClick={() => setShowUnread(setShowUnreadTo)}

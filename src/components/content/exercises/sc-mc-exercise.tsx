@@ -94,7 +94,7 @@ export function ScMcExercise({
 
         <button
           className={clsx(
-            'serlo-button serlo-make-interactive-primary',
+            'serlo-button-blue',
             'mt-4',
             selected === undefined &&
               'opacity-100 bg-transparent text-gray-400 pointer-events-none'
@@ -176,7 +176,7 @@ export function ScMcExercise({
           />
         )}
         <button
-          className="serlo-button serlo-make-interactive-primary mt-4"
+          className="serlo-button-blue mt-4"
           onClick={() => {
             setShowFeedback(true)
           }}

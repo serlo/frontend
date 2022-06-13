@@ -70,7 +70,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                     'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
                     entry.active
                       ? 'text-black bg-brand-150'
-                      : 'serlo-make-interactive-transparent-blue'
+                      : 'serlo-button-blue-transparent'
                   )}
                 >
                   {entry.title}

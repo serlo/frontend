@@ -72,10 +72,7 @@ export function Events({
     if (!data?.pageInfo.hasNextPage) return null
     return (
       <p className="serlo-p mt-12">
-        <a
-          onClick={loadMore}
-          className="serlo-button serlo-make-interactive-primary"
-        >
+        <a onClick={loadMore} className="serlo-button-blue">
           {strings.actions.loadMore}
         </a>
       </p>

@@ -65,7 +65,7 @@ export function InputExercise({
         <>
           <a
             className={clsx(
-              'serlo-button serlo-make-interactive-primary',
+              'serlo-button-blue',
               'mt-4',
               value === '' && 'opacity-0 pointer-events-none'
             )}

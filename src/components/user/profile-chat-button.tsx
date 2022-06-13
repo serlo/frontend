@@ -63,7 +63,7 @@ export function ProfileChatButton({
         onClick={onClickAction}
         className={clsx(
           className,
-          'serlo-button serlo-make-interactive-green block text-center mt-[5px] w-44 self-start'
+          'serlo-button-green block text-center mt-[5px] w-44 self-start'
         )}
         style={{ gridArea: 'chatButton' }}
       >
@@ -136,7 +136,7 @@ export function ProfileChatButton({
         <p className="serlo-p">
           <a
             onClick={pending ? undefined : inviteToChat}
-            className="serlo-button serlo-make-interactive-green"
+            className="serlo-button-green"
           >
             <FaIcon
               icon={pending ? faSpinner : faPaperPlane}

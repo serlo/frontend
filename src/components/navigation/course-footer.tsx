@@ -36,7 +36,7 @@ export function CourseFooter({
         <Link
           href={previousHref}
           path={['courseback']}
-          className="serlo-button serlo-make-interactive-light mx-side hover:no-underline h-fit"
+          className="serlo-button-light mx-side hover:no-underline h-fit"
         >
           <FaIcon icon={faArrowCircleRight} className="-scale-x-100" />{' '}
           {strings.course.back}
@@ -48,7 +48,7 @@ export function CourseFooter({
           path={['coursenext']}
           className="ml-auto mr-side text-right hover:no-underline"
         >
-          <button className="serlo-button serlo-make-interactive-primary hover:no-underline mb-2">
+          <button className="serlo-button-blue hover:no-underline mb-2">
             <FaIcon icon={faArrowCircleRight} /> {strings.course.next}
           </button>
           <div className="flex text-lg">
@@ -64,10 +64,7 @@ export function CourseFooter({
           </div>
         </Link>
       ) : (
-        <button
-          className="serlo-button serlo-make-interactive-primary mx-side"
-          onClick={onOverviewClick}
-        >
+        <button className="serlo-button-blue mx-side" onClick={onOverviewClick}>
           <FaIcon icon={faArrowCircleUp} /> {strings.course.showPages}
         </button>
       )}

@@ -77,7 +77,7 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
         )}
         {isProbablyTemporary && (
           <button
-            className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+            className="serlo-button-blue mr-4 mt-4"
             onClick={() => window.location.reload()}
           >
             {strings.errors.refreshNow}
@@ -94,7 +94,7 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
         href="/"
         forceNoCSR
         unstyled
-        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+        className="serlo-button-blue mr-4 mt-4"
       >
         {strings.errors.backToHome}
       </Link>
@@ -105,7 +105,7 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
     if (!hasSerloBacklink) return null
     return (
       <button
-        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+        className="serlo-button-blue mr-4 mt-4"
         onClick={() => window.history.back()}
       >
         {strings.errors.backToPrevious}

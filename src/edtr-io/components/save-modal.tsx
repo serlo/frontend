@@ -94,7 +94,7 @@ export function SaveModal({
     return (
       <div className="mt-4 text-right mx-side">
         <button
-          className="serlo-button serlo-make-interactive-transparent"
+          className="serlo-button-transparent"
           onClick={() => {
             setVisibility(false)
           }}
@@ -110,7 +110,7 @@ export function SaveModal({
             'serlo-button',
             buttonDisabled
               ? 'cursor-default text-gray-300'
-              : 'serlo-make-interactive-green'
+              : 'serlo-button-green'
           )}
           disabled={buttonDisabled}
           title={getSaveHint()}

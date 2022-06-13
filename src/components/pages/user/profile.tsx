@@ -126,7 +126,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           <Link
             href="/user/settings#image"
             className={clsx(
-              'serlo-button serlo-make-interactive-green',
+              'serlo-button-green',
               'block absolute right-1 bottom-1 w-8 h-8'
             )}
           >
@@ -165,7 +165,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
         <p className="serlo-p">
           <Link
-            className="serlo-button serlo-make-interactive-primary mt-4"
+            className="serlo-button-blue mt-4"
             href={`/event/history/${id}#activities`}
           >
             {strings.profiles.showAllActivities}
