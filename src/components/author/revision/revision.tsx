@@ -175,7 +175,7 @@ export function Revision({ data }: RevisionProps) {
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
                   data.type === 'groupedExercise'
-                    ? strings.content.task
+                    ? strings.content.exercises.task
                     : strings.entities.solution,
                 title: (
                   <b>
