@@ -301,6 +301,8 @@ export const instanceData = {
       globalDescription: "Todos los eventos que ocurrieron en algún momento en %lang%.serlo.org"
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: "%actor% archivó %thread%.",
       setThreadStateUnarchived: "%actor% restauró %thread%.",
       createComment: "%actor% comentó en %thread%: %comment%.",
@@ -328,6 +330,7 @@ export const instanceData = {
       loadMore: "Cargar más"
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   }
