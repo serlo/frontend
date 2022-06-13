@@ -131,7 +131,7 @@ export function LandingDE({ data }: LandingDEProps) {
           >
             Was möchtest du <span className="pb-2 underlined">lernen ?</span>
           </h1>
-          <div className="lg:hidden mt-10 mb-8">
+          <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto">
             <Quickbar />
           </div>
           <p className="text-3xl leading-cozy">

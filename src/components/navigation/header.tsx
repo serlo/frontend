@@ -16,7 +16,7 @@ export function Header() {
   const { strings, headerData } = useInstanceData()
   const router = useRouter()
 
-  const onSearchPage = router.route === '/search'
+  const hideQuickbar = router.route === '/search' || router.route === '/'
 
   // compat: close mobile menu on client side navigation, we need the global Router instance
   Router.events.on('routeChangeStart', () => {
@@ -51,7 +51,7 @@ export function Header() {
               <Menu data={headerData} auth={auth.current} />
             </div>
             <div className="hidden md:block lg:hidden basis-full h-0" />
-            {onSearchPage ? null : (
+            {hideQuickbar ? null : (
               <Quickbar
                 className={clsx(
                   'mt-7 mx-auto text-left font-normal',
