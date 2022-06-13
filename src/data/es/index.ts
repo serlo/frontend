@@ -111,20 +111,9 @@ export const instanceData = {
     content: {
       show: "mostrar",
       hide: "ocultar",
-      prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
-      task: "Tarea",
-      right: "Correcto",
-      wrong: "Incorrecto",
-      feedback: "Sugerencias",
-      answer: "Respuesta",
-      check: "Revisa tu respuesta",
-      yourAnswer: "Tu respuesta...",
-      chooseOption: "Elige una de las opciones.",
-      printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
       emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
-      strategy: "Estrategia de solución",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
       exercisesTitle: "Ejercicios",
@@ -132,6 +121,20 @@ export const instanceData = {
       relatedContentTitle: "¿Todavía quieres más?",
       relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
       sourcesTitle: "Fuentes",
+      exercises: {
+        prerequisite: 'For this task you need the following basic knowledge:',
+        task: 'Task',
+        correct: 'Correct',
+        missedSome: 'Almost! You missed at least one correct answer.',
+        wrong: 'Wrong',
+        feedback: 'Feedback',
+        answer: 'Answer',
+        check: 'Check',
+        yourAnswer: 'Your answer…',
+        chooseOption: 'Click on one of the options.',
+        printModeChooseOption: 'Check one of the options.',
+        strategy: 'Solution Strategy'
+      },
       boxTypes: {
         blank: "Espacio en blanco",
         example: "Ejemplo",
@@ -557,8 +560,6 @@ export const loggedInData = {
         addAnswer: "Añadir respuesta",
         enterTheValue: "Introduzca el valor",
         yourSolution: "Tu solución",
-        correct: "Correcto",
-        wrong: "Incorrecto",
         number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")"
       },
@@ -583,10 +584,7 @@ export const loggedInData = {
         singleChoice: "Elección única",
         multipleChoice: "Múltiple elección",
         chooseType: "Elige el tipo de ejercicio",
-        addAnswer: "Añadir respuesta",
-        wrong: "Incorrecto",
-        missedSome: "¡Casi! Al menos una respuesta no es correcta.",
-        correct: "Correcto"
+        addAnswer: "Añadir respuesta"
       },
       serloTable: {
         mode: "Modalidad",
