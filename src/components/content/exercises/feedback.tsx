@@ -6,18 +6,25 @@ import { useInstanceData } from '@/contexts/instance-context'
 export interface FeedbackProps {
   correct: boolean
   children?: ReactNode
+  missedSome?: boolean
 }
 
-export function Feedback({ children, correct }: FeedbackProps) {
-  const { strings } = useInstanceData()
+export function Feedback({ children, correct, missedSome }: FeedbackProps) {
+  const exStrings = useInstanceData().strings.content.exercises
 
   const hasFeedback = Children.count(children)
-  const feedback = hasFeedback ? (
-    children
-  ) : (
+  const fallback = (
     <p className="serlo-p">
-      {strings.content.exercises[correct ? 'correct' : 'wrong']}
+      {exStrings[correct ? 'correct' : missedSome ? 'missedSome' : 'wrong']}
     </p>
+  )
+  const feedback = hasFeedback ? (
+    <>
+      {missedSome && exStrings.missedSome}
+      {children}
+    </>
+  ) : (
+    fallback
   )
 
   return (

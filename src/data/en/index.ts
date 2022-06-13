@@ -131,7 +131,7 @@ export const instanceData = {
         prerequisite: 'For this task you need the following basic knowledge:',
         task: 'Task',
         correct: 'Correct',
-        missedSome: 'Almost! You missed at least one correct answer',
+        missedSome: 'Almost! You missed at least one correct answer.',
         wrong: 'Wrong',
         feedback: 'Feedback',
         answer: 'Answer',
