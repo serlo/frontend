@@ -67,7 +67,10 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 
   void findResults()
 
-  const close = () => setOpen(false)
+  const close = () =>
+    setTimeout(() => {
+      setOpen(false)
+    }, 200)
 
   const goToSearch = () => {
     submitEvent('quickbar-to-search')
@@ -87,7 +90,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
       window.open(url)
     } else void router.push(url)
-    //`//${host}/${results[sel].entry.id}`
+    close()
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -133,11 +136,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder ?? '... heute lerne ich'}
         ref={inputRef}
-        onBlur={() => {
-          setTimeout(() => {
-            close()
-          }, 200)
-        }}
+        onBlur={close}
         onFocus={() => {
           if (query && data) setOpen(true)
         }}
