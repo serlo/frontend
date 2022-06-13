@@ -111,20 +111,9 @@ export const instanceData = {
     content: {
       show: "दिखाएँ",
       hide: "छिपाएं",
-      prerequisite: "इस कार्य के लिए आपको निम्नलिखित बुनियादी ज्ञान की आवश्यकता है",
-      task: "कार्य",
-      right: "सही!",
-      wrong: "गलत",
-      feedback: 'Feedback',
-      answer: 'Answer',
-      check: "जाँच करें",
-      yourAnswer: "आपका उत्तर",
-      chooseOption: "किसी एक विकल्प पर क्लिक करें",
-      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "यह सामग्री हटाने के लिए चिह्नित है",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
-      strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
       exercisesTitle: 'Exercises',
@@ -132,6 +121,20 @@ export const instanceData = {
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: "इस कार्य के लिए आपको निम्नलिखित बुनियादी ज्ञान की आवश्यकता है",
+        task: "कार्य",
+        correct: "सही",
+        missedSome: 'Almost! You missed at least one correct answer.',
+        wrong: "गलत",
+        feedback: "फीडबैक",
+        answer: 'Answer',
+        check: "जाँच करें",
+        yourAnswer: "आपका उत्तर",
+        chooseOption: "किसी एक विकल्प पर क्लिक करें",
+        printModeChooseOption: "किसी एक विकल्प पर क्लिक करें",
+        strategy: 'Solution Strategy'
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -557,8 +560,6 @@ export const loggedInData = {
         addAnswer: 'Add answer',
         enterTheValue: 'Enter the value',
         yourSolution: 'Your solution',
-        correct: 'Correct',
-        wrong: 'Wrong',
         number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
@@ -583,10 +584,7 @@ export const loggedInData = {
         singleChoice: 'Single-choice',
         multipleChoice: 'Multiple-choice',
         chooseType: 'Choose the exercise type',
-        addAnswer: 'Add answer',
-        wrong: 'Wrong',
-        missedSome: 'Almost! You missed at least one correct answer',
-        correct: 'Correct'
+        addAnswer: 'Add answer'
       },
       serloTable: {
         mode: 'Mode',
