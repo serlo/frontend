@@ -1,29 +1,7 @@
 import { faBellSlash } from '@fortawesome/free-solid-svg-icons/faBellSlash'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import {
-  CheckoutRevisionNotificationEvent,
-  CreateCommentNotificationEvent,
-  CreateEntityNotificationEvent,
-  CreateEntityLinkNotificationEvent,
-  CreateEntityRevisionNotificationEvent,
-  CreateTaxonomyTermNotificationEvent,
-  CreateTaxonomyLinkNotificationEvent,
-  CreateThreadNotificationEvent,
-  RejectRevisionNotificationEvent,
-  RemoveEntityLinkNotificationEvent,
-  RemoveTaxonomyLinkNotificationEvent,
-  SetLicenseNotificationEvent,
-  SetTaxonomyParentNotificationEvent,
-  SetTaxonomyTermNotificationEvent,
-  SetThreadStateNotificationEvent,
-  SetUuidStateNotificationEvent,
-  TaxonomyTerm,
-  AbstractUuid,
-  Thread,
-} from '@serlo/api'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
-import { hasPath } from 'ramda'
 
 import { FaIcon } from '../fa-icon'
 import { UserLink } from './user-link'
@@ -32,29 +10,20 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LoggedInData } from '@/data-types'
+import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
-export type EventData =
-  | CheckoutRevisionNotificationEvent
-  | CreateCommentNotificationEvent
-  | CreateEntityNotificationEvent
-  | CreateEntityLinkNotificationEvent
-  | CreateEntityRevisionNotificationEvent
-  | CreateTaxonomyTermNotificationEvent
-  | CreateTaxonomyLinkNotificationEvent
-  | CreateThreadNotificationEvent
-  | RejectRevisionNotificationEvent
-  | RemoveEntityLinkNotificationEvent
-  | RemoveTaxonomyLinkNotificationEvent
-  | SetLicenseNotificationEvent
-  | SetTaxonomyParentNotificationEvent
-  | SetTaxonomyTermNotificationEvent
-  | SetThreadStateNotificationEvent
-  | SetUuidStateNotificationEvent
+type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
+
+type EventThread = Extract<Event, { thread: any }>['thread']
+type EventObject = Extract<Event, { object: any }>['object']
+type EventParent = Extract<Event, { parent: any }>['parent']
+
+type EventAbstractUuid = Extract<Event, { __typename: string }>
 
 interface EventProps {
-  event: EventData
+  event: EventAbstractUuid
   eventId: number
   unread: boolean
   loggedInStrings?: LoggedInData['strings']['notifications']
@@ -82,34 +51,19 @@ export function Event({
 
   return (
     <>
-      <style jsx>{`
-        .unread {
-          font-weight: bold;
-          &:before {
-            content: '';
-            display: inline-block;
-            @apply bg-brand;
-            border-radius: 50%;
-            width: 10px;
-            height: 10px;
-            margin-right: 7px;
-          }
-        }
-      `}</style>
       <div
-        /*Item*/ className={clsx(
-          'py-6 px-side',
-          slim && 'pt-1 pb-1',
-          'relative my-2.5',
-          'odd:bg-brand-100'
+        className={clsx(
+          'relative my-2.5 py-6 px-side odd:bg-brand-100',
+          slim && 'pt-1 pb-1'
         )}
       >
         <TimeAgo
           className="text-sm text-truegray-500"
-          /*StyledTimeAgo*/ datetime={eventDate}
+          datetime={eventDate}
           dateAsTitle
         />
-        <div className={clsx('mb-2 mt-0.25', unread && 'unread')} /*Title*/>
+        <div className={clsx('mb-2 mt-0.25', unread && 'font-bold')}>
+          {unread && <span className="text-brand">● </span>}
           {renderText()}
         </div>
         {renderReason()}
@@ -145,7 +99,7 @@ export function Event({
           thread: renderThread(event.thread),
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
-              {strings.entities.comment}
+              {`${strings.entities.comment} ${event.comment.id}`}
             </Link>
           ),
         })
@@ -222,36 +176,36 @@ export function Event({
       case 'RemoveTaxonomyLinkNotificationEvent':
         return parseString(strings.events.removeTaxonomyLink, {
           child: renderObject(event.child),
-          parent: renderTax(event.parent),
+          parent: renderObject(event.parent),
         })
 
       case 'CreateTaxonomyTermNotificationEvent':
         return parseString(strings.events.createTaxonomyTerm, {
-          term: renderTax(event.taxonomyTerm),
+          term: renderObject(event.taxonomyTerm),
         })
 
       case 'SetTaxonomyTermNotificationEvent':
         return parseString(strings.events.setTaxonomyTerm, {
-          term: renderTax(event.taxonomyTerm),
+          term: renderObject(event.taxonomyTerm),
         })
 
       case 'SetTaxonomyParentNotificationEvent':
-        if (!event.parent) {
+        if (!event.optionalParent) {
           //deleted
           return parseString(strings.events.setTaxonomyParentDeleted, {
-            child: renderTax(event.child),
+            child: renderObject(event.child),
           })
         }
         if (event.previousParent) {
           return parseString(strings.events.setTaxonomyParentChangedFrom, {
-            child: renderTax(event.child),
-            previousparent: renderTax(event.previousParent),
-            parent: renderTax(event.parent),
+            child: renderObject(event.child),
+            previousparent: renderObject(event.previousParent),
+            parent: renderObject(event.optionalParent),
           })
         }
         return parseString(strings.events.setTaxonomyParentChanged, {
-          child: renderTax(event.child),
-          parent: renderTax(event.parent),
+          child: renderObject(event.child),
+          parent: renderObject(event.optionalParent),
         })
 
       case 'SetUuidStateNotificationEvent':
@@ -276,37 +230,38 @@ export function Event({
     }
   }
 
-  function renderObject(object: AbstractUuid & { __typename?: string }) {
-    return (
-      <Link href={object.alias}>
-        {hasObject(object)
-          ? object.currentRevision.title
-          : getEntityStringByTypename(object.__typename, strings)}
-      </Link>
-    )
+  function renderObject({
+    alias,
+    title,
+    __typename,
+  }: EventObject | EventParent) {
+    return <Link href={alias}>{renderTitle(title, __typename)}</Link>
   }
 
-  function renderTax(taxonomy: TaxonomyTerm) {
-    return <Link href={taxonomy.alias}>{taxonomy.name}</Link>
+  function renderTitle(title: string, type: string) {
+    const typeString = getEntityStringByTypename(type, strings)
+    const preposition = ['Exercise', 'GroupedExercise', 'Solution'].includes(
+      type
+    )
+      ? strings.events.entityInParentPreposition
+      : ['Thread', 'Comment'].includes(type)
+      ? strings.events.commentInParentPreposition
+      : ''
+
+    return preposition ? `${typeString} (${preposition} ${title})` : title
   }
 
   function renderRevision(id: number) {
-    return <Link href={`/${id}`}>{strings.entities.revision}</Link>
+    return <Link href={`/${id}`}>{`${strings.entities.revision} ${id}`}</Link>
   }
 
-  function renderThread(thread: Thread) {
+  function renderThread(thread: EventThread) {
     const id = thread.comments?.nodes[0]?.id
     return (
       <Link href={`/${id}`} forceNoCSR>
-        {strings.entities.thread}
+        {`${strings.entities.thread} ${id}`}
       </Link>
     )
-  }
-
-  function hasObject(
-    object: unknown
-  ): object is { currentRevision: { title: string } } {
-    return hasPath(['currentRevision', 'title'], object)
   }
 
   function renderButtons() {

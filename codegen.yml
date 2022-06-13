@@ -14,6 +14,8 @@ documents:
   - 'src/pages/pages.tsx'
   - 'src/fetcher/unrevised-revisions/query.ts'
   - 'src/components/user/user-unrevised-revisions.tsx'
+  - 'src/components/user/events.tsx'
+  - 'src/pages/user/notifications.tsx'
 generates:
   src/fetcher/graphql-types/operations.ts:
     plugins:
