@@ -27,12 +27,12 @@ export function ScMcExercise({
   renderNested,
   isRevisionView,
 }: ScMcExerciseProps) {
-  const { strings } = useInstanceData()
   const answers = state.answers.slice(0)
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)
   const [focused, setFocused] = useState<number | undefined>(undefined)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
+  const exStrings = useInstanceData().strings.content.exercises
 
   if (state.isSingleChoice) return renderSingleChoice()
 
@@ -106,10 +106,10 @@ export function ScMcExercise({
           onPointerUp={(e) => e.currentTarget.blur()}
         >
           {selected !== undefined
-            ? strings.content.check
+            ? exStrings.correct
             : isPrintMode
-            ? strings.content.printModeChooseOption
-            : strings.content.chooseOption}
+            ? exStrings.correct
+            : exStrings.correct}
         </button>
       </div>
     )
@@ -174,7 +174,7 @@ export function ScMcExercise({
           }}
           onPointerUp={(e) => e.currentTarget.blur()}
         >
-          {strings.content.check}
+          {exStrings.correct}
         </button>
       </div>
     )
@@ -194,7 +194,7 @@ export function ScMcExercise({
       <div className="bg-amber-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
-            [{strings.content.right}]
+            [{exStrings.correct}]
           </span>
         )}
         {renderNested(answer.feedback[0].children, `mcfeedbackrevision`)}

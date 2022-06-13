@@ -22,7 +22,7 @@ export function Solution({ node, renderNested }: SolutionProps) {
       prereq.push({
         type: 'p',
         children: [
-          { type: 'text', text: `${strings.content.prerequisite} ` },
+          { type: 'text', text: `${strings.content.exercises.prerequisite} ` },
           {
             type: 'a',
             href:
@@ -45,7 +45,7 @@ export function Solution({ node, renderNested }: SolutionProps) {
                   children: [
                     {
                       type: 'text',
-                      text: strings.content.strategy,
+                      text: strings.content.exercises.strategy,
                       strong: true,
                     },
                   ],

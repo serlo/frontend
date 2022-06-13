@@ -15,7 +15,9 @@ export function Feedback({ children, correct }: FeedbackProps) {
   const feedback = hasFeedback ? (
     children
   ) : (
-    <p className="serlo-p">{strings.content[correct ? 'right' : 'wrong']}</p>
+    <p className="serlo-p">
+      {strings.content.exercises[correct ? 'correct' : 'wrong']}
+    </p>
   )
 
   return (
