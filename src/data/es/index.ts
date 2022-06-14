@@ -87,12 +87,12 @@ export const instanceData = {
       button: "Editar",
       unrevised: "Mostrar revisiones sin revisar",
       inviteModal: {
-        title: 'Create with us!',
-        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        title: "¡Crea con nosotros!",
+        text: "¡Hola! %break% Es genial que quieras contribuir a este contenido :miniaturas_up: %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
         loginButton: "Iniciar sesión ahora",
-        registerButton: 'Register new account',
-        psText: 'You can find out in what ways you can contribute %link%.',
-        psLinkText: 'here'
+        registerButton: "Registrar una nueva cuenta",
+        psText: "Puedes averiguar de qué manera puedes contribuir con %link%.",
+        psLinkText: "aquí"
       }
     },
     license: {
@@ -260,7 +260,7 @@ export const instanceData = {
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
         part2: "Puedes invitar a %username% al chat para enviar mensajes directos.",
-        messagePlaceholder: 'Optional: Personal message',
+        messagePlaceholder: "Opcional: Mensaje personal",
         button: "Enviar invitación",
         success: "El usuario ha sido invitado correctamente."
       },
@@ -304,8 +304,8 @@ export const instanceData = {
       globalDescription: "Todos los eventos que ocurrieron en algún momento en %lang%.serlo.org"
     },
     events: {
-      entityInParentPreposition: 'in',
-      commentInParentPreposition: 'on',
+      entityInParentPreposition: "en",
+      commentInParentPreposition: "en",
       setThreadStateArchived: "%actor% archivó %thread%.",
       setThreadStateUnarchived: "%actor% restauró %thread%.",
       createComment: "%actor% comentó en %thread%: %comment%.",
@@ -326,15 +326,15 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% cambió padre de %child% a %parent%.",
       setUuidStateTrashed: "%actor% desechó %object%.",
       setUuidStateRestored: "%actor% restauró %object%.",
-      inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
+      inviteToChat: "%actor% te ha invitado al chat: %comment% Visita %chatLink% para chatear con %actor% y otros.",
       entityPlaceholderFallback: "Contenido"
     },
     actions: {
       loadMore: "Cargar más"
     },
     bin: {
-      title: 'Title',
-      trashed: 'Trashed…'
+      title: "Título",
+      trashed: "Destruido..."
     }
   }
 };
@@ -412,7 +412,7 @@ export const loggedInData = {
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
-      confirmTrash: 'Are you sure you want to delete this content?',
+      confirmTrash: "¿Estás seguro de que quieres eliminar este contenido?",
       restoreContent: "Restaurar de la papelera",
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
@@ -425,10 +425,10 @@ export const loggedInData = {
       newEntity: "Nueva Entidad",
       editProfile: "Editar perfil",
       directLink: "Enlace directo a este contenido",
-      analyticsLink: 'See analytics data'
+      analyticsLink: "Ver datos de analytics"
     },
     notifications: {
-      hide: 'Deactivate new notifications for this content.',
+      hide: "Desactivar nuevas notificaciones para este contenido.",
       setToRead: "Marcar notificaciones para leer.",
       setAllToRead: "Poner todas visibles para leer",
       showNew: "Nueva",
@@ -464,8 +464,8 @@ export const loggedInData = {
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
         save: "Edición guardada con éxito ✅",
-        updated: 'Successfully updated ✅',
-        generic: 'Success 🎉'
+        updated: "Actualización exitosa ✅",
+        generic: "Éxito 🎉"
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
