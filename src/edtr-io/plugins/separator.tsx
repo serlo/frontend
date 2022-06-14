@@ -1,6 +1,5 @@
 import { EditorPlugin, EditorPluginProps, scalar } from '@edtr-io/plugin'
 import * as React from 'react'
-import styled from 'styled-components'
 
 const separatorState = scalar(undefined)
 
@@ -13,21 +12,11 @@ export const separatorPlugin: EditorPlugin<SeparatorPluginState> = {
   config: {},
 }
 
-const Container = styled.div({
-  paddingTop: '10px',
-  paddingBottom: '10px',
-})
-
-const Separator = styled.hr({
-  marginTop: 0,
-  marginBottom: 0,
-})
-
 function SeparatorEditor(props: SeparatorProps) {
   if (!props.editable) return null
   return (
-    <Container>
-      <Separator />
-    </Container>
+    <div className="py-2.5">
+      <hr className="my-0" />
+    </div>
   )
 }

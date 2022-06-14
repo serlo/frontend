@@ -182,7 +182,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     analyticsLink: {
       title: loggedInStrings.authorMenu.analyticsLink,
       url: `https://simpleanalytics.com/${lang}.serlo.org${data.alias ?? ''}`,
-      canDo: canDo(Entity.checkoutRevision) && data.alias,
+      canDo: canDo(Uuid.delete('Page')) && data.alias,
     },
   } as ToolsConfig
 

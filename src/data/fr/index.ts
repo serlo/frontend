@@ -111,20 +111,9 @@ export const instanceData = {
     content: {
       show: "montrer",
       hide: "cacher",
-      prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
-      task: "Tâche",
-      right: "Vrai",
-      wrong: "Faux",
-      feedback: "Ton avis",
-      answer: "Répondre",
-      check: "Vérifier",
-      yourAnswer: "Ta réponse...",
-      chooseOption: "Sélectionne une des options :",
-      printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
       emptyNotice: 'There is no content here. Please edit or delete.',
-      strategy: "Stratégie de solution",
       picture: "Image",
       previewImage: "Aperçu de l'image",
       exercisesTitle: "Exercices",
@@ -132,6 +121,20 @@ export const instanceData = {
       relatedContentTitle: "Tu en veux encore plus?",
       relatedContentText: "Tu peux en trouver plus ici :",
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
+        task: "Tâche",
+        correct: "Correcte",
+        missedSome: "Presque ! Tu as manqué au moins une réponse correcte.",
+        wrong: "Incorrect",
+        feedback: "Ton avis",
+        answer: "Répondre",
+        check: "Vérifier",
+        yourAnswer: "Ta réponse...",
+        chooseOption: "Sélectionne une des options :",
+        printModeChooseOption: "Sélectionne une des options :",
+        strategy: "Stratégie de solution"
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -301,6 +304,8 @@ export const instanceData = {
       globalDescription: "Tous les événements qui se produisent quelque part sur %lang%.serlo.org"
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: "%actor% a archivé %thread%.",
       setThreadStateUnarchived: "%actor% a restauré %thread%.",
       createComment: "%actor% a commenté dans %thread%: %comment%.",
@@ -328,6 +333,7 @@ export const instanceData = {
       loadMore: "Charger plus"
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   }
@@ -554,8 +560,6 @@ export const loggedInData = {
         addAnswer: "Ajouter une réponse",
         enterTheValue: "Saisir la réponse",
         yourSolution: "Ta solution",
-        correct: "Correcte",
-        wrong: "Incorrect",
         number: "Number (exact solution, e.g. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
@@ -580,10 +584,7 @@ export const loggedInData = {
         singleChoice: "Choix unique",
         multipleChoice: "Choix multiple",
         chooseType: "Choisir le type d'exercice",
-        addAnswer: "Ajouter une réponse",
-        wrong: "Incorrect",
-        missedSome: "Presque ! Tu as manqué au moins une réponse correcte",
-        correct: "Correcte"
+        addAnswer: "Ajouter une réponse"
       },
       serloTable: {
         mode: 'Mode',

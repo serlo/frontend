@@ -139,7 +139,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-transparent-blue text-base',
+          'serlo-button-blue-transparent text-base',
           'ml-side mr-auto mb-4 pr-2',
           solutionVisible && 'bg-brand text-white'
         )}

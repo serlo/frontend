@@ -223,7 +223,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
               className="block mb-3 leading-cozy"
             >
               <button
-                className="serlo-button serlo-make-interactive-transparent-blue"
+                className="serlo-button-blue-transparent"
                 {...provided.dragHandleProps}
               >
                 <FaIcon icon={faGripLines} />
@@ -253,10 +253,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
   function renderUpdateButton() {
     return (
-      <button
-        className="mt-12 serlo-button serlo-make-interactive-primary"
-        onClick={onSave}
-      >
+      <button className="mt-12 serlo-button-blue" onClick={onSave}>
         {loggedInStrings.saveButtonText}
       </button>
     )
