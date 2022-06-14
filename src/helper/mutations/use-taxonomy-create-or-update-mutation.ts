@@ -63,7 +63,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
       return false
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('probably missing value?')
+      console.error('probably missing value?')
       return false
     }
   }

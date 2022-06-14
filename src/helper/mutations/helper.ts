@@ -102,7 +102,7 @@ export async function mutationFetch(
 
     const type = error ? error.extensions.code : 'UNKNOWN'
     // eslint-disable-next-line no-console
-    console.log(error)
+    console.error(error)
     if (type === 'INVALID_TOKEN' && !isRetry) {
       await auth.current.refreshToken(usedToken)
       return await mutationFetch(auth, query, input, errorStrings, true)
@@ -132,7 +132,7 @@ function handleError(
   const message = errorStrings[type] ?? errorStrings['UNKNOWN']
 
   // eslint-disable-next-line no-console
-  console.log(e)
+  console.error(e)
 
   if (type == 'BAD_USER_INPUT') {
     triggerSentry({ message: 'Bad unser input in mutation' })

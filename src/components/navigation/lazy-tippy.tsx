@@ -16,11 +16,6 @@ export function LazyTippy({
     })
   }, [onLoaded])
 
-  if (!Tippy) {
-    //console.log('return children', props)
-    return children ?? null
-  } else {
-    //console.log('rendering tippy with', props)
-    return <Tippy {...props}>{children}</Tippy>
-  }
+  if (!Tippy) return children ?? null
+  else return <Tippy {...props}>{children}</Tippy>
 }

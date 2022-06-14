@@ -27,7 +27,7 @@ export function triggerSentry({
   code = 0,
 }: TriggerSentryData) {
   // eslint-disable-next-line no-console
-  console.log(message)
+  console.error(message)
   if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
     const windowWithSentry = window as unknown as Window & SentryGlobal
     windowWithSentry.Sentry?.addBreadcrumb({

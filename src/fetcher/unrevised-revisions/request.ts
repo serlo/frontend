@@ -32,7 +32,7 @@ export async function requestUnrevisedRevisionsBySubjects(
     }
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
     return undefined
   }
 }
