@@ -207,7 +207,7 @@ function useFetchParentTaxonomy(id: number) {
 function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
   if (error) {
     // eslint-disable-next-line no-console
-    console.log(error)
+    console.error(error)
     return false
   }
   if (!data) return null

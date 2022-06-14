@@ -81,7 +81,7 @@ export function UuidUrlInput({
     if (maybeUuid === false) return modalStrings.invalidInput
     if (error) {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.error(error)
       return modalStrings.fetchError
     }
     if (!data) return modalStrings.loading

@@ -115,7 +115,7 @@ export const setEntityMutationRunner = async function ({
     return true
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log('probably missing value?')
+    console.error('probably missing value?')
     return false
   }
 }
@@ -221,7 +221,7 @@ const loopNestedChildren = async ({
       return result
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.error(error)
       return false
     }
   }

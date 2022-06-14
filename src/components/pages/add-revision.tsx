@@ -66,7 +66,7 @@ export function AddRevision({
         return resultHtml.includes('<a href="/auth/logout"')
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error)
+        console.error(error)
         return false
       }
     }
@@ -205,14 +205,14 @@ export function AddRevision({
                           : window.location.href
                     } else {
                       // eslint-disable-next-line no-console
-                      console.log(data.errors)
+                      console.error(data.errors)
                       reject()
                     }
                   }
                 )
                 .catch((value) => {
                   // eslint-disable-next-line no-console
-                  console.log(value)
+                  console.error(value)
                   reject(value)
                 })
             })
