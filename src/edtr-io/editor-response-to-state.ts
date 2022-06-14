@@ -95,7 +95,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     return convert(uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
 
     triggerSentry({
       message: `error while converting: ${JSON.stringify(stack)}`,

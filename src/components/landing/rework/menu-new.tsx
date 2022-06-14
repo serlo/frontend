@@ -43,7 +43,7 @@ export function MenuNew(props: MenuProps) {
       (value) => setTippy(value),
       (reason) => {
         // eslint-disable-next-line no-console
-        console.log(reason)
+        console.error(reason)
         triggerSentry({ message: 'tippy chunk load problem: ' })
       }
     )
