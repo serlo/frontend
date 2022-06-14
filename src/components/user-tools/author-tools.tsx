@@ -317,9 +317,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         'applet',
         'event',
         'folder',
-        'topicFolder',
+        'exerciseFolder',
       ],
-      folder: ['exercise', 'exerciseGroup'],
+      exerciseFolder: ['exercise', 'exerciseGroup'],
       subject: ['folder'],
       root: ['subject'],
     }
@@ -332,10 +332,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
       if (entityType === 'event' && !shouldRenderEvents) return null
 
-      if (['subject', 'folder', 'topicFolder'].includes(entityType)) {
+      if (['subject', 'folder', 'exerciseFolder'].includes(entityType)) {
         if (!canDo(TaxonomyTerm.change)) return null
 
-        const createId = entityType === 'topicFolder' ? 9 : 4
+        const createId = entityType === 'exerciseFolder' ? 9 : 4
         return renderLi(
           `/taxonomy/term/create/${createId}/${data.id}`,
           entities[entityType]

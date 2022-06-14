@@ -31,7 +31,7 @@ export function ArticleRelatedMagicInput({
         'GroupedExercise',
         'TaxonomyTerm',
       ]}
-      supportedTaxonomyTypes={['topicFolder']}
+      supportedTaxonomyTypes={['exerciseFolder']}
       unsupportedIds={[entityId]}
     />
   )
@@ -44,7 +44,7 @@ export function ArticleRelatedMagicInput({
             className="serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser mr-2"
             onClick={() => {
               showTopicFolderPreview(id)
-              document.getElementById('topicFolderScroll')?.scrollIntoView({
+              document.getElementById('exerciseFolderScroll')?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
               })

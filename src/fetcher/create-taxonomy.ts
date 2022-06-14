@@ -103,10 +103,7 @@ function collectTopicFolders(
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (
-      child.__typename === 'TaxonomyTerm' &&
-      (child.type === 'topicFolder' || child.type === 'curriculumTopicFolder')
-    )
+    if (child.__typename === 'TaxonomyTerm' && child.type === 'exerciseFolder')
       result.push({
         title: child.name,
         id: child.id,
@@ -123,8 +120,7 @@ function collectNestedTaxonomyTerms(
   children.forEach((child) => {
     if (
       child.__typename === 'TaxonomyTerm' &&
-      child.type !== 'topicFolder' &&
-      child.type !== 'curriculumTopicFolder'
+      child.type !== 'exerciseFolder'
     ) {
       const subChildren = child.children.nodes.filter(isActive_for_subchildren)
       result.push({
@@ -151,11 +147,7 @@ function collectNestedTaxonomyTerms(
 function collectSubfolders(children: TaxonomyTermChildrenLevel2[]) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (
-      child.__typename === 'TaxonomyTerm' &&
-      child.type !== 'topicFolder' &&
-      child.type !== 'curriculumTopicFolder'
-    )
+    if (child.__typename === 'TaxonomyTerm' && child.type !== 'exerciseFolder')
       result.push({ title: child.name, url: getAlias(child), id: child.id })
   })
   return result

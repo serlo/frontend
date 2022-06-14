@@ -9,7 +9,7 @@ export interface AuthorToolsData {
   type: string
   id: number
   alias?: string
-  taxonomyType?: 'folder' | 'topic' | 'subject' | 'root'
+  taxonomyType?: 'exerciseFolder' | 'topic' | 'subject' | 'root'
   revisionId?: number
   parentId?: number
   courseId?: number

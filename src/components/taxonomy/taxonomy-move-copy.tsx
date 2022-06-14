@@ -146,7 +146,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     return (
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
-        supportedTaxonomyTypes={['topic', 'topicFolder']}
+        supportedTaxonomyTypes={['topic', 'exerciseFolder']}
         unsupportedIds={[taxonomyData.id]}
         renderButtons={renderButtons}
       />
@@ -224,9 +224,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     if (!taxonomyData.exercises.length) return null
     return (
       <StaticInfoPanel type="info" icon={faInfoCircle}>
-        {replacePlaceholders(loggedInStrings.topicFolderNotice, {
+        {replacePlaceholders(loggedInStrings.exerciseFolderNotice, {
           break: <br />,
-          topicFolder: strings.entities.topicFolder,
+          exerciseFolder: strings.entities.exerciseFolder,
         })}
       </StaticInfoPanel>
     )

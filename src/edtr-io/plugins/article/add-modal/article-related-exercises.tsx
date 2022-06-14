@@ -11,15 +11,15 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
 
 interface ArticleRelatedExercisesProps {
-  topicFolderId: number
+  exerciseFolderId: number
   addEntry: (id: number, typename: string, title?: string) => void
 }
 
 export function ArticleRelatedExercises({
-  topicFolderId,
+  exerciseFolderId,
   addEntry,
 }: ArticleRelatedExercisesProps) {
-  const { data, error } = useFetchTopicFolder(topicFolderId)
+  const { data, error } = useFetchTopicFolder(exerciseFolderId)
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -30,18 +30,18 @@ export function ArticleRelatedExercises({
 
   if (!data || error) return errorReturn
   const { uuid } = data
-  if (uuid.type !== 'topicFolder') return errorReturn
+  if (uuid.type !== 'exerciseFolder') return errorReturn
 
   return (
     <div className="mt-5 border-t-2 pt-6">
       <a
         className="font-bold text-brand ml-2"
         target="_blank"
-        href={`/${topicFolderId}`}
+        href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
         <Icon icon={getIconByTypename('folder')} />
-        {strings.entities.topicFolder} {topicFolderId}
+        {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
       <div className="mt-4">{uuid.children.nodes.map(renderExercises)}</div>

@@ -135,10 +135,7 @@ export async function requestPage(
       metaData: {
         title,
         metaImage,
-        contentType:
-          uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder'
-            ? 'topic-folder'
-            : 'topic',
+        contentType: uuid.type === 'exerciseFolder' ? 'topic-folder' : 'topic',
       },
       cacheKey,
       breadcrumbsData,

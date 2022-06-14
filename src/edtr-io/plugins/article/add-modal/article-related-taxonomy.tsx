@@ -61,10 +61,10 @@ export function ArticleRelatedTaxonomy({
         <b className="block mb-2">
           <Icon icon={getIconByTypename(typename)} />{' '}
           {isTax
-            ? strings.entities.topicFolder
+            ? strings.entities.exerciseFolder
             : strings.categories[getCategoryByTypename(typename)]}
         </b>
-        {isTax ? articleStrings.addModal.topicFolderNote : null}
+        {isTax ? articleStrings.addModal.exerciseFolderNote : null}
         <ul>{dataArray.map((item) => renderLi(item, typename))}</ul>
       </div>
     )
@@ -234,7 +234,7 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
     )
       return
 
-    if (isTax && child.type !== 'topicFolder') return
+    if (isTax && child.type !== 'exerciseFolder') return
 
     if ((!isTax && !child.currentRevision) || child.trashed) return
 

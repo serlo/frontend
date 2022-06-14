@@ -24,8 +24,7 @@ export function createSecondaryMenu(
     if (!secondaryMenus) return undefined
 
     if (uuid.__typename === 'TaxonomyTerm') {
-      if (uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder')
-        return undefined
+      if (uuid.type === 'exerciseFolder') return undefined
 
       return findMenuByRootId(uuid.navigation?.path.nodes[0].id ?? undefined)
     }
