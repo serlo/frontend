@@ -63,14 +63,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   function getToolsArray(): Tool[] {
     switch (data.type) {
       case 'Page':
-        return [
-          Tool.Abo,
-          // Tool.PageConvert,
-          Tool.History,
-          Tool.Log,
-          Tool.AnalyticsLink,
-          // Tool.PageSetting,
-        ]
+        return [Tool.Abo, Tool.History, Tool.Log, Tool.AnalyticsLink]
       case 'Article':
       case 'Video':
       case 'Applet':

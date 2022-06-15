@@ -18,6 +18,7 @@ import {
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(
   mapObjIndexed((v) => (v === '' || v === undefined ? null : v))
@@ -109,7 +110,7 @@ export const setEntityMutationRunner = async function ({
 
     if (!isRecursiveCall && childrenResult) {
       showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      window.location.href = `/entity/repository/history/${data.id}`
+      window.location.href = getHistoryUrl(data.id)
     }
 
     return true

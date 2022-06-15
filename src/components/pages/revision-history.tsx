@@ -8,7 +8,7 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { HistoryRevisionData, HistoryRevisionsData } from '@/data-types'
-import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
@@ -26,7 +26,6 @@ export function RevisionHistory({
 }: RevisionHistoryProps) {
   const { strings } = useInstanceData()
   if (!data) return null
-  const isPage = data.__typename === 'Page'
   const { changes, status, author, date, view, edit } = strings.revisionHistory
 
   function handleOnClick(id: number) {
@@ -52,7 +51,7 @@ export function RevisionHistory({
   function renderRow(entry: HistoryRevisionData) {
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
-    const editUrl = getRevisionEditUrl(isPage, data!.id, entry.id)
+    const editUrl = getEditUrl(data!.id, entry.id)
     const isEditorLink = onSelectRevision !== undefined
 
     const isImportant =
