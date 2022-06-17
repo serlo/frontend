@@ -11,14 +11,34 @@ import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
-
+import { kratos } from '@/helper/kratos'
+import { useEffect, useState } from 'react'
 export interface LandingDEProps {
   data: InstanceLandingData
 }
 
 export function LandingDE({ data }: LandingDEProps) {
+  const [session, setSession] = useState<string>(
+    'No valid Ory Session was found.\nPlease sign in to receive one.'
+  )
+  const [hasSession, setHasSession] = useState<boolean>(false)
   const subjectsData = data.subjectsData
-
+  useEffect(() => {
+    kratos
+      .toSession()
+      .then(({ data }) => {
+        setSession(JSON.stringify(data, null, 2))
+        setHasSession(true)
+      })
+      .catch((err) => {
+        return Promise.reject(err)
+      })
+  }, [])
+  console.log(session)
+  let kratosUsername = ''
+  if(hasSession) {
+    kratosUsername = (JSON.parse(session)).identity.traits.username
+  }  
   return (
     <>
       <style jsx>{`
@@ -137,7 +157,7 @@ export function LandingDE({ data }: LandingDEProps) {
               'max-w-2xl mt-3 mb-6 mx-auto'
             )}
           >
-            Was möchtest du <span className="pb-2 underlined">lernen ?</span>
+            Was möchtest du <span className="pb-2 underlined">lernen{', ' + kratosUsername} ?</span>
           </h1>
           <div className="lg:hidden mt-10 mb-8">
             <Quickbar />
