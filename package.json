@@ -55,6 +55,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@ory/integrations": "^0.1.0",
+    "@ory/kratos-client": "^0.8.0-alpha.2",
     "@serlo/authorization": "^0.39.0",
     "@serlo/legacy-editor-to-editor": "Entkenntnis/tmp-serlo-legacy-editor-to-editor",
     "@serlo/markdown": "Entkenntnis/tmp-serlo-markdown",
