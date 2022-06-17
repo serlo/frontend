@@ -10,14 +10,28 @@ import { isText } from 'istextorbinary'
 
 export { config }
 
+// TODO: put into own module or into oauth2.ts
+const KRATOS_HOSTS = {
+  production: process.env.KRATOS_HOST_PRODUCTION,
+  staging: process.env.KRATOS_HOST_STAGING,
+  local: process.env.KRATOS_HOST_LOCAL,
+}
+
+const COOKIE_DOMAINS = {
+  production: process.env.NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION,
+  staging: process.env.NEXT_PUBLIC_SERLO_DOMAIN_STAGING,
+  local: 'localhost',
+}
+
+const HYDRA_HOST = KRATOS_HOSTS[process.env.NEXT_PUBLIC_ENV || 'local']
+const COOKIE_DOMAIN = COOKIE_DOMAINS[process.env.NEXT_PUBLIC_ENV || 'local']
+
 // TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 // TODO: is it okay to use that for open source version? Could also just fork it
 export default createApiHandler({
-  // TODO: read from env
-  apiBaseUrlOverride: 'https://kratos.serlo-staging.dev',
-  // TODO: read from env
+  apiBaseUrlOverride: HYDRA_HOST,
   forceCookieSecure: false,
-  forceCookieDomain: 'serlo-staging.dev',
+  forceCookieDomain: COOKIE_DOMAIN,
 })
 
 const encode = (v: string) => v
@@ -33,11 +47,9 @@ export function createApiHandler(options: CreateApiHandlerOptions) {
   if (options.apiBaseUrlOverride) {
     baseUrl = options.apiBaseUrlOverride
   }
-
   baseUrl = baseUrl.replace(/\/$/, '')
 
   return (req: NextApiRequest, res: NextApiResponse<string>) => {
-    console.log('hey ho')
     const { paths, ...query } = req.query
     const search = new URLSearchParams()
     Object.keys(query).forEach((key) => {

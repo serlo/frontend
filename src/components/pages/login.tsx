@@ -9,35 +9,26 @@ import { useEffect, useState } from 'react'
 import { Flow, handleFlowError } from '@/components/auth/flow'
 import { kratos } from '@/helper/kratos'
 
+// See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
+
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
-  console.log(flow)
 
-  // Get ?flow=... from the URL
   const router = useRouter()
 
   const {
     return_to: returnTo,
     flow: flowId,
-    // Refresh means we want to refresh the session. This is needed, for example, when we want to update the password
-    // of a user.
     refresh,
-    // AAL = Authorization Assurance Level. This implies that we want to upgrade the AAL, meaning that we want
-    // to perform two-factor authentication/verification.
     aal,
   } = router.query
 
-  // This might be confusing, but we want to show the user an option
-  // to sign out if they are performing two-factor authentication!
-  // const onLogout = createLogoutHandler([aal, refresh])
 
   useEffect(() => {
-    // If the router is not ready yet, or we already have a flow, do nothing.
     if (!router.isReady || flow) {
       return
     }
 
-    // If ?flow=.. was in the URL, we fetch it
     if (flowId) {
       kratos
         .getSelfServiceLoginFlow(String(flowId))
@@ -48,7 +39,6 @@ export function Login() {
       return
     }
 
-    // Otherwise we initialize it
     kratos
       .initializeSelfServiceLoginFlowForBrowsers(
         Boolean(refresh),
@@ -76,24 +66,17 @@ export function Login() {
       {aal || refresh ? (
         <div>Log out</div>
       ) : (
-        // <ActionCard>
-        //   <CenterLink data-testid="logout-link" onClick={onLogout}>
-        //     Log out
-        //   </CenterLink>
-        // </ActionCard>
         <>
-          <div>Create account</div>
-          <div>Recover account</div>
-          {/*<ActionCard>*/}
+          {/*<div>*/}
           {/*  <Link href="/registration" passHref>*/}
-          {/*    <CenterLink>Create account</CenterLink>*/}
+          {/*    <div>Create account</div>*/}
           {/*  </Link>*/}
-          {/*</ActionCard>*/}
-          {/*<ActionCard>*/}
+          {/*</div>*/}
+          {/*<div>*/}
           {/*  <Link href="/recovery" passHref>*/}
-          {/*    <CenterLink>Recover your account</CenterLink>*/}
+          {/*    <div>Recover your account</div>*/}
           {/*  </Link>*/}
-          {/*</ActionCard>*/}
+          {/*</div>*/}
         </>
       )}
     </>
@@ -102,11 +85,10 @@ export function Login() {
   async function onSubmit(values: SubmitSelfServiceLoginFlowBody) {
     console.log('submitting values', values)
     if (!flow?.id) return
-    const id = flow.id
 
-    await router.push(`/login?flow=${id}`, undefined, { shallow: true })
+    await router.push(`/login?flow=${flow.id}`, undefined, { shallow: true })
     try {
-      await kratos.submitSelfServiceLoginFlow(id, undefined, values)
+      await kratos.submitSelfServiceLoginFlow(flow.id, values)
       if (flow?.return_to) {
         window.location.href = flow?.return_to
         return
