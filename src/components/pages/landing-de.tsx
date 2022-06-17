@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
@@ -12,14 +13,15 @@ import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
 import { kratos } from '@/helper/kratos'
-import { useEffect, useState } from 'react'
+
 export interface LandingDEProps {
   data: InstanceLandingData
 }
 
 export function LandingDE({ data }: LandingDEProps) {
+  // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/index.tsx
   const [session, setSession] = useState<string>(
-    'No valid Ory Session was found.\nPlease sign in to receive one.'
+    'No valid session was found.\nPlease sign in to receive one.'
   )
   const [hasSession, setHasSession] = useState<boolean>(false)
   const subjectsData = data.subjectsData
@@ -27,18 +29,20 @@ export function LandingDE({ data }: LandingDEProps) {
     kratos
       .toSession()
       .then(({ data }) => {
-        setSession(JSON.stringify(data, null, 2))
+        setSession(data)
         setHasSession(true)
       })
       .catch((err) => {
         return Promise.reject(err)
       })
   }, [])
-  console.log(session)
+
+  // console.log(session)
+
   let kratosUsername = ''
-  if(hasSession) {
-    kratosUsername = (JSON.parse(session)).identity.traits.username
-  }  
+  if (hasSession) {
+    kratosUsername = session.identity.traits.username
+  }
   return (
     <>
       <style jsx>{`
@@ -157,7 +161,10 @@ export function LandingDE({ data }: LandingDEProps) {
               'max-w-2xl mt-3 mb-6 mx-auto'
             )}
           >
-            Was möchtest du <span className="pb-2 underlined">lernen{', ' + kratosUsername} ?</span>
+            Was möchtest du{' '}
+            <span className="pb-2 underlined">
+              lernen{', ' + kratosUsername} ?
+            </span>
           </h1>
           <div className="lg:hidden mt-10 mb-8">
             <Quickbar />

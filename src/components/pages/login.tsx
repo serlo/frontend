@@ -16,13 +16,7 @@ export function Login() {
 
   const router = useRouter()
 
-  const {
-    return_to: returnTo,
-    flow: flowId,
-    refresh,
-    aal,
-  } = router.query
-
+  const { return_to: returnTo, flow: flowId, refresh, aal } = router.query
 
   useEffect(() => {
     if (!router.isReady || flow) {
