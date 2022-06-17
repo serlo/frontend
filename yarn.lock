@@ -3574,21 +3574,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ory/kratos-client@npm:>=0.8.0-alpha.2":
+"@ory/kratos-client@npm:>=0.8.0-alpha.2, @ory/kratos-client@npm:^0.10.1":
   version: 0.10.1
   resolution: "@ory/kratos-client@npm:0.10.1"
   dependencies:
     axios: ^0.21.4
   checksum: 1c2283629904be0a8ab91a9b7e6c91c277e10f892bbe47a39eb9cbf6940b344477473f16dc93f7b12b265727b8fa033fd8a64bfd1f560179497c4b6ea1146b8d
-  languageName: node
-  linkType: hard
-
-"@ory/kratos-client@npm:^0.8.0-alpha.2":
-  version: 0.8.0-alpha.2
-  resolution: "@ory/kratos-client@npm:0.8.0-alpha.2"
-  dependencies:
-    axios: ^0.21.1
-  checksum: 95dd75e7746cf5ec32ce0e8adbfb167ee81a63858c6316e559e7532b33af3776a96e8ec13c779f22f575426406c63620499810d8391cbbf28a261e472c7de884
   languageName: node
   linkType: hard
 
@@ -3775,7 +3766,7 @@ __metadata:
     "@graphql-codegen/typescript-operations": 2.3.5
     "@next/bundle-analyzer": ^12.0.0
     "@ory/integrations": ^0.1.0
-    "@ory/kratos-client": ^0.8.0-alpha.2
+    "@ory/kratos-client": ^0.10.1
     "@serlo/api": ^0.39.0
     "@serlo/authorization": ^0.39.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
@@ -5310,7 +5301,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.1, axios@npm:^0.21.4":
+"axios@npm:^0.21.4":
   version: 0.21.4
   resolution: "axios@npm:0.21.4"
   dependencies:
