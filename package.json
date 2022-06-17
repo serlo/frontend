@@ -20,6 +20,7 @@
     "kratos": "docker-compose -f ./scripts/kratos/docker-compose.yml up",
     "kratos:detach": "yarn kratos -d",
     "kratos:stop": "docker-compose -f ./scripts/kratos/docker-compose.yml down",
+    "kratos:newuser": "./scripts/kratos/new-user.sh",
     "lint": "npm-run-all lint:tsc lint:eslint lint:prettier",
     "lint:eslint": "yarn _eslint",
     "lint:prettier": "yarn _prettier --check",
