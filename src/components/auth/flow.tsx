@@ -1,16 +1,17 @@
+import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
 } from '@ory/kratos-client'
-import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
-import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
-import { Node } from '@/components/auth/node'
-import { NextRouter } from 'next/router'
 import { AxiosError } from 'axios'
+import { NextRouter } from 'next/router'
+import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
+
+import { Node } from '@/components/auth/node'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow: SelfServiceLoginFlow
-  onSubmit(values: T): Promise<void>
+  onSubmit: (values: T) => Promise<void>
 }
 
 export type SubmitPayload = SubmitSelfServiceLoginFlowBody
@@ -89,9 +90,11 @@ export function handleFlowError<S>(
   resetFlow: Dispatch<SetStateAction<S | undefined>>
 ) {
   return async (err: AxiosError) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     switch (err.response?.data.error?.id) {
       case 'session_aal2_required':
         // 2FA is enabled and enforced, but user did not perform 2fa yet!
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
         window.location.href = err.response?.data.redirect_browser_to
         return
       case 'session_already_available':
@@ -100,6 +103,7 @@ export function handleFlowError<S>(
         return
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
         window.location.href = err.response?.data.redirect_browser_to
         return
       case 'self_service_flow_return_to_forbidden':
@@ -129,6 +133,7 @@ export function handleFlowError<S>(
         return
       case 'browser_location_change_required':
         // Ory Kratos asked us to point the user to this URL.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
         window.location.href = err.response.data.redirect_browser_to
         return
     }

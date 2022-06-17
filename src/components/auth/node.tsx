@@ -1,5 +1,3 @@
-import { UiNode } from '@ory/kratos-client'
-
 import {
   getNodeLabel,
   isUiNodeAnchorAttributes,
@@ -8,8 +6,10 @@ import {
   isUiNodeScriptAttributes,
   isUiNodeTextAttributes,
 } from '@ory/integrations/ui'
-import { triggerSentry } from '@/helper/trigger-sentry'
+import { UiNode } from '@ory/kratos-client'
 import { FormEvent } from 'react'
+
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
