@@ -124,7 +124,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     trash: {
       renderer: trash,
-      canDo: canDo(Uuid.setState(customTypeToAuthorizationType(data.type))),
+      canDo: canDo(Uuid.setState(typeToAuthorizationType(data.type))),
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
@@ -302,7 +302,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
-    if (data.type !== 'Taxonomy' || !data.taxonomyType) return null
+    if (data.type !== 'TaxonomyTerm' || !data.taxonomyType) return null
 
     type EntityTypes = keyof typeof entities
 
@@ -316,11 +316,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         'video',
         'applet',
         'event',
-        'folder',
+        'topic',
         'exerciseFolder',
       ],
       exerciseFolder: ['exercise', 'exerciseGroup'],
-      subject: ['folder'],
+      subject: ['topic'],
       root: ['subject'],
     }
 
@@ -332,7 +332,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
       if (entityType === 'event' && !shouldRenderEvents) return null
 
-      if (['subject', 'folder', 'exerciseFolder'].includes(entityType)) {
+      if (['subject', 'topic', 'exerciseFolder'].includes(entityType)) {
         if (!canDo(TaxonomyTerm.change)) return null
 
         const createId = entityType === 'exerciseFolder' ? 9 : 4
@@ -380,8 +380,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 }
 
-function customTypeToAuthorizationType(type: string) {
-  if (type == 'Taxonomy') return 'TaxonomyTerm'
+function typeToAuthorizationType(type: string) {
   if (['Page', 'PageRevision'].includes(type)) return type
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'

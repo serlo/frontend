@@ -42,7 +42,7 @@ export function ArticleRelatedTaxonomy({
         href={`/${term.id}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('folder')} /> {term.name}
+        <Icon icon={getIconByTypename('topic')} /> {term.name}
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {

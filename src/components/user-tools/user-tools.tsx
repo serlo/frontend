@@ -175,7 +175,7 @@ export function UserTools({
         : undefined
     }
 
-    if (type == 'Taxonomy') {
+    if (type == 'TaxonomyTerm') {
       return canDo(TaxonomyTerm.set) ? `/taxonomy/term/update/${id}` : undefined
     }
 
@@ -243,7 +243,7 @@ export function UserTools({
       'Applet',
       'Event',
       'CoursePage',
-      'Taxonomy',
+      'TaxonomyTerm',
       '_ExerciseInline',
       '_ExerciseGroupInline',
       '_SolutionInline',

@@ -83,7 +83,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           Tool.AnalyticsLink,
           Tool.Trash,
         ]
-      case 'Taxonomy':
+      case 'TaxonomyTerm':
         return [
           Tool.Abo,
           Tool.Organize,

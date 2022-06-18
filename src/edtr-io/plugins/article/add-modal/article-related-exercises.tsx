@@ -40,7 +40,7 @@ export function ArticleRelatedExercises({
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('folder')} />
+        <Icon icon={getIconByTypename('exerciseFolder')} />
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
