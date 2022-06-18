@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import Tippy, { TippyProps } from '@tippyjs/react'
 
 import { AuthorTools, Tool } from './author-tools'
@@ -9,7 +10,7 @@ export interface AuthorToolsData {
   type: string
   id: number
   alias?: string
-  taxonomyType?: 'exerciseFolder' | 'topic' | 'subject' | 'root'
+  taxonomyType?: TaxonomyTermType
   revisionId?: number
   parentId?: number
   courseId?: number
