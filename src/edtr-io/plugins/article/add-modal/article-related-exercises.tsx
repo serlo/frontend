@@ -19,7 +19,7 @@ export function ArticleRelatedExercises({
   exerciseFolderId,
   addEntry,
 }: ArticleRelatedExercisesProps) {
-  const { data, error } = useFetchTopicFolder(exerciseFolderId)
+  const { data, error } = useFetchExerciseFolder(exerciseFolderId)
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -76,8 +76,8 @@ export function ArticleRelatedExercises({
   }
 }
 
-const fetchTopicFolderQuery = gql`
-  query fetchTopicFolderQuery($id: Int!) {
+const fetchExerciseFolderQuery = gql`
+  query fetchExerciseFolderQuery($id: Int!) {
     uuid(id: $id) {
       ... on TaxonomyTerm {
         type
@@ -112,7 +112,7 @@ interface ChildNode {
   }
 }
 
-interface FetchTopicFolderType {
+interface FetchExerciseFolderType {
   uuid: {
     type: string
     children: {
@@ -121,9 +121,9 @@ interface FetchTopicFolderType {
   }
 }
 
-function useFetchTopicFolder(id: number) {
-  return useGraphqlSwr<FetchTopicFolderType>({
-    query: fetchTopicFolderQuery,
+function useFetchExerciseFolder(id: number) {
+  return useGraphqlSwr<FetchExerciseFolderType>({
+    query: fetchExerciseFolderQuery,
     variables: { id },
     config: {
       refreshInterval: 1 * 60 * 1000, //1min

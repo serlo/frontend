@@ -52,8 +52,6 @@ export function Events({
             <Event
               key={event.id}
               eventId={event.id}
-              // TODO: Check back in again
-              // @ts-expect-error
               event={event}
               unread={false}
               slim

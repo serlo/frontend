@@ -1,4 +1,4 @@
-import { Role } from '@serlo/api'
+import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
@@ -908,19 +908,11 @@ export interface TaxonomyLink {
   id: number
 }
 
-// until api has new types
-export enum TemporaryTaxonomyTermType {
-  Root = 'root',
-  Subject = 'subject',
-  Topic = 'topic',
-  ExerciseFolder = 'exerciseFolder',
-}
-
 // Second level has folders and exercises as links
 
 export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
   folders: TaxonomyLink[]
-  type: TemporaryTaxonomyTermType
+  type: TaxonomyTermType
 }
 
 // First level loads second level elements and exercises as content.
@@ -930,7 +922,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
   alias: string
   title: string
   trashed: boolean
-  taxonomyType: TemporaryTaxonomyTermType
+  taxonomyType: TaxonomyTermType
   subterms: TaxonomySubTerm[]
   exercisesContent: (FrontendExerciseNode | FrontendExerciseGroupNode)[]
   licenseData?: LicenseData

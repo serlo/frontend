@@ -22,7 +22,7 @@ export function ArticleAddModal({
   data,
   setModalOpen,
 }: ArticleAddModalProps) {
-  const [exerciseFolderId, setexerciseFolderId] = useState<undefined | number>(
+  const [exerciseFolderId, setExerciseFolderId] = useState<undefined | number>(
     undefined
   )
 
@@ -103,12 +103,12 @@ export function ArticleAddModal({
         <p className="mt-4">{articleStrings.addModal.introText2}</p>
         <ArticleRelatedMagicInput
           addEntry={addEntry}
-          showTopicFolderPreview={(id: number) => setexerciseFolderId(id)}
+          showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
         />
         <ArticleRelatedTaxonomy
           checkDuplicates={checkDuplicates}
           addEntry={addEntry}
-          showTopicFolderPreview={(id: number) => setexerciseFolderId(id)}
+          showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
         />
         <div id="exerciseFolderScroll" className="min-h-[8rem]">
           {exerciseFolderId ? (

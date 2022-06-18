@@ -13,13 +13,13 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: string, title?: string) => void
   checkDuplicates: (id: number, typename: string) => boolean
-  showTopicFolderPreview: (id: number) => void
+  showExerciseFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedTaxonomy({
   addEntry,
   checkDuplicates,
-  showTopicFolderPreview,
+  showExerciseFolderPreview,
 }: ArticleRelatedTaxonomyProps) {
   const entityId = useEntityId()
   const { data, error } = useFetchParentTaxonomy(entityId)
@@ -97,7 +97,7 @@ export function ArticleRelatedTaxonomy({
           <button
             className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser"
             onClick={() => {
-              showTopicFolderPreview(item.id)
+              showExerciseFolderPreview(item.id)
             }}
             title="Preview"
           >

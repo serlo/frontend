@@ -80,7 +80,7 @@ function getTaxonomyType(idString?: string) {
 
   if (topicIds.includes(id)) return TaxonomyTypeCreateOptions.Topic
   if (exerciseFolderIds.includes(id))
-    return TaxonomyTypeCreateOptions.TopicFolder
+    return TaxonomyTypeCreateOptions.ExerciseFolder
 
   throw 'unknown taxonomy type'
 }

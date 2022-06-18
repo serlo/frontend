@@ -34,7 +34,7 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     trashed: uuid.trashed,
 
     articles: collectType(children, 'Article'),
-    exercises: collectTopicFolders(children),
+    exercises: collectExerciseFolders(children),
     videos: collectType(children, 'Video'),
     applets: collectType(children, 'Applet'),
     courses: collectType(children, 'Course'),
@@ -98,7 +98,7 @@ function getAlias(child: { alias?: string | null; id: number }) {
   else return child.alias
 }
 
-function collectTopicFolders(
+function collectExerciseFolders(
   children: (TaxonomyTermChildrenLevel1 | TaxonomyTermChildrenLevel2)[]
 ) {
   const result: TaxonomyLink[] = []
@@ -131,7 +131,7 @@ function collectNestedTaxonomyTerms(
           ? convertState(child.description)
           : undefined,
         articles: collectType(subChildren, 'Article'),
-        exercises: collectTopicFolders(subChildren),
+        exercises: collectExerciseFolders(subChildren),
         videos: collectType(subChildren, 'Video'),
         applets: collectType(subChildren, 'Applet'),
         courses: collectType(subChildren, 'Course'),
