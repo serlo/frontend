@@ -1,4 +1,5 @@
 import { Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -30,7 +31,7 @@ export function ArticleRelatedExercises({
 
   if (!data || error) return errorReturn
   const { uuid } = data
-  if (uuid.type !== 'exerciseFolder') return errorReturn
+  if (uuid.type !== TaxonomyTermType.ExerciseFolder) return errorReturn
 
   return (
     <div className="mt-5 border-t-2 pt-6">
@@ -40,7 +41,7 @@ export function ArticleRelatedExercises({
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('exerciseFolder')} />
+        <Icon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:

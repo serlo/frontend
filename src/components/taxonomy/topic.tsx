@@ -1,5 +1,6 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import { TaxonomyTermType } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
@@ -26,8 +27,8 @@ export function Topic({ data }: TopicProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const { strings } = useInstanceData()
 
-  const isExerciseFolder = data.taxonomyType === 'exerciseFolder'
-  const isTopic = data.taxonomyType === 'topic'
+  const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
+  const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined

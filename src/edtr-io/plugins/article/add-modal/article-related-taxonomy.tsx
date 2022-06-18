@@ -1,4 +1,5 @@
 import { faSearch, Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -42,7 +43,7 @@ export function ArticleRelatedTaxonomy({
         href={`/${term.id}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('topic')} /> {term.name}
+        <Icon icon={getIconByTypename(TaxonomyTermType.Topic)} /> {term.name}
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {
@@ -234,7 +235,7 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
     )
       return
 
-    if (isTax && child.type !== 'exerciseFolder') return
+    if (isTax && child.type !== TaxonomyTermType.ExerciseFolder) return
 
     if ((!isTax && !child.currentRevision) || child.trashed) return
 

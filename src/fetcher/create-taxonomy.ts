@@ -1,6 +1,6 @@
 import { convertState } from './convert-state'
 import { createExercise, createExerciseGroup } from './create-exercises'
-import { MainUuidQuery } from './graphql-types/operations'
+import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
   TaxonomyData,
   FrontendExerciseNode,
@@ -103,7 +103,10 @@ function collectExerciseFolders(
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (child.__typename === 'TaxonomyTerm' && child.type === 'exerciseFolder')
+    if (
+      child.__typename === 'TaxonomyTerm' &&
+      child.type === TaxonomyTermType.ExerciseFolder
+    )
       result.push({
         title: child.name,
         id: child.id,
@@ -120,7 +123,7 @@ function collectNestedTaxonomyTerms(
   children.forEach((child) => {
     if (
       child.__typename === 'TaxonomyTerm' &&
-      child.type !== 'exerciseFolder'
+      child.type !== TaxonomyTermType.ExerciseFolder
     ) {
       const subChildren = child.children.nodes.filter(isActive_for_subchildren)
       result.push({
@@ -147,7 +150,10 @@ function collectNestedTaxonomyTerms(
 function collectSubfolders(children: TaxonomyTermChildrenLevel2[]) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
-    if (child.__typename === 'TaxonomyTerm' && child.type !== 'exerciseFolder')
+    if (
+      child.__typename === 'TaxonomyTerm' &&
+      child.type !== TaxonomyTermType.ExerciseFolder
+    )
       result.push({ title: child.name, url: getAlias(child), id: child.id })
   })
   return result

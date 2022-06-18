@@ -1,4 +1,5 @@
 import { faSearch, Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
@@ -31,7 +32,7 @@ export function ArticleRelatedMagicInput({
         'GroupedExercise',
         'TaxonomyTerm',
       ]}
-      supportedTaxonomyTypes={['exerciseFolder']}
+      supportedTaxonomyTypes={[TaxonomyTermType.ExerciseFolder]}
       unsupportedIds={[entityId]}
     />
   )

@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import {
   Entity,
   Page,
@@ -316,12 +317,12 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         'video',
         'applet',
         'event',
-        'topic',
-        'exerciseFolder',
+        TaxonomyTermType.Topic,
+        TaxonomyTermType.ExerciseFolder,
       ],
       exerciseFolder: ['exercise', 'exerciseGroup'],
-      subject: ['topic'],
-      root: ['subject'],
+      subject: [TaxonomyTermType.Topic],
+      root: [TaxonomyTermType.Subject],
     }
 
     const shouldRenderEvents =
@@ -332,10 +333,18 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
       if (entityType === 'event' && !shouldRenderEvents) return null
 
-      if (['subject', 'topic', 'exerciseFolder'].includes(entityType)) {
+      if (
+        (
+          [
+            TaxonomyTermType.Subject,
+            TaxonomyTermType.Topic,
+            TaxonomyTermType.ExerciseFolder,
+          ] as string[]
+        ).includes(entityType)
+      ) {
         if (!canDo(TaxonomyTerm.change)) return null
 
-        const createId = entityType === 'exerciseFolder' ? 9 : 4
+        const createId = entityType === TaxonomyTermType.ExerciseFolder ? 9 : 4
         return renderLi(
           `/taxonomy/term/create/${createId}/${data.id}`,
           entities[entityType]
