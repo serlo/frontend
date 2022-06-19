@@ -122,6 +122,7 @@ export const instanceData = {
         'There is no content here. Please edit or delete.',
       picture: 'Picture',
       previewImage: 'Preview Image',
+      imageAltFallback: 'Image',
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
