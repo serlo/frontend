@@ -98,7 +98,7 @@ export function Node(props: NodeProps) {
 
       default:
         // TODO: this possibly contains "required" and "pattern"
-        console.log(node.attributes)
+        // console.log(node.attributes)
         return (
           <>
             <label>

@@ -81,6 +81,7 @@ export function Login() {
     if (!flow?.id) return
 
     await router.push(`/login?flow=${flow.id}`, undefined, { shallow: true })
+
     try {
       await kratos.submitSelfServiceLoginFlow(flow.id, values)
       if (flow?.return_to) {

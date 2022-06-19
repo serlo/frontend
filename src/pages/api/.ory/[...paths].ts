@@ -37,13 +37,7 @@ export default createApiHandler({
 const encode = (v: string) => v
 
 export function createApiHandler(options: CreateApiHandlerOptions) {
-  let baseUrl = options.fallbackToPlayground
-    ? 'https://playground.projects.oryapis.com/'
-    : ''
-  if (process.env.ORY_SDK_URL) {
-    baseUrl = process.env.ORY_SDK_URL
-  }
-
+  let baseUrl = ''
   if (options.apiBaseUrlOverride) {
     baseUrl = options.apiBaseUrlOverride
   }
@@ -58,14 +52,6 @@ export function createApiHandler(options: CreateApiHandlerOptions) {
 
     const path = Array.isArray(paths) ? paths.join('/') : paths
     const url = `${baseUrl}/${path}?${search.toString()}`
-
-    if (path === 'ui/welcome') {
-      // A special for redirecting to the home page
-      // if we were being redirected to the hosted UI
-      // welcome page.
-      res.redirect(303, '../../../')
-      return
-    }
 
     const isTls =
       (req as unknown as { protocol: string }).protocol === 'https:' ||

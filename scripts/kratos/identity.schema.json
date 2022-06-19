@@ -21,9 +21,28 @@
           "ory.sh/kratos": {
             "credentials": { "password": { "identifier": true } }
           }
+        },
+        "description": {
+          "type": "string"
         }
       },
-      "required": ["email", "username"]
+      "required": ["email", "username"],
+      "additionalProperties": false
+    },
+    "metadata_public": {
+      "warning": "Kratos does not validate metadata, these fake fields are here just for documentation purpose",
+      "info": "only admins can edit, but user can also read",
+      "legacy_id": {
+        "type": "integer",
+        "required": false
+      },
+      "roles": {
+        "type": "array of strings",
+        "required": true
+      }
+    },
+    "metadata_admin": {
+      "info": "only admin can edit and read"
     }
   }
 }

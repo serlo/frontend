@@ -10,8 +10,8 @@ curl --request POST -sL \
   \"credentials\": { 
     \"password\": {
         \"config\": {
-            \"password\": \"$3\"
+          \"password\": \"$3\"
         }
+      }
     }
- }
-}" http://127.0.0.1:4434/identities
+  }" http://127.0.0.1:4434/identities
