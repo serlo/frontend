@@ -1940,9 +1940,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-image@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "@edtr-io/plugin-image@npm:2.6.0"
+"@edtr-io/plugin-image@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "@edtr-io/plugin-image@npm:2.8.0"
   dependencies:
     "@edtr-io/editor-ui": ^2.6.0
     "@edtr-io/plugin": ^2.6.0
@@ -1965,7 +1965,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: c28dc4287a54e36669f09d061958227919b39b003ae1811599bfd45de8cf74faae87bd31f510fbbb5cd64baadf338f0d118a067fcbb836cfefbc7de9b87d140d
+  checksum: 608c8aaafa75e49873a0e798ca0ce6417689d589d299f8d74900b87ff7ba200a53c344ad87741de5cf613eae32d988ad1e4ca04f3c6b3253b9af259b7fcf6de7
   languageName: node
   linkType: hard
 
@@ -2002,9 +2002,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-multimedia-explanation@npm:^2.6.0":
-  version: 2.6.0
-  resolution: "@edtr-io/plugin-multimedia-explanation@npm:2.6.0"
+"@edtr-io/plugin-multimedia-explanation@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "@edtr-io/plugin-multimedia-explanation@npm:2.8.0"
   dependencies:
     "@edtr-io/editor-ui": ^2.6.0
     "@edtr-io/plugin": ^2.6.0
@@ -2029,7 +2029,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: c27ee203f3e71f3858c07b738f99cde33b15b1e2e407d7e53d57bb9bdfd1341732fa5ace9fa4ff2a96764cd3f18bb0411098c4adf946f033c4ab1a90b17c020b
+  checksum: 28414b6e51af0a26cf77b6c039d68e162d8d1a98849eff60b9a65891cde7b6eca269633364b84708f87aa8a818c723d335a4661cfe65b810dabf0131a7bf6bd6
   languageName: node
   linkType: hard
 
@@ -3874,9 +3874,9 @@ __metadata:
     "@edtr-io/plugin-blockquote": ^2.6.0
     "@edtr-io/plugin-geogebra": ^2.6.0
     "@edtr-io/plugin-highlight": ^2.6.0
-    "@edtr-io/plugin-image": ^2.6.0
+    "@edtr-io/plugin-image": ^2.8.0
     "@edtr-io/plugin-input-exercise": ^2.6.0
-    "@edtr-io/plugin-multimedia-explanation": ^2.6.0
+    "@edtr-io/plugin-multimedia-explanation": ^2.8.0
     "@edtr-io/plugin-rows": ^2.6.0
     "@edtr-io/plugin-sc-mc-exercise": ^2.6.0
     "@edtr-io/plugin-serlo-injection": ^2.6.0
