@@ -23,13 +23,13 @@ const COOKIE_DOMAINS = {
   local: 'localhost',
 }
 
-const HYDRA_HOST = KRATOS_HOSTS[process.env.NEXT_PUBLIC_ENV || 'local']
+export const KRATOS_HOST = KRATOS_HOSTS[process.env.NEXT_PUBLIC_ENV || 'local']
 const COOKIE_DOMAIN = COOKIE_DOMAINS[process.env.NEXT_PUBLIC_ENV || 'local']
 
 // TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 // TODO: is it okay to use that for open source version? Could also just fork it
 export default createApiHandler({
-  apiBaseUrlOverride: HYDRA_HOST,
+  apiBaseUrlOverride: KRATOS_HOST,
   forceCookieSecure: false,
   forceCookieDomain: COOKIE_DOMAIN,
 })
