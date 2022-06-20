@@ -1,11 +1,5 @@
 import { TaxonomyTermType } from '@serlo/api'
-import {
-  Entity,
-  Page,
-  Subscription,
-  TaxonomyTerm,
-  Uuid,
-} from '@serlo/authorization'
+import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
@@ -17,6 +11,8 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -35,8 +31,6 @@ export enum Tool {
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
   Organize = 'organize',
-  PageConvert = 'pageConvert',
-  PageSetting = 'pageSetting',
   SortCoursePages = 'sortCoursePages',
   SortGroupedExercises = 'sortGroupedExercises',
   SortEntities = 'sortEntities',
@@ -82,19 +76,12 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       renderer: abo,
       canDo: canDo(Subscription.set),
     },
-    pageConvert: {
-      url: `/entity/repository/add-revision/${entityId}/${
-        data.revisionId || ''
-      }`,
-      title: loggedInStrings.authorMenu.convert,
-      canDo: canDo(Uuid.create('PageRevision')),
-    },
     log: {
       url: `/event/history/${entityId}`,
       canDo: true,
     },
     history: {
-      url: `/entity/repository/history/${entityId}`,
+      url: getHistoryUrl(entityId),
       canDo: true,
     },
     sortCoursePages: {
@@ -106,11 +93,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       canDo: canDo(Entity.orderChildren),
     },
     edit: {
-      url: `/entity/repository/add-revision/${entityId}`,
+      url: getEditUrl(entityId),
       canDo: canDo(Uuid.create('EntityRevision')),
     },
     unrevisedEdit: {
-      url: `/entity/repository/history/${entityId}`,
+      url: getHistoryUrl(entityId),
       canDo: canDo(Uuid.create('EntityRevision')),
     },
     curriculum: {
@@ -130,11 +117,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     newEntitySubmenu: {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
-    },
-    pageSetting: {
-      url: `/page/update/${data.id}`,
-      title: loggedInStrings.authorMenu.settings,
-      canDo: canDo(Page.set),
     },
     moveCoursePage: {
       url: `/entity/link/move/link/${data.id}/${data.courseId!}`,

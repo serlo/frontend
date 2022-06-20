@@ -121,6 +121,7 @@ export const instanceData = {
         'There is no content here. Please edit or delete.',
       picture: 'Picture',
       previewImage: 'Preview Image',
+      imageAltFallback: 'Image',
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
@@ -246,6 +247,10 @@ export const instanceData = {
       refreshNow: 'Refresh now',
       backToPrevious: 'Back to previous page',
       backToHome: 'To our home page',
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: 'Preparing print!',
