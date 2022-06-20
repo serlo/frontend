@@ -26,7 +26,7 @@ import {
 import { requestPage } from '@/fetcher/request-page'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { useTermSortMutation } from '@/helper/mutations/taxonomyTerm'
+import { useTaxonomyTermSortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -50,7 +50,7 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
 })
 
 function Content({ pageData }: { pageData: TaxonomyPage }) {
-  const sortTerm = useTermSortMutation()
+  const sortTerm = useTaxonomyTermSortMutation()
   const router = useRouter()
   const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
   const taxUrl = `/${taxonomyData.id}`

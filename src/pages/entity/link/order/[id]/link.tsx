@@ -20,22 +20,16 @@ import {
   SlugProps,
   TaxonomyLink,
   TaxonomyPage,
-  TaxonomyData,
-  TopicCategoryTypes,
   SingleEntityPage,
   FrontendExerciseNode,
-  FrontendExerciseGroupNode,
-  CoursePagesData,
   CoursePageEntry,
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { useEntitySortMutation } from '@/helper/mutations/taxonomyTerm'
+import { useEntitySortMutation } from '@/helper/mutations/use-entity-sort-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
-// this duplicates some from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
+// this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 
 export default renderedPageNoHooks<{ pageData: SingleEntityPage }>((props) => {
   return (
@@ -47,7 +41,7 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>((props) => {
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
   const sort = useEntitySortMutation()
-
+  const router = useRouter()
   const { entityData } = pageData
   const isCourse = entityData.typename.startsWith('Course')
 
@@ -55,9 +49,11 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     entityData.courseData?.pages ?? []
   )
 
-  const [exercises, setExercises] = useState<CoursePageEntry[]>(
-    entityData.
-  )
+  const getExes = () => {
+    const group = entityData.content?.[0]
+    return group && group.type === 'exercise-group' ? group.children ?? [] : []
+  }
+  const [exercises, setExercises] = useState<FrontendExerciseNode[]>(getExes())
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -65,33 +61,21 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
   const onSave = async () => {
-    console.log('saving…')
-    // const childrenIds = allCategories.reduce<number[]>((idArray, category) => {
-    //   if (!taxonomyData[category] || !taxonomyData[category].length)
-    //     return idArray
+    const childrenIds = isCourse
+      ? coursePages.map((page) => page.id)
+      : exercises.map((ex) => ex.context.id)
 
-    //   return [
-    //     ...idArray,
-    //     ...taxonomyData[category].map((entity) => {
-    //       if (hasOwnPropertyTs(entity, 'id')) {
-    //         return entity.id
-    //       }
+    const success = await sort({
+      childrenIds,
+      entityId: entityData.id,
+    })
 
-    //       return entity.context.id
-    //     }),
-    //   ]
-    // }, [])
-
-    // const success = await sortTerm({
-    //   childrenIds,
-    //   taxonomyTermId: taxonomyData.id,
-    // })
-    // if (success) {
-    //   showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
-    //   setTimeout(() => {
-    //     void router.push(taxUrl)
-    //   }, 500)
-    // }
+    if (success) {
+      showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
+      setTimeout(() => {
+        void router.push(entityData.alias)
+      }, 500)
+    }
   }
 
   return (
@@ -99,32 +83,30 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       {renderBackButton()}
       <PageTitle title={loggedInStrings.title} />
       <div className="mx-side">
-        {isCourse ? renderCoursePages() : renderExercises()}
+        {renderList()}
         {renderUpdateButton()}
       </div>
     </>
   )
 
-  function renderExercises() {
-    if (entityData.typename !== 'ExerciseGroup') return
-
-    const exGroup = entityData.content?.[0] as FrontendExerciseGroupNode
-    if (exGroup.children === undefined) return null
-
-    const exercises = ids.map((id) => {
-      console.log(exGroup.children![0])
-    })
-
+  function renderList() {
     return (
       <DragDropContext
-        //   key={category}
         onDragEnd={(result) => {
           const { source, destination } = result
           if (!destination) return
-          setIds(arrayMoveImmutable(ids, source.index, destination.index))
+          if (isCourse) {
+            setCoursePages(
+              arrayMoveImmutable(coursePages, source.index, destination.index)
+            )
+          } else {
+            setExercises(
+              arrayMoveImmutable(exercises, source.index, destination.index)
+            )
+          }
         }}
       >
-        <Droppable droppableId="exerciseGroups">
+        <Droppable droppableId="children">
           {(provided) => {
             return (
               <>
@@ -133,16 +115,27 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {exercises.map((ex, i) =>
-                    renderLink(
-                      {
-                        url: ex.href ?? `/${ex.context.id}`,
-                        title: getPreviewStringFromExercise(ex, strings),
-                        id: ex.context.id,
-                      },
-                      i
-                    )
-                  )}
+                  {isCourse
+                    ? coursePages.map((page, i) =>
+                        renderLink(
+                          {
+                            url: page.url,
+                            title: page.title,
+                            id: page.id,
+                          },
+                          i
+                        )
+                      )
+                    : exercises.map((ex, i) =>
+                        renderLink(
+                          {
+                            url: ex.href ?? `/${ex.context.id}`,
+                            title: getPreviewStringFromExercise(ex, strings),
+                            id: ex.context.id,
+                          },
+                          i
+                        )
+                      )}
                   {provided.placeholder}
                 </ul>
               </>
@@ -151,10 +144,6 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         </Droppable>
       </DragDropContext>
     )
-  }
-  function renderCoursePages() {
-    if (entityData.typename !== 'Course') return
-    return 123
   }
 
   function renderBackButton() {
@@ -217,7 +206,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
 
   function renderUpdateButton() {
     return (
-      <button className="mt-12 serlo-button-blue" onClick={() => {}}>
+      <button className="mt-12 serlo-button-blue" onClick={onSave}>
         {loggedInStrings.saveButtonText}
       </button>
     )
