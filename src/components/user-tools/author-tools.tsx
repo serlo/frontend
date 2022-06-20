@@ -1,12 +1,5 @@
 import { TaxonomyTermType } from '@serlo/api'
 import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
-import {
-  Entity,
-  Page,
-  Subscription,
-  TaxonomyTerm,
-  Uuid,
-} from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
