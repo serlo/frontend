@@ -1,4 +1,4 @@
-import { Instance } from '@serlo/api'
+import { Instance, TaxonomyTermType } from '@serlo/api'
 
 import { MainUuidType } from './query-types'
 import { SecondaryMenuData } from '@/data-types'
@@ -24,8 +24,7 @@ export function createSecondaryMenu(
     if (!secondaryMenus) return undefined
 
     if (uuid.__typename === 'TaxonomyTerm') {
-      if (uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder')
-        return undefined
+      if (uuid.type === TaxonomyTermType.ExerciseFolder) return undefined
 
       return findMenuByRootId(uuid.navigation?.path.nodes[0].id ?? undefined)
     }

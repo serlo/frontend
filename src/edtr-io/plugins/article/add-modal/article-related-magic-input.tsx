@@ -1,4 +1,5 @@
 import { faSearch, Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
@@ -7,12 +8,12 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 interface ArticleRelatedMagicInputProps {
   addEntry: (id: number, typename: string, title?: string) => void
-  showTopicFolderPreview: (id: number) => void
+  showExerciseFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedMagicInput({
   addEntry,
-  showTopicFolderPreview,
+  showExerciseFolderPreview: showExerciseFolderPreview,
 }: ArticleRelatedMagicInputProps) {
   const entityId = useEntityId()
   const loggedInData = useLoggedInData()
@@ -31,7 +32,7 @@ export function ArticleRelatedMagicInput({
         'GroupedExercise',
         'TaxonomyTerm',
       ]}
-      supportedTaxonomyTypes={['topicFolder']}
+      supportedTaxonomyTypes={[TaxonomyTermType.ExerciseFolder]}
       unsupportedIds={[entityId]}
     />
   )
@@ -43,8 +44,8 @@ export function ArticleRelatedMagicInput({
           <button
             className="serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser mr-2"
             onClick={() => {
-              showTopicFolderPreview(id)
-              document.getElementById('topicFolderScroll')?.scrollIntoView({
+              showExerciseFolderPreview(id)
+              document.getElementById('exerciseFolderScroll')?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
               })

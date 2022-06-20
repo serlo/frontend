@@ -1,4 +1,5 @@
 import { faSearch, Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -13,13 +14,13 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: string, title?: string) => void
   checkDuplicates: (id: number, typename: string) => boolean
-  showTopicFolderPreview: (id: number) => void
+  showExerciseFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedTaxonomy({
   addEntry,
   checkDuplicates,
-  showTopicFolderPreview,
+  showExerciseFolderPreview,
 }: ArticleRelatedTaxonomyProps) {
   const entityId = useEntityId()
   const { data, error } = useFetchParentTaxonomy(entityId)
@@ -42,7 +43,7 @@ export function ArticleRelatedTaxonomy({
         href={`/${term.id}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('folder')} /> {term.name}
+        <Icon icon={getIconByTypename(TaxonomyTermType.Topic)} /> {term.name}
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {
@@ -61,10 +62,10 @@ export function ArticleRelatedTaxonomy({
         <b className="block mb-2">
           <Icon icon={getIconByTypename(typename)} />{' '}
           {isTax
-            ? strings.entities.topicFolder
+            ? strings.entities.exerciseFolder
             : strings.categories[getCategoryByTypename(typename)]}
         </b>
-        {isTax ? articleStrings.addModal.topicFolderNote : null}
+        {isTax ? articleStrings.addModal.exerciseFolderNote : null}
         <ul>{dataArray.map((item) => renderLi(item, typename))}</ul>
       </div>
     )
@@ -97,7 +98,7 @@ export function ArticleRelatedTaxonomy({
           <button
             className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser"
             onClick={() => {
-              showTopicFolderPreview(item.id)
+              showExerciseFolderPreview(item.id)
             }}
             title="Preview"
           >
@@ -234,7 +235,7 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
     )
       return
 
-    if (isTax && child.type !== 'topicFolder') return
+    if (isTax && child.type !== TaxonomyTermType.ExerciseFolder) return
 
     if ((!isTax && !child.currentRevision) || child.trashed) return
 
