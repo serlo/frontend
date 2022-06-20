@@ -405,6 +405,7 @@ export async function requestPage(
       }
       return {
         title: page.currentRevision?.title ?? '',
+        id: page.id,
         url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
         active,
       }
