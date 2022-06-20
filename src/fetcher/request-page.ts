@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -136,7 +137,7 @@ export async function requestPage(
         title,
         metaImage,
         contentType:
-          uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder'
+          uuid.type === TaxonomyTermType.ExerciseFolder
             ? 'topic-folder'
             : 'topic',
       },

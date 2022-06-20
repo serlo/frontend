@@ -379,8 +379,6 @@ export type EntityTypes =
   | 'revision'
   | 'comment'
   | 'thread'
-  //just in case
-  | 'folder'
 
 export type EntityStrings = {
   [K in EntityTypes]: string

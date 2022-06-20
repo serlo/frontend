@@ -1,4 +1,5 @@
 import { Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -11,15 +12,15 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
 
 interface ArticleRelatedExercisesProps {
-  topicFolderId: number
+  exerciseFolderId: number
   addEntry: (id: number, typename: string, title?: string) => void
 }
 
 export function ArticleRelatedExercises({
-  topicFolderId,
+  exerciseFolderId,
   addEntry,
 }: ArticleRelatedExercisesProps) {
-  const { data, error } = useFetchTopicFolder(topicFolderId)
+  const { data, error } = useFetchExerciseFolder(exerciseFolderId)
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -30,18 +31,18 @@ export function ArticleRelatedExercises({
 
   if (!data || error) return errorReturn
   const { uuid } = data
-  if (uuid.type !== 'topicFolder') return errorReturn
+  if (uuid.type !== TaxonomyTermType.ExerciseFolder) return errorReturn
 
   return (
     <div className="mt-5 border-t-2 pt-6">
       <a
         className="font-bold text-brand ml-2"
         target="_blank"
-        href={`/${topicFolderId}`}
+        href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('folder')} />
-        {strings.entities.topicFolder} {topicFolderId}
+        <Icon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
+        {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
       <div className="mt-4">{uuid.children.nodes.map(renderExercises)}</div>
@@ -76,8 +77,8 @@ export function ArticleRelatedExercises({
   }
 }
 
-const fetchTopicFolderQuery = gql`
-  query fetchTopicFolderQuery($id: Int!) {
+const fetchExerciseFolderQuery = gql`
+  query fetchExerciseFolderQuery($id: Int!) {
     uuid(id: $id) {
       ... on TaxonomyTerm {
         type
@@ -112,7 +113,7 @@ interface ChildNode {
   }
 }
 
-interface FetchTopicFolderType {
+interface FetchExerciseFolderType {
   uuid: {
     type: string
     children: {
@@ -121,9 +122,9 @@ interface FetchTopicFolderType {
   }
 }
 
-function useFetchTopicFolder(id: number) {
-  return useGraphqlSwr<FetchTopicFolderType>({
-    query: fetchTopicFolderQuery,
+function useFetchExerciseFolder(id: number) {
+  return useGraphqlSwr<FetchExerciseFolderType>({
+    query: fetchExerciseFolderQuery,
     variables: { id },
     config: {
       refreshInterval: 1 * 60 * 1000, //1min
