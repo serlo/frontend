@@ -25,6 +25,8 @@ import {
   SingleEntityPage,
   FrontendExerciseNode,
   FrontendExerciseGroupNode,
+  CoursePagesData,
+  CoursePageEntry,
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -44,10 +46,18 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>((props) => {
 })
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
-  const sort = useEntitySortMutation
+  const sort = useEntitySortMutation()
 
   const { entityData } = pageData
-  const isCourse = entityData.typename === 'Course'
+  const isCourse = entityData.typename.startsWith('Course')
+
+  const [coursePages, setCoursePages] = useState<CoursePageEntry[]>(
+    entityData.courseData?.pages ?? []
+  )
+
+  const [exercises, setExercises] = useState<CoursePageEntry[]>(
+    entityData.
+  )
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -99,6 +109,11 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     if (entityData.typename !== 'ExerciseGroup') return
 
     const exGroup = entityData.content?.[0] as FrontendExerciseGroupNode
+    if (exGroup.children === undefined) return null
+
+    const exercises = ids.map((id) => {
+      console.log(exGroup.children![0])
+    })
 
     return (
       <DragDropContext
@@ -106,34 +121,19 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         onDragEnd={(result) => {
           const { source, destination } = result
           if (!destination) return
-          // const category = source.droppableId as Exclude<
-          //   TopicCategoryTypes,
-          //   'folders'
-          // >
-          // setTaxonomyData({
-          //   ...taxonomyData,
-          //   [category]: arrayMoveImmutable(
-          //     taxonomyData[category],
-          //     source.index,
-          //     destination.index
-          //   ),
-          // })
+          setIds(arrayMoveImmutable(ids, source.index, destination.index))
         }}
       >
         <Droppable droppableId="exerciseGroups">
           {(provided) => {
             return (
               <>
-                <h4 className="text-truegray-900 text-lg mb-4 font-bold">
-                  {strings.entities.coursePage}{' '}
-                  <FaIcon icon={categoryIconMapping['courses']} />
-                </h4>
                 <ul
                   className="first:mt-0 mb-6 mt-0 mobile:mt-2"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
-                  {exGroup.children?.map((ex, i) =>
+                  {exercises.map((ex, i) =>
                     renderLink(
                       {
                         url: ex.href ?? `/${ex.context.id}`,
