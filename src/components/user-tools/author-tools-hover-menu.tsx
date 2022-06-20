@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import Tippy, { TippyProps } from '@tippyjs/react'
 
 import { AuthorTools, Tool } from './author-tools'
@@ -9,8 +10,7 @@ export interface AuthorToolsData {
   type: string
   id: number
   alias?: string
-  taxonomyFolder?: boolean
-  taxonomyTopic?: boolean
+  taxonomyType?: TaxonomyTermType
   revisionId?: number
   parentId?: number
   courseId?: number
@@ -76,7 +76,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           Tool.AnalyticsLink,
           Tool.Trash,
         ]
-      case 'Taxonomy':
+      case 'TaxonomyTerm':
         return [
           Tool.Abo,
           Tool.Organize,

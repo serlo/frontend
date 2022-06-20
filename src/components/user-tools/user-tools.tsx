@@ -174,7 +174,7 @@ export function UserTools({
     if (type.startsWith('Page')) {
       return canDo(Uuid.create('PageRevision')) ? url : undefined
     }
-    if (type == 'Taxonomy') return canDo(TaxonomyTerm.set) ? url : undefined
+    if (type == 'TaxonomyTerm') return canDo(TaxonomyTerm.set) ? url : undefined
     return url
   }
 
@@ -231,7 +231,7 @@ export function UserTools({
       'Applet',
       'Event',
       'CoursePage',
-      'Taxonomy',
+      'TaxonomyTerm',
       '_ExerciseInline',
       '_ExerciseGroupInline',
       '_SolutionInline',

@@ -533,7 +533,7 @@ export interface PageSerializedState extends Uuid, License {
 }
 
 export interface TaxonomySerializedState extends Uuid {
-  __typename?: 'Taxonomy'
+  __typename?: 'TaxonomyTerm'
   term: {
     name: string
   }

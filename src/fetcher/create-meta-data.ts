@@ -6,21 +6,6 @@
 import { FrontendContentNode } from '@/data-types'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
-/*export function getMetaContentType(uuid) {
-  contentType = uuid.__typename
-  //match legacy content types that are used by google custom search
-  if (processed.contentType === undefined) return ''
-  if (processed.contentType === 'Exercise') return 'text-exercise'
-  if (processed.contentType === 'CoursePage') return 'course-page'
-
-  const type = ((processed.data as unknown) as ResponseDataQuickFix).type
-  if (type === 'topicFolder' || type === 'curriculumTopicFolder')
-    return 'topic-folder'
-  if (contentType === 'TaxonomyTerm') return 'topic'
-  //Article, Video, Applet, Page
-  return contentType.toLowerCase()
-}*/
-
 export function getMetaImage(alias: string) {
   const subject = alias.split('/')[1]
   let imageSrc = 'serlo.jpg'

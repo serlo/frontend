@@ -1,4 +1,5 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { TaxonomyTermType } from '@serlo/api'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -140,10 +141,8 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
         supportedTaxonomyTypes={[
-          'topic',
-          'topicFolder',
-          'curriculumTopic',
-          'curriculumTopicFolder',
+          TaxonomyTermType.Topic,
+          TaxonomyTermType.ExerciseFolder,
         ]}
         unsupportedIds={existingIds}
         renderButtons={renderAddButton}

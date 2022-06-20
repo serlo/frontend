@@ -91,7 +91,7 @@ export const featuredContent = {
     },
     {
       title: 'Aufgaben Vektor- vs. Pixelgrafik',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/informatik/94110/aufgaben-vektor-vs.-pixelgrafik',
       img: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg',
     },
@@ -103,7 +103,7 @@ export const featuredContent = {
     },
     {
       title: 'Aufgaben zur Darstellung von Informationen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/informatik/58039/aufgaben-zur-darstellung-von-informationen',
       img: 'https://assets.serlo.org/legacy/57f662a3d4b92_7176f6b7249476b91df9c5e7ecbb5dae7fc20015.jpg',
     },
@@ -184,7 +184,7 @@ export const featuredContent = {
 
     {
       title: 'Gemischte Aufgaben zum Ableiten von Funktionen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/26408/gemischte-aufgaben-zum-ableiten-von-funktionen',
       img: 'https://assets.serlo.org/legacy/573d7aa6699a3_6ffaa0ec0cb792e145610ebbb850e6d669154e23.png',
     },
@@ -212,14 +212,14 @@ export const featuredContent = {
 
     {
       title: 'Aufgaben zu den binomischen Formeln',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/26312/aufgaben-zu-den-binomischen-formeln',
       img: 'https://assets.serlo.org/legacy/5321cc011eea7_a6939af75e1532d9027d2bc2e7a8d6721f73beeb.jpg',
     },
 
     {
       title: 'Aufgaben zu quadratischen Gleichungen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/26259/aufgaben-zu-quadratischen-gleichungen',
       img: '',
     },
@@ -233,7 +233,7 @@ export const featuredContent = {
 
     {
       title: 'Gemischte Aufgaben zu Gleichungen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/25103/gemischte-aufgaben-zu-gleichungen',
       img: '',
     },
@@ -241,7 +241,7 @@ export const featuredContent = {
     {
       title:
         'Aufgaben zum Sinus, Kosinus und Tangens im rechtwinkligen Dreieck',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/30680/aufgaben-zum-sinus-kosinus-und-tangens-im-rechtwinkligen-dreieck',
       img: '',
     },
@@ -269,7 +269,7 @@ export const featuredContent = {
 
     {
       title: 'Aufgaben zu den Potenzgesetzen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/23665/aufgaben-zu-den-potenzgesetzen',
       img: 'https://assets.serlo.org/5e99543857efc_8be53479c9177f691809e1bbf8a08a92e1ae8bb0.PNG',
     },
@@ -283,14 +283,14 @@ export const featuredContent = {
 
     {
       title: 'Aufgaben zu linearen Funktionen und Geradengleichungen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/31912/aufgaben-zu-linearen-funktionen-und-geradengleichungen',
       img: 'https://assets.serlo.org/5f3666e0406a5_893f44e18c81875c8bdb3115c41805506e437b4a.svg',
     },
 
     {
       title: 'Gemischte Aufgaben zur Mengenlehre',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/mathe/30023/gemischte-aufgaben-zur-mengenlehre',
       img: '',
     },
@@ -341,7 +341,7 @@ export const featuredContent = {
     },
     {
       title: 'Zelltypen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/biologie/70946/zelltypen',
       img: 'https://assets.serlo.org/legacy/58c90d9bca918_17445d63d74dd0a475ffa9fac5c70daa1671c568.jpg',
     },
@@ -421,7 +421,7 @@ export const featuredContent = {
     },
     {
       title: 'Schätze den Wasserverbrauch',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/nachhaltigkeit/182868/sch%C3%A4tze-den-wasserverbrauch',
       img: 'https://assets.serlo.org/61409553967b5_3ab8bb7f3fd150e7b0c427de743ffada1b73747a.jpg',
     },
@@ -544,7 +544,7 @@ export const featuredContent = {
     },
     {
       title: 'Aufgaben zu Alkanen, Alkenen und Alkinen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/chemie/155791/aufgaben-zu-alkanen-alkenen-und-alkinen',
       img: 'https://assets.serlo.org/5e858fa0b97f8_50710e94bdb2f5c3be15e842de1c29269806290d.jpg',
     },
@@ -708,7 +708,7 @@ export const featuredContent = {
     },
     {
       title: 'Übungen zum richtigen Lesen von Aufgabenstellungen',
-      type: 'topicFolder',
+      type: 'exerciseFolder',
       url: '/lerntipps/119344/%C3%BCbungen-zum-richtigen-lesen-von-aufgabenstellungen',
       img: 'https://assets.serlo.org/5bbdcd8fdd6fc_a9048ddcdb5dc5abdc61598b5a6eb9c560964e27.jpg',
     },

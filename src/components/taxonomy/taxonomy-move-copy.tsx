@@ -1,5 +1,6 @@
 import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -146,7 +147,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     return (
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
-        supportedTaxonomyTypes={['topic', 'topicFolder']}
+        supportedTaxonomyTypes={[
+          TaxonomyTermType.Topic,
+          TaxonomyTermType.ExerciseFolder,
+        ]}
         unsupportedIds={[taxonomyData.id]}
         renderButtons={renderButtons}
       />
@@ -224,9 +228,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     if (!taxonomyData.exercises.length) return null
     return (
       <StaticInfoPanel type="info" icon={faInfoCircle}>
-        {replacePlaceholders(loggedInStrings.topicFolderNotice, {
+        {replacePlaceholders(loggedInStrings.exerciseFolderNotice, {
           break: <br />,
-          topicFolder: strings.entities.topicFolder,
+          exerciseFolder: strings.entities.exerciseFolder,
         })}
       </StaticInfoPanel>
     )
