@@ -122,7 +122,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
       if (
         hasOwnPropertyTs(links[0], 'type') &&
-        links[0].type.startsWith('exercise')
+        (links[0].type == 'exercise' || links[0].type == 'exercise-group')
       ) {
         return renderCategory(
           category,
