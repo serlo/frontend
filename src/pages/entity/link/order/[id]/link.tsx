@@ -44,7 +44,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const router = useRouter()
   const { entityData } = pageData
   const isCourse = entityData.typename.startsWith('Course')
-
+  const entityId = entityData.courseData?.id ?? entityData.id
   const [coursePages, setCoursePages] = useState<CoursePageEntry[]>(
     entityData.courseData?.pages ?? []
   )
@@ -67,13 +67,13 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
 
     const success = await sort({
       childrenIds,
-      entityId: entityData.id,
+      entityId: entityId,
     })
 
     if (success) {
       showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
       setTimeout(() => {
-        void router.push(entityData.alias)
+        void router.push(`/${entityId}`)
       }, 500)
     }
   }
