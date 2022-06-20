@@ -254,6 +254,8 @@ export function getPreviewStringFromExercise(
     (titleState.type === 'slate-p' &&
       titleState.children?.[0].type === 'text' &&
       titleState.children?.[0].text) ||
+    (titleState.children?.[0].type === 'inline-math' &&
+      titleState.children?.[0].formula) ||
     (titleState.type === 'slate-container' &&
       titleState.children?.[0].children?.[0].type === 'text' &&
       titleState.children?.[0].children?.[0].text)

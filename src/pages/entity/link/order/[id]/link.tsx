@@ -22,17 +22,20 @@ import {
   TaxonomyPage,
   TaxonomyData,
   TopicCategoryTypes,
+  SingleEntityPage,
+  FrontendExerciseNode,
+  FrontendExerciseGroupNode,
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { useTermSortMutation } from '@/helper/mutations/taxonomyTerm'
+import { useEntitySortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
-// this duplicates some code from /taxonomy/term/sort/entities… but since this feature will probably change / be removed in the future I'm okay with that
+// this duplicates some from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 
-export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
+export default renderedPageNoHooks<{ pageData: SingleEntityPage }>((props) => {
   return (
     <FrontendClientBase>
       <Content {...props} />
@@ -40,11 +43,11 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
   )
 })
 
-function Content({ pageData }: { pageData: TaxonomyPage }) {
-  const sortTerm = useTermSortMutation()
-  const router = useRouter()
-  const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
-  const taxUrl = `/${taxonomyData.id}`
+function Content({ pageData }: { pageData: SingleEntityPage }) {
+  const sort = useEntitySortMutation
+
+  const { entityData } = pageData
+  const isCourse = entityData.typename === 'Course'
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -52,32 +55,33 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   const loggedInStrings = loggedInData.strings.taxonomyTermTools.sort
 
   const onSave = async () => {
-    const childrenIds = allCategories.reduce<number[]>((idArray, category) => {
-      if (!taxonomyData[category] || !taxonomyData[category].length)
-        return idArray
+    console.log('saving…')
+    // const childrenIds = allCategories.reduce<number[]>((idArray, category) => {
+    //   if (!taxonomyData[category] || !taxonomyData[category].length)
+    //     return idArray
 
-      return [
-        ...idArray,
-        ...taxonomyData[category].map((entity) => {
-          if (hasOwnPropertyTs(entity, 'id')) {
-            return entity.id
-          }
+    //   return [
+    //     ...idArray,
+    //     ...taxonomyData[category].map((entity) => {
+    //       if (hasOwnPropertyTs(entity, 'id')) {
+    //         return entity.id
+    //       }
 
-          return entity.context.id
-        }),
-      ]
-    }, [])
+    //       return entity.context.id
+    //     }),
+    //   ]
+    // }, [])
 
-    const success = await sortTerm({
-      childrenIds,
-      taxonomyTermId: taxonomyData.id,
-    })
-    if (success) {
-      showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
-      setTimeout(() => {
-        void router.push(taxUrl)
-      }, 500)
-    }
+    // const success = await sortTerm({
+    //   childrenIds,
+    //   taxonomyTermId: taxonomyData.id,
+    // })
+    // if (success) {
+    //   showToastNotice(loggedInData.strings.mutations.success.generic, 'success')
+    //   setTimeout(() => {
+    //     void router.push(taxUrl)
+    //   }, 500)
+    // }
   }
 
   return (
@@ -85,11 +89,73 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       {renderBackButton()}
       <PageTitle title={loggedInStrings.title} />
       <div className="mx-side">
-        {renderCategories()}
+        {isCourse ? renderCoursePages() : renderExercises()}
         {renderUpdateButton()}
       </div>
     </>
   )
+
+  function renderExercises() {
+    if (entityData.typename !== 'ExerciseGroup') return
+
+    const exGroup = entityData.content?.[0] as FrontendExerciseGroupNode
+
+    return (
+      <DragDropContext
+        //   key={category}
+        onDragEnd={(result) => {
+          const { source, destination } = result
+          if (!destination) return
+          // const category = source.droppableId as Exclude<
+          //   TopicCategoryTypes,
+          //   'folders'
+          // >
+          // setTaxonomyData({
+          //   ...taxonomyData,
+          //   [category]: arrayMoveImmutable(
+          //     taxonomyData[category],
+          //     source.index,
+          //     destination.index
+          //   ),
+          // })
+        }}
+      >
+        <Droppable droppableId="exerciseGroups">
+          {(provided) => {
+            return (
+              <>
+                <h4 className="text-truegray-900 text-lg mb-4 font-bold">
+                  {strings.entities.coursePage}{' '}
+                  <FaIcon icon={categoryIconMapping['courses']} />
+                </h4>
+                <ul
+                  className="first:mt-0 mb-6 mt-0 mobile:mt-2"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {exGroup.children?.map((ex, i) =>
+                    renderLink(
+                      {
+                        url: ex.href ?? `/${ex.context.id}`,
+                        title: getPreviewStringFromExercise(ex, strings),
+                        id: ex.context.id,
+                      },
+                      i
+                    )
+                  )}
+                  {provided.placeholder}
+                </ul>
+              </>
+            )
+          }}
+        </Droppable>
+      </DragDropContext>
+    )
+  }
+  function renderCoursePages() {
+    if (entityData.typename !== 'Course') return
+    return 123
+  }
 
   function renderBackButton() {
     return (
@@ -97,104 +163,11 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
         data={[
           {
             label: strings.revisions.toContent,
-            url: taxUrl,
+            url: pageData.entityData.alias,
           },
         ]}
         asBackButton
       />
-    )
-  }
-
-  function renderCategories() {
-    return [...allCategories].map((category) => {
-      if (!(category in taxonomyData)) return null
-      const links = taxonomyData[category]
-      if (!links || !links.length || typeof links == 'boolean') return null
-
-      if (
-        hasOwnPropertyTs(links[0], 'type') &&
-        (links[0].type == 'exercise' || links[0].type == 'exercise-group')
-      ) {
-        return renderCategory(
-          category,
-          (links as unknown as TaxonomyData['exercisesContent']).map(
-            (exNode) => {
-              const url = exNode.href ?? `/${exNode.context.id}`
-              const pos =
-                exNode.positionOnPage !== undefined
-                  ? exNode.positionOnPage + 1
-                  : ''
-              const title = `(${pos}) ${getPreviewStringFromExercise(
-                exNode,
-                strings
-              )}`
-              return { title, url, id: exNode.context.id }
-            }
-          )
-        )
-      } else {
-        return renderCategory(category, links as TaxonomyLink[])
-      }
-    })
-  }
-
-  function renderCategory(
-    category: typeof allCategories[number],
-    links: TaxonomyLink[]
-  ) {
-    if (
-      links.length === 0 ||
-      links.filter((link) => !link.unrevised).length === 0
-    )
-      return null
-    return (
-      <DragDropContext
-        key={category}
-        onDragEnd={(result) => {
-          const { source, destination } = result
-          if (!destination) return
-          const category = source.droppableId as Exclude<
-            TopicCategoryTypes,
-            'folders'
-          >
-          setTaxonomyData({
-            ...taxonomyData,
-            [category]: arrayMoveImmutable(
-              taxonomyData[category],
-              source.index,
-              destination.index
-            ),
-          })
-        }}
-      >
-        <Droppable droppableId={category}>
-          {(provided) => {
-            const categoryAdapted =
-              category === 'subterms'
-                ? 'folders'
-                : category === 'exercisesContent'
-                ? 'exercises'
-                : category
-
-            return (
-              <ul
-                key={category}
-                className="first:mt-0 mb-6 mt-0 mobile:mt-2"
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                <h4 className="text-truegray-900 text-lg mb-4 font-bold">
-                  {strings.categories[categoryAdapted]}{' '}
-                  <FaIcon icon={categoryIconMapping[categoryAdapted]} />
-                </h4>
-
-                {links.map(renderLink)}
-                {provided.placeholder}
-              </ul>
-            )
-          }}
-        </Droppable>
-      </DragDropContext>
     )
   }
 
@@ -244,7 +217,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
   function renderUpdateButton() {
     return (
-      <button className="mt-12 serlo-button-blue" onClick={onSave}>
+      <button className="mt-12 serlo-button-blue" onClick={() => {}}>
         {loggedInStrings.saveButtonText}
       </button>
     )

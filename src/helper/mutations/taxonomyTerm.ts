@@ -63,7 +63,7 @@ export function useDeleteEntityLinkMutation() {
     await taxonomyTermDeleteEntityLink(input)
 }
 
-export function useTermSortMutation() {
+export function useEntitySortMutation() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
 
