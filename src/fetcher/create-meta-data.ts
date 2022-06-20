@@ -4,7 +4,7 @@
 } from '@/fetcher/process-response'*/
 
 import { FrontendContentNode } from '@/data-types'
-import { serloDomain } from '@/helper/serlo-domain'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export function getMetaImage(alias: string) {
   const subject = alias.split('/')[1]

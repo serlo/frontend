@@ -18,7 +18,8 @@ import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 interface UserToolsProps {
   id: number
@@ -168,28 +169,18 @@ export function UserTools({
   function getEditHref(): string | undefined {
     const revisionId = data.revisionId
     const { type, id } = data
+    const url = getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
 
     if (type.startsWith('Page')) {
-      return canDo(Uuid.create('PageRevision'))
-        ? getRevisionEditUrl(true, id, revisionId)
-        : undefined
+      return canDo(Uuid.create('PageRevision')) ? url : undefined
     }
-
-    if (type == 'TaxonomyTerm') {
-      return canDo(TaxonomyTerm.set) ? `/taxonomy/term/update/${id}` : undefined
-    }
-
-    return isRevision
-      ? getRevisionEditUrl(false, id, revisionId)
-      : `/entity/repository/add-revision/${id}`
+    if (type == 'TaxonomyTerm') return canDo(TaxonomyTerm.set) ? url : undefined
+    return url
   }
 
   function renderUnrevised() {
     return (
-      <Link
-        href={`/entity/repository/history/${id}`}
-        className={buttonClassName()}
-      >
+      <Link href={getHistoryUrl(id)} className={buttonClassName()}>
         {renderInner(
           `${strings.edit.unrevised} (${unrevisedRevisions || ''})`,
           faClock
@@ -206,10 +197,7 @@ export function UserTools({
           cloneElement(data.checkoutRejectButtons, {
             buttonStyle: buttonClassName(),
           })}
-        <Link
-          href={`/entity/repository/history/${data.id}`}
-          className={buttonClassName()}
-        >
+        <Link href={getHistoryUrl(data.id)} className={buttonClassName()}>
           {renderInner(strings.pageTitles.revisionHistory, faList)}
         </Link>
         {lang === 'de' && (

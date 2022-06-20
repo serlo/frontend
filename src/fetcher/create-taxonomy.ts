@@ -8,7 +8,7 @@ import {
   TaxonomyLink,
   TaxonomySubTerm,
 } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],

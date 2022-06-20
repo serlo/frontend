@@ -14,7 +14,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
-import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
@@ -23,6 +22,7 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 interface PagesProps {
   pages: PagesQuery['page']['pages']
@@ -67,11 +67,6 @@ function Content({ pages }: PagesProps) {
   function renderEntries(onlyTrashed: boolean) {
     return pages.map(({ id, trashed, currentRevision, alias }) => {
       if (onlyTrashed !== trashed) return null
-
-      const editHref = shouldUseFeature('addRevisionMutation')
-        ? `/entity/repository/add-revision/${id}`
-        : `/page/update/${id}`
-
       return (
         <li
           key={id}
@@ -84,7 +79,7 @@ function Content({ pages }: PagesProps) {
             <Link
               className="serlo-button-blue-transparent"
               title={loggedInStrings.authorMenu.edit}
-              href={editHref}
+              href={getEditUrl(id)}
             >
               <FaIcon icon={faPencil} />
             </Link>

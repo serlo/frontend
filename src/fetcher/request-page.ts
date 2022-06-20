@@ -19,8 +19,8 @@ import {
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 // ALWAYS start alias with slash
 export async function requestPage(
