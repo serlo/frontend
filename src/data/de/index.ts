@@ -39,19 +39,18 @@ export const instanceData = {
       event: "Veranstaltung",
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabe mit Teilaufgaben",
-      folder: "Themenbereich",
+      topic: "Themenbereich",
       groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
       user: "Benutzer*in",
       video: 'Video',
-      topicFolder: "Aufgabensammlung",
+      exerciseFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
       threads: "Diskussionen",
-      topic: "Thema",
       subject: "Fach",
       userProfile: "Userprofil",
       privacyPolicy: "Datenschutzerklärung",
@@ -116,6 +115,7 @@ export const instanceData = {
       emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
       picture: "Bild",
       previewImage: "Vorschaubild",
+      imageAltFallback: "Bild",
       exercisesTitle: "Übungsaufgaben",
       moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
       relatedContentTitle: "Du hast noch nicht genug vom Thema?",
@@ -236,7 +236,11 @@ export const instanceData = {
       typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
       refreshNow: "Jetzt aktualisieren",
       backToPrevious: "Zurück zur vorherigen Seite",
-      backToHome: "Zur Startseite"
+      backToHome: "Zur Startseite",
+      deletedComment: {
+        title: "Hoppla, das gibt's hier nicht mehr",
+        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde aus absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
+      }
     },
     print: {
       preparingNotice: "Druck wird vorbereitet!",
@@ -705,7 +709,7 @@ export const loggedInData = {
         sourceUrl: "Optionaler Link",
         moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
         addModal: {
-          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %topicFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
           introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
           buttonEx: "Aufgaben hinzufügen",
           buttonExFolder: "Aufgabenordner auswählen",
@@ -720,7 +724,7 @@ export const loggedInData = {
           unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
           addFromFolderTitle: "Aus dem Ordner",
           placeholder: "Eine Serlo Id oder URL hier einfügen",
-          topicFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
+          exerciseFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
         }
       },
       coursePage: {
@@ -826,7 +830,7 @@ export const loggedInData = {
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
         copySuccess: "Erfolgreich kopiert",
-        topicFolderNotice: "Kopieren oder verschieben von \"%topicFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
+        exerciseFolderNotice: "Kopieren oder verschieben von \"%exerciseFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
       },
       deleteAdd: {
         confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
