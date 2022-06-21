@@ -94,6 +94,7 @@ export async function requestPage(
     } else {
       const pages = uuid.pages.map((page) => {
         return {
+          id: page.id,
           title: page.currentRevision?.title ?? '',
           url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
           noCurrentRevision: !page.currentRevision,
@@ -405,6 +406,7 @@ export async function requestPage(
       }
       return {
         title: page.currentRevision?.title ?? '',
+        id: page.id,
         url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
         active,
       }

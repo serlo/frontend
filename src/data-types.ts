@@ -848,6 +848,7 @@ export type CoursePagesData = CoursePageEntry[]
 export interface CoursePageEntry {
   title: string
   url: string
+  id: number
   active?: boolean
   noCurrentRevision?: boolean
 }
