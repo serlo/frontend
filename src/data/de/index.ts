@@ -541,7 +541,7 @@ export const loggedInData = {
         settings: "Einstellungen",
         equationsTitle: "Terme und Gleichungen",
         equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
-        ready: "Bereit zum speichern?"
+        ready: "Bereit zum Speichern?"
       },
       anchor: {
         identifier: "Name",
