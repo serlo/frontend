@@ -52,6 +52,14 @@ export function ToastNotice() {
       }, 1000)
     }
 
+    //Make sure users that just registered get to see the info about their activation mail
+    if (window.location.hash === '#just-registered') {
+      showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
+      setTimeout(() => {
+        window.location.href = '/api/auth/login'
+      }, 700)
+    }
+
     if (
       window.location.hash === '#profile-refresh' ||
       window.location.hash === '#reload'
