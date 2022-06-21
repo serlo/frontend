@@ -1,4 +1,12 @@
+import dynamic from 'next/dynamic'
+import { ScriptProps } from 'next/script'
 import { useEffect } from 'react'
+
+import { useInstanceData } from '@/contexts/instance-context'
+
+const Script = dynamic<ScriptProps>(() =>
+  import('next/script').then((mod) => mod.default)
+)
 
 const pages = [
   '/abc',
@@ -6,9 +14,8 @@ const pages = [
   '/community',
   '/community/ressourcen-paedagoginnen',
   '/eltern',
-  '/feature-suggestions',
+  '/features',
   '/grundprinzipien',
-  '/hilfe-startseite',
   '/jahresberichte',
   '/jobs',
   '/kontakt',
@@ -39,34 +46,38 @@ const pages = [
 ]
 
 export function NewsletterPopup() {
+  const { lang } = useInstanceData()
+
+  const shouldLoad =
+    typeof window !== 'undefined' &&
+    lang === 'de' &&
+    pages.includes(window.location.pathname)
+
   useEffect(() => {
-    const tenant = window.location.hostname.split('.')[0]
-    if (
-      (tenant === 'de' || tenant === 'localhost') &&
-      pages.indexOf(window.location.pathname) > -1
-    ) {
-      const mcscriptTag = document.createElement('script')
-      mcscriptTag.src =
-        '//s3.amazonaws.com/downloads.mailchimp.com/js/signup-forms/popup/embed.js'
-      mcscriptTag.setAttribute(
-        'dojo-config',
-        'usePlainJson: true, isDebug: false'
-      )
-      document.body.appendChild(mcscriptTag)
-      mcscriptTag.onload = () => {
-        const customScriptTag = document.createElement('script')
-        const inlineScript = document.createTextNode(`
-        require(['mojo/signup-forms/Loader'], function(L) {
-          L.start({
-              baseUrl: 'mc.us7.list-manage.com',
-              uuid: '23f4b04bf70ea485a766e532d',
-              lid: 'a7bb2bbc4f'
-          })})`)
-        customScriptTag.appendChild(inlineScript)
-        document.body.appendChild(customScriptTag)
-      }
-    }
+    return () => document.getElementById('PopupSignupForm_0')?.remove()
   }, [])
 
-  return null
+  return shouldLoad ? (
+    <>
+      <Script
+        id="mailchimp-popup"
+        strategy="lazyOnload"
+        src="//s3.amazonaws.com/downloads.mailchimp.com/js/signup-forms/popup/embed.js"
+        data-dojo-config="usePlainJson: true, isDebug: false"
+        onLoad={() => {
+          setTimeout(() => {
+            // @ts-expect-error custom mc code
+            global.require(['mojo/signup-forms/Loader'], function (L) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+              L.start({
+                baseUrl: 'mc.us7.list-manage.com',
+                uuid: '23f4b04bf70ea485a766e532d',
+                lid: 'a7bb2bbc4f',
+              })
+            })
+          }, 200)
+        }}
+      />
+    </>
+  ) : null
 }
