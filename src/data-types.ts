@@ -380,10 +380,6 @@ export type EntityTypes =
   | 'comment'
   | 'thread'
 
-export type EntityStrings = {
-  [K in EntityTypes]: string
-}
-
 // Entities can belong to a category that we use in the taxonomy
 
 export type TopicCategoryTypes =
@@ -930,19 +926,6 @@ export interface TaxonomyData extends TaxonomyTermBase {
 export interface LoggedInData {
   authMenu: HeaderData
   strings: typeof loggedInData['strings']
-}
-
-// User roles
-
-export enum UserRoles {
-  Guest = 'guest',
-  Login = 'login',
-  Moderator = 'moderator',
-  Reviewer = 'reviewer',
-  TaxonomyManager = 'taxonomy-manager',
-  PageBuilder = 'page-builder',
-  Admin = 'admin',
-  SysAdmin = 'sys-admin',
 }
 
 export type CompBaseProps<T = {}> = FunctionComponent<
