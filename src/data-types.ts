@@ -100,7 +100,11 @@ export interface FooterLink {
   icon?: FooterIcon
 }
 
-export type FooterIcon = 'newsletter' | 'github' | 'job'
+export enum FooterIcon {
+  newsletter = 'newsletter',
+  github = 'github',
+  job = 'job',
+}
 
 // Menu shown on the left (desktop) or between header and content (mobile)
 // Links can be active
