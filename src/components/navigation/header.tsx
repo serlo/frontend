@@ -25,7 +25,12 @@ export function Header() {
 
   return (
     <>
-      <header className="text-truegray-700 mt-2 pb-5 mb-5">
+      <header
+        className={clsx(
+          'text-truegray-700 pt-3 pb-3 mb-8',
+          hideQuickbar ? '' : 'bg-brand-100'
+        )}
+      >
         <div className="pt-3 pb-6 px-side lg:px-side-lg">
           <div className="mobile:flex mobile:justify-between md:flex-wrap lg:flex-nowrap">
             <MobileMenuButton onClick={() => setOpen(!isOpen)} open={isOpen} />
