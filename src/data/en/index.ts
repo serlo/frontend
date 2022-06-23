@@ -14,7 +14,7 @@ export const instanceData = {
     search: {
       privacy:
         'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree',
+      agree: 'Agree to use search',
     },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
