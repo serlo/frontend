@@ -32,8 +32,8 @@ export const userQuery = gql`
     authorization
     uuid(alias: { path: $path, instance: $instance }) {
       ... on User {
-        __typename
         id
+        __typename
         trashed
         ...userData
       }
