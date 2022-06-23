@@ -3583,6 +3583,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@oryd/hydra-client@npm:^1.9.0-alpha.3":
+  version: 1.9.0-alpha.3
+  resolution: "@oryd/hydra-client@npm:1.9.0-alpha.3"
+  dependencies:
+    axios: ^0.19.2
+  checksum: e4cd9f9cd40ffb4a702b2cc68a9273ed7da048e3935bc4dfb86d8fe1f081b278eefd3b5d54ba1ba69eb088115af005fcd6617b7f2e18c0187a7758761ecaa3d1
+  languageName: node
+  linkType: hard
+
 "@polka/url@npm:^1.0.0-next.20":
   version: 1.0.0-next.21
   resolution: "@polka/url@npm:1.0.0-next.21"
@@ -3767,6 +3776,7 @@ __metadata:
     "@next/bundle-analyzer": ^12.0.0
     "@ory/integrations": ^0.1.0
     "@ory/kratos-client": ^0.10.1
+    "@oryd/hydra-client": ^1.9.0-alpha.3
     "@serlo/api": ^0.39.0
     "@serlo/authorization": ^0.39.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
@@ -5301,6 +5311,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^0.19.2":
+  version: 0.19.2
+  resolution: "axios@npm:0.19.2"
+  dependencies:
+    follow-redirects: 1.5.10
+  checksum: dcace11a0a25fdf9b3b97fc9d011d23dd9c67cc13d91778080482ddddbbfe731f7410a090b11aa0bbbdf83686c5911ccb4289fd3683b7488c1b0c4d3c882380c
+  languageName: node
+  linkType: hard
+
 "axios@npm:^0.21.4":
   version: 0.21.4
   resolution: "axios@npm:0.21.4"
@@ -6625,6 +6644,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"debug@npm:=3.1.0":
+  version: 3.1.0
+  resolution: "debug@npm:3.1.0"
+  dependencies:
+    ms: 2.0.0
+  checksum: 0b52718ab957254a5b3ca07fc34543bc778f358620c206a08452251eb7fc193c3ea3505072acbf4350219c14e2d71ceb7bdaa0d3370aa630b50da790458d08b3
+  languageName: node
+  linkType: hard
+
 "debug@npm:^2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -7796,6 +7824,15 @@ __metadata:
   version: 3.2.5
   resolution: "flatted@npm:3.2.5"
   checksum: 3c436e9695ccca29620b4be5671dd72e5dd0a7500e0856611b7ca9bd8169f177f408c3b9abfa78dfe1493ee2d873e2c119080a8a9bee4e1a186a9e60ca6c89f1
+  languageName: node
+  linkType: hard
+
+"follow-redirects@npm:1.5.10":
+  version: 1.5.10
+  resolution: "follow-redirects@npm:1.5.10"
+  dependencies:
+    debug: =3.1.0
+  checksum: 0edc4b74e37e7b88ee716188a8f2a790238877c1d954f00c7b78d560f3bef40061c130536d13bee8e47b4e8e71edf1175a2de2729e51ab8206e4646b2370e484
   languageName: node
   linkType: hard
 
