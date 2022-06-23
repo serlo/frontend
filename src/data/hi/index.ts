@@ -12,7 +12,7 @@ export const instanceData = {
     },
     search: {
       privacy: "खोज गूगल द्वारा प्रदान की गई है। क्या जानकारी संसाधित है, यह जानने के लिए हमारी%privacypolicy% देखें।",
-      agree: "सहमत"
+      agree: 'Agree to use search'
     },
     footer: {
       summaryHeading: "Serlo.org सीखने की विकिपीडिया है",

@@ -122,7 +122,7 @@ function Entry({
           href={url}
           path={['menu', i, subI!]}
           className={clsx(
-            'flex border-b border-brand-lighter',
+            'text-brand flex border-b border-brand-lighter',
             'hover:no-underline p-4 hover:bg-brand-300',
             isChild && 'bg-white',
             open && 'bg-brand-300'

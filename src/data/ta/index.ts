@@ -12,7 +12,7 @@ export const instanceData = {
     },
     search: {
       privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree'
+      agree: 'Agree to use search'
     },
     footer: {
       summaryHeading: "கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.",

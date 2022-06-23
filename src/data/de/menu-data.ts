@@ -43,7 +43,7 @@ export const headerData: InstanceData['headerData'] = [
     ],
   },
   {
-    url: '/serlo',
+    url: '',
     title: 'Über Uns',
     icon: 'about',
     //as of now this is a duplicate of the secondary menu, but this might change?
