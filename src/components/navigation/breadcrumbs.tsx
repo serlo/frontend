@@ -21,7 +21,7 @@ export function Breadcrumbs({
   noIcon,
 }: BreadcrumbsProps) {
   return (
-    <nav className={clsx('mx-side mt-6 sm:mb-11 sm:ml-2.5')}>
+    <nav className={clsx('mx-side mt-5 sm:mb-11 sm:ml-2.5')}>
       {data &&
         data.map((bcEntry, i) => {
           return (
