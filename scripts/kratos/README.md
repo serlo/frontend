@@ -15,7 +15,7 @@
     const headerFromCloudFlare =  `Serlo Service=${serviceToken};User=${user}`
     return handleAuthentication(headerFromCloudFlare, async (token) => {
 ```
+4. Start api and db layer
+5. Head to `localhost:3000/login`. ID: `dev`, password `123456`
 
-4. Head to `localhost:3000/login`. ID: `dev`, password `123456`
-
-Note: You may have to enable cors in you browser. Use an extension for that, like
+Note: You may have to enable cors in you browser. Use an extension for that, like [CORS Everywhere](https://addons.mozilla.org/de/firefox/addon/cors-everywhere/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
