@@ -14,7 +14,7 @@ import {
 } from '@/data-types'
 
 // Result of the htmlparser
-interface LegacyNode {
+export interface LegacyNode {
   type: string
   name: string
   attribs: {
