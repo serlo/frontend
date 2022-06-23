@@ -1,4 +1,4 @@
-import { TaxonomyTermType } from '@serlo/api'
+import { Instance, TaxonomyTermType } from '@serlo/api'
 import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
@@ -308,9 +308,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     }
 
     const shouldRenderEvents =
-      (lang === 'de' &&
+      (lang === Instance.De &&
         router.asPath === '/community/142215/veranstaltungen') ||
-      (lang !== 'de' && router.asPath.startsWith('/community'))
+      (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
       if (entityType === 'event' && !shouldRenderEvents) return null

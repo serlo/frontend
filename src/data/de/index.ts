@@ -1,6 +1,7 @@
+import { Instance } from '@serlo/api';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "de",
+  lang: Instance.De,
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,

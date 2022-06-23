@@ -1,5 +1,6 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { Instance } from '@serlo/api'
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
@@ -203,7 +204,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderEditMotivationLink() {
-    if (lang !== 'de') return null
+    if (lang !== Instance.De) return null
     return (
       <p className="serlo-p text-sm text-right ml-auto mt-3">
         <Link

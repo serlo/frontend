@@ -1,3 +1,5 @@
+import { Instance } from '@serlo/api'
+
 import { ProfileDescriptionEditor } from './profile-description-editor'
 import { ProfileExperimental } from './profile-experimental'
 import { getAvatarUrl } from './user-link'
@@ -104,7 +106,7 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   }
 
   function renderHowToEditMotivation() {
-    if (lang !== 'de') return null
+    if (lang !== Instance.De) return null
     const { buttonText, intro, privacy, toForm } = loggedInStrings.motivation
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 

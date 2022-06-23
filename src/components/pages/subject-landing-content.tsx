@@ -12,6 +12,7 @@ import { deSubjectLandingSubjects } from './subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomySubTerm } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { getServerSideStrings } from '@/helper/feature-i18n'
 
 interface SubjectLandingContentProps {
@@ -25,7 +26,7 @@ export function SubjectLandingContent({
 }: SubjectLandingContentProps) {
   const { lang } = useInstanceData()
 
-  if (lang !== 'de') return null
+  if (lang !== Instance.De) return null
   const instanceData = getServerSideStrings(lang)
 
   const data = deSubjectLandingData[subject]

@@ -5,6 +5,7 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
 import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
+import { Instance } from '@serlo/api'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState, cloneElement } from 'react'
@@ -200,7 +201,7 @@ export function UserTools({
         <Link href={getHistoryUrl(data.id)} className={buttonClassName()}>
           {renderInner(strings.pageTitles.revisionHistory, faList)}
         </Link>
-        {lang === 'de' && (
+        {lang === Instance.De && (
           <Link
             href="/community/140473/hilfeseiten-für-reviewer"
             className={buttonClassName()}

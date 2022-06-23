@@ -1,3 +1,4 @@
+import { Instance } from '@serlo/api'
 import { Fragment } from 'react'
 
 import { Link } from '../content/link'
@@ -115,7 +116,7 @@ export function ProfileBadges({
     )
     return (
       <>
-        {lang === 'de' && anchor ? (
+        {lang === Instance.De && anchor ? (
           <Link
             unstyled
             href={`/community/202923/rollen-der-serlo-community#${anchor}`}

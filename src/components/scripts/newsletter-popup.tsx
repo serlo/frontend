@@ -1,3 +1,4 @@
+import { Instance } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { ScriptProps } from 'next/script'
 import { useEffect } from 'react'
@@ -50,7 +51,7 @@ export function NewsletterPopup() {
 
   const shouldLoad =
     typeof window !== 'undefined' &&
-    lang === 'de' &&
+    lang === Instance.De &&
     pages.includes(window.location.pathname)
 
   useEffect(() => {

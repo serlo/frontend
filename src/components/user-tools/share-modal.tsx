@@ -6,6 +6,7 @@ import { faCompass } from '@fortawesome/free-solid-svg-icons/faCompass'
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
+import { Instance } from '@serlo/api'
 import clsx from 'clsx'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'
@@ -110,7 +111,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     }
   }
 
-  const lmsData = lang === 'de' ? lmsShare : [lmsShare[0]] //mebis only in de
+  const lmsData = lang === Instance.De ? lmsShare : [lmsShare[0]] //mebis only in de
   const pdfData = [getPdfData(), getPdfData(true)]
 
   return (

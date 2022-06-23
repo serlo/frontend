@@ -1,3 +1,5 @@
+import { Instance } from '@serlo/api'
+
 import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -28,7 +30,7 @@ export function UnrevisedRevisionsOverview({
     const { supportLinks, guideline } = strings.unrevisedRevisions
 
     const guidelineUrl =
-      lang === 'de'
+      lang === Instance.De
         ? '/140473'
         : 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/edit'
 

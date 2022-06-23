@@ -1,3 +1,4 @@
+import { Instance } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
@@ -61,7 +62,9 @@ export function FrontendClientBase({
       const featureI18n = require('@/helper/feature-i18n') as {
         getInstanceDataByLang: typeof getInstanceDataByLang
       }
-      return featureI18n.getInstanceDataByLang(locale!)
+      return featureI18n.getInstanceDataByLang(
+        (locale as Instance) ?? Instance.De
+      )
     } else {
       // load instance data from client from document tag
       return JSON.parse(

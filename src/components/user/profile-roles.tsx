@@ -1,3 +1,4 @@
+import { Instance } from '@serlo/api'
 import clsx from 'clsx'
 import { partition } from 'ramda'
 
@@ -53,7 +54,7 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
 
     return (
       <>
-        {lang === 'de' ? (
+        {lang === Instance.De ? (
           <Link href={`/community/202923/rollen-der-serlo-community#${role}`}>
             {label}
           </Link>

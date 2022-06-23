@@ -44,7 +44,7 @@ export interface EventHistoryProps {
 // Instance data is not part of initial props anymore. Instead, it is added to the html directly.
 
 export interface InstanceData {
-  lang: Instance | string
+  lang: Instance
   strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
