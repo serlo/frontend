@@ -57,7 +57,7 @@ export function ToastNotice() {
       showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
       setTimeout(() => {
         window.location.href = '/api/auth/login'
-      }, 700)
+      }, 400)
     }
 
     if (
