@@ -12,13 +12,13 @@ export function getMetaImage(alias: string) {
 
   switch (subject) {
     case 'mathe':
-      imageSrc = 'mathematik.jpg'
+      imageSrc = 'mathematik.png'
       break
     case 'nachhaltigkeit':
-      imageSrc = 'nachhaltigkeit.jpg'
+      imageSrc = 'nachhaltigkeit.png'
       break
     case 'biologie':
-      imageSrc = 'biologie.jpg'
+      imageSrc = 'biologie.png'
       break
   }
 
