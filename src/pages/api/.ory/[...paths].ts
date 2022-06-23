@@ -65,8 +65,8 @@ export function createApiHandler(options: CreateApiHandlerOptions) {
       req
         .pipe(
           request(url, {
-            followAllRedirects: false,
-            followRedirect: false,
+            followAllRedirects: true,
+            followRedirect: true,
             gzip: true,
             json: false,
           })
@@ -97,7 +97,7 @@ export function createApiHandler(options: CreateApiHandlerOptions) {
               encode,
             }))
             .map(({ value, name, ...options }) => {
-              console.log(value, name, options)
+              // console.log(value, name, options)
               return serialize(name, value, options as CookieSerializeOptions)
             })
 

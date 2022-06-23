@@ -46,7 +46,33 @@ services:
       - '4437:4437'
     networks:
       - intranet
+  hydra:
+    image: oryd/hydra:v1.11.8
+    ports:
+      - '4444:4444'
+      - '4445:4445'
+    command: serve all --dangerous-force-http
+    volumes:
+      - type: volume
+        source: hydra-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+    environment:
+      - LOG_LEVEL=debug
+      - LOG_LEAK_SENSITIVE_VALUES=true
+      - OAUTH2_EXPOSE_INTERNAL_ERRORS=1
+      - URLS_SELF_ISSUER=http://localhost:4444
+      - URLS_LOGIN=http://localhost:3000/login
+      - URLS_LOGOUT=http://localhost:3000/login
+      - URLS_CONSENT=http://localhost:3000/login
+      - DSN=memory
+      - SECRETS_SYSTEM=youReallyNeedToChangeThis
+      - OIDC_SUBJECT_IDENTIFIERS_ENABLED=public,pairwise
+      - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
+    networks:
+      - intranet
 networks:
   intranet:
 volumes:
   kratos-sqlite:
+  hydra-sqlite:

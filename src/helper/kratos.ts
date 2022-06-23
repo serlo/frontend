@@ -1,5 +1,6 @@
-import { Configuration, V0alpha2Api } from '@ory/kratos-client'
-
+import { edgeConfig } from '@ory/integrations'
+import { Configuration as KratosConfig, V0alpha2Api } from '@ory/kratos-client'
+import { AdminApi, Configuration as HydraConfig } from '@oryd/hydra-client'
 // export const kratos = new V0alpha2Api(
 //   new Configuration({
 //     basePath: 'https://kratos.serlo-staging.dev',
@@ -13,7 +14,20 @@ import { Configuration, V0alpha2Api } from '@ory/kratos-client'
 // Top fails because of missing Cookies
 
 export const kratos = new V0alpha2Api(
-  new Configuration({
+  new KratosConfig({
     basePath: `/api/.ory`,
+  })
+)
+
+const baseOptions: any = {}
+
+if (process.env.MOCK_TLS_TERMINATION) {
+  baseOptions.headers = { 'X-Forwarded-Proto': 'https' }
+}
+
+export const hydra = new AdminApi(
+  new HydraConfig({
+    basePath: 'http://127.0.0.1:4445',
+    baseOptions,
   })
 )
