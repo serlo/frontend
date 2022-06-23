@@ -51,7 +51,7 @@ export function Revision({ data }: RevisionProps) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (window.location.hash.substr(1) === DisplayModes.SideBySide) {
+    if (window.location.hash.substring(1) === DisplayModes.SideBySide) {
       setDisplayMode(DisplayModes.SideBySide)
       removeHash()
     }

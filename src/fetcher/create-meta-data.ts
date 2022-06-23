@@ -56,9 +56,9 @@ export function getMetaDescription(content: FrontendContentNode[]): string {
 
   const softCutoff = 135
   const fallback =
-    longFallback.substr(
+    longFallback.substring(
       0,
-      softCutoff + longFallback.substr(softCutoff).indexOf(' ')
+      softCutoff + longFallback.substring(softCutoff).indexOf(' ')
     ) + ' …'
   const description = fallback
   return description
