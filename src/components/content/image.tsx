@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 
 import { Lazy } from './lazy'
 import { Link } from './link'
+import { useInstanceData } from '@/contexts/instance-context'
 import type { FrontendImgNode } from '@/data-types'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -13,6 +14,7 @@ interface ImageProps {
 }
 
 export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
+  const { strings } = useInstanceData()
   const wrapInA = (comp: ReactNode) => {
     if (element.href) {
       // needs investigation if this could be simplified
@@ -45,7 +47,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
             <img
               className="serlo-img"
               src={element.src}
-              alt={element.alt || 'Bild'}
+              alt={element.alt || strings.content.imageAltFallback}
               itemProp="contentUrl"
             />
           </Lazy>
@@ -59,7 +61,9 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   function renderCaption() {
     if (!element.caption) return null
     return (
-      <div className="italic">{renderNested(element.caption, 'caption')}</div>
+      <div className="italic mt-3">
+        {renderNested(element.caption, 'caption')}
+      </div>
     )
   }
 }

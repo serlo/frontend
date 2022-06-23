@@ -22,16 +22,20 @@ type QuickbarData = QuickbarDataEntry[]
 
 interface QuickbarProps {
   subject?: string
+  placeholder?: string
   className?: string
 }
 
-export function Quickbar({ subject, className }: QuickbarProps) {
+export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const [sel, setSel] = useState(-1)
+
+  const wrapper = useRef<HTMLDivElement>(null)
+  const overlayWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (query && !data) fetchData()
@@ -46,13 +50,27 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   useEffect(() => {
     setSel(0)
     setOpen(!!(query && data))
+    setOverlayPosition()
   }, [query, data])
+
+  const setOverlayPosition = () => {
+    if (overlayWrapper.current && wrapper.current) {
+      overlayWrapper.current.style.left = `${
+        wrapper.current.getBoundingClientRect().left
+      }px`
+    }
+  }
+
+  setOverlayPosition()
 
   let results: { entry: QuickbarDataEntry; score: number }[] = []
 
   void findResults()
 
-  const close = () => setOpen(false)
+  const close = () =>
+    setTimeout(() => {
+      setOpen(false)
+    }, 200)
 
   const goToSearch = () => {
     submitEvent('quickbar-to-search')
@@ -72,7 +90,7 @@ export function Quickbar({ subject, className }: QuickbarProps) {
     if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
       window.open(url)
     } else void router.push(url)
-    //`//${host}/${results[sel].entry.id}`
+    close()
   }
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -100,17 +118,12 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   }
 
   return (
-    <div
-      className={clsx(
-        'max-w-2xl mx-auto px-4 text-left font-normal',
-        className
-      )}
-    >
+    <div className={className} ref={wrapper}>
       <div className="relative">
         {renderInput()}
         {query && renderResetButton()}
-        {open && renderOverlay()}
       </div>
+      {renderOverlay()}
     </div>
   )
 
@@ -118,16 +131,12 @@ export function Quickbar({ subject, className }: QuickbarProps) {
     return (
       <input
         type="text"
-        className="border-2 rounded-3xl pl-5 pr-12 h-12 w-full text-lg hover:shadow focus:shadow outline-none"
+        className="border-2 border-brand-150 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
-        placeholder="... heute lerne ich"
+        placeholder={placeholder ?? '... heute lerne ich'}
         ref={inputRef}
-        onBlur={() => {
-          setTimeout(() => {
-            close()
-          }, 200)
-        }}
+        onBlur={close}
         onFocus={() => {
           if (query && data) setOpen(true)
         }}
@@ -152,34 +161,52 @@ export function Quickbar({ subject, className }: QuickbarProps) {
   }
   function renderOverlay() {
     return (
-      <div className="px-5 pb-2 border rounded-xl shadow absolute top-14 w-full bg-white z-20">
-        {results.map((x, i) => (
-          <a
-            key={i}
-            className="serlo-link cursor-pointer hover:no-underline group"
-            onClick={(e) => goToResult(x.entry.id, e)}
-          >
-            <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
-              <span className="text-sm text-gray-700">
-                {x.entry.path.join(' > ')}
-                {x.entry.path.length > 0 ? ' > ' : ''}
-              </span>
+      <div
+        ref={overlayWrapper}
+        className={clsx(
+          'absolute left-side right-side mt-2 ml-2 max-w-2xl',
+          'px-5 pb-2 border rounded-xl shadow bg-white z-20',
+          open ? '' : 'hidden'
+        )}
+      >
+        {open && (
+          <>
+            {results.map((x, i) => (
+              <a
+                key={i}
+                className="serlo-link cursor-pointer hover:no-underline group"
+                onClick={(e) => goToResult(x.entry.id, e)}
+              >
+                <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
+                  <span className="text-sm text-gray-700">
+                    {x.entry.path.join(' > ')}
+                    {x.entry.path.length > 0 ? ' > ' : ''}
+                  </span>
 
-              <span className="text-lg text-brand group-hover:underline">
-                {x.entry.isTax ? <>{x.entry.title}&nbsp;&gt;</> : x.entry.title}
-              </span>
+                  <span className="text-lg text-brand group-hover:underline">
+                    {x.entry.isTax ? (
+                      <>{x.entry.title}&nbsp;&gt;</>
+                    ) : (
+                      x.entry.title
+                    )}
+                  </span>
+                </p>
+              </a>
+            ))}
+            <p
+              className={clsx('text-lg mt-2 text-gray-800', {
+                'bg-brand-50': sel == results.length,
+              })}
+            >
+              <a
+                className="cursor-pointer hover:text-black"
+                onClick={goToSearch}
+              >
+                Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
+              </a>
             </p>
-          </a>
-        ))}
-        <p
-          className={clsx('text-lg mt-2 text-gray-800', {
-            'bg-brand-50': sel == results.length,
-          })}
-        >
-          <a className="cursor-pointer hover:text-black" onClick={goToSearch}>
-            Auf Serlo nach <i className="font-bold">{query}</i> suchen ...
-          </a>
-        </p>
+          </>
+        )}
       </div>
     )
   }

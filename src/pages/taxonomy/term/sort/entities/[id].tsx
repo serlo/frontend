@@ -26,7 +26,7 @@ import {
 import { requestPage } from '@/fetcher/request-page'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { useTermSortMutation } from '@/helper/mutations/taxonomyTerm'
+import { useTaxonomyTermSortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -50,7 +50,7 @@ export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
 })
 
 function Content({ pageData }: { pageData: TaxonomyPage }) {
-  const sortTerm = useTermSortMutation()
+  const sortTerm = useTaxonomyTermSortMutation()
   const router = useRouter()
   const [taxonomyData, setTaxonomyData] = useState(pageData.taxonomyData)
   const taxUrl = `/${taxonomyData.id}`
@@ -122,7 +122,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
       if (
         hasOwnPropertyTs(links[0], 'type') &&
-        links[0].type.startsWith('exercise')
+        (links[0].type == 'exercise' || links[0].type == 'exercise-group')
       ) {
         return renderCategory(
           category,
@@ -223,7 +223,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
               className="block mb-3 leading-cozy"
             >
               <button
-                className="serlo-button serlo-make-interactive-transparent-blue"
+                className="serlo-button-blue-transparent"
                 {...provided.dragHandleProps}
               >
                 <FaIcon icon={faGripLines} />
@@ -253,10 +253,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
   function renderUpdateButton() {
     return (
-      <button
-        className="mt-12 serlo-button serlo-make-interactive-primary"
-        onClick={onSave}
-      >
+      <button className="mt-12 serlo-button-blue" onClick={onSave}>
         {loggedInStrings.saveButtonText}
       </button>
     )

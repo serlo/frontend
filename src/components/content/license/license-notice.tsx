@@ -75,7 +75,7 @@ export function LicenseNotice({
     return (
       <>
         <Link
-          className="serlo-button serlo-make-interactive-transparent-blue font-normal text-base hover:no-underline h-[max-content]"
+          className="serlo-button-blue-transparent font-normal text-base hover:no-underline h-[max-content]"
           title={minTitle}
           href={licenseHref}
           noExternalIcon
@@ -106,7 +106,8 @@ export function LicenseNotice({
   }
 
   function translateTypeString(): string {
-    if (type === 'task' || type == 'exercise-group') return strings.content.task
+    if (type === 'task' || type == 'exercise-group')
+      return strings.content.exercises.task
     return strings.entities[type || 'content']
   }
 }

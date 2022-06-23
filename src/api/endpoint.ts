@@ -1,4 +1,4 @@
-import { serloDomain } from '@/helper/serlo-domain'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export const endpoint =
   process.env.NEXT_PUBLIC_ENV === 'local'

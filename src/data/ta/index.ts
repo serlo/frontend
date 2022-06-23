@@ -12,7 +12,7 @@ export const instanceData = {
     },
     search: {
       privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree'
+      agree: 'Agree to use search'
     },
     footer: {
       summaryHeading: "கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.",
@@ -39,19 +39,18 @@ export const instanceData = {
       event: 'Event',
       exercise: 'Exercise',
       exerciseGroup: "பயிற்சிப் பதிவுகள்",
-      folder: "அடைவு",
+      topic: 'Folder',
       groupedExercise: 'Grouped Exercise',
       page: "பக்கம்",
       solution: "தீர்வு",
       taxonomyTerm: 'Taxonomy Term',
       user: "பயனர்",
       video: "காணொளி",
-      topicFolder: 'Exercise folder',
+      exerciseFolder: 'Exercise folder',
       comment: "கருத்து",
       revision: "மீட்டல்",
       thread: 'Thread',
       threads: 'Threads',
-      topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile',
       privacyPolicy: 'Privacy Policy',
@@ -111,27 +110,31 @@ export const instanceData = {
     content: {
       show: "காட்டு",
       hide: "மறை",
-      prerequisite: 'For this task you need the following basic knowledge:',
-      task: 'Task',
-      right: "சரி",
-      wrong: "பிழை",
-      feedback: 'Feedback',
-      answer: 'Answer',
-      check: "சரிபார்க்கவும்",
-      yourAnswer: "உங்கள் பதில்:",
-      chooseOption: 'Click on one of the options.',
-      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
-      strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
+      imageAltFallback: 'Image',
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: 'For this task you need the following basic knowledge:',
+        task: 'Task',
+        correct: 'Correct',
+        missedSome: 'Almost! You missed at least one correct answer.',
+        wrong: 'Wrong',
+        feedback: 'Feedback',
+        answer: 'Answer',
+        check: 'Check',
+        yourAnswer: 'Your answer…',
+        chooseOption: 'Click on one of the options.',
+        printModeChooseOption: 'Check one of the options.',
+        strategy: 'Solution Strategy'
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -233,7 +236,11 @@ export const instanceData = {
       typeNotSupported: 'Please try reloading this page.',
       refreshNow: 'Refresh now',
       backToPrevious: 'Back to previous page',
-      backToHome: 'To our home page'
+      backToHome: 'To our home page',
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: 'Preparing print!',
@@ -301,6 +308,8 @@ export const instanceData = {
       globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: '%actor% archived %thread%.',
       setThreadStateUnarchived: '%actor% restored %thread%.',
       createComment: '%actor% commented in %thread%: %comment%.',
@@ -328,6 +337,7 @@ export const instanceData = {
       loadMore: 'Load more'
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   }
@@ -554,8 +564,6 @@ export const loggedInData = {
         addAnswer: 'Add answer',
         enterTheValue: 'Enter the value',
         yourSolution: 'Your solution',
-        correct: 'Correct',
-        wrong: 'Wrong',
         number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
@@ -580,10 +588,7 @@ export const loggedInData = {
         singleChoice: 'Single-choice',
         multipleChoice: 'Multiple-choice',
         chooseType: 'Choose the exercise type',
-        addAnswer: 'Add answer',
-        wrong: 'Wrong',
-        missedSome: 'Almost! You missed at least one correct answer',
-        correct: 'Correct'
+        addAnswer: 'Add answer'
       },
       serloTable: {
         mode: 'Mode',
@@ -704,7 +709,7 @@ export const loggedInData = {
         sourceUrl: 'Optional URL',
         moreInFolder: 'You can find more exercises in the following folder',
         addModal: {
-          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %topicFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
           introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
@@ -719,7 +724,7 @@ export const loggedInData = {
           unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
-          topicFolderNote: 'Only one can be selected here'
+          exerciseFolderNote: 'Only one can be selected here'
         }
       },
       coursePage: {
@@ -812,6 +817,9 @@ export const loggedInData = {
       navigation: 'Navigation',
       recycleBin: 'Recycle Bin'
     },
+    pages: {
+      deletedPages: 'Deleted Pages'
+    },
     taxonomyTermTools: {
       copyMove: {
         title: "Move / Copy Entities in Taxonomy",
@@ -822,7 +830,7 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
-        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",

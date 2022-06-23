@@ -63,7 +63,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
       return false
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('probably missing value?')
+      console.error('probably missing value?')
       return false
     }
   }
@@ -76,10 +76,11 @@ function getTaxonomyType(idString?: string) {
   const id = parseInt(idString)
 
   const topicIds = [4, 16, 33, 42, 48, 53]
-  const topicFolderIds = [9, 19, 36, 45, 51, 56]
+  const exerciseFolderIds = [9, 19, 36, 45, 51, 56]
 
   if (topicIds.includes(id)) return TaxonomyTypeCreateOptions.Topic
-  if (topicFolderIds.includes(id)) return TaxonomyTypeCreateOptions.TopicFolder
+  if (exerciseFolderIds.includes(id))
+    return TaxonomyTypeCreateOptions.ExerciseFolder
 
   throw 'unknown taxonomy type'
 }

@@ -12,7 +12,7 @@ export const instanceData = {
     },
     search: {
       privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
-      agree: "Zustimmen"
+      agree: "Zustimmen um zu suchen"
     },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
@@ -39,19 +39,18 @@ export const instanceData = {
       event: "Veranstaltung",
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabe mit Teilaufgaben",
-      folder: "Themenbereich",
+      topic: "Themenbereich",
       groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
       user: "Benutzer*in",
       video: 'Video',
-      topicFolder: "Aufgabensammlung",
+      exerciseFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
       threads: "Diskussionen",
-      topic: "Thema",
       subject: "Fach",
       userProfile: "Userprofil",
       privacyPolicy: "Datenschutzerklärung",
@@ -111,27 +110,31 @@ export const instanceData = {
     content: {
       show: "anzeigen",
       hide: "ausblenden",
-      prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      task: "Aufgabenstellung",
-      right: "Richtig",
-      wrong: "Leider nicht richtig",
-      feedback: 'Feedback',
-      answer: "Antwort",
-      check: "Stimmt's?",
-      yourAnswer: "Deine Antwort…",
-      chooseOption: "Klicke auf eine der Optionen.",
-      printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
-      strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild",
+      imageAltFallback: "Bild",
       exercisesTitle: "Übungsaufgaben",
       moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
       relatedContentTitle: "Du hast noch nicht genug vom Thema?",
       relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
       sourcesTitle: "Quellen",
+      exercises: {
+        prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
+        task: "Aufgabenstellung",
+        correct: "Richtig",
+        missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort.",
+        wrong: "Leider nicht richtig",
+        feedback: 'Feedback',
+        answer: "Antwort",
+        check: "Stimmt's?",
+        yourAnswer: "Deine Antwort…",
+        chooseOption: "Klicke auf eine der Optionen",
+        printModeChooseOption: "Kreuze eine der Optionen an",
+        strategy: "Lösungsstrategie"
+      },
       boxTypes: {
         blank: "Blanko",
         example: "Beispiel",
@@ -233,7 +236,11 @@ export const instanceData = {
       typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
       refreshNow: "Jetzt aktualisieren",
       backToPrevious: "Zurück zur vorherigen Seite",
-      backToHome: "Zur Startseite"
+      backToHome: "Zur Startseite",
+      deletedComment: {
+        title: "Hoppla, das gibt's hier nicht mehr",
+        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde aus absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
+      }
     },
     print: {
       preparingNotice: "Druck wird vorbereitet!",
@@ -301,6 +308,8 @@ export const instanceData = {
       globalDescription: "Alle Aktivitäten auf %lang%.serlo.org "
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: "zu",
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
@@ -328,6 +337,7 @@ export const instanceData = {
       loadMore: "Weitere laden"
     },
     bin: {
+      title: "Titel",
       trashed: "Gelöscht…"
     }
   }
@@ -531,7 +541,7 @@ export const loggedInData = {
         settings: "Einstellungen",
         equationsTitle: "Terme und Gleichungen",
         equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
-        ready: "Bereit zum speichern?"
+        ready: "Bereit zum Speichern?"
       },
       anchor: {
         identifier: "Name",
@@ -554,8 +564,6 @@ export const loggedInData = {
         addAnswer: "Antwort hinzufügen",
         enterTheValue: "Gib hier die Antwort ein",
         yourSolution: "Deine Lösung",
-        correct: "Richtig",
-        wrong: "Falsch",
         number: "Zahl (exakte Lösung, z.B. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Mathematischer Ausdruck (äquivalente Lösung, z.B. \"0,5\" = \"1/2\" = \"2/4\")"
       },
@@ -580,10 +588,7 @@ export const loggedInData = {
         singleChoice: "Single Choice",
         multipleChoice: "Multiple Choice",
         chooseType: "Wähle den Aufgabentyp",
-        addAnswer: "Antwort hinzufügen",
-        wrong: "Falsch",
-        missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort",
-        correct: "Richtig"
+        addAnswer: "Antwort hinzufügen"
       },
       serloTable: {
         mode: "Modus",
@@ -704,7 +709,7 @@ export const loggedInData = {
         sourceUrl: "Optionaler Link",
         moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
         addModal: {
-          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %topicFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
           introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
           buttonEx: "Aufgaben hinzufügen",
           buttonExFolder: "Aufgabenordner auswählen",
@@ -719,7 +724,7 @@ export const loggedInData = {
           unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
           addFromFolderTitle: "Aus dem Ordner",
           placeholder: "Eine Serlo Id oder URL hier einfügen",
-          topicFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
+          exerciseFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
         }
       },
       coursePage: {
@@ -812,6 +817,9 @@ export const loggedInData = {
       navigation: 'Navigation',
       recycleBin: "Papierkorb"
     },
+    pages: {
+      deletedPages: "Gelöschte Seiten"
+    },
     taxonomyTermTools: {
       copyMove: {
         title: "Inhalte in Ordner verschieben / kopieren",
@@ -822,7 +830,7 @@ export const loggedInData = {
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
         copySuccess: "Erfolgreich kopiert",
-        topicFolderNotice: "Kopieren oder verschieben von \"%topicFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
+        exerciseFolderNotice: "Kopieren oder verschieben von \"%exerciseFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
       },
       deleteAdd: {
         confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
