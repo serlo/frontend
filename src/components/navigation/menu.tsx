@@ -15,6 +15,7 @@ import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
 import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+import { submitEvent } from '@/helper/submit-event'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 // Only show some icons on full menu
@@ -181,6 +182,9 @@ function MenuInner({
           'ease-linear duration-700'
         )}
         key={link.title}
+        onClick={() => {
+          if (link.url === '/spenden') submitEvent('spenden-header-menu-click')
+        }}
       >
         {hasChildren ? (
           Tippy ? (

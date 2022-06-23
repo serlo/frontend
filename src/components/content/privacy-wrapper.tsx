@@ -7,7 +7,7 @@ import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { serloDomain } from '@/helper/serlo-domain'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed

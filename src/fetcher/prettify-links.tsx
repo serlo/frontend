@@ -3,7 +3,7 @@ import { request } from 'graphql-request'
 import { idsQuery } from './query-ids'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, FrontendContentNode } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 export async function prettifyLinks(pageData: RequestPageData) {
   const ids: number[] = []

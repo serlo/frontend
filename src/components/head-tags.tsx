@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { BreadcrumbsData, HeadData } from '@/data-types'
-import { serloDomain } from '@/helper/serlo-domain'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface HeadTagsProps {
   data: HeadData

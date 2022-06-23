@@ -931,6 +931,7 @@ export interface EntityMutation {
   setGroupedExercise: SetEntityResponse;
   setSolution: SetEntityResponse;
   setVideo: SetEntityResponse;
+  sort: EntitySortResponse;
   updateLicense: EntityUpdateLicenseResponse;
 }
 
@@ -995,6 +996,11 @@ export interface EntityMutationSetVideoArgs {
 }
 
 
+export interface EntityMutationSortArgs {
+  input: EntitySortInput;
+}
+
+
 export interface EntityMutationUpdateLicenseArgs {
   input: EntityUpdateLicenseInput;
 }
@@ -1009,6 +1015,17 @@ export interface EntityQueryDeletedEntitiesArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   instance?: InputMaybe<Instance>;
+}
+
+export interface EntitySortInput {
+  childrenIds: Array<Scalars['Int']>;
+  entityId: Scalars['Int'];
+}
+
+export interface EntitySortResponse {
+  __typename?: 'EntitySortResponse';
+  query: Query;
+  success: Scalars['Boolean'];
 }
 
 export interface EntityUpdateLicenseInput {
@@ -1483,6 +1500,7 @@ export interface MetadataQuery {
   __typename?: 'MetadataQuery';
   entities: EntityMetadataConnection;
   publisher: Scalars['JSONObject'];
+  version: Scalars['String'];
 }
 
 
@@ -2374,22 +2392,15 @@ export interface TaxonomyTermSortResponse {
 }
 
 export enum TaxonomyTermType {
-  Blog = 'blog',
-  Curriculum = 'curriculum',
-  CurriculumTopic = 'curriculumTopic',
-  CurriculumTopicFolder = 'curriculumTopicFolder',
-  Forum = 'forum',
-  ForumCategory = 'forumCategory',
-  Locale = 'locale',
+  ExerciseFolder = 'exerciseFolder',
   Root = 'root',
   Subject = 'subject',
-  Topic = 'topic',
-  TopicFolder = 'topicFolder'
+  Topic = 'topic'
 }
 
 export enum TaxonomyTypeCreateOptions {
-  Topic = 'topic',
-  TopicFolder = 'topicFolder'
+  ExerciseFolder = 'exerciseFolder',
+  Topic = 'topic'
 }
 
 export interface Thread {
@@ -2497,6 +2508,7 @@ export interface ThreadQuery {
 export interface ThreadQueryAllThreadsArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
+  instance?: InputMaybe<Instance>;
 }
 
 export interface ThreadSetCommentStateInput {

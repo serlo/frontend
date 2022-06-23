@@ -39,19 +39,18 @@ export const instanceData = {
       event: "Evento",
       exercise: "Ejercicio",
       exerciseGroup: "Grupo de ejercicios",
-      folder: "Carpeta",
+      topic: "Carpeta",
       groupedExercise: "Ejercicio agrupado",
       page: "Página",
       solution: "Solución",
       taxonomyTerm: "Término de taxonomía",
       user: "Usuario",
       video: "Vídeo",
-      topicFolder: "Carpeta de ejercicios",
+      exerciseFolder: "Carpeta de ejercicios",
       comment: "Comentario",
       revision: "Revisión",
       thread: "Hilo de conversación",
       threads: "Hilos de conversación",
-      topic: "Tema",
       subject: "Asunto",
       userProfile: "Perfil de usuario",
       privacyPolicy: "Política de privacidad",
@@ -67,7 +66,7 @@ export const instanceData = {
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
       recycleBin: "Papelera de reciclaje",
-      diagon: 'Diagon Alley'
+      diagon: "Callejón de Diagon"
     },
     roles: {
       donor: "Donante",
@@ -116,6 +115,7 @@ export const instanceData = {
       emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
+      imageAltFallback: "Imagen",
       exercisesTitle: "Ejercicios",
       moreExercises: "Puedes encontrar más ejercicios en la siguiente carpeta:",
       relatedContentTitle: "¿Todavía quieres más?",
@@ -125,7 +125,7 @@ export const instanceData = {
         prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
         task: "Tarea",
         correct: "Correcto",
-        missedSome: "¡Casi! Al menos una respuesta no es correcta.",
+        missedSome: "¡Casi! Te faltó al menos una respuesta correcta.",
         wrong: "Incorrecto",
         feedback: "Sugerencias",
         answer: "Respuesta",
@@ -236,7 +236,11 @@ export const instanceData = {
       typeNotSupported: "Por favor, intenta volver a cargar está página.",
       refreshNow: "Actualizar ahora",
       backToPrevious: "Volver a la página anterior",
-      backToHome: "Ir a la página de inicio"
+      backToHome: "Ir a la página de inicio",
+      deletedComment: {
+        title: "Ups, esto ya no está aquí",
+        text: "Lo sentimos, este %type% ya no está en línea.%break% Pero fue borrado por una razón y probablemente no merezca tu tiempo de todos modos 💚"
+      }
     },
     print: {
       preparingNotice: "¡Preparando impresión!",
@@ -259,10 +263,10 @@ export const instanceData = {
       inviteToChat: "Invita al chat",
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
-        part2: "Puedes invitar a %username% al chat para enviar mensajes directos.",
+        part2: "Puedes invitar a %username% al chat para enviarle mensajes directos.",
         messagePlaceholder: "Opcional: Mensaje personal",
         button: "Enviar invitación",
-        success: "El usuario ha sido invitado correctamente."
+        success: "✨ ¡Invitación exitosa!"
       },
       activityGraph: {
         edits: "Ediciones",
@@ -471,9 +475,9 @@ export const loggedInData = {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
+        BAD_USER_INPUT: "Lo sentimos, estás intentando algo que no es posible…",
         UNKNOWN: "Un error desconocido…",
-        valueMissing: "Por favor complete todos los campos requeridos"
+        valueMissing: "Por favor completa todos los campos requeridos"
       }
     },
     editor: {
@@ -591,14 +595,14 @@ export const loggedInData = {
         columnHeaders: "Sólo las etiquetas de las columnas",
         rowHeaders: "Sólo las etiquetas de las filas",
         columnAndRowHeaders: "Etiquetas de columna y fila",
-        convertToText: 'Convert to text',
-        convertToImage: 'Convert to image',
-        row: "row",
-        column: "column",
-        addType: 'Add %type%',
-        addTypeBefore: 'Add %type% before',
-        deleteType: 'Delete %type%',
-        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
+        convertToText: "Convertir a texto",
+        convertToImage: "Convertir a imagen",
+        row: "fila",
+        column: "columna",
+        addType: "Agregar %type%",
+        addTypeBefore: "Agregar %type% antes",
+        deleteType: "Eliminar %type%",
+        confirmDelete: "¿Estás seguro de que quieres eliminar este %type% y su contenido?"
       },
       spoiler: {
         enterATitle: "Introduzca un título"
@@ -611,14 +615,14 @@ export const loggedInData = {
         closeSubMenu: "Cerrar sub-menú",
         heading: "Encabezado",
         headings: "Encabezados",
-        link: "Enlace (%ctrlOrCmd% + K)",
+        link: "Vínculo (%ctrlOrCmd% + K)",
         enterUrl: "Introducir URL",
         openInNewTab: "Abrir en una nueva pestaña",
         orderedList: "Lista ordenada",
         unorderedList: "Lista sin ordenar",
         lists: "Listas",
         mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
-        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
+        code: "Código (%ctrlOrCmd% + + + `)",
         displayAsBlock: "Mostrar en bloque",
         formula: "[fórmula]",
         visual: 'visual',
@@ -665,7 +669,7 @@ export const loggedInData = {
         type: "Tipo de caja",
         titlePlaceholder: "(título opcional)",
         anchorId: "ID de Ancla (marca de posición)",
-        emptyContentWarning: 'Boxes without content will not be displayed'
+        emptyContentWarning: "Cajas sin contenido no se visualizarán"
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
@@ -673,7 +677,7 @@ export const loggedInData = {
         multimediaTitle: "Contenido multimedia asociado con el texto"
       },
       pageLayoutColums: {
-        chooseRatio: 'Choose column ratio'
+        chooseRatio: "Elige la proporción de la columna"
       },
       solution: {
         optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
@@ -697,30 +701,30 @@ export const loggedInData = {
         stillWantMore: "¿Todavía quieres más?",
         moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
         addSource: "Añadir fuente",
-        removeLabel: 'Remove',
-        dragLabel: 'Drag to change order',
-        openInTab: 'Open in new tab',
+        removeLabel: "Eliminar",
+        dragLabel: "Arrastra para cambiar el orden",
+        openInTab: "Abrir en una pestaña nueva",
         sources: "Fuentes",
-        sourceText: 'Source Text',
-        sourceUrl: 'Optional URL',
+        sourceText: "Fuente del texto",
+        sourceUrl: "URL opcional",
         moreInFolder: "Puedes encontrar más ejercicios en la siguiente carpeta:",
         addModal: {
-          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %topicFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
-          introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
-          buttonEx: 'Add exercises',
-          buttonExFolder: 'Select exercise folder',
-          buttonContent: 'Add content',
-          buttonAddType: 'Add %type%',
-          title: 'Add related Content or Exercises',
-          invalidInput: 'Invalid id or url',
-          fetchError: 'Something went wrong, please try later',
-          loading: 'Loading…',
-          notFound: 'Could not find that content',
-          unsupportedType: 'Sorry, type [%type%] is not supported here',
-          unsupportedId: 'Sorry, this ID is not supported here',
-          addFromFolderTitle: 'From the folder',
-          placeholder: 'Paste Serlo ID or URL here',
-          topicFolderNote: 'Only one can be selected here'
+          introText: "Después de leer el artículo, ¿qué ayudaría a los alumnos a continuación? %break% Aquí puedes añadir algunos %exercises% o enlazar a una sola %exerciseFolder%. %break% O puedes sugerir %articles%, %courses% o %videos% para que continúen.",
+          introText2: "Puedes pegar un ID de Serlo, una URL o elegir el contenido de la carpeta principal de abajo.",
+          buttonEx: "Añadir ejercicios",
+          buttonExFolder: "Selecciona la carpeta de ejercicios",
+          buttonContent: "Añadir contenido",
+          buttonAddType: "Agregar %type%",
+          title: "Añadir contenido o ejercicios relacionados",
+          invalidInput: "Id o url inválidos",
+          fetchError: "Se produjo un error. Por favor, inténtalo más tarde.",
+          loading: "Cargando…",
+          notFound: "No se encontró ese contenido",
+          unsupportedType: "Lo sentimos, el tipo [%type%] no se puede usar aquí",
+          unsupportedId: "Disculpa, este ID no se puede usar aquí",
+          addFromFolderTitle: "De la carpeta",
+          placeholder: "Pegar Serlo ID o URL aquí",
+          exerciseFolderNote: "Solo uno puede ser seleccionado aquí"
         }
       },
       coursePage: {
@@ -782,7 +786,7 @@ export const loggedInData = {
       showInstructions: "Mostrar instrucciones",
       editImage: {
         header: "Foto de perfil",
-        buttonText: "Como editar tu foto del perfil",
+        buttonText: "Cómo editar tu foto de perfil",
         description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
         steps: {
           goToChat: "Ir a %chatLink%.",
@@ -808,35 +812,35 @@ export const loggedInData = {
       }
     },
     backend: {
-      pages: 'Static Pages',
-      authorization: 'Authorization',
-      navigation: 'Navigation',
-      recycleBin: 'Recycle Bin'
+      pages: "Páginas estáticas",
+      authorization: "Autorización",
+      navigation: "Navegador",
+      recycleBin: "Papelera de reciclaje"
     },
     pages: {
-      deletedPages: 'Deleted Pages'
+      deletedPages: "Páginas borradas"
     },
     taxonomyTermTools: {
       copyMove: {
-        title: "Move / Copy Entities in Taxonomy",
-        select: "Select entities to move or copy:",
-        target: "Target term:",
-        link: "Link",
-        moveButtonText: "Move to %type%",
-        copyButtonText: "Copy to %type%",
-        moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied",
-        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        title: "Mover / Copiar entidades en Taxonomía",
+        select: "Seleccionar entidades para mover o copiar:",
+        target: "Término objetivo:",
+        link: "Enlace",
+        moveButtonText: "Mover a %type%",
+        copyButtonText: "Copiar a %type%",
+        moveSuccess: "Movido exitosamente",
+        copySuccess: "Copiado exitosamente",
+        exerciseFolderNotice: "En este momento no es posible copiar o mover el tipo %exerciseFolder%. %break% Por favor, crea una nueva carpeta y mueve el contenido en lo posible."
       },
       deleteAdd: {
-        confirmDelete: "Are you sure you want to remove this assignment?",
-        addSuccess: "Sucessfully assigned, reloading …",
-        addNewTitle: "Add new assignment",
-        addButtonText: "Assign"
+        confirmDelete: "¿Está seguro de que deseas borrar esta tarea?",
+        addSuccess: "Asignado con éxito, recargando  …",
+        addNewTitle: "Añadir nueva tarea",
+        addButtonText: "Asignar"
       },
       sort: {
-        title: 'Sort Entities',
-        saveButtonText: 'Save order'
+        title: "Ordenar entidades",
+        saveButtonText: "Guardar orden"
       }
     }
   }
