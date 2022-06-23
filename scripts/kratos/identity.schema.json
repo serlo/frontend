@@ -24,6 +24,12 @@
         },
         "description": {
           "type": "string"
+        },
+        "motivation": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string"
         }
       },
       "required": ["email", "username"],
