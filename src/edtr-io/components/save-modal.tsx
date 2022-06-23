@@ -107,7 +107,7 @@ export function SaveModal({
             setFireSave(true)
           }}
           className={clsx(
-            'serlo-button',
+            'serlo-button ml-2',
             buttonDisabled
               ? 'cursor-default text-gray-300'
               : 'serlo-button-green'

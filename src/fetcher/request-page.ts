@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -18,8 +19,8 @@ import {
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 // ALWAYS start alias with slash
 export async function requestPage(
@@ -93,6 +94,7 @@ export async function requestPage(
     } else {
       const pages = uuid.pages.map((page) => {
         return {
+          id: page.id,
           title: page.currentRevision?.title ?? '',
           url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
           noCurrentRevision: !page.currentRevision,
@@ -136,7 +138,7 @@ export async function requestPage(
         title,
         metaImage,
         contentType:
-          uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder'
+          uuid.type === TaxonomyTermType.ExerciseFolder
             ? 'topic-folder'
             : 'topic',
       },
@@ -404,6 +406,7 @@ export async function requestPage(
       }
       return {
         title: page.currentRevision?.title ?? '',
+        id: page.id,
         url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
         active,
       }

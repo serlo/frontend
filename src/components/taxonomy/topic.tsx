@@ -1,5 +1,6 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import { TaxonomyTermType } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
@@ -26,12 +27,8 @@ export function Topic({ data }: TopicProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const { strings } = useInstanceData()
 
-  const isFolder =
-    data.taxonomyType === 'topicFolder' ||
-    data.taxonomyType === 'curriculumTopicFolder'
-
-  const isTopic =
-    data.taxonomyType === 'topic' || data.taxonomyType === 'curriculumTopic'
+  const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
+  const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
@@ -53,7 +50,7 @@ export function Topic({ data }: TopicProps) {
 
         {isTopic && <TopicCategories data={data} full />}
 
-        {isFolder && data.events && (
+        {isExerciseFolder && data.events && (
           <TopicCategories data={data} categories={['events']} full />
         )}
       </div>
@@ -83,8 +80,8 @@ export function Topic({ data }: TopicProps) {
     return (
       <h1 className="serlo-h1 mt-8 mb-10">
         {data.title}
-        {isFolder && (
-          <span title={strings.entities.topicFolder}>
+        {isExerciseFolder && (
+          <span title={strings.entities.exerciseFolder}>
             {' '}
             <FaIcon
               icon={faFile}
@@ -129,13 +126,7 @@ export function Topic({ data }: TopicProps) {
     return (
       <UserTools
         onShare={() => setModalOpen(true)}
-        data={{
-          type: 'Taxonomy',
-          id: data.id,
-          taxonomyFolder: isFolder,
-          taxonomyTopic: isTopic,
-          alias: data.alias,
-        }}
+        data={{ type: 'TaxonomyTerm', ...data }}
         id={data.id}
         aboveContent={setting?.aboveContent}
       />

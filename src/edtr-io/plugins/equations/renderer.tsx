@@ -8,7 +8,6 @@ import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
 
 export const TableWrapper = styled.div({
-  overflowX: 'scroll',
   padding: '10px 0',
 })
 

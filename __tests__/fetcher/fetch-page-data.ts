@@ -18,7 +18,7 @@ import {
 import { endpoint } from '@/api/endpoint'
 import { SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
-import { serloDomain } from '@/helper/serlo-domain'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 const server = setupServer()
 

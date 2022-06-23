@@ -379,8 +379,6 @@ export type EntityTypes =
   | 'revision'
   | 'comment'
   | 'thread'
-  //just in case
-  | 'folder'
 
 export type EntityStrings = {
   [K in EntityTypes]: string
@@ -850,6 +848,7 @@ export type CoursePagesData = CoursePageEntry[]
 export interface CoursePageEntry {
   title: string
   url: string
+  id: number
   active?: boolean
   noCurrentRevision?: boolean
 }

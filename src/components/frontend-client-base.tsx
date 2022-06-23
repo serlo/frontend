@@ -16,9 +16,9 @@ import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
-import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
 export type FrontendClientBaseProps = PropsWithChildren<{
   noHeaderFooter?: boolean

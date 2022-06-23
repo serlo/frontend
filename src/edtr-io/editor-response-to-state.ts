@@ -95,7 +95,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     return convert(uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
 
     triggerSentry({
       message: `error while converting: ${JSON.stringify(stack)}`,
@@ -533,7 +533,7 @@ export interface PageSerializedState extends Uuid, License {
 }
 
 export interface TaxonomySerializedState extends Uuid {
-  __typename?: 'Taxonomy'
+  __typename?: 'TaxonomyTerm'
   term: {
     name: string
   }

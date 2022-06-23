@@ -39,19 +39,18 @@ export const instanceData = {
       event: "Événement",
       exercise: "Exercice",
       exerciseGroup: "Groupe d'exercices",
-      folder: "Dossier",
+      topic: 'Folder',
       groupedExercise: "Exercice groupé",
       page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
       video: "Vidéo",
-      topicFolder: "Dossier d'exercice",
+      exerciseFolder: 'Exercise folder',
       comment: "Commentaire",
       revision: "Révision",
       thread: 'Thread',
       threads: 'Threads',
-      topic: "Thèmes",
       subject: "Sujet",
       userProfile: "Profil d'utilisateur·utilisatrice",
       privacyPolicy: "Politique de confidentialité",
@@ -116,6 +115,7 @@ export const instanceData = {
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: "Image",
       previewImage: "Aperçu de l'image",
+      imageAltFallback: 'Image',
       exercisesTitle: "Exercices",
       moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
       relatedContentTitle: "Tu en veux encore plus?",
@@ -236,7 +236,11 @@ export const instanceData = {
       typeNotSupported: "Veuille essayer de recharger cette page.",
       refreshNow: "Actualiser maintenant",
       backToPrevious: "Retour à la page précédente",
-      backToHome: "Aller à notre page d'accueil"
+      backToHome: "Aller à notre page d'accueil",
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: "Préparation de l'impression !",
@@ -705,7 +709,7 @@ export const loggedInData = {
         sourceUrl: 'Optional URL',
         moreInFolder: "Tu peux trouver plus d'exercices dans le dossier suivant :",
         addModal: {
-          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %topicFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
           introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
@@ -720,7 +724,7 @@ export const loggedInData = {
           unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
-          topicFolderNote: 'Only one can be selected here'
+          exerciseFolderNote: 'Only one can be selected here'
         }
       },
       coursePage: {
@@ -826,7 +830,7 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
-        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",

@@ -1,31 +1,31 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 
-type ListData = string[][]
+import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 // from https://github.com/serlo/frontend/wiki/Schema
 const entities = [
-  ['Page', '/18922'],
-  ['Article', '/27801'],
-  ['CoursePage', '/52020'],
-  ['Video', '/40744'],
-  ['Applet', '/138114'],
-  ['TaxonomyTerm', '/5'],
-  ['TaxonomyTerm (lvl)', '/1386'],
-  ['Exercise', '/54210'],
-  ['ExerciseGroup', '/53205'],
-  ['GroupedExercise', '/53209'],
-  ['Solution', '/195107'],
-  ['Course', '/51979'],
-  ['Event', '/145590'],
+  ['Page', 18922],
+  ['Article', 27801],
+  ['CoursePage', 52020],
+  ['Video', 40744],
+  ['Applet', 138114],
+  ['TaxonomyTerm', 5],
+  ['TaxonomyTerm (lvl)', 1386],
+  ['Exercise', 54210],
+  ['ExerciseGroup', 53205],
+  ['GroupedExercise', 53209],
+  ['Solution', 195107],
+  ['Course', 51979],
+  ['Event', 145590],
 ]
 
 const specialCases = [
-  ['Huge Equation Plugin', '/202374'],
-  ['Long Code Block', '/48121'],
-  ['Course w/ trashed pages', '/139048'],
-  ['Multimedia w/ Code', '/222271'],
-  ['SC Exercise without feedback', '/7125'],
+  ['Huge Equation Plugin', 202374],
+  ['Long Code Block', 48121],
+  ['Course w/ trashed pages', 139048],
+  ['Multimedia w/ Code', 222271],
+  ['SC Exercise without feedback', 7125],
 ]
 
 const ContentPage: NextPage = () => {
@@ -47,14 +47,22 @@ const ContentPage: NextPage = () => {
     </>
   )
 
-  function renderLis(lis: ListData, edtr?: boolean) {
-    return lis.map((li) => (
-      <li key={li[0]}>
+  function renderLis(lis: typeof entities, edtr?: boolean) {
+    return lis.map(([name, id]) => (
+      <li key={name}>
         <a
-          href={edtr ? '/entity/repository/add-revision' + li[1] : li[1]}
+          href={
+            edtr
+              ? getEditUrl(
+                  id as number,
+                  undefined,
+                  (name as string).startsWith('Taxonomy')
+                )
+              : `/${id}`
+          }
           target="show"
         >
-          {li[0]}
+          {name}
         </a>
       </li>
     ))

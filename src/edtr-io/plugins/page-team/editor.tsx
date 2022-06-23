@@ -81,7 +81,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
             } catch (error) {
               showToastNotice('⚠️ Sorry… something went wrong', 'warning')
               // eslint-disable-next-line no-console
-              console.log(error)
+              console.error(error)
             }
           }}
         >
