@@ -1,3 +1,4 @@
+// import { converter } from '@serlo/markdown'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -6,9 +7,12 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { renderNested } from '@/schema/article-renderer'
 import { convert } from '@/schema/convert-edtr-io-state'
+// import { convertLegacyState } from '@/schema/convert-legacy-state'
 import {
   EdtrPluginBox,
+  // EdtrPluginSerloTable,
   EdtrPluginSpoiler,
+  // EdtrPluginText,
   EdtrState,
 } from '@/schema/edtr-io-types'
 
@@ -69,6 +73,96 @@ function Content(props: EditorPageData) {
     }
   }
 
+  // table to serloTable
+  /*
+  function mutateTable(node: EdtrState) {
+    if (node.plugin === 'serloTable') {
+      // console.log(node)
+    }
+    if (node.plugin === 'table') {
+      const html = converter.makeHtml(node.state)
+      // compat: the markdown converter could return all types of content, only use table nodes.
+      const children = convertLegacyState(html).children.filter(
+        (child) => child.type == 'table'
+      )
+
+      //this is a bit stupid because I turn Frontend-States back to Edtr States
+      // but it's all typed so it should work
+
+      const trs = children[0].children
+        ?.filter((n) => n.type === 'tr')
+        .map((row) => {
+          return {
+            columns: row.children?.map((td) => {
+              // const empty = [{ type: 'text', children: [{ text: '' }] }]
+
+              const contentChildren =
+                td.children && td.children.length
+                  ? td.children[0].children
+                  : undefined
+
+              const children = contentChildren?.map(
+                (contentNode): EdtrPluginText['state'] => {
+                  if (
+                    contentNode &&
+                    contentNode.type !== 'text' &&
+                    contentNode.type !== 'inline-math'
+                  ) {
+                    console.log(`unsupported content type: ${contentNode.type}`)
+                    console.log(contentNode)
+                    return []
+                    // TODO: handle code? 0: {text: "Test", code: true}
+                  }
+
+                  if (contentNode.type === 'text') {
+                    return [
+                      { type: 'p', children: [{ text: contentNode.text }] },
+                    ]
+                  }
+                  if (contentNode.type === 'inline-math') {
+                    return [
+                      {
+                        // @ts-expect-error for now
+                        type: 'p',
+                        children: [
+                          {
+                            text: contentNode.formula,
+                            inline: true,
+                            type: 'math',
+                            // @ts-expect-error for now
+                            src: contentNode.formulaSource,
+                          },
+                        ],
+                      },
+                    ]
+                  }
+                  return []
+                }
+              )
+              return {
+                content: {
+                  plugin: 'text',
+                  state: [{ type: 'p', children }],
+                },
+              }
+            }),
+          }
+        })
+
+      if (!trs) return
+
+      const mutatedPlugin: EdtrPluginSerloTable = {
+        plugin: 'serloTable',
+        state: {
+          tableType: 'OnlyColumnHeader',
+          // @ts-expect-error for now
+          rows: trs,
+        },
+      }
+      mutated.push({ inState: node, outState: mutatedPlugin })
+    }
+  }
+*/
   const mutated: MutatedPlugin[] = []
 
   const state = props.initialState.state as {} | undefined
@@ -104,6 +198,7 @@ function Content(props: EditorPageData) {
 
     mutateToBox(node)
     mutateSpoilerTitle(node)
+    // mutateTable(node)
 
     if (hasOwnPropertyTs(node, 'content'))
       parseContent(node.content as EdtrState)
