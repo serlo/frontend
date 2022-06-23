@@ -1,4 +1,4 @@
-import { serloDomain } from '../../helper/serlo-domain'
+import { serloDomain } from '../../helper/urls/serlo-domain'
 import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {

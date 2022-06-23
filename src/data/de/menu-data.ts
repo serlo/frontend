@@ -1,4 +1,4 @@
-import { serloDomain } from '../../helper/serlo-domain'
+import { serloDomain } from '../../helper/urls/serlo-domain'
 import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
@@ -43,7 +43,7 @@ export const headerData: InstanceData['headerData'] = [
     ],
   },
   {
-    url: '/serlo',
+    url: '',
     title: 'Über Uns',
     icon: 'about',
     //as of now this is a duplicate of the secondary menu, but this might change?
@@ -260,7 +260,6 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Team', id: 21439 },
       { title: 'Jobs', id: 21563 },
       { title: 'Partner & Förderer', id: 21456 },
-      { title: 'Spenden', url: '/spenden' },
       { title: 'Wirkung', id: 21406 },
       { title: 'Transparenz', id: 21468 },
       { title: 'Die Geschichte von Serlo', id: 21413 },

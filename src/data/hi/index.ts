@@ -39,19 +39,18 @@ export const instanceData = {
       event: "कार्यक्रम",
       exercise: "अभ्यास",
       exerciseGroup: "व्यायाम समूह",
-      folder: "फोल्डर",
+      topic: 'Folder',
       groupedExercise: "समूह व्यायाम",
       page: "पृष्ठ",
       solution: "हल",
       taxonomyTerm: "टैक्सोनोमी शब्द",
       user: "उपयोगकर्ता",
       video: "वीडियो",
-      topicFolder: "अभ्यास फोल्डर",
+      exerciseFolder: 'Exercise folder',
       comment: "टिप्पणियां",
       revision: "संशोधन",
       thread: "धागा",
       threads: "थ्रेडस",
-      topic: "विषय",
       subject: "विषय",
       userProfile: "यूज़र प्रोफाइल",
       privacyPolicy: "गोपनीयता नीति",
@@ -116,6 +115,7 @@ export const instanceData = {
       emptyNotice: 'There is no content here. Please edit or delete.',
       picture: 'Picture',
       previewImage: 'Preview Image',
+      imageAltFallback: 'Image',
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
@@ -236,7 +236,11 @@ export const instanceData = {
       typeNotSupported: "कृपया इस पृष्ठ को पुनः लोड करने का प्रयास करें",
       refreshNow: "अब ताज़ा करें",
       backToPrevious: "पिछले पृष्ठ पर जाएँ",
-      backToHome: "होमपेज पर जाएं"
+      backToHome: "होमपेज पर जाएं",
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: 'Preparing print!',
@@ -705,7 +709,7 @@ export const loggedInData = {
         sourceUrl: 'Optional URL',
         moreInFolder: 'You can find more exercises in the following folder',
         addModal: {
-          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %topicFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
           introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
@@ -720,7 +724,7 @@ export const loggedInData = {
           unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
-          topicFolderNote: 'Only one can be selected here'
+          exerciseFolderNote: 'Only one can be selected here'
         }
       },
       coursePage: {
@@ -826,7 +830,7 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
-        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",

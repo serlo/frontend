@@ -1,4 +1,4 @@
-import { Instance } from './graphql-types/operations'
+import { Instance, TaxonomyTermType } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
 import { SubscriptionNode } from '@/components/pages/manage-subscriptions'
 import {
@@ -35,10 +35,10 @@ export function getRawTitle(
 
   if (uuid.__typename === 'TaxonomyTerm') {
     const term = uuid
-    if (term.type === 'topic') {
+    if (term.type === TaxonomyTermType.Topic) {
       return `${term.name} (${strings.entities.topic})`
     }
-    if (term.type === 'subject') {
+    if (term.type === TaxonomyTermType.Subject) {
       return `${term.name} - ${strings.entities.subject}`
     }
     // missing: special behaviour on curriculum term

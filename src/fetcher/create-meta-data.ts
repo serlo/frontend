@@ -4,22 +4,7 @@
 } from '@/fetcher/process-response'*/
 
 import { FrontendContentNode } from '@/data-types'
-import { serloDomain } from '@/helper/serlo-domain'
-
-/*export function getMetaContentType(uuid) {
-  contentType = uuid.__typename
-  //match legacy content types that are used by google custom search
-  if (processed.contentType === undefined) return ''
-  if (processed.contentType === 'Exercise') return 'text-exercise'
-  if (processed.contentType === 'CoursePage') return 'course-page'
-
-  const type = ((processed.data as unknown) as ResponseDataQuickFix).type
-  if (type === 'topicFolder' || type === 'curriculumTopicFolder')
-    return 'topic-folder'
-  if (contentType === 'TaxonomyTerm') return 'topic'
-  //Article, Video, Applet, Page
-  return contentType.toLowerCase()
-}*/
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export function getMetaImage(alias: string) {
   const subject = alias.split('/')[1]
@@ -27,13 +12,13 @@ export function getMetaImage(alias: string) {
 
   switch (subject) {
     case 'mathe':
-      imageSrc = 'mathematik.jpg'
+      imageSrc = 'mathematik.png'
       break
     case 'nachhaltigkeit':
-      imageSrc = 'nachhaltigkeit.jpg'
+      imageSrc = 'nachhaltigkeit.png'
       break
     case 'biologie':
-      imageSrc = 'biologie.jpg'
+      imageSrc = 'biologie.png'
       break
   }
 

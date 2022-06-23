@@ -84,16 +84,33 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'image') {
     // remove images without source
     if (!node.state.src) return []
+
+    const { caption, maxWidth, link, src } = node.state
+
+    const convertedCaption = caption ? convert(caption as EdtrState) : undefined
+    const captionTexts = convertedCaption?.[0].children?.[0].children
+
+    // if alt is not set construct plain string from caption
+    const alt = node.state.alt
+      ? node.state.alt
+      : caption
+      ? captionTexts && captionTexts.length > 0
+        ? captionTexts
+            .map((textPlugin) => {
+              return textPlugin.type === 'text' ? textPlugin.text : ''
+            })
+            .join('')
+        : ''
+      : ''
+
     return [
       {
         type: 'img',
-        src: node.state.src as string,
-        alt: node.state.alt || '',
-        maxWidth: node.state.maxWidth,
-        href: node.state.link?.href,
-        caption: node.state.caption
-          ? convert(node.state.caption as EdtrState)
-          : undefined,
+        src: src as string,
+        alt: alt,
+        maxWidth: maxWidth,
+        href: link?.href,
+        caption: convertedCaption,
       },
     ]
   }

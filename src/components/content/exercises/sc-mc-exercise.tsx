@@ -106,10 +106,10 @@ export function ScMcExercise({
           onPointerUp={(e) => e.currentTarget.blur()}
         >
           {selected !== undefined
-            ? exStrings.correct
+            ? exStrings.check
             : isPrintMode
-            ? exStrings.correct
-            : exStrings.correct}
+            ? exStrings.printModeChooseOption
+            : exStrings.chooseOption}
         </button>
       </div>
     )
@@ -182,7 +182,7 @@ export function ScMcExercise({
           }}
           onPointerUp={(e) => e.currentTarget.blur()}
         >
-          {exStrings.correct}
+          {exStrings.check}
         </button>
       </div>
     )
