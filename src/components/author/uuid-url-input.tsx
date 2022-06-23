@@ -6,20 +6,10 @@ import { useState } from 'react'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidSimpleQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-
-// const supportedEntityTypes = [
-//   'Article',
-//   'Course',
-//   'CoursePage',
-//   'Video',
-//   'Exercise',
-//   'ExerciseGroup',
-//   'GroupedExercise',
-//   'TaxonomyTerm',
-// ]
 
 interface UuidUrlInputProps {
   supportedEntityTypes: string[]
@@ -89,22 +79,11 @@ export function UuidUrlInput({
     const { uuid } = data
     if (!uuid) return modalStrings.notFound
 
-    const [id, title, __typename] =
-      uuid.__typename === 'CoursePage'
-        ? [
-            uuid.course?.id,
-            uuid.course?.currentRevision?.title,
-            uuid.__typename,
-          ]
-        : uuid.__typename === 'TaxonomyTerm'
-        ? [uuid.id, uuid.name, uuid.__typename]
-        : uuid.__typename.includes('Exercise')
-        ? [
-            uuid.id,
-            getTranslatedType(strings, uuid.__typename),
-            uuid.__typename,
-          ]
-        : [uuid.id, uuid.currentRevision?.title, uuid.__typename]
+    const title = uuid.__typename.includes('Exercise')
+      ? getTranslatedType(strings, uuid.__typename)
+      : uuid.title
+
+    const id = uuid.__typename === 'CoursePage' ? uuid.course?.id : uuid.id
 
     if (!supportedEntityTypes.includes(uuid.__typename))
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
@@ -131,7 +110,7 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <Icon icon={getIconByTypename(__typename)} /> {title}
+          <Icon icon={getIconByTypename(uuid.__typename)} /> {title}
         </a>
         {renderButtons(
           uuid.__typename,
@@ -145,35 +124,17 @@ export function UuidUrlInput({
 }
 
 const uuidSimpleQuery = gql`
-  query uuidSimpleQuery($id: Int!) {
+  query uuidSimple($id: Int!) {
     uuid(id: $id) {
       id
       __typename
-      ... on Article {
-        currentRevision {
-          title
-        }
-      }
-      ... on Course {
-        currentRevision {
-          title
-        }
-      }
+      title
       ... on CoursePage {
         course {
           id
-          currentRevision {
-            title
-          }
-        }
-      }
-      ... on Video {
-        currentRevision {
-          title
         }
       }
       ... on TaxonomyTerm {
-        name
         type
       }
     }
@@ -181,16 +142,7 @@ const uuidSimpleQuery = gql`
 `
 
 function useSimpleUuidFetch(maybeUuid: null | false | number) {
-  return useGraphqlSwr<{
-    uuid: {
-      id: number
-      __typename: string
-      currentRevision?: { title?: string }
-      course?: { id: number; currentRevision?: { title?: string } }
-      name?: string
-      type?: string
-    }
-  }>({
+  return useGraphqlSwr<UuidSimpleQuery>({
     noKey: maybeUuid === false,
     query: uuidSimpleQuery,
     variables: { id: maybeUuid },

@@ -2878,6 +2878,18 @@ export interface _CacheMutationUpdateArgs {
   input: CacheUpdateInput;
 }
 
+export type UuidSimpleQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type UuidSimpleQuery = { __typename?: 'Query', uuid?: { __typename: 'Applet', id: number, title: string } | { __typename: 'AppletRevision', id: number, title: string } | { __typename: 'Article', id: number, title: string } | { __typename: 'ArticleRevision', id: number, title: string } | { __typename: 'Comment', id: number, title: string } | { __typename: 'Course', id: number, title: string } | { __typename: 'CoursePage', id: number, title: string, course: { __typename?: 'Course', id: number } } | { __typename: 'CoursePageRevision', id: number, title: string } | { __typename: 'CourseRevision', id: number, title: string } | { __typename: 'Event', id: number, title: string } | { __typename: 'EventRevision', id: number, title: string } | { __typename: 'Exercise', id: number, title: string } | { __typename: 'ExerciseGroup', id: number, title: string } | { __typename: 'ExerciseGroupRevision', id: number, title: string } | { __typename: 'ExerciseRevision', id: number, title: string } | { __typename: 'GroupedExercise', id: number, title: string } | { __typename: 'GroupedExerciseRevision', id: number, title: string } | { __typename: 'Page', id: number, title: string } | { __typename: 'PageRevision', id: number, title: string } | { __typename: 'Solution', id: number, title: string } | { __typename: 'SolutionRevision', id: number, title: string } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, id: number, title: string } | { __typename: 'User', id: number, title: string } | { __typename: 'Video', id: number, title: string } | { __typename: 'VideoRevision', id: number, title: string } | null };
+
+export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Unnamed_1_Query = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', totalCount: number } };
+
 export type GetEventDataQueryVariables = Exact<{
   actorId?: InputMaybe<Scalars['Int']>;
   objectId?: InputMaybe<Scalars['Int']>;

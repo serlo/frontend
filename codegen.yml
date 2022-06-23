@@ -1,23 +1,14 @@
 overwrite: true
 schema: 'https://api.serlo-staging.dev/graphql'
 documents:
-  - 'src/fetcher/query.ts'
-  - 'src/fetcher/license/*.ts'
-  - 'src/fetcher/revision/*.ts'
-  - 'src/fetcher/subject-landing/*.ts'
-  - 'src/fetcher/unrevised-revisions/*.ts'
-  - 'src/fetcher/query-fragments.ts'
-  - 'src/fetcher/revision/query.ts'
-  - 'src/fetcher/use-comment-data-all.ts'
-  - 'src/fetcher/use-comment-data.ts'
-  - 'src/fetcher/user/*.ts'
+  - 'src/fetcher/*.ts'
+  - 'src/fetcher/*/*.ts'
+  - 'src/components/*/*.tsx'
   - 'src/pages/entity/license/update/[id].tsx'
   - 'src/pages/subscriptions/manage.tsx'
   - 'src/pages/entity/taxonomy/update/[id].tsx'
   - 'src/pages/uuid/recycle-bin.tsx'
   - 'src/pages/pages.tsx'
-  - 'src/components/user/user-unrevised-revisions.tsx'
-  - 'src/components/user/events.tsx'
   - 'src/pages/user/notifications.tsx'
 generates:
   src/fetcher/graphql-types/operations.ts:
