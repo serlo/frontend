@@ -12,7 +12,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
-      agree: "Accepter"
+      agree: 'Agree to use search'
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
