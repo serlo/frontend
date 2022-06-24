@@ -1,3 +1,4 @@
+import { Instance } from '@serlo/api'
 import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -38,7 +39,7 @@ export async function requestUser(
             instance:
               role.scope == null || role.scope === Scope.Serlo
                 ? null
-                : role.scope.substring('serlo.org:'.length),
+                : (role.scope.substring('serlo.org:'.length) as Instance),
           }
         }),
       },
