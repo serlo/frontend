@@ -10,7 +10,7 @@ import {
 import { Geogebra } from '@/components/content/geogebra'
 import { Video } from '@/components/content/video'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { RevisionData, UuidRevType } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface RevisionPreviewBoxesProps {
@@ -83,7 +83,7 @@ export function RevisionPreviewBoxes({
 
   function renderVideoOrAppletBox(dataSet: RevisionData['currentRevision']) {
     if (dataSet.url === undefined) return null
-    const isVideo = data.type === 'video'
+    const isVideo = data.typename === UuidRevType.Video
     return (
       <PreviewBox
         title={isVideo ? strings.entities.video : strings.entities.applet}
@@ -122,7 +122,8 @@ export function RevisionPreviewBoxes({
         </p>
         <div
           className={clsx(
-            (data.type === 'exercise' || data.type === 'groupedExercise') &&
+            (data.typename === UuidRevType.Exercise ||
+              data.typename === UuidRevType.GroupedExercise) &&
               '!py-2',
             withPadding && 'p-side',
             'text-lg py-7 border border-brand-lighter rounded-2xl',

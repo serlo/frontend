@@ -11,13 +11,7 @@ import {
 } from '../graphql-types/operations'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import {
-  EntityTypes,
-  PageNotFound,
-  RevisionPage,
-  UuidRevType,
-  UuidType,
-} from '@/data-types'
+import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export async function requestRevision(
@@ -154,10 +148,6 @@ export async function requestRevision(
       return previousRevision?.id
     }
 
-    const _typeNoRevision = uuid.__typename.replace('Revision', '')
-    const type = (_typeNoRevision.charAt(0).toLowerCase() +
-      _typeNoRevision.slice(1)) as EntityTypes
-
     const currentRevision = hasOwnPropertyTs(uuid, 'repository')
       ? uuid.repository.currentRevision
       : undefined
@@ -166,7 +156,6 @@ export async function requestRevision(
       kind: 'revision',
       newsletterPopup: false,
       revisionData: {
-        type,
         repository: {
           id: uuid.repository.id,
           alias: uuid.repository.alias,

@@ -297,7 +297,6 @@ export interface RevisionPage extends EntityPageBase {
 export interface RevisionData {
   typename: UuidRevType
   date: string
-  type: EntityTypes
   user: FrontendUserData
   repository: {
     id: number
@@ -368,25 +367,9 @@ export enum UuidType {
 
 export type UuidWithRevType = UuidRevType | UuidType
 
-// Entities each should have an translated string and a corresponding icon
-
-export type EntityTypes =
-  | 'applet'
-  | 'article'
-  | 'course'
-  | 'coursePage'
-  | 'event'
-  | 'exercise'
-  | 'exerciseGroup'
-  | 'groupedExercise'
-  | 'page'
-  | 'solution'
-  | 'taxonomyTerm'
-  | 'user'
-  | 'video'
-  | 'revision'
-  | 'comment'
-  | 'thread'
+// TODO: Leftover custom types,
+// | 'revision'
+// | 'thread'
 
 // Entities can belong to a category that we use in the taxonomy
 

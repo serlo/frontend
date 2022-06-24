@@ -145,7 +145,11 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExercisePreview() {
     if (
-      !['solution', 'exerciseGroup', 'groupedExercise'].includes(data.type) ||
+      ![
+        UuidRevType.Solution,
+        UuidRevType.ExerciseGroup,
+        UuidRevType.GroupedExercise,
+      ].includes(data.typename) ||
       data.repository.parentId === undefined
     )
       return null
@@ -175,7 +179,7 @@ export function Revision({ data }: RevisionProps) {
             <span className="mx-side px-1 mb-10 inline-block bg-yellow-200">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
-                  data.type === 'groupedExercise'
+                  data.typename === UuidRevType.GroupedExercise
                     ? strings.content.exercises.task
                     : strings.entities.solution,
                 title: (

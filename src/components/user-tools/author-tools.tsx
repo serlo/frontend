@@ -10,6 +10,7 @@ import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidRevType, UuidType } from '@/data-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -58,7 +59,7 @@ export interface AuthorToolsProps {
 
 export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
-  const instanceData = useInstanceData()
+  const { lang, strings } = useInstanceData()
 
   const isSubscribed = useIsSubscribed(data.id)
   const setSubscription = useSubscriptionSetMutation()
@@ -69,8 +70,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
-  const entities = instanceData.strings.entities
-  const lang = instanceData.lang
 
   const toolsConfig = {
     abo: {
@@ -288,22 +287,20 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   function renderNewEntity() {
     if (data.type !== UuidType.TaxonomyTerm || !data.taxonomyType) return null
 
-    type EntityTypes = keyof typeof entities
-
     const allowedTypes: Record<
-      NonNullable<AuthorToolsData['taxonomyType']>,
-      EntityTypes[]
+      TaxonomyTermType,
+      (UuidType | TaxonomyTermType)[]
     > = {
       topic: [
-        'article',
-        'course',
-        'video',
-        'applet',
-        'event',
+        UuidType.Article,
+        UuidType.Course,
+        UuidType.Video,
+        UuidType.Applet,
+        UuidType.Event,
         TaxonomyTermType.Topic,
         TaxonomyTermType.ExerciseFolder,
       ],
-      exerciseFolder: ['exercise', 'exerciseGroup'],
+      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup],
       subject: [TaxonomyTermType.Topic],
       root: [TaxonomyTermType.Subject],
     }
@@ -314,7 +311,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
-      if (entityType === 'event' && !shouldRenderEvents) return null
+      if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
       if (
         (
@@ -330,20 +327,20 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         const createId = entityType === TaxonomyTermType.ExerciseFolder ? 9 : 4
         return renderLi(
           `/taxonomy/term/create/${createId}/${data.id}`,
-          entities[entityType]
+          getTranslatedType(strings, entityType)
         )
       }
 
       const urlTypeString =
-        entityType === 'exercise'
+        entityType === UuidType.Exercise
           ? 'text-exercise'
-          : entityType === 'exerciseGroup'
+          : entityType === UuidType.ExerciseGroup
           ? 'text-exercise-group'
           : entityType
 
       return renderLi(
         `/entity/create/${urlTypeString}?taxonomy%5Bterm%5D=${data.id}`,
-        entities[entityType]
+        getTranslatedType(strings, entityType)
       )
     })
 
