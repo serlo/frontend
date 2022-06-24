@@ -113,7 +113,7 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <Icon icon={getIconByTypename(uuid.__typename)} /> {title}
+          <Icon icon={getIconByTypename(uuid.__typename as UuidType)} /> {title}
         </a>
         {renderButtons(
           uuid.__typename as UuidWithRevType,

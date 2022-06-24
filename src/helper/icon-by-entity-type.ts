@@ -10,8 +10,9 @@ import { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
+import { TaxonomyTermType } from '@serlo/api'
 
-import { TopicCategoryTypes } from '@/data-types'
+import { TopicCategoryTypes, UuidWithRevType } from '@/data-types'
 
 export const categoryIconMapping: {
   [K in TopicCategoryTypes]: IconDefinition
@@ -25,9 +26,12 @@ export const categoryIconMapping: {
   events: faCalendarAlt,
 }
 
-export function getIconByTypename(typename: string) {
-  const typenameLowerCase =
-    typename.toLowerCase() as keyof typeof entityIconMapping
+export function getIconByTypename(
+  typename: UuidWithRevType | TaxonomyTermType
+) {
+  const typenameLowerCase = typename
+    .replace('Revision', '')
+    .toLowerCase() as keyof typeof entityIconMapping
   return entityIconMapping[typenameLowerCase] ?? faCircle
 }
 

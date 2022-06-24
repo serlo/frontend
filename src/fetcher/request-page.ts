@@ -108,9 +108,8 @@ export async function requestPage(
         entityData: {
           id: uuid.id,
           alias: uuid.alias,
-          typename: uuid.__typename,
+          typename: UuidType.Course,
           title: uuid.currentRevision?.title ?? '',
-          categoryIcon: 'course',
           isUnrevised: !uuid.currentRevision,
           courseData: {
             id: uuid.id,
@@ -159,7 +158,7 @@ export async function requestPage(
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
-        typename: uuid.__typename,
+        typename: uuid.__typename as UuidType,
         trashed: uuid.trashed,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -199,7 +198,7 @@ export async function requestPage(
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
-        typename: uuid.__typename,
+        typename: UuidType.ExerciseGroup,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
@@ -227,7 +226,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Event,
         content,
         isUnrevised: false,
       },
@@ -252,7 +251,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Page,
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
@@ -282,7 +281,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
         licenseData,
@@ -291,7 +290,6 @@ export async function requestPage(
           useArticleTag: true,
           setContentAsSection: true,
         },
-        categoryIcon: 'article',
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -320,7 +318,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Video,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
@@ -330,7 +328,6 @@ export async function requestPage(
           },
           ...content,
         ],
-        categoryIcon: 'video',
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -359,7 +356,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Applet,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
@@ -423,7 +420,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
         licenseData,
@@ -432,7 +429,6 @@ export async function requestPage(
           useArticleTag: true,
           setContentAsSection: true,
         },
-        categoryIcon: 'coursePage',
         courseData: {
           id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',

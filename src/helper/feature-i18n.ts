@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import mergeDeepRight from 'ramda/src/mergeDeepRight'
 
-import { InstanceData } from '@/data-types'
+import { InstanceData, UuidType, UuidWithRevType } from '@/data-types'
 import {
   instanceData as deInstanceData,
   instanceLandingData as deInstanceLandingData,
@@ -139,9 +139,10 @@ export function getLoggedInData(lang: string) {
 }
 
 export function getEntityStringByTypename(
-  typename: string | undefined,
+  typename: UuidWithRevType | undefined,
   strings: InstanceData['strings']
 ) {
+  const typenameNoRevs = typename?.replace('Revision', '')
   const lookup = {
     Page: strings.entities.page,
     Article: strings.entities.article,
@@ -160,8 +161,8 @@ export function getEntityStringByTypename(
     fallback: strings.entities.content,
   }
 
-  if (typename && typename in lookup) {
-    return lookup[typename as keyof typeof lookup]
+  if (typenameNoRevs && typenameNoRevs in lookup) {
+    return lookup[typenameNoRevs as keyof typeof lookup]
   }
   return lookup.fallback
 }

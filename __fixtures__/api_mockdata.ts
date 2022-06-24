@@ -3,8 +3,10 @@
 
 import { TaxonomyTermType } from '@serlo/api'
 
+import { UuidType } from '@/data-types'
+
 export const articleUuidMock = {
-  __typename: 'Article',
+  __typename: UuidType.Article,
   id: 27801,
   alias:
     '/mathe/zahlen-groessen/bruchrechnen-dezimalzahlen/dezimalbrueche/addition-subtraktion-dezimalbruechen',
@@ -48,7 +50,7 @@ export const articleUuidMock = {
 }
 
 export const taxonomyTermUuidMock = {
-  __typename: 'TaxonomyTerm',
+  __typename: UuidType.TaxonomyTerm,
   id: 5,
   type: TaxonomyTermType.Subject,
   name: 'Mathe',
@@ -74,7 +76,7 @@ export const taxonomyTermUuidMock = {
     nodes: [
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Universität alt',
         alias: '/mathe/universität-alt',
@@ -84,7 +86,7 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/universität-alt/tu-münchen',
               type: TaxonomyTermType.Topic,
               name: 'TU München',
@@ -94,7 +96,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Analysis - neu',
         alias: '/mathe/analysis---neu',
@@ -104,7 +106,7 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'Article',
+              __typename: UuidType.Article,
               alias: null,
               id: 23436,
               currentRevision: null,
@@ -114,7 +116,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Arithmetik und Rechnen Rechnen und Zahlen - neuer Themenbaum ',
         alias: '/mathe/arithmetik-rechnen-rechnen-zahlen---neuer-themenbaum',
@@ -126,7 +128,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Zahlen und Größen',
         alias: '/mathe/zahlen-größen',
@@ -137,18 +139,18 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'Exercise',
+              __typename: UuidType.Exercise,
             },
             {
               trashed: false,
-              __typename: 'Article',
+              __typename: UuidType.Article,
               alias: null,
               id: 26452,
               currentRevision: null,
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/zahlen-größen/Übersicht-aller-artikel-zahlen-größen',
               type: TaxonomyTermType.Topic,
@@ -156,14 +158,14 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/grundrechenarten',
               type: TaxonomyTermType.Topic,
               name: 'Grundrechenarten',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/zahlen-größen/zahlenmengen,-rechenausdrücke-allgemeine-rechengesetze',
               type: TaxonomyTermType.Topic,
@@ -171,63 +173,63 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/teiler-primzahlen',
               type: TaxonomyTermType.Topic,
               name: 'Teiler und Primzahlen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/quersumme,-durchschnitt-betrag',
               type: TaxonomyTermType.Topic,
               name: 'Quersumme, Durchschnitt und Betrag',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen',
               type: TaxonomyTermType.Topic,
               name: 'Bruchrechnen und Dezimalzahlen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/prozent--zinsrechnung',
               type: TaxonomyTermType.Topic,
               name: 'Prozent- und Zinsrechnung',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/proportionalität-dreisatz',
               type: TaxonomyTermType.Topic,
               name: 'Proportionalität und Dreisatz',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/größen-einheiten',
               type: TaxonomyTermType.Topic,
               name: 'Größen und Einheiten',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/sonstiges',
               type: TaxonomyTermType.Topic,
               name: 'Sonstiges',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/eiten-umrechnen',
               type: TaxonomyTermType.ExerciseFolder,
               name: 'eiten umrechnen',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/zahlen-größen/gelöschte-topics---recyclen',
               type: TaxonomyTermType.Topic,
               name: 'Gelöschte topics - zum Recyclen',
@@ -237,7 +239,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Terme und Gleichungen',
         alias: '/mathe/terme-gleichungen',
@@ -247,14 +249,14 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'Article',
+              __typename: UuidType.Article,
               alias: null,
               id: 122193,
               currentRevision: null,
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/terme-gleichungen/Übersicht-aller-artikel-terme-gleichungen',
               type: TaxonomyTermType.Topic,
@@ -262,35 +264,35 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-gleichungen/potenzen,-wurzeln-logarithmen',
               type: TaxonomyTermType.Topic,
               name: 'Potenzen, Wurzeln und Logarithmen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-gleichungen/terme-variablen',
               type: TaxonomyTermType.Topic,
               name: 'Terme und Variablen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-gleichungen/gleichungen',
               type: TaxonomyTermType.Topic,
               name: 'Gleichungen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-gleichungen/ungleichungen',
               type: TaxonomyTermType.Topic,
               name: 'Ungleichungen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-gleichungen/gleichungssysteme',
               type: TaxonomyTermType.Topic,
               name: 'Gleichungssysteme',
@@ -300,7 +302,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Terme ausmultiplizieren t4',
         alias: '/mathe/terme-ausmultiplizieren-t4',
@@ -310,21 +312,21 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-ausmultiplizieren-t4/cramersche-regell',
               type: TaxonomyTermType.Topic,
               name: 'Cramersche Regell',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/terme-ausmultiplizieren-t4/terme-faktorisieren-t4',
               type: TaxonomyTermType.Topic,
               name: 'Terme faktorisieren t4',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/terme-ausmultiplizieren-t4/terme-zusammenfassen-t4',
               type: TaxonomyTermType.Topic,
@@ -335,7 +337,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Geometrie',
         alias: '/mathe/geometrie',
@@ -346,7 +348,7 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/geometrie/Übersicht-aller-artikel,-videos-kurse-geometrie',
               type: TaxonomyTermType.Topic,
@@ -354,14 +356,14 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/grundbegriffe',
               type: TaxonomyTermType.Topic,
               name: 'Grundbegriffe',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/geometrie/dreiecke,-vierecke,-kreise-andere-ebene-figuren',
               type: TaxonomyTermType.Topic,
@@ -369,28 +371,28 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/räumliche-figuren',
               type: TaxonomyTermType.Topic,
               name: 'Räumliche Figuren',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/tangenten-sekanten-kreis',
               type: TaxonomyTermType.Topic,
               name: 'Tangenten und Sekanten am Kreis',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/konstruktion-geometrischen-objekten',
               type: TaxonomyTermType.Topic,
               name: 'Konstruktion von geometrischen Objekten',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/geometrie/spiegelung,-zentrische-streckung-andere-abbildungen-ebene',
               type: TaxonomyTermType.Topic,
@@ -398,7 +400,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/geometrie/strahlensatz-vierstreckensatz,-Ähnlichkeit',
               type: TaxonomyTermType.Topic,
@@ -406,21 +408,21 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/satzgruppe-pythagoras',
               type: TaxonomyTermType.Topic,
               name: 'Satzgruppe des Pythagoras',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/sinus,-kosinus-tangens',
               type: TaxonomyTermType.Topic,
               name: 'Sinus, Kosinus und Tangens',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/geometrie/analytische-geometrie',
               type: TaxonomyTermType.Topic,
               name: 'Analytische Geometrie',
@@ -430,7 +432,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 't4 Quader',
         alias: '/mathe/t4-quader',
@@ -440,21 +442,21 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/t4-quader/geradengleichungen-raum--alt',
               type: TaxonomyTermType.Topic,
               name: 'Geradengleichungen im Raum -alt',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/t4-quader/t4-kugel',
               type: TaxonomyTermType.Topic,
               name: 't4 Kugel',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/t4-quader/t4-gemischte-aufgaben-volumen--massenberechnung',
               type: TaxonomyTermType.Topic,
@@ -465,7 +467,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Funktionen',
         alias: '/mathe/funktionen',
@@ -476,28 +478,28 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/Übersicht-aller-artikel-funktionen',
               type: TaxonomyTermType.Topic,
               name: 'Übersicht aller Artikel zu Funktionen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/funktionsbegriff',
               type: TaxonomyTermType.Topic,
               name: 'Funktionsbegriff',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/wichtige-funktionstypen-eigenschaften',
               type: TaxonomyTermType.Topic,
               name: 'Wichtige Funktionstypen und ihre Eigenschaften',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/funktionen/grenzwerte,-stetigkeit-differenzierbarkeit',
               type: TaxonomyTermType.Topic,
@@ -505,14 +507,14 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/ableitung-funktionen',
               type: TaxonomyTermType.Topic,
               name: 'Ableitung von Funktionen ',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/funktionen/stammfunktion,-integral-flächenberechnung',
               type: TaxonomyTermType.Topic,
@@ -520,28 +522,28 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/kurvendiskussion',
               type: TaxonomyTermType.Topic,
               name: 'Kurvendiskussion',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/funktionsscharen',
               type: TaxonomyTermType.Topic,
               name: 'Funktionsscharen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/anwendungszusammenhänge-anderes',
               type: TaxonomyTermType.Topic,
               name: 'Anwendungszusammenhänge und anderes',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/funktionen/gemischtes,-Überblick-vertiefung',
               type: TaxonomyTermType.Topic,
               name: 'Gemischtes, Überblick und Vertiefung',
@@ -551,7 +553,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Stochastik',
         alias: '/mathe/stochastik',
@@ -562,49 +564,49 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'Video',
+              __typename: UuidType.Video,
               alias: null,
               id: 141895,
               currentRevision: null,
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/Übersicht-aller-artikel-stochastik',
               type: TaxonomyTermType.Topic,
               name: 'Übersicht aller Artikel zur Stochastik',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/grundbegriffe-methoden',
               type: TaxonomyTermType.Topic,
               name: 'Grundbegriffe und Methoden',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/kombinatorik',
               type: TaxonomyTermType.Topic,
               name: 'Kombinatorik',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/daten-datendarstellung',
               type: TaxonomyTermType.Topic,
               name: 'Daten und Datendarstellung',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/relative-häufigkeit-wahrscheinlichkeit',
               type: TaxonomyTermType.Topic,
               name: 'Relative Häufigkeit und Wahrscheinlichkeit',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik/bedingte-wahrscheinlichkeit-unabhängigkeit',
               type: TaxonomyTermType.Topic,
@@ -612,35 +614,35 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/zufallsgrößen',
               type: TaxonomyTermType.Topic,
               name: 'Zufallsgrößen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/wichtige-modelle-verteilungen',
               type: TaxonomyTermType.Topic,
               name: 'Wichtige Modelle und Verteilungen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/hypothesentests',
               type: TaxonomyTermType.Topic,
               name: 'Hypothesentests',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/hypothesentest',
               type: TaxonomyTermType.Topic,
               name: 'Hypothesentest',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik/gemischte-aufgaben-grundbegriffen-stochastik',
               type: TaxonomyTermType.Topic,
@@ -648,21 +650,21 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/wahrscheinlichkeit',
               type: TaxonomyTermType.Topic,
               name: 'Wahrscheinlichkeit',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/tafelwerk-stochastik',
               type: TaxonomyTermType.Topic,
               name: 'Tafelwerk der Stochastik',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/stochastik/aufgaben-w',
               type: TaxonomyTermType.ExerciseFolder,
               name: 'Aufgaben zur W',
@@ -672,7 +674,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Stochastik-neuer Themenbaum - später löschen',
         alias: '/mathe/stochastik-neuer-themenbaum---später-löschen',
@@ -682,7 +684,7 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/grundbegriffe-methoden',
               type: TaxonomyTermType.Topic,
@@ -690,7 +692,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/zufallsgrößen',
               type: TaxonomyTermType.Topic,
@@ -698,7 +700,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/binomialverteilung',
               type: TaxonomyTermType.Topic,
@@ -706,7 +708,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/absolute-relative-häufigkeit--leer',
               type: TaxonomyTermType.Topic,
@@ -714,7 +716,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/hypergeometrische-verteilung',
               type: TaxonomyTermType.Topic,
@@ -722,7 +724,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/poisson-verteilung',
               type: TaxonomyTermType.Topic,
@@ -730,7 +732,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/laplace-wahrscheinlichkeiten---leer',
               type: TaxonomyTermType.Topic,
@@ -738,7 +740,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/stochastik-neuer-themenbaum---später-löschen/bedingte-wahrscheinlichkeit---leer',
               type: TaxonomyTermType.Topic,
@@ -749,7 +751,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Sonstiges',
         alias: '/mathe/sonstiges',
@@ -759,21 +761,21 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'Article',
+              __typename: UuidType.Article,
               alias: null,
               id: 27699,
               currentRevision: null,
             },
             {
               trashed: false,
-              __typename: 'Video',
+              __typename: UuidType.Video,
               alias: null,
               id: 27746,
               currentRevision: null,
             },
             {
               trashed: true,
-              __typename: 'Article',
+              __typename: UuidType.Article,
               alias: '/mathe/sonstiges/test',
               id: 28886,
               currentRevision: {
@@ -782,168 +784,168 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/lernstrategien',
               type: TaxonomyTermType.Topic,
               name: 'Lernstrategien',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/baustelle',
               type: TaxonomyTermType.ExerciseFolder,
               name: 'Baustelle',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/baustelle-mathematik',
               type: TaxonomyTermType.Topic,
               name: 'Baustelle Mathematik',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/vorkurs-mathematik-informatiker',
               type: TaxonomyTermType.Topic,
               name: 'Vorkurs Mathematik für Informatiker',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/test/-29465',
               type: TaxonomyTermType.Topic,
               name: 'Test',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/summer-academy',
               type: TaxonomyTermType.ExerciseFolder,
               name: 'Summer Academy',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/Übersicht-aller-artikel-sonstiges',
               type: TaxonomyTermType.Topic,
               name: 'Übersicht aller Artikel zu Sonstiges',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/mathematische-teilgebiete',
               type: TaxonomyTermType.Topic,
               name: 'Mathematische Teilgebiete',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/mengenlehre-logik',
               type: TaxonomyTermType.Topic,
               name: 'Mengenlehre und Logik',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/zahlensysteme',
               type: TaxonomyTermType.Topic,
               name: 'Zahlensysteme',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/weiterführendes',
               type: TaxonomyTermType.Topic,
               name: 'Weiterführendes',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/nachschlagen',
               type: TaxonomyTermType.Topic,
               name: 'Zum Nachschlagen ',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/interessantes/-1457',
               type: TaxonomyTermType.Topic,
               name: 'Interessantes',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/knobelaufgaben',
               type: TaxonomyTermType.Topic,
               name: 'Knobelaufgaben',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/seo',
               type: TaxonomyTermType.Topic,
               name: 'SEO',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/alte-richtlinien-naturwissenschaften',
               type: TaxonomyTermType.Topic,
               name: 'Alte Richtlinien Naturwissenschaften ',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/testen',
               type: TaxonomyTermType.Topic,
               name: 'Zum Testen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/artikel-videos-serlo-1',
               type: TaxonomyTermType.Topic,
               name: 'Artikel und Videos aus Serlo 1',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/berechnung-determinanten',
               type: TaxonomyTermType.Topic,
               name: 'Berechnung von Determinanten',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/formeln-berechen',
               type: TaxonomyTermType.Topic,
               name: 'Formeln berechen',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/statistik',
               type: TaxonomyTermType.Topic,
               name: 'Statistik',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/informatik',
               type: TaxonomyTermType.Topic,
               name: 'Informatik',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/serlo',
               type: TaxonomyTermType.Topic,
               name: 'Über Serlo',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/sonstiges/später-löschen',
               type: TaxonomyTermType.Topic,
               name: 'Später löschen',
@@ -953,7 +955,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: true,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Ordner für Lehrpläne - später löschen',
         alias: '/mathe/ordner-lehrpläne---später-löschen',
@@ -963,7 +965,7 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/ordner-lehrpläne---später-löschen/vorbereitung-jahrgangsstufentest',
               type: TaxonomyTermType.Topic,
@@ -971,7 +973,7 @@ export const taxonomyTermUuidMock = {
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias:
                 '/mathe/ordner-lehrpläne---später-löschen/lehrplan-beispiele',
               type: TaxonomyTermType.Topic,
@@ -982,7 +984,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Hochschule',
         alias: '/mathe/hochschule',
@@ -993,28 +995,28 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/hochschule/grundlagen-mathematik',
               type: TaxonomyTermType.Topic,
               name: 'Grundlagen der Mathematik',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/hochschule/analysis-1',
               type: TaxonomyTermType.Topic,
               name: 'Analysis 1',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/hochschule/tu-münchen',
               type: TaxonomyTermType.Topic,
               name: 'TU München',
             },
             {
               trashed: true,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/hochschule/grundlagen-mathematik_gelöscht',
               type: TaxonomyTermType.Topic,
               name: 'Grundlagen der Mathematik_gelöscht',
@@ -1024,7 +1026,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Deutschland',
         alias: '/mathe/deutschland',
@@ -1034,119 +1036,119 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/baden-württemberg',
               type: TaxonomyTermType.Topic,
               name: 'Baden-Württemberg',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/bayern',
               type: TaxonomyTermType.Topic,
               name: 'Bayern',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/berlin',
               type: TaxonomyTermType.Topic,
               name: 'Berlin',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/brandenburg',
               type: TaxonomyTermType.Topic,
               name: 'Brandenburg',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/bremen',
               type: TaxonomyTermType.Topic,
               name: 'Bremen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/hamburg',
               type: TaxonomyTermType.Topic,
               name: 'Hamburg',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/hessen',
               type: TaxonomyTermType.Topic,
               name: 'Hessen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/mecklenburg-vorpommern',
               type: TaxonomyTermType.Topic,
               name: 'Mecklenburg-Vorpommern',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/niedersachsen',
               type: TaxonomyTermType.Topic,
               name: 'Niedersachsen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/nordrhein-westfalen',
               type: TaxonomyTermType.Topic,
               name: 'Nordrhein-Westfalen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/rheinland-pfalz',
               type: TaxonomyTermType.Topic,
               name: 'Rheinland-Pfalz',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/saarland',
               type: TaxonomyTermType.Topic,
               name: 'Saarland',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/sachsen',
               type: TaxonomyTermType.Topic,
               name: 'Sachsen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/sachsen-anhalt',
               type: TaxonomyTermType.Topic,
               name: 'Sachsen-Anhalt',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/schleswig-holstein',
               type: TaxonomyTermType.Topic,
               name: 'Schleswig-Holstein',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/thüringen',
               type: TaxonomyTermType.Topic,
               name: 'Thüringen',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/deutschland/serlo-lehrplan',
               type: TaxonomyTermType.Topic,
               name: 'Serlo-Lehrplan',
@@ -1156,7 +1158,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Österreich',
         alias: '/mathe/Österreich',
@@ -1166,14 +1168,14 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/Österreich/hwb',
               type: TaxonomyTermType.Topic,
               name: 'HWB',
             },
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/Österreich/ausbildungen',
               type: TaxonomyTermType.Topic,
               name: 'Ausbildungen',
@@ -1183,7 +1185,7 @@ export const taxonomyTermUuidMock = {
       },
       {
         trashed: false,
-        __typename: 'TaxonomyTerm',
+        __typename: UuidType.TaxonomyTerm,
         type: TaxonomyTermType.Topic,
         name: 'Partner',
         alias: '/mathe/partner',
@@ -1194,7 +1196,7 @@ export const taxonomyTermUuidMock = {
           nodes: [
             {
               trashed: false,
-              __typename: 'TaxonomyTerm',
+              __typename: UuidType.TaxonomyTerm,
               alias: '/mathe/partner/schlau-werkstatt',
               type: TaxonomyTermType.Topic,
               name: 'Schlau-Werkstatt',
@@ -1207,7 +1209,7 @@ export const taxonomyTermUuidMock = {
 }
 
 export const appletUuidMock = {
-  __typename: 'Applet',
+  __typename: UuidType.Applet,
   id: 138114,
   alias:
     '/mathe/zahlen-größen/bruchrechnen-dezimalzahlen/rechnen-brüchen/brüche-multiplizieren-138114',
@@ -1260,7 +1262,7 @@ export const appletUuidMock = {
 }
 
 export const videoUuidMock = {
-  __typename: 'Video',
+  __typename: UuidType.Video,
   id: 40744,
   alias:
     '/mathe/geometrie/konstruktion-geometrischen-objekten/winkel-konstruieren',
@@ -1307,7 +1309,7 @@ export const videoUuidMock = {
 }
 
 export const coursePageUuidMock = {
-  __typename: 'CoursePage',
+  __typename: UuidType.CoursePage,
   id: 52020,
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
@@ -1612,7 +1614,7 @@ export const coursePageUuidMock = {
 }
 
 export const pageUuidMock = {
-  __typename: 'Page',
+  __typename: UuidType.Page,
   id: 18922,
   alias: '/serlo',
   instance: 'de',
@@ -1640,7 +1642,7 @@ export const pageUuidMock = {
 }
 
 export const exerciseUuidMock = {
-  __typename: 'Exercise',
+  __typename: UuidType.Exercise,
   id: 54210,
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/54210',
@@ -1775,7 +1777,7 @@ export const exerciseUuidMock = {
 }
 
 export const exerciseGroupUuidMock = {
-  __typename: 'ExerciseGroup',
+  __typename: UuidType.ExerciseGroup,
   id: 53205,
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205',
@@ -1999,7 +2001,7 @@ export const exerciseGroupUuidMock = {
 }
 
 export const groupedExerciseUuidMock = {
-  __typename: 'GroupedExercise',
+  __typename: UuidType.GroupedExercise,
   id: 53209,
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-eigenschaften/trigonometrische-funktionen/aufgaben-verschieben-strecken-trigonometrischer-funktionen/53205/53209',
@@ -2031,7 +2033,7 @@ export const groupedExerciseUuidMock = {
 }
 
 export const courseUuidMock_id = {
-  __typename: 'Course',
+  __typename: UuidType.Course,
   id: 51979,
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen',
@@ -2245,7 +2247,7 @@ export const courseUuidMock_id = {
 }
 
 export const courseUuidMock_alias = {
-  __typename: 'CoursePage',
+  __typename: UuidType.CoursePage,
   id: 52020,
   alias:
     '/mathe/funktionen/wichtige-funktionstypen-ihre-eigenschaften/polynomfunktionen-beliebigen-grades/berechnungsmethoden-nullstellen-polynomfunktionen/uebersicht',
@@ -2550,7 +2552,7 @@ export const courseUuidMock_alias = {
 }
 
 export const eventUuidMock = {
-  __typename: 'Event',
+  __typename: UuidType.Event,
   id: 145590,
   alias: '/community/veranstaltungen/digital-learning-summer-academy-2020',
   instance: 'de',

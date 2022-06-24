@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -5,6 +6,7 @@ import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
 import {
   featuredContent,
   FeaturedContentData,
@@ -91,7 +93,7 @@ export function SubjectLandingFeatured({
     )
   }
 
-  function renderTypeIcon(type: string) {
+  function renderTypeIcon(type: UuidType | TaxonomyTermType) {
     const icon = getIconByTypename(type)
     return <FaIcon icon={icon} />
   }

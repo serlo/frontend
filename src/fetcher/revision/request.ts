@@ -174,7 +174,7 @@ export async function requestRevision(
           previousRevisionId: getPreviousRevisionId(),
           positionInGroup: getPositionInGroup(),
         },
-        typename: uuid.__typename,
+        typename: uuid.__typename as UuidRevType,
         thisRevision: {
           id: uuid.id,
           trashed: uuid.trashed,

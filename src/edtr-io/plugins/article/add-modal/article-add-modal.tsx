@@ -34,7 +34,7 @@ export function ArticleAddModal({
 
   const { exercises, exerciseFolder, relatedContent } = data
 
-  const checkDuplicates = (id: number, typename: string) => {
+  const checkDuplicates = (id: number, typename: UuidWithRevType) => {
     const category = getCategoryByTypename(typename)
     if (
       category === 'articles' ||

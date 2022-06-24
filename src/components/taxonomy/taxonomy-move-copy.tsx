@@ -83,7 +83,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     return (
       <>
         <p className="mt-4">
-          {taxonomyData.articles.map((node) => renderLi(node, 'article'))}
+          {taxonomyData.articles.map((node) =>
+            renderLi(node, UuidType.Article)
+          )}
         </p>
         <p className="mt-4">
           {taxonomyData.exercisesContent.map((node) => {
@@ -95,28 +97,28 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
                 title,
                 url: node.href ?? `/${node.context.id}`,
               },
-              'exercise'
+              UuidType.Exercise
             )
           })}
         </p>
         <p className="mt-4">
-          {taxonomyData.videos.map((node) => renderLi(node, 'video'))}
+          {taxonomyData.videos.map((node) => renderLi(node, UuidType.Video))}
         </p>
         <p className="mt-4">
-          {taxonomyData.applets.map((node) => renderLi(node, 'applet'))}
+          {taxonomyData.applets.map((node) => renderLi(node, UuidType.Applet))}
         </p>
         <p className="mt-4">
-          {taxonomyData.courses.map((node) => renderLi(node, 'course'))}
+          {taxonomyData.courses.map((node) => renderLi(node, UuidType.Course))}
         </p>
         <p className="mt-4">
-          {taxonomyData.events.map((node) => renderLi(node, 'event'))}
+          {taxonomyData.events.map((node) => renderLi(node, UuidType.Event))}
         </p>
         {renderFolderNotice()}
       </>
     )
   }
 
-  function renderLi(node: TaxonomyLink, type: string) {
+  function renderLi(node: TaxonomyLink, typename: UuidType) {
     if (removedEntityIds.includes(node.id)) return null
     const isChecked = entityIds.includes(node.id)
     return (
@@ -131,7 +133,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
               else setEntityIds([...entityIds, node.id])
             }}
           />{' '}
-          <FaIcon icon={getIconByTypename(type)} /> {node.title}
+          <FaIcon icon={getIconByTypename(typename)} /> {node.title}
         </label>{' '}
         ({' '}
         <a

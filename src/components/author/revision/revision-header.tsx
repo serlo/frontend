@@ -11,7 +11,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { RevisionData, UuidType } from '@/data-types'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 export interface RevisionHeaderProps {
@@ -93,7 +93,7 @@ export function RevisionHeader({
         {' '}
         <FaIcon
           className="text-brand-lighter text-2.5xl"
-          icon={getIconByTypename(data.type)}
+          icon={getIconByTypename(data.type as UuidType)}
         />{' '}
       </span>
     )

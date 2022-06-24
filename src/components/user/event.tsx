@@ -235,19 +235,21 @@ export function Event({
     title,
     __typename,
   }: EventObject | EventParent) {
-    return <Link href={alias}>{renderTitle(title, __typename)}</Link>
+    return (
+      <Link href={alias}>{renderTitle(title, __typename as UuidType)}</Link>
+    )
   }
 
-  function renderTitle(title: string, type: string) {
-    const typeString = getEntityStringByTypename(type, strings)
+  function renderTitle(title: string, typename: UuidType) {
+    const typeString = getEntityStringByTypename(typename, strings)
     const preposition = [
       UuidType.Exercise,
       UuidType.GroupedExercise,
       UuidType.Solution,
-    ].includes(type as UuidType)
+    ].includes(typename)
       ? strings.events.entityInParentPreposition
       : // TODO: type Thread should not exist, right?
-      ['Thread', UuidType.Comment].includes(type)
+      ['Thread', UuidType.Comment].includes(typename)
       ? strings.events.commentInParentPreposition
       : ''
 

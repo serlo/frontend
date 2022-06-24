@@ -276,11 +276,10 @@ export interface SingleEntityPage extends EntityPageBase {
 export interface EntityData {
   id: number
   alias: string
-  typename: string
+  typename: UuidType
   trashed?: boolean
   revisionId?: number
   title?: string
-  categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
   licenseData?: LicenseData
@@ -296,7 +295,7 @@ export interface RevisionPage extends EntityPageBase {
 }
 
 export interface RevisionData {
-  typename: string
+  typename: UuidRevType
   date: string
   type: EntityTypes
   user: FrontendUserData
