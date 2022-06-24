@@ -10,6 +10,7 @@ import {
   SolutionEdtrState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
+  FrontendNodeType,
 } from '@/frontend-node-types'
 import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
@@ -59,7 +60,7 @@ export function createExercise(
     }
   }
   return {
-    type: 'exercise',
+    type: FrontendNodeType.Exercise,
     grouped: false,
     positionOnPage: index,
     trashed: uuid.trashed,
@@ -120,7 +121,7 @@ export function createSolution(
   >
 ): FrontendSolutionNode {
   return {
-    type: 'solution',
+    type: FrontendNodeType.Solution,
     solution: createSolutionData({
       __typename: UuidType.Solution,
       license: uuid.repository.license,
@@ -159,7 +160,7 @@ export function createExerciseGroup(
   }
 
   return {
-    type: 'exercise-group',
+    type: FrontendNodeType.ExerciseGroup,
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
     license: createInlineLicense(uuid.license),

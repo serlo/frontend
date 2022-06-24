@@ -367,7 +367,7 @@ export enum UuidType {
 
 export type UuidWithRevType = UuidRevType | UuidType
 
-// TODO: Leftover custom types,
+// TODO: check leftover custom types,
 // | 'revision'
 // | 'thread'
 

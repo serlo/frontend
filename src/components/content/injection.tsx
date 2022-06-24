@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SlugProps } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionProps {
@@ -43,8 +43,13 @@ export function Injection({ href, renderNested }: InjectionProps) {
         } else {
           setValue([
             {
-              type: 'p',
-              children: [{ type: 'text', text: strings.errors.defaultMessage }],
+              type: FrontendNodeType.P,
+              children: [
+                {
+                  type: FrontendNodeType.Text,
+                  text: strings.errors.defaultMessage,
+                },
+              ],
             },
           ])
         }

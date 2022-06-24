@@ -12,7 +12,7 @@ import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { FrontendExerciseNode } from '@/frontend-node-types'
+import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -111,7 +111,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {renderNested(
           [
             {
-              type: 'solution',
+              type: FrontendNodeType.Solution,
               solution: node.solution,
               context: { id: node.context.solutionId! },
             },

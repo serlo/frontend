@@ -1,5 +1,5 @@
 import { render } from '../../external/legacy_render'
-import { FrontendContentNode } from '@/frontend-node-types'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { convert } from '@/schema/convert-edtr-io-state'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
 
@@ -16,6 +16,11 @@ export function convertState(raw: string | undefined): FrontendContentNode[] {
     return convert(JSON.parse(raw))
   } else {
     // raw as text
-    return [{ type: 'p', children: [{ type: 'text', text: raw ?? '' }] }]
+    return [
+      {
+        type: FrontendNodeType.P,
+        children: [{ type: FrontendNodeType.Text, text: raw ?? '' }],
+      },
+    ]
   }
 }

@@ -2,6 +2,7 @@ import type { RenderNestedFunction } from '../../../schema/article-renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   FrontendContentNode,
+  FrontendNodeType,
   FrontendSolutionNode,
 } from '@/frontend-node-types'
 
@@ -23,14 +24,19 @@ export function Solution({ node, renderNested }: SolutionProps) {
     const prereq: FrontendContentNode[] = []
     if (state.prerequisite && state.prerequisite.id) {
       prereq.push({
-        type: 'p',
+        type: FrontendNodeType.P,
         children: [
-          { type: 'text', text: `${strings.content.exercises.prerequisite} ` },
           {
-            type: 'a',
+            type: FrontendNodeType.Text,
+            text: `${strings.content.exercises.prerequisite} `,
+          },
+          {
+            type: FrontendNodeType.A,
             href:
               state.prerequisite.href ?? `/${state.prerequisite.id.toString()}`, // for revisions
-            children: [{ type: 'text', text: state.prerequisite.title }],
+            children: [
+              { type: FrontendNodeType.Text, text: state.prerequisite.title },
+            ],
           },
         ],
       })
@@ -41,13 +47,13 @@ export function Solution({ node, renderNested }: SolutionProps) {
       state.strategy.length > 0
         ? [
             {
-              type: 'important',
+              type: FrontendNodeType.Important,
               children: [
                 {
-                  type: 'p',
+                  type: FrontendNodeType.P,
                   children: [
                     {
-                      type: 'text',
+                      type: FrontendNodeType.Text,
                       text: strings.content.exercises.strategy,
                       strong: true,
                     },

@@ -22,6 +22,7 @@ import {
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
+  FrontendNodeType,
 } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
@@ -250,20 +251,20 @@ export function getPreviewStringFromExercise(
   const typeString = getTranslatedType(strings, node.type)
 
   const titleState =
-    node.type === 'exercise'
+    node.type === FrontendNodeType.Exercise
       ? node.task.edtrState?.content[0].children?.[0]
       : node.content[0].children?.[0]
 
   if (!titleState) return typeString
 
   const titleString =
-    (titleState.type === 'slate-p' &&
-      titleState.children?.[0].type === 'text' &&
+    (titleState.type === FrontendNodeType.SlateP &&
+      titleState.children?.[0].type === FrontendNodeType.Text &&
       titleState.children?.[0].text) ||
-    (titleState.children?.[0].type === 'inline-math' &&
+    (titleState.children?.[0].type === FrontendNodeType.InlineMath &&
       titleState.children?.[0].formula) ||
-    (titleState.type === 'slate-container' &&
-      titleState.children?.[0].children?.[0].type === 'text' &&
+    (titleState.type === FrontendNodeType.SlateContainer &&
+      titleState.children?.[0].children?.[0].type === FrontendNodeType.Text &&
       titleState.children?.[0].children?.[0].text)
 
   if (!titleString) return typeString

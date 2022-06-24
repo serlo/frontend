@@ -9,8 +9,51 @@ import { TableType } from './edtr-io/plugins/serlo-table/renderer'
 // Will switch to edtr-io state one day.
 // Until then: Here are the types the frontend expects after converting
 
+export enum FrontendNodeType {
+  Text = 'text',
+  A = 'a',
+  Article = 'article',
+  InlineMath = 'inline-math',
+  P = 'p',
+  SlateP = 'slate-p',
+  SlateContainer = 'slate-container',
+  H = 'h',
+  Math = 'math',
+  Img = 'img',
+  SpoilerContainer = 'spoiler-container',
+  SpoilerTitle = 'spoiler-title',
+  SpoilerBody = 'spoiler-body',
+  Ul = 'ul',
+  Ol = 'ol',
+  Li = 'li',
+  Multimedia = 'multimedia',
+  Row = 'row',
+  Col = 'col',
+  Important = 'important',
+  Blockquote = 'blockquote',
+  Box = 'box',
+  Anchor = 'anchor',
+  SerloTable = 'serlo-table',
+  SerloTr = 'serlo-tr',
+  SerloTd = 'serlo-td',
+  Table = 'table',
+  Tr = 'tr',
+  Th = 'th',
+  Td = 'td',
+  Geogebra = 'geogebra',
+  Injection = 'injection',
+  Exercise = 'exercise',
+  Solution = 'solution',
+  ExerciseGroup = 'exercise-group',
+  Video = 'video',
+  Code = 'code',
+  Equations = 'equations',
+  PageLayout = 'pageLayout',
+  PageTeam = 'pageTeam',
+}
+
 export interface FrontendTextNode {
-  type: 'text'
+  type: FrontendNodeType.Text
   text: string
   color?: FrontendTextColor
   em?: boolean
@@ -22,7 +65,7 @@ export interface FrontendTextNode {
 export type FrontendTextColor = 'blue' | 'green' | 'orange'
 
 export interface FrontendANode {
-  type: 'a'
+  type: FrontendNodeType.A
   href: string
   children?: FrontendContentNode[]
 }
@@ -33,7 +76,7 @@ export interface ArticleNodeUuidLink {
 }
 
 export interface FrontendArticleNode {
-  type: 'article'
+  type: FrontendNodeType.Article
   introduction: FrontendContentNode[]
   content: FrontendContentNode[]
   exercises: FrontendContentNode[]
@@ -51,36 +94,36 @@ export interface FrontendArticleNode {
 }
 
 export interface FrontendInlineMathNode {
-  type: 'inline-math'
+  type: FrontendNodeType.InlineMath
   formula: string
   formulaSource?: string
   children?: undefined
 }
 
 export interface FrontendPNode {
-  type: 'p'
+  type: FrontendNodeType.P
   children?: FrontendContentNode[]
 }
 
 export interface FrontendSlatePNode {
-  type: 'slate-p'
+  type: FrontendNodeType.SlateP
   children?: FrontendContentNode[]
 }
 
 export interface FrontendSlateContainerNode {
-  type: 'slate-container'
+  type: FrontendNodeType.SlateContainer
   children?: FrontendContentNode[]
 }
 
 export interface FrontendHNode {
-  type: 'h'
+  type: FrontendNodeType.H
   level: 1 | 2 | 3 | 4 | 5
   id?: string
   children?: FrontendContentNode[]
 }
 
 export interface FrontendMathNode {
-  type: 'math'
+  type: FrontendNodeType.Math
   formula: string
   formulaSource?: string
   children?: undefined
@@ -88,7 +131,7 @@ export interface FrontendMathNode {
 }
 
 export interface FrontendImgNode {
-  type: 'img'
+  type: FrontendNodeType.Img
   src: string
   href?: string
   alt: string
@@ -98,37 +141,37 @@ export interface FrontendImgNode {
 }
 
 export interface FrontendSpoilerContainerNode {
-  type: 'spoiler-container'
+  type: FrontendNodeType.SpoilerContainer
   children: [FrontendSpoilerTitleNode, FrontendSpoilerBodyNode]
 }
 
 export interface FrontendSpoilerTitleNode {
-  type: 'spoiler-title'
+  type: FrontendNodeType.SpoilerTitle
   children?: FrontendContentNode[]
 }
 
 export interface FrontendSpoilerBodyNode {
-  type: 'spoiler-body'
+  type: FrontendNodeType.SpoilerBody
   children?: FrontendContentNode[]
 }
 
 export interface FrontendUlNode {
-  type: 'ul'
+  type: FrontendNodeType.Ul
   children?: FrontendLiNode[]
 }
 
 export interface FrontendOlNode {
-  type: 'ol'
+  type: FrontendNodeType.Ol
   children?: FrontendLiNode[]
 }
 
 export interface FrontendLiNode {
-  type: 'li'
+  type: FrontendNodeType.Li
   children?: FrontendContentNode[]
 }
 
 export interface FrontendMultiMediaNode {
-  type: 'multimedia'
+  type: FrontendNodeType.Multimedia
   float?: 'left' | 'right'
   mediaWidth: number
   media: FrontendContentNode[]
@@ -136,29 +179,29 @@ export interface FrontendMultiMediaNode {
 }
 
 export interface FrontendRowNode {
-  type: 'row'
+  type: FrontendNodeType.Row
   children?: FrontendColNode[]
 }
 
 export interface FrontendColNode {
-  type: 'col'
+  type: FrontendNodeType.Col
   size: number
   float?: 'left' | 'right'
   children?: FrontendContentNode[]
 }
 
 export interface FrontendImportantNode {
-  type: 'important'
+  type: FrontendNodeType.Important
   children?: FrontendContentNode[]
 }
 
 export interface FrontendBlockquoteNode {
-  type: 'blockquote'
+  type: FrontendNodeType.Blockquote
   children?: FrontendContentNode[]
 }
 
 export interface FrontendBoxNode {
-  type: 'box'
+  type: FrontendNodeType.Box
   boxType: BoxType
   title?: FrontendContentNode[]
   anchorId: string
@@ -166,55 +209,55 @@ export interface FrontendBoxNode {
 }
 
 export interface FrontendAnchorNode {
-  type: 'anchor'
+  type: FrontendNodeType.Anchor
   id: string
   children?: undefined
 }
 
 export interface FrontendSerloTableNode {
-  type: 'serlo-table'
+  type: FrontendNodeType.SerloTable
   children?: FrontendSerloTrNode[]
   tableType: keyof typeof TableType | string
 }
 
 export interface FrontendSerloTrNode {
-  type: 'serlo-tr'
+  type: FrontendNodeType.SerloTr
   children?: FrontendSerloTdNode[]
 }
 
 export interface FrontendSerloTdNode {
-  type: 'serlo-td'
+  type: FrontendNodeType.SerloTd
   children?: FrontendContentNode[]
 }
 
 export interface FrontendTableNode {
-  type: 'table'
+  type: FrontendNodeType.Table
   children?: FrontendTrNode[]
 }
 
 export interface FrontendTrNode {
-  type: 'tr'
+  type: FrontendNodeType.Tr
   children?: (FrontendThNode | FrontendTdNode)[]
 }
 
 export interface FrontendThNode {
-  type: 'th'
+  type: FrontendNodeType.Th
   children?: FrontendContentNode[]
 }
 
 export interface FrontendTdNode {
-  type: 'td'
+  type: FrontendNodeType.Td
   children?: FrontendContentNode[]
 }
 
 export interface FrontendGeogebraNode {
-  type: 'geogebra'
+  type: FrontendNodeType.Geogebra
   id: string
   children?: undefined
 }
 
 export interface FrontendInjectionNode {
-  type: 'injection'
+  type: FrontendNodeType.Injection
   href: string
   children?: undefined
 }
@@ -227,7 +270,7 @@ interface BareSolution {
 }
 
 export interface FrontendExerciseNode {
-  type: 'exercise'
+  type: FrontendNodeType.Exercise
   trashed?: boolean
   task: {
     legacy?: FrontendContentNode[]
@@ -249,7 +292,7 @@ export interface FrontendExerciseNode {
 }
 
 export interface FrontendSolutionNode {
-  type: 'solution'
+  type: FrontendNodeType.Solution
   solution: BareSolution
 
   context: {
@@ -306,7 +349,7 @@ export interface EdtrPluginInputExercise {
 }
 
 export interface FrontendExerciseGroupNode {
-  type: 'exercise-group'
+  type: FrontendNodeType.ExerciseGroup
   license?: LicenseData
   positionOnPage?: number
   content: FrontendContentNode[]
@@ -319,14 +362,14 @@ export interface FrontendExerciseGroupNode {
 }
 
 export interface FrontendVideoNode {
-  type: 'video'
+  type: FrontendNodeType.Video
   src: string
   children?: undefined
   license?: LicenseData
 }
 
 export interface FrontendCodeNode {
-  type: 'code'
+  type: FrontendNodeType.Code
   code: string
   language: string
   showLineNumbers: boolean
@@ -343,7 +386,7 @@ export enum Sign {
 }
 
 export interface FrontendEquationsNode {
-  type: 'equations'
+  type: FrontendNodeType.Equations
   steps: {
     left: string
     leftSource?: string
@@ -360,7 +403,7 @@ export interface FrontendEquationsNode {
 }
 
 export interface FrontendPageLayoutNode {
-  type: 'pageLayout'
+  type: FrontendNodeType.PageLayout
   column1: FrontendContentNode[]
   column2: FrontendContentNode[]
   widthPercent: number
@@ -368,7 +411,7 @@ export interface FrontendPageLayoutNode {
 }
 
 export type FrontendPageTeamNode = PageTeamRendererProps & {
-  type: 'pageTeam'
+  type: FrontendNodeType.PageTeam
   children?: undefined
 }
 

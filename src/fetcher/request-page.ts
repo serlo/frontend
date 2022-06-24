@@ -19,6 +19,7 @@ import {
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
+import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
@@ -322,7 +323,7 @@ export async function requestPage(
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
-            type: 'video',
+            type: FrontendNodeType.Video,
             src: uuid.currentRevision?.url!,
             license: createInlineLicense(uuid.license),
           },
@@ -360,7 +361,7 @@ export async function requestPage(
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
-            type: 'geogebra',
+            type: FrontendNodeType.Geogebra,
             id: uuid.currentRevision?.url ?? '',
           },
           ...content,
