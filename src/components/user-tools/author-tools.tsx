@@ -4,6 +4,7 @@ import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
+import { ExerciseInlineType } from '../content/exercises/exercise-author-tools'
 import { AuthorToolsData, tippyDefaultProps } from './author-tools-hover-menu'
 import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
@@ -104,7 +105,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
       canDo:
-        !(data.type === '_ExerciseInline' && data.grouped) &&
+        !(data.type === ExerciseInlineType.Exercise && data.grouped) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
         canDo(TaxonomyTerm.change) &&

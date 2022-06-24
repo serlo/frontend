@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
 import { LicenseNotice } from '../license/license-notice'
+import { ExerciseInlineType } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
@@ -96,7 +97,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     const authorTools = ExerciseAuthorTools && loaded && auth.current && (
       <ExerciseAuthorTools
         data={{
-          type: '_SolutionInline',
+          type: ExerciseInlineType.Solution,
           id: node.context.solutionId!,
           parentId: node.context.id,
           grouped: node.grouped,
@@ -204,7 +205,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {loaded && auth.current && ExerciseAuthorTools && (
           <ExerciseAuthorTools
             data={{
-              type: '_ExerciseInline',
+              type: ExerciseInlineType.Exercise,
               trashed: node.trashed,
               id: node.context.id,
               grouped: node.grouped,

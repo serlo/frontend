@@ -3,12 +3,14 @@ import Tippy, { TippyProps } from '@tippyjs/react'
 
 import { AuthorTools, Tool } from './author-tools'
 import { MenuSubButtonLink } from './menu-sub-button-link'
+import { ExerciseInlineType } from '@/components/content/exercises/exercise-author-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 
 export interface AuthorToolsData {
-  type: string
+  type: UuidWithRevType | ExerciseInlineType
   id: number
   alias?: string
   taxonomyType?: TaxonomyTermType
@@ -36,7 +38,7 @@ export const tippyDefaultProps: Partial<TippyProps> = {
 
 export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const loggedInData = useLoggedInData()
-  const instanceData = useInstanceData()
+  const { strings } = useInstanceData()
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
@@ -48,9 +50,9 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   }
 
   if (
-    data.type == '_ExerciseInline' ||
-    data.type == '_ExerciseGroupInline' ||
-    data.type == '_SolutionInline'
+    data.type == ExerciseInlineType.Exercise ||
+    data.type == ExerciseInlineType.ExerciseGroup ||
+    data.type == ExerciseInlineType.Solution
   ) {
     return renderExercise()
   }
@@ -158,22 +160,20 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     )
   }
   function renderExercise() {
-    const entities = instanceData.strings.entities
-
-    const typeName =
-      entities[
-        data.type === '_ExerciseInline'
-          ? 'exercise'
-          : data.type === '_ExerciseGroupInline'
-          ? 'exerciseGroup'
-          : data.type === '_SolutionInline'
-          ? 'solution'
-          : 'exercise'
-      ]
+    const type = getTranslatedType(
+      strings,
+      data.type === ExerciseInlineType.Exercise
+        ? UuidType.Exercise
+        : data.type === ExerciseInlineType.ExerciseGroup
+        ? UuidType.ExerciseGroup
+        : data.type === ExerciseInlineType.Solution
+        ? UuidType.Solution
+        : UuidType.Exercise
+    )
 
     return (
       <ul className="serlo-sub-list-hover">
-        <li className="mb-1.5 ml-2 font-bold">{typeName}</li>
+        <li className="mb-1.5 ml-2 font-bold">{type}</li>
         <AuthorTools
           entityId={data.id}
           data={data}
@@ -182,7 +182,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           }
         />
 
-        {data.type == '_ExerciseGroupInline' && (
+        {data.type == ExerciseInlineType.ExerciseGroup && (
           <AuthorTools
             entityId={data.id}
             data={data}
@@ -190,7 +190,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           />
         )}
 
-        {data.type != '_SolutionInline' && (
+        {data.type != ExerciseInlineType.Solution && (
           <AuthorTools
             entityId={data.id}
             data={data}
@@ -198,7 +198,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           />
         )}
 
-        {data.type == '_SolutionInline' ? (
+        {data.type == ExerciseInlineType.Solution ? (
           <AuthorTools
             entityId={data.id}
             data={data}
@@ -217,7 +217,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           data={data}
           tools={[Tool.ChangeLicense, Tool.Log, Tool.Abo, Tool.Trash]}
         />
-        {data.type != '_SolutionInline' && (
+        {data.type != ExerciseInlineType.Solution && (
           <AuthorTools
             entityId={data.id}
             data={data}

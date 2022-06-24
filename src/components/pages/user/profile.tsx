@@ -17,7 +17,7 @@ import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UserPage } from '@/data-types'
+import { UserPage, UuidType } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -196,7 +196,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         id={id}
         hideEditProfile={!isOwnProfile}
         data={{
-          type: 'Profile',
+          type: UuidType.User,
           id: id,
         }}
       />

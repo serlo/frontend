@@ -10,6 +10,7 @@ import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import clsx from 'clsx'
 import { useEffect, useState, cloneElement } from 'react'
 
+import { ExerciseInlineType } from '../content/exercises/exercise-author-tools'
 import { FaIcon } from '../fa-icon'
 import { LazyTippy } from '../navigation/lazy-tippy'
 import { AuthorToolsData } from './author-tools-hover-menu'
@@ -125,7 +126,7 @@ export function UserTools({
       return null
     }
 
-    if (data.type === 'Profile') return renderProfileButtons()
+    if (data.type === UuidType.User) return renderProfileButtons()
 
     return (
       <>
@@ -230,7 +231,7 @@ export function UserTools({
 
   function renderExtraTools() {
     if (!loggedInComponents || !loggedInData) return null // safeguard
-    const supportedTypes = [
+    const supportedTypes: AuthorToolsData['type'][] = [
       UuidType.Page,
       UuidType.Article,
       UuidType.Video,
@@ -238,9 +239,9 @@ export function UserTools({
       UuidType.Event,
       UuidType.CoursePage,
       UuidType.TaxonomyTerm,
-      '_ExerciseInline',
-      '_ExerciseGroupInline',
-      '_SolutionInline',
+      ExerciseInlineType.Exercise,
+      ExerciseInlineType.ExerciseGroup,
+      ExerciseInlineType.Solution,
     ]
     if (!supportedTypes.includes(data.type)) return null
 
