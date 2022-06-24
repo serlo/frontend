@@ -1,5 +1,5 @@
 import { PageLayoutRenderer } from './renderer'
-import type { FrontendPageLayoutNode } from '@/data-types'
+import type { FrontendPageLayoutNode } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export function PageLayoutAdapter({

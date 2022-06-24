@@ -21,10 +21,10 @@ import {
   TaxonomyLink,
   TaxonomyPage,
   SingleEntityPage,
-  FrontendExerciseNode,
   CoursePageEntry,
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
+import { FrontendExerciseNode } from '@/frontend-node-types'
 import { useEntitySortMutation } from '@/helper/mutations/use-entity-sort-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'

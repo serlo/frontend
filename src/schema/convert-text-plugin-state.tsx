@@ -6,7 +6,7 @@ import type {
   FrontendLiNode,
   FrontendTextColor,
   FrontendTextNode,
-} from '@/data-types'
+} from '@/frontend-node-types'
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 

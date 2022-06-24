@@ -3,7 +3,7 @@
   ResponseDataQuickFix,
 } from '@/fetcher/process-response'*/
 
-import { FrontendContentNode } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export function getMetaImage(alias: string) {

@@ -24,9 +24,9 @@ import { SerloTable } from '@/components/content/serlo-table'
 import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
-import type { FrontendContentNode } from '@/data-types'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
 import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
+import type { FrontendContentNode } from '@/frontend-node-types'
 
 export type NodePath = (number | string)[]
 

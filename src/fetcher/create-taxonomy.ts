@@ -1,13 +1,11 @@
 import { convertState } from './convert-state'
 import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
+import { TaxonomyData, TaxonomyLink, TaxonomySubTerm } from '@/data-types'
 import {
-  TaxonomyData,
   FrontendExerciseNode,
   FrontendExerciseGroupNode,
-  TaxonomyLink,
-  TaxonomySubTerm,
-} from '@/data-types'
+} from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 type TaxonomyTerm = Extract<

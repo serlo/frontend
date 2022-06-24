@@ -12,13 +12,11 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { InstanceData, TaxonomyData, TaxonomyLink } from '@/data-types'
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
-  InstanceData,
-  TaxonomyData,
-  TaxonomyLink,
-} from '@/data-types'
+} from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {

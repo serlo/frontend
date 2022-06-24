@@ -5,14 +5,14 @@ import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
 import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
+import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
   FrontendContentNode,
   FrontendMathNode,
   FrontendSerloTrNode,
   FrontendTextNode,
   Sign,
-} from '@/data-types'
-import { BoxType } from '@/edtr-io/plugins/box/renderer'
+} from '@/frontend-node-types'
 
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined

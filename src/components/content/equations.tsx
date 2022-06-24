@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { shade } from 'polished'
 import { ReactNode, Fragment } from 'react'
 
-import { FrontendContentNode, Sign } from '@/data-types'
+import { FrontendContentNode, Sign } from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 import { theme } from '@/theme'
 

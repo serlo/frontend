@@ -11,7 +11,7 @@ import {
   FrontendTextNode,
   FrontendInlineMathNode,
   FrontendMathNode,
-} from '@/data-types'
+} from '@/frontend-node-types'
 
 // Result of the htmlparser
 interface LegacyNode {
