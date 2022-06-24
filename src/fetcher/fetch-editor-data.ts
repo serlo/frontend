@@ -21,10 +21,11 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: string
+  type: UuidWithRevType
   converted?: boolean
   needsReview: boolean
-  id: number
+  id?: number // only for existing
+  parentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
 }
@@ -87,7 +88,7 @@ export async function fetchEditorData(
   } else {
     return {
       ...result,
-      type: data.__typename,
+      type: data.__typename as UuidWithRevType,
       needsReview,
       id: repoId,
       errorType: 'none',

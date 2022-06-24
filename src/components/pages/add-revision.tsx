@@ -22,21 +22,33 @@ import {
 import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
 
+// can probably be removed in refactor
+const supportedTypes = [
+  UuidType.Applet,
+  UuidType.Article,
+  UuidType.Course,
+  UuidType.CoursePage,
+  UuidType.Event,
+  UuidType.Solution,
+  UuidType.Video,
+  UuidType.Exercise,
+  UuidType.ExerciseGroup,
+  UuidType.GroupedExercise,
+  UuidType.Page,
+  UuidType.TaxonomyTerm,
+]
+
 export function AddRevision({
   initialState,
   type,
   needsReview,
   id,
+  parentId,
   breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
 
   const auth = useAuthentication()
-
-  const backlink = {
-    label: strings.revisions.toContent,
-    url: `/${id}`,
-  }
 
   const setEntityMutation = useSetEntityMutation()
   const addPageRevision = useAddPageRevision()
@@ -79,6 +91,12 @@ export function AddRevision({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (!id && !parentId) return null
+  const backlink = {
+    label: strings.revisions.toContent,
+    url: `/${id ?? parentId!}`,
+  }
+
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
     return (
@@ -88,21 +106,6 @@ export function AddRevision({
         Please: Logout and Login again and try to edit again.
       </StaticInfoPanel>
     )
-
-  const supportedTypes = [
-    UuidType.Applet,
-    UuidType.Article,
-    UuidType.Course,
-    UuidType.CoursePage,
-    UuidType.Event,
-    UuidType.Solution,
-    UuidType.Video,
-    UuidType.Exercise,
-    UuidType.ExerciseGroup,
-    UuidType.GroupedExercise,
-    UuidType.Page,
-    UuidType.TaxonomyTerm,
-  ]
 
   return (
     <>
