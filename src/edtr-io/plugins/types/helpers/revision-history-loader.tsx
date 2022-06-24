@@ -10,7 +10,6 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { HistoryRevisionsData } from '@/data-types'
 import {
   editorResponseToState,
   isError,
@@ -20,6 +19,7 @@ import {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
+import { Revisions } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -98,7 +98,7 @@ export function RevisionHistoryLoader<T>(
   )
 
   function useRevisionsFetch(id: number) {
-    return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
+    return useGraphqlSwr<{ uuid: Revisions }>({
       query: revisionHistoryQuery,
       variables: { id },
       config: {

@@ -188,34 +188,6 @@ export interface LicenseDetailData {
   isDefault: boolean
 }
 
-export interface HistoryRevisionData {
-  author: FrontendUserData
-  trashed: boolean
-  changes?: string
-  date: string
-  id: number
-}
-
-export interface HistoryRevisionsData {
-  id: number
-  alias: string
-  __typename: string
-  currentRevision: {
-    id: number
-    title?: string
-  }
-  revisions: {
-    nodes: HistoryRevisionData[]
-  }
-  solutionRevisions?: {
-    nodes: HistoryRevisionData[]
-  }
-}
-
-export interface HistoryRevisionProps {
-  id: number
-}
-
 // For types that are supported through their own pages we return this helper in request-page
 
 export interface Redirect {

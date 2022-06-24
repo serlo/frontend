@@ -1,15 +1,9 @@
 overwrite: true
 schema: 'https://api.serlo-staging.dev/graphql'
 documents:
-  - 'src/fetcher/*.ts'
-  - 'src/fetcher/*/*.ts'
-  - 'src/components/*/*.tsx'
-  - 'src/pages/*.tsx'
-  - 'src/pages/entity/license/update/[id].tsx'
-  - 'src/pages/subscriptions/manage.tsx'
-  - 'src/pages/entity/taxonomy/update/[id].tsx'
-  - 'src/pages/uuid/recycle-bin.tsx'
-  - 'src/pages/user/notifications.tsx'
+  - 'src/**/*.tsx'
+  - 'src/**/*.ts'
+  - '!src/helper/mutations/**/*.ts'
 generates:
   src/fetcher/graphql-types/operations.ts:
     plugins:

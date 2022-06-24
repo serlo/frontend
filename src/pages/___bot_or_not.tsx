@@ -16,7 +16,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserPage } from '@/data-types'
 import { convertState } from '@/fetcher/convert-state'
 import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
-import { sharedUserFragment } from '@/fetcher/user/query'
+import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
 import { mutationFetch } from '@/helper/mutations/helper'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -415,5 +415,5 @@ const potentialSpamUsersQuery = gql`
     }
   }
 
-  ${sharedUserFragment}
+  ${sharedUserFragments}
 `

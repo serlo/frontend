@@ -7,7 +7,9 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { FetchExerciseFolderQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
 
@@ -15,6 +17,12 @@ interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
   addEntry: (id: number, typename: string, title?: string) => void
 }
+
+type ChildNodes = Extract<
+  FetchExerciseFolderQuery['uuid'],
+  { type: any }
+>['children']['nodes']
+type ChildNode = Extract<ChildNodes[number], { id: any }>
 
 export function ArticleRelatedExercises({
   exerciseFolderId,
@@ -31,7 +39,11 @@ export function ArticleRelatedExercises({
 
   if (!data || error) return errorReturn
   const { uuid } = data
-  if (uuid.type !== TaxonomyTermType.ExerciseFolder) return errorReturn
+  if (
+    uuid?.__typename !== 'TaxonomyTerm' ||
+    uuid.type !== TaxonomyTermType.ExerciseFolder
+  )
+    return errorReturn
 
   return (
     <div className="mt-5 border-t-2 pt-6">
@@ -45,7 +57,11 @@ export function ArticleRelatedExercises({
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
-      <div className="mt-4">{uuid.children.nodes.map(renderExercises)}</div>
+      <div className="mt-4">
+        {uuid.children.nodes.map((node) => {
+          return hasOwnPropertyTs(node, 'id') ? renderExercises(node) : null
+        })}
+      </div>
     </div>
   )
 
@@ -78,21 +94,24 @@ export function ArticleRelatedExercises({
 }
 
 const fetchExerciseFolderQuery = gql`
-  query fetchExerciseFolderQuery($id: Int!) {
+  query fetchExerciseFolder($id: Int!) {
     uuid(id: $id) {
       ... on TaxonomyTerm {
         type
         children {
           nodes {
-            id
-            trashed
-            __typename
             ... on Exercise {
+              id
+              trashed
+              __typename
               currentRevision {
                 id
               }
             }
             ... on ExerciseGroup {
+              id
+              trashed
+              __typename
               currentRevision {
                 id
               }
@@ -104,26 +123,8 @@ const fetchExerciseFolderQuery = gql`
   }
 `
 
-interface ChildNode {
-  __typename: string
-  id: number
-  trashed: boolean
-  currentRevision?: {
-    id: number
-  }
-}
-
-interface FetchExerciseFolderType {
-  uuid: {
-    type: string
-    children: {
-      nodes: ChildNode[]
-    }
-  }
-}
-
 function useFetchExerciseFolder(id: number) {
-  return useGraphqlSwr<FetchExerciseFolderType>({
+  return useGraphqlSwr<FetchExerciseFolderQuery>({
     query: fetchExerciseFolderQuery,
     variables: { id },
     config: {
