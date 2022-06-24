@@ -34,6 +34,9 @@ export const instanceData = {
       folders: 'Folders',
       exercises: 'Exercises',
       events: 'Events',
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content',
     },
     entities: {
       applet: 'Applet',

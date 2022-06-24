@@ -12,7 +12,7 @@ import { LicenseNotice } from '@/components/content/license/license-notice'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { TaxonomyData, UuidType } from '@/data-types'
+import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
@@ -51,7 +51,11 @@ export function Topic({ data }: TopicProps) {
         {isTopic && <TopicCategories data={data} full />}
 
         {isExerciseFolder && data.events && (
-          <TopicCategories data={data} categories={['events']} full />
+          <TopicCategories
+            data={data}
+            categories={[TopicCategoryType.events]}
+            full
+          />
         )}
       </div>
 

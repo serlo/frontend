@@ -12,11 +12,16 @@ import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
 import { TaxonomyTermType } from '@serlo/api'
 
-import { TopicCategoryTypes, UuidWithRevType } from '@/data-types'
+import {
+  TopicCategoryCustomType,
+  TopicCategoryType,
+  UuidWithRevType,
+} from '@/data-types'
 
-export const categoryIconMapping: {
-  [K in TopicCategoryTypes]: IconDefinition
-} = {
+export const categoryIconMapping: Record<
+  TopicCategoryType | TopicCategoryCustomType,
+  IconDefinition
+> = {
   articles: faNewspaper,
   courses: faGraduationCap,
   videos: faPlayCircle,
@@ -24,6 +29,9 @@ export const categoryIconMapping: {
   folders: faFolderOpen,
   exercises: faFile,
   events: faCalendarAlt,
+  unrevised: faCircle,
+  subterms: faFolderOpen,
+  exercisesContent: faFile,
 }
 
 export function getIconByTypename(

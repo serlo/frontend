@@ -106,9 +106,14 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderEntityIcon() {
-    if (data.typename === UuidType.CoursePage) return null
+    if (
+      data.typename === UuidType.CoursePage ||
+      data.typename === UuidType.Page
+    )
+      return null
     return (
       <span title={getTranslatedType(strings, data.typename)}>
+        {' '}
         <FaIcon
           icon={getIconByTypename(data.typename)}
           className="text-brand-lighter text-2.5xl"

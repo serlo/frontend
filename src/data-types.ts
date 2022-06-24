@@ -350,6 +350,7 @@ export enum UuidRevType {
 
 export enum UuidType {
   Comment = 'Comment',
+  Thread = 'Thread', // Not a UUID type but used as typename in Events
   Applet = 'Applet',
   Article = 'Article',
   Course = 'Course',
@@ -367,20 +368,23 @@ export enum UuidType {
 
 export type UuidWithRevType = UuidRevType | UuidType
 
-// TODO: check leftover custom types,
-// | 'revision'
-// | 'thread'
-
 // Entities can belong to a category that we use in the taxonomy
 
-export type TopicCategoryTypes =
-  | 'articles'
-  | 'courses'
-  | 'videos'
-  | 'applets'
-  | 'folders'
-  | 'exercises'
-  | 'events'
+export enum TopicCategoryType {
+  articles = 'articles',
+  courses = 'courses',
+  videos = 'videos',
+  applets = 'applets',
+  folders = 'folders',
+  exercises = 'exercises',
+  events = 'events',
+}
+
+export enum TopicCategoryCustomType {
+  unrevised = 'unrevised',
+  subterms = 'subterms',
+  exercisesContent = 'exercisesContent',
+}
 
 // Some flags to control schema.org behaviour. Not very well done yet.
 

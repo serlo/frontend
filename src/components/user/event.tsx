@@ -248,8 +248,7 @@ export function Event({
       UuidType.Solution,
     ].includes(typename)
       ? strings.events.entityInParentPreposition
-      : // TODO: type Thread should not exist, right?
-      ['Thread', UuidType.Comment].includes(typename)
+      : [UuidType.Thread, UuidType.Comment].includes(typename)
       ? strings.events.commentInParentPreposition
       : ''
 
