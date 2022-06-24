@@ -7,7 +7,7 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import { FetchExerciseFolderQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -16,7 +16,7 @@ import { renderNested } from '@/schema/article-renderer'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
-  addEntry: (id: number, typename: string, title?: string) => void
+  addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
 }
 
 type ChildNodes = Extract<

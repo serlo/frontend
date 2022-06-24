@@ -1,4 +1,5 @@
 import { Icon } from '@edtr-io/ui'
+import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
@@ -6,20 +7,20 @@ import { useState } from 'react'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import { UuidSimpleQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface UuidUrlInputProps {
-  supportedEntityTypes: string[]
-  supportedTaxonomyTypes: string[]
+  supportedEntityTypes: UuidWithRevType[]
+  supportedTaxonomyTypes: TaxonomyTermType[]
   renderButtons: (
-    typename: string,
+    typename: UuidWithRevType,
     id: number,
     title: string,
-    taxType?: string
+    taxType?: TaxonomyTermType
   ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
@@ -87,7 +88,7 @@ export function UuidUrlInput({
     const id =
       uuid.__typename === UuidType.CoursePage ? uuid.course?.id : uuid.id
 
-    if (!supportedEntityTypes.includes(uuid.__typename))
+    if (!supportedEntityTypes.includes(uuid.__typename as UuidWithRevType))
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
 
     if (
@@ -115,7 +116,7 @@ export function UuidUrlInput({
           <Icon icon={getIconByTypename(uuid.__typename)} /> {title}
         </a>
         {renderButtons(
-          uuid.__typename,
+          uuid.__typename as UuidWithRevType,
           id,
           title ?? getTranslatedType(strings, uuid.__typename),
           hasOwnPropertyTs(uuid, 'type') ? uuid.type : undefined

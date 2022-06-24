@@ -14,7 +14,7 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import {
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
@@ -153,10 +153,10 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
   }
 
   function renderAddButton(
-    _typename: string,
+    _typename: UuidWithRevType,
     taxId: number,
     _title: string,
-    taxType?: string
+    taxType?: TaxonomyTermType
   ) {
     return (
       <>

@@ -17,6 +17,7 @@ import {
   TaxonomyData,
   TaxonomyLink,
   UuidType,
+  UuidWithRevType,
 } from '@/data-types'
 import {
   FrontendExerciseGroupNode,
@@ -161,10 +162,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   }
 
   function renderButtons(
-    _typename: string,
+    _typename: UuidWithRevType,
     id: number,
     _title: string,
-    taxType?: string
+    taxType?: TaxonomyTermType
   ) {
     const buttonClass = clsx(
       'text-base serlo-button-light mr-3',

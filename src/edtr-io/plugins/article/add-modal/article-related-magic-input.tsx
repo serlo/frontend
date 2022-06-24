@@ -5,10 +5,10 @@ import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
 
 interface ArticleRelatedMagicInputProps {
-  addEntry: (id: number, typename: string, title?: string) => void
+  addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
   showExerciseFolderPreview: (id: number) => void
 }
 
@@ -38,7 +38,7 @@ export function ArticleRelatedMagicInput({
     />
   )
 
-  function renderButtons(typename: string, id: number, title: string) {
+  function renderButtons(typename: UuidWithRevType, id: number, title: string) {
     return (
       <>
         {typename === UuidType.TaxonomyTerm ? (

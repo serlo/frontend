@@ -8,7 +8,7 @@ import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
@@ -55,7 +55,7 @@ export function ArticleAddModal({
     )
   }
 
-  const addEntry = (id: number, typename: string, title?: string) => {
+  const addEntry = (id: number, typename: UuidWithRevType, title?: string) => {
     const category = getCategoryByTypename(typename)
     if (
       category === 'articles' ||

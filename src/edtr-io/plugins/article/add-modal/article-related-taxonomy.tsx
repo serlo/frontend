@@ -7,14 +7,14 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface ArticleRelatedTaxonomyProps {
-  addEntry: (id: number, typename: string, title?: string) => void
-  checkDuplicates: (id: number, typename: string) => boolean
+  addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
+  checkDuplicates: (id: number, typename: UuidWithRevType) => boolean
   showExerciseFolderPreview: (id: number) => void
 }
 
@@ -48,13 +48,13 @@ export function ArticleRelatedTaxonomy({
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {
-          return renderList(typename, categoryData)
+          return renderList(typename as UuidWithRevType, categoryData)
         })}
       </div>
     </div>
   )
 
-  function renderList(typename: string, dataArray: ChildNode[]) {
+  function renderList(typename: UuidWithRevType, dataArray: ChildNode[]) {
     if (dataArray.length === 0) return null
     const isTax = typename === UuidType.TaxonomyTerm
 
@@ -72,7 +72,7 @@ export function ArticleRelatedTaxonomy({
     )
   }
 
-  function renderLi(item: ChildNode, typename: string) {
+  function renderLi(item: ChildNode, typename: UuidWithRevType) {
     const title = typename.includes(UuidType.Exercise)
       ? getTranslatedType(strings, typename)
       : typename === UuidType.TaxonomyTerm
@@ -170,14 +170,14 @@ const fetchParentQuery = gql`
 `
 
 interface ChildNode {
-  __typename: string
+  __typename: UuidWithRevType
   id: number
   trashed: boolean
   currentRevision?: {
     title?: string
     id?: string
   }
-  type?: string
+  type?: TaxonomyTermType
   name?: string
 }
 
@@ -185,7 +185,7 @@ interface FetchParentType {
   uuid: {
     taxonomyTerms: {
       nodes: {
-        type: string
+        type: TaxonomyTermType
         name: string
         id: number
         children: {
