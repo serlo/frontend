@@ -8,6 +8,7 @@ import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
@@ -68,12 +69,12 @@ export function ArticleAddModal({
       })
     }
 
-    if (typename === 'TaxonomyTerm' && title) {
+    if (typename === UuidType.TaxonomyTerm && title) {
       exerciseFolder.title.set(title)
       exerciseFolder.id.set(id.toString())
     }
 
-    if (typename.includes('Exercise')) {
+    if (typename.includes(UuidType.Exercise)) {
       //maybe also check for duplicates
       exercises.insert(exercises.length, {
         plugin: 'injection',

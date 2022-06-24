@@ -6,7 +6,7 @@ import { convertState } from '../convert-state'
 import { User } from '../query-types'
 import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { PageNotFound, UserPage } from '@/data-types'
+import { PageNotFound, UserPage, UuidType } from '@/data-types'
 
 export async function requestUser(
   path: string,
@@ -24,7 +24,7 @@ export async function requestUser(
     return { kind: 'not-found' }
   }
 
-  if (uuid.__typename === 'User') {
+  if (uuid.__typename === UuidType.User) {
     return {
       kind: 'user/profile',
       newsletterPopup: false,

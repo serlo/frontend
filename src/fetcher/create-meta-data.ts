@@ -26,7 +26,7 @@ export function getMetaImage(alias: string) {
 }
 
 export function getMetaDescription(content: FrontendContentNode[]): string {
-  /*if (processed.contentType === 'TaxonomyTerm') return
+  /*if (processed.contentType === UuidType.TaxonomyTerm) return
 
   if (!processed.data) return
 

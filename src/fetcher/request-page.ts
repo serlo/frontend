@@ -18,7 +18,7 @@ import {
 } from './graphql-types/operations'
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { RequestPageData, UuidRevType } from '@/data-types'
+import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
@@ -60,9 +60,9 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
 
-  if (uuid.__typename === 'Solution') {
+  if (uuid.__typename === UuidType.Solution) {
     return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
@@ -74,7 +74,7 @@ export async function requestPage(
   const metaImage = getMetaImage(uuid.alias)
 
   // Special case for event history, User profiles are requested in user/request.ts
-  if (uuid.__typename === 'User') {
+  if (uuid.__typename === UuidType.User) {
     return {
       kind: 'user/events',
       userData: {
@@ -85,7 +85,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Course') {
+  if (uuid.__typename === UuidType.Course) {
     const firstPage = uuid.pages.filter(
       (page) => page.currentRevision !== null
     )[0]?.alias
@@ -129,7 +129,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'TaxonomyTerm') {
+  if (uuid.__typename === UuidType.TaxonomyTerm) {
     return {
       kind: 'taxonomy',
       taxonomyData: buildTaxonomyData(uuid),
@@ -149,7 +149,10 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Exercise' || uuid.__typename === 'GroupedExercise') {
+  if (
+    uuid.__typename === UuidType.Exercise ||
+    uuid.__typename === UuidType.GroupedExercise
+  ) {
     const exercise = [createExercise(uuid)]
     return {
       kind: 'single-entity',
@@ -164,7 +167,7 @@ export async function requestPage(
       },
       newsletterPopup: false,
       breadcrumbsData:
-        uuid.__typename == 'GroupedExercise'
+        uuid.__typename == UuidType.GroupedExercise
           ? [
               {
                 label:
@@ -177,7 +180,9 @@ export async function requestPage(
       metaData: {
         title,
         contentType:
-          uuid.__typename === 'Exercise' ? 'text-exercise' : 'groupedexercise',
+          uuid.__typename === UuidType.Exercise
+            ? 'text-exercise'
+            : 'groupedexercise',
         metaImage,
         metaDescription: getMetaDescription(exercise),
       },
@@ -187,7 +192,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'ExerciseGroup') {
+  if (uuid.__typename === UuidType.ExerciseGroup) {
     const exercise = [createExerciseGroup(uuid)]
     return {
       kind: 'single-entity',
@@ -215,7 +220,7 @@ export async function requestPage(
 
   const content = convertState(uuid.currentRevision?.content)
 
-  if (uuid.__typename === 'Event') {
+  if (uuid.__typename === UuidType.Event) {
     return {
       kind: 'single-entity',
       entityData: {
@@ -239,7 +244,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Page') {
+  if (uuid.__typename === UuidType.Page) {
     return {
       kind: 'single-entity',
       newsletterPopup: true,
@@ -269,7 +274,7 @@ export async function requestPage(
 
   const licenseData = { ...uuid.license, isDefault: uuid.license.default }
 
-  if (uuid.__typename === 'Article') {
+  if (uuid.__typename === UuidType.Article) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -307,7 +312,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Video') {
+  if (uuid.__typename === UuidType.Video) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -346,7 +351,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Applet') {
+  if (uuid.__typename === UuidType.Applet) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -385,7 +390,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'CoursePage') {
+  if (uuid.__typename === UuidType.CoursePage) {
     const pagesToShow =
       uuid.course && uuid.course.pages
         ? uuid.course.pages.filter(

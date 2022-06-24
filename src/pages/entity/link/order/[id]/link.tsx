@@ -22,6 +22,7 @@ import {
   TaxonomyPage,
   SingleEntityPage,
   CoursePageEntry,
+  UuidType,
 } from '@/data-types'
 import { requestPage } from '@/fetcher/request-page'
 import { FrontendExerciseNode } from '@/frontend-node-types'
@@ -43,7 +44,9 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const sort = useEntitySortMutation()
   const router = useRouter()
   const { entityData } = pageData
-  const isCourse = entityData.typename.startsWith('Course')
+  const isCourse =
+    entityData.typename === UuidType.Course ||
+    entityData.typename === UuidType.CoursePage
   const entityId = entityData.courseData?.id ?? entityData.id
   const [coursePages, setCoursePages] = useState<CoursePageEntry[]>(
     entityData.courseData?.pages ?? []

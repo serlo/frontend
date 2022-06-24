@@ -16,6 +16,7 @@ import {
   PageNotFound,
   RevisionPage,
   UuidRevType,
+  UuidType,
 } from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
@@ -110,7 +111,7 @@ export async function requestRevision(
         return uuid.repository.exerciseGroup.id
       if (uuid.__typename === UuidRevType.Solution) {
         const exercise = uuid.repository.exercise
-        if (exercise.__typename === 'GroupedExercise')
+        if (exercise.__typename === UuidType.GroupedExercise)
           return exercise.exerciseGroup?.id
         return exercise.id
       }
@@ -120,7 +121,7 @@ export async function requestRevision(
     const getPositionInGroup = () => {
       if (uuid.__typename === UuidRevType.Solution) {
         const exercise = uuid.repository.exercise
-        if (exercise.__typename === 'GroupedExercise') {
+        if (exercise.__typename === UuidType.GroupedExercise) {
           const pos = exercise.exerciseGroup?.exercises.findIndex(
             (ex) => ex.id === exercise.id
           )

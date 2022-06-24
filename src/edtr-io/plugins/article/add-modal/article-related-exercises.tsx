@@ -7,6 +7,7 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import { FetchExerciseFolderQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -40,7 +41,7 @@ export function ArticleRelatedExercises({
   if (!data || error) return errorReturn
   const { uuid } = data
   if (
-    uuid?.__typename !== 'TaxonomyTerm' ||
+    uuid?.__typename !== UuidType.TaxonomyTerm ||
     uuid.type !== TaxonomyTermType.ExerciseFolder
   )
     return errorReturn
@@ -85,7 +86,7 @@ export function ArticleRelatedExercises({
             getTranslatedType(strings, __typename)
           )}
           onClick={() => {
-            addEntry(id, 'Exercise')
+            addEntry(id, UuidType.Exercise)
           }}
         />
       </div>

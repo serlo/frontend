@@ -5,6 +5,7 @@ import { AuthorTools, Tool } from './author-tools'
 import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export interface AuthorToolsData {
   type: string
@@ -42,7 +43,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
   const hasUnrevised =
     data.unrevisedRevisions !== undefined && data.unrevisedRevisions > 0
 
-  if (data.type == 'CoursePage') {
+  if (data.type == UuidType.CoursePage) {
     return renderCoursePage()
   }
 
@@ -62,12 +63,12 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
 
   function getToolsArray(): Tool[] {
     switch (data.type) {
-      case 'Page':
+      case UuidType.Page:
         return [Tool.Abo, Tool.History, Tool.Log, Tool.AnalyticsLink]
-      case 'Article':
-      case 'Video':
-      case 'Applet':
-      case 'Event':
+      case UuidType.Article:
+      case UuidType.Video:
+      case UuidType.Applet:
+      case UuidType.Event:
         return [
           Tool.Abo,
           Tool.History,
@@ -76,7 +77,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
           Tool.AnalyticsLink,
           Tool.Trash,
         ]
-      case 'TaxonomyTerm':
+      case UuidType.TaxonomyTerm:
         return [
           Tool.Abo,
           Tool.Organize,

@@ -14,6 +14,7 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import {
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
@@ -139,7 +140,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
 
     return (
       <UuidUrlInput
-        supportedEntityTypes={['TaxonomyTerm']}
+        supportedEntityTypes={[UuidType.TaxonomyTerm]}
         supportedTaxonomyTypes={[
           TaxonomyTermType.Topic,
           TaxonomyTermType.ExerciseFolder,

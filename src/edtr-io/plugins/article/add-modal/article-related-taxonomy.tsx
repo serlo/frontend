@@ -7,6 +7,7 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
@@ -55,7 +56,7 @@ export function ArticleRelatedTaxonomy({
 
   function renderList(typename: string, dataArray: ChildNode[]) {
     if (dataArray.length === 0) return null
-    const isTax = typename === 'TaxonomyTerm'
+    const isTax = typename === UuidType.TaxonomyTerm
 
     return (
       <div className="py-2 max-w-[30%] mr-4" key={typename}>
@@ -72,15 +73,15 @@ export function ArticleRelatedTaxonomy({
   }
 
   function renderLi(item: ChildNode, typename: string) {
-    const title = typename.includes('Exercise')
+    const title = typename.includes(UuidType.Exercise)
       ? getTranslatedType(strings, typename)
-      : typename === 'TaxonomyTerm'
+      : typename === UuidType.TaxonomyTerm
       ? item.name
       : item.currentRevision?.title
 
     if (!title) return null
 
-    const isTax = typename === 'TaxonomyTerm'
+    const isTax = typename === UuidType.TaxonomyTerm
 
     if (checkDuplicates(item.id, typename)) return null
 
@@ -223,13 +224,16 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
   }
 
   term.children.nodes.map((child) => {
-    const isEx = child.__typename.includes('Exercise')
-    const isTax = child.__typename === 'TaxonomyTerm'
+    const isEx = child.__typename.includes(UuidType.Exercise)
+    const isTax = child.__typename === UuidType.TaxonomyTerm
 
     if (
-      !['Article', 'Course', 'CoursePage', 'Video'].includes(
-        child.__typename
-      ) &&
+      ![
+        UuidType.Article,
+        UuidType.Course,
+        UuidType.CoursePage,
+        UuidType.Video,
+      ].includes(child.__typename as UuidType) &&
       !isEx &&
       !isTax
     )
@@ -239,7 +243,7 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
 
     if ((!isTax && !child.currentRevision) || child.trashed) return
 
-    const category = isEx ? 'Exercise' : child.__typename
+    const category = isEx ? UuidType.Exercise : child.__typename
     if (!categorisedData[category]) categorisedData[category] = []
     categorisedData[category].push(child)
   })

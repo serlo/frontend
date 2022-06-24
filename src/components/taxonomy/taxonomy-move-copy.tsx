@@ -12,7 +12,12 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { InstanceData, TaxonomyData, TaxonomyLink } from '@/data-types'
+import {
+  InstanceData,
+  TaxonomyData,
+  TaxonomyLink,
+  UuidType,
+} from '@/data-types'
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
@@ -144,7 +149,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   function renderInput() {
     return (
       <UuidUrlInput
-        supportedEntityTypes={['TaxonomyTerm']}
+        supportedEntityTypes={[UuidType.TaxonomyTerm]}
         supportedTaxonomyTypes={[
           TaxonomyTermType.Topic,
           TaxonomyTermType.ExerciseFolder,

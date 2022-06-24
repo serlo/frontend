@@ -8,6 +8,7 @@ import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/ty
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export function useTaxonomyCreateOrUpdateMutation() {
   const auth = useAuthentication()
@@ -19,7 +20,8 @@ export function useTaxonomyCreateOrUpdateMutation() {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
-    if (!data.__typename || data.__typename !== 'TaxonomyTerm') return false
+    if (!data.__typename || data.__typename !== UuidType.TaxonomyTerm)
+      return false
 
     try {
       const input = {

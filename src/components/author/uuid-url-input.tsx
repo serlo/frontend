@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import { UuidSimpleQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -79,11 +80,12 @@ export function UuidUrlInput({
     const { uuid } = data
     if (!uuid) return modalStrings.notFound
 
-    const title = uuid.__typename.includes('Exercise')
+    const title = uuid.__typename.includes(UuidType.Exercise)
       ? getTranslatedType(strings, uuid.__typename)
       : uuid.title
 
-    const id = uuid.__typename === 'CoursePage' ? uuid.course?.id : uuid.id
+    const id =
+      uuid.__typename === UuidType.CoursePage ? uuid.course?.id : uuid.id
 
     if (!supportedEntityTypes.includes(uuid.__typename))
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
@@ -99,7 +101,7 @@ export function UuidUrlInput({
       return modalStrings.unsupportedId
 
     if (!id) return modalStrings.notFound
-    if (!uuid.__typename.includes('Exercise') && !title)
+    if (!uuid.__typename.includes(UuidType.Exercise) && !title)
       return modalStrings.notFound
 
     return (

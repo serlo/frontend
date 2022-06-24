@@ -5,6 +5,7 @@ import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 interface ArticleRelatedMagicInputProps {
   addEntry: (id: number, typename: string, title?: string) => void
@@ -23,14 +24,14 @@ export function ArticleRelatedMagicInput({
     <UuidUrlInput
       renderButtons={renderButtons}
       supportedEntityTypes={[
-        'Article',
-        'Course',
-        'CoursePage',
-        'Video',
-        'Exercise',
-        'ExerciseGroup',
-        'GroupedExercise',
-        'TaxonomyTerm',
+        UuidType.Article,
+        UuidType.Course,
+        UuidType.CoursePage,
+        UuidType.Video,
+        UuidType.Exercise,
+        UuidType.ExerciseGroup,
+        UuidType.GroupedExercise,
+        UuidType.TaxonomyTerm,
       ]}
       supportedTaxonomyTypes={[TaxonomyTermType.ExerciseFolder]}
       unsupportedIds={[entityId]}
@@ -40,7 +41,7 @@ export function ArticleRelatedMagicInput({
   function renderButtons(typename: string, id: number, title: string) {
     return (
       <>
-        {typename === 'TaxonomyTerm' ? (
+        {typename === UuidType.TaxonomyTerm ? (
           <button
             className="serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser mr-2"
             onClick={() => {

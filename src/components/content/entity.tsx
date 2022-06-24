@@ -17,7 +17,7 @@ import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EntityData } from '@/data-types'
+import { EntityData, UuidType } from '@/data-types'
 import { FrontendContentNode } from '@/frontend-node-types'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -170,13 +170,13 @@ export function Entity({ data }: EntityProps) {
 
   function renderShareModal() {
     const showPdf = [
-      'Page',
-      'Article',
-      'CoursePage',
-      'ExerciseGroup',
-      'Exercise',
-      'Solution',
-    ].includes(data.typename)
+      UuidType.Page,
+      UuidType.Article,
+      UuidType.CoursePage,
+      UuidType.ExerciseGroup,
+      UuidType.Exercise,
+      UuidType.Solution,
+    ].includes(data.typename as UuidType)
     return (
       <ShareModal
         isOpen={shareOpen}

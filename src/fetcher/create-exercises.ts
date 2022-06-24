@@ -2,6 +2,7 @@ import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
 import { RevisionUuidQuery } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
+import { UuidType } from '@/data-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -121,7 +122,7 @@ export function createSolution(
   return {
     type: 'solution',
     solution: createSolutionData({
-      __typename: 'Solution',
+      __typename: UuidType.Solution,
       license: uuid.repository.license,
       id: uuid.id,
       trashed: uuid.trashed,

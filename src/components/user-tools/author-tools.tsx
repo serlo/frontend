@@ -9,7 +9,7 @@ import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidRevType } from '@/data-types'
+import { UuidRevType, UuidType } from '@/data-types'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -286,7 +286,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
-    if (data.type !== 'TaxonomyTerm' || !data.taxonomyType) return null
+    if (data.type !== UuidType.TaxonomyTerm || !data.taxonomyType) return null
 
     type EntityTypes = keyof typeof entities
 
@@ -373,7 +373,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 }
 
 function typeToAuthorizationType(type: string) {
-  if (['Page', UuidRevType.Page].includes(type)) return type
+  if ([UuidType.Page, UuidRevType.Page].includes(type as UuidType)) return type
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }
