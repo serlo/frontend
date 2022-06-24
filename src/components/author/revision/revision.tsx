@@ -1,4 +1,4 @@
-import { Entity, Uuid } from '@serlo/authorization'
+import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
