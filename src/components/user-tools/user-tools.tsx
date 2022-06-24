@@ -19,6 +19,7 @@ import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidRevType } from '@/data-types'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
@@ -173,7 +174,7 @@ export function UserTools({
     const url = getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
 
     if (type.startsWith('Page')) {
-      return canDo(Uuid.create('PageRevision')) ? url : undefined
+      return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined
     }
     if (type == 'TaxonomyTerm') return canDo(TaxonomyTerm.set) ? url : undefined
     return url

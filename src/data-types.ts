@@ -336,6 +336,39 @@ export type UnrevisedRevisionsData = NonNullable<
   UnrevisedRevisionsQuery['subject']
 >
 
+export enum UuidRevType {
+  Applet = 'AppletRevision',
+  Article = 'ArticleRevision',
+  Course = 'CourseRevision',
+  CoursePage = 'CoursePageRevision',
+  Event = 'EventRevision',
+  Exercise = 'ExerciseRevision',
+  ExerciseGroup = 'ExerciseGroupRevision',
+  GroupedExercise = 'GroupedExerciseRevision',
+  Page = 'PageRevision',
+  Solution = 'SolutionRevision',
+  Video = 'VideoRevision',
+}
+
+export enum UuidType {
+  Comment = 'Comment',
+  Applet = 'Applet',
+  Article = 'Article',
+  Course = 'Course',
+  CoursePage = 'CoursePage',
+  Event = 'Event',
+  Exercise = 'Exercise',
+  ExerciseGroup = 'ExerciseGroup',
+  GroupedExercise = 'GroupedExercise',
+  Page = 'Page',
+  Solution = 'Solution',
+  TaxonomyTerm = 'TaxonomyTerm',
+  User = 'User',
+  Video = 'Video',
+}
+
+export type UuidWithRevType = UuidRevType | UuidType
+
 // Entities each should have an translated string and a corresponding icon
 
 export type EntityTypes =

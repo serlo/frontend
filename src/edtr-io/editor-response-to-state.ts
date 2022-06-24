@@ -23,6 +23,7 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
+import { UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -378,7 +379,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           },
           currentRevision: {
             ...exercise.currentRevision,
-            __typename: 'ExerciseRevision',
+            __typename: UuidRevType.Exercise,
             content: exercise.currentRevision?.content ?? '',
             date: '',
           },

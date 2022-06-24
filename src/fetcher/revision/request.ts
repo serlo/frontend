@@ -11,7 +11,12 @@ import {
 } from '../graphql-types/operations'
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { EntityTypes, PageNotFound, RevisionPage } from '@/data-types'
+import {
+  EntityTypes,
+  PageNotFound,
+  RevisionPage,
+  UuidRevType,
+} from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export async function requestRevision(
@@ -40,21 +45,21 @@ export async function requestRevision(
   const cacheKey = `/${instance}/${revisionId}`
 
   if (
-    uuid.__typename === 'ArticleRevision' ||
-    uuid.__typename === 'PageRevision' ||
-    uuid.__typename === 'CoursePageRevision' ||
-    uuid.__typename === 'VideoRevision' ||
-    uuid.__typename === 'EventRevision' ||
-    uuid.__typename === 'AppletRevision' ||
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'ExerciseRevision' ||
-    uuid.__typename === 'ExerciseGroupRevision' ||
-    uuid.__typename === 'SolutionRevision' ||
-    uuid.__typename === 'CourseRevision'
+    uuid.__typename === UuidRevType.Article ||
+    uuid.__typename === UuidRevType.Page ||
+    uuid.__typename === UuidRevType.CoursePage ||
+    uuid.__typename === UuidRevType.Video ||
+    uuid.__typename === UuidRevType.Event ||
+    uuid.__typename === UuidRevType.Applet ||
+    uuid.__typename === UuidRevType.GroupedExercise ||
+    uuid.__typename === UuidRevType.Exercise ||
+    uuid.__typename === UuidRevType.ExerciseGroup ||
+    uuid.__typename === UuidRevType.Solution ||
+    uuid.__typename === UuidRevType.Course
   ) {
     const isExercise =
-      uuid.__typename === 'ExerciseRevision' ||
-      uuid.__typename === 'GroupedExerciseRevision'
+      uuid.__typename === UuidRevType.Exercise ||
+      uuid.__typename === UuidRevType.GroupedExercise
 
     const title = createTitle(uuid, instance)
 
@@ -86,7 +91,7 @@ export async function requestRevision(
         : null
 
     const thisSolution =
-      uuid.__typename === 'SolutionRevision'
+      uuid.__typename === UuidRevType.Solution
         ? [
             createSolution({
               ...uuid,
@@ -98,12 +103,12 @@ export async function requestRevision(
           ]
         : null
     const currentSolution =
-      uuid.__typename === 'SolutionRevision' ? [createSolution(uuid)] : null
+      uuid.__typename === UuidRevType.Solution ? [createSolution(uuid)] : null
 
     const getParentId = () => {
-      if (uuid.__typename === 'GroupedExerciseRevision')
+      if (uuid.__typename === UuidRevType.GroupedExercise)
         return uuid.repository.exerciseGroup.id
-      if (uuid.__typename === 'SolutionRevision') {
+      if (uuid.__typename === UuidRevType.Solution) {
         const exercise = uuid.repository.exercise
         if (exercise.__typename === 'GroupedExercise')
           return exercise.exerciseGroup?.id
@@ -113,7 +118,7 @@ export async function requestRevision(
     }
 
     const getPositionInGroup = () => {
-      if (uuid.__typename === 'SolutionRevision') {
+      if (uuid.__typename === UuidRevType.Solution) {
         const exercise = uuid.repository.exercise
         if (exercise.__typename === 'GroupedExercise') {
           const pos = exercise.exerciseGroup?.exercises.findIndex(
@@ -122,7 +127,7 @@ export async function requestRevision(
           return pos && pos > -1 ? pos : undefined
         }
       }
-      if (uuid.__typename === 'GroupedExerciseRevision') {
+      if (uuid.__typename === UuidRevType.GroupedExercise) {
         const pos = uuid.repository.exerciseGroup.exercises.findIndex(
           (ex) => ex.id === uuid.repository.id
         )

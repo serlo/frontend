@@ -1,3 +1,4 @@
+import { UuidRevType } from '@/data-types'
 import { RevisionUuidQuery } from '@/fetcher/graphql-types/operations'
 import { MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -30,7 +31,7 @@ export function revisionResponseToResponse(
     ? uuid.repository.taxonomyTerms
     : { nodes: [{}] }
 
-  if (uuid.__typename === 'AppletRevision') {
+  if (uuid.__typename === UuidRevType.Applet) {
     uuid.__typename
     return {
       __typename: 'Applet',
@@ -50,7 +51,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'ArticleRevision') {
+  if (uuid.__typename === UuidRevType.Article) {
     uuid.__typename
     return {
       __typename: 'Article',
@@ -69,7 +70,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'CourseRevision') {
+  if (uuid.__typename === UuidRevType.Course) {
     uuid.__typename
     return {
       __typename: 'Course',
@@ -79,7 +80,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'CoursePageRevision') {
+  if (uuid.__typename === UuidRevType.CoursePage) {
     uuid.__typename
     return {
       __typename: 'CoursePage',
@@ -97,7 +98,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'EventRevision') {
+  if (uuid.__typename === UuidRevType.Event) {
     uuid.__typename
     return {
       __typename: 'Event',
@@ -111,7 +112,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'ExerciseRevision') {
+  if (uuid.__typename === UuidRevType.Exercise) {
     uuid.__typename
     return {
       __typename: 'Exercise',
@@ -126,7 +127,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'ExerciseGroupRevision') {
+  if (uuid.__typename === UuidRevType.ExerciseGroup) {
     uuid.__typename
     return {
       __typename: 'ExerciseGroup',
@@ -144,7 +145,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'GroupedExerciseRevision') {
+  if (uuid.__typename === UuidRevType.GroupedExercise) {
     uuid.__typename
     return {
       __typename: 'GroupedExercise',
@@ -160,7 +161,7 @@ export function revisionResponseToResponse(
   }
 
   // probably not needed
-  if (uuid.__typename === 'PageRevision') {
+  if (uuid.__typename === UuidRevType.Page) {
     uuid.__typename
     return {
       __typename: 'Page',
@@ -173,7 +174,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'SolutionRevision') {
+  if (uuid.__typename === UuidRevType.Solution) {
     uuid.__typename
     return {
       __typename: 'Solution',
@@ -186,7 +187,7 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'VideoRevision') {
+  if (uuid.__typename === UuidRevType.Video) {
     uuid.__typename
     return {
       __typename: 'Video',

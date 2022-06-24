@@ -18,7 +18,7 @@ import {
 } from './graphql-types/operations'
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { RequestPageData } from '@/data-types'
+import { RequestPageData, UuidRevType } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
@@ -39,17 +39,17 @@ export async function requestPage(
   if (!uuid) return { kind: 'not-found' }
   // Can be deleted if CFWorker redirects those for us
   if (
-    uuid.__typename === 'ArticleRevision' ||
-    uuid.__typename === 'PageRevision' ||
-    uuid.__typename === 'CoursePageRevision' ||
-    uuid.__typename === 'VideoRevision' ||
-    uuid.__typename === 'EventRevision' ||
-    uuid.__typename === 'AppletRevision' ||
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'ExerciseRevision' ||
-    uuid.__typename === 'ExerciseGroupRevision' ||
-    uuid.__typename === 'SolutionRevision' ||
-    uuid.__typename === 'CourseRevision'
+    uuid.__typename === UuidRevType.Article ||
+    uuid.__typename === UuidRevType.Page ||
+    uuid.__typename === UuidRevType.CoursePage ||
+    uuid.__typename === UuidRevType.Video ||
+    uuid.__typename === UuidRevType.Event ||
+    uuid.__typename === UuidRevType.Applet ||
+    uuid.__typename === UuidRevType.GroupedExercise ||
+    uuid.__typename === UuidRevType.Exercise ||
+    uuid.__typename === UuidRevType.ExerciseGroup ||
+    uuid.__typename === UuidRevType.Solution ||
+    uuid.__typename === UuidRevType.Course
   ) {
     return {
       kind: 'redirect',

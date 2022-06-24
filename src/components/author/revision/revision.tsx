@@ -1,4 +1,4 @@
-import { Entity } from '@serlo/authorization'
+import { Entity, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
@@ -15,7 +15,7 @@ import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
@@ -135,7 +135,7 @@ export function Revision({ data }: RevisionProps) {
                 revisionId={data.thisRevision.id}
                 isRejected={isRejected}
                 isCurrent={isCurrentRevision}
-                isPage={data.typename === 'PageRevision'}
+                isPage={data.typename === UuidRevType.Page}
               />
             ) : undefined,
         }}

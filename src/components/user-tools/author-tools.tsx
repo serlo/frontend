@@ -9,6 +9,7 @@ import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidRevType } from '@/data-types'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -372,7 +373,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 }
 
 function typeToAuthorizationType(type: string) {
-  if (['Page', 'PageRevision'].includes(type)) return type
+  if (['Page', UuidRevType.Page].includes(type)) return type
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }
