@@ -1,6 +1,5 @@
 import { faSearch, Icon } from '@edtr-io/ui'
 
-
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { useEntityId } from '@/contexts/entity-id-context'

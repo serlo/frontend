@@ -18,7 +18,6 @@ import {
 } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
-
 export const categoryIconMapping: Record<
   TopicCategoryType | TopicCategoryCustomType,
   IconDefinition
