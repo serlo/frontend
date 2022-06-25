@@ -1,4 +1,4 @@
-import { Instance } from '@serlo/api';
+import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: Instance.De,

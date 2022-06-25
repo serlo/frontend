@@ -1,6 +1,5 @@
 import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
-import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -19,6 +18,7 @@ import {
   UuidType,
   UuidWithRevType,
 } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,

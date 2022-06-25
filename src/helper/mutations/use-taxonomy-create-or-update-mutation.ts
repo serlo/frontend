@@ -1,4 +1,3 @@
-import { TaxonomyTypeCreateOptions } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
@@ -9,6 +8,7 @@ import { getRequiredString } from './use-set-entity-mutation/use-set-entity-muta
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { TaxonomyTypeCreateOptions } from '@/fetcher/graphql-types/operations'
 
 export function useTaxonomyCreateOrUpdateMutation() {
   const auth = useAuthentication()

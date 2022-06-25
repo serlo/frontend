@@ -1,4 +1,3 @@
-import { SetGenericEntityInput } from '@serlo/api'
 // eslint-disable-next-line import/no-internal-modules
 import { eqBy, mapObjIndexed } from 'ramda'
 
@@ -18,6 +17,7 @@ import {
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(

@@ -1,6 +1,5 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-import { TaxonomyTermType } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
@@ -13,6 +12,7 @@ import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {

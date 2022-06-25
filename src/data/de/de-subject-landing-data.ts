@@ -1,6 +1,6 @@
-import { TaxonomyTermType } from '@serlo/api'
-
 import { UuidType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+
 
 export const deSubjectLandingData = {
   informatik: {

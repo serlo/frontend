@@ -1,9 +1,9 @@
-import { Instance } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { ScriptProps } from 'next/script'
 import { useEffect } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 const Script = dynamic<ScriptProps>(() =>
   import('next/script').then((mod) => mod.default)

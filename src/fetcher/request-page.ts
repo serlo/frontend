@@ -1,4 +1,3 @@
-import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -19,6 +18,7 @@ import {
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'

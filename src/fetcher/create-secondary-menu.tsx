@@ -1,7 +1,6 @@
-import { Instance, TaxonomyTermType } from '@serlo/api'
-
 import { MainUuidType } from './query-types'
 import { SecondaryMenuData, UuidType } from '@/data-types'
+import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export function createSecondaryMenu(

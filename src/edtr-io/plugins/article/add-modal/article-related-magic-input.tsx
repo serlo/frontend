@@ -1,11 +1,12 @@
 import { faSearch, Icon } from '@edtr-io/ui'
-import { TaxonomyTermType } from '@serlo/api'
+
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 interface ArticleRelatedMagicInputProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void

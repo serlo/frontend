@@ -1,4 +1,3 @@
-import { TaxonomyTermType } from '@serlo/api'
 import Tippy, { TippyProps } from '@tippyjs/react'
 
 import { AuthorTools, Tool } from './author-tools'
@@ -7,6 +6,7 @@ import { ExerciseInlineType } from '@/components/content/exercises/exercise-auth
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 
 export interface AuthorToolsData {

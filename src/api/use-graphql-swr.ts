@@ -1,4 +1,3 @@
-import { PageInfo } from '@serlo/api'
 import useSWR, { SWRConfiguration } from 'swr'
 // eslint-disable-next-line import/no-internal-modules
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
@@ -8,6 +7,7 @@ import {
   createGraphqlFetch,
 } from './graphql-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
+import { PageInfo } from '@/fetcher/graphql-types/operations'
 
 export function useGraphqlSwr<T>({
   query,

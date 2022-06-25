@@ -1,5 +1,4 @@
 import { Icon } from '@edtr-io/ui'
-import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
@@ -8,7 +7,10 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
-import { UuidSimpleQuery } from '@/fetcher/graphql-types/operations'
+import {
+  TaxonomyTermType,
+  UuidSimpleQuery,
+} from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'

@@ -1,6 +1,5 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
-import { Instance } from '@serlo/api'
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
@@ -18,6 +17,7 @@ import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {

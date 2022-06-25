@@ -1,6 +1,6 @@
-import { Instance } from '@serlo/api'
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 

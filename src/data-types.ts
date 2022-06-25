@@ -1,4 +1,3 @@
-import { Role, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
@@ -13,6 +12,7 @@ import {
   FrontendExerciseNode,
 } from './frontend-node-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
+import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 // exact props of /[...slug] page
 export interface SlugProps {

@@ -1,10 +1,10 @@
-import { Instance } from '@serlo/api'
 import clsx from 'clsx'
 import { partition } from 'ramda'
 
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 type Roles = UserPage['userData']['roles']
 

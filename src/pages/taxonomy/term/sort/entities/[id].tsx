@@ -1,5 +1,4 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
-import { Instance } from '@serlo/api'
 import { arrayMoveImmutable } from 'array-move'
 import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -25,6 +24,7 @@ import {
   TopicCategoryCustomType,
   TaxonomySubTerm,
 } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
 import {
   FrontendExerciseGroupNode,

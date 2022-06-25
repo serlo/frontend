@@ -1,7 +1,7 @@
 //TODO: Prefer manually crafted data over long API answers for tests
 // e.g. JSON.stringify([[{ col: 24, content: "## Hello World"}]])
 
-import { TaxonomyTermType } from '@serlo/api'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 import { UuidType } from '@/data-types'
 

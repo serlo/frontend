@@ -1,4 +1,3 @@
-import { Instance } from '@serlo/api'
 import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -7,6 +6,7 @@ import { User } from '../query-types'
 import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 export async function requestUser(
   path: string,
