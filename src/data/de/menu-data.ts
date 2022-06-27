@@ -49,6 +49,7 @@ export const headerData: InstanceData['headerData'] = [
     //as of now this is a duplicate of the secondary menu, but this might change?
     children: [
       { title: 'Über Serlo', url: '/serlo' },
+      { title: 'Pädagogisches Konzept', url: '/21423/pädagogisches-konzept' },
       { title: 'So funktioniert die Lernplattform', url: '/features' },
       { title: 'Team', url: '/team' },
       { title: 'Jobs', url: '/jobs' },
@@ -255,6 +256,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     entries: [
       { title: 'Über Serlo', id: 18922 },
+      { title: 'Pädagogisches Konzept', id: 21423 },
       { title: 'So funktioniert die Lernplattform', id: 81862 },
       { title: 'Team', id: 21439 },
       { title: 'Jobs', id: 21563 },
