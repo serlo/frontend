@@ -132,9 +132,8 @@ function SerloTableEditor(props: SerloTableProps) {
         <div
           className="flex flex-col"
           onClick={(e) => {
-            //@ts-expect-error another hack to make focus ux ok
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            e.target.querySelector('.hackdiv')?.focus()
+            const hackDiv = (e.target as HTMLElement).querySelector('.hackdiv')
+            void (hackDiv as HTMLDivElement)?.focus()
           }}
         >
           <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
