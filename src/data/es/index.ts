@@ -1,6 +1,7 @@
+import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "es",
+  lang: Instance.Es,
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,

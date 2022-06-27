@@ -9,7 +9,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LoggedInData } from '@/data-types'
+import { LoggedInData, UuidType } from '@/data-types'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -235,16 +235,20 @@ export function Event({
     title,
     __typename,
   }: EventObject | EventParent) {
-    return <Link href={alias}>{renderTitle(title, __typename)}</Link>
+    return (
+      <Link href={alias}>{renderTitle(title, __typename as UuidType)}</Link>
+    )
   }
 
-  function renderTitle(title: string, type: string) {
-    const typeString = getEntityStringByTypename(type, strings)
-    const preposition = ['Exercise', 'GroupedExercise', 'Solution'].includes(
-      type
-    )
+  function renderTitle(title: string, typename: UuidType) {
+    const typeString = getEntityStringByTypename(typename, strings)
+    const preposition = [
+      UuidType.Exercise,
+      UuidType.GroupedExercise,
+      UuidType.Solution,
+    ].includes(typename)
       ? strings.events.entityInParentPreposition
-      : ['Thread', 'Comment'].includes(type)
+      : [UuidType.Thread, UuidType.Comment].includes(typename)
       ? strings.events.commentInParentPreposition
       : ''
 

@@ -8,6 +8,7 @@ import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
@@ -33,7 +34,7 @@ export function ArticleAddModal({
 
   const { exercises, exerciseFolder, relatedContent } = data
 
-  const checkDuplicates = (id: number, typename: string) => {
+  const checkDuplicates = (id: number, typename: UuidWithRevType) => {
     const category = getCategoryByTypename(typename)
     if (
       category === 'articles' ||
@@ -54,7 +55,7 @@ export function ArticleAddModal({
     )
   }
 
-  const addEntry = (id: number, typename: string, title?: string) => {
+  const addEntry = (id: number, typename: UuidWithRevType, title?: string) => {
     const category = getCategoryByTypename(typename)
     if (
       category === 'articles' ||
@@ -68,12 +69,12 @@ export function ArticleAddModal({
       })
     }
 
-    if (typename === 'TaxonomyTerm' && title) {
+    if (typename === UuidType.TaxonomyTerm && title) {
       exerciseFolder.title.set(title)
       exerciseFolder.id.set(id.toString())
     }
 
-    if (typename.includes('Exercise')) {
+    if (typename.includes(UuidType.Exercise)) {
       //maybe also check for duplicates
       exercises.insert(exercises.length, {
         plugin: 'injection',

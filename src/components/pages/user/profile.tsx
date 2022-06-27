@@ -16,7 +16,8 @@ import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UserPage } from '@/data-types'
+import { UserPage, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -195,7 +196,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         id={id}
         hideEditProfile={!isOwnProfile}
         data={{
-          type: 'Profile',
+          type: UuidType.User,
           id: id,
         }}
       />
@@ -203,7 +204,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderEditMotivationLink() {
-    if (lang !== 'de') return null
+    if (lang !== Instance.De) return null
     return (
       <p className="serlo-p text-sm text-right ml-auto mt-3">
         <Link

@@ -1,13 +1,3 @@
-import {
-  SetAppletInput,
-  SetGenericEntityInput,
-  SetArticleInput,
-  SetCourseInput,
-  SetCoursePageInput,
-  SetEventInput,
-  SetExerciseGroupInput,
-  SetVideoInput,
-} from '@serlo/api'
 import { RefObject } from 'react'
 
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -25,6 +15,16 @@ import {
   TextSolutionSerializedState,
   VideoSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+import {
+  SetAppletInput,
+  SetGenericEntityInput,
+  SetArticleInput,
+  SetCourseInput,
+  SetCoursePageInput,
+  SetEventInput,
+  SetExerciseGroupInput,
+  SetVideoInput,
+} from '@/fetcher/graphql-types/operations'
 
 export interface OnSaveData {
   csrf?: string

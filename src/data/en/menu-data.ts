@@ -1,5 +1,5 @@
 import { serloDomain } from '../../helper/urls/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
@@ -61,12 +61,12 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'Newsletter',
           url: 'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-          icon: 'newsletter',
+          icon: FooterIcon.newsletter,
         },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
