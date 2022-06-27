@@ -1,7 +1,7 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance.Ta,
+  lang: Instance["Ta"],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -30,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: 'Folders',
       exercises: "பயிற்சிகள்",
-      events: "நிகழ்வுகள்"
+      events: "நிகழ்வுகள்",
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content'
     },
     entities: {
       applet: "ஆப்லெட்",
@@ -344,7 +347,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance.Ta,
+  lang: Instance["Ta"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.",
