@@ -62,18 +62,23 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
         <ul>
           {data.map((entry, i) => {
             return (
-              <li className="mb-3.5" key={entry.title}>
+              <li className="mb-1.5" key={entry.title}>
                 <Link
                   href={entry.url}
                   path={[`metamenu${i}`]}
-                  className={clsx(
-                    'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
-                    entry.active
-                      ? 'text-black bg-brand-150'
-                      : 'serlo-button-blue-transparent'
-                  )}
+                  className="hover:no-underline block group py-1"
                 >
-                  {entry.title}
+                  <span
+                    className={clsx(
+                      'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
+                      'group-hover:text-white group-hover:bg-brand',
+                      entry.active
+                        ? 'text-black bg-brand-150'
+                        : 'serlo-button-blue-transparent'
+                    )}
+                  >
+                    {entry.title}
+                  </span>
                 </Link>
               </li>
             )
