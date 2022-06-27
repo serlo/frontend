@@ -1,9 +1,9 @@
 import { ReactNode, useState, useEffect } from 'react'
 
-import { ExerciseInlineType } from './exercise-author-tools'
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
+import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseGroupProps {
   children: ReactNode

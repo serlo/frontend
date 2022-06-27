@@ -368,6 +368,14 @@ export enum UuidType {
 
 export type UuidWithRevType = UuidRevType | UuidType
 
+// special inline types for author tools
+
+export enum ExerciseInlineType {
+  Solution = '_SolutionInline',
+  ExerciseGroup = '_ExerciseGroupInline',
+  Exercise = '_ExerciseInline',
+}
+
 // Entities can belong to a category that we use in the taxonomy
 
 export enum TopicCategoryType {
