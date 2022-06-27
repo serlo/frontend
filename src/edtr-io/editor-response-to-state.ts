@@ -57,9 +57,9 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       ? {
           id: uuid.license.id,
           title: uuid.license.title,
+          shortTitle: uuid.license.shortTitle,
           url: uuid.license.url,
           agreement: uuid.license.agreement,
-          iconHref: uuid.license.iconHref,
         }
       : undefined
   const { id } = uuid
@@ -95,7 +95,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     return convert(uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
 
     triggerSentry({
       message: `error while converting: ${JSON.stringify(stack)}`,
@@ -204,6 +204,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
                 ...page,
                 currentRevision: {
                   id: page.id,
+                  alias: page.alias,
                   title: page.currentRevision?.title ?? '',
                   content: page.currentRevision?.content ?? '',
                   date: '', // not used
@@ -324,6 +325,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             uuid.solution && !uuid.solution.trashed
               ? convertTextSolution({
                   ...uuid.solution,
+                  alias: uuid.alias,
                   __typename: 'Solution',
                   instance: uuid.instance,
                   exercise: uuid,
@@ -531,7 +533,7 @@ export interface PageSerializedState extends Uuid, License {
 }
 
 export interface TaxonomySerializedState extends Uuid {
-  __typename?: 'Taxonomy'
+  __typename?: 'TaxonomyTerm'
   term: {
     name: string
   }

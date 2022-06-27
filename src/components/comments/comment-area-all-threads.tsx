@@ -22,10 +22,7 @@ export function CommentAreaAllThreads() {
           {loading ? (
             <LoadingSpinner noText />
           ) : (
-            <button
-              className="serlo-button serlo-make-interactive-primary mt-5 mb-12"
-              onClick={loadMore}
-            >
+            <button className="serlo-button-blue mt-5 mb-12" onClick={loadMore}>
               {strings.actions.loadMore}
             </button>
           )}
@@ -36,9 +33,9 @@ export function CommentAreaAllThreads() {
 
   function renderThreads() {
     return commentData?.map((thread) => {
-      const { id, __typename } = thread.object
+      const { __typename } = thread.object
 
-      const href = thread.object.alias ?? `/${id}`
+      const href = thread.object.alias
 
       return (
         <EntityIdProvider key={thread.id} value={thread.object.id}>

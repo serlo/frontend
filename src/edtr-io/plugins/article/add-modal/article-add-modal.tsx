@@ -22,7 +22,7 @@ export function ArticleAddModal({
   data,
   setModalOpen,
 }: ArticleAddModalProps) {
-  const [topicFolderId, setTopicFolderId] = useState<undefined | number>(
+  const [exerciseFolderId, setExerciseFolderId] = useState<undefined | number>(
     undefined
   )
 
@@ -94,7 +94,7 @@ export function ArticleAddModal({
           {replacePlaceholders(articleStrings.addModal.introText, {
             break: <br />,
             exercises: strings.categories.exercises,
-            topicFolder: strings.entities.topicFolder,
+            exerciseFolder: strings.entities.exerciseFolder,
             articles: strings.categories.articles,
             courses: strings.categories.courses,
             videos: strings.categories.videos,
@@ -103,17 +103,17 @@ export function ArticleAddModal({
         <p className="mt-4">{articleStrings.addModal.introText2}</p>
         <ArticleRelatedMagicInput
           addEntry={addEntry}
-          showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
+          showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
         />
         <ArticleRelatedTaxonomy
           checkDuplicates={checkDuplicates}
           addEntry={addEntry}
-          showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
+          showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
         />
-        <div id="topicFolderScroll" className="min-h-[8rem]">
-          {topicFolderId ? (
+        <div id="exerciseFolderScroll" className="min-h-[8rem]">
+          {exerciseFolderId ? (
             <ArticleRelatedExercises
-              topicFolderId={topicFolderId}
+              exerciseFolderId={exerciseFolderId}
               addEntry={addEntry}
             />
           ) : null}

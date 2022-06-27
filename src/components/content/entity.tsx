@@ -11,7 +11,7 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { InviteModalProps } from '../user-tools/invite-modal'
 import { HSpace } from './h-space'
 import { Link } from './link'
-import { LicenseNotice } from '@/components/content/license-notice'
+import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
@@ -20,6 +20,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, FrontendContentNode } from '@/data-types'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface EntityProps {
@@ -246,7 +247,7 @@ export function Entity({ data }: EntityProps) {
 
     if (data.isUnrevised) {
       const link = (
-        <Link href={`/entity/repository/history/${data.id}`}>
+        <Link href={getHistoryUrl(data.id)}>
           {strings.pageTitles.revisionHistory}
         </Link>
       )

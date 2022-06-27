@@ -1,10 +1,13 @@
+import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
+import { StaticInfoPanel } from '../static-info-panel'
 import { shouldUseFeature } from '../user/profile-experimental'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
@@ -27,6 +30,8 @@ export function AddRevision({
 }: EditorPageData) {
   const { strings } = useInstanceData()
 
+  const auth = useAuthentication()
+
   const backlink = {
     label: strings.revisions.toContent,
     url: `/${id}`,
@@ -36,22 +41,52 @@ export function AddRevision({
   const addPageRevision = useAddPageRevision()
   const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 
-  const [cookieReady, setCookieReady] = useState(false)
+  const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
     if (window.location.hostname === 'localhost') {
-      setCookieReady(true)
-    } else {
-      fetch('/auth/password/change')
-        .then((res) => res.text())
-        .then(() => {
-          setCookieReady(true)
-        })
-        .catch(() => {})
+      setUserReady(true)
+      return
     }
+
+    const makeDamnSureUserIsLoggedIn = async () => {
+      if (auth.current === null) return false
+
+      /*
+      the better way would be to check if the authenticated cookie is still
+      set since this seems to be the only cookie legacy actually removes,
+      but since it's http-only this workaround is way easier.
+      The fetch also makes sure the CSRF tokens are set
+      This is only a hack until we rely on the API to save content
+      */
+
+      try {
+        const result = await fetch(`/auth/password/change`)
+        const resultHtml = await result.text()
+        return resultHtml.includes('<a href="/auth/logout"')
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+        return false
+      }
+    }
+
+    void makeDamnSureUserIsLoggedIn().then((isLoggedIn) => {
+      setUserReady(isLoggedIn)
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!cookieReady) return <LoadingSpinner noText />
+  if (userReady === undefined) return <LoadingSpinner noText />
+  if (userReady === false)
+    return (
+      <StaticInfoPanel icon={faWarning} type="failure">
+        Sorry, Something is wrong!
+        <br />
+        Please: Logout and Login again and try to edit again.
+      </StaticInfoPanel>
+    )
 
   const supportedTypes = [
     'Applet',
@@ -65,7 +100,7 @@ export function AddRevision({
     'ExerciseGroup',
     'GroupedExercise',
     'Page',
-    // 'TaxonomyTerm',
+    'TaxonomyTerm',
   ]
 
   return (
@@ -170,14 +205,14 @@ export function AddRevision({
                           : window.location.href
                     } else {
                       // eslint-disable-next-line no-console
-                      console.log(data.errors)
+                      console.error(data.errors)
                       reject()
                     }
                   }
                 )
                 .catch((value) => {
                   // eslint-disable-next-line no-console
-                  console.log(value)
+                  console.error(value)
                   reject(value)
                 })
             })

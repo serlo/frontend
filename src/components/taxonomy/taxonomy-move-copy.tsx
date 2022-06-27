@@ -1,5 +1,6 @@
 import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -58,7 +59,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         data={[
           {
             label: taxonomyData.title ?? strings.revisions.toContent,
-            url: taxonomyData.alias ?? `/${taxonomyData.id}`,
+            url: taxonomyData.alias,
           },
         ]}
         asBackButton
@@ -146,7 +147,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     return (
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
-        supportedTaxonomyTypes={['topic', 'topicFolder']}
+        supportedTaxonomyTypes={[
+          TaxonomyTermType.Topic,
+          TaxonomyTermType.ExerciseFolder,
+        ]}
         unsupportedIds={[taxonomyData.id]}
         renderButtons={renderButtons}
       />
@@ -160,7 +164,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     taxType?: string
   ) {
     const buttonClass = clsx(
-      'text-base serlo-button serlo-make-interactive-light mr-3',
+      'text-base serlo-button-light mr-3',
       !buttonsActive &&
         'bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-gray-100 hover:text-gray-400'
     )
@@ -224,9 +228,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     if (!taxonomyData.exercises.length) return null
     return (
       <StaticInfoPanel type="info" icon={faInfoCircle}>
-        {replacePlaceholders(loggedInStrings.topicFolderNotice, {
+        {replacePlaceholders(loggedInStrings.exerciseFolderNotice, {
           break: <br />,
-          topicFolder: strings.entities.topicFolder,
+          exerciseFolder: strings.entities.exerciseFolder,
         })}
       </StaticInfoPanel>
     )
@@ -250,6 +254,8 @@ export function getPreviewStringFromExercise(
     (titleState.type === 'slate-p' &&
       titleState.children?.[0].type === 'text' &&
       titleState.children?.[0].text) ||
+    (titleState.children?.[0].type === 'inline-math' &&
+      titleState.children?.[0].formula) ||
     (titleState.type === 'slate-container' &&
       titleState.children?.[0].children?.[0].type === 'text' &&
       titleState.children?.[0].children?.[0].text)

@@ -18,6 +18,7 @@ import {
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(
   mapObjIndexed((v) => (v === '' || v === undefined ? null : v))
@@ -109,13 +110,13 @@ export const setEntityMutationRunner = async function ({
 
     if (!isRecursiveCall && childrenResult) {
       showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      window.location.href = `/entity/repository/history/${data.id}`
+      window.location.href = getHistoryUrl(data.id)
     }
 
     return true
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log('probably missing value?')
+    console.error('probably missing value?')
     return false
   }
 }
@@ -221,7 +222,7 @@ const loopNestedChildren = async ({
       return result
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(error)
+      console.error(error)
       return false
     }
   }

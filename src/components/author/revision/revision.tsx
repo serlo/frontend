@@ -18,6 +18,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderNested } from '@/schema/article-renderer'
 
 export interface RevisionProps {
@@ -47,7 +48,6 @@ export function Revision({ data }: RevisionProps) {
   const [displayMode, setDisplayMode] = useState<DisplayModes>(
     DisplayModes.This
   )
-  const repositoryAlias = data.repository.alias ?? `/${data.repository.id}`
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -100,7 +100,7 @@ export function Revision({ data }: RevisionProps) {
       <RevisionHeader
         data={data}
         isCurrentRevision={isCurrentRevision}
-        repositoryAlias={repositoryAlias}
+        repositoryAlias={data.repository.alias}
         renderUserTools={renderUserTools}
         isRejected={isRejected}
         displayMode={displayMode}
@@ -155,7 +155,7 @@ export function Revision({ data }: RevisionProps) {
     if (!hasCurrentRevision) {
       return (
         <p className="serlo-p mt-20">
-          <Link href={`/entity/repository/history/${parentId}`}>
+          <Link href={getHistoryUrl(parentId)}>
             {strings.revisions.parentFallbackLink}
           </Link>
         </p>
@@ -176,7 +176,7 @@ export function Revision({ data }: RevisionProps) {
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
                   data.type === 'groupedExercise'
-                    ? strings.content.task
+                    ? strings.content.exercises.task
                     : strings.entities.solution,
                 title: (
                   <b>

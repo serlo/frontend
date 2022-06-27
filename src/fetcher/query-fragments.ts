@@ -35,6 +35,7 @@ export const sharedRevisionFragments = gql`
 
   fragment coursePageRevision on CoursePageRevision {
     id
+    alias
     content
     title
     date
@@ -72,7 +73,8 @@ export const sharedEventFragments = gql`
         id
       }
       repository {
-        ...withTitle
+        ...withTaxonomyTerms
+        ...entityInfo
       }
       reason
     }
@@ -82,6 +84,7 @@ export const sharedEventFragments = gql`
       }
       thread {
         id
+        title
         comments(first: 1) {
           nodes {
             id
@@ -91,18 +94,18 @@ export const sharedEventFragments = gql`
     }
     ... on CreateEntityNotificationEvent {
       entity {
-        id
-        alias
+        ...withTaxonomyTerms
+        ...entityInfo
       }
     }
     ... on CreateEntityLinkNotificationEvent {
       parent {
-        id
-        alias
+        ...withTaxonomyTerms
+        ...entityInfo
       }
       child {
-        id
-        alias
+        ...withTaxonomyTerms
+        ...entityInfo
       }
     }
     ... on CreateEntityRevisionNotificationEvent {
@@ -110,24 +113,22 @@ export const sharedEventFragments = gql`
         id
       }
       entity {
-        ...withTitle
+        ...withTaxonomyTerms
+        ...entityInfo
       }
     }
     ... on CreateTaxonomyTermNotificationEvent {
       taxonomyTerm {
-        id
-        name
-        alias
+        ...entityInfo
       }
     }
     ... on CreateTaxonomyLinkNotificationEvent {
       child {
-        ...withTitle
+        ...withTaxonomyTerms
+        ...entityInfo
       }
       parent {
-        id
-        alias
-        name
+        ...entityInfo
       }
     }
     ... on CreateThreadNotificationEvent {
@@ -141,13 +142,13 @@ export const sharedEventFragments = gql`
         }
       }
       object {
-        ...withTitle
+        ...entityInfo
       }
     }
     ... on RejectRevisionNotificationEvent {
       repository {
-        id
-        alias
+        ...withTaxonomyTerms
+        ...entityInfo
       }
       revision {
         id
@@ -157,44 +158,43 @@ export const sharedEventFragments = gql`
     }
     ... on RemoveEntityLinkNotificationEvent {
       parent {
-        id
-        alias
+        ...withTaxonomyTerms
+        ...entityInfo
       }
       child {
-        id
-        alias
+        ...withTaxonomyTerms
+        ...entityInfo
       }
     }
     ... on RemoveTaxonomyLinkNotificationEvent {
       child {
-        ...withTitle
+        ...withTaxonomyTerms
+        ...entityInfo
       }
       parent {
-        id
-        alias
-        name
+        ...entityInfo
       }
     }
     ... on SetLicenseNotificationEvent {
       repository {
-        ...withTitle
+        ...withTaxonomyTerms
+        ...entityInfo
       }
     }
     ... on SetTaxonomyParentNotificationEvent {
       child {
-        id
-        alias
+        ...entityInfo
       }
       previousParent {
-        id
-        alias
+        ...entityInfo
+      }
+      optionalParent: parent {
+        ...entityInfo
       }
     }
     ... on SetTaxonomyTermNotificationEvent {
       taxonomyTerm {
-        id
-        alias
-        name
+        ...entityInfo
       }
     }
     ... on SetThreadStateNotificationEvent {
@@ -210,45 +210,64 @@ export const sharedEventFragments = gql`
     }
     ... on SetUuidStateNotificationEvent {
       object {
-        ...withTitle
+        ...entityInfo
+        ...withTaxonomyTerms
       }
       trashed
     }
   }
 
-  fragment withTitle on AbstractUuid {
+  fragment entityInfo on AbstractUuid {
     __typename
     id
+    title
     alias
+  }
 
-    ... on Applet {
-      currentRevision {
-        title
+  fragment withTaxonomyTerms on AbstractUuid {
+    ... on Exercise {
+      taxonomyTerms {
+        nodes {
+          type
+        }
       }
     }
-    ... on Article {
-      currentRevision {
-        title
+    ... on ExerciseGroup {
+      taxonomyTerms {
+        nodes {
+          type
+        }
       }
     }
-    ... on Course {
-      currentRevision {
-        title
+    ... on GroupedExercise {
+      exerciseGroup {
+        taxonomyTerms {
+          nodes {
+            type
+          }
+        }
       }
     }
-    ... on CoursePage {
-      currentRevision {
-        title
-      }
-    }
-    ... on Video {
-      currentRevision {
-        title
-      }
-    }
-    ... on Page {
-      currentRevision {
-        title
+    ... on Solution {
+      exercise {
+        ... on Exercise {
+          __typename
+          taxonomyTerms {
+            nodes {
+              type
+            }
+          }
+        }
+        ... on GroupedExercise {
+          __typename
+          exerciseGroup {
+            taxonomyTerms {
+              nodes {
+                type
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -287,9 +306,9 @@ export const sharedLicenseFragments = gql`
       id
       url
       title
+      shortTitle
       default
       agreement
-      iconHref
     }
   }
 `

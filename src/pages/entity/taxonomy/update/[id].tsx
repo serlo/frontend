@@ -1,4 +1,5 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { TaxonomyTermType } from '@serlo/api'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -93,7 +94,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
       <div className="py-3 border-b-2 flex">
         <button
           onClick={() => onDelete(term.id)}
-          className="serlo-button serlo-make-interactive-transparent-blue mr-2 text-brand-lighter"
+          className="serlo-button-blue-transparent mr-2 text-brand-lighter"
         >
           <FaIcon icon={faTrashAlt} />
         </button>
@@ -106,7 +107,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
           ))}
           <a
             className="text-brand font-bold"
-            href={term.alias ?? `/${term.id}`}
+            href={term.alias}
             target="_blank"
             rel="noreferrer"
           >
@@ -139,7 +140,10 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
     return (
       <UuidUrlInput
         supportedEntityTypes={['TaxonomyTerm']}
-        supportedTaxonomyTypes={['topic', 'topicFolder', 'curriculumTopic']}
+        supportedTaxonomyTypes={[
+          TaxonomyTermType.Topic,
+          TaxonomyTermType.ExerciseFolder,
+        ]}
         unsupportedIds={existingIds}
         renderButtons={renderAddButton}
         inlineFeedback
@@ -158,7 +162,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
         ({getTranslatedType(strings, taxType)}){' '}
         <button
           onClick={() => onAdd(taxId)}
-          className="'text-base serlo-button serlo-make-interactive-light ml-3"
+          className="'text-base serlo-button-light ml-3"
         >
           {loggedInStrings.addButtonText}
         </button>

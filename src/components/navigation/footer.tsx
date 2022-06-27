@@ -46,7 +46,7 @@ function About() {
             <Link
               href={footerData.aboutHref}
               path={['footer_about']}
-              className="serlo-button py-0.5 serlo-make-interactive-transparent-blue text-white my-4"
+              className="serlo-button-blue-transparent py-0.5 text-white my-4"
             >
               <FaIcon icon={faChevronCircleRight} className="h-4" />{' '}
               {strings.footer.learnMore}

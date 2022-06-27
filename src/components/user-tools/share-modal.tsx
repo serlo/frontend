@@ -184,7 +184,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
 }
 
 const shareButton = /* className={ */ clsx(
-  'serlo-button serlo-make-interactive-transparent-green',
+  'serlo-button-green-transparent',
   'mx-side block mt-1.5 text-base py-0.5',
   'sm:ml-3 sm:mr-0 sm:inline sm:mt-0'
 ) /* } */

@@ -66,7 +66,7 @@ export function Thread({
 
     return (
       <button
-        className="serlo-button serlo-make-interactive-light"
+        className="serlo-button-light"
         onClick={() => {
           if (toggleChildren) toggleChildren(thread.id)
         }}

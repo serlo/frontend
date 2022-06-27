@@ -9,12 +9,13 @@ export function revisionResponseToResponse(
 
   if (!hasOwnPropertyTs(uuid, 'repository')) return null
 
-  const { license, trashed, instance, id } = uuid.repository
+  const { license, trashed, instance, id, alias } = uuid.repository
   const repositoryFields = {
     license,
     trashed,
     id,
     instance,
+    alias,
   }
 
   const title = hasOwnPropertyTs(uuid, 'title') ? uuid.title : ''
@@ -84,6 +85,7 @@ export function revisionResponseToResponse(
       __typename: 'CoursePage',
       currentRevision: {
         id: uuid.id,
+        alias: uuid.alias,
         title,
         content,
         date,

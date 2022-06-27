@@ -1,6 +1,6 @@
 import { convertState } from './convert-state'
 import { createExercise, createExerciseGroup } from './create-exercises'
-import { MainUuidQuery } from './graphql-types/operations'
+import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
   TaxonomyData,
   FrontendExerciseNode,
@@ -8,7 +8,7 @@ import {
   TaxonomyLink,
   TaxonomySubTerm,
 } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 type TaxonomyTerm = Extract<
   MainUuidQuery['uuid'],
@@ -29,12 +29,12 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     description: uuid.description ? convertState(uuid.description) : undefined,
     title: uuid.name,
     id: uuid.id,
-    alias: uuid.alias ?? undefined,
+    alias: uuid.alias,
     taxonomyType: uuid.type,
     trashed: uuid.trashed,
 
     articles: collectType(children, 'Article'),
-    exercises: collectTopicFolders(children),
+    exercises: collectExerciseFolders(children),
     videos: collectType(children, 'Video'),
     applets: collectType(children, 'Applet'),
     courses: collectType(children, 'Course'),
@@ -93,18 +93,19 @@ function collectType(
 }
 
 function getAlias(child: { alias?: string | null; id: number }) {
+  // TODO: do we still need this?
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }
 
-function collectTopicFolders(
+function collectExerciseFolders(
   children: (TaxonomyTermChildrenLevel1 | TaxonomyTermChildrenLevel2)[]
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
     if (
       child.__typename === 'TaxonomyTerm' &&
-      (child.type === 'topicFolder' || child.type === 'curriculumTopicFolder')
+      child.type === TaxonomyTermType.ExerciseFolder
     )
       result.push({
         title: child.name,
@@ -122,8 +123,7 @@ function collectNestedTaxonomyTerms(
   children.forEach((child) => {
     if (
       child.__typename === 'TaxonomyTerm' &&
-      child.type !== 'topicFolder' &&
-      child.type !== 'curriculumTopicFolder'
+      child.type !== TaxonomyTermType.ExerciseFolder
     ) {
       const subChildren = child.children.nodes.filter(isActive_for_subchildren)
       result.push({
@@ -134,7 +134,7 @@ function collectNestedTaxonomyTerms(
           ? convertState(child.description)
           : undefined,
         articles: collectType(subChildren, 'Article'),
-        exercises: collectTopicFolders(subChildren),
+        exercises: collectExerciseFolders(subChildren),
         videos: collectType(subChildren, 'Video'),
         applets: collectType(subChildren, 'Applet'),
         courses: collectType(subChildren, 'Course'),
@@ -152,8 +152,7 @@ function collectSubfolders(children: TaxonomyTermChildrenLevel2[]) {
   children.forEach((child) => {
     if (
       child.__typename === 'TaxonomyTerm' &&
-      child.type !== 'topicFolder' &&
-      child.type !== 'curriculumTopicFolder'
+      child.type !== TaxonomyTermType.ExerciseFolder
     )
       result.push({ title: child.name, url: getAlias(child), id: child.id })
   })

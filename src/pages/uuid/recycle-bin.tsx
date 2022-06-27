@@ -1,4 +1,4 @@
-import { faTrashArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faTrashRestore } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 import Head from 'next/head'
 
@@ -11,6 +11,7 @@ import { Guard } from '@/components/guard'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
+import { loggedInData } from '@/data/de'
 import { GetTrashedEntitiesQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
@@ -53,10 +54,7 @@ function Content() {
 
     return (
       <p className="serlo-p mt-8">
-        <button
-          onClick={loadMore}
-          className="serlo-button serlo-make-interactive-primary"
-        >
+        <button onClick={loadMore} className="serlo-button-blue">
           {strings.actions.loadMore}
         </button>
       </p>
@@ -69,7 +67,7 @@ function Content() {
         <thead>
           <tr>
             <th className="serlo-th">ID</th>
-            <th className="serlo-th">Alias</th>
+            <th className="serlo-th">{strings.bin.title}</th>
             <th className="serlo-th">Type</th>
             <th className="serlo-th">{strings.bin.trashed}</th>
             <th className="serlo-th"></th>
@@ -82,20 +80,15 @@ function Content() {
 
   function renderRow(node: TrashedEntitiesNode) {
     if (!node.entity || !node.dateOfDeletion) return null
-    const { id, alias, __typename } = node.entity
-    const aliasString = alias ?? ''
-    const href = alias ?? `/${id}`
+    const { id, alias, title, __typename } = node.entity
 
-    //replace with title when available: https://github.com/serlo/api.serlo.org/issues/627
-    const aliasText =
-      aliasString.length > 25 ? ` …${aliasString.slice(-25)}` : aliasString
     return (
       <tr key={id}>
         <td className="serlo-td">
-          <Link href={href}>{id}</Link>
+          <Link href={alias}>{id}</Link>
         </td>
         <td className="serlo-td">
-          <Link href={href}>{aliasText}</Link>
+          <Link href={alias}>{title}</Link>
         </td>
         <td className="serlo-td">{getTranslatedType(strings, __typename)}</td>
         <td className="serlo-td">
@@ -103,13 +96,14 @@ function Content() {
         </td>
         <td className="serlo-td">
           <button
-            title="Restore"
-            className="serlo-button serlo-make-interactive-transparent-blue text-brand-300"
-            onClick={() => {
-              void setUuidState({ id: [id], trashed: false })
+            title={loggedInData.strings.authorMenu.restoreContent}
+            className="serlo-button-blue-transparent text-brand-300"
+            onClick={async () => {
+              const success = await setUuidState({ id: [id], trashed: false })
+              if (success) window.location.href = alias
             }}
           >
-            <FaIcon icon={faTrashArrowUp} />
+            <FaIcon icon={faTrashRestore} />
           </button>
         </td>
       </tr>
@@ -148,6 +142,7 @@ export const trashedEntitiesQuery = gql`
           entity {
             id
             alias
+            title
             __typename
           }
         }

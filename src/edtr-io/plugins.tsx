@@ -263,8 +263,8 @@ export function createPlugins({
         },
         inputPlaceholder: editorStrings.inputExercise.yourSolution,
         fallbackFeedback: {
-          correct: editorStrings.inputExercise.correct,
-          wrong: editorStrings.inputExercise.wrong,
+          correct: strings.content.exercises.correct,
+          wrong: strings.content.exercises.wrong,
         },
       },
     }),
@@ -342,13 +342,13 @@ export function createPlugins({
         answer: {
           addLabel: editorStrings.scMcExercise.addAnswer,
           fallbackFeedback: {
-            wrong: editorStrings.scMcExercise.wrong,
+            wrong: strings.content.exercises.wrong,
           },
         },
         globalFeedback: {
-          missingCorrectAnswers: editorStrings.scMcExercise.missedSome,
-          correct: editorStrings.scMcExercise.correct,
-          wrong: editorStrings.scMcExercise.wrong,
+          missingCorrectAnswers: strings.content.exercises.missedSome,
+          correct: strings.content.exercises.correct,
+          wrong: strings.content.exercises.wrong,
         },
       },
     }),

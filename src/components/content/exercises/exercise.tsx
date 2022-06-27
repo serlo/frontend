@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
-import { LicenseNotice } from '../license-notice'
+import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
@@ -88,9 +88,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderSolution() {
-    const license = node.solution.license && !node.solution.license.default && (
-      <LicenseNotice minimal data={node.solution.license} type="solution" />
-    )
+    const license = node.solution.license &&
+      !node.solution.license.isDefault && (
+        <LicenseNotice minimal data={node.solution.license} type="solution" />
+      )
     const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     const authorTools = ExerciseAuthorTools && loaded && auth.current && (
       <ExerciseAuthorTools
@@ -138,7 +139,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-transparent-blue text-base',
+          'serlo-button-blue-transparent text-base',
           'ml-side mr-auto mb-4 pr-2',
           solutionVisible && 'bg-brand text-white'
         )}

@@ -117,10 +117,7 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
             <p className="serlo-p mt-5">{intro}</p>
             <p className="serlo-p">{privacy}</p>
             <p className="serlo-p">
-              <a
-                href={editUrl}
-                className="serlo-button serlo-make-interactive-primary"
-              >
+              <a href={editUrl} className="serlo-button-blue">
                 {toForm}
               </a>
             </p>

@@ -1,5 +1,6 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import { TaxonomyTermType } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
@@ -7,7 +8,7 @@ import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
-import { LicenseNotice } from '@/components/content/license-notice'
+import { LicenseNotice } from '@/components/content/license/license-notice'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -26,12 +27,8 @@ export function Topic({ data }: TopicProps) {
   const [modalOpen, setModalOpen] = useState(false)
   const { strings } = useInstanceData()
 
-  const isFolder =
-    data.taxonomyType === 'topicFolder' ||
-    data.taxonomyType === 'curriculumTopicFolder'
-
-  const isTopic =
-    data.taxonomyType === 'topic' || data.taxonomyType === 'curriculumTopic'
+  const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
+  const isTopic = data.taxonomyType === TaxonomyTermType.Topic
 
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
@@ -53,7 +50,7 @@ export function Topic({ data }: TopicProps) {
 
         {isTopic && <TopicCategories data={data} full />}
 
-        {isFolder && data.events && (
+        {isExerciseFolder && data.events && (
           <TopicCategories data={data} categories={['events']} full />
         )}
       </div>
@@ -83,8 +80,8 @@ export function Topic({ data }: TopicProps) {
     return (
       <h1 className="serlo-h1 mt-8 mb-10">
         {data.title}
-        {isFolder && (
-          <span title={strings.entities.topicFolder}>
+        {isExerciseFolder && (
+          <span title={strings.entities.exerciseFolder}>
             {' '}
             <FaIcon
               icon={faFile}
@@ -129,13 +126,7 @@ export function Topic({ data }: TopicProps) {
     return (
       <UserTools
         onShare={() => setModalOpen(true)}
-        data={{
-          type: 'Taxonomy',
-          id: data.id,
-          taxonomyFolder: isFolder,
-          taxonomyTopic: isTopic,
-          alias: data.alias,
-        }}
+        data={{ type: 'TaxonomyTerm', ...data }}
         id={data.id}
         aboveContent={setting?.aboveContent}
       />
@@ -147,10 +138,11 @@ export function Topic({ data }: TopicProps) {
       const content = data.exercisesContent[i]
 
       if (content.type === 'exercise-group') {
-        if (content.license?.default) return content.license
+        if (content.license?.isDefault) return content.license
       } else {
-        if (content.task?.license?.default) return content.task.license
-        if (content.solution?.license?.default) return content.solution.license
+        if (content.task?.license?.isDefault) return content.task.license
+        if (content.solution?.license?.isDefault)
+          return content.solution.license
       }
     }
     //no part of collection has default license so don't show default notice.

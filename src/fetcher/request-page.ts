@@ -1,3 +1,4 @@
+import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -18,8 +19,8 @@ import {
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 // ALWAYS start alias with slash
 export async function requestPage(
@@ -70,7 +71,7 @@ export async function requestPage(
   const horizonData = instance == 'de' ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
-  const metaImage = getMetaImage(uuid.alias ? uuid.alias : undefined)
+  const metaImage = getMetaImage(uuid.alias)
 
   // Special case for event history, User profiles are requested in user/request.ts
   if (uuid.__typename === 'User') {
@@ -79,7 +80,7 @@ export async function requestPage(
       userData: {
         id: uuid.id,
         title: uuid.username,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
       },
     }
   }
@@ -93,8 +94,9 @@ export async function requestPage(
     } else {
       const pages = uuid.pages.map((page) => {
         return {
+          id: page.id,
           title: page.currentRevision?.title ?? '',
-          url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+          url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
           noCurrentRevision: !page.currentRevision,
         }
       })
@@ -105,7 +107,7 @@ export async function requestPage(
         newsletterPopup: false,
         entityData: {
           id: uuid.id,
-          alias: uuid.alias ?? undefined,
+          alias: uuid.alias,
           typename: uuid.__typename,
           title: uuid.currentRevision?.title ?? '',
           categoryIcon: 'course',
@@ -136,7 +138,7 @@ export async function requestPage(
         title,
         metaImage,
         contentType:
-          uuid.type === 'topicFolder' || uuid.type === 'curriculumTopicFolder'
+          uuid.type === TaxonomyTermType.ExerciseFolder
             ? 'topic-folder'
             : 'topic',
       },
@@ -153,7 +155,7 @@ export async function requestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         typename: uuid.__typename,
         trashed: uuid.trashed,
         content: exercise,
@@ -191,7 +193,7 @@ export async function requestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         typename: uuid.__typename,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -218,7 +220,7 @@ export async function requestPage(
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         content,
@@ -243,7 +245,7 @@ export async function requestPage(
       newsletterPopup: true,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         revisionId: uuid.currentRevision?.id,
@@ -265,7 +267,7 @@ export async function requestPage(
     }
   }
 
-  const licenseData = uuid.license
+  const licenseData = { ...uuid.license, isDefault: uuid.license.default }
 
   if (uuid.__typename === 'Article') {
     return {
@@ -273,7 +275,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
@@ -311,7 +313,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
@@ -350,7 +352,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
@@ -404,7 +406,8 @@ export async function requestPage(
       }
       return {
         title: page.currentRevision?.title ?? '',
-        url: !hasSpecialUrlChars(page.alias!) ? page.alias! : `/${page.id}`,
+        id: page.id,
+        url: !hasSpecialUrlChars(page.alias) ? page.alias : `/${page.id}`,
         active,
       }
     })
@@ -413,7 +416,7 @@ export async function requestPage(
       newsletterPopup: false,
       entityData: {
         id: uuid.id,
-        alias: uuid.alias ?? undefined,
+        alias: uuid.alias,
         trashed: uuid.trashed,
         typename: uuid.__typename,
         title: uuid.currentRevision?.title ?? '',
