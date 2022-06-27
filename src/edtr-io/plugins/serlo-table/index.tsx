@@ -1,30 +1,26 @@
 import { useScopedSelector, useScopedStore } from '@edtr-io/core'
 import {
   child,
-  ChildStateType,
   EditorPlugin,
   EditorPluginProps,
   list,
   object,
-  StateTypesReturnType,
   string,
 } from '@edtr-io/plugin'
 import {
   getFocused,
   isEmpty,
   focus,
-  getDocument,
   focusNext,
   focusPrevious,
 } from '@edtr-io/store'
-import { Icon, faImages, faParagraph } from '@edtr-io/ui'
+import { Icon } from '@edtr-io/ui'
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
 import { SerloTableRenderer, TableType } from './renderer'
-import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const headerTextPlugins = {
@@ -202,7 +198,6 @@ function SerloTableEditor(props: SerloTableProps) {
                   plugins: isHead ? headerTextPlugins : cellTextPlugins,
                 },
               })}
-              {renderSwitchButton(cell, isHead, isClear)}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
                 .serlo-td,
@@ -221,35 +216,6 @@ function SerloTableEditor(props: SerloTableProps) {
         }),
       }
     })
-  }
-
-  function renderSwitchButton(
-    cell: StateTypesReturnType<{
-      content: ChildStateType<string, unknown>
-    }>,
-    isHead: boolean,
-    isClear: boolean
-  ) {
-    const isFocused = cell.content.id === focusedElement
-    const isImage =
-      getDocument(cell.content.id)(store.getState())?.plugin === 'image'
-
-    if (isHead || !isFocused || !isClear) return null
-
-    return (
-      <button
-        onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
-        onClick={() => {
-          cell.content.replace(isImage ? 'text' : 'image')
-        }}
-        className="serlo-button-light m-2 py-0.5 text-sm block absolute"
-        title={
-          isImage ? tableStrings.convertToText : tableStrings.convertToImage
-        }
-      >
-        <FaIcon icon={isImage ? faParagraph : faImages} />
-      </button>
-    )
   }
 
   function renderInlineNav(rowIndex: number, colIndex: number) {
