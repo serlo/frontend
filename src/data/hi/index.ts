@@ -1,7 +1,7 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance.En,
+  lang: Instance["En"],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -347,7 +347,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance.En,
+  lang: Instance["En"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "हम नॉनप्रॉफिट आर्गेनाइजेशन संगठन हैं जो व्यक्तिगत शिक्षा का समर्थन करते हैं और समान शैक्षणिक अवसरों के लिए काम करते हैं। यह सीखने का मंच दुनिया भर के लाखों छात्रों के लिए हजारों निर्देशक लेख, वीडियो के माध्यम से सीखना और अभ्यास प्रदान करता है - पूरी तरह से नि: शुल्क। अब हिंदी में हमसे जुड़ने का समय है।",
