@@ -53,7 +53,6 @@ export const headerData: InstanceData['headerData'] = [
       { title: 'Team', url: '/team' },
       { title: 'Jobs', url: '/jobs' },
       { title: 'Partner & Förderer', url: '/partner' },
-      { title: 'Spenden', url: '/spenden' },
       { title: 'Wirkung', url: '/wirkung' },
       { title: 'Transparenz', url: '/transparenz' },
       { title: 'Die Geschichte von Serlo', url: '/geschichte' },
