@@ -22,7 +22,7 @@ docker-compose -f scripts/kratos/docker-compose.yml run \
 yarn kratos:newuser dev serlo@dev.org 123456 
 
 echo 
-echo "=== Now start api and database layer ==="
+echo "=== Now start frontend, api and database layer (with DB)==="
 echo 
 echo 
 echo "=== IMPORTANT: You may have to allow CORS in your browser ==="
