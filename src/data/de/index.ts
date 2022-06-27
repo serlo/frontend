@@ -1,6 +1,7 @@
+import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "de",
+  lang: Instance.En,
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -29,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Bereiche",
       exercises: "Aufgaben",
-      events: "Veranstaltungen"
+      events: "Veranstaltungen",
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content'
     },
     entities: {
       applet: 'Applet',
@@ -343,7 +347,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: "de",
+  lang: Instance.De,
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
