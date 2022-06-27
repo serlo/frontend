@@ -1,4 +1,4 @@
-import { FrontendContentNode } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
 
 interface ExtraRevisionViewInfoProps {
   isRevisionView?: boolean

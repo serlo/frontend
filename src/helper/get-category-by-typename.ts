@@ -1,17 +1,19 @@
+import { UuidType } from '@/data-types'
+
 export function getCategoryByTypename(typename?: string) {
-  return typename === 'Article'
+  return typename === UuidType.Article
     ? 'articles'
-    : typename === 'Video'
+    : typename === UuidType.Video
     ? 'videos'
-    : typename === 'Course' || typename === 'CoursePage'
+    : typename === UuidType.Course || typename === UuidType.CoursePage
     ? 'courses'
-    : typename === 'Applets'
+    : typename === UuidType.Applet
     ? 'applets'
-    : typename === 'Exercises' ||
-      typename === 'ExerciseGroup' ||
-      typename === 'GroupedExercise'
+    : typename === UuidType.Exercise ||
+      typename === UuidType.ExerciseGroup ||
+      typename === UuidType.GroupedExercise
     ? 'exercises'
-    : typename === 'Event'
+    : typename === UuidType.Event
     ? 'events'
     : 'folders'
 }

@@ -1,3 +1,4 @@
+import { UuidRevType, UuidType } from '@/data-types'
 import { RevisionUuidQuery } from '@/fetcher/graphql-types/operations'
 import { MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -30,10 +31,10 @@ export function revisionResponseToResponse(
     ? uuid.repository.taxonomyTerms
     : { nodes: [{}] }
 
-  if (uuid.__typename === 'AppletRevision') {
+  if (uuid.__typename === UuidRevType.Applet) {
     uuid.__typename
     return {
-      __typename: 'Applet',
+      __typename: UuidType.Applet,
       currentRevision: {
         id: uuid.id,
         url: uuid.url,
@@ -50,10 +51,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'ArticleRevision') {
+  if (uuid.__typename === UuidRevType.Article) {
     uuid.__typename
     return {
-      __typename: 'Article',
+      __typename: UuidType.Article,
       date,
       currentRevision: {
         id: uuid.id,
@@ -69,20 +70,20 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'CourseRevision') {
+  if (uuid.__typename === UuidRevType.Course) {
     uuid.__typename
     return {
-      __typename: 'Course',
+      __typename: UuidType.Course,
       ...repositoryFields,
       pages: uuid.repository.pages,
       taxonomyTerms,
     }
   }
 
-  if (uuid.__typename === 'CoursePageRevision') {
+  if (uuid.__typename === UuidRevType.CoursePage) {
     uuid.__typename
     return {
-      __typename: 'CoursePage',
+      __typename: UuidType.CoursePage,
       currentRevision: {
         id: uuid.id,
         alias: uuid.alias,
@@ -97,10 +98,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'EventRevision') {
+  if (uuid.__typename === UuidRevType.Event) {
     uuid.__typename
     return {
-      __typename: 'Event',
+      __typename: UuidType.Event,
       currentRevision: {
         id: uuid.id,
         title,
@@ -111,10 +112,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'ExerciseRevision') {
+  if (uuid.__typename === UuidRevType.Exercise) {
     uuid.__typename
     return {
-      __typename: 'Exercise',
+      __typename: UuidType.Exercise,
       currentRevision: {
         content,
         date,
@@ -126,10 +127,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'ExerciseGroupRevision') {
+  if (uuid.__typename === UuidRevType.ExerciseGroup) {
     uuid.__typename
     return {
-      __typename: 'ExerciseGroup',
+      __typename: UuidType.ExerciseGroup,
       currentRevision: {
         id: uuid.id,
         content,
@@ -144,10 +145,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'GroupedExerciseRevision') {
+  if (uuid.__typename === UuidRevType.GroupedExercise) {
     uuid.__typename
     return {
-      __typename: 'GroupedExercise',
+      __typename: UuidType.GroupedExercise,
       currentRevision: {
         content,
         date,
@@ -160,10 +161,10 @@ export function revisionResponseToResponse(
   }
 
   // probably not needed
-  if (uuid.__typename === 'PageRevision') {
+  if (uuid.__typename === UuidRevType.Page) {
     uuid.__typename
     return {
-      __typename: 'Page',
+      __typename: UuidType.Page,
       currentRevision: {
         id: uuid.id,
         title,
@@ -173,10 +174,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'SolutionRevision') {
+  if (uuid.__typename === UuidRevType.Solution) {
     uuid.__typename
     return {
-      __typename: 'Solution',
+      __typename: UuidType.Solution,
       currentRevision: {
         content,
       },
@@ -186,10 +187,10 @@ export function revisionResponseToResponse(
     }
   }
 
-  if (uuid.__typename === 'VideoRevision') {
+  if (uuid.__typename === UuidRevType.Video) {
     uuid.__typename
     return {
-      __typename: 'Video',
+      __typename: UuidType.Video,
       currentRevision: {
         id: uuid.id,
         url: uuid.url,

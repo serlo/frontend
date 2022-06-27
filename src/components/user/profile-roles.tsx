@@ -4,6 +4,7 @@ import { partition } from 'ramda'
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 type Roles = UserPage['userData']['roles']
 
@@ -53,7 +54,7 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
 
     return (
       <>
-        {lang === 'de' ? (
+        {lang === Instance.De ? (
           <Link href={`/community/202923/rollen-der-serlo-community#${role}`}>
             {label}
           </Link>

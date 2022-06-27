@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { Lazy } from './lazy'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { FrontendImgNode } from '@/data-types'
+import type { FrontendImgNode } from '@/frontend-node-types'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 interface ImageProps {

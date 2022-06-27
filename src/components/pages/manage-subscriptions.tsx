@@ -4,6 +4,7 @@ import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidWithRevType } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
 import {
   GetSubscriptionsQuery,
@@ -60,9 +61,10 @@ export function ManageSubscriptions({
 
   function renderLine({ object, sendEmail }: SubscriptionNode) {
     if (hidden.includes(object.id)) return null
-    const entityString = getEntityStringByTypename(object.__typename, strings)
+    const typename = object.__typename as UuidWithRevType
+    const entityString = getEntityStringByTypename(typename, strings)
     const title = getRawTitle(object, Instance.De) ?? entityString
-    const icon = getIconByTypename(object.__typename)
+    const icon = getIconByTypename(typename)
     const sendEmailOverwrite = mailOverwrite[object.id] ?? sendEmail
 
     return (

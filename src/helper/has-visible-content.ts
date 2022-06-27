@@ -1,5 +1,5 @@
 import { hasOwnPropertyTs } from './has-own-property-ts'
-import { FrontendContentNode } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
 
 export function hasVisibleContent(content: FrontendContentNode[]): boolean {
   const text = extractText(content)

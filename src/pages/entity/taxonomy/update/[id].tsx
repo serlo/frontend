@@ -1,5 +1,4 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { TaxonomyTermType } from '@serlo/api'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -14,7 +13,9 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import {
+  TaxonomyTermType,
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
 } from '@/fetcher/graphql-types/operations'
@@ -139,7 +140,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
 
     return (
       <UuidUrlInput
-        supportedEntityTypes={['TaxonomyTerm']}
+        supportedEntityTypes={[UuidType.TaxonomyTerm]}
         supportedTaxonomyTypes={[
           TaxonomyTermType.Topic,
           TaxonomyTermType.ExerciseFolder,
@@ -152,10 +153,10 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
   }
 
   function renderAddButton(
-    _typename: string,
+    _typename: UuidWithRevType,
     taxId: number,
     _title: string,
-    taxType?: string
+    taxType?: TaxonomyTermType
   ) {
     return (
       <>

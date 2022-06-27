@@ -5,6 +5,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Spoiler } from '@/components/content/spoiler'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ProfileSettingsProps {
@@ -104,7 +105,7 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   }
 
   function renderHowToEditMotivation() {
-    if (lang !== 'de') return null
+    if (lang !== Instance.De) return null
     const { buttonText, intro, privacy, toForm } = loggedInStrings.motivation
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 
