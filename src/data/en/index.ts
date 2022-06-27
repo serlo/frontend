@@ -1,7 +1,8 @@
 
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
 export const instanceData = {
-  lang: 'en',
+  lang: Instance.En,
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -33,6 +34,9 @@ export const instanceData = {
       folders: 'Folders',
       exercises: 'Exercises',
       events: 'Events',
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content',
     },
     entities: {
       applet: 'Applet',
@@ -360,7 +364,7 @@ export const instanceData = {
   },
 }
 export const instanceLandingData = {
-  lang: 'en',
+  lang: Instance.De,
   subjectsData: landingSubjectsData,
   strings: {
     vision:
