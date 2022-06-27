@@ -31,9 +31,9 @@ export const instanceData = {
       folders: "Bereiche",
       exercises: "Aufgaben",
       events: "Veranstaltungen",
-      unrevised: 'Unrevised',
-      subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      unrevised: "Ungeprüft",
+      subterms: "Unter-Themenbereich",
+      exercisesContent: "Aufgaben-Inhalte"
     },
     entities: {
       applet: 'Applet',
