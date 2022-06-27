@@ -364,7 +364,7 @@ export const instanceData = {
   },
 }
 export const instanceLandingData = {
-  lang: Instance.De,
+  lang: Instance.En,
   subjectsData: landingSubjectsData,
   strings: {
     vision:
