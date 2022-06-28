@@ -15,7 +15,7 @@ import { hydra, kratos } from '@/helper/kratos'
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
-  const [session, setSession] = useState<Session | null>()
+  const [session] = useState<Session | null>()
   const router = useRouter()
 
   const {
