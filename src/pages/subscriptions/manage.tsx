@@ -12,6 +12,7 @@ import {
 } from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -23,24 +24,25 @@ export default renderedPageNoHooks(() => (
 ))
 
 const filters = [
-  'Article',
-  'Video',
-  'Applet',
-  'CoursePage',
-  'Exercise',
-  'GroupedExercise',
-  'ExerciseGroup',
-  'Solution',
-  'User',
-  'Course',
-  'TaxonomyTerm',
+  UuidType.Article,
+  UuidType.Video,
+  UuidType.Applet,
+  UuidType.CoursePage,
+  UuidType.Exercise,
+  UuidType.GroupedExercise,
+  UuidType.ExerciseGroup,
+  UuidType.Solution,
+  UuidType.User,
+  UuidType.Course,
+  UuidType.TaxonomyTerm,
 ]
 
 function Content() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = useFetch()
-  const [showTypename, setShowTypename] =
-    useState<typeof filters[number]>('Article')
+  const [showTypename, setShowTypename] = useState<typeof filters[number]>(
+    UuidType.Article
+  )
 
   const filtered = data?.nodes.filter(
     (node) => node.object.__typename === showTypename

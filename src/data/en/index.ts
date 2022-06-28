@@ -1,7 +1,8 @@
 
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
 export const instanceData = {
-  lang: 'en',
+  lang: Instance["En"],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -14,7 +15,7 @@ export const instanceData = {
     search: {
       privacy:
         'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree',
+      agree: 'Agree to use search',
     },
     footer: {
       summaryHeading: 'Serlo.org is the Wikipedia for learning.',
@@ -33,6 +34,9 @@ export const instanceData = {
       folders: 'Folders',
       exercises: 'Exercises',
       events: 'Events',
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content',
     },
     entities: {
       applet: 'Applet',
@@ -360,7 +364,7 @@ export const instanceData = {
   },
 }
 export const instanceLandingData = {
-  lang: 'en',
+  lang: Instance["En"],
   subjectsData: landingSubjectsData,
   strings: {
     vision:

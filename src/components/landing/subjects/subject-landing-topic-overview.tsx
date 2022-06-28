@@ -110,6 +110,7 @@ export function SubjectLandingTopicOverview({
                 isActive ? 'text-black bg-brand/10 hover:bg-brand/10' : '',
                 src ? '' : 'pl-16'
               )}
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={() =>
                 isExtraTerm ? router.push(term.href) : onMenuClick(index)
               }

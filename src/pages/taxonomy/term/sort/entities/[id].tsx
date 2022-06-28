@@ -1,5 +1,4 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
-import { Instance } from '@serlo/api'
 import { arrayMoveImmutable } from 'array-move'
 import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -21,9 +20,16 @@ import {
   TaxonomyLink,
   TaxonomyPage,
   TaxonomyData,
-  TopicCategoryTypes,
+  TopicCategoryType,
+  TopicCategoryCustomType,
+  TaxonomySubTerm,
 } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
+import {
+  FrontendExerciseGroupNode,
+  FrontendExerciseNode,
+} from '@/frontend-node-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { useTaxonomyTermSortMutation } from '@/helper/mutations/taxonomyTerm'
@@ -31,14 +37,13 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export const allCategories = [
-  'articles',
-  'courses',
-  'videos',
-  'applets',
-  'exercises',
-  'events',
-  'subterms', //TaxonomySubTerm[]
-  'exercisesContent', //(FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  TopicCategoryType.articles,
+  TopicCategoryType.courses,
+  TopicCategoryType.videos,
+  TopicCategoryType.applets,
+  TopicCategoryType.events,
+  TopicCategoryCustomType.subterms,
+  TopicCategoryCustomType.exercisesContent,
 ] as const
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
@@ -120,31 +125,34 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       const links = taxonomyData[category]
       if (!links || !links.length || typeof links == 'boolean') return null
 
-      if (
-        hasOwnPropertyTs(links[0], 'type') &&
-        (links[0].type == 'exercise' || links[0].type == 'exercise-group')
-      ) {
-        return renderCategory(
-          category,
-          (links as unknown as TaxonomyData['exercisesContent']).map(
-            (exNode) => {
-              const url = exNode.href ?? `/${exNode.context.id}`
-              const pos =
-                exNode.positionOnPage !== undefined
-                  ? exNode.positionOnPage + 1
-                  : ''
-              const title = `(${pos}) ${getPreviewStringFromExercise(
-                exNode,
-                strings
-              )}`
-              return { title, url, id: exNode.context.id }
-            }
-          )
-        )
-      } else {
-        return renderCategory(category, links as TaxonomyLink[])
-      }
+      return renderCategory(category, exToTaxonomyLinks(links))
     })
+  }
+
+  function exToTaxonomyLinks(
+    links:
+      | TaxonomyLink[]
+      | TaxonomySubTerm[]
+      | (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  ): TaxonomyLink[] {
+    if (
+      hasOwnPropertyTs(links[0], 'type') &&
+      (links[0].type === 'exercise-group' || links[0].type === 'exercise')
+    ) {
+      return (links as unknown as TaxonomyData['exercisesContent']).map(
+        (exNode) => {
+          const url = exNode.href ?? `/${exNode.context.id}`
+          const pos =
+            exNode.positionOnPage !== undefined ? exNode.positionOnPage + 1 : ''
+          const title = `(${pos}) ${getPreviewStringFromExercise(
+            exNode,
+            strings
+          )}`
+          return { title, url, id: exNode.context.id }
+        }
+      )
+    }
+    return links as unknown as TaxonomyLink[]
   }
 
   function renderCategory(
@@ -156,20 +164,20 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       links.filter((link) => !link.unrevised).length === 0
     )
       return null
+
+    console.log(links)
     return (
       <DragDropContext
         key={category}
         onDragEnd={(result) => {
           const { source, destination } = result
           if (!destination) return
-          const category = source.droppableId as Exclude<
-            TopicCategoryTypes,
-            'folders'
-          >
+          const category = source.droppableId as typeof allCategories[number]
+
           setTaxonomyData({
             ...taxonomyData,
             [category]: arrayMoveImmutable(
-              taxonomyData[category],
+              exToTaxonomyLinks(taxonomyData[category]),
               source.index,
               destination.index
             ),
@@ -253,6 +261,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
   function renderUpdateButton() {
     return (
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       <button className="mt-12 serlo-button-blue" onClick={onSave}>
         {loggedInStrings.saveButtonText}
       </button>

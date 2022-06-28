@@ -1,4 +1,3 @@
-import { SetGenericEntityInput } from '@serlo/api'
 // eslint-disable-next-line import/no-internal-modules
 import { eqBy, mapObjIndexed } from 'ramda'
 
@@ -12,12 +11,13 @@ import {
 } from './types'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
+import { LoggedInData, UuidType } from '@/data-types'
 import {
   CourseSerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
+import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(
@@ -133,35 +133,39 @@ const loopNestedChildren = async ({
 
   let success = true
 
-  if (data.__typename === 'Course' && data['course-page']) {
+  if (data.__typename === UuidType.Course && data['course-page']) {
     success =
       success &&
       (await mapField(
         data['course-page'],
-        'CoursePage',
+        UuidType.CoursePage,
         (initialState.state as CourseSerializedState)['course-page']
       ))
   }
-  if (data.__typename === 'ExerciseGroup' && data['grouped-text-exercise']) {
+  if (
+    data.__typename === UuidType.ExerciseGroup &&
+    data['grouped-text-exercise']
+  ) {
     success =
       success &&
       (await mapField(
         data['grouped-text-exercise'],
-        'GroupedExercise',
+        UuidType.GroupedExercise,
         (initialState.state as TextExerciseGroupSerializedState)[
           'grouped-text-exercise'
         ]
       ))
   }
   if (
-    (data.__typename === 'Exercise' || data.__typename === 'GroupedExercise') &&
+    (data.__typename === UuidType.Exercise ||
+      data.__typename === UuidType.GroupedExercise) &&
     data['text-solution']
   ) {
     success =
       success &&
       (await mapField(
         data['text-solution'],
-        'Solution',
+        UuidType.Solution,
         (initialState.state as TextExerciseSerializedState)['text-solution']
       ))
   }
@@ -246,7 +250,8 @@ function getGenericInputData(
   data: SetEntityMutationData,
   needsReview: boolean
 ): SetGenericEntityInput {
-  const content = data.__typename === 'Course' ? data.description : data.content
+  const content =
+    data.__typename === UuidType.Course ? data.description : data.content
 
   return {
     changes: getRequiredString(loggedInData, 'changes', data.changes),
@@ -264,37 +269,37 @@ function getAdditionalInputData(
   data: SetEntityMutationData
 ) {
   switch (data.__typename) {
-    case 'Applet':
+    case UuidType.Applet:
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         url: getRequiredString(loggedInData, 'url', data.url),
         metaTitle: data['meta_title'],
         metaDescription: data['meta_description'],
       }
-    case 'Article':
+    case UuidType.Article:
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         metaTitle: data['meta_title'],
         metaDescription: data['meta_description'],
       }
-    case 'Course':
+    case UuidType.Course:
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         metaDescription: data['meta_description'],
       }
-    case 'CoursePage':
+    case UuidType.CoursePage:
       return { title: getRequiredString(loggedInData, 'title', data.title) }
-    case 'Event':
+    case UuidType.Event:
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         metaTitle: data['meta_title'],
         metaDescription: data['meta_description'],
       }
-    case 'Exercise':
+    case UuidType.Exercise:
       return {}
-    case 'ExerciseGroup':
+    case UuidType.ExerciseGroup:
       return { cohesive: data.cohesive === 'true' }
-    case 'Video':
+    case UuidType.Video:
       return {
         title: getRequiredString(loggedInData, 'title', data.title),
         url: getRequiredString(loggedInData, 'url', data.content), // url is stored in content for some reason

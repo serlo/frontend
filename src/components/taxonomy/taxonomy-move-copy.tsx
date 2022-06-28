@@ -1,6 +1,5 @@
 import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
-import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -13,12 +12,18 @@ import { PleaseLogIn } from '../user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
-  FrontendExerciseGroupNode,
-  FrontendExerciseNode,
   InstanceData,
   TaxonomyData,
   TaxonomyLink,
+  UuidType,
+  UuidWithRevType,
 } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import {
+  FrontendExerciseGroupNode,
+  FrontendExerciseNode,
+  FrontendNodeType,
+} from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import {
@@ -79,7 +84,9 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
     return (
       <>
         <p className="mt-4">
-          {taxonomyData.articles.map((node) => renderLi(node, 'article'))}
+          {taxonomyData.articles.map((node) =>
+            renderLi(node, UuidType.Article)
+          )}
         </p>
         <p className="mt-4">
           {taxonomyData.exercisesContent.map((node) => {
@@ -91,28 +98,28 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
                 title,
                 url: node.href ?? `/${node.context.id}`,
               },
-              'exercise'
+              UuidType.Exercise
             )
           })}
         </p>
         <p className="mt-4">
-          {taxonomyData.videos.map((node) => renderLi(node, 'video'))}
+          {taxonomyData.videos.map((node) => renderLi(node, UuidType.Video))}
         </p>
         <p className="mt-4">
-          {taxonomyData.applets.map((node) => renderLi(node, 'applet'))}
+          {taxonomyData.applets.map((node) => renderLi(node, UuidType.Applet))}
         </p>
         <p className="mt-4">
-          {taxonomyData.courses.map((node) => renderLi(node, 'course'))}
+          {taxonomyData.courses.map((node) => renderLi(node, UuidType.Course))}
         </p>
         <p className="mt-4">
-          {taxonomyData.events.map((node) => renderLi(node, 'event'))}
+          {taxonomyData.events.map((node) => renderLi(node, UuidType.Event))}
         </p>
         {renderFolderNotice()}
       </>
     )
   }
 
-  function renderLi(node: TaxonomyLink, type: string) {
+  function renderLi(node: TaxonomyLink, typename: UuidType) {
     if (removedEntityIds.includes(node.id)) return null
     const isChecked = entityIds.includes(node.id)
     return (
@@ -127,7 +134,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
               else setEntityIds([...entityIds, node.id])
             }}
           />{' '}
-          <FaIcon icon={getIconByTypename(type)} /> {node.title}
+          <FaIcon icon={getIconByTypename(typename)} /> {node.title}
         </label>{' '}
         ({' '}
         <a
@@ -146,7 +153,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   function renderInput() {
     return (
       <UuidUrlInput
-        supportedEntityTypes={['TaxonomyTerm']}
+        supportedEntityTypes={[UuidType.TaxonomyTerm]}
         supportedTaxonomyTypes={[
           TaxonomyTermType.Topic,
           TaxonomyTermType.ExerciseFolder,
@@ -158,10 +165,10 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
   }
 
   function renderButtons(
-    _typename: string,
+    _typename: UuidWithRevType,
     id: number,
     _title: string,
-    taxType?: string
+    taxType?: TaxonomyTermType
   ) {
     const buttonClass = clsx(
       'text-base serlo-button-light mr-3',
@@ -216,6 +223,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         <button
           className={buttonClass}
           disabled={!buttonsActive}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onButtonClick(isMove)}
         >
           <FaIcon icon={isMove ? faArrowRight : faCopy} /> {buttonText(isMove)}
@@ -244,20 +252,20 @@ export function getPreviewStringFromExercise(
   const typeString = getTranslatedType(strings, node.type)
 
   const titleState =
-    node.type === 'exercise'
+    node.type === FrontendNodeType.Exercise
       ? node.task.edtrState?.content[0].children?.[0]
       : node.content[0].children?.[0]
 
   if (!titleState) return typeString
 
   const titleString =
-    (titleState.type === 'slate-p' &&
-      titleState.children?.[0].type === 'text' &&
+    (titleState.type === FrontendNodeType.SlateP &&
+      titleState.children?.[0].type === FrontendNodeType.Text &&
       titleState.children?.[0].text) ||
-    (titleState.children?.[0].type === 'inline-math' &&
+    (titleState.children?.[0].type === FrontendNodeType.InlineMath &&
       titleState.children?.[0].formula) ||
-    (titleState.type === 'slate-container' &&
-      titleState.children?.[0].children?.[0].type === 'text' &&
+    (titleState.type === FrontendNodeType.SlateContainer &&
+      titleState.children?.[0].children?.[0].type === FrontendNodeType.Text &&
       titleState.children?.[0].children?.[0].text)
 
   if (!titleString) return typeString

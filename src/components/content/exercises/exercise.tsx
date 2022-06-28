@@ -12,7 +12,8 @@ import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { FrontendExerciseNode } from '@/data-types'
+import { ExerciseInlineType } from '@/data-types'
+import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -96,7 +97,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     const authorTools = ExerciseAuthorTools && loaded && auth.current && (
       <ExerciseAuthorTools
         data={{
-          type: '_SolutionInline',
+          type: ExerciseInlineType.Solution,
           id: node.context.solutionId!,
           parentId: node.context.id,
           grouped: node.grouped,
@@ -111,7 +112,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {renderNested(
           [
             {
-              type: 'solution',
+              type: FrontendNodeType.Solution,
               solution: node.solution,
               context: { id: node.context.solutionId! },
             },
@@ -204,7 +205,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {loaded && auth.current && ExerciseAuthorTools && (
           <ExerciseAuthorTools
             data={{
-              type: '_ExerciseInline',
+              type: ExerciseInlineType.Exercise,
               trashed: node.trashed,
               id: node.context.id,
               grouped: node.grouped,

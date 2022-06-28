@@ -1,12 +1,13 @@
 import type { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
 
 import { sanitizeLatex } from './sanitize-latex'
-import type {
+import {
   FrontendContentNode,
   FrontendLiNode,
+  FrontendNodeType,
   FrontendTextColor,
   FrontendTextNode,
-} from '@/data-types'
+} from '@/frontend-node-types'
 
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
@@ -31,10 +32,13 @@ export function convertTextPluginState(
 export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'p') {
     return [
-      { type: 'slate-p', children: convertTextPluginState(node.children) },
+      {
+        type: FrontendNodeType.SlateP,
+        children: convertTextPluginState(node.children),
+      },
     ]
   }
-  if (node.type === 'a') {
+  if (node.type === FrontendNodeType.A) {
     const children = convertTextPluginState(node.children)
     if (!node.href) {
       // remove empty links
@@ -42,7 +46,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     }
     return [
       {
-        type: 'a',
+        type: FrontendNodeType.A,
         href: node.href,
         children,
       },
@@ -58,7 +62,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     ) {
       return [
         {
-          type: 'h',
+          type: FrontendNodeType.H,
           level: node.level,
           children: convertTextPluginState(node.children),
         },
@@ -66,7 +70,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     } else {
       return [
         {
-          type: 'h',
+          type: FrontendNodeType.H,
           level: 5,
           children: convertTextPluginState(node.children),
         },
@@ -79,7 +83,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     }
     return [
       {
-        type: 'math',
+        type: FrontendNodeType.Math,
         formula: sanitizeLatex(node.src),
         formulaSource: node.src,
         alignCenter: true,
@@ -92,7 +96,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
     }
     return [
       {
-        type: 'inline-math',
+        type: FrontendNodeType.InlineMath,
         formula: sanitizeLatex(node.src),
         formulaSource: node.src,
       },
@@ -101,12 +105,12 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'unordered-list') {
     // only allow li nodes
     const children = convertTextPluginState(node.children).filter(
-      (child) => child.type === 'li'
+      (child) => child.type === FrontendNodeType.Li
     ) as FrontendLiNode[]
 
     return [
       {
-        type: 'ul',
+        type: FrontendNodeType.Ul,
         children,
       },
     ]
@@ -114,12 +118,12 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'ordered-list') {
     // only allow li nodes
     const children = convertTextPluginState(node.children).filter(
-      (child) => child.type === 'li'
+      (child) => child.type === FrontendNodeType.Li
     ) as FrontendLiNode[]
 
     return [
       {
-        type: 'ol',
+        type: FrontendNodeType.Ol,
         children,
       },
     ]
@@ -132,7 +136,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
 
     return [
       {
-        type: 'li',
+        type: FrontendNodeType.Li,
         children,
       },
     ]
@@ -148,7 +152,7 @@ export function convertTextNode(node: NewText): FrontendContentNode[] {
   if (text === '') return []
   return [
     {
-      type: 'text',
+      type: FrontendNodeType.Text,
       text,
       em: node.em,
       strong: node.strong,
@@ -163,14 +167,14 @@ function handleSemistructedContentOfPForListItems(
 ) {
   // generate children, split text blocks at new lines
   const children = input.flatMap((child) => {
-    if (child.type == 'text' && child.text.includes('\n')) {
+    if (child.type == FrontendNodeType.Text && child.text.includes('\n')) {
       return child.text.split('\n').flatMap((text, i) => {
         const value: FrontendTextNode[] = []
         if (i != 0) {
-          value.push({ type: 'text', text: '%%%BARRIER%%%' })
+          value.push({ type: FrontendNodeType.Text, text: '%%%BARRIER%%%' })
         }
         if (text) {
-          value.push({ type: 'text', text })
+          value.push({ type: FrontendNodeType.Text, text })
         }
         return value
       })
@@ -183,19 +187,22 @@ function handleSemistructedContentOfPForListItems(
   let resultAppendable = false
   children.forEach((child) => {
     if (
-      child.type == 'text' ||
-      child.type == 'a' ||
-      child.type == 'inline-math'
+      child.type == FrontendNodeType.Text ||
+      child.type == FrontendNodeType.A ||
+      child.type == FrontendNodeType.InlineMath
     ) {
       const last = result[result.length - 1]
-      if (child.type == 'text' && child.text == '%%%BARRIER%%%') {
+      if (
+        child.type == FrontendNodeType.Text &&
+        child.text == '%%%BARRIER%%%'
+      ) {
         resultAppendable = false
         return
       }
-      if (resultAppendable && last && last.type == 'slate-p') {
+      if (resultAppendable && last && last.type == FrontendNodeType.SlateP) {
         last.children!.push(child)
       } else {
-        result.push({ type: 'slate-p', children: [child] })
+        result.push({ type: FrontendNodeType.SlateP, children: [child] })
         resultAppendable = true
       }
     } else {

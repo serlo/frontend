@@ -17,4 +17,4 @@ curl --request POST -sL \
     \"metadata_public\" : { 
       \"legacy_id\": 1
     }
-  }" http://127.0.0.1:4434/identities
+  }" http://localhost:4434/identities

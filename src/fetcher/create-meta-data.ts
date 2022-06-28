@@ -3,7 +3,7 @@
   ResponseDataQuickFix,
 } from '@/fetcher/process-response'*/
 
-import { FrontendContentNode } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export function getMetaImage(alias: string) {
@@ -12,13 +12,13 @@ export function getMetaImage(alias: string) {
 
   switch (subject) {
     case 'mathe':
-      imageSrc = 'mathematik.jpg'
+      imageSrc = 'mathematik.png'
       break
     case 'nachhaltigkeit':
-      imageSrc = 'nachhaltigkeit.jpg'
+      imageSrc = 'nachhaltigkeit.png'
       break
     case 'biologie':
-      imageSrc = 'biologie.jpg'
+      imageSrc = 'biologie.png'
       break
   }
 
@@ -26,7 +26,7 @@ export function getMetaImage(alias: string) {
 }
 
 export function getMetaDescription(content: FrontendContentNode[]): string {
-  /*if (processed.contentType === 'TaxonomyTerm') return
+  /*if (processed.contentType === UuidType.TaxonomyTerm) return
 
   if (!processed.data) return
 
@@ -56,9 +56,9 @@ export function getMetaDescription(content: FrontendContentNode[]): string {
 
   const softCutoff = 135
   const fallback =
-    longFallback.substr(
+    longFallback.substring(
       0,
-      softCutoff + longFallback.substr(softCutoff).indexOf(' ')
+      softCutoff + longFallback.substring(softCutoff).indexOf(' ')
     ) + ' …'
   const description = fallback
   return description

@@ -3,7 +3,6 @@ import {
   faTrashAlt,
   faTrashRestore,
 } from '@fortawesome/free-solid-svg-icons'
-import { Instance } from '@serlo/api'
 import request, { gql } from 'graphql-request'
 import { GetStaticProps } from 'next'
 
@@ -17,6 +16,7 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
+  Instance,
   PagesQuery,
   PagesQueryVariables,
 } from '@/fetcher/graphql-types/operations'
@@ -90,6 +90,7 @@ function Content({ pages }: PagesProps) {
                   trashed ? 'restoreContent' : 'moveToTrash'
                 ]
               }
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={async () => {
                 await setUuidState({ id: [id], trashed: !trashed })
               }}

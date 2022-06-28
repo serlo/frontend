@@ -1,4 +1,3 @@
-import { edgeConfig } from '@ory/integrations'
 import { Configuration as KratosConfig, V0alpha2Api } from '@ory/kratos-client'
 import { AdminApi, Configuration as HydraConfig } from '@oryd/hydra-client'
 // export const kratos = new V0alpha2Api(
@@ -19,15 +18,17 @@ export const kratos = new V0alpha2Api(
   })
 )
 
-const baseOptions: any = {}
-
-if (process.env.MOCK_TLS_TERMINATION) {
-  baseOptions.headers = { 'X-Forwarded-Proto': 'https' }
-}
-
 export const hydra = new AdminApi(
   new HydraConfig({
-    basePath: 'http://127.0.0.1:4445',
-    baseOptions,
+    basePath: 'http://localhost:4445',
+    ...(process.env.MOCK_TLS_TERMINATION
+      ? {
+          baseOptions: {
+            headers: process.env.MOCK_TLS_TERMINATION
+              ? 'X-Forwarded-Proto'
+              : 'https',
+          },
+        }
+      : {}),
   })
 )

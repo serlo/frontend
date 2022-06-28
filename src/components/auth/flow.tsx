@@ -39,7 +39,13 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
   const { action, method, messages, nodes } = flow.ui
 
   return (
-    <form action={action} method={method} onSubmit={handleSubmit}>
+    <form
+      action={action}
+      method={method}
+      onSubmit={(e) => {
+        void handleSubmit(e)
+      }}
+    >
       {messages ? <pre>{JSON.stringify(messages)}</pre> : null}
       {nodes.map((node) => {
         const id = getNodeId(node)
@@ -90,12 +96,19 @@ export function handleFlowError<S>(
   resetFlow: Dispatch<SetStateAction<S | undefined>>
 ) {
   return async (err: AxiosError) => {
+    const data = err.response?.data as {
+      redirect_browser_to: string
+      error: {
+        id: string
+      }
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    switch (err.response?.data.error?.id) {
+    switch (data.error?.id) {
       case 'session_aal2_required':
         // 2FA is enabled and enforced, but user did not perform 2fa yet!
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-        window.location.href = err.response?.data.redirect_browser_to
+        window.location.href = data.redirect_browser_to
         return
       case 'session_already_available':
         // User is already signed in, let's redirect them home!
@@ -104,7 +117,7 @@ export function handleFlowError<S>(
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
-        window.location.href = err.response?.data.redirect_browser_to
+        window.location.href = data.redirect_browser_to
         return
       case 'self_service_flow_return_to_forbidden':
         // The flow expired, let's request a new one.
@@ -134,7 +147,7 @@ export function handleFlowError<S>(
       case 'browser_location_change_required':
         // Ory Kratos asked us to point the user to this URL.
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-        window.location.href = err.response.data.redirect_browser_to
+        window.location.href = data.redirect_browser_to
         return
     }
 

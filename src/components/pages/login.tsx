@@ -1,5 +1,6 @@
 import {
   SelfServiceLoginFlow,
+  Session,
   SubmitSelfServiceLoginFlowBody,
 } from '@ory/kratos-client'
 import { AcceptLoginRequest } from '@oryd/hydra-client'
@@ -8,15 +9,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Flow, handleFlowError } from '@/components/auth/flow'
-import { kratos, hydra } from '@/helper/kratos'
+import { hydra, kratos } from '@/helper/kratos'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
-  const [session, setSession] = useState<string>(
-    'No valid session was found.\nPlease sign in to receive one.'
-  )
+  const [session] = useState<Session | null>()
   const router = useRouter()
 
   const {
@@ -37,15 +36,16 @@ export function Login() {
       window.location.href = `http://localhost:3000/api/auth/login`
     }
 
-    if (consent_challenge) {
-      const acceptConsentRequest = {}
+    // TODO: session is never set
+    if (consent_challenge && session) {
       // TODO: pass values dynamically that are received
-      acceptConsentRequest.grant_scope = ['openid']
-      acceptConsentRequest.grant_access_token_audience = ['']
-
-      acceptConsentRequest.session = {
-        access_token: session.identity,
-        id_token: session.identity,
+      const acceptConsentRequest = {
+        grant_scope: ['open_id'],
+        grant_access_token_audience: [''],
+        session: {
+          access_token: session.identity,
+          id_token: session.identity,
+        },
       }
 
       hydra
@@ -53,8 +53,8 @@ export function Login() {
         .then(({ data: body }) => {
           window.location.href = `${body.redirect_to}`
         })
-        .catch((e) => {
-          throw Error(e)
+        .catch((e: Error) => {
+          throw e
         })
       return
     }
@@ -124,7 +124,9 @@ export function Login() {
         .then(async ({ data }) => {
           const { session } = data
 
-          const subject = session.identity.metadata_public.legacy_id
+          const subject = (
+            session.identity.metadata_public as { legacy_id: number }
+          ).legacy_id
 
           const acceptLoginRequest: AcceptLoginRequest =
             {} as AcceptLoginRequest
@@ -133,7 +135,7 @@ export function Login() {
           acceptLoginRequest.subject = String(subject)
           acceptLoginRequest.context = session
 
-          // BIG FIXME: cors is failing, no Access-Control-Allow-Origin header comming from server (it worked only with an extension that ignores cors)
+          // BIG FIXME: cors is failing, no Access-Control-Allow-Origin header coming from server (it worked only with an extension that ignores cors)
           // We should have configured it wrongly.
           await hydra
             .acceptLoginRequest(String(login_challenge), acceptLoginRequest)
@@ -141,12 +143,12 @@ export function Login() {
               window.location.href = `${body.redirect_to}`
               return
             })
-            .catch((e) => {
-              throw Error(e)
+            .catch((e: Error) => {
+              throw e
             })
         })
-        .catch((e) => {
-          throw Error(e)
+        .catch((e: Error) => {
+          throw e
         })
 
       if (flow?.return_to) {
@@ -161,7 +163,7 @@ export function Login() {
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {
-          setFlow(err.response?.data)
+          setFlow(err.response?.data as SelfServiceLoginFlow)
           return
         }
 

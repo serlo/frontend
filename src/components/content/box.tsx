@@ -9,7 +9,7 @@ import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendBoxNode } from '@/data-types'
+import { FrontendBoxNode } from '@/frontend-node-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 

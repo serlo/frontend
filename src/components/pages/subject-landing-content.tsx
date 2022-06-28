@@ -12,6 +12,7 @@ import { deSubjectLandingSubjects } from './subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomySubTerm } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { getServerSideStrings } from '@/helper/feature-i18n'
 
 interface SubjectLandingContentProps {
@@ -25,7 +26,7 @@ export function SubjectLandingContent({
 }: SubjectLandingContentProps) {
   const { lang } = useInstanceData()
 
-  if (lang !== 'de') return null
+  if (lang !== Instance.De) return null
   const instanceData = getServerSideStrings(lang)
 
   const data = deSubjectLandingData[subject]
@@ -102,14 +103,6 @@ export function SubjectLandingContent({
       </main>
       <FooterNew />
       <style jsx>{`
-        @font-face {
-          font-family: 'Caveat';
-          font-style: bold;
-          font-weight: 700;
-          src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
-            url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
-          font-display: swap;
-        }
         @font-face {
           font-family: 'Karmilla';
           font-style: bolder;

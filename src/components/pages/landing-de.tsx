@@ -1,13 +1,14 @@
+import { Session } from '@ory/kratos-client'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
-import { HeaderNew } from '../landing/rework/header-new'
 import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
+import { Header } from '../navigation/header'
 import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
@@ -20,17 +21,13 @@ export interface LandingDEProps {
 
 export function LandingDE({ data }: LandingDEProps) {
   // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/index.tsx
-  const [session, setSession] = useState<string>(
-    'No valid session was found.\nPlease sign in to receive one.'
-  )
-  const [hasSession, setHasSession] = useState<boolean>(false)
+  const [session, setSession] = useState<Session | null>(null)
   const subjectsData = data.subjectsData
   useEffect(() => {
     kratos
       .toSession()
       .then(({ data }) => {
         setSession(data)
-        setHasSession(true)
       })
       .catch((err) => {
         return Promise.reject(err)
@@ -39,21 +36,12 @@ export function LandingDE({ data }: LandingDEProps) {
 
   // console.log(session)
 
-  let kratosUsername = ''
-  if (hasSession) {
-    kratosUsername = session.identity.traits.username
-  }
+  const kratosUsername =
+    (session?.identity?.traits as { username: string }).username ?? ''
+
   return (
     <>
       <style jsx>{`
-        @font-face {
-          font-family: 'Caveat';
-          font-style: bold;
-          font-weight: 700;
-          src: url('/_assets/fonts/caveat/caveat-bold.woff2') format('woff2'),
-            url('/_assets/fonts/caveat/caveat-bold.woff') format('woff');
-          font-display: swap;
-        }
         @font-face {
           font-family: 'Karmilla';
           font-style: bolder;
@@ -63,6 +51,7 @@ export function LandingDE({ data }: LandingDEProps) {
             url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
           font-display: swap;
         }
+
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
@@ -80,12 +69,14 @@ export function LandingDE({ data }: LandingDEProps) {
             background-size: 82%, 100vw 100%;
           }
         }
+
         .underlined {
           padding-right: 1rem;
           white-space: nowrap;
           background: url('/_assets/img/landing/simple-underline.svg') no-repeat
             bottom;
         }
+
         :global(.landing-button-with-wings) {
           &:after,
           &:before {
@@ -116,6 +107,7 @@ export function LandingDE({ data }: LandingDEProps) {
             }
           }
         }
+
         :global(.landing-button-with-wink) {
           &:after,
           &:before {
@@ -124,6 +116,7 @@ export function LandingDE({ data }: LandingDEProps) {
             background-size: 65% !important;
           }
         }
+
         .p-with-wink {
           &:after,
           &:before {
@@ -133,13 +126,16 @@ export function LandingDE({ data }: LandingDEProps) {
             height: 2.5rem;
             opacity: 1;
           }
+
           &:after {
             margin-left: -0.5rem;
           }
+
           &:before {
             margin-left: -1.5rem;
           }
         }
+
         .partner {
           padding-top: 1rem;
           background: url('/_assets/img/landing/footer-container.svg') no-repeat;
@@ -148,9 +144,9 @@ export function LandingDE({ data }: LandingDEProps) {
       `}</style>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <LandingJsonLd />
-      <HeaderNew />
+      <Header />
       <main className="text-truegray-700">
-        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
+        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
             <WelcomeMessage />
           </p>
@@ -166,7 +162,7 @@ export function LandingDE({ data }: LandingDEProps) {
               lernen{', ' + kratosUsername} ?
             </span>
           </h1>
-          <div className="lg:hidden mt-10 mb-8">
+          <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto">
             <Quickbar />
           </div>
           <p className="text-3xl leading-cozy">
