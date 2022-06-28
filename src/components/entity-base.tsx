@@ -59,7 +59,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
           <main>{children}</main>
 
           {page.kind === 'single-entity' &&
-          page.entityData.typename !== 'page' ? (
+          page.entityData.typename !== UuidType.Page ? (
             <DonationsBanner id={entityId} />
           ) : null}
 

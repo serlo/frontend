@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 
 import { Lazy } from './lazy'
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
 
-// only instance: de
-
-const chance = 0.2 // 20%
+const chance = isProduction ? 0.2 : 0 // 20% or always while developing
 
 const banners = [
   {
@@ -17,11 +17,10 @@ const banners = [
       <>
         Serlo ist die einzige Lernplattform Deutschlands, die kostenlos ist. Wir
         finanzieren uns rein über Spenden und Förderer. Unterstütze auch du uns!{' '}
-        <p className="italic">Gemeinsam mit Dir gestalten wir Bildung neu.</p>
       </>
     ),
-    imageSrc:
-      'https://assets.serlo.org/6234abb319002_cde9403895bd5ad35fe739ca964535a0b79908d7.jpg',
+    call: 'Gemeinsam mit Dir gestalten wir Bildung neu.',
+    imageSrc: '/_assets/img/donations/donation-bird.svg',
   },
 ]
 
@@ -34,7 +33,7 @@ export function DonationsBanner({ id }: { id: number }) {
   const { lang } = useInstanceData()
 
   useEffect(() => {
-    if (lang !== 'de') return
+    if (lang !== Instance.De) return
     if (Math.random() < chance) return
     setBanner(banners[Math.floor(Math.random() * banners.length)])
 
@@ -44,31 +43,60 @@ export function DonationsBanner({ id }: { id: number }) {
     // rerole on entity change
   }, [setBanner, id, lang])
 
-  if (lang !== 'de' || !banner) return null
-
+  if (lang !== Instance.De || !banner) return null
   return (
     <Lazy slim>
-      <div className="h-64 py-6">
+      <div
+        onLoad={() => {
+          console.log('loaded now!')
+        }}
+      >
+        <style jsx>{`
+          @media (min-width: 800px) {
+            aside {
+              left: calc(-50vw + 50% - 51px);
+            }
+          }
+          @media (min-width: 1024px) {
+            aside {
+              left: calc(-50vw + 50%);
+            }
+          }
+          @media (min-width: 1216px) {
+            button {
+              zoom: 1.15;
+              position: absolute;
+            }
+          }
+        `}</style>
         <aside
+          style={{ left: 'calc(-50vw + 50%)' }}
           className={clsx(
-            'absolute left-0 right-0 h-64',
-            'sm:flex sm:items-stretch sm:justify-between',
-            'px-side pt-8 pb-6 -ml-2.5',
-            'text-2xl font-bold',
-            'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]'
+            'w-[100vw] relative py-6 px-side text-center text-xl font-bold',
+            'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
+            'sm:flex sm:justify-between sm:text-left sm:mx-0 sm:px-0',
+            'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16'
           )}
         >
-          <img src={banner.imageSrc} className="rounded-full" />
-          <h1>{banner.text}</h1>
-          <button
-            className="serlo-button-green"
-            onClick={() => {
-              submitEvent(`spenden-${banner.id}`)
-              void router.push('/spenden')
-            }}
-          >
-            Jetzt Spenden
-          </button>
+          <img
+            src={banner.imageSrc}
+            className="px-16 rounded-full -mb-5 max-w-[20rem] mx-auto sm:h-fit md:mr-0"
+          />
+          <div className="max-w-2xl mx-auto px-side sm:mt-5 md:ml-0">
+            <p className="">{banner.text}</p>
+            <p className="my-5 font-handwritten text-[1.32em] text-brand">
+              {banner.call}
+              <button
+                className="serlo-button-green mt-6 block mx-auto sm:ml-0 lg:inline-block lg:ml-4 lg:mt-0"
+                onClick={() => {
+                  submitEvent(`spenden-${banner.id}`)
+                  void router.push('/spenden')
+                }}
+              >
+                Jetzt Spenden
+              </button>
+            </p>
+          </div>
         </aside>
       </div>
     </Lazy>
