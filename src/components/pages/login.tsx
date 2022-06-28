@@ -53,8 +53,8 @@ export function Login() {
         .then(({ data: body }) => {
           window.location.href = `${body.redirect_to}`
         })
-        .catch((e) => {
-          throw Error(e)
+        .catch((e: Error) => {
+          throw e
         })
       return
     }
@@ -124,7 +124,9 @@ export function Login() {
         .then(async ({ data }) => {
           const { session } = data
 
-          const subject = session.identity.metadata_public.legacy_id
+          const subject = (
+            session.identity.metadata_public as { legacy_id: number }
+          ).legacy_id
 
           const acceptLoginRequest: AcceptLoginRequest =
             {} as AcceptLoginRequest
@@ -141,12 +143,12 @@ export function Login() {
               window.location.href = `${body.redirect_to}`
               return
             })
-            .catch((e) => {
-              throw Error(e)
+            .catch((e: Error) => {
+              throw e
             })
         })
-        .catch((e) => {
-          throw Error(e)
+        .catch((e: Error) => {
+          throw e
         })
 
       if (flow?.return_to) {

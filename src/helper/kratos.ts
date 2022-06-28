@@ -18,15 +18,17 @@ export const kratos = new V0alpha2Api(
   })
 )
 
-const baseOptions: any = {}
-
-if (process.env.MOCK_TLS_TERMINATION) {
-  baseOptions.headers = { 'X-Forwarded-Proto': 'https' }
-}
-
 export const hydra = new AdminApi(
   new HydraConfig({
     basePath: 'http://localhost:4445',
-    baseOptions,
+    ...(process.env.MOCK_TLS_TERMINATION
+      ? {
+          baseOptions: {
+            headers: process.env.MOCK_TLS_TERMINATION
+              ? 'X-Forwarded-Proto'
+              : 'https',
+          },
+        }
+      : {}),
   })
 )

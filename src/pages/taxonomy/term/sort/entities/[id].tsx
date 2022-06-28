@@ -261,6 +261,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
 
   function renderUpdateButton() {
     return (
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       <button className="mt-12 serlo-button-blue" onClick={onSave}>
         {loggedInStrings.saveButtonText}
       </button>

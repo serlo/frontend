@@ -94,6 +94,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
     return (
       <div className="py-3 border-b-2 flex">
         <button
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onDelete(term.id)}
           className="serlo-button-blue-transparent mr-2 text-brand-lighter"
         >
@@ -162,6 +163,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
       <>
         ({getTranslatedType(strings, taxType)}){' '}
         <button
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onAdd(taxId)}
           className="'text-base serlo-button-light ml-3"
         >

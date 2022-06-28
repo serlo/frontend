@@ -87,7 +87,7 @@ export function Node(props: NodeProps) {
           <button
             name={attributes.name}
             onClick={(e) => {
-              void onSubmit(e, attributes.value)
+              void onSubmit(e, (attributes as { value: string }).value)
             }}
             value={attributes.value || ''}
             disabled={attributes.disabled || disabled}

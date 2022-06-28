@@ -223,6 +223,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
         <button
           className={buttonClass}
           disabled={!buttonsActive}
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={() => onButtonClick(isMove)}
         >
           <FaIcon icon={isMove ? faArrowRight : faCopy} /> {buttonText(isMove)}
