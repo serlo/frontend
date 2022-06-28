@@ -1,4 +1,3 @@
-import { edgeConfig } from '@ory/integrations'
 import { Configuration as KratosConfig, V0alpha2Api } from '@ory/kratos-client'
 import { AdminApi, Configuration as HydraConfig } from '@oryd/hydra-client'
 // export const kratos = new V0alpha2Api(

@@ -1,3 +1,4 @@
+import { Session } from '@ory/kratos-client'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -20,17 +21,13 @@ export interface LandingDEProps {
 
 export function LandingDE({ data }: LandingDEProps) {
   // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/index.tsx
-  const [session, setSession] = useState<string>(
-    'No valid session was found.\nPlease sign in to receive one.'
-  )
-  const [hasSession, setHasSession] = useState<boolean>(false)
+  const [session, setSession] = useState<Session | null>(null)
   const subjectsData = data.subjectsData
   useEffect(() => {
     kratos
       .toSession()
       .then(({ data }) => {
         setSession(data)
-        setHasSession(true)
       })
       .catch((err) => {
         return Promise.reject(err)
@@ -40,7 +37,7 @@ export function LandingDE({ data }: LandingDEProps) {
   // console.log(session)
 
   let kratosUsername = ''
-  if (hasSession) {
+  if (session) {
     kratosUsername = session.identity.traits.username
   }
   return (

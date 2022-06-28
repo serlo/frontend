@@ -1,5 +1,6 @@
 import {
   SelfServiceLoginFlow,
+  Session,
   SubmitSelfServiceLoginFlowBody,
 } from '@ory/kratos-client'
 import { AcceptLoginRequest } from '@oryd/hydra-client'
@@ -8,15 +9,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Flow, handleFlowError } from '@/components/auth/flow'
-import { kratos, hydra } from '@/helper/kratos'
+import { hydra, kratos } from '@/helper/kratos'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
-  const [session, setSession] = useState<string>(
-    'No valid session was found.\nPlease sign in to receive one.'
-  )
+  const [session, setSession] = useState<Session | null>()
   const router = useRouter()
 
   const {
@@ -37,15 +36,16 @@ export function Login() {
       window.location.href = `http://localhost:3000/api/auth/login`
     }
 
-    if (consent_challenge) {
-      const acceptConsentRequest = {}
+    // TODO: session is never set
+    if (consent_challenge && session) {
       // TODO: pass values dynamically that are received
-      acceptConsentRequest.grant_scope = ['openid']
-      acceptConsentRequest.grant_access_token_audience = ['']
-
-      acceptConsentRequest.session = {
-        access_token: session.identity,
-        id_token: session.identity,
+      const acceptConsentRequest = {
+        grant_scope: ['open_id'],
+        grant_access_token_audience: [''],
+        session: {
+          access_token: session.identity,
+          id_token: session.identity,
+        },
       }
 
       hydra
@@ -161,7 +161,7 @@ export function Login() {
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {
-          setFlow(err.response?.data)
+          setFlow(err.response?.data as SelfServiceLoginFlow)
           return
         }
 
