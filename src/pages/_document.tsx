@@ -129,6 +129,7 @@ export default class MyDocument extends Document {
             <img src="https://sa.serlo.org/noscript.gif" alt="" />
             <style>{`.superspecial-noscript-hidden { display: none; }`}</style>
           </noscript>
+          <script src="/_assets/iframeResizer.contentWindow.min.js" />
         </body>
       </Html>
     )
