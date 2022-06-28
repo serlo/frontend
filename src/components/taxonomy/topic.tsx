@@ -1,6 +1,5 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-import { TaxonomyTermType } from '@serlo/api'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
@@ -12,7 +11,8 @@ import { LicenseNotice } from '@/components/content/license/license-notice'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { TaxonomyData } from '@/data-types'
+import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
@@ -51,7 +51,11 @@ export function Topic({ data }: TopicProps) {
         {isTopic && <TopicCategories data={data} full />}
 
         {isExerciseFolder && data.events && (
-          <TopicCategories data={data} categories={['events']} full />
+          <TopicCategories
+            data={data}
+            categories={[TopicCategoryType.events]}
+            full
+          />
         )}
       </div>
 
@@ -126,7 +130,7 @@ export function Topic({ data }: TopicProps) {
     return (
       <UserTools
         onShare={() => setModalOpen(true)}
-        data={{ type: 'TaxonomyTerm', ...data }}
+        data={{ type: UuidType.TaxonomyTerm, ...data }}
         id={data.id}
         aboveContent={setting?.aboveContent}
       />

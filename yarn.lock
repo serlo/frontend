@@ -3777,7 +3777,6 @@ __metadata:
     "@ory/integrations": ^0.1.0
     "@ory/kratos-client": ^0.10.1
     "@oryd/hydra-client": ^1.9.0-alpha.3
-    "@serlo/api": ^0.41.0
     "@serlo/authorization": ^0.41.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
     "@serlo/markdown": Entkenntnis/tmp-serlo-markdown

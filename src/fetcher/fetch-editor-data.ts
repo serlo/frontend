@@ -10,7 +10,7 @@ import { dataQuery } from './query'
 import { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
 import { endpoint } from '@/api/endpoint'
-import { BreadcrumbsData } from '@/data-types'
+import { BreadcrumbsData, UuidType, UuidWithRevType } from '@/data-types'
 import {
   editorResponseToState,
   isError,
@@ -72,8 +72,14 @@ export async function fetchEditorData(
       (entry) => entry.url == '/community/106082/sandkasten'
     ).length > 0
 
-  const noReviewTypes = ['TaxonomyTerm', 'Page', 'User']
-  const typeNeedsReview = !noReviewTypes.includes(data.__typename)
+  const noReviewTypes: UuidWithRevType[] = [
+    UuidType.TaxonomyTerm,
+    UuidType.Page,
+    UuidType.User,
+  ]
+  const typeNeedsReview = !noReviewTypes.includes(
+    data.__typename as UuidWithRevType
+  )
   const needsReview = !isSandbox && typeNeedsReview
 
   if (isError(result)) {

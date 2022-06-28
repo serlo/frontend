@@ -14,6 +14,7 @@ import { FaIcon } from '../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { theme } from '@/theme'
 
@@ -110,7 +111,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     }
   }
 
-  const lmsData = lang === 'de' ? lmsShare : [lmsShare[0]] //mebis only in de
+  const lmsData = lang === Instance.De ? lmsShare : [lmsShare[0]] //mebis only in de
   const pdfData = [getPdfData(), getPdfData(true)]
 
   return (

@@ -1,4 +1,3 @@
-import { CheckoutRevisionInput, RejectRevisionInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
@@ -7,6 +6,10 @@ import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import {
+  CheckoutRevisionInput,
+  RejectRevisionInput,
+} from '@/fetcher/graphql-types/operations'
 
 export type RevisionMutationMode = 'checkout' | 'reject'
 

@@ -31,7 +31,7 @@ export function Events({
     objectId,
     perPage,
     oldest,
-    lang as Instance
+    lang
   )
 
   return (

@@ -18,6 +18,8 @@ import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { ExerciseInlineType, UuidRevType, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
@@ -123,7 +125,7 @@ export function UserTools({
       return null
     }
 
-    if (data.type === 'Profile') return renderProfileButtons()
+    if (data.type === UuidType.User) return renderProfileButtons()
 
     return (
       <>
@@ -136,9 +138,12 @@ export function UserTools({
   }
 
   function renderEditOrInvite() {
-    const showInvite = !['Page', 'Event', 'TaxonomyTerm', 'User'].includes(
-      data.type
-    )
+    const showInvite = ![
+      UuidType.Page,
+      UuidType.Event,
+      UuidType.TaxonomyTerm,
+      UuidType.User,
+    ].includes(data.type as UuidType)
 
     if (!auth.current && showInvite) return renderInvite()
 
@@ -171,10 +176,11 @@ export function UserTools({
     const { type, id } = data
     const url = getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
 
-    if (type.startsWith('Page')) {
-      return canDo(Uuid.create('PageRevision')) ? url : undefined
+    if (type === UuidType.Page || type === UuidRevType.Page) {
+      return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined
     }
-    if (type == 'TaxonomyTerm') return canDo(TaxonomyTerm.set) ? url : undefined
+    if (type == UuidType.TaxonomyTerm)
+      return canDo(TaxonomyTerm.set) ? url : undefined
     return url
   }
 
@@ -200,7 +206,7 @@ export function UserTools({
         <Link href={getHistoryUrl(data.id)} className={buttonClassName()}>
           {renderInner(strings.pageTitles.revisionHistory, faList)}
         </Link>
-        {lang === 'de' && (
+        {lang === Instance.De && (
           <Link
             href="/community/140473/hilfeseiten-für-reviewer"
             className={buttonClassName()}
@@ -224,17 +230,17 @@ export function UserTools({
 
   function renderExtraTools() {
     if (!loggedInComponents || !loggedInData) return null // safeguard
-    const supportedTypes = [
-      'Page',
-      'Article',
-      'Video',
-      'Applet',
-      'Event',
-      'CoursePage',
-      'TaxonomyTerm',
-      '_ExerciseInline',
-      '_ExerciseGroupInline',
-      '_SolutionInline',
+    const supportedTypes: AuthorToolsData['type'][] = [
+      UuidType.Page,
+      UuidType.Article,
+      UuidType.Video,
+      UuidType.Applet,
+      UuidType.Event,
+      UuidType.CoursePage,
+      UuidType.TaxonomyTerm,
+      ExerciseInlineType.Exercise,
+      ExerciseInlineType.ExerciseGroup,
+      ExerciseInlineType.Solution,
     ]
     if (!supportedTypes.includes(data.type)) return null
 

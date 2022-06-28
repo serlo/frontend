@@ -3,6 +3,7 @@ import { ScriptProps } from 'next/script'
 import { useEffect } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 const Script = dynamic<ScriptProps>(() =>
   import('next/script').then((mod) => mod.default)
@@ -50,7 +51,7 @@ export function NewsletterPopup() {
 
   const shouldLoad =
     typeof window !== 'undefined' &&
-    lang === 'de' &&
+    lang === Instance.De &&
     pages.includes(window.location.pathname)
 
   useEffect(() => {

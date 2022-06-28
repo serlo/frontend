@@ -18,7 +18,7 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
 import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { LoggedInData } from '@/data-types'
+import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
   type: string,
@@ -30,7 +30,7 @@ export function getPluginRegistry(
     'text-exercise',
     'text-exercise-group',
   ].includes(type)
-  const isPage = type === 'Page'
+  const isPage = type === UuidType.Page
 
   const registry = [
     {

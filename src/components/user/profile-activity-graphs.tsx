@@ -1,8 +1,8 @@
-import { UserActivityByType } from '@serlo/api'
 import clsx from 'clsx'
 
 import { ProfileActivityGraph } from '@/components/user/profile-activity-graph'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UserActivityByType } from '@/fetcher/graphql-types/operations'
 
 interface ProfileActivityGraphsProps {
   values: UserActivityByType
