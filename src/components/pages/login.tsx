@@ -133,7 +133,7 @@ export function Login() {
           acceptLoginRequest.subject = String(subject)
           acceptLoginRequest.context = session
 
-          // BIG FIXME: cors is failing, no Access-Control-Allow-Origin header comming from server (it worked only with an extension that ignores cors)
+          // BIG FIXME: cors is failing, no Access-Control-Allow-Origin header coming from server (it worked only with an extension that ignores cors)
           // We should have configured it wrongly.
           await hydra
             .acceptLoginRequest(String(login_challenge), acceptLoginRequest)
