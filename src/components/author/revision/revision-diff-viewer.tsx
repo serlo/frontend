@@ -3,19 +3,20 @@ import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 
-type DiffViewerTypes =
-  | 'content'
-  | 'title'
-  | 'metaTitle'
-  | 'metaDescription'
-  | 'url'
+export enum DiffViewerMode {
+  content = 'content',
+  title = 'title',
+  metaTitle = 'metaTitle',
+  metaDescription = 'metaDescription',
+  url = 'url',
+}
 
 export interface RevisionDiffViewerProps {
   data: RevisionData
-  type: DiffViewerTypes
+  mode: DiffViewerMode
 }
 
-export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
+export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
   const { strings } = useInstanceData()
   return (
     <>
@@ -37,7 +38,7 @@ export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
           }
         }
       `}</style>
-      {type == 'content' ? (
+      {mode == DiffViewerMode.content ? (
         <div className="wrapper-split">
           <ReactDiffViewer
             leftTitle={strings.revisions.currentVersion}
@@ -52,8 +53,8 @@ export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
       ) : (
         <div className="wrapper-single">
           <ReactDiffViewer
-            oldValue={data.currentRevision[type]}
-            newValue={data.thisRevision[type]}
+            oldValue={data.currentRevision[mode]}
+            newValue={data.thisRevision[mode]}
             splitView={false}
             hideLineNumbers
             showDiffOnly={false}

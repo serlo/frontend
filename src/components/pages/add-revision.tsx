@@ -9,6 +9,7 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { shouldUseFeature } from '../user/profile-experimental'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -89,18 +90,18 @@ export function AddRevision({
     )
 
   const supportedTypes = [
-    'Applet',
-    'Article',
-    'Course',
-    'CoursePage',
-    'Event',
-    'Solution',
-    'Video',
-    'Exercise',
-    'ExerciseGroup',
-    'GroupedExercise',
-    'Page',
-    'TaxonomyTerm',
+    UuidType.Applet,
+    UuidType.Article,
+    UuidType.Course,
+    UuidType.CoursePage,
+    UuidType.Event,
+    UuidType.Solution,
+    UuidType.Video,
+    UuidType.Exercise,
+    UuidType.ExerciseGroup,
+    UuidType.GroupedExercise,
+    UuidType.Page,
+    UuidType.TaxonomyTerm,
   ]
 
   return (
@@ -129,7 +130,7 @@ export function AddRevision({
           ) => {
             if (
               shouldUseFeature('addRevisionMutation') &&
-              supportedTypes.includes(type)
+              supportedTypes.includes(type as UuidType)
             ) {
               // eslint-disable-next-line no-console
               console.log('using api endpoint to save')
@@ -146,10 +147,10 @@ export function AddRevision({
               const _needsReview = skipReview ? false : needsReview
 
               const success =
-                type === 'Page'
+                type === UuidType.Page
                   ? //@ts-expect-error resolve when old code is removed
                     await addPageRevision(dataWithType)
-                  : type === 'TaxonomyTerm'
+                  : type === UuidType.TaxonomyTerm
                   ? await taxonomyCreateOrUpdateMutation(
                       dataWithType as TaxonomyCreateOrUpdateMutationData
                     )

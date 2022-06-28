@@ -1,5 +1,6 @@
 //@ts-nocheck
 
+import { FrontendNodeType } from '@/frontend-node-types'
 import { convert } from '@/schema/convert-edtr-io-state'
 
 describe('returns an empty array when unsupported values are given', () => {
@@ -585,7 +586,7 @@ describe('text types', () => {
     })
     expect(result).toEqual([
       {
-        type: 'inline-math',
+        type: FrontendNodeType.InlineMath,
         formula: '\\tan^{-1}',
         formulaSource: '\\tan^{-1}',
       },
@@ -725,7 +726,7 @@ describe('text types', () => {
         type: 'list-item-child',
         children: [
           {
-            type: 'inline-math',
+            type: FrontendNodeType.InlineMath,
             formula: '\\tan^{-1}',
           },
         ],

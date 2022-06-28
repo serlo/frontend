@@ -1,4 +1,3 @@
-import { UuidSetStateInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { csrReload } from '../csr-reload'
@@ -6,6 +5,7 @@ import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidSetStateInput } from '@/fetcher/graphql-types/operations'
 
 export function useSetUuidStateMutation() {
   const auth = useAuthentication()

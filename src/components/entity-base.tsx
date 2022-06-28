@@ -12,7 +12,12 @@ import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { SecondaryMenu } from './navigation/secondary-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
-import { EntityPageBase, SingleEntityPage, TaxonomyPage } from '@/data-types'
+import {
+  EntityPageBase,
+  SingleEntityPage,
+  TaxonomyPage,
+  UuidType,
+} from '@/data-types'
 
 export interface EntityBaseProps {
   children: ReactNode
@@ -29,8 +34,8 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const noComments =
     page.kind === 'single-entity' &&
-    (page.entityData.typename === 'Page' ||
-      page.entityData.typename === 'GroupedExercise')
+    (page.entityData.typename === UuidType.Page ||
+      page.entityData.typename === UuidType.GroupedExercise)
 
   return (
     <>
@@ -85,7 +90,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         }
         asBackButton={
           page.kind == 'single-entity' &&
-          page.entityData.typename == 'GroupedExercise'
+          page.entityData.typename == UuidType.GroupedExercise
         }
       />
     )

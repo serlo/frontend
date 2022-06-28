@@ -1,14 +1,16 @@
-import { Instance, TaxonomyTermType } from '@serlo/api'
-
 import { MainUuidType } from './query-types'
-import { SecondaryMenuData } from '@/data-types'
+import { SecondaryMenuData, UuidType } from '@/data-types'
+import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export function createSecondaryMenu(
   uuid: MainUuidType,
   instance: Instance
 ): SecondaryMenuData['entries'] | undefined {
-  if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
+  if (
+    uuid.__typename !== UuidType.Page &&
+    uuid.__typename !== UuidType.TaxonomyTerm
+  )
     return undefined
 
   const { secondaryMenus } = getInstanceDataByLang(instance)
@@ -23,13 +25,13 @@ export function createSecondaryMenu(
   function getMenu() {
     if (!secondaryMenus) return undefined
 
-    if (uuid.__typename === 'TaxonomyTerm') {
+    if (uuid.__typename === UuidType.TaxonomyTerm) {
       if (uuid.type === TaxonomyTermType.ExerciseFolder) return undefined
 
       return findMenuByRootId(uuid.navigation?.path.nodes[0].id ?? undefined)
     }
 
-    if (uuid.__typename === 'Page') {
+    if (uuid.__typename === UuidType.Page) {
       const byRootId = findMenuByRootId(uuid.id)
       if (byRootId) return byRootId
 

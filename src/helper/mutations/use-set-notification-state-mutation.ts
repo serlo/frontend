@@ -1,10 +1,10 @@
-import { NotificationSetStateInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { useSWRConfig, mutate } from 'swr'
 
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { NotificationSetStateInput } from '@/fetcher/graphql-types/operations'
 
 export function useSetNotificationStateMutation() {
   const auth = useAuthentication()

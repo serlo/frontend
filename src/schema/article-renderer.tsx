@@ -24,9 +24,9 @@ import { SerloTable } from '@/components/content/serlo-table'
 import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
-import type { FrontendContentNode } from '@/data-types'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
 import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 
 export type NodePath = (number | string)[]
 
@@ -198,7 +198,7 @@ function renderElement({
   const isRevisionView =
     typeof path[0] === 'string' && path[0].startsWith('revision')
 
-  if (element.type === 'a') {
+  if (element.type === FrontendNodeType.A) {
     const isOnProfile =
       path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
@@ -211,7 +211,7 @@ function renderElement({
     )
   }
 
-  if (element.type === 'article') {
+  if (element.type === FrontendNodeType.Article) {
     return (
       <Article
         {...element}
@@ -220,10 +220,10 @@ function renderElement({
     )
   }
 
-  if (element.type === 'inline-math') {
+  if (element.type === FrontendNodeType.InlineMath) {
     return <Math formula={element.formula} />
   }
-  if (element.type === 'math') {
+  if (element.type === FrontendNodeType.Math) {
     const nowrap = /\\begin *{(array|aligned)}/.test(element.formula)
     const addDisplaystile = !/\\displaystyle[^a-z]/.test(element.formula)
     return (
@@ -246,16 +246,16 @@ function renderElement({
       </div>
     )
   }
-  if (element.type === 'p') {
+  if (element.type === FrontendNodeType.P) {
     return <p className="serlo-p">{children}</p>
   }
-  if (element.type === 'slate-p') {
+  if (element.type === FrontendNodeType.SlateP) {
     return <p className="serlo-p mb-0 slate-p min-h-[1.33em]">{children}</p>
   }
-  if (element.type === 'slate-container') {
+  if (element.type === FrontendNodeType.SlateContainer) {
     return <div className="mb-block slate-container">{children}</div>
   }
-  if (element.type === 'h') {
+  if (element.type === FrontendNodeType.H) {
     const classNames = {
       1: 'serlo-h1',
       2: 'serlo-h2',
@@ -272,7 +272,7 @@ function renderElement({
       children
     )
   }
-  if (element.type === 'img') {
+  if (element.type === FrontendNodeType.Img) {
     return (
       <Image
         element={element}
@@ -286,26 +286,26 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'spoiler-container') {
+  if (element.type === FrontendNodeType.SpoilerContainer) {
     if (!Array.isArray(children)) return null
     return <Spoiler title={children[0]} body={children[1]} path={path} />
   }
-  if (element.type === 'spoiler-body') {
+  if (element.type === FrontendNodeType.SpoilerBody) {
     return <div className="serlo-spoiler-body">{children}</div>
   }
-  if (element.type === 'spoiler-title') {
+  if (element.type === FrontendNodeType.SpoilerTitle) {
     return children
   }
-  if (element.type === 'ul') {
+  if (element.type === FrontendNodeType.Ul) {
     return <ul className="serlo-ul">{children}</ul>
   }
-  if (element.type === 'ol') {
+  if (element.type === FrontendNodeType.Ol) {
     return <ol className="serlo-ol">{children}</ol>
   }
-  if (element.type === 'li') {
+  if (element.type === FrontendNodeType.Li) {
     return <li>{children}</li>
   }
-  if (element.type === 'table') {
+  if (element.type === FrontendNodeType.Table) {
     return (
       <div className="mb-block max-w-[100vw] overflow-auto">
         <table className="serlo-table">
@@ -314,7 +314,7 @@ function renderElement({
       </div>
     )
   }
-  if (element.type === 'serlo-table') {
+  if (element.type === FrontendNodeType.SerloTable) {
     return (
       <SerloTable
         {...element}
@@ -322,16 +322,16 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'tr') {
+  if (element.type === FrontendNodeType.Tr) {
     return <tr>{children}</tr>
   }
-  if (element.type === 'th') {
+  if (element.type === FrontendNodeType.Th) {
     return <th className="serlo-th">{children}</th>
   }
-  if (element.type === 'td') {
+  if (element.type === FrontendNodeType.Td) {
     return <td className="serlo-td">{children}</td>
   }
-  if (element.type === 'multimedia') {
+  if (element.type === FrontendNodeType.Multimedia) {
     return (
       <Multimedia
         {...element}
@@ -339,23 +339,23 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'row') {
+  if (element.type === FrontendNodeType.Row) {
     return <div className="flex flex-col mobile:flex-row">{children}</div>
   }
-  if (element.type === 'col') {
+  if (element.type === FrontendNodeType.Col) {
     return (
       <div style={{ flexGrow: element.size, flexBasis: 0, flexShrink: 1 }}>
         {children}
       </div>
     )
   }
-  if (element.type === 'important') {
+  if (element.type === FrontendNodeType.Important) {
     return <div className="serlo-important">{children}</div>
   }
-  if (element.type === 'blockquote') {
+  if (element.type === FrontendNodeType.Blockquote) {
     return <blockquote className="serlo-blockquote">{children}</blockquote>
   }
-  if (element.type === 'box') {
+  if (element.type === FrontendNodeType.Box) {
     return (
       <Box
         {...element}
@@ -363,14 +363,14 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'geogebra') {
+  if (element.type === FrontendNodeType.Geogebra) {
     return (
       <Lazy noPrint>
         <Geogebra id={element.id} path={path} />
       </Lazy>
     )
   }
-  if (element.type === 'anchor') {
+  if (element.type === FrontendNodeType.Anchor) {
     const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
 
     if (match) {
@@ -385,7 +385,7 @@ function renderElement({
       </>
     )
   }
-  if (element.type === 'injection') {
+  if (element.type === FrontendNodeType.Injection) {
     return (
       <>
         {element.href ? (
@@ -400,7 +400,7 @@ function renderElement({
       </>
     )
   }
-  if (element.type === 'exercise') {
+  if (element.type === FrontendNodeType.Exercise) {
     return (
       <Exercise
         node={element}
@@ -409,7 +409,7 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'exercise-group') {
+  if (element.type === FrontendNodeType.ExerciseGroup) {
     return (
       <ExerciseGroup
         license={
@@ -427,7 +427,7 @@ function renderElement({
       </ExerciseGroup>
     )
   }
-  if (element.type === 'solution') {
+  if (element.type === FrontendNodeType.Solution) {
     return (
       <Solution
         node={element.solution}
@@ -435,14 +435,14 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'video') {
+  if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
         <Video src={element.src} path={path} license={element.license} />
       </Lazy>
     )
   }
-  if (element.type === 'equations') {
+  if (element.type === FrontendNodeType.Equations) {
     return (
       <Equations
         steps={element.steps}
@@ -452,7 +452,7 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'code') {
+  if (element.type === FrontendNodeType.Code) {
     return (
       <>
         <Code
@@ -464,7 +464,7 @@ function renderElement({
       </>
     )
   }
-  if (element.type === 'pageLayout') {
+  if (element.type === FrontendNodeType.PageLayout) {
     return (
       <PageLayoutAdapter
         {...element}
@@ -472,6 +472,7 @@ function renderElement({
       />
     )
   }
-  if (element.type === 'pageTeam') return <PageTeamAdapter {...element} />
+  if (element.type === FrontendNodeType.PageTeam)
+    return <PageTeamAdapter {...element} />
   return null
 }

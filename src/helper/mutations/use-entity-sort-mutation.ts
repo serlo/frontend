@@ -1,9 +1,9 @@
-import { EntitySortInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EntitySortInput } from '@/fetcher/graphql-types/operations'
 
 export function useEntitySortMutation() {
   const auth = useAuthentication()

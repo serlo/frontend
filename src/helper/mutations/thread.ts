@@ -1,10 +1,3 @@
-import {
-  ThreadCreateCommentInput,
-  ThreadCreateThreadInput,
-  ThreadSetCommentStateInput,
-  ThreadSetThreadArchivedInput,
-  ThreadSetThreadStateInput,
-} from '@serlo/api'
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { mutate, useSWRConfig } from 'swr'
@@ -13,6 +6,13 @@ import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import {
+  ThreadCreateCommentInput,
+  ThreadCreateThreadInput,
+  ThreadSetCommentStateInput,
+  ThreadSetThreadArchivedInput,
+  ThreadSetThreadStateInput,
+} from '@/fetcher/graphql-types/operations'
 
 export function useThreadArchivedMutation() {
   const auth = useAuthentication()
