@@ -27,7 +27,7 @@ if (process.env.MOCK_TLS_TERMINATION) {
 
 export const hydra = new AdminApi(
   new HydraConfig({
-    basePath: 'http://127.0.0.1:4445',
+    basePath: 'http://localhost:4445',
     baseOptions,
   })
 )
