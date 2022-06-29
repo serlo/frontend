@@ -44,7 +44,7 @@ function Content(props: EditorPageData) {
           },
           content: {
             plugin: 'rows',
-            state: node.state,
+            state: [node.state],
           },
           type: node.plugin === 'blockquote' ? 'quote' : 'blank',
           anchorId: generatedBoxId(),
