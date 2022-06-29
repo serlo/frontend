@@ -84,7 +84,6 @@ export function DonationsBanner({ id }: { id: number }) {
           })
           if (bannerRef.current) observer.observe(bannerRef.current)
         }}
-        style={{ left: 'calc(-50vw + 50%)' }}
         className={clsx(
           'w-[100vw] relative py-6 px-side text-center text-xl font-bold',
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
@@ -94,9 +93,9 @@ export function DonationsBanner({ id }: { id: number }) {
       >
         <img
           src={banner.imageSrc}
-          className="px-16 rounded-full -mb-5 max-w-[20rem] mx-auto sm:h-fit md:mr-0"
+          className="px-16 rounded-full -mb-5 max-w-[22rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[15rem] sm:px-3"
         />
-        <div className="max-w-2xl mx-auto px-side sm:mt-5 md:ml-0">
+        <div className="max-w-2xl mx-auto px-side sm:mt-5 sm:ml-0">
           <p className="">{banner.text}</p>
           <p className="my-5 font-handwritten text-[1.32em] text-brand">
             {banner.call}
@@ -113,9 +112,12 @@ export function DonationsBanner({ id }: { id: number }) {
         </div>
       </aside>
       <style jsx>{`
+        aside {
+          left: calc(-50vw + 50%);
+        }
         @media (min-width: 800px) {
           aside {
-            left: calc(-50vw + 50% - 51px);
+            left: -51px;
           }
         }
         @media (min-width: 1024px) {
