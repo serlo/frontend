@@ -15,7 +15,7 @@
     "build": "next build",
     "dev": "next",
     "check:all": "scripts/check-all.sh",
-    "format": "npm-run-all --continue-on-error format:*",
+    "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
     "lint": "npm-run-all lint:tsc lint:eslint lint:prettier",
