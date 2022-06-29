@@ -69,6 +69,7 @@ services:
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_ENABLED=public,pairwise
       - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
+      - SERVE_ADMIN_CORS_ENABLED=true # remove this value when hydra is handled in server side
     networks:
       - intranet
 networks:

@@ -37,7 +37,7 @@ export function LandingDE({ data }: LandingDEProps) {
   // console.log(session)
 
   const kratosUsername =
-    (session?.identity?.traits as { username: string }).username ?? ''
+    (session?.identity?.traits as { username: string })?.username ?? ''
 
   return (
     <>

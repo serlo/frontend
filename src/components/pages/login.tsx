@@ -160,8 +160,6 @@ export function Login() {
           acceptLoginRequest.subject = String(subject)
           acceptLoginRequest.context = session
 
-          // BIG FIXME: cors is failing, no Access-Control-Allow-Origin header coming from server (it worked only with an extension that ignores cors)
-          // We should have configured it wrongly.
           await hydra
             .acceptLoginRequest(String(login_challenge), acceptLoginRequest)
             .then(({ data: body }) => {
@@ -209,7 +207,7 @@ export function Login() {
         ? 'http://localhost:3001/kratos'
         : `https://api.${serloDomain}/kratos`
 
-    // FIXME: again cors problem
+    // FIXME: api has to enable cors
     await fetch(`${apiKratosEndpoint}/register`, {
       method: 'POST',
       headers: {
