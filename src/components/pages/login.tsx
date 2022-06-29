@@ -10,12 +10,19 @@ import { useEffect, useState } from 'react'
 
 import { Flow, handleFlowError } from '@/components/auth/flow'
 import { hydra, kratos } from '@/helper/kratos'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
 
+// TODO: remove Hydra, it should be a server side communication
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const [session] = useState<Session | null>()
+  const [state, setState] = useState({
+    email: '',
+    username: '',
+    password: '',
+  })
   const router = useRouter()
 
   const {
@@ -36,9 +43,7 @@ export function Login() {
       window.location.href = `http://localhost:3000/api/auth/login`
     }
 
-    // TODO: session is never set
     if (consent_challenge && session) {
-      // TODO: pass values dynamically that are received
       const acceptConsentRequest = {
         grant_scope: ['open_id'],
         grant_access_token_audience: [''],
@@ -91,29 +96,49 @@ export function Login() {
         }
         return 'Sign In'
       })()}
-      {/* TODO: instead of making it generic, we are probably better of hard-coding the form here */}
-      {flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}
-      {aal || refresh ? (
-        <div>Log out</div>
-      ) : (
-        <>
-          {/*<div>*/}
-          {/*  <Link href="/registration" passHref>*/}
-          {/*    <div>Create account</div>*/}
-          {/*  </Link>*/}
-          {/*</div>*/}
-          {/*<div>*/}
+      {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
+      {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
+      {aal || refresh ? <div>Log out</div> : ''}
+      <form onSubmit={onRegister}>
+        <label htmlFor="username">username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          onChange={onRegisterFormChange}
+          value={state.username}
+        />
+        <br />
+        <label htmlFor="email">email:</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          onChange={onRegisterFormChange}
+          value={state.email}
+        />
+        <br />
+        <label htmlFor="password">password:</label>
+        <input
+          type="text"
+          id="password"
+          name="password"
+          onChange={onRegisterFormChange}
+          value={state.password}
+        />
+        <br />
+        <input type="submit" value="Create account" />
+      </form>
+      {/*<div>
           {/*  <Link href="/recovery" passHref>*/}
-          {/*    <div>Recover your account</div>*/}
-          {/*  </Link>*/}
-          {/*</div>*/}
-        </>
-      )}
+      {/*    <div>Recover your account</div>*/}
+      {/*  </Link>*/}
+      {/*</div>*/}
     </>
   )
 
-  async function onSubmit(values: SubmitSelfServiceLoginFlowBody) {
-    console.log('submitting values', values)
+  async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
+    // console.log('submitting values', values)
     if (!flow?.id) return
 
     await router.push(`/login?flow=${flow.id}`, undefined, { shallow: true })
@@ -170,5 +195,29 @@ export function Login() {
         throw err
       }
     }
+  }
+
+  function onRegisterFormChange(e) {
+    setState({ ...state, [e.target.name]: e.target.value })
+  }
+
+  async function onRegister(event) {
+    event.preventDefault()
+
+    const apiKratosEndpoint =
+      process.env.NEXT_PUBLIC_ENV === 'local'
+        ? 'http://localhost:3001/kratos'
+        : `https://api.${serloDomain}/kratos`
+
+    // FIXME: again cors problem
+    await fetch(`${apiKratosEndpoint}/register`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(state),
+      credentials: 'same-origin',
+    })
   }
 }

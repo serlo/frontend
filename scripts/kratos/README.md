@@ -24,6 +24,8 @@ NEXT_PUBLIC_ENV=local
 ```
 
 5. Start frontend, api and db layer (with DB docker image).
-6. Head to `localhost:3000/login`. ID: `dev`, password `123456`.
+6. Head to `localhost:3000/login`.
+7. For Login you can already use the id `dev` and password `123456`.
+8. For Registration use the `kratos` branch in api.serlo.org and the `298-new-endpoint-usercreatemutation` branch in the serlo.org-database-layer (if they are not merged into main yet).
 
 Note: You may have to enable CORS in you browser. Use an extension for that, like [CORS Everywhere](https://addons.mozilla.org/de/firefox/addon/cors-everywhere/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
