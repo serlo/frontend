@@ -25,7 +25,7 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     tableType === TableType.ColumnAndRowHeader
 
   return (
-    <div className={isEdit ? undefined : 'overflow-scroll'}>
+    <div className={isEdit ? undefined : 'overflow-x-scroll'}>
       <table className="serlo-table mb-8">
         {showColumnHeader ? (
           <>
