@@ -15,7 +15,7 @@ declare global {
   var hack__id: number
 }
 
-const chance = isProduction ? 0.2 : 0.2 // 20% or always while developing
+const chance = isProduction ? 0.2 : 0 // 20% or always while developing
 
 const banners = [
   {
