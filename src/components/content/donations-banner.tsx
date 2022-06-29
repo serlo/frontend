@@ -15,7 +15,7 @@ declare global {
   var hack__id: number
 }
 
-const chance = isProduction ? 0.2 : 0 // 20% or always while developing
+const chance = isProduction ? 0.2 : 1 // 20% or always while developing
 
 const banners = [
   {
@@ -24,6 +24,17 @@ const banners = [
       <>
         Serlo ist die einzige Lernplattform Deutschlands, die kostenlos ist. Wir
         finanzieren uns rein über Spenden und Förderer. Unterstütze auch du uns!{' '}
+      </>
+    ),
+    call: 'Gemeinsam mit Dir gestalten wir Bildung neu.',
+    imageSrc: '/_assets/img/donations/donation-bird.svg',
+  },
+  {
+    id: 'banner-1b',
+    text: (
+      <>
+        Noch eine ganz andere Message, die super überzeugend ist. Wow, alle
+        klicken auf den Link gleich.{' '}
       </>
     ),
     call: 'Gemeinsam mit Dir gestalten wir Bildung neu.',
