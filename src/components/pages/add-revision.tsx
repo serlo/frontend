@@ -13,6 +13,7 @@ import { UuidType } from '@/data-types'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/helper/mutations/use-add-page-revision-mutation'
 import {
   AddPageRevisionMutationData,
@@ -45,7 +46,7 @@ export function AddRevision({
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
-    if (window.location.hostname === 'localhost') {
+    if (!isProduction) {
       setUserReady(true)
       return
     }
