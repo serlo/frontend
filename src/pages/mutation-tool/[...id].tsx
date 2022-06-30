@@ -61,10 +61,8 @@ function convertTable(html: string): EdtrPluginSerloTable | undefined {
       .filter((col) => col.type === 'tag')
       .map((col): Col => {
         return {
-          content: {
-            plugin: 'text',
-            state: convertCellContent(col),
-          },
+          // @ts-expect-error nevermind
+          content: convertCellContent(col),
         }
       })
     return {
@@ -90,7 +88,7 @@ function convertCellContent(cell: LegacyNode) {
 
   const converted = contentNodes.map(convertContentNode)
   // console.log([{ type: 'p', children: [converted] }])
-  return [{ plugin: 'text', state: [{ type: 'p', children: converted }] }]
+  return { plugin: 'text', state: [{ type: 'p', children: converted }] }
 }
 
 function convertContentNode(node: LegacyNode): NewNode | [] {
@@ -126,7 +124,7 @@ function convertContentNode(node: LegacyNode): NewNode | [] {
         return { text: '' }
       }
       const mathContent =
-        node.children[0].children[0].data?.replace(/%%/, '') ?? ''
+        node.children[0].children[0].data?.replace(/%%/g, '') ?? ''
       // not working as expected?!
       return {
         type: 'math',
@@ -159,9 +157,7 @@ function Content(props: EditorPageData) {
       const html = converter.makeHtml(node.state)
       const result = convertTable(html)
 
-      if (result) {
-        mutated.push({ inState: node, outState: result })
-      }
+      if (result) mutated.push({ inState: node, outState: result })
     }
   }
 
@@ -187,7 +183,7 @@ function Content(props: EditorPageData) {
                 {renderNested(convert(node.outState), [''], [''])}
               </div>
             </div>
-            <div className="m-side">
+            <div className="m-side max-w-3xl">
               <b>edtr</b>
               <div className="controls-portal sticky top-0 z-[94] bg-white" />
               <SerloEditor
@@ -199,7 +195,7 @@ function Content(props: EditorPageData) {
                   })
                 }}
                 type="article"
-                initialState={node.inState}
+                initialState={node.outState}
               />
             </div>
           </div>
