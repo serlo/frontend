@@ -111,6 +111,14 @@ function convertContentNode(node: LegacyNode): NewNode | [] {
       return { text: node.children[0].data ?? '', em: true }
     }
 
+    if (node.name === 'a' && node.attribs.href) {
+      return {
+        type: 'a',
+        href: node.attribs.href,
+        children: [{ text: node.children[0].data ?? '' }],
+      }
+    }
+
     if (node.name === 'span' && node.attribs.class === 'mathInline') {
       if (node.children.length !== 1) {
         console.log('mathInline: unexpected state, skipping')
