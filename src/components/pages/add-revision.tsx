@@ -29,7 +29,6 @@ export function AddRevision({
   breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
-
   const auth = useAuthentication()
 
   const backlink = {
@@ -102,6 +101,8 @@ export function AddRevision({
     'Page',
     'TaxonomyTerm',
   ]
+  console.log(initialState)
+  console.log(JSON.stringify(initialState))
 
   return (
     <>

@@ -4,6 +4,7 @@ import { parseDOM } from 'htmlparser2'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData, fetchEditorData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -185,6 +186,21 @@ function Content(props: EditorPageData) {
               <div className="flex-1">
                 {renderNested(convert(node.outState), [''], [''])}
               </div>
+            </div>
+            <div className="m-side">
+              <b>edtr</b>
+              <div className="controls-portal sticky top-0 z-[94] bg-white" />
+              <SerloEditor
+                getCsrfToken={() => ''}
+                needsReview
+                onSave={async () => {
+                  return new Promise((resolve) => {
+                    resolve()
+                  })
+                }}
+                type="article"
+                initialState={node.inState}
+              />
             </div>
           </div>
         )
