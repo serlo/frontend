@@ -4,15 +4,17 @@ import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 interface ArticleRelatedMagicInputProps {
-  addEntry: (id: number, typename: string, title?: string) => void
-  showTopicFolderPreview: (id: number) => void
+  addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
+  showExerciseFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedMagicInput({
   addEntry,
-  showTopicFolderPreview,
+  showExerciseFolderPreview: showExerciseFolderPreview,
 }: ArticleRelatedMagicInputProps) {
   const entityId = useEntityId()
   const loggedInData = useLoggedInData()
@@ -22,29 +24,29 @@ export function ArticleRelatedMagicInput({
     <UuidUrlInput
       renderButtons={renderButtons}
       supportedEntityTypes={[
-        'Article',
-        'Course',
-        'CoursePage',
-        'Video',
-        'Exercise',
-        'ExerciseGroup',
-        'GroupedExercise',
-        'TaxonomyTerm',
+        UuidType.Article,
+        UuidType.Course,
+        UuidType.CoursePage,
+        UuidType.Video,
+        UuidType.Exercise,
+        UuidType.ExerciseGroup,
+        UuidType.GroupedExercise,
+        UuidType.TaxonomyTerm,
       ]}
-      supportedTaxonomyTypes={['topicFolder']}
+      supportedTaxonomyTypes={[TaxonomyTermType.ExerciseFolder]}
       unsupportedIds={[entityId]}
     />
   )
 
-  function renderButtons(typename: string, id: number, title: string) {
+  function renderButtons(typename: UuidWithRevType, id: number, title: string) {
     return (
       <>
-        {typename === 'TaxonomyTerm' ? (
+        {typename === UuidType.TaxonomyTerm ? (
           <button
             className="serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser mr-2"
             onClick={() => {
-              showTopicFolderPreview(id)
-              document.getElementById('topicFolderScroll')?.scrollIntoView({
+              showExerciseFolderPreview(id)
+              document.getElementById('exerciseFolderScroll')?.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
               })

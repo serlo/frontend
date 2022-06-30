@@ -57,7 +57,7 @@ export function ConsentPage() {
           </td>
           <td className="serlo-td text-lg">
             <button
-              className="serlo-button serlo-make-interactive-light"
+              className="serlo-button-light"
               onClick={() => {
                 revokeConsent(provider)
                 updateState({})

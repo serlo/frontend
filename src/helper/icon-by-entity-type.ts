@@ -11,11 +11,17 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
 
-import { TopicCategoryTypes } from '@/data-types'
+import {
+  TopicCategoryCustomType,
+  TopicCategoryType,
+  UuidWithRevType,
+} from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
-export const categoryIconMapping: {
-  [K in TopicCategoryTypes]: IconDefinition
-} = {
+export const categoryIconMapping: Record<
+  TopicCategoryType | TopicCategoryCustomType,
+  IconDefinition
+> = {
   articles: faNewspaper,
   courses: faGraduationCap,
   videos: faPlayCircle,
@@ -23,11 +29,17 @@ export const categoryIconMapping: {
   folders: faFolderOpen,
   exercises: faFile,
   events: faCalendarAlt,
+  unrevised: faCircle,
+  subterms: faFolderOpen,
+  exercisesContent: faFile,
 }
 
-export function getIconByTypename(typename: string) {
-  const typenameLowerCase =
-    typename.toLowerCase() as keyof typeof entityIconMapping
+export function getIconByTypename(
+  typename: UuidWithRevType | TaxonomyTermType
+) {
+  const typenameLowerCase = typename
+    .replace('Revision', '')
+    .toLowerCase() as keyof typeof entityIconMapping
   return entityIconMapping[typenameLowerCase] ?? faCircle
 }
 
@@ -40,7 +52,7 @@ export const entityIconMapping = {
   exercise: faFile,
   exercisegroup: faFile,
   folder: faFolderOpen,
-  topicfolder: faFolderOpen,
+  exercisefolder: faFolderOpen,
   groupedexercise: faFile,
   page: faFile,
   solution: faFile,

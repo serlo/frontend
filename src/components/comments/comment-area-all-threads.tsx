@@ -5,6 +5,7 @@ import { LoadingSpinner } from '../loading/loading-spinner'
 import { CommentArea } from './comment-area'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
@@ -22,10 +23,7 @@ export function CommentAreaAllThreads() {
           {loading ? (
             <LoadingSpinner noText />
           ) : (
-            <button
-              className="serlo-button serlo-make-interactive-primary mt-5 mb-12"
-              onClick={loadMore}
-            >
+            <button className="serlo-button-blue mt-5 mb-12" onClick={loadMore}>
               {strings.actions.loadMore}
             </button>
           )}
@@ -45,7 +43,7 @@ export function CommentAreaAllThreads() {
           <div className="mb-16">
             <div className="border-b-2 mt-16 mb-5 mx-side">
               <b>
-                <FaIcon icon={getIconByTypename(__typename)} />{' '}
+                <FaIcon icon={getIconByTypename(__typename as UuidType)} />{' '}
                 {getTranslatedType(strings, __typename)}
               </b>{' '}
               ({' '}

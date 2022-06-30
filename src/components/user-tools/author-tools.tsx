@@ -1,10 +1,4 @@
-import {
-  Entity,
-  Page,
-  Subscription,
-  TaxonomyTerm,
-  Uuid,
-} from '@serlo/authorization'
+import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
 import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
@@ -14,8 +8,13 @@ import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { ExerciseInlineType, UuidRevType, UuidType } from '@/data-types'
+import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
@@ -34,8 +33,6 @@ export enum Tool {
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
   Organize = 'organize',
-  PageConvert = 'pageConvert',
-  PageSetting = 'pageSetting',
   SortCoursePages = 'sortCoursePages',
   SortGroupedExercises = 'sortGroupedExercises',
   SortEntities = 'sortEntities',
@@ -62,7 +59,7 @@ export interface AuthorToolsProps {
 
 export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   const loggedInData = useLoggedInData()
-  const instanceData = useInstanceData()
+  const { lang, strings } = useInstanceData()
 
   const isSubscribed = useIsSubscribed(data.id)
   const setSubscription = useSubscriptionSetMutation()
@@ -73,27 +70,18 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings
-  const entities = instanceData.strings.entities
-  const lang = instanceData.lang
 
   const toolsConfig = {
     abo: {
       renderer: abo,
       canDo: canDo(Subscription.set),
     },
-    pageConvert: {
-      url: `/entity/repository/add-revision/${entityId}/${
-        data.revisionId || ''
-      }`,
-      title: loggedInStrings.authorMenu.convert,
-      canDo: canDo(Uuid.create('PageRevision')),
-    },
     log: {
       url: `/event/history/${entityId}`,
       canDo: true,
     },
     history: {
-      url: `/entity/repository/history/${entityId}`,
+      url: getHistoryUrl(entityId),
       canDo: true,
     },
     sortCoursePages: {
@@ -105,18 +93,18 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       canDo: canDo(Entity.orderChildren),
     },
     edit: {
-      url: `/entity/repository/add-revision/${entityId}`,
+      url: getEditUrl(entityId),
       canDo: canDo(Uuid.create('EntityRevision')),
     },
     unrevisedEdit: {
-      url: `/entity/repository/history/${entityId}`,
+      url: getHistoryUrl(entityId),
       canDo: canDo(Uuid.create('EntityRevision')),
     },
     curriculum: {
       url: `/entity/taxonomy/update/${entityId}`,
       title: loggedInStrings.authorMenu.editAssignments,
       canDo:
-        !(data.type === '_ExerciseInline' && data.grouped) &&
+        !(data.type === ExerciseInlineType.Exercise && data.grouped) &&
         canDo(TaxonomyTerm.set) &&
         canDo(TaxonomyTerm.orderChildren) &&
         canDo(TaxonomyTerm.change) &&
@@ -124,16 +112,11 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     trash: {
       renderer: trash,
-      canDo: canDo(Uuid.setState(customTypeToAuthorizationType(data.type))),
+      canDo: canDo(Uuid.setState(typeToAuthorizationType(data.type))),
     },
     newEntitySubmenu: {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
-    },
-    pageSetting: {
-      url: `/page/update/${data.id}`,
-      title: loggedInStrings.authorMenu.settings,
-      canDo: canDo(Page.set),
     },
     moveCoursePage: {
       url: `/entity/link/move/link/${data.id}/${data.courseId!}`,
@@ -182,7 +165,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     analyticsLink: {
       title: loggedInStrings.authorMenu.analyticsLink,
       url: `https://simpleanalytics.com/${lang}.serlo.org${data.alias ?? ''}`,
-      canDo: canDo(Entity.checkoutRevision) && data.alias,
+      canDo: canDo(Uuid.delete('Page')) && data.alias,
     },
   } as ToolsConfig
 
@@ -302,82 +285,79 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function renderNewEntity() {
+    if (data.type !== UuidType.TaxonomyTerm || !data.taxonomyType) return null
+
+    const allowedTypes: Record<
+      TaxonomyTermType,
+      (UuidType | TaxonomyTermType)[]
+    > = {
+      topic: [
+        UuidType.Article,
+        UuidType.Course,
+        UuidType.Video,
+        UuidType.Applet,
+        UuidType.Event,
+        TaxonomyTermType.Topic,
+        TaxonomyTermType.ExerciseFolder,
+      ],
+      exerciseFolder: [UuidType.Exercise, UuidType.ExerciseGroup],
+      subject: [TaxonomyTermType.Topic],
+      root: [TaxonomyTermType.Subject],
+    }
+
     const shouldRenderEvents =
-      (lang === 'de' &&
+      (lang === Instance.De &&
         router.asPath === '/community/142215/veranstaltungen') ||
-      (lang !== 'de' && router.asPath.startsWith('/community'))
+      (lang !== Instance.De && router.asPath.startsWith('/community'))
 
-    if (data.taxonomyFolder || data.taxonomyTopic)
-      return (
-        <li className="block">
-          <Tippy
-            {...tippyDefaultProps}
-            content={
-              <ul className="serlo-sub-list-hover">
-                {data.taxonomyFolder && (
-                  <>
-                    {renderLi(
-                      `/entity/create/text-exercise?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.exercise
-                    )}
-                    {renderLi(
-                      `/entity/create/text-exercise-group?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.exerciseGroup
-                    )}
-                  </>
-                )}
+    const entries = allowedTypes[data.taxonomyType].map((entityType) => {
+      if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
-                {data.taxonomyTopic && (
-                  <>
-                    {renderLi(
-                      `/entity/create/article?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.article
-                    )}
-                    {renderLi(
-                      `/entity/create/course?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.course
-                    )}
-                    {renderLi(
-                      `/entity/create/video?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.video
-                    )}
-                    {renderLi(
-                      `/entity/create/applet?taxonomy%5Bterm%5D=${data.id}`,
-                      entities.applet
-                    )}
-                    {shouldRenderEvents &&
-                      renderLi(
-                        `/entity/create/event?taxonomy%5Bterm%5D=${data.id}`,
-                        entities.event
-                      )}
-                  </>
-                )}
+      if (
+        (
+          [
+            TaxonomyTermType.Subject,
+            TaxonomyTermType.Topic,
+            TaxonomyTermType.ExerciseFolder,
+          ] as string[]
+        ).includes(entityType)
+      ) {
+        if (!canDo(TaxonomyTerm.change)) return null
 
-                {data.taxonomyTopic &&
-                  lang == 'de' &&
-                  canDo(TaxonomyTerm.change) && (
-                    <>
-                      {renderLi(
-                        `/taxonomy/term/create/4/${data.id}`,
-                        entities.folder
-                      )}
-                      {renderLi(
-                        `/taxonomy/term/create/9/${data.id}`,
-                        entities.topicFolder
-                      )}
-                    </>
-                  )}
-              </ul>
-            }
-          >
-            <div>
-              <MenuSubButtonLink tabIndex={0}>
-                ◂ {loggedInStrings.authorMenu.newEntity}
-              </MenuSubButtonLink>
-            </div>
-          </Tippy>
-        </li>
+        const createId = entityType === TaxonomyTermType.ExerciseFolder ? 9 : 4
+        return renderLi(
+          `/taxonomy/term/create/${createId}/${data.id}`,
+          getTranslatedType(strings, entityType)
+        )
+      }
+
+      const urlTypeString =
+        entityType === UuidType.Exercise
+          ? 'text-exercise'
+          : entityType === UuidType.ExerciseGroup
+          ? 'text-exercise-group'
+          : entityType
+
+      return renderLi(
+        `/entity/create/${urlTypeString}?taxonomy%5Bterm%5D=${data.id}`,
+        getTranslatedType(strings, entityType)
       )
+    })
+
+    return (
+      <li className="block">
+        <Tippy
+          {...tippyDefaultProps}
+          content={<ul className="serlo-sub-list-hover">{entries}</ul>}
+        >
+          <div>
+            <MenuSubButtonLink tabIndex={0}>
+              ◂ {loggedInStrings.authorMenu.newEntity}
+            </MenuSubButtonLink>
+          </div>
+        </Tippy>
+      </li>
+    )
   }
 
   function renderLi(href: string, text: string) {
@@ -389,9 +369,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 }
 
-function customTypeToAuthorizationType(type: string) {
-  if (type == 'Taxonomy') return 'TaxonomyTerm'
-  if (['Page', 'PageRevision'].includes(type)) return type
+function typeToAuthorizationType(type: string) {
+  if ([UuidType.Page, UuidRevType.Page].includes(type as UuidType)) return type
   if (type.includes('Revision')) return 'EntityRevision'
   return 'Entity'
 }

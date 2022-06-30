@@ -1,5 +1,5 @@
-import { serloDomain } from '../../helper/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { serloDomain } from '../../helper/urls/serlo-domain'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
@@ -43,17 +43,17 @@ export const headerData: InstanceData['headerData'] = [
     ],
   },
   {
-    url: '/serlo',
+    url: '',
     title: 'Über Uns',
     icon: 'about',
     //as of now this is a duplicate of the secondary menu, but this might change?
     children: [
       { title: 'Über Serlo', url: '/serlo' },
+      { title: 'Pädagogisches Konzept', url: '/21423/pädagogisches-konzept' },
       { title: 'So funktioniert die Lernplattform', url: '/features' },
       { title: 'Team', url: '/team' },
       { title: 'Jobs', url: '/jobs' },
       { title: 'Partner & Förderer', url: '/partner' },
-      { title: 'Spenden', url: '/spenden' },
       { title: 'Wirkung', url: '/wirkung' },
       { title: 'Transparenz', url: '/transparenz' },
       { title: 'Die Geschichte von Serlo', url: '/geschichte' },
@@ -107,17 +107,17 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'Newsletter',
           url: 'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-          icon: 'newsletter',
+          icon: FooterIcon.newsletter,
         },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
         {
           title: 'Jobs',
           url: `https://de.${serloDomain}/jobs`,
-          icon: 'job',
+          icon: FooterIcon.job,
         },
       ],
     },
@@ -256,11 +256,11 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     entries: [
       { title: 'Über Serlo', id: 18922 },
+      { title: 'Pädagogisches Konzept', id: 21423 },
       { title: 'So funktioniert die Lernplattform', id: 81862 },
       { title: 'Team', id: 21439 },
       { title: 'Jobs', id: 21563 },
       { title: 'Partner & Förderer', id: 21456 },
-      { title: 'Spenden', url: '/spenden' },
       { title: 'Wirkung', id: 21406 },
       { title: 'Transparenz', id: 21468 },
       { title: 'Die Geschichte von Serlo', id: 21413 },

@@ -15,9 +15,10 @@ import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderNested } from '@/schema/article-renderer'
 
 export interface RevisionProps {
@@ -50,7 +51,7 @@ export function Revision({ data }: RevisionProps) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (window.location.hash.substr(1) === DisplayModes.SideBySide) {
+    if (window.location.hash.substring(1) === DisplayModes.SideBySide) {
       setDisplayMode(DisplayModes.SideBySide)
       removeHash()
     }
@@ -134,7 +135,7 @@ export function Revision({ data }: RevisionProps) {
                 revisionId={data.thisRevision.id}
                 isRejected={isRejected}
                 isCurrent={isCurrentRevision}
-                isPage={data.typename === 'PageRevision'}
+                isPage={data.typename === UuidRevType.Page}
               />
             ) : undefined,
         }}
@@ -144,7 +145,11 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExercisePreview() {
     if (
-      !['solution', 'exerciseGroup', 'groupedExercise'].includes(data.type) ||
+      ![
+        UuidRevType.Solution,
+        UuidRevType.ExerciseGroup,
+        UuidRevType.GroupedExercise,
+      ].includes(data.typename) ||
       data.repository.parentId === undefined
     )
       return null
@@ -154,7 +159,7 @@ export function Revision({ data }: RevisionProps) {
     if (!hasCurrentRevision) {
       return (
         <p className="serlo-p mt-20">
-          <Link href={`/entity/repository/history/${parentId}`}>
+          <Link href={getHistoryUrl(parentId)}>
             {strings.revisions.parentFallbackLink}
           </Link>
         </p>
@@ -174,8 +179,8 @@ export function Revision({ data }: RevisionProps) {
             <span className="mx-side px-1 mb-10 inline-block bg-yellow-200">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
-                  data.type === 'groupedExercise'
-                    ? strings.content.task
+                  data.typename === UuidRevType.GroupedExercise
+                    ? strings.content.exercises.task
                     : strings.entities.solution,
                 title: (
                   <b>

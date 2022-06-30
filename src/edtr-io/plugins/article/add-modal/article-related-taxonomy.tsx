@@ -6,20 +6,22 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface ArticleRelatedTaxonomyProps {
-  addEntry: (id: number, typename: string, title?: string) => void
-  checkDuplicates: (id: number, typename: string) => boolean
-  showTopicFolderPreview: (id: number) => void
+  addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
+  checkDuplicates: (id: number, typename: UuidWithRevType) => boolean
+  showExerciseFolderPreview: (id: number) => void
 }
 
 export function ArticleRelatedTaxonomy({
   addEntry,
   checkDuplicates,
-  showTopicFolderPreview,
+  showExerciseFolderPreview,
 }: ArticleRelatedTaxonomyProps) {
   const entityId = useEntityId()
   const { data, error } = useFetchParentTaxonomy(entityId)
@@ -42,44 +44,44 @@ export function ArticleRelatedTaxonomy({
         href={`/${term.id}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename('folder')} /> {term.name}
+        <Icon icon={getIconByTypename(UuidType.TaxonomyTerm)} /> {term.name}
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {
-          return renderList(typename, categoryData)
+          return renderList(typename as UuidWithRevType, categoryData)
         })}
       </div>
     </div>
   )
 
-  function renderList(typename: string, dataArray: ChildNode[]) {
+  function renderList(typename: UuidWithRevType, dataArray: ChildNode[]) {
     if (dataArray.length === 0) return null
-    const isTax = typename === 'TaxonomyTerm'
+    const isTax = typename === UuidType.TaxonomyTerm
 
     return (
       <div className="py-2 max-w-[30%] mr-4" key={typename}>
         <b className="block mb-2">
           <Icon icon={getIconByTypename(typename)} />{' '}
           {isTax
-            ? strings.entities.topicFolder
+            ? strings.entities.exerciseFolder
             : strings.categories[getCategoryByTypename(typename)]}
         </b>
-        {isTax ? articleStrings.addModal.topicFolderNote : null}
+        {isTax ? articleStrings.addModal.exerciseFolderNote : null}
         <ul>{dataArray.map((item) => renderLi(item, typename))}</ul>
       </div>
     )
   }
 
-  function renderLi(item: ChildNode, typename: string) {
-    const title = typename.includes('Exercise')
+  function renderLi(item: ChildNode, typename: UuidWithRevType) {
+    const title = typename.includes(UuidType.Exercise)
       ? getTranslatedType(strings, typename)
-      : typename === 'TaxonomyTerm'
+      : typename === UuidType.TaxonomyTerm
       ? item.name
       : item.currentRevision?.title
 
     if (!title) return null
 
-    const isTax = typename === 'TaxonomyTerm'
+    const isTax = typename === UuidType.TaxonomyTerm
 
     if (checkDuplicates(item.id, typename)) return null
 
@@ -97,7 +99,7 @@ export function ArticleRelatedTaxonomy({
           <button
             className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser"
             onClick={() => {
-              showTopicFolderPreview(item.id)
+              showExerciseFolderPreview(item.id)
             }}
             title="Preview"
           >
@@ -168,14 +170,14 @@ const fetchParentQuery = gql`
 `
 
 interface ChildNode {
-  __typename: string
+  __typename: UuidWithRevType
   id: number
   trashed: boolean
   currentRevision?: {
     title?: string
     id?: string
   }
-  type?: string
+  type?: TaxonomyTermType
   name?: string
 }
 
@@ -183,7 +185,7 @@ interface FetchParentType {
   uuid: {
     taxonomyTerms: {
       nodes: {
-        type: string
+        type: TaxonomyTermType
         name: string
         id: number
         children: {
@@ -207,7 +209,7 @@ function useFetchParentTaxonomy(id: number) {
 function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
   if (error) {
     // eslint-disable-next-line no-console
-    console.log(error)
+    console.error(error)
     return false
   }
   if (!data) return null
@@ -222,23 +224,26 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
   }
 
   term.children.nodes.map((child) => {
-    const isEx = child.__typename.includes('Exercise')
-    const isTax = child.__typename === 'TaxonomyTerm'
+    const isEx = child.__typename.includes(UuidType.Exercise)
+    const isTax = child.__typename === UuidType.TaxonomyTerm
 
     if (
-      !['Article', 'Course', 'CoursePage', 'Video'].includes(
-        child.__typename
-      ) &&
+      ![
+        UuidType.Article,
+        UuidType.Course,
+        UuidType.CoursePage,
+        UuidType.Video,
+      ].includes(child.__typename as UuidType) &&
       !isEx &&
       !isTax
     )
       return
 
-    if (isTax && child.type !== 'topicFolder') return
+    if (isTax && child.type !== TaxonomyTermType.ExerciseFolder) return
 
     if ((!isTax && !child.currentRevision) || child.trashed) return
 
-    const category = isEx ? 'Exercise' : child.__typename
+    const category = isEx ? UuidType.Exercise : child.__typename
     if (!categorisedData[category]) categorisedData[category] = []
     categorisedData[category].push(child)
   })

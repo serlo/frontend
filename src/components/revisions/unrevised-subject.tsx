@@ -39,7 +39,7 @@ export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
     if (nodes.length <= limiter || showAll) return null
     return (
       <button
-        className="serlo-button serlo-make-interactive-light mx-side"
+        className="serlo-button-light mx-side"
         onClick={() => void setShowAll(true)}
       >
         {strings.unrevisedRevisions.showMoreEntities.replace('%subject%', name)}

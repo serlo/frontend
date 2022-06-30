@@ -121,10 +121,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
       <HeadTags data={{ title: strings.header.slogan }} />
       <section className="section">
         <p className="serlo-p ml-0">{landingStrings.vision}</p>
-        <Link
-          className="serlo-button serlo-make-interactive-light -ml-1"
-          href="/serlo"
-        >
+        <Link className="serlo-button-light -ml-1" href="/serlo">
           {landingStrings.learnMore} <FaIcon icon={faArrowCircleRight} />
         </Link>
       </section>
@@ -150,19 +147,13 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         </div>
         <div className="col">
           <p className="serlo-p ml-0">{landingStrings.callForAuthors}</p>
-          <Link
-            href="/community"
-            className="serlo-button serlo-make-interactive-light -ml-1"
-          >
+          <Link href="/community" className="serlo-button-light -ml-1">
             {landingStrings.communityLink} <FaIcon icon={faArrowCircleRight} />
           </Link>
         </div>
         <div className="col">
           <p className="serlo-p ml-0">{landingStrings.callForOther}</p>
-          <Link
-            href="/get-involved"
-            className="serlo-button serlo-make-interactive-light -ml-1"
-          >
+          <Link href="/get-involved" className="serlo-button-light -ml-1">
             {landingStrings.getInvolved} <FaIcon icon={faArrowCircleRight} />
           </Link>
         </div>

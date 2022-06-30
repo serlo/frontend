@@ -1,12 +1,11 @@
 import { gql } from 'graphql-request'
 
 import { Guard } from '../guard'
-import { EventData } from './event'
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
-import { Instance } from '@/fetcher/graphql-types/operations'
+import { GetEventDataQuery, Instance } from '@/fetcher/graphql-types/operations'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
 
 interface EventsProps {
@@ -32,7 +31,7 @@ export function Events({
     objectId,
     perPage,
     oldest,
-    lang as Instance
+    lang
   )
 
   return (
@@ -73,10 +72,7 @@ export function Events({
     if (!data?.pageInfo.hasNextPage) return null
     return (
       <p className="serlo-p mt-12">
-        <a
-          onClick={loadMore}
-          className="serlo-button serlo-make-interactive-primary"
-        >
+        <a onClick={loadMore} className="serlo-button-blue">
           {strings.actions.loadMore}
         </a>
       </p>
@@ -91,7 +87,9 @@ function useEventsFetch(
   oldest?: boolean,
   instance?: Instance
 ) {
-  return useGraphqlSwrPaginationWithAuth<EventData>({
+  return useGraphqlSwrPaginationWithAuth<
+    GetEventDataQuery['events']['nodes'][number]
+  >({
     query: eventsQuery,
     variables: {
       actorId,

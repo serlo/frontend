@@ -3,13 +3,14 @@ import { ReactNode } from 'react'
 
 import { DisplayModes } from './revision'
 import {
+  DiffViewerMode,
   RevisionDiffViewer,
   RevisionDiffViewerProps,
 } from './revision-diff-viewer'
 import { Geogebra } from '@/components/content/geogebra'
 import { Video } from '@/components/content/video'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { RevisionData, UuidRevType } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface RevisionPreviewBoxesProps {
@@ -20,7 +21,7 @@ export interface RevisionPreviewBoxesProps {
 
 interface PreviewBoxProps {
   title: string
-  diffType: RevisionDiffViewerProps['type']
+  diffMode: RevisionDiffViewerProps['mode']
   children: ReactNode
   changes?: boolean
 }
@@ -38,7 +39,7 @@ export function RevisionPreviewBoxes({
       {dataSet.title !== undefined && (
         <PreviewBox
           title={strings.revisions.title}
-          diffType="title"
+          diffMode={DiffViewerMode.title}
           changes={dataSet.title !== data.currentRevision.title}
         >
           <h1 className="serlo-h1">{dataSet.title}</h1>
@@ -47,7 +48,7 @@ export function RevisionPreviewBoxes({
       {dataSet.content !== undefined && (
         <PreviewBox
           title={strings.revisions.content}
-          diffType="content"
+          diffMode={DiffViewerMode.content}
           changes={dataSet.content !== data.currentRevision.content}
         >
           {renderArticle(
@@ -60,7 +61,7 @@ export function RevisionPreviewBoxes({
       {dataSet.metaTitle && (
         <PreviewBox
           title={strings.revisions.metaTitle}
-          diffType="metaTitle"
+          diffMode={DiffViewerMode.metaTitle}
           changes={dataSet.metaTitle !== data.currentRevision.metaTitle}
         >
           {dataSet.metaTitle}
@@ -69,7 +70,7 @@ export function RevisionPreviewBoxes({
       {dataSet.metaDescription && (
         <PreviewBox
           title={strings.revisions.metaDescription}
-          diffType="metaDescription"
+          diffMode={DiffViewerMode.metaDescription}
           changes={
             dataSet.metaDescription !== data.currentRevision.metaDescription
           }
@@ -82,11 +83,11 @@ export function RevisionPreviewBoxes({
 
   function renderVideoOrAppletBox(dataSet: RevisionData['currentRevision']) {
     if (dataSet.url === undefined) return null
-    const isVideo = data.type === 'video'
+    const isVideo = data.typename === UuidRevType.Video
     return (
       <PreviewBox
         title={isVideo ? strings.entities.video : strings.entities.applet}
-        diffType="url"
+        diffMode={DiffViewerMode.url}
         changes={dataSet.url !== data.currentRevision.url}
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
@@ -97,9 +98,11 @@ export function RevisionPreviewBoxes({
     )
   }
 
-  function PreviewBox({ title, children, diffType, changes }: PreviewBoxProps) {
+  function PreviewBox({ title, children, diffMode, changes }: PreviewBoxProps) {
     const withPadding =
-      notDiff && (diffType === 'metaDescription' || diffType === 'metaTitle')
+      notDiff &&
+      (diffMode === DiffViewerMode.metaDescription ||
+        diffMode === DiffViewerMode.metaTitle)
 
     return (
       <>
@@ -119,7 +122,8 @@ export function RevisionPreviewBoxes({
         </p>
         <div
           className={clsx(
-            (data.type === 'exercise' || data.type === 'groupedExercise') &&
+            (data.typename === UuidRevType.Exercise ||
+              data.typename === UuidRevType.GroupedExercise) &&
               '!py-2',
             withPadding && 'p-side',
             'text-lg py-7 border border-brand-lighter rounded-2xl',
@@ -129,7 +133,7 @@ export function RevisionPreviewBoxes({
           {notDiff ? (
             children
           ) : (
-            <RevisionDiffViewer data={data} type={diffType} />
+            <RevisionDiffViewer data={data} mode={diffMode} />
           )}
         </div>
       </>

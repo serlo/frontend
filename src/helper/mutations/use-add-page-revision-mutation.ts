@@ -6,6 +6,7 @@ import { AddPageRevisionMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export function useAddPageRevision() {
   const auth = useAuthentication()
@@ -16,7 +17,7 @@ export function useAddPageRevision() {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
-    if (!data.__typename || data.__typename !== 'Page') return false
+    if (!data.__typename || data.__typename !== UuidType.Page) return false
 
     try {
       const input = {
@@ -40,7 +41,7 @@ export function useAddPageRevision() {
       return false
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('probably missing value?')
+      console.error('probably missing value?')
       return false
     }
   }

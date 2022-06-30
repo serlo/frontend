@@ -1,4 +1,3 @@
-import { EntityUpdateLicenseInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
@@ -6,6 +5,7 @@ import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EntityUpdateLicenseInput } from '@/fetcher/graphql-types/operations'
 
 export function useEntityUpdateLicenseMutation() {
   const auth = useAuthentication()

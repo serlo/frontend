@@ -1,6 +1,7 @@
-import { Instance } from './graphql-types/operations'
+import { Instance, TaxonomyTermType } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
 import { SubscriptionNode } from '@/components/pages/manage-subscriptions'
+import { UuidType } from '@/data-types'
 import {
   getServerSideStrings,
   getInstanceDataByLang,
@@ -33,19 +34,22 @@ export function getRawTitle(
     )
   }
 
-  if (uuid.__typename === 'TaxonomyTerm') {
+  if (uuid.__typename === UuidType.TaxonomyTerm) {
     const term = uuid
-    if (term.type === 'topic') {
+    if (term.type === TaxonomyTermType.Topic) {
       return `${term.name} (${strings.entities.topic})`
     }
-    if (term.type === 'subject') {
+    if (term.type === TaxonomyTermType.Subject) {
       return `${term.name} - ${strings.entities.subject}`
     }
     // missing: special behaviour on curriculum term
     return `${term.name}`
   }
 
-  if (uuid.__typename === 'Exercise' || uuid.__typename === 'ExerciseGroup') {
+  if (
+    uuid.__typename === UuidType.Exercise ||
+    uuid.__typename === UuidType.ExerciseGroup
+  ) {
     const subject =
       uuid.taxonomyTerms.nodes?.[0]?.navigation?.path.nodes[0].label
     const typenameString = getTranslatedType(strings, uuid.__typename)
@@ -53,21 +57,21 @@ export function getRawTitle(
     return subject + ' ' + typenameString
   }
 
-  if (uuid.__typename === 'GroupedExercise') {
+  if (uuid.__typename === UuidType.GroupedExercise) {
     //good enough for now
     return getTranslatedType(strings, uuid.__typename)
   }
-  if (uuid.__typename === 'User') {
+  if (uuid.__typename === UuidType.User) {
     return uuid.username
   }
   if (
-    uuid.__typename === 'Page' ||
-    uuid.__typename === 'Article' ||
-    uuid.__typename === 'Video' ||
-    uuid.__typename === 'Applet' ||
-    uuid.__typename === 'CoursePage' ||
-    uuid.__typename === 'Course' ||
-    uuid.__typename === 'Event'
+    uuid.__typename === UuidType.Page ||
+    uuid.__typename === UuidType.Article ||
+    uuid.__typename === UuidType.Video ||
+    uuid.__typename === UuidType.Applet ||
+    uuid.__typename === UuidType.CoursePage ||
+    uuid.__typename === UuidType.Course ||
+    uuid.__typename === UuidType.Event
   ) {
     if (uuid.currentRevision?.title) {
       return uuid.currentRevision.title

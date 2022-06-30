@@ -7,14 +7,18 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { TaxonomyLink, TopicCategoryTypes } from '@/data-types'
+import {
+  TaxonomyLink,
+  TopicCategoryCustomType,
+  TopicCategoryType,
+} from '@/data-types'
 import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicCategoryProps {
   links: TaxonomyLink[]
   full?: boolean
-  category: TopicCategoryTypes
+  category: TopicCategoryType | TopicCategoryCustomType
   id?: number
 }
 

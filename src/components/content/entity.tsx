@@ -17,9 +17,12 @@ import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EntityData, FrontendContentNode } from '@/data-types'
+import { EntityData, UuidType } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface EntityProps {
@@ -103,12 +106,16 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderEntityIcon() {
-    if (!data.categoryIcon || data.categoryIcon === 'coursePage') return null
+    if (
+      data.typename === UuidType.CoursePage ||
+      data.typename === UuidType.Page
+    )
+      return null
     return (
-      <span title={strings.entities[data.categoryIcon]}>
+      <span title={getTranslatedType(strings, data.typename)}>
         {' '}
         <FaIcon
-          icon={getIconByTypename(data.categoryIcon)}
+          icon={getIconByTypename(data.typename)}
           className="text-brand-lighter text-2.5xl"
         />{' '}
       </span>
@@ -168,12 +175,12 @@ export function Entity({ data }: EntityProps) {
 
   function renderShareModal() {
     const showPdf = [
-      'Page',
-      'Article',
-      'CoursePage',
-      'ExerciseGroup',
-      'Exercise',
-      'Solution',
+      UuidType.Page,
+      UuidType.Article,
+      UuidType.CoursePage,
+      UuidType.ExerciseGroup,
+      UuidType.Exercise,
+      UuidType.Solution,
     ].includes(data.typename)
     return (
       <ShareModal
@@ -246,7 +253,7 @@ export function Entity({ data }: EntityProps) {
 
     if (data.isUnrevised) {
       const link = (
-        <Link href={`/entity/repository/history/${data.id}`}>
+        <Link href={getHistoryUrl(data.id)}>
           {strings.pageTitles.revisionHistory}
         </Link>
       )

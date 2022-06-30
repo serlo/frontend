@@ -18,7 +18,7 @@ import {
 import { endpoint } from '@/api/endpoint'
 import { SingleEntityPage, TaxonomyPage } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
-import { serloDomain } from '@/helper/serlo-domain'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 const server = setupServer()
 
@@ -432,7 +432,7 @@ describe('check all supported typenames with stored api-data', () => {
       'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
     )
     expect(pageData.metaData?.metaImage).toBe(
-      `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
+      `https://de.${serloDomain}/_assets/img/meta/mathematik.png`
     )
 
     assertCorrectHorizonDataFormat(pageData)
@@ -501,6 +501,6 @@ function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
 
 function assertCorrectMetaImageLink(pageData: SingleEntityPage | TaxonomyPage) {
   expect(pageData.metaData?.metaImage).toBe(
-    `https://de.${serloDomain}/_assets/img/meta/mathematik.jpg`
+    `https://de.${serloDomain}/_assets/img/meta/mathematik.png`
   )
 }

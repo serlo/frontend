@@ -1,4 +1,3 @@
-import { Instance } from '@serlo/api'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useState } from 'react'
@@ -13,6 +12,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   LicensesForInstaceQuery,
   LicensesForInstaceQueryVariables,
+  Instance,
 } from '@/fetcher/graphql-types/operations'
 import { useEntityUpdateLicenseMutation } from '@/helper/mutations/use-entity-update-license-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -48,13 +48,13 @@ function Content({ id, licenses }: UpdateLicenseProps) {
 
       <div className="mx-side flex">
         <select
-          className="serlo-button serlo-make-interactive-light serlo-input-font-reset max-w-xl"
+          className="serlo-button-light serlo-input-font-reset max-w-xl"
           onChange={(e) => setLicenseId(parseInt(e.target.value))}
         >
           {licenses.map(renderOption)}
         </select>
         <button
-          className="ml-4 serlo-button serlo-make-interactive-primary"
+          className="ml-4 serlo-button-blue"
           onClick={() => void updateLicense({ entityId: id, licenseId })}
         >
           Update

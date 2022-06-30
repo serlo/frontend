@@ -7,7 +7,7 @@ import type {
   FrontendMultiMediaNode,
   FrontendImgNode,
   FrontendContentNode,
-} from '@/data-types'
+} from '@/frontend-node-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 

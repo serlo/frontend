@@ -1,4 +1,3 @@
-import { TaxonomyTypeCreateOptions } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
@@ -8,6 +7,8 @@ import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/ty
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
+import { TaxonomyTypeCreateOptions } from '@/fetcher/graphql-types/operations'
 
 export function useTaxonomyCreateOrUpdateMutation() {
   const auth = useAuthentication()
@@ -19,7 +20,8 @@ export function useTaxonomyCreateOrUpdateMutation() {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
-    if (!data.__typename || data.__typename !== 'TaxonomyTerm') return false
+    if (!data.__typename || data.__typename !== UuidType.TaxonomyTerm)
+      return false
 
     try {
       const input = {
@@ -63,7 +65,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
       return false
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log('probably missing value?')
+      console.error('probably missing value?')
       return false
     }
   }
@@ -76,10 +78,11 @@ function getTaxonomyType(idString?: string) {
   const id = parseInt(idString)
 
   const topicIds = [4, 16, 33, 42, 48, 53]
-  const topicFolderIds = [9, 19, 36, 45, 51, 56]
+  const exerciseFolderIds = [9, 19, 36, 45, 51, 56]
 
   if (topicIds.includes(id)) return TaxonomyTypeCreateOptions.Topic
-  if (topicFolderIds.includes(id)) return TaxonomyTypeCreateOptions.TopicFolder
+  if (exerciseFolderIds.includes(id))
+    return TaxonomyTypeCreateOptions.ExerciseFolder
 
   throw 'unknown taxonomy type'
 }

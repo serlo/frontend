@@ -1,6 +1,7 @@
+import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "fr",
+  lang: Instance["Fr"],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -12,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
-      agree: "Accepter"
+      agree: 'Agree to use search'
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
@@ -29,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Dossiers",
       exercises: "exercices",
-      events: "Événements"
+      events: "Événements",
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content'
     },
     entities: {
       applet: "applet",
@@ -39,19 +43,18 @@ export const instanceData = {
       event: "Événement",
       exercise: "Exercice",
       exerciseGroup: "Groupe d'exercices",
-      folder: "Dossier",
+      topic: 'Folder',
       groupedExercise: "Exercice groupé",
       page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
       video: "Vidéo",
-      topicFolder: "Dossier d'exercice",
+      exerciseFolder: 'Exercise folder',
       comment: "Commentaire",
       revision: "Révision",
       thread: 'Thread',
       threads: 'Threads',
-      topic: "Thèmes",
       subject: "Sujet",
       userProfile: "Profil d'utilisateur·utilisatrice",
       privacyPolicy: "Politique de confidentialité",
@@ -111,27 +114,31 @@ export const instanceData = {
     content: {
       show: "montrer",
       hide: "cacher",
-      prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
-      task: "Tâche",
-      right: "Vrai",
-      wrong: "Faux",
-      feedback: "Ton avis",
-      answer: "Répondre",
-      check: "Vérifier",
-      yourAnswer: "Ta réponse...",
-      chooseOption: "Sélectionne une des options :",
-      printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
       emptyNotice: 'There is no content here. Please edit or delete.',
-      strategy: "Stratégie de solution",
       picture: "Image",
       previewImage: "Aperçu de l'image",
+      imageAltFallback: 'Image',
       exercisesTitle: "Exercices",
       moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
       relatedContentTitle: "Tu en veux encore plus?",
       relatedContentText: "Tu peux en trouver plus ici :",
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
+        task: "Tâche",
+        correct: "Correcte",
+        missedSome: "Presque ! Tu as manqué au moins une réponse correcte.",
+        wrong: "Incorrect",
+        feedback: "Ton avis",
+        answer: "Répondre",
+        check: "Vérifier",
+        yourAnswer: "Ta réponse...",
+        chooseOption: "Sélectionne une des options :",
+        printModeChooseOption: "Sélectionne une des options :",
+        strategy: "Stratégie de solution"
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -233,7 +240,11 @@ export const instanceData = {
       typeNotSupported: "Veuille essayer de recharger cette page.",
       refreshNow: "Actualiser maintenant",
       backToPrevious: "Retour à la page précédente",
-      backToHome: "Aller à notre page d'accueil"
+      backToHome: "Aller à notre page d'accueil",
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: "Préparation de l'impression !",
@@ -301,6 +312,8 @@ export const instanceData = {
       globalDescription: "Tous les événements qui se produisent quelque part sur %lang%.serlo.org"
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: "%actor% a archivé %thread%.",
       setThreadStateUnarchived: "%actor% a restauré %thread%.",
       createComment: "%actor% a commenté dans %thread%: %comment%.",
@@ -328,12 +341,13 @@ export const instanceData = {
       loadMore: "Charger plus"
     },
     bin: {
+      title: 'Title',
       trashed: 'Trashed…'
     }
   }
 };
 export const instanceLandingData = {
-  lang: "fr",
+  lang: Instance["Fr"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Notre vision est de permettre un apprentissage personnalisé et de fournir des ressources éducatives de haute qualité dans le monde entier - complètement gratuit. Serlo est une organisation de base inspirée par Wikipédia. Nous fournissons déjà des milliers d'articles, de vidéos et d'exercices résolus à cinq millions d'étudiants allemands chaque année.\nIl est maintenant temps de passer à l'international.",
@@ -554,8 +568,6 @@ export const loggedInData = {
         addAnswer: "Ajouter une réponse",
         enterTheValue: "Saisir la réponse",
         yourSolution: "Ta solution",
-        correct: "Correcte",
-        wrong: "Incorrect",
         number: "Number (exact solution, e.g. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
@@ -580,10 +592,7 @@ export const loggedInData = {
         singleChoice: "Choix unique",
         multipleChoice: "Choix multiple",
         chooseType: "Choisir le type d'exercice",
-        addAnswer: "Ajouter une réponse",
-        wrong: "Incorrect",
-        missedSome: "Presque ! Tu as manqué au moins une réponse correcte",
-        correct: "Correcte"
+        addAnswer: "Ajouter une réponse"
       },
       serloTable: {
         mode: 'Mode',
@@ -704,7 +713,7 @@ export const loggedInData = {
         sourceUrl: 'Optional URL',
         moreInFolder: "Tu peux trouver plus d'exercices dans le dossier suivant :",
         addModal: {
-          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %topicFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
           introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
@@ -719,7 +728,7 @@ export const loggedInData = {
           unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
-          topicFolderNote: 'Only one can be selected here'
+          exerciseFolderNote: 'Only one can be selected here'
         }
       },
       coursePage: {
@@ -825,7 +834,7 @@ export const loggedInData = {
         copyButtonText: "Copy to %type%",
         moveSuccess: "Sucessfully moved",
         copySuccess: "Sucessfully copied",
-        topicFolderNotice: "Copying or moving the type %topicFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
         confirmDelete: "Are you sure you want to remove this assignment?",

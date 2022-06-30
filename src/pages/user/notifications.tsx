@@ -6,13 +6,11 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
-import {
-  NotificationData,
-  Notifications,
-} from '@/components/pages/user/notifications'
+import { Notifications } from '@/components/pages/user/notifications'
 import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { sharedEventFragments } from '@/fetcher/query-fragments'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -59,10 +57,10 @@ function Content() {
     return (
       <button
         className={clsx(
-          'serlo-button mr-5 mb-5',
+          'mr-5 mb-5',
           showUnread === setShowUnreadTo
-            ? 'serlo-make-interactive-primary'
-            : 'serlo-make-interactive-light'
+            ? 'serlo-button-blue'
+            : 'serlo-button-light'
         )}
         onPointerUp={(e) => e.currentTarget.blur()}
         onClick={() => setShowUnread(setShowUnreadTo)}
@@ -80,7 +78,9 @@ function Title() {
 
 function useNotificationFetch(unread: boolean) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  return useGraphqlSwrPaginationWithAuth<NotificationData>({
+  return useGraphqlSwrPaginationWithAuth<
+    GetNotificationsQuery['notifications']['nodes'][number]
+  >({
     query: notificationsQuery,
     variables: { first: 10, unread },
     config: {
@@ -93,7 +93,7 @@ function useNotificationFetch(unread: boolean) {
 }
 
 const notificationsQuery = gql`
-  query notifications($first: Int!, $unread: Boolean, $after: String) {
+  query getNotifications($first: Int!, $unread: Boolean, $after: String) {
     notifications(first: $first, unread: $unread, after: $after) {
       pageInfo {
         hasNextPage

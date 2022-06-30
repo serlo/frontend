@@ -8,6 +8,7 @@ import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
@@ -22,7 +23,7 @@ export function ArticleAddModal({
   data,
   setModalOpen,
 }: ArticleAddModalProps) {
-  const [topicFolderId, setTopicFolderId] = useState<undefined | number>(
+  const [exerciseFolderId, setExerciseFolderId] = useState<undefined | number>(
     undefined
   )
 
@@ -33,7 +34,7 @@ export function ArticleAddModal({
 
   const { exercises, exerciseFolder, relatedContent } = data
 
-  const checkDuplicates = (id: number, typename: string) => {
+  const checkDuplicates = (id: number, typename: UuidWithRevType) => {
     const category = getCategoryByTypename(typename)
     if (
       category === 'articles' ||
@@ -54,7 +55,7 @@ export function ArticleAddModal({
     )
   }
 
-  const addEntry = (id: number, typename: string, title?: string) => {
+  const addEntry = (id: number, typename: UuidWithRevType, title?: string) => {
     const category = getCategoryByTypename(typename)
     if (
       category === 'articles' ||
@@ -68,12 +69,12 @@ export function ArticleAddModal({
       })
     }
 
-    if (typename === 'TaxonomyTerm' && title) {
+    if (typename === UuidType.TaxonomyTerm && title) {
       exerciseFolder.title.set(title)
       exerciseFolder.id.set(id.toString())
     }
 
-    if (typename.includes('Exercise')) {
+    if (typename.includes(UuidType.Exercise)) {
       //maybe also check for duplicates
       exercises.insert(exercises.length, {
         plugin: 'injection',
@@ -94,7 +95,7 @@ export function ArticleAddModal({
           {replacePlaceholders(articleStrings.addModal.introText, {
             break: <br />,
             exercises: strings.categories.exercises,
-            topicFolder: strings.entities.topicFolder,
+            exerciseFolder: strings.entities.exerciseFolder,
             articles: strings.categories.articles,
             courses: strings.categories.courses,
             videos: strings.categories.videos,
@@ -103,17 +104,17 @@ export function ArticleAddModal({
         <p className="mt-4">{articleStrings.addModal.introText2}</p>
         <ArticleRelatedMagicInput
           addEntry={addEntry}
-          showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
+          showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
         />
         <ArticleRelatedTaxonomy
           checkDuplicates={checkDuplicates}
           addEntry={addEntry}
-          showTopicFolderPreview={(id: number) => setTopicFolderId(id)}
+          showExerciseFolderPreview={(id: number) => setExerciseFolderId(id)}
         />
-        <div id="topicFolderScroll" className="min-h-[8rem]">
-          {topicFolderId ? (
+        <div id="exerciseFolderScroll" className="min-h-[8rem]">
+          {exerciseFolderId ? (
             <ArticleRelatedExercises
-              topicFolderId={topicFolderId}
+              exerciseFolderId={exerciseFolderId}
               addEntry={addEntry}
             />
           ) : null}

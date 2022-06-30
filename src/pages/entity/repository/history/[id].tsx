@@ -4,12 +4,17 @@ import { GetStaticPaths, GetStaticProps } from 'next'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { Guard } from '@/components/guard'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { RevisionHistory } from '@/components/pages/revision-history'
 import { useInstanceData } from '@/contexts/instance-context'
-import { HistoryRevisionProps, HistoryRevisionsData } from '@/data-types'
+import { Revisions } from '@/fetcher/query-types'
+import { basicUserDataFragment } from '@/fetcher/user/query'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+
+export interface HistoryRevisionProps {
+  id: number
+}
 
 export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
   <FrontendClientBase entityId={props.id}>
@@ -18,30 +23,52 @@ export default renderedPageNoHooks<HistoryRevisionProps>((props) => (
 ))
 
 function Content({ id }: HistoryRevisionProps) {
-  const response = useFetch(id)
+  const { data, error } = useFetch(id)
   const { strings } = useInstanceData()
-  if (response.data?.uuid.solutionRevisions) {
-    response.data.uuid.revisions = response.data.uuid.solutionRevisions
+
+  if (!data && !error) return <LoadingSpinner noText />
+
+  if (!data || !data.uuid) {
+    return (
+      <>
+        {renderBackbutton()}
+        {renderTitle()}
+        <h3 className="serlo-h3">{strings.errors.defaultMessage}</h3>
+      </>
+    )
   }
+
+  const { uuid } = data
+
   return (
     <>
+      {renderBackbutton()}
+      {renderTitle(uuid.revisions.nodes.length)}
+      <RevisionHistory data={uuid} />
+    </>
+  )
+
+  function renderBackbutton(title?: string, alias?: string) {
+    return (
       <Breadcrumbs
         data={[
           {
-            label:
-              response.data?.uuid.currentRevision?.title ??
-              strings.revisions.toContent,
-            url: response.data?.uuid.alias,
+            label: title ?? strings.revisions.toContent,
+            url: alias ?? `/${id}`,
           },
         ]}
         asBackButton
       />
-      <Title amount={response.data?.uuid.revisions?.nodes.length} />
-      <Guard {...response}>
-        <RevisionHistory data={response.data?.uuid} />
-      </Guard>
-    </>
-  )
+    )
+  }
+  function renderTitle(amount?: number) {
+    return (
+      <PageTitle
+        title={`${strings.pageTitles.revisionHistory} (${amount ?? '…'})`}
+        headTitle
+      />
+    )
+  }
 }
 
 export const getStaticProps: GetStaticProps<HistoryRevisionProps> = async (
@@ -62,18 +89,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-function Title({ amount }: { amount?: number }) {
-  const { strings } = useInstanceData()
-  return (
-    <PageTitle
-      title={`${strings.pageTitles.revisionHistory} (${amount ?? '…'})`}
-      headTitle
-    />
-  )
-}
-
 function useFetch(id: number) {
-  return useGraphqlSwr<{ uuid: HistoryRevisionsData }>({
+  return useGraphqlSwr<{ uuid: Revisions }>({
     query: revisionHistoryQuery,
     variables: { id },
     config: {
@@ -83,14 +100,14 @@ function useFetch(id: number) {
 }
 
 export const revisionHistoryQuery = gql`
-  query getRevisions($id: Int!) {
+  query revisions($id: Int!) {
     uuid(id: $id) {
       id
       alias
       __typename
+      title
       ... on Applet {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -98,7 +115,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -107,7 +124,6 @@ export const revisionHistoryQuery = gql`
       }
       ... on Article {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -115,7 +131,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -124,7 +140,6 @@ export const revisionHistoryQuery = gql`
       }
       ... on Course {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -132,7 +147,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -141,7 +156,6 @@ export const revisionHistoryQuery = gql`
       }
       ... on CoursePage {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -149,7 +163,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -158,7 +172,6 @@ export const revisionHistoryQuery = gql`
       }
       ... on Event {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -166,7 +179,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -182,7 +195,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -198,7 +211,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -214,7 +227,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -223,7 +236,6 @@ export const revisionHistoryQuery = gql`
       }
       ... on Page {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -231,7 +243,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             date
           }
@@ -239,7 +251,6 @@ export const revisionHistoryQuery = gql`
       }
       ... on Video {
         currentRevision {
-          title
           id
         }
         revisions {
@@ -247,7 +258,7 @@ export const revisionHistoryQuery = gql`
             id
             trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -258,11 +269,12 @@ export const revisionHistoryQuery = gql`
         currentRevision {
           id
         }
-        solutionRevisions: revisions {
+        revisions {
           nodes {
             id
+            trashed
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -272,11 +284,5 @@ export const revisionHistoryQuery = gql`
     }
   }
 
-  fragment authorData on User {
-    id
-    username
-    isActiveAuthor
-    isActiveDonor
-    isActiveReviewer
-  }
+  ${basicUserDataFragment}
 `

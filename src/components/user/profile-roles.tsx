@@ -4,6 +4,7 @@ import { partition } from 'ramda'
 import { Link } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 type Roles = UserPage['userData']['roles']
 
@@ -48,18 +49,12 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
 
   function Role({ text, role }: { text: string; role: string }) {
     const label = (
-      <span
-        className={clsx(
-          'serlo-button serlo-make-interactive-light text-sm ml-1'
-        )}
-      >
-        {text}
-      </span>
+      <span className={clsx('serlo-button-light text-sm ml-1')}>{text}</span>
     )
 
     return (
       <>
-        {lang === 'de' ? (
+        {lang === Instance.De ? (
           <Link href={`/community/202923/rollen-der-serlo-community#${role}`}>
             {label}
           </Link>

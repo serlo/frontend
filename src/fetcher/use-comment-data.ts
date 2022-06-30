@@ -57,7 +57,7 @@ export function useCommentData(id: number) {
   const uuid = data?.uuid
 
   // eslint-disable-next-line no-console
-  if (error) console.log(error)
+  if (error) console.error(error)
 
   if (uuid && hasOwnPropertyTs(uuid, 'threads')) {
     const threads = uuid?.threads.nodes

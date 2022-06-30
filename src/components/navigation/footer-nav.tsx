@@ -1,3 +1,4 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons/faGithubSquare'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
 import { faHouseLaptop } from '@fortawesome/free-solid-svg-icons/faHouseLaptop'
@@ -5,9 +6,9 @@ import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
-import { FooterNavigation } from '@/data-types'
+import { FooterIcon, FooterNavigation } from '@/data-types'
 
-const iconMapping = {
+const iconMapping: Record<FooterIcon, IconDefinition> = {
   newsletter: faEnvelope,
   github: faGithubSquare,
   job: faHouseLaptop,

@@ -141,7 +141,7 @@ function SerloTableEditor(props: SerloTableProps) {
             e.target.querySelector('.hackdiv')?.focus()
           }}
         >
-          <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+          <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
           {renderAddButton(true)}
         </div>
 
@@ -242,7 +242,7 @@ function SerloTableEditor(props: SerloTableProps) {
         onClick={() => {
           cell.content.replace(isImage ? 'text' : 'image')
         }}
-        className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm block absolute"
+        className="serlo-button-light m-2 py-0.5 text-sm block absolute"
         title={
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
@@ -333,9 +333,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function getButtonStyle() {
-    return clsx(
-      'serlo-button serlo-make-interactive-transparent-blue text-brand-lighter'
-    )
+    return clsx('serlo-button-blue-transparent text-brand-lighter')
   }
 
   function insertRow(beforeIndex?: number) {
@@ -379,7 +377,7 @@ function SerloTableEditor(props: SerloTableProps) {
     return (
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-light',
+          'serlo-button-light',
           isRow ? 'm-4 -mt-4 w-auto' : 'mb-16'
         )}
         title={replaceWithType(tableStrings.addType, isRow)}

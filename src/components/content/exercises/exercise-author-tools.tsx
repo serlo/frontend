@@ -8,9 +8,12 @@ import {
   AuthorToolsHoverMenu,
 } from '../../user-tools/author-tools-hover-menu'
 import { FaIcon } from '@/components/fa-icon'
+import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseAuthorToolsProps {
-  data: AuthorToolsData
+  data: AuthorToolsData & {
+    type: ExerciseInlineType
+  }
 }
 
 export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
@@ -31,7 +34,11 @@ export function ExerciseAuthorTools({ data }: ExerciseAuthorToolsProps) {
         )}
       >
         <FaIcon
-          icon={data.type == '_ExerciseGroupInline' ? faLayerGroup : faTools}
+          icon={
+            data.type == ExerciseInlineType.ExerciseGroup
+              ? faLayerGroup
+              : faTools
+          }
         />
       </a>
     </Tippy>

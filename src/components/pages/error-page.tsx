@@ -5,6 +5,8 @@ import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
+import { getTranslatedType } from '@/helper/get-translated-type'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 interface ErrorPageProps {
@@ -16,9 +18,12 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
   const [path, setPath] = useState('')
   const [hasSerloBacklink, setHasSerloBacklink] = useState(false)
   const { strings } = useInstanceData()
+  const errStrings = strings.errors
 
   useEffect(() => {
-    void triggerSentry({ message, code })
+    if (!window.location.pathname.startsWith('/error/deleted')) {
+      void triggerSentry({ message, code })
+    }
 
     setPath(window.location.pathname)
 
@@ -27,25 +32,35 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
   }, [code, message])
 
   const isProbablyTemporary = code > 500
+  const isDeletedComment = path.startsWith('/error/deleted/')
+
+  const title = isDeletedComment
+    ? `🧹 ${errStrings.deletedComment.title}`
+    : errStrings.title
+  const text = isDeletedComment
+    ? replacePlaceholders(errStrings.deletedComment.text, {
+        type: getTranslatedType(strings, 'comment'),
+        break: <br />,
+      })
+    : errStrings.defaultMessage
+
+  const additionalText = isDeletedComment
+    ? ''
+    : isProbablyTemporary
+    ? errStrings.temporary
+    : errStrings.permanent
 
   return (
     <>
       <Head>
+        {isDeletedComment && 'Deleted Comment'}
         <meta name="robots" content="noindex" />
       </Head>
-      <PageTitle title={strings.errors.title} headTitle />
+      <PageTitle title={title} headTitle />
       <p className="serlo-p text-2xl" id="error-page-description">
-        {strings.errors.defaultMessage}{' '}
-        {!isProbablyTemporary && (
-          <>
-            <br />
-            {strings.errors.permanent}
-          </>
-        )}
+        {text}
       </p>
-      <p className="serlo-p text-2xl">
-        {isProbablyTemporary && strings.errors.temporary}
-      </p>
+      <p className="serlo-p text-2xl">{additionalText}</p>
       <p className="serlo-p">{renderButtons()}</p>
       <HSpace amount={70} />
       <p className="serlo-p">
@@ -77,10 +92,10 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
         )}
         {isProbablyTemporary && (
           <button
-            className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+            className="serlo-button-blue mr-4 mt-4"
             onClick={() => window.location.reload()}
           >
-            {strings.errors.refreshNow}
+            {errStrings.refreshNow}
           </button>
         )}
       </>
@@ -94,9 +109,9 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
         href="/"
         forceNoCSR
         unstyled
-        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+        className="serlo-button-blue mr-4 mt-4"
       >
-        {strings.errors.backToHome}
+        {errStrings.backToHome}
       </Link>
     )
   }
@@ -105,10 +120,10 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
     if (!hasSerloBacklink) return null
     return (
       <button
-        className="serlo-button serlo-make-interactive-primary mr-4 mt-4"
+        className="serlo-button-blue mr-4 mt-4"
         onClick={() => window.history.back()}
       >
-        {strings.errors.backToPrevious}
+        {errStrings.backToPrevious}
       </button>
     )
   }

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import mergeDeepRight from 'ramda/src/mergeDeepRight'
 
-import { InstanceData } from '@/data-types'
+import { InstanceData, UuidWithRevType } from '@/data-types'
 import {
   instanceData as deInstanceData,
   instanceLandingData as deInstanceLandingData,
@@ -49,7 +49,7 @@ export function parseLanguageSubfolder(alias: string) {
       return { alias: subalias === '' ? '/' : subalias, instance: lang }
     }
   }
-  return { alias, instance: 'de' }
+  return { alias, instance: Instance.De }
 }
 
 export function isOnLanguageSubdomain() {
@@ -62,19 +62,19 @@ export function isOnLanguageSubdomain() {
   return false
 }
 
-export function getInstanceDataByLang(lang: string) {
+export function getInstanceDataByLang(lang: Instance) {
   const enData = enInstanceData
 
   const data =
-    lang == 'de'
+    lang == Instance.De
       ? deInstanceData
-      : lang == 'es'
+      : lang == Instance.Es
       ? esInstanceData
-      : lang == 'fr'
+      : lang == Instance.Fr
       ? frInstanceData
-      : lang == 'ta'
+      : lang == Instance.Ta
       ? taInstanceData
-      : lang == 'hi'
+      : lang == Instance.Hi
       ? hiInstanceData
       : enInstanceData
 
@@ -85,15 +85,15 @@ export function getServerSideStrings(lang: string) {
   const enData = enServerSideStrings
 
   const data =
-    lang == 'de'
+    lang == Instance.De
       ? deServerSideStrings
-      : lang == 'es'
+      : lang == Instance.Es
       ? esServerSideStrings
-      : lang == 'fr'
+      : lang == Instance.Fr
       ? frServerSideStrings
-      : lang == 'ta'
+      : lang == Instance.Ta
       ? taServerSideStrings
-      : lang == 'hi'
+      : lang == Instance.Hi
       ? hiServerSideStrings
       : enServerSideStrings
 
@@ -104,15 +104,15 @@ export function getLandingData(lang: string) {
   const enData = enInstanceLandingData
 
   const data =
-    lang == 'de'
+    lang == Instance.De
       ? deInstanceLandingData
-      : lang == 'es'
+      : lang == Instance.Es
       ? esInstanceLandingData
-      : lang == 'fr'
+      : lang == Instance.Fr
       ? frInstanceLandingData
-      : lang == 'ta'
+      : lang == Instance.Ta
       ? taInstanceLandingData
-      : lang == 'hi'
+      : lang == Instance.Hi
       ? hiInstanceLandingData
       : enInstanceLandingData
 
@@ -123,15 +123,15 @@ export function getLoggedInData(lang: string) {
   const enData = enLoggedInData
 
   const data =
-    lang == 'de'
+    lang == Instance.De
       ? deLoggedInData
-      : lang == 'es'
+      : lang == Instance.Es
       ? esLoggedInData
-      : lang == 'fr'
+      : lang == Instance.Fr
       ? frLoggedInData
-      : lang == 'ta'
+      : lang == Instance.Ta
       ? taLoggedInData
-      : lang == 'hi'
+      : lang == Instance.Hi
       ? hiLoggedInData
       : enLoggedInData
 
@@ -139,9 +139,10 @@ export function getLoggedInData(lang: string) {
 }
 
 export function getEntityStringByTypename(
-  typename: string | undefined,
+  typename: UuidWithRevType | undefined,
   strings: InstanceData['strings']
 ) {
+  const typenameNoRevs = typename?.replace('Revision', '')
   const lookup = {
     Page: strings.entities.page,
     Article: strings.entities.article,
@@ -156,11 +157,12 @@ export function getEntityStringByTypename(
     TaxonomyTerm: strings.entities.taxonomyTerm,
     Solution: strings.entities.solution,
     User: strings.entities.user,
+    Comment: strings.entities.comment,
     fallback: strings.entities.content,
   }
 
-  if (typename && typename in lookup) {
-    return lookup[typename as keyof typeof lookup]
+  if (typenameNoRevs && typenameNoRevs in lookup) {
+    return lookup[typenameNoRevs as keyof typeof lookup]
   }
   return lookup.fallback
 }

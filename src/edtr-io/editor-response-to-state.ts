@@ -23,6 +23,7 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
+import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -95,7 +96,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     return convert(uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
 
     triggerSentry({
       message: `error while converting: ${JSON.stringify(stack)}`,
@@ -326,7 +327,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
               ? convertTextSolution({
                   ...uuid.solution,
                   alias: uuid.alias,
-                  __typename: 'Solution',
+                  __typename: UuidType.Solution,
                   instance: uuid.instance,
                   exercise: uuid,
                 }).initialState.state
@@ -370,7 +371,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       .map((exercise) => {
         return convertTextExercise({
           ...exercise,
-          __typename: 'Exercise',
+          __typename: UuidType.Exercise,
           taxonomyTerms: { nodes: [] },
           revisions: {
             __typename: 'ExerciseRevisionConnection',
@@ -378,7 +379,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           },
           currentRevision: {
             ...exercise.currentRevision,
-            __typename: 'ExerciseRevision',
+            __typename: UuidRevType.Exercise,
             content: exercise.currentRevision?.content ?? '',
             date: '',
           },
@@ -483,7 +484,7 @@ export function convertUserByDescription(description?: string | null) {
 }
 
 export interface AppletSerializedState extends Entity {
-  __typename?: 'Applet'
+  __typename?: UuidType.Applet
   title?: string
   url?: string
   content: SerializedEditorState
@@ -493,7 +494,7 @@ export interface AppletSerializedState extends Entity {
 }
 
 export interface ArticleSerializedState extends Entity {
-  __typename?: 'Article'
+  __typename?: UuidType.Article
   title?: string
   content: SerializedEditorState
   reasoning?: SerializedEditorState
@@ -502,7 +503,7 @@ export interface ArticleSerializedState extends Entity {
 }
 
 export interface CourseSerializedState extends Entity {
-  __typename?: 'Course'
+  __typename?: UuidType.Course
   title?: string
   description: SerializedEditorState
   content?: SerializedEditorState // just to simplify types, will not be set
@@ -512,14 +513,14 @@ export interface CourseSerializedState extends Entity {
 }
 
 export interface CoursePageSerializedState extends Entity {
-  __typename?: 'CoursePage'
+  __typename?: UuidType.CoursePage
   title?: string
   icon?: 'explanation' | 'play' | 'question'
   content: SerializedEditorState
 }
 
 export interface EventSerializedState extends Entity {
-  __typename?: 'Event'
+  __typename?: UuidType.Event
   title?: string
   content: SerializedEditorState
   meta_title?: string
@@ -527,13 +528,13 @@ export interface EventSerializedState extends Entity {
 }
 
 export interface PageSerializedState extends Uuid, License {
-  __typename?: 'Page'
+  __typename?: UuidType.Page
   title?: string
   content: SerializedEditorState
 }
 
 export interface TaxonomySerializedState extends Uuid {
-  __typename?: 'Taxonomy'
+  __typename?: UuidType.TaxonomyTerm
   term: {
     name: string
   }
@@ -544,7 +545,7 @@ export interface TaxonomySerializedState extends Uuid {
 }
 
 export interface TextExerciseSerializedState extends Entity {
-  __typename?: 'Exercise'
+  __typename?: UuidType.Exercise
   content: SerializedEditorState
   'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
@@ -574,24 +575,24 @@ interface InputType {
 }
 
 export interface TextExerciseGroupSerializedState extends Entity {
-  __typename?: 'ExerciseGroup'
+  __typename?: UuidType.ExerciseGroup
   cohesive?: string
   content: SerializedEditorState
   'grouped-text-exercise'?: TextExerciseSerializedState[]
 }
 
 export interface TextSolutionSerializedState extends Entity {
-  __typename?: 'Solution'
+  __typename?: UuidType.Solution
   content: SerializedEditorState
 }
 
 export interface UserSerializedState extends Uuid {
-  __typename?: 'User'
+  __typename?: UuidType.User
   description: SerializedEditorState
 }
 
 export interface VideoSerializedState extends Entity {
-  __typename?: 'Video'
+  __typename?: UuidType.Video
   title?: string
   description: SerializedEditorState
   content?: string

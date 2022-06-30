@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-export const sharedUserFragment = gql`
+export const sharedUserFragments = gql`
   fragment userData on User {
     username
     date
@@ -27,18 +27,29 @@ export const sharedUserFragment = gql`
   }
 `
 
+export const basicUserDataFragment = gql`
+  fragment basicUserData on User {
+    id
+    username
+    isActiveAuthor
+    isActiveDonor
+    isActiveReviewer
+    isNewAuthor
+  }
+`
+
 export const userQuery = gql`
   query userUuid($path: String!, $instance: Instance!) {
     authorization
     uuid(alias: { path: $path, instance: $instance }) {
       ... on User {
-        __typename
         id
+        __typename
         trashed
         ...userData
       }
     }
   }
 
-  ${sharedUserFragment}
+  ${sharedUserFragments}
 `

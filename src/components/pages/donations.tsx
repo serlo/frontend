@@ -96,7 +96,7 @@ export function Donations() {
           </h3>
           <p>
             <a
-              className="serlo-button serlo-make-interactive-transparent-green -ml-1 font-bold pt-1"
+              className="serlo-button-green-transparent -ml-1 font-bold pt-1"
               href="https://www.paypal.me/serlo"
             >
               <FaIcon icon={faPaypal} /> Über PayPal spenden

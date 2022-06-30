@@ -33,7 +33,7 @@ export function CommentArchive({
         <button
           onClick={toogleShowArchived}
           onPointerUp={(e) => e.currentTarget.blur()}
-          className="serlo-button serlo-make-interactive-light mt-4"
+          className="serlo-button-light mt-4"
         >
           {replacePlaceholders(strings.comments.showArchived, {
             threads: strings.entities.threads,

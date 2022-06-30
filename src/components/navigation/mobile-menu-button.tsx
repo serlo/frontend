@@ -16,7 +16,7 @@ export function MobileMenuButton(props: MobileMenuButtonProps) {
       onClick={onClick}
       aria-label="Menu"
       className={clsx(
-        'sm:hidden absolute top-4 right-4',
+        'md:hidden absolute mt-5 right-4 mobile:static mobile:order-last block',
         'rounded-full bg-brand-150 text-brand w-12 h-12',
         'outline-none'
       )}
