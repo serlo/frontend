@@ -1526,7 +1526,6 @@ export interface Mutation {
 
 export interface Navigation {
   __typename?: 'Navigation';
-  data: Scalars['JSON'];
   path: NavigationNodeConnection;
 }
 
