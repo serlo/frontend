@@ -66,7 +66,7 @@ export function Box({
     <figure
       id={anchorId}
       className={clsx(
-        'serlo-box',
+        'serlo-box inline-block',
         'mx-side border-3 pt-[2px] pb-side mb-6 rounded-xl relative',
         borderColorClass
       )}
@@ -80,7 +80,7 @@ export function Box({
     const unwrappedTitle = title?.[0].children
 
     return (
-      <figcaption className="px-side pb-3 pt-1 text-lg">
+      <figcaption className="px-side pb-2 pt-2.5 text-lg">
         <a className="no-underline" href={'#' + anchorId}>
           {isBlank ? null : (
             <>
