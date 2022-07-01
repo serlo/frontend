@@ -66,7 +66,7 @@ export function Box({
     <figure
       id={anchorId}
       className={clsx(
-        'serlo-box inline-block',
+        'serlo-box overflow-auto',
         'mx-side border-3 pt-[2px] pb-side mb-6 rounded-xl relative',
         borderColorClass
       )}
