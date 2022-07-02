@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react'
 
 import { Flow, handleFlowError } from '@/components/auth/flow'
 import { hydra, kratos } from '@/helper/kratos'
-import { serloDomain } from '@/helper/urls/serlo-domain'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
 
@@ -18,11 +17,6 @@ import { serloDomain } from '@/helper/urls/serlo-domain'
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const [session] = useState<Session | null>()
-  const [state, setState] = useState({
-    email: '',
-    username: '',
-    password: '',
-  })
   const router = useRouter()
 
   const {
@@ -99,36 +93,6 @@ export function Login() {
       {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
       {aal || refresh ? <div>Log out</div> : ''}
-      <form onSubmit={onRegister}>
-        <label htmlFor="username">username:</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          onChange={onRegisterFormChange}
-          value={state.username}
-        />
-        <br />
-        <label htmlFor="email">email:</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          onChange={onRegisterFormChange}
-          value={state.email}
-        />
-        <br />
-        <label htmlFor="password">password:</label>
-        <input
-          type="text"
-          id="password"
-          name="password"
-          onChange={onRegisterFormChange}
-          value={state.password}
-        />
-        <br />
-        <input type="submit" value="Create account" />
-      </form>
       {/*<div>
           {/*  <Link href="/recovery" passHref>*/}
       {/*    <div>Recover your account</div>*/}
@@ -148,7 +112,6 @@ export function Login() {
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
           const { session } = data
-
           const subject = (
             session.identity.metadata_public as { legacy_id: number }
           ).legacy_id
@@ -193,29 +156,5 @@ export function Login() {
         throw err
       }
     }
-  }
-
-  function onRegisterFormChange(e) {
-    setState({ ...state, [e.target.name]: e.target.value })
-  }
-
-  async function onRegister(event) {
-    event.preventDefault()
-
-    const apiKratosEndpoint =
-      process.env.NEXT_PUBLIC_ENV === 'local'
-        ? 'http://localhost:3001/kratos'
-        : `https://api.${serloDomain}/kratos`
-
-    // FIXME: api has to enable cors
-    await fetch(`${apiKratosEndpoint}/register`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(state),
-      credentials: 'same-origin',
-    })
   }
 }

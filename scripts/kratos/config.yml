@@ -23,18 +23,23 @@ selfservice:
         haveibeenpwned_enabled: false
         min_password_length: 6
         identifier_similarity_check_enabled: false
+    link:
+      enabled: true
 
   flows:
     error:
       ui_url: http://localhost:3000/error
-
     logout:
       after:
         default_browser_return_url: http://localhost:3000/login
-
     login:
       ui_url: http://localhost:3000/login
       lifespan: 10m
+    registration:
+      ui_url: http://localhost:3000/registration
+    verification:
+      enabled: true
+      ui_url: http://localhost:3000/ # TODO: /verification that may just redirect withouth ?flow query
 
 log:
   level: debug
