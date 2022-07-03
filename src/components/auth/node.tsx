@@ -102,7 +102,9 @@ export function Node(props: NodeProps) {
         return (
           <>
             <label>
-              {getNodeLabel(node)}
+              {getNodeLabel(node)
+                ? getNodeLabel(node)
+                : node.attributes.name.replace('traits.', '')}
               <input
                 type={attributes.type}
                 name={attributes.name}

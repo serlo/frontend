@@ -78,11 +78,5 @@ export function Registration() {
       )
   }
 
-  return (
-    <>
-      {flow ? (
-        <Flow flow={flow} onSubmit={onSubmit}/>
-      ) : null}
-    </>
-  )
+  return <>{flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}</>
 }

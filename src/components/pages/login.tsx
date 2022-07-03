@@ -13,7 +13,7 @@ import { hydra, kratos } from '@/helper/kratos'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
 
-// TODO: remove Hydra, it should be a server side communication
+// TODO: remove Hydra from here, it should be a server side communication
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const [session] = useState<Session | null>()

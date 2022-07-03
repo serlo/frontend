@@ -1,7 +1,9 @@
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
   SelfServiceLoginFlow,
+  SelfServiceRegistrationFlow,
   SubmitSelfServiceLoginFlowBody,
+  SubmitSelfServiceRegistrationFlowBody,
 } from '@ory/kratos-client'
 import { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
@@ -10,11 +12,13 @@ import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 import { Node } from '@/components/auth/node'
 
 export interface FlowProps<T extends SubmitPayload> {
-  flow: SelfServiceLoginFlow
+  flow: SelfServiceLoginFlow | SelfServiceRegistrationFlow
   onSubmit: (values: T) => Promise<void>
 }
 
-export type SubmitPayload = SubmitSelfServiceLoginFlowBody
+export type SubmitPayload =
+  | SubmitSelfServiceLoginFlowBody
+  | SubmitSelfServiceRegistrationFlowBody
 
 export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
   const { flow, onSubmit } = props

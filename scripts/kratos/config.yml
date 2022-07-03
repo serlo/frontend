@@ -39,7 +39,7 @@ selfservice:
       ui_url: http://localhost:3000/registration
     verification:
       enabled: true
-      ui_url: http://localhost:3000/ # TODO: /verification that may just redirect withouth ?flow query
+      ui_url: http://localhost:3000/ # TODO: /verification that may just redirect without ?flow query
 
 log:
   level: debug
