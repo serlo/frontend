@@ -62,14 +62,13 @@ services:
       - LOG_LEAK_SENSITIVE_VALUES=true
       - OAUTH2_EXPOSE_INTERNAL_ERRORS=1
       - URLS_SELF_ISSUER=http://localhost:4444
-      - URLS_LOGIN=http://localhost:3000/login
-      - URLS_LOGOUT=http://localhost:3000/login
-      - URLS_CONSENT=http://localhost:3000/login
+      - URLS_LOGIN=http://localhost:3000/api/hydra/login
+      - URLS_LOGOUT=http://localhost:3000/api/hydra/login # TODO
+      - URLS_CONSENT=http://localhost:3000/api/hydra/consent
       - DSN=memory
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_ENABLED=public,pairwise
       - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
-      - SERVE_ADMIN_CORS_ENABLED=true # remove this value when hydra is handled in server side
     networks:
       - intranet
 networks:

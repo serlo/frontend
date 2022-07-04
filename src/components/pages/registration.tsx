@@ -45,7 +45,7 @@ export function Registration() {
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
     await router
-      .push(`/registration?flow=${flow?.id}`, undefined, { shallow: true })
+      .push(`/registration?flow=${String(flow?.id)}`, undefined, { shallow: true })
       .then(() =>
         kratos
           .submitSelfServiceRegistrationFlow(String(flow?.id), values)

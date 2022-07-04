@@ -14,7 +14,7 @@ docker-compose -f scripts/kratos/docker-compose.yml run \
   --grant-types authorization_code,refresh_token \
   --response-types code \
   --scope openid,offline_access \
-  --callbacks http://localhost:3000/api/auth/login,http://localhost:3000/api/auth/callback \
+  --callbacks http://localhost:3000/api/hydra/login,http://localhost:3000/api/auth/callback,http://localhost:3000/api/auth/login \
   --post-logout-callbacks http://localhost:3000/api/auth/logout-callback \
   --token-endpoint-auth-method client_secret_post
 

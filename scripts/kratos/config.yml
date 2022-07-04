@@ -11,10 +11,11 @@ serve:
     base_url: http://localhost:4434/
 
 selfservice:
-  default_browser_return_url: http://localhost:3000/api/auth/callback
+  default_browser_return_url: http://localhost:3000/
   allowed_return_urls:
-    - http://localhost:3000/api/auth/login
-    - http://localhost:3000/api/auth/callback
+    - http://localhost:3000/login
+    - http://localhost:3000/registration
+    - http://localhost:3000/verification
 
   methods:
     password:
