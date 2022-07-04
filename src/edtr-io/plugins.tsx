@@ -28,6 +28,7 @@ import { layoutPlugin } from './plugins/layout'
 import { createPageLayoutPlugin } from './plugins/page-layout'
 import { pageTeamPlugin } from './plugins/page-team'
 import { separatorPlugin } from './plugins/separator'
+import { createSerloGalleryPlugin } from './plugins/serlo-gallery'
 import { serloTablePlugin } from './plugins/serlo-table'
 import { solutionPlugin } from './plugins/solution'
 import { tablePlugin } from './plugins/table'
@@ -354,6 +355,7 @@ export function createPlugins({
     }),
     separator: separatorPlugin,
     serloTable: serloTablePlugin,
+    serloGallery: createSerloGalleryPlugin(),
     solution: solutionPlugin,
     spoiler: createSpoilerPlugin({
       content: { plugin: 'rows' },

@@ -34,6 +34,7 @@ export enum FrontendNodeType {
   Box = 'box',
   Anchor = 'anchor',
   SerloTable = 'serlo-table',
+  SerloGallery = 'serlo-gallery',
   SerloTr = 'serlo-tr',
   SerloTd = 'serlo-td',
   Table = 'table',
@@ -212,6 +213,10 @@ export interface FrontendAnchorNode {
   type: FrontendNodeType.Anchor
   id: string
   children?: undefined
+}
+
+export interface FrontendSerloGalleryNode {
+  children?: FrontendImgNode[]
 }
 
 export interface FrontendSerloTableNode {
