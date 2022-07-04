@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
-import { shouldUseFeature } from '../user/profile-experimental'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -132,94 +131,35 @@ export function AddRevision({
               | AddPageRevisionMutationData
               | TaxonomyCreateOrUpdateMutationData
           ) => {
-            if (
-              shouldUseFeature('addRevisionMutation') &&
-              supportedTypes.includes(type as UuidType)
-            ) {
-              // eslint-disable-next-line no-console
-              console.log('using api endpoint to save')
-
-              const dataWithType = {
-                ...data,
-                __typename: type,
-              }
-
-              // refactor and rename when removing legacy code
-              const skipReview = hasOwnPropertyTs(data, 'controls')
-                ? data.controls.checkout
-                : undefined
-              const _needsReview = skipReview ? false : needsReview
-
-              const success =
-                type === UuidType.Page
-                  ? //@ts-expect-error resolve when old code is removed
-                    await addPageRevision(dataWithType)
-                  : type === UuidType.TaxonomyTerm
-                  ? await taxonomyCreateOrUpdateMutation(
-                      dataWithType as TaxonomyCreateOrUpdateMutationData
-                    )
-                  : await setEntityMutation(
-                      //@ts-expect-error resolve when old code is removed
-                      dataWithType,
-                      _needsReview,
-                      initialState
-                    )
-
-              return new Promise((resolve, reject) => {
-                if (success) resolve()
-                else reject()
-              })
+            const dataWithType = {
+              ...data,
+              __typename: type,
             }
 
+            // refactor and rename when removing legacy code
+            const skipReview = hasOwnPropertyTs(data, 'controls')
+              ? data.controls.checkout
+              : undefined
+            const _needsReview = skipReview ? false : needsReview
+
+            const success =
+              type === UuidType.Page
+                ? //@ts-expect-error resolve when old code is removed
+                  await addPageRevision(dataWithType)
+                : type === UuidType.TaxonomyTerm
+                ? await taxonomyCreateOrUpdateMutation(
+                    dataWithType as TaxonomyCreateOrUpdateMutationData
+                  )
+                : await setEntityMutation(
+                    //@ts-expect-error resolve when old code is removed
+                    dataWithType,
+                    _needsReview,
+                    initialState
+                  )
+
             return new Promise((resolve, reject) => {
-              fetch(window.location.pathname, {
-                method: 'POST',
-                headers: {
-                  'X-Requested-with': 'XMLHttpRequest',
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  'X-From': 'legacy-serlo.org',
-                },
-                body: JSON.stringify(data),
-              })
-                .then((response) => response.json())
-                .then(
-                  (data: {
-                    success: boolean
-                    redirect: string
-                    errors: object
-                  }) => {
-                    if (data.success && data.redirect) {
-                      resolve()
-
-                      // override behaviour for taxonomy term
-                      if (
-                        data.redirect.includes('/taxonomy/term/update/') ||
-                        data.redirect.includes('/taxonomy/term/create/')
-                      ) {
-                        const id = data.redirect.match(/[\d]+$/)
-                        if (id && id[0]) {
-                          window.location.href = `/${id[0]}`
-                          return
-                        }
-                      }
-
-                      window.location.href =
-                        data.redirect.length > 5
-                          ? data.redirect
-                          : window.location.href
-                    } else {
-                      // eslint-disable-next-line no-console
-                      console.error(data.errors)
-                      reject()
-                    }
-                  }
-                )
-                .catch((value) => {
-                  // eslint-disable-next-line no-console
-                  console.error(value)
-                  reject(value)
-                })
+              if (success) resolve()
+              else reject()
             })
           }}
           type={type}
