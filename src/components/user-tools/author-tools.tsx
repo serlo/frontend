@@ -118,10 +118,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
     },
-    moveCoursePage: {
-      url: `/entity/link/move/link/${data.id}/${data.courseId!}`,
-      canDo: false,
-    },
     organize: {
       url: `/taxonomy/term/organize/${data.id}`,
       canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
@@ -133,10 +129,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     copyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
       canDo: canDo(TaxonomyTerm.change),
-    },
-    addGroupedTextExercise: {
-      url: `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
-      canDo: false,
     },
     changeLicense: {
       url: `/entity/license/update/${data.id}`,
@@ -152,10 +144,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         ? loggedInStrings.authorMenu.moveToGrouped
         : loggedInStrings.authorMenu.moveToTextExercise,
       canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
-    },
-    addCoursePage: {
-      url: `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
-      canDo: false,
     },
     directLink: {
       title: loggedInStrings.authorMenu.directLink,
