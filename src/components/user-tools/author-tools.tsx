@@ -19,8 +19,7 @@ import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
   Abo = 'abo',
-  AddCoursePage = 'addCoursePage',
-  AddGroupedTextExercise = 'addGroupedTextExercise',
+
   ChangeLicense = 'changeLicense',
   CopyItems = 'copyItems',
   Curriculum = 'curriculum',
@@ -28,7 +27,6 @@ export enum Tool {
   UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
-  MoveCoursePage = 'moveCoursePage',
   MoveItems = 'moveItems',
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
