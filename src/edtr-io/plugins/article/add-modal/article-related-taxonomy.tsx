@@ -1,5 +1,4 @@
 import { faSearch, Icon } from '@edtr-io/ui'
-import { TaxonomyTermType } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -8,6 +7,7 @@ import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'

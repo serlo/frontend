@@ -1,4 +1,3 @@
-import { Instance } from '@serlo/api'
 import { Fragment } from 'react'
 
 import { Link } from '../content/link'
@@ -7,6 +6,7 @@ import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { isDefined } from '@/helper/utils'
 
 export function ProfileBadges({

@@ -10,13 +10,13 @@ import { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
 import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
-import { TaxonomyTermType } from '@serlo/api'
 
 import {
   TopicCategoryCustomType,
   TopicCategoryType,
   UuidWithRevType,
 } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 export const categoryIconMapping: Record<
   TopicCategoryType | TopicCategoryCustomType,

@@ -1,4 +1,3 @@
-import { TaxonomyTermType } from '@serlo/api'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -11,6 +10,7 @@ import {
   featuredContent,
   FeaturedContentData,
 } from '@/data/de/de-subject-landing-data'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { shuffleArray } from '@/helper/shuffle-array'

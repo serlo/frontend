@@ -1,10 +1,10 @@
-import { Instance } from '@serlo/api'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
 
 import { isLegacyLink } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { submitEvent } from '@/helper/submit-event'
 
 /* 
@@ -47,8 +47,7 @@ export function GoogleSeachWrapper() {
     const gcse = document.createElement('script')
     gcse.type = 'text/javascript'
     gcse.async = true
-    gcse.src =
-      'https://cse.google.com/cse.js?cx=' + searchEngineIds[lang as Instance]
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + searchEngineIds[lang]
 
     const s = document.getElementsByTagName('script')[0]
     s.parentNode!.insertBefore(gcse, s)

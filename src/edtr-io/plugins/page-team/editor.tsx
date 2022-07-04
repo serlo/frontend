@@ -3,6 +3,7 @@ import * as t from 'io-ts'
 
 import { PageTeamPluginProps } from '.'
 import { PageTeamRenderer } from './renderer'
+import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 const TeamDataDecoder = t.array(
@@ -22,6 +23,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
 ) => {
   const { data } = props.state
   const noData = !data || data.length === 0
+  const { lang } = useInstanceData()
 
   const rendererData = data.map((entry) => {
     return {
@@ -64,7 +66,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
           onClick={async () => {
             try {
               const response = await fetch(
-                'https://opensheet.elk.sh/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/teamdata'
+                `https://opensheet.elk.sh/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/teamdata_${lang}`
               )
               const teamData = TeamDataDecoder.decode(
                 (await response.json()) as unknown

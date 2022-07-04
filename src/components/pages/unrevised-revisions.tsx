@@ -1,9 +1,8 @@
-import { Instance } from '@serlo/api'
-
 import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 export interface UnrevisedRevisionsOverviewProps {
   data: UnrevisedRevisionsData

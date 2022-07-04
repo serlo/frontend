@@ -1,5 +1,3 @@
-import { Instance } from '@serlo/api'
-
 import { ProfileDescriptionEditor } from './profile-description-editor'
 import { ProfileExperimental } from './profile-experimental'
 import { getAvatarUrl } from './user-link'
@@ -7,6 +5,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Spoiler } from '@/components/content/spoiler'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ProfileSettingsProps {

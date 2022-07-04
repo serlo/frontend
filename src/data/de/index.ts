@@ -1,7 +1,7 @@
-import { Instance } from '@serlo/api';
+import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance.De,
+  lang: Instance["De"],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -30,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Bereiche",
       exercises: "Aufgaben",
-      events: "Veranstaltungen"
+      events: "Veranstaltungen",
+      unrevised: "Ungeprüft",
+      subterms: "Unter-Themenbereich",
+      exercisesContent: "Aufgaben-Inhalte"
     },
     entities: {
       applet: 'Applet',
@@ -314,7 +317,7 @@ export const instanceData = {
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
+      createThread: "%actor% hat eine %thread% in %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
       createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
@@ -344,7 +347,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: "de",
+  lang: Instance["De"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",

@@ -1,9 +1,9 @@
-import { Instance } from '@serlo/api'
 import { useState } from 'react'
 import ReactTimeAgo, { TimeAgoProps as ReactTimeAgoProps } from 'timeago-react'
 import * as timeago from 'timeago.js'
 
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 interface TimeAgoProps extends Pick<ReactTimeAgoProps, 'datetime'> {
   className?: string

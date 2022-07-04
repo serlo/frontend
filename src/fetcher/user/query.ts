@@ -25,7 +25,9 @@ export const sharedUserFragments = gql`
       taxonomy
     }
   }
+`
 
+export const basicUserDataFragment = gql`
   fragment basicUserData on User {
     id
     username

@@ -1,10 +1,10 @@
-import { UserSetDescriptionInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { showToastNotice } from '../show-toast-notice'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UserSetDescriptionInput } from '@/fetcher/graphql-types/operations'
 
 export function useUserSetDescriptionMutation() {
   const auth = useAuthentication()

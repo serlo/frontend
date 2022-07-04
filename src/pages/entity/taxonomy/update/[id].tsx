@@ -1,5 +1,4 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { TaxonomyTermType } from '@serlo/api'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -16,6 +15,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import {
+  TaxonomyTermType,
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
 } from '@/fetcher/graphql-types/operations'

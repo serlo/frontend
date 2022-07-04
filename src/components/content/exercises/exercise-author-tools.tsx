@@ -8,12 +8,7 @@ import {
   AuthorToolsHoverMenu,
 } from '../../user-tools/author-tools-hover-menu'
 import { FaIcon } from '@/components/fa-icon'
-
-export enum ExerciseInlineType {
-  Solution = '_SolutionInline',
-  ExerciseGroup = '_ExerciseGroupInline',
-  Exercise = '_ExerciseInline',
-}
+import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseAuthorToolsProps {
   data: AuthorToolsData & {
