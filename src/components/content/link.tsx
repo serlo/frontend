@@ -3,7 +3,6 @@ import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
-import { shouldUseFeature } from '../user/profile-experimental'
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { NodePath } from '@/schema/article-renderer'
@@ -49,17 +48,11 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/entity/link/order/') ||
     _href.startsWith('/taxonomy/term/move/batch/') ||
     _href.startsWith('/taxonomy/term/copy/batch/') ||
-    _href.startsWith('/taxonomy/term/sort/entities/')
-  ) {
-    return false
-  }
-
-  // exerimental feature: useLegacyEditor
-  if (
+    _href.startsWith('/taxonomy/term/sort/entities/') ||
     _href.startsWith('/entity/repository/add-revision/') ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
-    return shouldUseFeature('legacyEditor')
+    return false
   }
 
   return (
