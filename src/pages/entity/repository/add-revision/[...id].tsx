@@ -12,7 +12,6 @@ import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<EditorPageData>((props) => {
-  console.log(JSON.stringify(props))
   return (
     <FrontendClientBase
       noContainers

@@ -48,7 +48,8 @@ export function useSetEntityMutation() {
     initialState: {
       plugin: 'text'
       state: unknown
-    }
+    },
+    parentId?: number
   ) =>
     await setEntityMutationRunner({
       auth,
@@ -56,6 +57,7 @@ export function useSetEntityMutation() {
       needsReview,
       loggedInData,
       initialState,
+      parentId,
     })
 }
 
@@ -84,17 +86,13 @@ export const setEntityMutationRunner = async function ({
       parentId: genericInput.entityId ? undefined : parentId,
     }
 
-    // while testing
-    // eslint-disable-next-line no-console
-    console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
-
     //here we rely on the api not to create an empty revision
-    const savedId = await mutationFetch(
+    const savedId = (await mutationFetch(
       auth,
       getSetMutation(data.__typename),
       input,
       loggedInData?.strings.mutations.errors
-    )
+    )) as number
 
     if (!Number.isInteger(savedId)) return false
 
@@ -105,12 +103,12 @@ export const setEntityMutationRunner = async function ({
       needsReview,
       loggedInData,
       initialState,
-      parentId: savedId as number,
+      parentId: savedId,
     })
 
     if (!isRecursiveCall && childrenResult) {
       showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      window.location.href = getHistoryUrl(data.id)
+      window.location.href = getHistoryUrl(savedId)
     }
 
     return true
@@ -192,12 +190,7 @@ const loopNestedChildren = async ({
         )
 
         // only request new revision when entity changed
-        if (hasNoChanges(oldVersion, child)) {
-          // while testing we rely on the API to not create a new revision
-          // eslint-disable-next-line no-console
-          console.log('should not create a new revision')
-          //return true
-        }
+        if (hasNoChanges(oldVersion, child)) return true
 
         const input = {
           ...child,

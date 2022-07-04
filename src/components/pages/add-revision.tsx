@@ -22,22 +22,6 @@ import {
 import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
 
-// can probably be removed in refactor
-const supportedTypes = [
-  UuidType.Applet,
-  UuidType.Article,
-  UuidType.Course,
-  UuidType.CoursePage,
-  UuidType.Event,
-  UuidType.Solution,
-  UuidType.Video,
-  UuidType.Exercise,
-  UuidType.ExerciseGroup,
-  UuidType.GroupedExercise,
-  UuidType.Page,
-  UuidType.TaxonomyTerm,
-]
-
 export function AddRevision({
   initialState,
   type,
@@ -92,9 +76,10 @@ export function AddRevision({
   }, [])
 
   if (!id && !parentId) return null
+
   const backlink = {
     label: strings.revisions.toContent,
-    url: `/${id ?? parentId!}`,
+    url: `/${id ?? parentId ?? ''}`,
   }
 
   if (userReady === undefined) return <LoadingSpinner noText />
@@ -154,7 +139,8 @@ export function AddRevision({
                     //@ts-expect-error resolve when old code is removed
                     dataWithType,
                     _needsReview,
-                    initialState
+                    initialState,
+                    parentId
                   )
 
             return new Promise((resolve, reject) => {
