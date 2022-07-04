@@ -34,6 +34,14 @@ export interface EditorFetchErrorData {
   errorType: 'failed-fetch'
 }
 
+const noReviewTypes: UuidWithRevType[] = [
+  UuidType.TaxonomyTerm,
+  UuidType.Page,
+  UuidType.User,
+]
+
+export const sandboxUrl = '/community/106082/sandkasten'
+
 export async function fetchEditorData(
   localeString: string,
   ids?: string[]
@@ -68,16 +76,8 @@ export async function fetchEditorData(
   const breadcrumbsData = createBreadcrumbs(data)
 
   const isSandbox =
-    breadcrumbsData &&
-    breadcrumbsData.filter(
-      (entry) => entry.url == '/community/106082/sandkasten'
-    ).length > 0
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.url == sandboxUrl)
 
-  const noReviewTypes: UuidWithRevType[] = [
-    UuidType.TaxonomyTerm,
-    UuidType.Page,
-    UuidType.User,
-  ]
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType
   )

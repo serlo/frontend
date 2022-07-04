@@ -8,10 +8,12 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { SerloEntityPluginType } from '@/edtr-io/plugins'
+import { sandboxUrl } from '@/fetcher/fetch-editor-data'
 import {
   GetTaxonomyTypeQuery,
   GetTaxonomyTypeQueryVariables,
 } from '@/fetcher/graphql-types/operations'
+import { sharedPathFragments } from '@/fetcher/query-fragments'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -29,19 +31,21 @@ enum AllowedTypes {
 interface EntityCreateProps {
   entityType: keyof typeof AllowedTypes
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
+  needsReview: boolean
 }
 
 export default renderedPageNoHooks<EntityCreateProps>(
-  ({ taxonomyTerm, entityType }) => {
-    const { id } = taxonomyTerm
-    const myProps = {
+  ({ taxonomyTerm, entityType, needsReview }) => {
+    const { id: parentId } = taxonomyTerm
+
+    const addRevisionProps = {
       initialState: {
         plugin: AllowedTypes[entityType] as unknown as string,
       },
       converted: false,
       type: UuidType[entityType],
-      needsReview: false,
-      parentId: id,
+      needsReview,
+      parentId,
       errorType: 'none',
     } as const
 
@@ -49,14 +53,14 @@ export default renderedPageNoHooks<EntityCreateProps>(
       <FrontendClientBase
         noContainers
         loadLoggedInData={!isProduction} // warn: enables preview editor without login
-        entityId={id}
+        entityId={parentId}
       >
         <div className="relative">
           <MaxWidthDiv>
             <main>
               <Guard needsAuth={isProduction ? true : undefined} data>
                 <>
-                  <AddRevision {...myProps} />
+                  <AddRevision {...addRevisionProps} />
                 </>
               </Guard>
             </main>
@@ -90,10 +94,15 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   )
     return { notFound: true }
 
+  const isSandbox = result.uuid.navigation?.path.nodes.some(
+    (node) => node.url === sandboxUrl
+  )
+
   return {
     props: {
       entityType,
       taxonomyTerm: { ...result.uuid },
+      needsReview: !isSandbox,
     },
     revalidate: 60 * 30, // 0.5 hours,
   }
@@ -114,7 +123,11 @@ export const getTaxonomyTypeQuery = gql`
         alias
         title
         type
+        navigation {
+          ...path
+        }
       }
     }
   }
+  ${sharedPathFragments}
 `

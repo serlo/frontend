@@ -19,7 +19,6 @@ import { useIsSubscribed } from '@/helper/use-is-subscribed'
 
 export enum Tool {
   Abo = 'abo',
-
   ChangeLicense = 'changeLicense',
   CopyItems = 'copyItems',
   Curriculum = 'curriculum',
