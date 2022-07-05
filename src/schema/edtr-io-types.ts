@@ -15,6 +15,7 @@ import { VideoPluginState } from '@edtr-io/plugin-video'
 import { BoxPluginState } from '@/edtr-io/plugins/box'
 import { PageLayoutPluginState } from '@/edtr-io/plugins/page-layout'
 import { PageTeamPluginState } from '@/edtr-io/plugins/page-team'
+import { SerloGalleryPluginState } from '@/edtr-io/plugins/serlo-gallery'
 import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
 
 export type SlateBlockElement = NewElement
@@ -81,6 +82,11 @@ export interface EdtrPluginTable {
 export interface EdtrPluginSerloTable {
   plugin: 'serloTable'
   state: StateTypeSerializedType<SerloTablePluginState>
+}
+
+export interface EdtrPluginSerloGallery {
+  plugin: 'serloGallery'
+  state: StateTypeSerializedType<SerloGalleryPluginState>
 }
 
 export interface EdtrPluginHighlight {
@@ -174,6 +180,7 @@ export type EdtrState =
   | EdtrPluginVideo
   | EdtrPluginTable
   | EdtrPluginSerloTable
+  | EdtrPluginSerloGallery
   | EdtrPluginHighlight
   | EdtrPluginSerloInjection
   | EdtrPluginLayout

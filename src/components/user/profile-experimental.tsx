@@ -11,6 +11,11 @@ export const features = {
     isActive: false,
     activeInDev: true,
   },
+  galleryPlugin: {
+    cookieName: 'useGalleryPlugin',
+    isActive: false,
+    activeInDev: true,
+  },
   legacyDesign: {
     cookieName: 'useFrontend',
     isActive: false,
@@ -83,6 +88,14 @@ export function ProfileExperimental() {
             {renderFeatureButton('tablePlugin')} Editor: New Table Plugin 📋
           </h3>
           <p className="serlo-p">Das neue Table Plugin zum testen.</p>
+        </div>
+      )}
+      {features.galleryPlugin && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('galleryPlugin')} Editor: New Gallery Plugin 🖼
+          </h3>
+          <p className="serlo-p">Das neue Gallery Plugin zum testen.</p>
         </div>
       )}
       <hr className="mx-side mb-4 -mt-2" />

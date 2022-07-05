@@ -26,6 +26,7 @@ import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
 import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
+import { SerloGalleryAdapter } from '@/edtr-io/plugins/serlo-gallery/frontend'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 
 export type NodePath = (number | string)[]
@@ -330,6 +331,14 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.Td) {
     return <td className="serlo-td">{children}</td>
+  }
+  if (element.type === FrontendNodeType.SerloGallery) {
+    return (
+      <SerloGalleryAdapter
+        {...element}
+        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+      />
+    )
   }
   if (element.type === FrontendNodeType.Multimedia) {
     return (

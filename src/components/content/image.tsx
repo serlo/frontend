@@ -59,7 +59,12 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   )
 
   function renderCaption() {
-    if (!element.caption) return null
+    if (
+      !element.caption ||
+      element.caption[0].children?.[0].children?.length === 0
+    )
+      return null
+
     return (
       <div className="italic mt-3">
         {renderNested(element.caption, 'caption')}

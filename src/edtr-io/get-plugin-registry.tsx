@@ -116,12 +116,16 @@ export function getPluginRegistry(
       description: editorStrings.edtrIo.serloTableDesc,
       icon: createIcon(faTable),
     },
-    {
-      name: 'serloGallery',
-      title: editorStrings.edtrIo.serloGallery,
-      description: editorStrings.edtrIo.serloGalleryDesc,
-      icon: createIcon(faImages),
-    },
+    ...(shouldUseFeature('galleryPlugin')
+      ? [
+          {
+            name: 'serloGallery',
+            title: editorStrings.edtrIo.serloGallery,
+            description: editorStrings.edtrIo.serloGalleryDesc,
+            icon: createIcon(faImages),
+          },
+        ]
+      : []),
     {
       name: 'video',
       title: editorStrings.edtrIo.video,

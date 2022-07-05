@@ -187,6 +187,10 @@
       @apply px-0;
     }
 
+    & .serlo-gallery .mb-block {
+      @apply mb-2;
+    }
+
     & .serlo-important,
     & .serlo-blockquote,
     & .serlo-spoiler-body,

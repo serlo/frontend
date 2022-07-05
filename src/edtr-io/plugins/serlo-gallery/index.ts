@@ -1,10 +1,4 @@
-import {
-  EditorPlugin,
-  object,
-  EditorPluginProps,
-  child,
-  list,
-} from '@edtr-io/plugin'
+import { object, EditorPluginProps, child, list } from '@edtr-io/plugin'
 
 import { SerloGalleryEditor } from './editor'
 
@@ -20,10 +14,8 @@ export const serloGalleryState = object({
 export type SerloGalleryPluginState = typeof serloGalleryState
 export type SerloGalleryPluginProps = EditorPluginProps<SerloGalleryPluginState>
 
-export function createSerloGalleryPlugin(): EditorPlugin<SerloGalleryPluginState> {
-  return {
-    Component: SerloGalleryEditor,
-    config: {},
-    state: serloGalleryState,
-  }
+export const serloGalleryPlugin = {
+  Component: SerloGalleryEditor,
+  config: {},
+  state: serloGalleryState,
 }

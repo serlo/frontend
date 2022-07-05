@@ -28,6 +28,7 @@ export function createPageLayoutState(
     'spoiler',
     'table',
     'serloTable',
+    'serloGallery',
     'video',
   ])
 

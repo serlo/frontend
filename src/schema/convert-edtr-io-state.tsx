@@ -3,11 +3,16 @@ import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
-import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
+import {
+  EdtrPluginImage,
+  EdtrState,
+  UnsupportedEdtrState,
+} from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
 import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
   FrontendContentNode,
+  FrontendImgNode,
   FrontendMathNode,
   FrontendNodeType,
   FrontendSerloTrNode,
@@ -246,6 +251,16 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         type: FrontendNodeType.SerloTable,
         tableType: node.state.tableType,
         children,
+      },
+    ]
+  }
+  if (node.plugin === 'serloGallery') {
+    return [
+      {
+        type: FrontendNodeType.SerloGallery,
+        children: node.state.images.map((image) => {
+          return convert(image as EdtrPluginImage)[0] as FrontendImgNode
+        }),
       },
     ]
   }

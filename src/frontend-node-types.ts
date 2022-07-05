@@ -216,6 +216,7 @@ export interface FrontendAnchorNode {
 }
 
 export interface FrontendSerloGalleryNode {
+  type: FrontendNodeType.SerloGallery
   children?: FrontendImgNode[]
 }
 
@@ -455,6 +456,7 @@ export type FrontendRestrictedElementNode =
   | FrontendSpoilerContainerNode
   | FrontendTableNode
   | FrontendSerloTableNode
+  | FrontendSerloGalleryNode
   | FrontendSerloTrNode
   | FrontendSpoilerContainerNode
   | FrontendUlNode

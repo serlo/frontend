@@ -20,6 +20,7 @@ export function createBoxState(
     'multimedia',
     'table',
     'serloTable',
+    'serloGallery',
     'highlight',
   ])
 
