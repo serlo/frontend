@@ -25,7 +25,7 @@ export interface EditorPageData {
   converted?: boolean
   needsReview: boolean
   id?: number // only for existing
-  parentId?: number // only for new
+  taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
 }

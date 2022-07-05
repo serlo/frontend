@@ -40,7 +40,7 @@ export function RevisionHistoryLoader<T>(
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
-  if (props.id === 0) return null
+  if (!revisionsResponse) return null
 
   if (!revisionsResponse.data?.uuid.revisions) return null // no revision loader for solutions
 
@@ -101,6 +101,7 @@ export function RevisionHistoryLoader<T>(
     return useGraphqlSwr<{ uuid: Revisions }>({
       query: revisionHistoryQuery,
       variables: { id },
+      noKey: id === 0,
       config: {
         refreshInterval: 1 * 60 * 1000, //1min
       },

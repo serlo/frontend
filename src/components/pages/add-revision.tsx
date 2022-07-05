@@ -27,7 +27,7 @@ export function AddRevision({
   type,
   needsReview,
   id,
-  parentId,
+  taxonomyParentId,
   breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
@@ -75,11 +75,11 @@ export function AddRevision({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!id && !parentId) return null
+  if (!id && !taxonomyParentId) return null
 
   const backlink = {
     label: strings.revisions.toContent,
-    url: `/${id ?? parentId ?? ''}`,
+    url: `/${id ?? taxonomyParentId!}`,
   }
 
   if (userReady === undefined) return <LoadingSpinner noText />
@@ -140,7 +140,7 @@ export function AddRevision({
                     dataWithType,
                     _needsReview,
                     initialState,
-                    parentId
+                    taxonomyParentId
                   )
 
             return new Promise((resolve, reject) => {

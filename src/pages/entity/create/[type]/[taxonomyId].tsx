@@ -36,7 +36,7 @@ interface EntityCreateProps {
 
 export default renderedPageNoHooks<EntityCreateProps>(
   ({ taxonomyTerm, entityType, needsReview }) => {
-    const { id: parentId } = taxonomyTerm
+    const { id: taxonomyParentId } = taxonomyTerm
 
     const addRevisionProps = {
       initialState: {
@@ -45,7 +45,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
       converted: false,
       type: UuidType[entityType],
       needsReview,
-      parentId,
+      taxonomyParentId,
       errorType: 'none',
     } as const
 
@@ -53,7 +53,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
       <FrontendClientBase
         noContainers
         loadLoggedInData={!isProduction} // warn: enables preview editor without login
-        entityId={parentId}
+        entityId={taxonomyParentId}
       >
         <div className="relative">
           <MaxWidthDiv>
