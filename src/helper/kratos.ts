@@ -1,9 +1,11 @@
 import { Configuration as KratosConfig, V0alpha2Api } from '@ory/kratos-client'
 import { AdminApi, Configuration as HydraConfig } from '@oryd/hydra-client'
 
+import { frontendOrigin } from './urls/frontent-origin'
+
 export const kratos = new V0alpha2Api(
   new KratosConfig({
-    basePath: `http://localhost:3000/api/.ory`, // TODO?: not only localhost?
+    basePath: `${frontendOrigin}/api/.ory`,
   })
 )
 
