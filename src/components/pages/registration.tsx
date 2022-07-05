@@ -45,7 +45,9 @@ export function Registration() {
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
     await router
-      .push(`/registration?flow=${String(flow?.id)}`, undefined, { shallow: true })
+      .push(`/registration?flow=${String(flow?.id)}`, undefined, {
+        shallow: true,
+      })
       .then(() =>
         kratos
           .submitSelfServiceRegistrationFlow(String(flow?.id), values)
@@ -69,7 +71,7 @@ export function Registration() {
           .catch(handleFlowError(router, 'registration', setFlow))
           .catch((err: AxiosError) => {
             if (err.response?.status === 400) {
-              setFlow(err.response?.data)
+              setFlow(err.response?.data as SelfServiceRegistrationFlow)
               return
             }
 

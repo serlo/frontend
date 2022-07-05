@@ -18,26 +18,30 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
     return
   }
 
-  hydra
-    .getLoginRequest(challenge)
-    .then(async () => {
-      return await hydra
-        .acceptLoginRequest(challenge, {
-          subject: String(session.identity.metadata_public?.legacy_id),
-          context: session || undefined,
-        })
-        .then(({ data: body }) => {
-          res.redirect(body.redirect_to)
-        })
-        .catch((error) => {
-          res.status(500)
-          res.send(error)
-        })
-    })
-    .catch((error) => {
-      res.status(500)
-      res.send(error)
-    })
+  if (session) {
+    const userId = (session.identity.metadata_public as { legacy_id: number })
+      .legacy_id
+    hydra
+      .getLoginRequest(challenge)
+      .then(async () => {
+        return await hydra
+          .acceptLoginRequest(challenge, {
+            subject: String(userId),
+            context: session || undefined,
+          })
+          .then(({ data: body }) => {
+            res.redirect(body.redirect_to)
+          })
+          .catch((error) => {
+            res.status(500)
+            res.send(error)
+          })
+      })
+      .catch((error) => {
+        res.status(500)
+        res.send(error)
+      })
+  }
 }
 
 export default login
