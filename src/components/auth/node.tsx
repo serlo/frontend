@@ -6,7 +6,7 @@ import {
   isUiNodeScriptAttributes,
   isUiNodeTextAttributes,
 } from '@ory/integrations/ui'
-import { UiNode } from '@ory/kratos-client'
+import { UiNode, UiNodeInputAttributes } from '@ory/kratos-client'
 import { FormEvent } from 'react'
 
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -104,7 +104,10 @@ export function Node(props: NodeProps) {
             <label>
               {getNodeLabel(node)
                 ? getNodeLabel(node)
-                : node.attributes.name.replace('traits.', '')}
+                : (node.attributes as UiNodeInputAttributes).name.replace(
+                    'traits.',
+                    ''
+                  )}
               <input
                 type={attributes.type}
                 name={attributes.name}
