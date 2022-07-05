@@ -18,7 +18,7 @@ async function logout(req: NextApiRequest, res: NextApiResponse) {
   let idToken: string
 
   try {
-    const token = JSON.parse(req.cookies['auth-token']) as { id_token: string }
+    const token = JSON.parse(req.cookies['auth-token']!) as { id_token: string }
     idToken = token['id_token']
   } catch (e) {
     // Token does not exist or user already logged out
