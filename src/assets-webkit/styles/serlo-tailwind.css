@@ -192,6 +192,8 @@
     & .serlo-spoiler-body,
     & .serlo-solution-box,
     & .serlo-styled-label,
+    & .serlo-box,
+    & .serlo-box > blockquote,
     & .slate-container,
     & li,
     & th,

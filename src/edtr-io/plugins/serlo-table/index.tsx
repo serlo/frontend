@@ -141,7 +141,7 @@ function SerloTableEditor(props: SerloTableProps) {
             e.target.querySelector('.hackdiv')?.focus()
           }}
         >
-          <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+          <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
           {renderAddButton(true)}
         </div>
 

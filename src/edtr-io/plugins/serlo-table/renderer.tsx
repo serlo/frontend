@@ -11,10 +11,11 @@ export interface SerloTableRendererProps {
   rows: {
     cells: JSX.Element[]
   }[]
+  isEdit?: boolean
 }
 
 export function SerloTableRenderer(props: SerloTableRendererProps) {
-  const { tableType, rows } = props
+  const { tableType, rows, isEdit } = props
 
   const showRowHeader =
     tableType === TableType.OnlyRowHeader ||
@@ -24,7 +25,7 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     tableType === TableType.ColumnAndRowHeader
 
   return (
-    <div className="overflow-x-scroll">
+    <div className={isEdit ? undefined : 'overflow-x-scroll'}>
       <table className="serlo-table mb-8">
         {showColumnHeader ? (
           <>

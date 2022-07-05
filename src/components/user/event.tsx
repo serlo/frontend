@@ -3,6 +3,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 
+import { MathSpan } from '../content/math-span'
 import { FaIcon } from '../fa-icon'
 import { UserLink } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -13,6 +14,7 @@ import { LoggedInData, UuidType } from '@/data-types'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { replaceWithJSX } from '@/helper/replace-with-jsx'
 
 type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
 
@@ -62,11 +64,11 @@ export function Event({
           datetime={eventDate}
           dateAsTitle
         />
-        <div className={clsx('mb-2 mt-0.25', unread && 'font-bold')}>
+        <div className={clsx('mb-2 mt-0.25 pr-24', unread && 'font-bold')}>
           {unread && <span className="text-brand">● </span>}
           {renderText()}
         </div>
-        {renderReason()}
+        {renderAdditionalText()}
         {renderButtons()}
       </div>
     </>
@@ -99,7 +101,7 @@ export function Event({
           thread: renderThread(event.thread),
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
-              {`${strings.entities.comment} ${event.comment.id}`}
+              {`${strings.entities.comment} (${event.comment.id})`}
             </Link>
           ),
         })
@@ -115,7 +117,7 @@ export function Event({
             ),
             comment: (
               <p className="font-normal">
-                &quot;{event.thread.comments.nodes[0].content}&quot;
+                &quot;{event.thread.thread.nodes[0].content}&quot;
               </p>
             ),
           })
@@ -220,14 +222,34 @@ export function Event({
     }
   }
 
-  function renderReason() {
+  function renderAdditionalText() {
     if (noPrivateContent) return null
+
     if (
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
-      return <div className="text-truegray-500" /*Content*/>{event.reason}</div>
+      return <div className="text-truegray-500">{event.reason}</div>
     }
+    if (event.__typename === 'CreateThreadNotificationEvent') {
+      return renderCommentContent(event.thread.thread.nodes[0].content)
+    }
+    if (event.__typename === 'CreateCommentNotificationEvent') {
+      return renderCommentContent(event.thread.comment.nodes[0].content)
+    }
+  }
+
+  function renderCommentContent(content?: string) {
+    if (!content) return null
+    const maxLength = 200
+    const shortened =
+      content.length > maxLength
+        ? content.substring(0, maxLength) + '…'
+        : content
+    const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (str, i) => (
+      <MathSpan key={`math-${i}`} formula={str} />
+    ))
+    return <div className="text-truegray-500">{withMath}</div>
   }
 
   function renderObject({
@@ -256,14 +278,14 @@ export function Event({
   }
 
   function renderRevision(id: number) {
-    return <Link href={`/${id}`}>{`${strings.entities.revision} ${id}`}</Link>
+    return <Link href={`/${id}`}>{`${strings.entities.revision} (${id})`}</Link>
   }
 
   function renderThread(thread: EventThread) {
-    const id = thread.comments?.nodes[0]?.id
+    const id = thread.thread.nodes[0]?.id
     return (
       <Link href={`/${id}`} forceNoCSR>
-        {`${strings.entities.thread} ${id}`}
+        {`${strings.entities.thread} (${id})`}
       </Link>
     )
   }
@@ -271,7 +293,7 @@ export function Event({
   function renderButtons() {
     if (!setToRead) return null
     return (
-      <div className="absolute flex right-5 top-8" /*ButtonWrapper*/>
+      <div className="absolute flex right-5 top-11" /*ButtonWrapper*/>
         {renderMuteButton()}
         {unread && renderReadButton()}
       </div>

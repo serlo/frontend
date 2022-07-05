@@ -1,4 +1,3 @@
-import { faHourglassEmpty } from '@fortawesome/free-solid-svg-icons/faHourglassEmpty'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
@@ -11,21 +10,6 @@ export const features = {
     cookieName: 'useTablePlugin',
     isActive: false,
     activeInDev: true,
-  },
-  addRevisionMutation: {
-    cookieName: 'useAddRevisionMutation',
-    isActive: false,
-    activeInDev: true,
-  },
-  pagePlugins: {
-    cookieName: 'usePagePlugins',
-    isActive: false,
-    activeInDev: true,
-  },
-  legacyEditor: {
-    cookieName: 'useLegacyEditor',
-    isActive: faHourglassEmpty,
-    activeInDev: false,
   },
   legacyDesign: {
     cookieName: 'useFrontend',
@@ -101,18 +85,6 @@ export function ProfileExperimental() {
           <p className="serlo-p">Das neue Table Plugin zum testen.</p>
         </div>
       )}
-      {features.addRevisionMutation && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('addRevisionMutation')} Revisions Speichern
-            über die neue Infrastruktur ⚠️
-          </h3>
-          <p className="serlo-p">
-            Bearbeitungen werden direkt über die API gespeichert. Vorsicht: Noch
-            nicht ausführlich getestet.
-          </p>
-        </div>
-      )}
       <hr className="mx-side mb-4 -mt-2" />
       {features.legacyDesign && (
         <div>
@@ -123,34 +95,6 @@ export function ProfileExperimental() {
           <p className="serlo-p">
             Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
             zum Vergleichen mit den neuen Design benutzt werden.
-          </p>
-        </div>
-      )}
-      {features.legacyEditor && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('legacyEditor')} Legacy-Editor ⚠️
-          </h3>
-          <p className="serlo-p">
-            Wenn du Probleme mit dem Editor hast, kannst du hier den alten
-            Editor aktivieren.
-            <br />
-            Zusätzlich die Probleme dann bitte{' '}
-            <a href="https://community.serlo.org/channel/software-features-and-bugs">
-              gleich melden
-            </a>
-            , weil wir den Legacy-Editor in absehbarer Zeit ganz abschalten
-            werden. Danke!
-          </p>
-        </div>
-      )}
-      {features.pagePlugins && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('pagePlugins')} Plugins für Statische Seiten ⚠️
-          </h3>
-          <p className="serlo-p">
-            Teamplugin und Layoutplugin. Bitte nur auf Anfrage testen.
           </p>
         </div>
       )}

@@ -165,7 +165,6 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     )
       return null
 
-    console.log(links)
     return (
       <DragDropContext
         key={category}
