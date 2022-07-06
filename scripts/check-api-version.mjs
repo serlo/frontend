@@ -1,6 +1,6 @@
 // Use `yarn check:api` in root to run this script.
 import { request, gql } from 'graphql-request'
-import { createRequire } from 'module'
+import { exit } from 'process'
 
 const query = gql`
   query getAPIVersion {
@@ -10,15 +10,18 @@ const query = gql`
   }
 `
 
-const require = createRequire(import.meta.url)
-
-const getVersion = async (domain) => {
-  const response = await request(`https://api.${domain}/graphql`, query)
-  return response.metadata.version
+const checkApi = async (domain) => {
+  try {
+    const response = await request(`https://api.${domain}/graphql`, query)
+    const version = response.metadata.version
+    console.log(`api.${domain} running:\x1b[32m ${version}\x1b[0m`)
+  } catch {
+    console.error(
+      `\x1b[33m⚠️ \x1b[31mCould not connect to api.${domain} \x1b[33m⚠️\x1b[0m`
+    )
+    exit(1)
+  }
 }
 
-const stagingVersion = await getVersion('serlo-staging.dev')
-const productionVersion = await getVersion('serlo.org')
-
-console.log(`staging is: \x1b[32m ${stagingVersion}\x1b[0m`)
-console.log(`production is: \x1b[32m ${productionVersion}\x1b[0m`)
+checkApi('serlo-staging.devs')
+checkApi('serlo.org')

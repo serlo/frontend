@@ -33,15 +33,6 @@ jobs:
           node-version: 16.x
       - run: yarn
       - run: yarn lint:prettier
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-      - run: yarn
-      - run: yarn test
   tsc:
     runs-on: ubuntu-latest
     steps:
@@ -51,3 +42,19 @@ jobs:
           node-version: 16.x
       - run: yarn
       - run: yarn lint:tsc
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - run: yarn
+      - run: yarn test
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - run: yarn check:api

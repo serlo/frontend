@@ -151,7 +151,6 @@
     "eslint-plugin-react-hooks": "^4.0.0",
     "jest": "^27.0.0",
     "msw": "^0.39.0",
-    "node-fetch": "^3.2.6",
     "npm-run-all": "^4.0.0",
     "postcss-flexbugs-fixes": "^5.0.0",
     "postcss-nested": "^5.0.6",
