@@ -23,5 +23,5 @@ const checkApi = async (domain) => {
   }
 }
 
-checkApi('serlo-staging.devs')
+checkApi('serlo-staging.dev')
 checkApi('serlo.org')
