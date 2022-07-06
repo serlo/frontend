@@ -1,14 +1,18 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
+import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
 import { SaveContext } from '../serlo-editor'
 import { SaveLocalButton } from './save-local-button'
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LicensesWithAgreementQuery } from '@/fetcher/graphql-types/operations'
 
 export interface SaveModalProps {
   visible: boolean
@@ -38,6 +42,12 @@ export function SaveModal({
   const [autoCheckout, setAutoCheckout] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '')
   const [fireSave, setFireSave] = useState(false)
+  const { lang } = useInstanceData()
+
+  const { data: licenseData } = useLicensesFetch(lang)
+  const defaultLicense = licenseData?.license.licenses.filter(
+    (license) => license.default
+  )[0]
 
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
@@ -182,12 +192,11 @@ export function SaveModal({
   }
 
   function renderLicense() {
-    if (!license) return null
+    const licenseAgreement =
+      license && license.defined
+        ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
+        : defaultLicense?.agreement ?? ''
 
-    const licenseAgreement = license.agreement.value.replace(
-      /<a href/g,
-      '<a target="_blank" href'
-    )
     return (
       <label className="block pb-2">
         <input
@@ -242,4 +251,25 @@ export function SaveModal({
       </>
     )
   }
+}
+
+const licensesQuery = gql`
+  query licensesWithAgreement($instance: Instance!) {
+    license {
+      licenses(instance: $instance) {
+        default
+        agreement
+      }
+    }
+  }
+`
+
+function useLicensesFetch(instance: string) {
+  return useGraphqlSwr<LicensesWithAgreementQuery>({
+    query: licensesQuery,
+    variables: { instance },
+    config: {
+      refreshInterval: 24 * 60 * 60 * 1000, // day
+    },
+  })
 }

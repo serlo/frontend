@@ -112,7 +112,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   hasUnrevised ? Tool.UnrevisedEdit : Tool.Edit,
                   Tool.Abo,
                   Tool.History,
-                  Tool.MoveCoursePage,
                   Tool.Log,
                   Tool.AnalyticsLink,
                   Tool.Trash,
@@ -138,7 +137,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
                   hasCourseRevisions ? Tool.UnrevisedEdit : Tool.Edit,
                   Tool.History,
                   Tool.Abo,
-                  Tool.AddCoursePage,
                   Tool.SortCoursePages,
                   Tool.Curriculum,
                   Tool.Log,
@@ -180,14 +178,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
             hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]
           }
         />
-
-        {data.type == ExerciseInlineType.ExerciseGroup && (
-          <AuthorTools
-            entityId={data.id}
-            data={data}
-            tools={[Tool.AddGroupedTextExercise]}
-          />
-        )}
 
         {data.type != ExerciseInlineType.Solution && (
           <AuthorTools
