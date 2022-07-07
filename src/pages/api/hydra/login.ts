@@ -6,11 +6,9 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const session = await kratos
     .toSession(undefined, String(req.headers.cookie))
     .then(({ data }) => data)
-    .catch(() => {
-      res.status(400)
-      // TODO
-      res.send('error getting kratos sessions')
-      // res.send(error)
+    .catch((error) => {
+      res.status(500)
+      res.send(error)
     })
   const query = req.query
   const challenge = String(query.login_challenge)
@@ -34,18 +32,14 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
           .then(({ data: body }) => {
             res.redirect(body.redirect_to)
           })
-          .catch(() => {
-            res.status(400)
-            // TODO
-            res.send('Error when accepting login request')
-            // res.send(error)
+          .catch((error) => {
+            res.status(500)
+            res.send(error)
           })
       })
-      .catch(() => {
-        res.status(400)
-        // TODO
-        res.send('Error when getting login request')
-        // res.send(error)
+      .catch((error) => {
+        res.status(500)
+        res.send(error)
       })
   }
 }
