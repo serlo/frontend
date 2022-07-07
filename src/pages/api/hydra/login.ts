@@ -32,14 +32,14 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
           .then(({ data: body }) => {
             res.redirect(body.redirect_to)
           })
-          .catch((error) => {
+          .catch(() => {
             res.status(500)
             // TODO
             res.send('Error when accepting login request')
             // res.send(error)
           })
       })
-      .catch((error) => {
+      .catch(() => {
         res.status(500)
         // TODO
         res.send('Error when getting login request')
