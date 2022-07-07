@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { hydra, kratos } from '../../../helper/kratos'
+import { hydra, kratos } from '@/helper/kratos'
 
 async function consent(req: NextApiRequest, res: NextApiResponse) {
   const query = req.query

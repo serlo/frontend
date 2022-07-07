@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { hydra, kratos } from '../../../helper/kratos'
+import { hydra, kratos } from '@/helper/kratos'
 
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const session = await kratos
