@@ -34,12 +34,16 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
           })
           .catch((error) => {
             res.status(500)
-            res.send(error)
+            // TODO
+            res.send('Error when accepting login request')
+            // res.send(error)
           })
       })
       .catch((error) => {
         res.status(500)
-        res.send(error)
+        // TODO
+        res.send('Error when getting login request')
+        // res.send(error)
       })
   }
 }
