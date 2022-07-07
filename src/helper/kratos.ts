@@ -15,7 +15,10 @@ export const kratos = new V0alpha2Api(
 
 export const hydra = new AdminApi(
   new HydraConfig({
-    basePath: 'http://localhost:4445', // TODO: use envvar
+    basePath:
+      process.env.NEXT_PUBLIC_ENV === 'local'
+        ? 'http://localhost:4445'
+        : 'https://hydra.serlo-staging.dev:4445', // TODO: use envvar
     ...(process.env.MOCK_TLS_TERMINATION
       ? {
           baseOptions: {
