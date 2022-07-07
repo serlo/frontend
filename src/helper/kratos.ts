@@ -18,7 +18,7 @@ export const hydra = new AdminApi(
     basePath:
       process.env.NEXT_PUBLIC_ENV === 'local'
         ? 'http://localhost:4445'
-        : 'https://hydra.serlo-staging.dev', // TODO: use envvar
+        : 'https://admin.hydra.serlo-staging.dev', // TODO: use envvar
     ...(process.env.MOCK_TLS_TERMINATION
       ? {
           baseOptions: {
