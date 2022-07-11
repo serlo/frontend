@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EdtrPluginInputExercise } from '@/data-types'
+import { EdtrPluginInputExercise } from '@/frontend-node-types'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {

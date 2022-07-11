@@ -1,6 +1,8 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
+import { basicUserDataFragment } from '../user/query'
+
 export const unrevisedEntitiesFragment = gql`
   fragment unrevisedEntitiesData on AbstractEntityConnection {
     nodes {
@@ -17,7 +19,7 @@ export const unrevisedEntitiesFragment = gql`
             title
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -34,7 +36,7 @@ export const unrevisedEntitiesFragment = gql`
             title
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -51,7 +53,7 @@ export const unrevisedEntitiesFragment = gql`
             title
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -68,7 +70,7 @@ export const unrevisedEntitiesFragment = gql`
             title
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -85,7 +87,7 @@ export const unrevisedEntitiesFragment = gql`
             title
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -100,7 +102,7 @@ export const unrevisedEntitiesFragment = gql`
           nodes {
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -115,7 +117,7 @@ export const unrevisedEntitiesFragment = gql`
           nodes {
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -130,7 +132,7 @@ export const unrevisedEntitiesFragment = gql`
           nodes {
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -147,7 +149,7 @@ export const unrevisedEntitiesFragment = gql`
             title
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -162,7 +164,7 @@ export const unrevisedEntitiesFragment = gql`
           nodes {
             id
             author {
-              ...authorData
+              ...basicUserData
             }
             changes
             date
@@ -176,14 +178,8 @@ export const unrevisedEntitiesFragment = gql`
       endCursor
     }
   }
-  fragment authorData on User {
-    id
-    username
-    isActiveAuthor
-    isActiveDonor
-    isActiveReviewer
-    isNewAuthor
-  }
+
+  ${basicUserDataFragment}
 `
 
 export const unrevisedRevisionsSubjectsQuery = gql`

@@ -1,3 +1,14 @@
+import { GraphQLError } from 'graphql'
+import { ClientError, GraphQLClient } from 'graphql-request'
+import { RefObject } from 'react'
+
+import { csrReload } from '../csr-reload'
+import { hasOwnPropertyTs } from '../has-own-property-ts'
+import { showToastNotice } from '../show-toast-notice'
+import { triggerSentry } from '../trigger-sentry'
+import { SetEntityInputTypes } from './use-set-entity-mutation/types'
+import { endpoint } from '@/api/endpoint'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 import {
   CheckoutRevisionInput,
   EntityMutation,
@@ -23,18 +34,7 @@ import {
   UuidSetStateInput,
   TaxonomyTermSortInput,
   EntitySortInput,
-} from '@serlo/api'
-import { GraphQLError } from 'graphql'
-import { ClientError, GraphQLClient } from 'graphql-request'
-import { RefObject } from 'react'
-
-import { csrReload } from '../csr-reload'
-import { hasOwnPropertyTs } from '../has-own-property-ts'
-import { showToastNotice } from '../show-toast-notice'
-import { triggerSentry } from '../trigger-sentry'
-import { SetEntityInputTypes } from './use-set-entity-mutation/types'
-import { endpoint } from '@/api/endpoint'
-import { AuthenticationPayload } from '@/auth/auth-provider'
+} from '@/fetcher/graphql-types/operations'
 
 type MutationInput =
   | NotificationSetStateInput

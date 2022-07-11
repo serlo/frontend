@@ -1,4 +1,3 @@
-import { SubscriptionSetInput } from '@serlo/api'
 import { gql } from 'graphql-request'
 import { mutate } from 'swr'
 
@@ -6,6 +5,7 @@ import { isSubscribedQuery } from '../use-is-subscribed'
 import { mutationFetch } from './helper'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { SubscriptionSetInput } from '@/fetcher/graphql-types/operations'
 
 export function useSubscriptionSetMutation() {
   const auth = useAuthentication()

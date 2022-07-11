@@ -3,6 +3,7 @@ import { ReactNode, useState, useEffect } from 'react'
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
+import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseGroupProps {
   children: ReactNode
@@ -46,7 +47,7 @@ export function ExerciseGroup({
           {loaded && auth.current && ExerciseAuthorTools && (
             <ExerciseAuthorTools
               data={{
-                type: '_ExerciseGroupInline',
+                type: ExerciseInlineType.ExerciseGroup,
                 id,
                 unrevisedRevisions,
               }}
