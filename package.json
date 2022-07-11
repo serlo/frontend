@@ -33,9 +33,6 @@
     "tailwind:status": "node ./scripts/tailwind-status.js",
     "codegen": "graphql-codegen --config codegen.yml"
   },
-  "resolutions": {
-    "@types/react": "^17.0.0"
-  },
   "dependencies": {
     "@edtr-io/core": "^2.8.2",
     "@edtr-io/default-document-editor": "^2.5.0",
