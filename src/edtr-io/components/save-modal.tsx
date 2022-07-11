@@ -12,7 +12,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LicensesWithAgreementQuery } from '@/fetcher/graphql-types/operations'
+import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
 
 export interface SaveModalProps {
   visible: boolean
@@ -45,9 +45,7 @@ export function SaveModal({
   const { lang } = useInstanceData()
 
   const { data: licenseData } = useLicensesFetch(lang)
-  const defaultLicense = licenseData?.license.licenses.filter(
-    (license) => license.default
-  )[0]
+  const defaultLicenseAgreement = licenseData?.license.defaultLicense.agreement
 
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
@@ -195,7 +193,7 @@ export function SaveModal({
     const licenseAgreement =
       license && license.defined
         ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
-        : defaultLicense?.agreement ?? ''
+        : defaultLicenseAgreement ?? ''
 
     return (
       <label className="block pb-2">
@@ -254,10 +252,9 @@ export function SaveModal({
 }
 
 const licensesQuery = gql`
-  query licensesWithAgreement($instance: Instance!) {
+  query defaultLicenseAgreement($instance: Instance!) {
     license {
-      licenses(instance: $instance) {
-        default
+      defaultLicense(instance: $instance) {
         agreement
       }
     }
@@ -265,7 +262,7 @@ const licensesQuery = gql`
 `
 
 function useLicensesFetch(instance: string) {
-  return useGraphqlSwr<LicensesWithAgreementQuery>({
+  return useGraphqlSwr<DefaultLicenseAgreementQuery>({
     query: licensesQuery,
     variables: { instance },
     config: {
