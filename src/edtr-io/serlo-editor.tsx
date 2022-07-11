@@ -2,7 +2,7 @@
 import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
-import { Entity } from '@serlo/authorization'
+import { Entity, UuidType } from '@serlo/authorization'
 import * as React from 'react'
 
 import { CsrfContext } from './csrf-context'
@@ -22,7 +22,7 @@ export interface SerloEditorProps {
   onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
-  type: string
+  type: UuidType
 }
 
 export interface LooseEdtrData {

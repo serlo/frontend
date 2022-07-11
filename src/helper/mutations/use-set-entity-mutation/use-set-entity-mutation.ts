@@ -48,7 +48,8 @@ export function useSetEntityMutation() {
     initialState: {
       plugin: 'text'
       state: unknown
-    }
+    },
+    taxonomyParentId?: number
   ) =>
     await setEntityMutationRunner({
       auth,
@@ -56,6 +57,7 @@ export function useSetEntityMutation() {
       needsReview,
       loggedInData,
       initialState,
+      taxonomyParentId,
     })
 }
 
@@ -66,7 +68,8 @@ export const setEntityMutationRunner = async function ({
   loggedInData,
   isRecursiveCall,
   initialState,
-  parentId,
+  savedParentId,
+  taxonomyParentId,
 }: SetEntityMutationRunnerData) {
   if (!auth || !loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
@@ -81,7 +84,11 @@ export const setEntityMutationRunner = async function ({
     const input = {
       ...genericInput,
       ...additionalInput,
-      parentId: genericInput.entityId ? undefined : parentId,
+      parentId: genericInput.entityId
+        ? undefined
+        : isRecursiveCall
+        ? savedParentId
+        : taxonomyParentId,
     }
 
     // while testing
@@ -105,7 +112,7 @@ export const setEntityMutationRunner = async function ({
       needsReview,
       loggedInData,
       initialState,
-      parentId: savedId as number,
+      savedParentId: savedId as number,
     })
 
     if (!isRecursiveCall && childrenResult) {
@@ -127,7 +134,7 @@ const loopNestedChildren = async ({
   needsReview,
   loggedInData,
   initialState,
-  parentId,
+  savedParentId,
 }: SetEntityMutationRunnerData): Promise<boolean> => {
   if (!data.__typename) return false
 
@@ -213,7 +220,7 @@ const loopNestedChildren = async ({
           needsReview,
           loggedInData,
           isRecursiveCall: true,
-          parentId,
+          savedParentId,
           initialState,
         })
         if (!success) throw 'revision of one child could not be saved'
