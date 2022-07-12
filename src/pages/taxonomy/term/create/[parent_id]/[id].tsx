@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
+import { UuidType } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 interface TaxonomyTermCreateProps {
@@ -19,7 +20,7 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
         <MaxWidthDiv>
           <main>
             <AddRevision
-              type="TaxonomyTerm"
+              type={UuidType.TaxonomyTerm}
               needsReview={false}
               id={parent}
               initialState={{

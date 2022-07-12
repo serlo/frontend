@@ -88,7 +88,8 @@ export interface SetEntityMutationRunnerData {
     plugin: 'text'
     state: unknown
   }
-  parentId?: number
+  savedParentId?: number
+  taxonomyParentId?: number
 }
 
 export type ChildFieldsData =

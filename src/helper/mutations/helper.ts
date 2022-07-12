@@ -85,7 +85,6 @@ export async function mutationFetch(
   isRetry?: boolean
 ): Promise<boolean | number> {
   if (auth.current === null) return handleError('UNAUTHENTICATED', errorStrings)
-
   const usedToken = auth.current.token
   try {
     const result = await executeQuery()

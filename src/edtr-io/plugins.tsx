@@ -48,20 +48,22 @@ import { InstanceData, LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { isMac } from '@/helper/client-detection'
 
-type PluginType =
-  | SerializedDocument['plugin']
-  | 'type-applet'
-  | 'type-article'
-  | 'type-course'
-  | 'type-course-page'
-  | 'type-event'
-  | 'type-page'
-  | 'type-taxonomy'
-  | 'type-text-exercise'
-  | 'type-text-exercise-group'
-  | 'type-text-solution'
-  | 'type-user'
-  | 'type-video'
+export enum SerloEntityPluginType {
+  Applet = 'type-applet',
+  Article = 'type-article',
+  Course = 'type-course',
+  CoursePage = 'type-course-page',
+  Event = 'type-event',
+  Page = 'type-page',
+  Taxonomy = 'type-taxonomy',
+  TextExercise = 'type-text-exercise',
+  TextExerciseGroup = 'type-text-exercise-group',
+  TextSolution = 'type-text-solution',
+  Video = 'type-video',
+  User = 'type-user',
+}
+
+type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
 
 export function createPlugins({
   getCsrfToken,
@@ -380,17 +382,17 @@ export function createPlugins({
     }),
 
     // Internal plugins for our content types
-    'type-applet': appletTypePlugin,
-    'type-article': articleTypePlugin,
-    'type-course': courseTypePlugin,
-    'type-course-page': coursePageTypePlugin,
-    'type-event': eventTypePlugin,
-    'type-page': pageTypePlugin,
-    'type-taxonomy': taxonomyTypePlugin,
-    'type-text-exercise': textExerciseTypePlugin,
-    'type-text-exercise-group': textExerciseGroupTypePlugin,
-    'type-text-solution': textSolutionTypePlugin,
-    'type-user': userTypePlugin,
-    'type-video': videoTypePlugin,
+    [SerloEntityPluginType.Applet]: appletTypePlugin,
+    [SerloEntityPluginType.Article]: articleTypePlugin,
+    [SerloEntityPluginType.Course]: courseTypePlugin,
+    [SerloEntityPluginType.CoursePage]: coursePageTypePlugin,
+    [SerloEntityPluginType.Event]: eventTypePlugin,
+    [SerloEntityPluginType.Page]: pageTypePlugin,
+    [SerloEntityPluginType.Taxonomy]: taxonomyTypePlugin,
+    [SerloEntityPluginType.TextExercise]: textExerciseTypePlugin,
+    [SerloEntityPluginType.TextExerciseGroup]: textExerciseGroupTypePlugin,
+    [SerloEntityPluginType.TextSolution]: textSolutionTypePlugin,
+    [SerloEntityPluginType.User]: userTypePlugin,
+    [SerloEntityPluginType.Video]: videoTypePlugin,
   }
 }

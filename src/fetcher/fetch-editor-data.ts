@@ -21,10 +21,11 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: string
+  type: UuidWithRevType
   converted?: boolean
   needsReview: boolean
-  id: number
+  id?: number // only for existing
+  taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
 }
@@ -32,6 +33,14 @@ export interface EditorPageData {
 export interface EditorFetchErrorData {
   errorType: 'failed-fetch'
 }
+
+const noReviewTypes: UuidWithRevType[] = [
+  UuidType.TaxonomyTerm,
+  UuidType.Page,
+  UuidType.User,
+]
+
+export const sandboxUrl = '/community/106082/sandkasten'
 
 export async function fetchEditorData(
   localeString: string,
@@ -67,16 +76,8 @@ export async function fetchEditorData(
   const breadcrumbsData = createBreadcrumbs(data)
 
   const isSandbox =
-    breadcrumbsData &&
-    breadcrumbsData.filter(
-      (entry) => entry.url == '/community/106082/sandkasten'
-    ).length > 0
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.url == sandboxUrl)
 
-  const noReviewTypes: UuidWithRevType[] = [
-    UuidType.TaxonomyTerm,
-    UuidType.Page,
-    UuidType.User,
-  ]
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType
   )
@@ -87,7 +88,7 @@ export async function fetchEditorData(
   } else {
     return {
       ...result,
-      type: data.__typename,
+      type: data.__typename as UuidWithRevType,
       needsReview,
       id: repoId,
       errorType: 'none',

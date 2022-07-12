@@ -12,6 +12,7 @@ import {
   number,
   object,
   string,
+  optional,
 } from '@edtr-io/plugin'
 import { getDocument } from '@edtr-io/store'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
@@ -31,7 +32,7 @@ export const uuid = {
 }
 
 export const license = {
-  license: licenseState,
+  license: optional(licenseState),
 }
 
 export const entity = {
