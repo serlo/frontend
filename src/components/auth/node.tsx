@@ -103,7 +103,7 @@ export function Node(props: NodeProps) {
           <>
             <label>
               {getNodeLabel(node)
-                ? getNodeLabel(node)
+                ? getNodeLabel(node) // TODO: this is a hotfix to show names of the labels, that would be for some reason hidden
                 : (node.attributes as UiNodeInputAttributes).name.replace(
                     'traits.',
                     ''
@@ -111,7 +111,7 @@ export function Node(props: NodeProps) {
               <input
                 type={attributes.type}
                 name={attributes.name}
-                // TODO:
+                // TODO: TODO message missing but it may be obvious to the experts.
                 value={(value as any) ?? ''}
                 disabled={disabled}
                 onChange={(e) => {

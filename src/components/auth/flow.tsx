@@ -99,8 +99,8 @@ export function handleFlowError<S>(
   flowType: 'login' | 'registration' | 'settings' | 'recovery' | 'verification',
   resetFlow: Dispatch<SetStateAction<S | undefined>>
 ) {
-  return async (err: AxiosError) => {
-    const data = err.response?.data as {
+  return async (error: AxiosError) => {
+    const data = error.response?.data as {
       redirect_browser_to: string
       error: {
         id: string
@@ -155,7 +155,7 @@ export function handleFlowError<S>(
         return
     }
 
-    switch (err.response?.status) {
+    switch (error.response?.status) {
       case 410:
         // The flow expired, let's request a new one.
         resetFlow(undefined)
@@ -164,6 +164,6 @@ export function handleFlowError<S>(
     }
 
     // We are not able to handle the error? Return it.
-    return Promise.reject(err)
+    return Promise.reject(error)
   }
 }

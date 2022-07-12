@@ -57,7 +57,9 @@ export function Login() {
       {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
       {aal || refresh ? <div>Log out</div> : ''}
-      <div><a href="/registration">Register</a></div>
+      <div>
+        <a href="/registration">Register</a>
+      </div>
       {/*<div>
           {/*  <Link href="/recovery" passHref>*/}
       {/*    <div>Recover your account</div>*/}
