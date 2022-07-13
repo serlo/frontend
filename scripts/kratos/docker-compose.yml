@@ -39,6 +39,8 @@ services:
         target: /etc/config/kratos
     networks:
       - intranet
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   mailslurper:
     image: oryd/mailslurper:latest-smtps
     ports:

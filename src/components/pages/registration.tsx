@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 
 import { Flow, handleFlowError } from '@/components/auth/flow'
 import { kratos } from '@/helper/kratos'
-import { serloDomain } from '@/helper/urls/serlo-domain'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/registration.tsx
 
@@ -51,22 +50,8 @@ export function Registration() {
       .then(() =>
         kratos
           .submitSelfServiceRegistrationFlow(String(flow?.id), values)
-          .then(async ({ data }) => {
-            const apiKratosEndpoint =
-              process.env.NEXT_PUBLIC_ENV === 'local'
-                ? 'http://localhost:3001/kratos'
-                : `https://api.${serloDomain}/kratos`
-
-            await fetch(`${apiKratosEndpoint}/register`, {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ userId: data.identity.id }),
-              credentials: 'same-origin',
-            })
-            return router.push(flow?.return_to || '/').then(() => {})
+          .then(async () => {
+            return await router.push(flow?.return_to || '/').then(() => {})
           })
           .catch(handleFlowError(router, 'registration', setFlow))
           // TODO: refactor to not use AxiosError in whole project and so removing axios dependency

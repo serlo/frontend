@@ -32,8 +32,6 @@ const COOKIE_DOMAIN =
     ? COOKIE_DOMAINS['staging']
     : COOKIE_DOMAINS['local']
 
-console.log(COOKIE_DOMAIN)
-
 // TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 // TODO: is it okay to use that for open source version? Could also just fork it
 export default createApiHandler({

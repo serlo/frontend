@@ -38,6 +38,13 @@ selfservice:
       lifespan: 10m
     registration:
       ui_url: http://localhost:3000/registration
+      after:
+        hooks:
+          - hook: web_hook
+            config:
+              url: http://host.docker.internal:3001/kratos/register
+              method: POST
+              body: file:///etc/config/kratos/register_legacy.jsonnet
     verification:
       enabled: true
       ui_url: http://localhost:3000/ # TODO: /verification that may just redirect without ?flow query
