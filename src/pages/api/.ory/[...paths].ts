@@ -24,7 +24,15 @@ const COOKIE_DOMAINS = {
 }
 
 export const KRATOS_HOST = KRATOS_HOSTS[process.env.NEXT_PUBLIC_ENV || 'local']
-const COOKIE_DOMAIN = COOKIE_DOMAINS[process.env.NEXT_PUBLIC_ENV || 'local']
+
+const COOKIE_DOMAIN =
+  process.env.NEXT_PUBLIC_ENV === 'production'
+    ? COOKIE_DOMAINS['production']
+    : process.env.NEXT_PUBLIC_VERCEL_URL
+    ? COOKIE_DOMAINS['staging']
+    : COOKIE_DOMAINS['local']
+
+console.log(COOKIE_DOMAIN)
 
 // TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 // TODO: is it okay to use that for open source version? Could also just fork it
