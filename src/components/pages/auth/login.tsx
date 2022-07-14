@@ -65,9 +65,7 @@ export function Login() {
       />
 
       {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
-      <div className="mx-side max-w-[18rem]">
-        {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      </div>
+      {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
 
       {showLogout ? <div>Log out</div> : ''}
 

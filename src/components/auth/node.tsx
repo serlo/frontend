@@ -1,19 +1,10 @@
-import {
-  getNodeLabel,
-  isUiNodeAnchorAttributes,
-  isUiNodeImageAttributes,
-  isUiNodeInputAttributes,
-  isUiNodeScriptAttributes,
-  isUiNodeTextAttributes,
-} from '@ory/integrations/ui'
+import { getNodeLabel, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import { UiNode } from '@ory/kratos-client'
 import { FormEvent } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
-
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 export interface NodeProps {
   node: UiNode
@@ -30,37 +21,6 @@ export function Node(props: NodeProps) {
 
   const { strings } = useInstanceData()
 
-  if (isUiNodeImageAttributes(attributes)) {
-    triggerSentry({
-      message:
-        'kratos: tried to render image node which is not implemented yet',
-    })
-    return null
-  }
-
-  if (isUiNodeScriptAttributes(attributes)) {
-    triggerSentry({
-      message:
-        'kratos: tried to render script node which is not implemented yet',
-    })
-    return null
-  }
-
-  if (isUiNodeTextAttributes(attributes)) {
-    triggerSentry({
-      message: 'kratos: tried to render text node which is not implemented yet',
-    })
-    return null
-  }
-
-  if (isUiNodeAnchorAttributes(attributes)) {
-    triggerSentry({
-      message:
-        'kratos: tried to render anchor node which is not implemented yet',
-    })
-    return null
-  }
-
   if (isUiNodeInputAttributes(attributes)) {
     switch (attributes.type) {
       case 'hidden':
@@ -68,6 +28,7 @@ export function Node(props: NodeProps) {
           <input
             type={attributes.type}
             name={attributes.name}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             value={attributes.value ?? 'true'}
           />
         )
@@ -94,7 +55,7 @@ export function Node(props: NodeProps) {
             onClick={(e) => {
               void onSubmit(e, (attributes as { value: string }).value)
             }}
-            value={attributes.value || ''}
+            value={(attributes.value as string) || ''}
             disabled={attributes.disabled || disabled}
           >
             {getNodeLabel(node)}
@@ -115,7 +76,7 @@ export function Node(props: NodeProps) {
                 type={attributes.type}
                 name={attributes.name}
                 // TODO: TODO message missing but it may be obvious to the experts.
-                value={(value as any) ?? ''}
+                value={(value as string) ?? ''}
                 disabled={disabled}
                 onChange={(e) => {
                   void onChange(e.target.value)
@@ -127,5 +88,9 @@ export function Node(props: NodeProps) {
     }
   }
 
+  // Anchor, Image, Script, Text
+  triggerSentry({
+    message: 'kratos: tried to render a node which is not an input node',
+  })
   return null
 }

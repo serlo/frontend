@@ -1,3 +1,4 @@
+import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
   SelfServiceLoginFlow,
@@ -9,6 +10,7 @@ import { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
 import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 
+import { StaticInfoPanel } from '../static-info-panel'
 import { Node } from '@/components/auth/node'
 
 export interface FlowProps<T extends SubmitPayload> {
@@ -50,6 +52,9 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
 
   const { action, method, messages, nodes } = flow.ui
 
+  // eslint-disable-next-line no-console
+  console.log(messages)
+
   return (
     <form
       action={action}
@@ -58,29 +63,40 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
         void handleSubmit(e)
       }}
     >
-      {messages ? <pre>{JSON.stringify(messages)}</pre> : null}
-      {nodes.map((node) => {
-        const id = getNodeId(node)
+      {messages
+        ? messages.map((message) => {
+            return (
+              <StaticInfoPanel key={message.id} type="warning" icon={faWarning}>
+                {message.text}
+              </StaticInfoPanel>
+            )
+          })
+        : null}
 
-        return (
-          <Fragment key={id}>
-            <Node
-              node={node}
-              disabled={isLoading}
-              value={values[id]}
-              onChange={(value) => {
-                setValues((values) => {
-                  return {
-                    ...values,
-                    [id]: value,
-                  }
-                })
-              }}
-              onSubmit={handleSubmit}
-            />
-          </Fragment>
-        )
-      })}
+      <div className="mx-side max-w-[18rem]">
+        {nodes.map((node) => {
+          const id = getNodeId(node)
+
+          return (
+            <Fragment key={id}>
+              <Node
+                node={node}
+                disabled={isLoading}
+                value={values[id]}
+                onChange={(value) => {
+                  setValues((values) => {
+                    return {
+                      ...values,
+                      [id]: value,
+                    }
+                  })
+                }}
+                onSubmit={handleSubmit}
+              />
+            </Fragment>
+          )
+        })}
+      </div>
     </form>
   )
 
