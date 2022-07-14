@@ -148,7 +148,7 @@ const uuidSimpleQuery = gql`
 
 function useSimpleUuidFetch(maybeUuid: null | false | number) {
   return useGraphqlSwr<UuidSimpleQuery>({
-    noKey: maybeUuid === false,
+    noKey: !maybeUuid,
     query: uuidSimpleQuery,
     variables: { id: maybeUuid },
     config: {
