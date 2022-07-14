@@ -11,10 +11,14 @@ export default renderedPageNoHooks(() => (
   </FrontendClientBase>
 ))
 
-// A better idea may be to put an logout_url as href in the logout button
+// A maybe better idea would be to put an logout_url as href in the logout button
 function Logout() {
   const router = useRouter()
   useEffect(() => {
+    kratos.toSession().catch(() => {
+      return router.push('/')
+    })
+
     kratos
       .createSelfServiceLogoutFlowUrlForBrowsers()
       .then(({ data }) => {
@@ -31,5 +35,7 @@ function Logout() {
         return Promise.reject(error)
       })
   })
+
+  // To avoid a component that returns null, maybe handle it server side?
   return null
 }
