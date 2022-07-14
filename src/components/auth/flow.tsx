@@ -107,6 +107,9 @@ export function handleFlowError<S>(
       }
     }
 
+    // at moment all flows are in the same folder. Ajust if they were moved somewhere else
+    const flowPath = `/auth/${flowType}`
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     switch (data.error?.id) {
       case 'session_aal2_required':
@@ -127,13 +130,13 @@ export function handleFlowError<S>(
         // The flow expired, let's request a new one.
         // toast.error('The return_to address is not allowed.')
         resetFlow(undefined)
-        await router.push('/' + flowType)
+        await router.push(flowPath)
         return
       case 'self_service_flow_expired':
         // The flow expired, let's request a new one.
         // toast.error('Your interaction expired, please fill out the form again.')
         resetFlow(undefined)
-        await router.push('/' + flowType)
+        await router.push(flowPath)
         return
       case 'security_csrf_violation':
         // A CSRF violation occurred. Best to just refresh the flow!
@@ -141,12 +144,12 @@ export function handleFlowError<S>(
         //   'A security violation was detected, please fill out the form again.'
         // )
         resetFlow(undefined)
-        await router.push('/' + flowType)
+        await router.push(flowPath)
         return
       case 'security_identity_mismatch':
         // The requested item was intended for someone else. Let's request a new flow...
         resetFlow(undefined)
-        await router.push('/' + flowType)
+        await router.push(flowPath)
         return
       case 'browser_location_change_required':
         // Ory Kratos asked us to point the user to this URL.
@@ -159,7 +162,7 @@ export function handleFlowError<S>(
       case 410:
         // The flow expired, let's request a new one.
         resetFlow(undefined)
-        await router.push('/' + flowType)
+        await router.push(flowPath)
         return
     }
 
