@@ -6,7 +6,7 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { Flow, handleFlowError } from '@/components/auth/flow'
+import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { kratos } from '@/helper/kratos'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/registration.tsx
@@ -28,7 +28,7 @@ export function Registration() {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, 'registration', setFlow))
+        .catch(handleFlowError(router, FlowType.registration, setFlow))
       return
     }
 
@@ -39,7 +39,7 @@ export function Registration() {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, 'registration', setFlow))
+      .catch(handleFlowError(router, FlowType.registration, setFlow))
   }, [flowId, router, router.isReady, returnTo, flow])
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
@@ -53,7 +53,7 @@ export function Registration() {
           .then(async () => {
             return await router.push(flow?.return_to || '/').then(() => {})
           })
-          .catch(handleFlowError(router, 'registration', setFlow))
+          .catch(handleFlowError(router, FlowType.registration, setFlow))
           // TODO: refactor to not use AxiosError in whole project and so removing axios dependency
           .catch((err: AxiosError) => {
             if (err.response?.status === 400) {

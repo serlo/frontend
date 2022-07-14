@@ -312,9 +312,13 @@ export const instanceData = {
       unknownProblem:
         'Sorry, there was a problem loading the content, please try again later.',
     },
-    login: {
+    auth: {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.',
+      fields: {
+        identifier: 'Username or Email address',
+        password: 'Password'
+      }
     },
     keys: {
       ctrl: 'ctrl',

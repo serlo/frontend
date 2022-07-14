@@ -16,6 +16,14 @@ export interface FlowProps<T extends SubmitPayload> {
   onSubmit: (values: T) => Promise<void>
 }
 
+export enum FlowType {
+  login = 'login',
+  registration = 'registration',
+  settings = 'settings',
+  recovery = 'recovery',
+  verification = 'verification',
+}
+
 export type SubmitPayload =
   | SubmitSelfServiceLoginFlowBody
   | SubmitSelfServiceRegistrationFlowBody
@@ -96,7 +104,7 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
 // A small function to help us deal with errors coming from fetching a flow.
 export function handleFlowError<S>(
   router: NextRouter,
-  flowType: 'login' | 'registration' | 'settings' | 'recovery' | 'verification',
+  flowType: FlowType,
   resetFlow: Dispatch<SetStateAction<S | undefined>>
 ) {
   return async (error: AxiosError) => {

@@ -6,9 +6,11 @@ import {
   isUiNodeScriptAttributes,
   isUiNodeTextAttributes,
 } from '@ory/integrations/ui'
-import { UiNode, UiNodeInputAttributes } from '@ory/kratos-client'
+import { UiNode } from '@ory/kratos-client'
 import { FormEvent } from 'react'
 
+import { useInstanceData } from '@/contexts/instance-context'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -25,6 +27,8 @@ export interface NodeProps {
 export function Node(props: NodeProps) {
   const { node, onChange, onSubmit, value, disabled } = props
   const { attributes } = node
+
+  const { strings } = useInstanceData()
 
   if (isUiNodeImageAttributes(attributes)) {
     triggerSentry({
@@ -85,6 +89,7 @@ export function Node(props: NodeProps) {
       case 'submit':
         return (
           <button
+            className="text-xl serlo-button-green block w-full py-2 mt-10"
             name={attributes.name}
             onClick={(e) => {
               void onSubmit(e, (attributes as { value: string }).value)
@@ -98,17 +103,15 @@ export function Node(props: NodeProps) {
 
       default:
         // TODO: this possibly contains "required" and "pattern"
-        // console.log(node.attributes)
         return (
           <>
-            <label>
-              {getNodeLabel(node)
-                ? getNodeLabel(node) // TODO: this is a hotfix to show names of the labels, that would be for some reason hidden
-                : (node.attributes as UiNodeInputAttributes).name.replace(
-                    'traits.',
-                    ''
-                  )}
+            <label className="block my-4">
+              {hasOwnPropertyTs(strings.auth.fields, attributes.name)
+                ? strings.auth.fields[attributes.name]
+                : attributes.name}
+              <br />
               <input
+                className="text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-150 focus:bg-brand-150 outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full"
                 type={attributes.type}
                 name={attributes.name}
                 // TODO: TODO message missing but it may be obvious to the experts.

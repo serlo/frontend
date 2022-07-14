@@ -6,9 +6,9 @@ export function PleaseLogIn() {
   return (
     <p className="serlo-p">
       <Link href="/api/auth/login" path={[]}>
-        {strings.login.pleaseLogInLink}
+        {strings.auth.pleaseLogInLink}
       </Link>{' '}
-      {strings.login.pleaseLogInText}
+      {strings.auth.pleaseLogInText}
     </p>
   )
 }

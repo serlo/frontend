@@ -1,3 +1,4 @@
+import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
@@ -6,7 +7,10 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { Flow, handleFlowError } from '@/components/auth/flow'
+import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Link } from '@/components/content/link'
+import { PageTitle } from '@/components/content/page-title'
+import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
@@ -14,7 +18,6 @@ import { kratos } from '@/helper/kratos'
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
-
   const { return_to: returnTo, flow: flowId, refresh, aal } = router.query
 
   useEffect(() => {
@@ -28,7 +31,7 @@ export function Login() {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, 'login', setFlow))
+        .catch(handleFlowError(router, FlowType.login, setFlow))
       return
     }
 
@@ -41,30 +44,47 @@ export function Login() {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, 'login', setFlow))
+      .catch(handleFlowError(router, FlowType.login, setFlow))
   }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
+
+  const showLogout = aal || refresh
 
   return (
     <>
-      {(() => {
-        if (flow?.refresh) {
-          return 'Confirm Action'
-        } else if (flow?.requested_aal === 'aal2') {
-          return 'Two-Factor Authentication'
-        }
-        return 'Sign In'
-      })()}
+      <PageTitle
+        headTitle
+        icon={<FaIcon icon={faUser} />}
+        title={(() => {
+          if (flow?.refresh) {
+            return 'Confirm Action'
+          } else if (flow?.requested_aal === 'aal2') {
+            return 'Two-Factor Authentication'
+          }
+          return 'Sign In'
+        })()}
+      />
+
       {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
-      {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      {aal || refresh ? <div>Log out</div> : ''}
-      <div>
-        <a href="/registration">Register</a>
+      <div className="mx-side max-w-[18rem]">
+        {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
       </div>
-      {/*<div>
-          {/*  <Link href="/recovery" passHref>*/}
-      {/*    <div>Recover your account</div>*/}
-      {/*  </Link>*/}
-      {/*</div>*/}
+
+      {showLogout ? <div>Log out</div> : ''}
+
+      <div className="mx-side mt-20 border-t-2 pt-4">
+        Bist du neu hier?{' '}
+        <Link href="/auth/registration" className="serlo-button-light">
+          Neuen Account registeren
+        </Link>
+      </div>
+
+      <div className="mx-side mt-2 pt-4">
+        Hast du dein{' '}
+        <Link href="/auth/recovery" className="font-bold">
+          Passwort vergessen
+        </Link>
+        ? (not implemented)
+      </div>
     </>
   )
 
@@ -96,7 +116,7 @@ export function Login() {
       }
     } catch (e: unknown) {
       try {
-        await handleFlowError(router, 'login', setFlow)(e as AxiosError)
+        await handleFlowError(router, FlowType.login, setFlow)(e as AxiosError)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {
