@@ -19,25 +19,135 @@ const chance = isProduction ? 0.2 : 1 // 20% or always while developing
 
 const banners = [
   {
-    id: 'banner-1a',
+    id: 'banner-A1',
+    isLong: true,
     text: (
-      <>
-        Serlo ist die einzige Lernplattform Deutschlands, die kostenlos ist. Wir
-        finanzieren uns rein über Spenden und Förderer. Unterstütze auch du uns!{' '}
-      </>
+      <div className="text-left">
+        <p className="serlo-p break-normal leading-6">
+          … dass in Deutschland über 1,1 Millionen Schüler*innen im Jahr teure
+          Nachhilfe in Anspruch nehmen? Mit 17 Jahren ist das jedes vierte Kind.
+          Nicht jede Familie kann sich das leisten! Und so ist der Schulerfolg
+          in Deutschland stark abhängig vom Geldbeutel der Eltern.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Die Corona-Pandemie verstärkt diesen bedenklichen Trend: Viele
+          Unterrichtsstunden sind ausgefallen und der verpasste Lernstoff muss
+          jetzt nachgeholt werden. Das ist besonders für die Schüler*innen aus
+          ärmeren Haushalten schwierig, die weniger außerschulische
+          Unterstützung erhalten und eher den Anschluss verlieren.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Wir finden das nicht fair! Jedes Kind in Deutschland sollte die
+          gleichen Chancen auf eine gute Schulbildung haben.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Dafür setzen wir uns ein! Serlo ist ein gemeinnütziger Verein mit dem
+          Ziel:{' '}
+          <b>
+            Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
+            Schüler*innen
+          </b>
+          . Jeden Monat erreichen wir mit unserer freien Lernplattform serlo.org
+          über 1 Millionen Schüler*innen und das mit einem sehr kleinen Budget.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Mit deiner Spende, groß oder klein, kannst du unsere Arbeit für mehr
+          Bildungsgerechtigkeit unterstützen.
+        </p>
+      </div>
     ),
-    call: 'Gemeinsam mit Dir gestalten wir Bildung neu.',
+    call: 'Wusstest du schon …',
     imageSrc: '/_assets/img/donations/donation-bird.svg',
   },
   {
-    id: 'banner-1b',
+    id: 'banner-A2',
+    isLong: false,
     text: (
-      <>
-        Noch eine ganz andere Message, die super überzeugend ist. Wow, alle
-        klicken auf den Link gleich.{' '}
-      </>
+      <div className="text-left">
+        <p className="serlo-p break-normal leading-6">
+          … dass in Deutschland pro Jahr über 1,1 Millionen Schüler*innen teure
+          Nachhilfe in Anspruch nehmen? Die Corona-Pandemie hat den Bedarf noch
+          größer gemacht. Aber nicht jede Familie kann sich das leisten!
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
+          hochwertigen Lernmaterialien für alle Schüler*innen komplett
+          kostenlos. Mit deiner Spende, groß oder klein, kannst du diese Arbeit
+          unterstützen.
+        </p>
+      </div>
     ),
-    call: 'Gemeinsam mit Dir gestalten wir Bildung neu.',
+    call: 'Wusstest du schon …',
+    imageSrc: '/_assets/img/donations/donation-bird.svg',
+  },
+  {
+    id: 'banner-B1',
+    isLong: true,
+    text: (
+      <div className="text-left">
+        <p className="serlo-p break-normal leading-6">
+          … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
+          engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
+          Pädagog*innen für das gemeinsame Ziel:{' '}
+          <b>
+            Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
+            Schüler*innen
+          </b>
+          . Jeden Monat lernen bereits über 1 Millionen Schüler*innen mit Serlo.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Neben der ehrenamtlichen Redaktion haben wir auch ein kleines Team von
+          Festangestellten. Sie kümmern sich z.B. um die Weiterentwicklung der
+          Software, Wartung der Server, Fortbildung für ehrenamtliche
+          Autor*innen und die Qualitätssicherung. Einige von uns arbeiten schon
+          seit ihrer eigenen Schulzeit an Serlo, wo die Idee der freien
+          Lernplattform entstanden ist.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Als nächstes würden wir gerne weitere Übungsformate für Serlo
+          entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
+          Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
+          eigenen Lernstand zu speichern.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für
+          immer kostenlos und frei von Werbung bleiben wird, sind wir auf
+          Spenden angewiesen.
+        </p>
+        <p className="serlo-p break-normal leading-6 font-bold">
+          Bitte unterstütze uns, Serlo noch besser zu machen!
+        </p>
+      </div>
+    ),
+    call: 'Wusstest du schon …',
+    imageSrc: '/_assets/img/donations/donation-bird.svg',
+  },
+  {
+    id: 'banner-B2',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="serlo-p break-normal leading-6">
+          … dass Serlo für alle und für immer kostenlos bleibt? Denn das ist
+          unsere Mission.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Hier gibt es keine Werbung, die vom Lernen ablenkt und keine
+          notwendige Registrierung. Die Plattform ist und bleibt kostenlos und
+          für alle frei nutzbar.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Wir finanzieren uns über öffentliche Förderungen und Spenden, mit
+          denen wir z.B. die Wartung der Server, die Fortbildungen unserer
+          Redakteur*innen und den Aufbau weiterer Lernfächer ermöglichen können.
+        </p>
+        <p className="serlo-p break-normal leading-6">
+          Auch du kannst Unterstützer*in von Serlo sein und die Plattform mit
+          deiner großen oder kleinen Spende noch besser machen.
+        </p>
+      </div>
+    ),
+    call: 'Wusstest du schon …',
     imageSrc: '/_assets/img/donations/donation-bird.svg',
   },
 ]
@@ -85,7 +195,7 @@ export function DonationsBanner({ id }: { id: number }) {
           if (bannerRef.current) observer.observe(bannerRef.current)
         }}
         className={clsx(
-          'w-[100vw] relative py-6 px-side text-center text-xl font-bold',
+          'w-[100vw] relative py-6 px-side text-center text-xl',
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
           'sm:flex sm:justify-between sm:text-left sm:mx-0 sm:px-0',
           'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16'
@@ -93,20 +203,23 @@ export function DonationsBanner({ id }: { id: number }) {
       >
         <img
           src={banner.imageSrc}
-          className="px-16 rounded-full -mb-5 max-w-[22rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[15rem] sm:px-3"
+          className="mt-6 px-16 max-w-[22rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[15rem] sm:px-3 scale-x-[-1]"
         />
         <div className="max-w-2xl mx-auto px-side sm:mt-5 sm:ml-0">
-          <p className="">{banner.text}</p>
-          <p className="my-5 font-handwritten text-[1.32em] text-brand">
+          <p className="my-5 font-handwritten text-[1.32em] text-brand mx-side">
             {banner.call}
+          </p>
+          <div className="">{banner.text}</div>
+
+          <p className="block mb-6 mx-auto sm:mb-10 sm:ml-side lg:mb-24">
             <button
-              className="serlo-button-green mt-6 block mx-auto sm:ml-0 lg:inline-block lg:ml-4 lg:mt-0"
+              className="serlo-button-green"
               onClick={() => {
                 submitEvent(`spenden-clicked-${banner.id}`)
                 void router.push('/spenden')
               }}
             >
-              Jetzt Spenden
+              Spende jetzt!
             </button>
           </p>
         </div>
