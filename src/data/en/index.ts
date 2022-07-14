@@ -428,7 +428,7 @@ export const loggedInData = {
           title: 'Settings',
         },
         {
-          url: '/api/auth/logout',
+          url: '/auth/logout',
           title: 'Log out',
         },
       ],

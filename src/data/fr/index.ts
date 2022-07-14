@@ -395,7 +395,7 @@ export const loggedInData = {
       url: '/user/settings',
       title: 'Settings'
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "Se déconnecter"
     }]
   }],
