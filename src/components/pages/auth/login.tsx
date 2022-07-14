@@ -89,8 +89,7 @@ export function Login() {
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
 
-    // TODO: dynamically get the path of current file or find a better solution
-    await router.push(`/auth/login?flow=${flow.id}`, undefined, {
+    await router.push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
       shallow: true,
     })
 

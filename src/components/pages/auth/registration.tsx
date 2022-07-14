@@ -44,7 +44,7 @@ export function Registration() {
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
     await router
-      .push(`/registration?flow=${String(flow?.id)}`, undefined, {
+      .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
         shallow: true,
       })
       .then(() =>
