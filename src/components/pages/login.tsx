@@ -71,7 +71,10 @@ export function Login() {
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
 
-    await router.push(`/login?flow=${flow.id}`, undefined, { shallow: true })
+    // TODO: dynamically get the path of current file or find a better solution
+    await router.push(`/auth/login?flow=${flow.id}`, undefined, {
+      shallow: true,
+    })
 
     try {
       await kratos

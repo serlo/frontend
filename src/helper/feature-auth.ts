@@ -10,7 +10,7 @@ export function getAuthData(
       ? authMenu
       : [
           {
-            url: '/login',
+            url: '/auth/login',
             title: loginTitle,
             icon: 'login',
           },
