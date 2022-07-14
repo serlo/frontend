@@ -24,6 +24,6 @@ NEXT_PUBLIC_ENV=local
 ```
 
 5. Start frontend, api and db layer (with DB docker image).
-6. Head to `localhost:3000/login`.
+6. Head to `localhost:3000/auth/login`.
 7. For Login you can already use the id `dev` and password `123456`.
 8. For Registration use the `kratos` branch in api.serlo.org and the `298-new-endpoint-usercreatemutation` branch in the serlo.org-database-layer (if they are not merged into main yet).

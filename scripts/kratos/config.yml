@@ -13,9 +13,9 @@ serve:
 selfservice:
   default_browser_return_url: http://localhost:3000/
   allowed_return_urls:
-    - http://localhost:3000/login
-    - http://localhost:3000/registration
-    - http://localhost:3000/verification
+    - http://localhost:3000/auth/login
+    - http://localhost:3000/auth/registration
+    - http://localhost:3000/auth/verification
 
   methods:
     password:
@@ -29,15 +29,15 @@ selfservice:
 
   flows:
     error:
-      ui_url: http://localhost:3000/error
+      ui_url: http://localhost:3000/auth/error
     logout:
       after:
-        default_browser_return_url: http://localhost:3000/login
+        default_browser_return_url: http://localhost:3000/auth/login
     login:
-      ui_url: http://localhost:3000/login
+      ui_url: http://localhost:3000/auth/login
       lifespan: 10m
     registration:
-      ui_url: http://localhost:3000/registration
+      ui_url: http://localhost:3000/auth/registration
       after:
         hooks:
           - hook: web_hook
