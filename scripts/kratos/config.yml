@@ -47,7 +47,7 @@ selfservice:
               body: file:///etc/config/kratos/register_legacy.jsonnet
     verification:
       enabled: true
-      ui_url: http://localhost:3000/ # TODO: /verification that may just redirect without ?flow query
+      ui_url: http://localhost:3000/auth/verification
     recovery:
       enabled: true
       ui_url: http://localhost:3000/auth/recovery
