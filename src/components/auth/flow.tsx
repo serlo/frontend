@@ -2,8 +2,10 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
   SelfServiceLoginFlow,
+  SelfServiceRecoveryFlow,
   SelfServiceRegistrationFlow,
   SubmitSelfServiceLoginFlowBody,
+  SubmitSelfServiceRecoveryFlowBody,
   SubmitSelfServiceRegistrationFlowBody,
 } from '@ory/kratos-client'
 import { AxiosError } from 'axios'
@@ -14,7 +16,10 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { Node } from '@/components/auth/node'
 
 export interface FlowProps<T extends SubmitPayload> {
-  flow: SelfServiceLoginFlow | SelfServiceRegistrationFlow
+  flow:
+    | SelfServiceLoginFlow
+    | SelfServiceRegistrationFlow
+    | SelfServiceRecoveryFlow
   onSubmit: (values: T) => Promise<void>
 }
 
@@ -29,10 +34,10 @@ export enum FlowType {
 export type SubmitPayload =
   | SubmitSelfServiceLoginFlowBody
   | SubmitSelfServiceRegistrationFlowBody
+  | SubmitSelfServiceRecoveryFlowBody
 
 export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
   const { flow, onSubmit } = props
-  if (!flow) return null
 
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState<Record<string, unknown>>(() => {

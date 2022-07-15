@@ -71,7 +71,7 @@ export function Recovery() {
           })
       )
   }
-
+  if (!flow) return null
   return (
     <>
       <div>Recover your account</div>
