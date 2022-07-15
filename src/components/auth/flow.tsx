@@ -1,4 +1,5 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
   SelfServiceLoginFlow,
@@ -17,6 +18,10 @@ import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 
 import { StaticInfoPanel } from '../static-info-panel'
 import { Node } from '@/components/auth/node'
+import { useInstanceData } from '@/contexts/instance-context'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow:
@@ -48,7 +53,7 @@ export function Flow<T extends SubmitPayload>({
   onSubmit,
 }: FlowProps<T>) {
   const { action, method, messages, nodes } = flow.ui
-
+  const { strings } = useInstanceData()
   const filteredNodes = only
     ? nodes.filter((node) => node.group === 'default' || node.group === only)
     : nodes
@@ -112,11 +117,37 @@ export function Flow<T extends SubmitPayload>({
     return (
       <div className="mx-side">
         {messages
-          ? messages.map(({ id, text, type }) => {
-              const panelType = type === 'info' ? 'success' : 'warning'
+          ? messages.map((node) => {
+              const { id, text, type } = node
+
+              const panelType = type === 'info' ? 'info' : 'warning'
+              const hasTranslatedMessage = hasOwnPropertyTs(
+                strings.auth.messages,
+                id
+              )
+              const rawMessage = hasTranslatedMessage
+                ? strings.auth.messages[
+                    id as keyof typeof strings.auth.messages
+                  ]
+                : text
+
+              // TODO: check context
+              const message = replacePlaceholders(rawMessage, { reason: text })
+
+              if (!hasTranslatedMessage) {
+                triggerSentry({
+                  message: 'kratos-untranslated-message',
+                  code: id,
+                })
+              }
+
               return (
-                <StaticInfoPanel key={id} type={panelType} icon={faWarning}>
-                  {text}
+                <StaticInfoPanel
+                  key={id}
+                  type={panelType}
+                  icon={type === 'info' ? faInfoCircle : faWarning}
+                >
+                  {message}
                 </StaticInfoPanel>
               )
             })
