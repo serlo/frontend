@@ -389,7 +389,7 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Suscripciones"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "Actualizar contraseña"
     }, {
       url: '/user/settings',

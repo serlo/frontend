@@ -25,6 +25,7 @@ export interface FlowProps<T extends SubmitPayload> {
     | SelfServiceRecoveryFlow
     | SelfServiceSettingsFlow
   onSubmit: (values: T) => Promise<void>
+  only?: string
 }
 
 export enum FlowType {
@@ -41,13 +42,21 @@ export type SubmitPayload =
   | SubmitSelfServiceRecoveryFlowBody
   | SubmitSelfServiceSettingsFlowBody
 
-export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
-  const { flow, onSubmit } = props
+export function Flow<T extends SubmitPayload>({
+  flow,
+  only,
+  onSubmit,
+}: FlowProps<T>) {
+  const { action, method, messages, nodes } = flow.ui
+
+  const filteredNodes = only
+    ? nodes.filter((node) => node.group === 'default' || node.group === only)
+    : nodes
 
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState<Record<string, unknown>>(() => {
     const values: Record<string, unknown> = {}
-    flow.ui.nodes.forEach((node) => {
+    filteredNodes.forEach((node) => {
       if (isUiNodeInputAttributes(node.attributes)) {
         if (
           node.attributes.type === 'hidden' ||
@@ -61,11 +70,6 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
     return values
   })
 
-  const { action, method, messages, nodes } = flow.ui
-
-  // eslint-disable-next-line no-console
-  console.log(messages)
-
   return (
     <form
       action={action}
@@ -74,18 +78,10 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
         void handleSubmit(e)
       }}
     >
-      {messages
-        ? messages.map((message) => {
-            return (
-              <StaticInfoPanel key={message.id} type="warning" icon={faWarning}>
-                {message.text}
-              </StaticInfoPanel>
-            )
-          })
-        : null}
+      {renderMessages()}
 
       <div className="mx-side max-w-[18rem]">
-        {nodes.map((node) => {
+        {filteredNodes.map((node) => {
           const id = getNodeId(node)
 
           return (
@@ -112,6 +108,23 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
     </form>
   )
 
+  function renderMessages() {
+    return (
+      <div className="mx-side">
+        {messages
+          ? messages.map(({ id, text, type }) => {
+              const panelType = type === 'info' ? 'success' : 'warning'
+              return (
+                <StaticInfoPanel key={id} type={panelType} icon={faWarning}>
+                  {text}
+                </StaticInfoPanel>
+              )
+            })
+          : null}
+      </div>
+    )
+  }
+
   function handleSubmit(e: FormEvent | MouseEvent, method?: string) {
     e.stopPropagation()
     e.preventDefault()
@@ -119,7 +132,6 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
     if (isLoading) return Promise.resolve()
     NProgress.start()
     setIsLoading(true)
-    console.log('starting')
 
     return onSubmit({
       ...values,

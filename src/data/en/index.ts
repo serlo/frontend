@@ -423,7 +423,7 @@ export const loggedInData = {
           title: 'Subscriptions',
         },
         {
-          url: '/auth/password/change',
+          url: '/auth/settings',
           title: 'Change password',
         },
         {

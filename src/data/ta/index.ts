@@ -389,7 +389,7 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "சந்தாக்கள்"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/user/settings',
