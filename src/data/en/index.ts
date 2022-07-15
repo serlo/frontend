@@ -315,9 +315,12 @@ export const instanceData = {
     auth: {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.',
+      registerTitle: 'Register new account',
       fields: {
         identifier: 'Username or Email address',
-        password: 'Password'
+        username: 'Username',
+        password: 'Password',
+        email: 'Email',
       }
     },
     keys: {

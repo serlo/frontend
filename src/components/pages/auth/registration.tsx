@@ -7,6 +7,8 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { PageTitle } from '@/components/content/page-title'
+import { useInstanceData } from '@/contexts/instance-context'
 import { kratos } from '@/helper/kratos'
 
 // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/registration.tsx
@@ -14,7 +16,7 @@ import { kratos } from '@/helper/kratos'
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
-
+  const { strings } = useInstanceData()
   const { return_to: returnTo, flow: flowId } = router.query
 
   useEffect(() => {
@@ -66,5 +68,10 @@ export function Registration() {
       )
   }
 
-  return <>{flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}</>
+  return (
+    <>
+      <PageTitle headTitle title={strings.auth.registerTitle} />
+      {flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}
+    </>
+  )
 }

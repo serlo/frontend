@@ -4,12 +4,15 @@ import {
   SelfServiceLoginFlow,
   SelfServiceRecoveryFlow,
   SelfServiceRegistrationFlow,
+  SelfServiceSettingsFlow,
   SubmitSelfServiceLoginFlowBody,
   SubmitSelfServiceRecoveryFlowBody,
   SubmitSelfServiceRegistrationFlowBody,
+  SubmitSelfServiceSettingsFlowBody,
 } from '@ory/kratos-client'
 import { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
+import NProgress from 'nprogress'
 import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 
 import { StaticInfoPanel } from '../static-info-panel'
@@ -20,6 +23,7 @@ export interface FlowProps<T extends SubmitPayload> {
     | SelfServiceLoginFlow
     | SelfServiceRegistrationFlow
     | SelfServiceRecoveryFlow
+    | SelfServiceSettingsFlow
   onSubmit: (values: T) => Promise<void>
 }
 
@@ -35,6 +39,7 @@ export type SubmitPayload =
   | SubmitSelfServiceLoginFlowBody
   | SubmitSelfServiceRegistrationFlowBody
   | SubmitSelfServiceRecoveryFlowBody
+  | SubmitSelfServiceSettingsFlowBody
 
 export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
   const { flow, onSubmit } = props
@@ -88,6 +93,7 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
               <Node
                 node={node}
                 disabled={isLoading}
+                isLoading={isLoading}
                 value={values[id]}
                 onChange={(value) => {
                   setValues((values) => {
@@ -111,13 +117,15 @@ export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
     e.preventDefault()
 
     if (isLoading) return Promise.resolve()
-
+    NProgress.start()
     setIsLoading(true)
+    console.log('starting')
 
     return onSubmit({
       ...values,
       ...(method === undefined ? {} : { method }),
     } as T).finally(() => {
+      NProgress.done()
       setIsLoading(false)
     })
   }
