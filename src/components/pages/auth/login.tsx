@@ -89,9 +89,13 @@ export function Login() {
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
 
-    await router.push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
-      shallow: true,
-    })
+    await router.push(
+      `${router.pathname}?flow=${String(flow?.id)}`,
+      undefined,
+      {
+        shallow: true,
+      }
+    )
 
     try {
       await kratos

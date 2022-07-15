@@ -32,6 +32,7 @@ export type SubmitPayload =
 
 export function Flow<T extends SubmitPayload>(props: FlowProps<T>) {
   const { flow, onSubmit } = props
+  if (!flow) return null
 
   const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState<Record<string, unknown>>(() => {
