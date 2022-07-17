@@ -1,12 +1,11 @@
-// need to install mysql lib
 const mysql = require('mysql')
 const Configuration = require('@ory/kratos-client').Configuration
 const V0alpha2Api = require('@ory/kratos-client').V0alpha2Api
 
 const config = {
-  kratosHost: 'http://localhost:4433',
+  kratosHost: 'http://kratos:4434',
   db: {
-    host: 'localhost',
+    host: 'host.docker.internal',
     user: 'root',
     password: 'secret',
     database: 'serlo',
@@ -30,7 +29,23 @@ connection.connect(async (error) => {
   if (error) throw error
   connection.query('SELECT * FROM user', async (error, result) => {
     if (error) throw error
+    let allIdentities = []
+    for (let page = 1; page < result.length / 1000 + 1; page++) {
+      allIdentities = [
+        ...allIdentities,
+        ...(await kratos
+          .adminListIdentities(1000, page)
+          .then(({ data }) => data)),
+      ]
+    }
+    if (allIdentities) {
+      for (const identity of allIdentities) {
+        await kratos.adminDeleteIdentity(identity.id)
+      }
+    }
     await importUsers(result)
+    console.log('Successful Import of Users')
+    process.exit(0)
   })
 })
 
@@ -59,8 +74,7 @@ async function importUsers(users) {
         },
       ],
     }
+    console.log('Importing user...')
     await kratos.adminCreateIdentity(user)
   }
 }
-
-kratos.adminListIdentities().then(({ data }) => console.log(data))

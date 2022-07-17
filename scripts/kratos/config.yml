@@ -12,10 +12,6 @@ serve:
 
 selfservice:
   default_browser_return_url: http://localhost:3000/
-  allowed_return_urls:
-    - http://localhost:3000/auth/login
-    - http://localhost:3000/auth/registration
-    - http://localhost:3000/auth/verification
 
   methods:
     password:
