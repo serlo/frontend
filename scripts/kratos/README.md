@@ -1,6 +1,13 @@
 # Integration frontend.serlo.org - Kratos
 
-## Getting started
+## Getting started using staging API (simple)
+
+1. Run `yarn kratos`.
+2. Run `yarn kratos:prepare`.
+3. Run `yarn dev` to start the frontend
+4. Head to `localhost:3000` and try to register or log in.
+
+## Getting started using local API and database layer
 
 1. Run `yarn kratos`.
 2. Run `yarn kratos:prepare`.
