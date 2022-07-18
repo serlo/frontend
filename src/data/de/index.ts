@@ -243,7 +243,7 @@ export const instanceData = {
       backToHome: "Zur Startseite",
       deletedComment: {
         title: "Hoppla, das gibt's hier nicht mehr",
-        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde aus absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
+        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
       }
     },
     print: {
