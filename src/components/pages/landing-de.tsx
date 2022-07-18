@@ -1,6 +1,4 @@
-import { Session } from '@ory/kratos-client'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
@@ -13,31 +11,13 @@ import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
-import { kratos } from '@/helper/kratos'
 
 export interface LandingDEProps {
   data: InstanceLandingData
 }
 
 export function LandingDE({ data }: LandingDEProps) {
-  // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/index.tsx
-  const [session, setSession] = useState<Session | null>(null)
   const subjectsData = data.subjectsData
-  useEffect(() => {
-    kratos
-      .toSession()
-      .then(({ data }) => {
-        setSession(data)
-      })
-      .catch((err) => {
-        return Promise.reject(err)
-      })
-  }, [])
-
-  // console.log(session)
-
-  const kratosUsername =
-    (session?.identity?.traits as { username: string })?.username ?? ''
 
   return (
     <>
@@ -157,10 +137,7 @@ export function LandingDE({ data }: LandingDEProps) {
               'max-w-2xl mt-3 mb-6 mx-auto'
             )}
           >
-            Was möchtest du{' '}
-            <span className="pb-2 underlined">
-              lernen{', ' + kratosUsername} ?
-            </span>
+            Was möchtest du <span className="pb-2 underlined">lernen ?</span>
           </h1>
           <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto">
             <Quickbar />

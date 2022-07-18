@@ -2,7 +2,7 @@ import {
   SelfServiceRegistrationFlow,
   SubmitSelfServiceRegistrationFlowBody,
 } from '@ory/kratos-client'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -53,7 +53,9 @@ export function Registration() {
         kratos
           .submitSelfServiceRegistrationFlow(String(flow?.id), values)
           .then(async () => {
-            return await router.push(flow?.return_to || '/').then(() => {})
+            return await router
+              .push(flow?.return_to || '/login-check')
+              .then(() => {})
           })
           .catch(handleFlowError(router, FlowType.registration, setFlow))
           // TODO: refactor to not use AxiosError in whole project and so removing axios dependency

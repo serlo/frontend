@@ -16,7 +16,7 @@ function Logout() {
   const router = useRouter()
   useEffect(() => {
     kratos.toSession().catch(() => {
-      return router.push('/')
+      return router.push('/auth/login-check')
     })
 
     kratos

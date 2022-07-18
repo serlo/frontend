@@ -1,5 +1,5 @@
 import { SelfServiceError } from '@ory/kratos-client'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 

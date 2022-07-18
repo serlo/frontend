@@ -1,4 +1,5 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
+import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: Instance["Es"],
@@ -389,13 +390,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Suscripciones"
     }, {
-      url: '/auth/settings',
+      url: getPasswordChangeUrl(),
       title: "Actualizar contraseña"
     }, {
       url: '/user/settings',
       title: "Configuración"
     }, {
-      url: '/auth/logout',
+      url: getLogoutUrl(),
       title: "Cerrar sesión"
     }]
   }],

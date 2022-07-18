@@ -11,7 +11,7 @@ import {
   SubmitSelfServiceRegistrationFlowBody,
   SubmitSelfServiceSettingsFlowBody,
 } from '@ory/kratos-client'
-import { AxiosError } from 'axios'
+import type { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
@@ -200,7 +200,7 @@ export function handleFlowError<S>(
         return
       case 'session_already_available':
         // User is already signed in, let's redirect them home!
-        await router.push('/')
+        await router.push('/auth/login-check')
         return
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action

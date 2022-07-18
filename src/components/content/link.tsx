@@ -33,6 +33,18 @@ const legacyLinks = [
 ]
 
 export function isLegacyLink(_href: string) {
+  // kratos links that should be handled in the frontend
+  if (
+    _href == '/auth/verification' ||
+    _href == '/auth/settings' ||
+    _href == '/auth/registration' ||
+    _href == '/auth/recovery' ||
+    _href == '/auth/logout' ||
+    _href == '/auth/login' ||
+    _href == '/auth/error'
+  )
+    return false
+
   // compat: this is a special frontend route or force frontend use
   if (
     _href == '/user/notifications' ||
@@ -47,10 +59,10 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/entity/license/update/') ||
     _href.startsWith('/entity/link/order/') ||
     _href.startsWith('/entity/create/') ||
+    _href.startsWith('/entity/repository/add-revision/') ||
     _href.startsWith('/taxonomy/term/move/batch/') ||
     _href.startsWith('/taxonomy/term/copy/batch/') ||
     _href.startsWith('/taxonomy/term/sort/entities/') ||
-    _href.startsWith('/entity/repository/add-revision/') ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
     return false
@@ -58,6 +70,7 @@ export function isLegacyLink(_href: string) {
 
   return (
     legacyLinks.includes(_href) ||
+    _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/authorization') ||
     _href.startsWith('/entity') ||
