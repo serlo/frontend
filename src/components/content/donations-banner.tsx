@@ -50,7 +50,7 @@ const banners = [
           . Jeden Monat erreichen wir mit unserer freien Lernplattform serlo.org
           über 1 Millionen Schüler*innen und das mit einem sehr kleinen Budget.
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p break-normal leading-6 font-bold">
           Mit deiner Spende, groß oder klein, kannst du unsere Arbeit für mehr
           Bildungsgerechtigkeit unterstützen.
         </p>
@@ -72,7 +72,10 @@ const banners = [
         <p className="serlo-p break-normal leading-6">
           Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
           hochwertigen Lernmaterialien für alle Schüler*innen komplett
-          kostenlos. Mit deiner Spende, groß oder klein, kannst du diese Arbeit
+          kostenlos.
+        </p>
+        <p className="serlo-p break-normal leading-6 font-bold">
+          Mit deiner Spende, groß oder klein, kannst du diese Arbeit
           unterstützen.
         </p>
       </div>
@@ -128,22 +131,22 @@ const banners = [
     text: (
       <div className="text-left">
         <p className="serlo-p break-normal leading-6">
-          … dass Serlo für alle und für immer kostenlos bleibt? Denn das ist
-          unsere Mission.
+          … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
+          engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
+          Pädagog*innen für das gemeinsame Ziel:{' '}
+          <b>
+            Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
+            Schüler*innen .
+          </b>
         </p>
         <p className="serlo-p break-normal leading-6">
-          Hier gibt es keine Werbung, die vom Lernen ablenkt und keine
-          notwendige Registrierung. Die Plattform ist und bleibt kostenlos und
-          für alle frei nutzbar.
+          Als nächstes möchten wir gerne weitere Übungsformate für Serlo
+          entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
+          Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
+          eigenen Lernstand zu speichern.
         </p>
-        <p className="serlo-p break-normal leading-6">
-          Wir finanzieren uns über öffentliche Förderungen und Spenden, mit
-          denen wir z.B. die Wartung der Server, die Fortbildungen unserer
-          Redakteur*innen und den Aufbau weiterer Lernfächer ermöglichen können.
-        </p>
-        <p className="serlo-p break-normal leading-6">
-          Auch du kannst Unterstützer*in von Serlo sein und die Plattform mit
-          deiner großen oder kleinen Spende noch besser machen.
+        <p className="serlo-p break-normal leading-6 font-bold">
+          Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
     ),
