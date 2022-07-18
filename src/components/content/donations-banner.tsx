@@ -45,9 +45,9 @@ const banners = [
           Ziel:{' '}
           <b>
             Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
-            Schüler*innen
-          </b>
-          . Jeden Monat erreichen wir mit unserer freien Lernplattform serlo.org
+            Schüler*innen.
+          </b>{' '}
+          Jeden Monat erreichen wir mit unserer freien Lernplattform serlo.org
           über 1 Millionen Schüler*innen und das mit einem sehr kleinen Budget.
         </p>
         <p className="serlo-p break-normal leading-6 font-bold">
@@ -71,8 +71,8 @@ const banners = [
         </p>
         <p className="serlo-p break-normal leading-6">
           Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
-          hochwertigen Lernmaterialien für alle Schüler*innen komplett
-          kostenlos.
+          hochwertigen Lernmaterialien für{' '}
+          <b>alle Schüler*innen komplett kostenlos</b>.
         </p>
         <p className="serlo-p break-normal leading-6 font-bold">
           Mit deiner Spende, groß oder klein, kannst du diese Arbeit
@@ -107,7 +107,7 @@ const banners = [
           Lernplattform entstanden ist.
         </p>
         <p className="serlo-p break-normal leading-6">
-          Als nächstes würden wir gerne weitere Übungsformate für Serlo
+          Als nächstes möchten wir gerne weitere Übungsformate für Serlo
           entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
           Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
           eigenen Lernstand zu speichern.
@@ -118,7 +118,7 @@ const banners = [
           Spenden angewiesen.
         </p>
         <p className="serlo-p break-normal leading-6 font-bold">
-          Bitte unterstütze uns, Serlo noch besser zu machen!
+          Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
     ),
@@ -136,8 +136,9 @@ const banners = [
           Pädagog*innen für das gemeinsame Ziel:{' '}
           <b>
             Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
-            Schüler*innen .
+            Schüler*innen
           </b>
+          .
         </p>
         <p className="serlo-p break-normal leading-6">
           Als nächstes möchten wir gerne weitere Übungsformate für Serlo
