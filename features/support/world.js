@@ -1,22 +1,15 @@
 const { setWorldConstructor, AfterAll } = require('cucumber')
-const webdriver = require('selenium-webdriver')
+const { browser } = require('./browser')
 
-const driver = new webdriver.Builder().forBrowser('chrome').build()
-const TIMEOUT = 10000
-driver
-  .manage()
-  .setTimeouts({ implicit: TIMEOUT, pageLoad: TIMEOUT, script: TIMEOUT })
-  .then()
-
-class AppWorld {
+class World {
   constructor() {
-    this.driver = driver
+    this.browser = browser
   }
 }
 
-setWorldConstructor(AppWorld)
+setWorldConstructor(World)
 
 // hooks
 AfterAll(async function () {
-  driver.close()
+  browser.close()
 })

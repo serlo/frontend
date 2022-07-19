@@ -1,10 +1,25 @@
-const { Given, Then } = require('cucumber')
+const { Given, When, Then } = require('cucumber')
 
-Given('I visit page /', async function () {
-  await this.driver.get('http://localhost:3000')
+Given('I visit page {string}', function (path) {
+  return this.browser.visit(path)
 })
 
-Then('I see the text Serlo', async function () {
-  const page = await this.driver.getPageSource()
-  page.includes('Serlo')
+When('I fill in {string} with {string}', function (name, value) {
+  return this.browser.fillInWith(name, value)
+})
+
+When('I click on the button {string}', function (text) {
+  return this.browser.clickButton(text)
+})
+
+When('I click on {string}', function (text) {
+  return this.browser.clickText(text)
+})
+
+Then('I should see the text {string}', function (text) {
+  return this.browser.seeText(text)
+})
+
+Then('I should see {string} input', function (name) {
+  return this.browser.seeInput(name)
 })

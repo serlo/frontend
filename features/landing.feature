@@ -1,6 +1,6 @@
-Feature: Home Page
+Feature: Landing Page
 
-  Scenario: Landing
-    When I visit page /
-    Then I see the text Serlo
-    
+  Scenario: Visiting the landing page
+    When I visit page '/'
+    Then I should see the text 'Was möchtest du '
+    Then I should see the text 'lernen ?'
