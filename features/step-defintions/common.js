@@ -23,3 +23,7 @@ Then('I should see the text {string}', function (text) {
 Then('I should see {string} input', function (name) {
   return this.browser.seeInput(name)
 })
+
+Then('I should be on page {string}', function (path) {
+  return this.browser.assertPath(path)
+})

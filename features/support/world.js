@@ -1,4 +1,4 @@
-const { setWorldConstructor, AfterAll } = require('cucumber')
+const { setWorldConstructor, Before, After } = require('cucumber')
 const { browser } = require('./browser')
 
 class World {
@@ -10,6 +10,11 @@ class World {
 setWorldConstructor(World)
 
 // hooks
-AfterAll(async function () {
+
+Before(async function () {
+  await browser.start()
+})
+
+After(async function () {
   browser.close()
 })
