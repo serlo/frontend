@@ -126,7 +126,6 @@
     "@testing-library/react": "^13.0.0",
     "@testing-library/react-hooks": "^7.0.0",
     "@types/algebra.js": "^0.2.0",
-    "@types/cucumber": "^7.0.0",
     "@types/escape-html": "^1.0.0",
     "@types/jest": "^27.0.0",
     "@types/js-cookie": "^3.0.0",
