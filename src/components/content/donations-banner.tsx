@@ -23,24 +23,24 @@ const banners = [
     isLong: true,
     text: (
       <div className="text-left">
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           … dass in Deutschland über 1,1 Millionen Schüler*innen im Jahr teure
           Nachhilfe in Anspruch nehmen? Mit 17 Jahren ist das jedes vierte Kind.
           Nicht jede Familie kann sich das leisten! Und so ist der Schulerfolg
           in Deutschland stark abhängig vom Geldbeutel der Eltern.
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           Die Corona-Pandemie verstärkt diesen bedenklichen Trend: Viele
           Unterrichtsstunden sind ausgefallen und der verpasste Lernstoff muss
           jetzt nachgeholt werden. Das ist besonders für die Schüler*innen aus
           ärmeren Haushalten schwierig, die weniger außerschulische
           Unterstützung erhalten und eher den Anschluss verlieren.
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           Wir finden das nicht fair! Jedes Kind in Deutschland sollte die
           gleichen Chancen auf eine gute Schulbildung haben.
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           Dafür setzen wir uns ein! Serlo ist ein gemeinnütziger Verein mit dem
           Ziel:{' '}
           <b>
@@ -50,7 +50,7 @@ const banners = [
           Jeden Monat erreichen wir mit unserer freien Lernplattform serlo.org
           über 1 Millionen Schüler*innen und das mit einem sehr kleinen Budget.
         </p>
-        <p className="serlo-p break-normal leading-6 font-bold">
+        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
           Mit deiner Spende, groß oder klein, kannst du unsere Arbeit für mehr
           Bildungsgerechtigkeit unterstützen.
         </p>
@@ -64,17 +64,17 @@ const banners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           … dass in Deutschland pro Jahr über 1,1 Millionen Schüler*innen teure
           Nachhilfe in Anspruch nehmen? Die Corona-Pandemie hat den Bedarf noch
           größer gemacht. Aber nicht jede Familie kann sich das leisten!
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
           hochwertigen Lernmaterialien für{' '}
           <b>alle Schüler*innen komplett kostenlos</b>.
         </p>
-        <p className="serlo-p break-normal leading-6 font-bold">
+        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
           Mit deiner Spende, groß oder klein, kannst du diese Arbeit
           unterstützen.
         </p>
@@ -88,7 +88,7 @@ const banners = [
     isLong: true,
     text: (
       <div className="text-left">
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
           engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
           Pädagog*innen für das gemeinsame Ziel:{' '}
@@ -98,26 +98,26 @@ const banners = [
           </b>
           . Jeden Monat lernen bereits über 1 Millionen Schüler*innen mit Serlo.
         </p>
-        <p className="serlo-p break-normal leading-6">
-          Neben der ehrenamtlichen Redaktion haben wir auch ein kleines Team von
-          Festangestellten. Sie kümmern sich z.B. um die Weiterentwicklung der
-          Software, Wartung der Server, Fortbildung für ehrenamtliche
-          Autor*innen und die Qualitätssicherung. Einige von uns arbeiten schon
-          seit ihrer eigenen Schulzeit an Serlo, wo die Idee der freien
-          Lernplattform entstanden ist.
+        <p className="serlo-p special-hyphens-initial leading-6">
+          Neben der großen ehrenamtlichen Redaktion haben wir auch ein kleines
+          Team von Festangestellten. Einige von ihnen waren selbst noch
+          Schüler*innen, als sie Serlo gegründet und aufgebaut haben. Das feste
+          Team kümmert sich unter anderem um die Weiterentwicklung der Software,
+          Wartung der Server, Fortbildungen für ehrenamtliche Autor*innen und
+          die Qualitätssicherung.
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           Als nächstes möchten wir gerne weitere Übungsformate für Serlo
           entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
           Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
           eigenen Lernstand zu speichern.
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für
           immer kostenlos und frei von Werbung bleiben wird, sind wir auf
           Spenden angewiesen.
         </p>
-        <p className="serlo-p break-normal leading-6 font-bold">
+        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
           Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
@@ -130,7 +130,7 @@ const banners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
           engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
           Pädagog*innen für das gemeinsame Ziel:{' '}
@@ -140,13 +140,13 @@ const banners = [
           </b>
           .
         </p>
-        <p className="serlo-p break-normal leading-6">
+        <p className="serlo-p special-hyphens-initial leading-6">
           Als nächstes möchten wir gerne weitere Übungsformate für Serlo
           entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
           Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
           eigenen Lernstand zu speichern.
         </p>
-        <p className="serlo-p break-normal leading-6 font-bold">
+        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
           Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
