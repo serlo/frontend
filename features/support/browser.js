@@ -51,6 +51,10 @@ class Browser {
       this.driver.getCurrentUrl() === `http://localhost:3000${path}`
     )
   }
+
+  pause(seconds) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
+  }
 }
 
 const browser = new Browser()

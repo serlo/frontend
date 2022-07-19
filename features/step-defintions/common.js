@@ -27,3 +27,7 @@ Then('I should see {string} input', function (name) {
 Then('I should be on page {string}', function (path) {
   return this.browser.assertPath(path)
 })
+
+Then('I wait {int} seconds', function (time) {
+  return this.browser.pause(time)
+})
