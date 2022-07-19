@@ -35,5 +35,5 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "features/step-defintions/common.js", "features/support/hooks.js"  ]
 }
