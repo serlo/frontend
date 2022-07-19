@@ -41,6 +41,12 @@ selfservice:
               url: http://host.docker.internal:3001/kratos/register
               method: POST
               body: file:///etc/config/kratos/register_legacy.jsonnet
+              auth:
+                type: api_key
+                config:
+                  name: x-kratos-key
+                  value: api.serlo.org-kratos-secret
+                  in: header
     verification:
       enabled: true
       ui_url: http://localhost:3000/auth/verification
