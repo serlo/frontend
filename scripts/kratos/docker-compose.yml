@@ -108,7 +108,7 @@ services:
       - SERLO_ORG_SECRET=serlo.org-secret
       - SERVER_HYDRA_HOST=http://hydra:4445
       - SERVER_KRATOS_HOST=http://kratos:4434
-      - SERVER_KRATOS_SECRET="api.serlo.org-kratos-secret"
+      - SERVER_KRATOS_SECRET=api.serlo.org-kratos-secret
       - SERVER_SERLO_CLOUDFLARE_WORKER_SECRET="api.serlo.org-playground-secret"
       - SERVER_SERLO_CACHE_WORKER_SECRET="api.serlo.org-cache-worker-secret"
       - SERVER_SWR_QUEUE_DASHBOARD_PASSWORD="secret"
