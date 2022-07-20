@@ -13,27 +13,33 @@ _note: make sure the staging kratos and hydra are pointing to localhost:3000. As
 
 1. Run `yarn kratos`.
 2. Run `yarn kratos:prepare`.
-<!--
-TODO: that will not be possible for now, since we are using api image in docker-compose.yml
-3. Change the following lines in `api.serlo.org/packages/server/src/internals/server/graphql-middleware.ts`:
+3. Change the following lines in `src/api/graphql-fetch.ts`:
 
-````typescript
-    const serviceToken = jwt.sign({}, process.env.SERLO_ORG_SECRET, {
+```typescript
+import jwt from 'jsonwebtoken'
+...
+    function executeQuery() {
+      const serviceToken = jwt.sign({}, "serlo.org-secret", {
         audience: 'api.serlo.org',
-        issuer: Service.Serlo,
-    })
-    const user = authorizationHeader.replace('Bearer ', '')
-    const headerFromCloudFlare = `Serlo Service=${serviceToken};User=${user}`
-    return handleAuthentication(headerFromCloudFlare, async (token) => {
-``` -->
+        issuer: 'serlo.org',
+      })
+      const client = new GraphQLClient(endpoint, {
+        headers: auth.current
+          ? {
+              Authorization: `Serlo Service=${serviceToken};User=${auth.current.token}`,
+            }
+          : {},
+      })
+      return client.request(query, variables)
+    }
+```
 
-3. Make sure to use the local environment in `.env.local`:
+4. Make sure to use the local environment in `.env.local`:
 
 ```bash
 NEXT_PUBLIC_ENV=local
 # NEXT_PUBLIC_ENV=staging
-````
+```
 
-4. Head to `localhost:3000/auth/login`.
-5. For Login you can already use the id `dev` and password `123456`.
-   _note: unfortunately you will not be able to be logged in with hydra. We are working on it_
+5. Head to `localhost:3000/auth/login`.
+6. For Login you can already use the id `dev` and password `123456`.

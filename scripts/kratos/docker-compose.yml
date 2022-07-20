@@ -106,6 +106,7 @@ services:
       - ENVIRONMENT="local"
       - REDIS_URL=redis://redis-server:6379
       - SERLO_ORG_DATABASE_LAYER_HOST=db-layer:8080
+      - SERLO_ORG_SECRET=serlo.org-secret
       - SERVER_HYDRA_HOST=http://hydra:4445
       - SERVER_KRATOS_HOST=http://kratos:4434
       - SERVER_KRATOS_SECRET="api.serlo.org-kratos-secret"
