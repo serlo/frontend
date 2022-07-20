@@ -88,6 +88,53 @@ services:
   #     - intranet
   #   extra_hosts:
   #     - 'host.docker.internal:host-gateway'
+  redis-server:
+    image: redis:6.0
+    restart: always
+    ports:
+      - '6379:6379'
+    networks:
+      - intranet
+  api:
+    image: eu.gcr.io/serlo-shared/api-server:0.44.0-staging
+    command: yarn start
+    depends_on:
+      - redis-server
+    ports:
+      - '3001:3001'
+    environment:
+      - ENVIRONMENT="local"
+      - REDIS_URL=redis://redis-server:6379
+      - SERLO_ORG_DATABASE_LAYER_HOST=db-layer:8080
+      - SERVER_HYDRA_HOST=http://hydra:4445
+      - SERVER_KRATOS_HOST=http://kratos:4434
+      - SERVER_KRATOS_SECRET="api.serlo.org-kratos-secret"
+      - SERVER_SERLO_CLOUDFLARE_WORKER_SECRET="api.serlo.org-playground-secret"
+      - SERVER_SERLO_CACHE_WORKER_SECRET="api.serlo.org-cache-worker-secret"
+      - SERVER_SWR_QUEUE_DASHBOARD_PASSWORD="secret"
+    networks:
+      - intranet
+  mysql:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    networks:
+      - intranet
+  db-layer:
+    image: eu.gcr.io/serlo-shared/serlo-org-database-layer:0.3.52
+    depends_on:
+      - mysql
+    command: ./server
+    environment:
+      - DATABASE_MAX_CONNECTIONS=5
+      - DATABASE_URL=mysql://root:secret@mysql:3306/serlo
+      - ENV=development
+    networks:
+      - intranet
 networks:
   intranet:
 volumes:
