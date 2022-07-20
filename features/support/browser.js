@@ -55,6 +55,14 @@ class Browser {
   pause(seconds) {
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }
+
+  hover(cssElement) {
+    return this.driver
+      .findElement(webdriver.By.css(cssElement))
+      .then((element) => {
+        return this.driver.actions().mouse({ origin: element, duration: 1000 })
+      })
+  }
 }
 
 const browser = new Browser()

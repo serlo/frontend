@@ -1,3 +1,9 @@
+/**
+ * These imperative steps do not correspond to cucumber best
+ * practices (see https://cucumber.io/docs/bdd/better-gherkin/)
+ * But they can be used as starting point for non-technical testers.
+ */
+
 const { Given, When, Then } = require('cucumber')
 
 Given('I visit page {string}', function (path) {
@@ -30,4 +36,8 @@ Then('I should be on page {string}', function (path) {
 
 Then('I wait {int} seconds', function (time) {
   return this.browser.pause(time)
+})
+
+When('I put mouse over {string}', function (element) {
+  return this.browser.hover(element)
 })
