@@ -23,3 +23,26 @@ NEXT_PUBLIC_ENV=local
 7. For verifying email go to `localhost:4436`.
 
 _Important: the file src/api/graphql-fetch.ts was modified in order to imitate the authentication made by the cloudflare worker. DO NOT COMMIT this change._
+
+## Folder explanation
+
+You find here different files that help you to have a mini serlo infrastructure in your local machine, and all that integrating kratos.
+
+**Kratos specific files:**
+
+- `config.yml` contains kratos configuration.
+- `register_legacy.jsonnet` contains the jsonnet used at the web hook after registering a new user.
+- `new-user.sh` is a script for creating new users.
+- `identity.schema.json` has identity schema that maps the user.
+- `import-users.js` is a script to import users from legacy db into kratos.
+
+**For your development:**
+
+- `docker-compose.yml` sets up containers to enable dev environment.
+- `prepare.sh`is a script for fine tuning your local dev environment.
+- `graphql-fetch-cloudflare-auth.template` should replace current `src/api/graphql-fetch.ts` to allow authenticated api calls.
+- `docker-entrypoint-initdb.d` initiates db for the DB layer.
+
+**Others:**
+
+- `legacy-password-hash-service.js` ports the password hash service from legacy.
