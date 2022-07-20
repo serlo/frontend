@@ -1,4 +1,3 @@
-# based on https://github.com/ory/kratos/blob/master/quickstart.yml
 version: '3.7'
 services:
   kratos-migrate:
@@ -88,7 +87,7 @@ services:
   #     - intranet
   #   extra_hosts:
   #     - 'host.docker.internal:host-gateway'
-  redis-server:
+  redis:
     image: redis:6.0
     restart: always
     ports:
@@ -99,12 +98,12 @@ services:
     image: eu.gcr.io/serlo-shared/api-server:0.44.0-staging
     command: yarn start
     depends_on:
-      - redis-server
+      - redis
     ports:
       - '3001:3001'
     environment:
       - ENVIRONMENT="local"
-      - REDIS_URL=redis://redis-server:6379
+      - REDIS_URL=redis://redis:6379
       - SERLO_ORG_DATABASE_LAYER_HOST=db-layer:8080
       - SERLO_ORG_SECRET=serlo.org-secret
       - SERVER_HYDRA_HOST=http://hydra:4445

@@ -1,9 +1,7 @@
 #!/bin/sh
 
-# Register new client in hydra
+echo 'Registering new client in hydra'
 docker-compose -f scripts/kratos/docker-compose.yml run hydra clients delete frontend.serlo.org --endpoint http://hydra:4445
-
-set -e
 
 docker-compose -f scripts/kratos/docker-compose.yml run \
   hydra clients create \
@@ -18,9 +16,9 @@ docker-compose -f scripts/kratos/docker-compose.yml run \
   --post-logout-callbacks http://localhost:3000/api/auth/logout-callback \
   --token-endpoint-auth-method client_secret_post
 
-# Create a user in Kratos
+echo 'Creating the user dev in Kratos'
 yarn kratos:newuser dev serlo@dev.org 123456
 
-echo
-echo "=== Now start frontend, api and database layer (with DB) ==="
-echo
+echo 'Making authentication in api possible'
+cp -f scripts/kratos/graphql-fetch-cloudflare-auth.template src/api/graphql-fetch.ts
+echo "\033[0;31mImportant:\033[0m the file src/api/graphql-fetch.ts was modified in order to imitate the authentication made by the cloudflare worker. DO NOT COMMIT this change."
