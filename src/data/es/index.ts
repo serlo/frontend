@@ -13,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
-      agree: 'Agree to use search'
+      agree: "Acepta utilizar el motor de búsqueda"
     },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
@@ -31,9 +31,9 @@ export const instanceData = {
       folders: "Carpetas",
       exercises: "Ejercicios",
       events: "Eventos",
-      unrevised: 'Unrevised',
+      unrevised: "Aún no revisado",
       subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      exercisesContent: "Ejercicios contenido"
     },
     entities: {
       applet: 'Applet',
@@ -670,10 +670,10 @@ export const loggedInData = {
         serloId: 'Serlo ID:'
       },
       box: {
-        type: "Tipo de caja",
+        type: "Tipo de contenedor",
         titlePlaceholder: "(título opcional)",
         anchorId: "ID de Ancla (marca de posición)",
-        emptyContentWarning: "Cajas sin contenido no se visualizarán"
+        emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
