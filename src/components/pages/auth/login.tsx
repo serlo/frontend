@@ -72,7 +72,7 @@ export function Login() {
       <div className="mx-side mt-20 border-t-2 pt-4">
         Bist du neu hier?{' '}
         <Link href="/auth/registration" className="serlo-button-light">
-          Neuen Account registeren
+          Neuen Account registrieren
         </Link>
       </div>
 
@@ -81,7 +81,7 @@ export function Login() {
         <Link href="/auth/recovery" className="font-bold">
           Passwort vergessen
         </Link>
-        ? (not implemented)
+        ?
       </div>
     </>
   )
