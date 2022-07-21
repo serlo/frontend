@@ -2,8 +2,6 @@ Feature: Registration
   @registration
   Scenario: User registers successfully
     When I visit page '/auth/login'
-    # FIXME: typo
-    And I click on 'Neuen Account registeren'
     And I click on 'Neuen Account registrieren' 
 
     Then I should be on page '/auth/registration'

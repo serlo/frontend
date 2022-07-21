@@ -30,19 +30,24 @@ After({ tags: '@registration' }, async function () {
     .adminListIdentities()
     .then(({ data }) => data)
   if (allIdentities) {
-    for (const identity of allIdentities) {
-      await kratos.adminDeleteIdentity(identity.id)
-    }
+    console.log(allIdentities)
+    const testUser = allIdentities.find(
+      (user) => user.traits.username === 'serlouser'
+    )
+    if (testUser) await kratos.adminDeleteIdentity(testUser.id)
   }
-  // TODO: find a way of deleting user in legacy db
-  // exec(`docker-compose -f scripts/kratos/docker-compose.yml exec mysql mysql --user=root --password=secret serlo  --execute="DELETE FROM user WHERE username = 'serlouser'"`, (error, stdout, stderr) => {
-  //   if (error) {
-  //       console.log(`error: ${error.message}`);
-  //       return;
-  //   }
-  //   if (stderr) {
-  //       console.log(`stderr: ${stderr}`);
-  //       return;
-  //   }
-  //   console.log(`stdout: ${stdout}`); })
+  exec(
+    `docker-compose -f scripts/kratos/docker-compose.yml exec -T mysql mysql --password=secret serlo --execute="DELETE FROM user WHERE username = 'serlouser'"`,
+    (error, stdout, stderr) => {
+      if (error) {
+        console.log(`error: ${error.message}`)
+        return
+      }
+      if (stderr) {
+        console.log(`stderr: ${stderr}`)
+        return
+      }
+      console.log(`stdout: ${stdout}`)
+    }
+  )
 })
