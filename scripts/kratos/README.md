@@ -24,6 +24,16 @@ NEXT_PUBLIC_ENV=local
 
 _Important: the file src/api/graphql-fetch.ts was modified in order to imitate the authentication made by the cloudflare worker. DO NOT COMMIT this change._
 
+## GUI testing
+
+only local. Be sure you have run `yarn install`.
+
+1. `yarn kratos`
+2. `yarn kratos: prepare`
+3. `yarn cucumber-js`
+   You can specify a file to run: v.g. `yarn cucumber-js features/auth/login.feature`  
+   or tags v.g. `yarn cucumber-js --tags @registration`
+
 ## Folder explanation
 
 You find here different files that help you to have a mini serlo infrastructure in your local machine, and all that integrating kratos.

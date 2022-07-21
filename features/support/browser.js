@@ -1,12 +1,12 @@
 const webdriver = require('selenium-webdriver')
-
+const { Builder } = webdriver
 /**
  * browser should be an abstraction over the driver tool we want to use
  * if we decide later to use another tool, we would have to change mainly this file
  */
 class Browser {
   async start() {
-    const driver = new webdriver.Builder().forBrowser('chrome').build()
+    const driver = new Builder().forBrowser('chrome').build()
     await driver.manage().window().maximize()
 
     const TIMEOUT = 10000
@@ -42,8 +42,8 @@ class Browser {
     return this.driver.findElement({ name })
   }
 
-  close() {
-    this.driver.close()
+  async close() {
+    await this.driver.close()
   }
 
   assertPath(path) {

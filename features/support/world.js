@@ -3,23 +3,15 @@ const { browser } = require('./browser')
 const { exec } = require('child_process')
 const { Configuration, V0alpha2Api } = require('@ory/kratos-client')
 
-class World {
-  constructor() {
-    this.browser = browser
-  }
-}
-
-setWorldConstructor(World)
-
-// hooks
-
 Before(async function () {
-  await browser.start()
+  this.browser = browser
+  await this.browser.start()
 })
 
 After(async function () {
-  browser.close()
+  await this.browser.close()
 })
+
 After({ tags: '@registration' }, async function () {
   const kratos = new V0alpha2Api(
     new Configuration({
@@ -30,7 +22,6 @@ After({ tags: '@registration' }, async function () {
     .adminListIdentities()
     .then(({ data }) => data)
   if (allIdentities) {
-    console.log(allIdentities)
     const testUser = allIdentities.find(
       (user) => user.traits.username === 'serlouser'
     )

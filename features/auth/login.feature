@@ -1,7 +1,7 @@
 Feature: Login and Logout
-  # The way the scenarios are written right are too imperative and so do not correspond
-  # to cucumbers best practices (see https://cucumber.io/docs/bdd/better-gherkin/).
-  # For purposes of refactoring the new authentication it is good enough though, but
+  # The way the scenarios are written right now are too imperative and so does not correspond
+  # to cucumber's best practices (see https://cucumber.io/docs/bdd/better-gherkin/).
+  # For purposes of refactoring the new authentication it is good enough, but
   # we would do better writting something like:
   #   Scenario: User logs in successfully
   #     When I visit 'login' page

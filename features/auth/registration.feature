@@ -8,7 +8,7 @@ Feature: Registration
     
     When I fill in 'traits.email' with 'user@serlo.org'
     And I fill in 'password' with '123456'
-    When I fill in 'traits.username' with 'serlouser'
+    And I fill in 'traits.username' with 'serlouser'
     And I click on the button 'Sign up'
 
     When I click on 'Anmelden'
