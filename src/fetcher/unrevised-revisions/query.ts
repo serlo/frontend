@@ -1,7 +1,7 @@
 // These types are auto-generated from the GraphQL schema
 import { gql } from 'graphql-request'
 
-import { sharedUserFragments } from '../user/query'
+import { basicUserDataFragment } from '../user/query'
 
 export const unrevisedEntitiesFragment = gql`
   fragment unrevisedEntitiesData on AbstractEntityConnection {
@@ -179,7 +179,7 @@ export const unrevisedEntitiesFragment = gql`
     }
   }
 
-  ${sharedUserFragments}
+  ${basicUserDataFragment}
 `
 
 export const unrevisedRevisionsSubjectsQuery = gql`

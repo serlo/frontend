@@ -85,9 +85,15 @@ export const sharedEventFragments = gql`
       thread {
         id
         title
-        comments(first: 1) {
+        thread: comments(first: 1) {
           nodes {
             id
+          }
+        }
+        comment: comments(last: 1) {
+          nodes {
+            id
+            content
           }
         }
       }
@@ -134,7 +140,7 @@ export const sharedEventFragments = gql`
     ... on CreateThreadNotificationEvent {
       thread {
         id
-        comments(first: 1) {
+        thread: comments(first: 1) {
           nodes {
             id
             content
@@ -201,7 +207,7 @@ export const sharedEventFragments = gql`
       archived
       thread {
         id
-        comments(first: 1) {
+        thread: comments(first: 1) {
           nodes {
             id
           }
