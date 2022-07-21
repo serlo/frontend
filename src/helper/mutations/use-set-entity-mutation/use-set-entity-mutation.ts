@@ -117,7 +117,14 @@ export const setEntityMutationRunner = async function ({
 
     if (!isRecursiveCall && childrenResult) {
       showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      window.location.href = getHistoryUrl(data.id)
+      const id =
+        data.id === 0
+          ? savedId === 0
+            ? undefined
+            : (savedId as number)
+          : data.id
+      if (id) window.location.href = getHistoryUrl(id)
+      else window.location.href = `/${taxonomyParentId as number}`
     }
 
     return true

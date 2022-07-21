@@ -68,9 +68,6 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
         )}
       </Fragment>
     )
-
-    // TODO: Revisit when we have examples with images.
-
     // Do we need to check this? Can we solve it with pure CSS?
     // const isImage =
     //   getDocument(content.get())(store.getState())?.plugin === 'image'
