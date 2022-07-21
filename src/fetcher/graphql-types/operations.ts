@@ -504,8 +504,7 @@ export interface ArticleRevisionCursor {
 }
 
 export interface CacheRemoveInput {
-  key?: InputMaybe<Scalars['String']>;
-  keys?: InputMaybe<Array<Scalars['String']>>;
+  keys: Array<Scalars['String']>;
 }
 
 export interface CacheRemoveResponse {
@@ -1503,6 +1502,30 @@ export interface LicenseQueryLicensesArgs {
   instance?: InputMaybe<Instance>;
 }
 
+export interface MediaQuery {
+  __typename?: 'MediaQuery';
+  upload: MediaUpload;
+}
+
+
+export interface MediaQueryUploadArgs {
+  mediaType: MediaType;
+}
+
+export enum MediaType {
+  ImageGif = 'IMAGE_GIF',
+  ImageJpeg = 'IMAGE_JPEG',
+  ImagePng = 'IMAGE_PNG',
+  ImageSvgXml = 'IMAGE_SVG_XML',
+  ImageWebp = 'IMAGE_WEBP'
+}
+
+export interface MediaUpload {
+  __typename?: 'MediaUpload';
+  uploadUrl: Scalars['String'];
+  urlAfterUpload: Scalars['String'];
+}
+
 export interface MetadataQuery {
   __typename?: 'MetadataQuery';
   entities: EntityMetadataConnection;
@@ -1768,6 +1791,7 @@ export interface Query {
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;
   license: LicenseQuery;
+  media: MediaQuery;
   metadata: MetadataQuery;
   notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
@@ -1888,6 +1912,16 @@ export enum Role {
   Reviewer = 'reviewer',
   StaticPagesBuilder = 'staticPagesBuilder',
   Sysadmin = 'sysadmin'
+}
+
+export enum Scope {
+  Serlo = 'Serlo',
+  SerloDe = 'Serlo_De',
+  SerloEn = 'Serlo_En',
+  SerloEs = 'Serlo_Es',
+  SerloFr = 'Serlo_Fr',
+  SerloHi = 'Serlo_Hi',
+  SerloTa = 'Serlo_Ta'
 }
 
 export interface ScopedRole {
@@ -2679,10 +2713,17 @@ export interface UserEdge {
 
 export interface UserMutation {
   __typename?: 'UserMutation';
+  addRole: UserRoleResponse;
   deleteBots: UserDeleteBotsResponse;
   deleteRegularUsers: Array<UserDeleteRegularUsersResponse>;
+  removeRole: UserRoleResponse;
   setDescription: UserSetDescriptionResponse;
   setEmail: UserSetEmailResponse;
+}
+
+
+export interface UserMutationAddRoleArgs {
+  input: UserRoleInput;
 }
 
 
@@ -2693,6 +2734,11 @@ export interface UserMutationDeleteBotsArgs {
 
 export interface UserMutationDeleteRegularUsersArgs {
   input: UserDeleteRegularUsersInput;
+}
+
+
+export interface UserMutationRemoveRoleArgs {
+  input: UserRoleInput;
 }
 
 
@@ -2714,6 +2760,17 @@ export interface UserQuery {
 export interface UserQueryPotentialSpamUsersArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
+}
+
+export interface UserRoleInput {
+  role: Role;
+  scope: Scope;
+  username: Scalars['String'];
+}
+
+export interface UserRoleResponse {
+  __typename?: 'UserRoleResponse';
+  success: Scalars['Boolean'];
 }
 
 export interface UserSetDescriptionInput {
