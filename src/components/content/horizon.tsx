@@ -10,6 +10,7 @@ export interface HorizonProps {
 export function Horizon({ data }: HorizonProps) {
   return (
     <aside
+      id="horizon"
       className={clsx(
         'sm:flex sm:items-stretch sm:justify-between',
         'px-side pt-8 pb-6 -ml-2.5'
