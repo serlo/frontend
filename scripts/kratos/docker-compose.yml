@@ -95,7 +95,7 @@ services:
     networks:
       - intranet
   api:
-    image: eu.gcr.io/serlo-shared/api-server:0.44.0-staging
+    image: eu.gcr.io/serlo-shared/api-server:0.44.0-staging.1
     command: yarn start
     depends_on:
       - redis
