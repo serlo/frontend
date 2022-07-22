@@ -66,7 +66,6 @@ export enum SerloEntityPluginType {
 type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
 
 export function createPlugins({
-  getCsrfToken,
   editorStrings,
   strings,
   registry,
@@ -235,7 +234,7 @@ export function createPlugins({
         },
       },
     }),
-    image: createImagePlugin(getCsrfToken),
+    image: createImagePlugin(),
     important: createImportantPlugin(),
     injection: injectionPlugin,
     inputExercise: createInputExercisePlugin({

@@ -1,6 +1,14 @@
 import { LoadedFile, UploadValidator } from '@edtr-io/plugin'
 import { createImagePlugin as createCoreImagePlugin } from '@edtr-io/plugin-image'
+import { gql } from 'graphql-request'
+import Cookies from 'js-cookie'
+import jwt_decode from 'jwt-decode'
+import { Token } from 'simple-oauth2'
 import fetch from 'unfetch'
+
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { AuthenticationPayload } from '@/auth/auth-provider'
+import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024
 const ALLOWED_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg']
@@ -70,8 +78,8 @@ export const validateFile: UploadValidator<FileError[]> = (file) => {
   }
 }
 
-export function createUploadImageHandler(getCsrfToken: () => string) {
-  const readFile = createReadFile(getCsrfToken)
+export function createUploadImageHandler() {
+  const readFile = createReadFile()
   return function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)
     if (!validation.valid) {
@@ -85,44 +93,98 @@ export function createUploadImageHandler(getCsrfToken: () => string) {
   }
 }
 
-export function createReadFile(getCsrfToken: () => string) {
+export function createReadFile() {
   return function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader()
+      const authenticationPayload = parseAuthCookie()
 
-      reader.onload = function (e: ProgressEvent) {
-        if (!e.target) return
-        const formData = new FormData()
-        formData.append('attachment[file]', file)
-        formData.append('type', 'file')
-        formData.append('csrf', getCsrfToken())
+      if (!authenticationPayload?.token) return
 
-        fetch('/attachment/upload', {
-          method: 'POST',
-          body: formData,
-        })
-          .then((response) => response.json())
-          .then((data: { success: boolean; files: { location: string }[] }) => {
-            if (!data['success']) reject()
-            resolve({
-              file,
-              dataUrl: data.files[0].location,
+      const gqlFetch = createAuthAwareGraphqlFetch({
+        current: authenticationPayload,
+      })
+      const args = JSON.stringify({
+        query: uploadUrlQuery,
+        variables: { mediaType: MediaType.ImagePng },
+      })
+      void gqlFetch(args).then((data: MediaUploadQuery) => {
+        const reader = new FileReader()
+
+        reader.onload = function (e: ProgressEvent) {
+          if (!e.target) return
+          const formData = new FormData()
+          formData.append('attachment[file]', file)
+          formData.append('type', 'file')
+
+          fetch(data.media.upload.uploadUrl, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'image/jpeg' },
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then(
+              (data: { success: boolean; files: { location: string }[] }) => {
+                if (!data['success']) reject()
+                resolve({
+                  file,
+                  dataUrl: data.files[0].location,
+                })
+              }
+            )
+            .catch(() => {
+              reject()
             })
-          })
-          .catch(() => {
-            reject()
-          })
-      }
+        }
 
-      reader.readAsDataURL(file)
+        reader.readAsDataURL(file)
+      })
     })
   }
 }
 
-export function createImagePlugin(getCsrfToken: () => string) {
+export function createImagePlugin() {
   return createCoreImagePlugin({
-    upload: createUploadImageHandler(getCsrfToken),
+    upload: createUploadImageHandler(),
     validate: validateFile,
     secondInput: 'description',
   })
+}
+
+const uploadUrlQuery = gql`
+  query mediaUpload($mediaType: MediaType!) {
+    media {
+      upload(mediaType: $mediaType) {
+        uploadUrl
+        urlAfterUpload
+      }
+    }
+  }
+`
+
+// TODO: Duplicated because of hooks
+function parseAuthCookie(): AuthenticationPayload {
+  try {
+    const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+
+    const { access_token, id_token } = JSON.parse(
+      cookies['auth-token']
+    ) as Token
+
+    const decoded = jwt_decode<{
+      username: string
+      id: number
+    }>(id_token as string)
+
+    return {
+      username: decoded.username,
+      id: decoded.id,
+      token: access_token as string,
+      refreshToken: () => Promise.resolve(),
+      clearToken: () => {
+        return
+      },
+    }
+  } catch {
+    return null
+  }
 }

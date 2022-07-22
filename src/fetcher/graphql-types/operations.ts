@@ -3354,6 +3354,13 @@ export type PotentialSpamUsersQueryVariables = Exact<{
 
 export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', potentialSpamUsers: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', id: number, username: string, date: string, lastLogin?: string | null, description?: string | null, isActiveReviewer: boolean, isActiveAuthor: boolean, isActiveDonor: boolean, chatUrl?: string | null, imageUrl: string, motivation?: string | null, roles: { __typename?: 'ScopedRoleConnection', nodes: Array<{ __typename?: 'ScopedRole', scope?: string | null, role: Role }> }, activityByType: { __typename?: 'UserActivityByType', edits: number, comments: number, reviews: number, taxonomy: number } }> } } };
 
+export type MediaUploadQueryVariables = Exact<{
+  mediaType: MediaType;
+}>;
+
+
+export type MediaUploadQuery = { __typename?: 'Query', media: { __typename?: 'MediaQuery', upload: { __typename?: 'MediaUpload', uploadUrl: string, urlAfterUpload: string } } };
+
 export type GetTaxonomyTypeQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
