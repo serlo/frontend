@@ -20,6 +20,10 @@ class Browser {
     return this.driver.get(`http://localhost:3000${path}`)
   }
 
+  goTo(url) {
+    return this.driver.get(url)
+  }
+
   fillInWith(name, value) {
     return this.driver.findElement({ name }).sendKeys(value)
   }
@@ -32,6 +36,14 @@ class Browser {
 
   clickText(text) {
     return this.driver.findElement({ xpath: `//*[text()='${text}']` }).click()
+  }
+
+  async clickLinkContaining(substring, position = 0) {
+    const links = await this.driver.findElements({
+      xpath: `//a[contains(., '${substring}')]`,
+    })
+
+    return links[position].click()
   }
 
   seeText(text) {

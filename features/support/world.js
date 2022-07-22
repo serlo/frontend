@@ -1,4 +1,4 @@
-const { setWorldConstructor, Before, After } = require('cucumber')
+const { setWorldConstructor, Before, After, AfterAll } = require('cucumber')
 const { browser } = require('./browser')
 const { exec } = require('child_process')
 const { Configuration, V0alpha2Api } = require('@ory/kratos-client')
@@ -12,7 +12,7 @@ After(async function () {
   await this.browser.close()
 })
 
-After({ tags: '@registration' }, async function () {
+AfterAll({ tags: '@registration' }, async function () {
   const kratos = new V0alpha2Api(
     new Configuration({
       basePath: `http://localhost:4434`,

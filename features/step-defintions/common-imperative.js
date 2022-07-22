@@ -10,6 +10,10 @@ Given('I visit page {string}', function (path) {
   return this.browser.visit(path)
 })
 
+Given('I visit the site {string}', function (url) {
+  return this.browser.goTo(url)
+})
+
 When('I fill in {string} with {string}', function (name, value) {
   return this.browser.fillInWith(name, value)
 })
@@ -20,6 +24,10 @@ When('I click on the button {string}', function (text) {
 
 When('I click on {string}', function (text) {
   return this.browser.clickText(text)
+})
+
+When('I click on link that contains {string}', function (substring) {
+  return this.browser.clickLinkContaining(substring)
 })
 
 Then('I should see the text {string}', function (text) {
