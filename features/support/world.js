@@ -39,6 +39,7 @@ AfterAll({ tags: '@registration' }, async function () {
         return
       }
       console.log(`stdout: ${stdout}`)
+      return
     }
   )
 })

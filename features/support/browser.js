@@ -16,26 +16,26 @@ class Browser {
 
     this.driver = driver
   }
-  visit(path) {
-    return this.driver.get(`http://localhost:3000${path}`)
+  async visit(path) {
+    await this.driver.get(`http://localhost:3000${path}`)
   }
 
-  goTo(url) {
-    return this.driver.get(url)
+  async goTo(url) {
+    await this.driver.get(url)
   }
 
-  fillInWith(name, value) {
-    return this.driver.findElement({ name }).sendKeys(value)
+  async fillInWith(name, value) {
+    await this.driver.findElement({ name }).sendKeys(value)
   }
 
-  clickButton(text) {
-    return this.driver
+  async clickButton(text) {
+    await this.driver
       .findElement({ xpath: `//button[text()='${text}']` })
       .click()
   }
 
-  clickText(text) {
-    return this.driver.findElement({ xpath: `//*[text()='${text}']` }).click()
+  async clickText(text) {
+    await this.driver.findElement({ xpath: `//*[text()='${text}']` }).click()
   }
 
   async clickLinkContaining(substring, position = 0) {
@@ -43,36 +43,36 @@ class Browser {
       xpath: `//a[contains(., '${substring}')]`,
     })
 
-    return links[position].click()
+    await links[position].click()
   }
 
-  seeText(text) {
-    return this.driver.findElement({ xpath: `//*[text()='${text}']` })
+  async seeText(text) {
+    await this.driver.findElement({ xpath: `//*[text()='${text}']` })
   }
 
-  seeInput(name) {
-    return this.driver.findElement({ name })
+  async seeInput(name) {
+    await this.driver.findElement({ name })
   }
 
   async close() {
     await this.driver.close()
   }
 
-  assertPath(path) {
+  async assertPath(path) {
     console.assert(
       this.driver.getCurrentUrl() === `http://localhost:3000${path}`
     )
   }
 
-  pause(seconds) {
-    return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
+  async pause(seconds) {
+    await new Promise((resolve) => setTimeout(resolve, seconds * 1000))
   }
 
-  hover(cssElement) {
-    return this.driver
+  async hover(cssElement) {
+    await this.driver
       .findElement(webdriver.By.css(cssElement))
-      .then((element) => {
-        return this.driver.actions().mouse({ origin: element, duration: 1000 })
+      .then(async (element) => {
+        await this.driver.actions().mouse({ origin: element, duration: 1000 })
       })
   }
 }

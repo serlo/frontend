@@ -18,7 +18,7 @@ Feature: Registration
     And I click on the button 'Sign in'
 
     Then I should be on path '/auth/login-check'
-    And I wait 5 seconds
+    And I wait 3 seconds
     And I should see the text 'serlouser'
 
   Scenario: User verfies email
@@ -33,5 +33,5 @@ Feature: Registration
     And I click on the button 'Sign in'
 
     Then I should be on path '/auth/login-check'
-    And I wait 5 seconds
+    And I wait 3 seconds
     And I should see the text 'serlouser'
