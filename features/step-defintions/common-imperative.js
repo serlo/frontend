@@ -6,7 +6,7 @@
 
 const { Given, When, Then } = require('cucumber')
 
-Given('I visit page {string}', function (path) {
+Given('I go to path {string}', function (path) {
   return this.browser.visit(path)
 })
 
@@ -14,7 +14,7 @@ Given('I visit the site {string}', function (url) {
   return this.browser.goTo(url)
 })
 
-When('I fill in {string} with {string}', function (name, value) {
+When('I fill in input name {string} with value {string}', function (name, value) {
   return this.browser.fillInWith(name, value)
 })
 
@@ -38,7 +38,7 @@ Then('I should see {string} input', function (name) {
   return this.browser.seeInput(name)
 })
 
-Then('I should be on page {string}', function (path) {
+Then('I should be on path {string}', function (path) {
   return this.browser.assertPath(path)
 })
 

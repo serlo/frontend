@@ -5,27 +5,26 @@ Feature: Login and Logout
   # we would do better writting something like:
   #   Scenario: User logs in successfully
   #     When I visit 'login' page
-  #     And I log in as 'dev'
-  #     Then I should be on 'login-check' page
-  #     And I should see the text 'dev'
+  #     And I provide valid credentials for user 'yolobird'
+  #     Then I should be logged in as user 'yolobird'
   # On the other side, such imperative way of writting would allow some stakeholders to
   # write testing by their own.
   Scenario: User logs in and out successfully
-    When I visit page '/'
+    When I go to path '/'
     And I click on 'Anmelden'
-    Then I should be on page '/auth/login'
+    Then I should be on path '/auth/login'
 
-    When I fill in 'identifier' with 'dev'
-    And I fill in 'password' with '123456'
+    When I fill in input name 'identifier' with value 'dev'
+    And I fill in input name 'password' with value '123456'
     And I click on the button 'Sign in'
 
-    Then I should be on page '/auth/login-check'
-    And I wait 4 seconds
+    Then I should be on path '/auth/login-check'
+    And I wait 5 seconds
     And I should see the text 'dev'
 
     When I put mouse over 'img.rounded-full'
     And I click on 'Abmelden'
 
-    Then I should be on page '/auth/login-check'
-    And I wait 3 seconds
+    Then I should be on path '/auth/login-check'
+    And I wait 4 seconds
     And I should see the text 'Gast'
