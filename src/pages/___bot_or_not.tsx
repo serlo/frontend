@@ -63,7 +63,7 @@ const BotHunt = () => {
   const { lang } = useInstanceData()
 
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
+  if (!loggedInData) return <>log in first</>
   const { mutations } = loggedInData.strings
 
   async function remove(id: number) {
