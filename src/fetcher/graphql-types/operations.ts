@@ -504,8 +504,7 @@ export interface ArticleRevisionCursor {
 }
 
 export interface CacheRemoveInput {
-  key?: InputMaybe<Scalars['String']>;
-  keys?: InputMaybe<Array<Scalars['String']>>;
+  keys: Array<Scalars['String']>;
 }
 
 export interface CacheRemoveResponse {
@@ -1503,6 +1502,32 @@ export interface LicenseQueryLicensesArgs {
   instance?: InputMaybe<Instance>;
 }
 
+export interface MediaQuery {
+  __typename?: 'MediaQuery';
+  newUpload: MediaUpload;
+}
+
+
+export interface MediaQueryNewUploadArgs {
+  mediaType: MediaType;
+}
+
+export enum MediaType {
+  ImageGif = 'IMAGE_GIF',
+  ImageJpeg = 'IMAGE_JPEG',
+  ImagePng = 'IMAGE_PNG',
+  ImageSvgXml = 'IMAGE_SVG_XML',
+  ImageWebp = 'IMAGE_WEBP'
+}
+
+export interface MediaUpload {
+  __typename?: 'MediaUpload';
+  fileExtension: Scalars['String'];
+  fileNameWithoutExtension: Scalars['String'];
+  uploadUrl: Scalars['String'];
+  urlAfterUpload: Scalars['String'];
+}
+
 export interface MetadataQuery {
   __typename?: 'MetadataQuery';
   entities: EntityMetadataConnection;
@@ -1768,6 +1793,7 @@ export interface Query {
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;
   license: LicenseQuery;
+  media: MediaQuery;
   metadata: MetadataQuery;
   notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
@@ -1888,6 +1914,16 @@ export enum Role {
   Reviewer = 'reviewer',
   StaticPagesBuilder = 'staticPagesBuilder',
   Sysadmin = 'sysadmin'
+}
+
+export enum Scope {
+  Serlo = 'Serlo',
+  SerloDe = 'Serlo_De',
+  SerloEn = 'Serlo_En',
+  SerloEs = 'Serlo_Es',
+  SerloFr = 'Serlo_Fr',
+  SerloHi = 'Serlo_Hi',
+  SerloTa = 'Serlo_Ta'
 }
 
 export interface ScopedRole {
@@ -2679,10 +2715,17 @@ export interface UserEdge {
 
 export interface UserMutation {
   __typename?: 'UserMutation';
+  addRole: UserRoleResponse;
   deleteBots: UserDeleteBotsResponse;
   deleteRegularUsers: Array<UserDeleteRegularUsersResponse>;
+  removeRole: UserRoleResponse;
   setDescription: UserSetDescriptionResponse;
   setEmail: UserSetEmailResponse;
+}
+
+
+export interface UserMutationAddRoleArgs {
+  input: UserRoleInput;
 }
 
 
@@ -2693,6 +2736,11 @@ export interface UserMutationDeleteBotsArgs {
 
 export interface UserMutationDeleteRegularUsersArgs {
   input: UserDeleteRegularUsersInput;
+}
+
+
+export interface UserMutationRemoveRoleArgs {
+  input: UserRoleInput;
 }
 
 
@@ -2708,12 +2756,32 @@ export interface UserMutationSetEmailArgs {
 export interface UserQuery {
   __typename?: 'UserQuery';
   potentialSpamUsers: UserConnection;
+  usersByRole: UserConnection;
 }
 
 
 export interface UserQueryPotentialSpamUsersArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
+}
+
+
+export interface UserQueryUsersByRoleArgs {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  role: Role;
+  scope: Scope;
+}
+
+export interface UserRoleInput {
+  role: Role;
+  scope: Scope;
+  username: Scalars['String'];
+}
+
+export interface UserRoleResponse {
+  __typename?: 'UserRoleResponse';
+  success: Scalars['Boolean'];
 }
 
 export interface UserSetDescriptionInput {
@@ -3296,6 +3364,16 @@ export type PotentialSpamUsersQueryVariables = Exact<{
 
 
 export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', potentialSpamUsers: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', id: number, username: string, date: string, lastLogin?: string | null, description?: string | null, isActiveReviewer: boolean, isActiveAuthor: boolean, isActiveDonor: boolean, chatUrl?: string | null, imageUrl: string, motivation?: string | null, roles: { __typename?: 'ScopedRoleConnection', nodes: Array<{ __typename?: 'ScopedRole', scope?: string | null, role: Role }> }, activityByType: { __typename?: 'UserActivityByType', edits: number, comments: number, reviews: number, taxonomy: number } }> } } };
+
+export type UsersByRoleQueryVariables = Exact<{
+  role: Role;
+  scope: Scope;
+  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UsersByRoleQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', usersByRole: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', username: string, alias: string }> } } };
 
 export type GetTaxonomyTypeQueryVariables = Exact<{
   id: Scalars['Int'];
