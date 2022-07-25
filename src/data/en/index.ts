@@ -334,8 +334,8 @@ export const instanceData = {
         4000003: 'Length must be \u003e= %expected_length%, but got %actual_length%.',
         4000004: '"%value%" is not valid "%format%"',
         4000005: 'The password can not be used because %reason%.',
-        4000006: 'The provided credentials are invalid, check for spelling mistakes in your password or username, email address, or phone number.',
-        4000007: 'An account with the same identifier (email, phone, username, ...) exists already.',
+        4000006: 'The provided credentials are invalid, check for spelling mistakes in your password or username, email address.',
+        4000007: 'An account with the same identifier (email, username, ...) exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
         4000010: 'Account not active yet. Did you forget to verify your email address?',
       }
