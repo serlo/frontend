@@ -122,7 +122,8 @@ export function ScMcExercise({
       (answer, i) => answer.isCorrect && selectedArray[i]
     ).length
     const selectedFalseCount = selectedCount - selectedCorrectCount
-    const allCorrect = selectedCorrectCount === correctCount
+    const allCorrect =
+      selectedCorrectCount === correctCount && selectedFalseCount === 0
     const missedSome =
       selectedCorrectCount > 0 && !allCorrect && selectedFalseCount === 0
 
