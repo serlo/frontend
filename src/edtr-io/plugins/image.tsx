@@ -108,6 +108,8 @@ export function createReadFile() {
         variables: { mediaType: MediaType.ImagePng },
       })
       void gqlFetch(args).then((data: MediaUploadQuery) => {
+        console.log('resulting url:')
+        console.log(data.media.upload.uploadUrl)
         const reader = new FileReader()
 
         reader.onload = function (e: ProgressEvent) {
@@ -161,7 +163,7 @@ const uploadUrlQuery = gql`
   }
 `
 
-// TODO: Duplicated because of hooks
+// TODO: Duplicated for now because of hooks
 function parseAuthCookie(): AuthenticationPayload {
   try {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
