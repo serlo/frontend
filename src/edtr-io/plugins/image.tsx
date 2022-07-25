@@ -109,7 +109,7 @@ export function createReadFile() {
       })
       void gqlFetch(args).then((data: MediaUploadQuery) => {
         console.log('resulting url:')
-        console.log(data.media.upload.uploadUrl)
+        console.log(data.media.newUpload.uploadUrl)
         const reader = new FileReader()
 
         reader.onload = function (e: ProgressEvent) {
@@ -118,9 +118,9 @@ export function createReadFile() {
           formData.append('attachment[file]', file)
           formData.append('type', 'file')
 
-          fetch(data.media.upload.uploadUrl, {
+          fetch(data.media.newUpload.uploadUrl, {
             method: 'PUT',
-            headers: { 'Content-Type': 'image/jpeg' },
+            headers: { 'Content-Type': 'image/jpeg' }, // TODO: fixed only for testing
             body: formData,
           })
             .then((response) => response.json())
@@ -155,9 +155,11 @@ export function createImagePlugin() {
 const uploadUrlQuery = gql`
   query mediaUpload($mediaType: MediaType!) {
     media {
-      upload(mediaType: $mediaType) {
+      newUpload(mediaType: $mediaType) {
         uploadUrl
         urlAfterUpload
+        fileExtension
+        fileNameWithoutExtension
       }
     }
   }
