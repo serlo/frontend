@@ -3,7 +3,6 @@ import { GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { Link } from '@/components/content/link'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
@@ -12,9 +11,11 @@ import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { UuidType, SingleEntityPage, SlugProps } from '@/data-types'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { FrontendContentNode } from '@/frontend-node-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { renderArticle } from '@/schema/article-renderer'
 
-const jobsPageId = 21563
+const jobsPageId = 226222 //21563
 
 const ShareModal = dynamic<ShareModalProps>(() =>
   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
@@ -56,7 +57,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
-            Pssst!
+            Hey du
           </p>
           <h1
             className={clsx(
@@ -83,21 +84,21 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             className={clsx(
               'text-center text-4xl text-truegray-700 font-bold',
               'leading-cozy tracking-tight',
-              'max-w-2xl mt-24 mx-auto relative z-10 px-2'
+              'max-w-2xl mt-32 mx-auto relative z-10 px-2'
             )}
           >
-            <p className="text-brand italic font-handwritten text-5xl">
+            <p className=" italic font-handwritten text-5xl">
               Das erwartet dich
             </p>
             <div className="relative z-0 h-0 w-full mt-1">
               <div
                 className={clsx(
-                  'absolute inset-0 -mt-16 h-40 ml-5',
+                  'absolute inset-0 mt-[-4.3rem] h-40 ml-5 opacity-50',
                   'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
                 )}
               ></div>
             </div>
-            <div className="strech-wide grid grid-cols-3 w-[100vw] relative py-6 px-side sm:text-left sm:mx-0 sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:mb-16 text-center ">
+            <div className="strech-wide grid mobile:grid-cols-2 md:grid-cols-3 w-[100vw] relative py-6 px-side sm:text-left sm:mx-0 sm:max-w-[100vw] text-2xl lg:py-10 lg:mb-16 text-center">
               <div className="w-full text-center">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
@@ -105,7 +106,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 />
                 <b>Impact</b>
                 <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-4">
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
@@ -116,7 +117,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 />
                 <b>Arbeit mit Sinn</b>
                 <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-4">
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
@@ -127,7 +128,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 />
                 <b>... und Unsinn</b>
                 <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-4">
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
@@ -138,7 +139,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 />
                 <b>New Work – aber richtig</b>
                 <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-4">
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
@@ -149,7 +150,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 />
                 <b>Flexibilität</b>
                 <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-4">
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
@@ -160,7 +161,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 />
                 <b>Gemeinsam</b>
                 <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-4">
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
@@ -168,8 +169,8 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </h3>
         </section>
 
-        <section className="mt-20 mb-20 mx-side">
-          <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
+        <section className="text-center partner strech-wide w-[100vw] relative py-6 px-side sm:text-left sm:mx-0 sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:mb-16">
+          <img src="/_assets/img/landing/birds.svg" className="mx-auto mt-12" />
           <h3
             style={{ hyphens: 'auto' }}
             className={clsx(
@@ -180,30 +181,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           >
             Unsere offenen Stellen
           </h3>
-        </section>
-
-        <section className="text-center partner">
-          <h3
-            className={clsx(
-              'text-center text-4xl font-bold',
-              'leading-cozy tracking-tight',
-              'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
-            )}
-          >
-            Partner und Förderer
-          </h3>
-          <Link
-            className={clsx(
-              'hidden md:inline-block mx-auto mt-12',
-              'font-bold text-xl rounded-lg text-truegray-700 ',
-              'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
-              'hover:border-brand-light hover:no-underline hover:text-brand-light',
-              'landing-button-with-wings landing-button-with-wink'
-            )}
-            href="/partner"
-          >
-            Alle Partner ansehen
-          </Link>
+          <div className="">{data.content && renderContent(data.content)}</div>
         </section>
       </main>
 
@@ -321,11 +299,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           type: data.typename,
           id: data.id,
           alias: data.alias,
-          revisionId: data.revisionId,
-          courseId: data.courseData?.id,
           trashed: data.trashed,
-          unrevisedRevisions: data.unrevisedRevisions,
-          unrevisedCourseRevisions: data.unrevisedCourseRevisions,
         }}
       />
     )
@@ -353,6 +327,14 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     return (
       <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
     )
+  }
+
+  function renderContent(value: FrontendContentNode[]) {
+    const content = renderArticle(value, `entity${data.id}`)
+    if (data.schemaData?.setContentAsSection) {
+      return <section itemProp="articleBody">{content}</section>
+    }
+    return content
   }
 }
 
