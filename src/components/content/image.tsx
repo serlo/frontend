@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
 import { Lazy } from './lazy'
@@ -14,7 +15,19 @@ interface ImageProps {
 }
 
 export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
+  const router = useRouter()
   const { strings } = useInstanceData()
+
+  const semanticName = (element.alt ?? router.asPath.split('/').pop()).replace(
+    /[^\w+]/g,
+    ''
+  )
+  const fileExtension = /\.\w+$/.exec(element.src)?.[0]
+  const src =
+    fileExtension && semanticName && semanticName.length > 3
+      ? element.src.replace(fileExtension, `/${semanticName}${fileExtension}`)
+      : element.src
+
   const wrapInA = (comp: ReactNode) => {
     if (element.href) {
       // needs investigation if this could be simplified
@@ -46,7 +59,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
           <Lazy>
             <img
               className="serlo-img"
-              src={element.src}
+              src={src}
               alt={element.alt || strings.content.imageAltFallback}
               itemProp="contentUrl"
             />
