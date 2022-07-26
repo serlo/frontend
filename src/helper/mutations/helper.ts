@@ -34,6 +34,7 @@ import {
   UuidSetStateInput,
   TaxonomyTermSortInput,
   EntitySortInput,
+  UserRoleInput,
 } from '@/fetcher/graphql-types/operations'
 
 type MutationInput =
@@ -57,6 +58,7 @@ type MutationInput =
   | EntityUpdateLicenseInput
   | TaxonomyTermSortInput
   | EntitySortInput
+  | UserRoleInput
 
 type MutationResponse =
   | ThreadMutation
