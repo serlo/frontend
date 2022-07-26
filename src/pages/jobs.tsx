@@ -3,9 +3,11 @@ import { GetStaticProps } from 'next'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { EntityBase } from '@/components/entity-base'
+import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
+import { FooterNew } from '@/components/landing/rework/footer-new'
+import { Header } from '@/components/navigation/header'
 import { InviteModalProps } from '@/components/user-tools/invite-modal'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -30,19 +32,21 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
     return (
       <FrontendClientBase
         noContainers
+        noHeaderFooter
         entityId={jobsPageId}
         authorization={pageData.authorization}
       >
-        <EntityBase
-          page={{ ...pageData, secondaryMenuData: undefined }}
-          entityId={jobsPageId}
-        >
+        <div className="min-h-[68vh] max-w-full overflow-x-hidden sm:overflow-visible">
           <Content pageData={pageData} />
-        </EntityBase>
+        </div>
       </FrontendClientBase>
     )
   }
 )
+
+const h2Class =
+  'text-center text-4xl font-extrabold leading-cozy tracking-tight'
+const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
   const [shareOpen, setShareOpen] = useState(false)
@@ -52,11 +56,17 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
 
   return (
     <>
+      <Header />
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
       {renderUserTools({ aboveContent: true })}
       <main className="text-truegray-700">
-        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
-          <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
+        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2 z-10 relative">
+          <p
+            className={clsx(
+              italicClass,
+              'landing-button-with-wings landing-button-with-wink p-with-wink'
+            )}
+          >
             Hey du
           </p>
           <h1
@@ -67,42 +77,46 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             )}
           >
             Digitale Bildung braucht{' '}
-            <span className="pb-2 underlined">dich</span> !
+            <span className="underlined">dich&thinsp;!</span>
           </h1>
           <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto"></div>
-          <p className="text-3xl leading-cozy">
-            Hier noch einen kurzen schönen Text?
-          </p>
         </section>
 
-        <aside className="w-full relative left-0 right-0 mt-16">
-          <img src="/_assets/img/jobs/jobs-header.jpg" />
+        <aside className="mt-16">
+          <img
+            src="/_assets/img/jobs/jobs-header.jpg"
+            className="rounded-full w-[30rem] h-[30rem] object-left object-cover mx-auto"
+          />
         </aside>
 
-        <section>
+        <section
+          className={clsx(
+            'partner strech-wide w-[100vw] relative px-side',
+            'sm:text-left sm:mx-0 sm:max-w-[100vw]',
+            'mt-24 !pt-16'
+          )}
+        >
           <h3
             className={clsx(
               'text-center text-4xl text-truegray-700 font-bold',
               'leading-cozy tracking-tight',
-              'max-w-2xl mt-32 mx-auto relative z-10 px-2'
+              'mx-auto'
             )}
           >
-            <p className=" italic font-handwritten text-5xl">
-              Das erwartet dich
-            </p>
-            <div className="relative z-0 h-0 w-full mt-1">
+            <p className={clsx(italicClass)}>Das erwartet dich bei uns</p>
+            {/* <div className="relative z-0 h-0 w-full mt-1">
               <div
                 className={clsx(
                   'absolute inset-0 mt-[-4.3rem] h-40 ml-5 opacity-50',
                   'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
                 )}
               ></div>
-            </div>
+            </div> */}
             <div className="strech-wide grid mobile:grid-cols-2 md:grid-cols-3 w-[100vw] relative py-6 px-side sm:text-left sm:mx-0 sm:max-w-[100vw] text-2xl lg:py-10 lg:mb-16 text-center">
-              <div className="w-full text-center">
+              <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mt-10 mx-auto"
+                  className="max-h-28 mx-auto"
                 />
                 <b>Impact</b>
                 <br />
@@ -110,10 +124,10 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
-              <div className="w-full text-center">
+              <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mt-10 mx-auto"
+                  className="max-h-28 mx-auto"
                 />
                 <b>Arbeit mit Sinn</b>
                 <br />
@@ -121,10 +135,10 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
-              <div className="w-full text-center">
+              <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mt-10 mx-auto"
+                  className="max-h-28 mx-auto"
                 />
                 <b>... und Unsinn</b>
                 <br />
@@ -132,10 +146,10 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
-              <div className="w-full text-center">
+              <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mt-10 mx-auto"
+                  className="max-h-28 mx-auto"
                 />
                 <b>New Work – aber richtig</b>
                 <br />
@@ -143,10 +157,10 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
-              <div className="w-full text-center">
+              <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mt-10 mx-auto"
+                  className="max-h-28 mx-auto"
                 />
                 <b>Flexibilität</b>
                 <br />
@@ -154,10 +168,10 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                   Hier kommt noch ein kurzer Text hin jeweils!
                 </p>
               </div>
-              <div className="w-full text-center">
+              <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mt-10 mx-auto"
+                  className="max-h-28 mx-auto"
                 />
                 <b>Gemeinsam</b>
                 <br />
@@ -169,21 +183,57 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </h3>
         </section>
 
-        <section className="text-center partner strech-wide w-[100vw] relative py-6 px-side sm:text-left sm:mx-0 sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:mb-16">
-          <img src="/_assets/img/landing/birds.svg" className="mx-auto mt-12" />
+        <section className={clsx('text-center')}>
           <h3
             style={{ hyphens: 'auto' }}
-            className={clsx(
-              'text-center text-4xl font-bold',
-              'leading-cozy tracking-tight',
-              'max-w-2xl mt-7 mx-auto'
-            )}
+            className={clsx(h2Class, 'underlined inline-block mt-7 pb-3')}
           >
             Unsere offenen Stellen
           </h3>
-          <div className="">{data.content && renderContent(data.content)}</div>
+          <div className="sm:flex pt-8 justify-center text-left">
+            <div className="max-w-xl w-full mr-8">
+              <h3 className="serlo-h3">Hauptamptlich</h3>
+              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
+                Fancy Stellenplugin hier
+              </div>
+              <img
+                src="/_assets/img/jobs/jobs-header.jpg"
+                className="rounded-lg mt-12"
+              />
+            </div>
+            <div className="max-w-xl w-full">
+              <h3 className="serlo-h3">Ehrenamtlich</h3>
+              {data.content && renderContent(data.content)}
+            </div>
+          </div>
+        </section>
+
+        <section
+          className={clsx(
+            'partner about-serlo strech-wide w-[100vw] relative px-side',
+            'sm:text-left sm:mx-0 sm:max-w-[100vw]',
+            'mt-24 !pt-16'
+          )}
+        >
+          <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
+            <img
+              src="/_assets/img/landing/birds.svg"
+              className="mx-auto my-5"
+            />
+            <p className="mb-8 max-w-2xl px-2 mx-auto font-bold">
+              Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
+              digitale Transformation unserer Schulen ein.
+            </p>
+            <Link
+              className="serlo-new-landing-button inline landing-button-with-wings"
+              href="/serlo"
+            >
+              Mehr über Serlo
+            </Link>
+          </div>
         </section>
       </main>
+      <FooterNew />
 
       {renderUserTools()}
       {renderShareModal()}
@@ -280,8 +330,11 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         }
         .partner {
           padding-top: 1rem;
-          background: url('/_assets/img/landing/footer-container.svg') no-repeat;
+          background-image: url('/_assets/img/landing/about-container.svg');
           background-size: 100% 100%;
+        }
+        .about-serlo {
+          background-image: url('/_assets/img/landing/footer-container.svg');
         }
       `}</style>
     </>
