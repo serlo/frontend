@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
-import { FooterNew } from '@/components/landing/rework/footer-new'
+import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
 import { InviteModalProps } from '@/components/user-tools/invite-modal'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
@@ -212,7 +212,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           className={clsx(
             'partner about-serlo strech-wide w-[100vw] relative px-side',
             'sm:text-left sm:mx-0 sm:max-w-[100vw]',
-            'mt-24 !pt-16'
+            'mt-24 !pt-16 -mb-8 pb-24'
           )}
         >
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
@@ -233,7 +233,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </div>
         </section>
       </main>
-      <FooterNew />
+      <Footer />
 
       {renderUserTools()}
       {renderShareModal()}
