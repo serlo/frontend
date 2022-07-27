@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { GetStaticProps } from 'next'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { Link } from '@/components/content/link'
@@ -8,24 +8,25 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { Footer } from '@/components/navigation/footer'
 import { Header } from '@/components/navigation/header'
-import { InviteModalProps } from '@/components/user-tools/invite-modal'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
+// import { InviteModalProps } from '@/components/user-tools/invite-modal'
+// import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { UuidType, SingleEntityPage, SlugProps } from '@/data-types'
+import { SingleEntityPage, SlugProps } from '@/data-types'
+import { CommunityWallPerson } from '@/data/de/community-people'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
-import { FrontendContentNode } from '@/frontend-node-types'
+// import { FrontendContentNode } from '@/frontend-node-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { renderArticle } from '@/schema/article-renderer'
+// import { renderArticle } from '@/schema/article-renderer'
 
 const jobsPageId = 226222 //21563
 
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-)
+// const ShareModal = dynamic<ShareModalProps>(() =>
+//   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+// )
 
-const InviteModal = dynamic<InviteModalProps>(() =>
-  import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
-)
+// const InviteModal = dynamic<InviteModalProps>(() =>
+//   import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
+// )
 
 export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
   ({ pageData }) => {
@@ -52,6 +53,8 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   const [shareOpen, setShareOpen] = useState(false)
   const [inviteOpen, setInviteOpen] = useState(false)
 
+  console.log(shareOpen)
+  console.log(inviteOpen)
   const { entityData: data } = pageData
 
   return (
@@ -60,38 +63,69 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
       {renderUserTools({ aboveContent: true })}
       <main className="text-truegray-700">
-        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2 z-10 relative">
-          <p
-            className={clsx(
-              italicClass,
-              'landing-button-with-wings landing-button-with-wink p-with-wink'
-            )}
-          >
-            Hey du
-          </p>
-          <h1
-            className={clsx(
-              'text-center text-5xl font-extrabold',
-              'tracking-tight',
-              'max-w-3xl mt-3 mb-6 mx-auto'
-            )}
-          >
-            Digitale Bildung braucht{' '}
-            <span className="underlined">dich&thinsp;!</span>
-          </h1>
-          <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto"></div>
+        <section
+          className={clsx(
+            'mt-20 md:mt-[11vh] px-2',
+            'flex',
+            'text-left font-bold'
+          )}
+        >
+          <aside className="w-full">
+            <img src="/_assets/img/jobs/jobs-header.jpg" className="ml-8" />
+          </aside>
+          <div className="w-full mt-10 ml-3">
+            <p
+              className={clsx(
+                italicClass,
+                'landing-button-with-wings landing-button-with-wink p-with-wink mr-6'
+              )}
+            >
+              Hey du
+            </p>
+            <h1
+              className={clsx(
+                'text-5xl font-extrabold',
+                'tracking-tight leading-tight',
+                'max-w-md mt-3 mb-6 mr-auto'
+              )}
+            >
+              Digitale Bildung braucht{' '}
+              <span className="underlined !pr-0">dich&thinsp;!</span>
+            </h1>
+          </div>
         </section>
 
-        <aside className="mt-16">
-          <img
-            src="/_assets/img/jobs/jobs-header.jpg"
-            className="rounded-full w-[30rem] h-[30rem] object-left object-cover mx-auto"
-          />
-        </aside>
+        <section className={clsx('text-center mt-32')}>
+          <h3
+            style={{ hyphens: 'auto' }}
+            className={clsx(h2Class, 'inline-block mt-7 pb-3')}
+          >
+            Unsere offenen Stellen
+          </h3>
+          <div className="sm:flex pt-8 justify-center text-left">
+            <div className="max-w-xl w-full mr-8">
+              <h3 className="serlo-h3">Hauptamptlich</h3>
+              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
+                Fancy Stellenplugin hier
+              </div>
+              {/* <img
+                src="/_assets/img/jobs/jobs-header.jpg"
+                className="rounded-lg mt-12"
+              /> */}
+            </div>
+            <div className="max-w-xl w-full">
+              <h3 className="serlo-h3">Ehrenamtlich</h3>
+              {/* {data.content && renderContent(data.content)} */}
+              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
+                Imported Content here
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section
           className={clsx(
-            'partner strech-wide w-[100vw] relative px-side',
+            'partner strech-wide relative px-side',
             'sm:text-left sm:mx-0 sm:max-w-[100vw]',
             'mt-24 !pt-16'
           )}
@@ -103,7 +137,9 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               'mx-auto'
             )}
           >
-            <p className={clsx(italicClass)}>Das erwartet dich bei uns</p>
+            <p className={clsx(italicClass, 'text-4xl')}>
+              Das erwartet dich bei uns
+            </p>
             {/* <div className="relative z-0 h-0 w-full mt-1">
               <div
                 className={clsx(
@@ -112,7 +148,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 )}
               ></div>
             </div> */}
-            <div className="strech-wide grid mobile:grid-cols-2 md:grid-cols-3 w-[100vw] relative py-6 px-side sm:text-left sm:mx-0 sm:max-w-[100vw] text-2xl lg:py-10 lg:mb-16 text-center">
+            <div className="grid mobile:grid-cols-2 md:grid-cols-3 relative py-6 text-2xl lg:py-10 lg:mb-16 text-center">
               <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/donations/donation-bird.svg"
@@ -183,36 +219,30 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </h3>
         </section>
 
-        <section className={clsx('text-center')}>
-          <h3
-            style={{ hyphens: 'auto' }}
-            className={clsx(h2Class, 'underlined inline-block mt-7 pb-3')}
-          >
-            Unsere offenen Stellen
-          </h3>
-          <div className="sm:flex pt-8 justify-center text-left">
-            <div className="max-w-xl w-full mr-8">
-              <h3 className="serlo-h3">Hauptamptlich</h3>
-              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
-                Fancy Stellenplugin hier
-              </div>
-              <img
-                src="/_assets/img/jobs/jobs-header.jpg"
-                className="rounded-lg mt-12"
-              />
-            </div>
-            <div className="max-w-xl w-full">
-              <h3 className="serlo-h3">Ehrenamtlich</h3>
-              {data.content && renderContent(data.content)}
-            </div>
+        <section
+          className={clsx(
+            'sm:text-left sm:mx-0 sm:max-w-[100vw]',
+            'mt-18 -mb-4'
+          )}
+        >
+          <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
+            <p className="font-bold">
+              Noch Fragen? Dann schreib uns an: <br />
+              <a className="text-brand underline" href="mailto:jobs@serlo.org">
+                jobs@serlo.org
+              </a>
+              <br />
+              <br />
+              Wir freuen uns von dir zu hören.
+            </p>
           </div>
         </section>
 
         <section
           className={clsx(
-            'partner about-serlo strech-wide w-[100vw] relative px-side',
+            'partner about-serlo strech-wide  relative px-side',
             'sm:text-left sm:mx-0 sm:max-w-[100vw]',
-            'mt-24 !pt-16 -mb-8 pb-24'
+            'mt-24 !pt-16 -mb-8 pb-16'
           )}
         >
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
@@ -231,13 +261,32 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               Mehr über Serlo
             </Link>
           </div>
+
+          <div className="mt-6 mx-24 flex">
+            {renderPerson({
+              name: 'Almut',
+              role: 'Kommunikation und Öffentlichkeitsarbeit',
+              imgSrc:
+                'https://assets.serlo.org/6234abb319002_cde9403895bd5ad35fe739ca964535a0b79908d7.jpg',
+              subjects: [
+                'Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die digitale Transformation unserer Schulen ein.',
+              ],
+            })}
+            {renderPerson({
+              name: 'Leogato',
+              role: 'Feelgood-Manager',
+              imgSrc:
+                'https://assets.serlo.org/60c35978e37c1_5f8b94bdf728b060bfbaea458675c67d6f1658d8.jpg',
+              subjects: ['Well… meow.'],
+            })}
+          </div>
         </section>
       </main>
       <Footer />
-
+      {/* 
       {renderUserTools()}
       {renderShareModal()}
-      {renderInviteModal()}
+      {renderInviteModal()} */}
 
       <style jsx>{`
         @font-face {
@@ -340,6 +389,52 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     </>
   )
 
+  function renderPerson({ name, imgSrc, role, subjects }: CommunityWallPerson) {
+    return (
+      <figure
+        className={clsx(
+          'mt-12 mx-1 text-center group',
+          'w-1/3v sm:w-1/4v md:w-1/4v',
+          'max-w-[20rem]'
+        )}
+      >
+        <div className="relative w-full">
+          <div
+            className={clsx(
+              'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
+              'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
+              'transition-all ease-linear duration-200 group-hover:rotate-1'
+            )}
+          ></div>
+        </div>
+        <Link
+          className="hover:no-underline relative z-10 whitespace-nowrap"
+          href={`/user/profile/${name}`}
+        >
+          <img
+            src={imgSrc}
+            alt={`Avatar von ${name}`}
+            className="rounded-full w-full aspect-square object-cover p-12 -mb-12"
+          />
+          <p className="text-base mt-2 font-bold text-gray-700">@{name}</p>
+          <span
+            className={clsx(
+              'text-brand font-handwritten text-xl font-bold px-2 py-1',
+              'rounded-2xl'
+              // ? 'bg-yellow'
+              // ? 'bg-brand-light'
+              // ? 'bg-newgreen'
+              // 'bg-berry'
+            )}
+          >
+            {role}
+          </span>
+        </Link>
+        <p className="serlo-p mt-5">{subjects[0]}</p>
+      </figure>
+    )
+  }
+
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
@@ -358,37 +453,37 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     )
   }
 
-  function renderShareModal() {
-    const showPdf = [
-      UuidType.Page,
-      UuidType.Article,
-      UuidType.CoursePage,
-      UuidType.ExerciseGroup,
-      UuidType.Exercise,
-      UuidType.Solution,
-    ].includes(data.typename)
-    return (
-      <ShareModal
-        isOpen={shareOpen}
-        onClose={() => setShareOpen(false)}
-        showPdf={showPdf}
-      />
-    )
-  }
+  // function renderShareModal() {
+  //   const showPdf = [
+  //     UuidType.Page,
+  //     UuidType.Article,
+  //     UuidType.CoursePage,
+  //     UuidType.ExerciseGroup,
+  //     UuidType.Exercise,
+  //     UuidType.Solution,
+  //   ].includes(data.typename)
+  //   return (
+  //     <ShareModal
+  //       isOpen={shareOpen}
+  //       onClose={() => setShareOpen(false)}
+  //       showPdf={showPdf}
+  //     />
+  //   )
+  // }
 
-  function renderInviteModal() {
-    return (
-      <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
-    )
-  }
+  // function renderInviteModal() {
+  //   return (
+  //     <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
+  //   )
+  // }
 
-  function renderContent(value: FrontendContentNode[]) {
-    const content = renderArticle(value, `entity${data.id}`)
-    if (data.schemaData?.setContentAsSection) {
-      return <section itemProp="articleBody">{content}</section>
-    }
-    return content
-  }
+  // function renderContent(value: FrontendContentNode[]) {
+  //   const content = renderArticle(value, `entity${data.id}`)
+  //   if (data.schemaData?.setContentAsSection) {
+  //     return <section itemProp="articleBody">{content}</section>
+  //   }
+  //   return content
+  // }
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
