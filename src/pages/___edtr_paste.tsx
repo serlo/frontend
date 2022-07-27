@@ -9,7 +9,8 @@ import { useEffect, useRef, useState } from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { loggedInData } from '@/data/de'
+import { UuidType } from '@/data-types'
+import { instanceData, loggedInData } from '@/data/de'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { createPlugins } from '@/edtr-io/plugins'
 
@@ -58,8 +59,10 @@ const ContentPage: NextPage = () => {
 
   const plugins = createPlugins({
     getCsrfToken: () => '',
-    registry: getPluginRegistry('Article', editorStrings),
+    registry: getPluginRegistry(UuidType.Article, editorStrings),
+    type: UuidType.Article,
     editorStrings,
+    strings: instanceData.strings,
   })
 
   const DocumentEditor = createDefaultDocumentEditor({
