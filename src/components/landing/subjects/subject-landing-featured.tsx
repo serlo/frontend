@@ -5,10 +5,12 @@ import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
 import {
   featuredContent,
   FeaturedContentData,
 } from '@/data/de/de-subject-landing-data'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { shuffleArray } from '@/helper/shuffle-array'
@@ -91,7 +93,7 @@ export function SubjectLandingFeatured({
     )
   }
 
-  function renderTypeIcon(type: string) {
+  function renderTypeIcon(type: UuidType | TaxonomyTermType) {
     const icon = getIconByTypename(type)
     return <FaIcon icon={icon} />
   }

@@ -1,5 +1,5 @@
-import { serloDomain } from '../../helper/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { serloDomain } from '../../helper/urls/serlo-domain'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [],
@@ -65,7 +65,7 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
@@ -92,3 +92,14 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/27469',
   donationHref: '/spenden',
 }
+
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
+  {
+    // grammar
+    rootId: 140527,
+    entries: [
+      { title: 'இலக்கணம்', id: 140522 },
+      { title: 'பாடங்கள்', id: 140527 },
+    ],
+  },
+]

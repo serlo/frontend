@@ -1,9 +1,8 @@
-import { Subject } from '@serlo/api'
-
 import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 
 export interface UnrevisedRevisionsOverviewProps {
   data: UnrevisedRevisionsData
@@ -20,7 +19,7 @@ export function UnrevisedRevisionsOverview({
         {renderHelp()}
         {renderQuicklinks()}
       </div>
-      {data.subjects.map((subject: Subject) => (
+      {data.subjects.map((subject) => (
         <UnrevisedSubject key={subject.id} subject={subject} />
       ))}
     </>
@@ -30,7 +29,7 @@ export function UnrevisedRevisionsOverview({
     const { supportLinks, guideline } = strings.unrevisedRevisions
 
     const guidelineUrl =
-      lang === 'de'
+      lang === Instance.De
         ? '/140473'
         : 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/edit'
 
@@ -49,7 +48,7 @@ export function UnrevisedRevisionsOverview({
       <div>
         <h2 className="serlo-h2">Quicklinks</h2>
         <ul className="serlo-ul">
-          {data.subjects.map((subject: Subject) => {
+          {data.subjects.map((subject) => {
             if (subject.unrevisedEntities.totalCount === 0) return null
             const name = subject.taxonomyTerm.name
             return (

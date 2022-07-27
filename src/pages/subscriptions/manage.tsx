@@ -6,10 +6,13 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { PageTitle } from '@/components/content/page-title'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
-import { ManageSubscriptions } from '@/components/pages/manage-subscriptions'
+import {
+  ManageSubscriptions,
+  SubscriptionNode,
+} from '@/components/pages/manage-subscriptions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SubscriptionData } from '@/data-types'
+import { UuidType } from '@/data-types'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -21,24 +24,25 @@ export default renderedPageNoHooks(() => (
 ))
 
 const filters = [
-  'Article',
-  'Video',
-  'Applet',
-  'CoursePage',
-  'Exercise',
-  'GroupedExercise',
-  'ExerciseGroup',
-  'Solution',
-  'User',
-  'Course',
-  'TaxonomyTerm',
+  UuidType.Article,
+  UuidType.Video,
+  UuidType.Applet,
+  UuidType.CoursePage,
+  UuidType.Exercise,
+  UuidType.GroupedExercise,
+  UuidType.ExerciseGroup,
+  UuidType.Solution,
+  UuidType.User,
+  UuidType.Course,
+  UuidType.TaxonomyTerm,
 ]
 
 function Content() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { data, error, loadMore } = useFetch()
-  const [showTypename, setShowTypename] =
-    useState<typeof filters[number]>('Article')
+  const [showTypename, setShowTypename] = useState<typeof filters[number]>(
+    UuidType.Article
+  )
 
   const filtered = data?.nodes.filter(
     (node) => node.object.__typename === showTypename
@@ -61,10 +65,10 @@ function Content() {
             onPointerUp={(e) => e.currentTarget.blur()}
             onClick={() => setShowTypename(typename)}
             className={clsx(
-              'serlo-button mr-2 mb-2.5',
+              'mr-2 mb-2.5',
               showTypename == typename
-                ? 'serlo-make-interactive-primary'
-                : 'serlo-make-interactive-light'
+                ? 'serlo-button-blue'
+                : 'serlo-button-light'
             )}
           >
             {getEntityStringByTypename(typename, strings)}
@@ -107,7 +111,7 @@ function Content() {
 }
 
 function useFetch() {
-  return useGraphqlSwrPaginationWithAuth<SubscriptionData>({
+  return useGraphqlSwrPaginationWithAuth<SubscriptionNode>({
     query: subscriptionsQuery,
     variables: { first: 300 },
     config: {
@@ -121,7 +125,7 @@ function useFetch() {
 }
 
 export const subscriptionsQuery = gql`
-  query subscription($first: Int!, $after: String) {
+  query getSubscriptions($first: Int!, $after: String) {
     subscription {
       getSubscriptions(first: $first, after: $after) {
         totalCount

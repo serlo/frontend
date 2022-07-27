@@ -22,7 +22,7 @@ export function SaveLocalButton({ visible }: { visible: boolean }) {
 
   return (
     <button
-      className="serlo-button serlo-make-interactive-primary mt-3"
+      className="serlo-button-blue mt-3"
       onClick={() => {
         const serializedRoot = serializeRootDocument()(store.getState())
         storeState(serializedRoot)

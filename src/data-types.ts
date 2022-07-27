@@ -1,11 +1,18 @@
-import { Role, Subject, TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { CSSProperties, FunctionComponent } from 'react'
 
-import { BoxType } from './edtr-io/plugins/box/renderer'
-import { TableType } from './edtr-io/plugins/serlo-table/renderer'
-import { Instance, QueryResponse, User } from './fetcher/query-types'
+import {
+  Instance,
+  UnrevisedRevisionsQuery,
+} from './fetcher/graphql-types/operations'
+import { User } from './fetcher/query-types'
+import {
+  FrontendContentNode,
+  FrontendExerciseGroupNode,
+  FrontendExerciseNode,
+} from './frontend-node-types'
 import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
+import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 // exact props of /[...slug] page
 export interface SlugProps {
@@ -29,7 +36,12 @@ export interface UnrevisedRevisionsProps {
 }
 
 export interface EventHistoryProps {
-  pageData: EventHistoryData
+  pageData: {
+    id: number
+    title: string
+    alias: string
+    isUser: boolean
+  }
 }
 
 // Instance data consists of the language, translation strings, header menu and footer menu.
@@ -39,10 +51,11 @@ export interface EventHistoryProps {
 // Instance data is not part of initial props anymore. Instead, it is added to the html directly.
 
 export interface InstanceData {
-  lang: Instance | string
+  lang: Instance
   strings: typeof instanceData['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
+  secondaryMenus: SecondaryMenuData[]
 }
 
 // Menus are trees of title and urls, possibly with icons.
@@ -94,7 +107,26 @@ export interface FooterLink {
   icon?: FooterIcon
 }
 
-export type FooterIcon = 'newsletter' | 'github' | 'job'
+export enum FooterIcon {
+  newsletter = 'newsletter',
+  github = 'github',
+  job = 'job',
+}
+
+// Menu shown on the left (desktop) or between header and content (mobile)
+// Links can be active
+
+export interface SecondaryMenuLink {
+  title: string
+  url?: string
+  id?: number
+  active?: boolean
+}
+
+export interface SecondaryMenuData {
+  rootId?: number
+  entries: SecondaryMenuLink[]
+}
 
 // We have different types of pages, each with its own set of data:
 
@@ -157,38 +189,10 @@ export interface LicenseDetailPage {
 }
 
 export interface LicenseDetailData {
+  id: number
   title: string
   content: FrontendContentNode[]
-  iconHref: string
-  id: number
-}
-
-export interface HistoryRevisionData {
-  author: FrontendUserData
-  trashed: boolean
-  changes?: string
-  date: string
-  id: number
-}
-
-export interface HistoryRevisionsData {
-  id: number
-  alias: string
-  __typename: string
-  currentRevision: {
-    id: number
-    title?: string
-  }
-  revisions: {
-    nodes: HistoryRevisionData[]
-  }
-  solutionRevisions?: {
-    nodes: HistoryRevisionData[]
-  }
-}
-
-export interface HistoryRevisionProps {
-  id: number
+  isDefault: boolean
 }
 
 // For types that are supported through their own pages we return this helper in request-page
@@ -203,7 +207,7 @@ export interface Redirect {
 
 export interface EntityPageBase {
   breadcrumbsData?: BreadcrumbsData
-  secondaryNavigationData?: SecondaryNavigationData
+  secondaryMenuData?: SecondaryMenuData['entries']
   metaData?: HeadData
   horizonData?: HorizonData
   newsletterPopup: boolean
@@ -228,17 +232,6 @@ export interface BreadcrumbLinkEntry {
 export interface BreadcrumbEllipsis extends BreadcrumbLinkEntry {
   label: ''
   ellipsis: true
-}
-
-// Menu shown on the left (desktop) or between header and content (mobile)
-// Links can be active, urls are already prettified.
-
-export type SecondaryNavigationData = SecondaryNavigationEntry[]
-
-export interface SecondaryNavigationEntry {
-  url?: string
-  title: string
-  active?: boolean
 }
 
 // Populate some head tags (e.g. open graph)
@@ -282,15 +275,13 @@ export interface SingleEntityPage extends EntityPageBase {
 
 export interface EntityData {
   id: number
-  alias?: string
-  typename: string
+  alias: string
+  typename: UuidType
   trashed?: boolean
   revisionId?: number
   title?: string
-  categoryIcon?: EntityTypes
   schemaData?: SchemaData
   content?: FrontendContentNode[]
-  inviteToEdit?: boolean
   licenseData?: LicenseData
   courseData?: CourseData
   unrevisedRevisions?: number
@@ -304,13 +295,12 @@ export interface RevisionPage extends EntityPageBase {
 }
 
 export interface RevisionData {
-  typename: string
+  typename: UuidRevType
   date: string
-  type: EntityTypes
   user: FrontendUserData
   repository: {
     id: number
-    alias?: string
+    alias: string
     parentId?: number
     previousRevisionId?: number
     positionInGroup?: number
@@ -335,58 +325,74 @@ export interface RevisionData {
   changes?: string
 }
 
-export interface EventHistoryData {
-  id: number
-  title: string
-  alias: string
-  isUser: boolean
-}
-
 export interface UnrevisedRevisionsPage extends EntityPageBase {
   kind: 'unrevisedRevisions'
   revisionsData: UnrevisedRevisionsData
 }
 
-export interface UnrevisedRevisionsData {
-  subjects: Subject[]
+export type UnrevisedRevisionsData = NonNullable<
+  UnrevisedRevisionsQuery['subject']
+>
+
+export enum UuidRevType {
+  Applet = 'AppletRevision',
+  Article = 'ArticleRevision',
+  Course = 'CourseRevision',
+  CoursePage = 'CoursePageRevision',
+  Event = 'EventRevision',
+  Exercise = 'ExerciseRevision',
+  ExerciseGroup = 'ExerciseGroupRevision',
+  GroupedExercise = 'GroupedExerciseRevision',
+  Page = 'PageRevision',
+  Solution = 'SolutionRevision',
+  Video = 'VideoRevision',
 }
 
-// Entities each should have an translated string and a corresponding icon
+export enum UuidType {
+  Comment = 'Comment',
+  Thread = 'Thread', // Not a UUID type but used as typename in Events
+  Applet = 'Applet',
+  Article = 'Article',
+  Course = 'Course',
+  CoursePage = 'CoursePage',
+  Event = 'Event',
+  Exercise = 'Exercise',
+  ExerciseGroup = 'ExerciseGroup',
+  GroupedExercise = 'GroupedExercise',
+  Page = 'Page',
+  Solution = 'Solution',
+  TaxonomyTerm = 'TaxonomyTerm',
+  User = 'User',
+  Video = 'Video',
+}
 
-export type EntityTypes =
-  | 'applet'
-  | 'article'
-  | 'course'
-  | 'coursePage'
-  | 'event'
-  | 'exercise'
-  | 'exerciseGroup'
-  | 'groupedExercise'
-  | 'page'
-  | 'solution'
-  | 'taxonomyTerm'
-  | 'user'
-  | 'video'
-  | 'revision'
-  | 'comment'
-  | 'thread'
-  //just in case
-  | 'folder'
+export type UuidWithRevType = UuidRevType | UuidType
 
-export type EntityStrings = {
-  [K in EntityTypes]: string
+// special inline types for author tools
+
+export enum ExerciseInlineType {
+  Solution = '_SolutionInline',
+  ExerciseGroup = '_ExerciseGroupInline',
+  Exercise = '_ExerciseInline',
 }
 
 // Entities can belong to a category that we use in the taxonomy
 
-export type TopicCategoryTypes =
-  | 'articles'
-  | 'courses'
-  | 'videos'
-  | 'applets'
-  | 'folders'
-  | 'exercises'
-  | 'events'
+export enum TopicCategoryType {
+  articles = 'articles',
+  courses = 'courses',
+  videos = 'videos',
+  applets = 'applets',
+  folders = 'folders',
+  exercises = 'exercises',
+  events = 'events',
+}
+
+export enum TopicCategoryCustomType {
+  unrevised = 'unrevised',
+  subterms = 'subterms',
+  exercisesContent = 'exercisesContent',
+}
 
 // Some flags to control schema.org behaviour. Not very well done yet.
 
@@ -396,406 +402,13 @@ export interface SchemaData {
   setContentAsSection?: boolean
 }
 
-// The actual content of the page.
-
-// The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
-// Will switch to edtr-io state one day.
-// Until then: Here are the types the frontend expects after converting
-
-export interface FrontendTextNode {
-  type: 'text'
-  text: string
-  color?: FrontendTextColor
-  em?: boolean
-  strong?: boolean
-  code?: boolean
-  children?: undefined
-}
-
-export type FrontendTextColor = 'blue' | 'green' | 'orange'
-
-export interface FrontendANode {
-  type: 'a'
-  href: string
-  children?: FrontendContentNode[]
-}
-
-export interface ArticleNodeUuidLink {
-  id: string
-  title: string
-}
-
-export interface FrontendArticleNode {
-  type: 'article'
-  introduction: FrontendContentNode[]
-  content: FrontendContentNode[]
-  exercises: FrontendContentNode[]
-  exerciseFolder: ArticleNodeUuidLink
-  relatedContent?: {
-    articles: ArticleNodeUuidLink[]
-    courses: ArticleNodeUuidLink[]
-    videos: ArticleNodeUuidLink[]
-  }
-  sources: {
-    href: string
-    title: string
-  }[]
-  children?: undefined
-}
-
-export interface FrontendInlineMathNode {
-  type: 'inline-math'
-  formula: string
-  formulaSource?: string
-  children?: undefined
-}
-
-export interface FrontendPNode {
-  type: 'p'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendHNode {
-  type: 'h'
-  level: 1 | 2 | 3 | 4 | 5
-  id?: string
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendMathNode {
-  type: 'math'
-  formula: string
-  formulaSource?: string
-  children?: undefined
-  alignCenter?: boolean
-}
-
-export interface FrontendImgNode {
-  type: 'img'
-  src: string
-  href?: string
-  alt: string
-  maxWidth?: number
-  children?: undefined
-}
-
-export interface FrontendSpoilerContainerNode {
-  type: 'spoiler-container'
-  children: [FrontendSpoilerTitleNode, FrontendSpoilerBodyNode]
-}
-
-export interface FrontendSpoilerTitleNode {
-  type: 'spoiler-title'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendSpoilerBodyNode {
-  type: 'spoiler-body'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendUlNode {
-  type: 'ul'
-  children?: FrontendLiNode[]
-}
-
-export interface FrontendOlNode {
-  type: 'ol'
-  children?: FrontendLiNode[]
-}
-
-export interface FrontendLiNode {
-  type: 'li'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendMultiMediaNode {
-  type: 'multimedia'
-  float?: 'left' | 'right'
-  mediaWidth: number
-  media: FrontendContentNode[]
-  children: FrontendContentNode[]
-}
-
-export interface FrontendRowNode {
-  type: 'row'
-  children?: FrontendColNode[]
-}
-
-export interface FrontendColNode {
-  type: 'col'
-  size: number
-  float?: 'left' | 'right'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendImportantNode {
-  type: 'important'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendBlockquoteNode {
-  type: 'blockquote'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendBoxNode {
-  type: 'box'
-  boxType: BoxType
-  title?: FrontendContentNode[]
-  anchorId: string
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendAnchorNode {
-  type: 'anchor'
-  id: string
-  children?: undefined
-}
-
-export interface FrontendSerloTableNode {
-  type: 'serlo-table'
-  children?: FrontendSerloTrNode[]
-  tableType: keyof typeof TableType | string
-}
-
-export interface FrontendSerloTrNode {
-  type: 'serlo-tr'
-  children?: FrontendSerloTdNode[]
-}
-
-export interface FrontendSerloTdNode {
-  type: 'serlo-td'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendTableNode {
-  type: 'table'
-  children?: FrontendTrNode[]
-}
-
-export interface FrontendTrNode {
-  type: 'tr'
-  children?: (FrontendThNode | FrontendTdNode)[]
-}
-
-export interface FrontendThNode {
-  type: 'th'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendTdNode {
-  type: 'td'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendGeogebraNode {
-  type: 'geogebra'
-  id: string
-  children?: undefined
-}
-
-export interface FrontendInjectionNode {
-  type: 'injection'
-  href: string
-  children?: undefined
-}
-
-interface BareSolution {
-  legacy?: FrontendContentNode[]
-  edtrState?: SolutionEdtrState
-  license?: LicenseData
-  trashed: boolean
-}
-
-export interface FrontendExerciseNode {
-  type: 'exercise'
-  trashed?: boolean
-  task: {
-    legacy?: FrontendContentNode[]
-    edtrState?: TaskEdtrState
-    license?: LicenseData
-  }
-  solution: BareSolution
-  grouped?: boolean
-  positionInGroup?: number
-  positionOnPage?: number
-  context: {
-    id: number
-    parent?: number
-    solutionId?: number
-  }
-  children?: undefined
-  href?: string
-  unrevisedRevisions?: number
-}
-
-export interface FrontendSolutionNode {
-  type: 'solution'
-  solution: BareSolution
-
-  context: {
-    id: number
-  }
-  href?: string
-  children?: undefined
-  unrevisedRevisions?: number
-}
-
-export interface TaskEdtrState {
-  content: FrontendContentNode[] // edtr-io plugin "exercise"
-  interactive?: EdtrPluginScMcExercise | EdtrPluginInputExercise
-}
-
-export interface SolutionEdtrState {
-  prerequisite?: {
-    // edtr-io plugin "solution"
-    id?: number
-    href?: string // added, the resolved alias
-    title: string
-  }
-  strategy: FrontendContentNode[]
-  steps: FrontendContentNode[]
-}
-
-export interface EdtrPluginScMcExercise {
-  plugin: 'scMcExercise' // edtr-io plugin
-  state: {
-    answers: {
-      isCorrect: boolean
-      feedback: FrontendContentNode[]
-      content: FrontendContentNode[]
-      originalIndex: number
-    }[]
-    isSingleChoice?: boolean
-  }
-}
-
-export interface EdtrPluginInputExercise {
-  plugin: 'inputExercise' // edtr-io plugin
-  state: {
-    type:
-      | 'input-number-exact-match-challenge'
-      | 'input-string-normalized-match-challenge'
-      | 'input-expression-equal-match-challenge'
-    answers: {
-      value: string
-      isCorrect: boolean
-      feedback: FrontendContentNode[]
-    }[]
-    unit: string
-  }
-}
-
-export interface FrontendExerciseGroupNode {
-  type: 'exercise-group'
-  license?: LicenseData
-  positionOnPage?: number
-  content: FrontendContentNode[]
-  children?: FrontendExerciseNode[]
-  context: {
-    id: number
-  }
-  href?: string
-  unrevisedRevisions?: number
-}
-
-export interface FrontendVideoNode {
-  type: 'video'
-  src: string
-  children?: undefined
-  license?: LicenseData
-}
-
-export interface FrontendCodeNode {
-  type: 'code'
-  code: string
-  language: string
-  showLineNumbers: boolean
-  children?: undefined
-}
-
-export enum Sign {
-  Equals = 'equals',
-  GreaterThan = 'greater-than',
-  GreaterThanOrEqual = 'greater-than-or-equal',
-  LessThan = 'less-than',
-  LessThanOrEqual = 'less-than-or-equal',
-  AlmostEqualTo = 'almost-equal-to',
-}
-
-export interface FrontendEquationsNode {
-  type: 'equations'
-  steps: {
-    left: string
-    leftSource?: string
-    sign: Sign
-    right: string
-    rightSource?: string
-    transform: string
-    transformSource?: string
-    explanation: FrontendContentNode[]
-  }[]
-  firstExplanation: FrontendContentNode[]
-  transformationTarget: 'term' | 'equation'
-  children?: undefined
-}
-
-export type FrontendVoidNode =
-  | FrontendInlineMathNode
-  | FrontendMathNode
-  | FrontendImgNode
-  | FrontendAnchorNode
-  | FrontendGeogebraNode
-  | FrontendInjectionNode
-  | FrontendExerciseNode
-  | FrontendSolutionNode
-  | FrontendVideoNode
-  | FrontendCodeNode
-  | FrontendEquationsNode
-
-export type FrontendElementNode =
-  | FrontendANode
-  | FrontendPNode
-  | FrontendHNode
-  | FrontendSpoilerTitleNode
-  | FrontendSpoilerBodyNode
-  | FrontendLiNode
-  | FrontendColNode
-  | FrontendImportantNode
-  | FrontendBlockquoteNode
-  | FrontendBoxNode
-  | FrontendThNode
-  | FrontendTdNode
-  | FrontendSerloTdNode
-
-export type FrontendRestrictedElementNode =
-  | FrontendArticleNode
-  | FrontendSpoilerContainerNode
-  | FrontendTableNode
-  | FrontendSerloTableNode
-  | FrontendSerloTrNode
-  | FrontendSpoilerContainerNode
-  | FrontendUlNode
-  | FrontendOlNode
-  | FrontendRowNode
-  | FrontendMultiMediaNode
-  | FrontendTrNode
-  | FrontendExerciseGroupNode
-
-export type FrontendContentNode =
-  | FrontendTextNode
-  | FrontendVoidNode
-  | FrontendElementNode
-  | FrontendRestrictedElementNode
-
 // A license notice.
 
 export interface LicenseData {
   title: string
   url: string // to to license
   id: number // of the license
-  default: boolean
+  isDefault: boolean
   shortTitle?: string // show this if not default
 }
 
@@ -813,6 +426,7 @@ export type CoursePagesData = CoursePageEntry[]
 export interface CoursePageEntry {
   title: string
   url: string
+  id: number
   active?: boolean
   noCurrentRevision?: boolean
 }
@@ -835,7 +449,7 @@ export interface UserPage extends EntityPageBase {
     description?: FrontendContentNode[] | null
     lastLogin?: string | null
     date: string
-    roles: { role: Role; instance: string | null }[]
+    roles: { role: Role; instance: Instance | null }[]
     isActiveReviewer: boolean
     isActiveAuthor: boolean
     isActiveDonor: boolean
@@ -848,7 +462,7 @@ export interface UserEventsPage {
   userData: {
     id: number
     title: string
-    alias?: string
+    alias: string
   }
 }
 
@@ -882,7 +496,7 @@ export interface TaxonomySubTerm extends TaxonomyTermBase, TaxonomyLink {
 
 export interface TaxonomyData extends TaxonomyTermBase {
   id: number
-  alias?: string
+  alias: string
   title: string
   trashed: boolean
   taxonomyType: TaxonomyTermType
@@ -894,26 +508,6 @@ export interface TaxonomyData extends TaxonomyTermBase {
 export interface LoggedInData {
   authMenu: HeaderData
   strings: typeof loggedInData['strings']
-}
-
-// User roles
-
-export enum UserRoles {
-  Guest = 'guest',
-  Login = 'login',
-  Moderator = 'moderator',
-  Reviewer = 'reviewer',
-  TaxonomyManager = 'taxonomy-manager',
-  PageBuilder = 'page-builder',
-  Admin = 'admin',
-  SysAdmin = 'sys-admin',
-}
-
-// Subscription Management Page
-
-export interface SubscriptionData {
-  object: QueryResponse
-  sendEmail: boolean
 }
 
 export type CompBaseProps<T = {}> = FunctionComponent<

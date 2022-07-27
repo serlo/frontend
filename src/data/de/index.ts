@@ -1,8 +1,10 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { Instance } from '@/fetcher/graphql-types/operations';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "de",
+  lang: Instance["De"],
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "Die freie Lernplattform",
@@ -11,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
-      agree: "Zustimmen"
+      agree: "Zustimmen um zu suchen"
     },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
@@ -28,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Bereiche",
       exercises: "Aufgaben",
-      events: "Veranstaltungen"
+      events: "Veranstaltungen",
+      unrevised: "Ungeprüft",
+      subterms: "Unter-Themenbereich",
+      exercisesContent: "Aufgaben-Inhalte"
     },
     entities: {
       applet: 'Applet',
@@ -38,19 +43,18 @@ export const instanceData = {
       event: "Veranstaltung",
       exercise: "Aufgabe",
       exerciseGroup: "Aufgabe mit Teilaufgaben",
-      folder: "Bereich",
+      topic: "Themenbereich",
       groupedExercise: "Teilaufgabe",
       page: "Seite",
       solution: "Lösung",
       taxonomyTerm: "Taxonomie-Begriff",
       user: "Benutzer*in",
       video: 'Video',
-      topicFolder: "Aufgabensammlung",
+      exerciseFolder: "Aufgabensammlung",
       comment: "Kommentar",
       revision: "Bearbeitung",
       thread: "Diskussion",
       threads: "Diskussionen",
-      topic: "Thema",
       subject: "Fach",
       userProfile: "Userprofil",
       privacyPolicy: "Datenschutzerklärung",
@@ -64,7 +68,9 @@ export const instanceData = {
       unrevisedRevisions: "Ungeprüfte Bearbeitungen",
       userEdits: "Bearbeitungen von %user%",
       userEditsMine: "Meine ungeprüften Bearbeitungen",
-      editProfile: "Profil bearbeiten & Einstellungen"
+      editProfile: "Profil bearbeiten & Einstellungen",
+      recycleBin: "Papierkorb",
+      diagon: "Winkelgasse"
     },
     roles: {
       donor: "Spender*in",
@@ -82,7 +88,15 @@ export const instanceData = {
     },
     edit: {
       button: "Inhalt überarbeiten",
-      unrevised: "Zeige neue Bearbeitungen"
+      unrevised: "Zeige neue Bearbeitungen",
+      inviteModal: {
+        title: "Erstelle mit uns!",
+        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        loginButton: "Jetzt einloggen",
+        registerButton: "Neues Konto anlegen",
+        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psLinkText: "Hier"
+      }
     },
     license: {
       readMore: "Was bedeutet das?",
@@ -100,27 +114,31 @@ export const instanceData = {
     content: {
       show: "anzeigen",
       hide: "ausblenden",
-      prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
-      task: "Aufgabenstellung",
-      right: "Richtig",
-      wrong: "Leider nicht richtig",
-      feedback: 'Feedback',
-      answer: "Antwort",
-      check: "Stimmt's?",
-      yourAnswer: "Deine Antwort…",
-      chooseOption: "Klicke auf eine der Optionen.",
-      printModeChooseOption: "Kreuze eine der Optionen an",
       trashedNotice: "Dieser Inhalt wurde gelöscht.",
       unrevisedNotice: "Dieser Inhalt wurde noch nicht überprüft. Über den %link% kannst du dir die Entwürfe anzeigen lassen.",
       emptyNotice: "Hier gibt es keinen Inhalt. Bitte bearbeiten oder löschen.",
-      strategy: "Lösungsstrategie",
       picture: "Bild",
       previewImage: "Vorschaubild",
+      imageAltFallback: "Bild",
       exercisesTitle: "Übungsaufgaben",
       moreExercises: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
       relatedContentTitle: "Du hast noch nicht genug vom Thema?",
       relatedContentText: "Hier findest du noch weitere passende Inhalte zum Thema:",
       sourcesTitle: "Quellen",
+      exercises: {
+        prerequisite: "Für diese Aufgabe benötigst Du folgendes Grundwissen:",
+        task: "Aufgabenstellung",
+        correct: "Richtig",
+        missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort.",
+        wrong: "Leider nicht richtig",
+        feedback: 'Feedback',
+        answer: "Antwort",
+        check: "Stimmt's?",
+        yourAnswer: "Deine Antwort…",
+        chooseOption: "Klicke auf eine der Optionen",
+        printModeChooseOption: "Kreuze eine der Optionen an",
+        strategy: "Lösungsstrategie"
+      },
       boxTypes: {
         blank: "Blanko",
         example: "Beispiel",
@@ -164,6 +182,7 @@ export const instanceData = {
       error: "Die Kommentare konnten leider nicht geladen werden. Bitte versuch es später noch einmal.",
       showMoreReply: "Einen weiteren Kommentar",
       showMoreReplies: "%number% weitere Kommentare",
+      hideReplies: "Einklappen",
       showArchived: "Archivierte %threads% anzeigen",
       copyLink: "Kommentarlink kopieren"
     },
@@ -221,7 +240,11 @@ export const instanceData = {
       typeNotSupported: "Bitte versuche diese Seite noch einmal zu laden.",
       refreshNow: "Jetzt aktualisieren",
       backToPrevious: "Zurück zur vorherigen Seite",
-      backToHome: "Zur Startseite"
+      backToHome: "Zur Startseite",
+      deletedComment: {
+        title: "Hoppla, das gibt's hier nicht mehr",
+        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
+      }
     },
     print: {
       preparingNotice: "Druck wird vorbereitet!",
@@ -289,14 +312,16 @@ export const instanceData = {
       globalDescription: "Alle Aktivitäten auf %lang%.serlo.org "
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: "zu",
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
+      createThread: "%actor% hat eine %thread% in %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
-      createEntityLink: "%actor% hat %child% mit %parent% verknüpft.",
-      removeEntityLink: "%actor% hat die Verknüpfung von %child% mit %parent% entfernt.",
+      createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
+      removeEntityLink: "%actor% hat die Zuweisung von %child% zu %parent% entfernt.",
       createEntityRevision: "%actor% hat eine %revision% von %entity% erstellt.",
       checkoutRevision: "%actor% hat eine %revision% von %repository% übernommen.",
       rejectRevision: "%actor% hat eine %revision% in %repository% nicht übernommen.",
@@ -314,11 +339,15 @@ export const instanceData = {
     },
     actions: {
       loadMore: "Weitere laden"
+    },
+    bin: {
+      title: "Titel",
+      trashed: "Gelöscht…"
     }
   }
 };
 export const instanceLandingData = {
-  lang: "de",
+  lang: Instance["De"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -391,6 +420,7 @@ export const loggedInData = {
       history: "Bearbeitungsverlauf",
       editAssignments: "Zuweisung zu Themen und Lehrplänen bearbeiten",
       moveToTrash: "In den Papierkorb verschieben",
+      confirmTrash: "Bist du sicher, dass du diesen Inhalt löschen willst?",
       restoreContent: "Aus dem Papierkorb wiederherstellen",
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
@@ -399,13 +429,14 @@ export const loggedInData = {
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
-      sortEntities: "Inhalt sortieren",
+      sortEntities: "Inhalte sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
-      directLink: "Direkter Link zu diesem Inhalt"
+      directLink: "Direkter Link zu diesem Inhalt",
+      analyticsLink: "Analytics Daten anschauen"
     },
     notifications: {
-      hide: "Benachrichtigungen für diesen Inhalt nicht mehr anzeigen.",
+      hide: "Neue Benachrichtigungen für diesen Inhalt deaktivieren.",
       setToRead: "Benachrichtigung als gelesen markieren.",
       setAllToRead: "Alle sichtbaren gelesen",
       showNew: "Neu",
@@ -439,14 +470,16 @@ export const loggedInData = {
         trash: "Erfolgreich gelöscht 🗑",
         restore: "Erfolgreich wiederhergestellt ♻️",
         accept: "Bearbeitung wurde akzeptiert ✅",
-        reject: "Bearbeitung wurde abgelehnt ❌",
-        save: "Bearbeiten erfolgreich gespeichert ✅"
+        reject: "Bearbeitung wurde nicht akzeptiert ❌",
+        save: "Bearbeitung erfolgreich gespeichert ✅",
+        updated: "Erfolgreich aktualisiert",
+        generic: "Hat geklappt 🎉"
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
         FORBIDDEN: "Dafür fehlen dir leider die Rechte!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: "Sorry, das ist so nicht unterstützt…",
         UNKNOWN: "Ein unbekannter Fehler…",
         valueMissing: "Bitte alle Pflichtfelder ausfüllen"
       }
@@ -512,7 +545,7 @@ export const loggedInData = {
         settings: "Einstellungen",
         equationsTitle: "Terme und Gleichungen",
         equationsDesc: "Erstelle Termumformungen und löse mehrzeilige Gleichungen.",
-        ready: "Bereit zum speichern?"
+        ready: "Bereit zum Speichern?"
       },
       anchor: {
         identifier: "Name",
@@ -535,8 +568,6 @@ export const loggedInData = {
         addAnswer: "Antwort hinzufügen",
         enterTheValue: "Gib hier die Antwort ein",
         yourSolution: "Deine Lösung",
-        correct: "Richtig",
-        wrong: "Falsch",
         number: "Zahl (exakte Lösung, z.B. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Mathematischer Ausdruck (äquivalente Lösung, z.B. \"0,5\" = \"1/2\" = \"2/4\")"
       },
@@ -561,10 +592,7 @@ export const loggedInData = {
         singleChoice: "Single Choice",
         multipleChoice: "Multiple Choice",
         chooseType: "Wähle den Aufgabentyp",
-        addAnswer: "Antwort hinzufügen",
-        wrong: "Falsch",
-        missedSome: "Fast! Dir fehlt noch mindestens eine richtige Antwort",
-        correct: "Richtig"
+        addAnswer: "Antwort hinzufügen"
       },
       serloTable: {
         mode: "Modus",
@@ -576,6 +604,7 @@ export const loggedInData = {
         row: "Zeile",
         column: "Spalte",
         addType: "%type% hinzufügen",
+        addTypeBefore: "%type% davor hinzufügen",
         deleteType: "%type% löschen",
         confirmDelete: "Sicher, dass diese %type% und ihren Inhalt löschen willst?"
       },
@@ -590,13 +619,14 @@ export const loggedInData = {
         closeSubMenu: "Untermenü schließen",
         heading: "Überschrift",
         headings: "Überschriften",
-        linkStrgK: 'Link (Strg + K)',
+        link: 'Link (%ctrlOrCmd% + K)',
         enterUrl: "Hier Link einfügen",
         openInNewTab: "Öffne den Link in einem neuen Tab",
         orderedList: "Nummerierte Liste",
         unorderedList: "Aufzählung",
         lists: "Listen",
-        mathFormula: "Matheformel (Strg + M)",
+        mathFormula: "Matheformel (%ctrlOrCmd% + M)",
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "eigene Zeile",
         formula: "[neue Formel]",
         visual: "visuell",
@@ -611,8 +641,8 @@ export const loggedInData = {
         mathSymbols: "Mathematische Symbole",
         eG: "z.B.",
         functions: "Funktionen",
-        bold: "Fett (Strg + B)",
-        italic: "Kursiv (Strg + I)",
+        bold: "Fett (%ctrlOrCmd% + B)",
+        italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
       video: {
@@ -642,12 +672,16 @@ export const loggedInData = {
       box: {
         type: "Art der Box",
         titlePlaceholder: "(optionaler Titel)",
-        anchorId: "Sprungmarke (anchor id)"
+        anchorId: "Sprungmarke (anchor id)",
+        emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
       },
       layout: {
         toDragConvert: "Um die Inhalte zu verschieben, konvertiere sie für den neuen Editor:",
         oneColumnLayout: "Einspaltiges Layout",
         multimediaTitle: "Erklärung mit Multimedia-Inhalt"
+      },
+      pageLayoutColums: {
+        chooseRatio: "Spaltenverhältnis auswählen"
       },
       solution: {
         optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
@@ -668,36 +702,34 @@ export const loggedInData = {
         seoDesc: "Beschreibung für Suchmaschinen",
         title: "Titel",
         writeShortIntro: "Fasse das Thema des Artikels kurz zusammen",
-        exercises: "Übungsaufgaben",
-        dragTheExercise: "Verschiebe die Aufgabe",
-        removeExercise: "Entferne die Aufgabe",
-        addOptionalExercise: "Aufgabe hinzufügen",
         stillWantMore: "Du hast noch nicht genug vom Thema?",
         moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
-        articles: "Artikel",
-        addArticle: "Artikel hinzufügen",
-        idArticle: "ID eines Artikels, z.B. 1855",
-        openArticleTab: "Öffne den Artikel in einem neuen Tab",
-        dragTheArticle: "Verschiebe den Artikel",
-        courses: "Kurse",
-        addCourse: "Kurs hinzufügen",
-        idCourse: "ID eines Kurses, z.B. 51979",
-        openCourseTab: "Öffne den Kurs in einem neuen Tab",
-        dragTheCourse: "Verschiebe den Kurs",
-        videos: 'Videos',
-        addVideo: "Video hinzufügen",
-        idVideo: "ID eines Videos, z.B. 40744",
-        openVideoTab: "Öffne das Video in einem neuen Tab",
-        dragTheVideo: "Verschiebe das Video",
-        linkTitle: "Titel des Links",
-        sources: "Quellen",
-        linkUrl: "URL des Links",
-        openInNewTab: "Öffne den Link in einem neuen Tab",
-        dragTheSource: "Verschiebe die Quellenangabe",
         addSource: "Quellenangabe hinzufügen",
+        removeLabel: "Löschen",
+        dragLabel: "Ziehen, um die Reihenfolge zu ändern",
+        openInTab: "In neuem Tab öffnen",
+        sources: "Quellen",
+        sourceText: "Quelle",
+        sourceUrl: "Optionaler Link",
         moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
-        exFolderId: "ID eines Aufgabenordners, z.B. 30560",
-        openExerciseTab: "Öffne den Aufgabenordner in einem neuen Tab"
+        addModal: {
+          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+          introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
+          buttonEx: "Aufgaben hinzufügen",
+          buttonExFolder: "Aufgabenordner auswählen",
+          buttonContent: "Inhalt hinzufügen",
+          buttonAddType: "%type% hinzufügen",
+          title: "Weiterführende Inhalte oder Übungsaufgaben hinzufügen",
+          invalidInput: "Ungültige ID oder URL",
+          fetchError: "Etwas ist schief gelaufen, bitte versuche es später noch einmal",
+          loading: "Wird geladen …",
+          notFound: "Inhalt konnte nicht gefunden werden",
+          unsupportedType: "Sorry, der Typ [%type%] wird hier nicht unterstützt",
+          unsupportedId: "Sorry, diese ID ist hier nicht erlaubt. (z.B. weil sie schon ausgewählt ist, oder weil du diese ID bearbeitest…)",
+          addFromFolderTitle: "Aus dem Ordner",
+          placeholder: "Eine Serlo Id oder URL hier einfügen",
+          exerciseFolderNote: "Hier kann nur ein Ordner ausgewählt werden"
+        }
       },
       coursePage: {
         explanation: "Erklärung",
@@ -781,6 +813,38 @@ export const loggedInData = {
         heading: "So kannst du dein Konto löschen",
         text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
         deleteAccount: "Account löschen"
+      }
+    },
+    backend: {
+      pages: "Statische Seiten",
+      authorization: "Rechtevergabe",
+      navigation: 'Navigation',
+      recycleBin: "Papierkorb"
+    },
+    pages: {
+      deletedPages: "Gelöschte Seiten"
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Inhalte in Ordner verschieben / kopieren",
+        select: "Inhalte zum kopieren oder verschieben auswählen:",
+        target: "Zielordner:",
+        link: "Link",
+        moveButtonText: "Verschieben zu: %type%",
+        copyButtonText: "Kopieren zu %type% ",
+        moveSuccess: "Erfolgreich verschoben",
+        copySuccess: "Erfolgreich kopiert",
+        exerciseFolderNotice: "Kopieren oder verschieben von \"%exerciseFolder%\" wird derzeit nicht unterstützt. %break% Bitte erstelle einen neuen Ordner und verschiebe stattdessen die Inhalte."
+      },
+      deleteAdd: {
+        confirmDelete: "Bist du sicher, dass du diese Zuweisung löschen möchtest?",
+        addSuccess: "Erfolgreich zugewiesen, Seite wird neu geladen …",
+        addNewTitle: "Neue Zuweisung hinzufügen",
+        addButtonText: "Zuweisen"
+      },
+      sort: {
+        title: "Inhalte sortieren",
+        saveButtonText: "Reihenfolge speichern"
       }
     }
   }

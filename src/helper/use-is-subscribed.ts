@@ -1,9 +1,10 @@
 import { gql } from 'graphql-request'
 
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
+import { IsSubscribedQuery } from '@/fetcher/graphql-types/operations'
 
 export const isSubscribedQuery = gql`
-  query hasSubscribed($id: Int!) {
+  query isSubscribed($id: Int!) {
     subscription {
       currentUserHasSubscribed(id: $id)
     }
@@ -11,15 +12,11 @@ export const isSubscribedQuery = gql`
 `
 
 export function useIsSubscribed(id: number): boolean {
-  const { data } = useGraphqlSwrWithAuth<{
-    subscription: {
-      currentUserHasSubscribed: boolean
-    }
-  }>({
+  const { data } = useGraphqlSwrWithAuth<IsSubscribedQuery>({
     query: isSubscribedQuery,
     variables: { id },
     config: {
-      refreshInterval: 60 * 60 * 1000, // always refresh for now, maybe use cache in the future
+      refreshInterval: 60 * 60 * 1000,
     },
   })
 

@@ -5,7 +5,7 @@ import {
   undo,
   hasRedoActions,
   hasUndoActions,
-  getPendingChanges,
+  hasPendingChanges,
 } from '@edtr-io/store'
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
@@ -35,8 +35,7 @@ export function ToolbarMain({
   const dispatch = useScopedDispatch()
   const undoable = useScopedSelector(hasUndoActions())
   const redoable = useScopedSelector(hasRedoActions())
-  const pendingChanges = useScopedSelector(getPendingChanges())
-  const hasPendingChanges = pendingChanges !== 0
+  const isChanged = useScopedSelector(hasPendingChanges())
 
   const [visible, setVisibility] = useState(false)
 
@@ -45,7 +44,7 @@ export function ToolbarMain({
     subscriptions
   )
 
-  useLeaveConfirm(hasPendingChanges && !pending)
+  useLeaveConfirm(isChanged && !pending)
 
   return (
     <>
@@ -84,9 +83,7 @@ export function ToolbarMain({
       <button
         className={clsx(
           'serlo-button',
-          disabled
-            ? 'text-gray-300 cursor-default'
-            : 'serlo-make-interactive-light'
+          disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
         )}
         onClick={() => {
           dispatch(action())
@@ -100,14 +97,12 @@ export function ToolbarMain({
   }
 
   function renderSaveButton() {
-    const isDisabled = !hasPendingChanges
+    const isDisabled = !isChanged
     return (
       <button
         className={clsx(
           'serlo-button ml-2',
-          isDisabled
-            ? 'text-gray-300 cursor-default'
-            : 'serlo-make-interactive-green'
+          isDisabled ? 'text-gray-300 cursor-default' : 'serlo-button-green'
         )}
         onClick={() => setVisibility(true)}
         disabled={isDisabled}

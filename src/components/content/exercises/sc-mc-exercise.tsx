@@ -9,7 +9,8 @@ import { Feedback } from './feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EdtrPluginScMcExercise } from '@/data-types'
+import { EdtrPluginScMcExercise } from '@/frontend-node-types'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
@@ -26,12 +27,12 @@ export function ScMcExercise({
   renderNested,
   isRevisionView,
 }: ScMcExerciseProps) {
-  const { strings } = useInstanceData()
   const answers = state.answers.slice(0)
   const [selected, setSelected] = useState<number | undefined>(undefined)
   const [showFeedback, setShowFeedback] = useState(false)
   const [focused, setFocused] = useState<number | undefined>(undefined)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
+  const exStrings = useInstanceData().strings.content.exercises
 
   if (state.isSingleChoice) return renderSingleChoice()
 
@@ -85,7 +86,7 @@ export function ScMcExercise({
                       )}
                     </Feedback>
                   )}
-                {isRevisionView && renderRevisionExtra(answer)}
+                {isRevisionView && renderRevisionExtra(answer, true)}
               </Fragment>
             )
           })}
@@ -93,7 +94,7 @@ export function ScMcExercise({
 
         <button
           className={clsx(
-            'serlo-button serlo-make-interactive-primary',
+            'serlo-button-blue',
             'mt-4',
             selected === undefined &&
               'opacity-100 bg-transparent text-gray-400 pointer-events-none'
@@ -105,28 +106,34 @@ export function ScMcExercise({
           onPointerUp={(e) => e.currentTarget.blur()}
         >
           {selected !== undefined
-            ? strings.content.check
+            ? exStrings.check
             : isPrintMode
-            ? strings.content.printModeChooseOption
-            : strings.content.chooseOption}
+            ? exStrings.printModeChooseOption
+            : exStrings.chooseOption}
         </button>
       </div>
     )
   }
 
   function renderMultipleChoice() {
-    const correct = answers.every(
-      (answer, i) => answer.isCorrect === selectedArray[i]
-    )
+    const correctCount = answers.filter((answer) => answer.isCorrect).length
+    const selectedCount = selectedArray.filter(Boolean).length
+    const selectedCorrectCount = answers.filter(
+      (answer, i) => answer.isCorrect && selectedArray[i]
+    ).length
+    const selectedFalseCount = selectedCount - selectedCorrectCount
+    const allCorrect =
+      selectedCorrectCount === correctCount && selectedFalseCount === 0
+    const missedSome =
+      selectedCorrectCount > 0 && !allCorrect && selectedFalseCount === 0
+
     return (
       <div className="mx-side mb-block">
         <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
-            const hasFeedback =
-              answer.feedback[0]?.children &&
-              answer.feedback[0].children.length > 0
+            const hasFeedback = hasVisibleContent(answer.feedback)
 
             return (
               <Fragment key={i}>
@@ -167,15 +174,17 @@ export function ScMcExercise({
             )
           })}
         </ul>
-        {showFeedback && <Feedback correct={correct} />}
+        {showFeedback && (
+          <Feedback correct={allCorrect} missedSome={missedSome} />
+        )}
         <button
-          className="serlo-button serlo-make-interactive-primary mt-4"
+          className="serlo-button-blue mt-4"
           onClick={() => {
             setShowFeedback(true)
           }}
           onPointerUp={(e) => e.currentTarget.blur()}
         >
-          {strings.content.check}
+          {exStrings.check}
         </button>
       </div>
     )
@@ -185,15 +194,20 @@ export function ScMcExercise({
     answer: EdtrPluginScMcExercise['state']['answers'][0],
     hasFeedback?: boolean
   ) {
-    if (!answer.isCorrect && !hasFeedback) return null
+    if (
+      !hasFeedback ||
+      !hasVisibleContent(answer.feedback) ||
+      !answer.feedback[0].children
+    )
+      return null
     return (
-      <div className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
+      <div className="bg-amber-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
-            [{strings.content.right}]
+            [{exStrings.correct}]
           </span>
         )}
-        {renderNested(answer.feedback, `mcfeedbackrevision`)}
+        {renderNested(answer.feedback[0].children, `mcfeedbackrevision`)}
       </div>
     )
   }

@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Script from 'next/script'
 
 import { Entity } from '@/components/content/entity'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -7,8 +8,8 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { Topic } from '@/components/taxonomy/topic'
 import { SlugProps } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { prettifyLinks } from '@/fetcher/prettify-links'
-import { Instance } from '@/fetcher/query-types'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -48,6 +49,10 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       entityId={entityId}
       authorization={pageData.authorization}
     >
+      <Script
+        src="/_assets/iframeResizer.contentWindow.min.js"
+        strategy="lazyOnload"
+      />
       {pageData.metaData && (
         <HeadTags
           data={pageData.metaData}
@@ -56,7 +61,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
         />
       )}
       <div className="relative">
-        <MaxWidthDiv showNav={!!pageData.secondaryNavigationData}>
+        <MaxWidthDiv showNav={!!pageData.secondaryMenuData}>
           <main>{page}</main>
         </MaxWidthDiv>
       </div>

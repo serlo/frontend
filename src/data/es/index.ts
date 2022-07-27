@@ -1,8 +1,10 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { Instance } from '@/fetcher/graphql-types/operations';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "es",
+  lang: Instance["Es"],
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
@@ -11,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
-      agree: "Estoy de acuerdo"
+      agree: "Acepta utilizar el motor de búsqueda"
     },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
@@ -28,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Carpetas",
       exercises: "Ejercicios",
-      events: "Eventos"
+      events: "Eventos",
+      unrevised: "Aún no revisado",
+      subterms: 'Subterms',
+      exercisesContent: "Ejercicios contenido"
     },
     entities: {
       applet: 'Applet',
@@ -38,19 +43,18 @@ export const instanceData = {
       event: "Evento",
       exercise: "Ejercicio",
       exerciseGroup: "Grupo de ejercicios",
-      folder: "Carpeta",
+      topic: "Carpeta",
       groupedExercise: "Ejercicio agrupado",
       page: "Página",
       solution: "Solución",
       taxonomyTerm: "Término de taxonomía",
       user: "Usuario",
       video: "Vídeo",
-      topicFolder: "Carpeta de ejercicios",
+      exerciseFolder: "Carpeta de ejercicios",
       comment: "Comentario",
       revision: "Revisión",
       thread: "Hilo de conversación",
       threads: "Hilos de conversación",
-      topic: "Tema",
       subject: "Asunto",
       userProfile: "Perfil de usuario",
       privacyPolicy: "Política de privacidad",
@@ -64,7 +68,9 @@ export const instanceData = {
       unrevisedRevisions: "Revisiones no revisadas",
       userEdits: "Ediciones por %user%",
       userEditsMine: "Mi trabajo aún sin revisar",
-      editProfile: "Editar perfil y ajustes"
+      editProfile: "Editar perfil y ajustes",
+      recycleBin: "Papelera de reciclaje",
+      diagon: "Callejón de Diagon"
     },
     roles: {
       donor: "Donante",
@@ -82,7 +88,15 @@ export const instanceData = {
     },
     edit: {
       button: "Editar",
-      unrevised: "Mostrar revisiones sin revisar"
+      unrevised: "Mostrar revisiones sin revisar",
+      inviteModal: {
+        title: "¡Crea con nosotros!",
+        text: "¡Hola! %break% Es genial que quieras contribuir a este contenido :miniaturas_up: %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
+        loginButton: "Iniciar sesión ahora",
+        registerButton: "Registrar una nueva cuenta",
+        psText: "Puedes averiguar de qué manera puedes contribuir con %link%.",
+        psLinkText: "aquí"
+      }
     },
     license: {
       readMore: "Información",
@@ -100,27 +114,31 @@ export const instanceData = {
     content: {
       show: "mostrar",
       hide: "ocultar",
-      prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
-      task: "Tarea",
-      right: "Correcto",
-      wrong: "Incorrecto",
-      feedback: "Sugerencias",
-      answer: "Respuesta",
-      check: "Revisa tu respuesta",
-      yourAnswer: "Tu respuesta...",
-      chooseOption: "Elige una de las opciones.",
-      printModeChooseOption: "Elige una de las opciones.",
       trashedNotice: "Este contenido está marcado para su eliminación.",
       unrevisedNotice: "Este contenido no tiene ninguna revisión aceptada todavía. Por favor, utiliza este vínculo %link% para previsualizar.",
       emptyNotice: "No hay contenido aquí. Por favor, edite o elimine.",
-      strategy: "Estrategia de solución",
       picture: "Imagen",
       previewImage: "Previsualizar Imagen",
+      imageAltFallback: "Imagen",
       exercisesTitle: "Ejercicios",
       moreExercises: "Puedes encontrar más ejercicios en la siguiente carpeta:",
       relatedContentTitle: "¿Todavía quieres más?",
       relatedContentText: "Puedes encontrar más contenido sobre este tema aquí:",
       sourcesTitle: "Fuentes",
+      exercises: {
+        prerequisite: "Para este ejercicio se necesitan los siguientes conocimientos básicos:",
+        task: "Tarea",
+        correct: "Correcto",
+        missedSome: "¡Casi! Te faltó al menos una respuesta correcta.",
+        wrong: "Incorrecto",
+        feedback: "Sugerencias",
+        answer: "Respuesta",
+        check: "Comprobar",
+        yourAnswer: "Tu respuesta...",
+        chooseOption: "Elige una de las opciones.",
+        printModeChooseOption: "Elige una de las opciones.",
+        strategy: "Estrategia de solución"
+      },
       boxTypes: {
         blank: "Espacio en blanco",
         example: "Ejemplo",
@@ -164,6 +182,7 @@ export const instanceData = {
       error: "Lo sentimos, no se han podido cargar los comentarios. Inténtalo de nuevo más tarde.",
       showMoreReply: "Mostrar una respuesta más",
       showMoreReplies: "Mostrar %number% respuestas más",
+      hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario"
     },
@@ -221,7 +240,11 @@ export const instanceData = {
       typeNotSupported: "Por favor, intenta volver a cargar está página.",
       refreshNow: "Actualizar ahora",
       backToPrevious: "Volver a la página anterior",
-      backToHome: "Ir a la página de inicio"
+      backToHome: "Ir a la página de inicio",
+      deletedComment: {
+        title: "Ups, esto ya no está aquí",
+        text: "Lo sentimos, este %type% ya no está en línea.%break% Pero fue borrado por una razón y probablemente no merezca tu tiempo de todos modos 💚"
+      }
     },
     print: {
       preparingNotice: "¡Preparando impresión!",
@@ -244,10 +267,10 @@ export const instanceData = {
       inviteToChat: "Invita al chat",
       inviteModal: {
         part1: "%username%  aún no está activo/a en nuestra comunidad del chat en %chatLink%.",
-        part2: "Puedes invitar a %username% al chat para enviar mensajes directos.",
-        messagePlaceholder: 'Optional: Personal message',
+        part2: "Puedes invitar a %username% al chat para enviarle mensajes directos.",
+        messagePlaceholder: "Opcional: Mensaje personal",
         button: "Enviar invitación",
-        success: "El usuario ha sido invitado correctamente."
+        success: "✨ ¡Invitación exitosa!"
       },
       activityGraph: {
         edits: "Ediciones",
@@ -289,6 +312,8 @@ export const instanceData = {
       globalDescription: "Todos los eventos que ocurrieron en algún momento en %lang%.serlo.org"
     },
     events: {
+      entityInParentPreposition: "en",
+      commentInParentPreposition: "en",
       setThreadStateArchived: "%actor% archivó %thread%.",
       setThreadStateUnarchived: "%actor% restauró %thread%.",
       createComment: "%actor% comentó en %thread%: %comment%.",
@@ -309,16 +334,20 @@ export const instanceData = {
       setTaxonomyParentChanged: "%actor% cambió padre de %child% a %parent%.",
       setUuidStateTrashed: "%actor% desechó %object%.",
       setUuidStateRestored: "%actor% restauró %object%.",
-      inviteToChat: '%actor% invited you to the Chat: %comment% Go to %chatLink% to chat with %actor% and others.',
+      inviteToChat: "%actor% te ha invitado al chat: %comment% Visita %chatLink% para chatear con %actor% y otros.",
       entityPlaceholderFallback: "Contenido"
     },
     actions: {
       loadMore: "Cargar más"
+    },
+    bin: {
+      title: "Título",
+      trashed: "Destruido..."
     }
   }
 };
 export const instanceLandingData = {
-  lang: "es",
+  lang: Instance["Es"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Somos una organización de base comunitaria sin ánimo de lucro, que apoya el aprendizaje personalizado, y trabaja por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
@@ -391,6 +420,7 @@ export const loggedInData = {
       history: "Historial",
       editAssignments: "Editar el tema y las asignaciones de currículo",
       moveToTrash: "Mover a la papelera",
+      confirmTrash: "¿Estás seguro de que quieres eliminar este contenido?",
       restoreContent: "Restaurar de la papelera",
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
@@ -402,10 +432,11 @@ export const loggedInData = {
       sortEntities: "Ordenar contenido",
       newEntity: "Nueva Entidad",
       editProfile: "Editar perfil",
-      directLink: "Enlace directo a este contenido"
+      directLink: "Enlace directo a este contenido",
+      analyticsLink: "Ver datos de analytics"
     },
     notifications: {
-      hide: "Ocultar notificaciones para este contenido.",
+      hide: "Desactivar nuevas notificaciones para este contenido.",
       setToRead: "Marcar notificaciones para leer.",
       setAllToRead: "Poner todas visibles para leer",
       showNew: "Nueva",
@@ -440,15 +471,17 @@ export const loggedInData = {
         restore: "Restablecido con éxito ♻️",
         accept: "Edición aceptada ✅",
         reject: "Edición rechazada ❌ ",
-        save: "Edición guardada con éxito ✅"
+        save: "Edición guardada con éxito ✅",
+        updated: "Actualización exitosa ✅",
+        generic: "Éxito 🎉"
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
         FORBIDDEN: "Lo sentimos, ¡no estás autorizado para hacer esto!",
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: "Lo sentimos, estás intentando algo que no es posible…",
         UNKNOWN: "Un error desconocido…",
-        valueMissing: "Por favor complete todos los campos requeridos"
+        valueMissing: "Por favor completa todos los campos requeridos"
       }
     },
     editor: {
@@ -535,8 +568,6 @@ export const loggedInData = {
         addAnswer: "Añadir respuesta",
         enterTheValue: "Introduzca el valor",
         yourSolution: "Tu solución",
-        correct: "Correcto",
-        wrong: "Incorrecto",
         number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")"
       },
@@ -561,23 +592,21 @@ export const loggedInData = {
         singleChoice: "Elección única",
         multipleChoice: "Múltiple elección",
         chooseType: "Elige el tipo de ejercicio",
-        addAnswer: "Añadir respuesta",
-        wrong: "Incorrecto",
-        missedSome: "¡Casi! Al menos una respuesta no es correcta.",
-        correct: "Correcto"
+        addAnswer: "Añadir respuesta"
       },
       serloTable: {
         mode: "Modalidad",
         columnHeaders: "Sólo las etiquetas de las columnas",
         rowHeaders: "Sólo las etiquetas de las filas",
         columnAndRowHeaders: "Etiquetas de columna y fila",
-        convertToText: 'Convert to text',
-        convertToImage: 'Convert to image',
-        row: "row",
-        column: "column",
-        addType: 'Add %type%',
-        deleteType: 'Delete %type%',
-        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
+        convertToText: "Convertir a texto",
+        convertToImage: "Convertir a imagen",
+        row: "fila",
+        column: "columna",
+        addType: "Agregar %type%",
+        addTypeBefore: "Agregar %type% antes",
+        deleteType: "Eliminar %type%",
+        confirmDelete: "¿Estás seguro de que quieres eliminar este %type% y su contenido?"
       },
       spoiler: {
         enterATitle: "Introduzca un título"
@@ -590,13 +619,14 @@ export const loggedInData = {
         closeSubMenu: "Cerrar sub-menú",
         heading: "Encabezado",
         headings: "Encabezados",
-        linkStrgK: "Enlace (ctrl + K)",
+        link: "Vínculo (%ctrlOrCmd% + K)",
         enterUrl: "Introducir URL",
         openInNewTab: "Abrir en una nueva pestaña",
         orderedList: "Lista ordenada",
         unorderedList: "Lista sin ordenar",
         lists: "Listas",
-        mathFormula: "Fórmula matemática (ctrl + M)",
+        mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
+        code: "Código (%ctrlOrCmd% + + + `)",
         displayAsBlock: "Mostrar en bloque",
         formula: "[fórmula]",
         visual: 'visual',
@@ -611,8 +641,8 @@ export const loggedInData = {
         mathSymbols: "Símbolos matemáticos",
         eG: "por ejemplo,",
         functions: "Funciones",
-        bold: "Negrilla (ctrl + B)",
-        italic: "Itálica (ctrl + I)",
+        bold: "Negrilla (%ctrlOrCmd% + B)",
+        italic: "Itálica (%ctrlOrCmd% + I)",
         noItemsFound: "Elementos no encontrados"
       },
       video: {
@@ -640,14 +670,18 @@ export const loggedInData = {
         serloId: 'Serlo ID:'
       },
       box: {
-        type: "Tipo de caja",
+        type: "Tipo de contenedor",
         titlePlaceholder: "(título opcional)",
-        anchorId: "ID de Ancla (marca de posición)"
+        anchorId: "ID de Ancla (marca de posición)",
+        emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
         oneColumnLayout: "Diseño con una columna",
         multimediaTitle: "Contenido multimedia asociado con el texto"
+      },
+      pageLayoutColums: {
+        chooseRatio: "Elige la proporción de la columna"
       },
       solution: {
         optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
@@ -668,36 +702,34 @@ export const loggedInData = {
         seoDesc: "Descripción para los motores de búsqueda",
         title: "Título",
         writeShortIntro: "Escribe una breve introducción",
-        exercises: "Ejercicios",
-        dragTheExercise: "Arrastra el ejercicio",
-        removeExercise: "Eliminar ejercicio",
-        addOptionalExercise: "Añadir ejercicio opcional",
         stillWantMore: "¿Todavía quieres más?",
         moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
-        articles: "Artículos",
-        addArticle: "Añadir artículo",
-        idArticle: "ID de un artículo, p. ej., 1855",
-        openArticleTab: "Abrir el artículo en una nueva pestaña:",
-        dragTheArticle: "Arrastre el artículo",
-        courses: "Cursos",
-        addCourse: "Añadir un Curso",
-        idCourse: "ID de un curso, ej. 51979",
-        openCourseTab: "Abrir el curso en una nueva pestaña:",
-        dragTheCourse: "Arrastra el curso",
-        videos: "Vídeos",
-        addVideo: "Añadir vídeo",
-        idVideo: "ID de un vídeo, p. ej., 40744",
-        openVideoTab: "Abrir el vídeo en una nueva pestaña:",
-        dragTheVideo: "Arrastra el vídeo",
-        linkTitle: "Título del enlace",
-        sources: "Fuentes",
-        linkUrl: "URL del enlace",
-        openInNewTab: "Abrir el vínculo en una nueva pestaña:",
-        dragTheSource: "Arrastra la fuente",
         addSource: "Añadir fuente",
+        removeLabel: "Eliminar",
+        dragLabel: "Arrastra para cambiar el orden",
+        openInTab: "Abrir en una pestaña nueva",
+        sources: "Fuentes",
+        sourceText: "Fuente del texto",
+        sourceUrl: "URL opcional",
         moreInFolder: "Puedes encontrar más ejercicios en la siguiente carpeta:",
-        exFolderId: "ID de una carpeta de ejercicios, ej. 30560",
-        openExerciseTab: "Abrir la carpeta de ejercicios en una nueva pestaña:"
+        addModal: {
+          introText: "Después de leer el artículo, ¿qué ayudaría a los alumnos a continuación? %break% Aquí puedes añadir algunos %exercises% o enlazar a una sola %exerciseFolder%. %break% O puedes sugerir %articles%, %courses% o %videos% para que continúen.",
+          introText2: "Puedes pegar un ID de Serlo, una URL o elegir el contenido de la carpeta principal de abajo.",
+          buttonEx: "Añadir ejercicios",
+          buttonExFolder: "Selecciona la carpeta de ejercicios",
+          buttonContent: "Añadir contenido",
+          buttonAddType: "Agregar %type%",
+          title: "Añadir contenido o ejercicios relacionados",
+          invalidInput: "Id o url inválidos",
+          fetchError: "Se produjo un error. Por favor, inténtalo más tarde.",
+          loading: "Cargando…",
+          notFound: "No se encontró ese contenido",
+          unsupportedType: "Lo sentimos, el tipo [%type%] no se puede usar aquí",
+          unsupportedId: "Disculpa, este ID no se puede usar aquí",
+          addFromFolderTitle: "De la carpeta",
+          placeholder: "Pegar Serlo ID o URL aquí",
+          exerciseFolderNote: "Solo uno puede ser seleccionado aquí"
+        }
       },
       coursePage: {
         explanation: "Explicación",
@@ -758,7 +790,7 @@ export const loggedInData = {
       showInstructions: "Mostrar instrucciones",
       editImage: {
         header: "Foto de perfil",
-        buttonText: "Como editar tu foto del perfil",
+        buttonText: "Cómo editar tu foto de perfil",
         description: "Actualmente usamos las imágenes del %chatLink%  como impagen de perfil.  Para cambiar la imágen, haz lo siguiente:",
         steps: {
           goToChat: "Ir a %chatLink%.",
@@ -781,6 +813,38 @@ export const loggedInData = {
         heading: "¿Cómo eliminar mi cuenta?",
         text: "Si quieres eliminar tu cuenta, escríbenos a  %mailLink%.%break% Asegúrate de utilizar tu dirección de correo electrónico registrada y  %subjectLine% en el espacio para el asunto.",
         deleteAccount: "Eliminar cuenta"
+      }
+    },
+    backend: {
+      pages: "Páginas estáticas",
+      authorization: "Autorización",
+      navigation: "Navegador",
+      recycleBin: "Papelera de reciclaje"
+    },
+    pages: {
+      deletedPages: "Páginas borradas"
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Mover / Copiar entidades en Taxonomía",
+        select: "Seleccionar entidades para mover o copiar:",
+        target: "Término objetivo:",
+        link: "Enlace",
+        moveButtonText: "Mover a %type%",
+        copyButtonText: "Copiar a %type%",
+        moveSuccess: "Movido exitosamente",
+        copySuccess: "Copiado exitosamente",
+        exerciseFolderNotice: "En este momento no es posible copiar o mover el tipo %exerciseFolder%. %break% Por favor, crea una nueva carpeta y mueve el contenido en lo posible."
+      },
+      deleteAdd: {
+        confirmDelete: "¿Está seguro de que deseas borrar esta tarea?",
+        addSuccess: "Asignado con éxito, recargando  …",
+        addNewTitle: "Añadir nueva tarea",
+        addButtonText: "Asignar"
+      },
+      sort: {
+        title: "Ordenar entidades",
+        saveButtonText: "Guardar orden"
       }
     }
   }

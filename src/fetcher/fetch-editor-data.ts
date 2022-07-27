@@ -1,11 +1,16 @@
 import { request } from 'graphql-request'
 
 import { createBreadcrumbs } from './create-breadcrumbs'
+import {
+  MainUuidQuery,
+  RevisionUuidQuery,
+  RevisionUuidQueryVariables,
+} from './graphql-types/operations'
 import { dataQuery } from './query'
-import { QueryResponse, QueryResponseRevision } from './query-types'
+import { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
 import { endpoint } from '@/api/endpoint'
-import { BreadcrumbsData } from '@/data-types'
+import { BreadcrumbsData, UuidType, UuidWithRevType } from '@/data-types'
 import {
   editorResponseToState,
   isError,
@@ -16,10 +21,11 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: string
+  type: UuidWithRevType
   converted?: boolean
   needsReview: boolean
-  id: number
+  id?: number // only for existing
+  taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
 }
@@ -28,22 +34,28 @@ export interface EditorFetchErrorData {
   errorType: 'failed-fetch'
 }
 
+const noReviewTypes: UuidWithRevType[] = [
+  UuidType.TaxonomyTerm,
+  UuidType.Page,
+  UuidType.User,
+]
+
+export const sandboxUrl = '/community/106082/sandkasten'
+
 export async function fetchEditorData(
   localeString: string,
   ids?: string[]
 ): Promise<EditorPageData | EditorFetchErrorData> {
-  if (!ids)
-    return {
-      errorType: 'failed-fetch',
-    }
-  let data = null
+  if (!ids) return { errorType: 'failed-fetch' }
+  let data: MainUuidType | undefined | null = null
   const repoId = parseInt(ids[0])
   const revisionId = parseInt(ids[1])
 
   if (revisionId && !isNaN(revisionId)) {
-    const { uuid } = await request<{
-      uuid: QueryResponseRevision
-    }>(endpoint, revisionQuery, {
+    const { uuid } = await request<
+      RevisionUuidQuery,
+      RevisionUuidQueryVariables
+    >(endpoint, revisionQuery, {
       id: revisionId,
     })
     data = revisionResponseToResponse(uuid)
@@ -51,9 +63,7 @@ export async function fetchEditorData(
     const raw_alias = '/' + localeString + '/' + repoId.toString()
     const { alias, instance } = parseLanguageSubfolder(raw_alias)
 
-    const { uuid } = await request<{
-      uuid: QueryResponse
-    }>(endpoint, dataQuery, {
+    const { uuid } = await request<MainUuidQuery>(endpoint, dataQuery, {
       alias: { instance, path: alias },
     })
     data = uuid
@@ -66,13 +76,11 @@ export async function fetchEditorData(
   const breadcrumbsData = createBreadcrumbs(data)
 
   const isSandbox =
-    breadcrumbsData &&
-    breadcrumbsData.filter(
-      (entry) => entry.url == '/community/106082/sandkasten'
-    ).length > 0
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.url == sandboxUrl)
 
-  const noReviewTypes = ['TaxonomyTerm', 'Page', 'User']
-  const typeNeedsReview = !noReviewTypes.includes(data.__typename)
+  const typeNeedsReview = !noReviewTypes.includes(
+    data.__typename as UuidWithRevType
+  )
   const needsReview = !isSandbox && typeNeedsReview
 
   if (isError(result)) {
@@ -80,7 +88,7 @@ export async function fetchEditorData(
   } else {
     return {
       ...result,
-      type: data.__typename,
+      type: data.__typename as UuidWithRevType,
       needsReview,
       id: repoId,
       errorType: 'none',

@@ -1,5 +1,5 @@
-import { serloDomain } from '../../helper/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { serloDomain } from '../../helper/urls/serlo-domain'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [],
@@ -58,7 +58,7 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
@@ -82,3 +82,11 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/141581',
   donationHref: '/spenden',
 }
+
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
+  {
+    // subject: 'conseils-pour-apprendre',
+    rootId: 148617,
+    entries: [{ title: 'Tous les thèmes', id: 204968 }],
+  },
+]

@@ -10,7 +10,7 @@ try {
   BaseModal.defaultStyles.overlay!.zIndex = 101
 } catch (e) {
   // eslint-disable-next-line no-console
-  console.log(e)
+  console.error(e)
 }
 
 BaseModal.setAppElement('#__next')

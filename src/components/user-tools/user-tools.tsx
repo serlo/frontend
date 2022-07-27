@@ -18,12 +18,15 @@ import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
+import { ExerciseInlineType, UuidRevType, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 interface UserToolsProps {
   id: number
   onShare?: () => void
-  hideEdit?: boolean
+  onInvite?: () => void
   hideEditProfile?: boolean
   data: AuthorToolsData
   unrevisedRevisions?: number
@@ -37,7 +40,7 @@ export interface UserToolsData {
 export function UserTools({
   id,
   onShare,
-  hideEdit,
+  onInvite,
   data,
   unrevisedRevisions,
   aboveContent,
@@ -70,13 +73,10 @@ export function UserTools({
   function buttonClassName() {
     // no autocomplete here yet
     if (aboveContent) {
-      return clsx(
-        'serlo-button serlo-make-interactive-green',
-        'text-sm m-0.5 ml-1 leading-browser'
-      )
+      return clsx('serlo-button-green', 'text-sm m-0.5 ml-1 leading-browser')
     } else {
       return clsx(
-        'serlo-button serlo-make-interactive-transparent-green',
+        'serlo-button-green-transparent',
         'py-1 m-1 text-base leading-browser'
       )
     }
@@ -125,25 +125,34 @@ export function UserTools({
       return null
     }
 
-    if (data.type === 'Profile') return renderProfileButtons()
+    if (data.type === UuidType.User) return renderProfileButtons()
 
     return (
       <>
         {isRevision && renderRevisionTools()}
-        {(!hideEdit || auth.current) && renderEdit()}
+        {renderEditOrInvite()}
         {renderShare()}
         {auth.current && renderExtraTools()}
       </>
     )
   }
 
-  function renderEdit() {
-    const hasUnrevised =
-      unrevisedRevisions !== undefined && unrevisedRevisions > 0
-    if (hasUnrevised) return renderUnrevised()
+  function renderEditOrInvite() {
+    const showInvite = ![
+      UuidType.Page,
+      UuidType.Event,
+      UuidType.TaxonomyTerm,
+      UuidType.User,
+    ].includes(data.type as UuidType)
+
+    if (!auth.current && showInvite) return renderInvite()
 
     const editHref = getEditHref()
     if (!editHref) return null
+
+    const hasUnrevised =
+      unrevisedRevisions !== undefined && unrevisedRevisions > 0
+    if (hasUnrevised) return renderUnrevised()
 
     return (
       <Link href={editHref} className={buttonClassName()}>
@@ -152,34 +161,32 @@ export function UserTools({
     )
   }
 
+  function renderInvite() {
+    if (auth.current || onInvite === undefined) return null
+
+    return (
+      <button className={buttonClassName()} onClick={onInvite}>
+        {renderInner(strings.edit.button, faPencilAlt)}
+      </button>
+    )
+  }
+
   function getEditHref(): string | undefined {
-    if (data.type == 'Page') {
-      if (canDo(Uuid.create('PageRevision'))) {
-        return `/page/revision/create-old/${data.id}/${data.revisionId || ''}`
-      }
-    } else if (data.type == 'Taxonomy') {
-      if (canDo(TaxonomyTerm.set)) {
-        return `/taxonomy/term/update/${id}`
-      }
-    } else {
-      if (data.type === 'PageRevision' && canDo(Uuid.create('PageRevision'))) {
-        return getRevisionEditUrl(true, data.id, id)
-      }
-      if (canDo(Uuid.create('EntityRevision'))) {
-        return isRevision
-          ? getRevisionEditUrl(false, data.id, id)
-          : `/entity/repository/add-revision/${id}`
-      }
+    const revisionId = data.revisionId
+    const { type, id } = data
+    const url = getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
+
+    if (type === UuidType.Page || type === UuidRevType.Page) {
+      return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined
     }
-    return
+    if (type == UuidType.TaxonomyTerm)
+      return canDo(TaxonomyTerm.set) ? url : undefined
+    return url
   }
 
   function renderUnrevised() {
     return (
-      <Link
-        href={`/entity/repository/history/${id}`}
-        className={buttonClassName()}
-      >
+      <Link href={getHistoryUrl(id)} className={buttonClassName()}>
         {renderInner(
           `${strings.edit.unrevised} (${unrevisedRevisions || ''})`,
           faClock
@@ -196,13 +203,10 @@ export function UserTools({
           cloneElement(data.checkoutRejectButtons, {
             buttonStyle: buttonClassName(),
           })}
-        <Link
-          href={`/entity/repository/history/${data.id}`}
-          className={buttonClassName()}
-        >
+        <Link href={getHistoryUrl(data.id)} className={buttonClassName()}>
           {renderInner(strings.pageTitles.revisionHistory, faList)}
         </Link>
-        {lang === 'de' && (
+        {lang === Instance.De && (
           <Link
             href="/community/140473/hilfeseiten-für-reviewer"
             className={buttonClassName()}
@@ -226,17 +230,17 @@ export function UserTools({
 
   function renderExtraTools() {
     if (!loggedInComponents || !loggedInData) return null // safeguard
-    const supportedTypes = [
-      'Page',
-      'Article',
-      'Video',
-      'Applet',
-      'Event',
-      'CoursePage',
-      'Taxonomy',
-      '_ExerciseInline',
-      '_ExerciseGroupInline',
-      '_SolutionInline',
+    const supportedTypes: AuthorToolsData['type'][] = [
+      UuidType.Page,
+      UuidType.Article,
+      UuidType.Video,
+      UuidType.Applet,
+      UuidType.Event,
+      UuidType.CoursePage,
+      UuidType.TaxonomyTerm,
+      ExerciseInlineType.Exercise,
+      ExerciseInlineType.ExerciseGroup,
+      ExerciseInlineType.Solution,
     ]
     if (!supportedTypes.includes(data.type)) return null
 

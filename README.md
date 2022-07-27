@@ -89,6 +89,12 @@ yarn test
 
 Runs jest tests.
 
+```
+yarn codegen
+```
+
+Generates exact types for some GraphQL queries and mutations. Add yours in `codegen.yml`.
+
 All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
 
 ## More information

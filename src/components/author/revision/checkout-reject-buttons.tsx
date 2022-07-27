@@ -8,7 +8,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,
-} from '@/helper/mutations/revision'
+} from '@/helper/mutations/use-revision-decide-mutation'
 
 export interface CheckoutRejectButtonsProps {
   revisionId: number
@@ -49,25 +49,8 @@ export function CheckoutRejectButtons({
 
   return (
     <>
-      <button
-        className={buttonStyle}
-        onClick={() => setModalMode('checkout')}
-        onPointerUp={(e) => e.currentTarget.blur()}
-      >
-        <FaIcon icon={faCheck} className="lg:mr-0.5" />{' '}
-        {strings.revisions.checkout.action}
-      </button>
-      {!isRejected && !isPage && (
-        <button
-          className={buttonStyle}
-          onClick={() => setModalMode('reject')}
-          onPointerUp={(e) => e.currentTarget.blur()}
-        >
-          &nbsp;
-          <FaIcon icon={faTimes} className="lg:mr-0.5" />{' '}
-          {strings.revisions.reject.action}
-        </button>
-      )}
+      {renderButton('checkout')}
+      {!isRejected && !isPage ? renderButton('reject') : null}
 
       <ModalWithCloseButton
         isOpen={modalMode != null}
@@ -81,6 +64,24 @@ export function CheckoutRejectButtons({
     </>
   )
 
+  function renderButton(mode: 'reject' | 'checkout') {
+    const isCheckout = mode === 'checkout'
+    return (
+      <button
+        className={buttonStyle}
+        onClick={() => setModalMode(mode)}
+        onPointerUp={(e) => e.currentTarget.blur()}
+      >
+        &nbsp;
+        <FaIcon
+          icon={isCheckout ? faCheck : faTimes}
+          className="lg:mr-0.5"
+        />{' '}
+        {strings.revisions[mode].action}
+      </button>
+    )
+  }
+
   function renderModalContent() {
     if (!modalMode) return null
     return (
@@ -88,10 +89,7 @@ export function CheckoutRejectButtons({
         <p className="mx-side mb-1">
           {strings.revisions[modalMode].explanation}
           {renderTextArea()}
-          <button
-            className="serlo-button serlo-make-interactive-light"
-            onClick={onConfirm}
-          >
+          <button className="serlo-button-light" onClick={onConfirm}>
             {strings.revisions.confirm}
           </button>
         </p>

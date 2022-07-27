@@ -14,6 +14,7 @@ import { FaIcon } from '../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { theme } from '@/theme'
 
@@ -110,7 +111,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     }
   }
 
-  const lmsData = lang === 'de' ? lmsShare : [lmsShare[0]] //mebis only in de
+  const lmsData = lang === Instance.De ? lmsShare : [lmsShare[0]] //mebis only in de
   const pdfData = [getPdfData(), getPdfData(true)]
 
   return (
@@ -184,7 +185,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
 }
 
 const shareButton = /* className={ */ clsx(
-  'serlo-button serlo-make-interactive-transparent-green',
+  'serlo-button-green-transparent',
   'mx-side block mt-1.5 text-base py-0.5',
   'sm:ml-3 sm:mr-0 sm:inline sm:mt-0'
 ) /* } */

@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { ReactNode } from 'react'
 import Modal from 'react-modal'
 
 import { ModalClsx } from '../modal-with-close-button'
@@ -8,15 +9,16 @@ export interface LightBoxProps {
   open: boolean
   onClose: () => void
   src: string
-  label?: string
+  alt?: string
+  label?: JSX.Element | ReactNode[]
 }
 
-export function LightBox(props: LightBoxProps) {
+export function LightBox({ open, onClose, label, src, alt }: LightBoxProps) {
   const { strings } = useInstanceData()
-  const { open, onClose, label, src } = props
   if (!open) return null
 
   const pictureString = strings.content.picture
+  const isVector = src.endsWith('.svg')
 
   return (
     <>
@@ -28,8 +30,11 @@ export function LightBox(props: LightBoxProps) {
         <img
           onClick={onClose}
           src={src}
-          alt={label ?? pictureString}
-          className="my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]"
+          alt={alt ?? pictureString}
+          className={clsx(
+            'my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]',
+            isVector && 'w-[80vw]'
+          )}
         />
         <p className="pointer-events-auto">{label}</p>
       </Modal>

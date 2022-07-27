@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
@@ -13,7 +14,7 @@ const sentryLoader = `
     window.Sentry.init({
       environment: "${process.env.NEXT_PUBLIC_ENV}",
       release: "frontend@${
-        process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7) ?? ''
+        process.env.NEXT_PUBLIC_COMMIT_SHA?.substring(0, 7) ?? ''
       }"
     });
     window.Sentry.forceLoad();
@@ -23,7 +24,7 @@ const sentryLoader = `
 export default class MyDocument extends Document {
   render() {
     const langData = this.props.__NEXT_DATA__.locale
-      ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale)
+      ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale as Instance)
       : undefined
     return (
       <Html className="print:serlo-print-style">
@@ -76,6 +77,13 @@ export default class MyDocument extends Document {
           <link
             rel="preload"
             href="/_assets/fonts/karmilla/karmilla-bold.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
+            href="/_assets/fonts/caveat/caveat-bold.woff2"
             as="font"
             type="font/woff2"
             crossOrigin=""

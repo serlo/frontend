@@ -11,10 +11,12 @@ import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { TimeAgo } from '@/components/time-ago'
 import { ProfileRoles } from '@/components/user/profile-roles'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { FrontendContentNode, UserPage } from '@/data-types'
+import { UserPage } from '@/data-types'
 import { convertState } from '@/fetcher/convert-state'
-import { sharedUserFragment } from '@/fetcher/user/query'
+import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
+import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
 import { mutationFetch } from '@/helper/mutations/helper'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -58,8 +60,10 @@ const BotHunt = () => {
   const canDo = useCanDo()
   const canDelete = canDo(User.deleteBot)
 
+  const { lang } = useInstanceData()
+
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
+  if (!loggedInData) return <>log in first</>
   const { mutations } = loggedInData.strings
 
   async function remove(id: number) {
@@ -264,10 +268,8 @@ const BotHunt = () => {
     )
   }
 
-  function renderRoles(roles: UserPage['userData']['roles']) {
-    // @ts-expect-error mistreating types here, sorry, not sorry.
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const nodes = roles.nodes as UserPage['userData']['roles']
+  function renderRoles(roles: Node['roles']) {
+    const nodes = roles.nodes
 
     if (nodes.length === 1) {
       return null
@@ -275,13 +277,16 @@ const BotHunt = () => {
 
     return (
       <span className="block">
-        <ProfileRoles roles={nodes} />
+        <ProfileRoles
+          roles={nodes.map((node) => {
+            return { role: node.role, instance: lang }
+          })}
+        />
       </span>
     )
   }
 
-  function renderDescription(description?: FrontendContentNode[] | null) {
-    const stringDescription = description as unknown as string
+  function renderDescription(stringDescription?: string | null) {
     if (!stringDescription || stringDescription === 'NULL') return null
     const desc = convertState(stringDescription)
 
@@ -374,16 +379,21 @@ const mutation = gql`
   }
 `
 
+type Node =
+  PotentialSpamUsersQuery['user']['potentialSpamUsers']['nodes'][number]
+
 function usePotentialSpamUsersFetch() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  return useGraphqlSwrPaginationWithAuth<UserPage['userData']>({
+  return useGraphqlSwrPaginationWithAuth<Node>({
     query: potentialSpamUsersQuery,
     variables: { first: 20 },
     config: {
       refreshInterval: 10 * 60 * 1000, // 10min
     },
     getConnection(data) {
-      return (data.user as { potentialSpamUsers: object }).potentialSpamUsers
+      return (
+        data.user as { potentialSpamUsers: PotentialSpamUsersQuery['user'] }
+      ).potentialSpamUsers
     },
   })
 }
@@ -405,5 +415,5 @@ const potentialSpamUsersQuery = gql`
     }
   }
 
-  ${sharedUserFragment}
+  ${sharedUserFragments}
 `

@@ -8,17 +8,21 @@ import { useState, MouseEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
+import { InviteModalProps } from '../user-tools/invite-modal'
 import { HSpace } from './h-space'
 import { Link } from './link'
-import { LicenseNotice } from '@/components/content/license-notice'
+import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EntityData, FrontendContentNode } from '@/data-types'
+import { EntityData, UuidType } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface EntityProps {
@@ -29,9 +33,14 @@ const ShareModal = dynamic<ShareModalProps>(() =>
   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
 )
 
+const InviteModal = dynamic<InviteModalProps>(() =>
+  import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
+)
+
 export function Entity({ data }: EntityProps) {
   // state@/components/comments/comment-area
-  const [open, setOpen] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
+  const [inviteOpen, setInviteOpen] = useState(false)
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
@@ -63,6 +72,7 @@ export function Entity({ data }: EntityProps) {
       <HSpace amount={20} />
       {renderUserTools()}
       {renderShareModal()}
+      {renderInviteModal()}
       {data.licenseData && (
         <LicenseNotice data={data.licenseData} path={['license']} />
       )}
@@ -96,12 +106,16 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderEntityIcon() {
-    if (!data.categoryIcon || data.categoryIcon === 'coursePage') return null
+    if (
+      data.typename === UuidType.CoursePage ||
+      data.typename === UuidType.Page
+    )
+      return null
     return (
-      <span title={strings.entities[data.categoryIcon]}>
+      <span title={getTranslatedType(strings, data.typename)}>
         {' '}
         <FaIcon
-          icon={getIconByTypename(data.categoryIcon)}
+          icon={getIconByTypename(data.typename)}
           className="text-brand-lighter text-2.5xl"
         />{' '}
       </span>
@@ -140,14 +154,15 @@ export function Entity({ data }: EntityProps) {
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
-        onShare={() => setOpen(true)}
+        onShare={() => setShareOpen(true)}
+        onInvite={() => setInviteOpen(true)}
         aboveContent={setting?.aboveContent}
         id={data.id}
-        hideEdit={!data.inviteToEdit}
         unrevisedRevisions={data.unrevisedRevisions}
         data={{
           type: data.typename,
           id: data.id,
+          alias: data.alias,
           revisionId: data.revisionId,
           courseId: data.courseData?.id,
           trashed: data.trashed,
@@ -160,19 +175,25 @@ export function Entity({ data }: EntityProps) {
 
   function renderShareModal() {
     const showPdf = [
-      'Page',
-      'Article',
-      'CoursePage',
-      'ExerciseGroup',
-      'Exercise',
-      'Solution',
+      UuidType.Page,
+      UuidType.Article,
+      UuidType.CoursePage,
+      UuidType.ExerciseGroup,
+      UuidType.Exercise,
+      UuidType.Solution,
     ].includes(data.typename)
     return (
       <ShareModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
+        isOpen={shareOpen}
+        onClose={() => setShareOpen(false)}
         showPdf={showPdf}
       />
+    )
+  }
+
+  function renderInviteModal() {
+    return (
+      <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
     )
   }
 
@@ -232,7 +253,7 @@ export function Entity({ data }: EntityProps) {
 
     if (data.isUnrevised) {
       const link = (
-        <Link href={`/entity/repository/history/${data.id}`}>
+        <Link href={getHistoryUrl(data.id)}>
           {strings.pageTitles.revisionHistory}
         </Link>
       )

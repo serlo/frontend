@@ -18,6 +18,7 @@ import {
   focusPrevious,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
@@ -31,7 +32,7 @@ const headerTextPlugins = {
   colors: false,
   headings: false,
   katex: true,
-  links: false,
+  links: true,
   lists: false,
   math: true,
   paragraphs: false,
@@ -112,7 +113,7 @@ function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => {
           return (
-            <div className="pr-2" key={cell.content.id}>
+            <div className="pr-2 min-h-[2rem]" key={cell.content.id}>
               {!isEmpty(cell.content.id)(store.getState()) &&
                 cell.content.render()}
             </div>
@@ -132,14 +133,26 @@ function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <div className="flex pt-3">
-        <div className="flex flex-col">
-          <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+        <div
+          className="flex flex-col"
+          onClick={(e) => {
+            //@ts-expect-error another hack to make focus ux ok
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            e.target.querySelector('.hackdiv')?.focus()
+          }}
+        >
+          <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
           {renderAddButton(true)}
         </div>
 
         {renderAddButton(false)}
       </div>
     )
+  }
+
+  function updateHack() {
+    store.dispatch(focusNext())
+    store.dispatch(focusPrevious())
   }
 
   function renderActiveCellsIntoObject() {
@@ -154,10 +167,7 @@ function SerloTableEditor(props: SerloTableProps) {
             colIndex === rows[0].columns.length - 1
           const dispatchFocus = () => store.dispatch(focus(cell.content.id))
           const isClear = isEmpty(cell.content.id)(store.getState())
-          const updateHack = () => {
-            store.dispatch(focusNext())
-            store.dispatch(focusPrevious())
-          }
+
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
             if (e.key === 'Delete' || e.key === 'Backspace') {
@@ -180,13 +190,12 @@ function SerloTableEditor(props: SerloTableProps) {
             <div
               key={colIndex}
               tabIndex={0} // capture tab
-              onMouseUp={updateHack} // hack: focus slate directly on click
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2 pb-6"
+              className="hackdiv pr-2 pb-6 min-h-[3.5rem]"
             >
-              {renderRemoveButtons(rowIndex, colIndex)}
+              {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
                 config: {
                   placeholder: '',
@@ -196,6 +205,11 @@ function SerloTableEditor(props: SerloTableProps) {
               {renderSwitchButton(cell, isHead, isClear)}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
+                .serlo-td,
+                .serlo-th {
+                  height: 1rem;
+                  min-width: 4rem;
+                }
                 .hackdiv {
                   > div > div > div {
                     margin-bottom: 0;
@@ -228,7 +242,7 @@ function SerloTableEditor(props: SerloTableProps) {
         onClick={() => {
           cell.content.replace(isImage ? 'text' : 'image')
         }}
-        className="serlo-button serlo-make-interactive-light m-2 py-0.5 text-sm ml-auto block absolute"
+        className="serlo-button-light m-2 py-0.5 text-sm block absolute"
         title={
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
@@ -238,24 +252,66 @@ function SerloTableEditor(props: SerloTableProps) {
     )
   }
 
-  function renderRemoveButtons(rowIndex: number, colIndex: number) {
+  function renderInlineNav(rowIndex: number, colIndex: number) {
+    const showRowButtons =
+      colIndex === 0 &&
+      rowIndex === focusedRowIndex &&
+      !(showColumnHeader && focusedRowIndex === 0)
+
+    const showColButtons =
+      rowIndex === 0 &&
+      colIndex === focusedColIndex &&
+      !(showRowHeader && focusedColIndex === 0)
+
     return (
       <>
-        {colIndex === 0
-          ? renderRemoveButton(true, rowIndex === focusedRowIndex)
-          : null}
-        {rowIndex === 0
-          ? renderRemoveButton(false, colIndex === focusedColIndex)
-          : null}
+        <nav className={clsx('absolute -ml-10 -mt-2 flex flex-col')}>
+          {showRowButtons ? (
+            <>
+              {renderInlineAddButton(true)}
+              {renderRemoveButton(true)}
+            </>
+          ) : null}
+        </nav>
+        <nav className={clsx('absolute -mt-12')}>
+          {showColButtons ? (
+            <>
+              {renderInlineAddButton(false)}
+              {renderRemoveButton(false)}
+            </>
+          ) : null}
+        </nav>
       </>
     )
 
-    function renderRemoveButton(isRow: boolean, show: boolean) {
-      if (isRow && rows.length === 1) return
-      if (!isRow && rows[0].columns.length === 1) return
+    function renderInlineAddButton(isRow: boolean) {
+      const onInlineAdd = () => {
+        if (isRow) insertRow(rowIndex)
+        else insertCol(colIndex)
+      }
+
+      return (
+        <button
+          className={getButtonStyle()}
+          title={replaceWithType(tableStrings.addTypeBefore, isRow)}
+          onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+          onClick={onInlineAdd}
+        >
+          <Icon icon={faCirclePlus} />
+        </button>
+      )
+    }
+
+    function renderRemoveButton(isRow: boolean) {
+      if (isRow && rows.length === 2) return null
+      if (!isRow && rows[0].columns.length === 2) return null
+
+      if (isRow && showColumnHeader && focusedRowIndex === 0) return null
+      if (!isRow && showRowHeader && focusedColIndex === 0) return null
+
       const confirmString = replaceWithType(tableStrings.confirmDelete, isRow)
 
-      const onClickHandler = () => {
+      const onRemove = () => {
         const empty = isRow ? isEmptyRow(rowIndex) : isEmptyCol(colIndex)
 
         if (!empty && !window.confirm(confirmString)) return
@@ -265,14 +321,10 @@ function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className={clsx(
-            'serlo-button serlo-make-interactive-transparent-blue text-brand-lighter absolute',
-            isRow ? '-ml-10 -mt-2' : '-mt-12',
-            show ? '' : 'opacity-0 pointer-events-none'
-          )}
+          className={getButtonStyle()}
           title={replaceWithType(tableStrings.deleteType, isRow)}
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
-          onClick={onClickHandler}
+          onClick={onRemove}
         >
           <Icon icon={faTrashCan} />
         </button>
@@ -280,15 +332,21 @@ function SerloTableEditor(props: SerloTableProps) {
     }
   }
 
-  function insertRow() {
-    rows.insert(rows.length, {
+  function getButtonStyle() {
+    return clsx('serlo-button-blue-transparent text-brand-lighter')
+  }
+
+  function insertRow(beforeIndex?: number) {
+    const pos = beforeIndex ?? rows.length
+    rows.insert(pos, {
       columns: rows[0].columns.map(() => newCell),
     })
   }
 
-  function insertCol() {
+  function insertCol(beforeIndex?: number) {
     for (const row of rows) {
-      row.columns.insert(row.columns.length, newCell)
+      const pos = beforeIndex ?? row.columns.length
+      row.columns.insert(pos, newCell)
     }
   }
 
@@ -310,6 +368,7 @@ function SerloTableEditor(props: SerloTableProps) {
       row.columns.remove(colIndex)
     }
   }
+
   function removeRow(rowIndex: number) {
     rows.remove(rowIndex)
   }
@@ -318,7 +377,7 @@ function SerloTableEditor(props: SerloTableProps) {
     return (
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-light',
+          'serlo-button-light',
           isRow ? 'm-4 -mt-4 w-auto' : 'mb-16'
         )}
         title={replaceWithType(tableStrings.addType, isRow)}
