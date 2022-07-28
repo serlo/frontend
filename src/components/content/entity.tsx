@@ -27,6 +27,7 @@ import { renderArticle } from '@/schema/article-renderer'
 
 export interface EntityProps {
   data: EntityData
+  children?: JSX.Element
 }
 
 const ShareModal = dynamic<ShareModalProps>(() =>
@@ -37,7 +38,7 @@ const InviteModal = dynamic<InviteModalProps>(() =>
   import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
 )
 
-export function Entity({ data }: EntityProps) {
+export function Entity({ children, data }: EntityProps) {
   // state@/components/comments/comment-area
   const [shareOpen, setShareOpen] = useState(false)
   const [inviteOpen, setInviteOpen] = useState(false)
@@ -66,7 +67,7 @@ export function Entity({ data }: EntityProps) {
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
-        {data.content && renderContent(data.content)}
+        {children ? children : data.content && renderContent(data.content)}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />

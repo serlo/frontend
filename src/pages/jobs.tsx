@@ -1,32 +1,18 @@
 import clsx from 'clsx'
 import { GetStaticProps } from 'next'
-// import dynamic from 'next/dynamic'
-import { useState } from 'react'
 
+import { Entity } from '@/components/content/entity'
 import { Link } from '@/components/content/link'
+import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
-import { Footer } from '@/components/navigation/footer'
-import { Header } from '@/components/navigation/header'
-// import { InviteModalProps } from '@/components/user-tools/invite-modal'
-// import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { SingleEntityPage, SlugProps } from '@/data-types'
 import { CommunityWallPerson } from '@/data/de/community-people'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
-// import { FrontendContentNode } from '@/frontend-node-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-// import { renderArticle } from '@/schema/article-renderer'
 
-const jobsPageId = 226222 //21563
-
-// const ShareModal = dynamic<ShareModalProps>(() =>
-//   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-// )
-
-// const InviteModal = dynamic<InviteModalProps>(() =>
-//   import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
-// )
+const jobsPageId = 21563
 
 const testimonials = [
   {
@@ -63,13 +49,23 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
     return (
       <FrontendClientBase
         noContainers
-        noHeaderFooter
-        entityId={jobsPageId}
+        entityId={pageData.entityData.id}
         authorization={pageData.authorization}
       >
-        <div className="min-h-[68vh] max-w-full overflow-x-hidden sm:overflow-visible">
-          <Content pageData={pageData} />
-        </div>
+        <EntityBase
+          page={{
+            ...pageData,
+            entityData: { ...pageData.entityData, title: '' },
+            secondaryMenuData: undefined,
+            breadcrumbsData: undefined,
+            horizonData: undefined,
+          }}
+          entityId={pageData.entityData.id}
+        >
+          <Entity data={pageData.entityData}>
+            <Content pageData={pageData} />
+          </Entity>
+        </EntityBase>
       </FrontendClientBase>
     )
   }
@@ -80,25 +76,21 @@ const h2Class =
 const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
-  const [shareOpen, setShareOpen] = useState(false)
-  const [inviteOpen, setInviteOpen] = useState(false)
-
-  console.log(shareOpen)
-  console.log(inviteOpen)
   const { entityData: data } = pageData
 
   return (
     <>
-      <Header />
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
-      {renderUserTools({ aboveContent: true })}
-      <main className="text-truegray-700">
+
+      <div
+        className={clsx(
+          'stretch-wide relative',
+          'sm:text-left sm:max-w-[100vw] w-[100vw] -ml-2',
+          '-mb-[9.7rem]'
+        )}
+      >
         <section
-          className={clsx(
-            'mt-20 md:mt-[11vh] px-2',
-            'flex',
-            'text-left font-bold'
-          )}
+          className={clsx('mt-20 md:mt-[11vh]', 'flex', 'text-left font-bold')}
         >
           <aside className="w-full">
             <img src="/_assets/img/jobs/jobs-header.jpg" className="ml-8" />
@@ -153,13 +145,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </div>
         </section>
 
-        <section
-          className={clsx(
-            'partner strech-wide relative px-side',
-            'sm:text-left sm:mx-0 sm:max-w-[100vw]',
-            'mt-24 !pt-16'
-          )}
-        >
+        <section className={clsx('partner', 'mt-24 !pt-16')}>
           <h3
             className={clsx(
               'text-center text-4xl text-truegray-700 font-bold',
@@ -258,12 +244,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </h3>
         </section>
 
-        <section
-          className={clsx(
-            'sm:text-left sm:mx-0 sm:max-w-[100vw]',
-            'mt-18 -mb-4'
-          )}
-        >
+        <section className={clsx('mt-18 -mb-4')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <p className="font-bold">
               Noch Fragen? Dann schreib uns an: <br />
@@ -278,11 +259,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         </section>
 
         <section
-          className={clsx(
-            'partner about-serlo strech-wide  relative px-side',
-            'sm:text-left sm:mx-0 sm:max-w-[100vw]',
-            'mt-24 !pt-16 -mb-8 pb-16'
-          )}
+          className={clsx('partner about-serlo', 'mt-24 !pt-16 -mb-8 pb-16')}
         >
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <img
@@ -305,12 +282,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             {testimonials.map(renderPerson)}
           </div>
         </section>
-      </main>
-      <Footer />
-      {/* 
-      {renderUserTools()}
-      {renderShareModal()}
-      {renderInviteModal()} */}
+      </div>
 
       <style jsx>{`
         @font-face {
@@ -322,14 +294,13 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
           font-display: swap;
         }
-        .strech-wide {
+        .stretch-wide {
           left: calc(-50vw + 50%);
         }
-
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
-          margin: 6rem 0 0 0;
+          margin-top: 6rem 0 0 0;
           background-image: url('/_assets/img/landing/about-container.svg');
           background-repeat: no-repeat;
           background-size: 100vw 100%;
@@ -450,56 +421,6 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       </figure>
     )
   }
-
-  function renderUserTools(setting?: { aboveContent?: boolean }) {
-    return (
-      <UserTools
-        onShare={() => setShareOpen(true)}
-        onInvite={() => setInviteOpen(true)}
-        aboveContent={setting?.aboveContent}
-        id={data.id}
-        unrevisedRevisions={data.unrevisedRevisions}
-        data={{
-          type: data.typename,
-          id: data.id,
-          alias: data.alias,
-          trashed: data.trashed,
-        }}
-      />
-    )
-  }
-
-  // function renderShareModal() {
-  //   const showPdf = [
-  //     UuidType.Page,
-  //     UuidType.Article,
-  //     UuidType.CoursePage,
-  //     UuidType.ExerciseGroup,
-  //     UuidType.Exercise,
-  //     UuidType.Solution,
-  //   ].includes(data.typename)
-  //   return (
-  //     <ShareModal
-  //       isOpen={shareOpen}
-  //       onClose={() => setShareOpen(false)}
-  //       showPdf={showPdf}
-  //     />
-  //   )
-  // }
-
-  // function renderInviteModal() {
-  //   return (
-  //     <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
-  //   )
-  // }
-
-  // function renderContent(value: FrontendContentNode[]) {
-  //   const content = renderArticle(value, `entity${data.id}`)
-  //   if (data.schemaData?.setContentAsSection) {
-  //     return <section itemProp="articleBody">{content}</section>
-  //   }
-  //   return content
-  // }
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
