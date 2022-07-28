@@ -28,6 +28,36 @@ const jobsPageId = 226222 //21563
 //   import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
 // )
 
+const testimonials = [
+  {
+    name: 'Anne',
+    role: 'Community-Support',
+    imgSrc:
+      'https://assets.serlo.org/59ee046dc2532_c1ce1c91105cb8630656d080614ad83eacccafe7.jpg',
+    subjects: [
+      'Serlo hat eine Feedbackkultur geschaffen, in der man sich ausprobieren kann und dabei immer etwas Neues lernt. Eine solche Umgebung wünsche ich mir auch für alle Schüler*innen beim Lernen!',
+    ],
+  },
+  {
+    name: 'Hugo',
+    role: 'Softwareentwickler',
+    imgSrc:
+      'https://assets.serlo.org/5fa26c949d3c5_e9a0b46b1988589b36cfa85696530c7a582e7b0d.jpg',
+    subjects: [
+      'Serlos politisches Engagement für Bildungsgerechtigkeit und der moderne Tech Stack motivieren mich jeden Tag hier zu arbeiten.',
+    ],
+  },
+  {
+    name: 'Kathi',
+    role: 'Mitgründerin',
+    imgSrc:
+      'https://assets.serlo.org/5fc6113cd6220_e761872fa96f411d8ed4f41b527dcc1318651373.jpg',
+    subjects: [
+      'Bei Serlo kann ich eine Arbeitsumgebung mitgestalten, in der ich, ich selbst sein kann und mich wohlfühle. Wir gestalten Arbeit nicht basierend auf dem Status Quo anderer Unternehmen, sondern so, wie wir es fair finden.',
+    ],
+  },
+]
+
 export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
   ({ pageData }) => {
     return (
@@ -151,68 +181,77 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             <div className="grid mobile:grid-cols-2 md:grid-cols-3 relative py-6 text-2xl lg:py-10 lg:mb-16 text-center">
               <div className="w-full text-center mb-10">
                 <img
-                  src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mx-auto"
+                  src="/_assets/img/jobs/impact.svg"
+                  className="max-h-40 mx-auto"
                 />
                 <b>Impact</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Hier kommt noch ein kurzer Text hin jeweils!
+                  Unsere Mission ist nicht weniger als das: Freien Zugang zu
+                  richtig guter Bildung schaffen – für alle weltweit. Und zwar
+                  jetzt!
                 </p>
               </div>
               <div className="w-full text-center mb-10">
                 <img
-                  src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mx-auto"
+                  src="/_assets/img/jobs/arbeit-mit-sinn.svg"
+                  className="max-h-40 mx-auto"
                 />
                 <b>Arbeit mit Sinn</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Hier kommt noch ein kurzer Text hin jeweils!
+                  Bei uns hast eine verantwortungsvolle Aufgabe und weißt jeden
+                  Tag, was dein Beitrag zu einer gerechteren Welt ist.
                 </p>
               </div>
               <div className="w-full text-center mb-10">
                 <img
-                  src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mx-auto"
+                  src="/_assets/img/jobs/arbeit-mit-unsinn.svg"
+                  className="max-h-40 mx-auto"
                 />
                 <b>... und Unsinn</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Hier kommt noch ein kurzer Text hin jeweils!
+                  Wir feiern unsere Erfolge und unser Team. Für verrückte Ideen
+                  ist bei uns immer Platz!
                 </p>
               </div>
               <div className="w-full text-center mb-10">
                 <img
-                  src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mx-auto"
+                  src="/_assets/img/jobs/new-work-richtig.svg"
+                  className="max-h-40 mx-auto"
                 />
                 <b>New Work – aber richtig</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Hier kommt noch ein kurzer Text hin jeweils!
+                  Wir führen Serlo gemeinsam und gleichzeitig effizient, mit
+                  viel Raum für das eigenverantwortliche Arbeiten jeder*s
+                  Einzelnen.
                 </p>
               </div>
               <div className="w-full text-center mb-10">
                 <img
-                  src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mx-auto"
-                />
-                <b>Flexibilität</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Hier kommt noch ein kurzer Text hin jeweils!
-                </p>
-              </div>
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/donations/donation-bird.svg"
-                  className="max-h-28 mx-auto"
+                  src="/_assets/img/jobs/gemeinsam.svg"
+                  className="max-h-40 mx-auto"
                 />
                 <b>Gemeinsam</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Hier kommt noch ein kurzer Text hin jeweils!
+                  Wir lernen stets voneinander und lassen uns inspirieren von
+                  der Diversität unseres Teams.
+                </p>
+              </div>
+              <div className="w-full text-center mb-10">
+                <img
+                  src="/_assets/img/jobs/weiterbildung.svg"
+                  className="max-h-40 mx-auto"
+                />
+                <b>Weiterbildung</b>
+                <br />
+                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
+                  Wir fördern unsere Talente. Entwickle dich mit uns weiter, wir
+                  bieten dir Coaching-Programme und Fortbildungen für deine
+                  Wunschthemen.
                 </p>
               </div>
             </div>
@@ -262,23 +301,8 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             </Link>
           </div>
 
-          <div className="mt-6 mx-24 flex">
-            {renderPerson({
-              name: 'Almut',
-              role: 'Kommunikation und Öffentlichkeitsarbeit',
-              imgSrc:
-                'https://assets.serlo.org/6234abb319002_cde9403895bd5ad35fe739ca964535a0b79908d7.jpg',
-              subjects: [
-                'Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die digitale Transformation unserer Schulen ein.',
-              ],
-            })}
-            {renderPerson({
-              name: 'Leogato',
-              role: 'Feelgood-Manager',
-              imgSrc:
-                'https://assets.serlo.org/60c35978e37c1_5f8b94bdf728b060bfbaea458675c67d6f1658d8.jpg',
-              subjects: ['Well… meow.'],
-            })}
+          <div className="mt-6 mx-24 flex justify-center">
+            {testimonials.map(renderPerson)}
           </div>
         </section>
       </main>
@@ -392,6 +416,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
   function renderPerson({ name, imgSrc, role, subjects }: CommunityWallPerson) {
     return (
       <figure
+        key={name}
         className={clsx(
           'mt-12 mx-1 text-center group',
           'w-1/3v sm:w-1/4v md:w-1/4v',
@@ -407,29 +432,20 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             )}
           ></div>
         </div>
-        <Link
-          className="hover:no-underline relative z-10 whitespace-nowrap"
-          href={`/user/profile/${name}`}
+        <img
+          src={imgSrc}
+          alt={`Avatar von ${name}`}
+          className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
+        />
+        <p className="text-base mt-2 font-bold text-gray-700">@{name}</p>
+        <span
+          className={clsx(
+            'text-brand font-handwritten text-xl font-bold px-2 py-1',
+            'rounded-2xl'
+          )}
         >
-          <img
-            src={imgSrc}
-            alt={`Avatar von ${name}`}
-            className="rounded-full w-full aspect-square object-cover p-12 -mb-12"
-          />
-          <p className="text-base mt-2 font-bold text-gray-700">@{name}</p>
-          <span
-            className={clsx(
-              'text-brand font-handwritten text-xl font-bold px-2 py-1',
-              'rounded-2xl'
-              // ? 'bg-yellow'
-              // ? 'bg-brand-light'
-              // ? 'bg-newgreen'
-              // 'bg-berry'
-            )}
-          >
-            {role}
-          </span>
-        </Link>
+          {role}
+        </span>
         <p className="serlo-p mt-5">{subjects[0]}</p>
       </figure>
     )
