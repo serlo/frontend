@@ -22,10 +22,9 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
     /[^\w+]/g,
     ''
   )
-  const fileExtension = /\.\w+$/.exec(element.src)?.[0]
   const src =
-    fileExtension && semanticName && semanticName.length > 3
-      ? element.src.replace(fileExtension, `/${semanticName}${fileExtension}`)
+    semanticName && semanticName.length > 3
+      ? element.src.replace('/image.', `/${semanticName}.`)
       : element.src
 
   const wrapInA = (comp: ReactNode) => {
