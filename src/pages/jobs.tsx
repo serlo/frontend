@@ -6,7 +6,6 @@ import { Link } from '@/components/content/link'
 import { EntityBase } from '@/components/entity-base'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
-import { UserTools } from '@/components/user-tools/user-tools'
 import { SingleEntityPage, SlugProps } from '@/data-types'
 import { CommunityWallPerson } from '@/data/de/community-people'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
@@ -55,7 +54,7 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
         <EntityBase
           page={{
             ...pageData,
-            entityData: { ...pageData.entityData, title: '' },
+            entityData: { ...pageData.entityData, title: undefined },
             secondaryMenuData: undefined,
             breadcrumbsData: undefined,
             horizonData: undefined,
@@ -77,6 +76,7 @@ const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
   const { entityData: data } = pageData
+  console.log(data)
 
   return (
     <>
@@ -85,17 +85,27 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       <div
         className={clsx(
           'stretch-wide relative',
-          'sm:text-left sm:max-w-[100vw] w-[100vw] -ml-2',
-          '-mb-[9.7rem]'
+          'sm:text-left sm:max-w-[100vw] w-[100vw] sm:-ml-2',
+          '-mb-[12.7rem] sm:-mb-[9.7rem] -mt-12 text-center'
         )}
       >
         <section
-          className={clsx('mt-20 md:mt-[11vh]', 'flex', 'text-left font-bold')}
+          className={clsx(
+            'mt-16 md:mt-[11vh]',
+            'sm:flex',
+            'sm:text-left font-bold'
+          )}
         >
           <aside className="w-full">
-            <img src="/_assets/img/jobs/jobs-header.jpg" className="ml-8" />
+            <img
+              src="/_assets/img/jobs/jobs-header.jpg"
+              className={clsx(
+                'rounded-full object-cover object-left ml-auto aspect-square',
+                'p-side sm:w-[23rem] sm:h-[23rem]'
+              )}
+            />
           </aside>
-          <div className="w-full mt-10 ml-3">
+          <div className="w-full mt-12 sm:mt-24 sm:ml-10">
             <p
               className={clsx(
                 italicClass,
@@ -117,14 +127,14 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </div>
         </section>
 
-        <section className={clsx('text-center mt-32')}>
+        <section className={clsx('text-center mt-12')}>
           <h3
             style={{ hyphens: 'auto' }}
             className={clsx(h2Class, 'inline-block mt-7 pb-3')}
           >
             Unsere offenen Stellen
           </h3>
-          <div className="sm:flex pt-8 justify-center text-left">
+          <div className="sm:flex pt-8 justify-center text-left px-side">
             <div className="max-w-xl w-full mr-8">
               <h3 className="serlo-h3">Hauptamptlich</h3>
               <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
@@ -156,15 +166,13 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             <p className={clsx(italicClass, 'text-4xl')}>
               Das erwartet dich bei uns
             </p>
-            {/* <div className="relative z-0 h-0 w-full mt-1">
-              <div
-                className={clsx(
-                  'absolute inset-0 mt-[-4.3rem] h-40 ml-5 opacity-50',
-                  'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
-                )}
-              ></div>
-            </div> */}
-            <div className="grid mobile:grid-cols-2 md:grid-cols-3 relative py-6 text-2xl lg:py-10 lg:mb-16 text-center">
+            <div
+              className={clsx(
+                'relative text-2xl text-center pt-6 pb-16 mb-12',
+                'lg:py-10 lg:mb-16 ',
+                'mobile:grid mobile:grid-cols-2 md:grid-cols-3 '
+              )}
+            >
               <div className="w-full text-center mb-10">
                 <img
                   src="/_assets/img/jobs/impact.svg"
@@ -278,13 +286,16 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             </Link>
           </div>
 
-          <div className="mt-6 mx-24 flex justify-center">
+          <div className="mt-6 mobile:mx-24 sm:flex sm:justify-center">
             {testimonials.map(renderPerson)}
           </div>
         </section>
       </div>
 
       <style jsx>{`
+        :global(main > h1.serlo-h1) {
+          display: none;
+        }
         @font-face {
           font-family: 'Karmilla';
           font-style: bolder;
@@ -390,8 +401,8 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         key={name}
         className={clsx(
           'mt-12 mx-1 text-center group',
-          'w-1/3v sm:w-1/4v md:w-1/4v',
-          'max-w-[20rem]'
+          'mobile:w-1/3v sm:w-1/4v',
+          'sm:max-w-[20rem]'
         )}
       >
         <div className="relative w-full">
