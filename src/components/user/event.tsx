@@ -264,9 +264,7 @@ export function Event({
           {renderTitle(title, __typename as UuidType, id)}
           {shouldRenderParent(__typename as UuidType) ? (
             <>{renderParent(title, __typename as UuidType)}</>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </>
       </Link>
     )
