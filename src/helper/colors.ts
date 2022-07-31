@@ -1,14 +1,12 @@
-// exports colors from tailwind config and adds types
-
-import {
-  brandGreen,
-  articleColors as _articleColors,
-  brand,
-} from 'tailwind.config'
+import { theme } from 'tailwind.config'
 
 export const colors = {
-  brand: brand as string,
-  brandGreen: brandGreen as string,
+  brand: theme.extend.colors.brand.DEFAULT,
+  brandGreen: theme.extend.colors.brandgreen.DEFAULT,
 }
 
-export const articleColors = _articleColors as Record<string, string>
+export const articleColors = {
+  orange: '#ff6600',
+  blue: '#1794c1',
+  green: '#006400',
+}

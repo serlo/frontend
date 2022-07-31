@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { shade } from 'polished'
 import { ReactNode, Fragment } from 'react'
 
 import {
@@ -7,7 +6,6 @@ import {
   FrontendNodeType,
   Sign,
 } from '@/frontend-node-types'
-import { colors } from '@/helper/colors'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface StepProps {
@@ -31,8 +29,6 @@ export function Equations({
   renderNested,
   transformationTarget,
 }: EquationProps) {
-  const explanationColor = shade(0.3, colors.brandGreen)
-
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">
       <table>
@@ -74,7 +70,7 @@ export function Equations({
           )}
         </tr>
         {hasContent(step.explanation) && (
-          <tr className="whitespace-normal" style={{ color: explanationColor }}>
+          <tr className="whitespace-normal text-brandgreen-darker">
             <td />
             {renderDownArrow()}
             <td colSpan={2} className="relative -left-side px-1 pt-1 pb-3">
@@ -115,12 +111,12 @@ export function Equations({
 
     return (
       <>
-        <tr className="whitespace-normal" style={{ color: explanationColor }}>
+        <tr className="whitespace-normal text-brandgreen-darker">
           <td className="relative -left-side pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
         </tr>
-        <tr style={{ color: explanationColor }}>
+        <tr className="text-brandgreen-darker">
           <td />
           {renderDownArrow()}
         </tr>

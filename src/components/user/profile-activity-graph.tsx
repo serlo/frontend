@@ -68,9 +68,7 @@ export function ProfileActivityGraph({
           icon={faGrinStars}
           className="text-brandgreen-light h-32 w-32"
         />
-        <p className="font-bold text-xl" style={{ color: colors.brandGreen }}>
-          {value}
-        </p>
+        <p className="font-bold text-xl text-brandgreen">{value}</p>
       </>
     )
   }

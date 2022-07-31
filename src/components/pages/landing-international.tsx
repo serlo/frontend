@@ -21,6 +21,46 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
   return (
     <>
+      <HeadTags data={{ title: strings.header.slogan }} />
+      <section className="section">
+        <p className="serlo-p ml-0">{landingStrings.vision}</p>
+        <Link className="serlo-button-light -ml-1" href="/serlo">
+          {landingStrings.learnMore} <FaIcon icon={faArrowCircleRight} />
+        </Link>
+      </section>
+      <section className="mb-14">
+        <LandingSubjectsNew data={subjectsData} />
+      </section>
+
+      <section className="principles-section">
+        <PrinciplesGraphic strings={landingStrings} />
+      </section>
+
+      <section className="section">
+        <h2>{landingStrings.wikiTitle}</h2>
+        <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
+      </section>
+
+      <section className="image-section" />
+
+      <section className="section">
+        <h2>{landingStrings.movementTitle}</h2>
+        <div className="icon-style">
+          <ParticipateSVG />
+        </div>
+        <div className="col">
+          <p className="serlo-p ml-0">{landingStrings.callForAuthors}</p>
+          <Link href="/community" className="serlo-button-light -ml-1">
+            {landingStrings.communityLink} <FaIcon icon={faArrowCircleRight} />
+          </Link>
+        </div>
+        <div className="col">
+          <p className="serlo-p ml-0">{landingStrings.callForOther}</p>
+          <Link href="/get-involved" className="serlo-button-light -ml-1">
+            {landingStrings.getInvolved} <FaIcon icon={faArrowCircleRight} />
+          </Link>
+        </div>
+      </section>
       <style jsx>{`
         .section {
           margin-top: 60px;
@@ -118,46 +158,6 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           }
         }
       `}</style>
-      <HeadTags data={{ title: strings.header.slogan }} />
-      <section className="section">
-        <p className="serlo-p ml-0">{landingStrings.vision}</p>
-        <Link className="serlo-button-light -ml-1" href="/serlo">
-          {landingStrings.learnMore} <FaIcon icon={faArrowCircleRight} />
-        </Link>
-      </section>
-      <section className="mb-14">
-        <LandingSubjectsNew data={subjectsData} />
-      </section>
-
-      <section className="principles-section">
-        <PrinciplesGraphic strings={landingStrings} />
-      </section>
-
-      <section className="section">
-        <h2>{landingStrings.wikiTitle}</h2>
-        <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
-      </section>
-
-      <section className="image-section" />
-
-      <section className="section">
-        <h2>{landingStrings.movementTitle}</h2>
-        <div className="icon-style">
-          <ParticipateSVG />
-        </div>
-        <div className="col">
-          <p className="serlo-p ml-0">{landingStrings.callForAuthors}</p>
-          <Link href="/community" className="serlo-button-light -ml-1">
-            {landingStrings.communityLink} <FaIcon icon={faArrowCircleRight} />
-          </Link>
-        </div>
-        <div className="col">
-          <p className="serlo-p ml-0">{landingStrings.callForOther}</p>
-          <Link href="/get-involved" className="serlo-button-light -ml-1">
-            {landingStrings.getInvolved} <FaIcon icon={faArrowCircleRight} />
-          </Link>
-        </div>
-      </section>
     </>
   )
 }

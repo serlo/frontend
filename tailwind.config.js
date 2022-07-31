@@ -3,15 +3,9 @@ const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
 // base colors
-export const brand = '#007ec1'
-export const brandGreen = '#95bc1a'
-export const yellow = '#ffbe5e'
-
-export const articleColors = {
-  orange: '#ff6600',
-  blue: '#1794c1',
-  green: '#006400',
-}
+const brand = '#007ec1'
+const brandGreen = '#95bc1a'
+const yellow = '#ffbe5e'
 
 module.exports = {
   mode: 'jit',
@@ -184,22 +178,26 @@ module.exports = {
 }
 
 function extractCSSClasses() {
-  const css = require('fs').readFileSync(
-    require('path').join(
-      __dirname,
-      '/src/assets-webkit/styles/serlo-tailwind.css'
-    ),
-    'utf-8'
-  )
+  try {
+    const css = require('fs').readFileSync(
+      require('path').join(
+        __dirname,
+        '/src/assets-webkit/styles/serlo-tailwind.css'
+      ),
+      'utf-8'
+    )
 
-  const regex = /\.serlo\-[^ \:\{\n,]+/gm
-  let m = ''
-  const components = {}
+    const regex = /\.serlo\-[^ \:\{\n,]+/gm
+    let m = ''
+    const components = {}
 
-  while ((m = regex.exec(css)) !== null) {
-    // The result can be accessed through the `m`-variable.
-    components[m[0]] = {}
+    while ((m = regex.exec(css)) !== null) {
+      // The result can be accessed through the `m`-variable.
+      components[m[0]] = {}
+    }
+
+    return components
+  } catch (error) {
+    // don't run on client, no problem
   }
-
-  return components
 }
