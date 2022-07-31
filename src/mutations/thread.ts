@@ -1,8 +1,9 @@
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
-import { mutate, useSWRConfig } from 'swr'
+import { mutate } from 'swr'
 
 import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
 import { useEntityId } from '@/contexts/entity-id-context'
 import {
   ThreadCreateCommentInput,
@@ -11,6 +12,10 @@ import {
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
 } from '@/fetcher/graphql-types/operations'
+
+const threadCacheShouldMutate = (key: string) => {
+  return key.startsWith('$inf$') && key.includes('query getAllThreads')
+}
 
 const threadArchiveMutation = gql`
   mutation threadSetArchived($input: ThreadSetThreadArchivedInput!) {
@@ -25,7 +30,7 @@ const threadArchiveMutation = gql`
 export function useThreadArchivedMutation() {
   const entityId = useEntityId()
   const mutationFetch = useMutationFetch()
-  const { cache } = useSWRConfig()
+  const mutateSWRCache = useSWRCacheMutate()
 
   return async function (input: ThreadSetThreadArchivedInput) {
     NProgress.start()
@@ -34,7 +39,7 @@ export function useThreadArchivedMutation() {
 
     if (success) {
       await mutate(`comments::${entityId}`)
-      resetAllThreadsCache(cache)
+      mutateSWRCache(threadCacheShouldMutate)
       NProgress.done()
     }
     return success
@@ -54,13 +59,15 @@ const setThreadStateMutation = gql`
 export function useSetThreadStateMutation() {
   const entityId = useEntityId()
   const mutationFetch = useMutationFetch()
-  const { cache } = useSWRConfig()
+  const mutateSWRCache = useSWRCacheMutate()
 
   return async function (input: ThreadSetThreadStateInput) {
     const success = await mutationFetch(setThreadStateMutation, input)
 
-    if (success) await mutate(`comments::${entityId}`)
-    resetAllThreadsCache(cache)
+    if (success) {
+      await mutate(`comments::${entityId}`)
+      mutateSWRCache(threadCacheShouldMutate)
+    }
     return success
   }
 }
@@ -78,13 +85,15 @@ const setCommentStateMutation = gql`
 export function useSetCommentStateMutation() {
   const entityId = useEntityId()
   const mutationFetch = useMutationFetch()
-  const { cache } = useSWRConfig()
+  const mutateSWRCache = useSWRCacheMutate()
 
   return async function (input: ThreadSetCommentStateInput) {
     const success = await mutationFetch(setCommentStateMutation, input)
 
-    if (success) await mutate(`comments::${entityId}`)
-    resetAllThreadsCache(cache)
+    if (success) {
+      await mutate(`comments::${entityId}`)
+      mutateSWRCache(threadCacheShouldMutate)
+    }
     return success
   }
 }
@@ -101,13 +110,15 @@ const createThreadMutation = gql`
 
 export function useCreateThreadMutation() {
   const mutationFetch = useMutationFetch()
-  const { cache } = useSWRConfig()
+  const mutateSWRCache = useSWRCacheMutate()
 
   return async function (input: ThreadCreateThreadInput) {
     const success = await mutationFetch(createThreadMutation, input)
 
-    if (success) await mutate(`comments::${input.objectId}`)
-    resetAllThreadsCache(cache)
+    if (success) {
+      await mutate(`comments::${input.objectId}`)
+      mutateSWRCache(threadCacheShouldMutate)
+    }
     return success
   }
 }
@@ -124,37 +135,16 @@ const createCommentMutation = gql`
 
 export function useCreateCommentMutation() {
   const mutationFetch = useMutationFetch()
+  const mutateSWRCache = useSWRCacheMutate()
   const entityId = useEntityId()
-  const { cache } = useSWRConfig()
 
   return async function (input: ThreadCreateCommentInput) {
     const success = await mutationFetch(createCommentMutation, input)
 
-    if (success) await mutate(`comments::${entityId}`)
-    resetAllThreadsCache(cache)
-
+    if (success) {
+      await mutate(`comments::${entityId}`)
+      mutateSWRCache(threadCacheShouldMutate)
+    }
     return success
   }
-}
-
-function resetAllThreadsCache(cache: unknown) {
-  if (!(cache instanceof Map)) {
-    throw new Error(
-      'matchMutate requires the cache provider to be a Map instance'
-    )
-  }
-
-  const keys = []
-  for (const key of cache.keys() as IterableIterator<string>) {
-    const shouldBeMutated =
-      key.startsWith('$inf$') && key.includes('query getAllThreads')
-
-    if (shouldBeMutated) {
-      keys.push(key)
-    }
-  }
-
-  keys.forEach((key) => {
-    void mutate(key)
-  })
 }
