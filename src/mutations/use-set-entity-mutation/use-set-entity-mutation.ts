@@ -2,7 +2,7 @@
 import { eqBy, mapObjIndexed } from 'ramda'
 
 import { showToastNotice } from '../../helper/show-toast-notice'
-import { useMutationFetch } from '../use-mutation-fetch'
+import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { getSetMutation } from './get-set-mutation'
 import {
   ChildFieldsData,

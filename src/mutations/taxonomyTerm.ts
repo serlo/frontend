@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
 import {
   TaxonomyEntityLinksInput,
   TaxonomyTermSortInput,
@@ -20,8 +20,7 @@ export function useCreateEntityLinkMutation() {
   const mutationFetch = useMutationFetch()
 
   return async function (input: TaxonomyEntityLinksInput) {
-    const success = await mutationFetch(createEntityLinkMutation, input)
-    return success
+    return await mutationFetch(createEntityLinkMutation, input)
   }
 }
 

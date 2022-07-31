@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { mutate, useSWRConfig } from 'swr'
 
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useEntityId } from '@/contexts/entity-id-context'
 import {
   ThreadCreateCommentInput,

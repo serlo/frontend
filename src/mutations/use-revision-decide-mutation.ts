@@ -1,10 +1,8 @@
 import { gql } from 'graphql-request'
-import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 
-import { showToastNotice } from '../helper/show-toast-notice'
-import { useMutationFetch } from './use-mutation-fetch'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { RejectRevisionInput } from '@/fetcher/graphql-types/operations'
 
 export type RevisionMutationMode = 'checkout' | 'reject'
@@ -38,9 +36,8 @@ const checkoutPageMutation = gql`
 `
 
 export function useRevisionDecideMutation() {
-  const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetch()
-  const router = useRouter()
+  const successHandler = useSuccessHandler()
 
   return async function (
     mode: RevisionMutationMode,
@@ -57,21 +54,13 @@ export function useRevisionDecideMutation() {
 
     const success = await mutationFetch(mutation, input)
 
-    if (success) {
-      setTimeout(() => {
-        if (!loggedInData) return
-        showToastNotice(
-          loggedInData.strings.mutations.success[
-            isCheckout ? 'accept' : 'reject'
-          ],
-          'success'
-        )
-        NProgress.done()
-        void router.push(
-          sessionStorage.getItem('previousPathname') || '/entity/unrevised'
-        )
-      }, 100)
-    }
-    return success
+    return successHandler({
+      success,
+      toastKey: isCheckout ? 'accept' : 'reject',
+      redirectUrl:
+        sessionStorage.getItem('previousPathname') || '/entity/unrevised',
+      delay: 100,
+      stopNProgress: true,
+    })
   }
 }

@@ -2,7 +2,8 @@ import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
 import { showToastNotice } from '../helper/show-toast-notice'
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -34,6 +35,7 @@ const taxonomyCreateMutation = gql`
 export function useTaxonomyCreateOrUpdateMutation() {
   const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetch()
+  const successHandler = useSuccessHandler()
   const router = useRouter()
 
   return async (data: TaxonomyCreateOrUpdateMutationData) => {
@@ -68,12 +70,12 @@ export function useTaxonomyCreateOrUpdateMutation() {
             taxonomyType: getTaxonomyType(typeNumberString),
           })
 
-      if (success) {
-        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        window.location.href = `/${data.id ?? parentIdString}`
-        return true
-      }
-      return false
+      return successHandler({
+        success,
+        toastKey: 'save',
+        redirectUrl: `/${data.id ?? parentIdString}`,
+        useHardRedirect: true,
+      })
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('probably missing value?')

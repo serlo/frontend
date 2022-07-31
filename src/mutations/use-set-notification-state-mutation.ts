@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 import { useSWRConfig, mutate } from 'swr'
 
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
 import { NotificationSetStateInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`

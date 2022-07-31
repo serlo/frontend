@@ -1,9 +1,8 @@
 import { gql } from 'graphql-request'
 
-import { showToastNotice } from '../helper/show-toast-notice'
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { useAuthentication } from '@/auth/use-authentication'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UserSetDescriptionInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`
@@ -18,18 +17,18 @@ const mutation = gql`
 
 export function useUserSetDescriptionMutation() {
   const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetch()
+  const successHandler = useSuccessHandler()
 
   return async function (input: UserSetDescriptionInput) {
+    if (!auth.current) return
     const success = await mutationFetch(mutation, input)
 
-    if (success) {
-      if (!loggedInData || !auth.current) return
-      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      window.location.href = `/user/${auth.current.id}/${auth.current.username}`
-    }
-
-    return success
+    return successHandler({
+      success,
+      toastKey: 'save',
+      redirectUrl: `/user/${auth.current.id}/${auth.current.username}`,
+      useHardRedirect: true,
+    })
   }
 }

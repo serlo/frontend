@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { mutate } from 'swr'
 
 import { isSubscribedQuery } from '../helper/use-is-subscribed'
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
 import { SubscriptionSetInput } from '@/fetcher/graphql-types/operations'
 
 export function useSubscriptionSetMutation() {
@@ -18,7 +18,7 @@ export function useSubscriptionSetMutation() {
     }
   `
 
-  const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
+  return async function (input: SubscriptionSetInput) {
     const success = await mutationFetch(mutation, input)
 
     // note: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
@@ -34,7 +34,4 @@ export function useSubscriptionSetMutation() {
     }
     return success
   }
-
-  return async (input: SubscriptionSetInput) =>
-    await subscriptionSetMutation(input)
 }

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { useMutationFetch } from './use-mutation-fetch'
+import { useMutationFetch } from './helper/use-mutation-fetch'
 import { EntitySortInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`

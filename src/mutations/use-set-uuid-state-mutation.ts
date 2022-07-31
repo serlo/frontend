@@ -1,9 +1,8 @@
 import { gql } from 'graphql-request'
 
 import { csrReload } from '../helper/csr-reload'
-import { showToastNotice } from '../helper/show-toast-notice'
-import { useMutationFetch } from './use-mutation-fetch'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { UuidSetStateInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`
@@ -17,26 +16,21 @@ const mutation = gql`
 `
 
 export function useSetUuidStateMutation() {
-  const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetch()
+  const successHandler = useSuccessHandler()
 
   return async function (input: UuidSetStateInput) {
     const success = await mutationFetch(mutation, input)
 
     if (success) {
       setTimeout(() => {
-        if (!loggedInData) return
-        showToastNotice(
-          loggedInData.strings.mutations.success[
-            input.trashed ? 'trash' : 'restore'
-          ],
-          'success'
-        )
-      }, 600)
-      setTimeout(() => {
         csrReload()
       }, 3000)
+      return successHandler({
+        success,
+        toastKey: input.trashed ? 'trash' : 'restore',
+        delay: 600,
+      })
     }
-    return success
   }
 }

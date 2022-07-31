@@ -18,7 +18,7 @@ import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
 import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useMutationFetch } from '@/mutations/use-mutation-fetch'
+import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
 import { renderArticle } from '@/schema/article-renderer'
 
 const ContentPage: NextPage = () => {
