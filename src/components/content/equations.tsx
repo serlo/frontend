@@ -7,8 +7,8 @@ import {
   FrontendNodeType,
   Sign,
 } from '@/frontend-node-types'
+import { colors } from '@/helper/colors'
 import { RenderNestedFunction } from '@/schema/article-renderer'
-import { theme } from '@/theme'
 
 export interface StepProps {
   left: string
@@ -31,7 +31,7 @@ export function Equations({
   renderNested,
   transformationTarget,
 }: EquationProps) {
-  const explanationColor = shade(0.3, theme.colors.brandGreen)
+  const explanationColor = shade(0.3, colors.brandGreen)
 
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">

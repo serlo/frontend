@@ -8,7 +8,7 @@ import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
-import { theme } from '@/theme'
+import { colors } from '@/helper/colors'
 
 export interface LandingInternationalProps {
   data: InstanceLandingData
@@ -108,7 +108,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         .icon-style {
           & > :global(path),
           & :global(.st0) {
-            fill: ${theme.colors.brandGreen};
+            fill: ${colors.brandGreen};
           }
           width: 100px;
           margin-right: 30px;

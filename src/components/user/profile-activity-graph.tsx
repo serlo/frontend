@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { theme } from '@/theme'
+import { colors } from '@/helper/colors'
 
 interface ProfileActivityGraphProps {
   value: number
@@ -68,10 +68,7 @@ export function ProfileActivityGraph({
           icon={faGrinStars}
           className="text-brandgreen-light h-32 w-32"
         />
-        <p
-          className="font-bold text-xl"
-          style={{ color: theme.colors.brandGreen }}
-        >
+        <p className="font-bold text-xl" style={{ color: colors.brandGreen }}>
           {value}
         </p>
       </>
@@ -92,7 +89,7 @@ export function ProfileActivityGraph({
             cy={fullRadius}
             style={{
               fill: 'none',
-              stroke: tint(0.85, theme.colors.brandGreen),
+              stroke: tint(0.85, colors.brandGreen),
               strokeWidth: radiusStep,
             }}
           />
@@ -102,7 +99,7 @@ export function ProfileActivityGraph({
             cy={fullRadius}
             style={{
               fill: 'none',
-              stroke: tint(0.5, theme.colors.brandGreen),
+              stroke: tint(0.5, colors.brandGreen),
               strokeWidth: radiusStep,
               transition: 'all ease 3s',
               transformOrigin: 'center',
@@ -115,7 +112,7 @@ export function ProfileActivityGraph({
             r={innerRadius}
             cx={fullRadius}
             cy={fullRadius}
-            style={{ fill: theme.colors.brandGreen }}
+            style={{ fill: colors.brandGreen }}
           />
           <text
             className="font-bold text-white fill-current"

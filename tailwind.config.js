@@ -3,9 +3,15 @@ const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
 // base colors
-const brand = '#007ec1'
-const brandGreen = '#95bc1a'
-const yellow = '#ffbe5e'
+export const brand = '#007ec1'
+export const brandGreen = '#95bc1a'
+export const yellow = '#ffbe5e'
+
+export const articleColors = {
+  orange: '#ff6600',
+  blue: '#1794c1',
+  green: '#006400',
+}
 
 module.exports = {
   mode: 'jit',
