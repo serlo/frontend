@@ -2,21 +2,42 @@ import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
 import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
+import { useMutationFetch } from './use-mutation-fetch'
 import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { TaxonomyTypeCreateOptions } from '@/fetcher/graphql-types/operations'
 
+const taxonomySetMutation = gql`
+  mutation taxonomyTermSetNameAndDescription(
+    $input: TaxonomyTermSetNameAndDescriptionInput!
+  ) {
+    taxonomyTerm {
+      setNameAndDescription(input: $input) {
+        success
+      }
+    }
+  }
+`
+
+const taxonomyCreateMutation = gql`
+  mutation taxonomyCreate($input: TaxonomyTermCreateInput!) {
+    taxonomyTerm {
+      create(input: $input) {
+        success
+      }
+    }
+  }
+`
+
 export function useTaxonomyCreateOrUpdateMutation() {
-  const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
   const router = useRouter()
 
   return async (data: TaxonomyCreateOrUpdateMutationData) => {
-    if (!auth || !loggedInData) {
+    if (!loggedInData) {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
@@ -40,22 +61,12 @@ export function useTaxonomyCreateOrUpdateMutation() {
         router.asPath.split('/') // taxonomy/term/create/4/1390
 
       const success = data.id
-        ? await mutationFetch(
-            auth,
-            taxonomySetMutation,
-            input,
-            loggedInData?.strings.mutations.errors
-          )
-        : await mutationFetch(
-            auth,
-            taxonomyCreateMutation,
-            {
-              ...input,
-              parentId: parseInt(parentIdString),
-              taxonomyType: getTaxonomyType(typeNumberString),
-            },
-            loggedInData?.strings.mutations.errors
-          )
+        ? await mutationFetch(taxonomySetMutation, input)
+        : await mutationFetch(taxonomyCreateMutation, {
+            ...input,
+            parentId: parseInt(parentIdString),
+            taxonomyType: getTaxonomyType(typeNumberString),
+          })
 
       if (success) {
         showToastNotice(loggedInData.strings.mutations.success.save, 'success')
@@ -86,25 +97,3 @@ function getTaxonomyType(idString?: string) {
 
   throw 'unknown taxonomy type'
 }
-
-const taxonomySetMutation = gql`
-  mutation taxonomyTermSetNameAndDescription(
-    $input: TaxonomyTermSetNameAndDescriptionInput!
-  ) {
-    taxonomyTerm {
-      setNameAndDescription(input: $input) {
-        success
-      }
-    }
-  }
-`
-
-const taxonomyCreateMutation = gql`
-  mutation taxonomyCreate($input: TaxonomyTermCreateInput!) {
-    taxonomyTerm {
-      create(input: $input) {
-        success
-      }
-    }
-  }
-`

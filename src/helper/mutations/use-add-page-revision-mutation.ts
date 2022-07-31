@@ -1,16 +1,27 @@
 import { gql } from 'graphql-request'
 
 import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
+import { useMutationFetch } from './use-mutation-fetch'
 import { AddPageRevisionMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
+const addPageRevisionMutation = gql`
+  mutation addPageRevision($input: PageAddRevisionInput!) {
+    page {
+      addRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+
 export function useAddPageRevision() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
 
   return async (data: AddPageRevisionMutationData) => {
     if (!auth || !loggedInData) {
@@ -26,12 +37,7 @@ export function useAddPageRevision() {
         title: getRequiredString(loggedInData, 'title', data.title),
       }
 
-      const success = await mutationFetch(
-        auth,
-        addPageRevisionMutation,
-        input,
-        loggedInData?.strings.mutations.errors
-      )
+      const success = await mutationFetch(addPageRevisionMutation, input)
 
       if (success) {
         showToastNotice(loggedInData.strings.mutations.success.save, 'success')
@@ -46,13 +52,3 @@ export function useAddPageRevision() {
     }
   }
 }
-
-const addPageRevisionMutation = gql`
-  mutation addPageRevision($input: PageAddRevisionInput!) {
-    page {
-      addRevision(input: $input) {
-        success
-      }
-    }
-  }
-`

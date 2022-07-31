@@ -1,35 +1,25 @@
 import { gql } from 'graphql-request'
 import { useSWRConfig, mutate } from 'swr'
 
-import { mutationFetch } from './helper'
-import { useAuthentication } from '@/auth/use-authentication'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useMutationFetch } from './use-mutation-fetch'
 import { NotificationSetStateInput } from '@/fetcher/graphql-types/operations'
 
-export function useSetNotificationStateMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-  const { cache } = useSWRConfig()
-
-  const mutation = gql`
-    mutation notificationSetState($input: NotificationSetStateInput!) {
-      notification {
-        setState(input: $input) {
-          success
-        }
+const mutation = gql`
+  mutation notificationSetState($input: NotificationSetStateInput!) {
+    notification {
+      setState(input: $input) {
+        success
       }
     }
-  `
+  }
+`
 
-  const setNotificationStateMutation = async function (
-    input: NotificationSetStateInput
-  ) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+export function useSetNotificationStateMutation() {
+  const mutationFetch = useMutationFetch()
+  const { cache } = useSWRConfig()
+
+  return async function (input: NotificationSetStateInput) {
+    const success = await mutationFetch(mutation, input)
 
     // note: Maybe implement global cache key management, but this works okay
 
@@ -60,6 +50,4 @@ export function useSetNotificationStateMutation() {
     }
     return success
   }
-  return async (input: NotificationSetStateInput) =>
-    await setNotificationStateMutation(input)
 }

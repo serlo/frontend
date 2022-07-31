@@ -2,32 +2,26 @@ import { gql } from 'graphql-request'
 
 import { csrReload } from '../csr-reload'
 import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
-import { useAuthentication } from '@/auth/use-authentication'
+import { useMutationFetch } from './use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidSetStateInput } from '@/fetcher/graphql-types/operations'
 
-export function useSetUuidStateMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-
-  const mutation = gql`
-    mutation setUuidState($input: UuidSetStateInput!) {
-      uuid {
-        setState(input: $input) {
-          success
-        }
+const mutation = gql`
+  mutation setUuidState($input: UuidSetStateInput!) {
+    uuid {
+      setState(input: $input) {
+        success
       }
     }
-  `
+  }
+`
 
-  const setUuidStateMutation = async function (input: UuidSetStateInput) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+export function useSetUuidStateMutation() {
+  const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
+
+  return async function (input: UuidSetStateInput) {
+    const success = await mutationFetch(mutation, input)
 
     if (success) {
       setTimeout(() => {
@@ -45,5 +39,4 @@ export function useSetUuidStateMutation() {
     }
     return success
   }
-  return async (input: UuidSetStateInput) => await setUuidStateMutation(input)
 }

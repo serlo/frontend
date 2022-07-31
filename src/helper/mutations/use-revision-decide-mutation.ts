@@ -3,13 +3,9 @@ import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 
 import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
-import { useAuthentication } from '@/auth/use-authentication'
+import { useMutationFetch } from './use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
-  CheckoutRevisionInput,
-  RejectRevisionInput,
-} from '@/fetcher/graphql-types/operations'
+import { RejectRevisionInput } from '@/fetcher/graphql-types/operations'
 
 export type RevisionMutationMode = 'checkout' | 'reject'
 
@@ -42,11 +38,11 @@ const checkoutPageMutation = gql`
 `
 
 export function useRevisionDecideMutation() {
-  const auth = useAuthentication()
-  const router = useRouter()
   const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
+  const router = useRouter()
 
-  const revisionMutation = async function (
+  return async function (
     mode: RevisionMutationMode,
     input: RejectRevisionInput,
     isPage: boolean
@@ -58,12 +54,8 @@ export function useRevisionDecideMutation() {
       ? checkoutEntityMutation
       : rejectEntityMutation
     NProgress.start()
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+
+    const success = await mutationFetch(mutation, input)
 
     if (success) {
       setTimeout(() => {
@@ -82,9 +74,4 @@ export function useRevisionDecideMutation() {
     }
     return success
   }
-  return async (
-    mode: RevisionMutationMode,
-    input: RejectRevisionInput | CheckoutRevisionInput,
-    isPage: boolean
-  ) => await revisionMutation(mode, input, isPage)
 }

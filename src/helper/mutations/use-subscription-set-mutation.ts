@@ -2,14 +2,11 @@ import { gql } from 'graphql-request'
 import { mutate } from 'swr'
 
 import { isSubscribedQuery } from '../use-is-subscribed'
-import { mutationFetch } from './helper'
-import { useAuthentication } from '@/auth/use-authentication'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useMutationFetch } from './use-mutation-fetch'
 import { SubscriptionSetInput } from '@/fetcher/graphql-types/operations'
 
 export function useSubscriptionSetMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
 
   const mutation = gql`
     mutation subscriptionSet($input: SubscriptionSetInput!) {
@@ -22,12 +19,7 @@ export function useSubscriptionSetMutation() {
   `
 
   const subscriptionSetMutation = async function (input: SubscriptionSetInput) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+    const success = await mutationFetch(mutation, input)
 
     // note: Reconstructing SWR keys here, we need a nice global solution how we handle SWR keys
     // see https://swr.vercel.app/docs/arguments and useGraphqlSwr(WithAuth)
@@ -39,14 +31,6 @@ export function useSubscriptionSetMutation() {
           variables: { id: input.id[0] },
         })
       )
-      // deactivated in favour of optimistic ui and automatic revalidations
-      // const keys = cache
-      //   .keys()
-      //   .filter((key) => key.includes('query subscription'))
-
-      // keys.forEach((key) => {
-      //   void mutate(key)
-      // })
     }
     return success
   }

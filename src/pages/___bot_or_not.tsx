@@ -5,7 +5,6 @@ import Head from 'next/head'
 import { MouseEvent, useRef, useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
@@ -18,7 +17,7 @@ import { convertState } from '@/fetcher/convert-state'
 import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
 import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
-import { mutationFetch } from '@/helper/mutations/helper'
+import { useMutationFetch } from '@/helper/mutations/use-mutation-fetch'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -50,7 +49,7 @@ const titles = [
 ]
 
 const BotHunt = () => {
-  const auth = useAuthentication()
+  const mutationFetch = useMutationFetch()
   const [removedIds, setRemovedIds] = useState<number[]>([])
   const manualInputRef = useRef<HTMLInputElement>(null)
 
@@ -64,14 +63,13 @@ const BotHunt = () => {
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return <>log in first</>
-  const { mutations } = loggedInData.strings
 
   async function remove(id: number) {
     const input = {
       botIds: [id],
     }
 
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(mutation, input)
     if (success) {
       setRemovedIds([...removedIds, id])
       showToastNotice(`# ${id} removed 💥`, 'warning')

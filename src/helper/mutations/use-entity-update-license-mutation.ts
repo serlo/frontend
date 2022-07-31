@@ -2,35 +2,27 @@ import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
 import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
-import { useAuthentication } from '@/auth/use-authentication'
+import { useMutationFetch } from './use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EntityUpdateLicenseInput } from '@/fetcher/graphql-types/operations'
 
-export function useEntityUpdateLicenseMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-  const router = useRouter()
-
-  const mutation = gql`
-    mutation updateLicense($input: EntityUpdateLicenseInput!) {
-      entity {
-        updateLicense(input: $input) {
-          success
-        }
+const mutation = gql`
+  mutation updateLicense($input: EntityUpdateLicenseInput!) {
+    entity {
+      updateLicense(input: $input) {
+        success
       }
     }
-  `
+  }
+`
 
-  const updateLicenseMutation = async function (
-    input: EntityUpdateLicenseInput
-  ) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+export function useEntityUpdateLicenseMutation() {
+  const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
+  const router = useRouter()
+
+  return async function (input: EntityUpdateLicenseInput) {
+    const success = await mutationFetch(mutation, input)
 
     if (success) {
       if (!loggedInData) return
@@ -41,6 +33,4 @@ export function useEntityUpdateLicenseMutation() {
     }
     return success
   }
-  return async (input: EntityUpdateLicenseInput) =>
-    await updateLicenseMutation(input)
 }

@@ -1,93 +1,64 @@
 import { gql } from 'graphql-request'
 
-import { mutationFetch } from './helper'
-import { useAuthentication } from '@/auth/use-authentication'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useMutationFetch } from './use-mutation-fetch'
 import {
   TaxonomyEntityLinksInput,
   TaxonomyTermSortInput,
 } from '@/fetcher/graphql-types/operations'
 
-export function useCreateEntityLinkMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-
-  const mutation = gql`
-    mutation taxonomyTermCreateEntityLink($input: TaxonomyEntityLinksInput!) {
-      taxonomyTerm {
-        createEntityLinks(input: $input) {
-          success
-        }
+const createEntityLinkMutation = gql`
+  mutation taxonomyTermCreateEntityLink($input: TaxonomyEntityLinksInput!) {
+    taxonomyTerm {
+      createEntityLinks(input: $input) {
+        success
       }
     }
-  `
-  const taxonomyTermCreateEntityLink = async function (
-    input: TaxonomyEntityLinksInput
-  ) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+  }
+`
+
+export function useCreateEntityLinkMutation() {
+  const mutationFetch = useMutationFetch()
+
+  return async function (input: TaxonomyEntityLinksInput) {
+    const success = await mutationFetch(createEntityLinkMutation, input)
     return success
   }
-
-  return async (input: TaxonomyEntityLinksInput) =>
-    await taxonomyTermCreateEntityLink(input)
 }
+
+const deleteEntityLink = gql`
+  mutation taxonomyTermDeleteEntityLink($input: TaxonomyEntityLinksInput!) {
+    taxonomyTerm {
+      deleteEntityLinks(input: $input) {
+        success
+      }
+    }
+  }
+`
 
 export function useDeleteEntityLinkMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
 
-  const mutation = gql`
-    mutation taxonomyTermDeleteEntityLink($input: TaxonomyEntityLinksInput!) {
-      taxonomyTerm {
-        deleteEntityLinks(input: $input) {
-          success
-        }
-      }
-    }
-  `
-  const taxonomyTermDeleteEntityLink = async function (
-    input: TaxonomyEntityLinksInput
-  ) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+  return async function (input: TaxonomyEntityLinksInput) {
+    const success = await mutationFetch(deleteEntityLink, input)
     return success
   }
-
-  return async (input: TaxonomyEntityLinksInput) =>
-    await taxonomyTermDeleteEntityLink(input)
 }
 
-export function useTaxonomyTermSortMutation() {
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
-
-  const mutation = gql`
-    mutation taxonomyTermSort($input: TaxonomyTermSortInput!) {
-      taxonomyTerm {
-        sort(input: $input) {
-          success
-        }
+const sortMutation = gql`
+  mutation taxonomyTermSort($input: TaxonomyTermSortInput!) {
+    taxonomyTerm {
+      sort(input: $input) {
+        success
       }
     }
-  `
-  const taxonomyTermSort = async function (input: TaxonomyTermSortInput) {
-    const success = await mutationFetch(
-      auth,
-      mutation,
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+  }
+`
+
+export function useTaxonomyTermSortMutation() {
+  const mutationFetch = useMutationFetch()
+
+  return async function (input: TaxonomyTermSortInput) {
+    const success = await mutationFetch(sortMutation, input)
     return success
   }
-
-  return async (input: TaxonomyTermSortInput) => await taxonomyTermSort(input)
 }
