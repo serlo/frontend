@@ -1,3 +1,5 @@
+// exports colors from tailwind config and adds types
+
 import {
   brandGreen,
   articleColors as _articleColors,
