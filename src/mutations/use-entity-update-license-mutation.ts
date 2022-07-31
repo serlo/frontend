@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 import { useRouter } from 'next/router'
 
-import { showToastNotice } from '../show-toast-notice'
+import { showToastNotice } from '../helper/show-toast-notice'
 import { useMutationFetch } from './use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EntityUpdateLicenseInput } from '@/fetcher/graphql-types/operations'

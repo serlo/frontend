@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
-import { csrReload } from '../csr-reload'
-import { showToastNotice } from '../show-toast-notice'
+import { csrReload } from '../helper/csr-reload'
+import { showToastNotice } from '../helper/show-toast-notice'
 import { useMutationFetch } from './use-mutation-fetch'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidSetStateInput } from '@/fetcher/graphql-types/operations'

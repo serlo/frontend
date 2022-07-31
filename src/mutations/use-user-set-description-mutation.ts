@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { showToastNotice } from '../show-toast-notice'
+import { showToastNotice } from '../helper/show-toast-notice'
 import { useMutationFetch } from './use-mutation-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

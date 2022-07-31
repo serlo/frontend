@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import { eqBy, mapObjIndexed } from 'ramda'
 
-import { showToastNotice } from '../../show-toast-notice'
+import { showToastNotice } from '../../helper/show-toast-notice'
 import { useMutationFetch } from '../use-mutation-fetch'
 import { getSetMutation } from './get-set-mutation'
 import {

@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { showToastNotice } from '../show-toast-notice'
+import { showToastNotice } from '../helper/show-toast-notice'
 import { useMutationFetch } from './use-mutation-fetch'
 import { AddPageRevisionMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'

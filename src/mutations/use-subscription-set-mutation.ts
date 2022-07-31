@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 import { mutate } from 'swr'
 
-import { isSubscribedQuery } from '../use-is-subscribed'
+import { isSubscribedQuery } from '../helper/use-is-subscribed'
 import { useMutationFetch } from './use-mutation-fetch'
 import { SubscriptionSetInput } from '@/fetcher/graphql-types/operations'
 
