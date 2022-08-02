@@ -43,6 +43,73 @@ const testimonials = [
   },
 ]
 
+const specials = [
+  {
+    src: '/_assets/img/jobs/impact.svg',
+    title: 'Impact',
+    content: (
+      <>
+        Unsere Mission ist nicht weniger als das: Freien Zugang zu richtig guter
+        Bildung schaffen – für alle weltweit. Und zwar jetzt!
+      </>
+    ),
+  },
+  {
+    src: '/_assets/img/jobs/arbeit-mit-sinn.svg',
+    title: 'Arbeit mit Sinn',
+    content: (
+      <>
+        Bei uns hast eine verantwortungsvolle Aufgabe und du weißt jeden Tag,
+        was dein Beitrag zu einer gerechteren Welt ist.
+      </>
+    ),
+  },
+
+  {
+    src: '/_assets/img/jobs/arbeit-mit-unsinn.svg',
+    title: '... und Unsinn',
+    content: (
+      <>
+        Wir feiern unsere Erfolge und unser Team. Für verrückte Ideen ist bei
+        uns immer Platz!
+      </>
+    ),
+  },
+
+  {
+    src: '/_assets/img/jobs/new-work-richtig.svg',
+    title: 'New Work – aber richtig',
+    content: (
+      <>
+        Wir führen Serlo gemeinsam und gleichzeitig effizient, mit viel Raum für
+        eigenverantwortliches Arbeiten jeder*s Einzelnen.
+      </>
+    ),
+  },
+
+  {
+    src: '/_assets/img/jobs/gemeinsam.svg',
+    title: 'Gemeinsam',
+    content: (
+      <>
+        Wir lernen täglich voneinander und lassen uns inspirieren von der
+        Diversität unseres Teams.
+      </>
+    ),
+  },
+
+  {
+    src: '/_assets/img/jobs/weiterbildung.svg',
+    title: 'Weiterbildung',
+    content: (
+      <>
+        Wir fördern unsere Talente. Entwickle dich mit uns weiter, wir bieten
+        dir Coaching-Programme und Fortbildungen für deine Wunschthemen.
+      </>
+    ),
+  },
+]
+
 export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
   ({ pageData }) => {
     return (
@@ -71,7 +138,8 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
 )
 
 const h2Class =
-  'text-center text-4xl font-extrabold leading-cozy tracking-tight'
+  'text-center text-3xl leading-cozy tracking-tight font-extrabold'
+const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
@@ -86,7 +154,8 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         className={clsx(
           'stretch-wide relative',
           'sm:text-left sm:max-w-[100vw] w-[100vw] sm:-ml-2',
-          '-mb-[12.7rem] sm:-mb-[9.7rem] -mt-12 text-center'
+          '-mb-[12.7rem] sm:-mb-[9.7rem] -mt-12 text-center',
+          'text-gray-700'
         )}
       >
         <section
@@ -100,12 +169,12 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             <img
               src="/_assets/img/jobs/jobs-header.jpg"
               className={clsx(
-                'rounded-full object-cover object-left ml-auto aspect-square',
-                'p-side sm:w-[23rem] sm:h-[23rem]'
+                'rounded-full object-cover object-left mx-side aspect-square',
+                'sm:w-[28rem] sm:h-[28rem] sm:mx-0 sm:ml-auto max-w-[90vw]'
               )}
             />
           </aside>
-          <div className="w-full mt-12 sm:mt-24 sm:ml-10">
+          <div className="w-full mt-12 sm:mt-32 sm:ml-10">
             <p
               className={clsx(
                 italicClass,
@@ -127,35 +196,86 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           </div>
         </section>
 
-        <section className={clsx('text-center mt-12')}>
+        <section className={clsx('text-center mt-3')}>
           <h3
             style={{ hyphens: 'auto' }}
-            className={clsx(h2Class, 'inline-block mt-7 pb-3')}
+            className={clsx(h2Class, 'inline-block mt-12 pb-3')}
           >
             Unsere offenen Stellen
           </h3>
-          <div className="sm:flex pt-8 justify-center text-left px-side">
+          <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
             <div className="max-w-xl w-full mr-8">
-              <h3 className="serlo-h3">Hauptamptlich</h3>
-              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
-                Fancy Stellenplugin hier
+              <h3 className={clsx(h3Class, 'text-center mb-2')}>
+                Hauptamptlich
+              </h3>
+              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-left">
+                <ul>
+                  <li className="mb-6">
+                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
+                      <a className="serlo-link font-bold" href="#123">
+                        Softwareentwickler*in
+                      </a>
+                      <br />
+                      (Vollzeit - unbefristet)
+                    </p>
+                  </li>
+                  <li>
+                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
+                      <a className="serlo-link font-bold" href="#123">
+                        Lernbegleiter*in
+                      </a>
+                      <br />
+                      (Teilzeit, Serlo Lab School)
+                    </p>
+                  </li>
+                </ul>
               </div>
               {/* <img
                 src="/_assets/img/jobs/jobs-header.jpg"
                 className="rounded-lg mt-12"
               /> */}
             </div>
-            <div className="max-w-xl w-full">
-              <h3 className="serlo-h3">Ehrenamtlich</h3>
+            <div className="max-w-xl w-full ">
+              <h3 className={clsx(h3Class, 'text-center mb-2')}>
+                Ehrenamtlich
+              </h3>
               {/* {data.content && renderContent(data.content)} */}
-              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-center">
-                Imported Content here
+              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-left">
+                <ul>
+                  <li className="mb-6">
+                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
+                      <a className="serlo-link font-bold" href="#123">
+                        (Lehramt-) Studierende in der Redaktion
+                      </a>
+                      <br />
+                      (Praktikum, Vollzeit oder Teilzeit)
+                    </p>
+                  </li>
+                  <li className="mb-6">
+                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
+                      <a className="serlo-link font-bold" href="#123">
+                        Weiterentwicklung unserer Autor*innen-Community
+                      </a>
+                      <br />
+                      (Engagement)
+                    </p>
+                  </li>
+                  <li>
+                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
+                      <a className="serlo-link font-bold" href="#123">
+                        Weiterentwicklung unserer Autor*innen-Community
+                      </a>
+                      <br />
+                      (Engagement)
+                    </p>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </section>
 
-        <section className={clsx('partner', 'mt-24 !pt-16')}>
+        <section className={clsx('partner', 'mt-24 !pt-12')}>
           <h3
             className={clsx(
               'text-center text-4xl text-truegray-700 font-bold',
@@ -163,103 +283,40 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               'mx-auto'
             )}
           >
-            <p className={clsx(italicClass, 'text-4xl')}>
+            <p className={clsx(h2Class, 'text-4xl mt-8')}>
               Das erwartet dich bei uns
             </p>
             <div
               className={clsx(
-                'relative text-2xl text-center pt-6 pb-16 mb-12',
-                'lg:py-10 lg:mb-16 ',
-                'mobile:grid mobile:grid-cols-2 md:grid-cols-3 '
+                'relative text-[1.3rem] text-left pb-16 mb-12',
+                'lg:pt-4 lg:mb-16 md:pb-16',
+                'mobile:grid mobile:grid-cols-2 md:grid-cols-3 md:max-w-4xl mx-auto'
               )}
             >
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/jobs/impact.svg"
-                  className="max-h-40 mx-auto"
-                />
-                <b>Impact</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Unsere Mission ist nicht weniger als das: Freien Zugang zu
-                  richtig guter Bildung schaffen – für alle weltweit. Und zwar
-                  jetzt!
-                </p>
-              </div>
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/jobs/arbeit-mit-sinn.svg"
-                  className="max-h-40 mx-auto"
-                />
-                <b>Arbeit mit Sinn</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Bei uns hast eine verantwortungsvolle Aufgabe und du weißt
-                  jeden Tag, was dein Beitrag zu einer gerechteren Welt ist.
-                </p>
-              </div>
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/jobs/arbeit-mit-unsinn.svg"
-                  className="max-h-40 mx-auto"
-                />
-                <b>... und Unsinn</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Wir feiern unsere Erfolge und unser Team. Für verrückte Ideen
-                  ist bei uns immer Platz!
-                </p>
-              </div>
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/jobs/new-work-richtig.svg"
-                  className="max-h-40 mx-auto"
-                />
-                <b>New Work – aber richtig</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Wir führen Serlo gemeinsam und gleichzeitig effizient, mit
-                  viel Raum für eigenverantwortliches Arbeiten jeder*s
-                  Einzelnen.
-                </p>
-              </div>
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/jobs/gemeinsam.svg"
-                  className="max-h-40 mx-auto"
-                />
-                <b>Gemeinsam</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Wir lernen täglich voneinander und lassen uns inspirieren von
-                  der Diversität unseres Teams.
-                </p>
-              </div>
-              <div className="w-full text-center mb-10">
-                <img
-                  src="/_assets/img/jobs/weiterbildung.svg"
-                  className="max-h-40 mx-auto"
-                />
-                <b>Weiterbildung</b>
-                <br />
-                <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Wir fördern unsere Talente. Entwickle dich mit uns weiter, wir
-                  bieten dir Coaching-Programme und Fortbildungen für deine
-                  Wunschthemen.
-                </p>
-              </div>
+              {specials.map(({ src, title, content }) => {
+                return (
+                  <div key={title} className="w-full mb-4 text-center">
+                    <img src={src} className="max-h-32 mx-auto" />
+                    <b className="text-center">{title}</b>
+                    <br />
+                    <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-1 tracking-slightly-tighter leading-snug special-hyphens-initial">
+                      {content}
+                    </p>
+                  </div>
+                )
+              })}
             </div>
           </h3>
         </section>
 
-        <section className={clsx('mt-18 -mb-4')}>
-          <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
-            <p className="font-bold">
-              Noch Fragen? Dann schreib uns an: <br />
+        <section className={clsx('mt-18 -mb-8')}>
+          <div className="max-w-4xl text-center mx-auto">
+            <p className={clsx(h2Class, 'text-4xl mt-8')}>Noch Fragen?</p>
+            <p className="text-[1.3rem] mt-3">
+              Dann schreib uns an{' '}
               <a className="text-brand underline" href="mailto:jobs@serlo.org">
                 jobs@serlo.org
               </a>
-              <br />
               <br />
               Wir freuen uns von dir zu hören.
             </p>
@@ -286,7 +343,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             </Link>
           </div>
 
-          <div className="mt-6 mobile:mx-24 sm:flex sm:justify-center">
+          <div className="mt-6 mobile:mx-24 sm:flex sm:justify-center mb-40">
             {testimonials.map(renderPerson)}
           </div>
         </section>
@@ -419,7 +476,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           alt={`Avatar von ${name}`}
           className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
         />
-        <p className="text-base mt-2 font-bold text-gray-700">@{name}</p>
+        <p className="text-base mt-2 font-bold">@{name}</p>
         <span
           className={clsx(
             'text-brand font-handwritten text-xl font-bold px-2 py-1',
@@ -428,7 +485,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
         >
           {role}
         </span>
-        <p className="serlo-p mt-5">{subjects[0]}</p>
+        <p className="serlo-p mt-5 special-hyphens-initial">{subjects[0]}</p>
       </figure>
     )
   }
