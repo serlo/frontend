@@ -194,8 +194,8 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 <b>Arbeit mit Sinn</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Bei uns hast eine verantwortungsvolle Aufgabe und weißt jeden
-                  Tag, was dein Beitrag zu einer gerechteren Welt ist.
+                  Bei uns hast eine verantwortungsvolle Aufgabe und du weißt
+                  jeden Tag, was dein Beitrag zu einer gerechteren Welt ist.
                 </p>
               </div>
               <div className="w-full text-center mb-10">
@@ -219,7 +219,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
                   Wir führen Serlo gemeinsam und gleichzeitig effizient, mit
-                  viel Raum für das eigenverantwortliche Arbeiten jeder*s
+                  viel Raum für eigenverantwortliches Arbeiten jeder*s
                   Einzelnen.
                 </p>
               </div>
@@ -231,7 +231,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 <b>Gemeinsam</b>
                 <br />
                 <p className="text-xl font-normal max-w-65 mx-auto mt-2">
-                  Wir lernen stets voneinander und lassen uns inspirieren von
+                  Wir lernen täglich voneinander und lassen uns inspirieren von
                   der Diversität unseres Teams.
                 </p>
               </div>
