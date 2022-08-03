@@ -1,3 +1,4 @@
+import { NewLinkElement, NewText } from '@edtr-io/plugin-text'
 import clsx from 'clsx'
 import { GetStaticProps } from 'next'
 
@@ -9,6 +10,7 @@ import { HeadTags } from '@/components/head-tags'
 import { SingleEntityPage, SlugProps } from '@/data-types'
 import { CommunityWallPerson } from '@/data/de/community-people'
 import { fetchPageData } from '@/fetcher/fetch-page-data'
+import { FrontendContentNode } from '@/frontend-node-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 const jobsPageId = 21563
@@ -144,7 +146,27 @@ const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 function Content({ pageData }: { pageData: SingleEntityPage }) {
   const { entityData: data } = pageData
-  console.log(data)
+
+  const cellsJobs = data.content?.[0].children?.[0].children?.slice(1)
+  const cellsHonorary = data.content?.[0].children?.[1].children?.slice(1)
+
+  const mapCells = (cells?: FrontendContentNode[]) => {
+    if (!cells) return []
+    return cells.map((cell) => {
+      const link = cell.children?.[0].children?.[0]
+        .children?.[0] as NewLinkElement
+
+      const text = (cell.children?.[0].children?.[1]?.children?.[0] as NewText)
+        ?.text
+
+      if (!link || !text) return undefined
+      return {
+        url: link?.href,
+        linkText: (link?.children?.[0] as NewText)?.text,
+        text,
+      }
+    })
+  }
 
   return (
     <>
@@ -211,67 +233,15 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 Hauptamptlich
               </h3>
               <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
-                <ul>
-                  <li className="mb-6">
-                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
-                      <a className="serlo-link font-bold" href="#123">
-                        Softwareentwickler*in
-                      </a>
-                      <br />
-                      (Vollzeit - unbefristet)
-                    </p>
-                  </li>
-                  <li>
-                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
-                      <a className="serlo-link font-bold" href="#123">
-                        Lernbegleiter*in
-                      </a>
-                      <br />
-                      (Teilzeit, Serlo Lab School)
-                    </p>
-                  </li>
-                </ul>
+                {renderPositions(cellsJobs)}
               </div>
-              {/* <img
-                src="/_assets/img/jobs/jobs-header.jpg"
-                className="rounded-lg mt-12"
-              /> */}
             </div>
             <div className="max-w-xl w-full mx-auto sm:ml-4">
               <h3 className={clsx(h3Class, 'text-center mb-2 mt-12 sm:mt-0')}>
                 Ehrenamtlich
               </h3>
-              {/* {data.content && renderContent(data.content)} */}
               <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
-                <ul>
-                  <li className="mb-6">
-                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
-                      <a className="serlo-link font-bold" href="#123">
-                        (Lehramt-) Studierende in der Redaktion
-                      </a>
-                      <br />
-                      (Praktikum, Vollzeit oder Teilzeit)
-                    </p>
-                  </li>
-                  <li className="mb-6">
-                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
-                      <a className="serlo-link font-bold" href="#123">
-                        Weiterentwicklung unserer Autor*innen-Community
-                      </a>
-                      <br />
-                      (Engagement)
-                    </p>
-                  </li>
-                  <li>
-                    <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
-                      <a className="serlo-link font-bold" href="#123">
-                        Weiterentwicklung unserer Autor*innen-Community
-                      </a>
-                      <br />
-                      (Engagement)
-                    </p>
-                  </li>
-                </ul>
+                {renderPositions(cellsHonorary)}
               </div>
             </div>
           </div>
@@ -454,43 +424,66 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     </>
   )
 
-  function renderPerson({ name, imgSrc, role, subjects }: CommunityWallPerson) {
+  function renderPositions(cells?: FrontendContentNode[]) {
+    const positions = mapCells(cells)
+    if (!positions) return null
     return (
-      <figure
-        key={name}
-        className={clsx(
-          'mt-12 text-center group',
-          'sm:w-1/3v',
-          'max-w-[20rem] mx-auto'
-        )}
-      >
-        <div className="relative w-full">
-          <div
-            className={clsx(
-              'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
-              'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
-              'transition-all ease-linear duration-200 group-hover:rotate-1'
-            )}
-          ></div>
-        </div>
-        <img
-          src={imgSrc}
-          alt={`Avatar von ${name}`}
-          className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
-        />
-        <p className="text-base mt-2 font-bold">@{name}</p>
-        <span
-          className={clsx(
-            'text-brand font-handwritten text-xl font-bold px-2 py-1',
-            'rounded-2xl'
-          )}
-        >
-          {role}
-        </span>
-        <p className="serlo-p mt-5 special-hyphens-initial">{subjects[0]}</p>
-      </figure>
+      <ul className="-mb-6">
+        {positions.map((position) => {
+          if (!position) return null
+          return (
+            <li key={position.url} className="mb-6">
+              <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
+                <a className="serlo-link font-bold" href={position.url}>
+                  {position.linkText}
+                </a>
+                <br />
+                {position.text}
+              </p>
+            </li>
+          )
+        })}
+      </ul>
     )
   }
+}
+
+function renderPerson({ name, imgSrc, role, subjects }: CommunityWallPerson) {
+  return (
+    <figure
+      key={name}
+      className={clsx(
+        'mt-12 text-center group',
+        'sm:w-1/3v',
+        'max-w-[20rem] mx-auto'
+      )}
+    >
+      <div className="relative w-full">
+        <div
+          className={clsx(
+            'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
+            'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
+            'transition-all ease-linear duration-200 group-hover:rotate-1'
+          )}
+        ></div>
+      </div>
+      <img
+        src={imgSrc}
+        alt={`Avatar von ${name}`}
+        className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
+      />
+      <p className="text-base mt-2 font-bold">@{name}</p>
+      <span
+        className={clsx(
+          'text-brand font-handwritten text-xl font-bold px-2 py-1',
+          'rounded-2xl'
+        )}
+      >
+        {role}
+      </span>
+      <p className="serlo-p mt-5 special-hyphens-initial">{subjects[0]}</p>
+    </figure>
+  )
 }
 
 export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
