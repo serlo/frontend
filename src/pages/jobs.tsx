@@ -152,29 +152,21 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
 
       <div
         className={clsx(
-          'stretch-wide relative',
-          'sm:text-left sm:max-w-[100vw] w-[100vw] sm:-ml-2',
-          '-mb-[12.7rem] sm:-mb-[9.7rem] -mt-12 text-center',
+          'sm:-ml-[51px]',
+          'md:left-[calc(-50vw+50%)] md:relative',
+          'md:text-left md:max-w-[100vw] w-[100vw] md:ml-0',
+          'mb-[-116px] -mt-12 text-center',
           'text-gray-700'
         )}
       >
         <section
           className={clsx(
             'mt-16 md:mt-[11vh]',
-            'sm:flex',
+            'sm:flex sm:flex-row-reverse',
             'sm:text-left font-bold'
           )}
         >
-          <aside className="w-full">
-            <img
-              src="/_assets/img/jobs/jobs-header.jpg"
-              className={clsx(
-                'rounded-full object-cover object-left mx-side aspect-square',
-                'sm:w-[28rem] sm:h-[28rem] sm:mx-0 sm:ml-auto max-w-[90vw]'
-              )}
-            />
-          </aside>
-          <div className="w-full mt-12 sm:mt-32 sm:ml-10">
+          <div className="w-full px-2 mt-12 sm:mt-32 sm:ml-10">
             <p
               className={clsx(
                 italicClass,
@@ -187,16 +179,26 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               className={clsx(
                 'text-5xl font-extrabold',
                 'tracking-tight leading-tight',
-                'max-w-md mt-3 mb-6 mr-auto'
+                'max-w-md mt-3 mb-6 mx-auto sm:ml-0'
               )}
             >
               Digitale Bildung braucht{' '}
               <span className="underlined !pr-0">dich&thinsp;!</span>
             </h1>
           </div>
+          <aside className="w-full">
+            <img
+              src="/_assets/img/jobs/jobs-header.jpg"
+              className={clsx(
+                'rounded-full object-cover object-left mx-side aspect-square',
+                'w-[90vw] max-w-[28rem] mx-auto',
+                'sm:w-[28rem] sm:h-[28rem] sm:mx-0 sm:ml-auto'
+              )}
+            />
+          </aside>
         </section>
 
-        <section className={clsx('text-center mt-3')}>
+        <section className={clsx('text-center mt-3 px-2')}>
           <h3
             style={{ hyphens: 'auto' }}
             className={clsx(h2Class, 'inline-block mt-12 pb-3')}
@@ -204,11 +206,11 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             Unsere offenen Stellen
           </h3>
           <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
-            <div className="max-w-xl w-full mr-8">
+            <div className="max-w-xl w-full mx-auto sm:mr-4">
               <h3 className={clsx(h3Class, 'text-center mb-2')}>
                 Hauptamptlich
               </h3>
-              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-left">
+              <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
                 <ul>
                   <li className="mb-6">
                     <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
@@ -235,12 +237,12 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
                 className="rounded-lg mt-12"
               /> */}
             </div>
-            <div className="max-w-xl w-full ">
-              <h3 className={clsx(h3Class, 'text-center mb-2')}>
+            <div className="max-w-xl w-full mx-auto sm:ml-4">
+              <h3 className={clsx(h3Class, 'text-center mb-2 mt-12 sm:mt-0')}>
                 Ehrenamtlich
               </h3>
               {/* {data.content && renderContent(data.content)} */}
-              <div className="border-2 border-brand p-12 rounded-lg text-xl font-bold text-left">
+              <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
                 <ul>
                   <li className="mb-6">
                     <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
@@ -283,21 +285,24 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               'mx-auto'
             )}
           >
-            <p className={clsx(h2Class, 'text-4xl mt-8')}>
+            <p className={clsx(h2Class, 'text-4xl mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
             <div
               className={clsx(
                 'relative text-[1.3rem] text-left pb-16 mb-12',
-                'lg:pt-4 lg:mb-16 md:pb-16',
-                'mobile:grid mobile:grid-cols-2 md:grid-cols-3 md:max-w-4xl mx-auto'
+                'pt-4 lg:mb-16 md:pb-16',
+                'grid grid-cols-2 md:grid-cols-3 max-w-2xl md:max-w-4xl mx-auto'
               )}
             >
               {specials.map(({ src, title, content }) => {
                 return (
-                  <div key={title} className="w-full mb-4 text-center">
-                    <img src={src} className="max-h-32 mx-auto" />
-                    <b className="text-center">{title}</b>
+                  <div
+                    key={title}
+                    className="w-full -mb-5 sm:mb-4 mobile:text-center px-2"
+                  >
+                    <img src={src} className="max-h-32 mobile:mx-auto" />
+                    <b>{title}</b>
                     <br />
                     <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-1 tracking-slightly-tighter leading-snug special-hyphens-initial">
                       {content}
@@ -343,7 +348,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             </Link>
           </div>
 
-          <div className="mt-6 mobile:mx-24 sm:flex sm:justify-center mb-40">
+          <div className="mt-6 sm:flex sm:justify-center lg:mb-40">
             {testimonials.map(renderPerson)}
           </div>
         </section>
@@ -361,9 +366,6 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               format('woff2'),
             url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
           font-display: swap;
-        }
-        .stretch-wide {
-          left: calc(-50vw + 50%);
         }
         .about {
           padding-top: 7rem;
@@ -457,9 +459,9 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
       <figure
         key={name}
         className={clsx(
-          'mt-12 mx-1 text-center group',
-          'mobile:w-1/3v sm:w-1/4v',
-          'sm:max-w-[20rem]'
+          'mt-12 text-center group',
+          'sm:w-1/3v',
+          'max-w-[20rem] mx-auto'
         )}
       >
         <div className="relative w-full">

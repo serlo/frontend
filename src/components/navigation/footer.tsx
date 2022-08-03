@@ -22,7 +22,7 @@ export function Footer() {
 function About() {
   const { footerData, strings } = useInstanceData()
   return (
-    <div className="flex flex-col md:flex-row mt-8">
+    <div className="flex flex-col md:flex-row">
       <div className="bg-brand w-full min-h-[54px] relative">
         <div
           className={clsx(
