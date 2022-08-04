@@ -17,12 +17,12 @@ const jobsPageId = 21563
 
 const testimonials = [
   {
-    name: 'Anne',
-    role: 'Community-Support',
+    name: 'Kathi',
+    role: 'Mitgründerin',
     imgSrc:
-      'https://assets.serlo.org/59ee046dc2532_c1ce1c91105cb8630656d080614ad83eacccafe7.jpg',
+      'https://assets.serlo.org/5fc6113cd6220_e761872fa96f411d8ed4f41b527dcc1318651373.jpg',
     subjects: [
-      'Serlo hat eine Feedbackkultur geschaffen, in der man sich ausprobieren kann und dabei immer etwas Neues lernt. Eine solche Umgebung wünsche ich mir auch für alle Schüler*innen beim Lernen!',
+      'Bei Serlo kann ich eine Arbeitsumgebung mitgestalten, in der ich, ich selbst sein kann und mich wohlfühle. Wir gestalten Arbeit nicht basierend auf dem Status Quo anderer Unternehmen, sondern so, wie wir es fair finden.',
     ],
   },
   {
@@ -35,12 +35,12 @@ const testimonials = [
     ],
   },
   {
-    name: 'Kathi',
-    role: 'Mitgründerin',
+    name: 'Anne',
+    role: 'Community-Support',
     imgSrc:
-      'https://assets.serlo.org/5fc6113cd6220_e761872fa96f411d8ed4f41b527dcc1318651373.jpg',
+      'https://assets.serlo.org/59ee046dc2532_c1ce1c91105cb8630656d080614ad83eacccafe7.jpg',
     subjects: [
-      'Bei Serlo kann ich eine Arbeitsumgebung mitgestalten, in der ich, ich selbst sein kann und mich wohlfühle. Wir gestalten Arbeit nicht basierend auf dem Status Quo anderer Unternehmen, sondern so, wie wir es fair finden.',
+      'Serlo hat eine Feedbackkultur geschaffen, in der man sich ausprobieren kann und dabei immer etwas Neues lernt. Eine solche Umgebung wünsche ich mir auch für alle Schüler*innen beim Lernen!',
     ],
   },
 ]
@@ -61,7 +61,7 @@ const specials = [
     title: 'Arbeit mit Sinn',
     content: (
       <>
-        Bei uns hast eine verantwortungsvolle Aufgabe und du weißt jeden Tag,
+        Bei uns hast du eine verantwortungsvolle Aufgabe und du weißt jeden Tag,
         was dein Beitrag zu einer gerechteren Welt ist.
       </>
     ),
@@ -140,7 +140,7 @@ export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
 )
 
 const h2Class =
-  'text-center text-3xl leading-cozy tracking-tight font-extrabold'
+  'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 const italicClass = 'text-brand italic font-handwritten text-3xl'
 
@@ -255,7 +255,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
               'mx-auto'
             )}
           >
-            <p className={clsx(h2Class, 'text-4xl mt-8 px-1')}>
+            <p className={clsx(h2Class, 'mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
             <div
@@ -286,7 +286,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
 
         <section className={clsx('mt-18 -mb-8')}>
           <div className="max-w-4xl text-center mx-auto">
-            <p className={clsx(h2Class, 'text-4xl mt-8')}>Noch Fragen?</p>
+            <p className={clsx(h2Class, 'mt-8')}>Noch Fragen?</p>
             <p className="text-[1.3rem] mt-3">
               Dann schreib uns an{' '}
               <a className="text-brand underline" href="mailto:jobs@serlo.org">
