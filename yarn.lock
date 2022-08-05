@@ -3941,6 +3941,7 @@ __metadata:
     eslint-plugin-import: ^2.0.0
     eslint-plugin-react: ^7.0.0
     eslint-plugin-react-hooks: ^4.0.0
+    fast-xml-parser: ^4.0.9
     fp-ts: ^2.12.1
     graphiql: ^1.4.7
     graphql: ^16.0.0
@@ -7635,6 +7636,17 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: 92cfec0a8dfafd9c7a15fba8f2cc29cd0b62b85f056d99ce448bbcd9f708e18ab2764bda4dd5158364f4145a7c72788538994f0d1787b956ef0d1062b0f7c24c
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "fast-xml-parser@npm:4.0.9"
+  dependencies:
+    strnum: ^1.0.5
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: 1ef2ba1406ce9985a2e7049a4c412de0e1e64e4ee6b0890f5b5bfce6407d04ce04b61733d2ddc7ba4acf4461b57eb3718cbc595df9a023f5a79ad81f70e8425a
   languageName: node
   linkType: hard
 
@@ -13649,6 +13661,13 @@ __metadata:
   version: 2.0.1
   resolution: "strip-json-comments@npm:2.0.1"
   checksum: 1074ccb63270d32ca28edfb0a281c96b94dc679077828135141f27d52a5a398ef5e78bcf22809d23cadc2b81dfbe345eb5fd8699b385c8b1128907dec4a7d1e1
+  languageName: node
+  linkType: hard
+
+"strnum@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "strnum@npm:1.0.5"
+  checksum: 651b2031db5da1bf4a77fdd2f116a8ac8055157c5420f5569f64879133825915ad461513e7202a16d7fec63c54fd822410d0962f8ca12385c4334891b9ae6dd2
   languageName: node
   linkType: hard
 

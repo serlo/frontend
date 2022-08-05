@@ -1,19 +1,10 @@
-import { NewLinkElement, NewText } from '@edtr-io/plugin-text'
 import clsx from 'clsx'
-import { GetStaticProps } from 'next'
 
-import { Entity } from '@/components/content/entity'
 import { Link } from '@/components/content/link'
-import { EntityBase } from '@/components/entity-base'
-import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
-import { SingleEntityPage, SlugProps } from '@/data-types'
 import { CommunityWallPerson } from '@/data/de/community-people'
-import { fetchPageData } from '@/fetcher/fetch-page-data'
-import { FrontendContentNode } from '@/frontend-node-types'
-import { renderedPageNoHooks } from '@/helper/rendered-page'
-
-const jobsPageId = 21563
+// eslint-disable-next-line import/extensions
+import { JobsProps, PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const testimonials = [
   {
@@ -112,62 +103,12 @@ const specials = [
   },
 ]
 
-export default renderedPageNoHooks<{ pageData: SingleEntityPage }>(
-  ({ pageData }) => {
-    return (
-      <FrontendClientBase
-        noContainers
-        entityId={pageData.entityData.id}
-        authorization={pageData.authorization}
-      >
-        <EntityBase
-          page={{
-            ...pageData,
-            entityData: { ...pageData.entityData, title: undefined },
-            secondaryMenuData: undefined,
-            breadcrumbsData: undefined,
-            horizonData: undefined,
-          }}
-          entityId={pageData.entityData.id}
-        >
-          <Entity data={pageData.entityData}>
-            <Content pageData={pageData} />
-          </Entity>
-        </EntityBase>
-      </FrontendClientBase>
-    )
-  }
-)
-
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 const italicClass = 'text-brand italic font-handwritten text-3xl'
 
-function Content({ pageData }: { pageData: SingleEntityPage }) {
-  const { entityData: data } = pageData
-
-  const cellsJobs = data.content?.[0].children?.[0].children?.slice(1)
-  const cellsHonorary = data.content?.[0].children?.[1].children?.slice(1)
-
-  const mapCells = (cells?: FrontendContentNode[]) => {
-    if (!cells) return []
-    return cells.map((cell) => {
-      const link = cell.children?.[0].children?.[0]
-        .children?.[0] as NewLinkElement
-
-      const text = (cell.children?.[0].children?.[1]?.children?.[0] as NewText)
-        ?.text
-
-      if (!link || !text) return undefined
-      return {
-        url: link?.href,
-        linkText: (link?.children?.[0] as NewText)?.text,
-        text,
-      }
-    })
-  }
-
+export function Overview({ positions }: JobsProps) {
   return (
     <>
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
@@ -224,24 +165,24 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
           <h3
             style={{ hyphens: 'auto' }}
             className={clsx(h2Class, 'inline-block mt-12 pb-3')}
+            id="stellen"
           >
             Unsere offenen Stellen
           </h3>
           <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
             <div className="max-w-xl w-full mx-auto sm:mr-4">
-              <h3 className={clsx(h3Class, 'text-center mb-2')}>
-                Hauptamptlich
-              </h3>
-              <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
-                {renderPositions(cellsJobs)}
-              </div>
+              <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamptlich</h3>
+              {renderPositions(positions)}
+              {/* <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
+                
+              </div> */}
             </div>
             <div className="max-w-xl w-full mx-auto sm:ml-4">
-              <h3 className={clsx(h3Class, 'text-center mb-2 mt-12 sm:mt-0')}>
+              <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-12 sm:mt-0')}>
                 Ehrenamtlich
               </h3>
               <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
-                {renderPositions(cellsHonorary)}
+                {/* {renderPositions(cellsHonorary)} */}
               </div>
             </div>
           </div>
@@ -424,78 +365,73 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
     </>
   )
 
-  function renderPositions(cells?: FrontendContentNode[]) {
-    const positions = mapCells(cells)
-    if (!positions) return null
+  function renderPositions(positions?: PersonioPosition[]) {
+    if (!positions || !positions.length)
+      return "Probier's doch später noch mal!"
+
     return (
       <ul className="-mb-6">
-        {positions.map((position) => {
-          if (!position) return null
+        {positions.map(({ id, name, employmentType, office }) => {
           return (
-            <li key={position.url} className="mb-6">
-              <p className="serlo-p mb-0 slate-p min-h-[1.33em] font-normal">
-                <a className="serlo-link font-bold" href={position.url}>
-                  {position.linkText}
-                </a>
+            <li key={id}>
+              <Link
+                unstyled
+                className={clsx(
+                  'block px-5 py-4 mb-5',
+                  'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
+                  'text-lg'
+                )}
+                href={`/jobs/${id}`}
+              >
+                <span className="text-brand font-bold">{name}</span>
                 <br />
-                {position.text}
-              </p>
+                {employmentType === 'permanent'
+                  ? 'Festanstellung'
+                  : 'Teilzeit'}{' '}
+                • {office}
+              </Link>
             </li>
           )
         })}
       </ul>
     )
   }
-}
 
-function renderPerson({ name, imgSrc, role, subjects }: CommunityWallPerson) {
-  return (
-    <figure
-      key={name}
-      className={clsx(
-        'mt-12 text-center group',
-        'sm:w-1/3v',
-        'max-w-[20rem] mx-auto'
-      )}
-    >
-      <div className="relative w-full">
-        <div
-          className={clsx(
-            'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
-            'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
-            'transition-all ease-linear duration-200 group-hover:rotate-1'
-          )}
-        ></div>
-      </div>
-      <img
-        src={imgSrc}
-        alt={`Avatar von ${name}`}
-        className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
-      />
-      <p className="text-base mt-2 font-bold">@{name}</p>
-      <span
+  function renderPerson({ name, imgSrc, role, subjects }: CommunityWallPerson) {
+    return (
+      <figure
+        key={name}
         className={clsx(
-          'text-brand font-handwritten text-xl font-bold px-2 py-1',
-          'rounded-2xl'
+          'mt-12 text-center group',
+          'sm:w-1/3v',
+          'max-w-[20rem] mx-auto'
         )}
       >
-        {role}
-      </span>
-      <p className="serlo-p mt-5 special-hyphens-initial">{subjects[0]}</p>
-    </figure>
-  )
-}
-
-export const getStaticProps: GetStaticProps<SlugProps> = async (context) => {
-  if (context.locale !== 'de') return { notFound: true }
-
-  const pageData = await fetchPageData(`/${jobsPageId}`)
-
-  return {
-    props: {
-      pageData: JSON.parse(JSON.stringify(pageData)) as SingleEntityPage,
-    },
-    revalidate: 60 * 60, // 1h,
-    notFound: pageData.kind !== 'single-entity',
+        <div className="relative w-full">
+          <div
+            className={clsx(
+              'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
+              'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
+              'transition-all ease-linear duration-200 group-hover:rotate-1'
+            )}
+          ></div>
+        </div>
+        <img
+          src={imgSrc}
+          alt={`Avatar von ${name}`}
+          className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
+        />
+        <p className="text-base mt-2 font-bold">@{name}</p>
+        <span
+          className={clsx(
+            'text-brand font-handwritten text-xl font-bold px-2 py-1',
+            'rounded-2xl'
+          )}
+        >
+          {role}
+        </span>
+        <p className="serlo-p mt-5 special-hyphens-initial">{subjects[0]}</p>
+      </figure>
+    )
   }
 }
