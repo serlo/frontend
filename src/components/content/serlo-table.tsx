@@ -1,8 +1,8 @@
-import type { FrontendSerloTableNode } from '@/data-types'
 import {
   SerloTableRenderer,
   TableType,
 } from '@/edtr-io/plugins/serlo-table/renderer'
+import type { FrontendSerloTableNode } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export function SerloTable({

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EdtrPluginInputExercise } from '@/data-types'
+import { EdtrPluginInputExercise } from '@/frontend-node-types'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
@@ -27,7 +27,7 @@ export function InputExercise({
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const [A, setA] = useState<typeof import('algebra.js') | null>(null)
-  const { strings } = useInstanceData()
+  const exStrings = useInstanceData().strings.content.exercises
 
   useEffect(() => {
     void import('algebra.js').then((value) => setA(value))
@@ -54,7 +54,7 @@ export function InputExercise({
         onKeyDown={(e) => {
           if (e.key == 'Enter') evaluate()
         }}
-        placeholder={strings.content.yourAnswer}
+        placeholder={exStrings.yourAnswer}
       />{' '}
       {data.unit}
       <br />
@@ -65,13 +65,13 @@ export function InputExercise({
         <>
           <a
             className={clsx(
-              'serlo-button serlo-make-interactive-primary',
+              'serlo-button-blue',
               'mt-4',
               value === '' && 'opacity-0 pointer-events-none'
             )}
             onClick={evaluate}
           >
-            {strings.content.check}
+            {exStrings.check}
           </a>
           {isRevisionView && renderRevisionExtra()}
         </>
@@ -109,12 +109,12 @@ export function InputExercise({
     if (filteredAnswers.length < 1 || !filteredAnswers[0]?.isCorrect) {
       return {
         correct: false,
-        message: customFeedbackNode || <>{strings.content.wrong}</>,
+        message: customFeedbackNode || <>{exStrings.wrong}</>,
       }
     } else {
       return {
         correct: true,
-        message: customFeedbackNode || <>{strings.content.right}</>,
+        message: customFeedbackNode || <>{exStrings.correct}</>,
       }
     }
   }
@@ -146,8 +146,7 @@ export function InputExercise({
         className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info"
       >
         <span className="font-bold text-sm mx-side">
-          {strings.content.answer}{' '}
-          {answer.isCorrect && `[${strings.content.right}]`}:
+          {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:
         </span>
         {answer.value}
         {renderNested(answer.feedback, `mcfeedbackrevision`)}

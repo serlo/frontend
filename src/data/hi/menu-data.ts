@@ -1,4 +1,4 @@
-import { serloDomain } from '../../helper/serlo-domain'
+import { serloDomain } from '../../helper/urls/serlo-domain'
 import { InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
@@ -39,3 +39,23 @@ export const footerData: InstanceData['footerData'] = {
   participationHref: '/112518',
   donationHref: '/spenden',
 }
+
+export const secondaryMenus: InstanceData['secondaryMenus'] = [
+  {
+    entries: [
+      { title: 'सेर्लो के बारे में', id: 112510 },
+      { title: 'सर्लो के साथ कैसे सीखें?', id: 185252 },
+      { title: 'प्रभाव', id: 185250 },
+      { title: 'टीम', id: 206300 },
+      { title: 'भागीदार और दाता', id: 185257 },
+      { title: 'अन्य भाषाओं में सेर्लो', id: 185259 },
+    ],
+  },
+  {
+    entries: [
+      { title: 'समुदाय', id: 195674 },
+      { title: 'सैंडबॉक्स', id: 197295 },
+      { title: 'सामुदायिक मूल्यों', id: 197268 },
+    ],
+  },
+]

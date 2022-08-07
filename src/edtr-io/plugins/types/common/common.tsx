@@ -12,6 +12,7 @@ import {
   number,
   object,
   string,
+  optional,
 } from '@edtr-io/plugin'
 import { getDocument } from '@edtr-io/store'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
@@ -21,9 +22,9 @@ import * as React from 'react'
 export const licenseState = object({
   id: number(),
   title: string(),
+  shortTitle: string(),
   url: string(),
   agreement: string(),
-  iconHref: string(),
 })
 
 export const uuid = {
@@ -31,7 +32,7 @@ export const uuid = {
 }
 
 export const license = {
-  license: licenseState,
+  license: optional(licenseState),
 }
 
 export const entity = {
@@ -241,7 +242,7 @@ export function OptionalChild(props: {
   })
   return (
     <>
-      <hr />
+      <hr className="my-12" />
       {children}
     </>
   )

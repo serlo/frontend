@@ -2,17 +2,18 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
-import { LicenseNotice } from '../license-notice'
+import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentAreaProps } from '@/components/comments/comment-area'
+import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { FrontendExerciseNode } from '@/data-types'
+import { ExerciseInlineType } from '@/data-types'
+import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -21,14 +22,20 @@ export interface ExerciseProps {
   path?: NodePath
 }
 
-const CommentArea = dynamic<CommentAreaProps>(() =>
-  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
+  import('@/components/comments/comment-area-entity').then(
+    (mod) => mod.CommentAreaEntity
+  )
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setSolutionVisible] = useState(
-    printModeSolutionVisible
+    isPrintMode
+      ? printModeSolutionVisible
+      : typeof window === 'undefined'
+      ? false
+      : window.location.href.includes('#comment-')
   )
   const [randomId] = useState(Math.random().toString())
 
@@ -82,14 +89,15 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   }
 
   function renderSolution() {
-    const license = node.solution.license && !node.solution.license.default && (
-      <LicenseNotice minimal data={node.solution.license} type="solution" />
-    )
+    const license = node.solution.license &&
+      !node.solution.license.isDefault && (
+        <LicenseNotice minimal data={node.solution.license} type="solution" />
+      )
     const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     const authorTools = ExerciseAuthorTools && loaded && auth.current && (
       <ExerciseAuthorTools
         data={{
-          type: '_SolutionInline',
+          type: ExerciseInlineType.Solution,
           id: node.context.solutionId!,
           parentId: node.context.id,
           grouped: node.grouped,
@@ -104,7 +112,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {renderNested(
           [
             {
-              type: 'solution',
+              type: FrontendNodeType.Solution,
               solution: node.solution,
               context: { id: node.context.solutionId! },
             },
@@ -114,7 +122,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {license && <div className="px-side">{license}</div>}
         {node.context.solutionId && (
           <Lazy>
-            <CommentArea entityId={node.context.solutionId} />
+            <CommentAreaEntity entityId={node.context.solutionId} />
           </Lazy>
         )}
       </div>
@@ -132,7 +140,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <button
         className={clsx(
-          'serlo-button serlo-make-interactive-transparent-blue text-base',
+          'serlo-button-blue-transparent text-base',
           'ml-side mr-auto mb-4 pr-2',
           solutionVisible && 'bg-brand text-white'
         )}
@@ -197,7 +205,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {loaded && auth.current && ExerciseAuthorTools && (
           <ExerciseAuthorTools
             data={{
-              type: '_ExerciseInline',
+              type: ExerciseInlineType.Exercise,
               trashed: node.trashed,
               id: node.context.id,
               grouped: node.grouped,

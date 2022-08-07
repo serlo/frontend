@@ -3,11 +3,12 @@ import { gql } from 'graphql-request'
 import {
   sharedExerciseFragments,
   sharedLicenseFragments,
+  sharedPathFragments,
   sharedRevisionFragments,
 } from './query-fragments'
 
 export const dataQuery = gql`
-  query uuid($id: Int, $alias: AliasInput) {
+  query mainUuid($id: Int, $alias: AliasInput) {
     authorization
     uuid(id: $id, alias: $alias) {
       __typename
@@ -29,7 +30,6 @@ export const dataQuery = gql`
           ...pageRevision
         }
         navigation {
-          data
           ...path
         }
       }
@@ -173,6 +173,7 @@ export const dataQuery = gql`
           content
           metaDescription
         }
+        ...taxonomyTerms
       }
 
       ... on TaxonomyTerm {
@@ -188,7 +189,6 @@ export const dataQuery = gql`
           id
         }
         navigation {
-          data
           ...path
         }
         children {
@@ -205,9 +205,18 @@ export const dataQuery = gql`
               instance
               currentRevision {
                 content
+                id
+                date
+                cohesive
               }
               exercises {
                 ...exercise
+                revisions(unrevised: true) {
+                  totalCount
+                }
+              }
+              revisions(unrevised: true) {
+                totalCount
               }
               ...license
             }
@@ -233,16 +242,6 @@ export const dataQuery = gql`
             }
           }
         }
-      }
-    }
-  }
-
-  fragment path on Navigation {
-    path {
-      nodes {
-        label
-        url
-        id
       }
     }
   }
@@ -332,6 +331,7 @@ export const dataQuery = gql`
     }
   }
 
+  ${sharedPathFragments}
   ${sharedLicenseFragments}
   ${sharedExerciseFragments}
   ${sharedRevisionFragments}

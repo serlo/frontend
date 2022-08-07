@@ -34,37 +34,43 @@ const legacyLinks = [
 
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
-  if (_href == '/user/notifications') return false
-  if (_href == '/user/settings') return false
-  if (_href == '/entity/unrevised') return false
-  if (_href.startsWith('/entity/repository/history')) return false
-  if (_href.startsWith('/entity/repository/compare')) return false
-
-  // exerimental feature: useLegacyEditor
   if (
+    _href == '/user/notifications' ||
+    _href == '/user/settings' ||
+    _href == '/entity/unrevised' ||
+    _href == '/uuid/recycle-bin' ||
+    _href == '/pages' ||
+    _href.startsWith('/entity/repository/history') ||
+    _href.startsWith('/entity/repository/compare') ||
+    _href.startsWith('/entity/license/update/') ||
+    _href.startsWith('/entity/taxonomy/update/') ||
+    _href.startsWith('/entity/license/update/') ||
+    _href.startsWith('/entity/link/order/') ||
+    _href.startsWith('/entity/create/') ||
+    _href.startsWith('/taxonomy/term/move/batch/') ||
+    _href.startsWith('/taxonomy/term/copy/batch/') ||
+    _href.startsWith('/taxonomy/term/sort/entities/') ||
     _href.startsWith('/entity/repository/add-revision/') ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
-    return (
-      typeof window !== 'undefined' &&
-      document.cookie.includes('useLegacyEditor=1')
-    )
+    return false
   }
 
   return (
     legacyLinks.includes(_href) ||
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
-    _href.startsWith('/discussions') ||
+    _href.startsWith('/authorization') ||
     _href.startsWith('/entity') ||
     _href.startsWith('/math/wiki/') || //temporary
     _href.startsWith('/ref/') || // temporary
     _href.startsWith('/page') ||
     _href.startsWith('/taxonomy') ||
+    _href.startsWith('/navigation') ||
     _href.startsWith('/unsubscribe') ||
     _href.startsWith('/user/profile/') ||
     _href.startsWith('/subscription/update') ||
-    _href.startsWith('/entity/repository/add-revision-old/') ||
+    _href.startsWith('/entity/repository/add-revision-old/') || // temporary
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language
   )
 }
@@ -109,7 +115,7 @@ function InternalLink({
   const isContentOnly = router.asPath.startsWith('/content-only/')
 
   if (isAnchor || isMailto) return renderLink(href)
-  if (isExternal || forceNoCSR) return renderLink(href)
+  if (isExternal || forceNoCSR || isContentOnly) return renderLink(href)
 
   //at this point only internal links should be left
 

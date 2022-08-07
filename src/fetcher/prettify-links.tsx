@@ -2,27 +2,25 @@ import { request } from 'graphql-request'
 
 import { idsQuery } from './query-ids'
 import { endpoint } from '@/api/endpoint'
-import { RequestPageData, FrontendContentNode } from '@/data-types'
-import { hasSpecialUrlChars } from '@/helper/check-special-url-chars'
+import { RequestPageData } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
+import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 export async function prettifyLinks(pageData: RequestPageData) {
   const ids: number[] = []
   const callbacks: { id: number; callback: (alias: string) => void }[] = []
 
   if (pageData.kind === 'single-entity' || pageData.kind === 'taxonomy') {
-    if (pageData.secondaryNavigationData) {
-      pageData.secondaryNavigationData.forEach((entry) => {
-        if (entry.url) {
-          const id = getId(entry.url)
-          if (id) {
-            ids.push(id)
-            callbacks.push({
-              id,
-              callback: (alias) => {
-                entry.url = alias
-              },
-            })
-          }
+    if (pageData.secondaryMenuData) {
+      pageData.secondaryMenuData.forEach((entry) => {
+        if (entry.id && !entry.url) {
+          ids.push(entry.id)
+          callbacks.push({
+            id: entry.id,
+            callback: (alias) => {
+              entry.url = alias
+            },
+          })
         }
       })
     }

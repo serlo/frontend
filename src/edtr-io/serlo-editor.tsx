@@ -2,25 +2,27 @@
 import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
-import { Entity } from '@serlo/authorization'
+import { Entity, UuidType } from '@serlo/authorization'
 import * as React from 'react'
 
 import { CsrfContext } from './csrf-context'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
+import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RevisionAddMutationData } from '@/helper/mutations/revision'
+import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
   getCsrfToken(): string
   children?: React.ReactNode
   needsReview: boolean
-  onSave: (data: RevisionAddMutationData) => Promise<void>
+  onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
-  type: string
+  type: UuidType
 }
 
 export interface LooseEdtrData {
@@ -55,6 +57,7 @@ export function SerloEditor({
   const canDo = useCanDo()
   const showSkipCheckout = canDo(Entity.checkoutRevision) && needsReview
 
+  const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -69,7 +72,9 @@ export function SerloEditor({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     getCsrfToken: getCsrfToken,
     registry: getPluginRegistry(type, editorStrings),
+    type,
     editorStrings,
+    strings,
   })
 
   const DocumentEditor = createDefaultDocumentEditor({
@@ -89,6 +94,7 @@ export function SerloEditor({
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <CsrfContext.Provider value={getCsrfToken}>
       <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
+        <MathSpan formula="" /> {/* preload formula plugin */}
         <Editor
           DocumentEditor={DocumentEditor}
           onError={onError}

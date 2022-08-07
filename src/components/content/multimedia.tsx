@@ -7,7 +7,8 @@ import type {
   FrontendMultiMediaNode,
   FrontendImgNode,
   FrontendContentNode,
-} from '@/data-types'
+} from '@/frontend-node-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
@@ -30,7 +31,7 @@ export function Multimedia({
   const width = convertToClosestQuarter(mediaWidth) // we can do this becaues witdth is only 25%, 50%, 75% or 100%
 
   return (
-    <div className="flex flex-col mobile:block">
+    <div className="flex flex-col-reverse mobile:block">
       <div
         onClick={mediaChildIsImage ? openLightBox : undefined}
         className={clsx(
@@ -56,12 +57,19 @@ export function Multimedia({
       return null
     }
 
+    // simplify after deploy, db-migration and api cache updates
+    const label =
+      hasOwnPropertyTs(mediaChild, 'caption') && mediaChild.caption
+        ? renderNested(mediaChild.caption) ?? undefined
+        : undefined
+
     return (
       open && (
         <LightBox
           open={open}
           onClose={() => setOpen(false)}
-          label={mediaChild.alt}
+          alt={mediaChild.alt}
+          label={label}
           src={mediaChild.src}
         />
       )

@@ -1,9 +1,27 @@
+import { GraphQLError } from 'graphql'
+import { ClientError, GraphQLClient } from 'graphql-request'
+import { RefObject } from 'react'
+
+import { csrReload } from '../csr-reload'
+import { hasOwnPropertyTs } from '../has-own-property-ts'
+import { showToastNotice } from '../show-toast-notice'
+import { triggerSentry } from '../trigger-sentry'
+import { SetEntityInputTypes } from './use-set-entity-mutation/types'
+import { endpoint } from '@/api/endpoint'
+import { AuthenticationPayload } from '@/auth/auth-provider'
 import {
   CheckoutRevisionInput,
+  EntityMutation,
+  EntityUpdateLicenseInput,
   NotificationMutation,
   NotificationSetStateInput,
+  PageAddRevisionInput,
   RejectRevisionInput,
+  SetEntityResponse,
   SubscriptionSetInput,
+  TaxonomyTermCreateInput,
+  TaxonomyTermSetNameAndDescriptionInput,
+  TaxonomyEntityLinksInput,
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
   ThreadMutation,
@@ -14,17 +32,9 @@ import {
   UserSetDescriptionInput,
   UuidMutation,
   UuidSetStateInput,
-} from '@serlo/api'
-import { GraphQLError } from 'graphql'
-import { ClientError, GraphQLClient } from 'graphql-request'
-import { RefObject } from 'react'
-
-import { csrReload } from '../csr-reload'
-import { showToastNotice } from '../show-toast-notice'
-import { triggerSentry } from '../trigger-sentry'
-import { AddRevisionInputTypes } from './revision'
-import { endpoint } from '@/api/endpoint'
-import { AuthenticationPayload } from '@/auth/auth-provider'
+  TaxonomyTermSortInput,
+  EntitySortInput,
+} from '@/fetcher/graphql-types/operations'
 
 type MutationInput =
   | NotificationSetStateInput
@@ -39,9 +49,20 @@ type MutationInput =
   | CheckoutRevisionInput
   | UserDeleteBotsInput
   | UserSetDescriptionInput
-  | AddRevisionInputTypes
+  | SetEntityInputTypes
+  | PageAddRevisionInput
+  | TaxonomyTermCreateInput
+  | TaxonomyTermSetNameAndDescriptionInput
+  | TaxonomyEntityLinksInput
+  | EntityUpdateLicenseInput
+  | TaxonomyTermSortInput
+  | EntitySortInput
 
-type MutationResponse = ThreadMutation | UuidMutation | NotificationMutation
+type MutationResponse =
+  | ThreadMutation
+  | UuidMutation
+  | NotificationMutation
+  | EntityMutation
 
 type ApiErrorType =
   | 'UNAUTHENTICATED'
@@ -62,12 +83,18 @@ export async function mutationFetch(
   input: MutationInput,
   errorStrings?: { [key in ErrorType]: string },
   isRetry?: boolean
-): Promise<boolean> {
+): Promise<boolean | number> {
   if (auth.current === null) return handleError('UNAUTHENTICATED', errorStrings)
-
   const usedToken = auth.current.token
   try {
     const result = await executeQuery()
+    if (hasOwnPropertyTs(result, 'entity')) {
+      const entity = result.entity as EntityMutation
+      if (Object.keys(entity)[0].startsWith('set')) {
+        const entityResponse = Object.values(entity)[0] as SetEntityResponse
+        return entityResponse.record?.id ?? false
+      }
+    }
     return !!result
   } catch (e) {
     const error = (e as ClientError).response?.errors?.[0] as
@@ -76,7 +103,7 @@ export async function mutationFetch(
 
     const type = error ? error.extensions.code : 'UNKNOWN'
     // eslint-disable-next-line no-console
-    console.log(error)
+    console.error(error)
     if (type === 'INVALID_TOKEN' && !isRetry) {
       await auth.current.refreshToken(usedToken)
       return await mutationFetch(auth, query, input, errorStrings, true)
@@ -106,7 +133,7 @@ function handleError(
   const message = errorStrings[type] ?? errorStrings['UNKNOWN']
 
   // eslint-disable-next-line no-console
-  console.log(e)
+  console.error(e)
 
   if (type == 'BAD_USER_INPUT') {
     triggerSentry({ message: 'Bad unser input in mutation' })
@@ -121,5 +148,8 @@ function handleError(
   }
 
   showToastNotice(message, 'warning')
+  if (e && hasOwnPropertyTs(e, 'message')) {
+    showToastNotice(`"${e.message as string}"`)
+  }
   return false
 }

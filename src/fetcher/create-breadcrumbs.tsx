@@ -1,28 +1,36 @@
-import { QueryResponse, TaxonomyTerms } from './query-types'
-import { BreadcrumbsData } from '@/data-types'
+import { MainUuidType } from './query-types'
+import { BreadcrumbsData, UuidType } from '@/data-types'
 
-export function createBreadcrumbs(uuid: QueryResponse) {
-  if (uuid.__typename === 'TaxonomyTerm') {
+export function createBreadcrumbs(uuid: MainUuidType) {
+  if (uuid.__typename === UuidType.TaxonomyTerm) {
     if (uuid.navigation?.path.nodes) {
       return compat(uuid.navigation?.path.nodes)
     }
   }
 
-  if (uuid.__typename === 'CoursePage') {
+  if (uuid.__typename === UuidType.CoursePage) {
     return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms.nodes))
   }
 
   if (
-    uuid.__typename === 'Article' ||
-    uuid.__typename === 'Video' ||
-    uuid.__typename === 'Applet' ||
-    uuid.__typename === 'Exercise' ||
-    uuid.__typename === 'ExerciseGroup'
+    uuid.__typename === UuidType.Article ||
+    uuid.__typename === UuidType.Video ||
+    uuid.__typename === UuidType.Applet ||
+    uuid.__typename === UuidType.Exercise ||
+    uuid.__typename === UuidType.ExerciseGroup ||
+    uuid.__typename === UuidType.Course
   ) {
     return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
   }
 
-  function buildFromTaxTerms(taxonomyPaths: TaxonomyTerms | undefined) {
+  function buildFromTaxTerms(
+    taxonomyPaths:
+      | Extract<
+          MainUuidType,
+          { __typename: 'Article' }
+        >['taxonomyTerms']['nodes']
+      | undefined
+  ) {
     if (taxonomyPaths === undefined) return undefined
     let breadcrumbs
     let backup
@@ -52,7 +60,7 @@ export function createBreadcrumbs(uuid: QueryResponse) {
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
 
-    if (uuid.__typename == 'TaxonomyTerm') {
+    if (uuid.__typename == UuidType.TaxonomyTerm) {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }
 

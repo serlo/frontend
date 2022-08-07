@@ -13,6 +13,8 @@ import { NewElement, NewText, TextPluginState } from '@edtr-io/plugin-text'
 import { VideoPluginState } from '@edtr-io/plugin-video'
 
 import { BoxPluginState } from '@/edtr-io/plugins/box'
+import { PageLayoutPluginState } from '@/edtr-io/plugins/page-layout'
+import { PageTeamPluginState } from '@/edtr-io/plugins/page-team'
 import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
 
 export type SlateBlockElement = NewElement
@@ -155,6 +157,16 @@ export interface EdtrPluginEquations {
   }
 }
 
+export interface EdtrPluginPageLayout {
+  plugin: 'pageLayout'
+  state: StateTypeSerializedType<PageLayoutPluginState>
+}
+
+export interface EdtrPluginPageTeam {
+  plugin: 'pageTeam'
+  state: StateTypeSerializedType<PageTeamPluginState>
+}
+
 export type EdtrState =
   | EdtrPluginArticle
   | EdtrPluginGeogebra
@@ -174,6 +186,8 @@ export type EdtrState =
   | EdtrPluginText
   | EdtrPluginRows
   | EdtrPluginEquations
+  | EdtrPluginPageLayout
+  | EdtrPluginPageTeam
 
 export interface UnsupportedEdtrState {
   plugin: string

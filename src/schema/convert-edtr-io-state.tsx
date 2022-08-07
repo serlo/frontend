@@ -1,70 +1,45 @@
-import { NewNode } from '@edtr-io/plugin-text'
+import { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
-import {
-  EdtrState,
-  SlateBlockElement,
-  SlateTextElement,
-  UnsupportedEdtrState,
-} from './edtr-io-types'
+import { convertTextPluginState } from './convert-text-plugin-state'
+import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
+import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
   FrontendContentNode,
-  FrontendLiNode,
   FrontendMathNode,
+  FrontendNodeType,
   FrontendSerloTrNode,
-  FrontendTextColor,
   FrontendTextNode,
   Sign,
-} from '@/data-types'
-import { BoxType } from '@/edtr-io/plugins/box/renderer'
-
-const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
+} from '@/frontend-node-types'
 
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
 
-function isSlateBlock(node: ConvertData): node is SlateBlockElement {
-  return (node as SlateBlockElement).type !== undefined
-}
-
-function isTextNode(node: ConvertData): node is SlateTextElement {
-  return (node as SlateTextElement).text !== undefined
-}
-
-type ConvertData =
+export type ConvertData =
   | EdtrState
-  | NewNode
-  | SlateTextElement
   | UnsupportedEdtrState
   | FrontendContentNode
+  | NewNode
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
+export function isTextPluginState(node: ConvertData): node is NewNode {
+  return (
+    (node as NewElement).type !== undefined ||
+    (node as NewText).text !== undefined
+  )
+}
+
 export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
-  if (!node || Object.keys(node).length === 0) {
-    return []
-  }
-
-  if (Array.isArray(node)) {
-    return node.flatMap(convert)
-  }
-
-  if (isEdtrState(node)) {
-    return convertPlugin(node)
-  }
-
-  if (isSlateBlock(node)) {
-    return convertSlate(node)
-  }
-
-  if (isTextNode(node)) {
-    return convertText(node)
-  }
-
+  if (!node || Object.keys(node).length === 0) return []
+  if (Array.isArray(node)) return node.flatMap(convert)
+  if (isEdtrState(node)) return convertPlugin(node)
+  if (isTextPluginState(node)) return convertTextPluginState(node)
   return []
 }
 
@@ -84,7 +59,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     )
     return [
       {
-        type: 'article',
+        type: FrontendNodeType.Article,
         introduction: convertPlugin({
           ...introduction,
           plugin: 'multimedia',
@@ -101,38 +76,54 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-
   if (node.plugin === 'rows') {
     return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
-    return convert(node.state)
+    return [
+      { type: FrontendNodeType.SlateContainer, children: convert(node.state) },
+    ]
   }
   if (node.plugin === 'image') {
     // remove images without source
     if (!node.state.src) return []
+
+    const { caption, maxWidth, link, src } = node.state
+
+    const convertedCaption = caption ? convert(caption as EdtrState) : undefined
+    const captionTexts = convertedCaption?.[0].children?.[0].children
+
+    // if alt is not set construct plain string from caption
+    const alt = node.state.alt
+      ? node.state.alt
+      : caption
+      ? captionTexts && captionTexts.length > 0
+        ? captionTexts
+            .map((textPlugin) => {
+              return textPlugin.type === 'text' ? textPlugin.text : ''
+            })
+            .join('')
+        : ''
+      : ''
+
     return [
       {
-        type: 'img',
-        src: node.state.src as string,
-        alt: node.state.alt || '',
-        maxWidth: node.state.maxWidth,
-        href: node.state.link?.href,
+        type: FrontendNodeType.Img,
+        src: src as string,
+        alt: alt,
+        maxWidth: maxWidth,
+        href: link?.href,
+        caption: convertedCaption,
       },
     ]
   }
   if (node.plugin === 'important') {
-    return [
-      {
-        type: 'important',
-        children: convert(node.state),
-      },
-    ]
+    return [{ type: FrontendNodeType.Important, children: convert(node.state) }]
   }
   if (node.plugin === 'blockquote') {
     return [
       {
-        type: 'blockquote',
+        type: FrontendNodeType.Blockquote,
         children: convert(node.state as EdtrState),
       },
     ]
@@ -144,14 +135,14 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       | FrontendMathNode
       | undefined
     const title = convertedTitle
-      ? ((convertedTitle.type === 'math'
-          ? [{ ...convertedTitle, type: 'inline-math' }]
+      ? ((convertedTitle.type === FrontendNodeType.Math
+          ? [{ ...convertedTitle, type: FrontendNodeType.InlineMath }]
           : convertedTitle.children) as unknown as FrontendContentNode[])
-      : ([{ type: 'text', text: '' }] as FrontendTextNode[])
+      : ([{ type: FrontendNodeType.Text, text: '' }] as FrontendTextNode[])
 
     return [
       {
-        type: 'box',
+        type: FrontendNodeType.Box,
         boxType: node.state.type as BoxType,
         anchorId: node.state.anchorId,
         title,
@@ -162,13 +153,13 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'spoiler') {
     return [
       {
-        type: 'spoiler-container',
+        type: FrontendNodeType.SpoilerContainer,
         children: [
           {
-            type: 'spoiler-title',
+            type: FrontendNodeType.SpoilerTitle,
             children: [
               {
-                type: 'text',
+                type: FrontendNodeType.Text,
                 text:
                   node.state.title ||
                   ' ' /* if title is falsy, use space instead to avoid empty text node*/,
@@ -176,19 +167,18 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
             ],
           },
           {
-            type: 'spoiler-body',
+            type: FrontendNodeType.SpoilerBody,
             children: convert(node.state.content as EdtrState),
           },
         ],
       },
     ]
   }
-
   if (node.plugin === 'multimedia') {
     const width = node.state.width ?? 50
     return [
       {
-        type: 'multimedia',
+        type: FrontendNodeType.Multimedia,
         mediaWidth: width,
         float: 'right',
         media: convert(node.state.multimedia as EdtrState),
@@ -199,11 +189,11 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'layout') {
     return [
       {
-        type: 'row',
+        type: FrontendNodeType.Row,
         children: node.state.map((child) => {
           const children = convert(child.child)
           return {
-            type: 'col',
+            type: FrontendNodeType.Col,
             size: child.width,
             children,
           }
@@ -214,7 +204,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'injection') {
     return [
       {
-        type: 'injection',
+        type: FrontendNodeType.Injection,
         href: node.state,
       },
     ]
@@ -223,7 +213,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     if (Object.keys(node.state).length == 0) return [] // ignore empty highlight plugin
     return [
       {
-        type: 'code',
+        type: FrontendNodeType.Code,
         code: node.state.code,
         language: node.state.language,
         showLineNumbers: node.state.showLineNumbers,
@@ -241,10 +231,10 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'serloTable') {
     const children = node.state.rows.map((row) => {
       return {
-        type: 'serlo-tr',
+        type: FrontendNodeType.SerloTr,
         children: row.columns.map((cell) => {
           return {
-            type: 'serlo-td',
+            type: FrontendNodeType.SerloTd,
             children: convert(cell.content as EdtrState),
           }
         }),
@@ -253,7 +243,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
 
     return [
       {
-        type: 'serlo-table',
+        type: FrontendNodeType.SerloTable,
         tableType: node.state.tableType,
         children,
       },
@@ -265,7 +255,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     }
     return [
       {
-        type: 'video',
+        type: FrontendNodeType.Video,
         src: node.state.src,
       },
     ]
@@ -273,7 +263,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'anchor') {
     return [
       {
-        type: 'anchor',
+        type: FrontendNodeType.Anchor,
         id: node.state,
       },
     ]
@@ -285,7 +275,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     if (match) {
       id = match[1]
     }
-    return [{ type: 'geogebra', id }]
+    return [{ type: FrontendNodeType.Geogebra, id }]
   }
   if (node.plugin === 'equations') {
     const { firstExplanation, transformationTarget } = node.state
@@ -303,7 +293,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     })
     return [
       {
-        type: 'equations',
+        type: FrontendNodeType.Equations,
         steps,
         firstExplanation: convert(firstExplanation),
         transformationTarget,
@@ -311,192 +301,20 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
 
+  if (node.plugin === 'pageTeam') {
+    return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
+  }
+
+  if (node.plugin === 'pageLayout') {
+    if (node.state.widthPercent === 0) return []
+    return [
+      {
+        type: FrontendNodeType.PageLayout,
+        column1: convert(node.state.column1 as EdtrState),
+        column2: convert(node.state.column2 as EdtrState),
+        widthPercent: node.state.widthPercent,
+      },
+    ]
+  }
   return []
-}
-
-function convertSlate(node: SlateBlockElement): FrontendContentNode[] {
-  if (node.type === 'p') {
-    return handleSemistructedContentOfP(convert(node.children))
-  }
-  if (node.type === 'a') {
-    const children = convert(node.children)
-    if (!node.href) {
-      // remove empty links
-      return children
-    }
-    return [
-      {
-        type: 'a',
-        href: node.href,
-        children,
-      },
-    ]
-  }
-  if (node.type === 'h') {
-    if (
-      node.level === 1 ||
-      node.level === 2 ||
-      node.level === 3 ||
-      node.level === 4 ||
-      node.level === 5
-    ) {
-      return [
-        {
-          type: 'h',
-          level: node.level,
-          children: convert(node.children),
-        },
-      ]
-    } else {
-      return [
-        {
-          type: 'h',
-          level: 5,
-          children: convert(node.children),
-        },
-      ]
-    }
-  }
-  if (node.type === 'math' && !node.inline) {
-    if (!node.src) {
-      return []
-    }
-    return [
-      {
-        type: 'math',
-        formula: sanitizeLatex(node.src),
-        formulaSource: node.src,
-        alignCenter: true,
-      },
-    ]
-  }
-  if (node.type === 'math' && node.inline) {
-    if (!node.src) {
-      return []
-    }
-    return [
-      {
-        type: 'inline-math',
-        formula: sanitizeLatex(node.src),
-        formulaSource: node.src,
-      },
-    ]
-  }
-  if (node.type === 'unordered-list') {
-    // only allow li nodes
-    const children = convert(node.children).filter(
-      (child) => child.type === 'li'
-    ) as FrontendLiNode[]
-
-    return [
-      {
-        type: 'ul',
-        children,
-      },
-    ]
-  }
-  if (node.type === 'ordered-list') {
-    // only allow li nodes
-    const children = convert(node.children).filter(
-      (child) => child.type === 'li'
-    ) as FrontendLiNode[]
-
-    return [
-      {
-        type: 'ol',
-        children,
-      },
-    ]
-  }
-  if (node.type === 'list-item') {
-    const children = handleSemistructedContentOfP(convert(node.children))
-    return [
-      {
-        type: 'li',
-        children,
-      },
-    ]
-  }
-  if (node.type === 'list-item-child') {
-    return convert(node.children)
-  }
-
-  return []
-}
-
-function convertText(node: SlateTextElement): FrontendContentNode[] {
-  const text = node.text.replace(/\ufeff/g, '')
-  if (text === '') return []
-  return [
-    {
-      type: 'text',
-      text,
-      em: node.em,
-      strong: node.strong,
-      color: colors[node.color as number],
-      code: node.code,
-    },
-  ]
-}
-
-function unwrapSingleMathInline(children: FrontendContentNode[]) {
-  return children.map((child) => {
-    if (
-      child.type == 'p' &&
-      child.children?.length == 1 &&
-      child.children[0].type == 'inline-math'
-    ) {
-      // force conversion
-      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
-      return child.children[0]
-    }
-    return child
-  })
-}
-
-function handleSemistructedContentOfP(input: FrontendContentNode[]) {
-  // generate children, split text blocks at new lines
-  const children = input.flatMap((child) => {
-    if (child.type == 'text' && child.text.includes('\n')) {
-      return child.text.split('\n').flatMap((text, i) => {
-        const value: FrontendTextNode[] = []
-        if (i != 0) {
-          value.push({ type: 'text', text: '%%%BARRIER%%%' })
-        }
-        if (text) {
-          value.push({ type: 'text', text })
-        }
-        return value
-      })
-    }
-    return child
-  })
-
-  // group inline nodes together in p, don't merge if barrier is present
-  const result: FrontendContentNode[] = []
-  let resultAppendable = false
-  children.forEach((child) => {
-    if (
-      child.type == 'text' ||
-      child.type == 'a' ||
-      child.type == 'inline-math'
-    ) {
-      const last = result[result.length - 1]
-      if (child.type == 'text' && child.text == '%%%BARRIER%%%') {
-        resultAppendable = false
-        return
-      }
-      if (resultAppendable && last && last.type == 'p') {
-        last.children!.push(child)
-      } else {
-        result.push({ type: 'p', children: [child] })
-        resultAppendable = true
-      }
-    } else {
-      result.push(child)
-      resultAppendable = false
-    }
-  })
-
-  return unwrapSingleMathInline(result)
 }

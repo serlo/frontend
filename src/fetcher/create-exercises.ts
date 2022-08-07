@@ -1,6 +1,8 @@
 import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
-import { Solution, BareExercise, BareExerciseGroup } from './query-types'
+import { RevisionUuidQuery } from './graphql-types/operations'
+import { MainUuidType } from './query-types'
+import { UuidType } from '@/data-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -8,9 +10,16 @@ import {
   SolutionEdtrState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
-} from '@/data-types'
+  FrontendNodeType,
+} from '@/frontend-node-types'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
+
+type BareExercise = Omit<
+  Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
+  'exerciseGroup' | '__typename' | 'instance'
+>
 
 export function createExercise(
   uuid: BareExercise,
@@ -51,21 +60,21 @@ export function createExercise(
     }
   }
   return {
-    type: 'exercise',
+    type: FrontendNodeType.Exercise,
     grouped: false,
     positionOnPage: index,
     trashed: uuid.trashed,
     task: {
       legacy: taskLegacy,
       edtrState: taskEdtrState,
-      license: uuid.license && createInlineLicense(uuid.license),
+      license: createInlineLicense(uuid.license),
     },
     solution: createSolutionData(uuid.solution),
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
+    href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }
@@ -87,11 +96,7 @@ function createSolutionData(solution: BareExercise['solution']) {
         const solutionState = contentJson.state
         solutionState.strategy = convert(solutionState.strategy)
         // compat: (probably quite fragile) if strategy is empty, we ignore it
-        if (
-          solutionState.strategy.length == 1 &&
-          solutionState.strategy[0].type == 'p' &&
-          solutionState.strategy[0].children?.length === 0
-        ) {
+        if (!hasVisibleContent(solutionState.strategy)) {
           solutionState.strategy = []
         }
         solutionState.steps = convert(solutionState.steps)
@@ -105,33 +110,44 @@ function createSolutionData(solution: BareExercise['solution']) {
     legacy: solutionLegacy,
     edtrState: solutionEdtrState,
     trashed: solution?.trashed ? true : false,
-    license:
-      solution && solution.license
-        ? createInlineLicense(solution.license)
-        : undefined,
+    license: (solution && createInlineLicense(solution.license)) ?? undefined,
   }
 }
 
-export function createSolution(uuid: Solution): FrontendSolutionNode {
+export function createSolution(
+  uuid: Extract<
+    NonNullable<RevisionUuidQuery['uuid']>,
+    { __typename: 'SolutionRevision' }
+  >
+): FrontendSolutionNode {
   return {
-    type: 'solution',
-    solution: createSolutionData(uuid),
+    type: FrontendNodeType.Solution,
+    solution: createSolutionData({
+      __typename: UuidType.Solution,
+      license: uuid.repository.license,
+      id: uuid.id,
+      trashed: uuid.trashed,
+      currentRevision: uuid.repository.currentRevision,
+    }),
     context: {
       id: uuid.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
-    unrevisedRevisions: uuid.unrevisedRevisions,
+    href: uuid.repository.alias,
+    /* not part of the schema anymore, obsolete? unrevisedRevisions: uuid.unrevisedRevisions, */
   }
 }
 
 export function createExerciseGroup(
-  uuid: BareExerciseGroup,
+  uuid: Omit<
+    Extract<MainUuidType, { __typename: 'ExerciseGroup' }>,
+    'date' | 'taxonomyTerms'
+  >,
   pageIndex?: number
 ): FrontendExerciseGroupNode {
   const children: FrontendExerciseNode[] = []
   let groupIndex = 0
   if (uuid.exercises?.length > 0) {
-    uuid.exercises.forEach((exercise: BareExercise) => {
+    uuid.exercises.forEach((exercise) => {
       if (!exercise.currentRevision) return
       if (exercise.trashed) return
       const exerciseNode = createExercise(exercise)
@@ -144,15 +160,15 @@ export function createExerciseGroup(
   }
 
   return {
-    type: 'exercise-group',
+    type: FrontendNodeType.ExerciseGroup,
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
-    license: uuid.license && createInlineLicense(uuid.license),
+    license: createInlineLicense(uuid.license),
     children,
     context: {
       id: uuid.id,
     },
-    href: uuid.alias ? uuid.alias : undefined,
+    href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
   }
 }

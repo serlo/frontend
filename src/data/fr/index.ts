@@ -1,8 +1,10 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { Instance } from '@/fetcher/graphql-types/operations';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "fr",
+  lang: Instance["Fr"],
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "La plateforme d'apprentissage libre",
@@ -11,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
-      agree: "Accepter"
+      agree: "Accepte d'utiliser la recherche"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
@@ -28,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Dossiers",
       exercises: "exercices",
-      events: "Événements"
+      events: "Événements",
+      unrevised: "Non révisé",
+      subterms: 'Subterms',
+      exercisesContent: "Contenu des exercices"
     },
     entities: {
       applet: "applet",
@@ -38,19 +43,18 @@ export const instanceData = {
       event: "Événement",
       exercise: "Exercice",
       exerciseGroup: "Groupe d'exercices",
-      folder: "Dossier",
+      topic: "Dossier",
       groupedExercise: "Exercice groupé",
       page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
       video: "Vidéo",
-      topicFolder: "Dossier d'exercice",
+      exerciseFolder: "Dossier d'exercices",
       comment: "Commentaire",
       revision: "Révision",
       thread: 'Thread',
       threads: 'Threads',
-      topic: "Thèmes",
       subject: "Sujet",
       userProfile: "Profil d'utilisateur·utilisatrice",
       privacyPolicy: "Politique de confidentialité",
@@ -64,7 +68,9 @@ export const instanceData = {
       unrevisedRevisions: "Révisions non révisées",
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
-      editProfile: 'Edit Profile & Settings'
+      editProfile: "Modifier le profil et les paramètres",
+      recycleBin: "Corbeille",
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: "Donneur·e",
@@ -82,7 +88,15 @@ export const instanceData = {
     },
     edit: {
       button: "Modifier",
-      unrevised: "Afficher les révisions non révisées"
+      unrevised: "Afficher les révisions non révisées",
+      inviteModal: {
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
+      }
     },
     license: {
       readMore: "Information",
@@ -100,27 +114,31 @@ export const instanceData = {
     content: {
       show: "montrer",
       hide: "cacher",
-      prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
-      task: "Tâche",
-      right: "Vrai",
-      wrong: "Faux",
-      feedback: "Ton avis",
-      answer: "Répondre",
-      check: "Vérifier",
-      yourAnswer: "Ta réponse...",
-      chooseOption: "Sélectionne une des options :",
-      printModeChooseOption: "Sélectionne une des options :",
       trashedNotice: "Ce contenu est marqué pour être supprimé.",
       unrevisedNotice: "Ce contenu n'a pas encore accepté de révision. Veuillez utiliser %link% pour un aperçu.",
       emptyNotice: 'There is no content here. Please edit or delete.',
-      strategy: "Stratégie de solution",
       picture: "Image",
       previewImage: "Aperçu de l'image",
+      imageAltFallback: 'Image',
       exercisesTitle: "Exercices",
       moreExercises: "Tu peux trouver plus d'exercices dans le dossier suivant :",
       relatedContentTitle: "Tu en veux encore plus?",
       relatedContentText: "Tu peux en trouver plus ici :",
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: "Pour cet éxercice tu as besoin des connaissances de base suivantes:",
+        task: "Tâche",
+        correct: "Correcte",
+        missedSome: "Presque ! Tu as manqué au moins une réponse correcte.",
+        wrong: "Incorrect",
+        feedback: "Ton avis",
+        answer: "Répondre",
+        check: "Vérifier",
+        yourAnswer: "Ta réponse...",
+        chooseOption: "Sélectionne une des options :",
+        printModeChooseOption: "Sélectionne une des options :",
+        strategy: "Stratégie de solution"
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -164,6 +182,7 @@ export const instanceData = {
       error: "Désolé, les commentaires n'ont pas pu être chargés, veuille réessayer plus tard",
       showMoreReply: "Afficher un commentaire de plus",
       showMoreReplies: "Afficher %number% commentaires supplémentaires",
+      hideReplies: 'Hide',
       showArchived: "Afficher les %threads% affichés",
       copyLink: "Copier le lien du commentaire"
     },
@@ -221,7 +240,11 @@ export const instanceData = {
       typeNotSupported: "Veuille essayer de recharger cette page.",
       refreshNow: "Actualiser maintenant",
       backToPrevious: "Retour à la page précédente",
-      backToHome: "Aller à notre page d'accueil"
+      backToHome: "Aller à notre page d'accueil",
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: "Préparation de l'impression !",
@@ -289,6 +312,8 @@ export const instanceData = {
       globalDescription: "Tous les événements qui se produisent quelque part sur %lang%.serlo.org"
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: "%actor% a archivé %thread%.",
       setThreadStateUnarchived: "%actor% a restauré %thread%.",
       createComment: "%actor% a commenté dans %thread%: %comment%.",
@@ -297,9 +322,9 @@ export const instanceData = {
       setLicense: "%actor% a modifié la licence de %repository%.",
       createEntityLink: "%actor% a associé %child% à %parent%.",
       removeEntityLink: "%actor% a dissocié %child% de %parent%.",
-      createEntityRevision: "%actor% a créé une %revision% de %entity%.",
-      checkoutRevision: "%actor% a accepté une %revision% dans %repository%.",
-      rejectRevision: "%actor% n'a pas accepté une %revision% dans %repository%.",
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: "%actor% a ajouté %child% à %parent%.",
       removeTaxonomyLink: "%actor% a retiré %child% de %parent%.",
       createTaxonomyTerm: "%actor% a créé %term%.",
@@ -314,11 +339,15 @@ export const instanceData = {
     },
     actions: {
       loadMore: "Charger plus"
+    },
+    bin: {
+      title: 'Title',
+      trashed: 'Trashed…'
     }
   }
 };
 export const instanceLandingData = {
-  lang: "fr",
+  lang: Instance["Fr"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Notre vision est de permettre un apprentissage personnalisé et de fournir des ressources éducatives de haute qualité dans le monde entier - complètement gratuit. Serlo est une organisation de base inspirée par Wikipédia. Nous fournissons déjà des milliers d'articles, de vidéos et d'exercices résolus à cinq millions d'étudiants allemands chaque année.\nIl est maintenant temps de passer à l'international.",
@@ -391,6 +420,7 @@ export const loggedInData = {
       history: "Histoire",
       editAssignments: "Modifier le sujet et le programme d'études",
       moveToTrash: "Déplacer dans la corbeille",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: "Restaurer à partir de la corbeille",
       sortCoursePages: "Trier les pages du cours",
       sortGroupedExercises: "Trier les exercices groupés",
@@ -402,10 +432,11 @@ export const loggedInData = {
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
       editProfile: "Modifier profil",
-      directLink: "Lien direct vers ce contenu"
+      directLink: "Lien direct vers ce contenu",
+      analyticsLink: 'See analytics data'
     },
     notifications: {
-      hide: "Masquer les notifications pour ce contenu.",
+      hide: 'Deactivate new notifications for this content.',
       setToRead: "Définir la notification comme lu.",
       setAllToRead: "Définir tous les visibles comme lus.",
       showNew: "Nouveau",
@@ -440,13 +471,15 @@ export const loggedInData = {
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
-        save: 'Edit successfully saved ✅'
+        save: 'Edit successfully saved ✅',
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
         FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
         valueMissing: 'Please fill all required fields'
       }
@@ -535,8 +568,6 @@ export const loggedInData = {
         addAnswer: "Ajouter une réponse",
         enterTheValue: "Saisir la réponse",
         yourSolution: "Ta solution",
-        correct: "Correcte",
-        wrong: "Incorrect",
         number: "Number (exact solution, e.g. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
@@ -561,10 +592,7 @@ export const loggedInData = {
         singleChoice: "Choix unique",
         multipleChoice: "Choix multiple",
         chooseType: "Choisir le type d'exercice",
-        addAnswer: "Ajouter une réponse",
-        wrong: "Incorrect",
-        missedSome: "Presque ! Tu as manqué au moins une réponse correcte",
-        correct: "Correcte"
+        addAnswer: "Ajouter une réponse"
       },
       serloTable: {
         mode: 'Mode',
@@ -576,6 +604,7 @@ export const loggedInData = {
         row: "row",
         column: "column",
         addType: 'Add %type%',
+        addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
         confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
@@ -590,13 +619,14 @@ export const loggedInData = {
         closeSubMenu: "Fermer le sous-menu",
         heading: "Titre",
         headings: "Titres",
-        linkStrgK: "Lien (Strg + K)",
+        link: "Lien (%ctrlOrCmd% + K)",
         enterUrl: "Saisir l'URL",
         openInNewTab: "Ouvrir dans un nouvel onglet",
         orderedList: "Liste ordonnée",
         unorderedList: "Liste non ordonnée",
         lists: "Listes",
-        mathFormula: "Formule mathématique (Strg + M)",
+        mathFormula: "Formule mathématique (%ctrlOrCmd% + M)",
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: "Afficher comme un bloc",
         formula: '[formula]',
         visual: "visuel",
@@ -611,8 +641,8 @@ export const loggedInData = {
         mathSymbols: "Symboles mathématiques",
         eG: "par ex.",
         functions: "Fonctions",
-        bold: "Gras (Ctrl + B)",
-        italic: "Italique (Ctrl + I)",
+        bold: "Gras (%ctrlOrCmd% + B)",
+        italic: "Italique (%ctrlOrCmd% + I)",
         noItemsFound: "Aucun élément trouvé"
       },
       video: {
@@ -642,12 +672,16 @@ export const loggedInData = {
       box: {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
-        anchorId: 'Anchor ID'
+        anchorId: 'Anchor ID',
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: "Pour rendre le contenu glissable, converte-le pour le nouvel éditeur :",
         oneColumnLayout: "Mise en page en une colonne",
         multimediaTitle: "Contenu multimédia avec un texte"
+      },
+      pageLayoutColums: {
+        chooseRatio: 'Choose column ratio'
       },
       solution: {
         optionalExplanation: "Explication de la stratégie de solution (facultatif)",
@@ -668,36 +702,34 @@ export const loggedInData = {
         seoDesc: "Description pour les moteurs de recherche",
         title: "Titre",
         writeShortIntro: "Écrire une courte introduction",
-        exercises: "Exercices",
-        dragTheExercise: "Faire glisser l'exercice",
-        removeExercise: "Supprimer l'exercice",
-        addOptionalExercise: "Ajouter un exercice facultatif",
         stillWantMore: "Tu en veux encore plus?",
         moreOnTopic: "Tu peux en trouver plus ici :",
-        articles: 'Articles',
-        addArticle: "Ajouter un article",
-        idArticle: "ID d'un article, par exemple 1855",
-        openArticleTab: "Ouvrir l'article dans un nouvel onglet :",
-        dragTheArticle: "Faire glisser l'article",
-        courses: "Cours",
-        addCourse: "Ajouter un cours",
-        idCourse: "ID d'un cours, par exemple 51979",
-        openCourseTab: "Ouvrir le cours dans un nouvel onglet :",
-        dragTheCourse: "Faire glisser le cours",
-        videos: "Vidéos",
-        addVideo: "Ajouter une vidéo",
-        idVideo: "ID d'une vidéo, par exemple 40744",
-        openVideoTab: "Ouvrir la vidéo dans un nouvel onglet :",
-        dragTheVideo: "Faire glisser la vidéo",
-        linkTitle: "Titre du lien",
-        sources: 'Sources',
-        linkUrl: "URL du lien",
-        openInNewTab: "Ouvrir le lien dans un nouvel onglet :",
-        dragTheSource: "Faire glisser la source",
         addSource: "Ajouter une source",
+        removeLabel: 'Remove',
+        dragLabel: 'Drag to change order',
+        openInTab: 'Open in new tab',
+        sources: 'Sources',
+        sourceText: 'Source Text',
+        sourceUrl: 'Optional URL',
         moreInFolder: "Tu peux trouver plus d'exercices dans le dossier suivant :",
-        exFolderId: "ID d'un dossier exercice, par exemple 30560",
-        openExerciseTab: "Ouvrir le dossier d'exercice dans un nouvel onglet :"
+        addModal: {
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+          buttonEx: 'Add exercises',
+          buttonExFolder: 'Select exercise folder',
+          buttonContent: 'Add content',
+          buttonAddType: 'Add %type%',
+          title: 'Add related Content or Exercises',
+          invalidInput: 'Invalid id or url',
+          fetchError: 'Something went wrong, please try later',
+          loading: 'Loading…',
+          notFound: 'Could not find that content',
+          unsupportedType: 'Sorry, type [%type%] is not supported here',
+          unsupportedId: 'Sorry, this ID is not supported here',
+          addFromFolderTitle: 'From the folder',
+          placeholder: 'Paste Serlo ID or URL here',
+          exerciseFolderNote: 'Only one can be selected here'
+        }
       },
       coursePage: {
         explanation: "Explication",
@@ -781,6 +813,38 @@ export const loggedInData = {
         heading: 'How to delete your account',
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
         deleteAccount: 'Delete Account'
+      }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
+    },
+    pages: {
+      deletedPages: 'Deleted Pages'
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied",
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+      },
+      deleteAdd: {
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

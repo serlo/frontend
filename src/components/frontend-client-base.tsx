@@ -15,10 +15,11 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
-import { frontendOrigin } from '@/helper/frontent-origin'
 import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
 export type FrontendClientBaseProps = PropsWithChildren<{
   noHeaderFooter?: boolean
@@ -61,7 +62,9 @@ export function FrontendClientBase({
       const featureI18n = require('@/helper/feature-i18n') as {
         getInstanceDataByLang: typeof getInstanceDataByLang
       }
-      return featureI18n.getInstanceDataByLang(locale!)
+      return featureI18n.getInstanceDataByLang(
+        (locale as Instance) ?? Instance.De
+      )
     } else {
       // load instance data from client from document tag
       return JSON.parse(
@@ -81,12 +84,12 @@ export function FrontendClientBase({
     )
     sessionStorage.setItem('currentPathname', window.location.href)
     // scroll to comment area to start lazy loading
-    if (window.location.href.includes('#comment-')) {
+    if (window.location.hash.startsWith('#comment-')) {
       setTimeout(() => {
         document
           .querySelector('#comment-area-begin-scrollpoint')
           ?.scrollIntoView()
-      }, 1000)
+      }, 800)
     }
   })
 

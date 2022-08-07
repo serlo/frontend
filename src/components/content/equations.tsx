@@ -2,7 +2,11 @@ import clsx from 'clsx'
 import { shade } from 'polished'
 import { ReactNode, Fragment } from 'react'
 
-import { FrontendContentNode, Sign } from '@/data-types'
+import {
+  FrontendContentNode,
+  FrontendNodeType,
+  Sign,
+} from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 import { theme } from '@/theme'
 
@@ -97,7 +101,11 @@ export function Equations({
     }
 
     function renderFormula(formula: string, key: string) {
-      return renderNested([{ type: 'inline-math', formula }], `step${i}`, key)
+      return renderNested(
+        [{ type: FrontendNodeType.InlineMath, formula }],
+        `step${i}`,
+        key
+      )
     }
   }
 
@@ -146,6 +154,8 @@ function renderSignToString(sign: Sign): string {
   }
 }
 
-function hasContent(content: FrontendContentNode[]) {
+function hasContent(content: FrontendContentNode[]): boolean {
+  if (content[0]?.type == 'slate-container')
+    return hasContent(content[0].children ?? [])
   return content.some((node) => node?.children?.length || node.type == 'math')
 }

@@ -24,13 +24,14 @@ export function CommunityWallSubjectLanding({
 }: {
   subject: deSubjectLandingSubjects
 }) {
-  const [persons, setPersons] = useState<CommunityWallPerson[]>(
-    communityWallPersons.filter((person) => person.subjects.includes(subject))
-  )
+  const [persons, setPersons] = useState<CommunityWallPerson[]>([])
 
   useEffect(() => {
-    setPersons((p) => shuffleArray(p))
-  }, [])
+    const persons = communityWallPersons.filter((person) =>
+      person.subjects.includes(subject)
+    )
+    setPersons(shuffleArray(persons))
+  }, [subject])
 
   const { title, contributeLink } = deSubjectLandingData[subject]
 
@@ -45,7 +46,7 @@ export function CommunityWallSubjectLanding({
               'max-w-xl mt-20 mx-auto relative z-10 mb-8'
             )}
           >
-            Lust das Fach {title} mitzugestalten?
+            Lust, das Fach {title} mitzugestalten?
           </h3>
           <p className="jsx-1406289065 text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
@@ -62,7 +63,7 @@ export function CommunityWallSubjectLanding({
               )}
               href={contributeLink}
             >
-              Mehr erfahren
+              Mitmachen
             </Link>
             <div className="relative">
               <div className="absolute flex justify-center inset-0">

@@ -9,7 +9,7 @@ import { Events } from '@/components/user/events'
 import { UserUnrevisedRevisions } from '@/components/user/user-unrevised-revisions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EventHistoryProps } from '@/data-types'
-import { Instance } from '@/fetcher/query-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -39,7 +39,7 @@ function Content({ title, id, alias, isUser }: EventHistoryProps['pageData']) {
 
   const hasTitle = title && title.length > 1
   const label = hasTitle ? title : strings.revisions.toContent
-  const url = alias ? alias : id ? `/${id}` : undefined
+  const url = alias
 
   const anyUserString = strings.pageTitles.userEdits.replace(
     '%user%',
@@ -78,7 +78,7 @@ function Content({ title, id, alias, isUser }: EventHistoryProps['pageData']) {
     )
 
     function renderEdits() {
-      return <UserUnrevisedRevisions userId={id} alias={alias} isOwn={isOwn} />
+      return <UserUnrevisedRevisions userId={id} isOwn={isOwn} />
     }
   }
 }

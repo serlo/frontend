@@ -7,12 +7,13 @@ import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { HistoryRevisionData, HistoryRevisionsData } from '@/data-types'
-import { getRevisionEditUrl } from '@/helper/get-revision-edit-url'
+import { Revision, Revisions } from '@/fetcher/query-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
-  data?: HistoryRevisionsData
+  data?: Revisions
   hideEdit?: boolean
   onSelectRevision?: (id: number) => void
   selectedRevisionId?: number
@@ -26,7 +27,6 @@ export function RevisionHistory({
 }: RevisionHistoryProps) {
   const { strings } = useInstanceData()
   if (!data) return null
-  const isPage = data.__typename === 'Page'
   const { changes, status, author, date, view, edit } = strings.revisionHistory
 
   function handleOnClick(id: number) {
@@ -49,16 +49,18 @@ export function RevisionHistory({
     </table>
   )
 
-  function renderRow(entry: HistoryRevisionData) {
+  function renderRow(entry: Revision) {
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
-    const editUrl = getRevisionEditUrl(isPage, data!.id, entry.id)
+    const editUrl = getEditUrl(data!.id, entry.id)
     const isEditorLink = onSelectRevision !== undefined
 
     const isImportant =
       selectedRevisionId === entry.id ||
       (isCurrent && selectedRevisionId === undefined)
     const isActiveEditorLink = isEditorLink && !isImportant
+
+    const changes = hasOwnPropertyTs(entry, 'changes') ? entry.changes : '–'
 
     return (
       <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>
@@ -76,7 +78,7 @@ export function RevisionHistory({
                 isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
               }
             >
-              {entry.changes || '–'}
+              {changes}
             </span>
           </Link>
         </td>
@@ -95,7 +97,7 @@ export function RevisionHistory({
         >
           {(isActiveEditorLink || !isEditorLink) && (
             <Link
-              className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+              className="serlo-button-light my-0 mx-auto text-base"
               title={strings.revisionHistory.viewLabel}
               href={isEditorLink ? undefined : viewUrl}
             >
@@ -106,7 +108,7 @@ export function RevisionHistory({
         {!hideEdit && (
           <td className="serlo-td">
             <Link
-              className="serlo-button serlo-make-interactive-light my-0 mx-auto text-base"
+              className="serlo-button-light my-0 mx-auto text-base"
               title={strings.revisionHistory.editLabel}
               href={editUrl}
             >

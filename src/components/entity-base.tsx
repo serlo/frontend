@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
 
+import { CommentAreaEntityProps } from './comments/comment-area-entity'
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
@@ -8,10 +9,14 @@ import { HeadTags } from './head-tags'
 import { JsonLd } from './json-ld'
 import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { MetaMenu } from './navigation/meta-menu'
+import { SecondaryMenu } from './navigation/secondary-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
-import { CommentAreaProps } from '@/components/comments/comment-area'
-import { EntityPageBase, SingleEntityPage, TaxonomyPage } from '@/data-types'
+import {
+  EntityPageBase,
+  SingleEntityPage,
+  TaxonomyPage,
+  UuidType,
+} from '@/data-types'
 
 export interface EntityBaseProps {
   children: ReactNode
@@ -19,20 +24,22 @@ export interface EntityBaseProps {
   entityId: number
 }
 
-const CommentArea = dynamic<CommentAreaProps>(() =>
-  import('@/components/comments/comment-area').then((mod) => mod.CommentArea)
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
+  import('@/components/comments/comment-area-entity').then(
+    (mod) => mod.CommentAreaEntity
+  )
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const noComments =
     page.kind === 'single-entity' &&
-    (page.entityData.typename === 'Page' ||
-      page.entityData.typename === 'GroupedExercise')
+    (page.entityData.typename === UuidType.Page ||
+      page.entityData.typename === UuidType.GroupedExercise)
 
   return (
     <>
-      {page.secondaryNavigationData && (
-        <MetaMenu data={page.secondaryNavigationData} />
+      {page.secondaryMenuData && (
+        <SecondaryMenu data={page.secondaryMenuData} />
       )}
       {page.metaData && (
         <HeadTags
@@ -46,16 +53,15 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       ) : null}
       {page.newsletterPopup && <NewsletterPopup />}
       <div className="relative">
-        <MaxWidthDiv showNav={!!page.secondaryNavigationData}>
+        <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           {renderBreadcrumbs()}
           <main>{children}</main>
+
+          <div id="comment-area-begin-scrollpoint" />
           {!noComments && (
-            <>
-              <div id="comment-area-begin-scrollpoint" />
-              <Lazy>
-                <CommentArea entityId={entityId} />
-              </Lazy>
-            </>
+            <Lazy>
+              <CommentAreaEntity entityId={entityId} />
+            </Lazy>
           )}
           <HSpace amount={40} />
           {page.horizonData && (
@@ -78,7 +84,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         }
         asBackButton={
           page.kind == 'single-entity' &&
-          page.entityData.typename == 'GroupedExercise'
+          page.entityData.typename == UuidType.GroupedExercise
         }
       />
     )

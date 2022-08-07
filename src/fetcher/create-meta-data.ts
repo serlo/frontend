@@ -3,37 +3,22 @@
   ResponseDataQuickFix,
 } from '@/fetcher/process-response'*/
 
-import { FrontendContentNode } from '@/data-types'
-import { serloDomain } from '@/helper/serlo-domain'
+import { FrontendContentNode } from '@/frontend-node-types'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
-/*export function getMetaContentType(uuid) {
-  contentType = uuid.__typename
-  //match legacy content types that are used by google custom search
-  if (processed.contentType === undefined) return ''
-  if (processed.contentType === 'Exercise') return 'text-exercise'
-  if (processed.contentType === 'CoursePage') return 'course-page'
-
-  const type = ((processed.data as unknown) as ResponseDataQuickFix).type
-  if (type === 'topicFolder' || type === 'curriculumTopicFolder')
-    return 'topic-folder'
-  if (contentType === 'TaxonomyTerm') return 'topic'
-  //Article, Video, Applet, Page
-  return contentType.toLowerCase()
-}*/
-
-export function getMetaImage(alias?: string) {
-  const subject = alias ? alias.split('/')[1] : 'default'
+export function getMetaImage(alias: string) {
+  const subject = alias.split('/')[1]
   let imageSrc = 'serlo.jpg'
 
   switch (subject) {
     case 'mathe':
-      imageSrc = 'mathematik.jpg'
+      imageSrc = 'mathematik.png'
       break
     case 'nachhaltigkeit':
-      imageSrc = 'nachhaltigkeit.jpg'
+      imageSrc = 'nachhaltigkeit.png'
       break
     case 'biologie':
-      imageSrc = 'biologie.jpg'
+      imageSrc = 'biologie.png'
       break
   }
 
@@ -41,7 +26,7 @@ export function getMetaImage(alias?: string) {
 }
 
 export function getMetaDescription(content: FrontendContentNode[]): string {
-  /*if (processed.contentType === 'TaxonomyTerm') return
+  /*if (processed.contentType === UuidType.TaxonomyTerm) return
 
   if (!processed.data) return
 
@@ -71,9 +56,9 @@ export function getMetaDescription(content: FrontendContentNode[]): string {
 
   const softCutoff = 135
   const fallback =
-    longFallback.substr(
+    longFallback.substring(
       0,
-      softCutoff + longFallback.substr(softCutoff).indexOf(' ')
+      softCutoff + longFallback.substring(softCutoff).indexOf(' ')
     ) + ' …'
   const description = fallback
   return description

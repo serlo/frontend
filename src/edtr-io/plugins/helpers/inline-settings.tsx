@@ -22,16 +22,18 @@ export function InlineSettings({
   ...props
 }: {
   children: React.ReactNode
-  onDelete: React.MouseEventHandler
+  onDelete?: React.MouseEventHandler
   position: HoverPosition
   anchor?: React.RefObject<HTMLElement>
 }) {
   return (
     <HoveringOverlay position={position} anchor={props.anchor}>
       <InlinePreview>{props.children}</InlinePreview>
-      <ChangeButton onClick={props.onDelete}>
-        <Icon icon={faTrashAlt} />
-      </ChangeButton>
+      {props.onDelete ? (
+        <ChangeButton onClick={props.onDelete}>
+          <Icon icon={faTrashAlt} />
+        </ChangeButton>
+      ) : null}
     </HoveringOverlay>
   )
 }

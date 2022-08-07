@@ -1,14 +1,18 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
-import { useContext, useState } from 'react'
+import { gql } from 'graphql-request'
+import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
 import { SaveContext } from '../serlo-editor'
 import { SaveLocalButton } from './save-local-button'
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
 
 export interface SaveModalProps {
   visible: boolean
@@ -36,12 +40,31 @@ export function SaveModal({
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [autoCheckout, setAutoCheckout] = useState(false)
+  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  const [fireSave, setFireSave] = useState(false)
+  const { lang } = useInstanceData()
+
+  const { data: licenseData } = useLicensesFetch(lang)
+  const defaultLicenseAgreement = licenseData?.license.defaultLicense.agreement
 
   const licenseAccepted = !license || agreement
-  const changesFilled = !changes || changes.value
+  const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
   const buttonDisabled = !maySave || pending
   const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
+
+  useEffect(() => {
+    if (fireSave) {
+      handleSave(notificationSubscription, emailSubscription, autoCheckout)
+      setFireSave(false)
+    }
+  }, [
+    autoCheckout,
+    emailSubscription,
+    fireSave,
+    handleSave,
+    notificationSubscription,
+  ])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -79,7 +102,7 @@ export function SaveModal({
     return (
       <div className="mt-4 text-right mx-side">
         <button
-          className="serlo-button serlo-make-interactive-transparent"
+          className="serlo-button-transparent"
           onClick={() => {
             setVisibility(false)
           }}
@@ -88,17 +111,14 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            handleSave(
-              notificationSubscription,
-              emailSubscription,
-              autoCheckout
-            )
+            changes?.set(changesText)
+            setFireSave(true)
           }}
           className={clsx(
-            'serlo-button',
+            'serlo-button ml-2',
             buttonDisabled
               ? 'cursor-default text-gray-300'
-              : 'serlo-make-interactive-green'
+              : 'serlo-button-green'
           )}
           disabled={buttonDisabled}
           title={getSaveHint()}
@@ -138,10 +158,10 @@ export function SaveModal({
       <label className="font-bold">
         {edtrIo.changes}
         <textarea
-          value={changes.value}
+          value={changesText}
           onChange={(e) => {
             const { value } = e.target as HTMLTextAreaElement
-            changes.set(value)
+            setChangesText(value)
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
@@ -170,7 +190,11 @@ export function SaveModal({
   }
 
   function renderLicense() {
-    if (!license) return null
+    const licenseAgreement =
+      license && license.defined
+        ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
+        : defaultLicenseAgreement ?? ''
+
     return (
       <label className="block pb-2">
         <input
@@ -183,7 +207,7 @@ export function SaveModal({
         />{' '}
         <span
           className="license-wrapper"
-          dangerouslySetInnerHTML={{ __html: license.agreement.value }}
+          dangerouslySetInnerHTML={{ __html: licenseAgreement }}
         />
         <style jsx global>
           {`
@@ -225,4 +249,24 @@ export function SaveModal({
       </>
     )
   }
+}
+
+const licensesQuery = gql`
+  query defaultLicenseAgreement($instance: Instance!) {
+    license {
+      defaultLicense(instance: $instance) {
+        agreement
+      }
+    }
+  }
+`
+
+function useLicensesFetch(instance: string) {
+  return useGraphqlSwr<DefaultLicenseAgreementQuery>({
+    query: licensesQuery,
+    variables: { instance },
+    config: {
+      refreshInterval: 24 * 60 * 60 * 1000, // day
+    },
+  })
 }

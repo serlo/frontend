@@ -10,6 +10,7 @@ import {
   Splish,
 } from '@serlo/legacy-editor-to-editor'
 
+import { SerloEntityPluginType } from './plugins'
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
 import { Entity, License, Uuid } from './plugins/types/common/common'
@@ -23,29 +24,15 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
-import {
-  Applet,
-  Article,
-  Course,
-  CoursePage,
-  Event,
-  Exercise,
-  BareExercise,
-  ExerciseGroup,
-  Page,
-  QueryResponse,
-  Solution,
-  TaxonomyTerm,
-  User,
-  Video,
-} from '@/fetcher/query-types'
+import { UuidType, UuidRevType } from '@/data-types'
+import { User, MainUuidType } from '@/fetcher/query-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 
 // converts query response to deserialized editor state
-export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
+export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   const stack: { id: number; type: string }[] = []
 
   const config: Record<
@@ -72,9 +59,9 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
       ? {
           id: uuid.license.id,
           title: uuid.license.title,
+          shortTitle: uuid.license.shortTitle,
           url: uuid.license.url,
           agreement: uuid.license.agreement,
-          iconHref: uuid.license.iconHref,
         }
       : undefined
   const { id } = uuid
@@ -86,11 +73,11 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
     currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
-      ? (currentRev.metaTitle as string)
+      ? currentRev.metaTitle
       : ''
   const meta_description =
     currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
-      ? (currentRev.metaDescription as string)
+      ? currentRev.metaDescription
       : ''
   const revision =
     currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0
@@ -110,7 +97,7 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     return convert(uuid)
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    console.error(e)
 
     triggerSentry({
       message: `error while converting: ${JSON.stringify(stack)}`,
@@ -122,12 +109,12 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertApplet(
-    uuid: Applet
+    uuid: Extract<MainUuidType, { __typename: 'Applet' }>
   ): DeserializedState<typeof appletTypeState> {
     stack.push({ id: uuid.id, type: 'applet' })
     return {
       initialState: {
-        plugin: 'type-applet',
+        plugin: SerloEntityPluginType.Applet,
         state: {
           ...entityFields,
           revision,
@@ -144,12 +131,12 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertArticle(
-    uuid: Article
+    uuid: Extract<MainUuidType, { __typename: 'Article' }>
   ): DeserializedState<typeof articleTypeState> {
     stack.push({ id: uuid.id, type: 'article' })
     return {
       initialState: {
-        plugin: 'type-article',
+        plugin: SerloEntityPluginType.Article,
         state: {
           ...entityFields,
           revision,
@@ -197,12 +184,12 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertCourse(
-    uuid: Course
+    uuid: Extract<MainUuidType, { __typename: 'Course' }>
   ): DeserializedState<typeof courseTypeState> {
     stack.push({ id: uuid.id, type: 'course' })
     return {
       initialState: {
-        plugin: 'type-course',
+        plugin: SerloEntityPluginType.Course,
         state: {
           ...entityFields,
           revision,
@@ -219,6 +206,7 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
                 ...page,
                 currentRevision: {
                   id: page.id,
+                  alias: page.alias,
                   title: page.currentRevision?.title ?? '',
                   content: page.currentRevision?.content ?? '',
                   date: '', // not used
@@ -232,19 +220,22 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertCoursePage(
-    uuid: Pick<CoursePage, 'id' | 'currentRevision'>
+    uuid: Pick<
+      Extract<MainUuidType, { __typename: 'CoursePage' }>,
+      'id' | 'currentRevision'
+    >
   ): DeserializedState<typeof coursePageTypeState> {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
-        plugin: 'type-course-page',
+        plugin: SerloEntityPluginType.CoursePage,
         state: {
           id: uuid.id,
           license: license!, // there could be cases where this is not correct
           revision,
           changes: '',
-          title: uuid.currentRevision?.title || '',
           icon: 'explanation',
+          title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
             toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
           ),
@@ -256,11 +247,13 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     }
   }
 
-  function convertEvent(uuid: Event): DeserializedState<typeof eventTypeState> {
+  function convertEvent(
+    uuid: Extract<MainUuidType, { __typename: 'Event' }>
+  ): DeserializedState<typeof eventTypeState> {
     stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
-        plugin: 'type-event',
+        plugin: SerloEntityPluginType.Event,
         state: {
           ...entityFields,
           revision,
@@ -275,11 +268,13 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     }
   }
 
-  function convertPage(uuid: Page): DeserializedState<typeof pageTypeState> {
+  function convertPage(
+    uuid: Extract<MainUuidType, { __typename: 'Page' }>
+  ): DeserializedState<typeof pageTypeState> {
     stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
-        plugin: 'type-page',
+        plugin: SerloEntityPluginType.Page,
         state: {
           ...entityFields,
           title,
@@ -291,15 +286,15 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertTaxonomy(
-    uuid: TaxonomyTerm
+    uuid: Extract<MainUuidType, { __typename: 'TaxonomyTerm' }>
   ): DeserializedState<typeof taxonomyTypeState> {
     stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
       initialState: {
-        plugin: 'type-taxonomy',
+        plugin: SerloEntityPluginType.Taxonomy,
         state: {
           id: uuid.id,
-          parent: uuid.parent.id,
+          parent: uuid.parent?.id ?? 0,
           position: uuid.weight,
           taxonomy: uuid.taxonomyId,
           term: {
@@ -315,14 +310,14 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertTextExercise(
-    uuid: Exercise | BareExercise
+    uuid: Extract<MainUuidType, { __typename: 'Exercise' }>
   ): DeserializedState<typeof textExerciseTypeState> {
     stack.push({ id: uuid.id, type: 'text-exercise' })
     const convertd = convertEditorState(content)
 
     return {
       initialState: {
-        plugin: 'type-text-exercise',
+        plugin: SerloEntityPluginType.TextExercise,
         state: {
           id: uuid.id,
           license: license!,
@@ -330,7 +325,13 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
           revision,
           'text-solution':
             uuid.solution && !uuid.solution.trashed
-              ? convertTextSolution(uuid.solution).initialState.state
+              ? convertTextSolution({
+                  ...uuid.solution,
+                  alias: uuid.alias,
+                  __typename: UuidType.Solution,
+                  instance: uuid.instance,
+                  exercise: uuid,
+                }).initialState.state
               : '',
           content: getContent(),
         },
@@ -362,19 +363,33 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertTextExerciseGroup(
-    uuid: ExerciseGroup
+    uuid: Extract<MainUuidType, { __typename: 'ExerciseGroup' }>
   ): DeserializedState<typeof textExerciseGroupTypeState> {
     stack.push({ id: uuid.id, type: 'text-exercise-group' })
 
     const exercises = uuid.exercises
       .filter((exercise) => exercise.trashed === false)
       .map((exercise) => {
-        return convertTextExercise(exercise).initialState.state
+        return convertTextExercise({
+          ...exercise,
+          __typename: UuidType.Exercise,
+          taxonomyTerms: { nodes: [] },
+          revisions: {
+            __typename: 'ExerciseRevisionConnection',
+            totalCount: -1,
+          },
+          currentRevision: {
+            ...exercise.currentRevision,
+            __typename: UuidRevType.Exercise,
+            content: exercise.currentRevision?.content ?? '',
+            date: '',
+          },
+        }).initialState.state
       })
 
     return {
       initialState: {
-        plugin: 'type-text-exercise-group',
+        plugin: SerloEntityPluginType.TextExerciseGroup,
         state: {
           ...entityFields,
           changes: '',
@@ -389,14 +404,14 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
   }
 
   function convertTextSolution(
-    uuid: Pick<Solution, 'id' | 'currentRevision'>
+    uuid: Extract<MainUuidType, { __typename: 'Solution' }>
   ): DeserializedState<typeof textSolutionTypeState> {
     stack.push({ id: uuid.id, type: 'text-solution' })
 
     const solutionContent = uuid.currentRevision?.content ?? ''
     return {
       initialState: {
-        plugin: 'type-text-solution',
+        plugin: SerloEntityPluginType.TextSolution,
         state: {
           id: uuid.id,
           license: license!,
@@ -432,11 +447,13 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
     return convertUserByDescription(uuid.description)
   }
 
-  function convertVideo(uuid: Video): DeserializedState<typeof videoTypeState> {
+  function convertVideo(
+    uuid: Extract<MainUuidType, { __typename: 'Video' }>
+  ): DeserializedState<typeof videoTypeState> {
     stack.push({ id: uuid.id, type: 'video' })
     return {
       initialState: {
-        plugin: 'type-video',
+        plugin: SerloEntityPluginType.Video,
         state: {
           ...entityFields,
           changes: '',
@@ -456,7 +473,7 @@ export function editorResponseToState(uuid: QueryResponse): DeserializeResult {
 export function convertUserByDescription(description?: string | null) {
   return {
     initialState: {
-      plugin: 'type-user',
+      plugin: SerloEntityPluginType.User,
       state: {
         description: serializeEditorState(
           toEdtr(convertEditorState(description ?? ''))
@@ -468,7 +485,7 @@ export function convertUserByDescription(description?: string | null) {
 }
 
 export interface AppletSerializedState extends Entity {
-  __typename?: 'Applet'
+  __typename?: UuidType.Applet
   title?: string
   url?: string
   content: SerializedEditorState
@@ -478,7 +495,7 @@ export interface AppletSerializedState extends Entity {
 }
 
 export interface ArticleSerializedState extends Entity {
-  __typename?: 'Article'
+  __typename?: UuidType.Article
   title?: string
   content: SerializedEditorState
   reasoning?: SerializedEditorState
@@ -487,7 +504,7 @@ export interface ArticleSerializedState extends Entity {
 }
 
 export interface CourseSerializedState extends Entity {
-  __typename?: 'Course'
+  __typename?: UuidType.Course
   title?: string
   description: SerializedEditorState
   content?: SerializedEditorState // just to simplify types, will not be set
@@ -497,14 +514,14 @@ export interface CourseSerializedState extends Entity {
 }
 
 export interface CoursePageSerializedState extends Entity {
-  __typename?: 'CoursePage'
+  __typename?: UuidType.CoursePage
   title?: string
   icon?: 'explanation' | 'play' | 'question'
   content: SerializedEditorState
 }
 
 export interface EventSerializedState extends Entity {
-  __typename?: 'Event'
+  __typename?: UuidType.Event
   title?: string
   content: SerializedEditorState
   meta_title?: string
@@ -512,13 +529,13 @@ export interface EventSerializedState extends Entity {
 }
 
 export interface PageSerializedState extends Uuid, License {
-  __typename?: 'Page'
+  __typename?: UuidType.Page
   title?: string
   content: SerializedEditorState
 }
 
 export interface TaxonomySerializedState extends Uuid {
-  __typename?: 'Taxonomy'
+  __typename?: UuidType.TaxonomyTerm
   term: {
     name: string
   }
@@ -529,7 +546,7 @@ export interface TaxonomySerializedState extends Uuid {
 }
 
 export interface TextExerciseSerializedState extends Entity {
-  __typename?: 'Exercise'
+  __typename?: UuidType.Exercise
   content: SerializedEditorState
   'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
@@ -559,24 +576,24 @@ interface InputType {
 }
 
 export interface TextExerciseGroupSerializedState extends Entity {
-  __typename?: 'ExerciseGroup'
+  __typename?: UuidType.ExerciseGroup
   cohesive?: string
   content: SerializedEditorState
   'grouped-text-exercise'?: TextExerciseSerializedState[]
 }
 
 export interface TextSolutionSerializedState extends Entity {
-  __typename?: 'Solution'
+  __typename?: UuidType.Solution
   content: SerializedEditorState
 }
 
 export interface UserSerializedState extends Uuid {
-  __typename?: 'User'
+  __typename?: UuidType.User
   description: SerializedEditorState
 }
 
 export interface VideoSerializedState extends Entity {
-  __typename?: 'Video'
+  __typename?: UuidType.Video
   title?: string
   description: SerializedEditorState
   content?: string
@@ -605,7 +622,12 @@ function toEdtr(content: EditorState): Edtr {
   if (!content)
     return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
   if (isEdtr(content)) return content
-  return convert(content)
+
+  // fixes https://github.com/serlo/frontend/issues/1563
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return convert(sanitized)
 }
 
 function serializeEditorState(content: Legacy): SerializedLegacyEditorState

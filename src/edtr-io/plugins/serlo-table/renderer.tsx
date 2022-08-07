@@ -11,10 +11,11 @@ export interface SerloTableRendererProps {
   rows: {
     cells: JSX.Element[]
   }[]
+  isEdit?: boolean
 }
 
 export function SerloTableRenderer(props: SerloTableRendererProps) {
-  const { tableType, rows } = props
+  const { tableType, rows, isEdit } = props
 
   const showRowHeader =
     tableType === TableType.OnlyRowHeader ||
@@ -24,16 +25,18 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     tableType === TableType.ColumnAndRowHeader
 
   return (
-    <table className="serlo-table overflow-x-scroll mb-8">
-      {showColumnHeader ? (
-        <>
-          <thead>{renderRows([rows[0]])}</thead>
-          <tbody>{renderRows(rows.slice(1), 1)}</tbody>
-        </>
-      ) : (
-        <tbody>{renderRows(rows)}</tbody>
-      )}
-    </table>
+    <div className={isEdit ? undefined : 'overflow-x-scroll'}>
+      <table className="serlo-table mb-8">
+        {showColumnHeader ? (
+          <>
+            <thead>{renderRows([rows[0]])}</thead>
+            <tbody>{renderRows(rows.slice(1), 1)}</tbody>
+          </>
+        ) : (
+          <tbody>{renderRows(rows)}</tbody>
+        )}
+      </table>
+    </div>
   )
 
   function renderRows(rows: SerloTableRendererProps['rows'], startIndex = 0) {
@@ -57,17 +60,14 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
     return (
       <Fragment key={colIndex}>
         {isHead ? (
-          <th scope={scope} className="serlo-th px-0 min-w-[4rem] min-h-[1rem]">
+          <th scope={scope} className="serlo-th px-0 align-top">
             {cell}
           </th>
         ) : (
-          <td className="serlo-td px-0 min-h-[1rem]">{cell}</td>
+          <td className="serlo-td px-0">{cell}</td>
         )}
       </Fragment>
     )
-
-    // TODO: Revisit when we have examples with images.
-
     // Do we need to check this? Can we solve it with pure CSS?
     // const isImage =
     //   getDocument(content.get())(store.getState())?.plugin === 'image'

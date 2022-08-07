@@ -1,8 +1,10 @@
-import { headerData, footerData, landingSubjectsData } from './menu-data';
+import { Instance } from '@/fetcher/graphql-types/operations';
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: "ta",
+  lang: Instance["Ta"],
   headerData: headerData,
   footerData: footerData,
+  secondaryMenus: secondaryMenus,
   strings: {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",
@@ -11,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
-      agree: 'Agree'
+      agree: 'Agree to use search'
     },
     footer: {
       summaryHeading: "கற்பதற்கு விக்கிபீடியா போன்றது Serlo.org.",
@@ -28,7 +30,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: 'Folders',
       exercises: "பயிற்சிகள்",
-      events: "நிகழ்வுகள்"
+      events: "நிகழ்வுகள்",
+      unrevised: 'Unrevised',
+      subterms: 'Subterms',
+      exercisesContent: 'Exercises Content'
     },
     entities: {
       applet: "ஆப்லெட்",
@@ -38,19 +43,18 @@ export const instanceData = {
       event: 'Event',
       exercise: 'Exercise',
       exerciseGroup: "பயிற்சிப் பதிவுகள்",
-      folder: "அடைவு",
+      topic: 'Folder',
       groupedExercise: 'Grouped Exercise',
       page: "பக்கம்",
       solution: "தீர்வு",
       taxonomyTerm: 'Taxonomy Term',
       user: "பயனர்",
       video: "காணொளி",
-      topicFolder: 'Exercise folder',
+      exerciseFolder: 'Exercise folder',
       comment: "கருத்து",
       revision: "மீட்டல்",
       thread: 'Thread',
       threads: 'Threads',
-      topic: 'Topic',
       subject: 'Subject',
       userProfile: 'User Profile',
       privacyPolicy: 'Privacy Policy',
@@ -64,7 +68,9 @@ export const instanceData = {
       unrevisedRevisions: 'Unrevised Revisions',
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
-      editProfile: 'Edit Profile & Settings'
+      editProfile: 'Edit Profile & Settings',
+      recycleBin: 'Recycle Bin',
+      diagon: 'Diagon Alley'
     },
     roles: {
       donor: 'Donor',
@@ -82,7 +88,15 @@ export const instanceData = {
     },
     edit: {
       button: "தொகு",
-      unrevised: 'Show unrevised revisions'
+      unrevised: 'Show unrevised revisions',
+      inviteModal: {
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
+      }
     },
     license: {
       readMore: "தகவல்",
@@ -100,27 +114,31 @@ export const instanceData = {
     content: {
       show: "காட்டு",
       hide: "மறை",
-      prerequisite: 'For this task you need the following basic knowledge:',
-      task: 'Task',
-      right: "சரி",
-      wrong: "பிழை",
-      feedback: 'Feedback',
-      answer: 'Answer',
-      check: "சரிபார்க்கவும்",
-      yourAnswer: "உங்கள் பதில்:",
-      chooseOption: 'Click on one of the options.',
-      printModeChooseOption: 'Check one of the options.',
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
-      strategy: 'Solution Strategy',
       picture: 'Picture',
       previewImage: 'Preview Image',
+      imageAltFallback: 'Image',
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
       relatedContentText: 'You can find more content on this topic here:',
       sourcesTitle: 'Sources',
+      exercises: {
+        prerequisite: 'For this task you need the following basic knowledge:',
+        task: 'Task',
+        correct: 'Correct',
+        missedSome: 'Almost! You missed at least one correct answer.',
+        wrong: 'Wrong',
+        feedback: 'Feedback',
+        answer: 'Answer',
+        check: 'Check',
+        yourAnswer: 'Your answer…',
+        chooseOption: 'Click on one of the options.',
+        printModeChooseOption: 'Check one of the options.',
+        strategy: 'Solution Strategy'
+      },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
@@ -164,6 +182,7 @@ export const instanceData = {
       error: 'Sorry, comments could not be loaded, please try again later.',
       showMoreReply: 'Show one more reply',
       showMoreReplies: 'Show %number% more replies',
+      hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link'
     },
@@ -221,7 +240,11 @@ export const instanceData = {
       typeNotSupported: 'Please try reloading this page.',
       refreshNow: 'Refresh now',
       backToPrevious: 'Back to previous page',
-      backToHome: 'To our home page'
+      backToHome: 'To our home page',
+      deletedComment: {
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+      }
     },
     print: {
       preparingNotice: 'Preparing print!',
@@ -289,6 +312,8 @@ export const instanceData = {
       globalDescription: 'All events that happen somewhere on %lang%.serlo.org'
     },
     events: {
+      entityInParentPreposition: 'in',
+      commentInParentPreposition: 'on',
       setThreadStateArchived: '%actor% archived %thread%.',
       setThreadStateUnarchived: '%actor% restored %thread%.',
       createComment: '%actor% commented in %thread%: %comment%.',
@@ -297,9 +322,9 @@ export const instanceData = {
       setLicense: '%actor% changed the license of %repository%.',
       createEntityLink: '%actor% associated %child% with %parent%.',
       removeEntityLink: '%actor% dissociated %child% from %parent%.',
-      createEntityRevision: '%actor% created a %revision% of %entity%.',
-      checkoutRevision: '%actor% checked out a %revision% in %repository%.',
-      rejectRevision: '%actor% did not accept a %revision% in %repository%.',
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: '%actor% added %child% to %parent%.',
       removeTaxonomyLink: '%actor% removed %child% from %parent%.',
       createTaxonomyTerm: '%actor% created %term%.',
@@ -314,11 +339,15 @@ export const instanceData = {
     },
     actions: {
       loadMore: 'Load more'
+    },
+    bin: {
+      title: 'Title',
+      trashed: 'Trashed…'
     }
   }
 };
 export const instanceLandingData = {
-  lang: "ta",
+  lang: Instance["Ta"],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.",
@@ -391,6 +420,7 @@ export const loggedInData = {
       history: "வரலாறு",
       editAssignments: "தலைப்பு மற்றும் பாடத்திட்ட பணிகளை உருவாக்கவும்.",
       moveToTrash: "குப்பைக்கு நகர்த்தவும்",
+      confirmTrash: 'Are you sure you want to delete this content?',
       restoreContent: 'Restore from trash',
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
@@ -402,10 +432,11 @@ export const loggedInData = {
       sortEntities: 'Sort content',
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
-      directLink: 'Direct link to this content'
+      directLink: 'Direct link to this content',
+      analyticsLink: 'See analytics data'
     },
     notifications: {
-      hide: 'Hide notifications for this content.',
+      hide: 'Deactivate new notifications for this content.',
       setToRead: 'Set notification to read.',
       setAllToRead: 'Set all visible to read',
       showNew: 'New',
@@ -440,13 +471,15 @@ export const loggedInData = {
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
-        save: 'Edit successfully saved ✅'
+        save: 'Edit successfully saved ✅',
+        updated: 'Successfully updated ✅',
+        generic: 'Success 🎉'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
         FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: '',
+        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
         valueMissing: 'Please fill all required fields'
       }
@@ -535,8 +568,6 @@ export const loggedInData = {
         addAnswer: 'Add answer',
         enterTheValue: 'Enter the value',
         yourSolution: 'Your solution',
-        correct: 'Correct',
-        wrong: 'Wrong',
         number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
@@ -561,10 +592,7 @@ export const loggedInData = {
         singleChoice: 'Single-choice',
         multipleChoice: 'Multiple-choice',
         chooseType: 'Choose the exercise type',
-        addAnswer: 'Add answer',
-        wrong: 'Wrong',
-        missedSome: 'Almost! You missed at least one correct answer',
-        correct: 'Correct'
+        addAnswer: 'Add answer'
       },
       serloTable: {
         mode: 'Mode',
@@ -576,6 +604,7 @@ export const loggedInData = {
         row: "row",
         column: "column",
         addType: 'Add %type%',
+        addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
         confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
       },
@@ -590,13 +619,14 @@ export const loggedInData = {
         closeSubMenu: 'Close sub menu',
         heading: 'Heading',
         headings: 'Headings',
-        linkStrgK: 'Link (Strg + K)',
+        link: 'Link (%ctrlOrCmd% + K)',
         enterUrl: 'Enter URL',
         openInNewTab: 'Open in new tab',
         orderedList: 'Ordered list',
         unorderedList: 'Unordered list',
         lists: 'Lists',
-        mathFormula: 'Math formula (Strg + M)',
+        mathFormula: 'Math formula (%ctrlOrCmd% + M)',
+        code: 'Code (%ctrlOrCmd% + ⇧ + `)',
         displayAsBlock: 'Display as block',
         formula: '[formula]',
         visual: 'visual',
@@ -611,8 +641,8 @@ export const loggedInData = {
         mathSymbols: 'Math symbols',
         eG: 'e.g.',
         functions: 'Functions',
-        bold: 'Bold (Strg + B)',
-        italic: 'Italic (Strg + I)',
+        bold: 'Bold (%ctrlOrCmd% + B)',
+        italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found'
       },
       video: {
@@ -642,12 +672,16 @@ export const loggedInData = {
       box: {
         type: 'Type of box',
         titlePlaceholder: '(optional title)',
-        anchorId: 'Anchor ID'
+        anchorId: 'Anchor ID',
+        emptyContentWarning: 'Boxes without content will not be displayed'
       },
       layout: {
         toDragConvert: 'To make the content draggable, convert them for the new editor:',
         oneColumnLayout: 'One-column layout',
         multimediaTitle: 'Multimedia content associated with text'
+      },
+      pageLayoutColums: {
+        chooseRatio: 'Choose column ratio'
       },
       solution: {
         optionalExplanation: 'Optionally explain the solution strategy here',
@@ -668,36 +702,34 @@ export const loggedInData = {
         seoDesc: 'Description for search engines',
         title: 'Title',
         writeShortIntro: 'Write a short introduction',
-        exercises: 'Exercises',
-        dragTheExercise: 'Drag the exercise',
-        removeExercise: 'Remove exercise',
-        addOptionalExercise: 'Add optional exercise',
         stillWantMore: 'Still want more?',
         moreOnTopic: 'You can find more content on this topic here',
-        articles: 'Articles',
-        addArticle: 'Add article',
-        idArticle: 'ID of an article, e.g. 1855',
-        openArticleTab: 'Open the article in a new tab:',
-        dragTheArticle: 'Drag the article',
-        courses: 'Courses',
-        addCourse: 'Add course',
-        idCourse: 'ID of a course, e.g. 51979',
-        openCourseTab: 'Open the course in a new tab:',
-        dragTheCourse: 'Drag the course',
-        videos: 'Videos',
-        addVideo: 'Add video',
-        idVideo: 'ID of a video, e.g. 40744',
-        openVideoTab: 'Open the video in a new tab:',
-        dragTheVideo: 'Drag the video',
-        linkTitle: 'Title of the link',
-        sources: 'Sources',
-        linkUrl: 'URL of the link',
-        openInNewTab: 'Open the link in a new tab:',
-        dragTheSource: 'Drag the source',
         addSource: 'Add source',
+        removeLabel: 'Remove',
+        dragLabel: 'Drag to change order',
+        openInTab: 'Open in new tab',
+        sources: 'Sources',
+        sourceText: 'Source Text',
+        sourceUrl: 'Optional URL',
         moreInFolder: 'You can find more exercises in the following folder',
-        exFolderId: 'ID of an exercise folder, e.g. 30560',
-        openExerciseTab: 'Open the exercise folder in a new tab:'
+        addModal: {
+          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+          buttonEx: 'Add exercises',
+          buttonExFolder: 'Select exercise folder',
+          buttonContent: 'Add content',
+          buttonAddType: 'Add %type%',
+          title: 'Add related Content or Exercises',
+          invalidInput: 'Invalid id or url',
+          fetchError: 'Something went wrong, please try later',
+          loading: 'Loading…',
+          notFound: 'Could not find that content',
+          unsupportedType: 'Sorry, type [%type%] is not supported here',
+          unsupportedId: 'Sorry, this ID is not supported here',
+          addFromFolderTitle: 'From the folder',
+          placeholder: 'Paste Serlo ID or URL here',
+          exerciseFolderNote: 'Only one can be selected here'
+        }
       },
       coursePage: {
         explanation: 'Explanation',
@@ -781,6 +813,38 @@ export const loggedInData = {
         heading: 'How to delete your account',
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
         deleteAccount: 'Delete Account'
+      }
+    },
+    backend: {
+      pages: 'Static Pages',
+      authorization: 'Authorization',
+      navigation: 'Navigation',
+      recycleBin: 'Recycle Bin'
+    },
+    pages: {
+      deletedPages: 'Deleted Pages'
+    },
+    taxonomyTermTools: {
+      copyMove: {
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied",
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+      },
+      deleteAdd: {
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign"
+      },
+      sort: {
+        title: 'Sort Entities',
+        saveButtonText: 'Save order'
       }
     }
   }

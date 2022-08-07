@@ -1,5 +1,8 @@
 import KaTeX from 'katex'
 
+/* eslint-disable import/no-unassigned-import */
+import 'katex/contrib/mhchem'
+
 import { KaTeXStyles } from '../../../external/katexstyles'
 
 export interface MathSpanProps {
