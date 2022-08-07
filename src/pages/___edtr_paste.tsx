@@ -7,9 +7,10 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRef, useState } from 'react'
 
+import { MathSpan } from '@/components/content/math-span'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { loggedInData } from '@/data/de'
+import { loggedInData, instanceData } from '@/data/de'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { createPlugins } from '@/edtr-io/plugins'
 
@@ -48,8 +49,10 @@ const ContentPage: NextPage = () => {
 
   const plugins = createPlugins({
     getCsrfToken: () => '',
-    registry: getPluginRegistry('Article', editorStrings),
     editorStrings,
+    registry: getPluginRegistry('Article', editorStrings),
+    strings: instanceData.strings,
+    type: 'Article',
   })
 
   const DocumentEditor = createDefaultDocumentEditor({
@@ -91,6 +94,8 @@ const ContentPage: NextPage = () => {
               onChange={onChangeHandler}
               placeholder="paste edtr state here (valid JSON)"
             />
+            <div className="controls-portal sticky top-0 z-[94] bg-white" />
+            <MathSpan formula="" /> {/* preload formula plugin */}
             <div
               className={clsx(
                 'max-w-[816px] mx-auto pt-6 mb-24 edtr-io serlo-editor-hacks',
