@@ -71,7 +71,6 @@ export function UserTools({
   }
 
   function buttonClassName() {
-    // no autocomplete here yet
     if (aboveContent) {
       return clsx('serlo-button-green', 'text-sm m-0.5 ml-1 leading-browser')
     } else {

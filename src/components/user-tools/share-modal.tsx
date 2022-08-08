@@ -22,6 +22,7 @@ export interface ShareModalProps {
   isOpen: boolean
   onClose: () => void
   showPdf?: boolean
+  path?: string
 }
 
 interface EntryData {
@@ -32,12 +33,18 @@ interface EntryData {
   onClick?: (event: MouseEvent) => void
 }
 
-export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
+export function ShareModal({
+  isOpen,
+  onClose,
+  showPdf,
+  path,
+}: ShareModalProps) {
   const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
   const id = useContext(EntityIdContext)
+  const pathOrId = path ?? id
 
-  if (!isOpen || !id) return null
+  if (!isOpen || !pathOrId) return null
 
   function copyToClipboard(event: MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
@@ -50,7 +57,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     )
   }
 
-  const shareUrl = `${window.location.protocol}//${window.location.host}/${id}`
+  const shareUrl = `${window.location.protocol}//${window.location.host}/${pathOrId}`
   const urlEncoded = encodeURIComponent(shareUrl)
   const titleEncoded = encodeURIComponent(document.title)
 
@@ -94,12 +101,13 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     },
   ]
 
-  const path = window.location.pathname
-  const fileName = `serlo__${path.split('/').pop() ?? id}.pdf`
-  const host =
-    window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
-
   const getPdfData = (noSolutions?: boolean) => {
+    if (!id) return null
+    const pathName = window.location.pathname
+    const fileName = `serlo__${pathName.split('/').pop() ?? id}.pdf`
+    const host =
+      window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
+
     return {
       title: strings.share[noSolutions ? 'pdfNoSolutions' : 'pdf'],
       icon: faDownload,
@@ -163,10 +171,11 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     )
   }
 
-  function renderButtons(list: EntryData[]) {
+  function renderButtons(list: (EntryData | null)[]) {
     return (
       <div className="flex items-start flex-col sm:flex-row mt-4">
-        {list.map((entry: EntryData) => {
+        {list.map((entry: EntryData | null) => {
+          if (!entry) return null
           return (
             <a
               className={shareButton}

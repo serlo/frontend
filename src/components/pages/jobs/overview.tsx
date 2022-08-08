@@ -1,11 +1,19 @@
 import clsx from 'clsx'
-import { Fragment } from 'react'
+import dynamic from 'next/dynamic'
+import { Fragment, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
+import { ShareModalProps } from '@/components/user-tools/share-modal'
+import { UserTools } from '@/components/user-tools/user-tools'
+import { UuidType } from '@/data-types'
 import { CommunityWallPerson } from '@/data/de/community-people'
 // eslint-disable-next-line import/extensions
 import { JobsProps, PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+
+const ShareModal = dynamic<ShareModalProps>(() =>
+  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+)
 
 const testimonials = [
   {
@@ -109,22 +117,23 @@ const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 export function Overview({ positions }: JobsProps) {
+  const [shareOpen, setShareOpen] = useState(false)
+
   return (
     <>
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
 
       <div
         className={clsx(
-          'sm:-ml-[51px]',
           'md:left-[calc(-50vw+50%)] md:relative',
           'md:text-left md:max-w-[100vw] w-[100vw] md:ml-0',
           '-mt-12 text-center',
           'text-gray-700'
         )}
       >
+        <div className="mt-16 md:mt-[11vh]">{renderUserTools(true)}</div>
         <section
           className={clsx(
-            'mt-16 md:mt-[11vh]',
             'sm:flex sm:flex-row-reverse',
             'sm:text-left font-bold'
           )}
@@ -181,9 +190,7 @@ export function Overview({ positions }: JobsProps) {
               <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-12 sm:mt-0')}>
                 Ehrenamtlich
               </h3>
-              <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
-                {/* {renderPositions(cellsHonorary)} */}
-              </div>
+              {renderPositions(positions)}
             </div>
           </div>
         </section>
@@ -257,10 +264,17 @@ export function Overview({ positions }: JobsProps) {
             </Link>
           </div>
 
-          <div className="mt-6 sm:flex sm:justify-center lg:mb-40">
+          <div className="mt-6 sm:flex sm:justify-center">
             {testimonials.map(renderPerson)}
           </div>
         </section>
+        {renderUserTools(false)}
+        <ShareModal
+          isOpen={shareOpen}
+          onClose={() => setShareOpen(false)}
+          showPdf={false}
+          path="jobs"
+        />
       </div>
 
       <style jsx>{`
@@ -362,6 +376,21 @@ export function Overview({ positions }: JobsProps) {
       `}</style>
     </>
   )
+
+  function renderUserTools(aboveContent: boolean) {
+    return (
+      <UserTools
+        onShare={() => setShareOpen(true)}
+        id={0}
+        aboveContent={aboveContent}
+        data={{
+          type: UuidType.Page,
+          id: -1,
+          alias: '/jobs',
+        }}
+      />
+    )
+  }
 
   function renderPositions(positions?: PersonioPosition[]) {
     if (!positions || !positions.length)
