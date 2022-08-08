@@ -6,7 +6,6 @@ import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { UuidType } from '@/data-types'
 import { CommunityWallPerson } from '@/data/de/community-people'
 // eslint-disable-next-line import/extensions
 import { JobsProps, PersonioPosition } from '@/pages/jobs/[[...jobId]]'
@@ -182,9 +181,6 @@ export function Overview({ positions }: JobsProps) {
             <div className="max-w-xl w-full mx-auto sm:mr-4">
               <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamptlich</h3>
               {renderPositions(positions)}
-              {/* <div className="border-2 border-brand p-5 sm:p-12 rounded-lg text-xl font-bold text-left">
-                
-              </div> */}
             </div>
             <div className="max-w-xl w-full mx-auto sm:ml-4">
               <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-12 sm:mt-0')}>
@@ -381,13 +377,7 @@ export function Overview({ positions }: JobsProps) {
     return (
       <UserTools
         onShare={() => setShareOpen(true)}
-        id={0}
         aboveContent={aboveContent}
-        data={{
-          type: UuidType.Page,
-          id: -1,
-          alias: '/jobs',
-        }}
       />
     )
   }
@@ -398,42 +388,38 @@ export function Overview({ positions }: JobsProps) {
 
     return (
       <ul className="-mb-6">
-        {positions.map(
-          ({ id, name, employmentType, office, department }, index) => {
-            console.log(index)
-            // const showCategory =
-            //   index === 0 || positions[index - 1]?.department !== department
-
-            return (
-              <Fragment key={id}>
-                {/* {showCategory ? (
+        {positions.map(({ id, name, employmentType, office, department }) => {
+          // const showCategory =
+          //   index === 0 || positions[index - 1]?.department !== department
+          return (
+            <Fragment key={id}>
+              {/* {showCategory ? (
                   <h4 className="ml-auto mr-5 mt-4 text-lg text-right">
                     {department ?? 'Sonstige'}
                   </h4>
                 ) : null} */}
-                <li key={id}>
-                  <Link
-                    unstyled
-                    className={clsx(
-                      'block px-5 py-4 mb-5',
-                      'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
-                      'text-lg'
-                    )}
-                    href={`/jobs/${id}`}
-                  >
-                    <span className="text-brand font-bold">{name}</span>
-                    <br />
-                    {department ? `${department} • ` : ''}
-                    {employmentType === 'permanent'
-                      ? 'Festanstellung'
-                      : 'Teilzeit'}{' '}
-                    • {office}
-                  </Link>
-                </li>
-              </Fragment>
-            )
-          }
-        )}
+              <li key={id}>
+                <Link
+                  unstyled
+                  className={clsx(
+                    'block px-5 py-4 mb-5',
+                    'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
+                    'text-lg'
+                  )}
+                  href={`/jobs/${id}`}
+                >
+                  <span className="text-brand font-bold">{name}</span>
+                  <br />
+                  {department ? `${department} • ` : ''}
+                  {employmentType === 'permanent'
+                    ? 'Festanstellung'
+                    : 'Teilzeit'}{' '}
+                  • {office}
+                </Link>
+              </li>
+            </Fragment>
+          )
+        })}
       </ul>
     )
   }

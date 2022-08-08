@@ -6,7 +6,6 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { UuidType } from '@/data-types'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
@@ -101,13 +100,7 @@ export function Job({ position }: { position: PersonioPosition }) {
     return (
       <UserTools
         onShare={() => setShareOpen(true)}
-        id={0}
         aboveContent={aboveContent}
-        data={{
-          type: UuidType.Page,
-          id: -1,
-          alias: `/jobs/${id}`,
-        }}
       />
     )
   }
