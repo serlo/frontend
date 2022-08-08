@@ -29,8 +29,7 @@ const testimonials = [
   {
     name: 'Anne',
     role: 'Community-Support',
-    imgSrc:
-      'https://assets.serlo.org/59ee046dc2532_c1ce1c91105cb8630656d080614ad83eacccafe7.jpg',
+    imgSrc: '/_assets/img/jobs/anne.jpg',
     subjects: [
       'Serlo hat eine Feedbackkultur geschaffen, in der man sich ausprobieren kann und dabei immer etwas Neues lernt. Eine solche Umgebung wünsche ich mir auch für alle Schüler*innen beim Lernen!',
     ],
@@ -119,7 +118,7 @@ export function Overview({ positions }: JobsProps) {
           'sm:-ml-[51px]',
           'md:left-[calc(-50vw+50%)] md:relative',
           'md:text-left md:max-w-[100vw] w-[100vw] md:ml-0',
-          'mb-[-116px] -mt-12 text-center',
+          '-mt-12 text-center',
           'text-gray-700'
         )}
       >
@@ -240,9 +239,7 @@ export function Overview({ positions }: JobsProps) {
           </div>
         </section>
 
-        <section
-          className={clsx('partner about-serlo', 'mt-24 !pt-16 -mb-8 pb-16')}
-        >
+        <section className={clsx('partner about-serlo', 'mt-24 !pt-16 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <img
               src="/_assets/img/landing/birds.svg"
@@ -374,6 +371,7 @@ export function Overview({ positions }: JobsProps) {
       <ul className="-mb-6">
         {positions.map(
           ({ id, name, employmentType, office, department }, index) => {
+            console.log(index)
             // const showCategory =
             //   index === 0 || positions[index - 1]?.department !== department
 
