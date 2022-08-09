@@ -18,7 +18,6 @@ export function createBoxState(
     'image',
     'equations',
     'multimedia',
-    'table',
     'serloTable',
     'highlight',
   ])

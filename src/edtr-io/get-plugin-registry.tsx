@@ -17,7 +17,6 @@ import {
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
 import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
 
-import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
@@ -105,12 +104,6 @@ export function getPluginRegistry(
       icon: createIcon(faCaretSquareDown),
     },
     {
-      name: 'table',
-      title: editorStrings.edtrIo.table,
-      description: editorStrings.edtrIo.tableDesc,
-      icon: createIcon(faTable),
-    },
-    {
       name: 'serloTable',
       title: editorStrings.edtrIo.serloTable,
       description: editorStrings.edtrIo.serloTableDesc,
@@ -158,12 +151,5 @@ export function getPluginRegistry(
     (plugin) => !['blockquote', 'important'].includes(plugin.name)
   )
 
-  // Testing new table plugin
-  const showNewTable = shouldUseFeature('tablePlugin')
-
-  const tableFiltered = showNewTable
-    ? boxFiltered.filter((plugin) => plugin.name !== 'table')
-    : boxFiltered.filter((plugin) => plugin.name !== 'serloTable')
-
-  return tableFiltered
+  return boxFiltered
 }
