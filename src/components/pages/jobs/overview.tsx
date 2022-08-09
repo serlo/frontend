@@ -67,7 +67,7 @@ const specials = [
 
   {
     src: '/_assets/img/jobs/arbeit-mit-unsinn.svg',
-    title: '... und Unsinn',
+    title: '.&thinsp;.&thinsp;. und Unsinn',
     content: (
       <>
         Wir feiern unsere Erfolge und unser Team. Für verrückte Ideen ist bei
@@ -202,30 +202,32 @@ export function Overview({ positions }: JobsProps) {
             <p className={clsx(h2Class, 'mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
-            <div
-              className={clsx(
-                'relative text-[1.3rem] text-left pb-16 mb-12',
-                'pt-4 lg:mb-16 md:pb-16',
-                'grid grid-cols-2 md:grid-cols-3 max-w-2xl md:max-w-4xl mx-auto'
-              )}
-            >
-              {specials.map(({ src, title, content }) => {
-                return (
-                  <div
-                    key={title}
-                    className="w-full -mb-5 sm:mb-4 mobile:text-center px-2"
-                  >
-                    <img src={src} className="max-h-32 mobile:mx-auto" />
-                    <b>{title}</b>
-                    <br />
-                    <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-1 tracking-slightly-tighter leading-snug special-hyphens-initial">
-                      {content}
-                    </p>
-                  </div>
-                )
-              })}
-            </div>
           </h3>
+          <div
+            className={clsx(
+              'relative text-[1.3rem] text-left pb-16 mb-12',
+              'pt-4 lg:mb-16 md:pb-16',
+              'grid grid-cols-2 md:grid-cols-3 max-w-2xl md:max-w-4xl mx-auto'
+            )}
+          >
+            {specials.map(({ src, title, content }) => {
+              return (
+                <div
+                  key={title}
+                  className="w-full -mb-5 sm:mb-4 mobile:text-center px-2 tracking-slightly-tighter"
+                >
+                  <img src={src} className="max-h-32 mobile:mx-auto" />
+                  <h4
+                    className="text-truegray-700 font-extrabold leading-cozy"
+                    dangerouslySetInnerHTML={{ __html: title }}
+                  />
+                  <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-2 leading-snug special-hyphens-initial">
+                    {content}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
         </section>
 
         <section className={clsx('mt-18 -mb-8')}>
