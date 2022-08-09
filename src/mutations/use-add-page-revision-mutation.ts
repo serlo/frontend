@@ -1,16 +1,29 @@
 import { gql } from 'graphql-request'
 
-import { showToastNotice } from '../show-toast-notice'
-import { mutationFetch } from './helper'
+import { showToastNotice } from '../helper/show-toast-notice'
+import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { AddPageRevisionMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
+const addPageRevisionMutation = gql`
+  mutation addPageRevision($input: PageAddRevisionInput!) {
+    page {
+      addRevision(input: $input) {
+        success
+      }
+    }
+  }
+`
+
 export function useAddPageRevision() {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
+  const successHandler = useSuccessHandler()
 
   return async (data: AddPageRevisionMutationData) => {
     if (!auth || !loggedInData) {
@@ -26,19 +39,14 @@ export function useAddPageRevision() {
         title: getRequiredString(loggedInData, 'title', data.title),
       }
 
-      const success = await mutationFetch(
-        auth,
-        addPageRevisionMutation,
-        input,
-        loggedInData?.strings.mutations.errors
-      )
+      const success = await mutationFetch(addPageRevisionMutation, input)
 
-      if (success) {
-        showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-        window.location.href = `/${data.id}`
-        return true
-      }
-      return false
+      return successHandler({
+        success,
+        toastKey: 'save',
+        redirectUrl: `/${data.id}`,
+        useHardRedirect: true,
+      })
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error('probably missing value?')
@@ -46,13 +54,3 @@ export function useAddPageRevision() {
     }
   }
 }
-
-const addPageRevisionMutation = gql`
-  mutation addPageRevision($input: PageAddRevisionInput!) {
-    page {
-      addRevision(input: $input) {
-        success
-      }
-    }
-  }
-`

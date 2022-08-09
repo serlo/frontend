@@ -1,15 +1,14 @@
 // eslint-disable-next-line import/no-internal-modules
 import { eqBy, mapObjIndexed } from 'ramda'
 
-import { showToastNotice } from '../../show-toast-notice'
-import { mutationFetch } from '../helper'
+import { showToastNotice } from '../../helper/show-toast-notice'
+import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { getSetMutation } from './get-set-mutation'
 import {
   ChildFieldsData,
   SetEntityMutationData,
   SetEntityMutationRunnerData,
 } from './types'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import {
@@ -39,8 +38,8 @@ const hasNoChanges = (
 }
 
 export function useSetEntityMutation() {
-  const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
 
   return async (
     data: SetEntityMutationData,
@@ -52,7 +51,7 @@ export function useSetEntityMutation() {
     taxonomyParentId?: number
   ) =>
     await setEntityMutationRunner({
-      auth,
+      mutationFetch,
       data,
       needsReview,
       loggedInData,
@@ -62,7 +61,7 @@ export function useSetEntityMutation() {
 }
 
 export const setEntityMutationRunner = async function ({
-  auth,
+  mutationFetch,
   data,
   needsReview,
   loggedInData,
@@ -71,7 +70,7 @@ export const setEntityMutationRunner = async function ({
   savedParentId,
   taxonomyParentId,
 }: SetEntityMutationRunnerData) {
-  if (!auth || !loggedInData) {
+  if (!loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
     return false
   }
@@ -91,23 +90,14 @@ export const setEntityMutationRunner = async function ({
         : taxonomyParentId,
     }
 
-    // while testing
-    // eslint-disable-next-line no-console
-    console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
-
     //here we rely on the api not to create an empty revision
-    const savedId = await mutationFetch(
-      auth,
-      getSetMutation(data.__typename),
-      input,
-      loggedInData?.strings.mutations.errors
-    )
+    const savedId = await mutationFetch(getSetMutation(data.__typename), input)
 
     if (!Number.isInteger(savedId)) return false
 
     // check for children
     const childrenResult = await loopNestedChildren({
-      auth,
+      mutationFetch,
       data,
       needsReview,
       loggedInData,
@@ -136,7 +126,7 @@ export const setEntityMutationRunner = async function ({
 }
 
 const loopNestedChildren = async ({
-  auth,
+  mutationFetch,
   data,
   needsReview,
   loggedInData,
@@ -222,7 +212,7 @@ const loopNestedChildren = async ({
         }
 
         const success = await setEntityMutationRunner({
-          auth,
+          mutationFetch,
           data: input as SetEntityMutationData,
           needsReview,
           loggedInData,

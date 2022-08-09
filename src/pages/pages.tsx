@@ -20,9 +20,9 @@ import {
   PagesQuery,
   PagesQueryVariables,
 } from '@/fetcher/graphql-types/operations'
-import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
+import { useSetUuidStateMutation } from '@/mutations/use-set-uuid-state-mutation'
 
 interface PagesProps {
   pages: PagesQuery['page']['pages']
