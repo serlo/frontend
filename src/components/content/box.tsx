@@ -46,8 +46,7 @@ export function Box({
   renderNested,
 }: BoxProps) {
   const { strings } = useInstanceData()
-
-  if (!children || !children.length) return null
+  if (!children || !children.length || !boxType) return null
 
   const isBlank = boxType === 'blank'
 

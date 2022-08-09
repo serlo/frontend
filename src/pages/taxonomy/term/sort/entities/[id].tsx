@@ -32,9 +32,9 @@ import {
 } from '@/frontend-node-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { useTaxonomyTermSortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
 
 export const allCategories = [
   TopicCategoryType.articles,

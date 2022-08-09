@@ -56,6 +56,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           {renderBreadcrumbs()}
           <main>{children}</main>
+
           <div id="comment-area-begin-scrollpoint" />
           {!noComments && (
             <Lazy>

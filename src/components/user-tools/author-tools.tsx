@@ -11,11 +11,11 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidRevType, UuidType } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
-import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
+import { useSetUuidStateMutation } from '@/mutations/use-set-uuid-state-mutation'
+import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mutation'
 
 export enum Tool {
   Abo = 'abo',

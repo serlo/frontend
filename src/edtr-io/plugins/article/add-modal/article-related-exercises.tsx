@@ -48,7 +48,6 @@ export function ArticleRelatedExercises({
     uuid?.__typename !== UuidType.TaxonomyTerm ||
     uuid.type !== TaxonomyTermType.ExerciseFolder
   ) {
-    console.log(uuid)
     return errorReturn
   }
 

@@ -8,8 +8,8 @@ import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
-import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
-import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
+import { useSetNotificationStateMutation } from '@/mutations/use-set-notification-state-mutation'
+import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mutation'
 
 interface NotificationProps {
   data: GetNotificationsQuery['notifications']

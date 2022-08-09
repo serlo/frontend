@@ -14,8 +14,8 @@ import {
   LicensesForInstaceQueryVariables,
   Instance,
 } from '@/fetcher/graphql-types/operations'
-import { useEntityUpdateLicenseMutation } from '@/helper/mutations/use-entity-update-license-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { useEntityUpdateLicenseMutation } from '@/mutations/use-entity-update-license-mutation'
 
 interface UpdateLicenseProps {
   id: number

@@ -13,7 +13,7 @@ import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
+import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
   getCsrfToken(): string

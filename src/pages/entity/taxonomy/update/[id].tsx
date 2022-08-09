@@ -21,12 +21,12 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   useCreateEntityLinkMutation,
   useDeleteEntityLinkMutation,
-} from '@/helper/mutations/taxonomyTerm'
-import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { showToastNotice } from '@/helper/show-toast-notice'
+} from '@/mutations/taxonomyTerm'
 
 interface UpdateTaxonomyLinksProps {
   id: number
