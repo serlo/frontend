@@ -1,6 +1,6 @@
 const mysql = require('mysql')
-const Configuration = require('@ory/kratos-client').Configuration
-const V0alpha2Api = require('@ory/kratos-client').V0alpha2Api
+const Configuration = require('@ory/client').Configuration
+const V0alpha2Api = require('@ory/client').V0alpha2Api
 
 const config = {
   kratosHost: 'http://kratos:4434',

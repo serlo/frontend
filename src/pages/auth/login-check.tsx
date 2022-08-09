@@ -1,5 +1,5 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { Session } from '@ory/kratos-client'
+import { Session } from '@ory/client'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 

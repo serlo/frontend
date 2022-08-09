@@ -1,6 +1,6 @@
 import { faSpinner } from '@edtr-io/ui'
+import { UiNode } from '@ory/client'
 import { getNodeLabel, isUiNodeInputAttributes } from '@ory/integrations/ui'
-import { UiNode } from '@ory/kratos-client'
 import clsx from 'clsx'
 import { FormEvent } from 'react'
 

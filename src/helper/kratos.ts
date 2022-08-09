@@ -1,5 +1,5 @@
-import { Configuration as KratosConfig, V0alpha2Api } from '@ory/kratos-client'
-import { AdminApi, Configuration as HydraConfig } from '@oryd/hydra-client'
+import { Configuration as KratosConfig, V0alpha2Api } from '@ory/client'
+import { AdminApi, Configuration as HydraConfig } from '@ory/hydra-client'
 
 import { frontendOrigin } from './urls/frontent-origin'
 

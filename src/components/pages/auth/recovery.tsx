@@ -1,7 +1,7 @@
 import {
   SelfServiceRecoveryFlow,
   SubmitSelfServiceRecoveryFlowBody,
-} from '@ory/kratos-client'
+} from '@ory/client'
 import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'

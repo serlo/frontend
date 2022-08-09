@@ -1,6 +1,5 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import {
   SelfServiceLoginFlow,
   SelfServiceRecoveryFlow,
@@ -10,7 +9,8 @@ import {
   SubmitSelfServiceRecoveryFlowBody,
   SubmitSelfServiceRegistrationFlowBody,
   SubmitSelfServiceSettingsFlowBody,
-} from '@ory/kratos-client'
+} from '@ory/client'
+import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import type { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
 import NProgress from 'nprogress'

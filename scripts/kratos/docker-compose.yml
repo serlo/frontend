@@ -81,7 +81,7 @@ services:
   #   volumes:
   #     - ./import-users.js:/tmp/import-users.js
   #   working_dir: /tmp
-  #   command: "bash -c 'yarn init --yes && yarn add mysql @ory/kratos-client && node import-users.js'"
+  #   command: "bash -c 'yarn init --yes && yarn add mysql @ory/client && node import-users.js'"
   #   restart: on-failure
   #   networks:
   #     - intranet

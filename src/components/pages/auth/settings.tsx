@@ -2,7 +2,7 @@ import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import {
   SelfServiceSettingsFlow,
   SubmitSelfServiceSettingsFlowBody,
-} from '@ory/kratos-client'
+} from '@ory/client'
 import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'

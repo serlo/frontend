@@ -3815,12 +3815,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ory/client@npm:0.2.0-alpha.4":
+  version: 0.2.0-alpha.4
+  resolution: "@ory/client@npm:0.2.0-alpha.4"
+  dependencies:
+    axios: ^0.21.4
+  checksum: c7cae2309ae929372b8c1f5b31511e3a91eda2c4333df63790bb5b9f0172e751c14fbf8f7408f30e3cc5f96de41fd06d192358ef3ed4494058dfad3775f00d34
+  languageName: node
+  linkType: hard
+
 "@ory/client@npm:>=0.0.1-alpha.21":
   version: 0.0.1-alpha.189
   resolution: "@ory/client@npm:0.0.1-alpha.189"
   dependencies:
     axios: ^0.21.4
   checksum: f275d8c6e84cb2b540b04b3cefbfc9adcf843c937ce8aae53cc3aaa252587b5c7ccb2a5ffd133290d539299ad75b3fda074a94d31f0112031c4d16d990c8ebee
+  languageName: node
+  linkType: hard
+
+"@ory/hydra-client@npm:^1.11.8":
+  version: 1.11.8
+  resolution: "@ory/hydra-client@npm:1.11.8"
+  dependencies:
+    axios: ^0.21.4
+  checksum: 14c9ff6b91b8cb1d557834dc81939541bb4e8147216b606f8274362e183c9f9e5a8d52a71267e7d5fd6f7c791078cc9337a91e7324cdbf0a8e6025ba6d431c49
   languageName: node
   linkType: hard
 
@@ -3845,21 +3863,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ory/kratos-client@npm:>=0.8.0-alpha.2, @ory/kratos-client@npm:^0.10.1":
+"@ory/kratos-client@npm:>=0.8.0-alpha.2":
   version: 0.10.1
   resolution: "@ory/kratos-client@npm:0.10.1"
   dependencies:
     axios: ^0.21.4
   checksum: 1c2283629904be0a8ab91a9b7e6c91c277e10f892bbe47a39eb9cbf6940b344477473f16dc93f7b12b265727b8fa033fd8a64bfd1f560179497c4b6ea1146b8d
-  languageName: node
-  linkType: hard
-
-"@oryd/hydra-client@npm:^1.9.0-alpha.3":
-  version: 1.9.0-alpha.3
-  resolution: "@oryd/hydra-client@npm:1.9.0-alpha.3"
-  dependencies:
-    axios: ^0.19.2
-  checksum: e4cd9f9cd40ffb4a702b2cc68a9273ed7da048e3935bc4dfb86d8fe1f081b278eefd3b5d54ba1ba69eb088115af005fcd6617b7f2e18c0187a7758761ecaa3d1
   languageName: node
   linkType: hard
 
@@ -4045,9 +4054,9 @@ __metadata:
     "@graphql-codegen/typescript-graphql-request": ^4.4.5
     "@graphql-codegen/typescript-operations": 2.3.5
     "@next/bundle-analyzer": ^12.0.0
+    "@ory/client": 0.2.0-alpha.4
+    "@ory/hydra-client": ^1.11.8
     "@ory/integrations": ^0.1.0
-    "@ory/kratos-client": ^0.10.1
-    "@oryd/hydra-client": ^1.9.0-alpha.3
     "@serlo/authorization": ^0.42.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
     "@serlo/markdown": Entkenntnis/tmp-serlo-markdown
@@ -5577,15 +5586,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.19.2":
-  version: 0.19.2
-  resolution: "axios@npm:0.19.2"
-  dependencies:
-    follow-redirects: 1.5.10
-  checksum: dcace11a0a25fdf9b3b97fc9d011d23dd9c67cc13d91778080482ddddbbfe731f7410a090b11aa0bbbdf83686c5911ccb4289fd3683b7488c1b0c4d3c882380c
-  languageName: node
-  linkType: hard
-
 "axios@npm:^0.21.4":
   version: 0.21.4
   resolution: "axios@npm:0.21.4"
@@ -6904,15 +6904,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:=3.1.0":
-  version: 3.1.0
-  resolution: "debug@npm:3.1.0"
-  dependencies:
-    ms: 2.0.0
-  checksum: 0b52718ab957254a5b3ca07fc34543bc778f358620c206a08452251eb7fc193c3ea3505072acbf4350219c14e2d71ceb7bdaa0d3370aa630b50da790458d08b3
-  languageName: node
-  linkType: hard
-
 "debug@npm:^2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -8078,15 +8069,6 @@ __metadata:
   version: 3.2.5
   resolution: "flatted@npm:3.2.5"
   checksum: 3c436e9695ccca29620b4be5671dd72e5dd0a7500e0856611b7ca9bd8169f177f408c3b9abfa78dfe1493ee2d873e2c119080a8a9bee4e1a186a9e60ca6c89f1
-  languageName: node
-  linkType: hard
-
-"follow-redirects@npm:1.5.10":
-  version: 1.5.10
-  resolution: "follow-redirects@npm:1.5.10"
-  dependencies:
-    debug: =3.1.0
-  checksum: 0edc4b74e37e7b88ee716188a8f2a790238877c1d954f00c7b78d560f3bef40061c130536d13bee8e47b4e8e71edf1175a2de2729e51ab8206e4646b2370e484
   languageName: node
   linkType: hard
 
