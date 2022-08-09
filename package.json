@@ -63,7 +63,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@ory/client": "0.2.0-alpha.4",
     "@ory/hydra-client": "^1.11.8",
-    "@ory/integrations": "^0.1.0",
+    "@ory/integrations": "^0.2.6",
     "@serlo/authorization": "^0.42.0",
     "@serlo/legacy-editor-to-editor": "Entkenntnis/tmp-serlo-legacy-editor-to-editor",
     "@serlo/markdown": "Entkenntnis/tmp-serlo-markdown",

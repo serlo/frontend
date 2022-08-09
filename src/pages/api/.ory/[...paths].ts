@@ -1,10 +1,9 @@
-import { config } from '@ory/integrations/nextjs'
+import { config, CreateApiHandlerOptions } from '@ory/integrations/next-edge'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Buffer } from 'buffer'
 import { IncomingHttpHeaders } from 'http'
 import parse from 'set-cookie-parser'
 import { CookieSerializeOptions, serialize } from 'cookie'
-import { CreateApiHandlerOptions } from '@ory/integrations/src/nextjs'
 import request from 'request'
 import { isText } from 'istextorbinary'
 
