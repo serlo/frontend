@@ -517,7 +517,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
         serloTable: "Tabelle",
-        serloTableDesc: 'Create pretty tables',
+        serloTableDesc: "Schöne Tabellen erstellen.",
         table: "Tabelle",
         tableDesc: "Erstelle eine Tabelle mit Markdown.",
         video: 'Video',
