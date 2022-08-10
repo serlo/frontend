@@ -44,7 +44,7 @@ export const codes = {
   // 1050018: 'Remove security key "%name%"',
   // TODO: actually minutes are configurable. It would be better to make it dynamic.
   1060001:
-     'You successfully recovered your account. Please change your password within the next 2 minutes.',
+    'You successfully recovered your account. Please change your password within the next 2 minutes.',
   // 1060002:
   //   'An email containing a recovery link has been sent to the email address you provided.',
   1070001: 'Password',
@@ -64,8 +64,7 @@ export const codes = {
   4000005: 'The password can not be used because %reason%.',
   4000006:
     'The provided credentials are invalid, check for spelling mistakes in your password, username or email address.',
-  4000007:
-    'An account with the same email and/or username exists already.',
+  4000007: 'An account with the same email and/or username exists already.',
   4000008: 'The provided authentication code is invalid, please try again.',
   // 4000009:
   //   'Could not find any login identifiers. Did you forget to set them? This could also be caused by a server misconfiguration.',

@@ -70,10 +70,10 @@ export function Settings() {
       .then(() =>
         kratos
           .submitSelfServiceSettingsFlow(String(flow.id), values)
-          .then(({ data }) => {
+          .then(async ({ data }) => {
             // The settings have been saved and the flow was updated. Let's show it to the user!
             setFlow(data)
-            return Promise.resolve()
+            await router.push('/api/auth/login')
           })
           .catch(handleFlowError(router, FlowType.settings, setFlow))
           .catch(async (err: AxiosError) => {
