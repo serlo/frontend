@@ -42,8 +42,9 @@ export const codes = {
   // 1050017:
   //   'This is your authenticator app secret. Use it if you can not scan the QR code.',
   // 1050018: 'Remove security key "%name%"',
-  // 1060001:
-  //   'You successfully recovered your account. Please change your password or set up an alternative login method (e.g. social sign in) within the next 0.02 minutes.',
+  // TODO: actually minutes are configurable. It would be better to make it dynamic.
+  1060001:
+     'You successfully recovered your account. Please change your password within the next 2 minutes.',
   // 1060002:
   //   'An email containing a recovery link has been sent to the email address you provided.',
   1070001: 'Password',
@@ -62,9 +63,9 @@ export const codes = {
   4000004: '"%value%" is not valid "%format%"',
   4000005: 'The password can not be used because %reason%.',
   4000006:
-    'The provided credentials are invalid, check for spelling mistakes in your password or username, email address, or phone number.',
+    'The provided credentials are invalid, check for spelling mistakes in your password, username or email address.',
   4000007:
-    'An account with the same identifier (email, phone, username, ...) exists already.',
+    'An account with the same email and/or username exists already.',
   4000008: 'The provided authentication code is invalid, please try again.',
   // 4000009:
   //   'Could not find any login identifiers. Did you forget to set them? This could also be caused by a server misconfiguration.',
@@ -87,19 +88,19 @@ export const codes = {
   //   'Could not find a strategy to recover your account with. Did you fill out the form correctly?',
   // 4010006:
   //   'Could not find a strategy to verify your account with. Did you fill out the form correctly?',
-  4040001: 'The registration flow expired 0.02 minutes ago, please try again.',
-  4050001: 'The settings flow expired 0.02 minutes ago, please try again.',
+  4040001: 'The registration flow expired 2 minutes ago, please try again.',
+  4050001: 'The settings flow expired 2 minutes ago, please try again.',
   4060001:
     'The request was already completed successfully and can not be retried.',
   4060002: 'The recovery flow reached a failure state and must be retried.',
   4060004:
     'The recovery token is invalid or has already been used. Please retry the flow.',
-  4060005: 'The recovery flow expired 0.02 minutes ago, please try again.',
+  4060005: 'The recovery flow expired 2 minutes ago, please try again.',
   4070001:
     'The verification token is invalid or has already been used. Please retry the flow.',
   4070002:
     'The request was already completed successfully and can not be retried.',
   4070003: 'The verification flow reached a failure state and must be retried.',
-  4070005: 'The verification flow expired -0.02 minutes ago, please try again.',
+  4070005: 'The verification flow expired 2 minutes ago, please try again.',
   5000001: '%reason%',
 }
