@@ -4,6 +4,10 @@ import util from 'util'
 
 import { getClientCredentials, getLogoutUrl } from '@/auth/oauth2'
 
+export const config = {
+  runtime: 'experimental-edge',
+}
+
 const generateSecret = util.promisify(randomBytes)
 
 async function logout(req: NextApiRequest, res: NextApiResponse) {

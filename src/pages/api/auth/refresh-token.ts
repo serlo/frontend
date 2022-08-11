@@ -7,6 +7,10 @@ import {
   scope,
 } from '@/auth/oauth2'
 
+export const config = {
+  runtime: 'experimental-edge',
+}
+
 async function refreshToken(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     res.status(405)

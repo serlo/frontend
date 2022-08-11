@@ -4,6 +4,10 @@ import { promisify } from 'util'
 
 import { getAuthorizationCode, scope } from '@/auth/oauth2'
 
+export const config = {
+  runtime: 'experimental-edge',
+}
+
 const generateSecret = promisify(randomBytes)
 
 async function login(req: NextApiRequest, res: NextApiResponse) {

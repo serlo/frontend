@@ -1,6 +1,9 @@
-import { config, createApiHandler } from '@ory/integrations/next-edge'
+import {
+  config as oryConfig,
+  createApiHandler,
+} from '@ory/integrations/next-edge'
 
-export { config }
+export const config = { ...oryConfig, runtime: 'experimental-edge' }
 
 const KRATOS_HOSTS = {
   production: process.env.KRATOS_HOST_PRODUCTION,

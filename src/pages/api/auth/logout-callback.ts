@@ -3,6 +3,10 @@ import { Token } from 'simple-oauth2'
 
 import { getAuthorizationCode, getClientCredentials } from '@/auth/oauth2'
 
+export const config = {
+  runtime: 'experimental-edge',
+}
+
 async function callback(req: NextApiRequest, res: NextApiResponse) {
   const oauth2ClientCredentials = getClientCredentials()
   const oauth2AuthorizationCode = getAuthorizationCode()
