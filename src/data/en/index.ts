@@ -325,7 +325,7 @@ export const instanceData = {
       },
       messages: {
         1050001: 'Your changes have been saved! 🎉',
-        1060001: 'You successfully recovered your account. Please change your password or set up an alternative login method (e.g. social sign in) within the next 0.02 minutes.',
+        1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         1060002: 'An email containing a recovery link has been sent to the email address you provided.',
         1080001: 'An email containing a verification link has been sent to the email address you provided.',
         1080002: 'You successfully verified your email address.',
