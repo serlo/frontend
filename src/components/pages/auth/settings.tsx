@@ -12,8 +12,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
 
-// See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/settings.tsx
-
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
@@ -28,7 +26,7 @@ export function Settings() {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, FlowType.login, setFlow))
+        .catch(handleFlowError(router, FlowType.settings, setFlow))
       return
     }
 
