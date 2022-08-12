@@ -5,7 +5,6 @@ import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface UnrevisedRevisionsOverviewProps {
@@ -15,7 +14,7 @@ export interface UnrevisedRevisionsOverviewProps {
 export function UnrevisedRevisionsOverview({
   data,
 }: UnrevisedRevisionsOverviewProps) {
-  const { lang, strings } = useInstanceData()
+  const { strings } = useInstanceData()
 
   return (
     <>
