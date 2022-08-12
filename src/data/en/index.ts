@@ -521,6 +521,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Are you sure you want to leave without saving?",
+      noChangesWarning: "Nothing changed so there is no need to save yet",
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',

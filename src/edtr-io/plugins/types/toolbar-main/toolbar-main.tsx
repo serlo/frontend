@@ -18,7 +18,9 @@ import { createPortal } from 'react-dom'
 import { entity } from '../common/common'
 import { useHandleSave } from '../helpers/use-handle-save'
 import { FaIcon } from '@/components/fa-icon'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
@@ -45,6 +47,9 @@ export function ToolbarMain({
   )
 
   useLeaveConfirm(isChanged && !pending)
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
 
   return (
     <>
@@ -97,15 +102,16 @@ export function ToolbarMain({
   }
 
   function renderSaveButton() {
-    const isDisabled = !isChanged
     return (
       <button
-        className={clsx(
-          'serlo-button ml-2',
-          isDisabled ? 'text-gray-300 cursor-default' : 'serlo-button-green'
-        )}
-        onClick={() => setVisibility(true)}
-        disabled={isDisabled}
+        className={clsx('serlo-button-green ml-2')}
+        onClick={() => {
+          if (isChanged) setVisibility(true)
+          else
+            showToastNotice(
+              '💅 ' + loggedInData!.strings.editor.noChangesWarning
+            )
+        }}
         title="Save"
       >
         <FaIcon icon={faSave} />

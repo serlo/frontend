@@ -1,3 +1,4 @@
+import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 
 import { Link } from '../content/link'
@@ -5,7 +6,9 @@ import { FaIcon } from '../fa-icon'
 import { Guard } from '../guard'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { StaticInfoPanel } from '../static-info-panel'
+import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArea } from './comment-area'
+import { useAuthentication } from '@/auth/use-authentication'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -18,6 +21,7 @@ export function CommentAreaAllThreads() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const { commentData, error, loading, loadMore } = useCommentDataAll()
   const { lang, strings } = useInstanceData()
+  const auth = useAuthentication()
 
   return (
     <Guard data={commentData} error={error}>
@@ -28,6 +32,11 @@ export function CommentAreaAllThreads() {
             instance: lang,
           })}
         </StaticInfoPanel>
+        {auth.current === null ? (
+          <StaticInfoPanel icon={faWarning} type="warning">
+            <PleaseLogIn noWrapper />
+          </StaticInfoPanel>
+        ) : null}
         {renderThreads()}
         <div className="border-t-2 border-truegray-300 mx-side mt-24">
           {loading ? (

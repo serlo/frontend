@@ -42,14 +42,15 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
   )
 
   function renderNoIndexMeta() {
-    // hide search, trashed and sandkasten content in instance de
-    const filteredBreadcrumbs = breadcrumbsData?.filter(
-      (entry) => entry.url == '/community/106082/sandkasten'
+    // hide search, trashed and Testbereich content in instance de
+    const filteredBreadcrumbs = breadcrumbsData?.filter((entry) =>
+      entry.url?.startsWith('/community/106082/')
     )
     if (
       noindex ||
       (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
-      data.title.startsWith('Sandkasten')
+      data.title.startsWith('Sandkasten') ||
+      data.title.startsWith('Testbereich')
     ) {
       return <meta name="robots" content="noindex" />
     }

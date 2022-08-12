@@ -40,7 +40,7 @@ const noReviewTypes: UuidWithRevType[] = [
   UuidType.User,
 ]
 
-export const sandboxUrl = '/community/106082/sandkasten'
+export const sandboxUrlStart = '/community/106082/'
 
 export async function fetchEditorData(
   localeString: string,
@@ -76,7 +76,8 @@ export async function fetchEditorData(
   const breadcrumbsData = createBreadcrumbs(data)
 
   const isSandbox =
-    breadcrumbsData && breadcrumbsData.some((entry) => entry.url == sandboxUrl)
+    breadcrumbsData &&
+    breadcrumbsData.some((entry) => entry.url?.startsWith(sandboxUrlStart))
 
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType
