@@ -434,6 +434,8 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                       ? ' • Voll- oder Teilzeit'
                       : schedule === 'full-time'
                       ? ' • Vollzeit'
+                      : schedule === 'part-time'
+                      ? ' • Teilzeit'
                       : ''}{' '}
                     • {office}
                   </Link>
