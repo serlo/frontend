@@ -69,18 +69,7 @@ export function Job({ position }: { position: PersonioPosition }) {
               </section>
             )
           })}
-          <section className="my-12 mx-side">
-            {isVolunteer ? null : (
-              <a
-                className="serlo-button-green text-xl px-5"
-                href={`https://serlo.jobs.personio.de/job/${id}?display=de#apply`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Jetzt Bewerben!
-              </a>
-            )}
-          </section>
+          <section className="my-12 mx-side">{renderButton()}</section>
           {renderUserTools(false)}
           <ShareModal
             isOpen={shareOpen}
@@ -109,6 +98,19 @@ export function Job({ position }: { position: PersonioPosition }) {
     </>
   )
 
+  function renderButton() {
+    if (isVolunteer) return null
+    return (
+      <a
+        className="serlo-button-green text-xl px-5"
+        href={`https://serlo.jobs.personio.de/job/${id}?display=de#apply`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        Jetzt Bewerben!
+      </a>
+    )
+  }
   function renderUserTools(aboveContent: boolean) {
     return (
       <UserTools
