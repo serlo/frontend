@@ -73,7 +73,8 @@ export const instanceData = {
       userEditsMine: 'My Unrevised Revisions',
       editProfile: 'Edit Profile & Settings',
       recycleBin: 'Recycle Bin',
-      diagon: 'Diagon Alley'
+      diagon: 'Diagon Alley',
+      discussions: 'Comments'
     },
     roles: {
       donor: 'Donor',
