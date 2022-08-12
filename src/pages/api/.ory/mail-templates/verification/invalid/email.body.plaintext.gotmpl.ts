@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const template = `Hi,
+const template = `👋 Hi,
 
 someone asked to verify this email address, but we were unable to find an account for this address.
 

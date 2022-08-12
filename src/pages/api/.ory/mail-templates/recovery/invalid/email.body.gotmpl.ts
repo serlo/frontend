@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const template = `Hi,
+const template = `👋 Hi,
 
 you (or someone else) entered this email address when trying to recover access to an account.
 

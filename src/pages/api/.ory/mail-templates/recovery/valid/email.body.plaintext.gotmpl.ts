@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const template = `Hi,
+const template = `👋 Hi,
 
 please recover access to your account by clicking the following link:
 
