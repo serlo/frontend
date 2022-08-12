@@ -24,6 +24,15 @@ NEXT_PUBLIC_ENV=local
 
 _Important: the file src/api/graphql-fetch.ts was modified in order to imitate the authentication made by the cloudflare worker. DO NOT COMMIT this change._
 
+### Developing email templates
+
+Kratos has to be rebuild every time you change an email template in `scripts/kratos/email-templates/`. Use the following workflow:
+
+1. Change something in the `email-templates/` folder.
+2. Run `yarn kratos:rebuild`
+3. Test the verification or the recovery email. Repeat the process.
+
+
 ## Folder explanation
 
 You find here different files that help you to have a mini serlo infrastructure in your local machine, and all that integrating kratos.

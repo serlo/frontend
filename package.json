@@ -20,6 +20,7 @@
     "format:prettier": "yarn _prettier --write",
     "kratos": "docker-compose -f ./scripts/kratos/docker-compose.yml up",
     "kratos:detach": "yarn kratos -d",
+    "kratos:rebuild": "docker-compose -f scripts/kratos/docker-compose.yml up -d --force-recreate --no-deps --build kratos",
     "kratos:stop": "docker-compose -f ./scripts/kratos/docker-compose.yml down",
     "kratos:newuser": "./scripts/kratos/new-user.sh",
     "kratos:prepare": "./scripts/kratos/prepare.sh",
