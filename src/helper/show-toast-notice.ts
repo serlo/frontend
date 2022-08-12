@@ -21,13 +21,13 @@ const colors = {
 export const showToastNotice = function (
   message: string,
   type?: 'default' | 'success' | 'warning',
-  time?: number
+  time = 3200
 ) {
   if (!toastNotice) return
   ;(toastNotice as unknown as typeof notify['show'])(
     message,
     'custom',
-    time ?? 3200,
+    time,
     colors[type || 'default']
   )
 }

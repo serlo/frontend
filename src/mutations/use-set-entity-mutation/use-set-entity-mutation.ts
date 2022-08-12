@@ -106,7 +106,13 @@ export const setEntityMutationRunner = async function ({
     })
 
     if (!isRecursiveCall && childrenResult) {
-      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+      showToastNotice(
+        needsReview
+          ? loggedInData.strings.mutations.success.saveNeedsReview
+          : loggedInData.strings.mutations.success.save,
+        'success',
+        4000
+      )
       const id =
         data.id === 0
           ? savedId === 0

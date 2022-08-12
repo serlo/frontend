@@ -194,6 +194,7 @@ export const instanceData = {
       hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
+      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -506,7 +507,8 @@ export const loggedInData = {
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
         updated: 'Successfully updated ✅',
-        generic: 'Success 🎉'
+        generic: 'Success 🎉',
+        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
