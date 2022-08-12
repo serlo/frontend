@@ -404,40 +404,35 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
     return (
       <ul className="-mb-6">
-        {positions.map(
-          ({ id, name, employmentType, office, department, schedule }) => {
-            // const showCategory =
-            //   index === 0 || positions[index - 1]?.department !== department
-            return (
-              <Fragment key={id}>
-                {/* {showCategory ? (
+        {positions.map((position) => {
+          const { id, name } = position
+          // const showCategory =
+          //   index === 0 || positions[index - 1]?.department !== department
+          return (
+            <Fragment key={id}>
+              {/* {showCategory ? (
                   <h4 className="ml-auto mr-5 mt-4 text-lg text-right">
                     {department ?? 'Sonstige'}
                   </h4>
                 ) : null} */}
-                <li key={id}>
-                  <Link
-                    unstyled
-                    className={clsx(
-                      'block px-5 py-4 mb-5',
-                      'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
-                      'text-lg'
-                    )}
-                    href={`/jobs/${id}`}
-                  >
-                    <span className="text-brand font-bold">{name}</span>
-                    <br />
-                    {department ? department : ''}
-                    {employmentType === 'trainee'
-                      ? null
-                      : renderSchedule(schedule)}{' '}
-                    • {office}
-                  </Link>
-                </li>
-              </Fragment>
-            )
-          }
-        )}
+              <li key={id}>
+                <Link
+                  unstyled
+                  className={clsx(
+                    'block px-5 py-4 mb-5',
+                    'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
+                    'text-lg'
+                  )}
+                  href={`/jobs/${id}`}
+                >
+                  <span className="text-brand font-bold">{name}</span>
+                  <br />
+                  {renderSubline(position)}
+                </Link>
+              </li>
+            </Fragment>
+          )
+        })}
       </ul>
     )
   }
@@ -481,12 +476,26 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
   }
 }
 
-export function renderSchedule(schedule?: string) {
-  return schedule === 'full-or-part-time'
-    ? ' • Voll- oder Teilzeit'
-    : schedule === 'full-time'
-    ? ' • Vollzeit'
-    : schedule === 'part-time'
-    ? ' • Teilzeit'
-    : ''
+export function renderSubline({
+  employmentType,
+  office,
+  department,
+  schedule,
+}: PersonioPosition) {
+  return (
+    <>
+      {department ? department : ''}
+      {employmentType === 'trainee' ? null : renderSchedule(schedule)} •{' '}
+      {office}
+    </>
+  )
+  function renderSchedule(schedule?: string) {
+    return schedule === 'full-or-part-time'
+      ? ' • Voll- oder Teilzeit'
+      : schedule === 'full-time'
+      ? ' • Vollzeit'
+      : schedule === 'part-time'
+      ? ' • Teilzeit'
+      : ''
+  }
 }

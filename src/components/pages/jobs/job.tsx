@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { renderSchedule } from './overview'
+import { renderSubline } from './overview'
 import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -17,8 +17,7 @@ const h2Class =
   'mx-side text-4xl leading-cozy tracking-tight font-extrabold text-gray-700'
 
 export function Job({ position }: { position: PersonioPosition }) {
-  const { id, name, employmentType, office, schedule, jobDescriptions } =
-    position
+  const { id, name, employmentType, jobDescriptions } = position
 
   const [shareOpen, setShareOpen] = useState(false)
 
@@ -43,16 +42,7 @@ export function Job({ position }: { position: PersonioPosition }) {
           <h1 className={h2Class + ' mt-11 sm:mt-0'}>{name}</h1>
 
           <p className="serlo-p mt-2">
-            {isVolunteer ? null : (
-              <>
-                {employmentType === 'permanent'
-                  ? 'Festanstellung'
-                  : employmentType === 'intern'
-                  ? 'Praktikum'
-                  : ''}{' '}
-                {renderSchedule(schedule)} • {office}
-              </>
-            )}
+            {isVolunteer ? null : <>{renderSubline(position)}</>}
           </p>
 
           {jobDescriptions?.jobDescription?.map(({ name, value }) => {
