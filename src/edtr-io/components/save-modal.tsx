@@ -13,6 +13,7 @@ import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface SaveModalProps {
   visible: boolean
@@ -50,7 +51,6 @@ export function SaveModal({
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
-  const buttonDisabled = !maySave || pending
   const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
 
   useEffect(() => {
@@ -111,19 +111,28 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            changes?.set(changesText)
-            setFireSave(true)
+            if (maySave) {
+              changes?.set(changesText)
+              setFireSave(true)
+            } else {
+              showToastNotice(
+                loggedInData!.strings.mutations.errors.valueMissing,
+                'warning'
+              )
+            }
           }}
           className={clsx(
             'serlo-button ml-2',
-            buttonDisabled
-              ? 'cursor-default text-gray-300'
-              : 'serlo-button-green'
+            pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
-          disabled={buttonDisabled}
+          disabled={pending}
           title={getSaveHint()}
         >
-          {pending ? edtrIo.saving : edtrIo.save}
+          {pending
+            ? edtrIo.saving
+            : showSkipCheckout && autoCheckout
+            ? edtrIo.save
+            : edtrIo.saveWithReview}
         </button>
       </div>
     )
@@ -156,7 +165,7 @@ export function SaveModal({
     if (!changes) return null
     return (
       <label className="font-bold">
-        {edtrIo.changes}
+        {edtrIo.changes} <span className="font-bold text-red-500">*</span>
         <textarea
           value={changesText}
           onChange={(e) => {
@@ -208,7 +217,8 @@ export function SaveModal({
         <span
           className="license-wrapper"
           dangerouslySetInnerHTML={{ __html: licenseAgreement }}
-        />
+        />{' '}
+        <span className="font-bold text-red-500">*</span>
         <style jsx global>
           {`
             .license-wrapper a {

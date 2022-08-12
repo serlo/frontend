@@ -110,8 +110,7 @@ export const setEntityMutationRunner = async function ({
         needsReview
           ? loggedInData.strings.mutations.success.saveNeedsReview
           : loggedInData.strings.mutations.success.save,
-        'success',
-        4000
+        'success'
       )
       const id =
         data.id === 0
@@ -119,6 +118,7 @@ export const setEntityMutationRunner = async function ({
             ? undefined
             : (savedId as number)
           : data.id
+
       if (id) window.location.href = getHistoryUrl(id)
       else window.location.href = `/${taxonomyParentId as number}`
     }

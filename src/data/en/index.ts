@@ -577,6 +577,7 @@ export const loggedInData = {
         solutionSeparatorDesc:
           'Divide the solution into individual steps.',
         save: 'Save',
+        saveWithReview: 'Save and get review',
         cancel: 'Cancel',
         saving: 'Saving…',
         missingChanges:
@@ -589,7 +590,7 @@ export const loggedInData = {
           'You can store the revision locally, refresh the page and try to save again.',
         revisionSaved: 'Revision saved',
         saveRevision: 'Save revision',
-        changes: 'Changes',
+        changes: 'Describe your changes to the content',
         skipReview: 'Skip peer review (not recommended)',
         enableNotifs: 'Enable serlo.org notifications',
         enableNotifsMail: 'Enable notifications via e-mail',

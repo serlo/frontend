@@ -8,7 +8,7 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { SerloEntityPluginType } from '@/edtr-io/plugins'
-import { sandboxUrl } from '@/fetcher/fetch-editor-data'
+import { sandboxUrlStart } from '@/fetcher/fetch-editor-data'
 import {
   GetTaxonomyTypeQuery,
   GetTaxonomyTypeQueryVariables,
@@ -95,7 +95,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     return { notFound: true }
 
   const isSandbox = result.uuid.navigation?.path.nodes.some(
-    (node) => node.url === sandboxUrl
+    (node) => node.url === sandboxUrlStart
   )
 
   return {
