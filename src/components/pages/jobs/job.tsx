@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
+import { renderSchedule } from './overview'
 import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -49,9 +50,7 @@ export function Job({ position }: { position: PersonioPosition }) {
                   : employmentType === 'intern'
                   ? 'Praktikum'
                   : ''}{' '}
-                •{' '}
-                {schedule === 'full-or-part-time' ? 'Voll- oder Teilzeit' : ''}
-                {schedule === 'full-time' ? 'Vollzeit' : ''} • {office}
+                {renderSchedule(schedule)} • {office}
               </>
             )}
           </p>

@@ -430,13 +430,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                     {department ? department : ''}
                     {employmentType === 'trainee'
                       ? null
-                      : schedule === 'full-or-part-time'
-                      ? ' • Voll- oder Teilzeit'
-                      : schedule === 'full-time'
-                      ? ' • Vollzeit'
-                      : schedule === 'part-time'
-                      ? ' • Teilzeit'
-                      : ''}{' '}
+                      : renderSchedule(schedule)}{' '}
                     • {office}
                   </Link>
                 </li>
@@ -485,4 +479,14 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       </figure>
     )
   }
+}
+
+export function renderSchedule(schedule?: string) {
+  return schedule === 'full-or-part-time'
+    ? ' • Voll- oder Teilzeit'
+    : schedule === 'full-time'
+    ? ' • Vollzeit'
+    : schedule === 'part-time'
+    ? ' • Teilzeit'
+    : ''
 }
