@@ -11,14 +11,37 @@ export interface JobsProps {
   jobId: number | null
 }
 
+// employmentType special cases:
+// intern: praktikum
+// trailnee: ehrenamt
+
 export default renderedPageNoHooks<JobsProps>((props) => {
   const position =
     props.jobId &&
     props.positions.find((position) => position.id === props.jobId)
 
+  const jobs = [] as PersonioPosition[]
+  const internships = [] as PersonioPosition[]
+  const volunteers = [] as PersonioPosition[]
+
+  for (let i = 0; i < props.positions.length; i++) {
+    const pos = props.positions[i]
+    if (pos.employmentType === 'trainee') volunteers.push(pos)
+    else if (pos.employmentType === 'intern') internships.push(pos)
+    else jobs.push(pos)
+  }
+
   return (
     <FrontendClientBase noContainers>
-      {position ? <Job position={position} /> : <Overview {...props} />}
+      {position ? (
+        <Job position={position} />
+      ) : (
+        <Overview
+          jobs={jobs}
+          internships={internships}
+          volunteers={volunteers}
+        />
+      )}
     </FrontendClientBase>
   )
 })

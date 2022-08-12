@@ -8,7 +8,7 @@ import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { CommunityWallPerson } from '@/data/de/community-people'
 // eslint-disable-next-line import/extensions
-import { JobsProps, PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const ShareModal = dynamic<ShareModalProps>(() =>
   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
@@ -115,7 +115,14 @@ const h2Class =
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 const italicClass = 'text-brand italic font-handwritten text-3xl'
 
-export function Overview({ positions }: JobsProps) {
+// type CategorizedJobsProps = Record<string, PersonioPosition[]>
+export interface JobsOverviewProps {
+  jobs: PersonioPosition[]
+  internships: PersonioPosition[]
+  volunteers: PersonioPosition[]
+}
+
+export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
   const [shareOpen, setShareOpen] = useState(false)
 
   return (
@@ -180,14 +187,21 @@ export function Overview({ positions }: JobsProps) {
           <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
             <div className="max-w-xl w-full mx-auto sm:mr-4">
               <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamptlich</h3>
-              {renderPositions(positions)}
+              {renderPositions(jobs)}
             </div>
             <div className="max-w-xl w-full mx-auto sm:ml-4">
               <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-12 sm:mt-0')}>
                 Ehrenamtlich
               </h3>
-              {renderPositions(positions)}
+              {renderPositions(volunteers)}
             </div>
+          </div>
+          <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
+            <div className="max-w-xl w-full mx-auto sm:mr-4">
+              <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Praktikas</h3>
+              {renderPositions(internships)}
+            </div>
+            <div className="max-w-xl w-full mx-auto sm:ml-4"></div>
           </div>
         </section>
 
@@ -412,10 +426,12 @@ export function Overview({ positions }: JobsProps) {
                 >
                   <span className="text-brand font-bold">{name}</span>
                   <br />
-                  {department ? `${department} • ` : ''}
+                  {department ? department : ''}
                   {employmentType === 'permanent'
-                    ? 'Festanstellung'
-                    : 'Teilzeit'}{' '}
+                    ? ' • Festanstellung'
+                    : employmentType === 'trainee'
+                    ? ''
+                    : ' • Teilzeit'}{' '}
                   • {office}
                 </Link>
               </li>

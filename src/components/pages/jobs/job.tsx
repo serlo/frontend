@@ -21,6 +21,8 @@ export function Job({ position }: { position: PersonioPosition }) {
 
   const [shareOpen, setShareOpen] = useState(false)
 
+  const isVolunteer = employmentType === 'trainee'
+
   return (
     <>
       <HeadTags data={{ title: `${name} bei Serlo` }} />
@@ -38,10 +40,20 @@ export function Job({ position }: { position: PersonioPosition }) {
             asBackButton
           />
           <h1 className={h2Class + ' mt-11 sm:mt-0'}>{name}</h1>
+
           <p className="serlo-p mt-2">
-            {employmentType === 'permanent' ? 'Festanstellung' : ''} •{' '}
-            {schedule === 'full-or-part-time' ? 'Voll- oder Teilzeit' : ''}
-            {schedule === 'full-time' ? 'Vollzeit' : ''} • {office}
+            {isVolunteer ? null : (
+              <>
+                {employmentType === 'permanent'
+                  ? 'Festanstellung'
+                  : employmentType === 'intern'
+                  ? 'Praktikum'
+                  : ''}{' '}
+                •{' '}
+                {schedule === 'full-or-part-time' ? 'Voll- oder Teilzeit' : ''}
+                {schedule === 'full-time' ? 'Vollzeit' : ''} • {office}
+              </>
+            )}
           </p>
 
           {jobDescriptions?.jobDescription?.map(({ name, value }) => {
@@ -57,16 +69,17 @@ export function Job({ position }: { position: PersonioPosition }) {
               </section>
             )
           })}
-
           <section className="my-12 mx-side">
-            <a
-              className="serlo-button-green text-xl px-5"
-              href={`https://serlo.jobs.personio.de/job/${id}?display=de#apply`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Jetzt Bewerben!
-            </a>
+            {isVolunteer ? null : (
+              <a
+                className="serlo-button-green text-xl px-5"
+                href={`https://serlo.jobs.personio.de/job/${id}?display=de#apply`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Jetzt Bewerben!
+              </a>
+            )}
           </section>
           {renderUserTools(false)}
           <ShareModal
