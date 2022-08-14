@@ -30,6 +30,9 @@
         },
         "profile_image": {
           "type": "string"
+        },
+        "language": {
+          "type": "string"
         }
       },
       "required": ["email", "username"],
