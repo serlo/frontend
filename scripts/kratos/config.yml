@@ -84,3 +84,30 @@ courier:
   smtp:
     connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
   template_override_path: /etc/config/kratos/email-templates/
+  templates:
+    verification:
+      valid:
+        email:
+          subject: http://host.docker.internal:3000/api/.ory/mail-templates/verification/valid/email.subject.gotmpl
+          body:
+            html: http://host.docker.internal:3000/api/.ory/mail-templates/verification/valid/email.body.gotmpl
+            plaintext: http://host.docker.internal:3000/api/.ory/mail-templates/verification/valid/email.body.plaintext.gotmpl
+      invalid:
+        email:
+          subject: http://host.docker.internal:3000/api/.ory/mail-templates/verification/invalid/email.subject.gotmpl
+          body:
+            html: http://host.docker.internal:3000/api/.ory/mail-templates/verification/invalid/email.body.gotmpl
+            plaintext: http://host.docker.internal:3000/api/.ory/mail-templates/verification/invalid/email.body.plaintext.gotmpl
+    recovery:
+      valid:
+        email:
+          subject: http://host.docker.internal:3000/api/.ory/mail-templates/recovery/valid/email.subject.gotmpl
+          body:
+            html: http://host.docker.internal:3000/api/.ory/mail-templates/recovery/valid/email.body.gotmpl
+            plaintext: http://host.docker.internal:3000/api/.ory/mail-templates/recovery/valid/email.body.plaintext.gotmpl
+      invalid:
+        email:
+          subject: http://host.docker.internal:3000/api/.ory/mail-templates/recovery/invalid/email.subject.gotmpl
+          body:
+            html: http://host.docker.internal:3000/api/.ory/mail-templates/recovery/invalid/email.body.gotmpl
+            plaintext: http://host.docker.internal:3000/api/.ory/mail-templates/recovery/invalid/email.body.plaintext.gotmpl

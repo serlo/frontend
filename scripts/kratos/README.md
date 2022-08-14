@@ -7,6 +7,10 @@ _note: make sure the staging kratos and hydra are pointing to localhost:3000. As
 Make sure your `NEXT_PUBLIC_ENV=staging`, run `yarn dev` to start the frontend and
 head to `localhost:3000` and try to register, verify email, log in, log out, and reset password.
 
+### Developing email templates
+
+Change files in `src/pages/api/.ory/mail-templates/`, commit and push. And ask the infrastructure unit to redeploy kratos.
+
 ## Getting started using local API and database layer
 
 1. Run `yarn kratos` (or `yarn kratos:detach` if you want to have control of the terminal).
@@ -31,7 +35,6 @@ Kratos has to be rebuild every time you change an email template in `scripts/kra
 1. Change something in the `email-templates/` folder.
 2. Run `yarn kratos:rebuild`
 3. Test the verification or the recovery email. Repeat the process.
-
 
 ## Folder explanation
 
