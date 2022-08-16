@@ -15,10 +15,10 @@ mit dem folgenen Link kommst du wieder in deinen Serlo-Account:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>
 {{end}}
 
-{{- if eq .language "en" -}}
+{{- if eq .Identity.traits.language "en" -}}
 {{ template "en_template" . }}
 {{- end -}}
-{{- if eq .language "de" -}}
+{{- if eq .Identity.traits.language "de" -}}
 {{ template "de_template" . }}
 {{- end -}}
 `

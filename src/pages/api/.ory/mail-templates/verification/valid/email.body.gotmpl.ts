@@ -15,10 +15,10 @@ Bitte bestätige deinen Account mit diesem Link:
 <a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 {{end}}
 
-{{- if eq .language "en" -}}
+{{- if eq .Identity.traits.language "en" -}}
 {{ template "en_template" . }}
 {{- end -}}
-{{- if eq .language "de" -}}
+{{- if eq .Identity.traits.language "de" -}}
 {{ template "de_template" . }}
 {{- end -}}
 `
