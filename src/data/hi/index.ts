@@ -850,3 +850,5 @@ export const loggedInData = {
     }
   }
 };
+
+export const kratosMailStrings = {}

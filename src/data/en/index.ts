@@ -939,3 +939,69 @@ export const loggedInData = {
     }
   },
 }
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: '👉 Access to your Serlo account',
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+please recover access to your account by opening the following link in your browser:
+
+{{ .RecoveryURL }}`,
+      body: `👋 Hi  {{ .Identity.traits.username }},
+please recover access to your account by clicking the following link:
+
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>`,
+    },
+    invalid: {
+      subject: '👉 Account access attempted',
+      'body.plaintext': `👋 Hi,
+
+you (or someone else) entered this email address when trying to recover access to an account.
+
+However, this email address is not on our database of registered users and therefore the attempt has failed.
+
+If this was you, check if you signed up using a different address.
+
+If this was not you, please ignore this email.`,
+      body: `👋 Hi,
+
+you (or someone else) entered this email address when trying to recover access to an account.
+
+However, this email address is not on our database of registered users and therefore the attempt has failed.
+
+If this was you, check if you signed up using a different address.
+
+If this was not you, please ignore this email.`,
+    }
+  },
+  verification: {
+    valid: {
+      subject: '👋 Please verify your email address',
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
+please verify your account by clicking the following link:
+
+{{ .VerificationURL }}`,
+      body: `👋 Hi  {{ .Identity.traits.username }}, welcome to Serlo!
+Please verify your account by clicking the following link:
+
+<a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>`,
+    },
+    invalid: {
+      subject: `👋 Someone tried to verify this email address`,
+      'body.plaintext': `👋 Hi,
+
+someone asked to verify this email address, but we were unable to find an account for this address.
+
+If this was you, check if you signed up using a different address.
+
+If this was not you, please ignore this email.`,
+      body: `👋 Hi,
+
+someone asked to verify this email address, but we were unable to find an account for this address.
+
+If this was you, check if you signed up using a different address.
+
+If this was not you, please ignore this email.`
+    }
+  }
+}
