@@ -33,9 +33,9 @@ _Important: the file src/api/graphql-fetch.ts was modified in order to imitate t
 
 ### Developing email templates
 
-Kratos has to be rebuild every time you change an email template in `scripts/kratos/email-templates/`. Use the following workflow:
+Kratos has to be rebuilt every time you change an email template. Use the following workflow:
 
-1. Change something in the `email-templates/` folder.
+1. Edit an template.
 2. Run `yarn kratos:rebuild`
 3. Test the verification or the recovery email at `localhost:4436`. Repeat the process.
 
