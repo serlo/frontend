@@ -54,7 +54,7 @@ export function Registration() {
           .submitSelfServiceRegistrationFlow(String(flow?.id), values)
           .then(async () => {
             return await router
-              .push(flow?.return_to || '/login-check')
+              .push(flow?.return_to || '/auth/login-check')
               .then(() => {})
           })
           .catch(handleFlowError(router, FlowType.registration, setFlow))
