@@ -14,6 +14,7 @@ Change files in `src/pages/api/.ory/mail-templates/`, commit and push. And ask t
 ## Getting started using local API and database layer
 
 1. Run `yarn kratos` (or `yarn kratos:detach` if you want to have control of the terminal).
+   _Note: if you are doing it for the first time, it may take a while (10 to 15 minutes is realistic)._
 2. Run `yarn kratos:prepare`.
 3. Make sure to use the local environment in `.env.local`:
 
@@ -22,9 +23,11 @@ NEXT_PUBLIC_ENV=local
 # NEXT_PUBLIC_ENV=staging
 ```
 
+4. `yarn dev`.  
+   _Note: if you have to change `.env.local.`, you have to rerun `yarn dev`_
 5. Head to `localhost:3000/auth/login`.
-6. For Login you can already use the id `dev` and password `123456`.
-7. For verifying email go to `localhost:4436`.
+6. For login you can already use the id `dev`, email `serlo@dev.org` and password `123456`.
+7. For emails go to `localhost:4436`.
 
 _Important: the file src/api/graphql-fetch.ts was modified in order to imitate the authentication made by the cloudflare worker. DO NOT COMMIT this change._
 
@@ -34,7 +37,7 @@ Kratos has to be rebuild every time you change an email template in `scripts/kra
 
 1. Change something in the `email-templates/` folder.
 2. Run `yarn kratos:rebuild`
-3. Test the verification or the recovery email. Repeat the process.
+3. Test the verification or the recovery email at `localhost:4436`. Repeat the process.
 
 ## Folder explanation
 
