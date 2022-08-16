@@ -14,8 +14,8 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { loggedInData } from '@/data/de'
 import { GetTrashedEntitiesQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { useSetUuidStateMutation } from '@/mutations/use-set-uuid-state-mutation'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>

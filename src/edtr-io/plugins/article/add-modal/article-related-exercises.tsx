@@ -32,21 +32,24 @@ export function ArticleRelatedExercises({
   addEntry,
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
-
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
-  const errorReturn = <p>Sorry, something went wrong</p>
+  const errorReturn = <p>Sorry, something went wrong.</p>
 
-  if (!data || error) return errorReturn
+  if (error) return errorReturn
+  if (!data) return <p>…</p>
+
   const { uuid } = data
+
   if (
     uuid?.__typename !== UuidType.TaxonomyTerm ||
     uuid.type !== TaxonomyTermType.ExerciseFolder
-  )
+  ) {
     return errorReturn
+  }
 
   return (
     <div className="mt-5 border-t-2 pt-6">
@@ -100,6 +103,7 @@ const fetchExerciseFolderQuery = gql`
   query fetchExerciseFolder($id: Int!) {
     uuid(id: $id) {
       ... on TaxonomyTerm {
+        __typename
         type
         children {
           nodes {

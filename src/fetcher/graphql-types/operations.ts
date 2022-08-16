@@ -504,7 +504,7 @@ export interface ArticleRevisionCursor {
 }
 
 export interface CacheRemoveInput {
-  key: Scalars['String'];
+  keys: Array<Scalars['String']>;
 }
 
 export interface CacheRemoveResponse {
@@ -1482,8 +1482,14 @@ export interface License {
 
 export interface LicenseQuery {
   __typename?: 'LicenseQuery';
+  defaultLicense: License;
   license?: Maybe<License>;
   licenses: Array<License>;
+}
+
+
+export interface LicenseQueryDefaultLicenseArgs {
+  instance: Instance;
 }
 
 
@@ -1494,6 +1500,32 @@ export interface LicenseQueryLicenseArgs {
 
 export interface LicenseQueryLicensesArgs {
   instance?: InputMaybe<Instance>;
+}
+
+export interface MediaQuery {
+  __typename?: 'MediaQuery';
+  newUpload: MediaUpload;
+}
+
+
+export interface MediaQueryNewUploadArgs {
+  mediaType: MediaType;
+}
+
+export enum MediaType {
+  ImageGif = 'IMAGE_GIF',
+  ImageJpeg = 'IMAGE_JPEG',
+  ImagePng = 'IMAGE_PNG',
+  ImageSvgXml = 'IMAGE_SVG_XML',
+  ImageWebp = 'IMAGE_WEBP'
+}
+
+export interface MediaUpload {
+  __typename?: 'MediaUpload';
+  fileExtension: Scalars['String'];
+  fileNameWithoutExtension: Scalars['String'];
+  uploadUrl: Scalars['String'];
+  urlAfterUpload: Scalars['String'];
 }
 
 export interface MetadataQuery {
@@ -1761,6 +1793,7 @@ export interface Query {
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;
   license: LicenseQuery;
+  media: MediaQuery;
   metadata: MetadataQuery;
   notificationEvent?: Maybe<AbstractNotificationEvent>;
   notifications: NotificationConnection;
@@ -1881,6 +1914,16 @@ export enum Role {
   Reviewer = 'reviewer',
   StaticPagesBuilder = 'staticPagesBuilder',
   Sysadmin = 'sysadmin'
+}
+
+export enum Scope {
+  Serlo = 'Serlo',
+  SerloDe = 'Serlo_De',
+  SerloEn = 'Serlo_En',
+  SerloEs = 'Serlo_Es',
+  SerloFr = 'Serlo_Fr',
+  SerloHi = 'Serlo_Hi',
+  SerloTa = 'Serlo_Ta'
 }
 
 export interface ScopedRole {
@@ -2672,10 +2715,17 @@ export interface UserEdge {
 
 export interface UserMutation {
   __typename?: 'UserMutation';
+  addRole: UserRoleResponse;
   deleteBots: UserDeleteBotsResponse;
   deleteRegularUsers: Array<UserDeleteRegularUsersResponse>;
+  removeRole: UserRoleResponse;
   setDescription: UserSetDescriptionResponse;
   setEmail: UserSetEmailResponse;
+}
+
+
+export interface UserMutationAddRoleArgs {
+  input: UserRoleInput;
 }
 
 
@@ -2686,6 +2736,11 @@ export interface UserMutationDeleteBotsArgs {
 
 export interface UserMutationDeleteRegularUsersArgs {
   input: UserDeleteRegularUsersInput;
+}
+
+
+export interface UserMutationRemoveRoleArgs {
+  input: UserRoleInput;
 }
 
 
@@ -2701,12 +2756,32 @@ export interface UserMutationSetEmailArgs {
 export interface UserQuery {
   __typename?: 'UserQuery';
   potentialSpamUsers: UserConnection;
+  usersByRole: UserConnection;
 }
 
 
 export interface UserQueryPotentialSpamUsersArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
+}
+
+
+export interface UserQueryUsersByRoleArgs {
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  role: Role;
+  scope: Scope;
+}
+
+export interface UserRoleInput {
+  role: Role;
+  scope: Scope;
+  username: Scalars['String'];
+}
+
+export interface UserRoleResponse {
+  __typename?: 'UserRoleResponse';
+  success: Scalars['Boolean'];
 }
 
 export interface UserSetDescriptionInput {
@@ -2908,12 +2983,19 @@ export type UserRevisionQueryVariables = Exact<{
 
 export type UserRevisionQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User', unrevisedEntities: { __typename?: 'AbstractEntityConnection', totalCount: number, nodes: Array<{ __typename: 'Applet', id: number, alias: string, currentRevision?: { __typename?: 'AppletRevision', title: string, id: number } | null, revisions: { __typename?: 'AppletRevisionConnection', nodes: Array<{ __typename?: 'AppletRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Article', id: number, alias: string, currentRevision?: { __typename?: 'ArticleRevision', title: string, id: number } | null, revisions: { __typename?: 'ArticleRevisionConnection', nodes: Array<{ __typename?: 'ArticleRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Course', id: number, alias: string, currentRevision?: { __typename?: 'CourseRevision', title: string, id: number } | null, revisions: { __typename?: 'CourseRevisionConnection', nodes: Array<{ __typename?: 'CourseRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'CoursePage', id: number, alias: string, currentRevision?: { __typename?: 'CoursePageRevision', title: string, id: number } | null, revisions: { __typename?: 'CoursePageRevisionConnection', nodes: Array<{ __typename?: 'CoursePageRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Event', id: number, alias: string, currentRevision?: { __typename?: 'EventRevision', title: string, id: number } | null, revisions: { __typename?: 'EventRevisionConnection', nodes: Array<{ __typename?: 'EventRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Exercise', id: number, alias: string, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null, revisions: { __typename?: 'ExerciseRevisionConnection', nodes: Array<{ __typename?: 'ExerciseRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'ExerciseGroup', id: number, alias: string, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null, revisions: { __typename?: 'ExerciseGroupRevisionConnection', nodes: Array<{ __typename?: 'ExerciseGroupRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'GroupedExercise', id: number, alias: string, currentRevision?: { __typename?: 'GroupedExerciseRevision', id: number } | null, revisions: { __typename?: 'GroupedExerciseRevisionConnection', nodes: Array<{ __typename?: 'GroupedExerciseRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Solution', id: number, alias: string, currentRevision?: { __typename?: 'SolutionRevision', id: number } | null, solutionRevisions: { __typename?: 'SolutionRevisionConnection', nodes: Array<{ __typename?: 'SolutionRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Video', id: number, alias: string, currentRevision?: { __typename?: 'VideoRevision', title: string, id: number } | null, revisions: { __typename?: 'VideoRevisionConnection', nodes: Array<{ __typename?: 'VideoRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } }>, pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null } } } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
 
+export type DefaultLicenseAgreementQueryVariables = Exact<{
+  instance: Instance;
+}>;
+
+
+export type DefaultLicenseAgreementQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', defaultLicense: { __typename?: 'License', agreement: string } } };
+
 export type FetchExerciseFolderQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type FetchExerciseFolderQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm', type: TaxonomyTermType, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' }> } } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
+export type FetchExerciseFolderQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' }> } } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
 
 export type FetchParentQueryQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -3268,6 +3350,216 @@ export type IsSubscribedQueryVariables = Exact<{
 
 export type IsSubscribedQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', currentUserHasSubscribed: boolean } };
 
+export type TaxonomyTermCreateEntityLinkMutationVariables = Exact<{
+  input: TaxonomyEntityLinksInput;
+}>;
+
+
+export type TaxonomyTermCreateEntityLinkMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', createEntityLinks: { __typename?: 'TaxonomyEntityLinksResponse', success: boolean } } };
+
+export type TaxonomyTermDeleteEntityLinkMutationVariables = Exact<{
+  input: TaxonomyEntityLinksInput;
+}>;
+
+
+export type TaxonomyTermDeleteEntityLinkMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', deleteEntityLinks: { __typename?: 'TaxonomyEntityLinksResponse', success: boolean } } };
+
+export type TaxonomyTermSortMutationVariables = Exact<{
+  input: TaxonomyTermSortInput;
+}>;
+
+
+export type TaxonomyTermSortMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', sort: { __typename?: 'TaxonomyTermSortResponse', success: boolean } } };
+
+export type ThreadSetArchivedMutationVariables = Exact<{
+  input: ThreadSetThreadArchivedInput;
+}>;
+
+
+export type ThreadSetArchivedMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadArchived?: { __typename?: 'ThreadSetThreadArchivedResponse', success: boolean } | null } };
+
+export type ThreadSetStateMutationVariables = Exact<{
+  input: ThreadSetThreadStateInput;
+}>;
+
+
+export type ThreadSetStateMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setThreadState?: { __typename?: 'ThreadSetThreadStateResponse', success: boolean } | null } };
+
+export type ThreadSetCommentStateMutationVariables = Exact<{
+  input: ThreadSetCommentStateInput;
+}>;
+
+
+export type ThreadSetCommentStateMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', setCommentState?: { __typename?: 'ThreadSetCommentStateResponse', success: boolean } | null } };
+
+export type CreateThreadMutationVariables = Exact<{
+  input: ThreadCreateThreadInput;
+}>;
+
+
+export type CreateThreadMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createThread?: { __typename?: 'ThreadCreateThreadResponse', success: boolean } | null } };
+
+export type CreateCommentMutationVariables = Exact<{
+  input: ThreadCreateCommentInput;
+}>;
+
+
+export type CreateCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createComment?: { __typename?: 'ThreadCreateCommentResponse', success: boolean } | null } };
+
+export type AddPageRevisionMutationVariables = Exact<{
+  input: PageAddRevisionInput;
+}>;
+
+
+export type AddPageRevisionMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', addRevision: { __typename?: 'AddRevisionResponse', success: boolean } } };
+
+export type SortMutationVariables = Exact<{
+  input: EntitySortInput;
+}>;
+
+
+export type SortMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', sort: { __typename?: 'EntitySortResponse', success: boolean } } };
+
+export type UpdateLicenseMutationVariables = Exact<{
+  input: EntityUpdateLicenseInput;
+}>;
+
+
+export type UpdateLicenseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', updateLicense: { __typename?: 'EntityUpdateLicenseResponse', success: boolean } } };
+
+export type RejectRevisionMutationVariables = Exact<{
+  input: RejectRevisionInput;
+}>;
+
+
+export type RejectRevisionMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', rejectRevision: { __typename?: 'RejectRevisionResponse', success: boolean } } };
+
+export type CheckoutRevisionMutationVariables = Exact<{
+  input: CheckoutRevisionInput;
+}>;
+
+
+export type CheckoutRevisionMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', checkoutRevision: { __typename?: 'CheckoutRevisionResponse', success: boolean } } };
+
+export type CheckoutPageRevisionMutationVariables = Exact<{
+  input: CheckoutRevisionInput;
+}>;
+
+
+export type CheckoutPageRevisionMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', checkoutRevision: { __typename?: 'CheckoutRevisionResponse', success: boolean } } };
+
+export type SetAppletMutationVariables = Exact<{
+  input: SetAppletInput;
+}>;
+
+
+export type SetAppletMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setApplet: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetArticleMutationVariables = Exact<{
+  input: SetArticleInput;
+}>;
+
+
+export type SetArticleMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setArticle: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetCourseMutationVariables = Exact<{
+  input: SetCourseInput;
+}>;
+
+
+export type SetCourseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setCourse: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetCoursePageMutationVariables = Exact<{
+  input: SetCoursePageInput;
+}>;
+
+
+export type SetCoursePageMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setCoursePage: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetEventMutationVariables = Exact<{
+  input: SetEventInput;
+}>;
+
+
+export type SetEventMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setEvent: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetExerciseMutationVariables = Exact<{
+  input: SetGenericEntityInput;
+}>;
+
+
+export type SetExerciseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setExercise: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetExerciseGroupMutationVariables = Exact<{
+  input: SetExerciseGroupInput;
+}>;
+
+
+export type SetExerciseGroupMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setExerciseGroup: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetGroupedExerciseMutationVariables = Exact<{
+  input: SetGenericEntityInput;
+}>;
+
+
+export type SetGroupedExerciseMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setGroupedExercise: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetSolutionMutationVariables = Exact<{
+  input: SetGenericEntityInput;
+}>;
+
+
+export type SetSolutionMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setSolution: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type SetVideoMutationVariables = Exact<{
+  input: SetVideoInput;
+}>;
+
+
+export type SetVideoMutation = { __typename?: 'Mutation', entity: { __typename?: 'EntityMutation', setVideo: { __typename: 'SetEntityResponse', success: boolean, record?: { __typename?: 'Applet', id: number } | { __typename?: 'Article', id: number } | { __typename?: 'Course', id: number } | { __typename?: 'CoursePage', id: number } | { __typename?: 'Event', id: number } | { __typename?: 'Exercise', id: number } | { __typename?: 'ExerciseGroup', id: number } | { __typename?: 'GroupedExercise', id: number } | { __typename?: 'Solution', id: number } | { __typename?: 'Video', id: number } | null } } };
+
+export type NotificationSetStateMutationVariables = Exact<{
+  input: NotificationSetStateInput;
+}>;
+
+
+export type NotificationSetStateMutation = { __typename?: 'Mutation', notification: { __typename?: 'NotificationMutation', setState?: { __typename?: 'NotificationSetStateResponse', success: boolean } | null } };
+
+export type SetUuidStateMutationVariables = Exact<{
+  input: UuidSetStateInput;
+}>;
+
+
+export type SetUuidStateMutation = { __typename?: 'Mutation', uuid: { __typename?: 'UuidMutation', setState?: { __typename?: 'UuidSetStateResponse', success: boolean } | null } };
+
+export type SubscriptionSetMutationVariables = Exact<{
+  input: SubscriptionSetInput;
+}>;
+
+
+export type SubscriptionSetMutation = { __typename?: 'Mutation', subscription: { __typename?: 'SubscriptionMutation', set?: { __typename?: 'SubscriptionSetResponse', success: boolean } | null } };
+
+export type TaxonomyTermSetNameAndDescriptionMutationVariables = Exact<{
+  input: TaxonomyTermSetNameAndDescriptionInput;
+}>;
+
+
+export type TaxonomyTermSetNameAndDescriptionMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', setNameAndDescription: { __typename?: 'TaxonomyTermSetNameAndDescriptionResponse', success: boolean } } };
+
+export type TaxonomyCreateMutationVariables = Exact<{
+  input: TaxonomyTermCreateInput;
+}>;
+
+
+export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'TaxonomyTermCreateResponse', success: boolean } } };
+
+export type SetDescriptionMutationVariables = Exact<{
+  input: UserSetDescriptionInput;
+}>;
+
+
+export type SetDescriptionMutation = { __typename?: 'Mutation', user: { __typename?: 'UserMutation', setDescription: { __typename?: 'UserSetDescriptionResponse', success: boolean } } };
+
 export type DeleteBotsMutationVariables = Exact<{
   input: UserDeleteBotsInput;
 }>;
@@ -3282,6 +3574,13 @@ export type PotentialSpamUsersQueryVariables = Exact<{
 
 
 export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', potentialSpamUsers: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', id: number, username: string, date: string, lastLogin?: string | null, description?: string | null, isActiveReviewer: boolean, isActiveAuthor: boolean, isActiveDonor: boolean, chatUrl?: string | null, imageUrl: string, motivation?: string | null, roles: { __typename?: 'ScopedRoleConnection', nodes: Array<{ __typename?: 'ScopedRole', scope?: string | null, role: Role }> }, activityByType: { __typename?: 'UserActivityByType', edits: number, comments: number, reviews: number, taxonomy: number } }> } } };
+
+export type GetTaxonomyTypeQueryVariables = Exact<{
+  id: Scalars['Int'];
+}>;
+
+
+export type GetTaxonomyTypeQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm', id: number, alias: string, title: string, type: TaxonomyTermType, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string, url?: string | null, id?: number | null }> } } | null } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
 
 export type LicensesForInstaceQueryVariables = Exact<{
   instance: Instance;

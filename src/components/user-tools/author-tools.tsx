@@ -11,16 +11,14 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidRevType, UuidType } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
-import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { useIsSubscribed } from '@/helper/use-is-subscribed'
+import { useSetUuidStateMutation } from '@/mutations/use-set-uuid-state-mutation'
+import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mutation'
 
 export enum Tool {
   Abo = 'abo',
-  AddCoursePage = 'addCoursePage',
-  AddGroupedTextExercise = 'addGroupedTextExercise',
   ChangeLicense = 'changeLicense',
   CopyItems = 'copyItems',
   Curriculum = 'curriculum',
@@ -28,7 +26,6 @@ export enum Tool {
   UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
-  MoveCoursePage = 'moveCoursePage',
   MoveItems = 'moveItems',
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
@@ -118,10 +115,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
     },
-    moveCoursePage: {
-      url: `/entity/link/move/link/${data.id}/${data.courseId!}`,
-      canDo: false,
-    },
     organize: {
       url: `/taxonomy/term/organize/${data.id}`,
       canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
@@ -133,10 +126,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     copyItems: {
       url: `/taxonomy/term/copy/batch/${data.id}`,
       canDo: canDo(TaxonomyTerm.change),
-    },
-    addGroupedTextExercise: {
-      url: `/entity/create/grouped-text-exercise?link%5Btype%5D=link&link%5Bchild%5D=${data.id}`,
-      canDo: false,
     },
     changeLicense: {
       url: `/entity/license/update/${data.id}`,
@@ -152,10 +141,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         ? loggedInStrings.authorMenu.moveToGrouped
         : loggedInStrings.authorMenu.moveToTextExercise,
       canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
-    },
-    addCoursePage: {
-      url: `/entity/create/course-page?link%5Btype%5D=link&link%5Bchild%5D=${data.courseId!}`,
-      canDo: false,
     },
     directLink: {
       title: loggedInStrings.authorMenu.directLink,
@@ -331,6 +316,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         )
       }
 
+      //remove when new entity/create is ready
       const urlTypeString =
         entityType === UuidType.Exercise
           ? 'text-exercise'

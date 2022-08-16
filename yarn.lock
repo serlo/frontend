@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 5
+  version: 6
   cacheKey: 8
 
 "@ampproject/remapping@npm:^2.1.0":
@@ -3911,7 +3911,7 @@ __metadata:
     "@types/jest": ^27.0.0
     "@types/js-cookie": ^3.0.0
     "@types/katex": ^0.14.0
-    "@types/node": ^14.0.0
+    "@types/node": ^16.0.0
     "@types/nprogress": ^0.2.0
     "@types/prismjs": ^1.16.6
     "@types/qrcode.react": ^1.0.2
@@ -3941,6 +3941,7 @@ __metadata:
     eslint-plugin-import: ^2.0.0
     eslint-plugin-react: ^7.0.0
     eslint-plugin-react-hooks: ^4.0.0
+    fast-xml-parser: ^4.0.9
     fp-ts: ^2.12.1
     graphiql: ^1.4.7
     graphql: ^16.0.0
@@ -4590,10 +4591,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^14.0.0":
-  version: 14.18.12
-  resolution: "@types/node@npm:14.18.12"
-  checksum: 8a0273caa0584020adb8802784fc7d4f18f05e6c205335b7f3818a91d6b0c22736b9f51da3428d5bc54076ad47f1a4d6d57990a3ce8489a520ac66b2b3ff24bc
+"@types/node@npm:^16.0.0":
+  version: 16.11.43
+  resolution: "@types/node@npm:16.11.43"
+  checksum: 96d09e68347c49ebf84fe1443360edc3f98336f0794256abc8e4f29ef3070546357cae17083d6fd9767b631239367c4f245fe64accff4af057d17bd6694f0b2b
   languageName: node
   linkType: hard
 
@@ -7635,6 +7636,17 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: 92cfec0a8dfafd9c7a15fba8f2cc29cd0b62b85f056d99ce448bbcd9f708e18ab2764bda4dd5158364f4145a7c72788538994f0d1787b956ef0d1062b0f7c24c
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.0.9":
+  version: 4.0.9
+  resolution: "fast-xml-parser@npm:4.0.9"
+  dependencies:
+    strnum: ^1.0.5
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: 1ef2ba1406ce9985a2e7049a4c412de0e1e64e4ee6b0890f5b5bfce6407d04ce04b61733d2ddc7ba4acf4461b57eb3718cbc595df9a023f5a79ad81f70e8425a
   languageName: node
   linkType: hard
 
@@ -13652,6 +13664,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strnum@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "strnum@npm:1.0.5"
+  checksum: 651b2031db5da1bf4a77fdd2f116a8ac8055157c5420f5569f64879133825915ad461513e7202a16d7fec63c54fd822410d0962f8ca12385c4334891b9ae6dd2
+  languageName: node
+  linkType: hard
+
 "style-mod@npm:^4.0.0":
   version: 4.0.0
   resolution: "style-mod@npm:4.0.0"
@@ -14259,11 +14278,11 @@ __metadata:
 
 "typescript@patch:typescript@^4.0.0#~builtin<compat/typescript>":
   version: 4.5.5
-  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=493e53"
+  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=7ad353"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: c05c318d79c690f101d7ffb34cd6c7d6bbd884d3af9cefe7749ad0cd6be43c7082f098280982ca945dcba23fde34a08fed9602bb26540936baf8c0520727d3ba
+  checksum: 858c61fa63f7274ca4aaaffeced854d550bf416cff6e558c4884041b3311fb662f476f167cf5c9f8680c607239797e26a2ee0bcc6467fbc05bfcb218e1c6c671
   languageName: node
   linkType: hard
 

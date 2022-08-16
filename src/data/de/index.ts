@@ -90,8 +90,8 @@ export const instanceData = {
       button: "Inhalt überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
-        title: "Erstelle mit uns!",
-        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        title: "Erstelle mit uns Lerninhalte!",
+        text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
         registerButton: "Neues Konto anlegen",
         psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
@@ -243,7 +243,7 @@ export const instanceData = {
       backToHome: "Zur Startseite",
       deletedComment: {
         title: "Hoppla, das gibt's hier nicht mehr",
-        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde aus absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
+        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
       }
     },
     print: {
@@ -517,7 +517,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
         serloTable: "Tabelle",
-        serloTableDesc: "(Testlauf für neues Plugin) Tabellen erstellen",
+        serloTableDesc: "Schöne Tabellen erstellen.",
         table: "Tabelle",
         tableDesc: "Erstelle eine Tabelle mit Markdown.",
         video: 'Video',

@@ -13,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
-      agree: 'Agree to use search'
+      agree: "Acepta utilizar el motor de búsqueda"
     },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
@@ -31,9 +31,9 @@ export const instanceData = {
       folders: "Carpetas",
       exercises: "Ejercicios",
       events: "Eventos",
-      unrevised: 'Unrevised',
+      unrevised: "Aún no revisado",
       subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      exercisesContent: "Ejercicios contenido"
     },
     entities: {
       applet: 'Applet',
@@ -322,9 +322,9 @@ export const instanceData = {
       setLicense: "%actor% cambió la licencia de %repository%.",
       createEntityLink: "%actor% asoció %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
-      createEntityRevision: "%actor% creó una %revision% de %entity%.",
-      checkoutRevision: "%actor% revisió una %revision% en %repository%.",
-      rejectRevision: "%actor% no aceptó a %revision% en %repository%.",
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: "%actor% agregó %child% a %parent%.",
       removeTaxonomyLink: "%actor% eliminó %child% de %parent%.",
       createTaxonomyTerm: "%actor% creó %term%.",
@@ -517,7 +517,7 @@ export const loggedInData = {
         spoiler: "Spoiler/desplegable",
         spoilerDesc: "Una caja colapsable.",
         serloTable: "Tabla",
-        serloTableDesc: "(nuevo plugin en fase de prueba) Crear tablas",
+        serloTableDesc: 'Create pretty tables',
         table: "Tabla",
         tableDesc: "Crear tablas usando Markdown.",
         video: "Vídeo",
@@ -670,10 +670,10 @@ export const loggedInData = {
         serloId: 'Serlo ID:'
       },
       box: {
-        type: "Tipo de caja",
+        type: "Tipo de contenedor",
         titlePlaceholder: "(título opcional)",
         anchorId: "ID de Ancla (marca de posición)",
-        emptyContentWarning: "Cajas sin contenido no se visualizarán"
+        emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
