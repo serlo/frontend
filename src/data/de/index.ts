@@ -94,7 +94,7 @@ export const instanceData = {
         text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
         registerButton: "Neues Konto anlegen",
-        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
     },
