@@ -7,7 +7,6 @@ import {
   string,
 } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
 import { useState } from 'react'
 
 import { SemanticSection } from '../helpers/semantic-section'
