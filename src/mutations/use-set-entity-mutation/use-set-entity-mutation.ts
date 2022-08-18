@@ -17,6 +17,7 @@ import {
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
 import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(
@@ -165,13 +166,12 @@ const loopNestedChildren = async ({
       data.__typename === UuidType.GroupedExercise) &&
     data['text-solution']
   ) {
+    const initial = hasOwnPropertyTs(initialState, 'state')
+      ? (initialState.state as TextExerciseSerializedState)['text-solution']
+      : undefined
     success =
       success &&
-      (await mapField(
-        data['text-solution'],
-        UuidType.Solution,
-        (initialState.state as TextExerciseSerializedState)['text-solution']
-      ))
+      (await mapField(data['text-solution'], UuidType.Solution, initial))
   }
 
   return success
