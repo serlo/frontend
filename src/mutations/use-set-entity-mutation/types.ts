@@ -1,6 +1,3 @@
-import { RefObject } from 'react'
-
-import { AuthenticationPayload } from '@/auth/auth-provider'
 import { LoggedInData } from '@/data-types'
 import {
   AppletSerializedState,
@@ -79,7 +76,11 @@ export type TaxonomyCreateOrUpdateMutationData = Pick<
 }
 
 export interface SetEntityMutationRunnerData {
-  auth: RefObject<AuthenticationPayload>
+  mutationFetch: (
+    query: string,
+    input: unknown,
+    isRetry?: boolean
+  ) => Promise<boolean | number>
   data: SetEntityMutationData
   needsReview: boolean
   loggedInData: LoggedInData | null

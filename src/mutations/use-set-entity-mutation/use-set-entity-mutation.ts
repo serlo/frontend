@@ -1,15 +1,14 @@
 // eslint-disable-next-line import/no-internal-modules
 import { eqBy, mapObjIndexed } from 'ramda'
 
-import { showToastNotice } from '../../show-toast-notice'
-import { mutationFetch } from '../helper'
+import { showToastNotice } from '../../helper/show-toast-notice'
+import { useMutationFetch } from '../helper/use-mutation-fetch'
 import { getSetMutation } from './get-set-mutation'
 import {
   ChildFieldsData,
   SetEntityMutationData,
   SetEntityMutationRunnerData,
 } from './types'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
 import {
@@ -18,6 +17,7 @@ import {
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
 import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(
@@ -39,8 +39,8 @@ const hasNoChanges = (
 }
 
 export function useSetEntityMutation() {
-  const auth = useAuthentication()
   const loggedInData = useLoggedInData()
+  const mutationFetch = useMutationFetch()
 
   return async (
     data: SetEntityMutationData,
@@ -52,7 +52,7 @@ export function useSetEntityMutation() {
     taxonomyParentId?: number
   ) =>
     await setEntityMutationRunner({
-      auth,
+      mutationFetch,
       data,
       needsReview,
       loggedInData,
@@ -62,7 +62,7 @@ export function useSetEntityMutation() {
 }
 
 export const setEntityMutationRunner = async function ({
-  auth,
+  mutationFetch,
   data,
   needsReview,
   loggedInData,
@@ -71,17 +71,18 @@ export const setEntityMutationRunner = async function ({
   savedParentId,
   taxonomyParentId,
 }: SetEntityMutationRunnerData) {
-  if (!auth || !loggedInData) {
+  if (!loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
     return false
   }
 
   if (!data.__typename) return false
 
+  let input = {}
   try {
     const genericInput = getGenericInputData(loggedInData, data, needsReview)
     const additionalInput = getAdditionalInputData(loggedInData, data)
-    const input = {
+    input = {
       ...genericInput,
       ...additionalInput,
       parentId: genericInput.entityId
@@ -90,53 +91,57 @@ export const setEntityMutationRunner = async function ({
         ? savedParentId
         : taxonomyParentId,
     }
-
-    // while testing
+  } catch (error) {
     // eslint-disable-next-line no-console
-    console.log(`saving ${input.title ?? '?'} (${data.__typename})`)
+    console.error('error collecting data, probably missing value?')
+    return false
+  }
 
+  let savedId = undefined
+  try {
     //here we rely on the api not to create an empty revision
-    const savedId = await mutationFetch(
-      auth,
-      getSetMutation(data.__typename),
-      input,
-      loggedInData?.strings.mutations.errors
-    )
-
+    savedId = await mutationFetch(getSetMutation(data.__typename), input)
     if (!Number.isInteger(savedId)) return false
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error saving main uuid')
+    return false
+  }
 
-    // check for children
-    const childrenResult = await loopNestedChildren({
-      auth,
+  // check for children and save them
+  let childrenResult = undefined
+  try {
+    childrenResult = await loopNestedChildren({
+      mutationFetch,
       data,
       needsReview,
       loggedInData,
       initialState,
       savedParentId: savedId as number,
     })
-
-    if (!isRecursiveCall && childrenResult) {
-      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      const id =
-        data.id === 0
-          ? savedId === 0
-            ? undefined
-            : (savedId as number)
-          : data.id
-      if (id) window.location.href = getHistoryUrl(id)
-      else window.location.href = `/${taxonomyParentId as number}`
-    }
-
-    return true
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('probably missing value?')
+    console.error(`error saving children of ${savedId as number}`)
     return false
   }
+
+  if (!isRecursiveCall && childrenResult) {
+    showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    const id =
+      data.id === 0
+        ? savedId === 0
+          ? undefined
+          : (savedId as number)
+        : data.id
+    if (id) window.location.href = getHistoryUrl(id)
+    else window.location.href = `/${taxonomyParentId as number}`
+  }
+
+  return true
 }
 
 const loopNestedChildren = async ({
-  auth,
+  mutationFetch,
   data,
   needsReview,
   loggedInData,
@@ -147,13 +152,17 @@ const loopNestedChildren = async ({
 
   let success = true
 
+  const initialStateState = hasOwnPropertyTs(initialState, 'state')
+    ? initialState.state
+    : undefined
+
   if (data.__typename === UuidType.Course && data['course-page']) {
     success =
       success &&
       (await mapField(
         data['course-page'],
         UuidType.CoursePage,
-        (initialState.state as CourseSerializedState)['course-page']
+        (initialStateState as CourseSerializedState)?.['course-page']
       ))
   }
   if (
@@ -165,7 +174,7 @@ const loopNestedChildren = async ({
       (await mapField(
         data['grouped-text-exercise'],
         UuidType.GroupedExercise,
-        (initialState.state as TextExerciseGroupSerializedState)[
+        (initialStateState as TextExerciseGroupSerializedState)?.[
           'grouped-text-exercise'
         ]
       ))
@@ -180,7 +189,7 @@ const loopNestedChildren = async ({
       (await mapField(
         data['text-solution'],
         UuidType.Solution,
-        (initialState.state as TextExerciseSerializedState)['text-solution']
+        (initialStateState as TextExerciseSerializedState)?.['text-solution']
       ))
   }
 
@@ -206,12 +215,7 @@ const loopNestedChildren = async ({
         )
 
         // only request new revision when entity changed
-        if (hasNoChanges(oldVersion, child)) {
-          // while testing we rely on the API to not create a new revision
-          // eslint-disable-next-line no-console
-          console.log('should not create a new revision')
-          //return true
-        }
+        if (hasNoChanges(oldVersion, child)) return true
 
         const input = {
           ...child,
@@ -222,7 +226,7 @@ const loopNestedChildren = async ({
         }
 
         const success = await setEntityMutationRunner({
-          auth,
+          mutationFetch,
           data: input as SetEntityMutationData,
           needsReview,
           loggedInData,

@@ -17,7 +17,7 @@ import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
-} from '@/helper/mutations/thread'
+} from '@/mutations/thread'
 
 export type ThreadsData = GetCommentsNode[] | GetAllThreadsNode[]
 export type CommentsData =

@@ -13,7 +13,7 @@ export const instanceData = {
     },
     search: {
       privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
-      agree: 'Agree to use search'
+      agree: "Accepte d'utiliser la recherche"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
@@ -31,9 +31,9 @@ export const instanceData = {
       folders: "Dossiers",
       exercises: "exercices",
       events: "Événements",
-      unrevised: 'Unrevised',
+      unrevised: "Non révisé",
       subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      exercisesContent: "Contenu des exercices"
     },
     entities: {
       applet: "applet",
@@ -43,14 +43,14 @@ export const instanceData = {
       event: "Événement",
       exercise: "Exercice",
       exerciseGroup: "Groupe d'exercices",
-      topic: 'Folder',
+      topic: "Dossier",
       groupedExercise: "Exercice groupé",
       page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
       video: "Vidéo",
-      exerciseFolder: 'Exercise folder',
+      exerciseFolder: "Dossier d'exercices",
       comment: "Commentaire",
       revision: "Révision",
       thread: 'Thread',
@@ -68,8 +68,8 @@ export const instanceData = {
       unrevisedRevisions: "Révisions non révisées",
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
-      editProfile: 'Edit Profile & Settings',
-      recycleBin: 'Recycle Bin',
+      editProfile: "Modifier le profil et les paramètres",
+      recycleBin: "Corbeille",
       diagon: 'Diagon Alley'
     },
     roles: {
@@ -322,9 +322,9 @@ export const instanceData = {
       setLicense: "%actor% a modifié la licence de %repository%.",
       createEntityLink: "%actor% a associé %child% à %parent%.",
       removeEntityLink: "%actor% a dissocié %child% de %parent%.",
-      createEntityRevision: "%actor% a créé une %revision% de %entity%.",
-      checkoutRevision: "%actor% a accepté une %revision% dans %repository%.",
-      rejectRevision: "%actor% n'a pas accepté une %revision% dans %repository%.",
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: "%actor% a ajouté %child% à %parent%.",
       removeTaxonomyLink: "%actor% a retiré %child% de %parent%.",
       createTaxonomyTerm: "%actor% a créé %term%.",
@@ -517,7 +517,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: "Une boîte réductible.",
         serloTable: 'Table',
-        serloTableDesc: '(new plugin in testing) Create tables',
+        serloTableDesc: 'Create pretty tables',
         table: "Tableau",
         tableDesc: "Créer un tableau avec Markdown.",
         video: "Vidéo",

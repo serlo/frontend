@@ -9,12 +9,12 @@
   "license": "Apache-2.0",
   "author": "Serlo Education e.V.",
   "scripts": {
+    "start": "next start",
     "_eslint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "_prettier": "prettier .",
     "analyze": "cross-env ANALYZE=true yarn build",
     "build": "next build",
     "dev": "next",
-    "check:all": "scripts/check-all.sh",
     "format": "npm-run-all --continue-on-error \"format:*\"",
     "format:eslint": "yarn _eslint --fix",
     "format:prettier": "yarn _prettier --write",
@@ -23,10 +23,11 @@
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
     "lint:next": "yarn _eslint --config .eslintrc-next.js",
-    "start": "next start",
     "test": "jest",
-    "tailwind:status": "node ./scripts/tailwind-status.js",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --config codegen.yml",
+    "check:all": "scripts/check-all.sh",
+    "check:api": "node ./scripts/check-api-version.mjs",
+    "check:tailwind": "node ./scripts/check-tailwind.js"
   },
   "dependencies": {
     "@edtr-io/core": "^2.8.2",
@@ -64,6 +65,7 @@
     "array-move": "^4.0.0",
     "autoprefixer": "^10.0.0",
     "clsx": "^1.0.0",
+    "fast-xml-parser": "^4.0.9",
     "fp-ts": "^2.12.1",
     "graphiql": "^1.4.7",
     "graphql": "^16.0.0",
@@ -161,6 +163,11 @@
     "styled-jsx-plugin-postcss": "^4.0.0",
     "tailwindcss": "^3.0.0",
     "typescript": "^4.0.0"
+  },
+  "nextBundleAnalysis": {
+    "budget": null,
+    "budgetPercentIncreaseRed": 20,
+    "showDetails": true
   },
   "packageManager": "yarn@3.2.1"
 }
