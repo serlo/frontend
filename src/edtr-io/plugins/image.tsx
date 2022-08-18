@@ -114,25 +114,18 @@ export function createReadFile() {
 
         reader.onload = function (e: ProgressEvent) {
           if (!e.target) return
-          const formData = new FormData()
-          formData.append('attachment[file]', file)
-          formData.append('type', 'file')
-
           fetch(data.media.newUpload.uploadUrl, {
             method: 'PUT',
-            headers: { 'Content-Type': 'image/jpeg' }, // TODO: fixed only for testing
-            body: formData,
+            headers: { 'Content-Type': 'image/png' }, // TODO: fixed only for testing
+            body: file,
           })
-            .then((response) => response.json())
-            .then(
-              (data: { success: boolean; files: { location: string }[] }) => {
-                if (!data['success']) reject()
-                resolve({
-                  file,
-                  dataUrl: data.files[0].location,
-                })
-              }
-            )
+            .then((response) => {
+              if (response.status !== 200) reject()
+              resolve({
+                file,
+                dataUrl: data.media.newUpload.urlAfterUpload,
+              })
+            })
             .catch(() => {
               reject()
             })
