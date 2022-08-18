@@ -1,3 +1,4 @@
+import { elem } from 'fp-ts/lib/Tree'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
@@ -18,10 +19,11 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   const router = useRouter()
   const { strings } = useInstanceData()
 
-  const semanticName = (element.alt ?? router.asPath.split('/').pop()).replace(
-    /[^\w+]/g,
-    ''
-  )
+  const semanticNameSource =
+    element.alt && element.alt.length > 3
+      ? element.alt
+      : router.asPath.split('/').pop()
+  const semanticName = semanticNameSource?.replace(/[^\w+]/g, '')
   const src =
     semanticName && semanticName.length > 3
       ? element.src.replace('/image.', `/${semanticName}.`)
