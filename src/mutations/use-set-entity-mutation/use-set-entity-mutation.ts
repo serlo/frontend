@@ -78,10 +78,11 @@ export const setEntityMutationRunner = async function ({
 
   if (!data.__typename) return false
 
+  let input = {}
   try {
     const genericInput = getGenericInputData(loggedInData, data, needsReview)
     const additionalInput = getAdditionalInputData(loggedInData, data)
-    const input = {
+    input = {
       ...genericInput,
       ...additionalInput,
       parentId: genericInput.entityId
@@ -90,14 +91,27 @@ export const setEntityMutationRunner = async function ({
         ? savedParentId
         : taxonomyParentId,
     }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error collecting data, probably missing value?')
+    return false
+  }
 
+  let savedId = undefined
+  try {
     //here we rely on the api not to create an empty revision
-    const savedId = await mutationFetch(getSetMutation(data.__typename), input)
-
+    savedId = await mutationFetch(getSetMutation(data.__typename), input)
     if (!Number.isInteger(savedId)) return false
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('error saving main uuid')
+    return false
+  }
 
-    // check for children
-    const childrenResult = await loopNestedChildren({
+  // check for children and save them
+  let childrenResult = undefined
+  try {
+    childrenResult = await loopNestedChildren({
       mutationFetch,
       data,
       needsReview,
@@ -105,25 +119,25 @@ export const setEntityMutationRunner = async function ({
       initialState,
       savedParentId: savedId as number,
     })
-
-    if (!isRecursiveCall && childrenResult) {
-      showToastNotice(loggedInData.strings.mutations.success.save, 'success')
-      const id =
-        data.id === 0
-          ? savedId === 0
-            ? undefined
-            : (savedId as number)
-          : data.id
-      if (id) window.location.href = getHistoryUrl(id)
-      else window.location.href = `/${taxonomyParentId as number}`
-    }
-
-    return true
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('probably missing value?')
+    console.error(`error saving children of ${savedId as number}`)
     return false
   }
+
+  if (!isRecursiveCall && childrenResult) {
+    showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    const id =
+      data.id === 0
+        ? savedId === 0
+          ? undefined
+          : (savedId as number)
+        : data.id
+    if (id) window.location.href = getHistoryUrl(id)
+    else window.location.href = `/${taxonomyParentId as number}`
+  }
+
+  return true
 }
 
 const loopNestedChildren = async ({
@@ -138,13 +152,17 @@ const loopNestedChildren = async ({
 
   let success = true
 
+  const initialStateState = hasOwnPropertyTs(initialState, 'state')
+    ? initialState.state
+    : undefined
+
   if (data.__typename === UuidType.Course && data['course-page']) {
     success =
       success &&
       (await mapField(
         data['course-page'],
         UuidType.CoursePage,
-        (initialState.state as CourseSerializedState)['course-page']
+        (initialStateState as CourseSerializedState)?.['course-page']
       ))
   }
   if (
@@ -156,7 +174,7 @@ const loopNestedChildren = async ({
       (await mapField(
         data['grouped-text-exercise'],
         UuidType.GroupedExercise,
-        (initialState.state as TextExerciseGroupSerializedState)[
+        (initialStateState as TextExerciseGroupSerializedState)?.[
           'grouped-text-exercise'
         ]
       ))
@@ -166,12 +184,13 @@ const loopNestedChildren = async ({
       data.__typename === UuidType.GroupedExercise) &&
     data['text-solution']
   ) {
-    const initial = hasOwnPropertyTs(initialState, 'state')
-      ? (initialState.state as TextExerciseSerializedState)['text-solution']
-      : undefined
     success =
       success &&
-      (await mapField(data['text-solution'], UuidType.Solution, initial))
+      (await mapField(
+        data['text-solution'],
+        UuidType.Solution,
+        (initialStateState as TextExerciseSerializedState)?.['text-solution']
+      ))
   }
 
   return success
