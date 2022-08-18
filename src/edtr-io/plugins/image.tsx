@@ -10,8 +10,25 @@ import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024
-const ALLOWED_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg']
+const maxFileSize = 2 * 1024 * 1024
+const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
+const supportedMimeTypes = [
+  'image/gif',
+  'image/jpeg',
+  'image/png',
+  'image/svg+xml',
+  'image/webp',
+] as const
+
+type SupportedMimeType = typeof supportedMimeTypes[number]
+
+const mimeTypesToMediaType: Record<SupportedMimeType, MediaType> = {
+  'image/gif': MediaType.ImageGif,
+  'image/jpeg': MediaType.ImageJpeg,
+  'image/png': MediaType.ImagePng,
+  'image/svg+xml': MediaType.ImageSvgXml,
+  'image/webp': MediaType.ImageWebp,
+}
 
 enum FileErrorCode {
   TOO_MANY_FILES,
@@ -28,7 +45,7 @@ export interface FileError {
 
 function matchesAllowedExtensions(fileName: string) {
   const extension = fileName.toLowerCase().slice(fileName.lastIndexOf('.') + 1)
-  return ALLOWED_EXTENSIONS.indexOf(extension) >= 0
+  return allowedExtensions.includes(extension)
 }
 
 function handleErrors(errors: FileErrorCode[]): FileError[] {
@@ -64,7 +81,7 @@ export const validateFile: UploadValidator<FileError[]> = (file) => {
     uploadErrors = [...uploadErrors, FileErrorCode.NO_FILE_SELECTED]
   } else if (!matchesAllowedExtensions(file.name)) {
     uploadErrors = [...uploadErrors, FileErrorCode.BAD_EXTENSION]
-  } else if (file.size > MAX_FILE_SIZE) {
+  } else if (file.size > maxFileSize) {
     uploadErrors = [...uploadErrors, FileErrorCode.FILE_TOO_BIG]
   } else {
     return {
@@ -97,7 +114,6 @@ export function createReadFile() {
   return function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
       const authenticationPayload = parseAuthCookie()
-
       if (!authenticationPayload?.token) return
 
       const gqlFetch = createAuthAwareGraphqlFetch({
@@ -105,18 +121,18 @@ export function createReadFile() {
       })
       const args = JSON.stringify({
         query: uploadUrlQuery,
-        variables: { mediaType: MediaType.ImagePng },
+        variables: {
+          mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
+        },
       })
       void gqlFetch(args).then((data: MediaUploadQuery) => {
-        console.log('resulting url:')
-        console.log(data.media.newUpload.uploadUrl)
         const reader = new FileReader()
 
         reader.onload = function (e: ProgressEvent) {
           if (!e.target) return
           fetch(data.media.newUpload.uploadUrl, {
             method: 'PUT',
-            headers: { 'Content-Type': 'image/png' }, // TODO: fixed only for testing
+            headers: { 'Content-Type': file.type },
             body: file,
           })
             .then((response) => {
@@ -151,8 +167,6 @@ const uploadUrlQuery = gql`
       newUpload(mediaType: $mediaType) {
         uploadUrl
         urlAfterUpload
-        fileExtension
-        fileNameWithoutExtension
       }
     }
   }

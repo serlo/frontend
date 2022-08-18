@@ -1522,8 +1522,6 @@ export enum MediaType {
 
 export interface MediaUpload {
   __typename?: 'MediaUpload';
-  fileExtension: Scalars['String'];
-  fileNameWithoutExtension: Scalars['String'];
   uploadUrl: Scalars['String'];
   urlAfterUpload: Scalars['String'];
 }
@@ -3011,7 +3009,7 @@ export type MediaUploadQueryVariables = Exact<{
 }>;
 
 
-export type MediaUploadQuery = { __typename?: 'Query', media: { __typename?: 'MediaQuery', newUpload: { __typename?: 'MediaUpload', uploadUrl: string, urlAfterUpload: string, fileExtension: string, fileNameWithoutExtension: string } } };
+export type MediaUploadQuery = { __typename?: 'Query', media: { __typename?: 'MediaQuery', newUpload: { __typename?: 'MediaUpload', uploadUrl: string, urlAfterUpload: string } } };
 
 export type LicenseDetailsQueryVariables = Exact<{
   id: Scalars['Int'];
