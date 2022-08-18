@@ -1,8 +1,6 @@
-import { theme } from 'tailwind.config'
-
 export const colors = {
-  brand: theme.extend.colors.brand.DEFAULT,
-  brandGreen: theme.extend.colors.brandgreen.DEFAULT,
+  brand: '#007ec1',
+  brandGreen: '#95bc1a',
 }
 
 export const articleColors = {
