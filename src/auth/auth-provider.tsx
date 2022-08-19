@@ -66,7 +66,10 @@ export type AuthenticationPayload = {
   clearToken(): void
 } | null
 
-function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
+export function useAuthentication(): [
+  RefObject<AuthenticationPayload>,
+  boolean
+] {
   const initialValue = parseAuthCookie()
   const authenticationPayload = useRef<AuthenticationPayload>(initialValue)
   const pendingRefreshTokenPromise = useRef<Promise<void> | null>(null)

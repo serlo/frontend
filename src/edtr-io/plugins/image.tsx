@@ -1,13 +1,10 @@
 import { LoadedFile, UploadValidator } from '@edtr-io/plugin'
 import { createImagePlugin as createCoreImagePlugin } from '@edtr-io/plugin-image'
 import { gql } from 'graphql-request'
-import Cookies from 'js-cookie'
-import jwt_decode from 'jwt-decode'
-import { Token } from 'simple-oauth2'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { AuthenticationPayload } from '@/auth/auth-provider'
+import { useAuthentication } from '@/auth/auth-provider'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const maxFileSize = 2 * 1024 * 1024
@@ -113,12 +110,10 @@ export function createUploadImageHandler() {
 export function createReadFile() {
   return function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      const authenticationPayload = parseAuthCookie()
-      if (!authenticationPayload?.token) return
+      const authenticationPayload = useAuthentication()[0]
+      if (!authenticationPayload?.current?.token) return
 
-      const gqlFetch = createAuthAwareGraphqlFetch({
-        current: authenticationPayload,
-      })
+      const gqlFetch = createAuthAwareGraphqlFetch(authenticationPayload)
       const args = JSON.stringify({
         query: uploadUrlQuery,
         variables: {
@@ -171,31 +166,3 @@ const uploadUrlQuery = gql`
     }
   }
 `
-
-// TODO: Duplicated for now because of hooks
-function parseAuthCookie(): AuthenticationPayload {
-  try {
-    const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-
-    const { access_token, id_token } = JSON.parse(
-      cookies['auth-token']
-    ) as Token
-
-    const decoded = jwt_decode<{
-      username: string
-      id: number
-    }>(id_token as string)
-
-    return {
-      username: decoded.username,
-      id: decoded.id,
-      token: access_token as string,
-      refreshToken: () => Promise.resolve(),
-      clearToken: () => {
-        return
-      },
-    }
-  } catch {
-    return null
-  }
-}
