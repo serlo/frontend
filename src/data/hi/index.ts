@@ -518,7 +518,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: 'A collapsible box.',
         serloTable: 'Table',
-        serloTableDesc: '(new plugin in testing) Create tables',
+        serloTableDesc: 'Create pretty tables',
         table: 'Table',
         tableDesc: 'Create tables using Markdown.',
         video: 'Video',

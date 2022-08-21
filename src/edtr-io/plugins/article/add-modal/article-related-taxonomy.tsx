@@ -32,7 +32,18 @@ export function ArticleRelatedTaxonomy({
   const articleStrings = loggedInData.strings.editor.article
 
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
-  if (!dataAndTerm) return <p>Sorry, something went wrong</p>
+  if (!dataAndTerm) {
+    const isNew =
+      typeof window !== undefined &&
+      window.location.pathname.startsWith('/entity/create')
+    return (
+      <p className="mt-4 pt-4 border-t-2 text-gray-400 italic">
+        {isNew
+          ? 'Sorry, folder preview is currently not supported for new articles.'
+          : 'Sorry, something went wrong.'}
+      </p>
+    )
+  }
   const { categorisedData, term } = dataAndTerm
 
   return (
@@ -216,7 +227,7 @@ function getCategorisedDataAndTerm(data?: FetchParentType, error?: object) {
   const { uuid } = data
   if (!uuid) return null
 
-  const term = uuid.taxonomyTerms.nodes.find((node) => node.type === 'topic')
+  const term = uuid.taxonomyTerms?.nodes.find((node) => node.type === 'topic')
   if (!term || term.children.nodes.length === 0) return null
 
   const categorisedData = {} as {
