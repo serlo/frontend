@@ -63,9 +63,9 @@ services:
       - LOG_LEAK_SENSITIVE_VALUES=true
       - OAUTH2_EXPOSE_INTERNAL_ERRORS=1
       - URLS_SELF_ISSUER=http://localhost:4444
-      - URLS_LOGIN=http://localhost:3001/kratos/hydra-login
-      - URLS_LOGOUT=http://localhost:3001/kratos/hydra-logout
-      - URLS_CONSENT=http://localhost:3001/kratos/hydra-consent
+      - URLS_LOGIN=http://localhost:3001/hydra/login
+      - URLS_LOGOUT=http://localhost:3001/hydra/logout
+      - URLS_CONSENT=http://localhost:3001/hydra/consent
       - DSN=memory
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_ENABLED=public,pairwise
@@ -95,7 +95,7 @@ services:
     networks:
       - intranet
   api:
-    image: eu.gcr.io/serlo-shared/api-server:0.44.0-staging
+    image: eu.gcr.io/serlo-shared/api-server:0.47.0-staging.1
     command: yarn start
     depends_on:
       - redis
