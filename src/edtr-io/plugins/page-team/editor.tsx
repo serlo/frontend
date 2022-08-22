@@ -63,7 +63,6 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
         </p>
         <button
           className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           onClick={async () => {
             try {
               const response = await fetch(

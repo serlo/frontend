@@ -98,7 +98,6 @@ function Content() {
           <button
             title={loggedInData.strings.authorMenu.restoreContent}
             className="serlo-button-blue-transparent text-brand-300"
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={async () => {
               const success = await setUuidState({ id: [id], trashed: false })
               if (success) window.location.href = alias

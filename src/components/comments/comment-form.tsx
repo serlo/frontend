@@ -82,7 +82,6 @@ export function CommentForm({
       />
       <button
         title={sendTitle}
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={onSendAction}
         onPointerUp={(e) => e.currentTarget.blur()}
         className={clsx(

@@ -66,7 +66,6 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     const refreshLink = (
       <a
         className="serlo-link cursor-pointer"
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onClick={async () => {
           const cache = await caches.open('v1')
           await cache.delete(getAvatarUrl(username))
