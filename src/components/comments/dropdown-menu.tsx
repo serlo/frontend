@@ -8,12 +8,12 @@ import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
   useThreadArchivedMutation,
-} from '@/helper/mutations/thread'
-import { showToastNotice } from '@/helper/show-toast-notice'
+} from '@/mutations/thread'
 
 interface DropdownMenuProps {
   isParent?: boolean

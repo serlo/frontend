@@ -13,14 +13,14 @@ import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
-import { useAddPageRevision } from '@/helper/mutations/use-add-page-revision-mutation'
+import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
   AddPageRevisionMutationData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
-} from '@/helper/mutations/use-set-entity-mutation/types'
-import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
-import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
+} from '@/mutations/use-set-entity-mutation/types'
+import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
+import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
 
 export function AddRevision({
   initialState,

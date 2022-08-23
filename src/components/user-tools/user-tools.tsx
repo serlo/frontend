@@ -24,11 +24,11 @@ import { getEditUrl } from '@/helper/urls/get-edit-url'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 interface UserToolsProps {
-  id: number
+  id?: number
   onShare?: () => void
   onInvite?: () => void
   hideEditProfile?: boolean
-  data: AuthorToolsData
+  data?: AuthorToolsData
   unrevisedRevisions?: number
   aboveContent?: boolean
 }
@@ -51,7 +51,7 @@ export function UserTools({
   const loggedInData = useLoggedInData()
   const loggedInComponents = useLoggedInComponents()
   const canDo = useCanDo()
-  const isRevision = data.type.includes('Revision')
+  const isRevision = data && data.type.includes('Revision')
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
 
@@ -71,7 +71,6 @@ export function UserTools({
   }
 
   function buttonClassName() {
-    // no autocomplete here yet
     if (aboveContent) {
       return clsx('serlo-button-green', 'text-sm m-0.5 ml-1 leading-browser')
     } else {
@@ -125,7 +124,7 @@ export function UserTools({
       return null
     }
 
-    if (data.type === UuidType.User) return renderProfileButtons()
+    if (data && data.type === UuidType.User) return renderProfileButtons()
 
     return (
       <>
@@ -138,6 +137,7 @@ export function UserTools({
   }
 
   function renderEditOrInvite() {
+    if (!data) return null
     const showInvite = ![
       UuidType.Page,
       UuidType.Event,
@@ -172,6 +172,7 @@ export function UserTools({
   }
 
   function getEditHref(): string | undefined {
+    if (!data) return undefined
     const revisionId = data.revisionId
     const { type, id } = data
     const url = getEditUrl(id, revisionId, type.startsWith('Taxonomy'))
@@ -185,6 +186,7 @@ export function UserTools({
   }
 
   function renderUnrevised() {
+    if (!id) return null
     return (
       <Link href={getHistoryUrl(id)} className={buttonClassName()}>
         {renderInner(
@@ -196,6 +198,7 @@ export function UserTools({
   }
 
   function renderRevisionTools() {
+    if (!data) return null
     // cloneElement seems to be the accepted way to add additional props to an inherited component.
     return (
       <>
@@ -229,7 +232,7 @@ export function UserTools({
   }
 
   function renderExtraTools() {
-    if (!loggedInComponents || !loggedInData) return null // safeguard
+    if (!data || !loggedInComponents || !loggedInData) return null
     const supportedTypes: AuthorToolsData['type'][] = [
       UuidType.Page,
       UuidType.Article,
