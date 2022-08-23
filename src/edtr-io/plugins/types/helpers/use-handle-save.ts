@@ -69,13 +69,17 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
       },
     })
       .then(() => {
-        storeState(undefined)
-        setPending(false)
-        setHasError(false)
+        setTimeout(() => {
+          storeState(undefined)
+          setPending(false)
+          setHasError(false)
+        }, 200)
       })
       .catch(() => {
-        setPending(false)
-        setHasError(true)
+        setTimeout(() => {
+          setPending(false)
+          setHasError(true)
+        }, 200)
       })
   }
 
