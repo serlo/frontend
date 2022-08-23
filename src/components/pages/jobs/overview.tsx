@@ -186,7 +186,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </h3>
           <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
             <div className="max-w-xl w-full mx-auto sm:mr-4">
-              <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamptlich</h3>
+              <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamtlich</h3>
               {renderPositions(jobs)}
             </div>
             <div className="max-w-xl w-full mx-auto sm:ml-4">
