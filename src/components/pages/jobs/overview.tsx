@@ -190,19 +190,19 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               {renderPositions(jobs)}
             </div>
             <div className="max-w-xl w-full mx-auto sm:ml-4">
-              <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-12 sm:mt-0')}>
-                Ehrenamtlich
-              </h3>
-              {renderPositions(volunteers)}
+              <div>
+                <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-16 sm:mt-0')}>
+                  Ehrenamtlich
+                </h3>
+                {renderPositions(volunteers)}
+              </div>
+              <div className="mt-16">
+                <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Praktika</h3>
+                {renderPositions(internships)}
+              </div>
             </div>
           </div>
-          <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
-            <div className="max-w-xl w-full mx-auto sm:mr-4">
-              <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Praktika</h3>
-              {renderPositions(internships)}
-            </div>
-            <div className="max-w-xl w-full mx-auto sm:ml-4"></div>
-          </div>
+          {/* <div className="sm:flex pt-8 justify-center text-left px-side mt-5"></div> */}
         </section>
 
         <section className={clsx('partner', 'mt-24 !pt-12')}>
