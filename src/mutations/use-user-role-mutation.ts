@@ -1,10 +1,10 @@
 import { gql } from 'graphql-request'
 import { mutate, useSWRConfig } from 'swr'
 
-import { mutationFetch } from './helper'
+import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { Role, Scope, UserRoleInput } from '@/fetcher/graphql-types/operations'
+import { UserRoleInput } from '@/fetcher/graphql-types/operations'
 
 const addMutation = gql`
   mutation addRole($input: UserRoleInput!) {
@@ -27,23 +27,15 @@ const removeMutation = gql`
 `
 
 export function useUserAddOrRemoveRoleMutation() {
+  const mutationFetch = useMutationFetch()
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
   const { cache } = useSWRConfig()
 
-  const addOrRemoveRoleMutation = async function (
-    input: {
-      username: string
-      role: Role
-      scope: Scope
-    },
-    isAdd: boolean
-  ) {
+  return async function (input: UserRoleInput, isAdd: boolean) {
     const success = await mutationFetch(
-      auth,
       isAdd ? addMutation : removeMutation,
-      input,
-      loggedInData?.strings.mutations.errors
+      input
     )
 
     if (success) {
@@ -52,11 +44,6 @@ export function useUserAddOrRemoveRoleMutation() {
     }
     return success
   }
-
-  return [
-    async (input: UserRoleInput) => await addOrRemoveRoleMutation(input, true), //add
-    async (input: UserRoleInput) => await addOrRemoveRoleMutation(input, false), //remove
-  ]
 }
 
 function resetUserRolesCache(cache: unknown) {

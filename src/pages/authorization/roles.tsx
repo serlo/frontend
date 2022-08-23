@@ -14,13 +14,13 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
+  Instance,
   Role,
-  Scope,
   UsersByRoleQuery,
 } from '@/fetcher/graphql-types/operations'
-import { useUserAddOrRemoveRoleMutation } from '@/helper/mutations/use-user-role-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { useUserAddOrRemoveRoleMutation } from '@/mutations/use-user-role-mutation'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>
@@ -32,15 +32,12 @@ const roles = Object.values(Role) as Array<Role>
 
 function Content() {
   const { lang, strings } = useInstanceData()
-  const [addRole, removeRole] = useUserAddOrRemoveRoleMutation()
+  const instance = lang
+  const setHasRole = useUserAddOrRemoveRoleMutation()
   const usernameInput = useRef<HTMLInputElement>(null)
-
-  const scope = `Serlo_${lang[0].toUpperCase() + lang.slice(1)}` as Scope
   const [showRole, setShowRole] = useState<Role>(Role.Admin)
-
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error, loadMore } = useFetch(scope, showRole)
-
+  const { data, error, loadMore } = useFetch(instance, showRole)
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.subscriptions
@@ -73,7 +70,7 @@ function Content() {
           onClick={async () => {
             const username = usernameInput.current?.value
             if (username && username.length > 0) {
-              void addRole({ username, role: showRole, scope })
+              void setHasRole({ username, role: showRole, instance }, true)
             }
           }}
         >
@@ -115,19 +112,19 @@ function Content() {
   }
 
   function renderUsers() {
-    return data?.nodes.map(({ username }) => {
+    return data?.nodes.map(({ username, alias }) => {
       return (
         <li
           key={username}
           className="flex justify-between my-3 p-3 -ml-3 hover:bg-brand-50 rounded-md"
         >
-          <Link href={`123${username}`}>{username}</Link>
+          <Link href={alias}>{username}</Link>
           <span className="ml-3">
             <button
               className=" text-brand-300 hover:text-brand"
               title="remove role"
               onClick={async () => {
-                void removeRole({ username, role: showRole, scope })
+                void setHasRole({ username, role: showRole, instance }, false)
               }}
             >
               <FaIcon icon={faMinusCircle} />
@@ -160,10 +157,10 @@ export type UserByRoleNode = NonNullable<
   UsersByRoleQuery['user']['usersByRole']['nodes'][0]
 >
 
-function useFetch(scope: Scope, role: Role) {
+function useFetch(instance: Instance, role: Role) {
   return useGraphqlSwrPaginationWithAuth<UserByRoleNode>({
     query: usersByRoleQuery,
-    variables: { first: 300, scope, role },
+    variables: { first: 300, instance, role },
     config: {
       refreshInterval: 5 * 60 * 1000, // 5min
     },
@@ -174,9 +171,19 @@ function useFetch(scope: Scope, role: Role) {
 }
 
 export const usersByRoleQuery = gql`
-  query usersByRole($role: Role!, $scope: Scope!, $first: Int, $after: String) {
+  query usersByRole(
+    $role: Role!
+    $instance: Instance!
+    $first: Int
+    $after: String
+  ) {
     user {
-      usersByRole(role: $role, scope: $scope, first: $first, after: $after) {
+      usersByRole(
+        role: $role
+        instance: $instance
+        first: $first
+        after: $after
+      ) {
         totalCount
         pageInfo {
           hasNextPage

@@ -1522,8 +1522,6 @@ export enum MediaType {
 
 export interface MediaUpload {
   __typename?: 'MediaUpload';
-  fileExtension: Scalars['String'];
-  fileNameWithoutExtension: Scalars['String'];
   uploadUrl: Scalars['String'];
   urlAfterUpload: Scalars['String'];
 }
@@ -2769,13 +2767,13 @@ export interface UserQueryPotentialSpamUsersArgs {
 export interface UserQueryUsersByRoleArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
+  instance?: InputMaybe<Instance>;
   role: Role;
-  scope: Scope;
 }
 
 export interface UserRoleInput {
+  instance?: InputMaybe<Instance>;
   role: Role;
-  scope: Scope;
   username: Scalars['String'];
 }
 
@@ -3553,6 +3551,20 @@ export type TaxonomyCreateMutationVariables = Exact<{
 
 export type TaxonomyCreateMutation = { __typename?: 'Mutation', taxonomyTerm: { __typename?: 'TaxonomyTermMutation', create: { __typename?: 'TaxonomyTermCreateResponse', success: boolean } } };
 
+export type AddRoleMutationVariables = Exact<{
+  input: UserRoleInput;
+}>;
+
+
+export type AddRoleMutation = { __typename?: 'Mutation', user: { __typename?: 'UserMutation', addRole: { __typename?: 'UserRoleResponse', success: boolean } } };
+
+export type RemoveRoleMutationVariables = Exact<{
+  input: UserRoleInput;
+}>;
+
+
+export type RemoveRoleMutation = { __typename?: 'Mutation', user: { __typename?: 'UserMutation', removeRole: { __typename?: 'UserRoleResponse', success: boolean } } };
+
 export type SetDescriptionMutationVariables = Exact<{
   input: UserSetDescriptionInput;
 }>;
@@ -3577,7 +3589,7 @@ export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename
 
 export type UsersByRoleQueryVariables = Exact<{
   role: Role;
-  scope: Scope;
+  instance: Instance;
   first?: InputMaybe<Scalars['Int']>;
   after?: InputMaybe<Scalars['String']>;
 }>;
