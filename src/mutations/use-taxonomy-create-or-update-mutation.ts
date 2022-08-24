@@ -60,7 +60,7 @@ export function useTaxonomyCreateOrUpdateMutation() {
       // reafactor as soon as we don't rely on legacy any more…
       // only for create
       const [, , , , typeNumberString, parentIdString] =
-        router.asPath.split('/') // taxonomy/term/create/4/1390
+        router.asPath.split('/') // e.g. taxonomy/term/create/4/1390
 
       const success = data.id
         ? await mutationFetch(taxonomySetMutation, input)

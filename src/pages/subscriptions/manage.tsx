@@ -58,11 +58,9 @@ function Content() {
       {renderTitle(data?.totalCount)}
       {renderLoadMore()}
       <p className="serlo-p">
-        {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
         {filters.map((typename) => (
           <button
             key={typename}
-            onPointerUp={(e) => e.currentTarget.blur()}
             onClick={() => setShowTypename(typename)}
             className={clsx(
               'mr-2 mb-2.5',

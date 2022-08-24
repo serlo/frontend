@@ -67,11 +67,7 @@ export function CheckoutRejectButtons({
   function renderButton(mode: 'reject' | 'checkout') {
     const isCheckout = mode === 'checkout'
     return (
-      <button
-        className={buttonStyle}
-        onClick={() => setModalMode(mode)}
-        onPointerUp={(e) => e.currentTarget.blur()}
-      >
+      <button className={buttonStyle} onClick={() => setModalMode(mode)}>
         &nbsp;
         <FaIcon
           icon={isCheckout ? faCheck : faTimes}
