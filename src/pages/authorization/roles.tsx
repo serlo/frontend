@@ -47,7 +47,7 @@ function Content() {
   const { data, error, loadMore } = useFetch(instance, showRole)
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const loggedInStrings = loggedInData.strings.subscriptions
+  const loggedInStrings = loggedInData.strings
 
   return (
     <>
@@ -81,8 +81,12 @@ function Content() {
             }
           }}
         >
-          <FaIcon icon={faPlusCircle} /> Add as{' '}
-          <span className="capitalize">{renderRoleTitle(showRole)}</span>
+          <FaIcon icon={faPlusCircle} />{' '}
+          {replacePlaceholders(loggedInStrings.roles.addButton, {
+            role: (
+              <span className="capitalize">{renderRoleTitle(showRole)}</span>
+            ),
+          })}
         </button>
       </p>
     )
@@ -154,12 +158,12 @@ function Content() {
 
     return (
       <p className="serlo-p mt-8">
-        {replacePlaceholders(loggedInStrings.loadedSentence, {
+        {replacePlaceholders(loggedInStrings.subscriptions.loadedSentence, {
           loadedCount: data?.nodes.length.toString() || '',
           totalCount: data?.totalCount!.toString() || '',
         })}{' '}
         <a onClick={loadMore} className="serlo-link cursor-pointer">
-          {loggedInStrings.loadMoreLink}
+          {loggedInStrings.subscriptions.loadMoreLink}
         </a>
       </p>
     )
