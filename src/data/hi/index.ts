@@ -449,7 +449,7 @@ export const loggedInData = {
       noMails: "निष्क्रिय करें ",
       getMails: 'activate',
       noNotifications: "रद्द करें",
-      loadedSentence: 'Loaded %loadedCount% of %totalCount% subscriptions.',
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: 'Load more!'
     },
     revisions: {
