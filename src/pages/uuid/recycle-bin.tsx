@@ -9,6 +9,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { loggedInData } from '@/data/de'
@@ -34,6 +35,7 @@ function Content() {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
+      {renderBackButton()}
       <PageTitle title={strings.pageTitles.recycleBin} headTitle />
       <Guard data={data} error={error} needsAuth>
         <>
@@ -107,6 +109,15 @@ function Content() {
           </button>
         </td>
       </tr>
+    )
+  }
+
+  function renderBackButton() {
+    return (
+      <Breadcrumbs
+        data={[{ label: strings.pageTitles.diagon, url: '/backend' }]}
+        asBackButton
+      />
     )
   }
 }
