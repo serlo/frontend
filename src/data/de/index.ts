@@ -847,6 +847,9 @@ export const loggedInData = {
         title: "Inhalte sortieren",
         saveButtonText: "Reihenfolge speichern"
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };
