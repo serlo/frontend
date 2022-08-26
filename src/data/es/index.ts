@@ -70,7 +70,8 @@ export const instanceData = {
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
       recycleBin: "Papelera de reciclaje",
-      diagon: "Callejón de Diagon"
+      diagon: "Callejón de Diagon",
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Donante",
