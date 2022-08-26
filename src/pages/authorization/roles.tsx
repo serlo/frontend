@@ -1,5 +1,5 @@
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import { faMinusCircle } from '@fortawesome/free-solid-svg-icons/faMinusCircle'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useRef, useState } from 'react'
@@ -28,7 +28,14 @@ export default renderedPageNoHooks(() => (
   </FrontendClientBase>
 ))
 
-const roles = Object.values(Role) as Array<Role>
+const roles = [
+  Role.Admin,
+  Role.Architect,
+  Role.Moderator,
+  Role.Reviewer,
+  Role.StaticPagesBuilder,
+  Role.Sysadmin,
+]
 
 function Content() {
   const { lang, strings } = useInstanceData()
@@ -75,7 +82,7 @@ function Content() {
           }}
         >
           <FaIcon icon={faPlusCircle} /> Add as{' '}
-          <span className="capitalize">{showRole}</span>
+          <span className="capitalize">{renderRoleTitle(showRole)}</span>
         </button>
       </p>
     )
@@ -84,23 +91,29 @@ function Content() {
   function renderRolesTabs() {
     return (
       <p className="serlo-p">
-        {/* //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported*/}
-        {roles.map((role) => (
-          <button
-            key={role}
-            onPointerUp={(e) => e.currentTarget.blur()}
-            onClick={() => setShowRole(role)}
-            className={clsx(
-              'mr-2 mb-2.5',
-              showRole == role ? 'serlo-button-blue' : 'serlo-button-light',
-              'capitalize'
-            )}
-          >
-            {role}
-          </button>
-        ))}
+        {roles.map((role) => {
+          return (
+            <button
+              key={role}
+              onPointerUp={(e) => e.currentTarget.blur()}
+              onClick={() => setShowRole(role)}
+              className={clsx(
+                'mr-2 mb-2.5',
+                showRole == role ? 'serlo-button-blue' : 'serlo-button-light',
+                'capitalize'
+              )}
+            >
+              {renderRoleTitle(role)}
+            </button>
+          )
+        })}
       </p>
     )
+  }
+  function renderRoleTitle(role: Role) {
+    return `${role.replace(/_/g, ' ')}${
+      role === Role.Sysadmin ? ' (global)' : ''
+    }`
   }
   function renderBackButton() {
     return (
@@ -127,7 +140,7 @@ function Content() {
                 void setHasRole({ username, role: showRole, instance }, false)
               }}
             >
-              <FaIcon icon={faMinusCircle} />
+              <FaIcon icon={faTrash} />
             </button>
           </span>
         </li>

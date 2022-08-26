@@ -480,7 +480,7 @@ export const loggedInData = {
       noMails: 'deactivate',
       getMails: 'activate',
       noNotifications: 'cancel',
-      loadedSentence: 'Loaded %loadedCount% of %totalCount% subscriptions.',
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: 'Load more!',
     },
     revisions: {
