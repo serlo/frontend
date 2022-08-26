@@ -847,6 +847,9 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };
