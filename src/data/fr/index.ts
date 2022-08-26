@@ -70,7 +70,8 @@ export const instanceData = {
       userEditsMine: 'My Unrevised Revisions',
       editProfile: "Modifier le profil et les paramètres",
       recycleBin: "Corbeille",
-      diagon: 'Diagon Alley'
+      diagon: 'Diagon Alley',
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Donneur·e",
@@ -448,7 +449,7 @@ export const loggedInData = {
       noMails: "désactiver",
       getMails: "activer",
       noNotifications: "annuler",
-      loadedSentence: "%loadedCount% sur %totalCount% abonnements chargés.",
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: "Charger plus!"
     },
     revisions: {
@@ -846,6 +847,9 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };
