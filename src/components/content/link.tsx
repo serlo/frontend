@@ -52,6 +52,7 @@ export function isLegacyLink(_href: string) {
     _href == '/entity/unrevised' ||
     _href == '/uuid/recycle-bin' ||
     _href == '/pages' ||
+    _href == '/authorization/roles' ||
     _href.startsWith('/entity/repository/history') ||
     _href.startsWith('/entity/repository/compare') ||
     _href.startsWith('/entity/license/update/') ||
