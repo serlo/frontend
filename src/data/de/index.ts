@@ -71,7 +71,7 @@ export const instanceData = {
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
       diagon: "Winkelgasse",
-      manageRoles: 'Manage User Roles'
+      manageRoles: "User-Rollen verwalten"
     },
     roles: {
       donor: "Spender*in",
@@ -449,7 +449,7 @@ export const loggedInData = {
       noMails: "deaktivieren",
       getMails: "aktivieren",
       noNotifications: "abbestellen",
-      loadedSentence: "%loadedCount% von %totalCount% Abonnements geladen.",
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: "Mehr laden!"
     },
     revisions: {
