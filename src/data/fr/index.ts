@@ -449,7 +449,7 @@ export const loggedInData = {
       noMails: "désactiver",
       getMails: "activer",
       noNotifications: "annuler",
-      loadedSentence: "%loadedCount% sur %totalCount% abonnements chargés.",
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: "Charger plus!"
     },
     revisions: {
