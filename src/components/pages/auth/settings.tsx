@@ -7,6 +7,7 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { useAuthentication } from '@/auth/use-authentication'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
@@ -15,9 +16,18 @@ import { kratos } from '@/helper/kratos'
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
+  const auth = useAuthentication()
+
   const { flow: flowId, return_to: returnTo } = router.query
 
   useEffect(() => {
+    async function authenticate() {
+      if (auth.current === null) {
+        await router.push('/api/auth/login')
+      }
+    }
+    void authenticate()
+
     if (!router.isReady || flow) return
 
     if (flowId) {
@@ -38,7 +48,7 @@ export function Settings() {
         setFlow(data)
       })
       .catch(handleFlowError(router, FlowType.settings, setFlow))
-  }, [flowId, router, router.isReady, returnTo, flow])
+  }, [flowId, router, router.isReady, returnTo, flow, auth])
 
   return (
     <>
@@ -71,7 +81,6 @@ export function Settings() {
           .then(async ({ data }) => {
             // The settings have been saved and the flow was updated. Let's show it to the user!
             setFlow(data)
-            await router.push('/api/auth/login')
           })
           .catch(handleFlowError(router, FlowType.settings, setFlow))
           .catch(async (err: AxiosError) => {
