@@ -449,7 +449,7 @@ export const loggedInData = {
       noMails: "deaktivieren",
       getMails: "aktivieren",
       noNotifications: "abbestellen",
-      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
+      loadedSentence: "%loadedCount% von %totalCount% Einträgen geladen.",
       loadMoreLink: "Mehr laden!"
     },
     revisions: {
@@ -849,7 +849,7 @@ export const loggedInData = {
       }
     },
     roles: {
-      addButton: 'Add as %role%'
+      addButton: "Als %role% hinzufügen"
     }
   }
 };
