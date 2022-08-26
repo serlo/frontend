@@ -78,7 +78,7 @@ export function Settings() {
       .then(() =>
         kratos
           .submitSelfServiceSettingsFlow(String(flow.id), values)
-          .then(async ({ data }) => {
+          .then(({ data }) => {
             // The settings have been saved and the flow was updated. Let's show it to the user!
             setFlow(data)
           })
