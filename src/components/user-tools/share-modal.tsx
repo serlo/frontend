@@ -15,13 +15,14 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { theme } from '@/theme'
 
 export interface ShareModalProps {
   isOpen: boolean
   onClose: () => void
   showPdf?: boolean
+  path?: string
 }
 
 interface EntryData {
@@ -32,12 +33,18 @@ interface EntryData {
   onClick?: (event: MouseEvent) => void
 }
 
-export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
+export function ShareModal({
+  isOpen,
+  onClose,
+  showPdf,
+  path,
+}: ShareModalProps) {
   const shareInputRef = useRef<HTMLInputElement>(null)
   const { strings, lang } = useInstanceData()
   const id = useContext(EntityIdContext)
+  const pathOrId = path ?? id
 
-  if (!isOpen || !id) return null
+  if (!isOpen || !pathOrId) return null
 
   function copyToClipboard(event: MouseEvent, text?: string) {
     const target = event.target as HTMLAnchorElement
@@ -50,7 +57,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     )
   }
 
-  const shareUrl = `${window.location.protocol}//${window.location.host}/${id}`
+  const shareUrl = `${window.location.protocol}//${window.location.host}/${pathOrId}`
   const urlEncoded = encodeURIComponent(shareUrl)
   const titleEncoded = encodeURIComponent(document.title)
 
@@ -94,12 +101,13 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     },
   ]
 
-  const path = window.location.pathname
-  const fileName = `serlo__${path.split('/').pop() ?? id}.pdf`
-  const host =
-    window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
-
   const getPdfData = (noSolutions?: boolean) => {
+    if (!id) return null
+    const pathName = window.location.pathname
+    const fileName = `serlo__${pathName.split('/').pop() ?? id}.pdf`
+    const host =
+      window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
+
     return {
       title: strings.share[noSolutions ? 'pdfNoSolutions' : 'pdf'],
       icon: faDownload,
@@ -122,7 +130,7 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
       className="top-1/2"
     >
       <div className="sm:float-right mx-side mb-4 sm:mb-0">
-        <QRCode value={shareUrl} renderAs="svg" fgColor={theme.colors.brand} />
+        <QRCode value={shareUrl} renderAs="svg" fgColor={colors.brand} />
       </div>
       {renderShareInput()}
       <hr className="my-4 mx-side" />
@@ -163,10 +171,11 @@ export function ShareModal({ isOpen, onClose, showPdf }: ShareModalProps) {
     )
   }
 
-  function renderButtons(list: EntryData[]) {
+  function renderButtons(list: (EntryData | null)[]) {
     return (
       <div className="flex items-start flex-col sm:flex-row mt-4">
-        {list.map((entry: EntryData) => {
+        {list.map((entry: EntryData | null) => {
+          if (!entry) return null
           return (
             <a
               className={shareButton}

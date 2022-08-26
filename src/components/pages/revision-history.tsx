@@ -8,9 +8,9 @@ import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Revision, Revisions } from '@/fetcher/query-types'
+import { colors } from '@/helper/colors'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
-import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
   data?: Revisions
@@ -139,7 +139,7 @@ export function RevisionHistory({
           backgroundColor: trashed
             ? '#c56c6c'
             : isCurrent
-            ? theme.colors.brandGreen
+            ? colors.brandGreen
             : '#eee',
         }}
         title={

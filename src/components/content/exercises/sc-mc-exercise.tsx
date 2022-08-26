@@ -102,8 +102,6 @@ export function ScMcExercise({
           onClick={() => {
             setShowFeedback(true)
           }}
-          //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
-          onPointerUp={(e) => e.currentTarget.blur()}
         >
           {selected !== undefined
             ? exStrings.check
@@ -182,7 +180,6 @@ export function ScMcExercise({
           onClick={() => {
             setShowFeedback(true)
           }}
-          onPointerUp={(e) => e.currentTarget.blur()}
         >
           {exStrings.check}
         </button>

@@ -59,15 +59,20 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
 
           <div id="comment-area-begin-scrollpoint" />
           {!noComments && (
-            <Lazy>
-              <CommentAreaEntity entityId={entityId} />
-            </Lazy>
+            <>
+              <Lazy>
+                <CommentAreaEntity entityId={entityId} />
+              </Lazy>
+              <HSpace amount={40} />
+            </>
           )}
-          <HSpace amount={40} />
           {page.horizonData && (
-            <Lazy>
-              <Horizon data={page.horizonData} />
-            </Lazy>
+            <>
+              <Lazy>
+                <Horizon data={page.horizonData} />
+              </Lazy>
+              <HSpace amount={40} />
+            </>
           )}
         </MaxWidthDiv>
       </div>

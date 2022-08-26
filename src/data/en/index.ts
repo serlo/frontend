@@ -74,7 +74,8 @@ export const instanceData = {
       editProfile: 'Edit Profile & Settings',
       recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley',
-      discussions: 'Comments'
+      discussions: 'Comments',
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: 'Donor',

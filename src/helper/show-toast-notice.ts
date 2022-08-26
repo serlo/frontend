@@ -1,19 +1,19 @@
 import { notify } from 'react-notify-toast'
 
-import { theme } from '@/theme'
+import { colors, articleColors } from '@/helper/colors'
 
 const toastNotice = notify.createShowQueue()
-const colors = {
+const toastColors = {
   default: {
-    background: theme.colors.brand,
+    background: colors.brand,
     text: '#fff',
   },
   success: {
-    background: theme.colors.brandGreen,
+    background: colors.brandGreen,
     text: '#fff',
   },
   warning: {
-    background: theme.colors.orange,
+    background: articleColors.orange,
     text: '#000',
   },
 }
@@ -21,13 +21,13 @@ const colors = {
 export const showToastNotice = function (
   message: string,
   type?: 'default' | 'success' | 'warning',
-  time = 3200
+  time?: number
 ) {
   if (!toastNotice) return
   ;(toastNotice as unknown as typeof notify['show'])(
     message,
     'custom',
-    time,
-    colors[type || 'default']
+    time ?? 3200,
+    toastColors[type || 'default']
   )
 }

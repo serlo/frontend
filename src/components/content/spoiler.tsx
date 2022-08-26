@@ -44,7 +44,6 @@ function SpoilerTitle({
   return (
     <button
       onClick={!disabled ? onClick : undefined}
-      onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       className={clsx(
         'serlo-input-font-reset border-none m-0 text-lg',
         'leading-normal',
