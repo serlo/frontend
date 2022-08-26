@@ -70,7 +70,8 @@ export const instanceData = {
       userEditsMine: "Meine ungeprüften Bearbeitungen",
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
-      diagon: "Winkelgasse"
+      diagon: "Winkelgasse",
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Spender*in",
