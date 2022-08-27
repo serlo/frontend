@@ -17976,7 +17976,7 @@
             "deprecationReason": null
           },
           {
-            "name": "staticPagesBuilder",
+            "name": "static_pages_builder",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -25464,6 +25464,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "instance",
+                "description": null,
+                "type": {
+                  "kind": "ENUM",
+                  "name": "Instance",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "role",
                 "description": null,
                 "type": {
@@ -25472,22 +25484,6 @@
                   "ofType": {
                     "kind": "ENUM",
                     "name": "Role",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              },
-              {
-                "name": "scope",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "ENUM",
-                    "name": "Scope",
                     "ofType": null
                   }
                 },
@@ -25521,6 +25517,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "instance",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "Instance",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "role",
             "description": null,
             "type": {
@@ -25529,22 +25537,6 @@
               "ofType": {
                 "kind": "ENUM",
                 "name": "Role",
-                "ofType": null
-              }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "scope",
-            "description": null,
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "Scope",
                 "ofType": null
               }
             },

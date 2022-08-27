@@ -1910,7 +1910,7 @@ export enum Role {
   Login = 'login',
   Moderator = 'moderator',
   Reviewer = 'reviewer',
-  StaticPagesBuilder = 'staticPagesBuilder',
+  StaticPagesBuilder = 'static_pages_builder',
   Sysadmin = 'sysadmin'
 }
 
@@ -2767,13 +2767,13 @@ export interface UserQueryPotentialSpamUsersArgs {
 export interface UserQueryUsersByRoleArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
+  instance?: InputMaybe<Instance>;
   role: Role;
-  scope: Scope;
 }
 
 export interface UserRoleInput {
+  instance?: InputMaybe<Instance>;
   role: Role;
-  scope: Scope;
   username: Scalars['String'];
 }
 

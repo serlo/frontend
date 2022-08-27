@@ -1,13 +1,10 @@
 import { LoadedFile, UploadValidator } from '@edtr-io/plugin'
 import { createImagePlugin as createCoreImagePlugin } from '@edtr-io/plugin-image'
 import { gql } from 'graphql-request'
-import Cookies from 'js-cookie'
-import jwt_decode from 'jwt-decode'
-import { Token } from 'simple-oauth2'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { AuthenticationPayload } from '@/auth/auth-provider'
+import { parseAuthCookie } from '@/auth/parse-auth-cookie'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const maxFileSize = 2 * 1024 * 1024
@@ -113,7 +110,13 @@ export function createUploadImageHandler() {
 export function createReadFile() {
   return function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      const authenticationPayload = parseAuthCookie()
+      // hard to get to the default auth logic outside of react components
+      // I provide dummy functions for refresh / clear token here since we only need the token
+      // and can be quite certain, that the token has been checked when loading the edtr in the first place
+      const authenticationPayload = parseAuthCookie(
+        (_dummy: string) => new Promise(() => {}),
+        () => {}
+      )
       if (!authenticationPayload?.token) return
 
       const gqlFetch = createAuthAwareGraphqlFetch({
@@ -171,31 +174,3 @@ const uploadUrlQuery = gql`
     }
   }
 `
-
-// TODO: Duplicated for now because of hooks
-function parseAuthCookie(): AuthenticationPayload {
-  try {
-    const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-
-    const { access_token, id_token } = JSON.parse(
-      cookies['auth-token']
-    ) as Token
-
-    const decoded = jwt_decode<{
-      username: string
-      id: number
-    }>(id_token as string)
-
-    return {
-      username: decoded.username,
-      id: decoded.id,
-      token: access_token as string,
-      refreshToken: () => Promise.resolve(),
-      clearToken: () => {
-        return
-      },
-    }
-  } catch {
-    return null
-  }
-}
