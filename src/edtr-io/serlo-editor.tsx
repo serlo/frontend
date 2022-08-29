@@ -69,8 +69,6 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   const plugins = createPlugins({
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    getCsrfToken: getCsrfToken,
     registry: getPluginRegistry(type, editorStrings),
     type,
     editorStrings,

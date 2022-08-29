@@ -71,7 +71,6 @@ export function createPlugins({
   registry,
   type,
 }: {
-  getCsrfToken: () => string
   editorStrings: LoggedInData['strings']['editor']
   strings: InstanceData['strings']
   registry: RowsConfig['plugins']
