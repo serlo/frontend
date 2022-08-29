@@ -94,21 +94,19 @@ export const validateFile: UploadValidator<FileError[]> = (file) => {
 
 export function createUploadImageHandler() {
   const readFile = createReadFile()
-  return function uploadImageHandler(file: File): Promise<string> {
+  return async function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)
     if (!validation.valid) {
       onError(validation.errors)
       return Promise.reject(validation.errors)
     }
 
-    return readFile(file).then((loaded) => {
-      return loaded.dataUrl
-    })
+    return (await readFile(file)).dataUrl
   }
 }
 
 export function createReadFile() {
-  return function readFile(file: File): Promise<LoadedFile> {
+  return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
       // hard to get to the default auth logic outside of react components
       // I provide dummy functions for refresh / clear token here since we only need the token
@@ -128,30 +126,35 @@ export function createReadFile() {
           mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
         },
       })
-      void gqlFetch(args).then((data: MediaUploadQuery) => {
+
+      async function runFetch() {
+        const data = (await gqlFetch(args)) as MediaUploadQuery
         const reader = new FileReader()
 
-        reader.onload = function (e: ProgressEvent) {
+        reader.onload = async function (e: ProgressEvent) {
           if (!e.target) return
-          fetch(data.media.newUpload.uploadUrl, {
-            method: 'PUT',
-            headers: { 'Content-Type': file.type },
-            body: file,
-          })
-            .then((response) => {
-              if (response.status !== 200) reject()
-              resolve({
-                file,
-                dataUrl: data.media.newUpload.urlAfterUpload,
-              })
+
+          try {
+            const response = await fetch(data.media.newUpload.uploadUrl, {
+              method: 'PUT',
+              headers: { 'Content-Type': file.type },
+              body: file,
             })
-            .catch(() => {
-              reject()
+
+            if (response.status !== 200) reject()
+            resolve({
+              file,
+              dataUrl: data.media.newUpload.urlAfterUpload,
             })
+          } catch {
+            reject()
+          }
         }
 
         reader.readAsDataURL(file)
-      })
+      }
+
+      void runFetch()
     })
   }
 }
