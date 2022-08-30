@@ -13,8 +13,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
 
-// See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
-
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
@@ -64,7 +62,6 @@ export function Login() {
         })()}
       />
 
-      {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
 
       {showLogout ? <div>Log out</div> : ''}

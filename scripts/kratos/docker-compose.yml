@@ -95,7 +95,7 @@ services:
     networks:
       - intranet
   api:
-    image: eu.gcr.io/serlo-shared/api-server:0.47.0-staging.5
+    image: eu.gcr.io/serlo-shared/api-server:0.47.0-staging.6
     command: yarn start
     depends_on:
       - redis
@@ -129,6 +129,8 @@ services:
     image: eu.gcr.io/serlo-shared/serlo-org-database-layer:0.3.52
     depends_on:
       - mysql
+    ports:
+      - '8080:8080'
     command: ./server
     environment:
       - DATABASE_MAX_CONNECTIONS=5

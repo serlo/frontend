@@ -79,7 +79,6 @@ export function Settings() {
         kratos
           .submitSelfServiceSettingsFlow(String(flow.id), values)
           .then(({ data }) => {
-            // The settings have been saved and the flow was updated. Let's show it to the user!
             setFlow(data)
           })
           .catch(handleFlowError(router, FlowType.settings, setFlow))

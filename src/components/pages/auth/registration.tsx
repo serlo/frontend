@@ -11,8 +11,6 @@ import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
 import { kratos } from '@/helper/kratos'
 
-// See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/registration.tsx
-
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
