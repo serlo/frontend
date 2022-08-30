@@ -3004,6 +3004,13 @@ export type FetchParentQueryQuery = { __typename?: 'Query', uuid?: { __typename?
 
 export type TaxonomyTermFragment = { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', id: number, type: TaxonomyTermType, name: string, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename: 'Applet', id: number, trashed: boolean } | { __typename: 'AppletRevision', id: number, trashed: boolean } | { __typename: 'Article', id: number, trashed: boolean, currentRevision?: { __typename?: 'ArticleRevision', title: string } | null } | { __typename: 'ArticleRevision', id: number, trashed: boolean } | { __typename: 'Comment', id: number, trashed: boolean } | { __typename: 'Course', id: number, trashed: boolean, currentRevision?: { __typename?: 'CourseRevision', title: string } | null } | { __typename: 'CoursePage', id: number, trashed: boolean } | { __typename: 'CoursePageRevision', id: number, trashed: boolean } | { __typename: 'CourseRevision', id: number, trashed: boolean } | { __typename: 'Event', id: number, trashed: boolean } | { __typename: 'EventRevision', id: number, trashed: boolean } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean } | { __typename: 'ExerciseGroupRevision', id: number, trashed: boolean } | { __typename: 'ExerciseRevision', id: number, trashed: boolean } | { __typename: 'GroupedExercise', id: number, trashed: boolean } | { __typename: 'GroupedExerciseRevision', id: number, trashed: boolean } | { __typename: 'Page', id: number, trashed: boolean } | { __typename: 'PageRevision', id: number, trashed: boolean } | { __typename: 'Solution', id: number, trashed: boolean } | { __typename: 'SolutionRevision', id: number, trashed: boolean } | { __typename: 'TaxonomyTerm', name: string, type: TaxonomyTermType, id: number, trashed: boolean } | { __typename: 'User', id: number, trashed: boolean } | { __typename: 'Video', id: number, trashed: boolean, currentRevision?: { __typename?: 'VideoRevision', title: string } | null } | { __typename: 'VideoRevision', id: number, trashed: boolean }> } }> };
 
+export type MediaUploadQueryVariables = Exact<{
+  mediaType: MediaType;
+}>;
+
+
+export type MediaUploadQuery = { __typename?: 'Query', media: { __typename?: 'MediaQuery', newUpload: { __typename?: 'MediaUpload', uploadUrl: string, urlAfterUpload: string } } };
+
 export type LicenseDetailsQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;

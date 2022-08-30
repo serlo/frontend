@@ -1,6 +1,5 @@
 import { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
-import jwt_decode from 'jwt-decode'
 import {
   createContext,
   ReactNode,
@@ -10,8 +9,8 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Token } from 'simple-oauth2'
 
+import { parseAuthCookie } from './parse-auth-cookie'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 export interface AuthContextValue {
@@ -67,38 +66,13 @@ export type AuthenticationPayload = {
 } | null
 
 function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
-  const initialValue = parseAuthCookie()
+  const initialValue = parseAuthCookie(refreshToken, clearToken)
   const authenticationPayload = useRef<AuthenticationPayload>(initialValue)
   const pendingRefreshTokenPromise = useRef<Promise<void> | null>(null)
 
   const [loggedIn, setLoggedIn] = useState(() => {
     return initialValue !== null
   })
-
-  function parseAuthCookie(): AuthenticationPayload {
-    try {
-      const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-
-      const { access_token, id_token } = JSON.parse(
-        cookies['auth-token']
-      ) as Token
-
-      const decoded = jwt_decode<{
-        username: string
-        id: number
-      }>(id_token as string)
-
-      return {
-        username: decoded.username,
-        id: decoded.id,
-        token: access_token as string,
-        refreshToken,
-        clearToken,
-      }
-    } catch {
-      return null
-    }
-  }
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async function refreshToken(usedToken: string) {
@@ -109,11 +83,11 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
         method: 'POST',
       })
 
-      authenticationPayload.current = parseAuthCookie()
+      authenticationPayload.current = parseAuthCookie(refreshToken, clearToken)
       pendingRefreshTokenPromise.current = null
     }
 
-    const currentCookieValue = parseAuthCookie()
+    const currentCookieValue = parseAuthCookie(refreshToken, clearToken)
     if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
       // Cooke has a newer token than the one we used for the request. So use that instead.
       authenticationPayload.current = currentCookieValue
