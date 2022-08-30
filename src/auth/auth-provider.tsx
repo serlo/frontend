@@ -1,6 +1,5 @@
+import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
-import Cookies from 'js-cookie'
-import jwt_decode from 'jwt-decode'
 import {
   createContext,
   ReactNode,
@@ -10,9 +9,9 @@ import {
   useRef,
   useState,
 } from 'react'
-import { Token } from 'simple-oauth2'
 
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
+import { kratos } from '@/helper/kratos'
 
 export interface AuthContextValue {
   loggedIn: boolean
@@ -61,78 +60,40 @@ export function AuthProvider({
 export type AuthenticationPayload = {
   username: string
   id: number
-  token: string
-  refreshToken(usedToken: string): Promise<void>
-  clearToken(): void
 } | null
 
+function parseAuthCookie(session: Session): AuthenticationPayload {
+  try {
+    const username = (session?.identity?.traits as { username: string })
+      ?.username
+    const legacyId = (
+      session?.identity?.metadata_public as { legacy_id: number }
+    )?.legacy_id
+    return {
+      username,
+      id: legacyId,
+    }
+  } catch {
+    return null
+  }
+}
+
 function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
-  const initialValue = parseAuthCookie()
-  const authenticationPayload = useRef<AuthenticationPayload>(initialValue)
-  const pendingRefreshTokenPromise = useRef<Promise<void> | null>(null)
+  const [session, setSession] = useState<Session | null>(null)
+  const authenticationPayload = useRef<AuthenticationPayload>(null)
+
+  useEffect(() => {
+    void (async () => {
+      const { data } = await kratos.toSession().catch()
+      setSession(data)
+      authenticationPayload.current = parseAuthCookie(data)
+      setLoggedIn(data !== null)
+    })()
+  }, [])
 
   const [loggedIn, setLoggedIn] = useState(() => {
-    return initialValue !== null
+    return session !== null
   })
-
-  function parseAuthCookie(): AuthenticationPayload {
-    try {
-      const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-
-      const { access_token, id_token } = JSON.parse(
-        cookies['auth-token']
-      ) as Token
-
-      const decoded = jwt_decode<{
-        username: string
-        id: number
-      }>(id_token as string)
-
-      return {
-        username: decoded.username,
-        id: decoded.id,
-        token: access_token as string,
-        refreshToken,
-        clearToken,
-      }
-    } catch {
-      return null
-    }
-  }
-
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async function refreshToken(usedToken: string) {
-    async function startRefreshTokenPromise(): Promise<void> {
-      if (typeof window === 'undefined') return
-
-      await fetch('/api/auth/refresh-token', {
-        method: 'POST',
-      })
-
-      authenticationPayload.current = parseAuthCookie()
-      pendingRefreshTokenPromise.current = null
-    }
-
-    const currentCookieValue = parseAuthCookie()
-    if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
-      // Cooke has a newer token than the one we used for the request. So use that instead.
-      authenticationPayload.current = currentCookieValue
-      return
-    }
-
-    if (!pendingRefreshTokenPromise.current) {
-      // Only initiate the token refresh request if it has not been started already.
-      pendingRefreshTokenPromise.current = startRefreshTokenPromise()
-    }
-
-    return pendingRefreshTokenPromise.current
-  }
-
-  function clearToken() {
-    if (!loggedIn) return
-    Cookies.remove('auth-token')
-    setLoggedIn(false)
-  }
 
   return [authenticationPayload, loggedIn]
 }
