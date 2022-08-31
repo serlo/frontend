@@ -84,10 +84,16 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
 
   useEffect(() => {
     void (async () => {
-      const { data } = await kratos.toSession().catch()
-      setSession(data)
-      authenticationPayload.current = parseAuthCookie(data)
-      setLoggedIn(data !== null)
+      try {
+        const { data } = await kratos.toSession()
+        setSession(data)
+        authenticationPayload.current = parseAuthCookie(data)
+        setLoggedIn(data !== null)
+      } catch (error) {
+        // user most likely just not logged in
+        setSession(null)
+        setLoggedIn(false)
+      }
     })()
   }, [])
 
