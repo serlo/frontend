@@ -1,5 +1,6 @@
 import {
   faPencil,
+  faPlusCircle,
   faTrashAlt,
   faTrashRestore,
 } from '@fortawesome/free-solid-svg-icons'
@@ -48,6 +49,12 @@ function Content({ pages }: PagesProps) {
       {renderBackButton()}
       <PageTitle title={loggedInStrings.backend.pages} />
 
+      <Link
+        href="/page/create"
+        className="serlo-button-blue float-right -mt-[4.4rem] mr-side sm:mr-48"
+      >
+        <FaIcon icon={faPlusCircle} /> {loggedInStrings.pages.newPage}
+      </Link>
       <ul className="mx-side max-w-fit">{renderEntries(false)}</ul>
 
       <h2 className="serlo-h2 mt-12">{loggedInStrings.pages.deletedPages}</h2>

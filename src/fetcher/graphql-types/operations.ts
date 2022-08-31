@@ -3418,6 +3418,13 @@ export type AddPageRevisionMutationVariables = Exact<{
 
 export type AddPageRevisionMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', addRevision: { __typename?: 'AddRevisionResponse', success: boolean } } };
 
+export type CreatePageMutationVariables = Exact<{
+  input: CreatePageInput;
+}>;
+
+
+export type CreatePageMutation = { __typename?: 'Mutation', page: { __typename?: 'PageMutation', create: { __typename?: 'PageCreateResponse', success: boolean } } };
+
 export type SortMutationVariables = Exact<{
   input: EntitySortInput;
 }>;
