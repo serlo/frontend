@@ -6,6 +6,7 @@ export enum Sign {
   LessThanOrEqual = 'less-than-or-equal',
   AlmostEqualTo = 'almost-equal-to',
   Estimates = 'estimates',
+  NotEqualTo = 'not-equal-to',
 }
 
 export function renderSignToString(sign: Sign): string {
@@ -24,5 +25,7 @@ export function renderSignToString(sign: Sign): string {
       return '≈'
     case Sign.Estimates:
       return '≙'
+    case Sign.NotEqualTo:
+      return '≠'
   }
 }
