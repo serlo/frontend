@@ -823,6 +823,7 @@ export const loggedInData = {
       recycleBin: "Papierkorb"
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: "Gelöschte Seiten"
     },
     taxonomyTermTools: {
