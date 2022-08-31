@@ -43,7 +43,7 @@ export function createAuthAwareGraphqlFetch(
       const client = new GraphQLClient(endpoint, {
         headers: auth.current
           ? {
-              Authorization: `Serlo Service=${serviceToken};User=`,
+              Authorization: `Serlo Service=${serviceToken}`,
             }
           : {},
         credentials: 'include'

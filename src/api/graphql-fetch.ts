@@ -35,11 +35,6 @@ export function createAuthAwareGraphqlFetch(
 
     function executeQuery() {
       const client = new GraphQLClient(endpoint, {
-        headers: auth.current
-          ? {
-              Authorization: `Bearer `,
-            }
-          : {},
         credentials: 'include',
       })
       return client.request(query, variables)

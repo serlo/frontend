@@ -70,11 +70,6 @@ export function useMutationFetch() {
 
     async function executeQuery(): Promise<MutationResponse> {
       const client = new GraphQLClient(endpoint, {
-        headers: auth.current
-          ? {
-              Authorization: `Bearer `,
-            }
-          : {},
         credentials: 'include',
       })
       return client.request(query, { input })

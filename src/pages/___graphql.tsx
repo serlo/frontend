@@ -25,8 +25,6 @@ const GraphQLPage: NextPage = () => {
 }
 
 function GraphQL() {
-  const auth = useAuthentication()
-
   const fetcher = async function fetcher(params: FetcherParams) {
     const data = await executeQuery()
     return data
@@ -37,14 +35,9 @@ function GraphQL() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          ...(auth.current
-            ? {
-                Authorization: `Bearer `,
-              }
-            : {}),
         },
         body: JSON.stringify(params),
-        credentials: 'same-origin',
+        credentials: 'include',
       })
       return (await response.json()) as ExecutionResult
     }
