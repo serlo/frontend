@@ -89,8 +89,8 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
         setSession(data)
         authenticationPayload.current = parseAuthCookie(data)
         setLoggedIn(data !== null)
-      } catch (error) {
-        // user most likely just not logged in
+      } catch {
+        // user is most likely just not logged in
         setSession(null)
         setLoggedIn(false)
       }

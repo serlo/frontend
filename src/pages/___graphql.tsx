@@ -7,7 +7,6 @@ import Head from 'next/head'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthProvider } from '@/auth/auth-provider'
-import { useAuthentication } from '@/auth/use-authentication'
 
 const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
   ssr: false,
