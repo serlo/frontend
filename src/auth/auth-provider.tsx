@@ -12,6 +12,7 @@ import {
 
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { kratos } from '@/helper/kratos'
+import Cookies from 'js-cookie'
 
 export interface AuthContextValue {
   loggedIn: boolean
@@ -85,12 +86,16 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
   useEffect(() => {
     void (async () => {
       try {
-        const { data } = await kratos.toSession()
+        const { data } = await kratos.toSession().catch(() => {
+          Cookies.remove('auth-session')
+          return { data: null }
+        })
         setSession(data)
-        authenticationPayload.current = parseAuthCookie(data)
         setLoggedIn(data !== null)
+        if (data) authenticationPayload.current = parseAuthCookie(data)
       } catch {
         // user is most likely just not logged in
+        Cookies.remove('auth-session')
         setSession(null)
         setLoggedIn(false)
       }
@@ -98,7 +103,7 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
   }, [])
 
   const [loggedIn, setLoggedIn] = useState(() => {
-    return session !== null
+    return Cookies.get('auth-session') != null
   })
 
   return [authenticationPayload, loggedIn]
