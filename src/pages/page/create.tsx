@@ -32,7 +32,7 @@ export default renderedPageNoHooks(() => {
               </>
             </Guard>
           </main>
-        </MaxWidthDiv>{' '}
+        </MaxWidthDiv>
       </div>
     </FrontendClientBase>
   )
