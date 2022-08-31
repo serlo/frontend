@@ -889,6 +889,7 @@ export const loggedInData = {
       recycleBin: 'Recycle Bin'
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: 'Deleted Pages'
     },
     taxonomyTermTools: {
