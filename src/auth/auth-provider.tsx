@@ -1,5 +1,6 @@
 import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
+import Cookies from 'js-cookie'
 import {
   createContext,
   ReactNode,
@@ -12,7 +13,7 @@ import {
 
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { kratos } from '@/helper/kratos'
-import Cookies from 'js-cookie'
+import { AuthSessionCookie } from './auth-session-cookie'
 
 export interface AuthContextValue {
   loggedIn: boolean
@@ -80,30 +81,38 @@ function parseAuthCookie(session: Session): AuthenticationPayload {
 }
 
 function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
-  const [session, setSession] = useState<Session | null>(null)
-  const authenticationPayload = useRef<AuthenticationPayload>(null)
+  const initialSessionValue = AuthSessionCookie.parse()
+  const [, setSession] = useState<Session | null>(initialSessionValue)
+  const authenticationPayload = useRef<AuthenticationPayload>( //null
+    initialSessionValue
+      ? {
+          username: (
+            initialSessionValue.identity.traits as { username: string }
+          ).username,
+          id: (
+            initialSessionValue.identity.metadata_public as {
+              legacy_id: number
+            }
+          )?.legacy_id,
+        }
+      : null
+  )
 
   useEffect(() => {
     void (async () => {
-      try {
-        const { data } = await kratos.toSession().catch(() => {
-          Cookies.remove('auth-session')
-          return { data: null }
-        })
-        setSession(data)
-        setLoggedIn(data !== null)
-        if (data) authenticationPayload.current = parseAuthCookie(data)
-      } catch {
+      const { data } = await kratos.toSession().catch(() => {
         // user is most likely just not logged in
-        Cookies.remove('auth-session')
-        setSession(null)
-        setLoggedIn(false)
-      }
+        AuthSessionCookie.remove()
+        return { data: null }
+      })
+      setSession(data)
+      setLoggedIn(data !== null)
+      if (data) authenticationPayload.current = parseAuthCookie(data)
     })()
   }, [])
 
   const [loggedIn, setLoggedIn] = useState(() => {
-    return Cookies.get('auth-session') != null
+    return AuthSessionCookie.get() !== undefined
   })
 
   return [authenticationPayload, loggedIn]

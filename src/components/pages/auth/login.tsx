@@ -13,6 +13,7 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
 import Cookies from 'js-cookie'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
@@ -99,7 +100,7 @@ export function Login() {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
-          Cookies.set('auth-session', JSON.stringify(data.session))
+          AuthSessionCookie.set(data.session)
           if (flow?.return_to) {
             window.location.href = flow?.return_to
             return
