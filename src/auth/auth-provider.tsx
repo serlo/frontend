@@ -1,6 +1,5 @@
 import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
-import Cookies from 'js-cookie'
 import {
   createContext,
   ReactNode,
@@ -11,9 +10,9 @@ import {
   useState,
 } from 'react'
 
+import { AuthSessionCookie } from './auth-session-cookie'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { kratos } from '@/helper/kratos'
-import { AuthSessionCookie } from './auth-session-cookie'
 
 export interface AuthContextValue {
   loggedIn: boolean

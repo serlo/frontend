@@ -7,13 +7,12 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
-import Cookies from 'js-cookie'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
