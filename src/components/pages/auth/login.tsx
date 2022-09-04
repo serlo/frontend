@@ -86,7 +86,7 @@ export function Login() {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-
+    const originalPreviousPath = sessionStorage.getItem('previousPathname')
     await router.push(
       `${router.pathname}?flow=${String(flow?.id)}`,
       undefined,
@@ -98,13 +98,14 @@ export function Login() {
     try {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
-        .then(async ({ data }) => {
+        .then(({ data }) => {
           AuthSessionCookie.set(data.session)
           if (flow?.return_to) {
             window.location.href = flow?.return_to
             return
           }
-          await router.push('/api/auth/login')
+          window.location.href = `${originalPreviousPath ?? '/'}#auth`
+          return
         })
         .catch((e: Error) => {
           throw e

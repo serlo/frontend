@@ -19,6 +19,7 @@ function Logout() {
     kratos.toSession().catch(() => {
       return router.push('/auth/login-check')
     })
+    const originalPreviousPath = sessionStorage.getItem('previousPathname')
 
     kratos
       .createSelfServiceLogoutFlowUrlForBrowsers()
@@ -28,7 +29,8 @@ function Logout() {
           .then(() => {
             AuthSessionCookie.remove()
 
-            return router.push('/api/auth/logout')
+            window.location.href = `${originalPreviousPath ?? '/'}#auth`
+            return
           })
           .catch((error: unknown) => {
             return Promise.reject(error)

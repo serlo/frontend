@@ -9,6 +9,7 @@ import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -160,7 +161,7 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (cookies['auth-token'] || loadLoggedInData) {
+    if (AuthSessionCookie.get() || loadLoggedInData) {
       Promise.all([
         !loggedInData
           ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
