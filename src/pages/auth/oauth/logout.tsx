@@ -4,6 +4,6 @@ import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>
-    <Logout />
+    <Logout oauth />
   </FrontendClientBase>
 ))

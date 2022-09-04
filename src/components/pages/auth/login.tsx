@@ -14,7 +14,7 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
 
-export function Login() {
+export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
   const { return_to: returnTo, flow: flowId, refresh, aal } = router.query
@@ -98,12 +98,17 @@ export function Login() {
     try {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
-        .then(({ data }) => {
+        .then(async ({ data }) => {
           AuthSessionCookie.set(data.session)
           if (flow?.return_to) {
             window.location.href = flow?.return_to
             return
           }
+
+          if (oauth) {
+            return await router.push('/api/auth/login')
+          }
+
           window.location.href = `${originalPreviousPath ?? '/'}#auth`
           return
         })
