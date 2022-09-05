@@ -18,6 +18,20 @@ docker-compose -f scripts/kratos/docker-compose.yml run \
   --post-logout-callbacks http://localhost:3000/api/auth/logout-callback \
   --token-endpoint-auth-method client_secret_post
 
+docker-compose -f scripts/kratos/docker-compose.yml run hydra clients delete rocket.chat --endpoint http://hydra:4445
+
+docker-compose -f scripts/kratos/docker-compose.yml run \
+  hydra clients create \
+  --skip-tls-verify \
+  --endpoint http://hydra:4445 \
+  --id rocket.chat \
+  --secret rocket.chat \
+  --grant-types authorization_code,refresh_token \
+  --response-types code \
+  --scope openid,offline_access \
+  --callbacks http://localhost:3030/_oauth/serlo \
+  --token-endpoint-auth-method client_secret_post
+
 echo
 echo 'Creating the user dev in Kratos'
 echo
