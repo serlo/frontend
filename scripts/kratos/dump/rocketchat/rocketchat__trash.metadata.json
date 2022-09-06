@@ -1,1 +1,32 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"__collection__":{"$numberInt":"1"}},"name":"__collection___1"},{"v":{"$numberInt":"2"},"key":{"_deletedAt":{"$numberInt":"1"}},"name":"_deletedAt_1","expireAfterSeconds":{"$numberInt":"2592000"}},{"v":{"$numberInt":"2"},"key":{"rid":{"$numberInt":"1"},"__collection__":{"$numberInt":"1"},"_deletedAt":{"$numberInt":"1"}},"name":"rid_1___collection___1__deletedAt_1"}],"uuid":"931f20c06662451ab84214def0cbf8e4","collectionName":"rocketchat__trash","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "__collection__": { "$numberInt": "1" } },
+      "name": "__collection___1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_deletedAt": { "$numberInt": "1" } },
+      "name": "_deletedAt_1",
+      "expireAfterSeconds": { "$numberInt": "2592000" }
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "rid": { "$numberInt": "1" },
+        "__collection__": { "$numberInt": "1" },
+        "_deletedAt": { "$numberInt": "1" }
+      },
+      "name": "rid_1___collection___1__deletedAt_1"
+    }
+  ],
+  "uuid": "931f20c06662451ab84214def0cbf8e4",
+  "collectionName": "rocketchat__trash",
+  "type": "collection"
+}

@@ -1,1 +1,23 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"},"nextRunAt":{"$numberInt":"1"},"priority":{"$numberInt":"-1"},"lockedAt":{"$numberInt":"1"},"disabled":{"$numberInt":"1"}},"name":"findAndLockNextJobIndex"}],"uuid":"c4d7a8d02ba04e8ca5534fdb56b2bdc3","collectionName":"omnichannel_scheduler","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "name": { "$numberInt": "1" },
+        "nextRunAt": { "$numberInt": "1" },
+        "priority": { "$numberInt": "-1" },
+        "lockedAt": { "$numberInt": "1" },
+        "disabled": { "$numberInt": "1" }
+      },
+      "name": "findAndLockNextJobIndex"
+    }
+  ],
+  "uuid": "c4d7a8d02ba04e8ca5534fdb56b2bdc3",
+  "collectionName": "omnichannel_scheduler",
+  "type": "collection"
+}

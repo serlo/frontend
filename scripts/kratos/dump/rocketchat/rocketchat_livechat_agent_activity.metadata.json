@@ -1,1 +1,26 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"date":{"$numberInt":"1"}},"name":"date_1"},{"v":{"$numberInt":"2"},"unique":true,"key":{"agentId":{"$numberInt":"1"},"date":{"$numberInt":"1"}},"name":"agentId_1_date_1"}],"uuid":"8aaee5a1b3f54a04834267a16eb887a5","collectionName":"rocketchat_livechat_agent_activity","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "date": { "$numberInt": "1" } },
+      "name": "date_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "unique": true,
+      "key": {
+        "agentId": { "$numberInt": "1" },
+        "date": { "$numberInt": "1" }
+      },
+      "name": "agentId_1_date_1"
+    }
+  ],
+  "uuid": "8aaee5a1b3f54a04834267a16eb887a5",
+  "collectionName": "rocketchat_livechat_agent_activity",
+  "type": "collection"
+}

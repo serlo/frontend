@@ -1,1 +1,17 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"_updatedAt":{"$numberInt":"1"}},"name":"_updatedAt_1"}],"uuid":"e6463d8f31af46c7affc326d1d299669","collectionName":"rocketchat_apps","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_updatedAt": { "$numberInt": "1" } },
+      "name": "_updatedAt_1"
+    }
+  ],
+  "uuid": "e6463d8f31af46c7affc326d1d299669",
+  "collectionName": "rocketchat_apps",
+  "type": "collection"
+}

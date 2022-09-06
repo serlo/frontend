@@ -1,1 +1,27 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"intendedAt":{"$numberInt":"1"},"name":{"$numberInt":"1"}},"name":"intendedAt_1_name_1"},{"v":{"$numberInt":"2"},"key":{"startedAt":{"$numberInt":"1"}},"name":"startedAt_1","expireAfterSeconds":{"$numberInt":"172800"}}],"uuid":"1ab43f0e5e8044f48abf8a953f6103dc","collectionName":"rocketchat_cron_history","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "unique": true,
+      "key": {
+        "intendedAt": { "$numberInt": "1" },
+        "name": { "$numberInt": "1" }
+      },
+      "name": "intendedAt_1_name_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "startedAt": { "$numberInt": "1" } },
+      "name": "startedAt_1",
+      "expireAfterSeconds": { "$numberInt": "172800" }
+    }
+  ],
+  "uuid": "1ab43f0e5e8044f48abf8a953f6103dc",
+  "collectionName": "rocketchat_cron_history",
+  "type": "collection"
+}

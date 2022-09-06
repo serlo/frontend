@@ -1,1 +1,24 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_1","sparse":true},{"v":{"$numberInt":"2"},"key":{"rid":{"$numberInt":"1"}},"name":"rid_1","sparse":true}],"uuid":"b642509ad1a042fda7643f64d00176d4","collectionName":"rocketchat_avatars","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "name": { "$numberInt": "1" } },
+      "name": "name_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "rid": { "$numberInt": "1" } },
+      "name": "rid_1",
+      "sparse": true
+    }
+  ],
+  "uuid": "b642509ad1a042fda7643f64d00176d4",
+  "collectionName": "rocketchat_avatars",
+  "type": "collection"
+}

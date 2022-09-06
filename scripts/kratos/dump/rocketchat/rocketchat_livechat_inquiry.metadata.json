@@ -1,1 +1,73 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"ts":{"$numberInt":"1"}},"name":"ts_1"},{"v":{"$numberInt":"2"},"key":{"department":{"$numberInt":"1"}},"name":"department_1"},{"v":{"$numberInt":"2"},"key":{"status":{"$numberInt":"1"}},"name":"status_1"},{"v":{"$numberInt":"2"},"key":{"_updatedAt":{"$numberInt":"1"}},"name":"_updatedAt_1"},{"v":{"$numberInt":"2"},"key":{"rid":{"$numberInt":"1"}},"name":"rid_1"},{"v":{"$numberInt":"2"},"key":{"queueOrder":{"$numberInt":"1"},"estimatedWaitingTimeQueue":{"$numberInt":"1"},"estimatedServiceTimeAt":{"$numberInt":"1"}},"name":"queueOrder_1_estimatedWaitingTimeQueue_1_estimatedServiceTimeAt_1"},{"v":{"$numberInt":"2"},"key":{"v.token":{"$numberInt":"1"},"status":{"$numberInt":"1"}},"name":"v.token_1_status_1"},{"v":{"$numberInt":"2"},"key":{"locked":{"$numberInt":"1"},"lockedAt":{"$numberInt":"1"}},"name":"locked_1_lockedAt_1","sparse":true},{"v":{"$numberInt":"2"},"key":{"name":{"$numberInt":"1"}},"name":"name_1"},{"v":{"$numberInt":"2"},"key":{"message":{"$numberInt":"1"}},"name":"message_1"}],"uuid":"0d778806e2d345c1b5ce45dd64c6ad21","collectionName":"rocketchat_livechat_inquiry","type":"collection"}
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "ts": { "$numberInt": "1" } },
+      "name": "ts_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "department": { "$numberInt": "1" } },
+      "name": "department_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "status": { "$numberInt": "1" } },
+      "name": "status_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_updatedAt": { "$numberInt": "1" } },
+      "name": "_updatedAt_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "rid": { "$numberInt": "1" } },
+      "name": "rid_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "queueOrder": { "$numberInt": "1" },
+        "estimatedWaitingTimeQueue": { "$numberInt": "1" },
+        "estimatedServiceTimeAt": { "$numberInt": "1" }
+      },
+      "name": "queueOrder_1_estimatedWaitingTimeQueue_1_estimatedServiceTimeAt_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "v.token": { "$numberInt": "1" },
+        "status": { "$numberInt": "1" }
+      },
+      "name": "v.token_1_status_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "locked": { "$numberInt": "1" },
+        "lockedAt": { "$numberInt": "1" }
+      },
+      "name": "locked_1_lockedAt_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "name": { "$numberInt": "1" } },
+      "name": "name_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "message": { "$numberInt": "1" } },
+      "name": "message_1"
+    }
+  ],
+  "uuid": "0d778806e2d345c1b5ce45dd64c6ad21",
+  "collectionName": "rocketchat_livechat_inquiry",
+  "type": "collection"
+}
