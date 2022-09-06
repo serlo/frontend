@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"status":{"$numberInt":"1"},"expireAt":{"$numberInt":"1"}},"name":"status_1_expireAt_1"}],"uuid":"a7926b39cc2c4d189f9e71b39cf97967","collectionName":"rocketchat_nps","type":"collection"}
