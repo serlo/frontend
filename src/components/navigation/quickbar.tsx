@@ -84,6 +84,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       | KeyboardEvent<HTMLInputElement>
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
+    event.preventDefault()
     submitEvent('quickbar-direct-hit')
     const url = `/${id}`
 
@@ -176,6 +177,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                 key={i}
                 className="serlo-link cursor-pointer hover:no-underline group"
                 onClick={(e) => goToResult(x.entry.id, e)}
+                href={`/${x.entry.id}`}
               >
                 <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
                   <span className="text-sm text-gray-700">
