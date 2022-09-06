@@ -2,7 +2,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 
-import { FaIcon } from '../fa-icon'
+import { FaIcon } from '../../fa-icon'
 
 interface MobileMenuButtonProps {
   open: boolean

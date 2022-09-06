@@ -6,7 +6,7 @@ import { HeadTags } from '../head-tags'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
-import { Logo } from '@/components/navigation/logo'
+import { Logo } from '@/components/navigation/header/logo'
 import { ExternalProvider } from '@/helper/use-consent'
 
 const footerEntries = [

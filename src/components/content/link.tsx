@@ -18,6 +18,7 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
   tabIndex?: number // menu
   unstyled?: boolean // don't add serlo-link class
+  passHref?: boolean
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -69,7 +70,6 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/taxonomy') ||
     _href.startsWith('/navigation') ||
     _href.startsWith('/unsubscribe') ||
-    _href.startsWith('/user/profile/') ||
     _href.startsWith('/subscription/update') ||
     _href.startsWith('/entity/repository/add-revision-old/') || // temporary
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language
@@ -98,6 +98,7 @@ function InternalLink({
   tabIndex,
   unstyled,
   ref,
+  passHref,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const router = useRouter()
@@ -124,6 +125,8 @@ function InternalLink({
 
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
+  console.log(href)
+
   //fallback
   return renderLink(href)
 
@@ -142,7 +145,7 @@ function InternalLink({
 
   function renderClientSide(_href: string) {
     return (
-      <NextLink prefetch={false} href={_href}>
+      <NextLink prefetch={false} href={_href} passHref={passHref}>
         {renderLink(_href)}
       </NextLink>
     )
