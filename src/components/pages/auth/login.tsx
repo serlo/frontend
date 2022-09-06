@@ -7,13 +7,12 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
-
-// See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/login.tsx
 
 export function Login() {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
@@ -64,7 +63,6 @@ export function Login() {
         })()}
       />
 
-      {/* TODO?: instead of making it generic, we are probably better of hard-coding the form here */}
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
 
       {showLogout ? <div>Log out</div> : ''}
@@ -100,7 +98,8 @@ export function Login() {
     try {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
-        .then(async (_) => {
+        .then(async ({ data }) => {
+          AuthSessionCookie.set(data.session)
           if (flow?.return_to) {
             window.location.href = flow?.return_to
             return
