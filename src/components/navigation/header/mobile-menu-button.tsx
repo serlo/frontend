@@ -14,9 +14,10 @@ export function MobileMenuButton(props: MobileMenuButtonProps) {
   return (
     <button
       onClick={onClick}
+      tabIndex={0}
       aria-label="Menu"
       className={clsx(
-        'md:hidden absolute mt-5 right-4 mobile:static mobile:order-last block',
+        'serlo-button md:hidden absolute mt-5 right-4 mobile:static block',
         'rounded-full bg-brand-150 text-brand w-12 h-12',
         'outline-none'
       )}

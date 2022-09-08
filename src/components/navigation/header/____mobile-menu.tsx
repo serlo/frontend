@@ -15,8 +15,7 @@ import { FaIcon } from '../../fa-icon'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { HeaderData, HeaderLink } from '@/data-types'
-import { getAuthData } from '@/helper/feature-auth'
+import { HeaderData, HeaderLinkData } from '@/data-types'
 
 interface MobileMenuProps {
   data: HeaderData
@@ -62,11 +61,16 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
   )
 
   function renderAuthMenu() {
-    const authData = getAuthData(
-      auth !== null,
-      strings.header.login,
-      loggedInData?.authMenu
-    )
+    const authData =
+      auth !== null
+        ? loggedInData?.authMenu
+        : [
+            {
+              url: '/api/auth/login',
+              title: strings.header.login,
+              icon: 'login',
+            },
+          ]
     if (!authData) return null
     return authData.map((link, i) => {
       return (
@@ -88,7 +92,7 @@ export function MobileMenu({ data, auth }: MobileMenuProps) {
   }
 }
 
-interface EntryProps extends HeaderLink {
+interface EntryProps extends HeaderLinkData {
   isChild?: boolean
   open?: boolean
   index?: number

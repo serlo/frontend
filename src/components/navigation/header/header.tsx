@@ -1,22 +1,25 @@
 import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Link } from '../../content/link'
-import { Menu } from './menu'
-import { MobileMenu } from './mobile-menu'
+import { Menu } from './menu/menu'
 import { MobileMenuButton } from './mobile-menu-button'
-import { useAuthentication } from '@/auth/use-authentication'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const auth = useAuthentication()
-  const { strings, headerData } = useInstanceData()
+  const { strings } = useInstanceData()
   const router = useRouter()
 
   const hideQuickbar = router.route === '/search' || router.route === '/'
+
+  useEffect(() => {
+    document.body.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMobileMenuOpen(false)
+    })
+  })
 
   // close mobile menu on client side navigation, we need the global Router instance
   Router.events.on('routeChangeStart', () => {
@@ -32,20 +35,27 @@ export function Header() {
       )}
     >
       <div className="pt-3 pb-6 px-side lg:px-side-lg">
-        <div className="mobile:flex mobile:justify-between md:flex-wrap lg:flex-nowrap">
+        <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
+          {renderLogo()}
+          <div
+            className={clsx(
+              'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
+              'order-last md:order-none lg:order-last ',
+              'w-full md:w-auto',
+              mobileMenuOpen ? '' : 'hidden'
+            )}
+          >
+            <Menu />
+          </div>
+          <div className="hidden md:block lg:hidden basis-full h-0" />
+          {renderQuickbar()}
           <MobileMenuButton
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             open={mobileMenuOpen}
           />
-          {renderLogo()}
-          <div className="lg:order-last">
-            <Menu data={headerData} auth={auth.current} />
-          </div>
-          <div className="hidden md:block lg:hidden basis-full h-0" />
-          {renderQuickbar()}
         </div>
       </div>
-      {mobileMenuOpen && <MobileMenu data={headerData} auth={auth.current} />}
+      {/* {mobileMenuOpen && <MobileMenu data={headerData} auth={auth.current} />} */}
     </header>
   )
 

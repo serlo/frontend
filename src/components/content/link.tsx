@@ -125,8 +125,6 @@ function InternalLink({
 
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
-  console.log(href)
-
   //fallback
   return renderLink(href)
 

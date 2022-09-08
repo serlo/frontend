@@ -12,7 +12,6 @@ import {
   TopicCategoryCustomType,
   TopicCategoryType,
 } from '@/data-types'
-import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
 export interface TopicCategoryProps {
@@ -28,7 +27,7 @@ export function TopicCategory({
   category,
   id,
 }: TopicCategoryProps) {
-  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   const auth = useAuthentication()

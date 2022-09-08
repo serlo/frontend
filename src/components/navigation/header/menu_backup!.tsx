@@ -13,8 +13,7 @@ import { MenuSubButtonLink } from '@/components/user-tools/menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { HeaderData, HeaderLink } from '@/data-types'
-import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+import { HeaderData, HeaderLinkData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -79,7 +78,7 @@ function MenuInner({
   target?: TippyProps['singleton']
 }) {
   //
-  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
@@ -119,11 +118,16 @@ function MenuInner({
   )
 
   function renderAuthMenu() {
-    const data = getAuthData(
-      mounted && auth !== null,
-      strings.header.login,
-      loggedInData?.authMenu
-    )
+    const data =
+      mounted && auth !== null
+        ? loggedInData?.authMenu
+        : [
+            {
+              url: '/api/auth/login',
+              title: strings.header.login,
+              icon: 'login',
+            },
+          ]
 
     // render placeholder while data is loading
     if (!data)
@@ -151,7 +155,7 @@ function MenuInner({
   }
 
   interface EntryData {
-    link: HeaderLink
+    link: HeaderLinkData
     authMenuMounted?: boolean
   }
 
@@ -239,7 +243,10 @@ function MenuInner({
     }
   }
 
-  function renderSubMenuInner(subEntries?: HeaderLink[], i?: number | string) {
+  function renderSubMenuInner(
+    subEntries?: HeaderLinkData[],
+    i?: number | string
+  ) {
     return (
       <ul className="serlo-sub-list">
         {subEntries !== undefined &&

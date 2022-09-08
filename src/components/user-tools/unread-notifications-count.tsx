@@ -44,7 +44,12 @@ export function UnreadNotificationsCount({
         'notification-count-span'
       )}
     >
-      {icon && <FaIcon icon={icon} className="absolute inset-0 w-5 h-6" />}
+      {icon && (
+        <FaIcon
+          icon={icon}
+          className="absolute inset-0 w-5 h-6 group-hover:text-white group-active:text-white"
+        />
+      )}
       <span
         className={clsx(
           'block text-sm absolute mt-0.25 text-white',

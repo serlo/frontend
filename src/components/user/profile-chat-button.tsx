@@ -8,7 +8,6 @@ import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { shouldUseNewAuth } from '@/helper/feature-auth'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useCreateThreadMutation } from '@/mutations/thread'
@@ -31,7 +30,7 @@ export function ProfileChatButton({
   const { strings } = useInstanceData()
   const createThread = useCreateThreadMutation()
   const auth = useAuthentication()
-  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(false)
   const [showInviteModal, setShowInviteModal] = useState(false)
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
