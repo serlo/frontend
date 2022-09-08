@@ -16,7 +16,7 @@ export function AuthItems() {
   const noAuthData = {
     url: '/api/auth/login',
     title: strings.header.login,
-    icon: 'user', //login?
+    icon: 'user',
   } as const
 
   if (!auth.current || !loggedInData || !auth.current.username)
@@ -24,11 +24,21 @@ export function AuthItems() {
 
   const UnreadNotificationsCount = loggedInComponents?.UnreadNotificationsCount
 
+  const ownProfileHref = `/user/${auth.current.id}/${auth.current.username}`
+
+  const [notificationLinkData, userLinkData] = loggedInData.authMenu
+  const updatedSubData = {
+    ...userLinkData,
+    children: userLinkData.children?.map((item) =>
+      item.url === '/user/me' ? { ...item, url: ownProfileHref } : item
+    ),
+  }
+
   return (
     <>
       {UnreadNotificationsCount ? (
         <Item
-          link={loggedInData.authMenu[0]}
+          link={notificationLinkData}
           specialContent={
             <div className="-top-[2px] md:relative md:mx-[3px] md:my-[7px]">
               <UnreadNotificationsCount icon={faBell} />
@@ -37,12 +47,12 @@ export function AuthItems() {
         />
       ) : null}
       <Item
-        link={loggedInData.authMenu[1]}
+        link={updatedSubData}
         specialContent={
           <img
             className="rounded-full w-6 h-6 inline md:my-[7px]"
             src={getAvatarUrl(auth.current.username)}
-            title={`${loggedInData.authMenu[1].title} ${auth.current.username}`}
+            title={`${updatedSubData.title} ${auth.current.username}`}
           />
         }
       />

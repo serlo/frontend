@@ -13,7 +13,6 @@ export const styledLinkCls = /* className={ */ clsx(
   'flex align-middle items-center',
   'w-full text-[1.33rem] font-bold',
   'text-brand block border-b border-brand-lighter p-4',
-  // open && 'bg-brand-300'
   'md:serlo-menu-entry-special',
   'md:block md:serlo-button-blue-transparent md:text-[0.9rem] md:leading-tight md:transition md:text-brand-light',
   'md:my-0 md:mt-[2px] md:py-0.5 md:px-[7px]',

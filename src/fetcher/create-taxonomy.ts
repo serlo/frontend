@@ -101,7 +101,6 @@ function collectType(
 }
 
 function getAlias(child: { alias?: string | null; id: number }) {
-  // TODO: do we still need this?
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }

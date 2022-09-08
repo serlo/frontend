@@ -9,20 +9,11 @@ export interface SubItemProps {
   parent: HeaderLinkData
 }
 
-export function SubItem({ item, parent }: SubItemProps) {
+export function SubItem({ item }: SubItemProps) {
   const isAbsolute = item.url.indexOf('//') > -1
 
-  // TODO: bonus
-  // const href = auth
-  //   ? item.url.replace(
-  //       '/user/me',
-  //       `/user/${auth.id}/${auth.username}`
-  //     )
-  //   : item.url
-  const href = item.url
-
   const inner = (
-    <NavigationMenu.Link href={href} className="block md:py-[3px] group">
+    <NavigationMenu.Link href={item.url} className="block md:py-[3px] group">
       <span
         className={clsx(
           'w-full md:mt-1.5 font-bold',
@@ -43,7 +34,7 @@ export function SubItem({ item, parent }: SubItemProps) {
       {isAbsolute ? (
         inner
       ) : (
-        <NextLink href={href} passHref>
+        <NextLink href={item.url} passHref>
           {inner}
         </NextLink>
       )}

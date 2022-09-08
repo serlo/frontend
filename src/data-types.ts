@@ -76,7 +76,6 @@ export type HeaderIcon =
   | 'community'
   | 'donate'
   | 'user'
-  | 'login'
   | 'notifications'
 
 export interface HeaderStrings {

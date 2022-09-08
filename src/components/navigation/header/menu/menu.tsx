@@ -4,17 +4,12 @@ import { useEffect, useState } from 'react'
 import { AuthItems } from './auth-items'
 import { Item } from './item'
 import { useInstanceData } from '@/contexts/instance-context'
-// import { submitEvent } from '@/helper/submit-event'
 
 export function Menu() {
   const { headerData } = useInstanceData()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => setMounted(true), [])
-
-  // TODO: what happens on click on item with submenu?
-
-  // TODO: auto position right
 
   return (
     <NavigationMenu.Root>
