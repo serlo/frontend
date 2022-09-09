@@ -82,7 +82,7 @@ export const headerData: InstanceData['headerData'] = [
         children: [
           {
             title: 'Hilf in einem Fach',
-            url: '/123einführungskurs',
+            url: '/community',
           },
           {
             title: 'Beantworte Kommentare',

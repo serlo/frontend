@@ -10,7 +10,7 @@ import { HeaderLinkData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
 
 export const styledLinkCls = /* className={ */ clsx(
-  'flex align-middle items-center',
+  'navtrigger flex align-middle items-center',
   'w-full text-[1.33rem] font-bold',
   'text-brand block border-b border-brand-lighter p-4',
   'md:serlo-menu-entry-special',
@@ -75,7 +75,7 @@ export function Item({ link, specialContent }: ItemProps) {
     return (
       <>
         <NavigationMenu.Trigger
-          className={styledLinkCls}
+          className={'serlo-header-navtrigger ' + styledLinkCls}
           onPointerMove={preventHover}
           onPointerLeave={preventHover}
         >

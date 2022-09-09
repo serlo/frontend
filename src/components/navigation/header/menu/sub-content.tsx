@@ -25,7 +25,7 @@ export function SubContent({ subItems, parent }: SubContentProps) {
       className={clsx(
         'text-left md:absolute md:z-[999] md:mt-2',
         (isLast || isCommunity) && 'md:right-0',
-        isCommunityMega && 'md:left-0'
+        isCommunityMega && 'md:-left-16'
       )}
       onPointerEnter={preventHover}
       onPointerLeave={preventHover}

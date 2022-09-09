@@ -250,6 +250,10 @@
     }
   }
 
+  .serlo-header-navtrigger[data-state='open'] {
+    @apply bg-brand text-white;
+  }
+
   .serlo-fa-icon {
     @apply inline-block overflow-visible h-[1em];
     vertical-align: -0.125em;
