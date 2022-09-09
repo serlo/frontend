@@ -1,4 +1,4 @@
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons/faPlusCircle'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'

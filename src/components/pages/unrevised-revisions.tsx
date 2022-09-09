@@ -1,4 +1,4 @@
-import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 
 import { FaIcon } from '../fa-icon'
 import { UnrevisedSubject } from '../revisions/unrevised-subject'
