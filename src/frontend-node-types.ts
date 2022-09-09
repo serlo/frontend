@@ -1,7 +1,10 @@
 import { LicenseData } from './data-types'
 import { BoxType } from './edtr-io/plugins/box/renderer'
+import { Sign } from './edtr-io/plugins/equations/sign'
 import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
+
+export { Sign } from './edtr-io/plugins/equations/sign'
 
 // The actual content of the page.
 
@@ -374,15 +377,6 @@ export interface FrontendCodeNode {
   language: string
   showLineNumbers: boolean
   children?: undefined
-}
-
-export enum Sign {
-  Equals = 'equals',
-  GreaterThan = 'greater-than',
-  GreaterThanOrEqual = 'greater-than-or-equal',
-  LessThan = 'less-than',
-  LessThanOrEqual = 'less-than-or-equal',
-  AlmostEqualTo = 'almost-equal-to',
 }
 
 export interface FrontendEquationsNode {

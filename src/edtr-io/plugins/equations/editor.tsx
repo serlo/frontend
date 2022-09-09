@@ -387,6 +387,7 @@ function StepEditor(props: StepEditorProps) {
               Sign.LessThan,
               Sign.GreaterThanOrEqual,
               Sign.LessThanOrEqual,
+              Sign.NotEqualTo,
               Sign.AlmostEqualTo,
               Sign.Estimates,
             ].map((sign) => {
