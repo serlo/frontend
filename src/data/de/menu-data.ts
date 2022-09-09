@@ -67,17 +67,59 @@ export const headerData: InstanceData['headerData'] = [
     icon: 'community',
     children: [
       {
-        url: '/community',
-        title: 'Startseite für Autor*innen',
+        title: 'Neu hier?',
+        url: '',
+        children: [
+          {
+            title: 'Mach den Einführungskurs',
+            url: '/community/hilfe-bearbeitung/einstieg/einstiegskurs/ueberblick',
+          },
+        ],
       },
-      { url: 'https://community.serlo.org/', title: 'Chat für Autor*innen' },
-      { url: '/88059', title: 'Hilfeseiten' },
       {
-        url: '/community/veranstaltungen/veranstaltungsübersicht',
-        title: 'Veranstaltungen für Autor*innen',
+        title: "Was gibt's zu tun?",
+        url: '',
+        children: [
+          {
+            title: 'Hilf in einem Fach',
+            url: '/123einführungskurs',
+          },
+          {
+            title: 'Beantworte Kommentare',
+            url: '/discussions',
+          },
+          {
+            title: 'Überprüfe Bearbeitungen',
+            url: '/entity/unrevised',
+          },
+          {
+            title: 'Teste den Editor',
+            url: '/community/106082/sandkasten',
+          },
+        ],
       },
-      { url: '/entity/unrevised', title: 'Ungeprüfte Bearbeitungen' },
-      { url: '/discussions', title: 'Liste aller Kommentare' },
+      {
+        title: 'Zusammenarbeit',
+        url: '',
+        children: [
+          {
+            title: 'Events & Treffen',
+            url: '/community/145470/veranstaltungsübersicht',
+          },
+          {
+            title: 'Communitychat',
+            url: 'https://community.serlo.org/home',
+          },
+          {
+            title: 'Anleitungen & Hilfe',
+            url: '/community/88059/hilfeseiten',
+          },
+          {
+            title: 'Aktivitäten auf der Seite',
+            url: '/event/history',
+          },
+        ],
+      },
     ],
   },
 ]

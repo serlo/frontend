@@ -5,7 +5,7 @@ import { faCreativeCommonsSa } from '@fortawesome/free-brands-svg-icons/faCreati
 import { faSlash } from '@fortawesome/free-solid-svg-icons/faSlash'
 import clsx from 'clsx'
 
-import { FaIcon } from '../../fa-icon'
+import { FaIcon } from '@/components/fa-icon'
 
 interface LicenseIconsProps {
   title: string

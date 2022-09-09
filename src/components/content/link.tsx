@@ -18,7 +18,6 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
   tabIndex?: number // menu
   unstyled?: boolean // don't add serlo-link class
-  passHref?: boolean
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -98,7 +97,6 @@ function InternalLink({
   tabIndex,
   unstyled,
   ref,
-  passHref,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const router = useRouter()
@@ -143,7 +141,7 @@ function InternalLink({
 
   function renderClientSide(_href: string) {
     return (
-      <NextLink prefetch={false} href={_href} passHref={passHref}>
+      <NextLink prefetch={false} href={_href}>
         {renderLink(_href)}
       </NextLink>
     )

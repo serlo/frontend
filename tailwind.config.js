@@ -97,6 +97,7 @@ module.exports = {
         'circled-and-arrow':
           "url('/_assets/img/landing/circled_and_arrow.svg')",
         underlined: "url('/_assets/img/landing/underlined.svg')",
+        'underlined-simple': "url('/_assets/img/landing/simple-underline.svg')",
         wiggle: "url('/_assets/img/landing/wiggle.svg')",
       },
       minHeight: {

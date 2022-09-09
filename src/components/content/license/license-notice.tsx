@@ -2,9 +2,9 @@ import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons/faCreative
 import { faSlash } from '@fortawesome/free-solid-svg-icons/faSlash'
 import clsx from 'clsx'
 
-import { FaIcon } from '../../fa-icon'
 import { Link } from '../link'
 import { LicenseIcons } from './license-icons'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
 import { NodePath } from '@/schema/article-renderer'

@@ -55,7 +55,6 @@ export function Header() {
           />
         </div>
       </div>
-      {/* {mobileMenuOpen && <MobileMenu data={headerData} auth={auth.current} />} */}
     </header>
   )
 

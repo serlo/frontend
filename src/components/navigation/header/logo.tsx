@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { Link } from '../../content/link'
+import { Link } from '@/components/content/link'
 
 const logoTargetWidth = 160
 
