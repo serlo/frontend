@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { BreadcrumbsData, HeadData } from '@/data-types'
-import { sandboxUrlStart } from '@/fetcher/fetch-editor-data'
+import { sandboxUrlStart } from '@/fetcher/sandbox'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface HeadTagsProps {

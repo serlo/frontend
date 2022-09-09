@@ -8,12 +8,12 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { SerloEntityPluginType } from '@/edtr-io/plugins'
-import { sandboxUrlStart } from '@/fetcher/fetch-editor-data'
 import {
   GetTaxonomyTypeQuery,
   GetTaxonomyTypeQueryVariables,
 } from '@/fetcher/graphql-types/operations'
 import { sharedPathFragments } from '@/fetcher/query-fragments'
+import { sandboxUrlStart } from '@/fetcher/sandbox'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
