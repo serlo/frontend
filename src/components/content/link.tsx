@@ -5,6 +5,7 @@ import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
@@ -41,17 +42,6 @@ export function isLegacyLink(_href: string) {
     _href == '/uuid/recycle-bin' ||
     _href == '/pages' ||
     _href == '/authorization/roles' ||
-    _href.startsWith('/entity/repository/history') ||
-    _href.startsWith('/entity/repository/compare') ||
-    _href.startsWith('/entity/license/update/') ||
-    _href.startsWith('/entity/taxonomy/update/') ||
-    _href.startsWith('/entity/license/update/') ||
-    _href.startsWith('/entity/link/order/') ||
-    _href.startsWith('/entity/create/') ||
-    _href.startsWith('/taxonomy/term/move/batch/') ||
-    _href.startsWith('/taxonomy/term/copy/batch/') ||
-    _href.startsWith('/taxonomy/term/sort/entities/') ||
-    _href.startsWith('/entity/repository/add-revision/') ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
     return false
@@ -62,15 +52,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/authorization') ||
-    _href.startsWith('/entity') ||
-    _href.startsWith('/math/wiki/') || //temporary
-    _href.startsWith('/ref/') || // temporary
-    _href.startsWith('/page') ||
-    _href.startsWith('/taxonomy') ||
     _href.startsWith('/navigation') ||
-    _href.startsWith('/unsubscribe') ||
-    _href.startsWith('/user/profile/') ||
-    _href.startsWith('/subscription/update') ||
     _href.startsWith('/entity/repository/add-revision-old/') || // temporary
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language
   )
@@ -123,6 +105,9 @@ function InternalLink({
   const internalLink = normalizeSerloLink(href)
 
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
+
+  //TODO: probably remove before merge to prod
+  triggerSentry({ message: `Legacy Route: ${href}` })
 
   //fallback
   return renderLink(href)

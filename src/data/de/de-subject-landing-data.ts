@@ -266,7 +266,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Quadratische Ergänzung',
       type: UuidType.Article,
-      url: '/mathe/31912/aufgaben-zu-linearen-funktionen-und-geradengleichungen',
+      url: '/mathe/1631/quadratische-erg%C3%A4nzung',
       img: '',
     },
 
