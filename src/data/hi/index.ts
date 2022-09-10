@@ -71,7 +71,8 @@ export const instanceData = {
       userEditsMine: 'My Unrevised Revisions',
       editProfile: 'Edit Profile & Settings',
       recycleBin: 'Recycle Bin',
-      diagon: 'Diagon Alley'
+      diagon: 'Diagon Alley',
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "दाताओं",
@@ -449,7 +450,7 @@ export const loggedInData = {
       noMails: "निष्क्रिय करें ",
       getMails: 'activate',
       noNotifications: "रद्द करें",
-      loadedSentence: 'Loaded %loadedCount% of %totalCount% subscriptions.',
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: 'Load more!'
     },
     revisions: {
@@ -823,6 +824,7 @@ export const loggedInData = {
       recycleBin: 'Recycle Bin'
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: 'Deleted Pages'
     },
     taxonomyTermTools: {
@@ -847,6 +849,9 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };

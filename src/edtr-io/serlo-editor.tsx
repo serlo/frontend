@@ -3,7 +3,7 @@ import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
 import { Entity, UuidType } from '@serlo/authorization'
-import * as React from 'react'
+import { createContext, ReactNode } from 'react'
 
 import { CsrfContext } from './csrf-context'
 import { getPluginRegistry } from './get-plugin-registry'
@@ -17,7 +17,7 @@ import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types
 
 export interface SerloEditorProps {
   getCsrfToken(): string
-  children?: React.ReactNode
+  children?: ReactNode
   needsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
@@ -33,7 +33,7 @@ export interface LooseEdtrDataDefined {
   [key: string]: EditorProps['initialState']
 }
 
-export const SaveContext = React.createContext<{
+export const SaveContext = createContext<{
   onSave: SerloEditorProps['onSave']
   showSkipCheckout: boolean
   needsReview: boolean
@@ -69,8 +69,6 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   const plugins = createPlugins({
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    getCsrfToken: getCsrfToken,
     registry: getPluginRegistry(type, editorStrings),
     type,
     editorStrings,

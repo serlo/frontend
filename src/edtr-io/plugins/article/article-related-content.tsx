@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import { faTrashAlt, Icon } from '@edtr-io/ui'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import * as R from 'ramda'
+import { flatten, values } from 'ramda'
 import {
   DragDropContext,
   Draggable,
@@ -31,7 +31,7 @@ export function ArticleRelatedContent({
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
-  const allItems = R.flatten(R.values(data))
+  const allItems = flatten(values(data))
   if (!editable && allItems.length === 0) return null
 
   return (

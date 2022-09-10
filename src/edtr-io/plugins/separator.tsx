@@ -1,5 +1,4 @@
 import { EditorPlugin, EditorPluginProps, scalar } from '@edtr-io/plugin'
-import * as React from 'react'
 
 const separatorState = scalar(undefined)
 

@@ -71,7 +71,8 @@ export const instanceData = {
       userEditsMine: "Meine ungeprüften Bearbeitungen",
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
-      diagon: "Winkelgasse"
+      diagon: "Winkelgasse",
+      manageRoles: "User-Rollen verwalten"
     },
     roles: {
       donor: "Spender*in",
@@ -449,7 +450,7 @@ export const loggedInData = {
       noMails: "deaktivieren",
       getMails: "aktivieren",
       noNotifications: "abbestellen",
-      loadedSentence: "%loadedCount% von %totalCount% Abonnements geladen.",
+      loadedSentence: "%loadedCount% von %totalCount% Einträgen geladen.",
       loadMoreLink: "Mehr laden!"
     },
     revisions: {
@@ -823,6 +824,7 @@ export const loggedInData = {
       recycleBin: "Papierkorb"
     },
     pages: {
+      newPage: "Neue Seite erstellen",
       deletedPages: "Gelöschte Seiten"
     },
     taxonomyTermTools: {
@@ -847,6 +849,9 @@ export const loggedInData = {
         title: "Inhalte sortieren",
         saveButtonText: "Reihenfolge speichern"
       }
+    },
+    roles: {
+      addButton: "Als %role% hinzufügen"
     }
   }
 };

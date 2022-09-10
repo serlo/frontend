@@ -3,7 +3,6 @@ import { EditorPluginProps, StateTypeReturnType } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/renderer-ui'
 import { DocumentState, replace, serializeDocument } from '@edtr-io/store'
 import { RowsPlugin } from '@serlo/legacy-editor-to-editor'
-import * as React from 'react'
 
 import { layoutState } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

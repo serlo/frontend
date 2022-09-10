@@ -4,7 +4,6 @@ import {
   object,
   string,
 } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import { editorContent, HeaderInput, license, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'

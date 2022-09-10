@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode, Fragment } from 'react'
 
+import { renderSignToString } from '@/edtr-io/plugins/equations/sign'
 import {
   FrontendContentNode,
   FrontendNodeType,
@@ -130,23 +131,6 @@ export function Equations({
         <div className="-mt-3">&darr;</div>
       </td>
     )
-  }
-}
-
-function renderSignToString(sign: Sign): string {
-  switch (sign) {
-    case Sign.Equals:
-      return '='
-    case Sign.GreaterThan:
-      return '>'
-    case Sign.GreaterThanOrEqual:
-      return '≥'
-    case Sign.LessThan:
-      return '<'
-    case Sign.LessThanOrEqual:
-      return '≤'
-    case Sign.AlmostEqualTo:
-      return '≈'
   }
 }
 
