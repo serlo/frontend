@@ -106,9 +106,6 @@ function InternalLink({
 
   if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
 
-  //TODO: probably remove before merge to prod
-  triggerSentry({ message: `Legacy Route: ${href}` })
-
   //fallback
   return renderLink(href)
 
