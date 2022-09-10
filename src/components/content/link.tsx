@@ -5,7 +5,6 @@ import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { triggerSentry } from '@/helper/trigger-sentry'
 import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
