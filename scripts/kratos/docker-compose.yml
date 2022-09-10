@@ -63,9 +63,9 @@ services:
       - LOG_LEAK_SENSITIVE_VALUES=true
       - OAUTH2_EXPOSE_INTERNAL_ERRORS=1
       - URLS_SELF_ISSUER=http://localhost:4444
-      - URLS_LOGIN=http://localhost:3001/hydra/login
-      - URLS_LOGOUT=http://localhost:3001/hydra/logout
-      - URLS_CONSENT=http://localhost:3001/hydra/consent
+      - URLS_LOGIN=http://localhost:3000/auth/oauth/login
+      - URLS_LOGOUT=http://localhost:3000/auth/oauth/logout
+      - URLS_CONSENT=http://localhost:3000/auth/oauth/consent
       - DSN=memory
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_ENABLED=public,pairwise

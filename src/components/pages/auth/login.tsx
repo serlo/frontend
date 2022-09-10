@@ -17,7 +17,13 @@ import { kratos } from '@/helper/kratos'
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
-  const { return_to: returnTo, flow: flowId, refresh, aal } = router.query
+  const {
+    return_to: returnTo,
+    flow: flowId,
+    refresh,
+    aal,
+    login_challenge,
+  } = router.query
 
   useEffect(() => {
     if (!router.isReady || flow) {
@@ -43,7 +49,19 @@ export function Login({ oauth }: { oauth?: boolean }) {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, FlowType.login, setFlow))
+      .catch(async (error: AxiosError) => {
+        const data = error.response?.data as {
+          error: {
+            id: string
+          }
+        }
+        if (oauth && data.error?.id === 'session_already_available') {
+          await router.push(
+            `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
+          )
+        }
+        await handleFlowError(router, FlowType.login, setFlow)(error)
+      })
   }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
 
   const showLogout = aal || refresh
@@ -100,13 +118,18 @@ export function Login({ oauth }: { oauth?: boolean }) {
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
           AuthSessionCookie.set(data.session)
+
+          if (oauth) {
+            return await router.push(
+              `/api/oauth/accept-login?login_challenge=${String(
+                login_challenge
+              )}`
+            )
+          }
+
           if (flow?.return_to) {
             window.location.href = flow?.return_to
             return
-          }
-
-          if (oauth) {
-            return await router.push('/api/auth/login')
           }
 
           window.location.href = `${originalPreviousPath ?? '/'}#auth`
