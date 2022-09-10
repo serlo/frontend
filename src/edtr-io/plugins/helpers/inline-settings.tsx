@@ -1,5 +1,4 @@
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
-import * as React from 'react'
 
 import { HoveringOverlay, HoverPosition } from './hovering-overlay'
 

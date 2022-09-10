@@ -2,7 +2,7 @@ import { useScopedStore } from '@edtr-io/core'
 import { MathRenderer } from '@edtr-io/math'
 import { isEmpty } from '@edtr-io/store'
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
+import { Fragment } from 'react'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
@@ -58,7 +58,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
           {renderFirstExplanation()}
           {state.steps.map((step, row) => {
             return (
-              <React.Fragment key={row}>
+              <Fragment key={row}>
                 <tr>
                   <LeftTd className={tdPadding}>
                     {step.left.value ? (
@@ -97,7 +97,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
                     </td>
                   </ExplanationTr>
                 )}
-              </React.Fragment>
+              </Fragment>
             )
           })}
         </tbody>

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { Value } from 'slate'
 import Plain from 'slate-plain-serializer'
 // @ts-expect-error missing types?
@@ -11,9 +11,9 @@ export function InlineInput(props: {
   placeholder: string
 }) {
   const { onChange, value, placeholder } = props
-  const [state, setState] = React.useState(Plain.deserialize(value))
+  const [state, setState] = useState(Plain.deserialize(value))
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (Plain.serialize(state) !== value) {
       setState(Plain.deserialize(value))
     }

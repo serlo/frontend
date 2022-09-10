@@ -4,7 +4,7 @@ import {
   EditorInlineSettings,
 } from '@edtr-io/editor-ui'
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { HighlightProps } from '.'
 
@@ -32,7 +32,7 @@ export function HighlightEditor(props: HighlightProps) {
   const { i18n, Renderer } = config
 
   const edit = focused && editable
-  const [throttledEdit, setEditThrottled] = React.useState(edit)
+  const [throttledEdit, setEditThrottled] = useState(edit)
   if (edit != throttledEdit) {
     if (!edit) {
       setTimeout(() => {

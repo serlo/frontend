@@ -1,5 +1,5 @@
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 const InlineInputInner = styled.input({
   backgroundColor: 'transparent',
@@ -18,7 +18,7 @@ const InlineInputRefForward: React.RefForwardingComponent<
 > = (props, ref) => {
   return <InlineInputInner {...props} ref={ref} />
 }
-export const InlineSettingsInput = React.forwardRef(InlineInputRefForward)
+export const InlineSettingsInput = forwardRef(InlineInputRefForward)
 
 export interface InputProps
   extends React.DetailedHTMLProps<
