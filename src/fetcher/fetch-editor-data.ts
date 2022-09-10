@@ -17,6 +17,7 @@ import {
 } from '@/edtr-io/editor-response-to-state'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import { SerloEditorProps } from '@/edtr-io/serlo-editor'
+import { sandboxUrlStart } from '@/fetcher/sandbox'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
@@ -39,8 +40,6 @@ const noReviewTypes: UuidWithRevType[] = [
   UuidType.Page,
   UuidType.User,
 ]
-
-export const sandboxUrlStart = '/community/106082/'
 
 export async function fetchEditorData(
   localeString: string,
