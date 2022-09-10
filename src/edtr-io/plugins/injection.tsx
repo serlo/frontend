@@ -4,7 +4,7 @@ import { EditorInlineSettings, EditorInput, styled } from '@edtr-io/editor-ui'
 import { PreviewOverlay } from '@edtr-io/editor-ui/internal'
 import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
 import { Icon, faNewspaper } from '@edtr-io/ui'
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { Injection } from '@/components/content/injection'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -37,10 +37,10 @@ const PlaceholderWrapper = styled.div({
 })
 
 function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
-  const [cache, setCache] = React.useState(props.state.value)
-  const [preview, setPreview] = React.useState(false)
+  const [cache, setCache] = useState(props.state.value)
+  const [preview, setPreview] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setCache(props.state.value)
     }, 2000)

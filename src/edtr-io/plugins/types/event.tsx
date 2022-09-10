@@ -1,5 +1,4 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'

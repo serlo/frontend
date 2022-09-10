@@ -9,8 +9,7 @@ import {
   StringStateType,
 } from '@edtr-io/plugin'
 import { DeepPartial } from '@edtr-io/ui'
-import * as R from 'ramda'
-import * as React from 'react'
+import { mergeDeepRight } from 'ramda'
 
 import { HighlightEditor } from './editor'
 import { HighlightRenderer, HighlightRendererProps } from './renderer'
@@ -27,7 +26,7 @@ export function createHighlightPlugin(
   return {
     Component: HighlightEditor,
     config: {
-      i18n: R.mergeDeepRight(
+      i18n: mergeDeepRight(
         {
           code: {
             label: 'Click here and enter your source code…',

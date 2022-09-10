@@ -82,7 +82,7 @@ function parseAuthCookie(session: Session): AuthenticationPayload {
 function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
   const initialSessionValue = AuthSessionCookie.parse()
   const [, setSession] = useState<Session | null>(initialSessionValue)
-  const authenticationPayload = useRef<AuthenticationPayload>( //null
+  const authenticationPayload = useRef<AuthenticationPayload>(
     initialSessionValue
       ? {
           username: (

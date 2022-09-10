@@ -2,8 +2,7 @@ import { gql } from 'graphql-request'
 import { mutate, useSWRConfig } from 'swr'
 
 import { useMutationFetch } from './helper/use-mutation-fetch'
-import { useAuthentication } from '@/auth/use-authentication'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { UserRoleInput } from '@/fetcher/graphql-types/operations'
 
 const addMutation = gql`
@@ -28,9 +27,8 @@ const removeMutation = gql`
 
 export function useUserAddOrRemoveRoleMutation() {
   const mutationFetch = useMutationFetch()
-  const auth = useAuthentication()
-  const loggedInData = useLoggedInData()
   const { cache } = useSWRConfig()
+  const successHandler = useSuccessHandler()
 
   return async function (input: UserRoleInput, isAdd: boolean) {
     const success = await mutationFetch(
@@ -39,8 +37,9 @@ export function useUserAddOrRemoveRoleMutation() {
     )
 
     if (success) {
-      if (!loggedInData || !auth.current) return
-      resetUserRolesCache(cache)
+      if (successHandler({ success, toastKey: 'updated' })) {
+        resetUserRolesCache(cache)
+      }
     }
     return success
   }

@@ -5,7 +5,6 @@ import {
   scalar,
   string,
 } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 

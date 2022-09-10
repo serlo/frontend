@@ -1,7 +1,7 @@
 import { EditorPlugin, EditorPluginProps } from '@edtr-io/plugin'
 import { ExpandableBox } from '@edtr-io/renderer-ui'
 import { ThemeProvider } from '@edtr-io/ui'
-import * as React from 'react'
+import { useCallback } from 'react'
 
 import { editorContent, entity, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
@@ -42,7 +42,7 @@ const solutionTheme = {
 
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   const loggedInData = useLoggedInData()
-  const renderTitle = React.useCallback(
+  const renderTitle = useCallback(
     (collapsed: boolean) => {
       if (!loggedInData) return
       const editorStrings = loggedInData.strings.editor

@@ -71,7 +71,8 @@ export const instanceData = {
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
       recycleBin: "Papelera de reciclaje",
-      diagon: "Callejón de Diagon"
+      diagon: "Callejón de Diagon",
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Donante",
@@ -449,7 +450,7 @@ export const loggedInData = {
       noMails: "desactivar",
       getMails: "activar",
       noNotifications: "cancelar",
-      loadedSentence: "Cargar %loadedCount% de %totalCount% suscripciones.",
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: "¡Cargar más!"
     },
     revisions: {
@@ -823,6 +824,7 @@ export const loggedInData = {
       recycleBin: "Papelera de reciclaje"
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: "Páginas borradas"
     },
     taxonomyTermTools: {
@@ -847,6 +849,9 @@ export const loggedInData = {
         title: "Ordenar entidades",
         saveButtonText: "Guardar orden"
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };
