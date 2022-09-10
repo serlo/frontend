@@ -29,13 +29,18 @@ export function UnrevisedRevisionsOverview({
   )
 
   function renderHelp() {
-    const { help1, help2, help3, reviewers, reviewersUrl } =
-      strings.unrevisedRevisions
-
-    // const guidelineUrl =
-    //   lang === Instance.De
-    //     ? '/140473'
-    //     : 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/'
+    const {
+      help1,
+      help2,
+      help3,
+      help4,
+      reviewers,
+      reviewersUrl,
+      contactPerson,
+      contactPersonUrl,
+      guideline,
+      guidelineUrl,
+    } = strings.unrevisedRevisions
 
     return (
       <div>
@@ -49,14 +54,10 @@ export function UnrevisedRevisionsOverview({
         </p>
         <p className="serlo-p font-bold">
           {replacePlaceholders(help3, {
-            userlink: (
-              <>
-                <br />
-                <Link href="https://community.serlo.org/direct/LinaMaria">
-                  LinaMaria
-                </Link>
-              </>
-            ),
+            contactLink: <Link href={contactPersonUrl}>{contactPerson}</Link>,
+          })}
+          {replacePlaceholders(help4, {
+            guildelineLink: <Link href={guidelineUrl}>{guideline}</Link>,
           })}
         </p>
       </div>
