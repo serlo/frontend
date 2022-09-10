@@ -4,8 +4,8 @@ import { gql } from 'graphql-request'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const maxFileSize = 2 * 1024 * 1024
 const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
