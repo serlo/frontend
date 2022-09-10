@@ -4,8 +4,8 @@ import { gql } from 'graphql-request'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { parseAuthCookie } from '@/auth/parse-auth-cookie'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 
 const maxFileSize = 2 * 1024 * 1024
 const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']
@@ -65,16 +65,19 @@ export function createReadFile() {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
       // hard to get to the default auth logic outside of react components
-      // I provide dummy functions for refresh / clear token here since we only need the token
-      // and can be quite certain, that the token has been checked when loading the edtr in the first place
-      const authenticationPayload = parseAuthCookie(
-        (_dummy: string) => new Promise(() => {}),
-        () => {}
-      )
-      if (!authenticationPayload?.token) return
+      // we need to rely on the session cookie, with risk that the user changed
+      // their username
+      const session = AuthSessionCookie.parse()
 
       const gqlFetch = createAuthAwareGraphqlFetch({
-        current: authenticationPayload,
+        current: session
+          ? {
+              username: (session.identity.traits as { username: string })
+                ?.username,
+              id: (session.identity.metadata_public as { legacy_id: number })
+                ?.legacy_id,
+            }
+          : null,
       })
       const args = JSON.stringify({
         query: uploadUrlQuery,
