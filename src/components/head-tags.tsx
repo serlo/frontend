@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { BreadcrumbsData, HeadData } from '@/data-types'
-import { sandboxUrlStart } from '@/fetcher/sandbox'
+import { testAreaUrlStart } from '@/fetcher/testArea'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface HeadTagsProps {
@@ -43,14 +43,14 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
   )
 
   function renderNoIndexMeta() {
-    // hide search, trashed and Testbereich content in instance de
+    // hide search, trashed and content of the "Testbereich" in instance de
     const filteredBreadcrumbs = breadcrumbsData?.filter((entry) =>
-      entry.url?.startsWith(sandboxUrlStart)
+      entry.url?.startsWith(testAreaUrlStart)
     )
     if (
       noindex ||
       (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
-      data.title.startsWith('Sandkasten') ||
+      data.title.startsWith('Sandkasten') || // remove when renamed
       data.title.startsWith('Testbereich')
     ) {
       return <meta name="robots" content="noindex" />
