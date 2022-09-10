@@ -70,7 +70,8 @@ export const instanceData = {
       userEditsMine: "Meine ungeprüften Bearbeitungen",
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
-      diagon: "Winkelgasse"
+      diagon: "Winkelgasse",
+      manageRoles: "User-Rollen verwalten"
     },
     roles: {
       donor: "Spender*in",
@@ -90,11 +91,11 @@ export const instanceData = {
       button: "Inhalt überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
-        title: "Erstelle mit uns!",
-        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        title: "Erstelle mit uns Lerninhalte!",
+        text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
         registerButton: "Neues Konto anlegen",
-        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
     },
@@ -448,7 +449,7 @@ export const loggedInData = {
       noMails: "deaktivieren",
       getMails: "aktivieren",
       noNotifications: "abbestellen",
-      loadedSentence: "%loadedCount% von %totalCount% Abonnements geladen.",
+      loadedSentence: "%loadedCount% von %totalCount% Einträgen geladen.",
       loadMoreLink: "Mehr laden!"
     },
     revisions: {
@@ -517,7 +518,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
         serloTable: "Tabelle",
-        serloTableDesc: "(Testlauf für neues Plugin) Tabellen erstellen",
+        serloTableDesc: "Schöne Tabellen erstellen.",
         table: "Tabelle",
         tableDesc: "Erstelle eine Tabelle mit Markdown.",
         video: 'Video',
@@ -822,6 +823,7 @@ export const loggedInData = {
       recycleBin: "Papierkorb"
     },
     pages: {
+      newPage: "Neue Seite erstellen",
       deletedPages: "Gelöschte Seiten"
     },
     taxonomyTermTools: {
@@ -846,6 +848,9 @@ export const loggedInData = {
         title: "Inhalte sortieren",
         saveButtonText: "Reihenfolge speichern"
       }
+    },
+    roles: {
+      addButton: "Als %role% hinzufügen"
     }
   }
 };

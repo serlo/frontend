@@ -9,7 +9,6 @@ import {
 } from '@edtr-io/plugin'
 import { isEmpty } from '@edtr-io/store'
 import { Icon, faExternalLinkAlt, styled } from '@edtr-io/ui'
-import * as React from 'react'
 
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'

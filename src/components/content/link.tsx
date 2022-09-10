@@ -40,17 +40,7 @@ export function isLegacyLink(_href: string) {
     _href == '/entity/unrevised' ||
     _href == '/uuid/recycle-bin' ||
     _href == '/pages' ||
-    _href.startsWith('/entity/repository/history') ||
-    _href.startsWith('/entity/repository/compare') ||
-    _href.startsWith('/entity/license/update/') ||
-    _href.startsWith('/entity/taxonomy/update/') ||
-    _href.startsWith('/entity/license/update/') ||
-    _href.startsWith('/entity/link/order/') ||
-    _href.startsWith('/entity/create/') ||
-    _href.startsWith('/taxonomy/term/move/batch/') ||
-    _href.startsWith('/taxonomy/term/copy/batch/') ||
-    _href.startsWith('/taxonomy/term/sort/entities/') ||
-    _href.startsWith('/entity/repository/add-revision/') ||
+    _href == '/authorization/roles' ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
     return false
@@ -61,15 +51,7 @@ export function isLegacyLink(_href: string) {
     _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/authorization') ||
-    _href.startsWith('/entity') ||
-    _href.startsWith('/math/wiki/') || //temporary
-    _href.startsWith('/ref/') || // temporary
-    _href.startsWith('/page') ||
-    _href.startsWith('/taxonomy') ||
     _href.startsWith('/navigation') ||
-    _href.startsWith('/unsubscribe') ||
-    _href.startsWith('/user/profile/') ||
-    _href.startsWith('/subscription/update') ||
     _href.startsWith('/entity/repository/add-revision-old/') || // temporary
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language
   )

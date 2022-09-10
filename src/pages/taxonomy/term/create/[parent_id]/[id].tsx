@@ -27,8 +27,7 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
                 plugin: 'type-taxonomy',
                 state: {
                   term: { name: '' },
-                  description:
-                    '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{}]}]}]}' /*hacky way of building valid empty state*/,
+                  description: '{"plugin":"rows"}',
                 },
               }}
               errorType="none"
@@ -44,7 +43,6 @@ export const getServerSideProps: GetServerSideProps<
   TaxonomyTermCreateProps
 > = async (context) => {
   const parent = parseInt((context.params?.id as string) ?? '')
-
   return {
     props: { parent },
   }

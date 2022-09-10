@@ -75,12 +75,9 @@ export function AddRevision({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!id && !taxonomyParentId) return null
+  const isPage = type === UuidType.Page
 
-  const backlink = {
-    label: strings.revisions.toContent,
-    url: `/${id ?? taxonomyParentId!}`,
-  }
+  if (!id && !isPage && !taxonomyParentId) return null
 
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
@@ -94,10 +91,7 @@ export function AddRevision({
 
   return (
     <>
-      <Breadcrumbs
-        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
-        noIcon
-      />
+      {renderBacklink()}
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
@@ -154,4 +148,17 @@ export function AddRevision({
       </div>
     </>
   )
+
+  function renderBacklink() {
+    const backlink = {
+      label: isPage ? 'Pages' : strings.revisions.toContent,
+      url: isPage ? '/pages' : `/${id ?? taxonomyParentId!}`,
+    }
+    return (
+      <Breadcrumbs
+        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
+        asBackButton={!breadcrumbsData}
+      />
+    )
+  }
 }

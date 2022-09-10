@@ -147,7 +147,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         onClick={() => {
           setSolutionVisible(!solutionVisible)
         }}
-        onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       >
         <span className="w-3.5">{solutionVisible ? '▾' : '▸'}&nbsp;</span>
         {strings.entities.solution}{' '}
