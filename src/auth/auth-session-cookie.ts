@@ -14,8 +14,10 @@ export const AuthSessionCookie = {
   remove() {
     Cookies.remove(this.cookieName)
   },
-  parse(): Session | null {
-    const session = Cookies.get(this.cookieName)
+  parse(cookies?: { [key: string]: string }): Session | null {
+    const session = cookies
+      ? cookies[this.cookieName]
+      : Cookies.get(this.cookieName)
     if (!session) return null
     return JSON.parse(session) as Session
   },

@@ -62,7 +62,17 @@ export function Login({ oauth }: { oauth?: boolean }) {
         }
         await handleFlowError(router, FlowType.login, setFlow)(error)
       })
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
+  }, [
+    flowId,
+    router,
+    router.isReady,
+    aal,
+    refresh,
+    returnTo,
+    flow,
+    oauth,
+    login_challenge,
+  ])
 
   const showLogout = aal || refresh
 
@@ -118,13 +128,13 @@ export function Login({ oauth }: { oauth?: boolean }) {
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
           AuthSessionCookie.set(data.session)
-
           if (oauth) {
-            return await router.push(
+            await router.push(
               `/api/oauth/accept-login?login_challenge=${String(
                 login_challenge
               )}`
             )
+            return
           }
 
           if (flow?.return_to) {

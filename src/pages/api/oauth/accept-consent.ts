@@ -8,17 +8,17 @@ export const config = {
   runtime: 'experimental-edge',
 }
 
-export default async function acceptLogin(
+export default async function acceptConsent(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { login_challenge } = req.query
+  const { consent_challenge } = req.query
 
   const session = AuthSessionCookie.parse(req.cookies)
   const query = gql`
     mutation ($input: OauthAcceptInput!) {
       oauth {
-        acceptLogin(input: $input) {
+        acceptConsent(input: $input) {
           redirectUri
         }
       }
@@ -27,12 +27,12 @@ export default async function acceptLogin(
   const variables = {
     input: {
       session: session,
-      challenge: login_challenge,
+      challenge: consent_challenge,
     },
   }
   const args = JSON.stringify({ query, variables })
   const response = (await createGraphqlFetch()(args)) as {
-    oauth: { acceptLogin: { redirectUri: string } }
+    oauth: { acceptConsent: { redirectUri: string } }
   }
-  res.redirect(302, response.oauth.acceptLogin.redirectUri)
+  res.redirect(302, response.oauth.acceptConsent.redirectUri)
 }
