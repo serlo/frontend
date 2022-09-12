@@ -1,3 +1,3 @@
-import React from 'react'
+import { createContext } from 'react'
 
-export const CsrfContext = React.createContext<() => string>(() => '')
+export const CsrfContext = createContext<() => string>(() => '')

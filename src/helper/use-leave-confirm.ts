@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
-import * as React from 'react'
+import { useCallback, useEffect } from 'react'
 
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
@@ -9,7 +9,7 @@ export function useLeaveConfirm(protect: boolean) {
   const Router = useRouter()
   const loggedInData = useLoggedInData()
 
-  const onRouteChangeStart = React.useCallback(() => {
+  const onRouteChangeStart = useCallback(() => {
     if (protect) {
       if (window.confirm(loggedInData?.strings.editor.confirmRouteChange)) {
         return true
@@ -22,7 +22,7 @@ export function useLeaveConfirm(protect: boolean) {
     }
   }, [protect, loggedInData?.strings.editor.confirmRouteChange, Router.asPath])
 
-  React.useEffect(() => {
+  useEffect(() => {
     Router.events.on('routeChangeStart', onRouteChangeStart)
     window.onbeforeunload = protect ? () => true : null
 

@@ -1,5 +1,5 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import * as React from 'react'
+import { useEffect } from 'react'
 
 import { entity, editorContent, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'
@@ -35,7 +35,7 @@ function CoursePageTypeEditor(
 ) {
   const { title, content, icon } = props.state
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!['explanation', 'question', 'play'].includes(icon.value)) {
       icon.set('explanation')
     }

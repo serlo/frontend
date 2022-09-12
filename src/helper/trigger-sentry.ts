@@ -28,7 +28,10 @@ export function triggerSentry({
 }: TriggerSentryData) {
   // eslint-disable-next-line no-console
   console.error(message)
-  if (process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined) {
+  if (
+    typeof window !== 'undefined' &&
+    process.env.NEXT_PUBLIC_SENTRY_DSN !== undefined
+  ) {
     const windowWithSentry = window as unknown as Window & SentryGlobal
     windowWithSentry.Sentry?.addBreadcrumb({
       category: 'error message',
