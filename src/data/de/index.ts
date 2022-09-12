@@ -71,7 +71,7 @@ export const instanceData = {
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
       diagon: "Winkelgasse",
-      discussions: 'Comments',
+      discussions: "Kommentare",
       manageRoles: "User-Rollen verwalten"
     },
     roles: {
@@ -187,7 +187,7 @@ export const instanceData = {
       hideReplies: "Einklappen",
       showArchived: "Archivierte %threads% anzeigen",
       copyLink: "Kommentarlink kopieren",
-      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
+      commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt."
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -223,17 +223,17 @@ export const instanceData = {
       status: 'Status'
     },
     unrevisedRevisions: {
-      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
-      reviewers: 'Reviewers',
-      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
-      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
-      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
+      help1: "Hier landen alle Bearbeitungen der Autor*innen. Diese werden in der Qualitätskontrolle durch die %reviewersLink% überprüft und freigegeben.",
+      reviewers: "Reviewer*innen",
+      reviewersUrl: "/community/202923/rollen-der-serlo-community",
+      help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
+      help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
       contactPerson: 'LinaMaria',
       contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
-      help4: 'How to review? See our %guidelineLink%.',
-      guideline: 'Guideline for Reviewing',
-      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
-      subjectLinks: 'To Subjects',
+      help4: "Wie geht reviewen? Hier gibt es die %guidelineLink%.",
+      guideline: "Anleitung",
+      guidelineUrl: "/140473",
+      subjectLinks: "Direkt zum Fach",
       showMoreEntities: "Alle in %subject% anzeigen",
       showMoreRevisions: "%number weitere anzeigen",
       newLabelText: "neu",
@@ -486,7 +486,7 @@ export const loggedInData = {
         save: "Bearbeitung erfolgreich gespeichert ✅",
         updated: "Erfolgreich aktualisiert",
         generic: "Hat geklappt 🎉",
-        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
+        saveNeedsReview: "Danke für deine Bearbeitung 🎉 Die Reviewer*innen prüfen sie bald und dann ist sie auf der Seite sichtbar."
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -499,7 +499,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
-      noChangesWarning: "Nothing changed so there is no need to save yet",
+      noChangesWarning: "Bisher hast du nichts geändert",
       edtrIo: {
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
@@ -539,7 +539,7 @@ export const loggedInData = {
         solutionSeparator: "Lösungs-Trenner",
         solutionSeparatorDesc: "Unterteile die Lösung in einzelne Lösungsschritte.",
         save: "Speichern",
-        saveWithReview: 'Save and get review',
+        saveWithReview: "Speichern und reviewen lassen",
         cancel: "Abbrechen",
         saving: "Speichert…",
         missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
@@ -549,7 +549,7 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
         revisionSaved: "Bearbeitung gespeichert",
         saveRevision: "Bearbeitung zwischenspeichern",
-        changes: 'Describe your changes to the content',
+        changes: "Bbeschreibe deine Änderungen am Inhalt",
         skipReview: "Bearbeitung ohne Review freischalten (nicht empfohlen)",
         enableNotifs: "Benachrichtigungen auf serlo.org erhalten",
         enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
