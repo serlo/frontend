@@ -2,17 +2,12 @@ import Head from 'next/head'
 import { MouseEvent, useState } from 'react'
 
 import { ModalWithCloseButton } from '../modal-with-close-button'
-import { endpointEnmeshed } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function WelcomeModal({
   callback,
-  username,
-  sessionId,
 }: {
   callback: () => void
-  username: string
   sessionId: string
 }) {
   const [showModal, setShowModal] = useState(false)
@@ -71,7 +66,7 @@ export function WelcomeModal({
       </button>
       <ModalWithCloseButton
         isOpen={showModal}
-        onCloseClick={() => setShowModal(false)}
+        onCloseClick={() => handleMockLoad()}
         title="Eigenen Lernstand laden"
       >
         <p className="serlo-p">
@@ -101,10 +96,7 @@ export function WelcomeModal({
           <a className="serlo-link" target="_blank" href="/wallet">
             Enmeshed
           </a>{' '}
-          App gescannt hast erscheint hier gleich dein Lernstand
-          <button className="serlo-link" onClick={handleMockLoad}>
-            .
-          </button>
+          App gescannt hast erscheint hier gleich dein Lernstand.
         </p>
         <style jsx>{`
           img {
@@ -116,68 +108,9 @@ export function WelcomeModal({
   )
 
   function fetchQRCode() {
-    const name = encodeURIComponent(username)
-
-    fetch(`${endpointEnmeshed}/init?sessionId=${sessionId}&name=${name}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'image/png',
-      },
-    })
-      .then((res) => res.blob())
-      .then((res) => {
-        const urlCreator = window.URL || window.webkitURL
-        setQrCodeSrc(urlCreator.createObjectURL(res))
-        // TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
-        // urlCreator.revokeObjectUrl(qrCode)
-      })
-      .then(fetchAttributes)
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(e))
-
-        triggerSentry({
-          message: `Error in User-Journey: Reading QR-Code: ${JSON.stringify(
-            e
-          )}`,
-        })
-
-        setShowModal(false)
-        callback()
-      })
-  }
-
-  function fetchAttributes() {
-    fetch(`${endpointEnmeshed}/attributes?sessionId=${sessionId}`, {})
-      .then((res) => res.json())
-      .then((body: EnmeshedResponse) => {
-        if (body.status === 'pending') {
-          // eslint-disable-next-line no-console
-          console.log('INFO: RelationshipRequest is pending...')
-          setTimeout(fetchAttributes, 1000)
-        }
-        if (body.status === 'success') {
-          // eslint-disable-next-line no-console
-          console.log('INFO: RelationshipRequest was accepted.')
-          // eslint-disable-next-line no-console
-          console.log(
-            `INFO: Value of Lernstand-Mathe is "${body.attributes['Lernstand-Mathe']}"`
-          )
-          setShowModal(false)
-          callback()
-        }
-      })
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log(`ERROR: ${JSON.stringify(e)}`)
-        setShowModal(false)
-        callback()
-        triggerSentry({
-          message: `Error in User-Journey: Reading Attributes: ${JSON.stringify(
-            e
-          )}`,
-        })
-      })
+    setTimeout(() => {
+      setQrCodeSrc('/_assets/mock_qr.png')
+    }, 500)
   }
 }
 

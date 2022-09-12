@@ -76,7 +76,7 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
   const loggedIn = true
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  async function refreshToken(usedToken: string): Promise<void> {
+  async function refreshToken(_usedToken: string): Promise<void> {
     // async function startRefreshTokenPromise(): Promise<void> {
     //   if (typeof window === 'undefined') return
 
@@ -88,7 +88,6 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
     //   pendingRefreshTokenPromise.current = null
 
     return new Promise(() => {
-      console.log(usedToken)
       return
     })
 

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import type { NextPage } from 'next'
 import Head from 'next/head'
 
@@ -38,7 +39,7 @@ const ContentPage: NextPage = () => {
         style={{
           backgroundImage:
             "url('https://b2cfilestore.blob.core.windows.net/samlfiles/background-my-daad.jpg')",
-          fontFamily: 'Open Sans',
+          fontFamily: 'Source+Sans+Pro',
         }}
       >
         <div className="c-login-screen">

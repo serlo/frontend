@@ -30,13 +30,9 @@ export function LenabiLogInLink({ title }: { title: string }) {
 
   return (
     <>
-      <a
-        href="/login"
-        className={clsx('group', styledLinkCls)}
-        onClick={handleOnClick}
-      >
+      <button className={clsx('group', styledLinkCls)} onClick={handleOnClick}>
         {title}
-      </a>
+      </button>
       <ModalWithCloseButton
         isOpen={showModal}
         onCloseClick={() => setShowModal(false)}
