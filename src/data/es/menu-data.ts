@@ -36,7 +36,7 @@ export const headerData: InstanceData['headerData'] = [
       { url: '/169578', title: 'Matemáticas' },
       { url: '/241982', title: 'Sostenibilidad aplicada' },
       { url: '/229701', title: 'Estudios en Diásporas Africanas' },
-      { url: '/community/sandbox', title: 'Sandbox' },
+      { url: '/community/sandbox', title: 'Test Area' },
     ],
   },
   { url: '/serlo', title: 'Sobre Serlo', icon: 'about' },
@@ -137,7 +137,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     entries: [
       { title: 'Páginas de ayuda', id: 170539 },
       { title: ' Recursos para educadores', id: 182103 },
-      { title: 'Sandbox', id: 164237 },
+      { title: 'Test Area', id: 164237 },
       { title: 'Todas las actividades en Serlo', url: '/event/history' },
       { title: 'Todos los comentarios en Serlo', url: '/discussions' },
       { title: 'Operaciones en revisión', url: '/entity/unrevised' },

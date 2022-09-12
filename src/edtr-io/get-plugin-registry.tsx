@@ -15,7 +15,8 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
-import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
+import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
 import { LoggedInData, UuidType } from '@/data-types'
 

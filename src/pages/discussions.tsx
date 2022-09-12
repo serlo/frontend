@@ -15,7 +15,7 @@ function Content() {
 
   return (
     <>
-      <PageTitle title={strings.entities.threads} headTitle />
+      <PageTitle title={strings.pageTitles.discussions} headTitle />
       <CommentAreaAllThreads />
     </>
   )
