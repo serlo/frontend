@@ -2,6 +2,7 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
+import { PointerEventHandler } from 'react'
 
 import { Icon } from './icon'
 import { SubContent } from './sub-content'
@@ -20,9 +21,8 @@ export const styledLinkCls = /* className={ */ clsx(
   'hover:no-underline hover:bg-brand-300'
 )
 
-export const preventHover = (event: any) => {
-  const e = event as Event
-  if (window.innerWidth < 1024) e.preventDefault()
+export const preventHover: PointerEventHandler = (event) => {
+  if (window.innerWidth < 1024) event.preventDefault()
 }
 
 export interface ItemProps {

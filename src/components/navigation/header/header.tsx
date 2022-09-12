@@ -19,12 +19,12 @@ export function Header() {
     document.body.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') setMobileMenuOpen(false)
     })
-  })
 
-  // close mobile menu on client side navigation, we need the global Router instance
-  Router.events.on('routeChangeStart', () => {
-    setMobileMenuOpen(false)
-  })
+    // close mobile menu on client side navigation, we need the global Router instance
+    Router.events.on('routeChangeStart', () => {
+      setMobileMenuOpen(false)
+    })
+  }, [])
 
   return (
     <header
