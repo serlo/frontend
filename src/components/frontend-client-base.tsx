@@ -160,33 +160,33 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (cookies['auth-token'] || loadLoggedInData) {
-      Promise.all([
-        !loggedInData
-          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-              (res) => res.json()
-            )
-          : false,
-        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
-      ])
-        .then((values) => {
-          if (values[0]) {
-            sessionStorage.setItem(
-              `___loggedInData_${instanceData.lang}`,
-              JSON.stringify(values[0])
-            )
-            setLoggedInData(values[0] as LoggedInData)
-          }
-          if (values[1])
-            setLoggedInComponents(
-              (values[1] as { Components: LoggedInStuff }).Components
-            )
-        })
-        .catch(() => {})
-      if (!cookies['__serlo_preview__']) {
-        // bypass cache
-        fetch('/api/frontend/preview').catch(() => {})
-      }
+    // if (cookies['auth-token'] || loadLoggedInData) {
+    Promise.all([
+      !loggedInData
+        ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
+            (res) => res.json()
+          )
+        : false,
+      !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
+    ])
+      .then((values) => {
+        if (values[0]) {
+          sessionStorage.setItem(
+            `___loggedInData_${instanceData.lang}`,
+            JSON.stringify(values[0])
+          )
+          setLoggedInData(values[0] as LoggedInData)
+        }
+        if (values[1])
+          setLoggedInComponents(
+            (values[1] as { Components: LoggedInStuff }).Components
+          )
+      })
+      .catch(() => {})
+    if (!cookies['__serlo_preview__']) {
+      // bypass cache
+      fetch('/api/frontend/preview').catch(() => {})
     }
+    // }
   }
 }

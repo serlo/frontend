@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { useState, useEffect } from 'react'
 
 import { Link } from '../content/link'
+import { LenabiLogInLink } from '../lenabi/lenabi-log-in-link'
 import { getAvatarUrl } from '../user/user-link'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 import { FaIcon } from '@/components/fa-icon'
@@ -14,7 +15,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { HeaderData, HeaderLink } from '@/data-types'
-import { getAuthData, shouldUseNewAuth } from '@/helper/feature-auth'
+import { getAuthData } from '@/helper/feature-auth'
 import { submitEvent } from '@/helper/submit-event'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -79,7 +80,7 @@ function MenuInner({
   target?: TippyProps['singleton']
 }) {
   //
-  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(true)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
@@ -126,28 +127,30 @@ function MenuInner({
     )
 
     // render placeholder while data is loading
-    if (!data)
+    if (typeof window !== 'undefined' && window.location.pathname === '/')
       return renderEntry(
         {
           link: {
-            url: '/auth/login',
-            title: strings.header.login,
-            icon: 'user',
+            url: '/api/auth/login',
+            title: 'Anmelden',
+            icon: 'login',
           },
           authMenuMounted: false,
         },
         'auth'
       )
 
-    return data.map((link) => {
-      return renderEntry(
-        {
-          link: link,
-          authMenuMounted: mounted,
-        },
-        'auth'
-      )
-    })
+    return data
+      ? data.map((link) => {
+          return renderEntry(
+            {
+              link: link,
+              authMenuMounted: mounted,
+            },
+            'auth'
+          )
+        })
+      : null
   }
 
   interface EntryData {
@@ -155,10 +158,7 @@ function MenuInner({
     authMenuMounted?: boolean
   }
 
-  function renderEntry(
-    { link, authMenuMounted }: EntryData,
-    i: number | string
-  ) {
+  function renderEntry({ link }: EntryData, i: number | string) {
     const hasChildren = link.children !== undefined
     const hasIcon =
       link.icon &&
@@ -176,9 +176,7 @@ function MenuInner({
       <li
         className={clsx(
           'inline-block',
-          (authMenuMounted === undefined ? true : authMenuMounted)
-            ? 'opacity-100'
-            : 'opacity-0',
+          'opacity-100',
           'ease-linear duration-700'
         )}
         key={link.title}
@@ -203,6 +201,8 @@ function MenuInner({
               {!hasIcon && link.title} <FaIcon icon={faCaretDown} />
             </Link>
           )
+        ) : link.url.includes('/api/auth/login') ? (
+          <LenabiLogInLink title={link.title} />
         ) : (
           <Link
             href={link.url}

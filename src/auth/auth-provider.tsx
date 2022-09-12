@@ -1,5 +1,5 @@
 import { AuthorizationPayload } from '@serlo/authorization'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 import {
   createContext,
   ReactNode,
@@ -68,44 +68,49 @@ export type AuthenticationPayload = {
 function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
   const initialValue = parseAuthCookie(refreshToken, clearToken)
   const authenticationPayload = useRef<AuthenticationPayload>(initialValue)
-  const pendingRefreshTokenPromise = useRef<Promise<void> | null>(null)
+  // const pendingRefreshTokenPromise = useRef<Promise<void> | null>(null)
 
-  const [loggedIn, setLoggedIn] = useState(() => {
-    return initialValue !== null
-  })
+  // const [loggedIn, setLoggedIn] = useState(() => {
+  //   return initialValue !== null
+  // })
+  const loggedIn = true
 
   // eslint-disable-next-line @typescript-eslint/require-await
-  async function refreshToken(usedToken: string) {
-    async function startRefreshTokenPromise(): Promise<void> {
-      if (typeof window === 'undefined') return
+  async function refreshToken(usedToken: string): Promise<void> {
+    // async function startRefreshTokenPromise(): Promise<void> {
+    //   if (typeof window === 'undefined') return
 
-      await fetch('/api/auth/refresh-token', {
-        method: 'POST',
-      })
+    //   await fetch('/api/auth/refresh-token', {
+    //     method: 'POST',
+    //   })
 
-      authenticationPayload.current = parseAuthCookie(refreshToken, clearToken)
-      pendingRefreshTokenPromise.current = null
-    }
+    //   authenticationPayload.current = parseAuthCookie(refreshToken, clearToken)
+    //   pendingRefreshTokenPromise.current = null
 
-    const currentCookieValue = parseAuthCookie(refreshToken, clearToken)
-    if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
-      // Cooke has a newer token than the one we used for the request. So use that instead.
-      authenticationPayload.current = currentCookieValue
+    return new Promise(() => {
+      console.log(usedToken)
       return
-    }
+    })
 
-    if (!pendingRefreshTokenPromise.current) {
-      // Only initiate the token refresh request if it has not been started already.
-      pendingRefreshTokenPromise.current = startRefreshTokenPromise()
-    }
+    // const currentCookieValue = parseAuthCookie(refreshToken, clearToken)
+    // if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
+    //   // Cooke has a newer token than the one we used for the request. So use that instead.
+    //   authenticationPayload.current = currentCookieValue
+    //   return
+    // }
 
-    return pendingRefreshTokenPromise.current
+    // if (!pendingRefreshTokenPromise.current) {
+    //   // Only initiate the token refresh request if it has not been started already.
+    //   pendingRefreshTokenPromise.current = startRefreshTokenPromise()
+    // }
+
+    // return pendingRefreshTokenPromise.current
   }
 
   function clearToken() {
-    if (!loggedIn) return
-    Cookies.remove('auth-token')
-    setLoggedIn(false)
+    // if (!loggedIn) return
+    // Cookies.remove('auth-token')
+    // setLoggedIn(false)
   }
 
   return [authenticationPayload, loggedIn]
