@@ -23,7 +23,7 @@ export function SubContent({ subItems, parent }: SubContentProps) {
   return (
     <NavigationMenu.Content
       className={clsx(
-        'text-left md:absolute md:z-[999] md:mt-2',
+        'text-left md:absolute md:z-[999] md:pt-2',
         (isLast || isCommunity) && 'md:right-0',
         isCommunityMega && 'md:-left-16'
       )}

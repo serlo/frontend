@@ -11,10 +11,10 @@ export interface SubHeaderProps {
 
 const headingClasses = /* className={ */ clsx(
   'block mx-4 py-4 mt-6 w-min min-w-[12rem] text-2xl',
-  'text-brand font-handwritten leading-5',
-  'md:p-2 md:pb-1 md:m-0 md:mb-3 md:w-[80%] md:min-w-0',
-  'md:text-xl md:text-center',
-  'bg-underlined-simple bg-contain bg-no-repeat bg-bottom md:hover:bg-underlined group-hover:bg-underlined'
+  'text-brand font-handwritten leading-5 bg-underlined-simple',
+  'md:p-2 md:pb-1 md:m-0 md:mx-0 md:mb-3 md:w-[80%] md:min-w-0',
+  'md:text-2xl md:whitespace-nowrap',
+  'md:bg-none bg-contain bg-no-repeat bg-bottom md:hover:bg-underlined-simple group-hover:bg-underlined-simple'
 )
 
 export function SubHeader({ item }: SubHeaderProps) {
