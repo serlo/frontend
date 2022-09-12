@@ -99,7 +99,6 @@ function Content() {
           return (
             <button
               key={role}
-              onPointerUp={(e) => e.currentTarget.blur()}
               onClick={() => setShowRole(role)}
               className={clsx(
                 'mr-2 mb-2.5',

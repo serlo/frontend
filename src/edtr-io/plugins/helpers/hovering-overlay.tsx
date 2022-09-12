@@ -1,5 +1,5 @@
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
+import { createRef, useLayoutEffect, useState } from 'react'
 
 const OverlayTriangle = styled.div<{ positionAbove: boolean }>((props) => {
   const borderPosition = props.positionAbove ? 'borderTop' : 'borderBottom'
@@ -44,13 +44,11 @@ export function HoveringOverlay(props: {
   anchor?: React.RefObject<HTMLElement>
   allowSelectionOverflow?: boolean
 }) {
-  const overlay = React.createRef<HTMLDivElement>()
-  const triangle = React.createRef<HTMLDivElement>()
-  const [positionAbove, setPositionAbove] = React.useState(
-    props.position === 'above'
-  )
+  const overlay = createRef<HTMLDivElement>()
+  const triangle = createRef<HTMLDivElement>()
+  const [positionAbove, setPositionAbove] = useState(props.position === 'above')
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!overlay.current || !triangle.current) return
     const menu = overlay.current
     let rect = undefined

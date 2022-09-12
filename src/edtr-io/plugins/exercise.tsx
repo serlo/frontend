@@ -11,7 +11,7 @@ import {
 } from '@edtr-io/plugin'
 import { getDocument } from '@edtr-io/store'
 import { Icon, faRandom, faTrashAlt } from '@edtr-io/ui'
-import * as React from 'react'
+import { PropsWithChildren, useState } from 'react'
 
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -77,7 +77,7 @@ const InlineOptionsContentWrapper = styled.div({
   borderRadius: '4px',
 })
 
-function InlineOptions(props: React.PropsWithChildren<{}>) {
+function InlineOptions(props: PropsWithChildren<{}>) {
   return (
     <InlineOptionsWrapper>
       <InlineOptionsContentWrapper>
@@ -99,7 +99,7 @@ const Option = styled.div({
 function ExerciseEditor({ editable, state }: ExerciseProps) {
   const store = useScopedStore()
   const { content, interactive } = state
-  const [showOptions, setShowOptions] = React.useState(false)
+  const [showOptions, setShowOptions] = useState(false)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
