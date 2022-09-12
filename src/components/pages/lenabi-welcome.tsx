@@ -47,10 +47,7 @@ export function LenabiWelcome() {
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-15vh font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
-            <span className="italic mr-2">
-              Willkommen {auth.current?.username}!
-            </span>{' '}
-            👋
+            <span className="italic mr-2">Willkommen Stefanie!</span> 👋
           </p>
           <h1
             className={clsx(
