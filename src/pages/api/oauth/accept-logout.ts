@@ -14,7 +14,7 @@ export default async function acceptLogout(
   const { logout_challenge } = req.query
 
   const query = gql`
-    mutation ($input: String!) {
+    mutation ($challenge: String!) {
       oauth {
         acceptLogout(challenge: $challenge) {
           redirectUri
