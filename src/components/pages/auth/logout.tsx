@@ -6,6 +6,8 @@ import { kratos } from '@/helper/kratos'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
+  const { logout_challenge } = router.query
+
   useEffect(() => {
     kratos.toSession().catch(() => {
       return router.push('/auth/login-check')
@@ -21,7 +23,12 @@ export function Logout({ oauth }: { oauth?: boolean }) {
             AuthSessionCookie.remove()
 
             if (oauth) {
-              return await router.push('/auth/oauth/logout')
+              if (!logout_challenge) return
+              return await router.push(
+                `/api/oauth/accept-logout?logout_challenge=${String(
+                  logout_challenge
+                )}`
+              )
             }
 
             window.location.href = `${originalPreviousPath ?? '/'}#auth`
@@ -34,7 +41,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       .catch((error: unknown) => {
         return Promise.reject(error)
       })
-  })
+  }, [router, oauth, logout_challenge])
 
   return null
 }
