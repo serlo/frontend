@@ -15,8 +15,8 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { theme } from '@/theme'
 
 export interface ShareModalProps {
   isOpen: boolean
@@ -130,7 +130,7 @@ export function ShareModal({
       className="top-1/2"
     >
       <div className="sm:float-right mx-side mb-4 sm:mb-0">
-        <QRCode value={shareUrl} renderAs="svg" fgColor={theme.colors.brand} />
+        <QRCode value={shareUrl} renderAs="svg" fgColor={colors.brand} />
       </div>
       {renderShareInput()}
       <hr className="my-4 mx-side" />

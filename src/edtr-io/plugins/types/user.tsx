@@ -1,5 +1,4 @@
 import { EditorPlugin, EditorPluginProps, object } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import { editorContent } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'

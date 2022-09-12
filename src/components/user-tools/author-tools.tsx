@@ -316,16 +316,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         )
       }
 
-      //remove when new entity/create is ready
-      const urlTypeString =
-        entityType === UuidType.Exercise
-          ? 'text-exercise'
-          : entityType === UuidType.ExerciseGroup
-          ? 'text-exercise-group'
-          : entityType
-
       return renderLi(
-        `/entity/create/${urlTypeString}?taxonomy%5Bterm%5D=${data.id}`,
+        `/entity/create/${entityType}/${data.id}`,
         getTranslatedType(strings, entityType)
       )
     })

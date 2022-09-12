@@ -12,7 +12,7 @@ import { createScMcExercisePlugin } from '@edtr-io/plugin-sc-mc-exercise'
 import { createSpoilerPlugin } from '@edtr-io/plugin-spoiler'
 import { createTextPlugin } from '@edtr-io/plugin-text'
 import { createVideoPlugin } from '@edtr-io/plugin-video'
-import * as React from 'react'
+import type { ComponentType, ReactNode } from 'react'
 
 import { articlePlugin } from './plugins/article'
 import { createBoxPlugin } from './plugins/box'
@@ -66,13 +66,11 @@ export enum SerloEntityPluginType {
 type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
 
 export function createPlugins({
-  getCsrfToken,
   editorStrings,
   strings,
   registry,
   type,
 }: {
-  getCsrfToken: () => string
   editorStrings: LoggedInData['strings']['editor']
   strings: InstanceData['strings']
   registry: RowsConfig['plugins']
@@ -120,7 +118,7 @@ export function createPlugins({
         latex: editorStrings.text.laTeX,
         noVisualEditorAvailableMessage: editorStrings.text.onlyLaTeX,
       },
-      helpText(KeySpan: React.ComponentType<{ children: React.ReactNode }>) {
+      helpText(KeySpan: ComponentType<{ children: ReactNode }>) {
         return (
           <>
             {editorStrings.text.shortcuts}:
@@ -235,7 +233,7 @@ export function createPlugins({
         },
       },
     }),
-    image: createImagePlugin(getCsrfToken),
+    image: createImagePlugin(),
     important: createImportantPlugin(),
     injection: injectionPlugin,
     inputExercise: createInputExercisePlugin({

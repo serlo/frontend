@@ -1,6 +1,6 @@
 import { useScopedStore } from '@edtr-io/core'
 import { serializeRootDocument } from '@edtr-io/store'
-import * as R from 'ramda'
+import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
 import { CsrfContext } from '@/edtr-io/csrf-context'
@@ -24,14 +24,12 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
 
   const serializedRoot = serializeRootDocument()(store.getState())
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const serialized = R.has('state', serializedRoot)
-    ? serializedRoot.state
-    : null
+  const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 
   if (
     serialized !== null &&
     serializedRoot?.plugin === 'type-text-exercise-group' &&
-    R.has('cohesive', serialized)
+    has('cohesive', serialized)
   ) {
     // legacy server can only handle string attributes
     serialized.cohesive = String(serialized.cohesive)
@@ -69,13 +67,17 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
       },
     })
       .then(() => {
-        storeState(undefined)
-        setPending(false)
-        setHasError(false)
+        setTimeout(() => {
+          storeState(undefined)
+          setPending(false)
+          setHasError(false)
+        }, 200)
       })
       .catch(() => {
-        setPending(false)
-        setHasError(true)
+        setTimeout(() => {
+          setPending(false)
+          setHasError(true)
+        }, 200)
       })
   }
 

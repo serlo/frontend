@@ -62,10 +62,8 @@ export function RevisionModeSwitcher({
   }
 
   function renderButton(mode: DisplayModes, title: string) {
-    //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
     return (
       <button
-        onPointerUp={(e) => e.currentTarget.blur()}
         onClick={() => setDisplayMode(mode)}
         className={clsx(
           'serlo-button-blue-transparent',

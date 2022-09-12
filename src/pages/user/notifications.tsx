@@ -53,7 +53,6 @@ function Content() {
     setShowUnreadTo: boolean
     children: ReactNode
   }) {
-    // blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
     return (
       <button
         className={clsx(
@@ -62,7 +61,6 @@ function Content() {
             ? 'serlo-button-blue'
             : 'serlo-button-light'
         )}
-        onPointerUp={(e) => e.currentTarget.blur()}
         onClick={() => setShowUnread(setShowUnreadTo)}
       >
         {children}
