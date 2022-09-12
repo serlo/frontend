@@ -5,7 +5,7 @@ export function PleaseLogIn() {
   const { strings } = useInstanceData()
   return (
     <p className="serlo-p">
-      <Link href="/api/auth/login" path={[]}>
+      <Link href="/auth/login" path={[]}>
         {strings.auth.pleaseLogInLink}
       </Link>{' '}
       {strings.auth.pleaseLogInText}

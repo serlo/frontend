@@ -8,8 +8,4 @@ export function getPasswordChangeUrl() {
 
 export function getLogoutUrl() {
   return '/auth/logout'
-  // FIXME: kratos-vercel.serlo-staging.dev it was evaluating to prod.
-  // return process.env.NODE_ENV === 'production'
-  //   ? '/api/auth/logout'
-  //   : '/auth/logout'
 }

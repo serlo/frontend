@@ -23,7 +23,7 @@ export function Settings() {
   useEffect(() => {
     async function authenticate() {
       if (auth.current === null) {
-        await router.push('/api/auth/login')
+        await router.push('/auth/login')
       }
     }
     void authenticate()

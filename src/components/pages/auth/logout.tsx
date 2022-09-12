@@ -21,7 +21,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
             AuthSessionCookie.remove()
 
             if (oauth) {
-              return await router.push('/api/auth/logout')
+              return await router.push('/auth/oauth/logout')
             }
 
             window.location.href = `${originalPreviousPath ?? '/'}#auth`
