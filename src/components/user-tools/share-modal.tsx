@@ -152,7 +152,7 @@ export function ShareModal({
         <input /*ShareInput*/
           className={clsx(
             'rounded-2xl border-none py-1 px-2.5 w-[250px]',
-            'ml-3 mb-2 mr-0 bg-brandgreen-lighter',
+            'ml-3 mb-2 mr-0 bg-brandgreen-50',
             'focus:outline-none focus:shadow-input'
           )}
           ref={shareInputRef}

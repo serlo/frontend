@@ -23,7 +23,7 @@
     @apply serlo-button text-white bg-brand hover:bg-brand-light;
   }
   .serlo-button-green {
-    @apply serlo-button text-white bg-brandgreen hover:bg-brand;
+    @apply serlo-button text-white bg-brandgreen hover:bg-brandgreen-300;
   }
   .serlo-button-light {
     @apply serlo-button text-brand bg-brand-100 hover:text-white hover:bg-brand;

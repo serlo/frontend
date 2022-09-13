@@ -112,7 +112,7 @@ export function ProfileChatButton({
         <div
           className={clsx(
             'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-            'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
+            'bg-brandgreen-50 focus-within:bg-brandgreen-100',
             'transition-colors duration-200 ease-in py-1'
           )}
         >

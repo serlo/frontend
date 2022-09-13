@@ -64,10 +64,7 @@ export function ProfileActivityGraph({
   function renderLegendary() {
     return (
       <>
-        <FaIcon
-          icon={faGrinStars}
-          className="text-brandgreen-light h-32 w-32"
-        />
+        <FaIcon icon={faGrinStars} className="text-brandgreen-100 h-32 w-32" />
         <p className="font-bold text-xl text-brandgreen">{value}</p>
       </>
     )
