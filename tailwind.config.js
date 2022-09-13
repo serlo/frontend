@@ -15,12 +15,14 @@ module.exports = {
       colors: {
         brand: {
           DEFAULT: brand,
-          light: tint(0.3, brand), // <- lightBlue
-          lighter: tint(0.55, brand), // <- lighterBlue
-          300: tint(0.73, brand),
-          150: tint(0.85, brand), // <-lightBlueBackground
-          100: tint(0.94, brand), // <- bluewhite
-          50: tint(0.96, brand), // <- lightBackground
+          50: '#F4F9FC',
+          100: '#EFF7FB',
+          150: '#D9EBF5',
+          200: '#D9EBF5',
+          300: '#BBDCED',
+          400: '#8EC5E2',
+          500: '#51A5D1',
+          600: brand,
         },
         brandgreen: {
           DEFAULT: brandGreen,

@@ -18,7 +18,7 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
         'block h-12 w-12 mx-side mb-5 pt-1 rounded-full',
         'sm:absolute sm:-mt-2.5 sm:-ml-10 md:-ml-14',
         'text-white text-4xl text-center font-bold bg-brand',
-        'hover:no-underline hover:bg-brand-lighter'
+        'hover:no-underline hover:bg-brand-400'
       )}
     >
       {index + 1}

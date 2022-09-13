@@ -132,7 +132,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     return (
       <input
         type="text"
-        className="border-2 border-brand-150 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
+        className="border-2 border-brand-200 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder ?? '... heute lerne ich'}

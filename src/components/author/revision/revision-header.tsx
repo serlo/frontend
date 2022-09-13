@@ -92,7 +92,7 @@ export function RevisionHeader({
       <span title={getTranslatedType(strings, data.typename)}>
         {' '}
         <FaIcon
-          className="text-brand-lighter text-2.5xl"
+          className="text-brand-400 text-2.5xl"
           icon={getIconByTypename(data.typename)}
         />{' '}
       </span>

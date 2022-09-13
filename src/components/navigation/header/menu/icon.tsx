@@ -33,7 +33,7 @@ export function Icon({ icon, element, alt }: IconProps) {
     <span
       className={clsx(
         'w-10 h-10 rounded-full flex justify-center items-center mr-2.5',
-        'bg-brand-150 text-brand-light',
+        'bg-brand-200 text-brand-500',
         element
           ? 'md:w-auto md:h-auto md:inline-block md:mr-0 md:bg-transparent'
           : 'md:hidden'

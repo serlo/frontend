@@ -39,7 +39,7 @@ export function LicenseNotice({
     return (
       <div
         className={clsx(
-          'border-t-2 border-brand-150 text-truegray-700 text-sm',
+          'border-t-2 border-brand-200 text-truegray-700 text-sm',
           'px-side py-2.5 my-10 mobile:flex'
         )}
       >

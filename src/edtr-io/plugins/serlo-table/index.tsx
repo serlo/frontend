@@ -333,7 +333,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function getButtonStyle() {
-    return clsx('serlo-button-blue-transparent text-brand-lighter')
+    return clsx('serlo-button-blue-transparent text-brand-400')
   }
 
   function insertRow(beforeIndex?: number) {

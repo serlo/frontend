@@ -95,7 +95,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <span
         className={clsx(
-          'text-xl text-center font-bold text-brand bg-brand-150',
+          'text-xl text-center font-bold text-brand bg-brand-200',
           'inline-block justify-center align-middle h-7 w-7',
           'rounded-full mr-1.5 -mt-1.5'
         )}
@@ -116,7 +116,7 @@ export function Entity({ data }: EntityProps) {
         {' '}
         <FaIcon
           icon={getIconByTypename(data.typename)}
-          className="text-brand-lighter text-2.5xl"
+          className="text-brand-400 text-2.5xl"
         />{' '}
       </span>
     )

@@ -213,7 +213,7 @@ export function LandingDE({ data }: LandingDEProps) {
               'hidden md:inline-block mx-auto mt-12',
               'font-bold text-xl rounded-lg text-truegray-700 ',
               'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
-              'hover:border-brand-light hover:no-underline hover:text-brand-light',
+              'hover:border-brand-500 hover:no-underline hover:text-brand-500',
               'landing-button-with-wings landing-button-with-wink'
             )}
             href="/partner"

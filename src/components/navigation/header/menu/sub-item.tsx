@@ -11,7 +11,7 @@ export interface SubItemProps {
 
 const itemClasses = /* className={ */ clsx(
   'w-full font-bold',
-  'text-brand block border-b border-brand-lighter',
+  'text-brand block border-b border-brand-400',
   'group-hover:text-white group-hover:bg-brand md:py-0.25',
   'hover:no-underline p-4 hover:bg-brand-300',
   'md:w-auto md:serlo-button-blue-transparent md:font-normal md:text-base md:rounded-[12px] md:special-hyphens-auto',
