@@ -1,4 +1,3 @@
-const { tint, lighten } = require('polished')
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
@@ -28,9 +27,9 @@ module.exports = {
           DEFAULT: brandGreen,
           50: '#EDFAC5',
           100: '#DDF299',
-          // 200: '#CFED6D',
+          200: '#CFED6D',
           300: '#B9D957',
-          // 400: '#9FC91C',
+          400: '#9FC91C',
           500: brandGreen,
           // 600: '#81A317',
           // 700: '#6D8A13',
@@ -42,7 +41,7 @@ module.exports = {
         newgreen: '#2fceb1',
         yellow: {
           DEFAULT: yellow,
-          200: tint(0.75, yellow),
+          200: '#FFEED7',
         },
         orange: {
           DEFAULT: colors.orange[900],

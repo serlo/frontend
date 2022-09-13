@@ -79,7 +79,6 @@
     "katex": "^0.15.5",
     "next": "^12.1.0",
     "nprogress": "^0.2.0",
-    "polished": "^4.0.0",
     "postcss": "^8.0.0",
     "qrcode.react": "^3.0.0",
     "ramda": "^0.28.0",
