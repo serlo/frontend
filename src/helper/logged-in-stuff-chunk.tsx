@@ -3,8 +3,6 @@ import { UnreadNotificationsCount } from '@/components/user-tools/unread-notific
 
 export const Components = {
   UnreadNotificationsCount,
-  // AuthorToolsHoverMenu,
-  // ExerciseAuthorTools,
   createAuthAwareGraphqlFetch,
 }
 

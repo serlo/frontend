@@ -1,15 +1,10 @@
-// import { Entity } from '@serlo/authorization'
-// import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
-// import type { CheckoutRejectButtonsProps } from '../../user-tools/revision/checkout-reject-buttons'
 import { RevisionHeader } from './revision-header'
 import {
   RevisionPreviewBoxes,
   RevisionPreviewBoxesProps,
 } from './revision-preview-boxes'
-// import { useAuthentication } from '@/auth/use-authentication'
-// import { useCanDo } from '@/auth/use-can-do'
 import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
@@ -25,11 +20,6 @@ export interface RevisionProps {
   data: RevisionData
 }
 
-// const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
-//   import('@/components/user-tools/revision/checkout-reject-buttons').then(
-//     (mod) => mod.CheckoutRejectButtons
-//   )
-// )
 export enum DisplayModes {
   This = 'this',
   SideBySide = 'sidebyside',
@@ -130,15 +120,6 @@ export function Revision({ data }: RevisionProps) {
             rejected: isRejected,
             current: isCurrentRevision,
           },
-          // checkoutRejectButtons:
-          //   auth.current && canCheckoutAndReject ? (
-          //     <CheckoutRejectButtons
-          //       revisionId={data.thisRevision.id}
-          //       isRejected={isRejected}
-          //       isCurrent={isCurrentRevision}
-          //       isPage={data.typename === UuidRevType.Page}
-          //     />
-          //   ) : undefined,
         }}
       />
     )

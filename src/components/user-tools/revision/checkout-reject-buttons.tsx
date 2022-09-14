@@ -1,10 +1,12 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import clsx from 'clsx'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
 import { AuthorToolsData } from '../author-tools'
-import { FaIcon } from '@/components/fa-icon'
+import { UserToolsItem } from '../user-tools-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidRevType } from '@/data-types'
 import {
   RevisionMutationMode,
@@ -13,18 +15,17 @@ import {
 
 export interface CheckoutRejectButtonsProps {
   data: AuthorToolsData
-  // revisionId: number
-  // isRejected: boolean
-  // isCurrent: boolean
-  // isPage: boolean
-  // buttonStyle?: string
+  aboveContent?: boolean
 }
 
-export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
-  // const loggedInData = useLoggedInData()
+export function CheckoutRejectButtons({
+  data,
+  aboveContent,
+}: CheckoutRejectButtonsProps) {
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
   const revisionMutation = useRevisionDecideMutation()
   const [reason, setReason] = useState('')
+  const loggedInData = useLoggedInData()
 
   if (!data.revisionData) return null
   const isCurrent = data.revisionData.current
@@ -33,7 +34,9 @@ export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
   const isPage = data.type === UuidRevType.Page
 
   if (isCurrent || !revisionId) return null
-  // const { strings } = loggedInData
+
+  if (!loggedInData) return null
+  const { strings } = loggedInData
 
   function onCloseClick() {
     setModalMode(null)
@@ -62,8 +65,7 @@ export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
         isOpen={modalMode != null}
         onCloseClick={onCloseClick}
         title={
-          '123'
-          // modalMode != null ? strings.revisions[modalMode].title : undefined
+          modalMode != null ? strings.revisions[modalMode].title : undefined
         }
       >
         {renderModalContent()}
@@ -74,15 +76,23 @@ export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
   function renderButton(mode: 'reject' | 'checkout') {
     const isCheckout = mode === 'checkout'
     return (
-      <button className="buttonStyle" onClick={() => setModalMode(mode)}>
-        &nbsp;
-        <FaIcon
-          icon={isCheckout ? faCheck : faTimes}
-          className="lg:mr-0.5"
-        />{' '}
-        {/* {strings.revisions[mode].action} */} 123
-      </button>
+      <UserToolsItem
+        title={strings.revisions[mode].action}
+        onClick={() => setModalMode(mode)}
+        aboveContent={aboveContent}
+        icon={isCheckout ? faCheck : faTimes}
+      />
     )
+    // return (
+    //   <button className="buttonStyle" onClick={() => setModalMode(mode)}>
+    //     &nbsp;
+    //     <FaIcon
+    //       icon={isCheckout ? faCheck : faTimes}
+    //       className="lg:mr-0.5"
+    //     />{' '}
+    //     {strings.revisions[mode].action}
+    //   </button>
+    // )
   }
 
   function renderModalContent() {
@@ -90,10 +100,10 @@ export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
     return (
       <>
         <p className="mx-side mb-1">
-          {/* {strings.revisions[modalMode].explanation} */}
+          {strings.revisions[modalMode].explanation}
           {renderTextArea()}
           <button className="serlo-button-light" onClick={onConfirm}>
-            {/* {strings.revisions.confirm} */}
+            {strings.revisions.confirm}
           </button>
         </p>
       </>
@@ -103,32 +113,17 @@ export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
   function renderTextArea() {
     return (
       <>
-        <style jsx>{`
-          textarea {
-            font-weight: bold;
-
-            width: 100%;
-            border: none;
-            padding: 0.5rem 3.5rem 0.5rem 1rem;
-            box-sizing: border-box;
-            outline: none;
-            min-height: 80px;
-
-            margin: 20px 0;
-            border-radius: 10px;
-            @apply bg-brand-50;
-
-            ::placeholder {
-              @apply text-brandgreen;
-            }
-          }
-        `}</style>
         <textarea
           value={reason}
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
             setReason(event.target.value)
           }}
           onKeyDown={onKeyDown}
+          className={clsx(
+            'bold w-full border-0 box-border outline-none',
+            'rounded-xl my-5 pr-14 pl-4 py-2 min-h-[80px]',
+            'bg-brand-50 focus-visible:bg-brand-200'
+          )}
         />
       </>
     )
