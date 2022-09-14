@@ -3,7 +3,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCi
 import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 
-import type { MoreAuthorToolsProps } from '../more-author-tools/more-author-tools'
+import type { MoreAuthorToolsProps } from '../foldout-author-menus/more-author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
 import { useCanDo } from '@/auth/use-can-do'

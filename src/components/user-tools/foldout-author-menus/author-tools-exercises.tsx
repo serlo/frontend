@@ -4,7 +4,7 @@ import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 
 import { AuthorTools, Tool } from './author-tools'
-import type { MoreAuthorToolsProps } from './more-author-tools/more-author-tools'
+import type { MoreAuthorToolsProps } from './more-author-tools'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

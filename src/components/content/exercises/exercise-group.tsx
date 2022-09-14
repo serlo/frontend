@@ -3,7 +3,7 @@ import { ReactNode, useState, useEffect } from 'react'
 
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
-import { MoreAuthorToolsProps } from '@/components/user-tools/more-author-tools/more-author-tools'
+import { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseGroupProps {
@@ -17,9 +17,9 @@ export interface ExerciseGroupProps {
 }
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
-  import('@/components/user-tools/author-tools-exercises').then(
-    (mod) => mod.AuthorToolsExercises
-  )
+  import(
+    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+  ).then((mod) => mod.AuthorToolsExercises)
 )
 
 export function ExerciseGroup({

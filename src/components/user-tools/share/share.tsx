@@ -2,7 +2,7 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import type { MoreAuthorToolsProps } from '../more-author-tools/more-author-tools'
+import type { MoreAuthorToolsProps } from '../foldout-author-menus/more-author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import type { ShareModalProps } from '@/components/user-tools/share/share-modal'
 import { useInstanceData } from '@/contexts/instance-context'

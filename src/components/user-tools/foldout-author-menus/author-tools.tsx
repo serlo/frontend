@@ -2,7 +2,7 @@ import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { SubItem } from './more-author-tools/sub-item'
+import { SubItem } from './sub-item'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

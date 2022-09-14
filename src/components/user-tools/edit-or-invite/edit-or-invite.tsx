@@ -4,7 +4,7 @@ import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { AuthorToolsData } from '../author-tools'
+import { AuthorToolsData } from '../foldout-author-menus/author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import type { InviteModalProps } from './invite-modal'
 import { useAuthentication } from '@/auth/use-authentication'

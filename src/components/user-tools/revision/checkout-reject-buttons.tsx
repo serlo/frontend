@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
-import { AuthorToolsData } from '../author-tools'
+import { AuthorToolsData } from '../foldout-author-menus/author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

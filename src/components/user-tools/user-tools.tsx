@@ -5,12 +5,12 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-import { AuthorToolsData } from './author-tools'
 import { EditOrInvite } from './edit-or-invite/edit-or-invite'
+import { AuthorToolsData } from './foldout-author-menus/author-tools'
 import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
-import type { MoreAuthorToolsProps } from '@/components/user-tools/more-author-tools/more-author-tools'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
@@ -34,14 +34,14 @@ const RevisionTools = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(() =>
-  import('@/components/user-tools/more-author-tools/more-author-tools').then(
+  import('@/components/user-tools/foldout-author-menus/more-author-tools').then(
     (mod) => mod.MoreAuthorTools
   )
 )
 
 const MoreAuthorToolsCourse = dynamic<MoreAuthorToolsProps>(() =>
   import(
-    '@/components/user-tools/more-author-tools/more-author-tools-course'
+    '@/components/user-tools/foldout-author-menus/more-author-tools-course'
   ).then((mod) => mod.MoreAuthorToolsCourse)
 )
 

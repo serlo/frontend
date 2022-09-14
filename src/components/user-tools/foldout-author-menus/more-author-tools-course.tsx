@@ -1,8 +1,8 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 
-import { AuthorTools, Tool } from '../author-tools'
 import { UserToolsItem } from '../user-tools-item'
+import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
