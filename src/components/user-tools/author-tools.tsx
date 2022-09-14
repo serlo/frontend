@@ -1,13 +1,9 @@
 import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
-import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import {
-  AuthorToolsData,
-  tippyDefaultProps,
-} from './more-autor-tools/author-tools-hover-menu'
-import { MenuSubButtonLink } from './more-autor-tools/menu-sub-button-link'
+import type { AuthorToolsData } from './more-author-tools/author-tools-hover-menu'
+import { SubItem } from './more-author-tools/sub-item'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -171,7 +167,16 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
               </Fragment>
             )
           }
-          if (url) return renderLi(url, title || getTranslatedString(toolName))
+          if (url) {
+            const titleWithFallback = title || getTranslatedString(toolName)
+            return (
+              <SubItem
+                key={titleWithFallback}
+                title={titleWithFallback}
+                href={url}
+              />
+            )
+          }
         }
       })}
     </>
@@ -186,73 +191,52 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function abo() {
-    if (isSubscribed) {
+    return (
+      <>
+        <li className="border-t-[1px] border-brand mt-2 pt-2"></li>
+        {isSubscribed ? (
+          renderAboItem(
+            loggedInStrings.authorMenu.unsubscribeNotifications,
+            false,
+            false
+          )
+        ) : (
+          <>
+            {renderAboItem(
+              loggedInStrings.authorMenu.subscribeNotifications,
+              true,
+              false
+            )}
+            {renderAboItem(
+              loggedInStrings.authorMenu.subscribeNotificationsAndMail,
+              true,
+              true
+            )}
+          </>
+        )}
+        <li className="border-b-[1px] border-brand mb-2 pb-2"></li>
+      </>
+    )
+
+    function renderAboItem(
+      title: string,
+      subscribe: boolean,
+      sendEmail: boolean
+    ) {
       return (
-        <li
-          className="block"
-          key={loggedInStrings.authorMenu.unsubscribeNotifications}
-        >
-          <MenuSubButtonLink
-            onClick={() => {
-              void setSubscription({
-                id: [entityId],
-                subscribe: false,
-                sendEmail: false,
-              })
-            }}
-          >
-            {loggedInStrings.authorMenu.unsubscribeNotifications}
-          </MenuSubButtonLink>
-        </li>
+        <SubItem
+          key={title}
+          title={title}
+          onClick={() => {
+            void setSubscription({
+              id: [entityId],
+              subscribe,
+              sendEmail,
+            })
+          }}
+        />
       )
     }
-    return (
-      <Tippy
-        {...tippyDefaultProps}
-        content={
-          <ul className="serlo-sub-list-hover">
-            <li
-              className="block"
-              key={loggedInStrings.authorMenu.subscribeNotifications}
-            >
-              <MenuSubButtonLink
-                onClick={() => {
-                  void setSubscription({
-                    id: [entityId],
-                    subscribe: true,
-                    sendEmail: false,
-                  })
-                }}
-              >
-                {loggedInStrings.authorMenu.subscribeNotifications}
-              </MenuSubButtonLink>
-            </li>
-            <li
-              className="block"
-              key={loggedInStrings.authorMenu.subscribeNotificationsAndMail}
-            >
-              <MenuSubButtonLink
-                onClick={() => {
-                  void setSubscription({
-                    id: [entityId],
-                    subscribe: true,
-                    sendEmail: true,
-                  })
-                }}
-              >
-                {loggedInStrings.authorMenu.subscribeNotificationsAndMail}
-              </MenuSubButtonLink>
-            </li>
-          </ul>
-        }
-      >
-        <li className="block">
-          <MenuSubButtonLink tabIndex={0}>
-            ◂ {loggedInStrings.authorMenu.subscribe}
-          </MenuSubButtonLink>
-        </li>
-      </Tippy>
-    )
   }
 
   function trash() {
@@ -260,16 +244,14 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       loggedInStrings.authorMenu
     const title = data.trashed ? restoreContent : moveToTrash
     return (
-      <li className="block" key={title}>
-        <MenuSubButtonLink
-          onClick={() => {
-            if (!data.trashed && !window.confirm(confirmTrash)) return
-            void setUuidState({ id: [data.id], trashed: !data.trashed })
-          }}
-        >
-          {title}
-        </MenuSubButtonLink>
-      </li>
+      <SubItem
+        title={title}
+        key={title}
+        onClick={() => {
+          if (!data.trashed && !window.confirm(confirmTrash)) return
+          void setUuidState({ id: [data.id], trashed: !data.trashed })
+        }}
+      />
     )
   }
 
@@ -302,6 +284,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
+      const title = `${
+        loggedInStrings.authorMenu.newEntity
+      }: ${getTranslatedType(strings, entityType)}`
       if (
         (
           [
@@ -314,39 +299,30 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
         if (!canDo(TaxonomyTerm.change)) return null
 
         const createId = entityType === TaxonomyTermType.ExerciseFolder ? 9 : 4
-        return renderLi(
-          `/taxonomy/term/create/${createId}/${data.id}`,
-          getTranslatedType(strings, entityType)
+
+        return (
+          <SubItem
+            title={title}
+            href={`/taxonomy/term/create/${createId}/${data.id}`}
+          />
         )
       }
 
-      return renderLi(
-        `/entity/create/${entityType}/${data.id}`,
-        getTranslatedType(strings, entityType)
+      return (
+        <SubItem
+          key={title}
+          title={title}
+          href={`/entity/create/${entityType}/${data.id}`}
+        />
       )
     })
 
     return (
-      <li className="block">
-        <Tippy
-          {...tippyDefaultProps}
-          content={<ul className="serlo-sub-list-hover">{entries}</ul>}
-        >
-          <div>
-            <MenuSubButtonLink tabIndex={0}>
-              ◂ {loggedInStrings.authorMenu.newEntity}
-            </MenuSubButtonLink>
-          </div>
-        </Tippy>
-      </li>
-    )
-  }
-
-  function renderLi(href: string, text: string) {
-    return (
-      <li className="block" key={text}>
-        <MenuSubButtonLink href={href}>{text}</MenuSubButtonLink>
-      </li>
+      <>
+        <li className="border-t-[1px] border-brand mt-2 pt-2"></li>
+        {entries}
+        <li className="border-b-[1px] border-brand mb-2 pb-2"></li>
+      </>
     )
   }
 }

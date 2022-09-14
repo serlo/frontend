@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import {
   AuthorToolsData,
   AuthorToolsHoverMenu,
-} from '../../user-tools/more-autor-tools/author-tools-hover-menu'
+} from '../../user-tools/more-author-tools/author-tools-hover-menu'
 import { FaIcon } from '@/components/fa-icon'
 import { ExerciseInlineType } from '@/data-types'
 

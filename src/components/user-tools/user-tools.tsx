@@ -6,11 +6,11 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
 import { EditOrInvite } from './edit-or-invite/edit-or-invite'
-import type { AuthorToolsData } from './more-autor-tools/author-tools-hover-menu'
+import type { AuthorToolsData } from './more-author-tools/author-tools-hover-menu'
 import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
-import type { MoreAutorToolsProps } from '@/components/user-tools/more-autor-tools/more-autor-tools'
+import type { MoreAutorToolsProps } from '@/components/user-tools/more-author-tools/more-autor-tools'
 import type { RevisionToolsProps } from '@/components/user-tools/revision/revision-tools'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -35,7 +35,7 @@ const RevisionTools = dynamic<RevisionToolsProps>(() =>
 )
 
 const MoreAutorTools = dynamic<MoreAutorToolsProps>(() =>
-  import('@/components/user-tools/more-autor-tools/more-autor-tools').then(
+  import('@/components/user-tools/more-author-tools/more-autor-tools').then(
     (mod) => mod.MoreAutorTools
   )
 )
@@ -68,37 +68,16 @@ export function UserTools({
   // note: this component is added twice, once without aboveContent and once with it
   // (responsive variants)
 
-  // function renderSideContainer() {
-  //   return (
-  //     <nav
-  //       className={clsx(
-  //         'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
-  //         'lg:flex hidden items-end pointer-events-none',
-  //         fadeIn()
-  //       )}
-  //     >
-  //       <div
-  //         className={clsx(
-  //           'sticky bottom-8 flex-col flex items-start',
-  //           'bg-white rounded-md pointer-events-auto'
-  //         )}
-  //       >
-  //         side
-  //         {renderButtons()}
-  //       </div>
-  //     </nav>
-  //   )
-  // }
-
   return (
     <NavigationMenu.Root
       className={
         aboveContent
-          ? ''
+          ? fadeIn
           : clsx(
               'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
               'lg:flex hidden items-end pointer-events-none',
-              '[&>div]:!sticky [&>div]:bottom-8'
+              '[&>div]:!sticky [&>div]:bottom-8',
+              fadeIn
             )
       }
     >
@@ -106,27 +85,13 @@ export function UserTools({
         className={clsx(
           aboveContent
             ? 'mr-4 -mt-4 mb-8 flex lg:hidden justify-end'
-            : 'bg-white rounded-md pointer-events-auto flex-col flex items-start',
-          fadeIn
-        )}
-      >
-        {aboveContent ? renderButtons() : renderSideContainer()}
-      </NavigationMenu.List>
-    </NavigationMenu.Root>
-  )
-
-  function renderSideContainer() {
-    return (
-      <div
-        className={clsx(
-          'sticky bottom-8 flex-col flex items-start',
-          'bg-white rounded-md pointer-events-auto'
+            : 'bg-white rounded-md pointer-events-auto flex-col flex items-start'
         )}
       >
         {renderButtons()}
-      </div>
-    )
-  }
+      </NavigationMenu.List>
+    </NavigationMenu.Root>
+  )
 
   function renderButtons() {
     if (firstPass)

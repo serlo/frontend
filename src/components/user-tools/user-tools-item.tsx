@@ -49,8 +49,15 @@ export function UserToolsItem({
 
   if (onClick)
     return (
-      <NavigationMenu.Item onClick={onClick}>
-        {renderLink()}
+      <NavigationMenu.Item
+        onClick={(e) => {
+          e.preventDefault()
+          onClick()
+        }}
+      >
+        <NavigationMenu.Link href="" className={classes}>
+          {inner}
+        </NavigationMenu.Link>
       </NavigationMenu.Item>
     )
 

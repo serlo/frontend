@@ -2,7 +2,7 @@ import { faList } from '@fortawesome/free-solid-svg-icons/faList'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
 // import { cloneElement } from 'react'
 
-import type { AuthorToolsData } from '../more-autor-tools/author-tools-hover-menu'
+import type { AuthorToolsData } from '../more-author-tools/author-tools-hover-menu'
 import { UserToolsItem } from '../user-tools-item'
 import { CheckoutRejectButtons } from './checkout-reject-buttons'
 // import { useCanDo } from '@/auth/use-can-do'

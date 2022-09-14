@@ -60,44 +60,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
     return renderExercise()
   }
 
-  return (
-    <ul className="serlo-sub-list-hover">
-      <AuthorTools entityId={data.id} data={data} tools={getToolsArray()} />
-    </ul>
-  )
-
-  function getToolsArray(): Tool[] {
-    switch (data.type) {
-      case UuidType.Page:
-        return [Tool.Abo, Tool.History, Tool.Log, Tool.AnalyticsLink]
-      case UuidType.Article:
-      case UuidType.Video:
-      case UuidType.Applet:
-      case UuidType.Event:
-        return [
-          Tool.Abo,
-          Tool.History,
-          Tool.Curriculum,
-          Tool.Log,
-          Tool.AnalyticsLink,
-          Tool.Trash,
-        ]
-      case UuidType.TaxonomyTerm:
-        return [
-          Tool.Abo,
-          Tool.Organize,
-          Tool.Log,
-          Tool.AnalyticsLink,
-          Tool.NewEntitySubmenu,
-          Tool.SortEntities,
-          Tool.CopyItems,
-          Tool.MoveItems,
-          Tool.Trash,
-        ]
-    }
-    return []
-  }
-
   function renderCoursePage() {
     const hasCourseRevisions =
       data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
@@ -221,4 +183,6 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       </ul>
     )
   }
+
+  return null
 }
