@@ -59,12 +59,11 @@ export const headerData: InstanceData['headerData'] = [
       { title: 'Die Geschichte von Serlo', url: '/geschichte' },
     ],
   },
-  { url: '/mitmachen', title: 'Mitmachen', icon: 'participate' },
   { url: '/spenden', title: 'Spenden', icon: 'donate' },
   {
     url: '',
-    title: 'Community',
-    icon: 'community',
+    title: 'Mitmachen',
+    icon: 'participate',
     children: [
       {
         title: 'Neu hier?',
