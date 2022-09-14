@@ -5,13 +5,12 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
+import { AuthorToolsData } from './author-tools'
 import { EditOrInvite } from './edit-or-invite/edit-or-invite'
-import type { AuthorToolsData } from './more-author-tools/author-tools-hover-menu'
 import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
-import type { MoreAutorToolsProps } from '@/components/user-tools/more-author-tools/more-autor-tools'
-import type { RevisionToolsProps } from '@/components/user-tools/revision/revision-tools'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/more-author-tools/more-author-tools'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
@@ -28,16 +27,22 @@ export interface UserToolsData {
   editHref: string
 }
 
-const RevisionTools = dynamic<RevisionToolsProps>(() =>
+const RevisionTools = dynamic<MoreAuthorToolsProps>(() =>
   import('@/components/user-tools/revision/revision-tools').then(
     (mod) => mod.RevisionTools
   )
 )
 
-const MoreAutorTools = dynamic<MoreAutorToolsProps>(() =>
-  import('@/components/user-tools/more-author-tools/more-autor-tools').then(
-    (mod) => mod.MoreAutorTools
+const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(() =>
+  import('@/components/user-tools/more-author-tools/more-author-tools').then(
+    (mod) => mod.MoreAuthorTools
   )
+)
+
+const MoreAuthorToolsCourse = dynamic<MoreAuthorToolsProps>(() =>
+  import(
+    '@/components/user-tools/more-author-tools/more-author-tools-course'
+  ).then((mod) => mod.MoreAuthorToolsCourse)
 )
 
 export function UserTools({
@@ -122,7 +127,11 @@ export function UserTools({
         <Share data={data} aboveContent={aboveContent} />
 
         {auth.current ? (
-          <MoreAutorTools data={data} aboveContent={aboveContent} />
+          data?.type === UuidType.CoursePage ? (
+            <MoreAuthorToolsCourse data={data} aboveContent={aboveContent} />
+          ) : (
+            <MoreAuthorTools data={data} aboveContent={aboveContent} />
+          )
         ) : null}
       </>
     )

@@ -2,7 +2,7 @@ import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-import { AuthorToolsData } from '../more-author-tools/author-tools-hover-menu'
+import type { MoreAuthorToolsProps } from '../more-author-tools/more-author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import type { ShareModalProps } from '@/components/user-tools/share/share-modal'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,12 +14,7 @@ const ShareModal = dynamic<ShareModalProps>(() =>
   )
 )
 
-interface ShareProps {
-  data?: AuthorToolsData
-  aboveContent?: boolean
-}
-
-export function Share({ data, aboveContent }: ShareProps) {
+export function Share({ data, aboveContent }: MoreAuthorToolsProps) {
   const { strings } = useInstanceData()
   const [shareOpen, setShareOpen] = useState(false)
 

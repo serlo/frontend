@@ -2,12 +2,16 @@ import { Entity, Subscription, TaxonomyTerm, Uuid } from '@serlo/authorization'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import type { AuthorToolsData } from './more-author-tools/author-tools-hover-menu'
 import { SubItem } from './more-author-tools/sub-item'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { ExerciseInlineType, UuidRevType, UuidType } from '@/data-types'
+import {
+  ExerciseInlineType,
+  UuidRevType,
+  UuidType,
+  UuidWithRevType,
+} from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
@@ -47,6 +51,25 @@ interface ToolConfig {
 }
 
 type ToolsConfig = Record<Tool, ToolConfig>
+
+export interface AuthorToolsData {
+  type: UuidWithRevType | ExerciseInlineType
+  id: number
+  alias?: string
+  taxonomyType?: TaxonomyTermType
+  revisionId?: number
+  parentId?: number
+  courseId?: number
+  grouped?: boolean
+  trashed?: boolean
+  checkoutRejectButtons?: JSX.Element
+  revisionData?: {
+    rejected: boolean
+    current: boolean
+  }
+  unrevisedRevisions?: number
+  unrevisedCourseRevisions?: number
+}
 
 export interface AuthorToolsProps {
   tools: Tool[]
@@ -191,30 +214,23 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
   }
 
   function abo() {
+    const {
+      unsubscribeNotifications,
+      subscribeNotifications,
+      subscribeNotificationsAndMail,
+    } = loggedInStrings.authorMenu
     return (
       <>
-        <li className="border-t-[1px] border-brand mt-2 pt-2"></li>
+        <li className="border-t-[1px] border-brand-200 mt-2 pt-2"></li>
         {isSubscribed ? (
-          renderAboItem(
-            loggedInStrings.authorMenu.unsubscribeNotifications,
-            false,
-            false
-          )
+          renderAboItem(unsubscribeNotifications, false, false)
         ) : (
           <>
-            {renderAboItem(
-              loggedInStrings.authorMenu.subscribeNotifications,
-              true,
-              false
-            )}
-            {renderAboItem(
-              loggedInStrings.authorMenu.subscribeNotificationsAndMail,
-              true,
-              true
-            )}
+            {renderAboItem(subscribeNotifications, true, false)}
+            {renderAboItem(subscribeNotificationsAndMail, true, true)}
           </>
         )}
-        <li className="border-b-[1px] border-brand mb-2 pb-2"></li>
+        <li className="border-b-[1px] border-brand-200 mb-2 pb-2"></li>
       </>
     )
 
@@ -319,9 +335,9 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     return (
       <>
-        <li className="border-t-[1px] border-brand mt-2 pt-2"></li>
+        <li className="border-t-[1px] border-brand-200 mt-2 pt-2"></li>
         {entries}
-        <li className="border-b-[1px] border-brand mb-2 pb-2"></li>
+        <li className="border-b-[1px] border-brand-200 mb-2 pb-2"></li>
       </>
     )
   }

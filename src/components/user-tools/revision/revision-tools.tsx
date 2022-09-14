@@ -1,21 +1,14 @@
 import { faList } from '@fortawesome/free-solid-svg-icons/faList'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
-// import { cloneElement } from 'react'
 
-import type { AuthorToolsData } from '../more-author-tools/author-tools-hover-menu'
+import type { MoreAuthorToolsProps } from '../more-author-tools/more-author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import { CheckoutRejectButtons } from './checkout-reject-buttons'
-// import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
-export interface RevisionToolsProps {
-  data?: AuthorToolsData
-  aboveContent?: boolean
-}
-
-export function RevisionTools({ data, aboveContent }: RevisionToolsProps) {
+export function RevisionTools({ data, aboveContent }: MoreAuthorToolsProps) {
   const { lang, strings } = useInstanceData()
   // const canDo = useCanDo()
   // const canCheckoutAndReject =

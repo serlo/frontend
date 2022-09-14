@@ -2,10 +2,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
-import { AuthorToolsData } from '../more-author-tools/author-tools-hover-menu'
+import { AuthorToolsData } from '../author-tools'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-// import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidRevType } from '@/data-types'
 import {
   RevisionMutationMode,
