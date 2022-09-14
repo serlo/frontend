@@ -23,16 +23,16 @@ export function Share({ data, aboveContent }: ShareProps) {
   const { strings } = useInstanceData()
   const [shareOpen, setShareOpen] = useState(false)
 
-  if (!data) return null
-
-  const showPdf = [
-    UuidType.Page,
-    UuidType.Article,
-    UuidType.CoursePage,
-    UuidType.ExerciseGroup,
-    UuidType.Exercise,
-    UuidType.Solution,
-  ].includes(data.type as UuidType)
+  const showPdf =
+    data &&
+    [
+      UuidType.Page,
+      UuidType.Article,
+      UuidType.CoursePage,
+      UuidType.ExerciseGroup,
+      UuidType.Exercise,
+      UuidType.Solution,
+    ].includes(data.type as UuidType)
 
   return (
     <>

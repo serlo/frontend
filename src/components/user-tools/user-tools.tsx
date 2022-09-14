@@ -2,22 +2,22 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
 import { EditOrInvite } from './edit-or-invite/edit-or-invite'
-import { AuthorToolsData } from './more-autor-tools/author-tools-hover-menu'
-import { MoreAutorTools } from './more-autor-tools/more-autor-tools'
-import { RevisionTools } from './revision/revision-tools'
+import type { AuthorToolsData } from './more-autor-tools/author-tools-hover-menu'
 import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
+import type { MoreAutorToolsProps } from '@/components/user-tools/more-autor-tools/more-autor-tools'
+import type { RevisionToolsProps } from '@/components/user-tools/revision/revision-tools'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
 interface UserToolsProps {
   id?: number
-  onShare?: () => void
   hideEditProfile?: boolean
   data?: AuthorToolsData
   unrevisedRevisions?: number
@@ -27,6 +27,18 @@ interface UserToolsProps {
 export interface UserToolsData {
   editHref: string
 }
+
+const RevisionTools = dynamic<RevisionToolsProps>(() =>
+  import('@/components/user-tools/revision/revision-tools').then(
+    (mod) => mod.RevisionTools
+  )
+)
+
+const MoreAutorTools = dynamic<MoreAutorToolsProps>(() =>
+  import('@/components/user-tools/more-autor-tools/more-autor-tools').then(
+    (mod) => mod.MoreAutorTools
+  )
+)
 
 export function UserTools({
   // id,
@@ -49,22 +61,72 @@ export function UserTools({
     }
   }, [auth, loggedInComponents, firstPass])
 
+  const fadeIn = clsx(
+    'transition-opacity',
+    firstPass ? 'opacity-0' : 'opacity-100'
+  )
   // note: this component is added twice, once without aboveContent and once with it
   // (responsive variants)
 
+  // function renderSideContainer() {
+  //   return (
+  //     <nav
+  //       className={clsx(
+  //         'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
+  //         'lg:flex hidden items-end pointer-events-none',
+  //         fadeIn()
+  //       )}
+  //     >
+  //       <div
+  //         className={clsx(
+  //           'sticky bottom-8 flex-col flex items-start',
+  //           'bg-white rounded-md pointer-events-auto'
+  //         )}
+  //       >
+  //         side
+  //         {renderButtons()}
+  //       </div>
+  //     </nav>
+  //   )
+  // }
+
   return (
-    <NavigationMenu.Root>
+    <NavigationMenu.Root
+      className={
+        aboveContent
+          ? ''
+          : clsx(
+              'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
+              'lg:flex hidden items-end pointer-events-none',
+              '[&>div]:!sticky [&>div]:bottom-8'
+            )
+      }
+    >
       <NavigationMenu.List
         className={clsx(
-          'serlo-user-tools mr-4 -mt-4 mb-8',
-          'flex lg:hidden justify-end',
-          fadeIn()
+          aboveContent
+            ? 'mr-4 -mt-4 mb-8 flex lg:hidden justify-end'
+            : 'bg-white rounded-md pointer-events-auto flex-col flex items-start',
+          fadeIn
         )}
       >
-        {renderButtons()}
+        {aboveContent ? renderButtons() : renderSideContainer()}
       </NavigationMenu.List>
     </NavigationMenu.Root>
   )
+
+  function renderSideContainer() {
+    return (
+      <div
+        className={clsx(
+          'sticky bottom-8 flex-col flex items-start',
+          'bg-white rounded-md pointer-events-auto'
+        )}
+      >
+        {renderButtons()}
+      </div>
+    )
+  }
 
   function renderButtons() {
     if (firstPass)
@@ -84,57 +146,20 @@ export function UserTools({
         {isRevision ? (
           <RevisionTools data={data} aboveContent={aboveContent} />
         ) : null}
-        <EditOrInvite
-          data={data}
-          unrevisedRevisions={unrevisedRevisions}
-          aboveContent={aboveContent}
-        />
+        {data ? (
+          <EditOrInvite
+            data={data}
+            unrevisedRevisions={unrevisedRevisions}
+            aboveContent={aboveContent}
+          />
+        ) : null}
+
         <Share data={data} aboveContent={aboveContent} />
-        {/* {auth.current ? } */}
-        <MoreAutorTools data={data} aboveContent={aboveContent} />
+
+        {auth.current ? (
+          <MoreAutorTools data={data} aboveContent={aboveContent} />
+        ) : null}
       </>
-    )
-  }
-
-  return <>{aboveContent ? renderInlineContainer() : renderSideContainer()}</>
-
-  function renderInlineContainer() {
-    return (
-      <nav
-        className={clsx(
-          'serlo-user-tools mr-4 -mt-4 mb-8',
-          'flex lg:hidden justify-end',
-          fadeIn()
-        )}
-      >
-        {renderButtons()}
-      </nav>
-    )
-  }
-
-  function fadeIn() {
-    return clsx('transition-opacity', firstPass ? 'opacity-0' : 'opacity-100')
-  }
-
-  function renderSideContainer() {
-    return (
-      <nav
-        className={clsx(
-          'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
-          'lg:flex hidden items-end pointer-events-none',
-          fadeIn()
-        )}
-      >
-        <div
-          className={clsx(
-            'sticky bottom-8 flex-col flex items-start',
-            'bg-white rounded-md pointer-events-auto'
-          )}
-        >
-          side
-          {renderButtons()}
-        </div>
-      </nav>
     )
   }
 

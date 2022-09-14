@@ -10,11 +10,7 @@ import {
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
 
-// const ShareModal = dynamic<ShareModalProps>(() =>
-//   import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-// )
-
-interface MoreAutorToolsProps {
+export interface MoreAutorToolsProps {
   data?: AuthorToolsData
   aboveContent?: boolean
 }
