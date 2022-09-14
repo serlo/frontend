@@ -4,14 +4,16 @@ import { Fragment, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
+import { ShareModalProps } from '@/components/user-tools/share/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { CommunityWallPerson } from '@/data/de/community-people'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+  import('@/components/user-tools/share/share-modal').then(
+    (mod) => mod.ShareModal
+  )
 )
 
 const testimonials = [

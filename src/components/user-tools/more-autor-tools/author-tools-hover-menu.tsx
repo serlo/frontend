@@ -1,6 +1,6 @@
 import Tippy, { TippyProps } from '@tippyjs/react'
 
-import { AuthorTools, Tool } from './author-tools'
+import { AuthorTools, Tool } from '../author-tools'
 import { MenuSubButtonLink } from './menu-sub-button-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -19,6 +19,10 @@ export interface AuthorToolsData {
   grouped?: boolean
   trashed?: boolean
   checkoutRejectButtons?: JSX.Element
+  revisionData?: {
+    rejected: boolean
+    current: boolean
+  }
   unrevisedRevisions?: number
   unrevisedCourseRevisions?: number
 }
@@ -156,6 +160,7 @@ export function AuthorToolsHoverMenu({ data }: AuthorToolsHoverMenuProps) {
       </ul>
     )
   }
+
   function renderExercise() {
     const type = getTranslatedType(
       strings,

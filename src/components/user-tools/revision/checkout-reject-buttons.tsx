@@ -2,36 +2,39 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
+import { AuthorToolsData } from '../more-autor-tools/author-tools-hover-menu'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+// import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidRevType } from '@/data-types'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,
 } from '@/mutations/use-revision-decide-mutation'
 
 export interface CheckoutRejectButtonsProps {
-  revisionId: number
-  isRejected: boolean
-  isCurrent: boolean
-  isPage: boolean
-  buttonStyle?: string
+  data: AuthorToolsData
+  // revisionId: number
+  // isRejected: boolean
+  // isCurrent: boolean
+  // isPage: boolean
+  // buttonStyle?: string
 }
 
-export function CheckoutRejectButtons({
-  revisionId,
-  isRejected,
-  isCurrent,
-  isPage,
-  buttonStyle,
-}: CheckoutRejectButtonsProps) {
-  const loggedInData = useLoggedInData()
+export function CheckoutRejectButtons({ data }: CheckoutRejectButtonsProps) {
+  // const loggedInData = useLoggedInData()
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
   const revisionMutation = useRevisionDecideMutation()
   const [reason, setReason] = useState('')
-  if (!loggedInData) return null
-  if (isCurrent) return null
-  const { strings } = loggedInData
+
+  if (!data.revisionData) return null
+  const isCurrent = data.revisionData.current
+  const isRejected = data.revisionData.rejected
+  const revisionId = data.revisionId
+  const isPage = data.type === UuidRevType.Page
+
+  if (isCurrent || !revisionId) return null
+  // const { strings } = loggedInData
 
   function onCloseClick() {
     setModalMode(null)
@@ -39,7 +42,11 @@ export function CheckoutRejectButtons({
 
   function onConfirm() {
     if (modalMode) {
-      void revisionMutation(modalMode, { revisionId, reason }, isPage)
+      void revisionMutation(
+        modalMode,
+        { revisionId: revisionId as number, reason },
+        isPage
+      )
     }
   }
 
@@ -56,7 +63,8 @@ export function CheckoutRejectButtons({
         isOpen={modalMode != null}
         onCloseClick={onCloseClick}
         title={
-          modalMode != null ? strings.revisions[modalMode].title : undefined
+          '123'
+          // modalMode != null ? strings.revisions[modalMode].title : undefined
         }
       >
         {renderModalContent()}
@@ -67,13 +75,13 @@ export function CheckoutRejectButtons({
   function renderButton(mode: 'reject' | 'checkout') {
     const isCheckout = mode === 'checkout'
     return (
-      <button className={buttonStyle} onClick={() => setModalMode(mode)}>
+      <button className="buttonStyle" onClick={() => setModalMode(mode)}>
         &nbsp;
         <FaIcon
           icon={isCheckout ? faCheck : faTimes}
           className="lg:mr-0.5"
         />{' '}
-        {strings.revisions[mode].action}
+        {/* {strings.revisions[mode].action} */} 123
       </button>
     )
   }
@@ -83,10 +91,10 @@ export function CheckoutRejectButtons({
     return (
       <>
         <p className="mx-side mb-1">
-          {strings.revisions[modalMode].explanation}
+          {/* {strings.revisions[modalMode].explanation} */}
           {renderTextArea()}
           <button className="serlo-button-light" onClick={onConfirm}>
-            {strings.revisions.confirm}
+            {/* {strings.revisions.confirm} */}
           </button>
         </p>
       </>

@@ -10,7 +10,7 @@ import clsx from 'clsx'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'
 
-import { FaIcon } from '../fa-icon'
+import { FaIcon } from '../../fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'

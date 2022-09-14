@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 
-import { Link, LinkProps } from '../content/link'
+import { Link, LinkProps } from '../../content/link'
 
 export function MenuSubButtonLink({
   children,

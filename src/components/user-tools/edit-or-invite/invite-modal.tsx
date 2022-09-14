@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
-import { Link } from '../content/link'
+import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -23,7 +24,7 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
 
   if (!isOpen || !id) return null
 
-  return (
+  return ReactDOM.createPortal(
     <ModalWithCloseButton
       isOpen={isOpen}
       onCloseClick={onClose}
@@ -49,7 +50,8 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
           ),
         })}
       </p>
-    </ModalWithCloseButton>
+    </ModalWithCloseButton>,
+    document.body
   )
 
   function renderButtons() {

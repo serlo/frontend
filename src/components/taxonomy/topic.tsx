@@ -8,7 +8,7 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { LicenseNotice } from '@/components/content/license/license-notice'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
+import { ShareModalProps } from '@/components/user-tools/share/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
@@ -20,7 +20,9 @@ export interface TopicProps {
 }
 
 const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+  import('@/components/user-tools/share/share-modal').then(
+    (mod) => mod.ShareModal
+  )
 )
 
 export function Topic({ data }: TopicProps) {

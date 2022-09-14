@@ -3,8 +3,11 @@ import Tippy from '@tippyjs/react'
 import { useRouter } from 'next/router'
 import { Fragment } from 'react'
 
-import { AuthorToolsData, tippyDefaultProps } from './author-tools-hover-menu'
-import { MenuSubButtonLink } from './menu-sub-button-link'
+import {
+  AuthorToolsData,
+  tippyDefaultProps,
+} from './more-autor-tools/author-tools-hover-menu'
+import { MenuSubButtonLink } from './more-autor-tools/menu-sub-button-link'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -30,6 +33,7 @@ export enum Tool {
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
   Organize = 'organize',
+  Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
   SortGroupedExercises = 'sortGroupedExercises',
   SortEntities = 'sortEntities',

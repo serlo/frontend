@@ -5,13 +5,15 @@ import { renderSubline } from './overview'
 import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
+import { ShareModalProps } from '@/components/user-tools/share/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+  import('@/components/user-tools/share/share-modal').then(
+    (mod) => mod.ShareModal
+  )
 )
 const h2Class =
   'mx-side text-4xl leading-cozy tracking-tight font-extrabold text-gray-700'
