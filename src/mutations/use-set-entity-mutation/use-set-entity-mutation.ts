@@ -215,7 +215,7 @@ const loopNestedChildren = async ({
         )
 
         // only request new revision when entity changed
-        if (hasNoChanges(oldVersion, child)) return true
+        if (hasNoChanges(oldVersion, child)) continue
 
         const input = {
           ...child,
