@@ -11,7 +11,6 @@ import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
@@ -54,17 +53,14 @@ export function UserTools({
 }: UserToolsProps) {
   const auth = useAuthentication()
   const loggedInData = useLoggedInData()
-  const loggedInComponents = useLoggedInComponents()
 
   const isRevision = data && data.type.includes('Revision')
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
 
   useEffect(() => {
-    if (firstPass && (!auth.current || (auth.current && loggedInComponents))) {
-      setFirstPass(false)
-    }
-  }, [auth, loggedInComponents, firstPass])
+    if (firstPass) setFirstPass(false)
+  }, [auth, firstPass])
 
   const fadeIn = clsx(
     'transition-opacity',
