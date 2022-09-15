@@ -1,5 +1,4 @@
 import { useContext, useEffect } from 'react'
-// import ReactDOM from 'react-dom'
 
 import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'

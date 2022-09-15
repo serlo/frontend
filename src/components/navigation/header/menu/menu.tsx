@@ -1,4 +1,4 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Root, List } from '@radix-ui/react-navigation-menu'
 import { useEffect, useState } from 'react'
 
 import { AuthItems } from './auth-items'
@@ -12,13 +12,13 @@ export function Menu() {
   useEffect(() => setMounted(true), [])
 
   return (
-    <NavigationMenu.Root>
-      <NavigationMenu.List className="md:text-right block m-0 p-0 relative">
+    <Root>
+      <List className="md:text-right block m-0 p-0 relative">
         {headerData.map((link) => (
           <Item key={link.title} link={link} />
         ))}
         {mounted ? <AuthItems /> : null}
-      </NavigationMenu.List>
-    </NavigationMenu.Root>
+      </List>
+    </Root>
   )
 }

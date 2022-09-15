@@ -1,5 +1,9 @@
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import {
+  Item as RadixItem,
+  Trigger,
+  Link,
+} from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 import { PointerEventHandler } from 'react'
@@ -41,7 +45,7 @@ export function Item({ link, specialContent }: ItemProps) {
   )
 
   return (
-    <NavigationMenu.Item
+    <RadixItem
       className={clsx(
         'ease-linear duration-700',
         'block md:inline-block md:mx-[3px]'
@@ -49,13 +53,13 @@ export function Item({ link, specialContent }: ItemProps) {
       key={link.title}
     >
       {hasChildren ? renderItemSub() : renderItemNoSub()}
-    </NavigationMenu.Item>
+    </RadixItem>
   )
 
   function renderItemNoSub() {
     return (
       <NextLink href={link.url} passHref>
-        <NavigationMenu.Link
+        <Link
           className={clsx('group', styledLinkCls)}
           // temporarily track spenden button use
           onClick={() => {
@@ -64,7 +68,7 @@ export function Item({ link, specialContent }: ItemProps) {
           }}
         >
           {textAndIcon}
-        </NavigationMenu.Link>
+        </Link>
       </NextLink>
     )
   }
@@ -74,14 +78,14 @@ export function Item({ link, specialContent }: ItemProps) {
 
     return (
       <>
-        <NavigationMenu.Trigger
+        <Trigger
           className={'serlo-header-navtrigger ' + styledLinkCls}
           onPointerMove={preventHover}
           onPointerLeave={preventHover}
         >
           {textAndIcon}&nbsp;
           <FaIcon icon={faCaretDown} />
-        </NavigationMenu.Trigger>
+        </Trigger>
         <SubContent subItems={link.children} parent={link} />
       </>
     )

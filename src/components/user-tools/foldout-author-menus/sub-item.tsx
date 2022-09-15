@@ -1,4 +1,4 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Item, Link } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
@@ -19,7 +19,7 @@ export function SubItem({ title, href, onClick }: SubItemProps) {
   const text = <span className={itemClasses}>{title}</span>
 
   const inner = (
-    <NavigationMenu.Link
+    <Link
       href={href ?? ''}
       onClick={
         onClick
@@ -32,11 +32,11 @@ export function SubItem({ title, href, onClick }: SubItemProps) {
       className="block md:py-[3px] group"
     >
       {text}
-    </NavigationMenu.Link>
+    </Link>
   )
 
   return (
-    <NavigationMenu.Item key={title}>
+    <Item key={title}>
       {onClick || isAbsolute || !href ? (
         inner
       ) : (
@@ -44,6 +44,6 @@ export function SubItem({ title, href, onClick }: SubItemProps) {
           {inner}
         </NextLink>
       )}
-    </NavigationMenu.Item>
+    </Item>
   )
 }

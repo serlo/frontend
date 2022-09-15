@@ -1,5 +1,5 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { List, Item, Trigger, Content } from '@radix-ui/react-navigation-menu'
 
 import { UserToolsItem } from '../user-tools-item'
 import { AuthorTools, Tool } from './author-tools'
@@ -29,8 +29,8 @@ export function MoreAuthorToolsCourse({
   function renderSettingsItem(whole: boolean) {
     if (!data || !loggedInData) return null
     return (
-      <NavigationMenu.Item>
-        <NavigationMenu.Trigger>
+      <Item>
+        <Trigger>
           <UserToolsItem
             title={
               whole
@@ -40,10 +40,10 @@ export function MoreAuthorToolsCourse({
             aboveContent={aboveContent}
             icon={faTools}
           />
-        </NavigationMenu.Trigger>
+        </Trigger>
 
-        <NavigationMenu.Content>
-          <NavigationMenu.List className="absolute w-56 z-50 pt-2 right-0 lg:right-48 lg:bottom-0">
+        <Content>
+          <List className="absolute w-56 z-50 pt-2 right-0 lg:right-48 lg:bottom-0">
             <div className="serlo-sub-list-hover">
               <AuthorTools
                 entityId={whole ? data.courseId || data.id : data.id}
@@ -51,9 +51,9 @@ export function MoreAuthorToolsCourse({
                 tools={getToolsArray(whole)}
               />
             </div>
-          </NavigationMenu.List>
-        </NavigationMenu.Content>
-      </NavigationMenu.Item>
+          </List>
+        </Content>
+      </Item>
     )
   }
 

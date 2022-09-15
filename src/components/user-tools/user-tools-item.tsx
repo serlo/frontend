@@ -1,5 +1,5 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Item, Link } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
@@ -40,32 +40,30 @@ export function UserToolsItem({
 
   if (href)
     return (
-      <NavigationMenu.Item>
+      <Item>
         <NextLink href={href} passHref>
           {renderLink()}
         </NextLink>
-      </NavigationMenu.Item>
+      </Item>
     )
 
   if (onClick)
     return (
-      <NavigationMenu.Item
+      <Item
         onClick={(e) => {
           e.preventDefault()
           onClick()
         }}
       >
-        <NavigationMenu.Link href="" className={classes}>
+        <Link href="" className={classes}>
           {inner}
-        </NavigationMenu.Link>
-      </NavigationMenu.Item>
+        </Link>
+      </Item>
     )
 
   return <span className={classes}>{inner}</span>
 
   function renderLink() {
-    return (
-      <NavigationMenu.Link className={classes}>{inner}</NavigationMenu.Link>
-    )
+    return <Link className={classes}>{inner}</Link>
   }
 }

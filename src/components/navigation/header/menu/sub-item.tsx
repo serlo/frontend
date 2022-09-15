@@ -1,4 +1,4 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Link, Item } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
@@ -22,13 +22,13 @@ export function SubItem({ item }: SubItemProps) {
   const isAbsolute = item.url.indexOf('//') > -1
 
   const inner = (
-    <NavigationMenu.Link href={item.url} className="block md:py-[3px] group">
+    <Link href={item.url} className="block md:py-[3px] group">
       <span className={itemClasses}>{item.title}</span>
-    </NavigationMenu.Link>
+    </Link>
   )
 
   return (
-    <NavigationMenu.Item key={item.title}>
+    <Item key={item.title}>
       {isAbsolute ? (
         inner
       ) : (
@@ -36,6 +36,6 @@ export function SubItem({ item }: SubItemProps) {
           {inner}
         </NextLink>
       )}
-    </NavigationMenu.Item>
+    </Item>
   )
 }

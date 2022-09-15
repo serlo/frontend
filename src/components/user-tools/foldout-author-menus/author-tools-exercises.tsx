@@ -1,6 +1,12 @@
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup'
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import {
+  Root,
+  List,
+  Item,
+  Trigger,
+  Content,
+} from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 
 import { AuthorTools, Tool } from './author-tools'
@@ -31,10 +37,10 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
   )
 
   return (
-    <NavigationMenu.Root>
-      <NavigationMenu.List>
-        <NavigationMenu.Item>
-          <NavigationMenu.Trigger
+    <Root>
+      <List>
+        <Item>
+          <Trigger
             className={clsx(
               'hidden sm:inline-block serlo-button text-center text-truegray-800',
               'hover:bg-brand hover:text-white text-base leading-8',
@@ -48,9 +54,9 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
                   : faTools
               }
             />
-          </NavigationMenu.Trigger>
-          <NavigationMenu.Content>
-            <NavigationMenu.List className="absolute w-56 z-50 pt-2 right-0 top-0">
+          </Trigger>
+          <Content>
+            <List className="absolute w-56 z-50 pt-2 right-0 top-0">
               <div className="serlo-sub-list-hover">
                 <li className="ml-2 font-bold">{type}</li>
                 <AuthorTools
@@ -59,11 +65,11 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
                   tools={getToolsArray()}
                 />
               </div>
-            </NavigationMenu.List>
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
-      </NavigationMenu.List>
-    </NavigationMenu.Root>
+            </List>
+          </Content>
+        </Item>
+      </List>
+    </Root>
   )
 
   function getToolsArray() {

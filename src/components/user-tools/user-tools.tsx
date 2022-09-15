@@ -1,6 +1,6 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Root, List } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
@@ -74,7 +74,7 @@ export function UserTools({
   // (responsive variants)
 
   return (
-    <NavigationMenu.Root
+    <Root
       className={
         aboveContent
           ? fadeIn
@@ -86,7 +86,7 @@ export function UserTools({
             )
       }
     >
-      <NavigationMenu.List
+      <List
         className={clsx(
           aboveContent
             ? 'mr-4 -mt-4 mb-8 flex lg:hidden justify-end'
@@ -94,8 +94,8 @@ export function UserTools({
         )}
       >
         {renderButtons()}
-      </NavigationMenu.List>
-    </NavigationMenu.Root>
+      </List>
+    </Root>
   )
 
   function renderButtons() {
