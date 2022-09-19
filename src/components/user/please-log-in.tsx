@@ -11,9 +11,9 @@ export function PleaseLogIn({ noWrapper }: { noWrapper?: boolean }) {
     return (
       <>
         <Link href="/auth/login" path={[]}>
-          {strings.login.pleaseLogInLink}
+          {strings.auth.pleaseLogInLink}
         </Link>{' '}
-        {strings.login.pleaseLogInText}
+        {strings.auth.pleaseLogInText}
       </>
     )
   }
