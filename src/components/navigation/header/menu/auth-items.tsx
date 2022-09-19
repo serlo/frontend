@@ -39,7 +39,7 @@ export function AuthItems() {
       {UnreadNotificationsCount ? (
         <Item
           link={notificationLinkData}
-          specialContent={
+          elementAsIcon={
             <div className="-top-[2px] md:relative md:mx-[3px] md:my-[7px]">
               <UnreadNotificationsCount icon={faBell} />
             </div>
@@ -48,7 +48,7 @@ export function AuthItems() {
       ) : null}
       <Item
         link={updatedSubData}
-        specialContent={
+        elementAsIcon={
           <img
             className="rounded-full w-6 h-6 inline md:my-[7px]"
             src={getAvatarUrl(auth.current.username)}

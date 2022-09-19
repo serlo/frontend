@@ -23,29 +23,32 @@ const menuIconMapping = {
 export type IconIdentifier = keyof typeof menuIconMapping
 
 export interface IconProps {
-  icon?: IconIdentifier
-  element?: JSX.Element
-  alt: string
+  elementOrIcon?: IconIdentifier | JSX.Element
 }
 
-export function Icon({ icon, element, alt }: IconProps) {
+export function Icon({ elementOrIcon }: IconProps) {
+  if (!elementOrIcon) return null
+  const isIcon = typeof elementOrIcon === 'string'
+
   return (
     <span
+      aria-hidden
       className={clsx(
         'w-10 h-10 rounded-full flex justify-center items-center mr-2.5',
         'bg-brand-200 text-brand-500',
-        element
-          ? 'md:w-auto md:h-auto md:inline-block md:mr-0 md:bg-transparent'
-          : 'md:hidden'
+        isIcon
+          ? 'md:hidden'
+          : 'md:w-auto md:h-auto md:inline-block md:mr-0 md:bg-transparent'
       )}
     >
-      {element ? (
-        <>
-          {element} <span className="sr-only">{alt}</span>
-        </>
-      ) : icon ? (
-        <FaIcon icon={menuIconMapping[icon]} style={{ fontSize: '23px' }} />
-      ) : null}
+      {isIcon ? (
+        <FaIcon
+          icon={menuIconMapping[elementOrIcon]}
+          style={{ fontSize: '23px' }}
+        />
+      ) : (
+        elementOrIcon
+      )}
     </span>
   )
 }
