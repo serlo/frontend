@@ -1,5 +1,5 @@
 import { faTrashAlt, Icon } from '@edtr-io/ui'
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical'
 import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 

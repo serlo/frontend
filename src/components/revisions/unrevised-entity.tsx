@@ -50,9 +50,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   const { strings } = useInstanceData()
 
   const nodes = getNodes(entity)
-
   const title = getTitle(entity)
-
   const isProbablyNew = entity.currentRevision === null
 
   return (
@@ -88,7 +86,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
 
     return (
       <tr className={isProbablyWIP ? 'opacity-50' : undefined}>
-        <Td className="pl-0 w-1/2">
+        <Td className="pl-0 w-1/2 pt-2.5">
           <Link href={viewUrl} className="hover:no-underline text-black">
             {revision.changes || '–'}
           </Link>
@@ -100,7 +98,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
             {revision.author.isNewAuthor && renderAuthorLabel()}
           </Td>
         )}
-        <Td className="w-1/6">
+        <Td className="w-1/6 pt-2.5">
           <TimeAgo datetime={new Date(revision.date)} dateAsTitle />
         </Td>
         <Td centered className="w-1/6">
@@ -109,7 +107,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
             title={strings.revisionHistory.viewLabel}
             href={viewUrl}
           >
-            <FaIcon icon={faEye} />
+            {strings.revisionHistory.view} <FaIcon icon={faEye} />
           </Link>
         </Td>
       </tr>

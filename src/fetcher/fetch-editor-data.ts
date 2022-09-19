@@ -17,6 +17,7 @@ import {
 } from '@/edtr-io/editor-response-to-state'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import { SerloEditorProps } from '@/edtr-io/serlo-editor'
+import { testAreaUrlStart } from '@/fetcher/testArea'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
@@ -39,8 +40,6 @@ const noReviewTypes: UuidWithRevType[] = [
   UuidType.Page,
   UuidType.User,
 ]
-
-export const sandboxUrl = '/community/106082/sandkasten'
 
 export async function fetchEditorData(
   localeString: string,
@@ -75,13 +74,14 @@ export async function fetchEditorData(
 
   const breadcrumbsData = createBreadcrumbs(data)
 
-  const isSandbox =
-    breadcrumbsData && breadcrumbsData.some((entry) => entry.url == sandboxUrl)
+  const isTestArea =
+    breadcrumbsData &&
+    breadcrumbsData.some((entry) => entry.url?.startsWith(testAreaUrlStart))
 
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType
   )
-  const needsReview = !isSandbox && typeNeedsReview
+  const needsReview = !isTestArea && typeNeedsReview
 
   if (isError(result)) {
     throw new Error(result.error)

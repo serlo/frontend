@@ -72,6 +72,7 @@ export const instanceData = {
       editProfile: "Modifier le profil et les paramètres",
       recycleBin: "Corbeille",
       diagon: 'Diagon Alley',
+      discussions: 'Comments',
       manageRoles: 'Manage User Roles'
     },
     roles: {
@@ -186,7 +187,8 @@ export const instanceData = {
       showMoreReplies: "Afficher %number% commentaires supplémentaires",
       hideReplies: 'Hide',
       showArchived: "Afficher les %threads% affichés",
-      copyLink: "Copier le lien du commentaire"
+      copyLink: "Copier le lien du commentaire",
+      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
@@ -222,8 +224,17 @@ export const instanceData = {
       status: "Statut"
     },
     unrevisedRevisions: {
-      supportLinks: "Comment réviser?",
-      guideline: "Aide à la révision",
+      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
+      reviewers: 'Reviewers',
+      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
+      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
+      contactPerson: 'LinaMaria',
+      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
+      help4: 'How to review? See our %guidelineLink%.',
+      guideline: 'Guideline for Reviewing',
+      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
+      subjectLinks: 'To Subjects',
       showMoreEntities: "Tout afficher dans %subject%",
       showMoreRevisions: "Afficher %number% plus…",
       newLabelText: "Nouveau",
@@ -475,7 +486,8 @@ export const loggedInData = {
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
         updated: 'Successfully updated ✅',
-        generic: 'Success 🎉'
+        generic: 'Success 🎉',
+        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -488,6 +500,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Are you sure you want to leave without saving?",
+      noChangesWarning: "Nothing changed so there is no need to save yet",
       edtrIo: {
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
@@ -527,6 +540,7 @@ export const loggedInData = {
         solutionSeparator: "Séparateur de solution",
         solutionSeparatorDesc: "Divisez la solution en différentes étapes.",
         save: "Sauvegarder",
+        saveWithReview: 'Save and get review',
         cancel: "Annuler",
         saving: "Sauvegarde…",
         missingChanges: "Tu dois remplir les modifications que tu as apportées",
@@ -536,7 +550,7 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Tu peux sauvegarder la révision localement, actualiser la page et essayer de sauvegarder à nouveau.",
         revisionSaved: "Révision sauvegardée",
         saveRevision: "Sauvegarder la révision",
-        changes: "Modifications",
+        changes: 'Describe your changes to the content',
         skipReview: "Passer la révision (non recommandé)",
         enableNotifs: "Activer les notifications par serlo.org",
         enableNotifsMail: "Activer les notifications par e-mail",
