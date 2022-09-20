@@ -102,6 +102,13 @@ export function SerloEditor({
         >
           {children}
         </Editor>
+        <style jsx global>{`
+          /* fixes bug in chromium based browsers v105+ */
+          /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
+          div[data-slate-editor] {
+            -webkit-user-modify: read-write !important;
+          }
+        `}</style>
       </SaveContext.Provider>
     </CsrfContext.Provider>
   )
