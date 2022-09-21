@@ -57,7 +57,7 @@ export function UnrevisedRevisionsOverview({
             contactLink: <Link href={contactPersonUrl}>{contactPerson}</Link>,
           })}
           {replacePlaceholders(help4, {
-            guildelineLink: <Link href={guidelineUrl}>{guideline}</Link>,
+            guidelineLink: <Link href={guidelineUrl}>{guideline}</Link>,
           })}
         </p>
       </div>
