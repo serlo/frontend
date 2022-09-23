@@ -21,21 +21,21 @@ export function Settings() {
   // The idea is to show to the user that they are logged it,
   // because auth-session cookie is used to initialize auth.current
   // but it is only working after refresh
-  async function setAuthSessionCookie() {
-    await kratos
-      .toSession()
-      .then(({ data }) => {
-        AuthSessionCookie.set(data)
-      })
-      .catch(() => {
-        // user is most likely just not logged in
-        AuthSessionCookie.remove()
-      })
-  }
-
-  void setAuthSessionCookie()
-
-  useAuthentication()
+  useEffect(() => {
+    async function setAuthSessionCookie() {
+      console.log('settingAuthSessionCookie')
+      await kratos
+        .toSession()
+        .then(({ data }) => {
+          AuthSessionCookie.set(data)
+        })
+        .catch(() => {
+          // user is most likely just not logged in
+          AuthSessionCookie.remove()
+        })
+    }
+    void setAuthSessionCookie()
+  })
 
   const { flow: flowId, return_to: returnTo } = router.query
 

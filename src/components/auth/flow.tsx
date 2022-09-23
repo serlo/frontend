@@ -52,13 +52,14 @@ export function Flow<T extends SubmitPayload>({
   only,
   onSubmit,
 }: FlowProps<T>) {
-  const { action, method, messages, nodes } = flow.ui
   const { strings } = useInstanceData()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const { action, method, messages, nodes } = flow.ui
   const filteredNodes = only
     ? nodes.filter((node) => node.group === 'default' || node.group === only)
     : nodes
 
-  const [isLoading, setIsLoading] = useState(false)
   const [values, setValues] = useState<Record<string, unknown>>(() => {
     const values: Record<string, unknown> = {}
     filteredNodes.forEach((node) => {
