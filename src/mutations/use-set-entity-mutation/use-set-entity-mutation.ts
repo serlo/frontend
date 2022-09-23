@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
+import { useRouter } from 'next/router'
 import { eqBy, mapObjIndexed } from 'ramda'
 
 import { showToastNotice } from '../../helper/show-toast-notice'
@@ -41,6 +42,7 @@ const hasNoChanges = (
 export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetch()
+  const router = useRouter()
 
   return async (
     data: SetEntityMutationData,
@@ -58,6 +60,7 @@ export function useSetEntityMutation() {
       loggedInData,
       initialState,
       taxonomyParentId,
+      router,
     })
 }
 
@@ -70,6 +73,7 @@ export const setEntityMutationRunner = async function ({
   initialState,
   savedParentId,
   taxonomyParentId,
+  router,
 }: SetEntityMutationRunnerData) {
   if (!loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
@@ -118,6 +122,7 @@ export const setEntityMutationRunner = async function ({
       loggedInData,
       initialState,
       savedParentId: savedId as number,
+      router,
     })
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -138,8 +143,11 @@ export const setEntityMutationRunner = async function ({
           ? undefined
           : (savedId as number)
         : data.id
-    if (id) window.location.href = getHistoryUrl(id)
-    else window.location.href = `/${taxonomyParentId as number}`
+    const redirectHref = id
+      ? getHistoryUrl(id)
+      : `/${taxonomyParentId as number}`
+
+    void router.push(redirectHref)
   }
 
   return true
