@@ -160,6 +160,7 @@ const loopNestedChildren = async ({
   loggedInData,
   initialState,
   savedParentId,
+  router,
 }: SetEntityMutationRunnerData): Promise<boolean> => {
   if (!data.__typename) return false
 
@@ -246,6 +247,7 @@ const loopNestedChildren = async ({
           isRecursiveCall: true,
           savedParentId,
           initialState,
+          router,
         })
         if (!success) throw 'revision of one child could not be saved'
       }
