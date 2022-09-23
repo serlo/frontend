@@ -72,17 +72,17 @@ export function Node(props: NodeProps) {
         )
 
       default:
-        if (attributes.disabled) return null
+        if (attributes.disabled || !attributes.required) return null
         // TODO: this possibly contains "required" and "pattern"
+        //className={clsx(!attributes.required && 'opacity-50')} {attributes.required ? '*' : ' (optional)'}
         return (
-          <div className={clsx(!attributes.required && 'opacity-50')}>
+          <div>
             <label
               className={clsx('block my-4', attributes.required && 'font-bold')}
             >
               {hasOwnPropertyTs(strings.auth.fields, shortName)
                 ? strings.auth.fields[shortName]
                 : shortName}
-              {attributes.required ? '*' : ' (optional)'}
               <br />
               <input
                 className="text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-150 focus:bg-brand-150 outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full"
