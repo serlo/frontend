@@ -1,5 +1,5 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-import {
+import type {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
 } from '@ory/client'
@@ -7,16 +7,20 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
+import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
-import { kratos } from '@/helper/kratos'
+import { useInstanceData } from '@/contexts/instance-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
+  const { strings } = useInstanceData()
+
   const {
     return_to: returnTo,
     flow: flowId,
@@ -83,25 +87,19 @@ export function Login({ oauth }: { oauth?: boolean }) {
         icon={<FaIcon icon={faUser} />}
         title={(() => {
           if (flow?.refresh) {
-            return 'Confirm Action'
-          } else if (flow?.requested_aal === 'aal2') {
-            return 'Two-Factor Authentication'
+            return 'Confirm Action' // TODO: i18n
           }
-          return 'Sign In'
+          return 'Sign In' // TODO: i18n
         })()}
       />
-
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-
-      {showLogout ? <div>Log out</div> : ''}
-
+      {showLogout ? <div>Log out</div> : ''} {/* TODO: i18n …*/}
       <div className="mx-side mt-20 border-t-2 pt-4">
         Bist du neu hier?{' '}
         <Link href="/auth/registration" className="serlo-button-light">
           Neuen Account registrieren
         </Link>
       </div>
-
       <div className="mx-side mt-2 pt-4">
         Hast du dein{' '}
         <Link href="/auth/recovery" className="font-bold">
@@ -127,22 +125,29 @@ export function Login({ oauth }: { oauth?: boolean }) {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
-          AuthSessionCookie.set(data.session)
+          void fetchAndPersistAuthSession(data.session)
           if (oauth) {
             await router.push(
               `/api/oauth/accept-login?login_challenge=${String(
-                login_challenge
+                login_challenge?.toString
               )}`
             )
             return
           }
 
-          if (flow?.return_to) {
-            window.location.href = flow?.return_to
-            return
-          }
+          showToastNotice(
+            strings.notices.welcome.replace(
+              '%username%',
+              (data.session.identity.traits as { username: string })?.username
+            )
+          )
 
-          window.location.href = `${originalPreviousPath ?? '/'}#auth`
+          setTimeout(() => {
+            // TODO: make sure router.push() also refreshed authed components (e.g. header)
+            window.location.href =
+              flow?.return_to ?? originalPreviousPath ?? '/'
+          }, 1000)
+
           return
         })
         .catch((e: Error) => {

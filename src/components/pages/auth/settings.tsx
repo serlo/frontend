@@ -7,35 +7,28 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
-// import { useAuthentication } from '@/auth/use-authentication'
+import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
+import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
-import { kratos } from '@/helper/kratos'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
+  const { strings } = useInstanceData()
 
-  // The idea is to show to the user that they are logged it,
-  // because auth-session cookie is used to initialize auth.current
-  // but it is only working after refresh
   useEffect(() => {
-    async function setAuthSessionCookie() {
-      console.log('settingAuthSessionCookie')
-      await kratos
-        .toSession()
-        .then(({ data }) => {
-          AuthSessionCookie.set(data)
-        })
-        .catch(() => {
-          // user is most likely just not logged in
-          AuthSessionCookie.remove()
-        })
-    }
-    void setAuthSessionCookie()
-  })
+    // quick hack to fix non authed header state
+    void fetchAndPersistAuthSession().then(() => {
+      const { href } = window.location
+      if (href.includes('flow=') && !href.includes('#refreshed')) {
+        window.location.href = window.location.href + '#refreshed'
+        window.location.reload()
+      }
+    })
+  }, [])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -70,7 +63,7 @@ export function Settings() {
         title="Profile Management and Security Settings"
       />
 
-      <h2 className="serlo-h3">Change Password</h2>
+      <h2 className="serlo-h3">{strings.auth.changePassword}</h2>
 
       {flow ? (
         <Flow

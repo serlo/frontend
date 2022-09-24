@@ -1,4 +1,4 @@
-import { Session } from '@ory/client'
+import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
 export const AuthSessionCookie = {
@@ -7,6 +7,9 @@ export const AuthSessionCookie = {
     return Cookies.get(this.cookieName)
   },
   set(session: Session) {
+    // TODO: get same "expires at" settings
+    // TODO: remove token? Pretty sure we should not store that locally
+    console.log(session)
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
     })

@@ -1,12 +1,10 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { Session } from '@ory/client'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 
+import { useAuthentication } from '@/auth/use-authentication'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { WelcomeMessage } from '@/components/landing/rework/welcome-message'
 import { StaticInfoPanel } from '@/components/static-info-panel'
-import { kratos } from '@/helper/kratos'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -16,32 +14,13 @@ export default renderedPageNoHooks(() => (
 ))
 
 function KratosLoginCheck() {
-  // See https://github.com/ory/kratos-selfservice-ui-react-nextjs/blob/master/pages/index.tsx
-  const [session, setSession] = useState<Session | null>(null)
-
-  useEffect(() => {
-    kratos
-      .toSession()
-      .then(({ data }) => {
-        setSession(data)
-      })
-      .catch((err) => {
-        return Promise.reject(err)
-      })
-  }, [])
-
-  // console.log(session)
-
-  const kratosUsername =
-    (session?.identity?.traits as { username: string })?.username ?? 'Gast'
-
-  const isLoggedIn = !!session?.identity
+  const auth = useAuthentication()
 
   return (
     <>
       <main className="text-truegray-700">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
-          {isLoggedIn ? null : (
+          {auth.current ? null : (
             <StaticInfoPanel type="warning" icon={faWarning}>
               Not logged in
             </StaticInfoPanel>
@@ -58,7 +37,7 @@ function KratosLoginCheck() {
             )}
           >
             Wilkommen{' '}
-            <span className="pb-2 underlined">{kratosUsername} ?</span>
+            <span className="pb-2 underlined">{auth.current?.username} ?</span>
           </h1>
         </section>
       </main>

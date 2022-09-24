@@ -26,7 +26,7 @@ export default async function acceptLogin(
   `
   const variables = {
     input: {
-      session: session,
+      session,
       challenge: login_challenge,
     },
   }

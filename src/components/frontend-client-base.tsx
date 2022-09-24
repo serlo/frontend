@@ -161,6 +161,7 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+
     if (AuthSessionCookie.get() || loadLoggedInData) {
       Promise.all([
         !loggedInData

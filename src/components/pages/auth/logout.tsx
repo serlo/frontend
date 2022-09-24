@@ -1,17 +1,24 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
-import { kratos } from '@/helper/kratos'
+import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
+import { kratos } from '@/auth/kratos'
+import { useInstanceData } from '@/contexts/instance-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
+
+// TODO: since this returns null: Can we run this as a function instead or do we need a redirect?
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
+  const { strings } = useInstanceData()
   const { logout_challenge } = router.query
 
   useEffect(() => {
-    kratos.toSession().catch(() => {
+    fetchAndPersistAuthSession().catch(() => {
+      // TODO: what redirect would make sense as a fallback?
       return router.push('/auth/login-check')
     })
+
     const originalPreviousPath = sessionStorage.getItem('previousPathname')
 
     kratos
@@ -20,7 +27,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
         kratos
           .submitSelfServiceLogoutFlow(data.logout_token)
           .then(async () => {
-            AuthSessionCookie.remove()
+            void fetchAndPersistAuthSession(null)
 
             if (oauth) {
               if (!logout_challenge) return
@@ -30,8 +37,13 @@ export function Logout({ oauth }: { oauth?: boolean }) {
                 )}`
               )
             }
+            showToastNotice(strings.notices.bye)
 
-            window.location.href = `${originalPreviousPath ?? '/'}#auth`
+            setTimeout(() => {
+              // TODO: make sure router.push() also refreshed authed components (e.g. header)
+              window.location.href = originalPreviousPath ?? '/'
+            }, 1000)
+
             return
           })
           .catch((error: unknown) => {

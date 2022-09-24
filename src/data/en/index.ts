@@ -330,6 +330,7 @@ export const instanceData = {
       pleaseLogInText: 'to use this feature.',
       registerTitle: 'Register new account',
       recoverTitle: 'Recover your account',
+      changePassword: 'Change Password',
       fields: {
         identifier: 'Username or Email address',
         username: 'Username',

@@ -1,7 +1,7 @@
 import { Configuration as KratosConfig, V0alpha2Api } from '@ory/client'
 import { AdminApi, Configuration as HydraConfig } from '@ory/hydra-client'
 
-import { frontendOrigin } from './urls/frontent-origin'
+import { frontendOrigin } from '../helper/urls/frontent-origin'
 
 export const kratos = new V0alpha2Api(
   new KratosConfig({

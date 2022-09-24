@@ -3,8 +3,8 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { kratos } from '@/auth/kratos'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { kratos } from '@/helper/kratos'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (

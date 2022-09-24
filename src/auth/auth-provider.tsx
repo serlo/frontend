@@ -1,36 +1,24 @@
-import { Session } from '@ory/client'
+// import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
 import {
   createContext,
   ReactNode,
   RefObject,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from 'react'
 
 import { AuthSessionCookie } from './auth-session-cookie'
+// import { kratos } from '@/auth/kratos'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { kratos } from '@/helper/kratos'
 
 export interface AuthContextValue {
-  loggedIn: boolean
   authenticationPayload: RefObject<AuthenticationPayload>
   authorizationPayload: AuthorizationPayload | null
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
-
-export function useAuth(): AuthContextValue {
-  const contextValue = useContext(AuthContext)
-
-  if (contextValue === null) {
-    throw new Error('Attempt to use auth data outside of provider!')
-  }
-
-  return contextValue
-}
 
 export function AuthProvider({
   children,
@@ -39,7 +27,9 @@ export function AuthProvider({
   children: ReactNode
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 }) {
-  const [authenticationPayload, loggedIn] = useAuthentication()
+  const authenticationPayload = useRef<AuthenticationPayload>(
+    getAuthPayloadFromLocalCookie()
+  )
   const authorizationPayload = useAuthorizationPayload(
     authenticationPayload,
     unauthenticatedAuthorizationPayload
@@ -50,7 +40,7 @@ export function AuthProvider({
       value={{
         authenticationPayload,
         authorizationPayload,
-        loggedIn,
+        // loggedIn,
       }}
     >
       {children}
@@ -63,58 +53,19 @@ export type AuthenticationPayload = {
   id: number
 } | null
 
-function parseAuthCookie(session: Session): AuthenticationPayload {
-  try {
-    const username = (session?.identity?.traits as { username: string })
-      ?.username
-    const legacyId = (
-      session?.identity?.metadata_public as { legacy_id: number }
-    )?.legacy_id
-    return {
-      username,
-      id: legacyId,
-    }
-  } catch {
-    return null
-  }
-}
-
-function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
+function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
   const initialSessionValue = AuthSessionCookie.parse()
-  const [, setSession] = useState<Session | null>(initialSessionValue)
-  const authenticationPayload = useRef<AuthenticationPayload>(
-    initialSessionValue
-      ? {
-          username: (
-            initialSessionValue.identity.traits as { username: string }
-          ).username,
-          id: (
-            initialSessionValue.identity.metadata_public as {
-              legacy_id: number
-            }
-          )?.legacy_id,
-        }
-      : null
-  )
-
-  useEffect(() => {
-    void (async () => {
-      const { data } = await kratos.toSession().catch(() => {
-        // user is most likely just not logged in
-        AuthSessionCookie.remove()
-        return { data: null }
-      })
-      setSession(data)
-      setLoggedIn(data !== null)
-      if (data) authenticationPayload.current = parseAuthCookie(data)
-    })()
-  }, [])
-
-  const [loggedIn, setLoggedIn] = useState(() => {
-    return AuthSessionCookie.get() !== undefined
-  })
-
-  return [authenticationPayload, loggedIn]
+  return initialSessionValue
+    ? {
+        username: (initialSessionValue.identity.traits as { username: string })
+          .username,
+        id: (
+          initialSessionValue.identity.metadata_public as {
+            legacy_id: number
+          }
+        )?.legacy_id,
+      }
+    : null
 }
 
 function useAuthorizationPayload(
