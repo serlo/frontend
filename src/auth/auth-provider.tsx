@@ -1,4 +1,3 @@
-// import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
 import {
   createContext,
@@ -10,7 +9,6 @@ import {
 } from 'react'
 
 import { AuthSessionCookie } from './auth-session-cookie'
-// import { kratos } from '@/auth/kratos'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
 
 export interface AuthContextValue {
@@ -40,7 +38,6 @@ export function AuthProvider({
       value={{
         authenticationPayload,
         authorizationPayload,
-        // loggedIn,
       }}
     >
       {children}
