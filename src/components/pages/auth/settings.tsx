@@ -3,7 +3,6 @@ import {
   SelfServiceSettingsFlow,
   SubmitSelfServiceSettingsFlowBody,
 } from '@ory/client'
-import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -12,7 +11,7 @@ import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
-import { kratos } from '@/helper/kratos'
+import { kratos, KratosError } from '@/helper/kratos'
 
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
@@ -94,7 +93,7 @@ export function Settings() {
             setFlow(data)
           })
           .catch(handleFlowError(router, FlowType.settings, setFlow))
-          .catch(async (err: AxiosError) => {
+          .catch(async (err: KratosError) => {
             if (err.response?.status === 400) {
               setFlow(err.response?.data as SelfServiceSettingsFlow)
               return Promise.reject()

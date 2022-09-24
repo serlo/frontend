@@ -11,7 +11,6 @@ import {
   SubmitSelfServiceSettingsFlowBody,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
-import type { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
@@ -20,6 +19,7 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { Node } from '@/components/auth/node'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import type { KratosError } from '@/helper/kratos'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -181,7 +181,7 @@ export function handleFlowError<S>(
   flowType: FlowType,
   resetFlow: Dispatch<SetStateAction<S | undefined>>
 ) {
-  return async (error: AxiosError) => {
+  return async (error: KratosError) => {
     const data = error.response?.data as {
       redirect_browser_to: string
       error: {

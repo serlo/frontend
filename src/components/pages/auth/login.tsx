@@ -3,7 +3,6 @@ import {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
 } from '@ory/client'
-import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -12,7 +11,7 @@ import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
-import { kratos } from '@/helper/kratos'
+import { kratos, KratosError } from '@/helper/kratos'
 
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
@@ -49,7 +48,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(async (error: AxiosError) => {
+      .catch(async (error: KratosError) => {
         const data = error.response?.data as {
           error: {
             id: string
@@ -155,9 +154,9 @@ export function Login({ oauth }: { oauth?: boolean }) {
       }
     } catch (e: unknown) {
       try {
-        await handleFlowError(router, FlowType.login, setFlow)(e as AxiosError)
+        await handleFlowError(router, FlowType.login, setFlow)(e as KratosError)
       } catch (e: unknown) {
-        const err = e as AxiosError
+        const err = e as KratosError
         if (err.response?.status === 400) {
           setFlow(err.response?.data as SelfServiceLoginFlow)
           return

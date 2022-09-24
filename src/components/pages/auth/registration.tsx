@@ -2,14 +2,13 @@ import {
   SelfServiceRegistrationFlow,
   SubmitSelfServiceRegistrationFlowBody,
 } from '@ory/client'
-import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
-import { kratos } from '@/helper/kratos'
+import { kratos, KratosError } from '@/helper/kratos'
 
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
@@ -61,8 +60,7 @@ export function Registration() {
               .then(() => {})
           })
           .catch(handleFlowError(router, FlowType.registration, setFlow))
-          // TODO: refactor to not use AxiosError in whole project and so removing axios dependency
-          .catch((err: AxiosError) => {
+          .catch((err: KratosError) => {
             if (err.response?.status === 400) {
               setFlow(err.response?.data as SelfServiceRegistrationFlow)
               return

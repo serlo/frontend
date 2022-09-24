@@ -1,10 +1,9 @@
 import { SelfServiceError } from '@ory/client'
-import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { kratos } from '@/helper/kratos'
+import { kratos, KratosError } from '@/helper/kratos'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -16,12 +15,10 @@ export default renderedPageNoHooks(() => (
 function Error() {
   const [error, setError] = useState<SelfServiceError | string>()
 
-  // Get ?id=... from the URL
   const router = useRouter()
   const { id } = router.query
 
   useEffect(() => {
-    // If the router is not ready yet, or we already have an error, do nothing.
     if (!router.isReady || error) {
       return
     }
@@ -31,7 +28,7 @@ function Error() {
       .then(({ data }) => {
         setError(data)
       })
-      .catch((err: AxiosError) => {
+      .catch((err: KratosError) => {
         switch (err.response?.status) {
           case 404:
             // The error id could not be found. Let's just redirect home!

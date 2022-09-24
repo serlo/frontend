@@ -2,14 +2,13 @@ import {
   SelfServiceRecoveryFlow,
   SubmitSelfServiceRecoveryFlowBody,
 } from '@ory/client'
-import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
-import { kratos } from '@/helper/kratos'
+import { kratos, KratosError } from '@/helper/kratos'
 
 export function Recovery() {
   const [flow, setFlow] = useState<SelfServiceRecoveryFlow>()
@@ -38,7 +37,7 @@ export function Recovery() {
         setFlow(data)
       })
       .catch(handleFlowError(router, FlowType.recovery, setFlow))
-      .catch((err: AxiosError) => {
+      .catch((err: KratosError) => {
         // If the previous handler did not catch the error it's most likely a form validation error
         if (err.response?.status === 400) {
           setFlow(err.response?.data as SelfServiceRecoveryFlow)
@@ -61,7 +60,7 @@ export function Recovery() {
             setFlow(data)
           })
           .catch(handleFlowError(router, FlowType.recovery, setFlow))
-          .catch((err: AxiosError) => {
+          .catch((err: KratosError) => {
             switch (err.response?.status) {
               case 400:
                 // Status code 400 implies the form validation had an error
