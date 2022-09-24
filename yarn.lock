@@ -3833,15 +3833,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ory/hydra-client@npm:^1.11.8":
-  version: 1.11.8
-  resolution: "@ory/hydra-client@npm:1.11.8"
-  dependencies:
-    axios: ^0.21.4
-  checksum: 14c9ff6b91b8cb1d557834dc81939541bb4e8147216b606f8274362e183c9f9e5a8d52a71267e7d5fd6f7c791078cc9337a91e7324cdbf0a8e6025ba6d431c49
-  languageName: node
-  linkType: hard
-
 "@ory/integrations@npm:^0.2.6":
   version: 0.2.6
   resolution: "@ory/integrations@npm:0.2.6"
@@ -4046,7 +4037,6 @@ __metadata:
     "@graphql-codegen/typescript-operations": 2.3.5
     "@next/bundle-analyzer": ^12.0.0
     "@ory/client": 0.2.0-alpha.4
-    "@ory/hydra-client": ^1.11.8
     "@ory/integrations": ^0.2.6
     "@serlo/authorization": ^0.42.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
