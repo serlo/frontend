@@ -7,11 +7,13 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { PageTitle } from '@/components/content/page-title'
+import { useInstanceData } from '@/contexts/instance-context'
 import { kratos } from '@/helper/kratos'
 
 export function Recovery() {
   const [flow, setFlow] = useState<SelfServiceRecoveryFlow>()
-
+  const { strings } = useInstanceData()
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -74,7 +76,7 @@ export function Recovery() {
   if (!flow) return null
   return (
     <>
-      <div>Recover your account</div>
+      <PageTitle headTitle title={strings.auth.recoverTitle} />
       <Flow onSubmit={onSubmit} flow={flow} />
     </>
   )

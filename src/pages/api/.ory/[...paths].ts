@@ -29,6 +29,6 @@ const COOKIE_DOMAIN =
 // TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 export default createApiHandler({
   apiBaseUrlOverride: KRATOS_HOST,
-  forceCookieSecure: false,
+  forceCookieSecure: true,
   forceCookieDomain: COOKIE_DOMAIN,
 })

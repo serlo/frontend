@@ -14,7 +14,7 @@ import { kratos } from '@/helper/kratos'
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
-  const { strings } = useInstanceData()
+  const { lang, strings } = useInstanceData()
   const { return_to: returnTo, flow: flowId } = router.query
 
   useEffect(() => {
@@ -43,13 +43,18 @@ export function Registration() {
   }, [flowId, router, router.isReady, returnTo, flow])
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
+    const valuesWithLanguage = { ...values, 'traits.language': lang }
+
     await router
       .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
         shallow: true,
       })
       .then(() =>
         kratos
-          .submitSelfServiceRegistrationFlow(String(flow?.id), values)
+          .submitSelfServiceRegistrationFlow(
+            String(flow?.id),
+            valuesWithLanguage
+          )
           .then(async () => {
             return await router
               .push(flow?.return_to || '/auth/login-check')

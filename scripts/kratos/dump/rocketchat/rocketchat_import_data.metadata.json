@@ -1,0 +1,17 @@
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_updatedAt": { "$numberInt": "1" } },
+      "name": "_updatedAt_1"
+    }
+  ],
+  "uuid": "f65896f627d44bf2a6a58f9486ea7d9b",
+  "collectionName": "rocketchat_import_data",
+  "type": "collection"
+}

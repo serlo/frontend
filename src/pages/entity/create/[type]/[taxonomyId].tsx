@@ -8,12 +8,12 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { SerloEntityPluginType } from '@/edtr-io/plugins'
-import { sandboxUrl } from '@/fetcher/fetch-editor-data'
 import {
   GetTaxonomyTypeQuery,
   GetTaxonomyTypeQueryVariables,
 } from '@/fetcher/graphql-types/operations'
 import { sharedPathFragments } from '@/fetcher/query-fragments'
+import { testAreaUrlStart } from '@/fetcher/testArea'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -94,15 +94,15 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   )
     return { notFound: true }
 
-  const isSandbox = result.uuid.navigation?.path.nodes.some(
-    (node) => node.url === sandboxUrl
+  const isTestArea = result.uuid.navigation?.path.nodes.some(
+    (node) => node.url === testAreaUrlStart
   )
 
   return {
     props: {
       entityType,
       taxonomyTerm: { ...result.uuid },
-      needsReview: !isSandbox,
+      needsReview: !isTestArea,
     },
     revalidate: 60 * 30, // 0.5 hours,
   }

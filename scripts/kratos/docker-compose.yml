@@ -63,9 +63,9 @@ services:
       - LOG_LEAK_SENSITIVE_VALUES=true
       - OAUTH2_EXPOSE_INTERNAL_ERRORS=1
       - URLS_SELF_ISSUER=http://localhost:4444
-      - URLS_LOGIN=http://localhost:3001/hydra/login
-      - URLS_LOGOUT=http://localhost:3001/hydra/logout
-      - URLS_CONSENT=http://localhost:3001/hydra/consent
+      - URLS_LOGIN=http://localhost:3000/auth/oauth/login
+      - URLS_LOGOUT=http://localhost:3000/auth/oauth/logout
+      - URLS_CONSENT=http://localhost:3000/auth/oauth/consent
       - DSN=memory
       - SECRETS_SYSTEM=youReallyNeedToChangeThis
       - OIDC_SUBJECT_IDENTIFIERS_ENABLED=public,pairwise
@@ -95,7 +95,7 @@ services:
     networks:
       - intranet
   api:
-    image: eu.gcr.io/serlo-shared/api-server:0.47.0-staging.7
+    image: eu.gcr.io/serlo-shared/api-server:0.47.0-staging.13
     command: yarn start
     depends_on:
       - redis
@@ -138,8 +138,43 @@ services:
       - ENV=development
     networks:
       - intranet
+  rocketchat:
+    image: registry.rocket.chat/rocketchat/rocket.chat:latest
+    restart: on-failure
+    environment:
+      MONGO_URL: 'mongodb://mongodb:27017/rocketchat?replicaSet=rs0'
+      MONGO_OPLOG_URL: 'mongodb://mongodb:27017/local?replicaSet=rs0'
+      ROOT_URL: http://localhost:3030
+      PORT: '3030'
+      DEPLOY_METHOD: docker
+    depends_on:
+      - mongodb
+    expose:
+      - '3030'
+    ports:
+      - '${BIND_IP:-0.0.0.0}:${HOST_PORT:-3030}:3030'
+    networks:
+      - intranet
+  mongodb:
+    image: docker.io/bitnami/mongodb:4.4
+    restart: on-failure
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+      - ./dump:/dump
+    environment:
+      MONGODB_REPLICA_SET_MODE: primary
+      MONGODB_REPLICA_SET_NAME: rs0
+      MONGODB_PORT_NUMBER: '27017'
+      MONGODB_INITIAL_PRIMARY_HOST: mongodb
+      MONGODB_INITIAL_PRIMARY_PORT_NUMBER: '27017'
+      MONGODB_ADVERTISED_HOSTNAME: mongodb
+      MONGODB_ENABLE_JOURNAL: 'true'
+      ALLOW_EMPTY_PASSWORD: 'yes'
+    networks:
+      - intranet
 networks:
   intranet:
 volumes:
   kratos-sqlite:
   hydra-sqlite:
+  mongodb_data: { driver: local }

@@ -134,7 +134,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Community', id: 35587 },
       { title: 'Help for Editors', id: 84500 },
       { title: 'New Subjects and Topics', id: 106103 },
-      { title: 'Sandbox for Authors', id: 106102 },
+      { title: 'Test Area for Authors', id: 106102 },
       { title: 'All Activities on Serlo', url: '/event/history' },
       { title: 'All Discussions', url: '/discussions' },
       { title: 'Start new Serlo teams', id: 48538 },

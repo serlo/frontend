@@ -11,7 +11,7 @@ head to `localhost:3000` and try to register, verify email, log in, log out, and
 
 Change files in `src/pages/api/.ory/mail-templates/`, commit and push. And ask the infrastructure unit to redeploy kratos.
 
-## Getting started using local API and database layer
+## Getting started using local environment
 
 1. Run `yarn kratos` (or `yarn kratos:detach` if you want to have control of the terminal).
    _Note: if you are doing it for the first time, it may take a while (10 to 15 minutes is realistic)._
@@ -29,7 +29,12 @@ NEXT_PUBLIC_ENV=local
 6. For login you can already use the id `dev`, email `serlo@dev.org` and password `123456`.
 7. For emails go to `localhost:4436`.
 
-_Important: the file src/api/graphql-fetch.ts was modified in order to imitate the authentication made by the cloudflare worker. DO NOT COMMIT this change._
+_Important: the file src/api/graphql-fetch.ts and src/data/de/menu-data.ts were modified in order to imitate the current behavior in deployment. DO NOT COMMIT these changes._
+
+### Developing with local rocket chat
+
+Rocket chat will be available in `localhost:3030`.
+You can log in as admin using the username `dev` and password `123456`.
 
 ### Developing email templates
 

@@ -126,7 +126,12 @@ export const setEntityMutationRunner = async function ({
   }
 
   if (!isRecursiveCall && childrenResult) {
-    showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    showToastNotice(
+      needsReview
+        ? loggedInData.strings.mutations.success.saveNeedsReview
+        : loggedInData.strings.mutations.success.save,
+      'success'
+    )
     const id =
       data.id === 0
         ? savedId === 0
@@ -215,7 +220,7 @@ const loopNestedChildren = async ({
         )
 
         // only request new revision when entity changed
-        if (hasNoChanges(oldVersion, child)) return true
+        if (hasNoChanges(oldVersion, child)) continue
 
         const input = {
           ...child,

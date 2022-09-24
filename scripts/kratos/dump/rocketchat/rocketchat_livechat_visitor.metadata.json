@@ -1,0 +1,51 @@
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "token": { "$numberInt": "1" } },
+      "name": "token_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "phone.phoneNumber": { "$numberInt": "1" } },
+      "name": "phone.phoneNumber_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "visitorEmails.address": { "$numberInt": "1" } },
+      "name": "visitorEmails.address_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "name": { "$numberInt": "1" } },
+      "name": "name_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "username": { "$numberInt": "1" } },
+      "name": "username_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "contactMananger.username": { "$numberInt": "1" } },
+      "name": "contactMananger.username_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "livechatData.$**": { "$numberInt": "1" } },
+      "name": "livechatData.$**_1"
+    }
+  ],
+  "uuid": "73e9527bb69d42129db1ffc1b981e51a",
+  "collectionName": "rocketchat_livechat_visitor",
+  "type": "collection"
+}

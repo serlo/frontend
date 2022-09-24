@@ -7,7 +7,8 @@ import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { useAuthentication } from '@/auth/use-authentication'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+// import { useAuthentication } from '@/auth/use-authentication'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
@@ -16,18 +17,29 @@ import { kratos } from '@/helper/kratos'
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
-  const auth = useAuthentication()
+
+  // The idea is to show to the user that they are logged it,
+  // because auth-session cookie is used to initialize auth.current
+  // but it is only working after refresh
+  useEffect(() => {
+    async function setAuthSessionCookie() {
+      console.log('settingAuthSessionCookie')
+      await kratos
+        .toSession()
+        .then(({ data }) => {
+          AuthSessionCookie.set(data)
+        })
+        .catch(() => {
+          // user is most likely just not logged in
+          AuthSessionCookie.remove()
+        })
+    }
+    void setAuthSessionCookie()
+  })
 
   const { flow: flowId, return_to: returnTo } = router.query
 
   useEffect(() => {
-    async function authenticate() {
-      if (auth.current === null) {
-        await router.push('/api/auth/login')
-      }
-    }
-    void authenticate()
-
     if (!router.isReady || flow) return
 
     if (flowId) {
@@ -48,7 +60,7 @@ export function Settings() {
         setFlow(data)
       })
       .catch(handleFlowError(router, FlowType.settings, setFlow))
-  }, [flowId, router, router.isReady, returnTo, flow, auth])
+  }, [flowId, router, router.isReady, returnTo, flow])
 
   return (
     <>

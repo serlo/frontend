@@ -14,10 +14,16 @@ import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { kratos } from '@/helper/kratos'
 
-export function Login() {
+export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
-  const { return_to: returnTo, flow: flowId, refresh, aal } = router.query
+  const {
+    return_to: returnTo,
+    flow: flowId,
+    refresh,
+    aal,
+    login_challenge,
+  } = router.query
 
   useEffect(() => {
     if (!router.isReady || flow) {
@@ -43,8 +49,30 @@ export function Login() {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, FlowType.login, setFlow))
-  }, [flowId, router, router.isReady, aal, refresh, returnTo, flow])
+      .catch(async (error: AxiosError) => {
+        const data = error.response?.data as {
+          error: {
+            id: string
+          }
+        }
+        if (oauth && data.error?.id === 'session_already_available') {
+          await router.push(
+            `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
+          )
+        }
+        await handleFlowError(router, FlowType.login, setFlow)(error)
+      })
+  }, [
+    flowId,
+    router,
+    router.isReady,
+    aal,
+    refresh,
+    returnTo,
+    flow,
+    oauth,
+    login_challenge,
+  ])
 
   const showLogout = aal || refresh
 
@@ -86,7 +114,7 @@ export function Login() {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-
+    const originalPreviousPath = sessionStorage.getItem('previousPathname')
     await router.push(
       `${router.pathname}?flow=${String(flow?.id)}`,
       undefined,
@@ -100,11 +128,22 @@ export function Login() {
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
           AuthSessionCookie.set(data.session)
+          if (oauth) {
+            await router.push(
+              `/api/oauth/accept-login?login_challenge=${String(
+                login_challenge
+              )}`
+            )
+            return
+          }
+
           if (flow?.return_to) {
             window.location.href = flow?.return_to
             return
           }
-          await router.push('/api/auth/login')
+
+          window.location.href = `${originalPreviousPath ?? '/'}#auth`
+          return
         })
         .catch((e: Error) => {
           throw e

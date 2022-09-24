@@ -1,0 +1,31 @@
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "platform": { "$numberInt": "1" },
+        "startAt": { "$numberInt": "1" },
+        "expireAt": { "$numberInt": "1" }
+      },
+      "name": "platform_1_startAt_1_expireAt_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "platform": { "$numberInt": "1" },
+        "startAt": { "$numberInt": "1" },
+        "expireAt": { "$numberInt": "1" },
+        "active": { "$numberInt": "1" }
+      },
+      "name": "platform_1_startAt_1_expireAt_1_active_1"
+    }
+  ],
+  "uuid": "98bd282d30e54a339fbba6bbd0f94196",
+  "collectionName": "rocketchat_banner",
+  "type": "collection"
+}

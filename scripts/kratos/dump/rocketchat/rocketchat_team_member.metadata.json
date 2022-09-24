@@ -1,0 +1,26 @@
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "unique": true,
+      "key": {
+        "teamId": { "$numberInt": "1" },
+        "userId": { "$numberInt": "1" }
+      },
+      "name": "teamId_1_userId_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "teamId": { "$numberInt": "1" } },
+      "name": "teamId_1"
+    }
+  ],
+  "uuid": "7ef8317c3ede42a3ba589c9fec709691",
+  "collectionName": "rocketchat_team_member",
+  "type": "collection"
+}

@@ -1,0 +1,54 @@
+{
+  "indexes": [
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_id": { "$numberInt": "1" } },
+      "name": "_id_"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "parentId": { "$numberInt": "1" } },
+      "name": "parentId_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "ancestors": { "$numberInt": "1" } },
+      "name": "ancestors_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "_updatedAt": { "$numberInt": "1" } },
+      "name": "_updatedAt_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "name": { "$numberInt": "1" } },
+      "name": "name_1"
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "businessHourId": { "$numberInt": "1" } },
+      "name": "businessHourId_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": { "type": { "$numberInt": "1" } },
+      "name": "type_1",
+      "sparse": true
+    },
+    {
+      "v": { "$numberInt": "2" },
+      "key": {
+        "numAgents": { "$numberInt": "1" },
+        "enabled": { "$numberInt": "1" }
+      },
+      "name": "numAgents_1_enabled_1"
+    }
+  ],
+  "uuid": "20095d59aa064daaa878901057005653",
+  "collectionName": "rocketchat_livechat_department",
+  "type": "collection"
+}
