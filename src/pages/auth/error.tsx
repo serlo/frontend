@@ -1,9 +1,9 @@
 import { SelfServiceError } from '@ory/client'
-import type { AxiosError } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
+import type { AxiosError } from '@/auth/types'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 

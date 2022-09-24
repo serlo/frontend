@@ -11,12 +11,12 @@ import {
   SubmitSelfServiceSettingsFlowBody,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
-import type { AxiosError } from 'axios'
 import { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 
 import { StaticInfoPanel } from '../static-info-panel'
+import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
