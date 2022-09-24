@@ -7,11 +7,10 @@ export const AuthSessionCookie = {
     return Cookies.get(this.cookieName)
   },
   set(session: Session) {
-    // TODO: get same "expires at" settings
-    // TODO: remove token? Pretty sure we should not store that locally
-    console.log(session)
+    // TODO: is the cookie id problematic to store locally?
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
+      expires: session.expires_at ? new Date(session.expires_at) : undefined,
     })
   },
   remove() {

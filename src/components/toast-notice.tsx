@@ -26,7 +26,7 @@ export function ToastNotice() {
         window.location.reload()
       }, 200)
     }
-  }, [])
+  }, [strings.loading.oneMomentPlease])
 
   return <Notification />
 }
