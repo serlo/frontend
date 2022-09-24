@@ -15,8 +15,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
 
   useEffect(() => {
     fetchAndPersistAuthSession().catch(() => {
-      // TODO: what redirect would make sense as a fallback?
-      return router.push('/auth/login-check')
+      return router.push('/')
     })
 
     const originalPreviousPath = sessionStorage.getItem('previousPathname')
@@ -40,7 +39,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
             showToastNotice(strings.notices.bye)
 
             setTimeout(() => {
-              // TODO: make sure router.push() also refreshed authed components (e.g. header)
+              // TODO: make sure router.push() also rerenders authed components (e.g. header)
               window.location.href = originalPreviousPath ?? '/'
             }, 1000)
 
@@ -53,7 +52,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       .catch((error: unknown) => {
         return Promise.reject(error)
       })
-  }, [router, oauth, logout_challenge])
+  }, [router, oauth, logout_challenge, strings.notices.bye])
 
   return null
 }

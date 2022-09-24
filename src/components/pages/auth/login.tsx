@@ -14,12 +14,14 @@ import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
   const { strings } = useInstanceData()
+  const loginStrings = strings.auth.login
 
   const {
     return_to: returnTo,
@@ -85,27 +87,24 @@ export function Login({ oauth }: { oauth?: boolean }) {
       <PageTitle
         headTitle
         icon={<FaIcon icon={faUser} />}
-        title={(() => {
-          if (flow?.refresh) {
-            return 'Confirm Action' // TODO: i18n
-          }
-          return 'Sign In' // TODO: i18n
-        })()}
+        title={loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']}
       />
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      {showLogout ? <div>Log out</div> : ''} {/* TODO: i18n …*/}
+      {showLogout ? <div>{loginStrings.logOut}</div> : ''}
       <div className="mx-side mt-20 border-t-2 pt-4">
-        Bist du neu hier?{' '}
+        {loginStrings.newHere}{' '}
         <Link href="/auth/registration" className="serlo-button-light">
-          Neuen Account registrieren
+          {loginStrings.registerNewAccount}
         </Link>
       </div>
       <div className="mx-side mt-2 pt-4">
-        Hast du dein{' '}
-        <Link href="/auth/recovery" className="font-bold">
-          Passwort vergessen
-        </Link>
-        ?
+        {replacePlaceholders(loginStrings.forgotPassword, {
+          forgotLinkText: (
+            <Link href="/auth/recovery" className="font-bold">
+              {loginStrings.forgotLinkText}
+            </Link>
+          ),
+        })}
       </div>
     </>
   )
@@ -143,7 +142,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           )
 
           setTimeout(() => {
-            // TODO: make sure router.push() also refreshed authed components (e.g. header)
+            // TODO: make sure router.push() also rerenders authed components (e.g. header)
             window.location.href =
               flow?.return_to ?? originalPreviousPath ?? '/'
           }, 1000)

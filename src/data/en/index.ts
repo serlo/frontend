@@ -331,6 +331,15 @@ export const instanceData = {
       registerTitle: 'Register new account',
       recoverTitle: 'Recover your account',
       changePassword: 'Change Password',
+      login: {
+        confirmAction: 'Confirm Action',
+        signIn: 'Sign In',
+        logOut: 'Log out',
+        newHere: 'Are you new here?',
+        registerNewAccount: 'Register new account',
+        forgotPassword: 'Did you %forgotLinkText%?',
+        forgotLinkText: 'forget your password'
+      },
       fields: {
         identifier: 'Username or Email address',
         username: 'Username',

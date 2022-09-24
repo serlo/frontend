@@ -1,12 +1,10 @@
-// import { Session } from '@ory/client'
-// import Cookies from 'js-cookie'
-
 import type { Session } from '@ory/client'
 
 import { AuthSessionCookie } from './auth-session-cookie'
 import { kratos } from '@/auth/kratos'
 
-// TODO: make sure this runs on the user flows, route changes and maybe also browser tab change / refocus
+// TODO: when auth consumers update without refresh
+// we could run this on route changes and maybe browser tab change / refocus as well?
 
 export async function fetchAndPersistAuthSession(session?: Session | null) {
   if (session !== undefined) {
