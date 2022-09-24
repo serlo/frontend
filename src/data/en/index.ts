@@ -331,6 +331,7 @@ export const instanceData = {
       registerTitle: 'Register new account',
       recoverTitle: 'Recover your account',
       changePassword: 'Change Password',
+      loggingOut: 'Logging you out…',
       login: {
         confirmAction: 'Confirm Action',
         signIn: 'Sign In',

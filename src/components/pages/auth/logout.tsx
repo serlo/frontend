@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -52,5 +53,5 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       })
   }, [router, oauth, logout_challenge, strings.notices.bye])
 
-  return null
+  return <LoadingSpinner text={strings.auth.loggingOut} />
 }
