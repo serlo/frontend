@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from '@/auth/auth-session-cookie'
-import { useAuthentication } from '@/auth/use-authentication'
+// import { useAuthentication } from '@/auth/use-authentication'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
