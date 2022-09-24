@@ -16,12 +16,10 @@ export default renderedPageNoHooks(() => (
 function Error() {
   const [error, setError] = useState<SelfServiceError | string>()
 
-  // Get ?id=... from the URL
   const router = useRouter()
   const { id } = router.query
 
   useEffect(() => {
-    // If the router is not ready yet, or we already have an error, do nothing.
     if (!router.isReady || error) {
       return
     }

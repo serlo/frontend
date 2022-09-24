@@ -61,7 +61,6 @@ export function Registration() {
               .then(() => {})
           })
           .catch(handleFlowError(router, FlowType.registration, setFlow))
-          // TODO: refactor to not use AxiosError in whole project and so removing axios dependency
           .catch((err: AxiosError) => {
             if (err.response?.status === 400) {
               setFlow(err.response?.data as SelfServiceRegistrationFlow)

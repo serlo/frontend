@@ -1,5 +1,4 @@
 import { Configuration as KratosConfig, V0alpha2Api } from '@ory/client'
-import { AdminApi, Configuration as HydraConfig } from '@ory/hydra-client'
 
 import { frontendOrigin } from '../helper/urls/frontent-origin'
 
@@ -14,20 +13,19 @@ export const kratos = new V0alpha2Api(
   })
 )
 
-export const hydra = new AdminApi(
-  new HydraConfig({
-    basePath:
-      process.env.NEXT_PUBLIC_ENV === 'local'
-        ? 'http://localhost:4445'
-        : 'https://admin-hydra.serlo-staging.dev', // TODO: use envvar
-    ...(process.env.MOCK_TLS_TERMINATION
-      ? {
-          baseOptions: {
-            headers: process.env.MOCK_TLS_TERMINATION
-              ? 'X-Forwarded-Proto'
-              : 'https',
-          },
-        }
-      : {}),
-  })
-)
+// Kratos SDK uses AxiosError, but in order to not have to import the axios lib
+// just for the this error, we kind of imitate it here
+export class KratosError<T = unknown> extends Error {
+  code?: string
+  request?: any
+  response?: {
+    data: T
+    status: number
+    statusText: string
+    headers: Record<string, string> & {
+      'set-cookie'?: string[]
+    }
+    request?: any
+  }
+  status?: string
+}
