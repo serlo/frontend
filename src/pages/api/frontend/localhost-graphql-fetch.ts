@@ -10,7 +10,8 @@ export default async function handler(
 ) {
   const { query, variables } = JSON.parse(req.body as string) as ParsedArgs
 
-  if (!req.headers.cookie) res.json('no cookie!')
+  if (!req.headers.cookie)
+    res.status(403).json({ message: 'No auth cookie provided!' })
 
   function executeQuery() {
     const client = new GraphQLClient(endpoint, {
