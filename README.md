@@ -9,7 +9,6 @@ Next.js app that serves [serlo.org](https://serlo.org).
 The frontend turns the data it receives from our [GraphQL API](https://github.com/serlo/api.serlo.org) into pretty views.
 In our [staging](https://de.serlo-staging.dev/) and [production](https://serlo.org/) enviroments the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that mostly does redirects and could be used for A/B testing etc.
 
-
 ## Getting started
 
 ### Local installation
