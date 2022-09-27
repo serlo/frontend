@@ -109,12 +109,12 @@ export function ToolbarMain({
           if (isChanged) setVisibility(true)
           else
             showToastNotice(
-              '💅 ' + loggedInData!.strings.editor.noChangesWarning
+              '👀 ' + loggedInData!.strings.editor.noChangesWarning
             )
         }}
         title="Save"
       >
-        <FaIcon icon={faSave} />
+        <FaIcon icon={faSave} /> {loggedInData!.strings.editor.edtrIo.save}
       </button>
     )
   }

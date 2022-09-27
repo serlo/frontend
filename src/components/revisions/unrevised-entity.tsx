@@ -103,11 +103,14 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
         </Td>
         <Td centered className="w-1/6">
           <Link
-            className="serlo-button-light my-0 mx-auto text-base"
+            className="serlo-button-light my-0 mx-auto text-base group"
             title={strings.revisionHistory.viewLabel}
             href={viewUrl}
           >
-            {strings.revisionHistory.view} <FaIcon icon={faEye} />
+            <span className="hidden group-hover:inline">
+              {strings.revisionHistory.view}
+            </span>{' '}
+            <FaIcon icon={faEye} />
           </Link>
         </Td>
       </tr>
