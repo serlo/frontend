@@ -101,10 +101,9 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
         <Td className="w-1/6 pt-2.5">
           <TimeAgo datetime={new Date(revision.date)} dateAsTitle />
         </Td>
-        <Td centered className="w-1/6">
+        <Td centered className="w-1/6 text-right">
           <Link
-            className="serlo-button-light my-0 mx-auto text-base group"
-            title={strings.revisionHistory.viewLabel}
+            className="serlo-button-light my-0 ml-auto text-base group transition-none hover:bg-brand-100 hover:text-brand"
             href={viewUrl}
           >
             <span className="hidden group-hover:inline">
