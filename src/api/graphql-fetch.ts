@@ -29,6 +29,7 @@ export function createAuthAwareGraphqlFetch(
   return async function graphqlFetch(args: string) {
     if (auth.current === null) throw new Error('unauthorized')
 
+    // proxy calls from localhost to make sure we can send the cookies
     if (window.location.hostname == 'localhost') {
       const result = await fetch('/api/frontend/localhost-graphql-fetch', {
         headers: {
