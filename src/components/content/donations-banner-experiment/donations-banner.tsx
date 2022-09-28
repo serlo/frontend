@@ -192,7 +192,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
                 void router.push('/spenden')
               }}
             >
-              Spende jetzt!
+              Jetzt spenden
             </button>
           </p>
         </div>

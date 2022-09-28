@@ -173,7 +173,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
                 void router.push('/spenden')
               }}
             >
-              Spende jetzt!
+              Jetzt spenden
             </button>
           </p>
         </div>
