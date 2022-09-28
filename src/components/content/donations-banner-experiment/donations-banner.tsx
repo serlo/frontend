@@ -2,11 +2,18 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
-import { Lazy } from './lazy'
+import { Lazy } from '../lazy'
 import { useInstanceData } from '@/contexts/instance-context'
+import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
+
+// Round 2
+// 10% Artikel ✅
+// 10% dort ausreichend?) unter einer Lösung
+// 100% Ende der Kurse
+// 10% jeweils nach der 4. Aufgabe einer Aufgabensammlung
 
 declare global {
   // eslint-disable-next-line no-var
@@ -15,9 +22,10 @@ declare global {
   var hack__id: number
 }
 
-const chance = isProduction ? 0.2 : 1 // 20% or always while developing
+const reducedChance = isProduction ? 0.2 : 1 // 20% or always while developing
 
-const banners = [
+// show on articles and exercise groups
+const articleBanners = [
   {
     id: 'banner-A1',
     isLong: true,
@@ -156,28 +164,79 @@ const banners = [
   },
 ]
 
-type Banner = typeof banners[number]
+const courseBanner = {
+  id: 'banner-course-1',
+  isLong: false,
+  call: 'Hat dir dieser Kurs weitergeholfen?',
+  text: (
+    <div className="text-left">
+      <p className="serlo-p special-hyphens-initial leading-6">
+        Wir möchten <b>mehr kleinschrittige Kurse</b> entwickeln, die
+        Nutzbarkeit auf Smartphones verbessern und es Schüler*innen ermöglichen,
+        eigene Lernziele zu definieren und ihren eigenen Lernstand zu speichern.
+      </p>
+      <p className="serlo-p special-hyphens-initial leading-6">
+        All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für immer
+        kostenlos und frei von Werbung bleiben wird, sind wir auf Spenden
+        angewiesen.
+      </p>
+      <p className="serlo-p special-hyphens-initial leading-6 font-bold">
+        Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
+      </p>
+    </div>
+  ),
+  imageSrc: '/_assets/img/donations/donation-bird.svg',
+}
 
-export function DonationsBanner({ id }: { id: number }) {
+type Banner = typeof articleBanners[number]
+
+export interface DonationsBannerProps {
+  id: number
+  entityData?: EntityData
+}
+
+export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
   const [banner, setBanner] = useState<Banner | undefined>(undefined)
   const bannerRef = useRef<HTMLElement>(null)
   const router = useRouter()
   const { lang } = useInstanceData()
 
+  //const change = typename === UuidType.Course
+
   useEffect(() => {
     globalThis.hack__id = id
-    if (lang !== Instance.De || Math.random() > chance) {
+
+    console.log({ entityData })
+
+    const chanceShow = Math.random() < reducedChance
+
+    const isLastCoursePage =
+      UuidType.CoursePage &&
+      entityData?.courseData &&
+      entityData.courseData.pages.length === entityData.courseData.index + 1
+
+    const typeShow =
+      isLastCoursePage || entityData?.typename === UuidType.Article
+
+    if (
+      lang !== Instance.De ||
+      Math.random() > reducedChance ||
+      (entityData &&
+        ![(UuidType.Solution, UuidType.ExerciseGroup)].includes(
+          entityData.typename
+        ))
+    ) {
       setBanner(undefined)
       return undefined
     }
 
-    setBanner(banners[Math.floor(Math.random() * banners.length)])
+    setBanner(articleBanners[Math.floor(Math.random() * articleBanners.length)])
 
     const horizon = document.getElementById('horizon')
     if (horizon) horizon.style.display = 'none'
 
     // rerole on entity change
-  }, [setBanner, id, lang])
+  }, [setBanner, id, lang, entityData])
 
   if (lang !== Instance.De || !banner) return null
 
