@@ -91,7 +91,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     // rerole on entity change
   }, [setBanner, id, lang, place])
 
-  if (lang !== Instance.De || !banner) return null
+  if (!banner) return null
 
   return (
     <Lazy slim>

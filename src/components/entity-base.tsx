@@ -60,10 +60,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
 
           {/* Temporary donations banner trial */}
           {page.kind === 'single-entity' ? (
-            <>
-              here are the bannerssss
-              <DonationsBanner id={entityId} entityData={page.entityData} />
-            </>
+            <DonationsBanner id={entityId} entityData={page.entityData} />
           ) : null}
 
           <div id="comment-area-begin-scrollpoint" />

@@ -11,9 +11,7 @@ import { submitEvent } from '@/helper/submit-event'
 
 // Round 2
 // 10% Artikel ✅
-// 10% dort ausreichend?) unter einer Lösung
 // 100% Ende der Kurse
-// 10% jeweils nach der 4. Aufgabe einer Aufgabensammlung
 
 declare global {
   // eslint-disable-next-line no-var
@@ -192,7 +190,7 @@ type Banner = typeof articleBanners[number]
 
 export interface DonationsBannerProps {
   id: number
-  entityData?: EntityData
+  entityData: EntityData
 }
 
 export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
@@ -201,36 +199,31 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
   const router = useRouter()
   const { lang } = useInstanceData()
 
-  //const change = typename === UuidType.Course
-
   useEffect(() => {
     globalThis.hack__id = id
 
-    console.log({ entityData })
+    const isCourse = entityData.typename === UuidType.CoursePage
 
-    const chanceShow = Math.random() < reducedChance
+    const chanceShow = isCourse ? true : Math.random() < reducedChance
 
     const isLastCoursePage =
-      UuidType.CoursePage &&
-      entityData?.courseData &&
+      isCourse &&
+      entityData.courseData &&
       entityData.courseData.pages.length === entityData.courseData.index + 1
 
     const typeShow =
-      isLastCoursePage || entityData?.typename === UuidType.Article
+      isLastCoursePage || entityData.typename === UuidType.Article
 
-    if (
-      lang !== Instance.De ||
-      Math.random() > reducedChance ||
-      (entityData &&
-        ![(UuidType.Solution, UuidType.ExerciseGroup)].includes(
-          entityData.typename
-        ))
-    ) {
+    if (lang !== Instance.De || !typeShow || !chanceShow) {
       setBanner(undefined)
       return undefined
     }
 
-    setBanner(articleBanners[Math.floor(Math.random() * articleBanners.length)])
+    setBanner(
+      isCourse
+        ? courseBanner
+        : articleBanners[Math.floor(Math.random() * articleBanners.length)]
+    )
 
     const horizon = document.getElementById('horizon')
     if (horizon) horizon.style.display = 'none'
@@ -238,7 +231,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     // rerole on entity change
   }, [setBanner, id, lang, entityData])
 
-  if (lang !== Instance.De || !banner) return null
+  if (!banner) return null
 
   return (
     <Lazy slim>
