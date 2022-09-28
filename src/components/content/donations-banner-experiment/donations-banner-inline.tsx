@@ -127,7 +127,8 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     }
 
     const banners = possibleBanners[place]
-    setBanner(banners[Math.floor(Math.random() * banners.length)])
+    const chosenBannerIndex = Math.floor(Math.random() * banners.length)
+    setBanner(banners.at(chosenBannerIndex))
 
     const horizon = document.getElementById('horizon')
     if (horizon) horizon.style.display = 'none'
