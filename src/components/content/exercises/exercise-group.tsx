@@ -64,7 +64,7 @@ export function ExerciseGroup({
       </ol>
       {/* Temporary donations banner trial */}
       {positionOnPage === 3 ? (
-        <DonationsBannerInline id={id} place="ex" />
+        <DonationsBannerInline id={id} place="exercise" />
       ) : null}
     </div>
   )

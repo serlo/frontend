@@ -98,7 +98,7 @@ type Banner = typeof solutionBanner
 
 export interface DonationsBannerProps {
   id: number
-  place: 'solution' | 'ex'
+  place: 'solution' | 'exercise'
 }
 
 export function DonationsBannerInline({ id, place }: DonationsBannerProps) {

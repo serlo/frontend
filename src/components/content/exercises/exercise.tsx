@@ -88,7 +88,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
         {/* Temporary donations banner trial */}
         {node.positionOnPage === 3 ? (
-          <DonationsBannerInline id={node.context.id} place="ex" />
+          <DonationsBannerInline id={node.context.id} place="exercise" />
         ) : null}
       </>
     )
