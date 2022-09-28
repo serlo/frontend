@@ -123,7 +123,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
 
     if (lang !== Instance.De || Math.random() > reducedChance) {
       setBanner(undefined)
-      return undefined
+      return
     }
 
     const banners = possibleBanners[place]
@@ -136,24 +136,28 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     // rerole on entity change
   }, [setBanner, id, lang, place])
 
-  if (!banner) return null
+  if (banner == null) return null
 
   return (
     <Lazy slim>
       <aside
         ref={bannerRef}
         onLoad={() => {
-          const observer = new IntersectionObserver((entries, _observer) => {
-            const entry = entries[0]
-            if (
-              entry.isIntersecting &&
-              globalThis.hack__lastId !== globalThis.hack__id
-            ) {
-              globalThis.hack__lastId = globalThis.hack__id
-              submitEvent(`spenden-seen-${banner.id}`)
-            }
-          })
-          if (bannerRef.current) observer.observe(bannerRef.current)
+          const observer = new IntersectionObserver(
+            (entries) => {
+              const entry = entries.at(0)
+              if (
+                entry &&
+                entry.isIntersecting &&
+                globalThis.hack__lastId !== globalThis.hack__id
+              ) {
+                globalThis.hack__lastId = globalThis.hack__id
+                submitEvent(`spenden-seen-${banner.id}`)
+              }
+            },
+            { threshold: 0.8 }
+          )
+          if (bannerRef.current != null) observer.observe(bannerRef.current)
         }}
         className={clsx(
           'px-side text-center text-lg pb-5',
