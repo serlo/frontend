@@ -4,7 +4,7 @@ import { RefObject } from 'react'
 import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
 
-interface ParsedArgs {
+export interface ParsedArgs {
   query: RequestDocument
   variables: unknown
 }
@@ -26,14 +26,27 @@ export function createGraphqlFetch() {
 export function createAuthAwareGraphqlFetch(
   auth: RefObject<AuthenticationPayload>
 ) {
-  return async function fetch(args: string) {
-    const { query, variables } = JSON.parse(args) as ParsedArgs
+  return async function graphqlFetch(args: string) {
     if (auth.current === null) throw new Error('unauthorized')
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return await executeQuery()
+    // proxy calls from localhost to make sure we can send the cookies
+    if (window.location.hostname == 'localhost') {
+      const result = await fetch('/api/frontend/localhost-graphql-fetch', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify(args),
+      })
+      return (await result.json()) as unknown
+    } else {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return await executeQuery()
+    }
 
     function executeQuery() {
+      const { query, variables } = JSON.parse(args) as ParsedArgs
       const client = new GraphQLClient(endpoint, {
         credentials: 'include',
       })
