@@ -330,6 +330,17 @@ export const instanceData = {
       pleaseLogInText: 'to use this feature.',
       registerTitle: 'Register new account',
       recoverTitle: 'Recover your account',
+      changePassword: 'Change Password',
+      loggingOut: 'Logging you out…',
+      login: {
+        confirmAction: 'Confirm Action',
+        signIn: 'Sign In',
+        logOut: 'Log out',
+        newHere: 'Are you new here?',
+        registerNewAccount: 'Register new account',
+        forgotPassword: 'Did you %forgotLinkText%?',
+        forgotLinkText: 'forget your password'
+      },
       fields: {
         identifier: 'Username or Email address',
         username: 'Username',

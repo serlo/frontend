@@ -2,8 +2,9 @@ import { SelfServiceError } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { kratos } from '@/auth/kratos'
+import type { AxiosError } from '@/auth/types'
 import { FrontendClientBase } from '@/components/frontend-client-base'
-import { kratos, KratosError } from '@/helper/kratos'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks(() => (
@@ -28,7 +29,7 @@ function Error() {
       .then(({ data }) => {
         setError(data)
       })
-      .catch((err: KratosError) => {
+      .catch((err: AxiosError) => {
         switch (err.response?.status) {
           case 404:
             // The error id could not be found. Let's just redirect home!

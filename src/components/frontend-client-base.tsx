@@ -36,7 +36,7 @@ Router.events.on('routeChangeStart', () => {
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
   NProgress.done()
-  // experiment: when using csr and running into an error, try without csr once
+  // when using csr and running into an error, try without csr once
   if (!shallow && document.getElementById('error-page-description') !== null) {
     triggerSentry({ message: 'trying again without csr' })
     setTimeout(() => {
@@ -161,6 +161,7 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+
     if (AuthSessionCookie.get() || loadLoggedInData) {
       Promise.all([
         !loggedInData

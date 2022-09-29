@@ -1,18 +1,17 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
-export function Logout({ oauth }: { oauth?: boolean }) {
+export function useLogout() {
   const router = useRouter()
   const { strings } = useInstanceData()
+  const oauth = undefined
   const { logout_challenge } = router.query
 
-  useEffect(() => {
+  return () => {
     fetchAndPersistAuthSession().catch(() => {
       return router.push('/')
     })
@@ -51,7 +50,5 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       .catch((error: unknown) => {
         return Promise.reject(error)
       })
-  }, [router, oauth, logout_challenge, strings.notices.bye])
-
-  return <LoadingSpinner text={strings.auth.loggingOut} />
+  }
 }

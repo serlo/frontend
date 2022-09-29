@@ -4,7 +4,7 @@ import { gql } from 'graphql-request'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const maxFileSize = 2 * 1024 * 1024
@@ -64,56 +64,58 @@ export function createUploadImageHandler() {
 export function createReadFile() {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      // hard to get to the default auth logic outside of react components
-      // we need to rely on the session cookie, with risk that the user changed
-      // their username
-      const session = AuthSessionCookie.parse()
+      fetchAndPersistAuthSession()
+        .then((session) => {
+          const gqlFetch = createAuthAwareGraphqlFetch({
+            current: session
+              ? {
+                  username: (session.identity.traits as { username: string })
+                    ?.username,
+                  id: (
+                    session.identity.metadata_public as { legacy_id: number }
+                  )?.legacy_id,
+                }
+              : null,
+          })
+          const args = JSON.stringify({
+            query: uploadUrlQuery,
+            variables: {
+              mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
+            },
+          })
 
-      const gqlFetch = createAuthAwareGraphqlFetch({
-        current: session
-          ? {
-              username: (session.identity.traits as { username: string })
-                ?.username,
-              id: (session.identity.metadata_public as { legacy_id: number })
-                ?.legacy_id,
+          async function runFetch() {
+            const data = (await gqlFetch(args)) as MediaUploadQuery
+            const reader = new FileReader()
+
+            reader.onload = async function (e: ProgressEvent) {
+              if (!e.target) return
+
+              try {
+                const response = await fetch(data.media.newUpload.uploadUrl, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': file.type },
+                  body: file,
+                })
+
+                if (response.status !== 200) reject()
+                resolve({
+                  file,
+                  dataUrl: data.media.newUpload.urlAfterUpload,
+                })
+              } catch {
+                reject()
+              }
             }
-          : null,
-      })
-      const args = JSON.stringify({
-        query: uploadUrlQuery,
-        variables: {
-          mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
-        },
-      })
 
-      async function runFetch() {
-        const data = (await gqlFetch(args)) as MediaUploadQuery
-        const reader = new FileReader()
-
-        reader.onload = async function (e: ProgressEvent) {
-          if (!e.target) return
-
-          try {
-            const response = await fetch(data.media.newUpload.uploadUrl, {
-              method: 'PUT',
-              headers: { 'Content-Type': file.type },
-              body: file,
-            })
-
-            if (response.status !== 200) reject()
-            resolve({
-              file,
-              dataUrl: data.media.newUpload.urlAfterUpload,
-            })
-          } catch {
-            reject()
+            reader.readAsDataURL(file)
           }
-        }
 
-        reader.readAsDataURL(file)
-      }
-
-      void runFetch()
+          void runFetch()
+        })
+        .catch(() => {
+          reject()
+        })
     })
   }
 }

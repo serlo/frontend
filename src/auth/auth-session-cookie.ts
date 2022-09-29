@@ -1,4 +1,4 @@
-import { Session } from '@ory/client'
+import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
 export const AuthSessionCookie = {
@@ -7,8 +7,10 @@ export const AuthSessionCookie = {
     return Cookies.get(this.cookieName)
   },
   set(session: Session) {
+    // TODO: is the cookie id problematic to store locally?
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
+      expires: session.expires_at ? new Date(session.expires_at) : undefined,
     })
   },
   remove() {
