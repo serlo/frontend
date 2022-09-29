@@ -15,6 +15,7 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faWrench } from '@fortawesome/free-solid-svg-icons'
 import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
@@ -115,6 +116,12 @@ export function getPluginRegistry(
       title: editorStrings.edtrIo.video,
       description: editorStrings.edtrIo.videoDesc,
       icon: createIcon(faFilm),
+    },
+    {
+      name: 'pasteHack',
+      title: 'Paste Hack',
+      description: 'hmmm hack',
+      icon: createIcon(faWrench),
     },
     ...(isExercise
       ? [
