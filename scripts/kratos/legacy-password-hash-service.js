@@ -31,7 +31,6 @@ class HashService {
 
     for (const offset of this.salt_pattern) {
       const part = hash.substr(0, offset - last_offset)
-
       hash = hash.substr(offset - last_offset)
 
       password += part + salt.shift()
@@ -50,6 +49,15 @@ class HashService {
 
     return salt
   }
+
+  findSha(hashedPassword) {
+    let sha = hashedPassword.split('')
+    for (const offset of this.salt_pattern) {
+      sha.splice(offset, 1)
+    }
+
+    return sha.join('')
+  }
 }
 
 const hashService = new HashService()
@@ -60,6 +68,9 @@ switch (process.argv[2]) {
     break
   case 'find':
     console.log(hashService.findSalt(process.argv[3]))
+    break
+  case 'sha':
+    console.log(hashService.findSha(process.argv[3]))
     break
   default:
     console.log(
