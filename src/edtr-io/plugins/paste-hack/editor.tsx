@@ -27,7 +27,11 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       newDocuments.push(content)
     }
 
-    console.log({ props })
+    // TODO: check if we could replace this plugin with multiple plugins instead of nesting rows plugins
+    // like the layout plugin does
+    // store.getState()
+    // get parent rows plugin:
+    //const parent = getParent(props.id)(store.getState())
 
     store.dispatch(
       replace({
