@@ -12,20 +12,3 @@ export const kratos = new V0alpha2Api(
     //     : `${frontendOrigin}/api/.ory`,
   })
 )
-
-// Kratos SDK uses AxiosError, but in order to not have to import the axios lib
-// just for the this error, we kind of imitate it here
-export class KratosError<T = unknown> extends Error {
-  code?: string
-  request?: any
-  response?: {
-    data: T
-    status: number
-    statusText: string
-    headers: Record<string, string> & {
-      'set-cookie'?: string[]
-    }
-    request?: any
-  }
-  status?: string
-}
