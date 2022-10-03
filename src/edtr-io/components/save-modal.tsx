@@ -43,6 +43,7 @@ export function SaveModal({
   const [autoCheckout, setAutoCheckout] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '')
   const [fireSave, setFireSave] = useState(false)
+  const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { lang } = useInstanceData()
 
   const { data: licenseData } = useLicensesFetch(lang)
@@ -115,6 +116,7 @@ export function SaveModal({
               changes?.set(changesText)
               setFireSave(true)
             } else {
+              setHighlightMissingFields(true)
               showToastNotice(
                 loggedInData!.strings.mutations.errors.valueMissing,
                 'warning'
@@ -164,7 +166,12 @@ export function SaveModal({
   function renderChanges() {
     if (!changes) return null
     return (
-      <label className="font-bold">
+      <label
+        className={clsx(
+          'font-bold',
+          highlightMissingFields && !changesFilled && 'bg-red-100'
+        )}
+      >
         {edtrIo.changes} <span className="font-bold text-red-500">*</span>
         <textarea
           value={changesText}
@@ -205,7 +212,12 @@ export function SaveModal({
         : defaultLicenseAgreement ?? ''
 
     return (
-      <label className="block pb-2">
+      <label
+        className={clsx(
+          'block pb-2',
+          highlightMissingFields && !licenseAccepted && 'bg-red-100'
+        )}
+      >
         <input
           type="checkbox"
           checked={agreement}

@@ -53,6 +53,7 @@ export const headerData: InstanceData['headerData'] = [
       { url: 'https://community.serlo.org/', title: 'Chat para autores' },
       { url: '/170539', title: 'Páginas de ayuda' },
       { url: '/entity/unrevised', title: 'Cambios en revisión' },
+      { url: '/discussions', title: 'Todos los comentarios' },
     ],
   },
 ]
@@ -138,8 +139,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Páginas de ayuda', id: 170539 },
       { title: ' Recursos para educadores', id: 182103 },
       { title: 'Test Area', id: 164237 },
-      { title: 'Todas las actividades en Serlo', url: '/event/history' },
-      { title: 'Todos los comentarios en Serlo', url: '/discussions' },
+      { title: 'Todas las actividades', url: '/event/history' },
+      { title: 'Todos los comentarios', url: '/discussions' },
       { title: 'Operaciones en revisión', url: '/entity/unrevised' },
     ],
   },
