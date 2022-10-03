@@ -32,6 +32,10 @@ selfservice:
     login:
       ui_url: http://localhost:3000/auth/login
       lifespan: 10m
+      after:
+        password:
+          hooks:
+          - hook: require_verified_address
     registration:
       ui_url: http://localhost:3000/auth/registration
       after:

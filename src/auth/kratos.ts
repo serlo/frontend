@@ -4,11 +4,11 @@ import { frontendOrigin } from '../helper/urls/frontent-origin'
 
 export const kratos = new V0alpha2Api(
   new KratosConfig({
-    basePath: `${frontendOrigin}/api/.ory`,
+    // basePath: `${frontendOrigin}/api/.ory`,
     // // TODO: remove staging check when done with testing
-    // basePath:
-    //   process.env.NEXT_PUBLIC_ENV === 'staging'
-    //     ? 'https://kratos-vercel.serlo-staging.dev/api/.ory'
-    //     : `${frontendOrigin}/api/.ory`,
+    basePath:
+      process.env.NEXT_PUBLIC_ENV === 'staging'
+        ? 'https://kratos-vercel.serlo-staging.dev/api/.ory'
+        : `${frontendOrigin}/api/.ory`,
   })
 )
