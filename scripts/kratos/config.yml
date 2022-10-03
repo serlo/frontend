@@ -35,7 +35,7 @@ selfservice:
       after:
         password:
           hooks:
-          - hook: require_verified_address
+            - hook: require_verified_address
     registration:
       ui_url: http://localhost:3000/auth/registration
       after:
