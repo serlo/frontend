@@ -5,10 +5,12 @@ import {
   SelfServiceRecoveryFlow,
   SelfServiceRegistrationFlow,
   SelfServiceSettingsFlow,
+  SelfServiceVerificationFlow,
   SubmitSelfServiceLoginFlowBody,
   SubmitSelfServiceRecoveryFlowBody,
   SubmitSelfServiceRegistrationFlowBody,
   SubmitSelfServiceSettingsFlowBody,
+  SubmitSelfServiceVerificationFlowBody,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import { NextRouter } from 'next/router'
@@ -29,6 +31,7 @@ export interface FlowProps<T extends SubmitPayload> {
     | SelfServiceRegistrationFlow
     | SelfServiceRecoveryFlow
     | SelfServiceSettingsFlow
+    | SelfServiceVerificationFlow
   onSubmit: (values: T) => Promise<void>
   only?: string
 }
@@ -46,6 +49,7 @@ export type SubmitPayload =
   | SubmitSelfServiceRegistrationFlowBody
   | SubmitSelfServiceRecoveryFlowBody
   | SubmitSelfServiceSettingsFlowBody
+  | SubmitSelfServiceVerificationFlowBody
 
 export function Flow<T extends SubmitPayload>({
   flow,
@@ -161,7 +165,9 @@ export function Flow<T extends SubmitPayload>({
     e.stopPropagation()
     e.preventDefault()
 
-    if (isLoading) return Promise.resolve()
+    if (isLoading) {
+      return Promise.resolve()
+    }
     NProgress.start()
     setIsLoading(true)
 
@@ -189,7 +195,7 @@ export function handleFlowError<S>(
       }
     }
 
-    // at moment all flows are in the same folder. Ajust if they were moved somewhere else
+    // at moment all flows are in the same folder. Adjust if they were moved somewhere else
     const flowPath = `/auth/${flowType}`
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -216,15 +222,11 @@ export function handleFlowError<S>(
         return
       case 'self_service_flow_expired':
         // The flow expired, let's request a new one.
-        // toast.error('Your interaction expired, please fill out the form again.')
         resetFlow(undefined)
         await router.push(flowPath)
         return
       case 'security_csrf_violation':
         // A CSRF violation occurred. Best to just refresh the flow!
-        // toast.error(
-        //   'A security violation was detected, please fill out the form again.'
-        // )
         resetFlow(undefined)
         await router.push(flowPath)
         return

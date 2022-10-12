@@ -57,6 +57,7 @@ selfservice:
     recovery:
       enabled: true
       ui_url: http://localhost:3000/auth/recovery
+
     settings:
       ui_url: http://localhost:3000/auth/settings
 log:
