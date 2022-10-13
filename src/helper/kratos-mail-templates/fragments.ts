@@ -13,7 +13,7 @@ export function createLangTemplates(templateSlug: string[]) {
 
       let string = ''
       try {
-        //@ts-expect-error good enough for this use case
+        // @ts-expect-error good enough for this use case
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         string = strings[flowType][valid][strippedFileName] as string
         if (!string) throw ''
