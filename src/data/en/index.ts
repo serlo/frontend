@@ -975,11 +975,11 @@ export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: '👉 Access to your Serlo account',
-      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+      'body.plaintext': `👋 Hi,
 please recover access to your account by opening the following link in your browser:
 
 {{ .RecoveryURL }}`,
-      body: `👋 Hi  {{ .Identity.traits.username }},
+      body: `👋 Hi,
 please recover access to your account by clicking the following link:
 
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>`,
