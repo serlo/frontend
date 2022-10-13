@@ -1,9 +1,7 @@
 // helpers while we test kratos alongside the old version
 
 export function getPasswordChangeUrl() {
-  return process.env.NODE_ENV === 'production'
-    ? '/auth/password/change'
-    : '/auth/settings'
+  return '/auth/settings'
 }
 
 export function getLogoutUrl() {
