@@ -873,11 +873,11 @@ export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: 'DE: 👉 Access to your Serlo account',
-      'body.plaintext': `DE: 👋 Hi,
+      'body.plaintext': `DE: 👋 Hi {{ .Identity.traits.username }},
 please recover access to your account by opening the following link in your browser:
 
 {{ .RecoveryURL }}`,
-      body: `DE: 👋 Hi,
+      body: `DE: 👋 Hi {{ .Identity.traits.username }},
 please recover access to your account by clicking the following link:
 
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>`,
