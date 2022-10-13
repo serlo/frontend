@@ -25,8 +25,13 @@ export function Verification() {
     if (flowId) {
       kratos
         .getSelfServiceVerificationFlow(String(flowId))
-        .then(({ data }) => {
+        .then(async ({ data }) => {
           setFlow(data)
+          if (data.state === 'passed_challenge') {
+            return await router.push(
+              returnTo ? String(returnTo) : '/auth/login'
+            )
+          }
         })
         .catch(handleFlowError(router, FlowType.verification, setFlow))
       return
