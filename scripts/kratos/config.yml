@@ -53,10 +53,10 @@ selfservice:
                   in: header
     verification:
       enabled: true
-      use: link
       ui_url: http://localhost:3000/auth/verification
     recovery:
       enabled: true
+      use: link
       ui_url: http://localhost:3000/auth/recovery
 
     settings:
