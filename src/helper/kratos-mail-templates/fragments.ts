@@ -28,11 +28,18 @@ ${string}
     })
     .join('')
 
-  return templates + createLangTemplatesSelector(valid === 'invalid')
+  return (
+    templates +
+    createLangTemplatesSelector(
+      valid === 'invalid',
+      strippedFileName === 'subject'
+    )
+  )
 }
 
-function createLangTemplatesSelector(invalid: boolean) {
+function createLangTemplatesSelector(invalid: boolean, subject: boolean) {
   if (invalid) {
+    if (subject) return `{{ template "de_template" . }}`
     return `
 [english version below]
 ========================
