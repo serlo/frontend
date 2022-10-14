@@ -7,7 +7,7 @@ export function createLangTemplates(templateSlug: string[]) {
   const [flowType, valid, fileName] = templateSlug
   const strippedFileName = fileName.replace('.gotmpl', '').replace('email.', '')
 
-  return instancesArray
+  const templates = instancesArray
     .map((instance) => {
       const strings = getKratosMailStrings(instance)
 
@@ -27,20 +27,37 @@ ${string}
 `
     })
     .join('')
+
+  return templates + createLangTemplatesSelector(valid === 'invalid')
 }
 
-export const langTemplatesSelector =
-  instancesArray
-    .map((instance, index) => {
-      return `
+function createLangTemplatesSelector(invalid: boolean) {
+  if (invalid) {
+    return `
+[english version below]
+========================
+
+{{ template "de_template" . }}
+
+========================
+
+{{ template "en_template" . }}`
+  }
+
+  return (
+    instancesArray
+      .map((instance, index) => {
+        return `
 {{- ${
-        index === 0 ? '' : 'else '
-      }if eq .Identity.traits.language "${instance}" -}}
+          index === 0 ? '' : 'else '
+        }if eq .Identity.traits.language "${instance}" -}}
 {{ template "${instance}_template" . }}`
-    })
-    .join('') +
-  `
+      })
+      .join('') +
+    `
 {{- else -}}
 {{ template "de_template" . }}
 {{- end -}}
   `
+  )
+}
