@@ -362,7 +362,7 @@ export const instanceData = {
         4000006: 'The provided credentials are invalid, check for spelling mistakes in your password or username/email.',
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
-        4000010: 'Account not active yet. Did you forget to verify your email address?',
+        4000010: 'Account not active yet. Did you already verify your email address?',
       }
     },
     keys: {
