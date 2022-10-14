@@ -39,7 +39,8 @@ ${string}
 
 function createLangTemplatesSelector(invalid: boolean, subject: boolean) {
   if (invalid) {
-    if (subject) return `{{ template "de_template" . }}`
+    if (subject)
+      return `{{ template "en_template" . }} | {{ template "de_template" . }}`
     return `
 [english version below]
 ========================
