@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import DesignGuideSVG from '@/assets-webkit/img/design-guide/design-guide.svg'
 
+import DesignGuideSVG from '@/assets-webkit/img/design-guide/design-guide.svg'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 
 const ContentPage: NextPage = () => {
