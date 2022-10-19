@@ -386,11 +386,11 @@ export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
     title: "Notificaciones",
-    icon: "notificaciones"
+    icon: 'notifications'
   }, {
     url: "[secuencia vacía]",
     title: "Usuario",
-    icon: "usuario",
+    icon: 'user',
     children: [{
       url: '/user/me',
       title: "Perfil propio"
