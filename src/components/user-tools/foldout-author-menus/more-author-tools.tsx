@@ -1,18 +1,28 @@
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import { List, Item, Trigger, Content } from '@radix-ui/react-navigation-menu'
 
 import { UserToolsItem } from '../user-tools-item'
 import { AuthorTools, AuthorToolsData, Tool } from './author-tools'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
 
 export interface MoreAuthorToolsProps {
   data?: AuthorToolsData
   aboveContent?: boolean
+  taxNewItems?: boolean
+  title?: string
 }
 
-export function MoreAuthorTools({ data, aboveContent }: MoreAuthorToolsProps) {
+export function MoreAuthorTools({
+  data,
+  aboveContent,
+  taxNewItems,
+  title,
+}: MoreAuthorToolsProps) {
   const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
 
   if (!data) return null
 
@@ -32,17 +42,21 @@ export function MoreAuthorTools({ data, aboveContent }: MoreAuthorToolsProps) {
   if (!supportedTypes.includes(data.type)) return null
 
   return (
-    <Item>
+    <Item className="w-full">
       <Trigger>
         <UserToolsItem
-          title={loggedInData.strings.tools}
+          title={
+            taxNewItems
+              ? title ?? strings.editOrAdd.addNewEntities
+              : loggedInData.strings.tools
+          }
           aboveContent={aboveContent}
-          icon={faTools}
+          icon={taxNewItems ? faPlusCircle : faTools}
         />
       </Trigger>
 
       <Content>
-        <List className="absolute w-56 z-50 pt-2 right-0 lg:right-48 lg:bottom-0">
+        <List className="absolute w-56 z-50 pt-2 right-0 lg:mr-44 lg:bottom-0">
           <div className="serlo-sub-list-hover">
             <AuthorTools
               entityId={data.id}
@@ -73,17 +87,19 @@ export function MoreAuthorTools({ data, aboveContent }: MoreAuthorToolsProps) {
           Tool.Trash,
         ]
       case UuidType.TaxonomyTerm:
-        return [
-          Tool.Abo,
-          Tool.Organize,
-          Tool.Log,
-          Tool.AnalyticsLink,
-          Tool.NewEntitySubmenu,
-          Tool.SortEntities,
-          Tool.CopyItems,
-          Tool.MoveItems,
-          Tool.Trash,
-        ]
+        return taxNewItems
+          ? [Tool.NewEntitySubmenu]
+          : [
+              Tool.EditTax,
+              Tool.Abo,
+              Tool.Organize,
+              Tool.Log,
+              Tool.AnalyticsLink,
+              Tool.SortEntities,
+              Tool.CopyItems,
+              Tool.MoveItems,
+              Tool.Trash,
+            ]
     }
     return []
   }

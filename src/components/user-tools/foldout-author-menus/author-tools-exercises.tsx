@@ -1,4 +1,3 @@
-import { faLayerGroup } from '@fortawesome/free-solid-svg-icons/faLayerGroup'
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import {
   Root,

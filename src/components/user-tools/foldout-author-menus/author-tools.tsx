@@ -26,6 +26,7 @@ export enum Tool {
   CopyItems = 'copyItems',
   Curriculum = 'curriculum',
   Edit = 'edit',
+  EditTax = 'editTax',
   UnrevisedEdit = 'unrevisedEdit',
   History = 'history',
   Log = 'log',
@@ -115,6 +116,10 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     edit: {
       url: getEditUrl(entityId),
       canDo: canDo(Uuid.create('EntityRevision')),
+    },
+    editTax: {
+      url: getEditUrl(entityId),
+      canDo: canDo(TaxonomyTerm.set),
     },
     unrevisedEdit: {
       url: getHistoryUrl(entityId),
@@ -300,9 +305,8 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
       if (entityType === UuidType.Event && !shouldRenderEvents) return null
 
-      const title = `${
-        loggedInStrings.authorMenu.newEntity
-      }: ${getTranslatedType(strings, entityType)}`
+      const title = getTranslatedType(strings, entityType)
+
       if (
         (
           [
@@ -333,13 +337,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       )
     })
 
-    return (
-      <>
-        <li className="border-t-[1px] border-brand-200 mt-2 pt-2"></li>
-        {entries}
-        <li className="border-b-[1px] border-brand-200 mb-2 pb-2"></li>
-      </>
-    )
+    return <>{entries}</>
   }
 }
 
