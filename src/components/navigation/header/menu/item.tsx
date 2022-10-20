@@ -31,16 +31,16 @@ export const preventHover: PointerEventHandler = (event) => {
 
 export interface ItemProps {
   link: HeaderLinkData
-  specialContent?: JSX.Element
+  elementAsIcon?: JSX.Element
 }
 
-export function Item({ link, specialContent }: ItemProps) {
+export function Item({ link, elementAsIcon }: ItemProps) {
   const hasChildren = link.children !== undefined
 
   const textAndIcon = (
     <>
-      <Icon icon={link.icon} element={specialContent} alt={link.title} />
-      <span className={clsx(specialContent && 'md:sr-only')}>{link.title}</span>
+      <Icon elementOrIcon={elementAsIcon ?? link.icon} />
+      <span className={clsx(elementAsIcon && 'md:sr-only')}>{link.title}</span>
     </>
   )
 

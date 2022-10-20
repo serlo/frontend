@@ -6,12 +6,15 @@ import { SubItem } from './sub-item'
 import CommunityBird from '@/assets-webkit/img/community-menu-bird.svg'
 import { HeaderLinkData } from '@/data-types'
 
-export interface SubCommunityMegaProps {
+export interface SubParticipateMegaProps {
   subItems: HeaderLinkData[]
   parent: HeaderLinkData
 }
 
-export function SubCommunityMega({ subItems, parent }: SubCommunityMegaProps) {
+export function SubParticipateMega({
+  subItems,
+  parent,
+}: SubParticipateMegaProps) {
   return (
     <div className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0 md:flex md:gap-4 md:justify-between">
       {subItems.map((item, index) => {
