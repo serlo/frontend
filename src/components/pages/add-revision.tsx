@@ -1,4 +1,4 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'

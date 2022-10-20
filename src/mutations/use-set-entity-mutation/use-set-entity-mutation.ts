@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
+import { useRouter } from 'next/router'
 import { eqBy, mapObjIndexed } from 'ramda'
 
 import { showToastNotice } from '../../helper/show-toast-notice'
@@ -41,6 +42,7 @@ const hasNoChanges = (
 export function useSetEntityMutation() {
   const loggedInData = useLoggedInData()
   const mutationFetch = useMutationFetch()
+  const router = useRouter()
 
   return async (
     data: SetEntityMutationData,
@@ -58,6 +60,7 @@ export function useSetEntityMutation() {
       loggedInData,
       initialState,
       taxonomyParentId,
+      router,
     })
 }
 
@@ -70,6 +73,7 @@ export const setEntityMutationRunner = async function ({
   initialState,
   savedParentId,
   taxonomyParentId,
+  router,
 }: SetEntityMutationRunnerData) {
   if (!loggedInData) {
     showToastNotice('Please make sure you are logged in!', 'warning')
@@ -118,6 +122,7 @@ export const setEntityMutationRunner = async function ({
       loggedInData,
       initialState,
       savedParentId: savedId as number,
+      router,
     })
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -126,15 +131,23 @@ export const setEntityMutationRunner = async function ({
   }
 
   if (!isRecursiveCall && childrenResult) {
-    showToastNotice(loggedInData.strings.mutations.success.save, 'success')
+    showToastNotice(
+      needsReview
+        ? loggedInData.strings.mutations.success.saveNeedsReview
+        : loggedInData.strings.mutations.success.save,
+      'success'
+    )
     const id =
       data.id === 0
         ? savedId === 0
           ? undefined
           : (savedId as number)
         : data.id
-    if (id) window.location.href = getHistoryUrl(id)
-    else window.location.href = `/${taxonomyParentId as number}`
+    const redirectHref = id
+      ? getHistoryUrl(id)
+      : `/${taxonomyParentId as number}`
+
+    void router.push(redirectHref)
   }
 
   return true
@@ -147,6 +160,7 @@ const loopNestedChildren = async ({
   loggedInData,
   initialState,
   savedParentId,
+  router,
 }: SetEntityMutationRunnerData): Promise<boolean> => {
   if (!data.__typename) return false
 
@@ -215,7 +229,7 @@ const loopNestedChildren = async ({
         )
 
         // only request new revision when entity changed
-        if (hasNoChanges(oldVersion, child)) return true
+        if (hasNoChanges(oldVersion, child)) continue
 
         const input = {
           ...child,
@@ -233,6 +247,7 @@ const loopNestedChildren = async ({
           isRecursiveCall: true,
           savedParentId,
           initialState,
+          router,
         })
         if (!success) throw 'revision of one child could not be saved'
       }

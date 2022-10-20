@@ -1,3 +1,5 @@
+import { NextRouter } from 'next/router'
+
 import { LoggedInData } from '@/data-types'
 import {
   AppletSerializedState,
@@ -91,6 +93,7 @@ export interface SetEntityMutationRunnerData {
   }
   savedParentId?: number
   taxonomyParentId?: number
+  router: NextRouter
 }
 
 export type ChildFieldsData =
