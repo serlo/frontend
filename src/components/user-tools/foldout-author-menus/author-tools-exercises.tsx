@@ -42,18 +42,12 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
         <Item>
           <Trigger
             className={clsx(
-              'hidden sm:inline-block serlo-button text-center text-truegray-800',
-              'hover:bg-brand hover:text-white text-base leading-8',
+              'hidden sm:inline-block serlo-button text-center text-brandgreen',
+              'hover:bg-brandgreen hover:text-white text-base leading-8',
               'w-8 h-8 ml-1 p-0'
             )}
           >
-            <FaIcon
-              icon={
-                data.type == ExerciseInlineType.ExerciseGroup
-                  ? faLayerGroup
-                  : faTools
-              }
-            />
+            <FaIcon icon={faTools} />
           </Trigger>
           <Content>
             <List className="absolute w-56 z-50 pt-2 right-0 top-0">
