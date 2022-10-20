@@ -1,4 +1,4 @@
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
@@ -30,7 +30,7 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   const auth = useAuthentication()
   const canDo = useCanDo()
   const { strings } = useInstanceData()
-  const [inviteOpen, setInviteOpen] = useState(false)
+  const [inviteOpen, setInviteOpen] = useState<string | false>(false)
 
   if (!data || data.type !== UuidType.TaxonomyTerm) return null
 
@@ -48,16 +48,25 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
     <>
       {isInvite ? (
         <>
+          {isExerciseFolder ? (
+            <UserToolsItem
+              title={strings.editOrAdd.editExercises}
+              onClick={() => setInviteOpen('edit')}
+              aboveContent={aboveContent}
+              icon={faPencilAlt}
+            />
+          ) : null}
           <UserToolsItem
             title={title}
-            onClick={() => setInviteOpen(true)}
+            onClick={() => setInviteOpen('add')}
             aboveContent={aboveContent}
             icon={faPlusCircle}
           />
+
           {isInvite && inviteOpen ? (
             <InviteModal
-              type={data.type}
-              isOpen={inviteOpen}
+              type={`${data.taxonomyType ?? ''}-${inviteOpen}`}
+              isOpen={!!inviteOpen}
               onClose={() => setInviteOpen(false)}
             />
           ) : null}

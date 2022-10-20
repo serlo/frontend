@@ -94,6 +94,7 @@ export const instanceData = {
       button: 'Edit',
       addNewEntities: 'Add new content',
       addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
       unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
