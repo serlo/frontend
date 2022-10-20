@@ -9,10 +9,9 @@ import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
 
 // Round 2
-// 10% unter einer Lösung
-// 10% jeweils nach der 4. Aufgabe einer Aufgabensammlung
+// 3% unter einer Lösung
 
-const reducedChance = isProduction ? 0.2 : 1 // 20% or always while developing
+const reducedChance = isProduction ? 0.03 : 0.03 // 3% or always while developing
 
 const possibleBanners: { [key in DonationsBannerProps['place']]: Banner[] } = {
   solution: [
@@ -41,62 +40,6 @@ const possibleBanners: { [key in DonationsBannerProps['place']]: Banner[] } = {
       imageSrc: '/_assets/img/donations/donation-bird.svg',
     },
   ],
-  exercise: [
-    {
-      id: 'banner-exercisefolder-A2',
-      isLong: false,
-      text: (
-        <div className="text-left">
-          <p className="serlo-p special-hyphens-initial leading-6">
-            … dass in Deutschland pro Jahr über 1,1 Millionen Schüler*innen
-            teure Nachhilfe in Anspruch nehmen? Die Corona-Pandemie hat den
-            Bedarf noch größer gemacht. Aber nicht jede Familie kann sich das
-            leisten!
-          </p>
-          <p className="serlo-p special-hyphens-initial leading-6">
-            Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
-            hochwertigen Lernmaterialien für{' '}
-            <b>alle Schüler*innen komplett kostenlos</b>.
-          </p>
-          <p className="serlo-p special-hyphens-initial leading-6 font-bold">
-            Mit deiner Spende, groß oder klein, kannst du diese Arbeit
-            unterstützen.
-          </p>
-        </div>
-      ),
-      call: 'Wusstest du schon …',
-      imageSrc: '/_assets/img/donations/donation-bird.svg',
-    },
-    {
-      id: 'banner-exercisefolder-B2',
-      isLong: false,
-      text: (
-        <div className="text-left">
-          <p className="serlo-p special-hyphens-initial leading-6">
-            … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
-            engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
-            Pädagog*innen für das gemeinsame Ziel:{' '}
-            <b>
-              Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
-              Schüler*innen
-            </b>
-            .
-          </p>
-          <p className="serlo-p special-hyphens-initial leading-6">
-            Als nächstes möchten wir gerne weitere Übungsformate für Serlo
-            entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
-            Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
-            eigenen Lernstand zu speichern.
-          </p>
-          <p className="serlo-p special-hyphens-initial leading-6 font-bold">
-            Unterstütze uns, Serlo noch besser zu machen!
-          </p>
-        </div>
-      ),
-      call: 'Wusstest du schon …',
-      imageSrc: '/_assets/img/donations/donation-bird.svg',
-    },
-  ],
 }
 
 interface Banner {
@@ -109,7 +52,7 @@ interface Banner {
 
 export interface DonationsBannerProps {
   id: number
-  place: 'solution' | 'exercise'
+  place: 'solution'
 }
 
 export function DonationsBannerInline({ id, place }: DonationsBannerProps) {

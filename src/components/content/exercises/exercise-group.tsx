@@ -1,6 +1,5 @@
 import { ReactNode, useState, useEffect } from 'react'
 
-import { DonationsBannerInline } from '../donations-banner-experiment/donations-banner-inline'
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInComponents } from '@/contexts/logged-in-components'
@@ -62,10 +61,6 @@ export function ExerciseGroup({
       >
         {children}
       </ol>
-      {/* Temporary donations banner trial */}
-      {positionOnPage === 3 ? (
-        <DonationsBannerInline id={id} place="exercise" />
-      ) : null}
     </div>
   )
 }

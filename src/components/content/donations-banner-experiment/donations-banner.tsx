@@ -10,8 +10,8 @@ import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
 
 // Round 2
-// 10% Artikel ✅
-// 100% Ende der Kurse
+// 10% Artikel & Aufgabensammlung
+// 100% Ende von Kurs
 
 declare global {
   // eslint-disable-next-line no-var
@@ -20,7 +20,7 @@ declare global {
   var hack__id: number
 }
 
-const reducedChance = isProduction ? 0.2 : 1 // 20% or always while developing
+const reducedChance = isProduction ? 0.2 : 0.2 // 20% or always while developing
 
 // show on articles and exercise groups
 const articleBanners = [
@@ -120,18 +120,19 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     globalThis.hack__id = id
 
     const isCourse = entityData.typename === UuidType.CoursePage
-
-    const chanceShow = isCourse ? true : Math.random() < reducedChance
-
     const isLastCoursePage =
       isCourse &&
       entityData.courseData &&
       entityData.courseData.pages.length === entityData.courseData.index + 1
 
-    const typeShow =
-      isLastCoursePage || entityData.typename === UuidType.Article
+    const chanceShow = isCourse ? true : Math.random() < reducedChance
 
-    if (lang !== Instance.De || !typeShow || !chanceShow) {
+    const showOnType =
+      isLastCoursePage ||
+      entityData.typename === UuidType.Article ||
+      entityData.typename === UuidType.TaxonomyTerm
+
+    if (lang !== Instance.De || !showOnType || !chanceShow) {
       setBanner(undefined)
       return undefined
     }
