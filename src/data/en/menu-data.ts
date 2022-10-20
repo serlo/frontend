@@ -33,6 +33,7 @@ export const headerData: InstanceData['headerData'] = [
       },
       { url: 'https://community.serlo.org/', title: 'Chat for authors' },
       { url: '/entity/unrevised', title: 'Unrevised changes' },
+      { url: '/discussions', title: 'List of all comments' },
     ],
   },
 ]

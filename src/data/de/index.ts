@@ -230,7 +230,7 @@ export const instanceData = {
       help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
       contactPerson: 'LinaMaria',
       contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
-      help4: "Wie geht reviewen? Hier gibt es die %guidelineLink%.",
+      help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
       guideline: "Anleitung",
       guidelineUrl: "/140473",
       subjectLinks: "Direkt zum Fach",
@@ -311,7 +311,7 @@ export const instanceData = {
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
     login: {
-      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInLink: "Bitte melde dich an,",
       pleaseLogInText: "um diese Funktion zu benutzen."
     },
     keys: {
