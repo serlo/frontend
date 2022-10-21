@@ -11,7 +11,7 @@ import { submitEvent } from '@/helper/submit-event'
 // Round 2
 // 3% unter einer Lösung
 
-const reducedChance = isProduction ? 0.03 : 0.03 // 3% or always while developing
+const reducedChance = isProduction ? 0.03 : 1 // 3% or always while developing
 
 const possibleBanners: { [key in DonationsBannerProps['place']]: Banner[] } = {
   solution: [

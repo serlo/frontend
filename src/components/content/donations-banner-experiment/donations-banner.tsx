@@ -20,7 +20,7 @@ declare global {
   var hack__id: number
 }
 
-const reducedChance = isProduction ? 0.2 : 0.2 // 20% or always while developing
+const reducedChance = isProduction ? 0.2 : 1 // 20% or always while developing
 
 // show on articles and exercise groups
 const articleBanners = [
