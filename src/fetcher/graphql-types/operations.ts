@@ -2695,7 +2695,7 @@ export interface UserDeleteBotsResponse {
 }
 
 export interface UserDeleteRegularUsersInput {
-  userIds: Array<Scalars['Int']>;
+  users: Array<UserDescriptionInput>;
 }
 
 export interface UserDeleteRegularUsersResponse {
@@ -2703,6 +2703,11 @@ export interface UserDeleteRegularUsersResponse {
   reason?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
   username?: Maybe<Scalars['String']>;
+}
+
+export interface UserDescriptionInput {
+  id: Scalars['Int'];
+  username: Scalars['String'];
 }
 
 export interface UserEdge {
