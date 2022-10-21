@@ -1,17 +1,23 @@
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import dynamic from 'next/dynamic'
 
 import { Item } from './item'
 import { useAuthentication } from '@/auth/use-authentication'
+import type { UnreadNotificationsCountProps } from '@/components/user-tools/unread-notifications-count'
 import { getAvatarUrl } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+
+const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
+  import('@/components/user-tools/unread-notifications-count').then(
+    (mod) => mod.UnreadNotificationsCount
+  )
+)
 
 export function AuthItems() {
   const auth = useAuthentication()
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
-  const loggedInComponents = useLoggedInComponents()
 
   const noAuthData = {
     url: '/api/auth/login',
@@ -21,8 +27,6 @@ export function AuthItems() {
 
   if (!auth.current || !loggedInData || !auth.current.username)
     return <Item link={noAuthData} />
-
-  const UnreadNotificationsCount = loggedInComponents?.UnreadNotificationsCount
 
   const ownProfileHref = `/user/${auth.current.id}/${auth.current.username}`
 

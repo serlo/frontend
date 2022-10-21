@@ -1,36 +1,41 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import clsx from 'clsx'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
-import { FaIcon } from '@/components/fa-icon'
+import { AuthorToolsData } from '../foldout-author-menus/author-tools'
+import { UserToolsItem } from '../user-tools-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidRevType } from '@/data-types'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,
 } from '@/mutations/use-revision-decide-mutation'
 
 export interface CheckoutRejectButtonsProps {
-  revisionId: number
-  isRejected: boolean
-  isCurrent: boolean
-  isPage: boolean
-  buttonStyle?: string
+  data: AuthorToolsData
+  aboveContent?: boolean
 }
 
 export function CheckoutRejectButtons({
-  revisionId,
-  isRejected,
-  isCurrent,
-  isPage,
-  buttonStyle,
+  data,
+  aboveContent,
 }: CheckoutRejectButtonsProps) {
-  const loggedInData = useLoggedInData()
   const [modalMode, setModalMode] = useState<RevisionMutationMode | null>(null)
   const revisionMutation = useRevisionDecideMutation()
   const [reason, setReason] = useState('')
+  const loggedInData = useLoggedInData()
+
+  if (!data.revisionData) return null
+  const isCurrent = data.revisionData.current
+  const isRejected = data.revisionData.rejected
+  const revisionId = data.revisionId
+  const isPage = data.type === UuidRevType.Page
+
+  if (isCurrent || !revisionId) return null
+
   if (!loggedInData) return null
-  if (isCurrent) return null
   const { strings } = loggedInData
 
   function onCloseClick() {
@@ -39,7 +44,11 @@ export function CheckoutRejectButtons({
 
   function onConfirm() {
     if (modalMode) {
-      void revisionMutation(modalMode, { revisionId, reason }, isPage)
+      void revisionMutation(
+        modalMode,
+        { revisionId: revisionId as number, reason },
+        isPage
+      )
     }
   }
 
@@ -67,15 +76,23 @@ export function CheckoutRejectButtons({
   function renderButton(mode: 'reject' | 'checkout') {
     const isCheckout = mode === 'checkout'
     return (
-      <button className={buttonStyle} onClick={() => setModalMode(mode)}>
-        &nbsp;
-        <FaIcon
-          icon={isCheckout ? faCheck : faTimes}
-          className="lg:mr-0.5"
-        />{' '}
-        {strings.revisions[mode].action}
-      </button>
+      <UserToolsItem
+        title={strings.revisions[mode].action}
+        onClick={() => setModalMode(mode)}
+        aboveContent={aboveContent}
+        icon={isCheckout ? faCheck : faTimes}
+      />
     )
+    // return (
+    //   <button className="buttonStyle" onClick={() => setModalMode(mode)}>
+    //     &nbsp;
+    //     <FaIcon
+    //       icon={isCheckout ? faCheck : faTimes}
+    //       className="lg:mr-0.5"
+    //     />{' '}
+    //     {strings.revisions[mode].action}
+    //   </button>
+    // )
   }
 
   function renderModalContent() {
@@ -96,32 +113,17 @@ export function CheckoutRejectButtons({
   function renderTextArea() {
     return (
       <>
-        <style jsx>{`
-          textarea {
-            font-weight: bold;
-
-            width: 100%;
-            border: none;
-            padding: 0.5rem 3.5rem 0.5rem 1rem;
-            box-sizing: border-box;
-            outline: none;
-            min-height: 80px;
-
-            margin: 20px 0;
-            border-radius: 10px;
-            @apply bg-brand-50;
-
-            ::placeholder {
-              @apply text-brandgreen;
-            }
-          }
-        `}</style>
         <textarea
           value={reason}
           onChange={(event: ChangeEvent<HTMLTextAreaElement>) => {
             setReason(event.target.value)
           }}
           onKeyDown={onKeyDown}
+          className={clsx(
+            'bold w-full border-0 box-border outline-none',
+            'rounded-xl my-5 pr-14 pl-4 py-2 min-h-[80px]',
+            'bg-brand-50 focus-visible:bg-brand-200'
+          )}
         />
       </>
     )

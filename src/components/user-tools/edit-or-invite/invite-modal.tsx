@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 
-import { Link } from '../content/link'
+import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'

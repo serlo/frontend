@@ -1,4 +1,4 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { List, Link } from '@radix-ui/react-navigation-menu'
 import { default as NextLink } from 'next/link'
 
 import { SubHeader } from './sub-header'
@@ -27,7 +27,7 @@ export function SubParticipateMega({
             {index === 0 ? (
               renderNewArea()
             ) : (
-              <NavigationMenu.List className="md:mb-4">
+              <List className="md:mb-4">
                 {item.children?.map((subItem) => {
                   return (
                     <SubItem
@@ -37,7 +37,7 @@ export function SubParticipateMega({
                     />
                   )
                 })}
-              </NavigationMenu.List>
+              </List>
             )}
           </div>
         )
@@ -50,9 +50,9 @@ export function SubParticipateMega({
       <>
         <CommunityBird className="hidden md:block w-[8.1rem] px-side" />
         <NextLink href="/community" passHref>
-          <NavigationMenu.Link className="ml-4 my-3 serlo-button-green text-base rounded-4xl w-max py-[0.1rem]">
+          <Link className="ml-4 my-3 serlo-button-green text-base rounded-4xl w-max py-[0.1rem]">
             <span>Hier gehts los!</span>
-          </NavigationMenu.Link>
+          </Link>
         </NextLink>
       </>
     )

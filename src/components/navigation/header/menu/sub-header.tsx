@@ -1,4 +1,4 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Link } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
@@ -20,9 +20,9 @@ const headingClasses = /* className={ */ clsx(
 export function SubHeader({ item }: SubHeaderProps) {
   return (
     <NextLink href={item.url} passHref>
-      <NavigationMenu.Link href={item.url} className="block md:py-[3px] group">
+      <Link href={item.url} className="block md:py-[3px] group">
         <span className={headingClasses}>{item.title}</span>
-      </NavigationMenu.Link>
+      </Link>
     </NextLink>
   )
 }

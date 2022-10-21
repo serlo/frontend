@@ -11,7 +11,7 @@ import {
 } from 'react'
 
 import { parseAuthCookie } from './parse-auth-cookie'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
+import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 export interface AuthContextValue {
   loggedIn: boolean
@@ -89,7 +89,7 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
 
     const currentCookieValue = parseAuthCookie(refreshToken, clearToken)
     if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
-      // Cooke has a newer token than the one we used for the request. So use that instead.
+      // Cookie has a newer token than the one we used for the request. So use that instead.
       authenticationPayload.current = currentCookieValue
       return
     }
@@ -115,16 +115,20 @@ function useAuthorizationPayload(
   authenticationPayload: RefObject<AuthenticationPayload>,
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
-  const lc = useLoggedInComponents()
-
   async function fetchAuthorizationPayload(
     authenticationPayload: RefObject<AuthenticationPayload>
   ): Promise<AuthorizationPayload> {
-    if (authenticationPayload.current === null || lc === null) {
+    if (authenticationPayload.current === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }
 
-    const fetch = lc.createAuthAwareGraphqlFetch(authenticationPayload)
+    const graphQLFetch = (await import('@/api/graphql-fetch')) as {
+      createAuthAwareGraphqlFetch: typeof createAuthAwareGraphqlFetch
+    }
+
+    const fetch = graphQLFetch.createAuthAwareGraphqlFetch(
+      authenticationPayload
+    )
     const data = (await fetch(
       JSON.stringify({
         query: `
@@ -149,7 +153,7 @@ function useAuthorizationPayload(
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationPayload, authenticationPayload.current?.id, lc])
+  }, [authenticationPayload, authenticationPayload.current?.id])
 
   return authorizationPayload
 }

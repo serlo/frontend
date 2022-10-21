@@ -1,4 +1,4 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { Content, List } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 
 import { preventHover } from './item'
@@ -22,7 +22,7 @@ export function SubContent({ subItems, parent }: SubContentProps) {
   const isParticipateMega = isParticipate && lang === 'de'
 
   return (
-    <NavigationMenu.Content
+    <Content
       className={clsx(
         'text-left md:absolute md:z-[999] md:pt-2',
         (isLast || isParticipate) && 'md:right-0',
@@ -34,12 +34,12 @@ export function SubContent({ subItems, parent }: SubContentProps) {
       {isParticipateMega ? (
         <SubParticipateMega subItems={subItems} parent={parent} />
       ) : (
-        <NavigationMenu.List className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0">
+        <List className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0">
           {subItems.map((item) => (
             <SubItem key={item.title} item={item} parent={parent} />
           ))}
-        </NavigationMenu.List>
+        </List>
       )}
-    </NavigationMenu.Content>
+    </Content>
   )
 }
