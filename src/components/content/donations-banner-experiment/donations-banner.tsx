@@ -1,8 +1,10 @@
+import { faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
 import { Lazy } from '../lazy'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -77,6 +79,33 @@ const articleBanners = [
     call: 'Wusstest du schon …',
     imageSrc: '/_assets/img/donations/donation-bird.svg',
   },
+  {
+    id: 'banner-testimonial-Maria_F',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="serlo-p special-hyphens-initial leading-6">
+          weil es mir bei der Differenzierung hilft. Ich weiß, dass ich mich auf
+          die Qualität der Inhalte verlassen kann.
+          <br />
+          Serlo ist für mich das beste Beispiel für qualitativ hochwertige freie
+          Bildungsmaterialien.
+        </p>
+        <p className="serlo-p special-hyphens-initial leading-6">
+          Lernmittel haben auch einen großen Einfluss auf das selbständige
+          Lernen zu Hause. Gute Lernmittel sollten frei lizenziert sein und von
+          einer engagierten Community weiterentwickelt werden, anstatt dass
+          einzelne Lehrkräfte immer wieder von vorn anfangen. Deswegen
+          unterstütze ich Serlo gern mit einer Spende
+        </p>
+      </div>
+    ),
+    call: 'Ich nutze Serlo gern in meinem Unterricht, …',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Lehrerin', 'Spenderin'],
+    username: 'Maria_F',
+    imageSrc: 'https://community.serlo.org/avatar/Maria_F',
+  },
 ]
 
 const courseBanner = {
@@ -101,6 +130,9 @@ const courseBanner = {
     </div>
   ),
   imageSrc: '/_assets/img/donations/donation-bird.svg',
+  buttonText: '',
+  roles: [],
+  username: '',
 }
 
 type Banner = typeof articleBanners[number]
@@ -151,6 +183,8 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
 
   if (!banner) return null
 
+  const isTestimonial = banner.id.startsWith('banner-testimonial')
+
   return (
     <Lazy slim>
       <aside
@@ -169,16 +203,34 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           if (bannerRef.current) observer.observe(bannerRef.current)
         }}
         className={clsx(
-          'w-[100vw] relative py-6 px-side text-center text-xl',
+          'w-[100vw] relative py-6 px-side text-center text-xl overflow-x-hidden',
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
-          'sm:flex sm:justify-between sm:text-left sm:mx-0 sm:px-0',
-          'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16'
+          'sm:flex sm:justify-between sm:text-left sm:-mx-2 sm:px-0',
+          'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16',
+          isTestimonial
+            ? 'bg-[url("/_assets/img/landing/about-container-green.svg")]'
+            : 'bg-[url("/_assets/img/landing/about-container.svg")]'
         )}
       >
-        <img
-          src={banner.imageSrc}
-          className="mt-6 px-16 max-w-[22rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[15rem] sm:px-3 scale-x-[-1]"
-        />
+        <figure className="mx-auto mt-6 max-w-[22rem] sm:mr-0 sm:max-w-[15rem] text-center">
+          <img
+            src={banner.imageSrc}
+            className={clsx(
+              ' sm:h-fit',
+              isTestimonial
+                ? 'rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
+                : 'scale-x-[-1] sm:px-3 px-16'
+            )}
+          />
+          {isTestimonial ? (
+            <>
+              <p className="text-base mt-1 font-bold text-gray-700">
+                @{banner.username}
+              </p>
+              {renderRoles(banner.roles)}
+            </>
+          ) : null}
+        </figure>
         <div className="max-w-2xl mx-auto px-side sm:mt-5 sm:ml-0">
           <p className="my-5 font-handwritten text-[1.32em] text-brand mx-side">
             {banner.call}
@@ -193,7 +245,8 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
                 void router.push('/spenden')
               }}
             >
-              Jetzt spenden
+              {banner.buttonText ?? 'Jetzt spenden'}{' '}
+              <FaIcon icon={faHandHoldingHeart} />
             </button>
           </p>
         </div>
@@ -221,4 +274,27 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       `}</style>
     </Lazy>
   )
+
+  function renderRoles(roles: string[] | undefined) {
+    if (!roles) return null
+    const badges = roles?.map((role) => {
+      return (
+        <>
+          <span
+            key={role}
+            className={clsx(
+              'text-white text-[16px] font-bold px-2 py-1',
+              'rounded-2xl',
+              'bg-brand opacity-70'
+            )}
+          >
+            {role}
+          </span>
+          <br />
+        </>
+      )
+    })
+
+    return <>{badges}</>
+  }
 }
