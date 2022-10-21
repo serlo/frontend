@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
+import { DonationsBannerInline } from '../donations-banner-experiment/donations-banner-inline'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -123,6 +124,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {node.context.solutionId && (
           <Lazy>
             <CommentAreaEntity entityId={node.context.solutionId} />
+            {/* Temporary donations banner trial */}
+            <DonationsBannerInline id={node.context.id} place="solution" />
           </Lazy>
         )}
       </div>

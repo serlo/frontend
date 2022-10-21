@@ -3,6 +3,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
 import dynamic from 'next/dynamic'
 import { useState, Fragment } from 'react'
 
+import { DonationsBanner } from '../content/donations-banner-experiment/donations-banner'
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
@@ -58,10 +59,21 @@ export function Topic({ data }: TopicProps) {
           />
         )}
       </div>
-
       {defaultLicense && (
         <LicenseNotice data={defaultLicense} path={['license']} />
       )}
+
+      {/* Temporary donations banner trial */}
+      {isExerciseFolder ? (
+        <DonationsBanner
+          id={data.id}
+          entityData={{
+            ...data,
+            typename: UuidType.TaxonomyTerm,
+            isUnrevised: false,
+          }}
+        />
+      ) : null}
 
       {renderUserTools()}
       <ShareModal
