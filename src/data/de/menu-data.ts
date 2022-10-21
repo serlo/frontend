@@ -285,7 +285,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Community', id: 19882 },
       { title: 'Hilfeseiten', id: 88059 },
       { title: 'Werte und Entscheidungen', id: 181028 },
-      { title: 'Sandkasten für AutorInnen', id: 106082 },
+      { title: 'Testbereich', id: 106082 },
       { title: 'Ressourcen für PädagogInnen', id: 88061 },
       { title: 'Veranstaltungen für AutorInnen', id: 145470 },
       { title: 'Alle Aktivitäten auf serlo.org', url: '/event/history' },

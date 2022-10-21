@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
 
 import { CommentAreaEntityProps } from './comments/comment-area-entity'
+import { DonationsBanner } from './content/donations-banner-experiment/donations-banner'
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
@@ -56,6 +57,11 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           {renderBreadcrumbs()}
           <main>{children}</main>
+
+          {/* Temporary donations banner trial */}
+          {page.kind === 'single-entity' ? (
+            <DonationsBanner id={entityId} entityData={page.entityData} />
+          ) : null}
 
           <div id="comment-area-begin-scrollpoint" />
           {!noComments && (

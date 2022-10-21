@@ -71,6 +71,7 @@ export const instanceData = {
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
       diagon: "Winkelgasse",
+      discussions: "Kommentare",
       manageRoles: "User-Rollen verwalten"
     },
     roles: {
@@ -185,7 +186,8 @@ export const instanceData = {
       showMoreReplies: "%number% weitere Kommentare",
       hideReplies: "Einklappen",
       showArchived: "Archivierte %threads% anzeigen",
-      copyLink: "Kommentarlink kopieren"
+      copyLink: "Kommentarlink kopieren",
+      commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt."
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -221,8 +223,17 @@ export const instanceData = {
       status: 'Status'
     },
     unrevisedRevisions: {
-      supportLinks: "Wie reviewe ich?",
-      guideline: "Review Hilfeseite",
+      help1: "Hier landen alle Bearbeitungen der Autor*innen. Diese werden in der Qualitätskontrolle durch die %reviewersLink% überprüft und freigegeben.",
+      reviewers: "Reviewer*innen",
+      reviewersUrl: "/community/202923/rollen-der-serlo-community",
+      help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
+      help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
+      contactPerson: 'LinaMaria',
+      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
+      help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
+      guideline: "Anleitung",
+      guidelineUrl: "/140473",
+      subjectLinks: "Direkt zum Fach",
       showMoreEntities: "Alle in %subject% anzeigen",
       showMoreRevisions: "%number weitere anzeigen",
       newLabelText: "neu",
@@ -300,7 +311,7 @@ export const instanceData = {
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
     login: {
-      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInLink: "Bitte melde dich an,",
       pleaseLogInText: "um diese Funktion zu benutzen."
     },
     keys: {
@@ -474,7 +485,8 @@ export const loggedInData = {
         reject: "Bearbeitung wurde nicht akzeptiert ❌",
         save: "Bearbeitung erfolgreich gespeichert ✅",
         updated: "Erfolgreich aktualisiert",
-        generic: "Hat geklappt 🎉"
+        generic: "Hat geklappt 🎉",
+        saveNeedsReview: "Danke für deine Bearbeitung 🎉 Die Reviewer*innen prüfen sie bald und dann ist sie auf der Seite sichtbar."
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -487,6 +499,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
+      noChangesWarning: "Bisher hast du nichts geändert",
       edtrIo: {
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
@@ -526,6 +539,7 @@ export const loggedInData = {
         solutionSeparator: "Lösungs-Trenner",
         solutionSeparatorDesc: "Unterteile die Lösung in einzelne Lösungsschritte.",
         save: "Speichern",
+        saveWithReview: "Speichern und reviewen lassen",
         cancel: "Abbrechen",
         saving: "Speichert…",
         missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
@@ -535,7 +549,7 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
         revisionSaved: "Bearbeitung gespeichert",
         saveRevision: "Bearbeitung zwischenspeichern",
-        changes: "Änderungen",
+        changes: "Beschreibe deine Änderungen am Inhalt",
         skipReview: "Bearbeitung ohne Review freischalten (nicht empfohlen)",
         enableNotifs: "Benachrichtigungen auf serlo.org erhalten",
         enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
@@ -714,7 +728,7 @@ export const loggedInData = {
         sourceUrl: "Optionaler Link",
         moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
         addModal: {
-          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
           introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
           buttonEx: "Aufgaben hinzufügen",
           buttonExFolder: "Aufgabenordner auswählen",

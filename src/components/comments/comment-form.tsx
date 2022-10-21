@@ -56,7 +56,8 @@ export function CommentForm({
     <div
       className={clsx(
         'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-        'bg-brandgreen-50 focus-within:bg-brandgreen-100',
+        'bg-brandgreen-50',
+        'border-2 border-brandgreen-50 focus-within:border-brandgreen-muted',
         'transition-colors duration-200 ease-in py-1'
       )}
     >
