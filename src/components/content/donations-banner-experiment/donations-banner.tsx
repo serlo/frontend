@@ -2,11 +2,16 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
-import { Lazy } from './lazy'
+import { Lazy } from '../lazy'
 import { useInstanceData } from '@/contexts/instance-context'
+import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
+
+// Round 2
+// 10% Artikel & Aufgabensammlung
+// 100% Ende von Kurs
 
 declare global {
   // eslint-disable-next-line no-var
@@ -15,50 +20,10 @@ declare global {
   var hack__id: number
 }
 
-const chance = isProduction ? 0.2 : 1 // 20% or always while developing
+const reducedChance = isProduction ? 0.2 : 1 // 20% or always while developing
 
-const banners = [
-  {
-    id: 'banner-A1',
-    isLong: true,
-    text: (
-      <div className="text-left">
-        <p className="serlo-p special-hyphens-initial leading-6">
-          … dass in Deutschland über 1,1 Millionen Schüler*innen im Jahr teure
-          Nachhilfe in Anspruch nehmen? Mit 17 Jahren ist das jedes vierte Kind.
-          Nicht jede Familie kann sich das leisten! Und so ist der Schulerfolg
-          in Deutschland stark abhängig vom Geldbeutel der Eltern.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          Die Corona-Pandemie verstärkt diesen bedenklichen Trend: Viele
-          Unterrichtsstunden sind ausgefallen und der verpasste Lernstoff muss
-          jetzt nachgeholt werden. Das ist besonders für die Schüler*innen aus
-          ärmeren Haushalten schwierig, die weniger außerschulische
-          Unterstützung erhalten und eher den Anschluss verlieren.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          Wir finden das nicht fair! Jedes Kind in Deutschland sollte die
-          gleichen Chancen auf eine gute Schulbildung haben.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          Dafür setzen wir uns ein! Serlo ist ein gemeinnütziger Verein mit dem
-          Ziel:{' '}
-          <b>
-            Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
-            Schüler*innen.
-          </b>{' '}
-          Jeden Monat erreichen wir mit unserer freien Lernplattform serlo.org
-          über 1 Millionen Schüler*innen und das mit einem sehr kleinen Budget.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
-          Mit deiner Spende, groß oder klein, kannst du unsere Arbeit für mehr
-          Bildungsgerechtigkeit unterstützen.
-        </p>
-      </div>
-    ),
-    call: 'Wusstest du schon …',
-    imageSrc: '/_assets/img/donations/donation-bird.svg',
-  },
+// show on articles and exercise groups
+const articleBanners = [
   {
     id: 'banner-A2',
     isLong: false,
@@ -77,48 +42,6 @@ const banners = [
         <p className="serlo-p special-hyphens-initial leading-6 font-bold">
           Mit deiner Spende, groß oder klein, kannst du diese Arbeit
           unterstützen.
-        </p>
-      </div>
-    ),
-    call: 'Wusstest du schon …',
-    imageSrc: '/_assets/img/donations/donation-bird.svg',
-  },
-  {
-    id: 'banner-B1',
-    isLong: true,
-    text: (
-      <div className="text-left">
-        <p className="serlo-p special-hyphens-initial leading-6">
-          … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
-          engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
-          Pädagog*innen für das gemeinsame Ziel:{' '}
-          <b>
-            Kostenloser Zugang zu hochwertigen Lernmaterialien – für alle
-            Schüler*innen
-          </b>
-          . Jeden Monat lernen bereits über 1 Millionen Schüler*innen mit Serlo.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          Neben der großen ehrenamtlichen Redaktion haben wir auch ein kleines
-          Team von Festangestellten. Einige von ihnen waren selbst noch
-          Schüler*innen, als sie Serlo gegründet und aufgebaut haben. Das feste
-          Team kümmert sich unter anderem um die Weiterentwicklung der Software,
-          Wartung der Server, Fortbildungen für ehrenamtliche Autor*innen und
-          die Qualitätssicherung.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          Als nächstes möchten wir gerne weitere Übungsformate für Serlo
-          entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
-          Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
-          eigenen Lernstand zu speichern.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für
-          immer kostenlos und frei von Werbung bleiben wird, sind wir auf
-          Spenden angewiesen.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
-          Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
     ),
@@ -156,9 +79,38 @@ const banners = [
   },
 ]
 
-type Banner = typeof banners[number]
+const courseBanner = {
+  id: 'banner-course-1',
+  isLong: false,
+  call: 'Hat dir dieser Kurs weitergeholfen?',
+  text: (
+    <div className="text-left">
+      <p className="serlo-p special-hyphens-initial leading-6">
+        Wir möchten <b>mehr kleinschrittige Kurse</b> entwickeln, die
+        Nutzbarkeit auf Smartphones verbessern und es Schüler*innen ermöglichen,
+        eigene Lernziele zu definieren und ihren eigenen Lernstand zu speichern.
+      </p>
+      <p className="serlo-p special-hyphens-initial leading-6">
+        All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für immer
+        kostenlos und frei von Werbung bleiben wird, sind wir auf Spenden
+        angewiesen.
+      </p>
+      <p className="serlo-p special-hyphens-initial leading-6 font-bold">
+        Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
+      </p>
+    </div>
+  ),
+  imageSrc: '/_assets/img/donations/donation-bird.svg',
+}
 
-export function DonationsBanner({ id }: { id: number }) {
+type Banner = typeof articleBanners[number]
+
+export interface DonationsBannerProps {
+  id: number
+  entityData: EntityData
+}
+
+export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
   const [banner, setBanner] = useState<Banner | undefined>(undefined)
   const bannerRef = useRef<HTMLElement>(null)
   const router = useRouter()
@@ -166,20 +118,38 @@ export function DonationsBanner({ id }: { id: number }) {
 
   useEffect(() => {
     globalThis.hack__id = id
-    if (lang !== Instance.De || Math.random() > chance) {
+
+    const isCourse = entityData.typename === UuidType.CoursePage
+    const isLastCoursePage =
+      isCourse &&
+      entityData.courseData &&
+      entityData.courseData.pages.length === entityData.courseData.index + 1
+
+    const chanceShow = isCourse ? true : Math.random() < reducedChance
+
+    const showOnType =
+      isLastCoursePage ||
+      entityData.typename === UuidType.Article ||
+      entityData.typename === UuidType.TaxonomyTerm
+
+    if (lang !== Instance.De || !showOnType || !chanceShow) {
       setBanner(undefined)
       return undefined
     }
 
-    setBanner(banners[Math.floor(Math.random() * banners.length)])
+    setBanner(
+      isCourse
+        ? courseBanner
+        : articleBanners[Math.floor(Math.random() * articleBanners.length)]
+    )
 
     const horizon = document.getElementById('horizon')
     if (horizon) horizon.style.display = 'none'
 
     // rerole on entity change
-  }, [setBanner, id, lang])
+  }, [setBanner, id, lang, entityData])
 
-  if (lang !== Instance.De || !banner) return null
+  if (!banner) return null
 
   return (
     <Lazy slim>
@@ -223,7 +193,7 @@ export function DonationsBanner({ id }: { id: number }) {
                 void router.push('/spenden')
               }}
             >
-              Spende jetzt!
+              Jetzt spenden
             </button>
           </p>
         </div>

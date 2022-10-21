@@ -24,6 +24,7 @@ module.exports = {
         },
         brandgreen: {
           DEFAULT: brandGreen,
+          muted: tint(0.55, brandGreen),
           light: lighten(0.35, brandGreen),
           lighter: lighten(0.45, brandGreen),
         },
