@@ -1,4 +1,5 @@
 import { faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart'
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
@@ -14,6 +15,8 @@ import { submitEvent } from '@/helper/submit-event'
 // Round 2
 // 10% Artikel & Aufgabensammlung
 // 100% Ende von Kurs
+
+const hideDonationBannerKey = 'hide-donation-banner'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -78,34 +81,37 @@ const articleBanners = [
     ),
     call: 'Wusstest du schon …',
     imageSrc: '/_assets/img/donations/donation-bird.svg',
+    buttonText: '',
+    roles: [],
+    username: '',
   },
-  {
-    id: 'banner-testimonial-Maria_F',
-    isLong: false,
-    text: (
-      <div className="text-left">
-        <p className="serlo-p special-hyphens-initial leading-6">
-          weil es mir bei der Differenzierung hilft. Ich weiß, dass ich mich auf
-          die Qualität der Inhalte verlassen kann.
-          <br />
-          Serlo ist für mich das beste Beispiel für qualitativ hochwertige freie
-          Bildungsmaterialien.
-        </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
-          Lernmittel haben auch einen großen Einfluss auf das selbständige
-          Lernen zu Hause. Gute Lernmittel sollten frei lizenziert sein und von
-          einer engagierten Community weiterentwickelt werden, anstatt dass
-          einzelne Lehrkräfte immer wieder von vorn anfangen. Deswegen
-          unterstütze ich Serlo gern mit einer Spende
-        </p>
-      </div>
-    ),
-    call: 'Ich nutze Serlo gern in meinem Unterricht, …',
-    buttonText: 'Jetzt auch spenden',
-    roles: ['Lehrerin', 'Spenderin'],
-    username: 'Maria_F',
-    imageSrc: 'https://community.serlo.org/avatar/Maria_F',
-  },
+  // {
+  //   id: 'banner-testimonial-Maria_F',
+  //   isLong: false,
+  //   text: (
+  //     <div className="text-left">
+  //       <p className="serlo-p special-hyphens-initial leading-6">
+  //         weil es mir bei der Differenzierung hilft. Ich weiß, dass ich mich auf
+  //         die Qualität der Inhalte verlassen kann.
+  //         <br />
+  //         Serlo ist für mich das beste Beispiel für qualitativ hochwertige freie
+  //         Bildungsmaterialien.
+  //       </p>
+  //       <p className="serlo-p special-hyphens-initial leading-6">
+  //         Lernmittel haben auch einen großen Einfluss auf das selbständige
+  //         Lernen zu Hause. Gute Lernmittel sollten frei lizenziert sein und von
+  //         einer engagierten Community weiterentwickelt werden, anstatt dass
+  //         einzelne Lehrkräfte immer wieder von vorn anfangen. Deswegen
+  //         unterstütze ich Serlo gern mit einer Spende
+  //       </p>
+  //     </div>
+  //   ),
+  //   call: 'Ich nutze Serlo gern in meinem Unterricht, …',
+  //   buttonText: 'Jetzt auch spenden',
+  //   roles: ['Lehrerin', 'Spenderin'],
+  //   username: 'Maria_F',
+  //   imageSrc: 'https://community.serlo.org/avatar/Maria_F',
+  // },
 ]
 
 const courseBanner = {
@@ -164,7 +170,10 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       entityData.typename === UuidType.Article ||
       entityData.typename === UuidType.TaxonomyTerm
 
-    if (lang !== Instance.De || !showOnType || !chanceShow) {
+    const hiddenByUser =
+      sessionStorage.getItem(hideDonationBannerKey) === 'true'
+
+    if (lang !== Instance.De || !showOnType || !chanceShow || hiddenByUser) {
       setBanner(undefined)
       return undefined
     }
@@ -212,6 +221,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
             : 'bg-[url("/_assets/img/landing/about-container.svg")]'
         )}
       >
+        {renderHideButton()}
         <figure className="mx-auto mt-6 max-w-[22rem] sm:mr-0 sm:max-w-[15rem] text-center">
           <img
             src={banner.imageSrc}
@@ -245,7 +255,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
                 void router.push('/spenden')
               }}
             >
-              {banner.buttonText ?? 'Jetzt spenden'}{' '}
+              {banner.buttonText ? banner.buttonText : 'Jetzt spenden'}{' '}
               <FaIcon icon={faHandHoldingHeart} />
             </button>
           </p>
@@ -274,6 +284,21 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       `}</style>
     </Lazy>
   )
+
+  function renderHideButton() {
+    return (
+      <button
+        title="Banner verstecken"
+        onClick={() => {
+          sessionStorage.setItem(hideDonationBannerKey, 'true')
+          setBanner(undefined)
+        }}
+        className="serlo-button-blue-transparent absolute right-6  bg-[rgba(0,0,0,0.05)] text-truegray-600 w-8 h-8"
+      >
+        <FaIcon icon={faTimes} />
+      </button>
+    )
+  }
 
   function renderRoles(roles: string[] | undefined) {
     if (!roles) return null
