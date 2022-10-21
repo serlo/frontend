@@ -35,7 +35,7 @@ module.exports = {
           // 700: '#6D8A13',
           // 800: '#5B7310',
           // 900: '#45570C',
-          muted: 'rgb(207, 224, 151)',
+          muted: '#cfe097',
         },
         truegray: colors.neutral,
         berry: '#857189',
