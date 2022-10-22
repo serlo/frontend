@@ -20,7 +20,8 @@
           "type": "string",
           "ory.sh/kratos": {
             "credentials": { "password": { "identifier": true } }
-          }
+          },
+          "pattern": "^[\\w\\-]+$"
         },
         "description": {
           "type": "string"
