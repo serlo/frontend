@@ -88,9 +88,12 @@ export const instanceData = {
       pdf: "Télécharger comme PDF",
       pdfNoSolutions: "PDF sans solutions"
     },
-    edit: {
-      button: "Modifier",
-      unrevised: "Afficher les révisions non révisées",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
+      unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
@@ -437,6 +440,7 @@ export const loggedInData = {
       sortCoursePages: "Trier les pages du cours",
       sortGroupedExercises: "Trier les exercices groupés",
       edit: "Modifier",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: "Afficher les révisions non révisées",
       organize: "Organiser",
       moveToGrouped: "Déplacer le contenu vers un autre exercice de texte groupé",
