@@ -132,7 +132,7 @@ export function SaveModal({
         >
           {pending
             ? edtrIo.saving
-            : showSkipCheckout && autoCheckout
+            : (showSkipCheckout && autoCheckout) || !showSkipCheckout
             ? edtrIo.save
             : edtrIo.saveWithReview}
         </button>
