@@ -10,15 +10,16 @@ import { submitEvent } from '@/helper/submit-event'
 export interface InviteModalProps {
   isOpen: boolean
   onClose: () => void
+  type: string
 }
 
-export function InviteModal({ isOpen, onClose }: InviteModalProps) {
+export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
   const { lang, strings, footerData } = useInstanceData()
-  const modalStrings = strings.edit.inviteModal
+  const modalStrings = strings.editOrAdd.inviteModal
   const id = useContext(EntityIdContext)
 
   useEffect(() => {
-    if (isOpen) submitEvent('invite2edit-open-modal')
+    if (isOpen) submitEvent('invite2edit-open-modal-' + type)
   })
 
   if (!isOpen || !id) return null
@@ -58,7 +59,7 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
         {' '}
         <a
           onClick={() => {
-            submitEvent('invite2edit-click-login')
+            submitEvent('invite2edit-click-login-' + type)
             onClose()
           }}
         >
@@ -68,7 +69,7 @@ export function InviteModal({ isOpen, onClose }: InviteModalProps) {
         </a>
         <a
           onClick={() => {
-            submitEvent('invite2edit-click-register')
+            submitEvent('invite2edit-click-register-' + type)
             onClose()
           }}
         >

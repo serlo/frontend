@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
 import { EditOrInvite } from './edit-or-invite/edit-or-invite'
+import { TaxAddOrInvite } from './edit-or-invite/tax-add-or-invite'
 import { AuthorToolsData } from './foldout-author-menus/author-tools'
 import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
@@ -55,6 +56,8 @@ export function UserTools({
   const loggedInData = useLoggedInData()
 
   const isRevision = data && data.type.includes('Revision')
+  const isTaxonomy = data && data.type === UuidType.TaxonomyTerm
+
   // note: we hide the ui on ssr and fade it in on the client
   const [firstPass, setFirstPass] = useState(true)
 
@@ -113,14 +116,16 @@ export function UserTools({
           <RevisionTools data={data} aboveContent={aboveContent} />
         ) : null}
         {data ? (
-          <EditOrInvite
-            data={data}
-            unrevisedRevisions={unrevisedRevisions}
-            aboveContent={aboveContent}
-          />
+          isTaxonomy ? (
+            <TaxAddOrInvite data={data} aboveContent={aboveContent} />
+          ) : (
+            <EditOrInvite
+              data={data}
+              unrevisedRevisions={unrevisedRevisions}
+              aboveContent={aboveContent}
+            />
+          )
         ) : null}
-
-        <Share data={data} aboveContent={aboveContent} />
 
         {auth.current ? (
           data?.type === UuidType.CoursePage ? (
@@ -129,6 +134,7 @@ export function UserTools({
             <MoreAuthorTools data={data} aboveContent={aboveContent} />
           )
         ) : null}
+        <Share data={data} aboveContent={aboveContent} />
       </>
     )
   }

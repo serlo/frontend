@@ -54,8 +54,8 @@ export function EditOrInvite({
   if (!href && !isInvite) return null
 
   const title = hasUnrevised
-    ? `${strings.edit.unrevised} (${unrevisedRevisions || ''})`
-    : strings.edit.button
+    ? `${strings.editOrAdd.unrevised} (${unrevisedRevisions || ''})`
+    : strings.editOrAdd.button
 
   const icon = hasUnrevised ? faClock : faPencilAlt
 
@@ -69,7 +69,11 @@ export function EditOrInvite({
         icon={icon}
       />
       {isInvite && inviteOpen ? (
-        <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
+        <InviteModal
+          type={data.type}
+          isOpen={inviteOpen}
+          onClose={() => setInviteOpen(false)}
+        />
       ) : null}
     </>
   )
