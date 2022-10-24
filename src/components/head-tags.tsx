@@ -50,6 +50,7 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
     if (
       noindex ||
       (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
+      data.title.startsWith('Sandkasten') || // remove when renamed
       data.title.startsWith('Testbereich')
     ) {
       return <meta name="robots" content="noindex" />
