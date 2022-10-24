@@ -161,7 +161,7 @@ export function CommentArea({
   function renderHeading(icon: IconDefinition, text: string) {
     return (
       <h2 className="serlo-h2 border-b-0 mt-10">
-        <FaIcon className="text-2.5xl text-brand-lighter" icon={icon} />
+        <FaIcon className="text-2.5xl text-brand-400" icon={icon} />
         {text}
       </h2>
     )

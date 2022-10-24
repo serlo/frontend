@@ -8,7 +8,7 @@ import { FaIcon } from './fa-icon'
 const colorClasses = {
   warning: 'bg-orange-200',
   info: 'bg-brand-100',
-  success: 'bg-brandgreen-lighter',
+  success: 'bg-brandgreen-50',
   failure: 'bg-red-100',
   gray: 'bg-truegray-100',
 }

@@ -6,7 +6,7 @@ import { FooterNew } from '../landing/rework/footer-new'
 import { LandingJsonLd } from '../landing/rework/landing-json-ld'
 import { PartnerListNew } from '../landing/rework/partner-list-new'
 import { WelcomeMessage } from '../landing/rework/welcome-message'
-import { Header } from '../navigation/header'
+import { Header } from '../navigation/header/header'
 import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
@@ -213,7 +213,7 @@ export function LandingDE({ data }: LandingDEProps) {
               'hidden md:inline-block mx-auto mt-12',
               'font-bold text-xl rounded-lg text-truegray-700 ',
               'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
-              'hover:border-brand-light hover:no-underline hover:text-brand-light',
+              'hover:border-brand-500 hover:no-underline hover:text-brand-500',
               'landing-button-with-wings landing-button-with-wink'
             )}
             href="/partner"

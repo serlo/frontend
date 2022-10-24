@@ -6,7 +6,7 @@ import { HeadTags } from '../head-tags'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { PartnerList } from '@/components/landing/partner-list'
 import { FooterNav } from '@/components/navigation/footer-nav'
-import { Logo } from '@/components/navigation/logo'
+import { Logo } from '@/components/navigation/header/logo'
 import { ExternalProvider } from '@/helper/use-consent'
 
 const footerEntries = [
@@ -105,7 +105,7 @@ export function Donations() {
         </div>
         <div
           className={clsx(
-            'pt-16 mt-11 border-t-8 border-brand-150',
+            'pt-16 mt-11 border-t-8 border-brand-200',
             'md:pt-0 md:mt-0 md:border-t-0',
             'md:max-w-xs md:absolute md:right-0 md:top-48 md:pr-4'
           )}
