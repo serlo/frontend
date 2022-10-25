@@ -48,12 +48,12 @@ export function SubjectLandingContent({
           <div>
             <h1
               className={clsx(
-                'text-6xl font-extrabold',
+                'text-4xl sm:text-6xl font-extrabold',
                 'tracking-tight',
                 'mt-3 mb-10'
               )}
             >
-              <span className="pb-2 underlined inline-block max-w-[27rem] !whitespace-normal">
+              <span className="w-min pb-3 underlined inline-block max-w-[27rem] !whitespace-normal">
                 {data.title}
               </span>
             </h1>
