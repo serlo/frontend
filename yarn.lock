@@ -4166,9 +4166,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/transform@npm:^29.2.1":
-  version: 29.2.1
-  resolution: "@jest/transform@npm:29.2.1"
+"@jest/transform@npm:^29.2.2":
+  version: 29.2.2
+  resolution: "@jest/transform@npm:29.2.2"
   dependencies:
     "@babel/core": ^7.11.6
     "@jest/types": ^29.2.1
@@ -4185,7 +4185,7 @@ __metadata:
     pirates: ^4.0.4
     slash: ^3.0.0
     write-file-atomic: ^4.0.1
-  checksum: bb50bfce34d8c648475a7d65e91787a0232cdcc0445331dba8d3d80180dff1b43d97872568be795c8f92d419b3f0e6114297349cc892fdf50e8471cb227f674a
+  checksum: ac12069100c260d1c46e5048bbad35bf0b5408592b918692b87a52c1c0c0e189c9f37ecf48dbcaa6f00ef083e1bc68201844999e1c0f66cd4d9b70127bf77537
   languageName: node
   linkType: hard
 
@@ -5171,37 +5171,37 @@ __metadata:
     "@types/styled-components": ^5.1.26
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
-    algebra.js: ^0.2.0
+    algebra.js: ^0.2.6
     array-move: ^4.0.0
     autoprefixer: ^10.4.12
-    babel-jest: ^29.2.1
+    babel-jest: ^29.2.2
     clsx: ^1.2.1
-    cross-env: ^7.0.0
-    dotenv: ^16.0.0
+    cross-env: ^7.0.3
+    dotenv: ^16.0.3
     eslint: ^8.26.0
     eslint-config-next: ^12.3.1
     eslint-config-prettier: ^8.5.0
     eslint-plugin-import: ^2.26.0
     eslint-plugin-react: ^7.31.10
     eslint-plugin-react-hooks: ^4.6.0
-    fast-xml-parser: ^4.0.9
+    fast-xml-parser: ^4.0.11
     fp-ts: ^2.13.1
     graphiql: ^2.0.9
     graphql: ^16.6.0
     graphql-request: ^5.0.0
     htmlparser2: ^8.0.1
     immutable: ^4.1.0
-    io-ts: ^2.2.16
+    io-ts: ^2.2.19
     jest: ^27.5.1
-    js-cookie: ^3.0.0
+    js-cookie: ^3.0.1
     jwt-decode: ^3.1.2
-    katex: ^0.16.2
+    katex: ^0.16.3
     msw: ^0.47.4
     next: ^12.3.1
     npm-run-all: ^4.1.5
     nprogress: ^0.2.0
     postcss: ^8.4.18
-    postcss-flexbugs-fixes: ^5.0.0
+    postcss-flexbugs-fixes: ^5.0.2
     postcss-nested: ^6.0.0
     prettier: ^2.7.1
     prettier-plugin-packagejson: ^2.3.0
@@ -5228,11 +5228,11 @@ __metadata:
     slate-react: ^0.22.0
     styled-components: ^5.3.6
     styled-jsx: ^5.1.0
-    styled-jsx-plugin-postcss: ^4.0.0
+    styled-jsx-plugin-postcss: ^4.0.1
     swr: ^1.3.0
-    tailwindcss: ^3.1.0
-    timeago-react: ^3.0.0
-    timeago.js: ^4.0.0
+    tailwindcss: ^3.2.1
+    timeago-react: ^3.0.5
+    timeago.js: ^4.0.2
     tippy.js: ^6.3.7
     typescript: ^4.0.0
     unfetch: ^4.2.0
@@ -6483,7 +6483,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"algebra.js@npm:^0.2.0, algebra.js@npm:^0.2.6":
+"algebra.js@npm:^0.2.6":
   version: 0.2.6
   resolution: "algebra.js@npm:0.2.6"
   checksum: 81ddcc1854248b0dfbbe113bae1caf2acbf02a17a3df15bf34543fa8772d3efd6f2854cc4cc9fc1a8e881efd7e454fcc9d90ed2f443a0d193f7c114588b2f1aa
@@ -6771,11 +6771,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-jest@npm:^29.2.1":
-  version: 29.2.1
-  resolution: "babel-jest@npm:29.2.1"
+"babel-jest@npm:^29.2.2":
+  version: 29.2.2
+  resolution: "babel-jest@npm:29.2.2"
   dependencies:
-    "@jest/transform": ^29.2.1
+    "@jest/transform": ^29.2.2
     "@types/babel__core": ^7.1.14
     babel-plugin-istanbul: ^6.1.1
     babel-preset-jest: ^29.2.0
@@ -6784,7 +6784,7 @@ __metadata:
     slash: ^3.0.0
   peerDependencies:
     "@babel/core": ^7.8.0
-  checksum: c340c10d8cee4b3ef5990443627b5f70dbe2649faa1fef671c8b4fd4a9f8d559b78e5644e18de8063974cd6606033caf1afcaa52744309f6e3176c0b37c2e8f9
+  checksum: 35f0eb895ab9218b55cacedbfe62dd94c99924d89a0a8096354c4fbb4c8465c0a2c4aba82e5bedf367def6c89635f4f134c7ebc22f07b6f9c930f7b43b7bbdde
   languageName: node
   linkType: hard
 
@@ -7066,7 +7066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"braces@npm:^3.0.1, braces@npm:~3.0.2":
+"braces@npm:^3.0.1, braces@npm:^3.0.2, braces@npm:~3.0.2":
   version: 3.0.2
   resolution: "braces@npm:3.0.2"
   dependencies:
@@ -7827,7 +7827,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cross-env@npm:^7.0.0":
+"cross-env@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-env@npm:7.0.3"
   dependencies:
@@ -8379,6 +8379,13 @@ __metadata:
   version: 16.0.0
   resolution: "dotenv@npm:16.0.0"
   checksum: 664cebb51f0a9a1d1b930f51f0271e72e26d62feaecc9dc03df39453dd494b4e724809ca480fb3ec3213382b1ed3f791aaeb83569a137f9329ce58efd4853dbf
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^16.0.3":
+  version: 16.0.3
+  resolution: "dotenv@npm:16.0.3"
+  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
   languageName: node
   linkType: hard
 
@@ -9073,7 +9080,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.0.3, fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.0.3, fast-glob@npm:^3.2.9":
   version: 3.2.11
   resolution: "fast-glob@npm:3.2.11"
   dependencies:
@@ -9083,6 +9090,19 @@ __metadata:
     merge2: ^1.3.0
     micromatch: ^4.0.4
   checksum: f473105324a7780a20c06de842e15ddbb41d3cb7e71d1e4fe6e8373204f22245d54f5ab9e2061e6a1c613047345954d29b022e0e76f5c28b1df9858179a0e6d7
+  languageName: node
+  linkType: hard
+
+"fast-glob@npm:^3.2.12":
+  version: 3.2.12
+  resolution: "fast-glob@npm:3.2.12"
+  dependencies:
+    "@nodelib/fs.stat": ^2.0.2
+    "@nodelib/fs.walk": ^1.2.3
+    glob-parent: ^5.1.2
+    merge2: ^1.3.0
+    micromatch: ^4.0.4
+  checksum: 0b1990f6ce831c7e28c4d505edcdaad8e27e88ab9fa65eedadb730438cfc7cde4910d6c975d6b7b8dc8a73da4773702ebcfcd6e3518e73938bb1383badfe01c2
   languageName: node
   linkType: hard
 
@@ -9100,14 +9120,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.0.9":
-  version: 4.0.9
-  resolution: "fast-xml-parser@npm:4.0.9"
+"fast-xml-parser@npm:^4.0.11":
+  version: 4.0.11
+  resolution: "fast-xml-parser@npm:4.0.11"
   dependencies:
     strnum: ^1.0.5
   bin:
     fxparser: src/cli/cli.js
-  checksum: 1ef2ba1406ce9985a2e7049a4c412de0e1e64e4ee6b0890f5b5bfce6407d04ce04b61733d2ddc7ba4acf4461b57eb3718cbc595df9a023f5a79ad81f70e8425a
+  checksum: d8a08e4d5597e0fc00a86735195872eeb03008913e298830941516f3766e16ee555e2d431acc92e1dda887938edc445252ec5b59494aab60a8389888bd13719c
   languageName: node
   linkType: hard
 
@@ -10150,12 +10170,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"io-ts@npm:^2.2.16":
-  version: 2.2.16
-  resolution: "io-ts@npm:2.2.16"
+"io-ts@npm:^2.2.19":
+  version: 2.2.19
+  resolution: "io-ts@npm:2.2.19"
   peerDependencies:
     fp-ts: ^2.5.0
-  checksum: 1b5855682e413cc92cfb5c51d0bdb24c99e407ab4e67821a53078f5d8dedbc387840c5b240cb19dd5d542bbdd2e2317ece17674a674f3de561ca0f00ae765bba
+  checksum: fe6a0203e43a518529ed8ab562db382c25a91b64cb8ba87a3798a6a9f15c834eff69ca85eeb5f2d3196cf92af61fd368239e8c5da5dccd57bf3beed712e91075
   languageName: node
   linkType: hard
 
@@ -11314,7 +11334,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-cookie@npm:^3.0.0":
+"js-cookie@npm:^3.0.1":
   version: 3.0.1
   resolution: "js-cookie@npm:3.0.1"
   checksum: bb48de67e2a6bd1ae3dfd6b2d5a167c33dd0c5a37e909206161eb0358c98f17cb55acd55827a58e9eea3630d89444e7479f7938ef4420dda443218b8c434a4c3
@@ -11564,14 +11584,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"katex@npm:^0.16.2":
-  version: 0.16.2
-  resolution: "katex@npm:0.16.2"
+"katex@npm:^0.16.3":
+  version: 0.16.3
+  resolution: "katex@npm:0.16.3"
   dependencies:
     commander: ^8.0.0
   bin:
     katex: cli.js
-  checksum: c0031c2e1287bb13102d733dcc3dada50752cf0d45b48a536c09937633ce8d6b438d18cbf382e64d4d237b957d8b3a8bd6414845720c7a8e1079c352b4ebf487
+  checksum: 3ee588b6420da2b8d087c524502163f52340c4b0bf9ccddb2603d90d66eb637d088696ddf97316eb88d3bb41340784c4270e1824dcf7311110ed4cb2bc5458db
   languageName: node
   linkType: hard
 
@@ -12200,6 +12220,16 @@ __metadata:
     braces: ^3.0.1
     picomatch: ^2.2.3
   checksum: ef3d1c88e79e0a68b0e94a03137676f3324ac18a908c245a9e5936f838079fcc108ac7170a5fadc265a9c2596963462e402841406bda1a4bb7b68805601d631c
+  languageName: node
+  linkType: hard
+
+"micromatch@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "micromatch@npm:4.0.5"
+  dependencies:
+    braces: ^3.0.2
+    picomatch: ^2.3.1
+  checksum: 02a17b671c06e8fefeeb6ef996119c1e597c942e632a21ef589154f23898c9c6a9858526246abb14f8bca6e77734aa9dcf65476fca47cedfb80d9577d52843fc
   languageName: node
   linkType: hard
 
@@ -13149,7 +13179,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^2.0.4, picomatch@npm:^2.2.1, picomatch@npm:^2.2.3":
+"picomatch@npm:^2.0.4, picomatch@npm:^2.2.1, picomatch@npm:^2.2.3, picomatch@npm:^2.3.1":
   version: 2.3.1
   resolution: "picomatch@npm:2.3.1"
   checksum: 050c865ce81119c4822c45d3c84f1ced46f93a0126febae20737bd05ca20589c564d6e9226977df859ed5e03dc73f02584a2b0faad36e896936238238b0446cf
@@ -13195,7 +13225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-flexbugs-fixes@npm:^5.0.0":
+"postcss-flexbugs-fixes@npm:^5.0.2":
   version: 5.0.2
   resolution: "postcss-flexbugs-fixes@npm:5.0.2"
   peerDependencies:
@@ -13256,18 +13286,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-nested@npm:5.0.6":
-  version: 5.0.6
-  resolution: "postcss-nested@npm:5.0.6"
-  dependencies:
-    postcss-selector-parser: ^6.0.6
-  peerDependencies:
-    postcss: ^8.2.14
-  checksum: dbcbfd11e514f485ac0d2b649b32bcbd855665a88a76f697f8be6c5017aa0260954ecccd2475bbd5865a5d248eae9a4e6e10d2d51927621d05430381aa37e43b
-  languageName: node
-  linkType: hard
-
-"postcss-nested@npm:^6.0.0":
+"postcss-nested@npm:6.0.0, postcss-nested@npm:^6.0.0":
   version: 6.0.0
   resolution: "postcss-nested@npm:6.0.0"
   dependencies:
@@ -13285,16 +13304,6 @@ __metadata:
     cssesc: ^3.0.0
     util-deprecate: ^1.0.2
   checksum: 46afaa60e3d1998bd7adf6caa374baf857cc58d3ff944e29459c9a9e4680a7fe41597bd5b755fc81d7c388357e9bf67c0251d047c640a09f148e13606b8a8608
-  languageName: node
-  linkType: hard
-
-"postcss-selector-parser@npm:^6.0.6":
-  version: 6.0.9
-  resolution: "postcss-selector-parser@npm:6.0.9"
-  dependencies:
-    cssesc: ^3.0.0
-    util-deprecate: ^1.0.2
-  checksum: f8161ab4d3e5c76b8467189c6d164ba0f6b6e74677435f29e34caa1df01e052b582b4ae4f7468b2243c4befdd8bdcdb7685542d1b2fca8deae21b3e849c78802
   languageName: node
   linkType: hard
 
@@ -13316,18 +13325,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.14":
-  version: 8.4.16
-  resolution: "postcss@npm:8.4.16"
-  dependencies:
-    nanoid: ^3.3.4
-    picocolors: ^1.0.0
-    source-map-js: ^1.0.2
-  checksum: 10eee25efd77868036403858577da0cefaf2e0905feeaba5770d5438ccdddba3d01cba8063e96b8aac4c6daa0ed413dd5ae0554a433a3c4db38df1d134cffc1f
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.4.18":
+"postcss@npm:^8.4.17, postcss@npm:^8.4.18":
   version: 8.4.18
   resolution: "postcss@npm:8.4.18"
   dependencies:
@@ -15340,7 +15338,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-jsx-plugin-postcss@npm:^4.0.0":
+"styled-jsx-plugin-postcss@npm:^4.0.1":
   version: 4.0.1
   resolution: "styled-jsx-plugin-postcss@npm:4.0.1"
   dependencies:
@@ -15481,9 +15479,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.1.0":
-  version: 3.1.8
-  resolution: "tailwindcss@npm:3.1.8"
+"tailwindcss@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "tailwindcss@npm:3.2.1"
   dependencies:
     arg: ^5.0.2
     chokidar: ^3.5.3
@@ -15491,18 +15489,19 @@ __metadata:
     detective: ^5.2.1
     didyoumean: ^1.2.2
     dlv: ^1.1.3
-    fast-glob: ^3.2.11
+    fast-glob: ^3.2.12
     glob-parent: ^6.0.2
     is-glob: ^4.0.3
     lilconfig: ^2.0.6
+    micromatch: ^4.0.5
     normalize-path: ^3.0.0
     object-hash: ^3.0.0
     picocolors: ^1.0.0
-    postcss: ^8.4.14
+    postcss: ^8.4.17
     postcss-import: ^14.1.0
     postcss-js: ^4.0.0
     postcss-load-config: ^3.1.4
-    postcss-nested: 5.0.6
+    postcss-nested: 6.0.0
     postcss-selector-parser: ^6.0.10
     postcss-value-parser: ^4.2.0
     quick-lru: ^5.1.1
@@ -15512,7 +15511,7 @@ __metadata:
   bin:
     tailwind: lib/cli.js
     tailwindcss: lib/cli.js
-  checksum: 86480301fc6ae1e392c2aba8264ab425bd919078176b010fda724518a7c265e950da5f4120c69c9041509c318207985fa9d680b6f5021e23f8214135a61a54b6
+  checksum: 8479f6e469b3ac3146fec5bf4b5ec411f24f481087d9db9a9e16bd5169cfe5f6af082b8fe656bbb8829faa8805765104843f549b08b4ba34e972d0743d0c7e94
   languageName: node
   linkType: hard
 
@@ -15572,18 +15571,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"timeago-react@npm:^3.0.0":
-  version: 3.0.4
-  resolution: "timeago-react@npm:3.0.4"
+"timeago-react@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "timeago-react@npm:3.0.5"
   dependencies:
     timeago.js: ^4.0.0
   peerDependencies:
-    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
-  checksum: b9b30a31a84d73bd4a6ae47715d4b6d0a225a8d4b29e83f0ac5cc1d47433b8f35f2e53bea64db1ee5eb461cec2433ec7699f7205a20edb26d564078d3a2ddc68
+    react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 79a2c9d7ef774d71a1babe15a637bb109fece886af8206c772fb70104a531afecd88449e92489f58ba728761345f4685fee37a44976e60580d779a35f0acbec9
   languageName: node
   linkType: hard
 
-"timeago.js@npm:^4.0.0":
+"timeago.js@npm:^4.0.0, timeago.js@npm:^4.0.2":
   version: 4.0.2
   resolution: "timeago.js@npm:4.0.2"
   checksum: c785a06988717cb5a00bb96b00ebaa56e83f4b5ed5d87c4c3931fb1bb2591a0e13a7ddc4b6c12c6ee7de64b440ed903c7bd4e0edddb37aade9bfc9ceab5d0db3
