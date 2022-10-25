@@ -1,7 +1,6 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-import dynamic from 'next/dynamic'
-import { useState, Fragment } from 'react'
+import { Fragment } from 'react'
 
 import { DonationsBanner } from '../content/donations-banner-experiment/donations-banner'
 import { FaIcon } from '../fa-icon'
@@ -9,7 +8,6 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
 import { LicenseNotice } from '@/components/content/license/license-notice'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
@@ -20,12 +18,7 @@ export interface TopicProps {
   data: TaxonomyData
 }
 
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-)
-
 export function Topic({ data }: TopicProps) {
-  const [modalOpen, setModalOpen] = useState(false)
   const { strings } = useInstanceData()
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
@@ -76,11 +69,6 @@ export function Topic({ data }: TopicProps) {
       ) : null}
 
       {renderUserTools()}
-      <ShareModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        showPdf={!!data.exercisesContent}
-      />
     </>
   )
 
@@ -101,7 +89,7 @@ export function Topic({ data }: TopicProps) {
             {' '}
             <FaIcon
               icon={faFile}
-              className="text-[1.43rem] align-baseline text-brand-lighter"
+              className="text-[1.43rem] align-baseline text-brand-400"
             />{' '}
           </span>
         )}
@@ -141,7 +129,6 @@ export function Topic({ data }: TopicProps) {
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
-        onShare={() => setModalOpen(true)}
         data={{ type: UuidType.TaxonomyTerm, ...data }}
         id={data.id}
         aboveContent={setting?.aboveContent}

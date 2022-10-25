@@ -80,7 +80,7 @@ export function Breadcrumbs({
           <>
             <Link
               className={clsx(
-                'serlo-button py-0.5 bg-brand-150 hover:bg-brand-lighter',
+                'serlo-button py-0.5 bg-brand-200 hover:bg-brand-400',
                 'hover:text-white sm:bg-brand-100 sm:hover:bg-brand'
               )}
               href={bcEntry.url ?? undefined}

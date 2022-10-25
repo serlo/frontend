@@ -1,25 +1,16 @@
-import dynamic from 'next/dynamic'
-import { useState } from 'react'
-
 import { renderSubline } from './overview'
 import { HeadTags } from '@/components/head-tags'
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-)
 const h2Class =
   'mx-side text-4xl leading-cozy tracking-tight font-extrabold text-gray-700'
 
 export function Job({ position }: { position: PersonioPosition }) {
   const { id, name, employmentType, jobDescriptions } = position
-
-  const [shareOpen, setShareOpen] = useState(false)
 
   const isVolunteer = employmentType === 'trainee'
 
@@ -29,7 +20,9 @@ export function Job({ position }: { position: PersonioPosition }) {
 
       <div className="relative">
         <MaxWidthDiv>
-          <div className="mt-16 md:mt-[11vh]">{renderUserTools(true)}</div>
+          <div className="mt-16 md:mt-[11vh]">
+            <UserTools aboveContent />
+          </div>
           <Breadcrumbs
             data={[
               {
@@ -59,13 +52,7 @@ export function Job({ position }: { position: PersonioPosition }) {
             )
           })}
           <section className="my-12 mx-side">{renderButton()}</section>
-          {renderUserTools(false)}
-          <ShareModal
-            isOpen={shareOpen}
-            onClose={() => setShareOpen(false)}
-            showPdf={false}
-            path="jobs"
-          />
+          <UserTools />
         </MaxWidthDiv>
       </div>
       <style jsx global>{`
@@ -98,14 +85,6 @@ export function Job({ position }: { position: PersonioPosition }) {
       >
         Jetzt Bewerben!
       </a>
-    )
-  }
-  function renderUserTools(aboveContent: boolean) {
-    return (
-      <UserTools
-        onShare={() => setShareOpen(true)}
-        aboveContent={aboveContent}
-      />
     )
   }
 }
