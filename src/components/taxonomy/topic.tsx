@@ -1,12 +1,13 @@
 import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
 
-import { DonationsBanner } from '../content/donations-banner-experiment/donations-banner'
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
+import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -17,6 +18,12 @@ import { renderArticle } from '@/schema/article-renderer'
 export interface TopicProps {
   data: TaxonomyData
 }
+
+const DonationsBanner = dynamic<DonationsBannerProps>(() =>
+  import(
+    '@/components/content/donations-banner-experiment/donations-banner'
+  ).then((mod) => mod.DonationsBanner)
+)
 
 export function Topic({ data }: TopicProps) {
   const { strings } = useInstanceData()

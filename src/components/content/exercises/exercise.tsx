@@ -2,7 +2,8 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
-import { DonationsBannerInline } from '../donations-banner-experiment/donations-banner-inline'
+// import { DonationsBannerInline } from '../donations-banner-experiment/donations-banner-inline'
+import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -33,6 +34,12 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
     '@/components/user-tools/foldout-author-menus/author-tools-exercises'
   ).then((mod) => mod.AuthorToolsExercises)
+)
+
+const DonationsBannerInline = dynamic<DonationsBannerProps>(() =>
+  import(
+    '@/components/content/donations-banner-experiment/donations-banner-inline'
+  ).then((mod) => mod.DonationsBannerInline)
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
