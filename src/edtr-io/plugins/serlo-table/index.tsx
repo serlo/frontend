@@ -26,6 +26,7 @@ import { KeyboardEvent } from 'react'
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 const headerTextPlugins = {
   code: true,
@@ -297,7 +298,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
         >
-          <Icon icon={faCirclePlus} />
+          <Icon icon={faCirclePlus as EdtrIconDefinition} />
         </button>
       )
     }
@@ -326,7 +327,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
         >
-          <Icon icon={faTrashCan} />
+          <Icon icon={faTrashCan as EdtrIconDefinition} />
         </button>
       )
     }

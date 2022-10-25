@@ -34,6 +34,7 @@ import {
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 enum StepSegment {
   Left = 0,
@@ -214,7 +215,9 @@ export function EquationsEditor(props: EquationsProps) {
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
-                                    <Icon icon={faXmark} />
+                                    <Icon
+                                      icon={faXmark as EdtrIconDefinition}
+                                    />
                                   </RemoveButton>
                                 </td>
                               </tr>
