@@ -1,9 +1,8 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { ReactNode } from 'react'
 
-import { FaIcon } from './fa-icon'
+import { FaIcon, FaIconProps } from './fa-icon'
 
 const colorClasses = {
   warning: 'bg-orange-200',
@@ -15,7 +14,7 @@ const colorClasses = {
 
 interface StaticInfoPanelProps {
   children: ReactNode
-  icon: IconDefinition
+  icon: FaIconProps['icon']
   type?: keyof typeof colorClasses
   doNotIndex?: boolean
 }

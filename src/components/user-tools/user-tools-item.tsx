@@ -1,15 +1,14 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { Item, Link } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
-import { FaIcon } from '../fa-icon'
+import { FaIcon, FaIconProps } from '../fa-icon'
 
 export interface UserToolsItemProps {
   title: string
   href?: string
   onClick?: () => void
-  icon: IconDefinition
+  icon: FaIconProps['icon']
   aboveContent?: boolean
 }
 

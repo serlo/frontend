@@ -1,12 +1,11 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 
-import { FaIcon } from '../fa-icon'
+import { FaIcon, FaIconProps } from '../fa-icon'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
 
 export interface UnreadNotificationsCountProps {
-  icon?: IconDefinition
+  icon?: FaIconProps['icon']
   onlyNumber?: boolean
 }
 
