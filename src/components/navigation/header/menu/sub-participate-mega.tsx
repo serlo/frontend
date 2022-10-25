@@ -15,7 +15,7 @@ export function SubParticipateMega({
   parent,
 }: SubParticipateMegaProps) {
   return (
-    <div className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0 md:flex md:gap-4 md:justify-between">
+    <div className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0 md:!flex md:gap-4 md:justify-between">
       {subItems.map((item, index) => {
         return (
           <div key={item.title}>
