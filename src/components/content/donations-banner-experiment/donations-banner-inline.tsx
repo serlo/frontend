@@ -85,23 +85,6 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        onLoad={() => {
-          const observer = new IntersectionObserver(
-            (entries) => {
-              const entry = entries.at(0)
-              if (
-                entry &&
-                entry.isIntersecting &&
-                globalThis.hack__lastId !== globalThis.hack__id
-              ) {
-                globalThis.hack__lastId = globalThis.hack__id
-                submitEvent(`spenden-seen-${banner.id}`)
-              }
-            },
-            { threshold: 0.8 }
-          )
-          if (bannerRef.current != null) observer.observe(bannerRef.current)
-        }}
         className={clsx(
           'px-side text-center text-lg pb-5',
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
@@ -110,6 +93,23 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
         )}
       >
         <img
+          onLoad={() => {
+            const observer = new IntersectionObserver(
+              (entries) => {
+                const entry = entries.at(0)
+                if (
+                  entry &&
+                  entry.isIntersecting &&
+                  globalThis.hack__lastId !== globalThis.hack__id
+                ) {
+                  globalThis.hack__lastId = globalThis.hack__id
+                  submitEvent(`spenden-seen-${banner.id}`)
+                }
+              },
+              { threshold: 0.8 }
+            )
+            if (bannerRef.current != null) observer.observe(bannerRef.current)
+          }}
           src={banner.imageSrc}
           className="mt-6 px-16 max-w-[18rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[12rem] sm:px-3 scale-x-[-1]"
         />

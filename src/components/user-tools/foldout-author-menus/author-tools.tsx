@@ -322,6 +322,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
         return (
           <SubItem
+            key={title}
             title={title}
             href={`/taxonomy/term/create/${createId}/${data.id}`}
           />

@@ -126,6 +126,14 @@ module.exports = {
 
     // eslint-plugin-next
     '@next/next/no-img-element': 'off',
+
+    // styledjsx exceptions
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx', 'global'],
+      },
+    ],
   },
   settings: {
     'import/internal-regex': '^@/',
