@@ -1,9 +1,13 @@
 import { Root, List } from '@radix-ui/react-navigation-menu'
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-import { AuthItems } from './auth-items'
 import { Item } from './item'
 import { useInstanceData } from '@/contexts/instance-context'
+
+const AuthItems = dynamic<{}>(() =>
+  import('./auth-items').then((mod) => mod.AuthItems)
+)
 
 export function Menu() {
   const { headerData } = useInstanceData()

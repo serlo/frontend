@@ -3,7 +3,7 @@ import { ReactNode, useState, useEffect } from 'react'
 
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
-import { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseGroupProps {

@@ -17,9 +17,9 @@ import { submitEvent } from '@/helper/submit-event'
 export const styledLinkCls = /* className={ */ clsx(
   'navtrigger flex align-middle items-center',
   'w-full text-[1.33rem] font-bold',
-  'text-brand block border-b border-brand-lighter p-4',
+  'text-brand block border-b border-brand-400 p-4',
   'md:serlo-menu-entry-special',
-  'md:block md:serlo-button-blue-transparent md:text-[0.9rem] md:leading-tight md:transition md:text-brand-light',
+  'md:block md:serlo-button-blue-transparent md:text-[0.9rem] md:leading-tight md:transition md:text-brand-500',
   'md:my-0 md:mt-[2px] md:py-0.5 md:px-[7px]',
   'md:text-center',
   'hover:no-underline hover:bg-brand-300'
