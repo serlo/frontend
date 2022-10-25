@@ -47,7 +47,7 @@ module.exports = {
         variables: false,
       },
     ],
-    'iodash@typescript-eslint/no-useless-constructor': 'error',
+    '@typescript-eslint/no-useless-constructor': 'error',
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/restrict-template-expressions': 'error',
     '@typescript-eslint/no-misused-promises': 'off',
