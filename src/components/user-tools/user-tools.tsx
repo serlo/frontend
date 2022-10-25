@@ -5,8 +5,8 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
-import { EditOrInvite } from './edit-or-invite/edit-or-invite'
-import { TaxAddOrInvite } from './edit-or-invite/tax-add-or-invite'
+import type { EditOrInviteProps } from './edit-or-invite/edit-or-invite'
+import type { TaxAddOrInviteProps } from './edit-or-invite/tax-add-or-invite'
 import { AuthorToolsData } from './foldout-author-menus/author-tools'
 import { Share } from './share/share'
 import { UserToolsItem } from './user-tools-item'
@@ -43,6 +43,14 @@ const MoreAuthorToolsCourse = dynamic<MoreAuthorToolsProps>(() =>
   import(
     '@/components/user-tools/foldout-author-menus/more-author-tools-course'
   ).then((mod) => mod.MoreAuthorToolsCourse)
+)
+
+const EditOrInvite = dynamic<EditOrInviteProps>(() =>
+  import('./edit-or-invite/edit-or-invite').then((mod) => mod.EditOrInvite)
+)
+
+const TaxAddOrInvite = dynamic<TaxAddOrInviteProps>(() =>
+  import('./edit-or-invite/tax-add-or-invite').then((mod) => mod.TaxAddOrInvite)
 )
 
 export function UserTools({

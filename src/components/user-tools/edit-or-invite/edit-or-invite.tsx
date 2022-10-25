@@ -20,7 +20,7 @@ const InviteModal = dynamic<InviteModalProps>(() =>
   )
 )
 
-interface EditOrInviteProps {
+export interface EditOrInviteProps {
   data?: AuthorToolsData
   unrevisedRevisions?: number
   aboveContent?: boolean

@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { AuthorToolsData } from '../foldout-author-menus/author-tools'
-import { MoreAuthorTools } from '../foldout-author-menus/more-author-tools'
+import type { MoreAuthorToolsProps } from '../foldout-author-menus/more-author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import type { InviteModalProps } from './invite-modal'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -20,7 +20,13 @@ const InviteModal = dynamic<InviteModalProps>(() =>
   )
 )
 
-interface TaxAddOrInviteProps {
+const MoreAuthorTools = dynamic<MoreAuthorToolsProps>(() =>
+  import('@/components/user-tools/foldout-author-menus/more-author-tools').then(
+    (mod) => mod.MoreAuthorTools
+  )
+)
+
+export interface TaxAddOrInviteProps {
   data?: AuthorToolsData
   unrevisedRevisions?: number
   aboveContent?: boolean
