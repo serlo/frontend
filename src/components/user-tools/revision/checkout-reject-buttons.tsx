@@ -1,5 +1,5 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
@@ -80,14 +80,14 @@ export function CheckoutRejectButtons({
         title={strings.revisions[mode].action}
         onClick={() => setModalMode(mode)}
         aboveContent={aboveContent}
-        icon={isCheckout ? faCheck : faTimes}
+        icon={isCheckout ? faCheck : faXmark}
       />
     )
     // return (
     //   <button className="buttonStyle" onClick={() => setModalMode(mode)}>
     //     &nbsp;
     //     <FaIcon
-    //       icon={isCheckout ? faCheck : faTimes}
+    //       icon={isCheckout ? faCheck : faXmark}
     //       className="lg:mr-0.5"
     //     />{' '}
     //     {strings.revisions[mode].action}

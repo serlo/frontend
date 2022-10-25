@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
-import { faExternalLinkAlt, faTrashAlt, Icon } from '@edtr-io/ui'
+import { faTrashAlt, Icon } from '@edtr-io/ui'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical'
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons/faUpRightFromSquare'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps, buttonClass, OpenInNewTab } from '.'
@@ -105,7 +106,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                           className="p-1 inline-block"
                         >
                           <OpenInNewTab title={articleStrings.openInTab}>
-                            <Icon icon={faExternalLinkAlt} />
+                            <Icon icon={faUpRightFromSquare} />
                           </OpenInNewTab>
                         </a>
                       </InlineSettings>

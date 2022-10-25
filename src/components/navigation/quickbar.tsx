@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
@@ -156,7 +156,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
           }, 0)
         }}
       >
-        <FaIcon icon={faTimes} />
+        <FaIcon icon={faXmark} />
       </div>
     )
   }

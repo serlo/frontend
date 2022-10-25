@@ -8,7 +8,8 @@ import {
   optional,
 } from '@edtr-io/plugin'
 import { isEmpty } from '@edtr-io/store'
-import { Icon, faExternalLinkAlt, styled } from '@edtr-io/ui'
+import { Icon, styled } from '@edtr-io/ui'
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons/faUpRightFromSquare'
 
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
@@ -114,7 +115,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   rel="noopener noreferrer"
                 >
                   <OpenInNewTab title={editorStrings.solution.openArticleTab}>
-                    <Icon icon={faExternalLinkAlt} />
+                    <Icon icon={faUpRightFromSquare} />
                   </OpenInNewTab>
                 </a>
               </InlineSettings>

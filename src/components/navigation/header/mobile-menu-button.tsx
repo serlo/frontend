@@ -1,5 +1,5 @@
 import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
@@ -22,7 +22,7 @@ export function MobileMenuButton(props: MobileMenuButtonProps) {
         'outline-none'
       )}
     >
-      <FaIcon icon={open ? faTimes : faBars} className="h-8 mt-1" />
+      <FaIcon icon={open ? faXmark : faBars} className="h-8 mt-1" />
     </button>
   )
 }
