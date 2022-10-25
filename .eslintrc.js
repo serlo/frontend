@@ -47,9 +47,10 @@ module.exports = {
         variables: false,
       },
     ],
-    '@typescript-eslint/no-useless-constructor': 'error',
+    'iodash@typescript-eslint/no-useless-constructor': 'error',
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/restrict-template-expressions': 'error',
+    '@typescript-eslint/no-misused-promises': 'off',
 
     // eslint-plugin-import
     'import/export': 'error',
