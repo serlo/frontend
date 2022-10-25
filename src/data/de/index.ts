@@ -88,8 +88,11 @@ export const instanceData = {
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
     },
-    edit: {
-      button: "Inhalt überarbeiten",
+    editOrAdd: {
+      button: "Überarbeiten",
+      addNewEntities: "Inhalt hinzufügen",
+      addNewExercises: "Aufgabe hinzufügen",
+      editExercises: "Aufgaben überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
         title: "Erstelle mit uns Lerninhalte!",
@@ -437,6 +440,7 @@ export const loggedInData = {
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
+      editTax: "Titel & Text bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",

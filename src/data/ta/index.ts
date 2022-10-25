@@ -88,8 +88,11 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
     },
-    edit: {
-      button: "தொகு",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
       unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
@@ -437,6 +440,7 @@ export const loggedInData = {
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
       edit: "திருத்தம்",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
       organize: "ஒழுங்குபடுத்த",
       moveToGrouped: 'Move content to other grouped-text-exercise',
