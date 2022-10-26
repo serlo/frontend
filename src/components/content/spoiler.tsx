@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { ReactNode, useState, MouseEvent } from 'react'
+import { ReactNode, useState } from 'react'
 
 import { isPrintMode } from '../print-mode'
 import { NodePath } from '@/schema/article-renderer'
@@ -11,55 +11,23 @@ export interface SpoilerProps {
 }
 
 export function Spoiler({ body, title }: SpoilerProps) {
-  const [open, setOpen] = useState(isPrintMode ? true : false)
+  const [open, setOpen] = useState(isPrintMode)
+
   return (
     <div className="flex flex-col mb-block mobile:mx-side">
-      <SpoilerTitle
-        onClick={() => {
-          setOpen(!open)
-        }}
-        open={open}
+      <button
+        onClick={() => setOpen(!open)}
+        className={clsx(
+          'serlo-input-font-reset text-lg text-left leading-normal',
+          'bg-brand-100 text-truegray-800 border-none rounded-xl',
+          'm-0 py-2.5 px-side',
+          open && 'text-white bg-brand rounded-bl-none'
+        )}
       >
-        <SpoilerToggle open={open} />
+        <span className="inline-block w-4">{open ? '▾ ' : '▸ '} </span>
         {title}
-      </SpoilerTitle>
+      </button>
       {open && body}
     </div>
   )
-}
-
-function SpoilerTitle({
-  open,
-  children,
-  onClick,
-  disabled,
-}: {
-  open: boolean
-  children: {}
-  onClick?: (e: MouseEvent) => void
-  disabled?: boolean
-}) {
-  const opened = typeof window === 'undefined' ? true : open
-
-  return (
-    <button
-      onClick={!disabled ? onClick : undefined}
-      className={clsx(
-        'serlo-input-font-reset border-none m-0 text-lg',
-        'leading-normal',
-        'py-2.5 px-side',
-        disabled
-          ? 'cursor-auto text-truegray-800 bg-brand-200'
-          : 'cursor-pointer',
-        'text-left',
-        opened ? 'text-white bg-brand' : 'text-truegray-800 bg-brand-100'
-      )}
-    >
-      {children}
-    </button>
-  )
-}
-
-function SpoilerToggle({ open }: { open: boolean }) {
-  return <span className="inline w-4">{open ? '▾ ' : '▸ '} </span>
 }
