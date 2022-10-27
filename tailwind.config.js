@@ -148,6 +148,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('tailwindcss-animate'),
     plugin(function ({ addUtilities, addComponents }) {
       // Custom utilities all start with `special-*`
       // They use css that is not covered by tailwind

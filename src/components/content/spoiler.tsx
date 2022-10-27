@@ -20,7 +20,7 @@ export function Spoiler({ body, title }: SpoilerProps) {
         className={clsx(
           'serlo-input-font-reset text-lg text-left leading-normal',
           'bg-brand-100 text-truegray-800 border-none rounded-xl',
-          'm-0 py-2.5 px-side',
+          'm-0 py-2.5 px-side transition-colors z-10',
           open && 'text-white bg-brand rounded-bl-none'
         )}
       >
