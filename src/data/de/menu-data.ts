@@ -71,47 +71,47 @@ export const headerData: InstanceData['headerData'] = [
         children: [
           {
             title: 'Mach den Einführungskurs',
-            url: '/community/hilfe-bearbeitung/einstieg/einstiegskurs/ueberblick',
+            url: '/community',
           },
         ],
       },
       {
         title: "Was gibt's zu tun?",
-        url: '',
+        url: '/community#wasgibtszutun',
         children: [
           {
             title: 'Hilf in einem Fach',
-            url: '/community',
+            url: '/256320/hilf-in-unseren-f%C3%A4chern',
           },
           {
-            title: 'Beantworte Kommentare',
+            title: 'Teste den Editor',
+            url: '/community/106082/testbereich',
+          },
+          {
+            title: 'Schreibe Kommentare',
             url: '/discussions',
           },
           {
             title: 'Überprüfe Bearbeitungen',
             url: '/entity/unrevised',
           },
-          {
-            title: 'Teste den Editor',
-            url: '/community/106082/sandkasten',
-          },
         ],
       },
       {
         title: 'Zusammenarbeit',
-        url: '',
+        url: '/community#zusammenarbeit',
         children: [
           {
-            title: 'Events & Treffen',
-            url: '/community/145470/veranstaltungsübersicht',
-          },
-          {
             title: 'Communitychat',
-            url: 'https://community.serlo.org/home',
+            url: 'https://community.serlo.org/channel/general',
           },
           {
-            title: 'Anleitungen & Hilfe',
-            url: '/community/88059/hilfeseiten',
+            title: 'Veranstaltungen',
+            url: '/community/145470/veranstaltungs%C3%BCbersicht',
+          },
+          {
+            title: 'Hilfe',
+            url: '/community/88059/hilfe',
           },
           {
             title: 'Aktivitäten auf der Seite',
