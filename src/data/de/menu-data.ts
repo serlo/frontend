@@ -57,6 +57,7 @@ export const headerData: InstanceData['headerData'] = [
       { title: 'Wirkung', url: '/wirkung' },
       { title: 'Transparenz', url: '/transparenz' },
       { title: 'Die Geschichte von Serlo', url: '/geschichte' },
+      { title: 'Kontakt & Standorte', url: '/21657/kontakt-und-standorte' },
     ],
   },
   { url: '/spenden', title: 'Spenden', icon: 'donate' },
@@ -305,14 +306,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Wirkung', id: 21406 },
       { title: 'Transparenz', id: 21468 },
       { title: 'Die Geschichte von Serlo', id: 21413 },
-    ],
-  },
-  {
-    entries: [
-      { title: 'Mitmachen', id: 19869 },
-      { title: 'Jobs & Ehrenamt', id: 21563 },
-      { title: 'Kontakt und Standorte', id: 21657 },
-      { title: 'Spenden', url: '/spenden' },
+      { title: 'Kontakt & Standorte', id: 21657 },
     ],
   },
 ]
