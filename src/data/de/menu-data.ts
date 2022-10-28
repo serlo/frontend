@@ -68,7 +68,7 @@ export const headerData: InstanceData['headerData'] = [
     children: [
       {
         title: 'Neu hier?',
-        url: '',
+        url: '/community',
         children: [
           {
             title: 'Mach den Einführungskurs',
