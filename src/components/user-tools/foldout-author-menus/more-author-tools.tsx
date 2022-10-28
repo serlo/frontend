@@ -73,25 +73,24 @@ export function MoreAuthorTools({
     if (!data) return []
     switch (data.type) {
       case UuidType.Page:
-        return [Tool.Abo, Tool.History, Tool.Log, Tool.AnalyticsLink]
+        return [Tool.History, Tool.Log, Tool.AnalyticsLink, Tool.Abo]
       case UuidType.Article:
       case UuidType.Video:
       case UuidType.Applet:
       case UuidType.Event:
         return [
-          Tool.Abo,
           Tool.History,
           Tool.Curriculum,
           Tool.Log,
           Tool.AnalyticsLink,
           Tool.Trash,
+          Tool.Abo,
         ]
       case UuidType.TaxonomyTerm:
         return taxNewItems
           ? [Tool.NewEntitySubmenu]
           : [
               Tool.EditTax,
-              Tool.Abo,
               Tool.Organize,
               Tool.Log,
               Tool.AnalyticsLink,
@@ -99,6 +98,7 @@ export function MoreAuthorTools({
               Tool.CopyItems,
               Tool.MoveItems,
               Tool.Trash,
+              Tool.Abo,
             ]
     }
     return []
