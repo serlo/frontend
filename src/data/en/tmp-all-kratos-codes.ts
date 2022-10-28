@@ -5,7 +5,7 @@ export const codes = {
   1010001: 'Sign in',
   // 1010001: 'Sign in with security key',
   1010002: 'Sign in with %provider%',
-  1010003: 'Please confirm this action by verifying that it is you.',
+  // 1010003: 'Please confirm this action by verifying that it is you.',
   1010004: 'Please complete the second authentication challenge.',
   1010005: 'Verify',
   1010006: 'Authentication code',
@@ -92,8 +92,8 @@ export const codes = {
   4060001:
     'The request was already completed successfully and can not be retried.',
   4060002: 'The recovery flow reached a failure state and must be retried.',
-  4060004:
-    'The recovery token is invalid or has already been used. Please retry the flow.',
+  // 4060004:
+  //   'The recovery token is invalid or has already been used. Please retry the flow.',
   4060005: 'The recovery flow expired 2 minutes ago, please try again.',
   4070001:
     'The verification token is invalid or has already been used. Please retry the flow.',

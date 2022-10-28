@@ -349,6 +349,7 @@ export const instanceData = {
         email: 'Email',
       },
       messages: {
+        1010003: 'Please confirm this action by verifying that it is you.',
         1050001: 'Your changes have been saved! 🎉',
         1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         1060002: 'An email containing a recovery link has been sent to the email address you provided.',
@@ -363,6 +364,7 @@ export const instanceData = {
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
         4000010: 'Account not active yet. Did you already verify your email address?',
+        4060004: 'The recovery token is invalid or has already been used. Please retry the flow.',
       }
     },
     keys: {
