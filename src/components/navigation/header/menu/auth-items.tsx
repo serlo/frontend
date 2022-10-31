@@ -28,14 +28,14 @@ export function AuthItems() {
   if (!auth.current || !loggedInData || !auth.current.username)
     return <Item link={noAuthData} />
 
-  const ownProfileHref = `/user/${auth.current.id}/${auth.current.username}`
+  const userMeReplacement = `user/${auth.current.id}/${auth.current.username}`
 
   const [notificationLinkData, userLinkData] = loggedInData.authMenu
   const updatedSubData = {
     ...userLinkData,
-    children: userLinkData.children?.map((item) =>
-      item.url === '/user/me' ? { ...item, url: ownProfileHref } : item
-    ),
+    children: userLinkData.children?.map((item) => {
+      return { ...item, url: item.url.replace('user/me', userMeReplacement) }
+    }),
   }
 
   return (
