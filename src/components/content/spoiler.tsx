@@ -24,9 +24,12 @@ export function Spoiler({ body, title }: SpoilerProps) {
           open && 'text-white bg-brand rounded-bl-none'
         )}
       >
-        <span className="inline-block w-4">{open ? '▾ ' : '▸ '} </span>
-        {title}
+        <span className="flex">
+          <span className="inline-block w-4">{open ? '▾ ' : '▸ '} </span>
+          {title}
+        </span>
       </button>
+
       {open && body}
     </div>
   )
