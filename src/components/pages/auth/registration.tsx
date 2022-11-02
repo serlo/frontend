@@ -57,7 +57,7 @@ export function Registration() {
           )
           .then(async () => {
             return await router
-              .push(flow?.return_to || '/auth/login-check')
+              .push(flow?.return_to || '/auth/login')
               .then(() => {})
           })
           .catch(handleFlowError(router, FlowType.registration, setFlow))

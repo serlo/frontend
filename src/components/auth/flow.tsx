@@ -207,7 +207,7 @@ export function handleFlowError<S>(
         return
       case 'session_already_available':
         // User is already signed in, let's redirect them home!
-        await router.push('/auth/login-check')
+        await router.push('/')
         return
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
