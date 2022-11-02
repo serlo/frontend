@@ -1,6 +1,7 @@
 const mysql = require('mysql')
 const Configuration = require('@ory/client').Configuration
 const V0alpha2Api = require('@ory/client').V0alpha2Api
+const hashService = require('./legacy-password-hash-service').hashService
 
 const config = {
   kratosHost: 'http://kratos:4434',
@@ -27,22 +28,25 @@ const connection = mysql.createConnection({
 
 connection.connect(async (error) => {
   if (error) throw error
+
+  let allIdentities = []
+
+  for (let page = 1; true; page++) {
+    const data = await kratos
+      .adminListIdentities(10, page)
+      .then(({ data }) => data)
+    if (!data.length) break
+    allIdentities = [...allIdentities, ...data]
+  }
+
+  if (allIdentities) {
+    allIdentities.map(async (identity) => {
+      await kratos.adminDeleteIdentity(identity.id)
+    })
+  }
+
   connection.query('SELECT * FROM user', async (error, result) => {
     if (error) throw error
-    let allIdentities = []
-    for (let page = 1; page < result.length / 1000 + 1; page++) {
-      allIdentities = [
-        ...allIdentities,
-        ...(await kratos
-          .adminListIdentities(1000, page)
-          .then(({ data }) => data)),
-      ]
-    }
-    if (allIdentities) {
-      for (const identity of allIdentities) {
-        await kratos.adminDeleteIdentity(identity.id)
-      }
-    }
     await importUsers(result)
     console.log('Successful Import of Users')
     process.exit(0)
@@ -51,6 +55,13 @@ connection.connect(async (error) => {
 
 async function importUsers(users) {
   for (const legacyUser of users) {
+    const passwordSaltBase64 = Buffer.from(
+      hashService.findSalt(legacyUser.password)
+    ).toString('base64')
+    const hashedPasswordBase64 = Buffer.from(
+      hashService.findSha(legacyUser.password),
+      'hex'
+    ).toString('base64')
     const user = {
       traits: {
         username: legacyUser.username,
@@ -60,7 +71,8 @@ async function importUsers(users) {
       credentials: {
         password: {
           config: {
-            password: legacyUser.password,
+            // [p]assword[f]ormat = {SALT}{PASSWORD}
+            hashed_password: `$sha1$pf=e1NBTFR9e1BBU1NXT1JEfQ==$${passwordSaltBase64}$${hashedPasswordBase64}`,
           },
         },
       },

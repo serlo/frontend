@@ -72,21 +72,22 @@ services:
       - OIDC_SUBJECT_IDENTIFIERS_PAIRWISE_SALT=youReallyNeedToChangeThis
     networks:
       - intranet
-  # Uncomment when testing user import
+  # Uncomment if you want to import all users from local db
   # import-users-job:
   #   depends_on:
-  #     - kratos-migrate
-  #     - kratos
+  #   - kratos-migrate
+  #   - kratos
   #   image: node:16
   #   volumes:
-  #     - ./import-users.js:/tmp/import-users.js
+  #   - ./import-users.js:/tmp/import-users.js
+  #   - ./legacy-password-hash-service.js:/tmp/legacy-password-hash-service.js
   #   working_dir: /tmp
-  #   command: "bash -c 'yarn init --yes && yarn add mysql @ory/client && node import-users.js'"
+  #   command: "bash -c 'yarn init --yes && yarn add js-sha1 mysql @ory/client && node import-users.js'"
   #   restart: on-failure
   #   networks:
-  #     - intranet
+  #   - intranet
   #   extra_hosts:
-  #     - 'host.docker.internal:host-gateway'
+  #   - 'host.docker.internal:host-gateway'
   redis:
     image: redis:6.0
     restart: always

@@ -62,18 +62,24 @@ class HashService {
 
 const hashService = new HashService()
 
-switch (process.argv[2]) {
-  case 'hash':
-    console.log(hashService.hashPassword(process.argv[3], process.argv[4]))
-    break
-  case 'find':
-    console.log(hashService.findSalt(process.argv[3]))
-    break
-  case 'sha':
-    console.log(hashService.findSha(process.argv[3]))
-    break
-  default:
-    console.log(
-      'use `hash [string] [optional salt] ` or `find [hashed password]`'
-    )
+if (require.main === module) {
+  switch (process.argv[2]) {
+    case 'hash':
+      console.log(hashService.hashPassword(process.argv[3], process.argv[4]))
+      break
+    case 'find':
+      console.log(hashService.findSalt(process.argv[3]))
+      break
+    case 'sha':
+      console.log(hashService.findSha(process.argv[3]))
+      break
+    default:
+      console.log(
+        'use `hash [string] [optional salt] ` or `find [hashed password]`'
+      )
+  }
+}
+
+module.exports = {
+  hashService,
 }
