@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
+import { AxiosError } from '@/auth/types'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { AxiosError } from '@/auth/types'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()

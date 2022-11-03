@@ -10,6 +10,7 @@ import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
@@ -72,10 +73,33 @@ export function Registration() {
       )
   }
 
+  const agreement = replacePlaceholders(strings.auth.registrationAgreement, {
+    signup: <em>{strings.auth.signUp}</em>,
+    privacypolicy: (
+      <a
+        className="text-brand serlo-link font-bold"
+        href="/privacy"
+        target="_blank"
+      >
+        {strings.entities.privacyPolicy}
+      </a>
+    ),
+    terms: (
+      <a
+        className="text-brand serlo-link font-bold"
+        href="/21654"
+        target="_blank"
+      >
+        {strings.auth.terms}
+      </a>
+    ),
+  })
+
   return (
     <>
       <PageTitle headTitle title={strings.auth.registerTitle} />
       {flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}
+      {agreement}
     </>
   )
 }

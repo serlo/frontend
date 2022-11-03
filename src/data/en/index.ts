@@ -369,7 +369,10 @@ export const instanceData = {
         4000008: 'The provided authentication code is invalid, please try again.',
         4000010: 'Account not active yet. Did you already verify your email address?',
         4060004: 'The recovery token is invalid or has already been used. Please retry the flow.',
-      }
+      },
+      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      terms: 'Terms',
+      signUp: 'Sign up'
     },
     keys: {
       ctrl: 'ctrl',
