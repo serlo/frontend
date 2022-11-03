@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
-import { useAuthentication } from '@/auth/use-authentication'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -18,16 +17,9 @@ export function Verification() {
   const { strings } = useInstanceData()
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
-  const auth = useAuthentication()
 
   useEffect(() => {
     if (!router.isReady || flow) {
-      return
-    }
-
-    if (auth.current?.isEmailVerified) {
-      showToastNotice(strings.notices.emailVerifiedSuccessfully)
-      void router.push(returnTo ? String(returnTo) : '/')
       return
     }
 
@@ -37,7 +29,10 @@ export function Verification() {
         .then(async ({ data }) => {
           setFlow(data)
           if (data.state === 'passed_challenge') {
-            showToastNotice(strings.notices.emailVerifiedSuccessfully)
+            showToastNotice(
+              strings.notices.emailVerifiedSuccessfully,
+              'success'
+            )
 
             return await router.push(
               returnTo ? String(returnTo) : '/auth/login'
@@ -49,8 +44,13 @@ export function Verification() {
     }
     kratos
       .initializeSelfServiceVerificationFlowForBrowsers()
-      .then(({ data }) => {
+      .then(async ({ data }) => {
         setFlow(data)
+        if (data.state === 'passed_challenge') {
+          showToastNotice(strings.notices.emailVerifiedSuccessfully, 'success')
+
+          return await router.push(returnTo ? String(returnTo) : '/auth/login')
+        }
       })
       .catch(handleFlowError(router, FlowType.verification, setFlow))
       .catch((err: AxiosError) => {
@@ -61,7 +61,14 @@ export function Verification() {
 
         return Promise.reject(err)
       })
-  }, [flowId, router, router.isReady, returnTo, flow, auth])
+  }, [
+    flowId,
+    router,
+    router.isReady,
+    returnTo,
+    flow,
+    strings.notices.emailVerifiedSuccessfully,
+  ])
 
   const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {
     return router
