@@ -6,6 +6,7 @@ import { kratos } from '@/auth/kratos'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { AxiosError } from '@/auth/types'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
@@ -44,11 +45,20 @@ export function Logout({ oauth }: { oauth?: boolean }) {
 
             return
           })
-          .catch((error: unknown) => {
+          .catch((error: AxiosError) => {
+            // 401 means user is already logged out
+            if (error.response?.status === 401) {
+              window.location.href = originalPreviousPath ?? '/'
+              return
+            }
             return Promise.reject(error)
           })
       })
-      .catch((error: unknown) => {
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 401) {
+          window.location.href = originalPreviousPath ?? '/'
+          return
+        }
         return Promise.reject(error)
       })
   }, [router, oauth, logout_challenge, strings.notices.bye])
