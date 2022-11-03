@@ -62,7 +62,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           {renderBreadcrumbs()}
-          <main>{children}</main>
+          <main id="content">{children}</main>
 
           {/* Temporary donations banner trial */}
           {page.kind === 'single-entity' ? (
