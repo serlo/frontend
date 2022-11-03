@@ -101,7 +101,10 @@ export function Node(props: NodeProps) {
                 className="text-red italic -mt-2 mb-2 block ml-3"
               >
                 {/* TODO: i18n error ids */}
-                {text}
+                {text.replace(
+                  'does not match pattern "^[\\\\w\\\\-]+$"',
+                  'Your username may only contain letters, digits, underscores (_) and hyphens (-).'
+                )}
               </span>
             ))}
           </div>
