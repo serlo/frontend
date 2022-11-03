@@ -7,18 +7,27 @@ import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
+import { useAuthentication } from '@/auth/use-authentication'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Verification() {
   const [flow, setFlow] = useState<SelfServiceVerificationFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
+  const auth = useAuthentication()
 
   useEffect(() => {
     if (!router.isReady || flow) {
+      return
+    }
+
+    if (auth?.current?.emailVerified) {
+      showToastNotice('You successfully verified your email')
+      void router.push(returnTo ? String(returnTo) : '/')
       return
     }
 
@@ -28,6 +37,8 @@ export function Verification() {
         .then(async ({ data }) => {
           setFlow(data)
           if (data.state === 'passed_challenge') {
+            showToastNotice('You successfully verified your email')
+
             return await router.push(
               returnTo ? String(returnTo) : '/auth/login'
             )
@@ -50,7 +61,7 @@ export function Verification() {
 
         return Promise.reject(err)
       })
-  }, [flowId, router, router.isReady, returnTo, flow])
+  }, [flowId, router, router.isReady, returnTo, flow, auth])
 
   const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {
     return router

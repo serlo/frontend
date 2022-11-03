@@ -48,6 +48,7 @@ export function AuthProvider({
 export type AuthenticationPayload = {
   username: string
   id: number
+  emailVerified: boolean
 } | null
 
 function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
@@ -61,6 +62,12 @@ function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
             legacy_id: number
           }
         )?.legacy_id,
+        // until now users have only one email
+        emailVerified: (
+          initialSessionValue.identity.verifiable_addresses![0] as {
+            verified: boolean
+          }
+        ).verified,
       }
     : null
 }
