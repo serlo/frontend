@@ -5,6 +5,7 @@ import { UserToolsItem } from '../user-tools-item'
 import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export function MoreAuthorToolsCourse({
   data,
@@ -14,6 +15,8 @@ export function MoreAuthorToolsCourse({
 
   if (!data || !loggedInData) return null
 
+  const isEmptyCourse = data.type === UuidType.Course
+
   const hasCourseRevisions =
     data.unrevisedCourseRevisions && data.unrevisedCourseRevisions > 0
   const hasUnrevised =
@@ -22,18 +25,18 @@ export function MoreAuthorToolsCourse({
   return (
     <>
       {renderSettingsItem(true)}
-      {renderSettingsItem(false)}
+      {isEmptyCourse ? null : renderSettingsItem(false)}
     </>
   )
 
-  function renderSettingsItem(whole: boolean) {
+  function renderSettingsItem(wholeCourse: boolean) {
     if (!data || !loggedInData) return null
     return (
       <Item>
         <Trigger>
           <UserToolsItem
             title={
-              whole
+              wholeCourse
                 ? loggedInData.strings.authorMenu.wholeCourse
                 : loggedInData.strings.authorMenu.thisCoursePage
             }
@@ -46,9 +49,9 @@ export function MoreAuthorToolsCourse({
           <List className="absolute w-56 z-50 pt-2 right-0 lg:right-48 lg:bottom-0">
             <div className="serlo-sub-list-hover">
               <AuthorTools
-                entityId={whole ? data.courseId || data.id : data.id}
+                entityId={wholeCourse ? data.courseId || data.id : data.id}
                 data={data}
-                tools={getToolsArray(whole)}
+                tools={getToolsArray(wholeCourse)}
               />
             </div>
           </List>
@@ -57,8 +60,8 @@ export function MoreAuthorToolsCourse({
     )
   }
 
-  function getToolsArray(whole: boolean) {
-    return whole
+  function getToolsArray(wholeCourse: boolean) {
+    return wholeCourse
       ? [
           Tool.Abo,
           hasCourseRevisions ? Tool.UnrevisedEdit : Tool.Edit,

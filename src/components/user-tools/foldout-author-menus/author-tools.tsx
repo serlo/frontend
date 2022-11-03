@@ -226,7 +226,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     } = loggedInStrings.authorMenu
     return (
       <>
-        <li className="border-t-[1px] border-brand-200 mt-2 pt-2"></li>
         {isSubscribed ? (
           renderAboItem(unsubscribeNotifications, false, false)
         ) : (
