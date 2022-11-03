@@ -2,6 +2,9 @@
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls'
 import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
+
+const emailVerifiedSuccessfully = 'You have successfully verified your email address'
+
 export const instanceData = {
   lang: Instance["En"],
   headerData: headerData,
@@ -318,6 +321,7 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
+      emailVerifiedSuccessfully
     },
     loading: {
       oneMomentPlease: 'One moment please…',
@@ -354,7 +358,7 @@ export const instanceData = {
         1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         1060002: 'An email containing a recovery link has been sent to the email address you provided.',
         1080001: 'An email containing a verification link has been sent to the email address you provided.',
-        1080002: 'You successfully verified your email address.',
+        1080002: emailVerifiedSuccessfully,
         4000001: '%reason%',
         4000002: 'Property %field% is missing.',
         4000003: 'Length must be \u003e= %expected_length%, but got %actual_length%.',
