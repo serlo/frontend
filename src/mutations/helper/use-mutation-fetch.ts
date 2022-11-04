@@ -2,15 +2,15 @@ import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
 
 import { csrReload } from '../../helper/csr-reload'
-import { hasOwnPropertyTs } from '../../helper/has-own-property-ts'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { triggerSentry } from '../../helper/trigger-sentry'
 import { endpoint } from '@/api/endpoint'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
+import type {
   EntityMutation,
   NotificationMutation,
+  SetCourseMutation,
   SetEntityResponse,
   ThreadMutation,
   UuidMutation,
@@ -21,6 +21,7 @@ type MutationResponse =
   | UuidMutation
   | NotificationMutation
   | EntityMutation
+  | SetCourseMutation
 
 type ApiErrorType =
   | 'UNAUTHENTICATED'
@@ -50,7 +51,7 @@ export function useMutationFetch() {
     const usedToken = auth.current.token
     try {
       const result = await executeQuery()
-      if (hasOwnPropertyTs(result, 'entity')) {
+      if (Object.hasOwn(result, 'entity')) {
         const entity = result.entity as EntityMutation
         if (Object.keys(entity)[0].startsWith('set')) {
           const entityResponse = Object.values(entity)[0] as SetEntityResponse
@@ -113,8 +114,13 @@ function handleError(
   }
 
   showToastNotice(message, 'warning')
-  if (e && hasOwnPropertyTs(e, 'message')) {
-    showToastNotice(`"${e.message as string}"`)
+  if (e) {
+    // @ts-expect-error not sure why hasOwn typehelper does not work in this case
+    const msg = Object.hasOwn(e, 'message')
+      ? // @ts-expect-error not sure why hasOwn typehelper does not work in this case
+        (e.message as string)
+      : 'unknown error'
+    showToastNotice(`"${msg}"`)
   }
   return false
 }

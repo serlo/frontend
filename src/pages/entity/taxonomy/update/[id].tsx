@@ -20,7 +20,6 @@ import {
   GetUuidPathsQueryVariables,
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
@@ -184,11 +183,7 @@ export const getStaticProps: GetStaticProps<UpdateTaxonomyLinksProps> = async (
     { id }
   )
 
-  if (
-    !result ||
-    !result.uuid ||
-    !hasOwnPropertyTs(result.uuid, 'taxonomyTerms')
-  )
+  if (!result || !result.uuid || !Object.hasOwn(result.uuid, 'taxonomyTerms'))
     return { notFound: true }
 
   return {

@@ -1,14 +1,13 @@
 import { UuidRevType, UuidType } from '@/data-types'
 import { RevisionUuidQuery } from '@/fetcher/graphql-types/operations'
 import { MainUuidType } from '@/fetcher/query-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export function revisionResponseToResponse(
   uuid: RevisionUuidQuery['uuid']
 ): MainUuidType | null {
   if (!uuid) return null
 
-  if (!hasOwnPropertyTs(uuid, 'repository')) return null
+  if (!Object.hasOwn(uuid, 'repository')) return null
 
   const { license, trashed, instance, id, alias } = uuid.repository
   const repositoryFields = {
@@ -19,15 +18,15 @@ export function revisionResponseToResponse(
     alias,
   }
 
-  const title = hasOwnPropertyTs(uuid, 'title') ? uuid.title : ''
+  const title = Object.hasOwn(uuid, 'title') ? uuid.title : ''
   const content = uuid.content
-  const metaTitle = hasOwnPropertyTs(uuid, 'metaTitle') ? uuid.metaTitle : ''
-  const metaDescription = hasOwnPropertyTs(uuid, 'metaDescription')
+  const metaTitle = Object.hasOwn(uuid, 'metaTitle') ? uuid.metaTitle : ''
+  const metaDescription = Object.hasOwn(uuid, 'metaDescription')
     ? uuid.metaDescription
     : ''
   const date = '' // just to make type happy, not used
 
-  const taxonomyTerms = hasOwnPropertyTs(uuid.repository, 'taxonomyTerms')
+  const taxonomyTerms = Object.hasOwn(uuid.repository, 'taxonomyTerms')
     ? uuid.repository.taxonomyTerms
     : { nodes: [{}] }
 

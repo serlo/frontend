@@ -9,7 +9,6 @@ import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Revision, Revisions } from '@/fetcher/query-types'
 import { colors } from '@/helper/colors'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
 
 export interface RevisionHistoryProps {
@@ -60,7 +59,7 @@ export function RevisionHistory({
       (isCurrent && selectedRevisionId === undefined)
     const isActiveEditorLink = isEditorLink && !isImportant
 
-    const changes = hasOwnPropertyTs(entry, 'changes') ? entry.changes : '–'
+    const changes = Object.hasOwn(entry, 'changes') ? entry.changes : '–'
 
     return (
       <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>

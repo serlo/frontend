@@ -2,7 +2,6 @@ import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
@@ -18,7 +17,7 @@ const showExperimentsStorageKey = 'showExperiments'
 type FeatureKey = keyof typeof features
 
 export function shouldUseFeature(featureKey: FeatureKey) {
-  if (typeof window === 'undefined' || !hasOwnPropertyTs(features, featureKey))
+  if (typeof window === 'undefined' || !Object.hasOwn(features, featureKey))
     return false
 
   const hasYesCookie = document.cookie.includes(

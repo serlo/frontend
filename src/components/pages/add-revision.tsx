@@ -11,7 +11,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
@@ -116,7 +115,7 @@ export function AddRevision({
             }
 
             // refactor and rename when removing legacy code
-            const skipReview = hasOwnPropertyTs(data, 'controls')
+            const skipReview = Object.hasOwn(data, 'controls')
               ? data.controls.checkout
               : undefined
             const _needsReview = skipReview ? false : needsReview

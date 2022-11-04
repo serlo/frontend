@@ -3,7 +3,6 @@ import Head from 'next/head'
 import { EntityBaseProps } from './entity-base'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 interface JsonLdProps {
   data: EntityBaseProps['page']
@@ -29,7 +28,7 @@ export function JsonLd({ data, id }: JsonLdProps) {
   const isTaxonomy = data.kind === 'taxonomy'
   const entityType = isEntity ? data.entityData.typename : UuidType.TaxonomyTerm
 
-  if (!hasOwnPropertyTs(typeStrings, entityType)) return null
+  if (!Object.hasOwn(typeStrings, entityType)) return null
   const typeString = typeStrings[entityType]
 
   return (

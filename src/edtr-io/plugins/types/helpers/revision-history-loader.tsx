@@ -14,7 +14,6 @@ import {
   editorResponseToState,
   isError,
 } from '@/edtr-io/editor-response-to-state'
-import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import {
   RevisionUuidQuery,
@@ -64,7 +63,7 @@ export function RevisionHistoryLoader<T>(
         }}
       >
         <PluginToolbarButton
-          icon={<Icon icon={faHistory as EdtrIconDefinition} size="lg" />}
+          icon={<Icon icon={faHistory} size="lg" />}
           label={editorStrings.edtrIo.switchRevision}
         />
       </span>

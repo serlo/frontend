@@ -26,7 +26,6 @@ import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
@@ -72,15 +71,15 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
-    currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
+    currentRev && Object.hasOwn(currentRev, 'metaTitle')
       ? currentRev.metaTitle
       : ''
   const meta_description =
-    currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
+    currentRev && Object.hasOwn(currentRev, 'metaDescription')
       ? currentRev.metaDescription
       : ''
   const revision =
-    currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0
+    currentRev && Object.hasOwn(currentRev, 'id') ? currentRev.id : 0
 
   const entityFields = {
     id,

@@ -18,7 +18,6 @@ import {
   TextExerciseSerializedState,
 } from '@/edtr-io/editor-response-to-state'
 import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 
 const equalsWithEmptyStringIsNull = eqBy(
@@ -166,7 +165,7 @@ const loopNestedChildren = async ({
 
   let success = true
 
-  const initialStateState = hasOwnPropertyTs(initialState, 'state')
+  const initialStateState = Object.hasOwn(initialState, 'state')
     ? initialState.state
     : undefined
 

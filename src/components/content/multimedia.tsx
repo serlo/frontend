@@ -8,7 +8,6 @@ import type {
   FrontendImgNode,
   FrontendContentNode,
 } from '@/frontend-node-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
@@ -59,7 +58,7 @@ export function Multimedia({
 
     // simplify after deploy, db-migration and api cache updates
     const label =
-      hasOwnPropertyTs(mediaChild, 'caption') && mediaChild.caption
+      Object.hasOwn(mediaChild, 'caption') && mediaChild.caption
         ? renderNested(mediaChild.caption) ?? undefined
         : undefined
 

@@ -14,7 +14,6 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { sharedPathFragments } from '@/fetcher/query-fragments'
 import { testAreaUrlStart } from '@/fetcher/testArea'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -89,7 +88,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   if (
     !result ||
     !result.uuid ||
-    !hasOwnPropertyTs(result.uuid, 'type') ||
+    !Object.hasOwn(result.uuid, 'type') ||
     !isValidType
   )
     return { notFound: true }
