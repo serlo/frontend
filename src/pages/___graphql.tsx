@@ -25,7 +25,7 @@ const GraphQLPage: NextPage = () => {
   )
 }
 
-function GraphQL() {
+function GraphiQLWithCustomFetcher() {
   const fetcher = async function fetcher(params: FetcherParams) {
     const data = await executeQuery()
     return data
