@@ -20,7 +20,7 @@ export function AuthItems() {
   const loggedInData = useLoggedInData()
 
   const noAuthData = {
-    url: '/api/auth/login',
+    url: '/auth/login',
     title: strings.header.login,
     icon: 'user',
   } as const
