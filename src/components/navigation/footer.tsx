@@ -26,7 +26,7 @@ function About() {
       <div className="bg-brand w-full min-h-[54px] relative">
         <div
           className={clsx(
-            'absolute right-4 top-2 text-white hover:bg-brand-light',
+            'absolute right-4 top-2 text-white hover:bg-brand-500',
             'w-10 h-10 items-center justify-center rounded-full flex',
             'cursor-pointer transition-colors'
           )}
@@ -37,7 +37,7 @@ function About() {
         </div>
       </div>
       <div className="text-lg shrink">
-        <div className="bg-brand-light text-white pt-8 pb-4 px-side md:px-side-lg">
+        <div className="bg-brand-500 text-white pt-8 pb-4 px-side md:px-side-lg">
           <div className="font-bold my-1">{strings.footer.summaryHeading}</div>
           <div className="mt-4 leading-browser">
             {strings.footer.summaryText}

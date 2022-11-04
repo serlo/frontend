@@ -49,7 +49,7 @@ function SpoilerTitle({
         'leading-normal',
         'py-2.5 px-side',
         disabled
-          ? 'cursor-auto text-truegray-800 bg-brand-150'
+          ? 'cursor-auto text-truegray-800 bg-brand-200'
           : 'cursor-pointer',
         'text-left',
         opened ? 'text-white bg-brand' : 'text-truegray-800 bg-brand-100'

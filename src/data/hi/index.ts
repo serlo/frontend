@@ -89,9 +89,12 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
     },
-    edit: {
-      button: "संपादित करें",
-      unrevised: "अप्रकाशित संशोधन दिखाएं",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
+      unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
@@ -438,6 +441,7 @@ export const loggedInData = {
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
       edit: "संपादित",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
       organize: "आयोजन",
       moveToGrouped: 'Move content to other grouped-text-exercise',

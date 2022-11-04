@@ -95,7 +95,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
       <div className="py-3 border-b-2 flex">
         <button
           onClick={() => onDelete(term.id)}
-          className="serlo-button-blue-transparent mr-2 text-brand-lighter"
+          className="serlo-button-blue-transparent mr-2 text-brand-400"
         >
           <FaIcon icon={faTrashAlt} />
         </button>

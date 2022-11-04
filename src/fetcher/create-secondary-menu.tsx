@@ -32,6 +32,9 @@ export function createSecondaryMenu(
     }
 
     if (uuid.__typename === UuidType.Page) {
+      //special case: hide menu on page de.serlo.org/community
+      if (uuid.id === 19882) return undefined
+
       const byRootId = findMenuByRootId(uuid.id)
       if (byRootId) return byRootId
 

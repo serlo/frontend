@@ -2,7 +2,7 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import clsx from 'clsx'
 import { CSSProperties } from 'react'
 
-interface FaIconProps {
+export interface FaIconProps {
   icon: IconDefinition
   className?: string
   style?: CSSProperties

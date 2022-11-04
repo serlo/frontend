@@ -9,7 +9,7 @@ import {
 } from 'react'
 
 import { AuthSessionCookie } from './auth-session-cookie'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
+import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 export interface AuthContextValue {
   authenticationPayload: RefObject<AuthenticationPayload>
@@ -69,16 +69,20 @@ function useAuthorizationPayload(
   authenticationPayload: RefObject<AuthenticationPayload>,
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
-  const lc = useLoggedInComponents()
-
   async function fetchAuthorizationPayload(
     authenticationPayload: RefObject<AuthenticationPayload>
   ): Promise<AuthorizationPayload> {
-    if (authenticationPayload.current === null || lc === null) {
+    if (authenticationPayload.current === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }
 
-    const fetch = lc.createAuthAwareGraphqlFetch(authenticationPayload)
+    const graphQLFetch = (await import('@/api/graphql-fetch')) as {
+      createAuthAwareGraphqlFetch: typeof createAuthAwareGraphqlFetch
+    }
+
+    const fetch = graphQLFetch.createAuthAwareGraphqlFetch(
+      authenticationPayload
+    )
     const data = (await fetch(
       JSON.stringify({
         query: `
@@ -103,7 +107,7 @@ function useAuthorizationPayload(
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationPayload, authenticationPayload.current?.id, lc])
+  }, [authenticationPayload, authenticationPayload.current?.id])
 
   return authorizationPayload
 }
