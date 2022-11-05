@@ -370,6 +370,7 @@ export const instanceData = {
         4000010: 'Account not active yet. Did you already verify your email address?',
         4060004: 'The recovery token is invalid or has already been used. Please retry the flow.',
       },
+      usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Sign up'
