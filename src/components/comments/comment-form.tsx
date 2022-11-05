@@ -56,7 +56,8 @@ export function CommentForm({
     <div
       className={clsx(
         'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-        'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
+        'bg-brandgreen-50',
+        'border-2 border-brandgreen-50 focus-within:border-brandgreen-muted',
         'transition-colors duration-200 ease-in py-1'
       )}
     >
@@ -75,7 +76,7 @@ export function CommentForm({
         minRows={1}
         className={clsx(
           'serlo-input-font-reset w-full text-lg',
-          'text-black border-0 bg-transparent outline-none resize-none',
+          'text-black border-0 bg-transparent resize-none focus:!outline-none',
           reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
           'placeholder-brandgreen'
         )}

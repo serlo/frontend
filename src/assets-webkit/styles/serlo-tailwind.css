@@ -20,10 +20,10 @@
     @apply focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-brand;
   }
   .serlo-button-blue {
-    @apply serlo-button text-white bg-brand hover:bg-brand-light;
+    @apply serlo-button text-white bg-brand hover:bg-brand-500;
   }
   .serlo-button-green {
-    @apply serlo-button text-white bg-brandgreen hover:bg-brand;
+    @apply serlo-button text-white bg-brandgreen hover:bg-brandgreen-300;
   }
   .serlo-button-light {
     @apply serlo-button text-brand bg-brand-100 hover:text-white hover:bg-brand;
@@ -58,10 +58,10 @@
     @apply mx-side border-collapse whitespace-nowrap mobile:whitespace-normal break-normal special-hyphens-auto;
   }
   .serlo-th {
-    @apply p-1.5 border-3 border-brand-150 text-left pl-3 bg-brand-100;
+    @apply p-1.5 border-3 border-brand-200 text-left pl-3 bg-brand-100;
   }
   .serlo-td {
-    @apply p-1.5 align-top border-3 border-brand-150;
+    @apply p-1.5 align-top border-3 border-brand-200;
     > p.serlo-p {
       @apply mx-0;
     }
@@ -70,7 +70,7 @@
     @apply mx-side mb-block mt-4 pl-5 list-none;
 
     & > li:before {
-      @apply absolute special-content-space bg-brand-lighter;
+      @apply absolute special-content-space bg-brand-400;
       @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
     }
     & > li {
@@ -88,7 +88,7 @@
     & > li:before {
       @apply absolute special-content-list-counter special-increment-list-counter;
       @apply font-bold text-center rounded-full -ml-6;
-      @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
+      @apply mt-0.5 bg-brand-200 w-4 h-4 text-xs;
       @apply leading-tight text-brand pt-0.25;
     }
     & > li {
@@ -123,7 +123,7 @@
     @apply pt-6 pb-3.5 border-l-8 border-brand;
   }
   .serlo-solution-box {
-    @apply py-2.5 mx-side mb-block border-l-8 border-brand-150;
+    @apply py-2.5 mx-side mb-block border-l-8 border-brand-200;
   }
   .serlo-styled-label {
     @apply flex items-center cursor-pointer;
@@ -160,7 +160,7 @@
     @apply flex justify-center align-middle;
     @apply h-7 w-7 mx-side mb-2.5 rounded-full;
     @apply sm:absolute sm:-mt-1 sm:-ml-10;
-    @apply text-xl font-bold text-brand bg-brand-150;
+    @apply text-xl font-bold text-brand bg-brand-200;
   }
   .serlo-responsive-margin {
     @apply mx-side lg:mx-side-lg;
@@ -223,10 +223,10 @@
   .serlo-new-landing-button {
     @apply text-white text-xl bg-brand rounded-lg font-bold;
     @apply px-8 py-4 mb-5 tracking-tight block text-center;
-    @apply hover:bg-brand-light hover:no-underline;
+    @apply hover:bg-brand-500 hover:no-underline;
   }
   .serlo-blockquote {
-    @apply border-l-6 border-brand-150 p-2.5 my-block mx-side;
+    @apply border-l-6 border-brand-200 p-2.5 my-block mx-side;
   }
   .serlo-revision-extra-info {
     .serlo-p:last-child {
@@ -248,6 +248,10 @@
         color: #fff;
       }
     }
+  }
+
+  .serlo-header-navtrigger[data-state='open'] {
+    @apply bg-brand text-white;
   }
 
   .serlo-fa-icon {
@@ -292,7 +296,7 @@
       @apply mx-side mb-block mt-4 pl-5 list-none;
 
       & > li:before {
-        @apply absolute special-content-space bg-brand-lighter;
+        @apply absolute special-content-space bg-brand-400;
         @apply w-2.5 h-2.5 rounded-full -ml-5 mt-2.25;
       }
       & > li {
@@ -310,7 +314,7 @@
       & > li:before {
         @apply absolute special-content-list-counter special-increment-list-counter;
         @apply font-bold text-center rounded-full -ml-7;
-        @apply mt-0.5 bg-brand-150 w-4 h-4 text-xs;
+        @apply mt-0.5 bg-brand-200 w-4 h-4 text-xs;
         @apply leading-tight text-brand pt-0.25;
       }
       & > li {
@@ -323,7 +327,7 @@
     }
 
     blockquote {
-      @apply border-l-6 border-brand-150 p-2.5 my-block mx-side;
+      @apply border-l-6 border-brand-200 p-2.5 my-block mx-side;
     }
 
     .page-header h1 input {

@@ -75,7 +75,7 @@ export function Comment({
         isParent
           ? 'rounded-2xl'
           : clsx(
-              'border-l-6 border-brand-150',
+              'border-l-6 border-brand-200',
               'pt-1 pb-0.5 pl-1 mt-8 mb-5 ml-4',
               'rounded-r-2xl'
             )

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-deprecated
 import { parseDOM } from 'htmlparser2'
 
 import { sanitizeLatex } from './sanitize-latex'
@@ -31,6 +32,7 @@ interface LegacyNode {
 }
 
 export function convertLegacyState(html: string) {
+  // eslint-disable-next-line import/no-deprecated
   const dom = parseDOM(html) as unknown as LegacyNode
   return { children: convert(dom) }
 }

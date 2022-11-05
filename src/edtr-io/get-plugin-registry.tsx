@@ -18,6 +18,7 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
 import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
+import { EdtrIconDefinition } from './edtr-icon-defintion'
 import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
@@ -49,7 +50,7 @@ export function getPluginRegistry(
       name: 'box',
       title: editorStrings.edtrIo.box,
       description: editorStrings.edtrIo.boxDesc,
-      icon: createIcon(faSquare),
+      icon: createIcon(faSquare as EdtrIconDefinition),
     },
     {
       name: 'geogebra',
@@ -131,13 +132,13 @@ export function getPluginRegistry(
             name: 'pageLayout',
             title: 'Layout Column for Pages',
             description: "The plugin the people want but don't get 🤫",
-            icon: createIcon(faGripLinesVertical),
+            icon: createIcon(faGripLinesVertical as EdtrIconDefinition),
           },
           {
             name: 'pageTeam',
             title: 'Team Overview',
             description: 'Only for the teampages',
-            icon: createIcon(faUsers),
+            icon: createIcon(faUsers as EdtrIconDefinition),
           },
         ]
       : []),

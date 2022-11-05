@@ -36,7 +36,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                 className={clsx(
                   'inline-block mr-4 py-[3px] font-bold text-[0.9rem]',
                   'border-b-2',
-                  entry.active ? 'border-brand' : 'border-brand-150'
+                  entry.active ? 'border-brand' : 'border-brand-200'
                 )}
                 key={entry.url}
                 ref={entry.active ? activeRef : null}
@@ -73,7 +73,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                       'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
                       'group-hover:text-white group-hover:bg-brand',
                       entry.active
-                        ? 'text-black bg-brand-150'
+                        ? 'text-black bg-brand-200'
                         : 'serlo-button-blue-transparent'
                     )}
                   >

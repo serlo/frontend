@@ -114,7 +114,7 @@ export function PrivacyWrapper({
           <button
             className={clsx(
               'serlo-button-light',
-              'group-hover:bg-brand-light group-hover:text-white'
+              'group-hover:bg-brand-500 group-hover:text-white'
             )}
             onKeyDown={onKeyDown}
           >

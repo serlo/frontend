@@ -86,7 +86,7 @@ export function SubjectLandingFeatured({
         <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
           {data.title}
         </h4>
-        <span className="block mt-1 font-sm text-brand-lighter absolute bottom-2">
+        <span className="block mt-1 font-sm text-brand-400 absolute bottom-2">
           {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
         </span>
       </Link>

@@ -58,7 +58,7 @@ export function CommunityWallSubjectLanding({
           <div className="group text-center">
             <Link
               className={clsx(
-                'serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline',
+                'serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline',
                 'mt-6 py-2 px-4 text-lg'
               )}
               href={contributeLink}
