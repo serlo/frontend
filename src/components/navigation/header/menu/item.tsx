@@ -58,7 +58,7 @@ export function Item({ link, elementAsIcon }: ItemProps) {
 
   function renderItemNoSub() {
     return (
-      <NextLink href={link.url} passHref>
+      <NextLink legacyBehavior href={link.url} passHref>
         <Link
           className={clsx('group', styledLinkCls)}
           // temporarily track spenden button use
