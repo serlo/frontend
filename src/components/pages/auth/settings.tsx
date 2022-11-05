@@ -41,7 +41,7 @@ export function Settings() {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, FlowType.settings, setFlow))
+        .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
       return
     }
 
@@ -52,7 +52,7 @@ export function Settings() {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, FlowType.settings, setFlow))
+      .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow])
 
   return (
@@ -86,7 +86,7 @@ export function Settings() {
           .then(({ data }) => {
             setFlow(data)
           })
-          .catch(handleFlowError(router, FlowType.settings, setFlow))
+          .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
           .catch(async (err: AxiosError) => {
             if (err.response?.status === 400) {
               setFlow(err.response?.data as SelfServiceSettingsFlow)

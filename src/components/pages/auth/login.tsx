@@ -42,7 +42,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, FlowType.login, setFlow))
+        .catch(handleFlowError(router, FlowType.login, setFlow, strings))
       return
     }
 
@@ -66,7 +66,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
             `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
           )
         }
-        await handleFlowError(router, FlowType.login, setFlow)(error)
+        await handleFlowError(router, FlowType.login, setFlow, strings)(error)
       })
   }, [
     flowId,
@@ -78,6 +78,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
     flow,
     oauth,
     login_challenge,
+    strings,
   ])
 
   const showLogout = aal || refresh
@@ -159,7 +160,12 @@ export function Login({ oauth }: { oauth?: boolean }) {
       }
     } catch (e: unknown) {
       try {
-        await handleFlowError(router, FlowType.login, setFlow)(e as AxiosError)
+        await handleFlowError(
+          router,
+          FlowType.login,
+          setFlow,
+          strings
+        )(e as AxiosError)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

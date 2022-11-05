@@ -29,7 +29,7 @@ export function Registration() {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, FlowType.registration, setFlow))
+        .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
       return
     }
 
@@ -40,7 +40,7 @@ export function Registration() {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, FlowType.registration, setFlow))
+      .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow])
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
@@ -61,7 +61,9 @@ export function Registration() {
               .push(flow?.return_to || '/auth/login')
               .then(() => {})
           })
-          .catch(handleFlowError(router, FlowType.registration, setFlow))
+          .catch(
+            handleFlowError(router, FlowType.registration, setFlow, strings)
+          )
           .catch((err: AxiosError) => {
             if (err.response?.status === 400) {
               setFlow(err.response?.data as SelfServiceRegistrationFlow)

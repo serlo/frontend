@@ -28,7 +28,7 @@ export function Recovery() {
         .then(({ data }) => {
           setFlow(data)
         })
-        .catch(handleFlowError(router, FlowType.recovery, setFlow))
+        .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
       return
     }
 
@@ -37,7 +37,7 @@ export function Recovery() {
       .then(({ data }) => {
         setFlow(data)
       })
-      .catch(handleFlowError(router, FlowType.recovery, setFlow))
+      .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
       .catch((err: AxiosError) => {
         // If the previous handler did not catch the error it's most likely a form validation error
         if (err.response?.status === 400) {
@@ -60,7 +60,7 @@ export function Recovery() {
           .then(({ data }) => {
             setFlow(data)
           })
-          .catch(handleFlowError(router, FlowType.recovery, setFlow))
+          .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
           .catch((err: AxiosError) => {
             switch (err.response?.status) {
               case 400:

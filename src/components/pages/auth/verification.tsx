@@ -39,7 +39,7 @@ export function Verification() {
             )
           }
         })
-        .catch(handleFlowError(router, FlowType.verification, setFlow))
+        .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
       return
     }
     kratos
@@ -52,7 +52,7 @@ export function Verification() {
           return await router.push(returnTo ? String(returnTo) : '/auth/login')
         }
       })
-      .catch(handleFlowError(router, FlowType.verification, setFlow))
+      .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
       .catch((err: AxiosError) => {
         if (err.response?.status === 400) {
           setFlow(err.response?.data as SelfServiceVerificationFlow)
@@ -85,7 +85,9 @@ export function Verification() {
           .then(({ data }) => {
             setFlow(data)
           })
-          .catch(handleFlowError(router, FlowType.verification, setFlow))
+          .catch(
+            handleFlowError(router, FlowType.verification, setFlow, strings)
+          )
           .catch((err: AxiosError) => {
             switch (err.response?.status) {
               case 400: {

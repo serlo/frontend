@@ -22,8 +22,10 @@ import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
+import type { InstanceData } from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface FlowProps<T extends SubmitPayload> {
@@ -196,7 +198,8 @@ export function Flow<T extends SubmitPayload>({
 export function handleFlowError<S>(
   router: NextRouter,
   flowType: FlowType,
-  resetFlow: Dispatch<SetStateAction<S | undefined>>
+  resetFlow: Dispatch<SetStateAction<S | undefined>>,
+  strings: InstanceData['strings']
 ) {
   return async (error: AxiosError) => {
     const data = error.response?.data as {
@@ -216,10 +219,18 @@ export function handleFlowError<S>(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
         window.location.href = data.redirect_browser_to
         return
-      case 'session_already_available':
-        // User is already signed in, let's redirect them home!
-        await router.push('/')
+      case 'session_already_available': {
+        showToastNotice(strings.notices.alreadyLoggedIn)
+
+        const previousPathname = sessionStorage.getItem('previousPathname')
+        const previousPathOrHome =
+          previousPathname &&
+          previousPathname !== sessionStorage.getItem('currentPathname')
+            ? previousPathname
+            : '/'
+        await router.push(previousPathOrHome)
         return
+      }
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
