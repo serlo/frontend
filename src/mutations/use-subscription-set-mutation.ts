@@ -3,10 +3,12 @@ import { mutate } from 'swr'
 
 import { isSubscribedQuery } from '../helper/use-is-subscribed'
 import { useMutationFetch } from './helper/use-mutation-fetch'
+import { useSuccessHandler } from './helper/use-success-handler'
 import { SubscriptionSetInput } from '@/fetcher/graphql-types/operations'
 
 export function useSubscriptionSetMutation() {
   const mutationFetch = useMutationFetch()
+  const successHandler = useSuccessHandler()
 
   const mutation = gql`
     mutation subscriptionSet($input: SubscriptionSetInput!) {
@@ -31,6 +33,11 @@ export function useSubscriptionSetMutation() {
           variables: { id: input.id[0] },
         })
       )
+
+      return successHandler({
+        success,
+        toastKey: 'generic',
+      })
     }
     return success
   }

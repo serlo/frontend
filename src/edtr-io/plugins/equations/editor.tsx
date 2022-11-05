@@ -12,7 +12,8 @@ import {
   getFocused,
   isEmpty,
 } from '@edtr-io/store'
-import { edtrDragHandle, EdtrIcon, faTimes, Icon, styled } from '@edtr-io/ui'
+import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -33,6 +34,7 @@ import {
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 enum StepSegment {
   Left = 0,
@@ -213,7 +215,9 @@ export function EquationsEditor(props: EquationsProps) {
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
-                                    <Icon icon={faTimes} />
+                                    <Icon
+                                      icon={faXmark as EdtrIconDefinition}
+                                    />
                                   </RemoveButton>
                                 </td>
                               </tr>

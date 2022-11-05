@@ -1,10 +1,9 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 
-import { FaIcon } from '../fa-icon'
+import { FaIcon, FaIconProps } from '../fa-icon'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
@@ -158,10 +157,10 @@ export function CommentArea({
     )
   }
 
-  function renderHeading(icon: IconDefinition, text: string) {
+  function renderHeading(icon: FaIconProps['icon'], text: string) {
     return (
       <h2 className="serlo-h2 border-b-0 mt-10">
-        <FaIcon className="text-2.5xl text-brand-lighter" icon={icon} />
+        <FaIcon className="text-2.5xl text-brand-400" icon={icon} />
         {text}
       </h2>
     )

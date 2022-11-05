@@ -54,7 +54,7 @@ export function CourseFooter({
           <div className="flex text-lg">
             <b
               className={clsx(
-                'text-center text-xs leading-tight text-brand bg-brand-150',
+                'text-center text-xs leading-tight text-brand bg-brand-200',
                 'rounded-full pt-0.25 w-4 h-4 mt-1.5 mr-1.5'
               )}
             >

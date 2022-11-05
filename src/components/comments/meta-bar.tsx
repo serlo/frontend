@@ -43,7 +43,7 @@ export function MetaBar({
         className={clsx(
           'serlo-button text-brand text-lg font-bold',
           '-ml-1 pl-1 flex items-center hover:no-underline',
-          'hover:text-brand hover:bg-brand-150'
+          'hover:text-brand hover:bg-brand-200'
         )}
       />
 
@@ -71,7 +71,7 @@ export function MetaBar({
         <button
           title={date.toLocaleString('de-DE')}
           className={clsx(
-            'serlo-button font-normal text-brand-light text-base h-7'
+            'serlo-button font-normal text-brand-500 text-base h-7'
           )}
         >
           <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />

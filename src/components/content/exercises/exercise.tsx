@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
+import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -10,8 +11,8 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
 import { ExerciseInlineType } from '@/data-types'
 import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
@@ -26,6 +27,18 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
     (mod) => mod.CommentAreaEntity
   )
+)
+
+const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
+  import(
+    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+  ).then((mod) => mod.AuthorToolsExercises)
+)
+
+const DonationsBannerInline = dynamic<DonationsBannerProps>(() =>
+  import(
+    '@/components/content/donations-banner-experiment/donations-banner-inline'
+  ).then((mod) => mod.DonationsBannerInline)
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
@@ -45,7 +58,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     setLoaded(true)
   }, [])
 
-  const loggedInComponents = useLoggedInComponents()
   const isRevisionView =
     path && typeof path[0] === 'string' && path[0].startsWith('revision')
 
@@ -93,9 +105,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       !node.solution.license.isDefault && (
         <LicenseNotice minimal data={node.solution.license} type="solution" />
       )
-    const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
-    const authorTools = ExerciseAuthorTools && loaded && auth.current && (
-      <ExerciseAuthorTools
+    const authorTools = loaded && auth.current && (
+      <AuthorToolsExercises
         data={{
           type: ExerciseInlineType.Solution,
           id: node.context.solutionId!,
@@ -123,6 +134,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {node.context.solutionId && (
           <Lazy>
             <CommentAreaEntity entityId={node.context.solutionId} />
+            {/* Temporary donations banner trial */}
+            <DonationsBannerInline id={node.context.id} place="solution" />
           </Lazy>
         )}
       </div>
@@ -198,11 +211,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderToolsButton() {
     if (isRevisionView) return null
-    const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     return (
       <>
-        {loaded && auth.current && ExerciseAuthorTools && (
-          <ExerciseAuthorTools
+        {loaded && auth.current && (
+          <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.Exercise,
               trashed: node.trashed,

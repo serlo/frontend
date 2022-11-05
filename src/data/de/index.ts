@@ -89,8 +89,11 @@ export const instanceData = {
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
     },
-    edit: {
-      button: "Inhalt überarbeiten",
+    editOrAdd: {
+      button: "Überarbeiten",
+      addNewEntities: "Inhalt hinzufügen",
+      addNewExercises: "Aufgabe hinzufügen",
+      editExercises: "Aufgaben überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
         title: "Erstelle mit uns Lerninhalte!",
@@ -231,7 +234,7 @@ export const instanceData = {
       help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
       contactPerson: 'LinaMaria',
       contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
-      help4: "Wie geht reviewen? Hier gibt es die %guidelineLink%.",
+      help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
       guideline: "Anleitung",
       guidelineUrl: "/140473",
       subjectLinks: "Direkt zum Fach",
@@ -312,7 +315,7 @@ export const instanceData = {
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
     login: {
-      pleaseLogInLink: "Bitte melde dich an",
+      pleaseLogInLink: "Bitte melde dich an,",
       pleaseLogInText: "um diese Funktion zu benutzen."
     },
     keys: {
@@ -438,6 +441,7 @@ export const loggedInData = {
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
+      editTax: "Titel & Text bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
@@ -729,7 +733,7 @@ export const loggedInData = {
         sourceUrl: "Optionaler Link",
         moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
         addModal: {
-          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
           introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
           buttonEx: "Aufgaben hinzufügen",
           buttonExFolder: "Aufgabenordner auswählen",

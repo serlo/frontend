@@ -14,7 +14,7 @@ export function LicenseDetail({
   return (
     <>
       <HSpace amount={70} />
-      <p className="serlo-p text-lg font-bold text-brand-light -mb-4 text-center">
+      <p className="serlo-p text-lg font-bold text-brand-500 -mb-4 text-center">
         {strings.license.readMore}
       </p>
       <h1 className="serlo-h2 text-center">{title}</h1>
