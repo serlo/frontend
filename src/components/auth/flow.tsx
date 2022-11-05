@@ -20,6 +20,7 @@ import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 import { StaticInfoPanel } from '../static-info-panel'
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
+import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -140,12 +141,12 @@ export function Flow<T extends SubmitPayload>({
               const message = replacePlaceholders(rawMessage, {
                 reason: text,
                 verificationLink: (
-                  <a
+                  <Link
                     className="text-brand serlo-link font-bold"
                     href="/auth/verification"
                   >
                     {strings.auth.verificationLink}
-                  </a>
+                  </Link>
                 ),
               })
 
