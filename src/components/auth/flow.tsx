@@ -137,7 +137,17 @@ export function Flow<T extends SubmitPayload>({
                 : text
 
               // TODO: check context
-              const message = replacePlaceholders(rawMessage, { reason: text })
+              const message = replacePlaceholders(rawMessage, {
+                reason: text,
+                verificationLink: (
+                  <a
+                    className="text-brand serlo-link font-bold"
+                    href="/auth/verification"
+                  >
+                    {strings.auth.verificationLink}
+                  </a>
+                ),
+              })
 
               if (!hasTranslatedMessage) {
                 triggerSentry({

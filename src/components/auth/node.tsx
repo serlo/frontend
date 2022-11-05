@@ -7,8 +7,8 @@ import { FormEvent } from 'react'
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { triggerSentry } from '@/helper/trigger-sentry'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
   node: UiNode
