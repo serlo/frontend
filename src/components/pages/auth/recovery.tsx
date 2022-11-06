@@ -77,6 +77,7 @@ export function Recovery() {
   return (
     <>
       <PageTitle headTitle title={strings.auth.recoverTitle} />
+      {strings.auth.recoveryInstructions}
       <Flow onSubmit={onSubmit} flow={flow} />
     </>
   )

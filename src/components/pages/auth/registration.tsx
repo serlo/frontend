@@ -11,6 +11,7 @@ import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
@@ -56,10 +57,9 @@ export function Registration() {
             String(flow?.id),
             valuesWithLanguage
           )
-          .then(async () => {
-            return await router
-              .push(flow?.return_to || '/auth/login')
-              .then(() => {})
+          .then(() => {
+            // it would be better to hide the registration fields and show the instruction
+            showToastNotice(strings.auth.messages[1080001])
           })
           .catch(
             handleFlowError(router, FlowType.registration, setFlow, strings)

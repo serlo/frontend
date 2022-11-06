@@ -333,7 +333,9 @@ export const instanceData = {
       pleaseLogInText: 'to use this feature.',
       registerTitle: 'Register new account',
       recoverTitle: 'Recover your account',
+      recoveryInstructions: 'Insert your email and click on submit to receive an email in order to reset your password.',
       verifyTitle: 'Verify your email',
+      verifyInstructions: 'Insert your email and click on submit to receive an email in order to verify your email.',
       changePassword: 'Insert new password',
       loggingOut: 'Logging you out…',
       login: {
