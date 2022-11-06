@@ -46,11 +46,6 @@ export function Logout({ oauth }: { oauth?: boolean }) {
             return
           })
           .catch((error: AxiosError) => {
-            // 401 means user is already logged out
-            if (error.response?.status === 401) {
-              window.location.href = originalPreviousPath ?? '/'
-              return
-            }
             return Promise.reject(error)
           })
       })

@@ -15,44 +15,26 @@ export default renderedPageNoHooks(() => (
 
 function Error() {
   const [error, setError] = useState<SelfServiceError | string>()
-
   const router = useRouter()
   const { id } = router.query
 
   useEffect(() => {
-    if (!router.isReady || error) {
-      return
-    }
+    if (!router.isReady || error) return
 
     kratos
       .getSelfServiceError(String(id))
-      .then(({ data }) => {
-        setError(data)
-      })
+      .then(({ data }) => setError(data))
       .catch((err: AxiosError) => {
         switch (err.response?.status) {
-          case 404:
-            // The error id could not be found. Let's just redirect home!
-            return router.push('/')
-          case 403:
-            // The error id could not be fetched due to e.g. a CSRF issue. Let's just redirect home!
-            return router.push('/')
-          case 410:
-            // The error id expired. Let's just redirect home!
-            return router.push('/')
+          case 404: // The error id could not be found.
+          case 403: // The error id could not be fetched due to e.g. a CSRF issue.
+          case 410: // The error id expired.
+            void router.push('/') // Let's just redirect home!
+            return Promise.reject(err)
         }
-
         return Promise.reject(err)
       })
   }, [id, router, router.isReady, error])
 
-  if (!error) {
-    return null
-  }
-
-  return (
-    <>
-      <pre>{JSON.stringify(error, null, 2)}</pre>
-    </>
-  )
+  return error ? <pre>{JSON.stringify(error, null, 2)}</pre> : null
 }

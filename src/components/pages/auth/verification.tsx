@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
-import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -25,41 +24,30 @@ export function Verification() {
       return
     }
 
+    const flowHandler = async ({
+      data,
+    }: {
+      data: SelfServiceVerificationFlow
+    }) => {
+      setFlow(data)
+      if (data.state === 'passed_challenge') {
+        showToastNotice(emailVerifiedSuccessfully, 'success')
+        return await router.push(returnTo ? String(returnTo) : '/auth/login')
+      }
+    }
+
     if (flowId) {
       kratos
         .getSelfServiceVerificationFlow(String(flowId))
-        .then(async ({ data }) => {
-          setFlow(data)
-          if (data.state === 'passed_challenge') {
-            showToastNotice(emailVerifiedSuccessfully, 'success')
-
-            return await router.push(
-              returnTo ? String(returnTo) : '/auth/login'
-            )
-          }
-        })
+        .then(flowHandler)
         .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
       return
     }
+
     kratos
       .initializeSelfServiceVerificationFlowForBrowsers()
-      .then(async ({ data }) => {
-        setFlow(data)
-        if (data.state === 'passed_challenge') {
-          showToastNotice(emailVerifiedSuccessfully, 'success')
-
-          return await router.push(returnTo ? String(returnTo) : '/auth/login')
-        }
-      })
+      .then(flowHandler)
       .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
-      .catch((err: AxiosError) => {
-        if (err.response?.status === 400) {
-          setFlow(err.response?.data as SelfServiceVerificationFlow)
-          return
-        }
-
-        return Promise.reject(err)
-      })
   }, [
     flowId,
     router.isReady,
@@ -82,32 +70,23 @@ export function Verification() {
             values,
             undefined
           )
-          .then(({ data }) => {
-            setFlow(data)
-          })
+          .then(({ data }) => setFlow(data))
           .catch(
-            handleFlowError(router, FlowType.verification, setFlow, strings)
+            handleFlowError(
+              router,
+              FlowType.verification,
+              setFlow,
+              strings,
+              true
+            )
           )
-          .catch((err: AxiosError) => {
-            switch (err.response?.status) {
-              case 400: {
-                // Status code 400 implies the form validation had an error
-                setFlow(err.response?.data as SelfServiceVerificationFlow)
-                return
-              }
-            }
-
-            throw err
-          })
       )
   }
-  if (!flow) {
-    return null
-  }
-  return (
+
+  return flow ? (
     <>
       <PageTitle headTitle title={strings.auth.verifyTitle} />
       <Flow onSubmit={onSubmit} flow={flow} />
     </>
-  )
+  ) : null
 }
