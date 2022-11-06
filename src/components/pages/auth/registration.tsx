@@ -1,3 +1,4 @@
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import {
   SelfServiceRegistrationFlow,
   SubmitSelfServiceRegistrationFlowBody,
@@ -8,16 +9,18 @@ import { useEffect, useState } from 'react'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
+import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
   const { lang, strings } = useInstanceData()
   const { return_to: returnTo, flow: flowId } = router.query
+  const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false)
 
   useEffect(() => {
     if (!router.isReady || flow) {
@@ -42,7 +45,7 @@ export function Registration() {
         setFlow(data)
       })
       .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
-  }, [flowId, router, router.isReady, returnTo, flow])
+  }, [flowId, router, router.isReady, returnTo, flow, strings])
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
     const valuesWithLanguage = { ...values, 'traits.language': lang }
@@ -58,8 +61,7 @@ export function Registration() {
             valuesWithLanguage
           )
           .then(() => {
-            // it would be better to hide the registration fields and show the instruction
-            showToastNotice(strings.auth.messages[1080001])
+            setIsSuccessfullySubmitted(true)
           })
           .catch(
             handleFlowError(router, FlowType.registration, setFlow, strings)
@@ -100,6 +102,17 @@ export function Registration() {
   return (
     <>
       <PageTitle headTitle title={strings.auth.registerTitle} />
+      {isSuccessfullySubmitted ? (
+        <StaticInfoPanel key={1} type="info" icon={faInfoCircle}>
+          {strings.auth.messages[1080001]}{' '}
+          <Link
+            className="text-brand serlo-link font-bold"
+            href="/auth/verification"
+          >
+            {strings.auth.verificationLink}
+          </Link>
+        </StaticInfoPanel>
+      ) : null}
       {flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}
       {agreement}
     </>
