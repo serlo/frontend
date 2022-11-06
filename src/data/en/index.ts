@@ -374,7 +374,7 @@ export const instanceData = {
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Sign up',
-      verificationLink: 'Click to send verification email again.'
+      verificationLink: 'Click here to request the verification email again.'
     },
     keys: {
       ctrl: 'ctrl',
