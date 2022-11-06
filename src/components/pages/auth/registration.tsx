@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
-import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
@@ -23,16 +22,12 @@ export function Registration() {
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false)
 
   useEffect(() => {
-    if (!router.isReady || flow) {
-      return
-    }
+    if (!router.isReady || flow) return
 
     if (flowId) {
       kratos
         .getSelfServiceRegistrationFlow(String(flowId))
-        .then(({ data }) => {
-          setFlow(data)
-        })
+        .then(({ data }) => setFlow(data))
         .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
       return
     }
@@ -41,9 +36,7 @@ export function Registration() {
       .initializeSelfServiceRegistrationFlowForBrowsers(
         returnTo ? String(returnTo) : undefined
       )
-      .then(({ data }) => {
-        setFlow(data)
-      })
+      .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow, strings])
 
@@ -66,38 +59,8 @@ export function Registration() {
           .catch(
             handleFlowError(router, FlowType.registration, setFlow, strings)
           )
-          .catch((err: AxiosError) => {
-            if (err.response?.status === 400) {
-              setFlow(err.response?.data as SelfServiceRegistrationFlow)
-              return
-            }
-
-            return Promise.reject(err)
-          })
       )
   }
-
-  const agreement = replacePlaceholders(strings.auth.registrationAgreement, {
-    signup: <em>{strings.auth.signUp}</em>,
-    privacypolicy: (
-      <a
-        className="text-brand serlo-link font-bold"
-        href="/privacy"
-        target="_blank"
-      >
-        {strings.entities.privacyPolicy}
-      </a>
-    ),
-    terms: (
-      <a
-        className="text-brand serlo-link font-bold"
-        href="/21654"
-        target="_blank"
-      >
-        {strings.auth.terms}
-      </a>
-    ),
-  })
 
   return (
     <>
@@ -114,7 +77,31 @@ export function Registration() {
         </StaticInfoPanel>
       ) : null}
       {flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}
-      {agreement}
+      {renderAgreement()}
     </>
   )
+
+  function renderAgreement() {
+    return replacePlaceholders(strings.auth.registrationAgreement, {
+      signup: <em>{strings.auth.signUp}</em>,
+      privacypolicy: (
+        <a
+          className="text-brand serlo-link font-bold"
+          href="/privacy"
+          target="_blank"
+        >
+          {strings.entities.privacyPolicy}
+        </a>
+      ),
+      terms: (
+        <a
+          className="text-brand serlo-link font-bold"
+          href="/21654"
+          target="_blank"
+        >
+          {strings.auth.terms}
+        </a>
+      ),
+    })
+  }
 }

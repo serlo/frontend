@@ -39,9 +39,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
     if (flowId) {
       kratos
         .getSelfServiceLoginFlow(String(flowId))
-        .then(({ data }) => {
-          setFlow(data)
-        })
+        .then(({ data }) => setFlow(data))
         .catch(handleFlowError(router, FlowType.login, setFlow, strings))
       return
     }
@@ -56,11 +54,8 @@ export function Login({ oauth }: { oauth?: boolean }) {
         setFlow(data)
       })
       .catch(async (error: AxiosError) => {
-        const data = error.response?.data as {
-          error: {
-            id: string
-          }
-        }
+        const data = error.response?.data as { error: { id: string } }
+
         if (oauth && data.error?.id === 'session_already_available') {
           await router.push(
             `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
@@ -91,7 +86,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         title={loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']}
       />
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      {showLogout ? <div>{loginStrings.logOut}</div> : ''}
+      {showLogout ? <div>{loginStrings.logOut}</div> : null}
       <div className="mx-side mt-20 border-t-2 pt-4">
         {loginStrings.newHere}{' '}
         <Link href="/auth/registration" className="serlo-button-light">

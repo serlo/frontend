@@ -165,7 +165,8 @@ export function handleFlowError<S>(
   router: NextRouter,
   flowType: FlowType,
   resetFlow: Dispatch<SetStateAction<S | undefined>>,
-  strings: InstanceData['strings']
+  strings: InstanceData['strings'],
+  throwError?: boolean
 ) {
   return async (error: AxiosError) => {
     const data = error.response?.data as {
@@ -236,7 +237,12 @@ export function handleFlowError<S>(
         resetFlow(undefined)
         await router.push(flowPath)
         return
+      case 400:
+        resetFlow(error.response?.data as S)
+        return
     }
+
+    if (throwError) throw error
 
     // We are not able to handle the error? Return it.
     return Promise.reject(error)
