@@ -5,9 +5,9 @@ import clsx from 'clsx'
 import { FormEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
+import { Message } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
@@ -31,27 +31,13 @@ export function Node(props: NodeProps) {
       ? (strings.auth.fields[shortName] as string)
       : shortName
 
-    const messages = node.messages.map(({ text, id }, k) => {
-      const hasTranslatedMessage = hasOwnPropertyTs(strings.auth.messages, id)
-      const rawMessage = hasTranslatedMessage
-        ? strings.auth.messages[id as keyof typeof strings.auth.messages]
-        : text
-
-      const message = replacePlaceholders(rawMessage, {
-        // couldn't we find more elegant way to handle %reason% placeholder?
-        reason: text.replace(
-          'does not match pattern "^[\\\\w\\\\-]+$"',
-          strings.auth.usernameRules
-        ),
-        field: fieldName,
-      })
-
+    const messages = node.messages.map((uiText) => {
       return (
         <span
-          key={`${id}-${k}`}
+          key={`${uiText.id}`}
           className="text-red italic -mt-2 mb-2 block ml-3"
         >
-          {message}
+          <Message uiText={uiText} fieldName={fieldName} />
         </span>
       )
     })

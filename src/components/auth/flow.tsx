@@ -19,14 +19,10 @@ import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 
 import { StaticInfoPanel } from '../static-info-panel'
 import type { AxiosError } from '@/auth/types'
+import { Message } from '@/components/auth/message'
 import { Node } from '@/components/auth/node'
-import { Link } from '@/components/content/link'
-import { useInstanceData } from '@/contexts/instance-context'
 import type { InstanceData } from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow:
@@ -59,7 +55,6 @@ export function Flow<T extends SubmitPayload>({
   only,
   onSubmit,
 }: FlowProps<T>) {
-  const { strings } = useInstanceData()
   const [isLoading, setIsLoading] = useState(false)
 
   const { action, method, messages, nodes } = flow.ui
@@ -125,39 +120,10 @@ export function Flow<T extends SubmitPayload>({
     return (
       <div className="mx-side">
         {messages
-          ? messages.map((node) => {
-              const { id, text, type } = node
+          ? messages.map((uiText) => {
+              const { id, type } = uiText
 
               const panelType = type === 'info' ? 'info' : 'warning'
-              const hasTranslatedMessage = hasOwnPropertyTs(
-                strings.auth.messages,
-                id
-              )
-              const rawMessage = hasTranslatedMessage
-                ? strings.auth.messages[
-                    id as keyof typeof strings.auth.messages
-                  ]
-                : text
-
-              // TODO: check context
-              const message = replacePlaceholders(rawMessage, {
-                reason: text,
-                verificationLink: (
-                  <Link
-                    className="text-brand serlo-link font-bold"
-                    href="/auth/verification"
-                  >
-                    {strings.auth.verificationLink}
-                  </Link>
-                ),
-              })
-
-              if (!hasTranslatedMessage) {
-                triggerSentry({
-                  message: 'kratos-untranslated-message',
-                  code: id,
-                })
-              }
 
               return (
                 <StaticInfoPanel
@@ -165,7 +131,7 @@ export function Flow<T extends SubmitPayload>({
                   type={panelType}
                   icon={type === 'info' ? faInfoCircle : faWarning}
                 >
-                  {message}
+                  <Message uiText={uiText} />
                 </StaticInfoPanel>
               )
             })
