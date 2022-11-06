@@ -320,7 +320,7 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
-      emailVerifiedSuccessfully: 'You have successfully verified your email address'
+      get emailVerifiedSuccessfully() { return instanceData.strings.auth.messages[1080002] }
     },
     loading: {
       oneMomentPlease: 'One moment please…',
