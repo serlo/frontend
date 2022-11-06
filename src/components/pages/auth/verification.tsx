@@ -18,6 +18,8 @@ export function Verification() {
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
 
+  const emailVerifiedSuccessfully = strings.auth.messages[1080002]
+
   useEffect(() => {
     if (!router.isReady || flow) {
       return
@@ -29,10 +31,7 @@ export function Verification() {
         .then(async ({ data }) => {
           setFlow(data)
           if (data.state === 'passed_challenge') {
-            showToastNotice(
-              strings.notices.emailVerifiedSuccessfully,
-              'success'
-            )
+            showToastNotice(emailVerifiedSuccessfully, 'success')
 
             return await router.push(
               returnTo ? String(returnTo) : '/auth/login'
@@ -47,7 +46,7 @@ export function Verification() {
       .then(async ({ data }) => {
         setFlow(data)
         if (data.state === 'passed_challenge') {
-          showToastNotice(strings.notices.emailVerifiedSuccessfully, 'success')
+          showToastNotice(emailVerifiedSuccessfully, 'success')
 
           return await router.push(returnTo ? String(returnTo) : '/auth/login')
         }
@@ -63,11 +62,12 @@ export function Verification() {
       })
   }, [
     flowId,
-    router,
     router.isReady,
     returnTo,
     flow,
-    strings.notices.emailVerifiedSuccessfully,
+    router,
+    strings,
+    emailVerifiedSuccessfully,
   ])
 
   const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {

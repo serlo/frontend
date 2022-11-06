@@ -310,7 +310,6 @@ export const instanceData = {
       addMotivation: 'Add motivation',
       lockedDescriptionTitle: 'Your description currently hidden from the public.',
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.',
-
     },
     notices: {
       welcome: '👋 Welcome %username%!',
@@ -320,7 +319,6 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
-      get emailVerifiedSuccessfully() { return instanceData.strings.auth.messages[1080002] }
     },
     loading: {
       oneMomentPlease: 'One moment please…',
