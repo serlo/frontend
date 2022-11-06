@@ -107,7 +107,21 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    const originalPreviousPath = sessionStorage.getItem('previousPathname')
+    const redirection = filterUnwantedRedirection(
+      sessionStorage.getItem('previousPathname')
+    )
+
+    function filterUnwantedRedirection(previousPath: string | null) {
+      if (
+        previousPath === null ||
+        previousPath === sessionStorage.getItem('currentPathname') ||
+        previousPath.includes('auth/verification')
+      ) {
+        return '/'
+      }
+      return previousPath
+    }
+
     await router.push(
       `${router.pathname}?flow=${String(flow?.id)}`,
       undefined,
@@ -139,8 +153,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
           setTimeout(() => {
             // TODO: make sure router.push() also rerenders authed components (e.g. header)
-            window.location.href =
-              flow?.return_to ?? originalPreviousPath ?? '/'
+            window.location.href = flow?.return_to ?? redirection
           }, 1000)
 
           return
