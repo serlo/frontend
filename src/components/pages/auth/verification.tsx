@@ -86,6 +86,7 @@ export function Verification() {
   return flow ? (
     <>
       <PageTitle headTitle title={strings.auth.verifyTitle} />
+      {strings.auth.verifyInstructions}
       <Flow onSubmit={onSubmit} flow={flow} />
     </>
   ) : null
