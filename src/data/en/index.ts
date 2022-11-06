@@ -3,8 +3,6 @@ import { Instance } from '@/fetcher/graphql-types/operations'
 import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls'
 import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
 
-const emailVerifiedSuccessfully = 'You have successfully verified your email address'
-
 export const instanceData = {
   lang: Instance["En"],
   headerData: headerData,
@@ -322,7 +320,7 @@ export const instanceData = {
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
       revisionSavedAccepted: 'Revision was successfully saved and accepted ✅',
-      emailVerifiedSuccessfully
+      emailVerifiedSuccessfully: 'You have successfully verified your email address'
     },
     loading: {
       oneMomentPlease: 'One moment please…',
@@ -359,13 +357,12 @@ export const instanceData = {
         1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         1060002: 'An email containing a recovery link has been sent to the email address you provided.',
         1080001: 'An email containing a verification link has been sent to the email address you provided.',
-        1080002: emailVerifiedSuccessfully,
+        1080002: 'You have successfully verified your email address.',
         4000001: '%reason%',
         4000002: '%field% is missing.',
         4000003: 'Length must be \u003e= %expected_length%, but got %actual_length%.',
-        4000004: '"%value%" is not valid "%format%"',
         4000005: 'The password can not be used because %reason%.',
-        4000006: 'The username, email adress or password was wrong. Please check for spelling mistakes.',
+        4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
         4000010: 'Have you already verified your email address?. %verificationLink%',
@@ -375,7 +372,7 @@ export const instanceData = {
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Sign up',
-      verificationLink: 'Go here to get the verification email again.'
+      verificationLink: 'Click to send verification email again.'
     },
     keys: {
       ctrl: 'ctrl',
