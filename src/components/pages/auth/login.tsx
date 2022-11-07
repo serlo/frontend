@@ -6,6 +6,7 @@ import type {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { filterUnwantedRedirection } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
@@ -107,20 +108,10 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    const redirection = filterUnwantedRedirection(
-      sessionStorage.getItem('previousPathname')
-    )
-
-    function filterUnwantedRedirection(previousPath: string | null) {
-      if (
-        previousPath === null ||
-        previousPath === sessionStorage.getItem('currentPathname') ||
-        previousPath.includes('auth/verification')
-      ) {
-        return '/'
-      }
-      return previousPath
-    }
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['auth/verification', 'auth/logout'],
+    })
 
     await router.push(
       `${router.pathname}?flow=${String(flow?.id)}`,
