@@ -365,14 +365,14 @@ export const instanceData = {
         4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
-        4000010: 'Have you already verified your email address?. %verificationLink%',
+        4000010: 'Have you already verified your email address?. %verificationLinkText%',
         4060004: 'The recovery token is invalid or has already been used. Please retry the flow.',
       },
       usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Sign up',
-      verificationLink: 'Click here to request the verification email again.'
+      verificationLinkText: 'Click here to request the verification email again.'
     },
     keys: {
       ctrl: 'ctrl',

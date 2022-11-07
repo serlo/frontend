@@ -72,7 +72,7 @@ export function Registration() {
             className="text-brand serlo-link font-bold"
             href="/auth/verification"
           >
-            {strings.auth.verificationLink}
+            {strings.auth.verificationLinkText}
           </Link>
         </StaticInfoPanel>
       ) : null}

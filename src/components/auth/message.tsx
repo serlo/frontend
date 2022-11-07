@@ -33,12 +33,12 @@ export function Message({
       'does not match pattern "^[\\\\w\\\\-]+$"',
       strings.auth.usernameRules
     ),
-    verificationLink: (
+    verificationLinkText: (
       <Link
         className="text-brand serlo-link font-bold"
         href="/auth/verification"
       >
-        {strings.auth.verificationLink}
+        {strings.auth.verificationLinkText}
       </Link>
     ),
     field: fieldName ?? '',
