@@ -11,9 +11,9 @@ export const instanceData = {
       search: "Suche",
       login: "Anmelden",
       skipLinks: {
-        sentence: 'Skip to %content% or %footer%',
-        content: 'content',
-        footer: 'footer'
+        sentence: "Springe zum %content% oder %footer%",
+        content: "Inhalt",
+        footer: "Footer"
       }
     },
     search: {
