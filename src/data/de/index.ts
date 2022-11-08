@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "Die freie Lernplattform",
       search: "Suche",
-      login: "Anmelden"
+      login: "Anmelden",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
