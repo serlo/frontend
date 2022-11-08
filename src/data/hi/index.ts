@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
       search: "खोजें",
-      login: "लॉग इन करें"
+      login: "लॉग इन करें",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "खोज गूगल द्वारा प्रदान की गई है। क्या जानकारी संसाधित है, यह जानने के लिए हमारी%privacypolicy% देखें।",
