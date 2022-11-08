@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
       search: "Buscar",
-      login: "Ingresar"
+      login: "Ingresar",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
