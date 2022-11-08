@@ -1,4 +1,3 @@
-import { faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart'
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
@@ -85,33 +84,116 @@ const articleBanners = [
     roles: [],
     username: '',
   },
-  // {
-  //   id: 'banner-testimonial-Maria_F',
-  //   isLong: false,
-  //   text: (
-  //     <div className="text-left">
-  //       <p className="serlo-p special-hyphens-initial leading-6">
-  //         weil es mir bei der Differenzierung hilft. Ich weiß, dass ich mich auf
-  //         die Qualität der Inhalte verlassen kann.
-  //         <br />
-  //         Serlo ist für mich das beste Beispiel für qualitativ hochwertige freie
-  //         Bildungsmaterialien.
-  //       </p>
-  //       <p className="serlo-p special-hyphens-initial leading-6">
-  //         Lernmittel haben auch einen großen Einfluss auf das selbständige
-  //         Lernen zu Hause. Gute Lernmittel sollten frei lizenziert sein und von
-  //         einer engagierten Community weiterentwickelt werden, anstatt dass
-  //         einzelne Lehrkräfte immer wieder von vorn anfangen. Deswegen
-  //         unterstütze ich Serlo gern mit einer Spende
-  //       </p>
-  //     </div>
-  //   ),
-  //   call: 'Ich nutze Serlo gern in meinem Unterricht, …',
-  //   buttonText: 'Jetzt auch spenden',
-  //   roles: ['Lehrerin', 'Spenderin'],
-  //   username: 'Maria_F',
-  //   imageSrc: 'https://community.serlo.org/avatar/Maria_F',
-  // },
+  {
+    id: 'banner-testimonial-WandaPaetzold',
+    isLong: false,
+    text: (
+      <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+        „ Ich unterstütze Serlo, da ich der Meinung bin, dass ein einfacher
+        Zugang zu Bildung ohne Bezahlung und Werbung ein Grundrecht für jede*n
+        ist und Serlo ermöglicht es mir als Lehrerin, für viel mehr Menschen
+        Wissen zu teilen und zu vermitteln.“
+      </p>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Lehrerin', 'Spenderin'],
+    username: 'WandaPaetzold',
+    imageSrc: 'https://community.serlo.org/avatar/WandaPaetzold',
+  },
+  {
+    id: 'banner-testimonial-Maria_F',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem] mb-0">
+          „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
+          Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
+          Inhalte verlassen kann.
+        </p>
+        <p className="serlo-p special-hyphens-initial leading-6 -mt-3">
+          <br />
+          Serlo ist für mich das beste Beispiel für qualitativ hochwertige freie
+          Bildungsmaterialien.
+          <br />
+          Lernmittel haben auch einen großen Einfluss auf das selbständige
+          Lernen zu Hause. Gute Lernmittel sollten frei lizenziert sein und von
+          einer engagierten Community weiterentwickelt werden, anstatt dass
+          einzelne Lehrkräfte immer wieder von vorn anfangen.{' '}
+        </p>
+        <p className="font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem] mb-5 -mt-3.5">
+          Deswegen unterstütze ich Serlo gern mit einer Spende.
+          <span className="font-handwritten text-[1.05em] text-truegray-700">
+            “
+          </span>
+        </p>
+      </div>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Lehrerin', 'Spenderin'],
+    username: 'Maria_F',
+    imageSrc: 'https://community.serlo.org/avatar/Maria_F',
+  },
+  {
+    id: 'banner-testimonial-Lena',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem] mb-0">
+          „ Bildung für alle - und das kostenfrei. Ein so wichtiges Ziel, um der
+          (Chancen-)Gerechtigkeit unserer Gesellschaft ein Stück näher zu
+          kommen!
+        </p>
+        <p className="serlo-p special-hyphens-initial leading-6 -mt-3">
+          <br />
+          Mit diesem Konzept begeistert mich Serlo nun schon seit zehn Jahren,
+          zunächst als Schülerin und als Teil des Serlo-Teams selbst, heute als
+          wissenschaftliche Mitarbeitern in der politischen Bildung. Doch auch
+          wenn ich nicht mehr aktiv bei Serlo tätig sein kann, verfolge ich den
+          Werdegang des Projektes und freue mich über die große Resonanz, die es
+          erfährt!
+        </p>
+        <p className="font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem] mb-5 -mt-3.5">
+          Danke an all die Menschen, die das möglich machen!
+          <span className="font-handwritten text-[1.05em] text-truegray-700">
+            “
+          </span>
+        </p>
+      </div>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Spenderin'],
+    username: 'Lena',
+    imageSrc: 'https://community.serlo.org/avatar/Lena',
+  },
+  {
+    id: 'banner-testimonial-Daniel-Flueck',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+          „ Ich wünsche mir eine Welt, wo nicht nur Wissen sondern auch der Weg,
+          um Wissen zu erlangen, frei verfügbar ist.
+        </p>
+        <p className="serlo-p special-hyphens-initial leading-6 -mt-2">
+          Ich hoffe, dass die fortschreitende Digitalisierung die Bewegung von
+          ‚Open Educational Resources‘ weiter in den Vordergrund rücken wird und
+          wir so auch eine moderne Didaktik immer mehr in die Klassenzimmer
+          tragen können.
+          <span className="font-handwritten text-[1.05em] text-truegray-700">
+            “
+          </span>
+        </p>
+      </div>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Spender'],
+    username: 'Daniel-Flueck',
+    imageSrc: 'https://community.serlo.org/avatar/Daniel-Flueck',
+  },
 ]
 
 const courseBanner = {
@@ -216,9 +298,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
           'sm:flex sm:justify-between sm:text-left sm:-mx-2 sm:px-0',
           'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16',
-          isTestimonial
-            ? 'bg-[url("/_assets/img/landing/about-container-green.svg")]'
-            : 'bg-[url("/_assets/img/landing/about-container.svg")]'
+          'bg-[url("/_assets/img/landing/about-container.svg")]'
         )}
       >
         {renderHideButton()}
@@ -242,7 +322,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           ) : null}
         </figure>
         <div className="max-w-2xl mx-auto px-side sm:mt-5 sm:ml-0">
-          <p className="my-5 font-handwritten text-[1.32em] text-brand mx-side">
+          <p className="my-5 font-handwritten mx-side text-[1.32em] text-brand">
             {banner.call}
           </p>
           <div className="">{banner.text}</div>
@@ -256,7 +336,6 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
               }}
             >
               {banner.buttonText ? banner.buttonText : 'Jetzt spenden'}{' '}
-              <FaIcon icon={faHandHoldingHeart} />
             </button>
           </p>
         </div>
@@ -302,24 +381,32 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
 
   function renderRoles(roles: string[] | undefined) {
     if (!roles) return null
-    const badges = roles?.map((role) => {
-      return (
-        <>
-          <span
-            key={role}
-            className={clsx(
-              'text-white text-[16px] font-bold px-2 py-1',
-              'rounded-2xl',
-              'bg-brand opacity-70'
-            )}
-          >
-            {role}
-          </span>
-          <br />
-        </>
-      )
-    })
 
-    return <>{badges}</>
+    return (
+      <b className="block text-[16px] text-brand -mt-1">{roles.join(', ')}</b>
+    )
   }
+
+  // function renderRoles(roles: string[] | undefined) {
+  //   if (!roles) return null
+  //   const badges = roles?.map((role) => {
+  //     return (
+  //       <>
+  //         <span
+  //           key={role}
+  //           className={clsx(
+  //             'text-white text-[16px] font-bold px-2 py-1',
+  //             'rounded-2xl',
+  //             'bg-brand opacity-70'
+  //           )}
+  //         >
+  //           {role}
+  //         </span>
+  //         <br />
+  //       </>
+  //     )
+  //   })
+
+  //   return <>{badges}</>
+  // }
 }
