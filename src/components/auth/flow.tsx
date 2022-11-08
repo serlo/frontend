@@ -19,11 +19,10 @@ import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
 
 import { StaticInfoPanel } from '../static-info-panel'
 import type { AxiosError } from '@/auth/types'
+import { Message } from '@/components/auth/message'
 import { Node } from '@/components/auth/node'
-import { useInstanceData } from '@/contexts/instance-context'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { triggerSentry } from '@/helper/trigger-sentry'
+import type { InstanceData } from '@/data-types'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow:
@@ -56,7 +55,6 @@ export function Flow<T extends SubmitPayload>({
   only,
   onSubmit,
 }: FlowProps<T>) {
-  const { strings } = useInstanceData()
   const [isLoading, setIsLoading] = useState(false)
 
   const { action, method, messages, nodes } = flow.ui
@@ -122,29 +120,10 @@ export function Flow<T extends SubmitPayload>({
     return (
       <div className="mx-side">
         {messages
-          ? messages.map((node) => {
-              const { id, text, type } = node
+          ? messages.map((uiText) => {
+              const { id, type } = uiText
 
               const panelType = type === 'info' ? 'info' : 'warning'
-              const hasTranslatedMessage = hasOwnPropertyTs(
-                strings.auth.messages,
-                id
-              )
-              const rawMessage = hasTranslatedMessage
-                ? strings.auth.messages[
-                    id as keyof typeof strings.auth.messages
-                  ]
-                : text
-
-              // TODO: check context
-              const message = replacePlaceholders(rawMessage, { reason: text })
-
-              if (!hasTranslatedMessage) {
-                triggerSentry({
-                  message: 'kratos-untranslated-message',
-                  code: id,
-                })
-              }
 
               return (
                 <StaticInfoPanel
@@ -152,7 +131,7 @@ export function Flow<T extends SubmitPayload>({
                   type={panelType}
                   icon={type === 'info' ? faInfoCircle : faWarning}
                 >
-                  {message}
+                  <Message uiText={uiText} />
                 </StaticInfoPanel>
               )
             })
@@ -185,7 +164,9 @@ export function Flow<T extends SubmitPayload>({
 export function handleFlowError<S>(
   router: NextRouter,
   flowType: FlowType,
-  resetFlow: Dispatch<SetStateAction<S | undefined>>
+  resetFlow: Dispatch<SetStateAction<S | undefined>>,
+  strings: InstanceData['strings'],
+  throwError?: boolean
 ) {
   return async (error: AxiosError) => {
     const data = error.response?.data as {
@@ -205,10 +186,18 @@ export function handleFlowError<S>(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
         window.location.href = data.redirect_browser_to
         return
-      case 'session_already_available':
-        // User is already signed in, let's redirect them home!
-        await router.push('/auth/login-check')
+      case 'session_already_available': {
+        showToastNotice(strings.notices.alreadyLoggedIn)
+
+        const previousPathname = sessionStorage.getItem('previousPathname')
+        const previousPathOrHome =
+          previousPathname &&
+          previousPathname !== sessionStorage.getItem('currentPathname')
+            ? previousPathname
+            : '/'
+        await router.push(previousPathOrHome)
         return
+      }
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
@@ -248,7 +237,12 @@ export function handleFlowError<S>(
         resetFlow(undefined)
         await router.push(flowPath)
         return
+      case 400:
+        resetFlow(error.response?.data as S)
+        return
     }
+
+    if (throwError) throw error
 
     // We are not able to handle the error? Return it.
     return Promise.reject(error)

@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react'
 
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
-import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { FaIcon } from '@/components/fa-icon'
@@ -38,10 +37,8 @@ export function Settings() {
     if (flowId) {
       kratos
         .getSelfServiceSettingsFlow(String(flowId))
-        .then(({ data }) => {
-          setFlow(data)
-        })
-        .catch(handleFlowError(router, FlowType.settings, setFlow))
+        .then(({ data }) => setFlow(data))
+        .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
       return
     }
 
@@ -49,11 +46,9 @@ export function Settings() {
       .initializeSelfServiceSettingsFlowForBrowsers(
         returnTo ? String(returnTo) : undefined
       )
-      .then(({ data }) => {
-        setFlow(data)
-      })
-      .catch(handleFlowError(router, FlowType.settings, setFlow))
-  }, [flowId, router, router.isReady, returnTo, flow])
+      .then(({ data }) => setFlow(data))
+      .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
+  }, [flowId, router, router.isReady, returnTo, flow, strings])
 
   return (
     <>
@@ -83,17 +78,8 @@ export function Settings() {
       .then(() =>
         kratos
           .submitSelfServiceSettingsFlow(String(flow.id), values)
-          .then(({ data }) => {
-            setFlow(data)
-          })
-          .catch(handleFlowError(router, FlowType.settings, setFlow))
-          .catch(async (err: AxiosError) => {
-            if (err.response?.status === 400) {
-              setFlow(err.response?.data as SelfServiceSettingsFlow)
-              return Promise.reject()
-            }
-            return Promise.reject()
-          })
+          .then(({ data }) => setFlow(data))
+          .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
       )
   }
 }

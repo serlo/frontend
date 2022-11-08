@@ -2,6 +2,7 @@
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls'
 import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
+
 export const instanceData = {
   lang: Instance["En"],
   headerData: headerData,
@@ -312,11 +313,11 @@ export const instanceData = {
       addMotivation: 'Add motivation',
       lockedDescriptionTitle: 'Your description currently hidden from the public.',
       lockedDescriptionText: 'After your first contributions it will become visible to everybody.',
-
     },
     notices: {
       welcome: '👋 Welcome %username%!',
       bye: '👋 See you soon!',
+      alreadyLoggedIn: 'Welcome back - you are already logged in',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -333,8 +334,10 @@ export const instanceData = {
       pleaseLogInText: 'to use this feature.',
       registerTitle: 'Register new account',
       recoverTitle: 'Recover your account',
+      recoveryInstructions: 'Insert your email and click on submit to receive an email in order to reset your password.',
       verifyTitle: 'Verify your email',
-      changePassword: 'Change Password',
+      verifyInstructions: 'Insert your email and click on submit to receive a verification email.',
+      changePassword: 'Insert new password',
       loggingOut: 'Logging you out…',
       login: {
         confirmAction: 'Confirm Action',
@@ -357,18 +360,22 @@ export const instanceData = {
         1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         1060002: 'An email containing a recovery link has been sent to the email address you provided.',
         1080001: 'An email containing a verification link has been sent to the email address you provided.',
-        1080002: 'You successfully verified your email address.',
+        1080002: 'You have successfully verified your email address.',
         4000001: '%reason%',
-        4000002: 'Property %field% is missing.',
+        4000002: '%field% is missing.',
         4000003: 'Length must be \u003e= %expected_length%, but got %actual_length%.',
-        4000004: '"%value%" is not valid "%format%"',
         4000005: 'The password can not be used because %reason%.',
-        4000006: 'The provided credentials are invalid, check for spelling mistakes in your password or username/email.',
+        4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
-        4000010: 'Account not active yet. Did you already verify your email address?',
+        4000010: 'Have you already verified your email address?. %verificationLinkText%',
         4060004: 'The recovery token is invalid or has already been used. Please retry the flow.',
-      }
+      },
+      usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      terms: 'Terms',
+      signUp: 'Sign up',
+      verificationLinkText: 'Click here to request the verification email again.'
     },
     keys: {
       ctrl: 'ctrl',

@@ -6,6 +6,7 @@ import type {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { filterUnwantedRedirection } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
@@ -39,10 +40,8 @@ export function Login({ oauth }: { oauth?: boolean }) {
     if (flowId) {
       kratos
         .getSelfServiceLoginFlow(String(flowId))
-        .then(({ data }) => {
-          setFlow(data)
-        })
-        .catch(handleFlowError(router, FlowType.login, setFlow))
+        .then(({ data }) => setFlow(data))
+        .catch(handleFlowError(router, FlowType.login, setFlow, strings))
       return
     }
 
@@ -56,17 +55,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
         setFlow(data)
       })
       .catch(async (error: AxiosError) => {
-        const data = error.response?.data as {
-          error: {
-            id: string
-          }
-        }
+        const data = error.response?.data as { error: { id: string } }
+
         if (oauth && data.error?.id === 'session_already_available') {
           await router.push(
             `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
           )
         }
-        await handleFlowError(router, FlowType.login, setFlow)(error)
+        await handleFlowError(router, FlowType.login, setFlow, strings)(error)
       })
   }, [
     flowId,
@@ -78,6 +74,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
     flow,
     oauth,
     login_challenge,
+    strings,
   ])
 
   const showLogout = aal || refresh
@@ -90,7 +87,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         title={loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']}
       />
       {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      {showLogout ? <div>{loginStrings.logOut}</div> : ''}
+      {showLogout ? <div>{loginStrings.logOut}</div> : null}
       <div className="mx-side mt-20 border-t-2 pt-4">
         {loginStrings.newHere}{' '}
         <Link href="/auth/registration" className="serlo-button-light">
@@ -111,7 +108,11 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    const originalPreviousPath = sessionStorage.getItem('previousPathname')
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['auth/verification', 'auth/logout'],
+    })
+
     await router.push(
       `${router.pathname}?flow=${String(flow?.id)}`,
       undefined,
@@ -143,8 +144,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
           setTimeout(() => {
             // TODO: make sure router.push() also rerenders authed components (e.g. header)
-            window.location.href =
-              flow?.return_to ?? originalPreviousPath ?? '/'
+            window.location.href = flow?.return_to ?? redirection
           }, 1000)
 
           return
@@ -159,7 +159,12 @@ export function Login({ oauth }: { oauth?: boolean }) {
       }
     } catch (e: unknown) {
       try {
-        await handleFlowError(router, FlowType.login, setFlow)(e as AxiosError)
+        await handleFlowError(
+          router,
+          FlowType.login,
+          setFlow,
+          strings
+        )(e as AxiosError)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

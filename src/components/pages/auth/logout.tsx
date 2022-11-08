@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { filterUnwantedRedirection } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
+import { AxiosError } from '@/auth/types'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -17,7 +19,10 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       return router.push('/')
     })
 
-    const originalPreviousPath = sessionStorage.getItem('previousPathname')
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['/auth/settings'],
+    })
 
     kratos
       .createSelfServiceLogoutFlowUrlForBrowsers()
@@ -39,16 +44,20 @@ export function Logout({ oauth }: { oauth?: boolean }) {
 
             setTimeout(() => {
               // TODO: make sure router.push() also rerenders authed components (e.g. header)
-              window.location.href = originalPreviousPath ?? '/'
+              window.location.href = redirection
             }, 1000)
 
             return
           })
-          .catch((error: unknown) => {
+          .catch((error: AxiosError) => {
             return Promise.reject(error)
           })
       })
-      .catch((error: unknown) => {
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 401) {
+          window.location.href = redirection
+          return
+        }
         return Promise.reject(error)
       })
   }, [router, oauth, logout_challenge, strings.notices.bye])

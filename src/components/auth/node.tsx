@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import { FormEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
+import { Message } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -26,6 +27,20 @@ export function Node(props: NodeProps) {
 
   if (isUiNodeInputAttributes(attributes)) {
     const shortName = attributes.name.replace('traits.', '')
+    const fieldName = hasOwnPropertyTs(strings.auth.fields, shortName)
+      ? (strings.auth.fields[shortName] as string)
+      : shortName
+
+    const messages = node.messages.map((uiText) => {
+      return (
+        <span
+          key={`${uiText.id}`}
+          className="text-red italic -mt-2 mb-2 block ml-3"
+        >
+          <Message uiText={uiText} fieldName={fieldName} />
+        </span>
+      )
+    })
 
     switch (attributes.type) {
       case 'hidden':
@@ -75,14 +90,13 @@ export function Node(props: NodeProps) {
         if (attributes.disabled || !attributes.required) return null
         // TODO: this possibly contains "required" and "pattern"
         //className={clsx(!attributes.required && 'opacity-50')} {attributes.required ? '*' : ' (optional)'}
+
         return (
           <div>
             <label
               className={clsx('block my-4', attributes.required && 'font-bold')}
             >
-              {hasOwnPropertyTs(strings.auth.fields, shortName)
-                ? strings.auth.fields[shortName]
-                : shortName}
+              {fieldName}
               <br />
               <input
                 className="text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-150 focus:bg-brand-150 outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full"
@@ -95,15 +109,7 @@ export function Node(props: NodeProps) {
                 }}
               />
             </label>
-            {node.messages.map(({ text, id }, k) => (
-              <span
-                key={`${id}-${k}`}
-                className="text-red italic -mt-2 mb-2 block ml-3"
-              >
-                {/* TODO: i18n error ids */}
-                {text}
-              </span>
-            ))}
+            {messages}
           </div>
         )
     }
