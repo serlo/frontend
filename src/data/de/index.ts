@@ -445,7 +445,7 @@ export const loggedInData = {
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
-      editTax: "Titel & Text bearbeiten",
+      editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
