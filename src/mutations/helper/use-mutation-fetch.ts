@@ -93,7 +93,7 @@ export function useMutationFetch() {
 function handleError(
   type: ErrorType,
   errorStrings?: { [key in ErrorType]: string },
-  e?: object
+  e?: { message?: string }
 ): false {
   if (!errorStrings) return false
   const message = errorStrings[type] ?? errorStrings['UNKNOWN']
@@ -115,10 +115,8 @@ function handleError(
 
   showToastNotice(message, 'warning')
   if (e) {
-    // @ts-expect-error not sure why hasOwn typehelper does not work in this case
     const msg = Object.hasOwn(e, 'message')
-      ? // @ts-expect-error not sure why hasOwn typehelper does not work in this case
-        (e.message as string)
+      ? (e.message as string)
       : 'unknown error'
     showToastNotice(`"${msg}"`)
   }
