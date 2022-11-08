@@ -1,6 +1,6 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 import clsx from 'clsx'
-import { Fragment, FunctionComponent } from 'react'
+import { Fragment, PropsWithChildren } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
@@ -158,12 +158,11 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   }
 }
 
-const Td: FunctionComponent<
-  React.PropsWithChildren<{
-    centered?: boolean
-    className?: string
-  }>
-> = ({ children, centered, className }) => (
+const Td = ({
+  children,
+  centered,
+  className,
+}: PropsWithChildren<{ centered?: boolean; className?: string }>) => (
   <td
     className={clsx(className, 'serlo-td', centered && 'text-center')}
     style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}
