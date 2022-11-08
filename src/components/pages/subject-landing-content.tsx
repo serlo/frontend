@@ -37,7 +37,7 @@ export function SubjectLandingContent({
         data={{ title: `${data.title} Startseite  - ${instanceData.title}` }}
       />
       <Header />
-      <main className="text-truegray-700">
+      <main id="content" className="text-truegray-700">
         <section
           className={clsx(
             'max-w-3xl mx-auto mt-16',

@@ -117,7 +117,7 @@ export function FrontendClientBase({
                 wrapper={(kids) => (
                   <div className="relative">
                     <MaxWidthDiv showNav={showNav}>
-                      <main>{kids}</main>
+                      <main id="content">{kids}</main>
                     </MaxWidthDiv>
                   </div>
                 )}

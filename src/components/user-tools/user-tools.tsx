@@ -92,6 +92,7 @@ export function UserTools({
               fadeIn
             )
       }
+      aria-label="Tool Menu"
     >
       <List
         className={clsx(
