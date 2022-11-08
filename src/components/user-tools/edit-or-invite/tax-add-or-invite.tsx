@@ -44,7 +44,7 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   const isInvite = !auth.current
 
   const href = getEditHref()
-  if (!href && !isInvite) return null
+  const showEditAction = href || isInvite
 
   const title = isExerciseFolder
     ? strings.editOrAdd.addNewExercises
@@ -54,7 +54,7 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
     <>
       {isInvite ? (
         <>
-          {isExerciseFolder ? (
+          {isExerciseFolder && showEditAction ? (
             <UserToolsItem
               title={strings.editOrAdd.editExercises}
               onClick={() => setInviteOpen('edit')}
@@ -68,7 +68,6 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
             aboveContent={aboveContent}
             icon={faPlusCircle}
           />
-
           {isInvite && inviteOpen ? (
             <InviteModal
               type={`${data.taxonomyType ?? ''}-${inviteOpen}`}
