@@ -10,11 +10,13 @@ export const features = {
     cookieName: 'useEdtrPasteHack',
     isActive: false,
     activeInDev: false,
+    hideInProduction: true,
   },
   legacyDesign: {
     cookieName: 'useFrontend',
     isActive: false,
     activeInDev: false,
+    hideInProduction: false,
   },
 }
 
@@ -26,15 +28,13 @@ export function shouldUseFeature(featureKey: FeatureKey) {
   if (typeof window === 'undefined' || !hasOwnPropertyTs(features, featureKey))
     return false
 
-  const hasYesCookie = document.cookie.includes(
-    features[featureKey].cookieName + '=1'
-  )
-  const hasNoCookie = document.cookie.includes(
-    features[featureKey].cookieName + '=0'
-  )
+  const feature = features[featureKey]
+
+  const hasYesCookie = document.cookie.includes(feature.cookieName + '=1')
+  const hasNoCookie = document.cookie.includes(feature.cookieName + '=0')
   return isProduction
-    ? hasYesCookie
-    : hasYesCookie || (features[featureKey].activeInDev && !hasNoCookie)
+    ? hasYesCookie && feature.hideInProduction === false
+    : hasYesCookie || (feature.activeInDev && !hasNoCookie)
 }
 
 export function ProfileExperimental() {
