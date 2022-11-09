@@ -6,7 +6,7 @@ import { SubjectIcon } from '../landing/rework/subject-icon'
 import { CommunityWallSubjectLanding } from '../landing/subjects/community-wall-subject-landing'
 import { SubjectLandingFeatured } from '../landing/subjects/subject-landing-featured'
 import { SubjectLandingTopicOverview } from '../landing/subjects/subject-landing-topic-overview'
-import { Header } from '../navigation/header'
+import { Header } from '../navigation/header/header'
 import { Quickbar } from '../navigation/quickbar'
 import { deSubjectLandingSubjects } from './subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -37,7 +37,7 @@ export function SubjectLandingContent({
         data={{ title: `${data.title} Startseite  - ${instanceData.title}` }}
       />
       <Header />
-      <main className="text-truegray-700">
+      <main id="content" className="text-truegray-700">
         <section
           className={clsx(
             'max-w-3xl mx-auto mt-16',
@@ -48,12 +48,12 @@ export function SubjectLandingContent({
           <div>
             <h1
               className={clsx(
-                'text-6xl font-extrabold',
+                'text-4xl sm:text-6xl font-extrabold',
                 'tracking-tight',
                 'mt-3 mb-10'
               )}
             >
-              <span className="pb-2 underlined inline-block max-w-[27rem] !whitespace-normal">
+              <span className="w-min pb-3 underlined inline-block max-w-[27rem] !whitespace-normal">
                 {data.title}
               </span>
             </h1>

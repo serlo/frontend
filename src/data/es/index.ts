@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
       search: "Buscar",
-      login: "Ingresar"
+      login: "Ingresar",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
@@ -88,16 +93,19 @@ export const instanceData = {
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
     },
-    edit: {
-      button: "Editar",
-      unrevised: "Mostrar revisiones sin revisar",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
+      unrevised: 'Show unrevised revisions',
       inviteModal: {
-        title: "¡Crea con nosotros!",
-        text: "¡Hola! %break% Es genial que quieras contribuir a este contenido :miniaturas_up: %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
-        loginButton: "Iniciar sesión ahora",
-        registerButton: "Registrar una nueva cuenta",
-        psText: "Puedes averiguar de qué manera puedes contribuir con %link%.",
-        psLinkText: "aquí"
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
       }
     },
     license: {
@@ -386,11 +394,11 @@ export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
     title: "Notificaciones",
-    icon: "notificaciones"
+    icon: 'notifications'
   }, {
     url: "[secuencia vacía]",
     title: "Usuario",
-    icon: "usuario",
+    icon: 'user',
     children: [{
       url: '/user/me',
       title: "Perfil propio"
@@ -437,6 +445,7 @@ export const loggedInData = {
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
       edit: "Editar",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
       moveToGrouped: "Mover contenido a otro grupo de ejercicios de texto",

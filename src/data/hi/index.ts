@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "ओपन लर्निंग प्लेटफॉर्म",
       search: "खोजें",
-      login: "लॉग इन करें"
+      login: "लॉग इन करें",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "खोज गूगल द्वारा प्रदान की गई है। क्या जानकारी संसाधित है, यह जानने के लिए हमारी%privacypolicy% देखें।",
@@ -88,9 +93,12 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions'
     },
-    edit: {
-      button: "संपादित करें",
-      unrevised: "अप्रकाशित संशोधन दिखाएं",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
+      unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
@@ -437,6 +445,7 @@ export const loggedInData = {
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
       edit: "संपादित",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
       organize: "आयोजन",
       moveToGrouped: 'Move content to other grouped-text-exercise',

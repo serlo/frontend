@@ -13,9 +13,7 @@ export interface Scalars {
   Int: number;
   Float: number;
   DateTime: string;
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-  /** The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSONObject: any;
 }
 
@@ -2695,7 +2693,7 @@ export interface UserDeleteBotsResponse {
 }
 
 export interface UserDeleteRegularUsersInput {
-  userIds: Array<Scalars['Int']>;
+  users: Array<UserDescriptionInput>;
 }
 
 export interface UserDeleteRegularUsersResponse {
@@ -2703,6 +2701,11 @@ export interface UserDeleteRegularUsersResponse {
   reason?: Maybe<Scalars['String']>;
   success: Scalars['Boolean'];
   username?: Maybe<Scalars['String']>;
+}
+
+export interface UserDescriptionInput {
+  id: Scalars['Int'];
+  username: Scalars['String'];
 }
 
 export interface UserEdge {

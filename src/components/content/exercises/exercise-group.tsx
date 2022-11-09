@@ -1,8 +1,9 @@
+import dynamic from 'next/dynamic'
 import { ReactNode, useState, useEffect } from 'react'
 
 import { ExerciseNumbering } from './exercise-numbering'
 import { useAuthentication } from '@/auth/use-authentication'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
 
 export interface ExerciseGroupProps {
@@ -14,6 +15,12 @@ export interface ExerciseGroupProps {
   href?: string
   unrevisedRevisions?: number
 }
+
+const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
+  import(
+    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+  ).then((mod) => mod.AuthorToolsExercises)
+)
 
 export function ExerciseGroup({
   children,
@@ -29,8 +36,6 @@ export function ExerciseGroup({
     setLoaded(true)
   }, [])
   const auth = useAuthentication()
-  const loggedInComponents = useLoggedInComponents()
-  const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
 
   return (
     <div className="pt-1">
@@ -44,8 +49,8 @@ export function ExerciseGroup({
         <div className="flex mb-0.5">
           <div className="grow">{groupIntro}</div>
           <div>{license}</div>
-          {loaded && auth.current && ExerciseAuthorTools && (
-            <ExerciseAuthorTools
+          {loaded && auth.current && (
+            <AuthorToolsExercises
               data={{
                 type: ExerciseInlineType.ExerciseGroup,
                 id,

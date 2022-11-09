@@ -132,7 +132,7 @@ export function SaveModal({
         >
           {pending
             ? edtrIo.saving
-            : showSkipCheckout && autoCheckout
+            : (showSkipCheckout && autoCheckout) || !showSkipCheckout
             ? edtrIo.save
             : edtrIo.saveWithReview}
         </button>
@@ -181,7 +181,7 @@ export function SaveModal({
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light'
+            'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
           )}
         />
       </label>

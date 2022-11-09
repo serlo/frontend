@@ -2,7 +2,6 @@ import dynamic from 'next/dynamic'
 import { ReactNode } from 'react'
 
 import { CommentAreaEntityProps } from './comments/comment-area-entity'
-import { DonationsBanner } from './content/donations-banner'
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
@@ -12,6 +11,7 @@ import { Breadcrumbs } from './navigation/breadcrumbs'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { SecondaryMenu } from './navigation/secondary-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
+import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import {
   EntityPageBase,
   SingleEntityPage,
@@ -29,6 +29,12 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
     (mod) => mod.CommentAreaEntity
   )
+)
+
+const DonationsBanner = dynamic<DonationsBannerProps>(() =>
+  import(
+    '@/components/content/donations-banner-experiment/donations-banner'
+  ).then((mod) => mod.DonationsBanner)
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
@@ -56,11 +62,11 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryMenuData}>
           {renderBreadcrumbs()}
-          <main>{children}</main>
+          <main id="content">{children}</main>
 
-          {page.kind === 'single-entity' &&
-          page.entityData.typename !== UuidType.Page ? (
-            <DonationsBanner id={entityId} />
+          {/* Temporary donations banner trial */}
+          {page.kind === 'single-entity' ? (
+            <DonationsBanner id={entityId} entityData={page.entityData} />
           ) : null}
 
           <div id="comment-area-begin-scrollpoint" />

@@ -23,7 +23,7 @@ async function refreshToken(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const accessToken = oauth2ClientCredentials.createToken(
-      JSON.parse(req.cookies['auth-token']) as Token
+      JSON.parse(req.cookies['auth-token']!) as Token
     )
     const token = await accessToken.refresh({
       scope,

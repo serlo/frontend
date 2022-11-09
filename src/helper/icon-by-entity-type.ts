@@ -1,4 +1,3 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt'
 import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
 import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
@@ -11,6 +10,7 @@ import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
 import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
 
+import { FaIconProps } from '@/components/fa-icon'
 import {
   TopicCategoryCustomType,
   TopicCategoryType,
@@ -20,7 +20,7 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 export const categoryIconMapping: Record<
   TopicCategoryType | TopicCategoryCustomType,
-  IconDefinition
+  FaIconProps['icon']
 > = {
   articles: faNewspaper,
   courses: faGraduationCap,
