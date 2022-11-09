@@ -6,6 +6,11 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
+  edtrPasteHack: {
+    cookieName: 'useEdtrPasteHack',
+    isActive: false,
+    activeInDev: false,
+  },
   legacyDesign: {
     cookieName: 'useFrontend',
     isActive: false,
@@ -72,7 +77,18 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {/* <hr className="mx-side mb-4 -mt-2" /> */}
+      {features.edtrPasteHack && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('edtrPasteHack')} Edtr: Einfügen von Edtr-State
+            JSON 🛠
+          </h3>
+          <p className="serlo-p">
+            Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
+          </p>
+        </div>
+      )}
+      <hr className="mx-side mb-4 -mt-2" />
       {features.legacyDesign && (
         <div>
           <h3 className="serlo-h3 mb-3">

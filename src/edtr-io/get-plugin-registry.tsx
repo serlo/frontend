@@ -19,6 +19,7 @@ import { faWrench } from '@fortawesome/free-solid-svg-icons'
 import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
@@ -117,12 +118,16 @@ export function getPluginRegistry(
       description: editorStrings.edtrIo.videoDesc,
       icon: createIcon(faFilm),
     },
-    {
-      name: 'pasteHack',
-      title: 'Paste Hack',
-      description: 'hmmm hack',
-      icon: createIcon(faWrench),
-    },
+    ...(shouldUseFeature('edtrPasteHack')
+      ? [
+          {
+            name: 'pasteHack',
+            title: 'Paste Hack',
+            description: 'hmmm hack',
+            icon: createIcon(faWrench),
+          },
+        ]
+      : []),
     ...(isExercise
       ? [
           {
