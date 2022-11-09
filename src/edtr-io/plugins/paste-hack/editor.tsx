@@ -9,7 +9,6 @@ import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 
 import { PasteHackPluginProps } from '.'
-import { EdtrState } from '@/schema/edtr-io-types'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 const dummyContent =
@@ -17,29 +16,31 @@ const dummyContent =
 
 const StateDecoder = t.strict({
   plugin: t.literal('rows'),
-  state: t.strict({
-    plugin: t.union([
-      t.literal('article'),
-      t.literal('articleIntroduction'),
-      t.literal('geogebra'),
-      t.literal('anchor'),
-      t.literal('video'),
-      t.literal('table'),
-      t.literal('serloTable'),
-      t.literal('highlight'),
-      t.literal('injection'),
-      t.literal('layout'),
-      t.literal('multimedia'),
-      t.literal('spoiler'),
-      t.literal('important'),
-      t.literal('blockquote'),
-      t.literal('box'),
-      t.literal('image'),
-      t.literal('text'),
-      t.literal('equations'),
-    ]),
-    state: t.unknown,
-  }),
+  state: t.array(
+    t.strict({
+      plugin: t.union([
+        t.literal('article'),
+        t.literal('articleIntroduction'),
+        t.literal('geogebra'),
+        t.literal('anchor'),
+        t.literal('video'),
+        t.literal('table'),
+        t.literal('serloTable'),
+        t.literal('highlight'),
+        t.literal('injection'),
+        t.literal('layout'),
+        t.literal('multimedia'),
+        t.literal('spoiler'),
+        t.literal('important'),
+        t.literal('blockquote'),
+        t.literal('box'),
+        t.literal('image'),
+        t.literal('text'),
+        t.literal('equations'),
+      ]),
+      state: t.unknown,
+    })
+  ),
 })
 
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
@@ -49,6 +50,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
   function throwError(error?: unknown) {
     showToastNotice('⚠️ Sorry, something is wrong with the data.', 'warning')
+    // eslint-disable-next-line no-console
     console.error(error)
     throw new Error(
       'JSON input data is not a valid edtr-state or contains unsupported plugins'
@@ -56,24 +58,27 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   }
 
   function replaceWithStateString() {
-    console.log('starting replace')
-
-    const decoded = StateDecoder.decode(dummyContent as unknown)
+    const decoded = StateDecoder.decode(JSON.parse(dummyContent))
 
     if (E.isLeft(decoded)) return throwError()
 
-    // we assume valid states. checking that is out of scope here
-    const content = decoded.right as unknown as EdtrState
+    const content = decoded.right
 
     try {
       const parentPlugin = getParent(props.id)(store.getState())
 
-      if (parentPlugin == null) return
+      if (
+        parentPlugin == null ||
+        serializeDocument(parentPlugin.id)(store.getState())?.plugin !== 'rows'
+      ) {
+        const msg = 'only use on rows plugin!'
+        showToastNotice(msg)
+        // eslint-disable-next-line no-console
+        console.error(msg)
+        return
+      }
 
       const documents = content.plugin === 'rows' ? content.state : [content]
-
-      console.log(store.getState())
-      console.log(serializeDocument(parentPlugin.id)(store.getState()))
 
       for (const document of documents) {
         store.dispatch(
@@ -84,11 +89,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           })
         )
       }
-
       store.dispatch(removeChild({ parent: parentPlugin.id, child: props.id }))
-
-      console.log(store.getState())
-      console.log(serializeDocument(parentPlugin.id)(store.getState()))
     } catch (error) {
       throwError(error)
     }
@@ -105,7 +106,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
           onClick={replaceWithStateString}
         >
-          Import Raw edtr data
+          Import Edtr JSON
         </button>
       </div>
     )
