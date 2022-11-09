@@ -5,6 +5,7 @@ import {
   serializeDocument,
   removeChild,
 } from '@edtr-io/store'
+import * as t from 'io-ts'
 
 import { PasteHackPluginProps } from '.'
 import { UnknownEdtrState } from '@/schema/edtr-io-types'
