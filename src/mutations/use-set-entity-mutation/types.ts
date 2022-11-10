@@ -27,10 +27,8 @@ import {
 
 export interface OnSaveData {
   controls: {
-    subscription?: {
-      subscribe: number
-      mailman: number
-    }
+    notificationSubscription?: boolean
+    emailSubscription?: boolean
     checkout?: boolean
   }
 }

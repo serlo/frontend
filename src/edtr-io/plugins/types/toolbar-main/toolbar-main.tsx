@@ -25,11 +25,11 @@ import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
   license?: StateTypeReturnType<typeof entity['license']>
-  subscriptions?: boolean
+  showSubscriptionOptions?: boolean
 }
 
 export function ToolbarMain({
-  subscriptions,
+  showSubscriptionOptions,
   changes,
   license,
 }: ToolbarMainProps) {
@@ -38,11 +38,11 @@ export function ToolbarMain({
   const redoable = useScopedSelector(hasRedoActions())
   const isChanged = useScopedSelector(hasPendingChanges())
 
-  const [visible, setVisibility] = useState(false)
+  const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   const { handleSave, pending, hasError } = useHandleSave(
-    visible,
-    subscriptions
+    saveModalOpen,
+    showSubscriptionOptions
   )
 
   useLeaveConfirm(isChanged && !pending)
@@ -65,14 +65,14 @@ export function ToolbarMain({
         document.getElementsByClassName('controls-portal')[0]
       )}
       <SaveModal
-        visible={visible}
-        setVisibility={setVisibility}
+        open={saveModalOpen}
+        setOpen={setSaveModalOpen}
         handleSave={handleSave}
         pending={pending}
         changes={changes}
         hasError={hasError}
         license={license}
-        subscriptions={subscriptions}
+        showSubscriptionOptions={showSubscriptionOptions}
       />
     </>
   )
@@ -105,7 +105,7 @@ export function ToolbarMain({
       <button
         className={clsx('serlo-button-green ml-2')}
         onClick={() => {
-          if (isChanged) setVisibility(true)
+          if (isChanged) setSaveModalOpen(true)
           else
             showToastNotice(
               '👀 ' + loggedInData!.strings.editor.noChangesWarning

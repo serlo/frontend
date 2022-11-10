@@ -68,7 +68,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         </h1>
       </div>
       <div itemProp="articleBody">{content.render()}</div>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </>
   )
 }

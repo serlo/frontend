@@ -290,9 +290,8 @@ function getGenericInputData(
     content: getRequiredString(loggedInData, 'content', content),
     entityId: data.id ? data.id : undefined,
     needsReview: needsReview,
-    subscribeThis: data.controls.subscription?.subscribe === 1 ? true : false, //simplify when old code is removed
-    subscribeThisByEmail:
-      data.controls.subscription?.mailman === 1 ? true : false, //simplify when old code is removed
+    subscribeThis: data.controls.notificationSubscription ?? false,
+    subscribeThisByEmail: data.controls.emailSubscription ?? false,
   }
 }
 

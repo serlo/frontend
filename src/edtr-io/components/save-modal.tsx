@@ -16,24 +16,24 @@ import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface SaveModalProps {
-  visible: boolean
-  setVisibility: (arg0: boolean) => void
+  open: boolean
+  setOpen: (arg0: boolean) => void
   handleSave: (arg0?: boolean, arg1?: boolean, arg2?: boolean) => void
   pending: boolean
   changes?: StateTypeReturnType<typeof entity['changes']>
   hasError: boolean
   license?: StateTypeReturnType<typeof entity['license']>
-  subscriptions?: boolean
+  showSubscriptionOptions?: boolean
 }
 
 export function SaveModal({
-  visible,
-  setVisibility,
+  open,
+  setOpen,
   pending,
   license,
   handleSave,
   changes,
-  subscriptions,
+  showSubscriptionOptions,
   hasError,
 }: SaveModalProps) {
   const { showSkipCheckout } = useContext(SaveContext)
@@ -52,7 +52,8 @@ export function SaveModal({
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
-  const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
+  const isOnlyText =
+    !showSkipCheckout && !showSubscriptionOptions && !license && !changes
 
   useEffect(() => {
     if (fireSave) {
@@ -73,9 +74,9 @@ export function SaveModal({
 
   return (
     <ModalWithCloseButton
-      isOpen={visible}
+      isOpen={open}
       onCloseClick={() => {
-        setVisibility(false)
+        setOpen(false)
       }}
       title={edtrIo.save}
     >
@@ -104,9 +105,7 @@ export function SaveModal({
       <div className="mt-4 text-right mx-side">
         <button
           className="serlo-button-transparent"
-          onClick={() => {
-            setVisibility(false)
-          }}
+          onClick={() => setOpen(false)}
         >
           {edtrIo.cancel}
         </button>
@@ -158,7 +157,7 @@ export function SaveModal({
         {edtrIo.errorSaving}
         <br />
         {edtrIo.saveLocallyAndRefresh}
-        <SaveLocalButton visible={visible} />
+        <SaveLocalButton open={open} />
       </StaticInfoPanel>
     )
   }
@@ -243,7 +242,7 @@ export function SaveModal({
   }
 
   function renderSubscription() {
-    if (!subscriptions) return null
+    if (!showSubscriptionOptions) return null
     return (
       <>
         <label className="block pb-2">

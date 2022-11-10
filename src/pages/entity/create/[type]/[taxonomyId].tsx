@@ -57,9 +57,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
           <MaxWidthDiv>
             <main>
               <Guard needsAuth={isProduction ? true : undefined} data>
-                <>
-                  <AddRevision {...addRevisionProps} />
-                </>
+                <AddRevision {...addRevisionProps} />
               </Guard>
             </main>
           </MaxWidthDiv>{' '}

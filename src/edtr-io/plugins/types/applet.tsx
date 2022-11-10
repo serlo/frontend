@@ -76,7 +76,7 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         {url.render()}
         {content.render()}
       </article>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </div>
   )
 }

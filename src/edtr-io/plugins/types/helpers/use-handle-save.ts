@@ -6,7 +6,10 @@ import { useContext, useEffect, useState } from 'react'
 import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
-export function useHandleSave(visible: boolean, subscriptions?: boolean) {
+export function useHandleSave(
+  visible: boolean,
+  showSubscriptionOptions?: boolean
+) {
   const store = useScopedStore()
   const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
@@ -40,15 +43,6 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
   ) => {
     setPending(true)
 
-    const subscriptionsControls = subscriptions
-      ? {
-          subscription: {
-            subscribe: notificationSubscription ? 1 : 0,
-            mailman: emailSubscription ? 1 : 0,
-          },
-        }
-      : {}
-
     const checkoutControls =
       !needsReview || (showSkipCheckout && autoCheckout)
         ? {
@@ -57,11 +51,13 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
         : {}
 
     onSave({
-      ...(serialized as SupportedTypesSerializedState),
       controls: {
-        ...subscriptionsControls,
+        ...(showSubscriptionOptions
+          ? { notificationSubscription, emailSubscription }
+          : {}),
         ...checkoutControls,
       },
+      ...(serialized as SupportedTypesSerializedState),
     })
       .then(() => {
         setTimeout(() => {
