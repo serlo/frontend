@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
@@ -41,10 +42,10 @@ export function AddRevision({
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
-    if (!isProduction) {
-      setUserReady(true)
-      return
-    }
+    // if (!isProduction) {
+    //   setUserReady(true)
+    //   return
+    // }
 
     const makeDamnSureUserIsLoggedIn = async () => {
       if (auth.current === null) return false
@@ -86,6 +87,11 @@ export function AddRevision({
         Sorry, Something is wrong!
         <br />
         Please: Logout and Login again and try to edit again.
+        <br />
+        <br />
+        If that does not work head to{' '}
+        <Link href="/auth/login">/auth/login</Link> and make sure you are logged
+        in there.
       </StaticInfoPanel>
     )
 
