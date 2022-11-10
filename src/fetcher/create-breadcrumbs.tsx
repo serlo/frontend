@@ -1,5 +1,19 @@
 import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+
+const rootIdsToLandingAlias: Record<number, string> = {
+  19767: '/mathe',
+  48492: '/informatik',
+  41108: '/physik',
+  182154: '/lerntipps',
+  24706: '/chemie',
+  58771: '/nachhaltigkeit',
+  23950: '/biologie',
+  25985: '/englisch',
+  79157: '/politik',
+  19882: '/community',
+}
 
 export function createBreadcrumbs(uuid: MainUuidType) {
   if (uuid.__typename === UuidType.TaxonomyTerm) {
@@ -82,6 +96,16 @@ export function createBreadcrumbs(uuid: MainUuidType) {
         shortened.push(entry)
       }
     })
+
+    // use correct urls for subject landing pages
+    if (
+      breadcrumbs[0].id &&
+      !isNaN(breadcrumbs[0].id) &&
+      hasOwnPropertyTs(rootIdsToLandingAlias, breadcrumbs[0].id)
+    ) {
+      breadcrumbs[0].url = rootIdsToLandingAlias[breadcrumbs[0].id]
+    }
+
     return shortened
   }
 }
