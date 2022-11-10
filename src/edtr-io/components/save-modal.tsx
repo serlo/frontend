@@ -36,11 +36,11 @@ export function SaveModal({
   showSubscriptionOptions,
   hasError,
 }: SaveModalProps) {
-  const { showSkipCheckout } = useContext(SaveContext)
+  const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
   const [agreement, setAgreement] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
-  const [autoCheckout, setAutoCheckout] = useState(false)
+  const [skipReview, setSkipReview] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
@@ -52,16 +52,17 @@ export function SaveModal({
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
+  const showSkipCheckout = userCanSkipReview && entityNeedsReview
   const isOnlyText =
     !showSkipCheckout && !showSubscriptionOptions && !license && !changes
 
   useEffect(() => {
     if (fireSave) {
-      handleSave(notificationSubscription, emailSubscription, autoCheckout)
+      handleSave(notificationSubscription, emailSubscription, skipReview)
       setFireSave(false)
     }
   }, [
-    autoCheckout,
+    skipReview,
     emailSubscription,
     fireSave,
     handleSave,
@@ -131,7 +132,7 @@ export function SaveModal({
         >
           {pending
             ? edtrIo.saving
-            : (showSkipCheckout && autoCheckout) || !showSkipCheckout
+            : (showSkipCheckout && skipReview) || !showSkipCheckout
             ? edtrIo.save
             : edtrIo.saveWithReview}
         </button>
@@ -193,11 +194,8 @@ export function SaveModal({
       <label>
         <input
           type="checkbox"
-          checked={autoCheckout}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setAutoCheckout(checked)
-          }}
+          checked={skipReview}
+          onChange={({ target }) => setSkipReview(target.checked)}
         />{' '}
         {edtrIo.skipReview}
       </label>

@@ -31,18 +31,18 @@ enum AllowedPlugins {
 interface EntityCreateProps {
   entityType: keyof typeof AllowedPlugins
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
-  needsReview: boolean
+  entityNeedsReview: boolean
 }
 
 export default renderedPageNoHooks<EntityCreateProps>(
-  ({ taxonomyTerm, entityType, needsReview }) => {
+  ({ taxonomyTerm, entityType, entityNeedsReview }) => {
     const { id: taxonomyParentId } = taxonomyTerm
 
     const addRevisionProps = {
       initialState: { plugin: AllowedPlugins[entityType] as unknown as string },
       converted: false,
       type: UuidType[entityType],
-      needsReview,
+      entityNeedsReview,
       taxonomyParentId,
       errorType: 'none',
     } as const
@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     props: {
       entityType,
       taxonomyTerm: { ...result.uuid },
-      needsReview: !isTestArea,
+      entityNeedsReview: !isTestArea,
     },
     revalidate: 60 * 30, // 0.5 hours,
   }

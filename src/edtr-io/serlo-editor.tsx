@@ -16,7 +16,7 @@ import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types
 
 export interface SerloEditorProps {
   children?: ReactNode
-  needsReview: boolean
+  entityNeedsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
@@ -33,26 +33,24 @@ export interface LooseEdtrDataDefined {
 
 export const SaveContext = createContext<{
   onSave: SerloEditorProps['onSave']
-  showSkipCheckout: boolean
-  needsReview: boolean
+  userCanSkipReview: boolean
+  entityNeedsReview: boolean
 }>({
-  onSave: () => {
-    return Promise.reject()
-  },
-  showSkipCheckout: false,
-  needsReview: true,
+  onSave: () => Promise.reject(),
+  userCanSkipReview: false,
+  entityNeedsReview: true,
 })
 
 export function SerloEditor({
   onSave,
-  needsReview,
+  entityNeedsReview,
   onError,
   initialState,
   children,
   type,
 }: SerloEditorProps) {
   const canDo = useCanDo()
-  const showSkipCheckout = canDo(Entity.checkoutRevision) && needsReview
+  const userCanSkipReview = canDo(Entity.checkoutRevision)
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -87,7 +85,9 @@ export function SerloEditor({
 
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
+    <SaveContext.Provider
+      value={{ onSave, userCanSkipReview, entityNeedsReview }}
+    >
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
         DocumentEditor={DocumentEditor}

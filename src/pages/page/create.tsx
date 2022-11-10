@@ -14,7 +14,7 @@ export default renderedPageNoHooks(() => {
     },
     converted: false,
     type: UuidType.Page,
-    needsReview: false,
+    entityNeedsReview: false,
     errorType: 'none',
   } as const
 

@@ -16,6 +16,7 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
+  OnSaveData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
 } from '@/mutations/use-set-entity-mutation/types'
@@ -25,7 +26,7 @@ import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-crea
 export function AddRevision({
   initialState,
   type,
-  needsReview,
+  entityNeedsReview,
   id,
   taxonomyParentId,
   breadcrumbsData,
@@ -94,17 +95,16 @@ export function AddRevision({
       </StaticInfoPanel>
     )
 
+  // TODO: Split data and controls
   const onSave = async (
     data:
       | SetEntityMutationData
       | PageSerializedState
       | TaxonomyCreateOrUpdateMutationData
   ) => {
-    // refactor and rename when removing legacy code
-    const skipReview = hasOwnPropertyTs(data, 'controls')
-      ? data.controls.checkout
-      : undefined
-    const _needsReview = skipReview ? false : needsReview
+    const willNeedReview = hasOwnPropertyTs(data, 'controls')
+      ? !(data as OnSaveData).controls.noReview
+      : entityNeedsReview
 
     const success =
       type === UuidType.Page
@@ -118,7 +118,7 @@ export function AddRevision({
               ...data,
               __typename: type,
             } as SetEntityMutationData,
-            _needsReview,
+            willNeedReview,
             initialState,
             taxonomyParentId
           )
@@ -139,7 +139,7 @@ export function AddRevision({
         )}
       >
         <SerloEditor
-          needsReview={needsReview}
+          entityNeedsReview={entityNeedsReview}
           onSave={onSave}
           type={type}
           initialState={initialState}

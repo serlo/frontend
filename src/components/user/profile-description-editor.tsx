@@ -35,7 +35,7 @@ export function ProfileDescriptionEditor({
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div className="edtr-io serlo-editor-hacks">
         <SerloEditor
-          needsReview={false}
+          entityNeedsReview={false}
           onSave={onSave}
           type="User"
           initialState={initialState}

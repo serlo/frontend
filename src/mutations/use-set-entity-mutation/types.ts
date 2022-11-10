@@ -29,7 +29,7 @@ export interface OnSaveData {
   controls: {
     notificationSubscription?: boolean
     emailSubscription?: boolean
-    checkout?: boolean
+    noReview: boolean // this entity needs no Review or user choose to skip review
   }
 }
 

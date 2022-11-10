@@ -11,7 +11,7 @@ export function useHandleSave(
   showSubscriptionOptions?: boolean
 ) {
   const store = useScopedStore()
-  const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
+  const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -39,23 +39,16 @@ export function useHandleSave(
   const handleSave = (
     notificationSubscription?: boolean,
     emailSubscription?: boolean,
-    autoCheckout?: boolean
+    manualSkipReview?: boolean
   ) => {
     setPending(true)
-
-    const checkoutControls =
-      !needsReview || (showSkipCheckout && autoCheckout)
-        ? {
-            checkout: true,
-          }
-        : {}
 
     onSave({
       controls: {
         ...(showSubscriptionOptions
           ? { notificationSubscription, emailSubscription }
           : {}),
-        ...checkoutControls,
+        noReview: manualSkipReview || !entityNeedsReview,
       },
       ...(serialized as SupportedTypesSerializedState),
     })
