@@ -87,8 +87,8 @@ export interface SetEntityMutationRunnerData {
   loggedInData: LoggedInData | null
   isRecursiveCall?: boolean
   initialState: {
-    plugin: 'text'
-    state: unknown
+    plugin: string
+    state?: unknown
   }
   savedParentId?: number
   taxonomyParentId?: number

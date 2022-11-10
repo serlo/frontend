@@ -48,8 +48,8 @@ export function useSetEntityMutation() {
     data: SetEntityMutationData,
     needsReview: boolean,
     initialState: {
-      plugin: 'text'
-      state: unknown
+      plugin: string
+      state?: unknown
     },
     taxonomyParentId?: number
   ) =>

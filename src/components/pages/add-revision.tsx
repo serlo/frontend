@@ -9,13 +9,13 @@ import { StaticInfoPanel } from '../static-info-panel'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
+import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
-  AddPageRevisionMutationData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
 } from '@/mutations/use-set-entity-mutation/types'
@@ -94,6 +94,42 @@ export function AddRevision({
       </StaticInfoPanel>
     )
 
+  const onSave = async (
+    data:
+      | SetEntityMutationData
+      | PageSerializedState
+      | TaxonomyCreateOrUpdateMutationData
+  ) => {
+    console.log(data)
+    // refactor and rename when removing legacy code
+    const skipReview = hasOwnPropertyTs(data, 'controls')
+      ? data.controls.checkout
+      : undefined
+    const _needsReview = skipReview ? false : needsReview
+
+    const success =
+      type === UuidType.Page
+        ? await addPageRevision(data as PageSerializedState)
+        : type === UuidType.TaxonomyTerm
+        ? await taxonomyCreateOrUpdateMutation(
+            data as TaxonomyCreateOrUpdateMutationData
+          )
+        : await setEntityMutation(
+            {
+              ...data,
+              __typename: type,
+            } as SetEntityMutationData,
+            _needsReview,
+            initialState,
+            taxonomyParentId
+          )
+
+    return new Promise((resolve: (value: void) => void, reject) => {
+      if (success) resolve()
+      else reject()
+    })
+  }
+
   return (
     <>
       {renderBacklink()}
@@ -105,44 +141,7 @@ export function AddRevision({
       >
         <SerloEditor
           needsReview={needsReview}
-          onSave={async (
-            data:
-              | SetEntityMutationData
-              | AddPageRevisionMutationData
-              | TaxonomyCreateOrUpdateMutationData
-          ) => {
-            const dataWithType = {
-              ...data,
-              __typename: type,
-            }
-
-            // refactor and rename when removing legacy code
-            const skipReview = hasOwnPropertyTs(data, 'controls')
-              ? data.controls.checkout
-              : undefined
-            const _needsReview = skipReview ? false : needsReview
-
-            const success =
-              type === UuidType.Page
-                ? //@ts-expect-error resolve when old code is removed
-                  await addPageRevision(dataWithType)
-                : type === UuidType.TaxonomyTerm
-                ? await taxonomyCreateOrUpdateMutation(
-                    dataWithType as TaxonomyCreateOrUpdateMutationData
-                  )
-                : await setEntityMutation(
-                    //@ts-expect-error resolve when old code is removed
-                    dataWithType,
-                    _needsReview,
-                    initialState,
-                    taxonomyParentId
-                  )
-
-            return new Promise((resolve, reject) => {
-              if (success) resolve()
-              else reject()
-            })
-          }}
+          onSave={onSave}
           type={type}
           initialState={initialState}
         />

@@ -7,7 +7,6 @@ import { useSuccessHandler } from './helper/use-success-handler'
 import { TaxonomyCreateOrUpdateMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
 import { TaxonomyTypeCreateOptions } from '@/fetcher/graphql-types/operations'
 
 const taxonomySetMutation = gql`
@@ -43,8 +42,6 @@ export function useTaxonomyCreateOrUpdateMutation() {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
-    if (!data.__typename || data.__typename !== UuidType.TaxonomyTerm)
-      return false
 
     try {
       const input = {

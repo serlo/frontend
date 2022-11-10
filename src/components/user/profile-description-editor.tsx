@@ -15,23 +15,17 @@ export function ProfileDescriptionEditor({
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
-    return new Promise(
-      (resolve: (value: void | PromiseLike<void>) => void, reject) => {
-        if (success) {
-          resolve()
-          //feedback is handled in mutation
-          // setTimeout(() => {
-          //   window.location.reload()
-          // }, 200)
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(success)
-          // eslint-disable-next-line no-console
-          console.log(data)
-          reject()
-        }
+    return new Promise((resolve: (value: void) => void, reject) => {
+      if (success) {
+        resolve()
+      } else {
+        // eslint-disable-next-line no-console
+        console.error(success)
+        // eslint-disable-next-line no-console
+        console.error(data)
+        reject()
       }
-    )
+    })
   }
 
   const initialState = convertUserByDescription(rawDescription).initialState
