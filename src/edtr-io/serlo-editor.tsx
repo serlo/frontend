@@ -5,7 +5,6 @@ import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/be
 import { Entity, UuidType } from '@serlo/authorization'
 import { createContext, ReactNode } from 'react'
 
-import { CsrfContext } from './csrf-context'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
@@ -16,7 +15,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
-  getCsrfToken(): string
   children?: ReactNode
   needsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
@@ -46,7 +44,6 @@ export const SaveContext = createContext<{
 })
 
 export function SerloEditor({
-  getCsrfToken,
   onSave,
   needsReview,
   onError,
@@ -90,27 +87,25 @@ export function SerloEditor({
 
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    <CsrfContext.Provider value={getCsrfToken}>
-      <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
-        <MathSpan formula="" /> {/* preload formula plugin */}
-        <Editor
-          DocumentEditor={DocumentEditor}
-          onError={onError}
-          plugins={plugins}
-          initialState={useStored ? stored : initialState}
-          editable
-        >
-          {children}
-        </Editor>
-        <style jsx global>{`
-          /* fixes bug in chromium based browsers v105+ */
-          /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
-          div[data-slate-editor] {
-            -webkit-user-modify: read-write !important;
-          }
-        `}</style>
-      </SaveContext.Provider>
-    </CsrfContext.Provider>
+    <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
+      <MathSpan formula="" /> {/* preload formula plugin */}
+      <Editor
+        DocumentEditor={DocumentEditor}
+        onError={onError}
+        plugins={plugins}
+        initialState={useStored ? stored : initialState}
+        editable
+      >
+        {children}
+      </Editor>
+      <style jsx global>{`
+        /* fixes bug in chromium based browsers v105+ */
+        /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
+        div[data-slate-editor] {
+          -webkit-user-modify: read-write !important;
+        }
+      `}</style>
+    </SaveContext.Provider>
   )
 }
 

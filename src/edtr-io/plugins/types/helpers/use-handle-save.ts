@@ -3,13 +3,11 @@ import { serializeRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
-import { CsrfContext } from '@/edtr-io/csrf-context'
 import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function useHandleSave(visible: boolean, subscriptions?: boolean) {
   const store = useScopedStore()
-  const getCsrfToken = useContext(CsrfContext)
   const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
@@ -60,7 +58,6 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
 
     onSave({
       ...(serialized as SupportedTypesSerializedState),
-      csrf: getCsrfToken(),
       controls: {
         ...subscriptionsControls,
         ...checkoutControls,

@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie'
-
 import { convertUserByDescription } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { useUserSetDescriptionMutation } from '@/mutations/use-user-set-description-mutation'
@@ -43,10 +41,6 @@ export function ProfileDescriptionEditor({
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div className="edtr-io serlo-editor-hacks">
         <SerloEditor
-          getCsrfToken={() => {
-            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-            return cookies['CSRF']
-          }}
           needsReview={false}
           onSave={onSave}
           type="User"

@@ -235,7 +235,6 @@ const loopNestedChildren = async ({
           ...child,
           __typename: childrenType,
           changes: data.changes,
-          csrf: data.csrf,
           controls: data.controls,
         }
 

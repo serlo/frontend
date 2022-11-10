@@ -26,7 +26,6 @@ import {
 } from '@/fetcher/graphql-types/operations'
 
 export interface OnSaveData {
-  csrf?: string
   controls: {
     subscription?: {
       subscribe: number

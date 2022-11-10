@@ -1,6 +1,5 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
 import clsx from 'clsx'
-import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import { Link } from '../content/link'
@@ -105,10 +104,6 @@ export function AddRevision({
         )}
       >
         <SerloEditor
-          getCsrfToken={() => {
-            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-            return cookies['CSRF']
-          }}
           needsReview={needsReview}
           onSave={async (
             data:
