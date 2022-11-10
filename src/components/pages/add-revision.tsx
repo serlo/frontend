@@ -42,10 +42,10 @@ export function AddRevision({
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
-    // if (!isProduction) {
-    //   setUserReady(true)
-    //   return
-    // }
+    if (!isProduction) {
+      setUserReady(true)
+      return
+    }
 
     const makeDamnSureUserIsLoggedIn = async () => {
       if (auth.current === null) return false
