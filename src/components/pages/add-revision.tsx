@@ -95,7 +95,8 @@ export function AddRevision({
       </StaticInfoPanel>
     )
 
-  // TODO: Split data and controls
+  // types needs refactoring here. splitting controls and data would probably make sense
+
   const onSave = async (
     data:
       | SetEntityMutationData

@@ -42,13 +42,14 @@ export function useTaxonomyCreateOrUpdateMutation() {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
+    const mutationStrings = loggedInData.strings.mutations
 
     try {
       const input = {
         id: data.id,
-        name: getRequiredString(loggedInData, 'name', data.term.name),
+        name: getRequiredString(mutationStrings, 'name', data.term.name),
         description: getRequiredString(
-          loggedInData,
+          mutationStrings,
           'description',
           data.description
         ),

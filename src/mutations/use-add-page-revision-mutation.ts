@@ -42,12 +42,13 @@ export function useAddPageRevision() {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
+    const mutationStrings = loggedInData.strings.mutations
     if (!data.__typename || data.__typename !== UuidType.Page) return false
 
     try {
       const sharedInput = {
-        content: getRequiredString(loggedInData, 'content', data.content),
-        title: getRequiredString(loggedInData, 'title', data.title),
+        content: getRequiredString(mutationStrings, 'content', data.content),
+        title: getRequiredString(mutationStrings, 'title', data.title),
       }
 
       if (data.id) {
