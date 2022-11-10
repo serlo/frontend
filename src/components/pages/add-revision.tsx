@@ -100,7 +100,6 @@ export function AddRevision({
       | PageSerializedState
       | TaxonomyCreateOrUpdateMutationData
   ) => {
-    console.log(data)
     // refactor and rename when removing legacy code
     const skipReview = hasOwnPropertyTs(data, 'controls')
       ? data.controls.checkout

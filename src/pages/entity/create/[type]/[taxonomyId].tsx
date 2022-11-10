@@ -18,7 +18,7 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-enum AllowedTypes {
+enum AllowedPlugins {
   Article = SerloEntityPluginType.Article,
   Course = SerloEntityPluginType.Course,
   Video = SerloEntityPluginType.Video,
@@ -29,7 +29,7 @@ enum AllowedTypes {
 }
 
 interface EntityCreateProps {
-  entityType: keyof typeof AllowedTypes
+  entityType: keyof typeof AllowedPlugins
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
   needsReview: boolean
 }
@@ -39,9 +39,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
     const { id: taxonomyParentId } = taxonomyTerm
 
     const addRevisionProps = {
-      initialState: {
-        plugin: AllowedTypes[entityType] as unknown as string,
-      },
+      initialState: { plugin: AllowedPlugins[entityType] as unknown as string },
       converted: false,
       type: UuidType[entityType],
       needsReview,
@@ -82,9 +80,9 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     GetTaxonomyTypeQueryVariables
   >(endpoint, getTaxonomyTypeQuery, { id: taxonomyId })
 
-  const entityType = context.params?.type as keyof typeof AllowedTypes
+  const entityType = context.params?.type as keyof typeof AllowedPlugins
   const isValidType =
-    entityType && Object.values(AllowedTypes).includes(entityType)
+    entityType && Object.values(AllowedPlugins).includes(entityType)
 
   if (
     !result ||

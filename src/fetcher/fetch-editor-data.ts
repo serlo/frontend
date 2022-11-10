@@ -22,7 +22,7 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: UuidWithRevType | UuidType.Page
+  type: UuidWithRevType
   converted?: boolean
   needsReview: boolean
   id?: number // only for existing
