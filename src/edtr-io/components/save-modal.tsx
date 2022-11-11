@@ -5,6 +5,7 @@ import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
+import { useHandleSave } from '../plugins/types/helpers/use-handle-save'
 import { SaveContext } from '../serlo-editor'
 import { SaveLocalButton } from './save-local-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
@@ -18,10 +19,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export interface SaveModalProps {
   open: boolean
   setOpen: (arg0: boolean) => void
-  handleSave: (arg0?: boolean, arg1?: boolean, arg2?: boolean) => void
-  pending: boolean
   changes?: StateTypeReturnType<typeof entity['changes']>
-  hasError: boolean
   license?: StateTypeReturnType<typeof entity['license']>
   showSubscriptionOptions?: boolean
 }
@@ -29,13 +27,14 @@ export interface SaveModalProps {
 export function SaveModal({
   open,
   setOpen,
-  pending,
   license,
-  handleSave,
   changes,
   showSubscriptionOptions,
-  hasError,
 }: SaveModalProps) {
+  const { handleSave, pending, hasError } = useHandleSave(
+    open,
+    showSubscriptionOptions
+  )
   const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
   const [agreement, setAgreement] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)

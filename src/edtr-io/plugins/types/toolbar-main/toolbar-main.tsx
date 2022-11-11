@@ -15,7 +15,6 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
-import { useHandleSave } from '../helpers/use-handle-save'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
@@ -40,11 +39,6 @@ export function ToolbarMain({
 
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
-  const { handleSave, pending, hasError } = useHandleSave(
-    saveModalOpen,
-    showSubscriptionOptions
-  )
-
   useLeaveConfirm(isChanged && !pending)
 
   const loggedInData = useLoggedInData()
@@ -67,10 +61,7 @@ export function ToolbarMain({
       <SaveModal
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
-        handleSave={handleSave}
-        pending={pending}
         changes={changes}
-        hasError={hasError}
         license={license}
         showSubscriptionOptions={showSubscriptionOptions}
       />
