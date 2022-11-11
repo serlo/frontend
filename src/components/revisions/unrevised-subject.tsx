@@ -27,7 +27,6 @@ export function UnrevisedSubject({ subject }: UnrevisedSubjectProps) {
       <h2 className="serlo-h2 border-0" id={getSubjectSlug(name)}>
         {name} ({subject.unrevisedEntities.totalCount})
       </h2>
-
       {visibleNodes.map((entity) => (
         <UnrevisedEntity key={entity.id} entity={entity} />
       ))}

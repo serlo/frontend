@@ -14,6 +14,7 @@ import {
   editorResponseToState,
   isError,
 } from '@/edtr-io/editor-response-to-state'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import {
   RevisionUuidQuery,
@@ -40,7 +41,7 @@ export function RevisionHistoryLoader<T>(
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
-  if (props.id === 0) return null
+  if (!revisionsResponse) return null
 
   if (!revisionsResponse.data?.uuid.revisions) return null // no revision loader for solutions
 
@@ -63,7 +64,7 @@ export function RevisionHistoryLoader<T>(
         }}
       >
         <PluginToolbarButton
-          icon={<Icon icon={faHistory} size="lg" />}
+          icon={<Icon icon={faHistory as EdtrIconDefinition} size="lg" />}
           label={editorStrings.edtrIo.switchRevision}
         />
       </span>
@@ -101,6 +102,7 @@ export function RevisionHistoryLoader<T>(
     return useGraphqlSwr<{ uuid: Revisions }>({
       query: revisionHistoryQuery,
       variables: { id },
+      noKey: id === 0,
       config: {
         refreshInterval: 1 * 60 * 1000, //1min
       },

@@ -9,11 +9,16 @@ export const instanceData = {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
       search: "Buscar",
-      login: "Ingresar"
+      login: "Ingresar",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
-      agree: 'Agree to use search'
+      agree: "Acepta utilizar el motor de búsqueda"
     },
     footer: {
       summaryHeading: "Serlo.org es la Wikipedia para el aprendizaje.",
@@ -31,9 +36,9 @@ export const instanceData = {
       folders: "Carpetas",
       exercises: "Ejercicios",
       events: "Eventos",
-      unrevised: 'Unrevised',
+      unrevised: "Aún no revisado",
       subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      exercisesContent: "Ejercicios contenido"
     },
     entities: {
       applet: 'Applet',
@@ -70,7 +75,9 @@ export const instanceData = {
       userEditsMine: "Mi trabajo aún sin revisar",
       editProfile: "Editar perfil y ajustes",
       recycleBin: "Papelera de reciclaje",
-      diagon: "Callejón de Diagon"
+      diagon: "Callejón de Diagon",
+      discussions: 'Comments',
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Donante",
@@ -86,16 +93,19 @@ export const instanceData = {
       pdf: "Descargar PDF",
       pdfNoSolutions: "PDF sin soluciones"
     },
-    edit: {
-      button: "Editar",
-      unrevised: "Mostrar revisiones sin revisar",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
+      unrevised: 'Show unrevised revisions',
       inviteModal: {
-        title: "¡Crea con nosotros!",
-        text: "¡Hola! %break% Es genial que quieras contribuir a este contenido :miniaturas_up: %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
-        loginButton: "Iniciar sesión ahora",
-        registerButton: "Registrar una nueva cuenta",
-        psText: "Puedes averiguar de qué manera puedes contribuir con %link%.",
-        psLinkText: "aquí"
+        title: 'Create with us!',
+        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
+        loginButton: 'Login now',
+        registerButton: 'Register new account',
+        psText: 'You can find out in what ways you can contribute %link%.',
+        psLinkText: 'here'
       }
     },
     license: {
@@ -184,7 +194,8 @@ export const instanceData = {
       showMoreReplies: "Mostrar %number% respuestas más",
       hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
-      copyLink: "Copiar el vínculo del comentario"
+      copyLink: "Copiar el vínculo del comentario",
+      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -220,8 +231,17 @@ export const instanceData = {
       status: "Estado"
     },
     unrevisedRevisions: {
-      supportLinks: "Apoyo de revisión",
-      guideline: "Directrices para la revisión",
+      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
+      reviewers: 'Reviewers',
+      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
+      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
+      contactPerson: 'LinaMaria',
+      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
+      help4: 'How to review? See our %guidelineLink%.',
+      guideline: 'Guideline for Reviewing',
+      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
+      subjectLinks: 'To Subjects',
       showMoreEntities: "Mostrar todo en %subject%",
       showMoreRevisions: "Mostrar %number% más…",
       newLabelText: "nuevo",
@@ -322,9 +342,9 @@ export const instanceData = {
       setLicense: "%actor% cambió la licencia de %repository%.",
       createEntityLink: "%actor% asoció %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
-      createEntityRevision: "%actor% creó una %revision% de %entity%.",
-      checkoutRevision: "%actor% revisió una %revision% en %repository%.",
-      rejectRevision: "%actor% no aceptó a %revision% en %repository%.",
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: "%actor% agregó %child% a %parent%.",
       removeTaxonomyLink: "%actor% eliminó %child% de %parent%.",
       createTaxonomyTerm: "%actor% creó %term%.",
@@ -374,11 +394,11 @@ export const loggedInData = {
   authMenu: [{
     url: '/user/notifications',
     title: "Notificaciones",
-    icon: "notificaciones"
+    icon: 'notifications'
   }, {
     url: "[secuencia vacía]",
     title: "Usuario",
-    icon: "usuario",
+    icon: 'user',
     children: [{
       url: '/user/me',
       title: "Perfil propio"
@@ -425,6 +445,7 @@ export const loggedInData = {
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
       edit: "Editar",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
       moveToGrouped: "Mover contenido a otro grupo de ejercicios de texto",
@@ -448,7 +469,7 @@ export const loggedInData = {
       noMails: "desactivar",
       getMails: "activar",
       noNotifications: "cancelar",
-      loadedSentence: "Cargar %loadedCount% de %totalCount% suscripciones.",
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: "¡Cargar más!"
     },
     revisions: {
@@ -473,7 +494,8 @@ export const loggedInData = {
         reject: "Edición rechazada ❌ ",
         save: "Edición guardada con éxito ✅",
         updated: "Actualización exitosa ✅",
-        generic: "Éxito 🎉"
+        generic: "Éxito 🎉",
+        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -486,6 +508,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
+      noChangesWarning: "Nothing changed so there is no need to save yet",
       edtrIo: {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
@@ -517,7 +540,7 @@ export const loggedInData = {
         spoiler: "Spoiler/desplegable",
         spoilerDesc: "Una caja colapsable.",
         serloTable: "Tabla",
-        serloTableDesc: "(nuevo plugin en fase de prueba) Crear tablas",
+        serloTableDesc: 'Create pretty tables',
         table: "Tabla",
         tableDesc: "Crear tablas usando Markdown.",
         video: "Vídeo",
@@ -525,6 +548,7 @@ export const loggedInData = {
         solutionSeparator: "Separador de Solución",
         solutionSeparatorDesc: "Desglosa la solución en pasos individuales.",
         save: "Guardar",
+        saveWithReview: 'Save and get review',
         cancel: "Cancelar",
         saving: "Guardando…",
         missingChanges: "Tienes que indicar los cambios que has hecho",
@@ -534,7 +558,7 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Puedes guardar la revisión localmente, actualiza la página e intenta guardar de nuevo.",
         revisionSaved: "Revisión guardada",
         saveRevision: "Guardar revisión",
-        changes: "Cambios",
+        changes: 'Describe your changes to the content',
         skipReview: "Omitir la revisión de pares (no recomendado)",
         enableNotifs: "Habilitar notificaciones de serlo.org",
         enableNotifsMail: "Activar notificaciones por correo electrónico",
@@ -670,10 +694,10 @@ export const loggedInData = {
         serloId: 'Serlo ID:'
       },
       box: {
-        type: "Tipo de caja",
+        type: "Tipo de contenedor",
         titlePlaceholder: "(título opcional)",
         anchorId: "ID de Ancla (marca de posición)",
-        emptyContentWarning: "Cajas sin contenido no se visualizarán"
+        emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
       },
       layout: {
         toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
@@ -822,6 +846,7 @@ export const loggedInData = {
       recycleBin: "Papelera de reciclaje"
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: "Páginas borradas"
     },
     taxonomyTermTools: {
@@ -846,6 +871,9 @@ export const loggedInData = {
         title: "Ordenar entidades",
         saveButtonText: "Guardar orden"
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };

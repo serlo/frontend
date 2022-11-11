@@ -12,11 +12,11 @@ import {
   number,
   object,
   string,
+  optional,
 } from '@edtr-io/plugin'
 import { getDocument } from '@edtr-io/store'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
-import * as R from 'ramda'
-import * as React from 'react'
+import { mapObjIndexed } from 'ramda'
 
 export const licenseState = object({
   id: number(),
@@ -31,7 +31,7 @@ export const uuid = {
 }
 
 export const license = {
-  license: licenseState,
+  license: optional(licenseState),
 }
 
 export const entity = {
@@ -73,7 +73,7 @@ export function entityType<
         ...initialisedObject,
         replaceOwnState(newValue) {
           onChange((previousState, helpers) => {
-            return R.mapObjIndexed((_value, key) => {
+            return mapObjIndexed((_value, key) => {
               if (key in ownTypes) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return ownTypes[key].deserialize(newValue[key], helpers)

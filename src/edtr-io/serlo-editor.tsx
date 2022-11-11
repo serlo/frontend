@@ -2,8 +2,8 @@
 import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
-import { Entity } from '@serlo/authorization'
-import * as React from 'react'
+import { Entity, UuidType } from '@serlo/authorization'
+import { createContext, ReactNode } from 'react'
 
 import { CsrfContext } from './csrf-context'
 import { getPluginRegistry } from './get-plugin-registry'
@@ -13,16 +13,16 @@ import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SetEntityMutationData } from '@/helper/mutations/use-set-entity-mutation/types'
+import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
   getCsrfToken(): string
-  children?: React.ReactNode
+  children?: ReactNode
   needsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
-  type: string
+  type: UuidType
 }
 
 export interface LooseEdtrData {
@@ -33,7 +33,7 @@ export interface LooseEdtrDataDefined {
   [key: string]: EditorProps['initialState']
 }
 
-export const SaveContext = React.createContext<{
+export const SaveContext = createContext<{
   onSave: SerloEditorProps['onSave']
   showSkipCheckout: boolean
   needsReview: boolean
@@ -69,8 +69,6 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   const plugins = createPlugins({
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    getCsrfToken: getCsrfToken,
     registry: getPluginRegistry(type, editorStrings),
     type,
     editorStrings,
@@ -104,6 +102,13 @@ export function SerloEditor({
         >
           {children}
         </Editor>
+        <style jsx global>{`
+          /* fixes bug in chromium based browsers v105+ */
+          /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
+          div[data-slate-editor] {
+            -webkit-user-modify: read-write !important;
+          }
+        `}</style>
       </SaveContext.Provider>
     </CsrfContext.Provider>
   )

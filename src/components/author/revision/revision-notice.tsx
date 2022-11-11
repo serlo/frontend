@@ -1,6 +1,6 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -29,7 +29,7 @@ export function RevisionNotice({
 
   const type = isCurrentRevision ? 'success' : 'failure'
   return (
-    <StaticInfoPanel type={type} icon={isRejected ? faTimes : faCheck}>
+    <StaticInfoPanel type={type} icon={isRejected ? faXmark : faCheck}>
       {isRejected
         ? strings.revisions.rejectedNotice
         : strings.revisions.currentNotice}

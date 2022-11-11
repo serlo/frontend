@@ -6,7 +6,6 @@ import { ReactNode, Fragment, createElement } from 'react'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license/license-notice'
 import { Link } from '../components/content/link'
-import { theme } from '../theme'
 import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { Article } from '@/components/content/article'
 import { Box } from '@/components/content/box'
@@ -28,6 +27,7 @@ import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
 import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
 import { SerloGalleryAdapter } from '@/edtr-io/plugins/serlo-gallery/frontend'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
+import { articleColors } from '@/helper/colors'
 
 export type NodePath = (number | string)[]
 
@@ -136,12 +136,6 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
     key,
     children: currentNode?.text,
   })
-}
-
-export const articleColors = {
-  blue: theme.colors.blue,
-  green: theme.colors.green,
-  orange: theme.colors.orange,
 }
 
 interface RenderLeafProps {

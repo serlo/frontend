@@ -11,6 +11,11 @@ export const instanceData = {
       slogan: 'The Open Learning Platform',
       search: 'Search',
       login: 'Login',
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy:
@@ -73,7 +78,9 @@ export const instanceData = {
       userEditsMine: 'My Unrevised Revisions',
       editProfile: 'Edit Profile & Settings',
       recycleBin: 'Recycle Bin',
-      diagon: 'Diagon Alley'
+      diagon: 'Diagon Alley',
+      discussions: 'Comments',
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: 'Donor',
@@ -89,8 +96,11 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions',
     },
-    edit: {
+    editOrAdd: {
       button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
       unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
@@ -193,6 +203,7 @@ export const instanceData = {
       hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
+      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -228,8 +239,17 @@ export const instanceData = {
       status: 'Status',
     },
     unrevisedRevisions: {
-      supportLinks: 'Review support',
-      guideline: 'Guideline for reviewing',
+      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
+      reviewers: 'Reviewers',
+      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
+      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
+      contactPerson: 'LinaMaria',
+      contactPersonUrl:'https://community.serlo.org/direct/LinaMaria',
+      help4: 'How to review? See our %guidelineLink%.',
+      guideline: 'Guideline for Reviewing',
+      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
+      subjectLinks: 'To Subjects',
       showMoreEntities: 'Show all in %subject%',
       showMoreRevisions: 'Show %number% more…',
       newLabelText: 'new',
@@ -336,9 +356,9 @@ export const instanceData = {
       setLicense: '%actor% changed the license of %repository%.',
       createEntityLink: '%actor% associated %child% with %parent%.',
       removeEntityLink: '%actor% dissociated %child% from %parent%.',
-      createEntityRevision: '%actor% created a %revision% of %entity%.',
-      checkoutRevision: '%actor% checked out a %revision% in %repository%.',
-      rejectRevision: '%actor% did not accept a %revision% in %repository%.',
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: '%actor% added %child% to %parent%.',
       removeTaxonomyLink: '%actor% removed %child% from %parent%.',
       createTaxonomyTerm: '%actor% created %term%.',
@@ -456,6 +476,7 @@ export const loggedInData = {
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
       edit: 'Edit',
+      editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
       organize: 'Organize',
       moveToGrouped: 'Move content to other grouped-text-exercise',
@@ -479,7 +500,7 @@ export const loggedInData = {
       noMails: 'deactivate',
       getMails: 'activate',
       noNotifications: 'cancel',
-      loadedSentence: 'Loaded %loadedCount% of %totalCount% subscriptions.',
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: 'Load more!',
     },
     revisions: {
@@ -505,7 +526,8 @@ export const loggedInData = {
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
         updated: 'Successfully updated ✅',
-        generic: 'Success 🎉'
+        generic: 'Success 🎉',
+        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
       }, 
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -518,6 +540,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Are you sure you want to leave without saving?",
+      noChangesWarning: "Nothing changed so there is no need to save yet",
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',
@@ -559,7 +582,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: 'A collapsible box.',
         serloTable: 'Table',
-        serloTableDesc: '(new plugin in testing) Create tables',
+        serloTableDesc: 'Create pretty tables',
         serloGallery: 'Gallery',
         serloGalleryDesc: '(in testing) Image Gallery',
         table: 'Table',
@@ -571,6 +594,7 @@ export const loggedInData = {
         solutionSeparatorDesc:
           'Divide the solution into individual steps.',
         save: 'Save',
+        saveWithReview: 'Save and get review',
         cancel: 'Cancel',
         saving: 'Saving…',
         missingChanges:
@@ -583,7 +607,7 @@ export const loggedInData = {
           'You can store the revision locally, refresh the page and try to save again.',
         revisionSaved: 'Revision saved',
         saveRevision: 'Save revision',
-        changes: 'Changes',
+        changes: 'Describe your changes to the content',
         skipReview: 'Skip peer review (not recommended)',
         enableNotifs: 'Enable serlo.org notifications',
         enableNotifsMail: 'Enable notifications via e-mail',
@@ -890,6 +914,7 @@ export const loggedInData = {
       recycleBin: 'Recycle Bin'
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: 'Deleted Pages'
     },
     taxonomyTermTools: {
@@ -914,6 +939,9 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   },
 }

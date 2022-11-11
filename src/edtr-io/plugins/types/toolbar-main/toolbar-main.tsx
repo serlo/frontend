@@ -7,7 +7,6 @@ import {
   hasUndoActions,
   hasPendingChanges,
 } from '@edtr-io/store'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
 import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo'
@@ -17,8 +16,10 @@ import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
 import { useHandleSave } from '../helpers/use-handle-save'
-import { FaIcon } from '@/components/fa-icon'
+import { FaIcon, FaIconProps } from '@/components/fa-icon'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
@@ -45,6 +46,9 @@ export function ToolbarMain({
   )
 
   useLeaveConfirm(isChanged && !pending)
+
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
 
   return (
     <>
@@ -75,7 +79,7 @@ export function ToolbarMain({
 
   function renderHistoryButton(
     title: string,
-    icon: IconDefinition,
+    icon: FaIconProps['icon'],
     action: typeof undo | typeof redo,
     disabled: boolean
   ) {
@@ -97,18 +101,19 @@ export function ToolbarMain({
   }
 
   function renderSaveButton() {
-    const isDisabled = !isChanged
     return (
       <button
-        className={clsx(
-          'serlo-button ml-2',
-          isDisabled ? 'text-gray-300 cursor-default' : 'serlo-button-green'
-        )}
-        onClick={() => setVisibility(true)}
-        disabled={isDisabled}
+        className={clsx('serlo-button-green ml-2')}
+        onClick={() => {
+          if (isChanged) setVisibility(true)
+          else
+            showToastNotice(
+              '👀 ' + loggedInData!.strings.editor.noChangesWarning
+            )
+        }}
         title="Save"
       >
-        <FaIcon icon={faSave} />
+        <FaIcon icon={faSave} /> {loggedInData!.strings.editor.edtrIo.save}
       </button>
     )
   }

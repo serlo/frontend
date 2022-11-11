@@ -26,7 +26,6 @@ export function createPageLayoutState(
     'injection',
     'multimedia',
     'spoiler',
-    'table',
     'serloTable',
     'serloGallery',
     'video',

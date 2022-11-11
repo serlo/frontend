@@ -57,27 +57,69 @@ export const headerData: InstanceData['headerData'] = [
       { title: 'Wirkung', url: '/wirkung' },
       { title: 'Transparenz', url: '/transparenz' },
       { title: 'Die Geschichte von Serlo', url: '/geschichte' },
+      { title: 'Kontakt & Standorte', url: '/21657/kontakt-und-standorte' },
     ],
   },
-  { url: '/mitmachen', title: 'Mitmachen', icon: 'participate' },
   { url: '/spenden', title: 'Spenden', icon: 'donate' },
   {
     url: '',
-    title: 'Community',
-    icon: 'community',
+    title: 'Mitmachen',
+    icon: 'participate',
     children: [
       {
+        title: 'Neu hier?',
         url: '/community',
-        title: 'Startseite für Autor*innen',
+        children: [
+          {
+            title: 'Mach den Einführungskurs',
+            url: '/community',
+          },
+        ],
       },
-      { url: 'https://community.serlo.org/', title: 'Chat für Autor*innen' },
-      { url: '/88059', title: 'Hilfeseiten' },
       {
-        url: '/community/veranstaltungen/veranstaltungsübersicht',
-        title: 'Veranstaltungen für Autor*innen',
+        title: "Was gibt's zu tun?",
+        url: '/community#wasgibtszutun',
+        children: [
+          {
+            title: 'Hilf in einem Fach',
+            url: '/256320/hilf-in-unseren-f%C3%A4chern',
+          },
+          {
+            title: 'Teste den Editor',
+            url: '/community/106082/testbereich',
+          },
+          {
+            title: 'Schreibe Kommentare',
+            url: '/discussions',
+          },
+          {
+            title: 'Überprüfe Bearbeitungen',
+            url: '/entity/unrevised',
+          },
+        ],
       },
-      { url: '/entity/unrevised', title: 'Ungeprüfte Bearbeitungen' },
-      { url: '/discussions', title: 'Liste aller Kommentare' },
+      {
+        title: 'Zusammenarbeit',
+        url: '/community#zusammenarbeit',
+        children: [
+          {
+            title: 'Communitychat',
+            url: 'https://community.serlo.org/channel/general',
+          },
+          {
+            title: 'Veranstaltungen',
+            url: '/community/145470/veranstaltungs%C3%BCbersicht',
+          },
+          {
+            title: 'Hilfe',
+            url: '/community/88059/hilfe',
+          },
+          {
+            title: 'Aktivitäten auf der Seite',
+            url: '/event/history',
+          },
+        ],
+      },
     ],
   },
 ]
@@ -244,7 +286,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Community', id: 19882 },
       { title: 'Hilfeseiten', id: 88059 },
       { title: 'Werte und Entscheidungen', id: 181028 },
-      { title: 'Sandkasten für AutorInnen', id: 106082 },
+      { title: 'Testbereich', id: 106082 },
       { title: 'Ressourcen für PädagogInnen', id: 88061 },
       { title: 'Veranstaltungen für AutorInnen', id: 145470 },
       { title: 'Alle Aktivitäten auf serlo.org', url: '/event/history' },
@@ -264,14 +306,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Wirkung', id: 21406 },
       { title: 'Transparenz', id: 21468 },
       { title: 'Die Geschichte von Serlo', id: 21413 },
-    ],
-  },
-  {
-    entries: [
-      { title: 'Mitmachen', id: 19869 },
-      { title: 'Jobs & Ehrenamt', id: 21563 },
-      { title: 'Kontakt und Standorte', id: 21657 },
-      { title: 'Spenden', url: '/spenden' },
+      { title: 'Kontakt & Standorte', id: 21657 },
     ],
   },
 ]

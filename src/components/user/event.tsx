@@ -101,7 +101,7 @@ export function Event({
           thread: renderThread(event.thread),
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
-              {`${strings.entities.comment} (${event.comment.id})`}
+              {strings.entities.comment}&nbsp;<sup>{event.comment.id}</sup>
             </Link>
           ),
         })
@@ -256,14 +256,31 @@ export function Event({
     alias,
     title,
     __typename,
+    id,
   }: EventObject | EventParent) {
     return (
-      <Link href={alias}>{renderTitle(title, __typename as UuidType)}</Link>
+      <Link href={alias}>
+        <>
+          {renderTitle(title, __typename as UuidType, id)}
+          {shouldRenderParent(__typename as UuidType) ? (
+            <>{renderParent(title, __typename as UuidType)}</>
+          ) : null}
+        </>
+      </Link>
     )
   }
 
-  function renderTitle(title: string, typename: UuidType) {
-    const typeString = getEntityStringByTypename(typename, strings)
+  function shouldRenderParent(typename: UuidType) {
+    return [
+      UuidType.Exercise,
+      UuidType.GroupedExercise,
+      UuidType.Solution,
+      UuidType.Thread,
+      UuidType.Comment,
+    ].includes(typename)
+  }
+
+  function renderParent(title: string, typename: UuidType) {
     const preposition = [
       UuidType.Exercise,
       UuidType.GroupedExercise,
@@ -274,18 +291,42 @@ export function Event({
       ? strings.events.commentInParentPreposition
       : ''
 
-    return preposition ? `${typeString} (${preposition} ${title})` : title
+    return ` (${preposition} ${title})`
+  }
+
+  function renderTitle(title: string, typename: UuidType, id: number) {
+    if (
+      [
+        UuidType.Exercise,
+        UuidType.GroupedExercise,
+        UuidType.Solution,
+        UuidType.Thread,
+        UuidType.Comment,
+      ].includes(typename)
+    ) {
+      return (
+        <>
+          {getEntityStringByTypename(typename, strings)}&nbsp;<sup>{id}</sup>
+        </>
+      )
+    } else {
+      return <>{title}</>
+    }
   }
 
   function renderRevision(id: number) {
-    return <Link href={`/${id}`}>{`${strings.entities.revision} (${id})`}</Link>
+    return (
+      <Link href={`/${id}`}>
+        {strings.entities.revision}&nbsp;<sup>{id}</sup>
+      </Link>
+    )
   }
 
   function renderThread(thread: EventThread) {
     const id = thread.thread.nodes[0]?.id
     return (
       <Link href={`/${id}`} forceNoCSR>
-        {`${strings.entities.thread} (${id})`}
+        {strings.entities.thread}&nbsp;<sup>{id}</sup>
       </Link>
     )
   }

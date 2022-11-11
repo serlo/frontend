@@ -12,7 +12,7 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
+import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mutation'
 
 export type SubscriptionNode =
   GetSubscriptionsQuery['subscription']['getSubscriptions']['nodes'][0]

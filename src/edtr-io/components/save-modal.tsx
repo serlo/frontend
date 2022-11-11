@@ -1,14 +1,19 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import clsx from 'clsx'
+import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
 import { SaveContext } from '../serlo-editor'
 import { SaveLocalButton } from './save-local-button'
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface SaveModalProps {
   visible: boolean
@@ -38,11 +43,15 @@ export function SaveModal({
   const [autoCheckout, setAutoCheckout] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '')
   const [fireSave, setFireSave] = useState(false)
+  const [highlightMissingFields, setHighlightMissingFields] = useState(false)
+  const { lang } = useInstanceData()
+
+  const { data: licenseData } = useLicensesFetch(lang)
+  const defaultLicenseAgreement = licenseData?.license.defaultLicense.agreement
 
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
-  const buttonDisabled = !maySave || pending
   const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
 
   useEffect(() => {
@@ -103,19 +112,29 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            changes?.set(changesText)
-            setFireSave(true)
+            if (maySave) {
+              changes?.set(changesText)
+              setFireSave(true)
+            } else {
+              setHighlightMissingFields(true)
+              showToastNotice(
+                loggedInData!.strings.mutations.errors.valueMissing,
+                'warning'
+              )
+            }
           }}
           className={clsx(
             'serlo-button ml-2',
-            buttonDisabled
-              ? 'cursor-default text-gray-300'
-              : 'serlo-button-green'
+            pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
-          disabled={buttonDisabled}
+          disabled={pending}
           title={getSaveHint()}
         >
-          {pending ? edtrIo.saving : edtrIo.save}
+          {pending
+            ? edtrIo.saving
+            : (showSkipCheckout && autoCheckout) || !showSkipCheckout
+            ? edtrIo.save
+            : edtrIo.saveWithReview}
         </button>
       </div>
     )
@@ -147,8 +166,13 @@ export function SaveModal({
   function renderChanges() {
     if (!changes) return null
     return (
-      <label className="font-bold">
-        {edtrIo.changes}
+      <label
+        className={clsx(
+          'font-bold',
+          highlightMissingFields && !changesFilled && 'bg-red-100'
+        )}
+      >
+        {edtrIo.changes} <span className="font-bold text-red-500">*</span>
         <textarea
           value={changesText}
           onChange={(e) => {
@@ -157,7 +181,7 @@ export function SaveModal({
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light'
+            'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
           )}
         />
       </label>
@@ -182,14 +206,18 @@ export function SaveModal({
   }
 
   function renderLicense() {
-    if (!license) return null
+    const licenseAgreement =
+      license && license.defined
+        ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
+        : defaultLicenseAgreement ?? ''
 
-    const licenseAgreement = license.agreement.value.replace(
-      /<a href/g,
-      '<a target="_blank" href'
-    )
     return (
-      <label className="block pb-2">
+      <label
+        className={clsx(
+          'block pb-2',
+          highlightMissingFields && !licenseAccepted && 'bg-red-100'
+        )}
+      >
         <input
           type="checkbox"
           checked={agreement}
@@ -201,7 +229,8 @@ export function SaveModal({
         <span
           className="license-wrapper"
           dangerouslySetInnerHTML={{ __html: licenseAgreement }}
-        />
+        />{' '}
+        <span className="font-bold text-red-500">*</span>
         <style jsx global>
           {`
             .license-wrapper a {
@@ -242,4 +271,24 @@ export function SaveModal({
       </>
     )
   }
+}
+
+const licensesQuery = gql`
+  query defaultLicenseAgreement($instance: Instance!) {
+    license {
+      defaultLicense(instance: $instance) {
+        agreement
+      }
+    }
+  }
+`
+
+function useLicensesFetch(instance: string) {
+  return useGraphqlSwr<DefaultLicenseAgreementQuery>({
+    query: licensesQuery,
+    variables: { instance },
+    config: {
+      refreshInterval: 24 * 60 * 60 * 1000, // day
+    },
+  })
 }

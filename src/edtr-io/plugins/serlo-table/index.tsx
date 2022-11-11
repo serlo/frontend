@@ -18,7 +18,7 @@ import {
   focusPrevious,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
@@ -26,6 +26,7 @@ import { KeyboardEvent } from 'react'
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 const headerTextPlugins = {
   code: true,
@@ -297,7 +298,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
         >
-          <Icon icon={faCirclePlus} />
+          <Icon icon={faCirclePlus as EdtrIconDefinition} />
         </button>
       )
     }
@@ -326,14 +327,14 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
         >
-          <Icon icon={faTrashCan} />
+          <Icon icon={faTrashCan as EdtrIconDefinition} />
         </button>
       )
     }
   }
 
   function getButtonStyle() {
-    return clsx('serlo-button-blue-transparent text-brand-lighter')
+    return clsx('serlo-button-blue-transparent text-brand-400')
   }
 
   function insertRow(beforeIndex?: number) {

@@ -15,9 +15,10 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
-import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
+import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
-import { shouldUseFeature } from '@/components/user/profile-experimental'
+import { EdtrIconDefinition } from './edtr-icon-defintion'
 import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
@@ -49,7 +50,7 @@ export function getPluginRegistry(
       name: 'box',
       title: editorStrings.edtrIo.box,
       description: editorStrings.edtrIo.boxDesc,
-      icon: createIcon(faSquare),
+      icon: createIcon(faSquare as EdtrIconDefinition),
     },
     {
       name: 'geogebra',
@@ -105,12 +106,6 @@ export function getPluginRegistry(
       icon: createIcon(faCaretSquareDown),
     },
     {
-      name: 'table',
-      title: editorStrings.edtrIo.table,
-      description: editorStrings.edtrIo.tableDesc,
-      icon: createIcon(faTable),
-    },
-    {
       name: 'serloTable',
       title: editorStrings.edtrIo.serloTable,
       description: editorStrings.edtrIo.serloTableDesc,
@@ -147,13 +142,13 @@ export function getPluginRegistry(
             name: 'pageLayout',
             title: 'Layout Column for Pages',
             description: "The plugin the people want but don't get 🤫",
-            icon: createIcon(faGripLinesVertical),
+            icon: createIcon(faGripLinesVertical as EdtrIconDefinition),
           },
           {
             name: 'pageTeam',
             title: 'Team Overview',
             description: 'Only for the teampages',
-            icon: createIcon(faUsers),
+            icon: createIcon(faUsers as EdtrIconDefinition),
           },
         ]
       : []),
@@ -168,12 +163,5 @@ export function getPluginRegistry(
     (plugin) => !['blockquote', 'important'].includes(plugin.name)
   )
 
-  // Testing new table plugin
-  const showNewTable = shouldUseFeature('tablePlugin')
-
-  const tableFiltered = showNewTable
-    ? boxFiltered.filter((plugin) => plugin.name !== 'table')
-    : boxFiltered.filter((plugin) => plugin.name !== 'serloTable')
-
-  return tableFiltered
+  return boxFiltered
 }

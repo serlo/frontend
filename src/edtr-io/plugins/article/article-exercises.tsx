@@ -1,10 +1,11 @@
 import { faTrashAlt, Icon } from '@edtr-io/ui'
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical'
 import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
@@ -95,7 +96,7 @@ export function ArticleExercises({
                           {...provided.dragHandleProps}
                           className={buttonClass}
                         >
-                          <Icon icon={faGripVertical} />
+                          <Icon icon={faGripVertical as EdtrIconDefinition} />
                         </button>
                         <button
                           title={articleStrings.removeLabel}

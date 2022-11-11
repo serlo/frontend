@@ -1,4 +1,4 @@
-import { faTrashRestore } from '@fortawesome/free-solid-svg-icons'
+import { faTrashRestore } from '@fortawesome/free-solid-svg-icons/faTrashRestore'
 import { gql } from 'graphql-request'
 import Head from 'next/head'
 
@@ -9,13 +9,14 @@ import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
 import { loggedInData } from '@/data/de'
 import { GetTrashedEntitiesQuery } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { useSetUuidStateMutation } from '@/helper/mutations/use-set-uuid-state-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { useSetUuidStateMutation } from '@/mutations/use-set-uuid-state-mutation'
 
 export default renderedPageNoHooks(() => (
   <FrontendClientBase>
@@ -34,6 +35,7 @@ function Content() {
       <Head>
         <meta name="robots" content="noindex" />
       </Head>
+      {renderBackButton()}
       <PageTitle title={strings.pageTitles.recycleBin} headTitle />
       <Guard data={data} error={error} needsAuth>
         <>
@@ -107,6 +109,15 @@ function Content() {
           </button>
         </td>
       </tr>
+    )
+  }
+
+  function renderBackButton() {
+    return (
+      <Breadcrumbs
+        data={[{ label: strings.pageTitles.diagon, url: '/backend' }]}
+        asBackButton
+      />
     )
   }
 }

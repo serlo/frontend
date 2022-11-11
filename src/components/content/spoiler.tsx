@@ -44,13 +44,12 @@ function SpoilerTitle({
   return (
     <button
       onClick={!disabled ? onClick : undefined}
-      onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       className={clsx(
         'serlo-input-font-reset border-none m-0 text-lg',
         'leading-normal',
         'py-2.5 px-side',
         disabled
-          ? 'cursor-auto text-truegray-800 bg-brand-150'
+          ? 'cursor-auto text-truegray-800 bg-brand-200'
           : 'cursor-pointer',
         'text-left',
         opened ? 'text-white bg-brand' : 'text-truegray-800 bg-brand-100'

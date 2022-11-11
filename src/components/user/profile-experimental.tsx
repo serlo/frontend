@@ -6,11 +6,6 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
-  tablePlugin: {
-    cookieName: 'useTablePlugin',
-    isActive: false,
-    activeInDev: true,
-  },
   galleryPlugin: {
     cookieName: 'useGalleryPlugin',
     isActive: false,
@@ -82,14 +77,6 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {features.tablePlugin && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('tablePlugin')} Editor: New Table Plugin 📋
-          </h3>
-          <p className="serlo-p">Das neue Table Plugin zum testen.</p>
-        </div>
-      )}
       {features.galleryPlugin && (
         <div>
           <h3 className="serlo-h3 mb-3">

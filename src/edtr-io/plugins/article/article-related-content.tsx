@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
 import { faTrashAlt, Icon } from '@edtr-io/ui'
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
-import * as R from 'ramda'
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons/faGripVertical'
+import { flatten, values } from 'ramda'
 import {
   DragDropContext,
   Draggable,
@@ -12,6 +12,7 @@ import {
 import { ArticleProps, buttonClass } from '.'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 
@@ -31,7 +32,7 @@ export function ArticleRelatedContent({
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
-  const allItems = R.flatten(R.values(data))
+  const allItems = flatten(values(data))
   if (!editable && allItems.length === 0) return null
 
   return (
@@ -93,7 +94,7 @@ export function ArticleRelatedContent({
     function renderHeader() {
       return (
         <div className="mb-1">
-          <Icon icon={categoryIconMapping[category]} />{' '}
+          <Icon icon={categoryIconMapping[category] as EdtrIconDefinition} />{' '}
           {getTranslatedType(strings, category)}
         </div>
       )
@@ -151,7 +152,7 @@ export function ArticleRelatedContent({
           {...dragHandleProps}
           className={buttonClass}
         >
-          <Icon icon={faGripVertical} />
+          <Icon icon={faGripVertical as unknown as EdtrIconDefinition} />
         </button>
       </>
     )

@@ -17,14 +17,16 @@ import {
 } from '@/edtr-io/editor-response-to-state'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import { SerloEditorProps } from '@/edtr-io/serlo-editor'
+import { testAreaUrlStart } from '@/fetcher/testArea'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: string
+  type: UuidWithRevType | UuidType.Page
   converted?: boolean
   needsReview: boolean
-  id: number
+  id?: number // only for existing
+  taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
 }
@@ -32,6 +34,12 @@ export interface EditorPageData {
 export interface EditorFetchErrorData {
   errorType: 'failed-fetch'
 }
+
+const noReviewTypes: UuidWithRevType[] = [
+  UuidType.TaxonomyTerm,
+  UuidType.Page,
+  UuidType.User,
+]
 
 export async function fetchEditorData(
   localeString: string,
@@ -66,28 +74,21 @@ export async function fetchEditorData(
 
   const breadcrumbsData = createBreadcrumbs(data)
 
-  const isSandbox =
+  const isTestArea =
     breadcrumbsData &&
-    breadcrumbsData.filter(
-      (entry) => entry.url == '/community/106082/sandkasten'
-    ).length > 0
+    breadcrumbsData.some((entry) => entry.url?.startsWith(testAreaUrlStart))
 
-  const noReviewTypes: UuidWithRevType[] = [
-    UuidType.TaxonomyTerm,
-    UuidType.Page,
-    UuidType.User,
-  ]
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType
   )
-  const needsReview = !isSandbox && typeNeedsReview
+  const needsReview = !isTestArea && typeNeedsReview
 
   if (isError(result)) {
     throw new Error(result.error)
   } else {
     return {
       ...result,
-      type: data.__typename,
+      type: data.__typename as UuidWithRevType,
       needsReview,
       id: repoId,
       errorType: 'none',

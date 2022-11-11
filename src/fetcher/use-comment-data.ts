@@ -60,7 +60,7 @@ export function useCommentData(id: number) {
   if (error) console.error(error)
 
   if (uuid && hasOwnPropertyTs(uuid, 'threads')) {
-    const threads = uuid?.threads.nodes
+    const threads = uuid.threads.nodes
 
     const activeThreads = threads?.filter((thread) => !thread.archived)
     const archivedThreads = threads?.filter((thread) => thread.archived)

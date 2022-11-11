@@ -7,6 +7,7 @@ import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import {
   TaxonomyTermType,
   FetchExerciseFolderQuery,
@@ -32,21 +33,24 @@ export function ArticleRelatedExercises({
   addEntry,
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
-
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
-  const errorReturn = <p>Sorry, something went wrong</p>
+  const errorReturn = <p>Sorry, something went wrong.</p>
 
-  if (!data || error) return errorReturn
+  if (error) return errorReturn
+  if (!data) return <p>…</p>
+
   const { uuid } = data
+
   if (
     uuid?.__typename !== UuidType.TaxonomyTerm ||
     uuid.type !== TaxonomyTermType.ExerciseFolder
-  )
+  ) {
     return errorReturn
+  }
 
   return (
     <div className="mt-5 border-t-2 pt-6">
@@ -56,7 +60,13 @@ export function ArticleRelatedExercises({
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
+        <Icon
+          icon={
+            getIconByTypename(
+              TaxonomyTermType.ExerciseFolder
+            ) as EdtrIconDefinition
+          }
+        />
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
@@ -100,6 +110,7 @@ const fetchExerciseFolderQuery = gql`
   query fetchExerciseFolder($id: Int!) {
     uuid(id: $id) {
       ... on TaxonomyTerm {
+        __typename
         type
         children {
           nodes {

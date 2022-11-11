@@ -1,16 +1,17 @@
 import { faGrinStars } from '@fortawesome/free-solid-svg-icons/faGrinStars'
-import { tint } from 'polished'
 import { useState, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { theme } from '@/theme'
+import { colors } from '@/helper/colors'
 
 interface ProfileActivityGraphProps {
   value: number
   maxValue: number
   title: string
 }
+
+const mutedBrightBackgroundGreen = '#EDFAC5'
 
 const maxLevel = 5
 const fullRadius = 50
@@ -64,16 +65,8 @@ export function ProfileActivityGraph({
   function renderLegendary() {
     return (
       <>
-        <FaIcon
-          icon={faGrinStars}
-          className="text-brandgreen-light h-32 w-32"
-        />
-        <p
-          className="font-bold text-xl"
-          style={{ color: theme.colors.brandGreen }}
-        >
-          {value}
-        </p>
+        <FaIcon icon={faGrinStars} className="text-brandgreen-100 h-32 w-32" />
+        <p className="font-bold text-xl text-brandgreen">{value}</p>
       </>
     )
   }
@@ -92,7 +85,7 @@ export function ProfileActivityGraph({
             cy={fullRadius}
             style={{
               fill: 'none',
-              stroke: tint(0.85, theme.colors.brandGreen),
+              stroke: mutedBrightBackgroundGreen,
               strokeWidth: radiusStep,
             }}
           />
@@ -102,7 +95,7 @@ export function ProfileActivityGraph({
             cy={fullRadius}
             style={{
               fill: 'none',
-              stroke: tint(0.5, theme.colors.brandGreen),
+              stroke: colors.brandGreen300,
               strokeWidth: radiusStep,
               transition: 'all ease 3s',
               transformOrigin: 'center',
@@ -115,7 +108,7 @@ export function ProfileActivityGraph({
             r={innerRadius}
             cx={fullRadius}
             cy={fullRadius}
-            style={{ fill: theme.colors.brandGreen }}
+            style={{ fill: colors.brandGreen }}
           />
           <text
             className="font-bold text-white fill-current"

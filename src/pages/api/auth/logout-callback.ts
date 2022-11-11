@@ -20,7 +20,7 @@ async function callback(req: NextApiRequest, res: NextApiResponse) {
   if (csrf !== req.cookies['auth-csrf']) return fail('CSRF validation failed')
 
   try {
-    const token = JSON.parse(req.cookies['auth-token']) as Token
+    const token = JSON.parse(req.cookies['auth-token']!) as Token
     const accessToken = oauth2ClientCredentials.createToken(token)
     await accessToken.revokeAll()
   } catch (e) {

@@ -50,6 +50,7 @@ module.exports = {
     '@typescript-eslint/no-useless-constructor': 'error',
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/restrict-template-expressions': 'error',
+    '@typescript-eslint/no-misused-promises': 'off',
 
     // eslint-plugin-import
     'import/export': 'error',
@@ -126,6 +127,14 @@ module.exports = {
 
     // eslint-plugin-next
     '@next/next/no-img-element': 'off',
+
+    // styledjsx exceptions
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx', 'global'],
+      },
+    ],
   },
   settings: {
     'import/internal-regex': '^@/',

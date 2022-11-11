@@ -1,4 +1,3 @@
-const { tint, lighten } = require('polished')
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
@@ -15,24 +14,35 @@ module.exports = {
       colors: {
         brand: {
           DEFAULT: brand,
-          light: tint(0.3, brand), // <- lightBlue
-          lighter: tint(0.55, brand), // <- lighterBlue
-          300: tint(0.73, brand),
-          150: tint(0.85, brand), // <-lightBlueBackground
-          100: tint(0.94, brand), // <- bluewhite
-          50: tint(0.96, brand), // <- lightBackground
+          50: '#F4F9FC',
+          100: '#EFF7FB',
+          150: '#D9EBF5',
+          200: '#D9EBF5',
+          300: '#BBDCED',
+          400: '#8EC5E2',
+          500: '#51A5D1',
+          600: brand,
         },
         brandgreen: {
           DEFAULT: brandGreen,
-          light: lighten(0.35, brandGreen),
-          lighter: lighten(0.45, brandGreen),
+          50: '#EDFAC5',
+          100: '#DDF299',
+          200: '#CFED6D',
+          300: '#B9D957',
+          400: '#9FC91C',
+          500: brandGreen,
+          // 600: '#81A317',
+          // 700: '#6D8A13',
+          // 800: '#5B7310',
+          // 900: '#45570C',
+          muted: '#cfe097',
         },
         truegray: colors.neutral,
         berry: '#857189',
         newgreen: '#2fceb1',
         yellow: {
           DEFAULT: yellow,
-          200: tint(0.75, yellow),
+          200: '#FFEED7',
         },
         orange: {
           DEFAULT: colors.orange[900],
@@ -97,6 +107,7 @@ module.exports = {
         'circled-and-arrow':
           "url('/_assets/img/landing/circled_and_arrow.svg')",
         underlined: "url('/_assets/img/landing/underlined.svg')",
+        'underlined-simple': "url('/_assets/img/landing/simple-underline.svg')",
         wiggle: "url('/_assets/img/landing/wiggle.svg')",
       },
       minHeight: {
@@ -163,6 +174,9 @@ module.exports = {
         '.special-hyphens-auto': {
           hyphens: 'auto',
         },
+        '.special-hyphens-initial': {
+          hyphens: 'initial',
+        },
         'special-no-page-breaks-inside': {
           'page-break-inside': 'avoid',
         },
@@ -175,22 +189,26 @@ module.exports = {
 }
 
 function extractCSSClasses() {
-  const css = require('fs').readFileSync(
-    require('path').join(
-      __dirname,
-      '/src/assets-webkit/styles/serlo-tailwind.css'
-    ),
-    'utf-8'
-  )
+  try {
+    const css = require('fs').readFileSync(
+      require('path').join(
+        __dirname,
+        '/src/assets-webkit/styles/serlo-tailwind.css'
+      ),
+      'utf-8'
+    )
 
-  const regex = /\.serlo\-[^ \:\{\n,]+/gm
-  let m = ''
-  const components = {}
+    const regex = /\.serlo\-[^ \:\{\n,]+/gm
+    let m = ''
+    const components = {}
 
-  while ((m = regex.exec(css)) !== null) {
-    // The result can be accessed through the `m`-variable.
-    components[m[0]] = {}
+    while ((m = regex.exec(css)) !== null) {
+      // The result can be accessed through the `m`-variable.
+      components[m[0]] = {}
+    }
+
+    return components
+  } catch (error) {
+    // don't run on client, no problem
   }
-
-  return components
 }

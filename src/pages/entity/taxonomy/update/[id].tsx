@@ -1,4 +1,4 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons/faTrashAlt'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -21,12 +21,12 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   useCreateEntityLinkMutation,
   useDeleteEntityLinkMutation,
-} from '@/helper/mutations/taxonomyTerm'
-import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { showToastNotice } from '@/helper/show-toast-notice'
+} from '@/mutations/taxonomyTerm'
 
 interface UpdateTaxonomyLinksProps {
   id: number
@@ -95,7 +95,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
       <div className="py-3 border-b-2 flex">
         <button
           onClick={() => onDelete(term.id)}
-          className="serlo-button-blue-transparent mr-2 text-brand-lighter"
+          className="serlo-button-blue-transparent mr-2 text-brand-400"
         >
           <FaIcon icon={faTrashAlt} />
         </button>

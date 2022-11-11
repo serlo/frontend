@@ -14,8 +14,8 @@ import {
   LicensesForInstaceQueryVariables,
   Instance,
 } from '@/fetcher/graphql-types/operations'
-import { useEntityUpdateLicenseMutation } from '@/helper/mutations/use-entity-update-license-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { useEntityUpdateLicenseMutation } from '@/mutations/use-entity-update-license-mutation'
 
 interface UpdateLicenseProps {
   id: number
@@ -66,7 +66,7 @@ function Content({ id, licenses }: UpdateLicenseProps) {
   function renderOption(license: UpdateLicenseProps['licenses'][number]) {
     return (
       <option
-        className="bg-brand-150 text-brand"
+        className="bg-brand-200 text-brand"
         key={license.id}
         value={license.id}
       >

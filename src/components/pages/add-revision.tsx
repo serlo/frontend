@@ -1,8 +1,9 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
+import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
@@ -13,30 +14,26 @@ import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
-import { useAddPageRevision } from '@/helper/mutations/use-add-page-revision-mutation'
+import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
   AddPageRevisionMutationData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
-} from '@/helper/mutations/use-set-entity-mutation/types'
-import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
-import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
+} from '@/mutations/use-set-entity-mutation/types'
+import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
+import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
 
 export function AddRevision({
   initialState,
   type,
   needsReview,
   id,
+  taxonomyParentId,
   breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
 
   const auth = useAuthentication()
-
-  const backlink = {
-    label: strings.revisions.toContent,
-    url: `/${id}`,
-  }
 
   const setEntityMutation = useSetEntityMutation()
   const addPageRevision = useAddPageRevision()
@@ -58,7 +55,7 @@ export function AddRevision({
       set since this seems to be the only cookie legacy actually removes,
       but since it's http-only this workaround is way easier.
       The fetch also makes sure the CSRF tokens are set
-      This is only a hack until we rely on the API to save content
+      This is only a hack until we don't use legacy authentication any more 
       */
 
       try {
@@ -79,6 +76,10 @@ export function AddRevision({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const isPage = type === UuidType.Page
+
+  if (!id && !isPage && !taxonomyParentId) return null
+
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
     return (
@@ -86,15 +87,17 @@ export function AddRevision({
         Sorry, Something is wrong!
         <br />
         Please: Logout and Login again and try to edit again.
+        <br />
+        <br />
+        If that does not work head to{' '}
+        <Link href="/auth/login">/auth/login</Link> and make sure you are logged
+        in there.
       </StaticInfoPanel>
     )
 
   return (
     <>
-      <Breadcrumbs
-        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
-        noIcon
-      />
+      {renderBacklink()}
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
@@ -136,7 +139,8 @@ export function AddRevision({
                     //@ts-expect-error resolve when old code is removed
                     dataWithType,
                     _needsReview,
-                    initialState
+                    initialState,
+                    taxonomyParentId
                   )
 
             return new Promise((resolve, reject) => {
@@ -150,4 +154,17 @@ export function AddRevision({
       </div>
     </>
   )
+
+  function renderBacklink() {
+    const backlink = {
+      label: isPage ? 'Pages' : strings.revisions.toContent,
+      url: isPage ? '/pages' : `/${id ?? taxonomyParentId!}`,
+    }
+    return (
+      <Breadcrumbs
+        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
+        asBackButton={!breadcrumbsData}
+      />
+    )
+  }
 }

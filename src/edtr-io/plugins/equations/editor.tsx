@@ -12,9 +12,10 @@ import {
   getFocused,
   isEmpty,
 } from '@edtr-io/store'
-import { edtrDragHandle, EdtrIcon, faTimes, Icon, styled } from '@edtr-io/ui'
-import * as R from 'ramda'
-import * as React from 'react'
+import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
+import { includes } from 'ramda'
+import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { EquationsProps, stepProps } from '.'
@@ -33,6 +34,7 @@ import {
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 enum StepSegment {
   Left = 0,
@@ -63,7 +65,7 @@ export function EquationsEditor(props: EquationsProps) {
   const focusedElement = useScopedSelector(getFocused())
   const nestedFocus =
     focused ||
-    R.includes(
+    includes(
       focusedElement,
       props.state.steps.map((step) => step.explanation.id)
     ) ||
@@ -90,7 +92,7 @@ export function EquationsEditor(props: EquationsProps) {
     },
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (nestedFocus) {
       gridFocus.setFocus({
         row: 0,
@@ -213,7 +215,9 @@ export function EquationsEditor(props: EquationsProps) {
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
-                                    <Icon icon={faTimes} />
+                                    <Icon
+                                      icon={faXmark as EdtrIconDefinition}
+                                    />
                                   </RemoveButton>
                                 </td>
                               </tr>
@@ -387,6 +391,7 @@ function StepEditor(props: StepEditorProps) {
               Sign.LessThan,
               Sign.GreaterThanOrEqual,
               Sign.LessThanOrEqual,
+              Sign.NotEqualTo,
               Sign.AlmostEqualTo,
               Sign.Estimates,
             ].map((sign) => {
@@ -467,7 +472,7 @@ function InlineMath(props: InlineMathProps) {
     suffix = '',
   } = props
 
-  const preferences = React.useContext(PreferenceContext)
+  const preferences = useContext(PreferenceContext)
 
   return (
     <MathEditor
@@ -518,7 +523,7 @@ function useGridFocus({
   onFocusChanged: (args: GridFocusState) => void
   transformationTarget: TransformationTarget
 }): GridFocus {
-  const [focus, setFocusState] = React.useState<GridFocusState | null>(null)
+  const [focus, setFocusState] = useState<GridFocusState | null>(null)
   const setFocus = (state: GridFocusState) => {
     onFocusChanged(state)
     setFocusState(state)

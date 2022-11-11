@@ -5,7 +5,7 @@ import { SubjectIcon } from './subject-icon'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
-import { theme } from '@/theme'
+import { colors } from '@/helper/colors'
 
 interface LandingSubjectsProps {
   data: LandingSubjectsData
@@ -64,9 +64,9 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             width: auto;
             transition: color 0.4s ease, background-color 0.4s ease;
 
-            @media (max-width: ${theme.breakpointsMax.sm}) {
+            @media (max-width: 799) {
               &:hover {
-                color: ${theme.colors.brand};
+                color: ${colors.brand};
                 background-color: transparent;
               }
             }
@@ -79,7 +79,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
         >
           {' '}
           <SubjectIcon subject={icon} />
-          <h2 className="group-hover:bg-brand-150 group-hover:text-brand serlo-button-blue-transparent">
+          <h2 className="group-hover:bg-brand-200 group-hover:text-brand serlo-button-blue-transparent">
             {title}
             <span className="align-middle ml-1.5">
               <FaIcon icon={faArrowCircleRight} />

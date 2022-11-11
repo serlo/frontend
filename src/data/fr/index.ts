@@ -9,11 +9,16 @@ export const instanceData = {
     header: {
       slogan: "La plateforme d'apprentissage libre",
       search: "Recherche",
-      login: "Se connecter"
+      login: "Se connecter",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
-      agree: 'Agree to use search'
+      agree: "Accepte d'utiliser la recherche"
     },
     footer: {
       summaryHeading: "Serlo.org est le Wikipedia pour l'apprentissage.",
@@ -31,9 +36,9 @@ export const instanceData = {
       folders: "Dossiers",
       exercises: "exercices",
       events: "Événements",
-      unrevised: 'Unrevised',
+      unrevised: "Non révisé",
       subterms: 'Subterms',
-      exercisesContent: 'Exercises Content'
+      exercisesContent: "Contenu des exercices"
     },
     entities: {
       applet: "applet",
@@ -43,14 +48,14 @@ export const instanceData = {
       event: "Événement",
       exercise: "Exercice",
       exerciseGroup: "Groupe d'exercices",
-      topic: 'Folder',
+      topic: "Dossier",
       groupedExercise: "Exercice groupé",
       page: "page",
       solution: "solution",
       taxonomyTerm: "Terme de taxonomie",
       user: "Utilisateur·Utilisatrice",
       video: "Vidéo",
-      exerciseFolder: 'Exercise folder',
+      exerciseFolder: "Dossier d'exercices",
       comment: "Commentaire",
       revision: "Révision",
       thread: 'Thread',
@@ -68,9 +73,11 @@ export const instanceData = {
       unrevisedRevisions: "Révisions non révisées",
       userEdits: 'Edits by %user%',
       userEditsMine: 'My Unrevised Revisions',
-      editProfile: 'Edit Profile & Settings',
-      recycleBin: 'Recycle Bin',
-      diagon: 'Diagon Alley'
+      editProfile: "Modifier le profil et les paramètres",
+      recycleBin: "Corbeille",
+      diagon: 'Diagon Alley',
+      discussions: 'Comments',
+      manageRoles: 'Manage User Roles'
     },
     roles: {
       donor: "Donneur·e",
@@ -86,9 +93,12 @@ export const instanceData = {
       pdf: "Télécharger comme PDF",
       pdfNoSolutions: "PDF sans solutions"
     },
-    edit: {
-      button: "Modifier",
-      unrevised: "Afficher les révisions non révisées",
+    editOrAdd: {
+      button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
+      unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
@@ -184,7 +194,8 @@ export const instanceData = {
       showMoreReplies: "Afficher %number% commentaires supplémentaires",
       hideReplies: 'Hide',
       showArchived: "Afficher les %threads% affichés",
-      copyLink: "Copier le lien du commentaire"
+      copyLink: "Copier le lien du commentaire",
+      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
     },
     revisions: {
       toOverview: "Retour à la vue d'ensemble",
@@ -220,8 +231,17 @@ export const instanceData = {
       status: "Statut"
     },
     unrevisedRevisions: {
-      supportLinks: "Comment réviser?",
-      guideline: "Aide à la révision",
+      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
+      reviewers: 'Reviewers',
+      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
+      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
+      contactPerson: 'LinaMaria',
+      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
+      help4: 'How to review? See our %guidelineLink%.',
+      guideline: 'Guideline for Reviewing',
+      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
+      subjectLinks: 'To Subjects',
       showMoreEntities: "Tout afficher dans %subject%",
       showMoreRevisions: "Afficher %number% plus…",
       newLabelText: "Nouveau",
@@ -322,9 +342,9 @@ export const instanceData = {
       setLicense: "%actor% a modifié la licence de %repository%.",
       createEntityLink: "%actor% a associé %child% à %parent%.",
       removeEntityLink: "%actor% a dissocié %child% de %parent%.",
-      createEntityRevision: "%actor% a créé une %revision% de %entity%.",
-      checkoutRevision: "%actor% a accepté une %revision% dans %repository%.",
-      rejectRevision: "%actor% n'a pas accepté une %revision% dans %repository%.",
+      createEntityRevision: '%actor% created %revision% of %entity%.',
+      checkoutRevision: '%actor% checked out %revision% in %repository%.',
+      rejectRevision: '%actor% did not accept %revision% in %repository%.',
       createTaxonomyLink: "%actor% a ajouté %child% à %parent%.",
       removeTaxonomyLink: "%actor% a retiré %child% de %parent%.",
       createTaxonomyTerm: "%actor% a créé %term%.",
@@ -425,6 +445,7 @@ export const loggedInData = {
       sortCoursePages: "Trier les pages du cours",
       sortGroupedExercises: "Trier les exercices groupés",
       edit: "Modifier",
+      editTax: 'Edit Title & Text',
       unrevisedEdit: "Afficher les révisions non révisées",
       organize: "Organiser",
       moveToGrouped: "Déplacer le contenu vers un autre exercice de texte groupé",
@@ -448,7 +469,7 @@ export const loggedInData = {
       noMails: "désactiver",
       getMails: "activer",
       noNotifications: "annuler",
-      loadedSentence: "%loadedCount% sur %totalCount% abonnements chargés.",
+      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
       loadMoreLink: "Charger plus!"
     },
     revisions: {
@@ -473,7 +494,8 @@ export const loggedInData = {
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
         updated: 'Successfully updated ✅',
-        generic: 'Success 🎉'
+        generic: 'Success 🎉',
+        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
       },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
@@ -486,6 +508,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Are you sure you want to leave without saving?",
+      noChangesWarning: "Nothing changed so there is no need to save yet",
       edtrIo: {
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
@@ -517,7 +540,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: "Une boîte réductible.",
         serloTable: 'Table',
-        serloTableDesc: '(new plugin in testing) Create tables',
+        serloTableDesc: 'Create pretty tables',
         table: "Tableau",
         tableDesc: "Créer un tableau avec Markdown.",
         video: "Vidéo",
@@ -525,6 +548,7 @@ export const loggedInData = {
         solutionSeparator: "Séparateur de solution",
         solutionSeparatorDesc: "Divisez la solution en différentes étapes.",
         save: "Sauvegarder",
+        saveWithReview: 'Save and get review',
         cancel: "Annuler",
         saving: "Sauvegarde…",
         missingChanges: "Tu dois remplir les modifications que tu as apportées",
@@ -534,7 +558,7 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Tu peux sauvegarder la révision localement, actualiser la page et essayer de sauvegarder à nouveau.",
         revisionSaved: "Révision sauvegardée",
         saveRevision: "Sauvegarder la révision",
-        changes: "Modifications",
+        changes: 'Describe your changes to the content',
         skipReview: "Passer la révision (non recommandé)",
         enableNotifs: "Activer les notifications par serlo.org",
         enableNotifsMail: "Activer les notifications par e-mail",
@@ -822,6 +846,7 @@ export const loggedInData = {
       recycleBin: 'Recycle Bin'
     },
     pages: {
+      newPage: 'Add new Page',
       deletedPages: 'Deleted Pages'
     },
     taxonomyTermTools: {
@@ -846,6 +871,9 @@ export const loggedInData = {
         title: 'Sort Entities',
         saveButtonText: 'Save order'
       }
+    },
+    roles: {
+      addButton: 'Add as %role%'
     }
   }
 };

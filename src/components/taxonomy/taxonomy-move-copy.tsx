@@ -1,5 +1,6 @@
-import { faCopy, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
+import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
@@ -26,12 +27,12 @@ import {
 } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   useCreateEntityLinkMutation,
   useDeleteEntityLinkMutation,
-} from '@/helper/mutations/taxonomyTerm'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { showToastNotice } from '@/helper/show-toast-notice'
+} from '@/mutations/taxonomyTerm'
 
 interface TaxonomyMoveCopyProps {
   taxonomyData: TaxonomyData

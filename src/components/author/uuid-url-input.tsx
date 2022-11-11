@@ -7,6 +7,7 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import {
   TaxonomyTermType,
   UuidSimpleQuery,
@@ -115,7 +116,14 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <Icon icon={getIconByTypename(uuid.__typename as UuidType)} /> {title}
+          <Icon
+            icon={
+              getIconByTypename(
+                uuid.__typename as UuidType
+              ) as EdtrIconDefinition
+            }
+          />{' '}
+          {title}
         </a>
         {renderButtons(
           uuid.__typename as UuidWithRevType,
@@ -148,7 +156,7 @@ const uuidSimpleQuery = gql`
 
 function useSimpleUuidFetch(maybeUuid: null | false | number) {
   return useGraphqlSwr<UuidSimpleQuery>({
-    noKey: maybeUuid === false,
+    noKey: !maybeUuid,
     query: uuidSimpleQuery,
     variables: { id: maybeUuid },
     config: {

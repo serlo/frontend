@@ -26,9 +26,9 @@ import {
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
 import { FrontendExerciseNode } from '@/frontend-node-types'
-import { useEntitySortMutation } from '@/helper/mutations/use-entity-sort-mutation'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'
 
 // this duplicates some code from /taxonomy/term/sort… but since this feature here is only temporary I'm okay with that
 

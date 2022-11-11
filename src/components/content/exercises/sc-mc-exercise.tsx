@@ -102,8 +102,6 @@ export function ScMcExercise({
           onClick={() => {
             setShowFeedback(true)
           }}
-          //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
-          onPointerUp={(e) => e.currentTarget.blur()}
         >
           {selected !== undefined
             ? exStrings.check
@@ -116,12 +114,17 @@ export function ScMcExercise({
   }
 
   function renderMultipleChoice() {
+    const correctCount = answers.filter((answer) => answer.isCorrect).length
     const selectedCount = selectedArray.filter(Boolean).length
-    let missedCount = 0
-    const correct = answers.every((answer, i) => {
-      if (answer.isCorrect && selectedArray[i] === false) missedCount++
-      return answer.isCorrect === selectedArray[i]
-    })
+    const selectedCorrectCount = answers.filter(
+      (answer, i) => answer.isCorrect && selectedArray[i]
+    ).length
+    const selectedFalseCount = selectedCount - selectedCorrectCount
+    const allCorrect =
+      selectedCorrectCount === correctCount && selectedFalseCount === 0
+    const missedSome =
+      selectedCorrectCount > 0 && !allCorrect && selectedFalseCount === 0
+
     return (
       <div className="mx-side mb-block">
         <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
@@ -170,17 +173,13 @@ export function ScMcExercise({
           })}
         </ul>
         {showFeedback && (
-          <Feedback
-            correct={correct}
-            missedSome={selectedCount > 0 && missedCount > 0}
-          />
+          <Feedback correct={allCorrect} missedSome={missedSome} />
         )}
         <button
           className="serlo-button-blue mt-4"
           onClick={() => {
             setShowFeedback(true)
           }}
-          onPointerUp={(e) => e.currentTarget.blur()}
         >
           {exStrings.check}
         </button>

@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
@@ -84,6 +84,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       | KeyboardEvent<HTMLInputElement>
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
+    event.preventDefault()
     submitEvent('quickbar-direct-hit')
     const url = `/${id}`
 
@@ -131,7 +132,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     return (
       <input
         type="text"
-        className="border-2 border-brand-150 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
+        className="border-2 border-brand-200 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder ?? '... heute lerne ich'}
@@ -155,7 +156,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
           }, 0)
         }}
       >
-        <FaIcon icon={faTimes} />
+        <FaIcon icon={faXmark} />
       </div>
     )
   }
@@ -176,6 +177,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                 key={i}
                 className="serlo-link cursor-pointer hover:no-underline group"
                 onClick={(e) => goToResult(x.entry.id, e)}
+                href={`/${x.entry.id}`}
               >
                 <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
                   <span className="text-sm text-gray-700">
