@@ -19,6 +19,7 @@ import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLin
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
 import { EdtrIconDefinition } from './edtr-icon-defintion'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
