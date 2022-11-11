@@ -76,6 +76,8 @@ export function AddRevision({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (!setEntityMutation) return null
+
   const isPage = type === UuidType.Page
 
   if (!id && !isPage && !taxonomyParentId) return null

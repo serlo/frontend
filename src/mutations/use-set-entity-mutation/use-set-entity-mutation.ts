@@ -44,11 +44,7 @@ export function useSetEntityMutation() {
   const mutationFetch = useMutationFetch()
   const router = useRouter()
 
-  if (!loggedInData) {
-    const msg = 'Please make sure you are logged in!'
-    showToastNotice(msg, 'warning')
-    throw new Error(msg)
-  }
+  if (!loggedInData) return false
   const mutationStrings = loggedInData.strings.mutations
 
   return async (
