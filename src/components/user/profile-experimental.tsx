@@ -9,7 +9,7 @@ export const features = {
   edtrPasteHack: {
     cookieName: 'useEdtrPasteHack',
     isActive: false,
-    activeInDev: false,
+    activeInDev: true,
     hideInProduction: true,
   },
   legacyDesign: {
