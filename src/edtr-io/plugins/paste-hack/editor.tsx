@@ -23,15 +23,12 @@ const StateDecoder = t.strict({
         t.literal('geogebra'),
         t.literal('anchor'),
         t.literal('video'),
-        t.literal('table'),
         t.literal('serloTable'),
         t.literal('highlight'),
         t.literal('injection'),
         t.literal('layout'),
         t.literal('multimedia'),
         t.literal('spoiler'),
-        t.literal('important'),
-        t.literal('blockquote'),
         t.literal('box'),
         t.literal('image'),
         t.literal('text'),
@@ -59,29 +56,28 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
   function replaceWithStateString() {
     if (!textareaRef.current || !textareaRef.current.value) return
-    const decoded = StateDecoder.decode(JSON.parse(textareaRef.current.value))
-
-    if (E.isLeft(decoded)) return throwError()
-
-    const content = decoded.right
 
     try {
+      const decoded = StateDecoder.decode(JSON.parse(textareaRef.current.value))
+
+      if (E.isLeft(decoded)) return throwError()
+
+      const content = decoded.right
+
       const parentPlugin = getParent(props.id)(store.getState())
 
       if (
         parentPlugin == null ||
         serializeDocument(parentPlugin.id)(store.getState())?.plugin !== 'rows'
       ) {
-        const msg = 'only use on rows plugin!'
+        const msg = 'Paste plugin can only be used inside a rows plugin!'
         showToastNotice(msg)
         // eslint-disable-next-line no-console
         console.error(msg)
         return
       }
 
-      const documents = content.plugin === 'rows' ? content.state : [content]
-
-      for (const document of documents) {
+      for (const document of content.state) {
         store.dispatch(
           insertChildBefore({
             parent: parentPlugin.id,
