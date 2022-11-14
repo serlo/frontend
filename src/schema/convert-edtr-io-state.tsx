@@ -3,7 +3,7 @@ import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
-import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
+import { EdtrState, UnknownEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
 import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
@@ -21,7 +21,7 @@ function isEdtrState(node: ConvertData): node is EdtrState {
 
 export type ConvertData =
   | EdtrState
-  | UnsupportedEdtrState
+  | UnknownEdtrState
   | FrontendContentNode
   | NewNode
 
