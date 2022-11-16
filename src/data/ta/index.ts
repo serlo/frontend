@@ -415,7 +415,7 @@ export const loggedInData = {
       url: '/user/settings',
       title: 'Settings'
     }, {
-      url: getLogoutUrl(),
+      url: '/auth/logout',
       title: "வெளியேறு"
     }]
   }],

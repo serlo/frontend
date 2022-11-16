@@ -489,7 +489,7 @@ export const loggedInData = {
           title: 'Settings',
         },
         {
-          url: getLogoutUrl(),
+          url: '/auth/logout',
           title: 'Log out',
         },
       ],
