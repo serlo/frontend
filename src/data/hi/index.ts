@@ -1,5 +1,4 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
-import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: Instance["Hi"],
@@ -410,7 +409,7 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "सब्सक्रिप्शन"
     }, {
-      url: getPasswordChangeUrl(),
+      url: '/auth/settings',
       title: "पासवर्ड परिवर्तित करें"
     }, {
       url: '/user/settings',
