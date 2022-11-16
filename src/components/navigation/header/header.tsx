@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from '../../content/link'
 import { Menu } from './menu/menu'
 import { MobileMenuButton } from './mobile-menu-button'
+import { SkipMenu } from './skip-menu'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -34,6 +35,7 @@ export function Header() {
         'pb-9 bg-[url("/_assets/img/header-curve.svg")] bg-no-repeat bg-bottom bg-[length:100vw_3rem]'
       )}
     >
+      <SkipMenu />
       <div className="pt-3 pb-6 px-side lg:px-side-lg">
         <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
           {renderLogo()}

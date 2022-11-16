@@ -8,7 +8,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 export function FooterNew() {
   const { footerData } = useInstanceData()
   return (
-    <footer className="px-side lg:px-36 pb-10 font-bold text-truegray-700 bg-brand-100">
+    <footer
+      id="footer"
+      className="px-side lg:px-36 pb-10 font-bold text-truegray-700 bg-brand-100"
+    >
       <Separator />
       <FooterNavNew />
       <Separator />

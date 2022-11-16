@@ -12,7 +12,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 export function Footer() {
   const { footerData } = useInstanceData()
   return (
-    <footer>
+    <footer id="footer">
       <About />
       <FooterNav data={footerData.footerNavigation} />
     </footer>

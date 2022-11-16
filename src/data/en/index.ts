@@ -13,6 +13,11 @@ export const instanceData = {
       slogan: 'The Open Learning Platform',
       search: 'Search',
       login: 'Login',
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy:

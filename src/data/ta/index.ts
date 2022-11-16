@@ -10,7 +10,12 @@ export const instanceData = {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",
       search: "தேடுக",
-      login: "உள்நுழை"
+      login: "உள்நுழை",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',

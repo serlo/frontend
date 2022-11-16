@@ -27,6 +27,7 @@ import { injectionPlugin } from './plugins/injection'
 import { layoutPlugin } from './plugins/layout'
 import { createPageLayoutPlugin } from './plugins/page-layout'
 import { pageTeamPlugin } from './plugins/page-team'
+import { pasteHackPlugin } from './plugins/paste-hack'
 import { separatorPlugin } from './plugins/separator'
 import { serloTablePlugin } from './plugins/serlo-table'
 import { solutionPlugin } from './plugins/solution'
@@ -271,6 +272,7 @@ export function createPlugins({
     layout: layoutPlugin,
     pageLayout: createPageLayoutPlugin(editorStrings),
     pageTeam: pageTeamPlugin,
+    pasteHack: pasteHackPlugin,
     multimedia: createMultimediaExplanationPlugin({
       explanation: {
         plugin: 'rows',
