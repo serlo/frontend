@@ -52,8 +52,9 @@ export function CommentArea({
   const canDo = useCanDo()
 
   const showAll =
-    typeof window !== 'undefined' &&
-    window.location.hash.startsWith('#comment-')
+    (typeof window !== 'undefined' &&
+      window.location.hash.startsWith('#comment-')) ||
+    highlightedCommentId !== undefined
 
   return (
     <>
