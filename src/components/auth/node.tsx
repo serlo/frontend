@@ -1,8 +1,10 @@
 import { faSpinner } from '@edtr-io/ui'
+import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'
 import { UiNode } from '@ory/client'
 import { getNodeLabel, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import clsx from 'clsx'
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { Message } from '@/components/auth/message'
@@ -16,7 +18,6 @@ export interface NodeProps {
   value: unknown
   onChange: (value: unknown) => void
   onSubmit: (e: FormEvent | MouseEvent, method?: string) => Promise<void>
-  // dispatchSubmit: FormDispatcher
   isLoading?: boolean
 }
 
@@ -24,6 +25,7 @@ export function Node(props: NodeProps) {
   const { node, onChange, onSubmit, value, disabled, isLoading } = props
   const { attributes } = node
   const { strings } = useInstanceData()
+  const [showPassword, setShowPassword] = useState(false)
 
   if (isUiNodeInputAttributes(attributes)) {
     const shortName = attributes.name.replace('traits.', '')
@@ -54,16 +56,9 @@ export function Node(props: NodeProps) {
         )
 
       case 'checkbox':
-        triggerSentry({
-          message:
-            'kratos: tried to render checkbox input node which is not implemented yet',
-        })
-        return null
-
       case 'button':
         triggerSentry({
-          message:
-            'kratos: tried to render button input node which is not implemented yet',
+          message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
         })
         return null
 
@@ -88,20 +83,21 @@ export function Node(props: NodeProps) {
 
       default:
         if (attributes.disabled || !attributes.required) return null
-        // TODO: this possibly contains "required" and "pattern"
-        //className={clsx(!attributes.required && 'opacity-50')} {attributes.required ? '*' : ' (optional)'}
 
         return (
           <div>
             <label
-              className={clsx('block my-4', attributes.required && 'font-bold')}
+              className={clsx('block my-6', attributes.required && 'font-bold')}
             >
-              {fieldName}
-              <br />
+              <span className="flex justify-between content-end">
+                {fieldName}
+                {attributes.type === 'password' ? renderShowHide() : null}
+              </span>
               <input
                 className="text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-150 focus:bg-brand-150 outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full"
-                type={attributes.type}
+                type={showPassword ? 'text' : attributes.type}
                 name={attributes.name}
+                pattern={attributes.pattern}
                 value={(value as string) ?? ''}
                 disabled={disabled}
                 onChange={(e) => {
@@ -120,4 +116,19 @@ export function Node(props: NodeProps) {
     message: 'kratos: tried to render a node which is not an input node',
   })
   return null
+
+  function renderShowHide() {
+    return (
+      <button
+        onClick={(e) => {
+          e.preventDefault()
+          setShowPassword(!showPassword)
+        }}
+        className="serlo-button-blue-transparent text-base py-0 mr-1.5 mb-0.5 align-super"
+      >
+        <FaIcon icon={showPassword ? faEyeSlash : faEye} />{' '}
+        {showPassword ? 'hide' : 'show'}
+      </button>
+    )
+  }
 }
