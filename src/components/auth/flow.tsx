@@ -1,5 +1,3 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import {
   SelfServiceLoginFlow,
   SelfServiceRecoveryFlow,
@@ -15,13 +13,21 @@ import {
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
-import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
+import {
+  Dispatch,
+  FormEvent,
+  Fragment,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from 'react'
 
-import { StaticInfoPanel } from '../static-info-panel'
+import { filterUnwantedRedirection } from '../pages/auth/utils'
+import { Messages } from './messages'
 import type { AxiosError } from '@/auth/types'
-import { Message } from '@/components/auth/message'
 import { Node } from '@/components/auth/node'
 import type { InstanceData } from '@/data-types'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface FlowProps<T extends SubmitPayload> {
@@ -33,6 +39,7 @@ export interface FlowProps<T extends SubmitPayload> {
     | SelfServiceVerificationFlow
   onSubmit: (values: T) => Promise<void>
   only?: string
+  contentBeforeSubmit?: ReactNode
 }
 
 export enum FlowType {
@@ -54,10 +61,11 @@ export function Flow<T extends SubmitPayload>({
   flow,
   only,
   onSubmit,
+  contentBeforeSubmit,
 }: FlowProps<T>) {
   const [isLoading, setIsLoading] = useState(false)
 
-  const { action, method, messages, nodes } = flow.ui
+  const { action, method, nodes, messages } = flow.ui
   const filteredNodes = only
     ? nodes.filter((node) => node.group === 'default' || node.group === only)
     : nodes
@@ -86,14 +94,18 @@ export function Flow<T extends SubmitPayload>({
         void handleSubmit(e)
       }}
     >
-      {renderMessages()}
+      <Messages messages={messages} />
 
-      <div className="mx-side max-w-[18rem]">
+      <div className="mx-side">
         {filteredNodes.map((node) => {
+          const isSubmit =
+            hasOwnPropertyTs(node.attributes, 'type') &&
+            node.attributes.type === 'submit'
           const id = getNodeId(node)
 
           return (
             <Fragment key={id}>
+              {isSubmit && contentBeforeSubmit ? contentBeforeSubmit : null}
               <Node
                 node={node}
                 disabled={isLoading}
@@ -115,30 +127,6 @@ export function Flow<T extends SubmitPayload>({
       </div>
     </form>
   )
-
-  function renderMessages() {
-    return (
-      <div className="mx-side">
-        {messages
-          ? messages.map((uiText) => {
-              const { id, type } = uiText
-
-              const panelType = type === 'info' ? 'info' : 'warning'
-
-              return (
-                <StaticInfoPanel
-                  key={id}
-                  type={panelType}
-                  icon={type === 'info' ? faInfoCircle : faWarning}
-                >
-                  <Message uiText={uiText} />
-                </StaticInfoPanel>
-              )
-            })
-          : null}
-      </div>
-    )
-  }
 
   function handleSubmit(e: FormEvent | MouseEvent, method?: string) {
     e.stopPropagation()
@@ -189,13 +177,16 @@ export function handleFlowError<S>(
       case 'session_already_available': {
         showToastNotice(strings.notices.alreadyLoggedIn)
 
-        const previousPathname = sessionStorage.getItem('previousPathname')
-        const previousPathOrHome =
-          previousPathname &&
-          previousPathname !== sessionStorage.getItem('currentPathname')
-            ? previousPathname
-            : '/'
-        await router.push(previousPathOrHome)
+        const redirection = filterUnwantedRedirection({
+          desiredPath: sessionStorage.getItem('previousPathname'),
+          unwantedPaths: [
+            '/auth/verification',
+            '/auth/login',
+            '/auth/registration',
+          ],
+        })
+
+        await router.push(redirection)
         return
       }
       case 'session_refresh_required':

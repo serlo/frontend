@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -83,11 +84,28 @@ export function Verification() {
       )
   }
 
-  return flow ? (
-    <>
-      <PageTitle headTitle title={strings.auth.verifyTitle} />
-      {strings.auth.verifyInstructions}
-      <Flow onSubmit={onSubmit} flow={flow} />
-    </>
-  ) : null
+  return (
+    <div className="max-w-[30rem] mx-auto">
+      <PageTitle headTitle title={`${strings.auth.verifyTitle} ✅`} extraBold />
+      {flow ? (
+        <>
+          <p className="serlo-p">{strings.auth.verifyInstructions}</p>
+          <Flow onSubmit={onSubmit} flow={flow} />
+        </>
+      ) : (
+        <LoadingSpinner noText />
+      )}
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
+    </div>
+  )
 }

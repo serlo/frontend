@@ -1,4 +1,3 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import {
   SelfServiceSettingsFlow,
   SubmitSelfServiceSettingsFlowBody,
@@ -10,7 +9,6 @@ import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
-import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function Settings() {
@@ -51,14 +49,14 @@ export function Settings() {
   }, [flowId, router, router.isReady, returnTo, flow, strings])
 
   return (
-    <>
+    <div className="max-w-[30rem] mx-auto">
       <PageTitle
         headTitle
-        icon={<FaIcon icon={faUser} />}
-        title="Profile Management and Security Settings"
+        title={`${strings.auth.settings.title} ✨`}
+        extraBold
       />
 
-      <h2 className="serlo-h3">{strings.auth.changePassword}</h2>
+      <p className="serlo-p">{strings.auth.settings.instruction}</p>
 
       {flow ? (
         <Flow
@@ -68,7 +66,18 @@ export function Settings() {
           flow={flow}
         />
       ) : null}
-    </>
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
+    </div>
   )
 
   function onSubmit(values: SubmitSelfServiceSettingsFlowBody) {

@@ -10,6 +10,7 @@ import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -64,7 +65,8 @@ export function Registration() {
 
   return (
     <>
-      <PageTitle headTitle title={strings.auth.registerTitle} />
+      <PageTitle headTitle title={strings.auth.registerTitle} extraBold />
+
       {isSuccessfullySubmitted ? (
         <StaticInfoPanel key={1} type="info" icon={faInfoCircle}>
           {strings.auth.messages[1080001]}{' '}
@@ -76,13 +78,39 @@ export function Registration() {
           </Link>
         </StaticInfoPanel>
       ) : null}
-      {flow ? <Flow flow={flow} onSubmit={onSubmit} /> : null}
-      {renderAgreement()}
+
+      {flow ? (
+        <div className="pb-8 flex mx-auto">
+          <Flow
+            flow={flow}
+            onSubmit={onSubmit}
+            contentBeforeSubmit={renderAgreement()}
+          />
+          <img
+            src="/_assets/img/community-menu-bird.svg"
+            className="hidden mobile:block w-[33vw] md:w-64 px-side -mt-44"
+          />
+        </div>
+      ) : (
+        <LoadingSpinner noText />
+      )}
+
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
     </>
   )
 
   function renderAgreement() {
-    return replacePlaceholders(strings.auth.registrationAgreement, {
+    const text = replacePlaceholders(strings.auth.registrationAgreement, {
       signup: <em>{strings.auth.signUp}</em>,
       privacypolicy: (
         <a
@@ -103,5 +131,6 @@ export function Registration() {
         </a>
       ),
     })
+    return <div className="mt-12">{text}</div>
   }
 }

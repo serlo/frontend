@@ -321,7 +321,7 @@ export const instanceData = {
     notices: {
       welcome: '👋 Welcome %username%!',
       bye: '👋 See you soon!',
-      alreadyLoggedIn: 'Welcome back - you are already logged in',
+      alreadyLoggedIn: '👋 Hi! You are already logged in',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -336,16 +336,19 @@ export const instanceData = {
     auth: {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.',
-      registerTitle: 'Register new account',
+      registerTitle: 'Register your Serlo Account',
       recoverTitle: 'Recover your account',
-      recoveryInstructions: 'Insert your email and click on submit to receive an email in order to reset your password.',
+      recoveryInstructions: 'Insert and submit your email address. We will then send you an email with a reset link.',
       verifyTitle: 'Verify your email',
-      verifyInstructions: 'Insert your email and click on submit to receive a verification email.',
-      changePassword: 'Insert new password',
-      loggingOut: 'Logging you out…',
+      verifyInstructions: 'Insert and submit your email address to verify it.',
+      settings: {
+        title: "Change your password",
+        instruction: 'Insert your new password.',
+      },
+      loggingOut: 'Logging you out …',
       login: {
         confirmAction: 'Confirm Action',
-        signIn: 'Sign In',
+        signIn: 'Sign in to your Account',
         logOut: 'Log out',
         newHere: 'Are you new here?',
         registerNewAccount: 'Register new account',
@@ -360,6 +363,10 @@ export const instanceData = {
       },
       messages: {
         1010003: 'Please confirm this action by verifying that it is you.',
+        1010001: 'Sign in',
+        1010013: 'Continue',
+        1040001: 'Register',
+        1040003: 'Continue',
         1050001: 'Your changes have been saved! 🎉',
         1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         1060002: 'An email containing a recovery link has been sent to the email address you provided.',
@@ -988,69 +995,78 @@ export const loggedInData = {
     }
   },
 }
+
 export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: '👉 Access to your Serlo account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-please recover access to your account by opening the following link in your browser:
-
+are you trying to get access to your account again? If not please just ignore this mail.
+ 
+To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}`,
-      body: `👋 Hi {{ .Identity.traits.username }},
-please recover access to your account by clicking the following link:
-
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a>`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b></p>,
+<p>are you trying to get access to your account again? If not please just ignore this mail.</p>
+ 
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`,
     },
     invalid: {
       subject: '👉 Account access attempted',
-      'body.plaintext': `👋 Hi,
+      'body.plaintext': `👋 Hi there!
 
-you (or someone else) entered this email address when trying to recover access to an account.
+You (or someone else) entered this email address when trying to recover access to an account at serlo.org.
 
-However, this email address is not on our database of registered users and therefore the attempt has failed.
+But this email address is not linked to a user in our website and therefore the attempt failed.
 
-If this was you, check if you signed up using a different address.
+If it was you, check if you signed up using a different address.
 
-If this was not you, please ignore this email.`,
-      body: `👋 Hi,
+Otherwise please just ignore this email.
 
-you (or someone else) entered this email address when trying to recover access to an account.
-
-However, this email address is not on our database of registered users and therefore the attempt has failed.
-
-If this was you, check if you signed up using a different address.
-
-If this was not you, please ignore this email.`,
+✌️`,
+      body: `<p>👋 Hi there!</p>
+<p>You (or someone else) entered this email address when trying to recover access to an account at <a href="https://serlo.org">serlo.org</a>. </p>
+<p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
+<p>If it was you, check if you signed up using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
+<p>✌️</p>`,
     }
   },
   verification: {
     valid: {
       subject: '👋 Please verify your email address',
       'body.plaintext': `Hi {{ .Identity.traits.username }},
-please verify your account by clicking the following link:
 
-{{ .VerificationURL }}`,
-      body: `👋 Hi  {{ .Identity.traits.username }}, welcome to Serlo!
-Please verify your account by clicking the following link:
+      We are excited to have you at serlo.org 🎉
 
-<a href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>`,
+      Please verify your brand new account by clicking the following link:
+
+{{ .VerificationURL }}
+
+Your Community-Support 💚`,
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>We are excited to have you at serlo.org 🎉</p>
+<p>Please verify your account by clicking the following link:<br/>
+<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Your Community-Support 💚</p>
+      `,
     },
     invalid: {
       subject: `👋 Someone tried to verify this email address`,
-      'body.plaintext': `👋 Hi,
+      'body.plaintext': `👋 Hi there,
 
-someone asked to verify this email address, but we were unable to find an account for this address.
+Someone asked to verify this email address, but we were unable to find an account at serlo.org for this address.
 
-If this was you, check if you signed up using a different address.
+If it was you, check if you registered using a different address.
 
-If this was not you, please ignore this email.`,
-      body: `👋 Hi,
+Otherwise, please just ignore this email.
 
-someone asked to verify this email address, but we were unable to find an account for this address.
-
-If this was you, check if you signed up using a different address.
-
-If this was not you, please ignore this email.`
+✌️`,
+      body: `<p>👋 Hi there,</p>
+<p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
+<p>If this was you, check if you registered using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
+<p>✌️</p>`
     }
   }
 }
