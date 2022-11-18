@@ -22,6 +22,7 @@ import {
   useState,
 } from 'react'
 
+import { filterUnwantedRedirection } from '../pages/auth/utils'
 import { Messages } from './messages'
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
@@ -176,13 +177,16 @@ export function handleFlowError<S>(
       case 'session_already_available': {
         showToastNotice(strings.notices.alreadyLoggedIn)
 
-        const previousPathname = sessionStorage.getItem('previousPathname')
-        const previousPathOrHome =
-          previousPathname &&
-          previousPathname !== sessionStorage.getItem('currentPathname')
-            ? previousPathname
-            : '/'
-        await router.push(previousPathOrHome)
+        const redirection = filterUnwantedRedirection({
+          desiredPath: sessionStorage.getItem('previousPathname'),
+          unwantedPaths: [
+            '/auth/verification',
+            '/auth/login',
+            '/auth/registration',
+          ],
+        })
+
+        await router.push(redirection)
         return
       }
       case 'session_refresh_required':
