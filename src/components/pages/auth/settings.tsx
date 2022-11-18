@@ -1,4 +1,3 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import {
   SelfServiceSettingsFlow,
   SubmitSelfServiceSettingsFlowBody,
@@ -10,7 +9,6 @@ import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
-import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function Settings() {
