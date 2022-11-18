@@ -51,14 +51,10 @@ export function Settings() {
   }, [flowId, router, router.isReady, returnTo, flow, strings])
 
   return (
-    <>
-      <PageTitle
-        headTitle
-        icon={<FaIcon icon={faUser} />}
-        title="Profile Management and Security Settings"
-      />
+    <div className="max-w-md mx-auto">
+      <PageTitle headTitle title={`${strings.auth.settings.title} ✨`} />
 
-      <h2 className="serlo-h3">{strings.auth.changePassword}</h2>
+      <p className="serlo-p">{strings.auth.settings.instruction}</p>
 
       {flow ? (
         <Flow
@@ -68,7 +64,7 @@ export function Settings() {
           flow={flow}
         />
       ) : null}
-    </>
+    </div>
   )
 
   function onSubmit(values: SubmitSelfServiceSettingsFlowBody) {

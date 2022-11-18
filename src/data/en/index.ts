@@ -340,9 +340,12 @@ export const instanceData = {
       recoverTitle: 'Recover your account',
       recoveryInstructions: 'Insert and submit your email address. We will then send you an email with a reset link.',
       verifyTitle: 'Verify your email',
-      verifyInstructions: 'Insert your email address and click on submit to receive a verification email.',
-      changePassword: 'Insert new password',
-      loggingOut: 'Logging you out…',
+      verifyInstructions: 'Insert and submit your email address to verify it.',
+      settings: {
+        title: "Change password",
+        instruction: 'Insert your new password.',
+      },
+      loggingOut: 'Logging you out …',
       login: {
         confirmAction: 'Confirm Action',
         signIn: 'Sign in to your Account',

@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -83,11 +84,17 @@ export function Verification() {
       )
   }
 
-  return flow ? (
-    <>
-      <PageTitle headTitle title={strings.auth.verifyTitle} />
-      {strings.auth.verifyInstructions}
-      <Flow onSubmit={onSubmit} flow={flow} />
-    </>
-  ) : null
+  return (
+    <div className="max-w-md mx-auto">
+      <PageTitle headTitle title={`${strings.auth.verifyTitle} ✅`} />
+      {flow ? (
+        <>
+          <p className="serlo-p">{strings.auth.verifyInstructions}</p>
+          <Flow onSubmit={onSubmit} flow={flow} />
+        </>
+      ) : (
+        <LoadingSpinner noText />
+      )}
+    </div>
+  )
 }
