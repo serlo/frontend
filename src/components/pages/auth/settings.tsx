@@ -51,8 +51,12 @@ export function Settings() {
   }, [flowId, router, router.isReady, returnTo, flow, strings])
 
   return (
-    <div className="max-w-md mx-auto">
-      <PageTitle headTitle title={`${strings.auth.settings.title} ✨`} />
+    <div className="max-w-[30rem] mx-auto">
+      <PageTitle
+        headTitle
+        title={`${strings.auth.settings.title} ✨`}
+        extraBold
+      />
 
       <p className="serlo-p">{strings.auth.settings.instruction}</p>
 
@@ -64,6 +68,17 @@ export function Settings() {
           flow={flow}
         />
       ) : null}
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
     </div>
   )
 

@@ -49,7 +49,7 @@ export function Recovery() {
   }
   if (!flow) return null
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-[30rem] mx-auto">
       <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
       <p className="serlo-p mb-10 -mt-4">{strings.auth.recoveryInstructions}</p>
       <Flow onSubmit={onSubmit} flow={flow} />

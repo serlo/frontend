@@ -85,8 +85,8 @@ export function Verification() {
   }
 
   return (
-    <div className="max-w-md mx-auto">
-      <PageTitle headTitle title={`${strings.auth.verifyTitle} ✅`} />
+    <div className="max-w-[30rem] mx-auto">
+      <PageTitle headTitle title={`${strings.auth.verifyTitle} ✅`} extraBold />
       {flow ? (
         <>
           <p className="serlo-p">{strings.auth.verifyInstructions}</p>
@@ -95,6 +95,17 @@ export function Verification() {
       ) : (
         <LoadingSpinner noText />
       )}
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
     </div>
   )
 }
