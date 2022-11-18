@@ -336,7 +336,7 @@ export const instanceData = {
     auth: {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.',
-      registerTitle: 'Register new account',
+      registerTitle: 'Create your Serlo Account',
       recoverTitle: 'Recover your account',
       recoveryInstructions: 'Insert your email and click on submit to receive an email in order to reset your password.',
       verifyTitle: 'Verify your email',
