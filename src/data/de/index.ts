@@ -881,25 +881,25 @@ export const loggedInData = {
 export const kratosMailStrings = {
   recovery: {
     valid: {
-      subject: '👉 Zugang zu deinem Serlo Konto',
+      subject: '👉 Zugang zu deinem Serlo Account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-versuchst du wieder Zugang zu deinem Konto zu bekommen? (Wenn nein kannst du die Mail einfach ignorieren)
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein kannst du die Mail einfach ignorieren)
  
 Um dein Passwort zurückzusetzen öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b></p>,
-<p>versuchst du wieder Zugang zu deinem Konto zu bekommen? (Wenn nein kannst du die Mail einfach ignorieren)</p>
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein kannst du die Mail einfach ignorieren)</p>
  
 <p>Um dein Passwort zurückzusetzen öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`,
     },
     invalid: {
-      subject: '👉 Kontozugriff',
+      subject: '👉 Zugriff auf Account',
       'body.plaintext': `👋 Hi!
 
-Du (oder jemand anderes) hat versucht mit dieser E-Mail Adresse den Zugang zu einem Konto auf serlo.org wiederherzustellen.
+Du (oder jemand anderes) hat versucht mit dieser E-Mail Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.
 
-Allerdings ist diese E-Mail Adresse nicht mit einem Konto bei uns verknüpft und deshalb hat das nicht geklappt.
+Allerdings ist diese E-Mail Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.
 
 Wenn du das warst überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
 
@@ -907,8 +907,8 @@ Sonst kannst du diese Mail einfach ignorieren.
 
 ✌️`,
       body: `<p>👋 Hi there!</p>
-<p>Du (oder jemand anderes) hat versucht mit dieser E-Mail Adresse den Zugang zu einem Konto auf serlo.org wiederherzustellen.</p>
-<p>Allerdings ist diese E-Mail Adresse nicht mit einem Konto bei uns verknüpft und deshalb hat das nicht geklappt.</p>
+<p>Du (oder jemand anderes) hat versucht mit dieser E-Mail Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.</p>
+<p>Allerdings ist diese E-Mail Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.</p>
 <p>Wenn du das warst überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
 <p>Sonst kannst du diese Mail einfach ignorieren.</p>
 <p>✌️</p>`,
@@ -921,13 +921,13 @@ Sonst kannst du diese Mail einfach ignorieren.
 
 wunderbar dich auf serlo.org zu haben 🎉
       
-Bitte bestätige dein brandneues Konto mit einem Klick auf diesen Link:
+Bitte bestätige dein brandneues Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 
 Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b></p>,
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
-<p>Bitte bestätige dein brandneues Konto mit einem Klick auf diesen Link:<br/>
+<p>Bitte bestätige dein brandneues Account mit einem Klick auf diesen Link:<br/>
 <a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Dein Community-Support 💚</p>
       `,
@@ -936,7 +936,7 @@ Dein Community-Support 💚`,
       subject: `👋 Someone tried to verify this email address`,
       'body.plaintext': `👋 Hi,
 
-jemand hat verucht diese E-Mail Adresse zu bestätigen, aber es ist kein Konto mit dieser Adresse verknüpft.
+jemand hat verucht diese E-Mail Adresse zu bestätigen, aber es ist kein Account mit dieser Adresse verknüpft.
 
 Wenn du das warst überprüfe bitte ob du dich mit einer anderen Adresse angemeldet hast.
 
@@ -944,7 +944,7 @@ Wenn du das nicht warst kannst du diese Mail einfach ignorieren.
 
 ✌️`,
       body: `<p>👋 Hi,</p>
-<p>jemand hat verucht diese E-Mail Adresse zu bestätigen, aber es ist kein Konto mit dieser Adresse verknüpft.</p>
+<p>jemand hat verucht diese E-Mail Adresse zu bestätigen, aber es ist kein Account mit dieser Adresse verknüpft.</p>
 <p>Wenn du das warst überprüfe bitte ob du dich mit einer anderen Adresse angemeldet hast.</p>
 <p>Wenn du das nicht warst kannst du diese Mail einfach ignorieren.</p>
 <p>✌️</p>`
