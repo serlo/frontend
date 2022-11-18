@@ -126,6 +126,7 @@ export function Node(props: NodeProps) {
   function renderShowHide() {
     return (
       <button
+        type="button" // keep this, otherwise enter does not submit form any more
         onClick={(e) => {
           e.preventDefault()
           setShowPassword(!showPassword)
