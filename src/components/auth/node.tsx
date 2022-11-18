@@ -2,7 +2,7 @@ import { faSpinner } from '@edtr-io/ui'
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'
 import { UiNode } from '@ory/client'
-import { getNodeLabel, isUiNodeInputAttributes } from '@ory/integrations/ui'
+import { isUiNodeInputAttributes } from '@ory/integrations/ui'
 import clsx from 'clsx'
 import { FormEvent, useState } from 'react'
 
@@ -63,6 +63,12 @@ export function Node(props: NodeProps) {
         return null
 
       case 'submit':
+        // eslint-disable-next-line no-case-declarations
+        const label =
+          node.meta.label?.id &&
+          hasOwnPropertyTs(strings.auth.messages, node.meta.label?.id)
+            ? strings.auth.messages[node.meta.label?.id]
+            : strings.auth.messages['1010013']
         return (
           <button
             className="text-xl serlo-button-green block w-full py-2 mt-10"
@@ -76,7 +82,7 @@ export function Node(props: NodeProps) {
             {isLoading ? (
               <FaIcon icon={faSpinner} className={clsx('animate-spin-slow')} />
             ) : (
-              getNodeLabel(node)
+              (label as string)
             )}
           </button>
         )

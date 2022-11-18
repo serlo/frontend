@@ -1,4 +1,3 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import type {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
@@ -13,7 +12,7 @@ import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
-import { FaIcon } from '@/components/fa-icon'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -81,27 +80,47 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   return (
     <>
-      <PageTitle
-        headTitle
-        icon={<FaIcon icon={faUser} />}
-        title={loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']}
-      />
-      {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      {showLogout ? <div>{loginStrings.logOut}</div> : null}
-      <div className="mx-side mt-20 border-t-2 pt-4">
-        {loginStrings.newHere}{' '}
-        <Link href="/auth/registration" className="serlo-button-light">
-          {loginStrings.registerNewAccount}
-        </Link>
-      </div>
-      <div className="mx-side mt-2 pt-4">
-        {replacePlaceholders(loginStrings.forgotPassword, {
-          forgotLinkText: (
-            <Link href="/auth/recovery" className="font-bold">
-              {loginStrings.forgotLinkText}
-            </Link>
-          ),
-        })}
+      <div className="mb-16 max-w-[30rem] pb-6 mx-auto">
+        <PageTitle
+          headTitle
+          title={`${
+            loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']
+          } 👋`}
+          extraBold
+        />
+
+        {flow ? (
+          <Flow flow={flow} onSubmit={onLogin} />
+        ) : (
+          <LoadingSpinner noText />
+        )}
+        {showLogout ? <div>{loginStrings.logOut}</div> : null}
+        <div className="mx-side mt-20 border-t-2 pt-4">
+          {loginStrings.newHere}{' '}
+          <Link href="/auth/registration" className="serlo-button-light">
+            {loginStrings.registerNewAccount}
+          </Link>
+        </div>
+        <div className="mx-side mt-2 pt-3">
+          {replacePlaceholders(loginStrings.forgotPassword, {
+            forgotLinkText: (
+              <Link href="/auth/recovery" className="font-bold">
+                {loginStrings.forgotLinkText}
+              </Link>
+            ),
+          })}
+        </div>
+        <style jsx>{`
+          @font-face {
+            font-family: 'Karmilla';
+            font-style: bolder;
+            font-weight: 800;
+            src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+                format('woff2'),
+              url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+            font-display: swap;
+          }
+        `}</style>
       </div>
     </>
   )

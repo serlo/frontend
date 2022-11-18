@@ -49,10 +49,21 @@ export function Recovery() {
   }
   if (!flow) return null
   return (
-    <>
-      <PageTitle headTitle title={strings.auth.recoverTitle} />
-      {strings.auth.recoveryInstructions}
+    <div className="max-w-md mx-auto">
+      <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
+      <p className="serlo-p mb-10 -mt-4">{strings.auth.recoveryInstructions}</p>
       <Flow onSubmit={onSubmit} flow={flow} />
-    </>
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
+    </div>
   )
 }

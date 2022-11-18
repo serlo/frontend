@@ -88,7 +88,7 @@ export function Registration() {
           />
           <img
             src="/_assets/img/community-menu-bird.svg"
-            className="hidden mobile:block w-[34vw] md:w-72 px-side -mt-44"
+            className="hidden mobile:block w-[33vw] md:w-64 px-side -mt-44"
           />
         </div>
       ) : (
