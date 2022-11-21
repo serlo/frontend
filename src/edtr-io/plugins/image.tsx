@@ -64,7 +64,7 @@ export function createUploadImageHandler() {
 export function createReadFile() {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      fetchAndPersistAuthSession()
+      fetchAndPersistAuthSession(() => {}) // TODO: cleanup quick hack
         .then((session) => {
           const gqlFetch = createAuthAwareGraphqlFetch({
             current: session

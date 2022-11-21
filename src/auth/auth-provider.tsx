@@ -1,19 +1,13 @@
 import { AuthorizationPayload } from '@serlo/authorization'
-import {
-  createContext,
-  ReactNode,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from './auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 export interface AuthContextValue {
-  authenticationPayload: RefObject<AuthenticationPayload>
+  authenticationPayload: { current: AuthenticationPayload }
   authorizationPayload: AuthorizationPayload | null
+  refreshAuth: () => void
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
@@ -25,9 +19,16 @@ export function AuthProvider({
   children: ReactNode
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 }) {
-  const authenticationPayload = useRef<AuthenticationPayload>(
-    getAuthPayloadFromLocalCookie()
-  )
+  const [authenticationPayload, setAuthenticationPayload] = useState({
+    current: getAuthPayloadFromLocalCookie(AuthSessionCookie.get()),
+  })
+
+  function refreshAuth() {
+    setAuthenticationPayload({
+      current: getAuthPayloadFromLocalCookie(AuthSessionCookie.get()),
+    })
+  }
+
   const authorizationPayload = useAuthorizationPayload(
     authenticationPayload,
     unauthenticatedAuthorizationPayload
@@ -38,6 +39,7 @@ export function AuthProvider({
       value={{
         authenticationPayload,
         authorizationPayload,
+        refreshAuth,
       }}
     >
       {children}
@@ -50,8 +52,12 @@ export type AuthenticationPayload = {
   id: number
 } | null
 
-function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
-  const initialSessionValue = AuthSessionCookie.parse()
+export function getAuthPayloadFromLocalCookie(
+  cookie?: string
+): AuthenticationPayload {
+  const initialSessionValue = AuthSessionCookie.parse({
+    [AuthSessionCookie.cookieName]: cookie,
+  })
   return initialSessionValue
     ? {
         username: (initialSessionValue.identity.traits as { username: string })
@@ -66,12 +72,12 @@ function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
 }
 
 function useAuthorizationPayload(
-  authenticationPayload: RefObject<AuthenticationPayload>,
+  authenticationPayload: { current: AuthenticationPayload },
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
-  async function fetchAuthorizationPayload(
-    authenticationPayload: RefObject<AuthenticationPayload>
-  ): Promise<AuthorizationPayload> {
+  async function fetchAuthorizationPayload(authenticationPayload: {
+    current: AuthenticationPayload
+  }): Promise<AuthorizationPayload> {
     if (authenticationPayload.current === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }

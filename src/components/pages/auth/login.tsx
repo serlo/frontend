@@ -9,6 +9,7 @@ import { filterUnwantedRedirection } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
+import { useAuth } from '@/auth/use-auth'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
@@ -20,6 +21,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
+  const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
   const loginStrings = strings.auth.login
 
@@ -144,7 +146,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
-          void fetchAndPersistAuthSession(data.session)
+          void fetchAndPersistAuthSession(refreshAuth, data.session)
           if (oauth) {
             await router.push(
               `/api/oauth/accept-login?login_challenge=${String(
@@ -160,11 +162,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
               (data.session.identity.traits as { username: string })?.username
             )
           )
-
-          setTimeout(() => {
-            // TODO: make sure router.push() also rerenders authed components (e.g. header)
-            window.location.href = flow?.return_to ?? redirection
-          }, 1000)
+          setTimeout(() => router.push(flow?.return_to ?? redirection), 2000)
 
           return
         })

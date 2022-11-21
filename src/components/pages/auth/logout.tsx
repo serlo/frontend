@@ -5,17 +5,19 @@ import { filterUnwantedRedirection } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import { AxiosError } from '@/auth/types'
+import { useAuth } from '@/auth/use-auth'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
+  const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
   const { logout_challenge } = router.query
 
   useEffect(() => {
-    fetchAndPersistAuthSession().catch(() => {
+    fetchAndPersistAuthSession(refreshAuth).catch(() => {
       return router.push('/')
     })
 
@@ -30,7 +32,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
         kratos
           .submitSelfServiceLogoutFlow(data.logout_token)
           .then(async () => {
-            void fetchAndPersistAuthSession(null)
+            void fetchAndPersistAuthSession(refreshAuth, null)
 
             if (oauth) {
               if (!logout_challenge) return
@@ -41,17 +43,10 @@ export function Logout({ oauth }: { oauth?: boolean }) {
               )
             }
             showToastNotice(strings.notices.bye)
-
-            setTimeout(() => {
-              // TODO: make sure router.push() also rerenders authed components (e.g. header)
-              window.location.href = redirection
-            }, 1000)
-
+            setTimeout(() => router.push(redirection), 1000)
             return
           })
-          .catch((error: AxiosError) => {
-            return Promise.reject(error)
-          })
+          .catch((error: AxiosError) => Promise.reject(error))
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {

@@ -2,6 +2,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
 import dynamic from 'next/dynamic'
 
 import { Item } from './item'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { UnreadNotificationsCountProps } from '@/components/user-tools/unread-notifications-count'
 import { getAvatarUrl } from '@/components/user/user-link'
@@ -18,6 +19,10 @@ export function AuthItems() {
   const auth = useAuthentication()
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
+
+  console.log('running AuthItems')
+  console.log(AuthSessionCookie.get())
+  console.log(auth.current)
 
   const noAuthData = {
     url: '/auth/login',

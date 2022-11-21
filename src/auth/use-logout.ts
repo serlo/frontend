@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { useAuth } from './use-auth'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -7,12 +8,13 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function useLogout() {
   const router = useRouter()
+  const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
   const oauth = undefined
   const { logout_challenge } = router.query
 
   return () => {
-    fetchAndPersistAuthSession().catch(() => {
+    fetchAndPersistAuthSession(refreshAuth).catch(() => {
       return router.push('/')
     })
 
@@ -24,7 +26,7 @@ export function useLogout() {
         kratos
           .submitSelfServiceLogoutFlow(data.logout_token)
           .then(async () => {
-            void fetchAndPersistAuthSession(null)
+            void fetchAndPersistAuthSession(refreshAuth, null)
 
             if (oauth) {
               if (!logout_challenge) return
@@ -38,7 +40,8 @@ export function useLogout() {
 
             setTimeout(() => {
               // TODO: make sure router.push() also rerenders authed components (e.g. header)
-              window.location.href = originalPreviousPath ?? '/'
+              void router.push(originalPreviousPath ?? '/')
+              // window.location.href = originalPreviousPath ?? '/'
             }, 1000)
 
             return
