@@ -1001,34 +1001,34 @@ export const kratosMailStrings = {
     valid: {
       subject: '👉 Access to your Serlo account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-are you trying get access to your account again? If not please just ignore this mail.
+are you trying to get access to your account again? If not please just ignore this mail.
  
-To reset your passwort please open the following link in your browser:
+To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b></p>,
-<p>are you trying get access to your account again? If not please just ignore this mail.</p>
+<p>are you trying to get access to your account again? If not please just ignore this mail.</p>
  
-<p>To reset your passwort please open the following link in your browser:
+<p>To reset your password please open the following link in your browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`,
     },
     invalid: {
       subject: '👉 Account access attempted',
       'body.plaintext': `👋 Hi there!
 
-You (or someone else) entered this email address when trying to recover access to an account.
+You (or someone else) entered this email address when trying to recover access to an account at serlo.org.
 
-But it seems this email address is not linked to a user on serlo.org and therefore the attempt failed.
+But this email address is not linked to a user in our website and therefore the attempt failed.
 
-If this was you, check if you signed up using a different address.
+If it was you, check if you signed up using a different address.
 
 Otherwise please just ignore this email.
 
 ✌️`,
       body: `<p>👋 Hi there!</p>
-<p>You (or someone else) entered this email address when trying to recover access to an account.</p>
-<p>But it seems this email address is not linked to a user on serlo.org and therefore the attempt failed.</p>
-<p>If this was you, check if you signed up using a different address.</p>
-<p>Otherwise please just ignore this email.</p>
+<p>You (or someone else) entered this email address when trying to recover access to an account at <a href="https://serlo.org">serlo.org</a>. </p>
+<p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
+<p>If it was you, check if you signed up using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
 <p>✌️</p>`,
     }
   },
@@ -1037,15 +1037,15 @@ Otherwise please just ignore this email.
       subject: '👋 Please verify your email address',
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
-      we are excited to have you at serlo.org 🎉
+      We are excited to have you at serlo.org 🎉
 
       Please verify your brand new account by clicking the following link:
 
 {{ .VerificationURL }}
 
 Your Community-Support 💚`,
-      body: `<p>Hi <b>{{ .Identity.traits.username }}</b></p>,
-<p>we are excited to have you at serlo.org 🎉</p>
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
 <a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
@@ -1055,17 +1055,17 @@ Your Community-Support 💚`,
       subject: `👋 Someone tried to verify this email address`,
       'body.plaintext': `👋 Hi there,
 
-someone asked to verify this email address, but we were unable to find an account for this address.
+Someone asked to verify this email address, but we were unable to find an account at serlo.org for this address.
 
-If this was you, check if you registered using a different address.
+If it was you, check if you registered using a different address.
 
-If this was not you, please just ignore this email.
+Otherwise, please just ignore this email.
 
 ✌️`,
       body: `<p>👋 Hi there,</p>
-<p>someone asked to verify this email address, but we were unable to find an account for this address.</p>
+<p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
 <p>If this was you, check if you registered using a different address.</p>
-<p>If this was not you, please just ignore this email.</p>
+<p>Otherwise, please just ignore this email.</p>
 <p>✌️</p>`
     }
   }
