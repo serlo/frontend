@@ -29,6 +29,20 @@ export function AuthProvider({
     })
   }
 
+  useEffect(() => {
+    // inspired by useSWR
+    const refreshWhenVisible = () => {
+      if (document.visibilityState) refreshAuth()
+    }
+    document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
+    window.addEventListener('online', refreshAuth) //on reconnect
+
+    return () => {
+      document.addEventListener('visibilitychange', refreshWhenVisible)
+      window.removeEventListener('online', refreshAuth)
+    }
+  })
+
   const authorizationPayload = useAuthorizationPayload(
     authenticationPayload,
     unauthenticatedAuthorizationPayload
