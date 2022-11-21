@@ -4,7 +4,7 @@ import { AuthSessionCookie } from './auth-session-cookie'
 import { kratos } from '@/auth/kratos'
 
 export async function fetchAndPersistAuthSession(
-  refreshAuth: () => void,
+  refreshAuth?: () => void,
   session?: Session | null
 ) {
   if (session !== undefined) {
@@ -22,6 +22,6 @@ export async function fetchAndPersistAuthSession(
         AuthSessionCookie.remove()
       })
   }
-  refreshAuth()
+  if (refreshAuth) refreshAuth()
   return session ?? null
 }

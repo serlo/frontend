@@ -2,7 +2,6 @@ import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
 import dynamic from 'next/dynamic'
 
 import { Item } from './item'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { UnreadNotificationsCountProps } from '@/components/user-tools/unread-notifications-count'
 import { getAvatarUrl } from '@/components/user/user-link'
@@ -20,20 +19,18 @@ export function AuthItems() {
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
-  console.log('running AuthItems')
-  console.log(AuthSessionCookie.get())
-  console.log(auth.current)
-
   const noAuthData = {
     url: '/auth/login',
     title: strings.header.login,
     icon: 'user',
   } as const
 
-  if (!auth.current || !loggedInData || !auth.current.username)
+  if (!auth || !loggedInData || !auth.username)
     return <Item link={noAuthData} />
 
-  const userMeReplacement = `user/${auth.current.id}/${auth.current.username}`
+  const { id, username } = auth
+
+  const userMeReplacement = `user/${id}/${username}`
 
   const [notificationLinkData, userLinkData] = loggedInData.authMenu
   const updatedSubData = {
@@ -60,8 +57,8 @@ export function AuthItems() {
         elementAsIcon={
           <img
             className="rounded-full w-6 h-6 inline md:my-[7px]"
-            src={getAvatarUrl(auth.current.username)}
-            title={`${updatedSubData.title} ${auth.current.username}`}
+            src={getAvatarUrl(username)}
+            title={`${updatedSubData.title} ${username}`}
           />
         }
       />

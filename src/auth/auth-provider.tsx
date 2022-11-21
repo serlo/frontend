@@ -5,7 +5,7 @@ import { AuthSessionCookie } from './auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 export interface AuthContextValue {
-  authenticationPayload: { current: AuthenticationPayload }
+  authenticationPayload: AuthenticationPayload
   authorizationPayload: AuthorizationPayload | null
   refreshAuth: () => void
 }
@@ -19,18 +19,17 @@ export function AuthProvider({
   children: ReactNode
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 }) {
-  const [authenticationPayload, setAuthenticationPayload] = useState({
-    current: getAuthPayloadFromLocalCookie(AuthSessionCookie.get()),
-  })
+  const [authenticationPayload, setAuthenticationPayload] = useState(
+    getAuthPayloadFromLocalCookie(AuthSessionCookie.get())
+  )
 
   function refreshAuth() {
-    setAuthenticationPayload({
-      current: getAuthPayloadFromLocalCookie(AuthSessionCookie.get()),
-    })
+    setAuthenticationPayload(
+      getAuthPayloadFromLocalCookie(AuthSessionCookie.get())
+    )
   }
 
   useEffect(() => {
-    // inspired by useSWR
     const refreshWhenVisible = () => {
       if (document.visibilityState) refreshAuth()
     }
@@ -86,13 +85,13 @@ export function getAuthPayloadFromLocalCookie(
 }
 
 function useAuthorizationPayload(
-  authenticationPayload: { current: AuthenticationPayload },
+  authenticationPayload: AuthenticationPayload,
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
-  async function fetchAuthorizationPayload(authenticationPayload: {
-    current: AuthenticationPayload
-  }): Promise<AuthorizationPayload> {
-    if (authenticationPayload.current === null) {
+  async function fetchAuthorizationPayload(
+    authenticationPayload: AuthenticationPayload
+  ): Promise<AuthorizationPayload> {
+    if (authenticationPayload === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }
 
@@ -127,7 +126,7 @@ function useAuthorizationPayload(
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationPayload, authenticationPayload.current?.id])
+  }, [authenticationPayload, authenticationPayload?.id])
 
   return authorizationPayload
 }

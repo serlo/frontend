@@ -37,21 +37,11 @@ export function useLogout() {
               )
             }
             showToastNotice(strings.notices.bye)
-
-            setTimeout(() => {
-              // TODO: make sure router.push() also rerenders authed components (e.g. header)
-              void router.push(originalPreviousPath ?? '/')
-              // window.location.href = originalPreviousPath ?? '/'
-            }, 1000)
-
+            setTimeout(() => router.push(originalPreviousPath ?? '/'), 1000)
             return
           })
-          .catch((error: unknown) => {
-            return Promise.reject(error)
-          })
+          .catch((error: unknown) => Promise.reject(error))
       })
-      .catch((error: unknown) => {
-        return Promise.reject(error)
-      })
+      .catch((error: unknown) => Promise.reject(error))
   }
 }

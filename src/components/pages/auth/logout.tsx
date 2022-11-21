@@ -55,7 +55,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
         }
         return Promise.reject(error)
       })
-  }, [router, oauth, logout_challenge, strings.notices.bye])
+  }, [router, oauth, logout_challenge, strings.notices.bye, refreshAuth])
 
   return <LoadingSpinner text={strings.auth.loggingOut} />
 }

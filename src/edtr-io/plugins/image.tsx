@@ -64,10 +64,10 @@ export function createUploadImageHandler() {
 export function createReadFile() {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      fetchAndPersistAuthSession(() => {}) // TODO: cleanup quick hack
+      fetchAndPersistAuthSession()
         .then((session) => {
-          const gqlFetch = createAuthAwareGraphqlFetch({
-            current: session
+          const gqlFetch = createAuthAwareGraphqlFetch(
+            session
               ? {
                   username: (session.identity.traits as { username: string })
                     ?.username,
@@ -75,8 +75,8 @@ export function createReadFile() {
                     session.identity.metadata_public as { legacy_id: number }
                   )?.legacy_id,
                 }
-              : null,
-          })
+              : null
+          )
           const args = JSON.stringify({
             query: uploadUrlQuery,
             variables: {

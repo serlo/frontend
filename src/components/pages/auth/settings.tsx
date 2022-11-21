@@ -28,7 +28,7 @@ export function Settings() {
         window.location.reload()
       }
     })
-  }, [])
+  }, [refreshAuth])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
