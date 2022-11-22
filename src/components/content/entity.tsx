@@ -9,6 +9,7 @@ import { useState, MouseEvent } from 'react'
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { InviteModalProps } from '../user-tools/invite-modal'
+import { MockupGaps } from './exercises/mockup-gaps'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license/license-notice'
@@ -58,6 +59,9 @@ export function Entity({ data }: EntityProps) {
   })
 
   const { strings } = useInstanceData()
+
+  const isMockupCoursePage = data.id === 233011
+
   return wrapWithSchema(
     <>
       {renderCourseNavigation()}
@@ -66,7 +70,11 @@ export function Entity({ data }: EntityProps) {
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
       <div className="min-h-1/4">
-        {data.content && renderContent(data.content)}
+        {isMockupCoursePage ? (
+          <MockupGaps />
+        ) : (
+          data.content && renderContent(data.content)
+        )}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
