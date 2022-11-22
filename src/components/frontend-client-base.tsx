@@ -94,10 +94,13 @@ export function FrontendClientBase({
     getCachedLoggedInData()
   )
 
+  const isLoggedIn = AuthSessionCookie.get() !== undefined
+
   useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
     loadLoggedInData,
+    isLoggedIn,
   ])
 
   // dev

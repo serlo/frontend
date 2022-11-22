@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { filterUnwantedRedirection } from './utils'
+import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
@@ -155,15 +156,12 @@ export function Login({ oauth }: { oauth?: boolean }) {
             )
             return
           }
-
+          const username =
+            getAuthPayloadFromSession(data.session)?.username ?? 'Jane Doe'
           showToastNotice(
-            strings.notices.welcome.replace(
-              '%username%',
-              (data.session.identity.traits as { username: string })?.username
-            )
+            strings.notices.welcome.replace('%username%', username)
           )
-          setTimeout(() => router.push(flow?.return_to ?? redirection), 2000)
-
+          void router.push(flow?.return_to ?? redirection)
           return
         })
         .catch((e: Error) => {

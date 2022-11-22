@@ -43,7 +43,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
               )
             }
             showToastNotice(strings.notices.bye)
-            setTimeout(() => router.push(redirection), 1000)
+            void router.push(redirection)
             return
           })
           .catch((error: AxiosError) => Promise.reject(error))

@@ -1,13 +1,19 @@
+import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from './auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
+export type AuthenticationPayload = {
+  username: string
+  id: number
+} | null
+
 export interface AuthContextValue {
   authenticationPayload: AuthenticationPayload
   authorizationPayload: AuthorizationPayload | null
-  refreshAuth: () => void
+  refreshAuth: (session: Session | null) => void
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
@@ -20,27 +26,26 @@ export function AuthProvider({
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 }) {
   const [authenticationPayload, setAuthenticationPayload] = useState(
-    getAuthPayloadFromLocalCookie(AuthSessionCookie.get())
+    getAuthPayloadFromLocalCookie()
   )
 
-  function refreshAuth() {
-    setAuthenticationPayload(
-      getAuthPayloadFromLocalCookie(AuthSessionCookie.get())
-    )
+  function refreshAuth(session: Session | null) {
+    setAuthenticationPayload(getAuthPayloadFromSession(session))
   }
 
   useEffect(() => {
     const refreshWhenVisible = () => {
-      if (document.visibilityState) refreshAuth()
+      if (document.visibilityState)
+        setAuthenticationPayload(getAuthPayloadFromLocalCookie())
     }
     document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
-    window.addEventListener('online', refreshAuth) //on reconnect
+    window.addEventListener('online', () => refreshWhenVisible) //on reconnect
 
     return () => {
       document.addEventListener('visibilitychange', refreshWhenVisible)
-      window.removeEventListener('online', refreshAuth)
+      window.removeEventListener('online', () => refreshWhenVisible)
     }
-  })
+  }, [])
 
   const authorizationPayload = useAuthorizationPayload(
     authenticationPayload,
@@ -60,23 +65,16 @@ export function AuthProvider({
   )
 }
 
-export type AuthenticationPayload = {
-  username: string
-  id: number
-} | null
+function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
+  return getAuthPayloadFromSession(AuthSessionCookie.parse())
+}
 
-export function getAuthPayloadFromLocalCookie(
-  cookie?: string
-): AuthenticationPayload {
-  const initialSessionValue = AuthSessionCookie.parse({
-    [AuthSessionCookie.cookieName]: cookie,
-  })
-  return initialSessionValue
+export function getAuthPayloadFromSession(session: Session | null) {
+  return session
     ? {
-        username: (initialSessionValue.identity.traits as { username: string })
-          .username,
+        username: (session.identity.traits as { username: string }).username,
         id: (
-          initialSessionValue.identity.metadata_public as {
+          session.identity.metadata_public as {
             legacy_id: number
           }
         )?.legacy_id,

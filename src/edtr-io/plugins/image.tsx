@@ -4,6 +4,7 @@ import { gql } from 'graphql-request'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
@@ -67,15 +68,7 @@ export function createReadFile() {
       fetchAndPersistAuthSession()
         .then((session) => {
           const gqlFetch = createAuthAwareGraphqlFetch(
-            session
-              ? {
-                  username: (session.identity.traits as { username: string })
-                    ?.username,
-                  id: (
-                    session.identity.metadata_public as { legacy_id: number }
-                  )?.legacy_id,
-                }
-              : null
+            getAuthPayloadFromSession(session)
           )
           const args = JSON.stringify({
             query: uploadUrlQuery,
