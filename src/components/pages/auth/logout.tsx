@@ -2,10 +2,12 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { filterUnwantedRedirection } from './utils'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -13,18 +15,23 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
   const { refreshAuth } = useAuth()
+  const auth = useAuthentication()
   const { strings } = useInstanceData()
   const { logout_challenge } = router.query
 
-  useEffect(() => {
-    fetchAndPersistAuthSession(refreshAuth).catch(() => {
-      return router.push('/')
-    })
+  const redirection = filterUnwantedRedirection({
+    desiredPath: sessionStorage.getItem('previousPathname'),
+    unwantedPaths: ['/auth/settings', 'auth/login'],
+  })
 
-    const redirection = filterUnwantedRedirection({
-      desiredPath: sessionStorage.getItem('previousPathname'),
-      unwantedPaths: ['/auth/settings'],
-    })
+  useEffect(() => {
+    const redirectOnError = () => {
+      window.location.href = redirection
+      return
+    }
+
+    // if they are problems we could add an additional check here
+    if (!auth || !AuthSessionCookie.get()) return
 
     kratos
       .createSelfServiceLogoutFlowUrlForBrowsers()
@@ -50,12 +57,19 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {
-          window.location.href = redirection
-          return
+          return redirectOnError()
         }
         return Promise.reject(error)
       })
-  }, [router, oauth, logout_challenge, strings.notices.bye, refreshAuth])
+  }, [
+    router,
+    oauth,
+    logout_challenge,
+    strings.notices.bye,
+    refreshAuth,
+    auth,
+    redirection,
+  ])
 
   return <LoadingSpinner text={strings.auth.loggingOut} />
 }
