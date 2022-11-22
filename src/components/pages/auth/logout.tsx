@@ -19,12 +19,12 @@ export function Logout({ oauth }: { oauth?: boolean }) {
   const { strings } = useInstanceData()
   const { logout_challenge } = router.query
 
-  const redirection = filterUnwantedRedirection({
-    desiredPath: sessionStorage.getItem('previousPathname'),
-    unwantedPaths: ['/auth/settings', 'auth/login'],
-  })
-
   useEffect(() => {
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['/auth/settings', 'auth/login'],
+    })
+
     const redirectOnError = () => {
       window.location.href = redirection
       return
@@ -61,15 +61,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
         }
         return Promise.reject(error)
       })
-  }, [
-    router,
-    oauth,
-    logout_challenge,
-    strings.notices.bye,
-    refreshAuth,
-    auth,
-    redirection,
-  ])
+  }, [router, oauth, logout_challenge, strings.notices.bye, refreshAuth, auth])
 
   return <LoadingSpinner text={strings.auth.loggingOut} />
 }
