@@ -13,7 +13,7 @@ export const AuthSessionCookie = {
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
       expires: session.expires_at ? new Date(session.expires_at) : undefined,
-      domain: frontendOrigin
+      domain: `.${frontendOrigin}`,
     })
   },
   remove() {
