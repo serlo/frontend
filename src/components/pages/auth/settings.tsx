@@ -7,25 +7,28 @@ import { useEffect, useState } from 'react'
 
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
+import { useAuth } from '@/auth/use-auth'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
+  const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
 
   useEffect(() => {
     // quick hack to fix non authed header state
-    void fetchAndPersistAuthSession().then(() => {
+    void fetchAndPersistAuthSession(refreshAuth).then(() => {
       const { href } = window.location
       if (href.includes('flow=') && !href.includes('#refreshed')) {
         window.location.href = window.location.href + '#refreshed'
         window.location.reload()
       }
     })
-  }, [])
+  }, [refreshAuth])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -65,7 +68,9 @@ export function Settings() {
           only="password"
           flow={flow}
         />
-      ) : null}
+      ) : (
+        <LoadingSpinner noText />
+      )}
       <style jsx>{`
         @font-face {
           font-family: 'Karmilla';

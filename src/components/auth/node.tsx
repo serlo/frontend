@@ -97,7 +97,6 @@ export function Node(props: NodeProps) {
             >
               <span className="flex justify-between content-end">
                 {fieldName}
-                {attributes.type === 'password' ? renderShowHide() : null}
               </span>
               <input
                 className="text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-150 focus:bg-brand-150 outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full"
@@ -111,6 +110,7 @@ export function Node(props: NodeProps) {
                 }}
               />
             </label>
+            {attributes.type === 'password' ? renderShowHide() : null}
             {messages}
           </div>
         )
@@ -125,17 +125,19 @@ export function Node(props: NodeProps) {
 
   function renderShowHide() {
     return (
-      <button
-        type="button" // keep this, otherwise enter does not submit form any more
-        onClick={(e) => {
-          e.preventDefault()
-          setShowPassword(!showPassword)
-        }}
-        className="serlo-button-blue-transparent text-base py-0 mr-1.5 mb-0.5 align-super"
-      >
-        <FaIcon icon={showPassword ? faEyeSlash : faEye} />{' '}
-        {showPassword ? 'hide' : 'show'}
-      </button>
+      <div className="text-right mb-20">
+        <button
+          type="button" // keep this, otherwise enter does not submit form any more
+          onClick={(e) => {
+            e.preventDefault()
+            setShowPassword(!showPassword)
+          }}
+          className="serlo-button-blue-transparent text-base py-0 mr-1.5 relative block -mt-24 ml-auto"
+        >
+          <FaIcon icon={showPassword ? faEyeSlash : faEye} />{' '}
+          {showPassword ? 'hide' : 'show'}
+        </button>
+      </div>
     )
   }
 }

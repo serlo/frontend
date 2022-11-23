@@ -43,8 +43,7 @@ export function useMutationFetch() {
     query: string,
     input: unknown
   ): Promise<boolean | number> {
-    if (auth.current === null)
-      return handleError('UNAUTHENTICATED', errorStrings)
+    if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
     try {
       const result = await executeQuery()
       if (hasOwnPropertyTs(result, 'entity')) {
