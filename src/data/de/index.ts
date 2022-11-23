@@ -921,13 +921,13 @@ Sonst kannst du diese Mail einfach ignorieren.
 
 wunderbar dich auf serlo.org zu haben 🎉
       
-Bitte bestätige dein brandneues Account mit einem Klick auf diesen Link:
+Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 
 Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
-<p>Bitte bestätige dein brandneues Account mit einem Klick auf diesen Link:<br/>
+<p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
 <a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Dein Community-Support 💚</p>
       `,
