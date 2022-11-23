@@ -1,6 +1,8 @@
 import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
+import { frontendOrigin } from '@/helper/urls/frontent-origin'
+
 export const AuthSessionCookie = {
   cookieName: 'auth-session',
   get() {
@@ -11,6 +13,7 @@ export const AuthSessionCookie = {
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
       expires: session.expires_at ? new Date(session.expires_at) : undefined,
+      domain: frontendOrigin
     })
   },
   remove() {
