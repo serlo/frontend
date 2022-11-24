@@ -108,7 +108,7 @@ export function Event({
 
       case 'CreateThreadNotificationEvent':
         // for invite to chat mvp
-        if (event.object.id === auth.current?.id) {
+        if (event.object.id === auth?.id) {
           return parseString(strings.events.inviteToChat, {
             chatLink: (
               <a className="serlo-link" href="https://community.serlo.org">

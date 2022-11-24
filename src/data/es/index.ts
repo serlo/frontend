@@ -409,13 +409,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Suscripciones"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "Actualizar contraseña"
     }, {
       url: '/user/settings',
       title: "Configuración"
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "Cerrar sesión"
     }]
   }],
@@ -877,3 +877,5 @@ export const loggedInData = {
     }
   }
 };
+
+export const kratosMailStrings = {}
