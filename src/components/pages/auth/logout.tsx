@@ -26,7 +26,8 @@ export function Logout({ oauth }: { oauth?: boolean }) {
     })
 
     const redirectOnError = () => {
-      window.location.href = redirection
+      // TODO: reactivate redirect
+      // window.location.href = redirection
       return
     }
 
@@ -53,9 +54,15 @@ export function Logout({ oauth }: { oauth?: boolean }) {
             void router.push(redirection)
             return
           })
-          .catch((error: AxiosError) => Promise.reject(error))
+          .catch((error: AxiosError) => {
+            // eslint-disable-next-line no-console
+            console.error(error)
+            return Promise.reject(error)
+          })
       })
       .catch((error: AxiosError) => {
+        // eslint-disable-next-line no-console
+        console.error(error)
         if (error.response?.status === 401) {
           return redirectOnError()
         }
