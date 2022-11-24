@@ -18,8 +18,8 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
 
   const auth = useAuthentication()
 
-  if (!auth) return null
-  const username = auth.username
+  if (!auth.current) return null
+  const username = auth.current.username
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.profileSettings

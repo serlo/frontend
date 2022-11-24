@@ -34,7 +34,7 @@ function Content({ title, id, alias, isUser }: EventHistoryProps['pageData']) {
 
   useEffect(() => {
     if (!isUser) return
-    setIsOwn(auth?.id === id)
+    setIsOwn(auth.current?.id === id)
   }, [auth, isUser, id])
 
   const hasTitle = title && title.length > 1

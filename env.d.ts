@@ -31,11 +31,5 @@ declare namespace NodeJS {
     HYDRA_HOST_STAGING: string
     // Hydra host for local environment (only exposed to server)
     HYDRA_HOST_LOCAL: string
-    // Kratos host for production environment (defined in preview & production, only exposed to server)
-    KRATOS_HOST_PRODUCTION: string | undefined
-    // Kratos host for staging environment (only exposed to server)
-    KRATOS_HOST_STAGING: string
-    // Kratos host for local environment (only exposed to server)
-    KRATOS_HOST_LOCAL: string
   }
 }

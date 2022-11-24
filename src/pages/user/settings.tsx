@@ -22,7 +22,10 @@ function Content() {
   const auth = useAuthentication()
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { data, error } = useFetch(auth?.id ? `/${auth?.id}` : undefined, lang)
+  const { data, error } = useFetch(
+    auth.current?.id ? `/${auth.current?.id}` : undefined,
+    lang
+  )
 
   const rawDescription =
     data?.uuid.description && data.uuid.description !== 'NULL'
@@ -35,13 +38,15 @@ function Content() {
         data={[
           {
             label: strings.entities.userProfile,
-            url: auth ? `/user/${auth.id}/${auth.username}` : '/user/me',
+            url: auth.current
+              ? `/user/${auth.current.id}/${auth.current.username}`
+              : '/user/me',
           },
         ]}
         asBackButton
       />
       <PageTitle title={strings.pageTitles.editProfile} headTitle />
-      {auth ? renderSettings() : <PleaseLogIn />}
+      {auth.current ? renderSettings() : <PleaseLogIn />}
     </>
   )
 
