@@ -1,4 +1,4 @@
-import { AuthorizationPayload } from '@serlo/authorization'
+import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
@@ -12,12 +12,10 @@ import { AuthProvider } from '@/auth/auth-provider'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
-import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import type { getInstanceDataByLang } from '@/helper/feature-i18n'
-import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -74,8 +72,6 @@ export function FrontendClientBase({
     }
   })
 
-  //useEffect(storePageData, [initialProps])
-
   useEffect(() => {
     //tiny history
     sessionStorage.setItem(
@@ -93,19 +89,13 @@ export function FrontendClientBase({
     }
   })
 
-  // const auth = useAuthentication('frontend-client-base')
   const [loggedInData, setLoggedInData] = useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
-  const [loggedInComponents, setLoggedInComponents] =
-    useState<LoggedInStuff | null>(null)
-
-  //console.log('Comps', loggedInComponents)
 
   useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
-    loggedInComponents,
     loadLoggedInData,
   ])
 
@@ -115,33 +105,31 @@ export function FrontendClientBase({
   return (
     <InstanceDataProvider value={instanceData}>
       <PrintMode />
-      <LoggedInComponentsProvider value={loggedInComponents}>
-        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-          <LoggedInDataProvider value={loggedInData}>
-            <EntityIdProvider value={entityId || null}>
+      <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
+        <LoggedInDataProvider value={loggedInData}>
+          <EntityIdProvider value={entityId || null}>
+            <ConditonalWrap
+              condition={!noHeaderFooter}
+              wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+            >
               <ConditonalWrap
-                condition={!noHeaderFooter}
-                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+                condition={!noContainers}
+                wrapper={(kids) => (
+                  <div className="relative">
+                    <MaxWidthDiv showNav={showNav}>
+                      <main id="content">{kids}</main>
+                    </MaxWidthDiv>
+                  </div>
+                )}
               >
-                <ConditonalWrap
-                  condition={!noContainers}
-                  wrapper={(kids) => (
-                    <div className="relative">
-                      <MaxWidthDiv showNav={showNav}>
-                        <main>{kids}</main>
-                      </MaxWidthDiv>
-                    </div>
-                  )}
-                >
-                  {/* should not be necessary…?*/}
-                  {children as JSX.Element}
-                </ConditonalWrap>
+                {/* should not be necessary…?*/}
+                {children as JSX.Element}
               </ConditonalWrap>
-              <ToastNotice />
-            </EntityIdProvider>
-          </LoggedInDataProvider>
-        </AuthProvider>
-      </LoggedInComponentsProvider>
+            </ConditonalWrap>
+            <ToastNotice />
+          </EntityIdProvider>
+        </LoggedInDataProvider>
+      </AuthProvider>
     </InstanceDataProvider>
   )
 
@@ -160,27 +148,18 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
+    if (loggedInData) return
     if (cookies['auth-token'] || loadLoggedInData) {
-      Promise.all([
-        !loggedInData
-          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-              (res) => res.json()
-            )
-          : false,
-        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
-      ])
-        .then((values) => {
-          if (values[0]) {
+      fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
+        .then((res) => res.json())
+        .then((value) => {
+          if (value) {
             sessionStorage.setItem(
               `___loggedInData_${instanceData.lang}`,
-              JSON.stringify(values[0])
+              JSON.stringify(value)
             )
-            setLoggedInData(values[0] as LoggedInData)
+            setLoggedInData(value as LoggedInData)
           }
-          if (values[1])
-            setLoggedInComponents(
-              (values[1] as { Components: LoggedInStuff }).Components
-            )
         })
         .catch(() => {})
       if (!cookies['__serlo_preview__']) {

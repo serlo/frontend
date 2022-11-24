@@ -7,6 +7,7 @@ import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import {
   TaxonomyTermType,
   FetchExerciseFolderQuery,
@@ -59,7 +60,13 @@ export function ArticleRelatedExercises({
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
+        <Icon
+          icon={
+            getIconByTypename(
+              TaxonomyTermType.ExerciseFolder
+            ) as EdtrIconDefinition
+          }
+        />
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:

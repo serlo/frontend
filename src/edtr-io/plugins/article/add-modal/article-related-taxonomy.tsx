@@ -7,6 +7,7 @@ import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
@@ -55,7 +56,10 @@ export function ArticleRelatedTaxonomy({
         href={`/${term.id}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename(UuidType.TaxonomyTerm)} /> {term.name}
+        <Icon
+          icon={getIconByTypename(UuidType.TaxonomyTerm) as EdtrIconDefinition}
+        />{' '}
+        {term.name}
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {
@@ -72,7 +76,7 @@ export function ArticleRelatedTaxonomy({
     return (
       <div className="py-2 max-w-[30%] mr-4" key={typename}>
         <b className="block mb-2">
-          <Icon icon={getIconByTypename(typename)} />{' '}
+          <Icon icon={getIconByTypename(typename) as EdtrIconDefinition} />{' '}
           {isTax
             ? strings.entities.exerciseFolder
             : strings.categories[getCategoryByTypename(typename)]}

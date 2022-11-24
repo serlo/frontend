@@ -57,7 +57,7 @@ export function CommunityWall() {
       <div className="mt-16 z-10 flex justify-center relative">
         <div className="group text-center">
           <Link
-            className="serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline"
+            className="serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline"
             href="/mitmachen"
           >
             Magst du mitmachen?

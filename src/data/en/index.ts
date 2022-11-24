@@ -11,6 +11,11 @@ export const instanceData = {
       slogan: 'The Open Learning Platform',
       search: 'Search',
       login: 'Login',
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy:
@@ -91,8 +96,11 @@ export const instanceData = {
       pdf: 'Download as PDF',
       pdfNoSolutions: 'PDF without solutions',
     },
-    edit: {
+    editOrAdd: {
       button: 'Edit',
+      addNewEntities: 'Add new content',
+      addNewExercises: 'Add new exercises',
+      editExercises: 'Edit exercises',
       unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
@@ -468,6 +476,7 @@ export const loggedInData = {
       sortCoursePages: 'Sort course pages',
       sortGroupedExercises: 'Sort grouped Exercises',
       edit: 'Edit',
+      editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
       organize: 'Organize',
       moveToGrouped: 'Move content to other grouped-text-exercise',

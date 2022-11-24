@@ -250,19 +250,6 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        onLoad={() => {
-          const observer = new IntersectionObserver((entries, _observer) => {
-            const entry = entries[0]
-            if (
-              entry.isIntersecting &&
-              globalThis.hack__lastId !== globalThis.hack__id
-            ) {
-              globalThis.hack__lastId = globalThis.hack__id
-              submitEvent(`spenden-seen-${banner.id}`)
-            }
-          })
-          if (bannerRef.current) observer.observe(bannerRef.current)
-        }}
         className={clsx(
           'w-[100vw] relative py-6 px-side text-center text-xl overflow-x-hidden',
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
@@ -275,6 +262,21 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
         <figure className="mx-auto mt-6 max-w-[22rem] sm:mr-0 sm:max-w-[15rem] text-center">
           <img
             src={banner.imageSrc}
+            onLoad={() => {
+              const observer = new IntersectionObserver(
+                (entries, _observer) => {
+                  const entry = entries[0]
+                  if (
+                    entry.isIntersecting &&
+                    globalThis.hack__lastId !== globalThis.hack__id
+                  ) {
+                    globalThis.hack__lastId = globalThis.hack__id
+                    submitEvent(`spenden-seen-${banner.id}`)
+                  }
+                }
+              )
+              if (bannerRef.current) observer.observe(bannerRef.current)
+            }}
             className={clsx(
               ' sm:h-fit',
               isTestimonial

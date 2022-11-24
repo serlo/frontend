@@ -1,6 +1,7 @@
 export const colors = {
   brand: '#007ec1',
   brandGreen: '#95bc1a',
+  brandGreen300: '#B9D957',
 }
 
 export const articleColors = {

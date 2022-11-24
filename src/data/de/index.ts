@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "Die freie Lernplattform",
       search: "Suche",
-      login: "Anmelden"
+      login: "Anmelden",
+      skipLinks: {
+        sentence: "Springe zum %content% oder %footer%",
+        content: "Inhalt",
+        footer: "Footer"
+      }
     },
     search: {
       privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
@@ -88,14 +93,17 @@ export const instanceData = {
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
     },
-    edit: {
-      button: "Inhalt überarbeiten",
+    editOrAdd: {
+      button: "Überarbeiten",
+      addNewEntities: "Inhalt hinzufügen",
+      addNewExercises: "Aufgabe hinzufügen",
+      editExercises: "Aufgaben überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
         title: "Erstelle mit uns Lerninhalte!",
         text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
-        registerButton: "Neues Konto anlegen",
+        registerButton: "Neuen Account anlegen",
         psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
@@ -437,6 +445,7 @@ export const loggedInData = {
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
+      editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
@@ -811,7 +820,7 @@ export const loggedInData = {
           goToChat: "Gehe zu %chatLink%.",
           signIn: "Melde dich an.",
           goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
-          myAccount: "Mein Konto",
+          myAccount: "Mein Account",
           uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
           refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
           refreshLink: "diesem magischem Link"
@@ -825,8 +834,8 @@ export const loggedInData = {
         toForm: "Motivationsformular"
       },
       delete: {
-        heading: "So kannst du dein Konto löschen",
-        text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
+        heading: "So kannst du deinen Account löschen",
+        text: "Wenn du deinen Account löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
         deleteAccount: "Account löschen"
       }
     },

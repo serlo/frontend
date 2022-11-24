@@ -1,18 +1,12 @@
 import clsx from 'clsx'
-import dynamic from 'next/dynamic'
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { CommunityWallPerson } from '@/data/de/community-people'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
-
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-)
 
 const testimonials = [
   {
@@ -21,7 +15,7 @@ const testimonials = [
     imgSrc:
       'https://assets.serlo.org/5fc6113cd6220_e761872fa96f411d8ed4f41b527dcc1318651373.jpg',
     subjects: [
-      'Bei Serlo kann ich eine Arbeitsumgebung mitgestalten, in der ich, ich selbst sein kann und mich wohlfühle. Wir gestalten Arbeit nicht basierend auf dem Status Quo anderer Unternehmen, sondern so, wie wir es fair finden.',
+      'Bei Serlo kann ich eine Arbeitsumgebung mitgestalten, in der ich ich selbst sein kann und mich wohlfühle. Wir gestalten Arbeit nicht basierend auf dem Status Quo anderer Unternehmen, sondern so, wie wir es fair finden.',
     ],
   },
   {
@@ -123,8 +117,6 @@ export interface JobsOverviewProps {
 }
 
 export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
-  const [shareOpen, setShareOpen] = useState(false)
-
   return (
     <>
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
@@ -137,7 +129,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           'text-gray-700'
         )}
       >
-        <div className="mt-16 md:mt-[11vh]">{renderUserTools(true)}</div>
+        <div className="mt-16 md:mt-[11vh]">
+          <UserTools aboveContent />
+        </div>
         <section
           className={clsx(
             'sm:flex sm:flex-row-reverse',
@@ -280,13 +274,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             {testimonials.map(renderPerson)}
           </div>
         </section>
-        {renderUserTools(false)}
-        <ShareModal
-          isOpen={shareOpen}
-          onClose={() => setShareOpen(false)}
-          showPdf={false}
-          path="jobs"
-        />
+        <UserTools />
       </div>
 
       <style jsx>{`
@@ -388,15 +376,6 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       `}</style>
     </>
   )
-
-  function renderUserTools(aboveContent: boolean) {
-    return (
-      <UserTools
-        onShare={() => setShareOpen(true)}
-        aboveContent={aboveContent}
-      />
-    )
-  }
 
   function renderPositions(positions?: PersonioPosition[]) {
     if (!positions || !positions.length)

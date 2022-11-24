@@ -60,13 +60,13 @@ export interface InstanceData {
 
 // Menus are trees of title and urls, possibly with icons.
 
-export type HeaderData = HeaderLink[]
+export type HeaderData = HeaderLinkData[]
 
-export interface HeaderLink {
+export interface HeaderLinkData {
   title: string
   url: string
   icon?: HeaderIcon
-  children?: HeaderLink[]
+  children?: HeaderLinkData[]
 }
 
 export type HeaderIcon =
@@ -76,7 +76,6 @@ export type HeaderIcon =
   | 'community'
   | 'donate'
   | 'user'
-  | 'login'
   | 'notifications'
 
 export interface HeaderStrings {
