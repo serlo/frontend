@@ -32,10 +32,9 @@ export const preventHover: PointerEventHandler = (event) => {
 export interface ItemProps {
   link: HeaderLinkData
   elementAsIcon?: JSX.Element
-  className?: string
 }
 
-export function Item({ link, elementAsIcon, className }: ItemProps) {
+export function Item({ link, elementAsIcon }: ItemProps) {
   const hasChildren = link.children !== undefined
 
   const textAndIcon = (
@@ -49,8 +48,7 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
     <RadixItem
       className={clsx(
         'ease-linear duration-700',
-        'block md:inline-block md:mx-[3px]',
-        className
+        'block md:inline-block md:mx-[3px]'
       )}
       key={link.title}
     >

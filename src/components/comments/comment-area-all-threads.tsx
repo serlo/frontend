@@ -32,7 +32,7 @@ export function CommentAreaAllThreads() {
             instance: lang,
           })}
         </StaticInfoPanel>
-        {auth === null ? (
+        {auth.current === null ? (
           <StaticInfoPanel icon={faWarning} type="warning">
             <PleaseLogIn noWrapper />
           </StaticInfoPanel>

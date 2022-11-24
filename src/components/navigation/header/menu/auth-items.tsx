@@ -1,21 +1,34 @@
 import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import dynamic from 'next/dynamic'
 
 import { Item } from './item'
-import { NoAuthItem } from './no-auth-item'
 import { useAuthentication } from '@/auth/use-authentication'
-import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
+import type { UnreadNotificationsCountProps } from '@/components/user-tools/unread-notifications-count'
 import { getAvatarUrl } from '@/components/user/user-link'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+
+const UnreadNotificationsCount = dynamic<UnreadNotificationsCountProps>(() =>
+  import('@/components/user-tools/unread-notifications-count').then(
+    (mod) => mod.UnreadNotificationsCount
+  )
+)
 
 export function AuthItems() {
   const auth = useAuthentication()
+  const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
 
-  if (!auth || !loggedInData || !auth.username)
-    return <NoAuthItem hidden={false} />
+  const noAuthData = {
+    url: '/api/auth/login',
+    title: strings.header.login,
+    icon: 'user',
+  } as const
 
-  const { id, username } = auth
-  const userMeReplacement = `user/${id}/${username}`
+  if (!auth.current || !loggedInData || !auth.current.username)
+    return <Item link={noAuthData} />
+
+  const userMeReplacement = `user/${auth.current.id}/${auth.current.username}`
 
   const [notificationLinkData, userLinkData] = loggedInData.authMenu
   const updatedSubData = {
@@ -27,21 +40,23 @@ export function AuthItems() {
 
   return (
     <>
-      <Item
-        link={notificationLinkData}
-        elementAsIcon={
-          <div className="-top-[2px] md:relative md:mx-[3px] md:my-[7px]">
-            <UnreadNotificationsCount icon={faBell} />
-          </div>
-        }
-      />
+      {UnreadNotificationsCount ? (
+        <Item
+          link={notificationLinkData}
+          elementAsIcon={
+            <div className="-top-[2px] md:relative md:mx-[3px] md:my-[7px]">
+              <UnreadNotificationsCount icon={faBell} />
+            </div>
+          }
+        />
+      ) : null}
       <Item
         link={updatedSubData}
         elementAsIcon={
           <img
             className="rounded-full w-6 h-6 inline md:my-[7px]"
-            src={getAvatarUrl(username)}
-            title={`${updatedSubData.title} ${username}`}
+            src={getAvatarUrl(auth.current.username)}
+            title={`${updatedSubData.title} ${auth.current.username}`}
           />
         }
       />

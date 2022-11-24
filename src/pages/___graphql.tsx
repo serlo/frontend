@@ -1,6 +1,6 @@
 import type { FetcherParams } from '@graphiql/toolkit'
 import type { GraphiQLProps } from 'graphiql/esm/components/GraphiQL'
-import { ExecutionResult } from 'graphql'
+import { ExecutionResult, GraphQLError } from 'graphql'
 import { NextPage } from 'next'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
@@ -9,6 +9,7 @@ import 'graphiql/graphiql.css'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthProvider } from '@/auth/auth-provider'
+import { useAuthentication } from '@/auth/use-authentication'
 
 const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
   ssr: false,
@@ -26,8 +27,22 @@ const GraphQLPage: NextPage = () => {
 }
 
 function GraphiQLWithCustomFetcher() {
+  const auth = useAuthentication()
+
   const fetcher = async function fetcher(params: FetcherParams) {
+    const usedToken = auth.current?.token
     const data = await executeQuery()
+    const error = data.errors?.[0] as
+      | (GraphQLError & {
+          extensions: {
+            code: 'INVALID_TOKEN'
+          }
+        })
+      | undefined
+    if (error?.extensions.code === 'INVALID_TOKEN' && auth.current !== null) {
+      await auth.current.refreshToken(usedToken!)
+      return await executeQuery()
+    }
     return data
 
     async function executeQuery() {
@@ -36,9 +51,14 @@ function GraphiQLWithCustomFetcher() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          ...(auth.current
+            ? {
+                Authorization: `Bearer ${auth.current.token}`,
+              }
+            : {}),
         },
         body: JSON.stringify(params),
-        credentials: 'include',
+        credentials: 'same-origin',
       })
       return (await response.json()) as ExecutionResult
     }

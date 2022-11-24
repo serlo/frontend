@@ -136,7 +136,7 @@ export function UserTools({
           )
         ) : null}
 
-        {auth ? (
+        {auth.current ? (
           data?.type === UuidType.CoursePage ||
           data?.type === UuidType.Course ? (
             <MoreAuthorToolsCourse data={data} aboveContent={aboveContent} />
