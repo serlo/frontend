@@ -20,6 +20,8 @@ export const AuthSessionCookie = {
     }
   },
   remove() {
+    console.log('removing cookie')
+    console.log(this.cookieName)
     Cookies.remove(this.cookieName)
   },
   parse(cookies?: Partial<{ [key: string]: string }>): Session | null {
