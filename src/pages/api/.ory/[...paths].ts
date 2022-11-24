@@ -1,6 +1,7 @@
+import { COOKIE_DOMAIN } from '../../../auth/kratos'
 import {
-  config as oryConfig,
   createApiHandler,
+  config as oryConfig,
 } from '@ory/integrations/next-edge'
 
 export const config = { ...oryConfig, runtime: 'experimental-edge' }
@@ -11,20 +12,7 @@ const KRATOS_HOSTS = {
   local: process.env.KRATOS_HOST_LOCAL,
 }
 
-const COOKIE_DOMAINS = {
-  production: process.env.NEXT_PUBLIC_SERLO_DOMAIN_PRODUCTION,
-  staging: process.env.NEXT_PUBLIC_SERLO_DOMAIN_STAGING,
-  local: 'localhost',
-}
-
-export const KRATOS_HOST = KRATOS_HOSTS[process.env.NEXT_PUBLIC_ENV || 'local']
-
-const COOKIE_DOMAIN =
-  process.env.NEXT_PUBLIC_ENV === 'production'
-    ? COOKIE_DOMAINS['production']
-    : process.env.NEXT_PUBLIC_VERCEL_URL
-    ? COOKIE_DOMAINS['staging']
-    : COOKIE_DOMAINS['local']
+const KRATOS_HOST = KRATOS_HOSTS[process.env.NEXT_PUBLIC_ENV || 'local']
 
 // TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 export default createApiHandler({
