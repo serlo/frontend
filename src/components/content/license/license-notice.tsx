@@ -2,9 +2,9 @@ import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons/faCreative
 import { faSlash } from '@fortawesome/free-solid-svg-icons/faSlash'
 import clsx from 'clsx'
 
-import { FaIcon } from '../../fa-icon'
 import { Link } from '../link'
 import { LicenseIcons } from './license-icons'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
 import { NodePath } from '@/schema/article-renderer'
@@ -39,7 +39,7 @@ export function LicenseNotice({
     return (
       <div
         className={clsx(
-          'border-t-2 border-brand-150 text-truegray-700 text-sm',
+          'border-t-2 border-brand-200 text-truegray-700 text-sm',
           'px-side py-2.5 my-10 mobile:flex'
         )}
       >

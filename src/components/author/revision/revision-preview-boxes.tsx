@@ -126,7 +126,7 @@ export function RevisionPreviewBoxes({
               data.typename === UuidRevType.GroupedExercise) &&
               '!py-2',
             withPadding && 'p-side',
-            'text-lg py-7 border border-brand-lighter rounded-2xl',
+            'text-lg py-7 border border-brand-400 rounded-2xl',
             'fixH1'
           )}
         >

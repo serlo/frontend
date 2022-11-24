@@ -55,7 +55,7 @@ export function AddRevision({
       set since this seems to be the only cookie legacy actually removes,
       but since it's http-only this workaround is way easier.
       The fetch also makes sure the CSRF tokens are set
-      This is only a hack until we rely on the API to save content
+      This is only a hack until we don't use legacy authentication any more 
       */
 
       try {

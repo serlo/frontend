@@ -66,7 +66,7 @@ function Content({ id, licenses }: UpdateLicenseProps) {
   function renderOption(license: UpdateLicenseProps['licenses'][number]) {
     return (
       <option
-        className="bg-brand-150 text-brand"
+        className="bg-brand-200 text-brand"
         key={license.id}
         value={license.id}
       >
