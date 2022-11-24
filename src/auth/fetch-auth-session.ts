@@ -15,9 +15,11 @@ export async function fetchAndPersistAuthSession(
 
     AuthSessionCookie.set(thisSession)
     if (refreshAuth) refreshAuth(thisSession)
+    return thisSession
   } catch {
     // user probably not logged in
     AuthSessionCookie.remove()
     if (refreshAuth) refreshAuth(null)
+    return null
   }
 }
