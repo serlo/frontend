@@ -6,10 +6,9 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
-import type { AxiosError } from '@/auth/types'
-import { useAuthentication } from '@/auth/use-authentication'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -18,50 +17,47 @@ export function Verification() {
   const { strings } = useInstanceData()
   const router = useRouter()
   const { flow: flowId, return_to: returnTo } = router.query
-  const auth = useAuthentication()
+
+  const emailVerifiedSuccessfully = strings.auth.messages[1080002]
 
   useEffect(() => {
     if (!router.isReady || flow) {
       return
     }
 
-    if (auth?.current?.emailVerified) {
-      showToastNotice('You successfully verified your email')
-      void router.push(returnTo ? String(returnTo) : '/')
-      return
+    const flowHandler = async ({
+      data,
+    }: {
+      data: SelfServiceVerificationFlow
+    }) => {
+      setFlow(data)
+      if (data.state === 'passed_challenge') {
+        showToastNotice(emailVerifiedSuccessfully, 'success')
+        return await router.push(returnTo ? String(returnTo) : '/auth/login')
+      }
     }
 
     if (flowId) {
       kratos
         .getSelfServiceVerificationFlow(String(flowId))
-        .then(async ({ data }) => {
-          setFlow(data)
-          if (data.state === 'passed_challenge') {
-            showToastNotice('You successfully verified your email')
-
-            return await router.push(
-              returnTo ? String(returnTo) : '/auth/login'
-            )
-          }
-        })
-        .catch(handleFlowError(router, FlowType.verification, setFlow))
+        .then(flowHandler)
+        .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
       return
     }
+
     kratos
       .initializeSelfServiceVerificationFlowForBrowsers()
-      .then(({ data }) => {
-        setFlow(data)
-      })
-      .catch(handleFlowError(router, FlowType.verification, setFlow))
-      .catch((err: AxiosError) => {
-        if (err.response?.status === 400) {
-          setFlow(err.response?.data as SelfServiceVerificationFlow)
-          return
-        }
-
-        return Promise.reject(err)
-      })
-  }, [flowId, router, router.isReady, returnTo, flow, auth])
+      .then(flowHandler)
+      .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
+  }, [
+    flowId,
+    router.isReady,
+    returnTo,
+    flow,
+    router,
+    strings,
+    emailVerifiedSuccessfully,
+  ])
 
   const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {
     return router
@@ -75,30 +71,41 @@ export function Verification() {
             values,
             undefined
           )
-          .then(({ data }) => {
-            setFlow(data)
-          })
-          .catch(handleFlowError(router, FlowType.verification, setFlow))
-          .catch((err: AxiosError) => {
-            switch (err.response?.status) {
-              case 400: {
-                // Status code 400 implies the form validation had an error
-                setFlow(err.response?.data as SelfServiceVerificationFlow)
-                return
-              }
-            }
-
-            throw err
-          })
+          .then(({ data }) => setFlow(data))
+          .catch(
+            handleFlowError(
+              router,
+              FlowType.verification,
+              setFlow,
+              strings,
+              true
+            )
+          )
       )
   }
-  if (!flow) {
-    return null
-  }
+
   return (
-    <>
-      <PageTitle headTitle title={strings.auth.verifyTitle} />
-      <Flow onSubmit={onSubmit} flow={flow} />
-    </>
+    <div className="max-w-[30rem] mx-auto">
+      <PageTitle headTitle title={`${strings.auth.verifyTitle} ✅`} extraBold />
+      {flow ? (
+        <>
+          <p className="serlo-p">{strings.auth.verifyInstructions}</p>
+          <Flow onSubmit={onSubmit} flow={flow} />
+        </>
+      ) : (
+        <LoadingSpinner noText />
+      )}
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
+    </div>
   )
 }

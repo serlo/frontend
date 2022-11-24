@@ -189,7 +189,7 @@ export type EdtrState =
   | EdtrPluginPageLayout
   | EdtrPluginPageTeam
 
-export interface UnsupportedEdtrState {
+export interface UnknownEdtrState {
   plugin: string
-  state: any
+  state?: unknown
 }

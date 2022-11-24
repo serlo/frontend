@@ -1,5 +1,3 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import {
   SelfServiceLoginFlow,
   SelfServiceRecoveryFlow,
@@ -15,15 +13,22 @@ import {
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
-import { Dispatch, FormEvent, Fragment, SetStateAction, useState } from 'react'
+import {
+  Dispatch,
+  FormEvent,
+  Fragment,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from 'react'
 
-import { StaticInfoPanel } from '../static-info-panel'
+import { filterUnwantedRedirection } from '../pages/auth/utils'
+import { Messages } from './messages'
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
-import { useInstanceData } from '@/contexts/instance-context'
+import type { InstanceData } from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { triggerSentry } from '@/helper/trigger-sentry'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow:
@@ -34,6 +39,7 @@ export interface FlowProps<T extends SubmitPayload> {
     | SelfServiceVerificationFlow
   onSubmit: (values: T) => Promise<void>
   only?: string
+  contentBeforeSubmit?: ReactNode
 }
 
 export enum FlowType {
@@ -55,11 +61,11 @@ export function Flow<T extends SubmitPayload>({
   flow,
   only,
   onSubmit,
+  contentBeforeSubmit,
 }: FlowProps<T>) {
-  const { strings } = useInstanceData()
   const [isLoading, setIsLoading] = useState(false)
 
-  const { action, method, messages, nodes } = flow.ui
+  const { action, method, nodes, messages } = flow.ui
   const filteredNodes = only
     ? nodes.filter((node) => node.group === 'default' || node.group === only)
     : nodes
@@ -88,14 +94,18 @@ export function Flow<T extends SubmitPayload>({
         void handleSubmit(e)
       }}
     >
-      {renderMessages()}
+      <Messages messages={messages} />
 
-      <div className="mx-side max-w-[18rem]">
+      <div className="mx-side">
         {filteredNodes.map((node) => {
+          const isSubmit =
+            hasOwnPropertyTs(node.attributes, 'type') &&
+            node.attributes.type === 'submit'
           const id = getNodeId(node)
 
           return (
             <Fragment key={id}>
+              {isSubmit && contentBeforeSubmit ? contentBeforeSubmit : null}
               <Node
                 node={node}
                 disabled={isLoading}
@@ -117,49 +127,6 @@ export function Flow<T extends SubmitPayload>({
       </div>
     </form>
   )
-
-  function renderMessages() {
-    return (
-      <div className="mx-side">
-        {messages
-          ? messages.map((node) => {
-              const { id, text, type } = node
-
-              const panelType = type === 'info' ? 'info' : 'warning'
-              const hasTranslatedMessage = hasOwnPropertyTs(
-                strings.auth.messages,
-                id
-              )
-              const rawMessage = hasTranslatedMessage
-                ? strings.auth.messages[
-                    id as keyof typeof strings.auth.messages
-                  ]
-                : text
-
-              // TODO: check context
-              const message = replacePlaceholders(rawMessage, { reason: text })
-
-              if (!hasTranslatedMessage) {
-                triggerSentry({
-                  message: 'kratos-untranslated-message',
-                  code: id,
-                })
-              }
-
-              return (
-                <StaticInfoPanel
-                  key={id}
-                  type={panelType}
-                  icon={type === 'info' ? faInfoCircle : faWarning}
-                >
-                  {message}
-                </StaticInfoPanel>
-              )
-            })
-          : null}
-      </div>
-    )
-  }
 
   function handleSubmit(e: FormEvent | MouseEvent, method?: string) {
     e.stopPropagation()
@@ -185,7 +152,9 @@ export function Flow<T extends SubmitPayload>({
 export function handleFlowError<S>(
   router: NextRouter,
   flowType: FlowType,
-  resetFlow: Dispatch<SetStateAction<S | undefined>>
+  resetFlow: Dispatch<SetStateAction<S | undefined>>,
+  strings: InstanceData['strings'],
+  throwError?: boolean
 ) {
   return async (error: AxiosError) => {
     const data = error.response?.data as {
@@ -205,10 +174,21 @@ export function handleFlowError<S>(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
         window.location.href = data.redirect_browser_to
         return
-      case 'session_already_available':
-        // User is already signed in, let's redirect them home!
-        await router.push('/')
+      case 'session_already_available': {
+        showToastNotice(strings.notices.alreadyLoggedIn)
+
+        const redirection = filterUnwantedRedirection({
+          desiredPath: sessionStorage.getItem('previousPathname'),
+          unwantedPaths: [
+            '/auth/verification',
+            '/auth/login',
+            '/auth/registration',
+          ],
+        })
+
+        await router.push(redirection)
         return
+      }
       case 'session_refresh_required':
         // We need to re-authenticate to perform this action
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
@@ -248,7 +228,12 @@ export function handleFlowError<S>(
         resetFlow(undefined)
         await router.push(flowPath)
         return
+      case 400:
+        resetFlow(error.response?.data as S)
+        return
     }
+
+    if (throwError) throw error
 
     // We are not able to handle the error? Return it.
     return Promise.reject(error)

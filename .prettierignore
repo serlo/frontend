@@ -13,7 +13,6 @@
 src/data/*/index.ts
 src/fetcher/graphql-types/operations.ts
 graphql.schema.json
-tsconfig.json
 
 # Assets
 public

@@ -1,5 +1,4 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
-import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: Instance["Ta"],
@@ -10,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "அனைவருக்கும் திறந்த உரிமம் உள்ள ஓர் இணையத்தளம்",
       search: "தேடுக",
-      login: "உள்நுழை"
+      login: "உள்நுழை",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: 'The search is provided by Google. See our %privacypolicy% to find out what information is processed.',
@@ -405,13 +409,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "சந்தாக்கள்"
     }, {
-      url: getPasswordChangeUrl(),
+      url: '/auth/settings',
       title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/user/settings',
       title: 'Settings'
     }, {
-      url: getLogoutUrl(),
+      url: '/auth/logout',
       title: "வெளியேறு"
     }]
   }],

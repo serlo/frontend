@@ -1,4 +1,3 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
 import type {
   SelfServiceLoginFlow,
   SubmitSelfServiceLoginFlowBody,
@@ -6,13 +5,16 @@ import type {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { filterUnwantedRedirection } from './utils'
+import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
+import { useAuth } from '@/auth/use-auth'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
-import { FaIcon } from '@/components/fa-icon'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -20,6 +22,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
+  const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
   const loginStrings = strings.auth.login
 
@@ -39,10 +42,8 @@ export function Login({ oauth }: { oauth?: boolean }) {
     if (flowId) {
       kratos
         .getSelfServiceLoginFlow(String(flowId))
-        .then(({ data }) => {
-          setFlow(data)
-        })
-        .catch(handleFlowError(router, FlowType.login, setFlow))
+        .then(({ data }) => setFlow(data))
+        .catch(handleFlowError(router, FlowType.login, setFlow, strings))
       return
     }
 
@@ -56,17 +57,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
         setFlow(data)
       })
       .catch(async (error: AxiosError) => {
-        const data = error.response?.data as {
-          error: {
-            id: string
-          }
-        }
+        const data = error.response?.data as { error: { id: string } }
+
         if (oauth && data.error?.id === 'session_already_available') {
           await router.push(
             `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
           )
         }
-        await handleFlowError(router, FlowType.login, setFlow)(error)
+        await handleFlowError(router, FlowType.login, setFlow, strings)(error)
       })
   }, [
     flowId,
@@ -78,40 +76,65 @@ export function Login({ oauth }: { oauth?: boolean }) {
     flow,
     oauth,
     login_challenge,
+    strings,
   ])
 
   const showLogout = aal || refresh
 
   return (
     <>
-      <PageTitle
-        headTitle
-        icon={<FaIcon icon={faUser} />}
-        title={loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']}
-      />
-      {flow ? <Flow flow={flow} onSubmit={onLogin} /> : null}
-      {showLogout ? <div>{loginStrings.logOut}</div> : ''}
-      <div className="mx-side mt-20 border-t-2 pt-4">
-        {loginStrings.newHere}{' '}
-        <Link href="/auth/registration" className="serlo-button-light">
-          {loginStrings.registerNewAccount}
-        </Link>
-      </div>
-      <div className="mx-side mt-2 pt-4">
-        {replacePlaceholders(loginStrings.forgotPassword, {
-          forgotLinkText: (
-            <Link href="/auth/recovery" className="font-bold">
-              {loginStrings.forgotLinkText}
-            </Link>
-          ),
-        })}
+      <div className="mb-16 max-w-[30rem] pb-6 mx-auto">
+        <PageTitle
+          headTitle
+          title={`${
+            loginStrings[flow?.refresh ? 'confirmAction' : 'signIn']
+          } 👋`}
+          extraBold
+        />
+
+        {flow ? (
+          <Flow flow={flow} onSubmit={onLogin} />
+        ) : (
+          <LoadingSpinner noText />
+        )}
+        {showLogout ? <div>{loginStrings.logOut}</div> : null}
+        <div className="mx-side mt-20 border-t-2 pt-4">
+          {loginStrings.newHere}{' '}
+          <Link href="/auth/registration" className="serlo-button-light">
+            {loginStrings.registerNewAccount}
+          </Link>
+        </div>
+        <div className="mx-side mt-2 pt-3">
+          {replacePlaceholders(loginStrings.forgotPassword, {
+            forgotLinkText: (
+              <Link href="/auth/recovery" className="font-bold">
+                {loginStrings.forgotLinkText}
+              </Link>
+            ),
+          })}
+        </div>
+        <style jsx>{`
+          @font-face {
+            font-family: 'Karmilla';
+            font-style: bolder;
+            font-weight: 800;
+            src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+                format('woff2'),
+              url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+            font-display: swap;
+          }
+        `}</style>
       </div>
     </>
   )
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    const originalPreviousPath = sessionStorage.getItem('previousPathname')
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['auth/verification', 'auth/logout'],
+    })
+
     await router.push(
       `${router.pathname}?flow=${String(flow?.id)}`,
       undefined,
@@ -124,7 +147,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(async ({ data }) => {
-          void fetchAndPersistAuthSession(data.session)
+          void fetchAndPersistAuthSession(refreshAuth, data.session)
           if (oauth) {
             await router.push(
               `/api/oauth/accept-login?login_challenge=${String(
@@ -133,20 +156,12 @@ export function Login({ oauth }: { oauth?: boolean }) {
             )
             return
           }
-
+          const username =
+            getAuthPayloadFromSession(data.session)?.username ?? 'Jane Doe'
           showToastNotice(
-            strings.notices.welcome.replace(
-              '%username%',
-              (data.session.identity.traits as { username: string })?.username
-            )
+            strings.notices.welcome.replace('%username%', username)
           )
-
-          setTimeout(() => {
-            // TODO: make sure router.push() also rerenders authed components (e.g. header)
-            window.location.href =
-              flow?.return_to ?? originalPreviousPath ?? '/'
-          }, 1000)
-
+          void router.push(flow?.return_to ?? redirection)
           return
         })
         .catch((e: Error) => {
@@ -159,7 +174,12 @@ export function Login({ oauth }: { oauth?: boolean }) {
       }
     } catch (e: unknown) {
       try {
-        await handleFlowError(router, FlowType.login, setFlow)(e as AxiosError)
+        await handleFlowError(
+          router,
+          FlowType.login,
+          setFlow,
+          strings
+        )(e as AxiosError)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

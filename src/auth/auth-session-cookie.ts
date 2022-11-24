@@ -1,6 +1,8 @@
 import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
+import { serloDomain } from '@/helper/urls/serlo-domain'
+
 export const AuthSessionCookie = {
   cookieName: 'auth-session',
   get() {
@@ -10,6 +12,7 @@ export const AuthSessionCookie = {
     // TODO: is the cookie id problematic to store locally?
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
+      domain: serloDomain,
       expires: session.expires_at ? new Date(session.expires_at) : undefined,
     })
   },

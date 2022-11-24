@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
-import type { AxiosError } from '@/auth/types'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -18,36 +17,21 @@ export function Recovery() {
   const { flow: flowId, return_to: returnTo } = router.query
 
   useEffect(() => {
-    if (!router.isReady || flow) {
-      return
-    }
+    if (!router.isReady || flow) return
 
     if (flowId) {
       kratos
         .getSelfServiceRecoveryFlow(String(flowId))
-        .then(({ data }) => {
-          setFlow(data)
-        })
-        .catch(handleFlowError(router, FlowType.recovery, setFlow))
+        .then(({ data }) => setFlow(data))
+        .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
       return
     }
 
     kratos
       .initializeSelfServiceRecoveryFlowForBrowsers()
-      .then(({ data }) => {
-        setFlow(data)
-      })
-      .catch(handleFlowError(router, FlowType.recovery, setFlow))
-      .catch((err: AxiosError) => {
-        // If the previous handler did not catch the error it's most likely a form validation error
-        if (err.response?.status === 400) {
-          setFlow(err.response?.data as SelfServiceRecoveryFlow)
-          return
-        }
-
-        return Promise.reject(err)
-      })
-  }, [flowId, router, router.isReady, returnTo, flow])
+      .then(({ data }) => setFlow(data))
+      .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
+  }, [flowId, router, router.isReady, returnTo, flow, strings])
 
   const onSubmit = (values: SubmitSelfServiceRecoveryFlowBody) => {
     return router
@@ -57,27 +41,29 @@ export function Recovery() {
       .then(() =>
         kratos
           .submitSelfServiceRecoveryFlow(String(flow?.id), values)
-          .then(({ data }) => {
-            setFlow(data)
-          })
-          .catch(handleFlowError(router, FlowType.recovery, setFlow))
-          .catch((err: AxiosError) => {
-            switch (err.response?.status) {
-              case 400:
-                // Status code 400 implies the form validation had an error
-                setFlow(err.response?.data as SelfServiceRecoveryFlow)
-                return
-            }
-
-            throw err
-          })
+          .then(({ data }) => setFlow(data))
+          .catch(
+            handleFlowError(router, FlowType.recovery, setFlow, strings, true)
+          )
       )
   }
   if (!flow) return null
   return (
-    <>
-      <PageTitle headTitle title={strings.auth.recoverTitle} />
+    <div className="max-w-[30rem] mx-auto">
+      <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
+      <p className="serlo-p mb-10 -mt-4">{strings.auth.recoveryInstructions}</p>
       <Flow onSubmit={onSubmit} flow={flow} />
-    </>
+      <style jsx>{`
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+      `}</style>
+    </div>
   )
 }

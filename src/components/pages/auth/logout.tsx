@@ -1,23 +1,37 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { filterUnwantedRedirection } from './utils'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
+import { AxiosError } from '@/auth/types'
+import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
+  const { refreshAuth } = useAuth()
+  const auth = useAuthentication()
   const { strings } = useInstanceData()
   const { logout_challenge } = router.query
 
   useEffect(() => {
-    fetchAndPersistAuthSession().catch(() => {
-      return router.push('/')
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['/auth/settings', 'auth/login'],
     })
 
-    const originalPreviousPath = sessionStorage.getItem('previousPathname')
+    const redirectOnError = () => {
+      window.location.href = redirection
+      return
+    }
+
+    // if they are problems we could add an additional check here
+    if (!auth || !AuthSessionCookie.get()) return
 
     kratos
       .createSelfServiceLogoutFlowUrlForBrowsers()
@@ -25,7 +39,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
         kratos
           .submitSelfServiceLogoutFlow(data.logout_token)
           .then(async () => {
-            void fetchAndPersistAuthSession(null)
+            void fetchAndPersistAuthSession(refreshAuth, null)
 
             if (oauth) {
               if (!logout_challenge) return
@@ -36,22 +50,18 @@ export function Logout({ oauth }: { oauth?: boolean }) {
               )
             }
             showToastNotice(strings.notices.bye)
-
-            setTimeout(() => {
-              // TODO: make sure router.push() also rerenders authed components (e.g. header)
-              window.location.href = originalPreviousPath ?? '/'
-            }, 1000)
-
+            void router.push(redirection)
             return
           })
-          .catch((error: unknown) => {
-            return Promise.reject(error)
-          })
+          .catch((error: AxiosError) => Promise.reject(error))
       })
-      .catch((error: unknown) => {
+      .catch((error: AxiosError) => {
+        if (error.response?.status === 401) {
+          return redirectOnError()
+        }
         return Promise.reject(error)
       })
-  }, [router, oauth, logout_challenge, strings.notices.bye])
+  }, [router, oauth, logout_challenge, strings.notices.bye, refreshAuth, auth])
 
   return <LoadingSpinner text={strings.auth.loggingOut} />
 }

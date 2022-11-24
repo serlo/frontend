@@ -6,10 +6,17 @@ import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
+  edtrPasteHack: {
+    cookieName: 'useEdtrPasteHack',
+    isActive: false,
+    activeInDev: true,
+    hideInProduction: true,
+  },
   legacyDesign: {
     cookieName: 'useFrontend',
     isActive: false,
     activeInDev: false,
+    hideInProduction: false,
   },
 }
 
@@ -21,15 +28,13 @@ export function shouldUseFeature(featureKey: FeatureKey) {
   if (typeof window === 'undefined' || !hasOwnPropertyTs(features, featureKey))
     return false
 
-  const hasYesCookie = document.cookie.includes(
-    features[featureKey].cookieName + '=1'
-  )
-  const hasNoCookie = document.cookie.includes(
-    features[featureKey].cookieName + '=0'
-  )
+  const feature = features[featureKey]
+
+  const hasYesCookie = document.cookie.includes(feature.cookieName + '=1')
+  const hasNoCookie = document.cookie.includes(feature.cookieName + '=0')
   return isProduction
-    ? hasYesCookie
-    : hasYesCookie || (features[featureKey].activeInDev && !hasNoCookie)
+    ? hasYesCookie && feature.hideInProduction === false
+    : hasYesCookie || (feature.activeInDev && !hasNoCookie)
 }
 
 export function ProfileExperimental() {
@@ -72,7 +77,18 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {/* <hr className="mx-side mb-4 -mt-2" /> */}
+      {features.edtrPasteHack && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('edtrPasteHack')} Edtr: Einfügen von Edtr-State
+            JSON 🛠
+          </h3>
+          <p className="serlo-p">
+            Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
+          </p>
+        </div>
+      )}
+      <hr className="mx-side mb-4 -mt-2" />
       {features.legacyDesign && (
         <div>
           <h3 className="serlo-h3 mb-3">

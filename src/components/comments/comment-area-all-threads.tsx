@@ -32,7 +32,7 @@ export function CommentAreaAllThreads() {
             instance: lang,
           })}
         </StaticInfoPanel>
-        {auth.current === null ? (
+        {auth === null ? (
           <StaticInfoPanel icon={faWarning} type="warning">
             <PleaseLogIn noWrapper />
           </StaticInfoPanel>
@@ -54,8 +54,8 @@ export function CommentAreaAllThreads() {
   function renderThreads() {
     return commentData?.map((thread) => {
       const { __typename } = thread.object
-
       const href = thread.object.alias
+      const latestCommentId = thread.comments.nodes.at(-1)?.id
 
       return (
         <EntityIdProvider key={thread.id} value={thread.object.id}>
@@ -71,7 +71,10 @@ export function CommentAreaAllThreads() {
               </Link>
               )
             </div>
-            <CommentArea commentData={{ active: [thread], archived: [] }} />
+            <CommentArea
+              commentData={{ active: [thread], archived: [] }}
+              highlightedCommentId={latestCommentId}
+            />
           </div>
         </EntityIdProvider>
       )

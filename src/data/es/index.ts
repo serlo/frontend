@@ -1,5 +1,4 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
-import { getLogoutUrl, getPasswordChangeUrl } from '@/helper/urls/get-auth-urls';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
   lang: Instance["Es"],
@@ -10,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "La Plataforma para el Aprendizaje Abierto",
       search: "Buscar",
-      login: "Ingresar"
+      login: "Ingresar",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "La búsqueda es proporcionada por Google. Mira  nuestra  %privacypolicy%  para saber qué información se procesa.",
@@ -405,13 +409,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Suscripciones"
     }, {
-      url: getPasswordChangeUrl(),
+      url: '/auth/settings',
       title: "Actualizar contraseña"
     }, {
       url: '/user/settings',
       title: "Configuración"
     }, {
-      url: getLogoutUrl(),
+      url: '/auth/logout',
       title: "Cerrar sesión"
     }]
   }],

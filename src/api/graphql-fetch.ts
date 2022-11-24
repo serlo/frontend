@@ -1,5 +1,4 @@
 import { GraphQLClient, RequestDocument } from 'graphql-request'
-import { RefObject } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { AuthenticationPayload } from '@/auth/auth-provider'
@@ -23,11 +22,9 @@ export function createGraphqlFetch() {
   }
 }
 
-export function createAuthAwareGraphqlFetch(
-  auth: RefObject<AuthenticationPayload>
-) {
+export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
   return async function graphqlFetch(args: string) {
-    if (auth.current === null) throw new Error('unauthorized')
+    if (auth === null) throw new Error('unauthorized')
 
     // proxy calls from localhost to make sure we can send the cookies
     if (window.location.hostname == 'localhost') {

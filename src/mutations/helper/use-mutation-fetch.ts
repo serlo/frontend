@@ -1,7 +1,6 @@
 import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
 
-import { csrReload } from '../../helper/csr-reload'
 import { hasOwnPropertyTs } from '../../helper/has-own-property-ts'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { triggerSentry } from '../../helper/trigger-sentry'
@@ -44,8 +43,7 @@ export function useMutationFetch() {
     query: string,
     input: unknown
   ): Promise<boolean | number> {
-    if (auth.current === null)
-      return handleError('UNAUTHENTICATED', errorStrings)
+    if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
     try {
       const result = await executeQuery()
       if (hasOwnPropertyTs(result, 'entity')) {
@@ -91,15 +89,18 @@ function handleError(
   console.error(e)
 
   if (type == 'BAD_USER_INPUT') {
-    triggerSentry({ message: 'Bad unser input in mutation' })
+    triggerSentry({ message: 'API(mutation): bad user input' })
   }
 
   if (type == 'UNKNOWN') {
-    triggerSentry({ message: 'Unknown API error' })
+    triggerSentry({ message: 'API(mutation): unknown error' })
   }
 
   if (type == 'UNAUTHENTICATED') {
-    csrReload()
+    // while this makes sense it can also increases the chance of lost changes when using the edtr.
+    // let's try without for now
+    // csrReload()
+    triggerSentry({ message: 'API(mutation): unauthenticated' })
   }
 
   showToastNotice(message, 'warning')

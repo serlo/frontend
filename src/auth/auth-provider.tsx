@@ -1,19 +1,19 @@
+import { Session } from '@ory/client'
 import { AuthorizationPayload } from '@serlo/authorization'
-import {
-  createContext,
-  ReactNode,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from './auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
+export type AuthenticationPayload = {
+  username: string
+  id: number
+} | null
+
 export interface AuthContextValue {
-  authenticationPayload: RefObject<AuthenticationPayload>
+  authenticationPayload: AuthenticationPayload
   authorizationPayload: AuthorizationPayload | null
+  refreshAuth: (session: Session | null) => void
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
@@ -25,9 +25,28 @@ export function AuthProvider({
   children: ReactNode
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 }) {
-  const authenticationPayload = useRef<AuthenticationPayload>(
+  const [authenticationPayload, setAuthenticationPayload] = useState(
     getAuthPayloadFromLocalCookie()
   )
+
+  function refreshAuth(session: Session | null) {
+    setAuthenticationPayload(getAuthPayloadFromSession(session))
+  }
+
+  useEffect(() => {
+    const refreshWhenVisible = () => {
+      if (document.visibilityState)
+        setAuthenticationPayload(getAuthPayloadFromLocalCookie())
+    }
+    document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
+    window.addEventListener('online', () => refreshWhenVisible) //on reconnect
+
+    return () => {
+      document.addEventListener('visibilitychange', refreshWhenVisible)
+      window.removeEventListener('online', () => refreshWhenVisible)
+    }
+  }, [])
+
   const authorizationPayload = useAuthorizationPayload(
     authenticationPayload,
     unauthenticatedAuthorizationPayload
@@ -38,6 +57,7 @@ export function AuthProvider({
       value={{
         authenticationPayload,
         authorizationPayload,
+        refreshAuth,
       }}
     >
       {children}
@@ -45,41 +65,31 @@ export function AuthProvider({
   )
 }
 
-export type AuthenticationPayload = {
-  username: string
-  id: number
-  emailVerified: boolean
-} | null
-
 function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
-  const initialSessionValue = AuthSessionCookie.parse()
-  return initialSessionValue
+  return getAuthPayloadFromSession(AuthSessionCookie.parse())
+}
+
+export function getAuthPayloadFromSession(session: Session | null) {
+  return session
     ? {
-        username: (initialSessionValue.identity.traits as { username: string })
-          .username,
+        username: (session.identity.traits as { username: string }).username,
         id: (
-          initialSessionValue.identity.metadata_public as {
+          session.identity.metadata_public as {
             legacy_id: number
           }
         )?.legacy_id,
-        // until now users have only one email
-        emailVerified: (
-          initialSessionValue.identity.verifiable_addresses![0] as {
-            verified: boolean
-          }
-        ).verified,
       }
     : null
 }
 
 function useAuthorizationPayload(
-  authenticationPayload: RefObject<AuthenticationPayload>,
+  authenticationPayload: AuthenticationPayload,
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
   async function fetchAuthorizationPayload(
-    authenticationPayload: RefObject<AuthenticationPayload>
+    authenticationPayload: AuthenticationPayload
   ): Promise<AuthorizationPayload> {
-    if (authenticationPayload.current === null) {
+    if (authenticationPayload === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }
 
@@ -114,7 +124,7 @@ function useAuthorizationPayload(
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationPayload, authenticationPayload.current?.id])
+  }, [authenticationPayload, authenticationPayload?.id])
 
   return authorizationPayload
 }
