@@ -101,6 +101,7 @@ export function FrontendClientBase({
     loggedInData,
     loadLoggedInData,
     isLoggedIn,
+    locale,
   ])
 
   // dev
