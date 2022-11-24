@@ -1,7 +1,7 @@
 import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
-import { serloDomain } from '@/helper/urls/serlo-domain'
+import { COOKIE_DOMAIN } from './kratos'
 
 export const AuthSessionCookie = {
   cookieName: 'auth-session',
@@ -12,7 +12,7 @@ export const AuthSessionCookie = {
     // TODO: is the cookie id problematic to store locally?
     Cookies.set(this.cookieName, JSON.stringify(session), {
       sameSite: 'Strict',
-      domain: serloDomain,
+      domain: COOKIE_DOMAIN,
       expires: session.expires_at ? new Date(session.expires_at) : undefined,
     })
   },
