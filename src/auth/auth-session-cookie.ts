@@ -20,9 +20,10 @@ export const AuthSessionCookie = {
     }
   },
   remove() {
-    console.log('removing cookie')
-    console.log(this.cookieName)
-    Cookies.remove(this.cookieName)
+    Cookies.remove(this.cookieName, {
+      domain: COOKIE_DOMAIN,
+      sameSite: 'Strict',
+    })
   },
   parse(cookies?: Partial<{ [key: string]: string }>): Session | null {
     const session = cookies

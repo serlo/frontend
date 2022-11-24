@@ -26,8 +26,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
     })
 
     const redirectOnError = () => {
-      // TODO: reactivate redirect
-      // window.location.href = redirection
+      window.location.href = redirection
       return
     }
 

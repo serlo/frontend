@@ -11,8 +11,6 @@ export async function fetchAndPersistAuthSession(
     const thisSession =
       session === undefined ? (await kratos.toSession()).data : session
 
-    console.log(thisSession)
-
     AuthSessionCookie.set(thisSession)
     if (refreshAuth) refreshAuth(thisSession)
     return thisSession
