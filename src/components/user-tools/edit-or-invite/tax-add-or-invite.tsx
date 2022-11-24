@@ -41,7 +41,7 @@ export function TaxAddOrInvite({ data, aboveContent }: TaxAddOrInviteProps) {
   if (!data || data.type !== UuidType.TaxonomyTerm) return null
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
-  const isInvite = !auth
+  const isInvite = !auth.current
 
   const href = getEditHref()
   const showEditAction = href || isInvite

@@ -41,9 +41,12 @@ export function useMutationFetch() {
 
   async function mutationFetch(
     query: string,
-    input: unknown
+    input: unknown,
+    isRetry?: boolean
   ): Promise<boolean | number> {
-    if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
+    if (auth.current === null)
+      return handleError('UNAUTHENTICATED', errorStrings)
+    const usedToken = auth.current.token
     try {
       const result = await executeQuery()
       if (hasOwnPropertyTs(result, 'entity')) {
@@ -62,13 +65,21 @@ export function useMutationFetch() {
       const type = error ? error.extensions.code : 'UNKNOWN'
       // eslint-disable-next-line no-console
       console.error(error)
+      if (type === 'INVALID_TOKEN' && !isRetry) {
+        await auth.current.refreshToken(usedToken)
+        return await mutationFetch(query, input, true)
+      }
 
       return handleError(type, errorStrings, error)
     }
 
     async function executeQuery(): Promise<MutationResponse> {
       const client = new GraphQLClient(endpoint, {
-        credentials: 'include',
+        headers: auth.current
+          ? {
+              Authorization: `Bearer ${auth.current.token}`,
+            }
+          : {},
       })
       return client.request(query, { input })
     }

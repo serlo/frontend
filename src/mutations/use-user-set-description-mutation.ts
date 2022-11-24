@@ -21,13 +21,13 @@ export function useUserSetDescriptionMutation() {
   const successHandler = useSuccessHandler()
 
   return async function (input: UserSetDescriptionInput) {
-    if (!auth) return
+    if (!auth.current) return
     const success = await mutationFetch(mutation, input)
 
     return successHandler({
       success,
       toastKey: 'save',
-      redirectUrl: `/user/${auth.id}/${auth.username}`,
+      redirectUrl: `/user/${auth.current.id}/${auth.current.username}`,
       useHardRedirect: true,
     })
   }

@@ -40,7 +40,7 @@ export function ProfileChatButton({
   }, [])
 
   if (!mounted) return null
-  if (auth === null) return null
+  if (auth.current === null) return null
   const isRegistered = !!chatUrl
 
   const text = isOwnProfile

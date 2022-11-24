@@ -72,7 +72,6 @@ module.exports = {
       'error',
       {
         allow: [
-          '@ory/integrations/ui',
           'graphiql/esm/components/GraphiQL',
           'graphql-request/dist/types',
           'msw/*',

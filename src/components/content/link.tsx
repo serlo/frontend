@@ -48,6 +48,7 @@ export function isLegacyLink(_href: string) {
 
   return (
     legacyLinks.includes(_href) ||
+    _href.startsWith('/auth/') ||
     _href.startsWith('/api/auth') ||
     _href.startsWith('/authorization') ||
     _href.startsWith('/navigation') ||

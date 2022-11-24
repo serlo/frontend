@@ -48,7 +48,7 @@ export function AddRevision({
     }
 
     const makeDamnSureUserIsLoggedIn = async () => {
-      if (auth === null) return false
+      if (auth.current === null) return false
 
       /*
       the better way would be to check if the authenticated cookie is still
