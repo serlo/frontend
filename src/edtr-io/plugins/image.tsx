@@ -4,7 +4,8 @@ import { gql } from 'graphql-request'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
-import { parseAuthCookie } from '@/auth/parse-auth-cookie'
+import { getAuthPayloadFromSession } from '@/auth/auth-provider'
+import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const maxFileSize = 2 * 1024 * 1024
@@ -64,53 +65,50 @@ export function createUploadImageHandler() {
 export function createReadFile() {
   return async function readFile(file: File): Promise<LoadedFile> {
     return new Promise((resolve, reject) => {
-      // hard to get to the default auth logic outside of react components
-      // I provide dummy functions for refresh / clear token here since we only need the token
-      // and can be quite certain, that the token has been checked when loading the edtr in the first place
-      const authenticationPayload = parseAuthCookie(
-        (_dummy: string) => new Promise(() => {}),
-        () => {}
-      )
-      if (!authenticationPayload?.token) return
+      fetchAndPersistAuthSession()
+        .then((session) => {
+          const gqlFetch = createAuthAwareGraphqlFetch(
+            getAuthPayloadFromSession(session)
+          )
+          const args = JSON.stringify({
+            query: uploadUrlQuery,
+            variables: {
+              mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
+            },
+          })
 
-      const gqlFetch = createAuthAwareGraphqlFetch({
-        current: authenticationPayload,
-      })
-      const args = JSON.stringify({
-        query: uploadUrlQuery,
-        variables: {
-          mediaType: mimeTypesToMediaType[file.type as SupportedMimeType],
-        },
-      })
+          async function runFetch() {
+            const data = (await gqlFetch(args)) as MediaUploadQuery
+            const reader = new FileReader()
 
-      async function runFetch() {
-        const data = (await gqlFetch(args)) as MediaUploadQuery
-        const reader = new FileReader()
+            reader.onload = async function (e: ProgressEvent) {
+              if (!e.target) return
 
-        reader.onload = async function (e: ProgressEvent) {
-          if (!e.target) return
+              try {
+                const response = await fetch(data.media.newUpload.uploadUrl, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': file.type },
+                  body: file,
+                })
 
-          try {
-            const response = await fetch(data.media.newUpload.uploadUrl, {
-              method: 'PUT',
-              headers: { 'Content-Type': file.type },
-              body: file,
-            })
+                if (response.status !== 200) reject()
+                resolve({
+                  file,
+                  dataUrl: data.media.newUpload.urlAfterUpload,
+                })
+              } catch {
+                reject()
+              }
+            }
 
-            if (response.status !== 200) reject()
-            resolve({
-              file,
-              dataUrl: data.media.newUpload.urlAfterUpload,
-            })
-          } catch {
-            reject()
+            reader.readAsDataURL(file)
           }
-        }
 
-        reader.readAsDataURL(file)
-      }
-
-      void runFetch()
+          void runFetch()
+        })
+        .catch(() => {
+          reject()
+        })
     })
   }
 }

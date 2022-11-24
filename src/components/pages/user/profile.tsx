@@ -55,7 +55,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     new Date().getTime() - new Date(date).getTime() < 1 * hourInMilliseconds
 
   useEffect(() => {
-    setIsOwnProfile(auth.current?.username === username)
+    setIsOwnProfile(auth?.username === username)
   }, [auth, username])
 
   return (

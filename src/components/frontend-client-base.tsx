@@ -9,6 +9,7 @@ import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -33,7 +34,7 @@ Router.events.on('routeChangeStart', () => {
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
   NProgress.done()
-  // experiment: when using csr and running into an error, try without csr once
+  // when using csr and running into an error, try without csr once
   if (!shallow && document.getElementById('error-page-description') !== null) {
     triggerSentry({ message: 'trying again without csr' })
     setTimeout(() => {
@@ -93,10 +94,13 @@ export function FrontendClientBase({
     getCachedLoggedInData()
   )
 
+  const isLoggedIn = AuthSessionCookie.get() !== undefined
+
   useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
     loadLoggedInData,
+    isLoggedIn,
   ])
 
   // dev
@@ -149,7 +153,7 @@ export function FrontendClientBase({
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
-    if (cookies['auth-token'] || loadLoggedInData) {
+    if (AuthSessionCookie.get() || loadLoggedInData) {
       fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
         .then((res) => res.json())
         .then((value) => {

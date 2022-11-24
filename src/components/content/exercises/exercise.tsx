@@ -105,7 +105,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       !node.solution.license.isDefault && (
         <LicenseNotice minimal data={node.solution.license} type="solution" />
       )
-    const authorTools = loaded && auth.current && (
+    const authorTools = loaded && auth && (
       <AuthorToolsExercises
         data={{
           type: ExerciseInlineType.Solution,
@@ -213,7 +213,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     if (isRevisionView) return null
     return (
       <>
-        {loaded && auth.current && (
+        {loaded && auth && (
           <AuthorToolsExercises
             data={{
               type: ExerciseInlineType.Exercise,
