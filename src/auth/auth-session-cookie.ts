@@ -8,15 +8,20 @@ export const AuthSessionCookie = {
   get() {
     return Cookies.get(this.cookieName)
   },
-  set(session: Session) {
-    // TODO: is the cookie id problematic to store locally?
-    Cookies.set(this.cookieName, JSON.stringify(session), {
-      sameSite: 'Strict',
-      domain: COOKIE_DOMAIN,
-      expires: session.expires_at ? new Date(session.expires_at) : undefined,
-    })
+  set(session: Session | null) {
+    if (session === null) this.remove()
+    else {
+      // TODO: is the cookie id problematic to store locally?
+      Cookies.set(this.cookieName, JSON.stringify(session), {
+        sameSite: 'Strict',
+        domain: COOKIE_DOMAIN,
+        expires: session.expires_at ? new Date(session.expires_at) : undefined,
+      })
+    }
   },
   remove() {
+    console.log('removing cookie')
+    console.log(this.cookieName)
     Cookies.remove(this.cookieName)
   },
   parse(cookies?: Partial<{ [key: string]: string }>): Session | null {
