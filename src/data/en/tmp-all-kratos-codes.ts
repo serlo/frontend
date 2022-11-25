@@ -95,8 +95,8 @@ export const codes = {
   // 4060004:
   //   'The recovery token is invalid or has already been used. Please retry the flow.',
   4060005: 'The recovery flow expired 2 minutes ago, please try again.',
-  4070001:
-    'The verification token is invalid or has already been used. Please retry the flow.',
+  // 4070001:
+  //   'The verification token is invalid or has already been used. Please retry the flow.',
   4070002:
     'The request was already completed successfully and can not be retried.',
   4070003: 'The verification flow reached a failure state and must be retried.',

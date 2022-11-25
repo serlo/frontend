@@ -339,8 +339,11 @@ export const instanceData = {
       registerTitle: 'Register your Serlo Account',
       recoverTitle: 'Recover your account',
       recoveryInstructions: 'Insert and submit your email address. We will then send you an email with a reset link.',
-      verifyTitle: 'Verify your email',
-      verifyInstructions: 'Insert and submit your email address to verify it.',
+      verify: {
+        title: 'Verify your email',
+        instructions: 'Insert and submit your email address to verify it.',
+        alreadyDone: 'Thank you, your email adress is verified.'
+      },
       settings: {
         title: "Change your password",
         instruction: 'Insert your new password.',
@@ -380,12 +383,13 @@ export const instanceData = {
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
         4000010: 'Have you already verified your email address?. %verificationLinkText%',
-        4060004: 'The recovery token is invalid or has already been used. Please retry the flow.',
+        4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
+        4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
       },
       usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
-      signUp: 'Sign up',
+      signUp: 'Register',
       verificationLinkText: 'Click here to request the verification email again.'
     },
     keys: {

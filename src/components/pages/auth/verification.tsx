@@ -1,3 +1,4 @@
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import {
   SelfServiceVerificationFlow,
   SubmitSelfServiceVerificationFlowBody,
@@ -5,10 +6,12 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { kratos } from '@/auth/kratos'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
@@ -20,8 +23,13 @@ export function Verification() {
 
   const emailVerifiedSuccessfully = strings.auth.messages[1080002]
 
+  const isAlreadyVerified =
+    AuthSessionCookie.parse()?.identity.verifiable_addresses?.[0]?.verified
+
+  const verifyStrings = strings.auth.verify
+
   useEffect(() => {
-    if (!router.isReady || flow) {
+    if (!router.isReady || flow || isAlreadyVerified) {
       return
     }
 
@@ -57,6 +65,7 @@ export function Verification() {
     router,
     strings,
     emailVerifiedSuccessfully,
+    isAlreadyVerified,
   ])
 
   const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {
@@ -86,10 +95,15 @@ export function Verification() {
 
   return (
     <div className="max-w-[30rem] mx-auto">
-      <PageTitle headTitle title={`${strings.auth.verifyTitle} ✅`} extraBold />
-      {flow ? (
+      <PageTitle headTitle title={`${verifyStrings.title} ✅`} extraBold />
+
+      {isAlreadyVerified ? (
+        <StaticInfoPanel type="info" icon={faInfoCircle}>
+          {verifyStrings.alreadyDone}
+        </StaticInfoPanel>
+      ) : flow ? (
         <>
-          <p className="serlo-p">{strings.auth.verifyInstructions}</p>
+          <p className="serlo-p">{verifyStrings.instructions}</p>
           <Flow onSubmit={onSubmit} flow={flow} />
         </>
       ) : (
