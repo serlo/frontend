@@ -92,7 +92,6 @@ export function MoreAuthorTools({
           : [
               Tool.Abo,
               Tool.EditTax,
-              Tool.Organize,
               Tool.Log,
               Tool.AnalyticsLink,
               Tool.SortEntities,

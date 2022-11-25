@@ -72,12 +72,6 @@ export function ToastNotice() {
       }, 1000)
     }
 
-    if (document.referrer.includes('/taxonomy/term/organize/')) {
-      setTimeout(() => {
-        window.location.reload()
-      }, 200)
-    }
-
     if (window.location.hash == '#flush-legacy') {
       // fetch a legacy page to flush flash messages - then reload page
       fetch('/auth/password/change')
