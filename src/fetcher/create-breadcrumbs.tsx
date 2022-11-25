@@ -99,6 +99,7 @@ export function createBreadcrumbs(uuid: MainUuidType) {
 
     // use correct urls for subject landing pages
     if (
+      breadcrumbs[0] &&
       breadcrumbs[0].id &&
       !isNaN(breadcrumbs[0].id) &&
       hasOwnPropertyTs(rootIdsToLandingAlias, breadcrumbs[0].id)
