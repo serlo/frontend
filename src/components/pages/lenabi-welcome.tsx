@@ -83,6 +83,7 @@ export function LenabiWelcome() {
                 </p>
                 {sessionId && (
                   <WelcomeModal
+                    username={auth.current.username}
                     callback={() => setLearnDataLoaded(true)}
                     sessionId={sessionId}
                   />
