@@ -23,8 +23,8 @@ export function Verification() {
 
   const emailVerifiedSuccessfully = strings.auth.messages[1080002]
 
-  const isAlreadyVerified =
-    AuthSessionCookie.parse()?.identity.verifiable_addresses?.[0]?.verified
+  const addresses = AuthSessionCookie.parse()?.identity.verifiable_addresses
+  const isAlreadyVerified = addresses?.every(({ verified }) => verified)
 
   const verifyStrings = strings.auth.verify
 
