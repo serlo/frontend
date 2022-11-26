@@ -1,6 +1,7 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import {
   SelfServiceVerificationFlow,
+  SelfServiceVerificationFlowState,
   SubmitSelfServiceVerificationFlowBody,
 } from '@ory/client'
 import { useRouter } from 'next/router'
@@ -39,7 +40,7 @@ export function Verification() {
       data: SelfServiceVerificationFlow
     }) => {
       setFlow(data)
-      if (data.state === 'passed_challenge') {
+      if (data.state === SelfServiceVerificationFlowState.PassedChallenge) {
         showToastNotice(emailVerifiedSuccessfully, 'success')
         return await router.push(returnTo ? String(returnTo) : '/auth/login')
       }
