@@ -80,6 +80,12 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.href)
+
+    // remember instance
+    if (locale) localStorage.setItem('instance', locale)
+  })
+
+  useEffect(() => {
     // scroll to comment area to start lazy loading
     if (window.location.hash.startsWith('#comment-')) {
       setTimeout(() => {
