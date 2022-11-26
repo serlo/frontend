@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
+import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
@@ -18,11 +19,13 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 export function Registration() {
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
+  const checkInstance = useCheckInstance()
   const { lang, strings } = useInstanceData()
   const { return_to: returnTo, flow: flowId } = router.query
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false)
 
   useEffect(() => {
+    checkInstance({ redirect: false })
     if (!router.isReady || flow) return
 
     if (flowId) {
@@ -39,7 +42,7 @@ export function Registration() {
       )
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
-  }, [flowId, router, router.isReady, returnTo, flow, strings])
+  }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
     const valuesWithLanguage = { ...values, 'traits.language': lang }

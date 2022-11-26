@@ -8,18 +8,22 @@ import { kratos } from '@/auth/kratos'
 import { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'
 import { useAuthentication } from '@/auth/use-authentication'
+import { useCheckInstance } from '@/auth/use-check-instance'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
+  const checkInstance = useCheckInstance()
   const { refreshAuth } = useAuth()
   const auth = useAuthentication()
   const { strings } = useInstanceData()
   const { logout_challenge } = router.query
 
   useEffect(() => {
+    checkInstance({ redirect: false })
+
     const redirection = filterUnwantedRedirection({
       desiredPath: sessionStorage.getItem('previousPathname'),
       unwantedPaths: ['/auth/settings', 'auth/login'],
@@ -67,7 +71,15 @@ export function Logout({ oauth }: { oauth?: boolean }) {
         }
         return Promise.reject(error)
       })
-  }, [router, oauth, logout_challenge, strings.notices.bye, refreshAuth, auth])
+  }, [
+    router,
+    oauth,
+    logout_challenge,
+    strings.notices.bye,
+    refreshAuth,
+    auth,
+    checkInstance,
+  ])
 
   return <LoadingSpinner text={strings.auth.loggingOut} />
 }

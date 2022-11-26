@@ -80,9 +80,6 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.href)
-
-    // remember instance
-    if (locale) localStorage.setItem('instance', locale)
   })
 
   useEffect(() => {

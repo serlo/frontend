@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { kratos } from '@/auth/kratos'
+import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,9 +15,11 @@ export function Recovery() {
   const [flow, setFlow] = useState<SelfServiceRecoveryFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
+  const checkInstance = useCheckInstance()
   const { flow: flowId, return_to: returnTo } = router.query
 
   useEffect(() => {
+    checkInstance({ redirect: true })
     if (!router.isReady || flow) return
 
     if (flowId) {
@@ -31,7 +34,7 @@ export function Recovery() {
       .initializeSelfServiceRecoveryFlowForBrowsers()
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
-  }, [flowId, router, router.isReady, returnTo, flow, strings])
+  }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   const onSubmit = (values: SubmitSelfServiceRecoveryFlowBody) => {
     return router

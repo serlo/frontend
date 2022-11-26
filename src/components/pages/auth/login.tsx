@@ -11,6 +11,7 @@ import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'
+import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
@@ -22,6 +23,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
+  const checkInstance = useCheckInstance()
   const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
   const loginStrings = strings.auth.login
@@ -35,6 +37,8 @@ export function Login({ oauth }: { oauth?: boolean }) {
   } = router.query
 
   useEffect(() => {
+    checkInstance({ redirect: false })
+
     if (!router.isReady || flow) {
       return
     }
@@ -77,6 +81,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
     oauth,
     login_challenge,
     strings,
+    checkInstance,
   ])
 
   const showLogout = aal || refresh

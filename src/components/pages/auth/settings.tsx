@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
 import { useAuth } from '@/auth/use-auth'
+import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -16,10 +17,13 @@ import { useInstanceData } from '@/contexts/instance-context'
 export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
+  const checkInstance = useCheckInstance()
   const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
 
   useEffect(() => {
+    checkInstance({ redirect: true })
+
     // quick hack to fix non authed header state
     void fetchAndPersistAuthSession(refreshAuth).then(() => {
       const { href } = window.location
@@ -28,7 +32,7 @@ export function Settings() {
         window.location.reload()
       }
     })
-  }, [refreshAuth])
+  }, [refreshAuth, checkInstance])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -49,7 +53,7 @@ export function Settings() {
       )
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
-  }, [flowId, router, router.isReady, returnTo, flow, strings])
+  }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   return (
     <div className="max-w-[30rem] mx-auto">

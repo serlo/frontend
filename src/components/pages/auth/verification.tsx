@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { kratos } from '@/auth/kratos'
+import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -20,6 +21,7 @@ export function Verification() {
   const [flow, setFlow] = useState<SelfServiceVerificationFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
+  const checkInstance = useCheckInstance()
   const { flow: flowId, return_to: returnTo } = router.query
 
   const emailVerifiedSuccessfully = strings.auth.messages[1080002]
@@ -30,6 +32,8 @@ export function Verification() {
   const verifyStrings = strings.auth.verify
 
   useEffect(() => {
+    checkInstance({ redirect: true })
+
     if (!router.isReady || flow || isAlreadyVerified) {
       return
     }
@@ -76,6 +80,7 @@ export function Verification() {
     strings,
     emailVerifiedSuccessfully,
     isAlreadyVerified,
+    checkInstance,
   ])
 
   const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {
