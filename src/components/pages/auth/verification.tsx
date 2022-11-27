@@ -38,15 +38,6 @@ export function Verification() {
       return
     }
 
-    // check if flow is in correct instance
-    const prevInstance = localStorage.getItem('instance')
-    if (prevInstance && router.locale && prevInstance !== router.locale) {
-      window.location.href = window.location.href.replace(
-        router.locale,
-        prevInstance
-      )
-    }
-
     const flowHandler = async ({
       data,
     }: {
