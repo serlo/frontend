@@ -2,9 +2,9 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { filterUnwantedRedirection } from './utils'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
-import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
 import { kratos } from '@/auth/kratos'
+import { fetchAndPersistAuthSession } from '@/auth/local-session/fetch-and-persist-auth-session'
+import { checkLoggedIn } from '@/auth/local-session/helpers'
 import { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -36,7 +36,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
     }
 
     // if they are problems we could add an additional check here
-    if (!auth || !AuthSessionCookie.get()) return
+    if (!auth || !checkLoggedIn()) return
 
     kratos
       .createSelfServiceLogoutFlowUrlForBrowsers()

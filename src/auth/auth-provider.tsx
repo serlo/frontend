@@ -2,7 +2,7 @@ import type { Session } from '@ory/client'
 import type { AuthorizationPayload } from '@serlo/authorization'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
-import { AuthSessionCookie } from './auth-session-cookie'
+import { getAuthPayloadFromLocalCookie } from './local-session/helpers'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 export type AuthenticationPayload = {
@@ -63,10 +63,6 @@ export function AuthProvider({
       {children}
     </AuthContext.Provider>
   )
-}
-
-function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
-  return getAuthPayloadFromSession(AuthSessionCookie.parse())
 }
 
 export function getAuthPayloadFromSession(session: Session | null) {

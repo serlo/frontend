@@ -9,7 +9,7 @@ import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+import { checkLoggedIn } from '@/auth/local-session/helpers'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -97,7 +97,7 @@ export function FrontendClientBase({
     getCachedLoggedInData()
   )
 
-  const isLoggedIn = AuthSessionCookie.get() !== undefined
+  const isLoggedIn = checkLoggedIn()
 
   useEffect(fetchLoggedInData, [
     instanceData.lang,

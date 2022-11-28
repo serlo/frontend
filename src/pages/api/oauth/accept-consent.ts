@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { createGraphqlFetch } from '@/api/graphql-fetch'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+import { kratos } from '@/auth/kratos'
 
 export const config = {
   runtime: 'experimental-edge',
@@ -14,7 +14,7 @@ export default async function acceptConsent(
 ) {
   const { consent_challenge } = req.query
 
-  const session = AuthSessionCookie.parse(req.cookies)
+  const session = (await kratos.toSession()).data
   const query = gql`
     mutation ($input: OauthAcceptInput!) {
       oauth {

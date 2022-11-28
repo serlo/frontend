@@ -5,7 +5,7 @@ import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
-import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
+import { fetchAndPersistAuthSession } from '@/auth/local-session/fetch-and-persist-auth-session'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
 
 const maxFileSize = 2 * 1024 * 1024
