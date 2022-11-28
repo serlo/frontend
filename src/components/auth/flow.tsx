@@ -29,6 +29,7 @@ import { Node } from '@/components/auth/node'
 import type { InstanceData } from '@/data-types'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow:
@@ -157,6 +158,10 @@ export function handleFlowError<S>(
   throwError?: boolean
 ) {
   return async (error: AxiosError) => {
+    // eslint-disable-next-line no-console
+    console.error(error)
+    triggerSentry({ message: 'Auth error', code: error.response?.status })
+
     const data = error.response?.data as {
       redirect_browser_to: string
       error: {
