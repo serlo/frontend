@@ -8,7 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { query, variables } = JSON.parse(req.body as string) as ParsedArgs
+  const { query, variables } = req.body as ParsedArgs
 
   if (!req.headers.cookie)
     res.status(403).json({ message: 'No auth cookie provided!' })

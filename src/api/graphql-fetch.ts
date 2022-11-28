@@ -45,7 +45,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify(args),
+        body: args,
       })
       return result.json()
     }

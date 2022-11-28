@@ -84,8 +84,7 @@ export function useMutationFetch() {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify({ query, variables: input }),
-        credentials: 'include',
+        body: JSON.stringify({ query, variables: { input } }),
       })
       return (await result.json()) as MutationResponse
     }
