@@ -342,7 +342,7 @@ export const instanceData = {
       verify: {
         title: 'Verify your email',
         instructions: 'Insert and submit your email address to verify it.',
-        alreadyDone: 'Thank you, your email adress is verified.'
+        alreadyDone: 'Your are logged in, so you are very likely verified already.'
       },
       settings: {
         title: "Change your password",
@@ -382,7 +382,7 @@ export const instanceData = {
         4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
-        4000010: 'Have you already verified your email address?. %verificationLinkText%',
+        4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
         4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
         4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
       },

@@ -157,7 +157,7 @@ export function FrontendClientBase({
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
-    if (AuthSessionCookie.get() || loadLoggedInData) {
+    if (isLoggedIn || loadLoggedInData) {
       fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
         .then((res) => res.json())
         .then((value) => {

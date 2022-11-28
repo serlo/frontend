@@ -16,6 +16,9 @@ export function Message({
   const { strings } = useInstanceData()
   const { id: codeId, text } = uiText
 
+  // uiText might contain a `context` that we might need inside some strings.
+  // so far we did not encounter this case
+
   const hasTranslatedMessage = hasOwnPropertyTs(strings.auth.messages, codeId)
   const rawMessage = hasTranslatedMessage
     ? strings.auth.messages[codeId as keyof typeof strings.auth.messages]
@@ -42,8 +45,8 @@ export function Message({
       </Link>
     ),
     field: fieldName ?? '',
+    break: <br />,
   })
 
   return <>{translatedMessage}</>
-  // TODO: check context
 }

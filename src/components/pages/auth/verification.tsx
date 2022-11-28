@@ -7,8 +7,8 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 import { kratos } from '@/auth/kratos'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
@@ -21,20 +21,17 @@ export function Verification() {
   const [flow, setFlow] = useState<SelfServiceVerificationFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
+  const auth = useAuthentication()
   const checkInstance = useCheckInstance()
   const { flow: flowId, return_to: returnTo } = router.query
 
   const emailVerifiedSuccessfully = strings.auth.messages[1080002]
-
-  const addresses = AuthSessionCookie.parse()?.identity.verifiable_addresses
-  const isAlreadyVerified = addresses?.every(({ verified }) => verified)
-
   const verifyStrings = strings.auth.verify
 
   useEffect(() => {
     checkInstance({ redirect: true })
 
-    if (!router.isReady || flow || isAlreadyVerified) {
+    if (!router.isReady || flow) {
       return
     }
 
@@ -70,7 +67,6 @@ export function Verification() {
     router,
     strings,
     emailVerifiedSuccessfully,
-    isAlreadyVerified,
     checkInstance,
   ])
 
@@ -103,11 +99,12 @@ export function Verification() {
     <div className="max-w-[30rem] mx-auto">
       <PageTitle headTitle title={`${verifyStrings.title} ✅`} extraBold />
 
-      {isAlreadyVerified ? (
+      {auth ? (
         <StaticInfoPanel type="info" icon={faInfoCircle}>
           {verifyStrings.alreadyDone}
         </StaticInfoPanel>
-      ) : flow ? (
+      ) : null}
+      {flow ? (
         <>
           <p className="serlo-p">{verifyStrings.instructions}</p>
           <Flow onSubmit={onSubmit} flow={flow} />

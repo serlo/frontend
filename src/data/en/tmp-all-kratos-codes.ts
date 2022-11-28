@@ -42,7 +42,6 @@ export const codes = {
   // 1050017:
   //   'This is your authenticator app secret. Use it if you can not scan the QR code.',
   // 1050018: 'Remove security key "%name%"',
-  // TODO: actually minutes are configurable. It would be better to make it dynamic.
   1060001:
     'You successfully recovered your account. Please change your password within the next 2 minutes.',
   // 1060002:
