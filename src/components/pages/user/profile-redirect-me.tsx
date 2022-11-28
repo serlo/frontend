@@ -11,16 +11,10 @@ export const ProfileRedirectMe: NextPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-    if (auth) {
-      // hack until we have a mutation
-      // TODO: probably not needed any more, test
-      const isChanged = document.referrer.endsWith('/user/settings')
-      const hash = isChanged ? '#profile-refresh' : window.location.hash
-      const url = `/user/${auth.id}/${auth.username}${hash}`
-      void router.replace(url)
-    } else {
-      void router.replace('/auth/login')
-    }
+    const url = auth
+      ? `/user/${auth.id}/${auth.username}${window.location.hash}`
+      : '/auth/login'
+    void router.replace(url)
   }, [auth, router])
 
   return null
