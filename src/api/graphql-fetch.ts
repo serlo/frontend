@@ -26,6 +26,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
   return async function graphqlFetch(args: string) {
     if (auth === null) throw new Error('unauthorized')
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return window.location.hostname == 'localhost'
       ? await executeQueryLocally()
       : await executeQuery()
@@ -35,7 +36,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
       const client = new GraphQLClient(endpoint, {
         credentials: 'include',
       })
-      return client.request(query, variables) as unknown
+      return client.request(query, variables)
     }
     async function executeQueryLocally() {
       const result = await fetch('/api/frontend/localhost-graphql-fetch', {
@@ -46,7 +47,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
         method: 'POST',
         body: JSON.stringify(args),
       })
-      return (await result.json()) as unknown
+      return result.json()
     }
   }
 }
