@@ -1,7 +1,7 @@
 import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
-import { COOKIE_DOMAIN } from './kratos'
+import { COOKIE_DOMAIN } from './cookie-domain'
 
 export const AuthSessionCookie = {
   cookieName: 'auth-session',

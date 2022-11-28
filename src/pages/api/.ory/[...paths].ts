@@ -1,4 +1,4 @@
-import { COOKIE_DOMAIN } from '../../../auth/kratos'
+import { COOKIE_DOMAIN } from '../../../auth/cookie-domain'
 import {
   createApiHandler,
   config as oryConfig,
