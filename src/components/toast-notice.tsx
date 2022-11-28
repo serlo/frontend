@@ -10,6 +10,7 @@ export function ToastNotice() {
   const showTime = 4000
 
   useEffect(() => {
+    // TODO: probably not needed any more, test
     if (
       window.location.hash === '#profile-refresh' ||
       window.location.hash === '#reload'

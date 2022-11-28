@@ -12,6 +12,7 @@ import { useCheckInstance } from '@/auth/use-check-instance'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { triggerSentry } from '@/helper/trigger-sentry'
 
 export function Logout({ oauth }: { oauth?: boolean }) {
   const router = useRouter()
@@ -60,12 +61,17 @@ export function Logout({ oauth }: { oauth?: boolean }) {
           .catch((error: AxiosError) => {
             // eslint-disable-next-line no-console
             console.error(error)
+            triggerSentry({
+              message: 'Auth error',
+              code: error.response?.status,
+            })
             return Promise.reject(error)
           })
       })
       .catch((error: AxiosError) => {
         // eslint-disable-next-line no-console
         console.error(error)
+        triggerSentry({ message: 'Auth error', code: error.response?.status })
         if (error.response?.status === 401) {
           return redirectOnError()
         }

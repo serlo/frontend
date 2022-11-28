@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
@@ -7,18 +8,20 @@ import { useAuthentication } from '@/auth/use-authentication'
 
 export const ProfileRedirectMe: NextPage = () => {
   const auth = useAuthentication()
+  const router = useRouter()
 
   useEffect(() => {
     if (auth) {
       // hack until we have a mutation
+      // TODO: probably not needed any more, test
       const isChanged = document.referrer.endsWith('/user/settings')
       const hash = isChanged ? '#profile-refresh' : window.location.hash
       const url = `/user/${auth.id}/${auth.username}${hash}`
-      window.location.replace(url)
+      void router.replace(url)
     } else {
-      window.location.replace('/auth/login')
+      void router.replace('/auth/login')
     }
-  }, [auth])
+  }, [auth, router])
 
   return null
 }
