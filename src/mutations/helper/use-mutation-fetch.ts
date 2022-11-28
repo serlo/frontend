@@ -45,7 +45,10 @@ export function useMutationFetch() {
   ): Promise<boolean | number> {
     if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
     try {
-      const result = await executeQuery()
+      const result =
+        window.location.hostname == 'localhost'
+          ? await executeQueryLocally()
+          : await executeQuery()
       if (hasOwnPropertyTs(result, 'entity')) {
         const entity = result.entity as EntityMutation
         if (Object.keys(entity)[0].startsWith('set')) {
@@ -71,6 +74,20 @@ export function useMutationFetch() {
         credentials: 'include',
       })
       return client.request(query, { input })
+    }
+
+    // proxy calls from localhost to make sure we can send the cookies
+    async function executeQueryLocally(): Promise<MutationResponse> {
+      const result = await fetch('/api/frontend/localhost-graphql-fetch', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ query, variables: input }),
+        credentials: 'include',
+      })
+      return (await result.json()) as MutationResponse
     }
   }
 

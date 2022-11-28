@@ -15,7 +15,6 @@ interface ProfileSettingsProps {
 export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   const loggedInData = useLoggedInData()
   const { lang } = useInstanceData()
-
   const auth = useAuthentication()
 
   if (!auth) return null

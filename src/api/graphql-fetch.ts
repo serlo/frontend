@@ -26,8 +26,18 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
   return async function graphqlFetch(args: string) {
     if (auth === null) throw new Error('unauthorized')
 
-    // proxy calls from localhost to make sure we can send the cookies
-    if (window.location.hostname == 'localhost') {
+    return window.location.hostname == 'localhost'
+      ? await executeQueryLocally()
+      : await executeQuery()
+
+    function executeQuery() {
+      const { query, variables } = JSON.parse(args) as ParsedArgs
+      const client = new GraphQLClient(endpoint, {
+        credentials: 'include',
+      })
+      return client.request(query, variables) as unknown
+    }
+    async function executeQueryLocally() {
       const result = await fetch('/api/frontend/localhost-graphql-fetch', {
         headers: {
           Accept: 'application/json',
@@ -37,17 +47,6 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
         body: JSON.stringify(args),
       })
       return (await result.json()) as unknown
-    } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      return await executeQuery()
-    }
-
-    function executeQuery() {
-      const { query, variables } = JSON.parse(args) as ParsedArgs
-      const client = new GraphQLClient(endpoint, {
-        credentials: 'include',
-      })
-      return client.request(query, variables)
     }
   }
 }
