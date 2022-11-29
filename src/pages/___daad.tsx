@@ -1,10 +1,20 @@
 /* eslint-disable @next/next/no-page-custom-font */
+import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useEffect } from 'react'
+
+import { FaIcon } from '@/components/fa-icon'
 
 const backlink = '/willkommen'
 
 const ContentPage: NextPage = () => {
+  useEffect(() => {
+    setTimeout(() => {
+      window.location.href = backlink
+    }, 500)
+  }, [])
+
   return (
     <>
       <Head>
@@ -33,16 +43,13 @@ const ContentPage: NextPage = () => {
           />
         </h1>
       </header>
-      <div
-        className="background-wrapper"
-        id="replace_background"
-        style={{
-          backgroundImage:
-            "url('https://b2cfilestore.blob.core.windows.net/samlfiles/background-my-daad.jpg')",
-          fontFamily: 'Source+Sans+Pro',
-        }}
-      >
-        <div className="c-login-screen">
+      <div className="background-wrapper" id="replace_background" style={{}}>
+        <div className="mt-12 text-brand text-center">
+          <p className="serlo-p">
+            <FaIcon icon={faSpinner} className="animate-spin-slow h-24" />
+          </p>
+        </div>
+        {/* <div className="c-login-screen">
           <div className="col-66">
             <div className="c-login-screen__box">
               <div className="c-login-screen__azure-wrapper">
@@ -126,7 +133,7 @@ const ContentPage: NextPage = () => {
                     >
                       Passwort vergessen?
                     </a>
-                  </p> */}
+                  </p> 
                 </div>
               </div>
             </div>
@@ -153,7 +160,7 @@ const ContentPage: NextPage = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <footer>
         <ul>
