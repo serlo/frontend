@@ -2,15 +2,13 @@ import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
 import { COOKIE_DOMAIN } from './cookie-domain'
+import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const authCookieName = 'auth-session'
 const sharedCookieConfig = {
   sameSite: 'Strict',
   domain: COOKIE_DOMAIN,
 } as const
-
-// const isLocalhost =
-//   typeof window !== undefined && window.location.hostname === 'localhost'
 
 export const AuthSessionCookie = {
   get() {
@@ -19,8 +17,7 @@ export const AuthSessionCookie = {
   set(session: Session | null) {
     if (session === null) this.remove()
     else {
-      // TODO: is the cookie id problematic to store locally?
-      Cookies.set(authCookieName, JSON.stringify(session), {
+      Cookies.set(authCookieName, JSON.stringify(stripSession(session)), {
         ...sharedCookieConfig,
         expires: session.expires_at ? new Date(session.expires_at) : undefined,
       })
@@ -36,4 +33,38 @@ export const AuthSessionCookie = {
     if (!session) return null
     return JSON.parse(session) as Session
   },
+}
+
+interface Traits {
+  description: string
+  email: string
+  username: string
+}
+
+function stripSession(session: Session): Session {
+  const { id, identity } = session
+  const { id: identityId, schema_id, schema_url } = identity
+  const { username, email } = identity.traits as Traits
+
+  const legacy_id =
+    identity.metadata_public &&
+    hasOwnPropertyTs(identity.metadata_public, 'legacy_id')
+      ? (identity.metadata_public.legacy_id as number)
+      : undefined
+
+  return {
+    id,
+    identity: {
+      id: identityId,
+      schema_id,
+      schema_url,
+      traits: {
+        username,
+        email,
+      },
+      metadata_public: {
+        legacy_id,
+      },
+    },
+  }
 }
