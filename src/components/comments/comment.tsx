@@ -15,6 +15,7 @@ interface CommentProps {
   isHighlight?: boolean
   data: CommentsData[number]
   highlight: (id: number) => void
+  noScroll?: boolean
 }
 
 const MathSpan = dynamic<MathSpanProps>(() =>
@@ -27,6 +28,7 @@ export function Comment({
   isHighlight,
   highlight,
   isParent,
+  noScroll,
 }: CommentProps) {
   const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
@@ -53,7 +55,7 @@ export function Comment({
   )
 
   useEffect(() => {
-    if (isHighlight) {
+    if (!noScroll && isHighlight) {
       setTimeout(() => {
         scrollIfNeeded(commentRef.current)
       }, 900)
@@ -64,7 +66,7 @@ export function Comment({
         ? '#fdf5e4'
         : 'transparent'
     }
-  }, [isHighlight])
+  }, [isHighlight, noScroll])
 
   return (
     <div

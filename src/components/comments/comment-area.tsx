@@ -33,6 +33,7 @@ export interface CommentAreaProps {
   noForms?: boolean
   highlightedCommentId?: number
   setHighlightedCommentId?: (id: number) => void
+  noScroll?: boolean
 }
 
 export function CommentArea({
@@ -42,10 +43,10 @@ export function CommentArea({
   noForms,
   highlightedCommentId,
   setHighlightedCommentId,
+  noScroll,
 }: CommentAreaProps) {
   const { strings } = useInstanceData()
   const auth = useAuthentication()
-  const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()
 
@@ -55,6 +56,10 @@ export function CommentArea({
     (typeof window !== 'undefined' &&
       window.location.hash.startsWith('#comment-')) ||
     highlightedCommentId !== undefined
+
+  const [showThreadChildren, setShowThreadChildren] = useState<string[]>(
+    showAll ? commentData.active?.map(({ id }) => id) ?? [] : []
+  )
 
   return (
     <>
@@ -116,11 +121,12 @@ export function CommentArea({
       <Fragment key={thread.id}>
         <Thread
           thread={thread}
-          showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
+          showChildren={showThreadChildren.includes(thread.id)}
           highlightedCommentId={highlightedCommentId}
           renderReplyForm={renderReplyForm}
           highlight={highlight}
           toggleChildren={onToggleThreadChildren}
+          noScroll={noScroll}
         />
       </Fragment>
     ))
