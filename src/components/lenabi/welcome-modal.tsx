@@ -4,7 +4,6 @@ import { MouseEvent, useState } from 'react'
 import { ModalWithCloseButton } from '../modal-with-close-button'
 import { endpointEnmeshed } from '@/api/endpoint'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { triggerSentry } from '@/helper/trigger-sentry'
 
 interface WelcomeModalProps {
   callback: () => void
@@ -24,7 +23,7 @@ export function WelcomeModal({
   const handleOnClick = (event: MouseEvent) => {
     event.preventDefault()
     setShowModal(true)
-    fetchQRCode()
+    void fetchQRCode()
   }
 
   const handleMockLoad = () => {
@@ -114,40 +113,34 @@ export function WelcomeModal({
     </>
   )
 
-  function fetchQRCode() {
+  async function fetchQRCode() {
     const name = encodeURIComponent(username)
 
-    fetch(`${endpointEnmeshed}/init?sessionId=${sessionId}&name=${name}`, {
-      method: 'POST',
-      headers: {
-        Accept: 'image/png',
-      },
-    })
-      .then((res) => res.blob())
-      .then((res) => {
-        const urlCreator = window.URL || window.webkitURL
-        setQrCodeSrc(urlCreator.createObjectURL(res))
-        // TODO: When the workflow has been defined in the future we should revoke the object URL when done with:
-        // urlCreator.revokeObjectUrl(qrCode)
-      })
-      .then(fetchAttributes)
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log(JSON.stringify(e))
+    const response = await fetch(
+      `${endpointEnmeshed}/init?sessionId=${sessionId}&name=${name}`,
+      {
+        method: 'POST',
+        headers: {
+          Accept: 'image/png',
+        },
+      }
+    )
+    if (response.status !== 200) {
+      setTimeout(() => {
+        setQrCodeSrc('/_assets/mock_qr.png')
+      }, 500)
+      return
+    }
 
-        triggerSentry({
-          message: `Error in User-Journey: Reading QR-Code: ${JSON.stringify(
-            e
-          )}`,
-        })
-
-        setShowModal(false)
-        callback()
-      })
+    const blob = await response.blob()
+    const urlCreator = window.URL
+    const src = urlCreator.createObjectURL(blob)
+    setQrCodeSrc(src)
+    fetchAttributes()
   }
 
   function fetchAttributes() {
-    fetch(`${endpointEnmeshed}/attributes?sessionId=${sessionId}`, {})
+    void fetch(`${endpointEnmeshed}/attributes?sessionId=${sessionId}`, {})
       .then((res) => res.json())
       .then((body: EnmeshedResponse) => {
         if (body.status === 'pending') {
@@ -165,17 +158,6 @@ export function WelcomeModal({
           setShowModal(false)
           callback()
         }
-      })
-      .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log(`ERROR: ${JSON.stringify(e)}`)
-        setShowModal(false)
-        callback()
-        triggerSentry({
-          message: `Error in User-Journey: Reading Attributes: ${JSON.stringify(
-            e
-          )}`,
-        })
       })
   }
 }

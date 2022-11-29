@@ -12,7 +12,7 @@ const ContentPage: NextPage = () => {
   useEffect(() => {
     setTimeout(() => {
       window.location.href = backlink
-    }, 500)
+    }, 300)
   }, [])
 
   return (
