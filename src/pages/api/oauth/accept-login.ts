@@ -1,6 +1,6 @@
 import { Session } from '@ory/client'
 import { gql } from 'graphql-request'
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextRequest } from 'next/server'
 
 import { createGraphqlFetch } from '@/api/graphql-fetch'
 import { KRATOS_HOST } from '@/auth/kratos-host'
@@ -9,19 +9,17 @@ export const config = {
   runtime: 'experimental-edge',
 }
 
-export default async function acceptLogin(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function acceptLogin(req: NextRequest) {
   if (!KRATOS_HOST)
     return new Response('missing env var', {
       status: 500,
     })
 
   try {
-    const { login_challenge } = req.query
-    // @ts-expect-error tbh I have no idea why .get works when direct access does not
-    const cookie = req.cookies.get('ory_kratos_session') as string
+    const { searchParams } = new URL(req.url)
+    const login_challenge = searchParams.get('login_challenge')
+
+    const cookie = req.cookies.get('ory_kratos_session') ?? ''
 
     const sessionResponse = await fetch(`${KRATOS_HOST}/sessions/whoami`, {
       credentials: 'include',
@@ -46,10 +44,10 @@ export default async function acceptLogin(
       },
     }
     const args = JSON.stringify({ query, variables })
-    const response = (await createGraphqlFetch()(args)) as {
+    const apiResponse = (await createGraphqlFetch()(args)) as {
       oauth: { acceptLogin: { redirectUri: string } }
     }
-    res.redirect(302, response.oauth.acceptLogin.redirectUri)
+    return Response.redirect(apiResponse.oauth.acceptLogin.redirectUri, 302)
   } catch {
     return new Response('error authenticating', {
       status: 401,

@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request'
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextRequest } from 'next/server'
 
 import { createGraphqlFetch } from '@/api/graphql-fetch'
 
@@ -7,11 +7,9 @@ export const config = {
   runtime: 'experimental-edge',
 }
 
-export default async function acceptLogout(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { logout_challenge } = req.query
+export default async function acceptLogout(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const logout_challenge = searchParams.get('logout_challenge')
 
   const query = gql`
     mutation ($challenge: String!) {
@@ -26,8 +24,8 @@ export default async function acceptLogout(
     challenge: logout_challenge,
   }
   const args = JSON.stringify({ query, variables })
-  const response = (await createGraphqlFetch()(args)) as {
+  const apiResponse = (await createGraphqlFetch()(args)) as {
     oauth: { acceptLogout: { redirectUri: string } }
   }
-  res.redirect(302, response.oauth.acceptLogout.redirectUri)
+  return Response.redirect(apiResponse.oauth.acceptLogout.redirectUri, 302)
 }
