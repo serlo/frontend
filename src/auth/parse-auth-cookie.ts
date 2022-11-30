@@ -24,7 +24,7 @@ export function parseAuthCookie(
       return null
     else
       return {
-        username: 'anne22',
+        username: 'alex_mock',
         id: 92258,
         token: 'mock123123123123' as string,
         refreshToken,

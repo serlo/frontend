@@ -227,7 +227,7 @@ function MenuInner({
       if (link.icon === 'user' && auth && auth.username) {
         return (
           <img
-            className="rounded-full w-6 h-6 inline -mt-1"
+            className="rounded-full w-10 h-10 inline -mt-1"
             src={getAvatarUrl(auth.username)}
             title={`${link.title} ${auth.username}`}
           />
