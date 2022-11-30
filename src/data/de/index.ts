@@ -936,73 +936,71 @@ export const loggedInData = {
 export const kratosMailStrings = {
   recovery: {
     valid: {
-      subject: '👉 Access to your Serlo account',
+      subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
  
-To reset your password please open the following link in your browser:
+Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
  
-<p>To reset your password please open the following link in your browser:
+<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
     },
     invalid: {
-      subject: '👉 Account access attempted',
+      subject: "👉 Zugriff auf Account",
       'body.plaintext': `👋 Hi there!
 
-You (or someone else) entered this email address when trying to recover access to an account at serlo.org.
+Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.
 
-But this email address is not linked to a user in our website and therefore the attempt failed.
+Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.
 
-If it was you, check if you signed up using a different address.
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
 
-Otherwise please just ignore this email.
+Sonst kannst du diese Mail einfach ignorieren.
 
 ✌️`,
       body: `<p>👋 Hi there!</p>
-<p>You (or someone else) entered this email address when trying to recover access to an account at <a href="https://serlo.org">serlo.org</a>. </p>
-<p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
-<p>If it was you, check if you signed up using a different address.</p>
-<p>Otherwise, please just ignore this email.</p>
+<p>Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf <a href="https://serlo.org">serlo.org</a> wiederherzustellen.</p>
+<p>Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>Sonst kannst du diese Mail einfach ignorieren.</p>
 <p>✌️</p>`
     }
   },
   verification: {
     valid: {
-      subject: '👋 Please verify your email address',
+      subject: "👋 Bitte bestätige deine E-Mail-Adresse",
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
-      We are excited to have you at serlo.org 🎉
-
-      Please verify your brand new account by clicking the following link:
-
+wunderbar dich auf serlo.org zu haben 🎉
+      
+Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 
-Your Community-Support 💚`,
+Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>We are excited to have you at serlo.org 🎉</p>
-<p>Please verify your account by clicking the following link:<br/>
+<p>wunderbar dich auf serlo.org zu haben 🎉</p>
+<p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
 <a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>Your Community-Support 💚</p>
-      `
+</p><p>Dein Community-Support 💚</p>`
     },
     invalid: {
-      subject: `👋 Someone tried to verify this email address`,
-      'body.plaintext': `👋 Hi there,
+      subject: `👋 Jemand hat versucht diese Mailadresse zu bestätigen`,
+      'body.plaintext': `👋 Hi,
 
-Someone asked to verify this email address, but we were unable to find an account at serlo.org for this address.
+jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf serlo.org mit dieser Adresse verknüpft.
 
-If it was you, check if you registered using a different address.
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
 
-Otherwise, please just ignore this email.
+Sonst kannst du diese Mail einfach ignorieren.
 
 ✌️`,
-      body: `<p>👋 Hi there,</p>
-<p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
-<p>If this was you, check if you registered using a different address.</p>
-<p>Otherwise, please just ignore this email.</p>
+      body: `<p>👋 Hi,</p>
+<p>jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf <a href="https://serlo.org">serlo.org</a> mit dieser Adresse verknüpft.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>sonst kannst du diese Mail einfach ignorieren.</p>
 <p>✌️</p>`
     }
   }
