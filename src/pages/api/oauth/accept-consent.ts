@@ -17,15 +17,13 @@ export default async function acceptConsent(req: NextRequest) {
 
   try {
     const { searchParams } = new URL(req.url)
-    const consent_challenge = searchParams.get('consent_challenge')
+    const challenge = searchParams.get('consent_challenge')
 
     const cookie = req.cookies.get('ory_kratos_session') ?? ''
-
     const sessionResponse = await fetch(`${KRATOS_HOST}/sessions/whoami`, {
       credentials: 'include',
       headers: { 'X-Session-Cookie': cookie },
     })
-
     const session = (await sessionResponse.json()) as Session
 
     const query = gql`
@@ -37,12 +35,7 @@ export default async function acceptConsent(req: NextRequest) {
         }
       }
     `
-    const variables = {
-      input: {
-        session: session,
-        challenge: consent_challenge,
-      },
-    }
+    const variables = { input: { session, challenge } }
     const args = JSON.stringify({ query, variables })
     const apiResponse = (await createGraphqlFetch()(args)) as {
       oauth: { acceptConsent: { redirectUri: string } }

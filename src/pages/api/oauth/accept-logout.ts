@@ -9,7 +9,7 @@ export const config = {
 
 export default async function acceptLogout(req: NextRequest) {
   const { searchParams } = new URL(req.url)
-  const logout_challenge = searchParams.get('logout_challenge')
+  const challenge = searchParams.get('logout_challenge')
 
   const query = gql`
     mutation ($challenge: String!) {
@@ -20,9 +20,7 @@ export default async function acceptLogout(req: NextRequest) {
       }
     }
   `
-  const variables = {
-    challenge: logout_challenge,
-  }
+  const variables = { challenge }
   const args = JSON.stringify({ query, variables })
   const apiResponse = (await createGraphqlFetch()(args)) as {
     oauth: { acceptLogout: { redirectUri: string } }

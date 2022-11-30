@@ -17,15 +17,13 @@ export default async function acceptLogin(req: NextRequest) {
 
   try {
     const { searchParams } = new URL(req.url)
-    const login_challenge = searchParams.get('login_challenge')
+    const challenge = searchParams.get('login_challenge')
 
     const cookie = req.cookies.get('ory_kratos_session') ?? ''
-
     const sessionResponse = await fetch(`${KRATOS_HOST}/sessions/whoami`, {
       credentials: 'include',
       headers: { 'X-Session-Cookie': cookie },
     })
-
     const session = (await sessionResponse.json()) as Session
 
     const query = gql`
@@ -37,16 +35,13 @@ export default async function acceptLogin(req: NextRequest) {
         }
       }
     `
-    const variables = {
-      input: {
-        session,
-        challenge: login_challenge,
-      },
-    }
+    const variables = { input: { session, challenge } }
     const args = JSON.stringify({ query, variables })
+
     const apiResponse = (await createGraphqlFetch()(args)) as {
       oauth: { acceptLogin: { redirectUri: string } }
     }
+
     return Response.redirect(apiResponse.oauth.acceptLogin.redirectUri, 302)
   } catch {
     return new Response('error authenticating', {
