@@ -394,7 +394,7 @@ export const instanceData = {
         '4000001': '%reason%',
         '4000002': '%field% is missing.',
         '4000003':
-          'Length must be \u003e= %expected_length%, but got %actual_length%.',
+          'Length must be at least %expected_length%, but got %actual_length%.',
         '4000005': '%reason%',
         '4000006':
           'The username, email address or password was incorrect. Please check for spelling mistakes.',
