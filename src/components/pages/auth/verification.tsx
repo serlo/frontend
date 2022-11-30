@@ -25,7 +25,7 @@ export function Verification() {
   const checkInstance = useCheckInstance()
   const { flow: flowId, return_to: returnTo } = router.query
 
-  const emailVerifiedSuccessfully = strings.auth.messages[1080002]
+  const emailVerifiedSuccessfully = strings.auth.messages.code1080002
   const verifyStrings = strings.auth.verify
 
   useEffect(() => {

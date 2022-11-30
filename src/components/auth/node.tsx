@@ -7,7 +7,7 @@ import clsx from 'clsx'
 import { FormEvent, useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
-import { Message } from '@/components/auth/message'
+import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
@@ -66,9 +66,11 @@ export function Node(props: NodeProps) {
         // eslint-disable-next-line no-case-declarations
         const label =
           node.meta.label?.id &&
-          hasOwnPropertyTs(strings.auth.messages, node.meta.label?.id)
-            ? strings.auth.messages[node.meta.label?.id]
-            : strings.auth.messages['1010013']
+          getKratosMessageString(
+            node.meta.label.id,
+            strings.auth.messages,
+            strings.auth.messages.code1010013
+          )
         return (
           <button
             className="text-xl serlo-button-green block w-full py-2 mt-10"

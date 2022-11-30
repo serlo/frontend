@@ -72,7 +72,7 @@ export function Registration() {
 
       {isSuccessfullySubmitted ? (
         <StaticInfoPanel key={1} type="info" icon={faInfoCircle}>
-          {strings.auth.messages[1080001]}{' '}
+          {strings.auth.messages.code1080001}{' '}
           <Link
             className="text-brand serlo-link font-bold"
             href="/auth/verification"

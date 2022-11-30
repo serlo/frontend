@@ -1,10 +1,5 @@
 import { Instance } from '@/fetcher/graphql-types/operations'
-import {
-  headerData,
-  footerData,
-  landingSubjectsData,
-  secondaryMenus,
-} from './menu-data'
+import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data'
 
 export const instanceData = {
   lang: Instance['En'],
@@ -324,8 +319,10 @@ export const instanceData = {
       },
       editMotivation: 'Edit motivation',
       addMotivation: 'Add motivation',
-      lockedDescriptionTitle: 'Your description currently hidden from the public.',
-      lockedDescriptionText: 'After your first contributions it will become visible to everybody.',
+      lockedDescriptionTitle:
+        'Your description currently hidden from the public.',
+      lockedDescriptionText:
+        'After your first contributions it will become visible to everybody.',
     },
     notices: {
       welcome: '👋 Welcome %username%!',
@@ -347,14 +344,16 @@ export const instanceData = {
       pleaseLogInText: 'to use this feature.',
       registerTitle: 'Register your Serlo Account',
       recoverTitle: 'Recover your account',
-      recoveryInstructions: 'Insert and submit your email address. We will then send you an email with a reset link.',
+      recoveryInstructions:
+        'Insert and submit your email address. We will then send you an email with a reset link.',
       verify: {
         title: 'Verify your email',
         instructions: 'Insert and submit your email address to verify it.',
-        alreadyDone: 'You are logged in, so you have already verified your email😊.'
+        alreadyDone:
+          'You are logged in, so you have already verified your email😊.',
       },
       settings: {
-        title: "Change your password",
+        title: 'Change your password',
         instruction: 'Insert your new password.',
       },
       loggingOut: 'Logging you out …',
@@ -374,33 +373,46 @@ export const instanceData = {
         email: 'Email',
       },
       messages: {
-        1010003: 'Please confirm this action by verifying that it is you.',
-        1010001: 'Sign in',
-        1010013: 'Continue',
-        1040001: 'Register',
-        1040003: 'Continue',
-        1050001: 'Your changes have been saved! 🎉',
-        1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
-        1060002: 'An email containing a recovery link has been sent to the email address you provided.',
-        1080001: 'An email containing a verification link has been sent to the email address you provided.',
-        1080002: 'You have successfully verified your email address.',
-        4000001: '%reason%',
-        4000002: '%field% is missing.',
-        4000003: 'Length must be \u003e= %expected_length%, but got %actual_length%.',
-        4000005: '%reason%',
-        4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
-        4000007: 'An account with the same email or username exists already.',
-        4000008: 'The provided authentication code is invalid, please try again.',
-        4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
-        4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
-        4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
+        code1010003: 'Please confirm this action by verifying that it is you.',
+        code1010001: 'Sign in',
+        code1010013: 'Continue',
+        code1040001: 'Register',
+        code1040003: 'Continue',
+        code1050001: 'Your changes have been saved! 🎉',
+        code1060001:
+          'You successfully recovered your account. Please change your password in the next minutes.',
+        code1060002:
+          'An email containing a recovery link has been sent to the email address you provided.',
+        code1080001:
+          'An email containing a verification link has been sent to the email address you provided.',
+        code1080002: 'You have successfully verified your email address.',
+        code4000001: '%reason%',
+        code4000002: '%field% is missing.',
+        code4000003:
+          'Length must be \u003e= %expected_length%, but got %actual_length%.',
+        code4000005: '%reason%',
+        code4000006:
+          'The username, email address or password was incorrect. Please check for spelling mistakes.',
+        code4000007: 'An account with the same email or username exists already.',
+        code4000008:
+          'The provided authentication code is invalid, please try again.',
+        code4000010:
+          'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4060004:
+          'The recovery link is not valid or has already been used. Please try requesting an email again',
+        code4070001:
+          'The verification link is not valid or has already been used. Please try requesting an email again.',
       },
-      usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
-      passwordInvalid: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
-      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      usernameInvalid:
+        'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      passwordInvalid:
+        'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      registrationAgreement:
+        'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Register',
-      verificationLinkText: 'Click here to request the verification email again.'
+      verificationLinkText:
+        'Click here to request the verification email again.',
     },
     keys: {
       ctrl: 'ctrl',
@@ -997,6 +1009,7 @@ export const loggedInData = {
     },
   },
 }
+
 
 export const kratosMailStrings = {
   recovery: {

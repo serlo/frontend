@@ -16,33 +16,29 @@ export function Message({
   const { strings } = useInstanceData()
   const { id: codeId, text, context } = uiText
 
-  const hasTranslatedMessage = hasOwnPropertyTs(strings.auth.messages, codeId)
-  const rawMessage = hasTranslatedMessage
-    ? strings.auth.messages[codeId as keyof typeof strings.auth.messages]
-    : text
+  const translatedMessage = getKratosMessageString(
+    codeId,
+    strings.auth.messages,
+    text
+  )
 
-  if (!hasTranslatedMessage) {
-    triggerSentry({
-      message: 'kratos-untranslated-message',
-      code: codeId,
-    })
-  }
-
-  const translatedMessage = replacePlaceholders(rawMessage, {
-    reason: hackyReasonTranslator(),
-    verificationLinkText: (
-      <Link
-        className="text-brand serlo-link font-bold"
-        href="/auth/verification"
-      >
-        {strings.auth.verificationLinkText}
-      </Link>
-    ),
-    field: fieldName ?? '',
-    break: <br />,
-  })
-
-  return <>{translatedMessage}</>
+  return (
+    <>
+      {replacePlaceholders(translatedMessage ?? text, {
+        reason: hackyReasonTranslator(),
+        verificationLinkText: (
+          <Link
+            className="text-brand serlo-link font-bold"
+            href="/auth/verification"
+          >
+            {strings.auth.verificationLinkText}
+          </Link>
+        ),
+        field: fieldName ?? '',
+        break: <br />,
+      })}
+    </>
+  )
 
   // I did not find a clean way to translate those strings kratos provides
   function hackyReasonTranslator() {
@@ -61,4 +57,24 @@ export function Message({
     triggerSentry({ message: 'kratos-untranslated-reason' })
     return '[unknown reason]'
   }
+}
+
+export function getKratosMessageString(
+  codeId: number,
+  messages: Record<string, string>,
+  fallback: string
+): string | undefined {
+  const codeKey = `code${codeId}`
+  const translatedMessage = hasOwnPropertyTs(messages, codeKey)
+    ? messages[codeKey]
+    : undefined
+
+  if (!translatedMessage) {
+    triggerSentry({
+      message: 'kratos-untranslated-message',
+      code: codeId,
+    })
+  }
+
+  return translatedMessage ?? fallback
 }
