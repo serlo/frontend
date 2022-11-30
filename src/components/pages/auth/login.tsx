@@ -156,7 +156,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           if (oauth) {
             await router.push(
               `/api/oauth/accept-login?login_challenge=${String(
-                login_challenge?.toString
+                login_challenge
               )}`
             )
             return
