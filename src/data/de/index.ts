@@ -331,7 +331,7 @@ export const instanceData = {
         alreadyDone: 'You are logged in, so you have already verified your email😊.'
       },
       settings: {
-        title: "Change your password",
+        title: 'Change your password',
         instruction: 'Insert your new password.'
       },
       loggingOut: 'Logging you out …',
@@ -351,26 +351,26 @@ export const instanceData = {
         email: 'Email'
       },
       messages: {
-        1010003: "1010003",
-        1010001: "1010001",
-        1010013: "1010013",
-        1040001: "1040001",
-        1040003: "1040003",
-        1050001: "1050001",
-        1060001: "1060001",
-        1060002: "1060002",
-        1080001: "1080001",
-        1080002: "1080002",
-        4000001: "4000001",
-        4000002: "4000002",
-        4000003: "4000003",
-        4000005: "4000005",
-        4000006: "4000006",
-        4000007: "4000007",
-        4000008: "4000008",
-        4000010: "4000010",
-        4060004: "4060004",
-        4070001: "4070001"
+        '1010003': "1010003",
+        '1010001': "1010001",
+        '1010013': "1010013",
+        '1040001': "1040001",
+        '1040003': "1040003",
+        '1050001': "1050001",
+        '1060001': "1060001",
+        '1060002': "1060002",
+        '1080001': "1080001",
+        '1080002': "1080002",
+        '4000001': "4000001",
+        '4000002': "4000002",
+        '4000003': "4000003",
+        '4000005': "4000005",
+        '4000006': "4000006",
+        '4000007': "4000007",
+        '4000008': "4000008",
+        '4000010': "4000010",
+        '4060004': "4060004",
+        '4070001': "4070001"
       },
       usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
@@ -910,7 +910,7 @@ export const loggedInData = {
         title: "Inhalte in Ordner verschieben / kopieren",
         select: "Inhalte zum kopieren oder verschieben auswählen:",
         target: "Zielordner:",
-        link: "Link",
+        link: 'Link',
         moveButtonText: "Verschieben zu: %type%",
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
@@ -938,14 +938,14 @@ export const kratosMailStrings = {
     valid: {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
  
-Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
  
-<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+<p>To reset your password please open the following link in your browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
     },
     invalid: {
