@@ -74,6 +74,7 @@ export function CommentAreaAllThreads() {
             <CommentArea
               commentData={{ active: [thread], archived: [] }}
               highlightedCommentId={latestCommentId}
+              noScroll
             />
           </div>
         </EntityIdProvider>
