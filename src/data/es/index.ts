@@ -308,6 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
+      alreadyLoggedIn: '👋 Hi! You are already logged in',
       revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
       revisionAccepted: "Revisión aceptada con éxito ✅",
       revisionRejected: "Revisión rechazada con éxito ❎",
@@ -318,9 +319,64 @@ export const instanceData = {
       isLoading: "El contenido está cargando…",
       unknownProblem: "Lo sentimos, hubo un problema al cargar el contenido, por favor inténtalo de nuevo más tarde."
     },
-    login: {
-      pleaseLogInLink: "Por favor, inicia sesión",
-      pleaseLogInText: "para utilizar esta función. "
+    auth: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.',
+      registerTitle: 'Register your Serlo Account',
+      recoverTitle: 'Recover your account',
+      recoveryInstructions: 'Insert and submit your email address. We will then send you an email with a reset link.',
+      verify: {
+        title: 'Verify your email',
+        instructions: 'Insert and submit your email address to verify it.',
+        alreadyDone: 'You are logged in, so you have already verified your email😊.'
+      },
+      settings: {
+        title: "Change your password",
+        instruction: 'Insert your new password.'
+      },
+      loggingOut: 'Logging you out …',
+      login: {
+        confirmAction: 'Confirm Action',
+        signIn: 'Sign in to your Account',
+        logOut: 'Log out',
+        newHere: 'Are you new here?',
+        registerNewAccount: 'Register new account',
+        forgotPassword: 'Did you %forgotLinkText%?',
+        forgotLinkText: 'forget your password'
+      },
+      fields: {
+        identifier: 'Username or Email address',
+        username: 'Username',
+        password: 'Password',
+        email: 'Email'
+      },
+      messages: {
+        1010003: "1010003",
+        1010001: "1010001",
+        1010013: "1010013",
+        1040001: "1040001",
+        1040003: "1040003",
+        1050001: "1050001",
+        1060001: "1060001",
+        1060002: "1060002",
+        1080001: "1080001",
+        1080002: "1080002",
+        4000001: "4000001",
+        4000002: "4000002",
+        4000003: "4000003",
+        4000005: "4000005",
+        4000006: "4000006",
+        4000007: "4000007",
+        4000008: "4000008",
+        4000010: "4000010",
+        4060004: "4060004",
+        4070001: "4070001"
+      },
+      usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      terms: 'Terms',
+      signUp: 'Register',
+      verificationLinkText: 'Click here to request the verification email again.'
     },
     keys: {
       ctrl: 'ctrl',
@@ -403,20 +459,20 @@ export const loggedInData = {
       url: '/user/me',
       title: "Perfil propio"
     }, {
-      url: '/event/history/user/me',
-      title: "Mis ediciones"
+      url: "/user/me",
+      title: "Perfil propio"
     }, {
-      url: '/subscriptions/manage',
-      title: "Suscripciones"
+      url: "/user/me",
+      title: "Perfil propio"
     }, {
-      url: '/auth/password/change',
-      title: "Actualizar contraseña"
+      url: "/user/me",
+      title: "Perfil propio"
     }, {
-      url: '/user/settings',
-      title: "Configuración"
+      url: "/user/me",
+      title: "Perfil propio"
     }, {
-      url: '/api/auth/logout',
-      title: "Cerrar sesión"
+      url: "/user/me",
+      title: "Perfil propio"
     }]
   }],
   strings: {
@@ -874,6 +930,80 @@ export const loggedInData = {
     },
     roles: {
       addButton: 'Add as %role%'
+    }
+  }
+};
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: '👉 Access to your Serlo account',
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+ 
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+ 
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
+    },
+    invalid: {
+      subject: '👉 Account access attempted',
+      'body.plaintext': `👋 Hi there!
+
+You (or someone else) entered this email address when trying to recover access to an account at serlo.org.
+
+But this email address is not linked to a user in our website and therefore the attempt failed.
+
+If it was you, check if you signed up using a different address.
+
+Otherwise please just ignore this email.
+
+✌️`,
+      body: `<p>👋 Hi there!</p>
+<p>You (or someone else) entered this email address when trying to recover access to an account at <a href="https://serlo.org">serlo.org</a>. </p>
+<p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
+<p>If it was you, check if you signed up using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
+<p>✌️</p>`
+    }
+  },
+  verification: {
+    valid: {
+      subject: '👋 Please verify your email address',
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
+
+      We are excited to have you at serlo.org 🎉
+
+      Please verify your brand new account by clicking the following link:
+
+{{ .VerificationURL }}
+
+Your Community-Support 💚`,
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>We are excited to have you at serlo.org 🎉</p>
+<p>Please verify your account by clicking the following link:<br/>
+<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Your Community-Support 💚</p>
+      `
+    },
+    invalid: {
+      subject: `👋 Someone tried to verify this email address`,
+      'body.plaintext': `👋 Hi there,
+
+Someone asked to verify this email address, but we were unable to find an account at serlo.org for this address.
+
+If it was you, check if you registered using a different address.
+
+Otherwise, please just ignore this email.
+
+✌️`,
+      body: `<p>👋 Hi there,</p>
+<p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
+<p>If this was you, check if you registered using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
+<p>✌️</p>`
     }
   }
 };
