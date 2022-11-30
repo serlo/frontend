@@ -262,8 +262,8 @@ export const instanceData = {
       backToPrevious: "पिछले पृष्ठ पर जाएँ",
       backToHome: "होमपेज पर जाएं",
       deletedComment: {
-        title: 'Whoops, this is not here anymore',
-        text: 'Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚'
+        title: "Whoops, this is not here anymore",
+        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
       }
     },
     print: {
@@ -331,7 +331,7 @@ export const instanceData = {
         alreadyDone: 'You are logged in, so you have already verified your email😊.'
       },
       settings: {
-        title: 'Change your password',
+        title: "Change your password",
         instruction: 'Insert your new password.'
       },
       loggingOut: 'Logging you out …',
@@ -351,26 +351,26 @@ export const instanceData = {
         email: 'Email'
       },
       messages: {
-        '1010003': "1010003",
-        '1010001': "1010001",
-        '1010013': "1010013",
-        '1040001': "1040001",
-        '1040003': "1040003",
-        '1050001': "1050001",
-        '1060001': "1060001",
-        '1060002': "1060002",
-        '1080001': "1080001",
-        '1080002': "1080002",
-        '4000001': "4000001",
-        '4000002': "4000002",
-        '4000003': "4000003",
-        '4000005': "4000005",
-        '4000006': "4000006",
-        '4000007': "4000007",
-        '4000008': "4000008",
-        '4000010': "4000010",
-        '4060004': "4060004",
-        '4070001': "4070001"
+        1010003: "1010003",
+        1010001: "1010001",
+        1010013: "1010013",
+        1040001: "1040001",
+        1040003: "1040003",
+        1050001: "1050001",
+        1060001: "1060001",
+        1060002: "1060002",
+        1080001: "1080001",
+        1080002: "1080002",
+        4000001: "4000001",
+        4000002: "4000002",
+        4000003: "4000003",
+        4000005: "4000005",
+        4000006: "4000006",
+        4000007: "4000007",
+        4000008: "4000008",
+        4000010: "4000010",
+        4060004: "4060004",
+        4070001: "4070001"
       },
       usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
@@ -563,8 +563,8 @@ export const loggedInData = {
       }
     },
     editor: {
-      confirmRouteChange: 'Are you sure you want to leave without saving?',
-      noChangesWarning: 'Nothing changed so there is no need to save yet',
+      confirmRouteChange: "Are you sure you want to leave without saving?",
+      noChangesWarning: "Nothing changed so there is no need to save yet",
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',
@@ -625,7 +625,7 @@ export const loggedInData = {
         settings: 'Settings',
         equationsTitle: 'Terms and equations',
         equationsDesc: 'Write term manipulations and solve multiline equations.',
-        ready: 'Ready to save?'
+        ready: "Ready to save?"
       },
       anchor: {
         identifier: 'Identifier',
@@ -681,8 +681,8 @@ export const loggedInData = {
         columnAndRowHeaders: 'Column and row headers',
         convertToText: 'Convert to text',
         convertToImage: 'Convert to image',
-        row: 'row',
-        column: 'column',
+        row: "row",
+        column: "column",
         addType: 'Add %type%',
         addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
@@ -849,7 +849,7 @@ export const loggedInData = {
         leftHandSide: 'left-hand side',
         transformation: 'transformation',
         mode: 'Mode',
-        transformationExample: 'e.g. -3x',
+        transformationExample: "e.g. -3x",
         transformationOfEquations: 'Transformation of equations',
         transformationOfTerms: 'Transformation of terms',
         addNewRow: 'Add new row',
@@ -907,21 +907,21 @@ export const loggedInData = {
     },
     taxonomyTermTools: {
       copyMove: {
-        title: 'Move / Copy Entities in Taxonomy',
-        select: 'Select entities to move or copy:',
-        target: 'Target term:',
-        link: 'Link',
-        moveButtonText: 'Move to %type%',
-        copyButtonText: 'Copy to %type%',
-        moveSuccess: 'Sucessfully moved',
-        copySuccess: 'Sucessfully copied',
-        exerciseFolderNotice: 'Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead.'
+        title: "Move / Copy Entities in Taxonomy",
+        select: "Select entities to move or copy:",
+        target: "Target term:",
+        link: "Link",
+        moveButtonText: "Move to %type%",
+        copyButtonText: "Copy to %type%",
+        moveSuccess: "Sucessfully moved",
+        copySuccess: "Sucessfully copied",
+        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
       },
       deleteAdd: {
-        confirmDelete: 'Are you sure you want to remove this assignment?',
-        addSuccess: 'Sucessfully assigned, reloading …',
-        addNewTitle: 'Add new assignment',
-        addButtonText: 'Assign'
+        confirmDelete: "Are you sure you want to remove this assignment?",
+        addSuccess: "Sucessfully assigned, reloading …",
+        addNewTitle: "Add new assignment",
+        addButtonText: "Assign"
       },
       sort: {
         title: 'Sort Entities',
@@ -938,12 +938,12 @@ export const kratosMailStrings = {
     valid: {
       subject: '👉 Access to your Serlo account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+are you trying to get access to your account at serlo.org? If not please just ignore this mail.
  
 To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+<p>are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
  
 <p>To reset your password please open the following link in your browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
