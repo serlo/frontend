@@ -388,8 +388,6 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
-        code4000003:
-          'Length must be \u003e= %expected_length%, but got %actual_length%.',
         code4000005: '%reason%',
         code4000006:
           'The username, email address or password was incorrect. Please check for spelling mistakes.',
