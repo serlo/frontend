@@ -308,7 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
-      alreadyLoggedIn: '👋 Hi! You are already logged in',
+      alreadyLoggedIn: "👋 Hi! Du bist schon angemeldet.",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -320,35 +320,35 @@ export const instanceData = {
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
     auth: {
-      pleaseLogInLink: 'Please log in',
-      pleaseLogInText: 'to use this feature.',
-      registerTitle: 'Register your Serlo Account',
-      recoverTitle: 'Recover your account',
-      recoveryInstructions: 'Insert and submit your email address. We will then send you an email with a reset link.',
+      pleaseLogInLink: "Bitte melde dich an,",
+      pleaseLogInText: "um diese Funktion zu benutzen.",
+      registerTitle: "Deinen Serlo Account erstellen",
+      recoverTitle: "Deinen Account wiederherstellen",
+      recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
       verify: {
-        title: 'Verify your email',
-        instructions: 'Insert and submit your email address to verify it.',
-        alreadyDone: 'You are logged in, so you have already verified your email😊.'
+        title: "Bestätige deine Mailadresse",
+        instructions: "Gib hier deine Mailadresse an und schick sie ab um einen Bestätigungslink per Mail zu bekommen.",
+        alreadyDone: "Du bist eingeloggt, das heißt deine Mailadresse ist schon bestätigt 😊."
       },
       settings: {
-        title: 'Change your password',
-        instruction: 'Insert your new password.'
+        title: "Dein Passwort ändern",
+        instruction: "Gib hier dein neues Passwort an."
       },
-      loggingOut: 'Logging you out …',
+      loggingOut: "Du wirst abgemeldet …",
       login: {
-        confirmAction: 'Confirm Action',
-        signIn: 'Sign in to your Account',
-        logOut: 'Log out',
-        newHere: 'Are you new here?',
-        registerNewAccount: 'Register new account',
-        forgotPassword: 'Did you %forgotLinkText%?',
-        forgotLinkText: 'forget your password'
+        confirmAction: "Vorgang bestätigen",
+        signIn: "Mit deinem Account anmelden",
+        logOut: "Abmelden",
+        newHere: "Bist du neu hier?",
+        registerNewAccount: "Einen neuen Account anlegen",
+        forgotPassword: "Hast du %forgotLinkText%?",
+        forgotLinkText: "dein Passwort vergessen"
       },
       fields: {
-        identifier: 'Username or Email address',
-        username: 'Username',
-        password: 'Password',
-        email: 'Email'
+        identifier: "Benutzername oder E-Mailadresse",
+        username: "Benutzername",
+        password: "Passwort",
+        email: "E-Mail-Adresse"
       },
       messages: {
         '1010003': "1010003",
@@ -372,11 +372,11 @@ export const instanceData = {
         '4060004': "4060004",
         '4070001': "4070001"
       },
-      usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
-      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
-      terms: 'Terms',
-      signUp: 'Register',
-      verificationLinkText: 'Click here to request the verification email again.'
+      usernameRules: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
+      terms: "Nutzungsbedingungen",
+      signUp: "Account anlegen",
+      verificationLinkText: "Klick hier, um ein neue Bestätigungsmail zu erhalten."
     },
     keys: {
       ctrl: "Strg",
@@ -938,14 +938,14 @@ export const kratosMailStrings = {
     valid: {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
  
-To reset your password please open the following link in your browser:
+Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
  
-<p>To reset your password please open the following link in your browser:
+<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
     },
     invalid: {
