@@ -14,10 +14,7 @@ export function Message({
   fieldName?: string
 }) {
   const { strings } = useInstanceData()
-  const { id: codeId, text } = uiText
-
-  // uiText might contain a `context` that we might need inside some strings.
-  // so far we did not encounter this case
+  const { id: codeId, text, context } = uiText
 
   const hasTranslatedMessage = hasOwnPropertyTs(strings.auth.messages, codeId)
   const rawMessage = hasTranslatedMessage
@@ -32,10 +29,7 @@ export function Message({
   }
 
   const translatedMessage = replacePlaceholders(rawMessage, {
-    reason: text.replace(
-      'does not match pattern "^[\\\\w\\\\-]+$"',
-      strings.auth.usernameRules
-    ),
+    reason: hackyReasonTranslator(),
     verificationLinkText: (
       <Link
         className="text-brand serlo-link font-bold"
@@ -49,4 +43,22 @@ export function Message({
   })
 
   return <>{translatedMessage}</>
+
+  // I did not find a clean way to translate those strings kratos provides
+  function hackyReasonTranslator() {
+    const reason =
+      context && hasOwnPropertyTs(context, 'reason')
+        ? (context.reason as string)
+        : ''
+    const searchString = reason + text
+    if (searchString.includes('password length'))
+      return strings.auth.passwordInvalid
+    if (searchString.includes('does not match pattern'))
+      return strings.auth.usernameInvalid
+
+    // eslint-disable-next-line no-console
+    console.log(text)
+    triggerSentry({ message: 'kratos-untranslated-reason' })
+    return '[unknown reason]'
+  }
 }
