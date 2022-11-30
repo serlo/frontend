@@ -342,7 +342,7 @@ export const instanceData = {
       verify: {
         title: 'Verify your email',
         instructions: 'Insert and submit your email address to verify it.',
-        alreadyDone: 'Your are logged in, so you are very likely verified already.'
+        alreadyDone: 'You are logged in, so you have already verified your email😊.'
       },
       settings: {
         title: "Change your password",
