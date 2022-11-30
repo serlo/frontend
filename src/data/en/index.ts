@@ -378,7 +378,7 @@ export const instanceData = {
         4000001: '%reason%',
         4000002: '%field% is missing.',
         4000003: 'Length must be \u003e= %expected_length%, but got %actual_length%.',
-        4000005: 'The password can not be used because %reason%.',
+        4000005: '%reason%',
         4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         4000007: 'An account with the same email or username exists already.',
         4000008: 'The provided authentication code is invalid, please try again.',
