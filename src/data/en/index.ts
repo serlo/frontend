@@ -1,9 +1,13 @@
-
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { headerData, footerData, landingSubjectsData,secondaryMenus } from './menu-data'
+import {
+  headerData,
+  footerData,
+  landingSubjectsData,
+  secondaryMenus,
+} from './menu-data'
 
 export const instanceData = {
-  lang: Instance["En"],
+  lang: Instance['En'],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -15,8 +19,8 @@ export const instanceData = {
       skipLinks: {
         sentence: 'Skip to %content% or %footer%',
         content: 'content',
-        footer: 'footer'
-      }
+        footer: 'footer',
+      },
     },
     search: {
       privacy:
@@ -81,7 +85,7 @@ export const instanceData = {
       recycleBin: 'Recycle Bin',
       diagon: 'Diagon Alley',
       discussions: 'Comments',
-      manageRoles: 'Manage User Roles'
+      manageRoles: 'Manage User Roles',
     },
     roles: {
       donor: 'Donor',
@@ -123,7 +127,8 @@ export const instanceData = {
       pages: 'Course overview',
       next: 'Next',
       back: 'Back',
-      noPagesWarning: 'Sorry there seem to be no reviewed pages in this course yet.',
+      noPagesWarning:
+        'Sorry there seem to be no reviewed pages in this course yet.',
       noRevisionForPage: 'unreviewed page',
     },
     content: {
@@ -132,8 +137,7 @@ export const instanceData = {
       trashedNotice: 'This content is marked for deletion.',
       unrevisedNotice:
         'This content has no accepted revision yet. Please use the %link% to preview.',
-      emptyNotice:
-        'There is no content here. Please edit or delete.',
+      emptyNotice: 'There is no content here. Please edit or delete.',
       picture: 'Picture',
       previewImage: 'Preview Image',
       imageAltFallback: 'Image',
@@ -204,7 +208,8 @@ export const instanceData = {
       hideReplies: 'Hide',
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
-      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
+      commentsOverviewExplanation:
+        'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -240,16 +245,20 @@ export const instanceData = {
       status: 'Status',
     },
     unrevisedRevisions: {
-      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
+      help1:
+        'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
       reviewers: 'Reviewers',
-      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
-      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
+      reviewersUrl:
+        'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+      help2:
+        'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
       help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
       contactPerson: 'LinaMaria',
-      contactPersonUrl:'https://community.serlo.org/direct/LinaMaria',
+      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
-      guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
+      guidelineUrl:
+        'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
       subjectLinks: 'To Subjects',
       showMoreEntities: 'Show all in %subject%',
       showMoreRevisions: 'Show %number% more…',
@@ -273,9 +282,9 @@ export const instanceData = {
       backToPrevious: 'Back to previous page',
       backToHome: 'To our home page',
       deletedComment: {
-        title: "Whoops, this is not here anymore",
-        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
-      }
+        title: 'Whoops, this is not here anymore',
+        text: 'Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚',
+      },
     },
     print: {
       preparingNotice: 'Preparing print!',
@@ -303,7 +312,7 @@ export const instanceData = {
         part2: 'You can invite %username% to the chat to send direct messages.',
         messagePlaceholder: 'Optional: Personal message',
         button: 'Send invitation',
-        success: '✨ Successfully invited!'
+        success: '✨ Successfully invited!',
       },
       activityGraph: {
         edits: 'Edits',
@@ -356,7 +365,7 @@ export const instanceData = {
         newHere: 'Are you new here?',
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
-        forgotLinkText: 'forget your password'
+        forgotLinkText: 'forget your password',
       },
       fields: {
         identifier: 'Username or Email address',
@@ -436,12 +445,12 @@ export const instanceData = {
     },
     bin: {
       title: 'Title',
-      trashed: 'Trashed…'
-    }
+      trashed: 'Trashed…',
+    },
   },
 }
 export const instanceLandingData = {
-  lang: Instance["En"],
+  lang: Instance['En'],
   subjectsData: landingSubjectsData,
   strings: {
     vision:
@@ -577,50 +586,48 @@ export const loggedInData = {
     },
     mutations: {
       success: {
-        trash:'Successfully trashed 🗑',
+        trash: 'Successfully trashed 🗑',
         restore: 'Successfully restored ♻️',
         accept: 'Edit was accepted ✅',
         reject: 'Edit not rejected ❌',
         save: 'Edit successfully saved ✅',
         updated: 'Successfully updated ✅',
         generic: 'Success 🎉',
-        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
-      }, 
+        saveNeedsReview:
+          'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.',
+      },
       errors: {
         UNAUTHENTICATED: 'You have to log in to use this function!',
-        FORBIDDEN:'Sorry, you are not allowed to do that!',
+        FORBIDDEN: 'Sorry, you are not allowed to do that!',
         INVALID_TOKEN: '',
-        BAD_USER_INPUT: 'Sorry, you are trying something that is not supported…',
+        BAD_USER_INPUT:
+          'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
-        valueMissing: 'Please fill all required fields'
-      }
+        valueMissing: 'Please fill all required fields',
+      },
     },
     editor: {
-      confirmRouteChange: "Are you sure you want to leave without saving?",
-      noChangesWarning: "Nothing changed so there is no need to save yet",
+      confirmRouteChange: 'Are you sure you want to leave without saving?',
+      noChangesWarning: 'Nothing changed so there is no need to save yet',
       edtrIo: {
         extendedSettings: 'Extended Settings',
         close: 'Close',
         notSupportedYet:
           "This content type isn't supported by the new editor, yet.",
         editInOld: 'You can edit the content in the old editor',
-        conversionError:
-          'An error occurred during the conversion.',
+        conversionError: 'An error occurred during the conversion.',
         oldRevisionFound:
           'We found an old revision created by you. Do you want to restore it?',
         notConverted:
           "This entity hasn't been converted to the new editor, yet.",
         box: 'Container',
-        boxDesc:
-          'A container for examples, quotes, warnings, theorems, notes…',
+        boxDesc: 'A container for examples, quotes, warnings, theorems, notes…',
         text: 'Text',
-        textDesc:
-          'Compose content using rich text and math formulas.',
+        textDesc: 'Compose content using rich text and math formulas.',
         blockquoteTitle: 'Quotation',
         quoteDescription: 'Create indented text for quotations.',
         geogebraTitle: 'GeoGebra Applet',
-        geogebraDesc:
-          'Embed GeoGebra Materials applets via URL or ID.',
+        geogebraDesc: 'Embed GeoGebra Materials applets via URL or ID.',
         highlightTitle: 'Source Code',
         highlightDesc: 'Highlight the syntax of source code.',
         anchor: 'Anchor',
@@ -628,12 +635,10 @@ export const loggedInData = {
         image: 'Image',
         imageDesc: 'Upload images.',
         importantTitle: 'Important Statement',
-        importantDesc:
-          'A box to highlight important statements.',
+        importantDesc: 'A box to highlight important statements.',
         injectionTitle: 'serlo.org Content',
         injectionDesc: 'Embed serlo.org content via their ID.',
-        multimediaTitle:
-          'Multimedia content associated with text',
+        multimediaTitle: 'Multimedia content associated with text',
         multimediaDesc:
           'Create an illustrating or explaining multimedia content associated with text.',
         spoiler: 'Spoiler',
@@ -643,17 +648,14 @@ export const loggedInData = {
         table: 'Table',
         tableDesc: 'Create tables using Markdown.',
         video: 'Video',
-        videoDesc:
-          'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
+        videoDesc: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
         solutionSeparator: 'Solution Separator',
-        solutionSeparatorDesc:
-          'Divide the solution into individual steps.',
+        solutionSeparatorDesc: 'Divide the solution into individual steps.',
         save: 'Save',
         saveWithReview: 'Save and get review',
         cancel: 'Cancel',
         saving: 'Saving…',
-        missingChanges:
-          'You need to fill out the changes you made',
+        missingChanges: 'You need to fill out the changes you made',
         missingLicenseTerms: 'You need to accept the license terms',
         missingChangesAndLicenseTerms:
           'You need to fill out the changes you made and accept the license terms',
@@ -674,7 +676,7 @@ export const loggedInData = {
         equationsTitle: 'Terms and equations',
         equationsDesc:
           'Write term manipulations and solve multiline equations.',
-        ready: "Ready to save?",
+        ready: 'Ready to save?',
       },
       anchor: {
         identifier: 'Identifier',
@@ -684,8 +686,7 @@ export const loggedInData = {
         urlOrId: 'GeoGebra URL or ID',
       },
       highlight: {
-        clickAndEnter:
-          'Click here and enter your source code…',
+        clickAndEnter: 'Click here and enter your source code…',
         enterHere: 'Enter your source code here',
         language: 'Language',
         enterLanguage: 'Enter language',
@@ -698,8 +699,7 @@ export const loggedInData = {
         addAnswer: 'Add answer',
         enterTheValue: 'Enter the value',
         yourSolution: 'Your solution',
-        number:
-          "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
+        number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
         mathematicalExpressionSolution:
           "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')",
       },
@@ -708,8 +708,7 @@ export const loggedInData = {
         video: 'Video',
         geogebraTitle: 'GeoGebra Applet',
         changeType: 'Change the multimedia type',
-        howImportant:
-          'How important is the multimedia content?',
+        howImportant: 'How important is the multimedia content?',
         isIllustrating: 'It is illustrating',
         isEssential: 'It is essential',
       },
@@ -734,12 +733,13 @@ export const loggedInData = {
         columnAndRowHeaders: 'Column and row headers',
         convertToText: 'Convert to text',
         convertToImage: 'Convert to image',
-        row: "row",
-        column: "column",
+        row: 'row',
+        column: 'column',
         addType: 'Add %type%',
         addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
-        confirmDelete: 'Are you sure you want to delete this %type% and the content in it?'
+        confirmDelete:
+          'Are you sure you want to delete this %type% and the content in it?',
       },
       spoiler: {
         enterATitle: 'Enter a title',
@@ -786,18 +786,16 @@ export const loggedInData = {
         seoTitle: 'Title for search engines',
       },
       error: {
-        convertionError:
-          'This part of the document could not be converted.',
+        convertionError: 'This part of the document could not be converted.',
       },
       exercise: {
         addChoiceExercise: 'Add choice exercise',
         choiceExercise: 'Choice exercise',
         addInputExercise: 'Add input exercise',
         inputExercise: 'Input exercise',
-        addOptionalInteractiveEx:
-          'Add an optional interactive exercise:',
+        addOptionalInteractiveEx: 'Add an optional interactive exercise:',
         changeInteractive: 'Change interactive element',
-        removeInteractive: 'Remove interactive element'
+        removeInteractive: 'Remove interactive element',
       },
       injection: {
         illegalInjectionFound: 'Illegal injection found',
@@ -814,15 +812,13 @@ export const loggedInData = {
         toDragConvert:
           'To make the content draggable, convert them for the new editor:',
         oneColumnLayout: 'One-column layout',
-        multimediaTitle:
-          'Multimedia content associated with text',
+        multimediaTitle: 'Multimedia content associated with text',
       },
       pageLayoutColums: {
-        chooseRatio: 'Choose column ratio'
+        chooseRatio: 'Choose column ratio',
       },
       solution: {
-        optionalExplanation:
-          'Optionally explain the solution strategy here',
+        optionalExplanation: 'Optionally explain the solution strategy here',
         fundamentalsNote:
           'For this exercise, you need the following fundamentals:',
         idArticle: 'ID of an article, e.g. 1855',
@@ -842,8 +838,7 @@ export const loggedInData = {
         title: 'Title',
         writeShortIntro: 'Write a short introduction',
         stillWantMore: 'Still want more?',
-        moreOnTopic:
-        'You can find more content on this topic here',
+        moreOnTopic: 'You can find more content on this topic here',
         addSource: 'Add source',
         removeLabel: 'Remove',
         dragLabel: 'Drag to change order',
@@ -851,11 +846,12 @@ export const loggedInData = {
         sources: 'Sources',
         sourceText: 'Source Text',
         sourceUrl: 'Optional URL',
-        moreInFolder:
-          'You can find more exercises in the following folder',
+        moreInFolder: 'You can find more exercises in the following folder',
         addModal: {
-          introText: 'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
-          introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
+          introText:
+            'After reading the article, what would help out learners next? %break% Here you can add some %exercises% or link to a single %exerciseFolder%. %break% Or you can suggest %articles%, %courses% or %videos% to follow up with.',
+          introText2:
+            'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
           buttonContent: 'Add content',
@@ -869,8 +865,8 @@ export const loggedInData = {
           unsupportedId: 'Sorry, this ID is not supported here',
           addFromFolderTitle: 'From the folder',
           placeholder: 'Paste Serlo ID or URL here',
-          exerciseFolderNote: 'Only one can be selected here'
-        }
+          exerciseFolderNote: 'Only one can be selected here',
+        },
       },
       coursePage: {
         explanation: 'Explanation',
@@ -910,7 +906,7 @@ export const loggedInData = {
         leftHandSide: 'left-hand side',
         transformation: 'transformation',
         mode: 'Mode',
-        transformationExample: "e.g. -3x",
+        transformationExample: 'e.g. -3x',
         transformationOfEquations: 'Transformation of equations',
         transformationOfTerms: 'Transformation of terms',
         addNewRow: 'Add new row',
@@ -920,7 +916,7 @@ export const loggedInData = {
         combineLikeTerms: 'Combine like terms.',
         setEqual: 'Set the terms equal to each other.',
         firstExplanation: 'First explanation',
-        addNew: 'Add new equation'
+        addNew: 'Add new equation',
       },
       deprecated: {
         unsupported:
@@ -960,44 +956,45 @@ export const loggedInData = {
         heading: 'How to delete your account',
         text: 'If you want to delete your account, please write us at %mailLink%.%break% Make sure to use your registered email address and %subjectLine% as subject line.',
         deleteAccount: 'Delete Account',
-      }
+      },
     },
     backend: {
       pages: 'Static Pages',
       authorization: 'Authorization',
       navigation: 'Navigation',
-      recycleBin: 'Recycle Bin'
+      recycleBin: 'Recycle Bin',
     },
     pages: {
       newPage: 'Add new Page',
-      deletedPages: 'Deleted Pages'
+      deletedPages: 'Deleted Pages',
     },
     taxonomyTermTools: {
       copyMove: {
-        title: "Move / Copy Entities in Taxonomy",
-        select: "Select entities to move or copy:",
-        target: "Target term:",
-        link: "Link",
-        moveButtonText: "Move to %type%",
-        copyButtonText: "Copy to %type%",
-        moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied",
-        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        title: 'Move / Copy Entities in Taxonomy',
+        select: 'Select entities to move or copy:',
+        target: 'Target term:',
+        link: 'Link',
+        moveButtonText: 'Move to %type%',
+        copyButtonText: 'Copy to %type%',
+        moveSuccess: 'Sucessfully moved',
+        copySuccess: 'Sucessfully copied',
+        exerciseFolderNotice:
+          'Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead.',
       },
       deleteAdd: {
-        confirmDelete: "Are you sure you want to remove this assignment?",
-        addSuccess: "Sucessfully assigned, reloading …",
-        addNewTitle: "Add new assignment",
-        addButtonText: "Assign",
+        confirmDelete: 'Are you sure you want to remove this assignment?',
+        addSuccess: 'Sucessfully assigned, reloading …',
+        addNewTitle: 'Add new assignment',
+        addButtonText: 'Assign',
       },
       sort: {
         title: 'Sort Entities',
-        saveButtonText: 'Save order'
-      }
+        saveButtonText: 'Save order',
+      },
     },
     roles: {
-      addButton: 'Add as %role%'
-    }
+      addButton: 'Add as %role%',
+    },
   },
 }
 
@@ -1035,7 +1032,7 @@ Otherwise please just ignore this email.
 <p>If it was you, check if you signed up using a different address.</p>
 <p>Otherwise, please just ignore this email.</p>
 <p>✌️</p>`,
-    }
+    },
   },
   verification: {
     valid: {
@@ -1071,7 +1068,7 @@ Otherwise, please just ignore this email.
 <p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
 <p>If this was you, check if you registered using a different address.</p>
 <p>Otherwise, please just ignore this email.</p>
-<p>✌️</p>`
-    }
-  }
+<p>✌️</p>`,
+    },
+  },
 }
