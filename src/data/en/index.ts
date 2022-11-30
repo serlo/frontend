@@ -1009,7 +1009,7 @@ are you trying to get access to your account again? If not please just ignore th
  
 To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}`,
-      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b></p>,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>are you trying to get access to your account again? If not please just ignore this mail.</p>
  
 <p>To reset your password please open the following link in your browser:
