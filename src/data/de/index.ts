@@ -351,28 +351,29 @@ export const instanceData = {
         email: "E-Mail-Adresse"
       },
       messages: {
-        '1010003': "1010003",
-        '1010001': "1010001",
-        '1010013': "1010013",
-        '1040001': "1040001",
-        '1040003': "1040003",
-        '1050001': "1050001",
-        '1060001': "1060001",
-        '1060002': "1060002",
-        '1080001': "1080001",
-        '1080002': "1080002",
-        '4000001': "4000001",
-        '4000002': "4000002",
-        '4000003': "4000003",
-        '4000005': "4000005",
-        '4000006': "4000006",
-        '4000007': "4000007",
-        '4000008': "4000008",
-        '4000010': "4000010",
-        '4060004': "4060004",
-        '4070001': "4070001"
+        code1010003: "Zur Sicherheit überprüfen wir hier noch mal ob das dein Account ist.",
+        code1010001: "Anmelden",
+        code1010013: "Weiter",
+        code1040001: "Account anlegen",
+        code1040003: "Weiter",
+        code1050001: "Deine Änderungen wurden gespeichert! 🎉",
+        code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
+        code1060002: "Eine E-Mail mit einem Link zum Zurücksetzen deines Passworts wurde an die angegebene Adresse gesendet.",
+        code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
+        code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
+        code4000001: '%reason%',
+        code4000002: "%field% bitte noch angeben.",
+        code4000003: 'Length must be >= %expected_length%, but got %actual_length%.',
+        code4000005: '%reason%',
+        code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
+        code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
+        code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
+        code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
+        code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen."
       },
-      usernameRules: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      passwordInvalid: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
@@ -459,20 +460,20 @@ export const loggedInData = {
       url: '/user/me',
       title: "Eigenes Profil"
     }, {
-      url: "/user/me",
-      title: "Eigenes Profil"
+      url: '/event/history/user/me',
+      title: "Meine Bearbeitungen"
     }, {
-      url: "/user/me",
-      title: "Eigenes Profil"
+      url: '/subscriptions/manage',
+      title: "Abonnements"
     }, {
-      url: "/user/me",
-      title: "Eigenes Profil"
+      url: '/auth/settings',
+      title: "Passwort ändern"
     }, {
-      url: "/user/me",
-      title: "Eigenes Profil"
+      url: '/user/settings',
+      title: "Einstellungen"
     }, {
-      url: "/user/me",
-      title: "Eigenes Profil"
+      url: '/auth/logout',
+      title: "Abmelden"
     }]
   }],
   strings: {
@@ -938,14 +939,14 @@ export const kratosMailStrings = {
     valid: {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
  
-To reset your password please open the following link in your browser:
+Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
  
-<p>To reset your password please open the following link in your browser:
+<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
     },
     invalid: {
