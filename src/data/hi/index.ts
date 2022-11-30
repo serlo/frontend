@@ -351,28 +351,29 @@ export const instanceData = {
         email: 'Email'
       },
       messages: {
-        '1010003': "1010003",
-        '1010001': "1010001",
-        '1010013': "1010013",
-        '1040001': "1040001",
-        '1040003': "1040003",
-        '1050001': "1050001",
-        '1060001': "1060001",
-        '1060002': "1060002",
-        '1080001': "1080001",
-        '1080002': "1080002",
-        '4000001': "4000001",
-        '4000002': "4000002",
-        '4000003': "4000003",
-        '4000005': "4000005",
-        '4000006': "4000006",
-        '4000007': "4000007",
-        '4000008': "4000008",
-        '4000010': "4000010",
-        '4060004': "4060004",
-        '4070001': "4070001"
+        code1010003: 'Please confirm this action by verifying that it is you.',
+        code1010001: 'Sign in',
+        code1010013: 'Continue',
+        code1040001: 'Register',
+        code1040003: 'Continue',
+        code1050001: 'Your changes have been saved! 🎉',
+        code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
+        code1060002: 'An email containing a recovery link has been sent to the email address you provided.',
+        code1080001: 'An email containing a verification link has been sent to the email address you provided.',
+        code1080002: 'You have successfully verified your email address.',
+        code4000001: '%reason%',
+        code4000002: '%field% is missing.',
+        code4000003: 'Length must be >= %expected_length%, but got %actual_length%.',
+        code4000005: '%reason%',
+        code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
+        code4000007: 'An account with the same email or username exists already.',
+        code4000008: 'The provided authentication code is invalid, please try again.',
+        code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
+        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.'
       },
-      usernameRules: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      passwordInvalid: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Register',
@@ -459,20 +460,20 @@ export const loggedInData = {
       url: '/user/me',
       title: 'Own profile'
     }, {
-      url: "/user/me",
-      title: "Own profile"
+      url: '/event/history/user/me',
+      title: 'My Edits'
     }, {
-      url: "/user/me",
-      title: "Own profile"
+      url: '/subscriptions/manage',
+      title: "सब्सक्रिप्शन"
     }, {
-      url: "/user/me",
-      title: "Own profile"
+      url: '/auth/settings',
+      title: "पासवर्ड परिवर्तित करें"
     }, {
-      url: "/user/me",
-      title: "Own profile"
+      url: '/user/settings',
+      title: 'Settings'
     }, {
-      url: "/user/me",
-      title: "Own profile"
+      url: '/auth/logout',
+      title: "लॉगआउट करें"
     }]
   }],
   strings: {
