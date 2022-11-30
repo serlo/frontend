@@ -345,7 +345,7 @@ export const instanceData = {
       registerTitle: 'Register your Serlo Account',
       recoverTitle: 'Recover your account',
       recoveryInstructions:
-        'Insert and submit your email address. We will then send you an email with a reset link.',
+        'Insert and submit your email address. %break% We will then send you an email with a reset link.',
       verify: {
         title: 'Verify your email',
         instructions: 'Insert and submit your email address to verify it.',

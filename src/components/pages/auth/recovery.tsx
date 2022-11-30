@@ -10,6 +10,7 @@ import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { PageTitle } from '@/components/content/page-title'
 import { useInstanceData } from '@/contexts/instance-context'
+import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Recovery() {
   const [flow, setFlow] = useState<SelfServiceRecoveryFlow>()
@@ -54,7 +55,11 @@ export function Recovery() {
   return (
     <div className="max-w-[30rem] mx-auto">
       <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
-      <p className="serlo-p mb-10 -mt-4">{strings.auth.recoveryInstructions}</p>
+      <p className="serlo-p mb-10 -mt-4 special-hyphens-initial">
+        {replacePlaceholders(strings.auth.recoveryInstructions, {
+          break: <br />,
+        })}
+      </p>
       <Flow onSubmit={onSubmit} flow={flow} />
       <style jsx>{`
         @font-face {

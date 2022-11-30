@@ -37,7 +37,7 @@ export function Node(props: NodeProps) {
       return (
         <span
           key={`${uiText.id}`}
-          className="text-red italic -mt-2 mb-2 block ml-3"
+          className="text-red italic -mt-2 mb-2 block ml-3 special-hyphens-initial"
         >
           <Message uiText={uiText} fieldName={fieldName} />
         </span>
@@ -64,13 +64,13 @@ export function Node(props: NodeProps) {
 
       case 'submit':
         // eslint-disable-next-line no-case-declarations
-        const label =
-          node.meta.label?.id &&
-          getKratosMessageString(
-            node.meta.label.id,
-            strings.auth.messages,
-            strings.auth.messages.code1010013
-          )
+        const label = node.meta.label?.id
+          ? getKratosMessageString(
+              node.meta.label.id,
+              strings.auth.messages,
+              strings.auth.messages.code1010013
+            )
+          : undefined
         return (
           <button
             className="text-xl serlo-button-green block w-full py-2 mt-10"

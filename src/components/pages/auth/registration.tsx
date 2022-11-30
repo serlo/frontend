@@ -134,6 +134,6 @@ export function Registration() {
         </a>
       ),
     })
-    return <div className="mt-12">{text}</div>
+    return <div className="mt-12 serlo-p mx-0 text-base">{text}</div>
   }
 }
