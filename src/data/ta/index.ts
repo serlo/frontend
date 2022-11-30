@@ -363,7 +363,6 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
-        code4000003: 'Length must be >= %expected_length%, but got %actual_length%.',
         code4000005: '%reason%',
         code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         code4000007: 'An account with the same email or username exists already.',
