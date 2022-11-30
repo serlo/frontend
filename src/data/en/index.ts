@@ -1006,12 +1006,12 @@ export const kratosMailStrings = {
     valid: {
       subject: '👉 Access to your Serlo account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
  
 To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
  
 <p>To reset your password please open the following link in your browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`,
