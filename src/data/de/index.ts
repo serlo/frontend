@@ -308,6 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
+      alreadyLoggedIn: "👋 Hi! Du bist schon angemeldet.",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -318,9 +319,64 @@ export const instanceData = {
       isLoading: "Inhalt wird geladen…",
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
-    login: {
+    auth: {
       pleaseLogInLink: "Bitte melde dich an,",
-      pleaseLogInText: "um diese Funktion zu benutzen."
+      pleaseLogInText: "um diese Funktion zu benutzen.",
+      registerTitle: "Deinen Serlo Account erstellen",
+      recoverTitle: "Deinen Account wiederherstellen",
+      recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
+      verify: {
+        title: "Bestätige deine Mailadresse",
+        instructions: "Gib hier deine Mailadresse an und schick sie ab um einen Bestätigungslink per Mail zu bekommen.",
+        alreadyDone: "Du bist eingeloggt, das heißt deine Mailadresse ist schon bestätigt 😊."
+      },
+      settings: {
+        title: "Dein Passwort ändern",
+        instruction: "Gib hier dein neues Passwort an."
+      },
+      loggingOut: "Du wirst abgemeldet …",
+      login: {
+        confirmAction: "Vorgang bestätigen",
+        signIn: "Mit deinem Account anmelden",
+        logOut: "Abmelden",
+        newHere: "Bist du neu hier?",
+        registerNewAccount: "Einen neuen Account anlegen",
+        forgotPassword: "Hast du %forgotLinkText%?",
+        forgotLinkText: "dein Passwort vergessen"
+      },
+      fields: {
+        identifier: "Benutzername oder E-Mailadresse",
+        username: "Benutzername",
+        password: "Passwort",
+        email: "E-Mail-Adresse"
+      },
+      messages: {
+        '1010003': "1010003",
+        '1010001': "1010001",
+        '1010013': "1010013",
+        '1040001': "1040001",
+        '1040003': "1040003",
+        '1050001': "1050001",
+        '1060001': "1060001",
+        '1060002': "1060002",
+        '1080001': "1080001",
+        '1080002': "1080002",
+        '4000001': "4000001",
+        '4000002': "4000002",
+        '4000003': "4000003",
+        '4000005': "4000005",
+        '4000006': "4000006",
+        '4000007': "4000007",
+        '4000008': "4000008",
+        '4000010': "4000010",
+        '4060004': "4060004",
+        '4070001': "4070001"
+      },
+      usernameRules: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
+      terms: "Nutzungsbedingungen",
+      signUp: "Account anlegen",
+      verificationLinkText: "Klick hier, um ein neue Bestätigungsmail zu erhalten."
     },
     keys: {
       ctrl: "Strg",
@@ -403,20 +459,20 @@ export const loggedInData = {
       url: '/user/me',
       title: "Eigenes Profil"
     }, {
-      url: '/event/history/user/me',
-      title: "Meine Bearbeitungen"
+      url: "/user/me",
+      title: "Eigenes Profil"
     }, {
-      url: '/subscriptions/manage',
-      title: "Abonnements"
+      url: "/user/me",
+      title: "Eigenes Profil"
     }, {
-      url: '/auth/password/change',
-      title: "Passwort ändern"
+      url: "/user/me",
+      title: "Eigenes Profil"
     }, {
-      url: '/user/settings',
-      title: "Einstellungen"
+      url: "/user/me",
+      title: "Eigenes Profil"
     }, {
-      url: '/api/auth/logout',
-      title: "Abmelden"
+      url: "/user/me",
+      title: "Eigenes Profil"
     }]
   }],
   strings: {
@@ -854,7 +910,7 @@ export const loggedInData = {
         title: "Inhalte in Ordner verschieben / kopieren",
         select: "Inhalte zum kopieren oder verschieben auswählen:",
         target: "Zielordner:",
-        link: "Link",
+        link: 'Link',
         moveButtonText: "Verschieben zu: %type%",
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
@@ -874,6 +930,78 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Als %role% hinzufügen"
+    }
+  }
+};
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: "👉 Zugang zu deinem Serlo Account",
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+ 
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+ 
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
+    },
+    invalid: {
+      subject: "👉 Zugriff auf Account",
+      'body.plaintext': `👋 Hi there!
+
+Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.
+
+Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.
+
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+
+Sonst kannst du diese Mail einfach ignorieren.
+
+✌️`,
+      body: `<p>👋 Hi there!</p>
+<p>Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf <a href="https://serlo.org">serlo.org</a> wiederherzustellen.</p>
+<p>Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>Sonst kannst du diese Mail einfach ignorieren.</p>
+<p>✌️</p>`
+    }
+  },
+  verification: {
+    valid: {
+      subject: "👋 Bitte bestätige deine E-Mail-Adresse",
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
+
+wunderbar dich auf serlo.org zu haben 🎉
+      
+Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
+{{ .VerificationURL }}
+
+Dein Community-Support 💚`,
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>wunderbar dich auf serlo.org zu haben 🎉</p>
+<p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
+<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Dein Community-Support 💚</p>`
+    },
+    invalid: {
+      subject: `👋 Jemand hat versucht diese Mailadresse zu bestätigen`,
+      'body.plaintext': `👋 Hi,
+
+jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf serlo.org mit dieser Adresse verknüpft.
+
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+
+Sonst kannst du diese Mail einfach ignorieren.
+
+✌️`,
+      body: `<p>👋 Hi,</p>
+<p>jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf <a href="https://serlo.org">serlo.org</a> mit dieser Adresse verknüpft.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>sonst kannst du diese Mail einfach ignorieren.</p>
+<p>✌️</p>`
     }
   }
 };
