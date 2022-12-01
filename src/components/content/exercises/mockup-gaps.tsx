@@ -2,10 +2,10 @@ import { faSave } from '@fortawesome/free-regular-svg-icons'
 import nProgress from 'nprogress'
 import { useState } from 'react'
 
-// import { endpointEnmeshed } from '@/api/endpoint'
+import { endpointEnmeshed } from '@/api/endpoint'
 import { FaIcon } from '@/components/fa-icon'
 import { showToastNotice } from '@/helper/show-toast-notice'
-// import { triggerSentry } from '@/helper/trigger-sentry'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import { GapEx, Gappy } from '@/pages/___gaps'
 
 export function MockupGaps() {
@@ -73,44 +73,44 @@ export function MockupGaps() {
   )
 
   function saveLearningProgress() {
-    // const sessionId = sessionStorage.getItem('sessionId')
-    // const name = 'Lernstand-Mathe'
-    // const value = encodeURIComponent('✓ Bruchaddition')
+    const sessionId = sessionStorage.getItem('sessionId')
+    const name = 'Lernstand-Mathe'
+    const value = encodeURIComponent('✓ Bruchaddition')
 
-    // if (!sessionId) return
+    if (!sessionId) return
 
     nProgress.start()
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       showToastNotice('Erfolgreich gespeichert 🎉')
       nProgress.done()
-    }, 1000)
+    }, 1000)*/
 
-    // fetch(
-    //   `${endpointEnmeshed}/attributes?name=${name}&value=${value}&sessionId=${sessionId}`,
-    //   { method: 'POST' }
-    // )
-    //   .then((res) => res.json())
-    //   .then(() => {
-    //     setTimeout(() => {
-    //       nProgress.done()
-    //       showToastNotice(
-    //         '👌 Lernstand wurde erfolgreich an deine Wallet gesendet',
-    //         'success',
-    //         6000
-    //       )
-    //       setShowWalletNotice(false)
-    //     }, 540)
-    //   })
-    //   .catch((e) => {
-    //     // eslint-disable-next-line no-console
-    //     console.log(JSON.stringify(e))
-    //     triggerSentry({
-    //       message: `Error in User-Journey: Saving Attribute: ${JSON.stringify(
-    //         e
-    //       )}`,
-    //     })
-    //     setShowWalletNotice(false)
-    //   })
+    fetch(
+      `${endpointEnmeshed}/attributes?name=${name}&value=${value}&sessionId=${sessionId}`,
+      { method: 'POST' }
+    )
+      .then((res) => res.json())
+      .then(() => {
+        setTimeout(() => {
+          nProgress.done()
+          showToastNotice(
+            '👌 Lernstand wurde erfolgreich an deine Wallet gesendet',
+            'success',
+            6000
+          )
+          setShowWalletNotice(false)
+        }, 540)
+      })
+      .catch((e) => {
+        // eslint-disable-next-line no-console
+        console.log(JSON.stringify(e))
+        triggerSentry({
+          message: `Error in User-Journey: Saving Attribute: ${JSON.stringify(
+            e
+          )}`,
+        })
+        setShowWalletNotice(false)
+      })
   }
 }
