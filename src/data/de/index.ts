@@ -327,7 +327,7 @@ export const instanceData = {
       recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
       verify: {
         title: "Bestätige deine Mailadresse",
-        instructions: "Gib hier deine Mailadresse an und schick sie ab um einen Bestätigungslink per Mail zu bekommen.",
+        instructions: "Gib hier deine Mailadresse an und schick sie ab, um einen Bestätigungslink per Mail zu bekommen.",
         alreadyDone: "Du bist eingeloggt, das heißt deine Mailadresse ist schon bestätigt 😊."
       },
       settings: {
@@ -351,7 +351,7 @@ export const instanceData = {
         email: "E-Mail-Adresse"
       },
       messages: {
-        code1010003: "Zur Sicherheit überprüfen wir hier noch mal ob das dein Account ist.",
+        code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
         code1010013: "Weiter",
         code1040001: "Account anlegen",
