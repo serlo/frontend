@@ -312,7 +312,6 @@ export const sharedLicenseFragments = gql`
       id
       url
       title
-      shortTitle
       default
       agreement
     }
