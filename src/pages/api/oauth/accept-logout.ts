@@ -3,10 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { createGraphqlFetch } from '@/api/graphql-fetch'
 
-export const config = {
-  runtime: 'experimental-edge',
-}
-
 export default async function acceptLogout(
   req: NextApiRequest,
   res: NextApiResponse
