@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { createGraphqlFetch } from '@/api/graphql-fetch'
-import { AuthSessionCookie } from '@/auth/auth-session-cookie'
+import { AuthSessionCookie } from '@/auth/cookie/auth-session-cookie'
 
 export default async function acceptConsent(
   req: NextApiRequest,

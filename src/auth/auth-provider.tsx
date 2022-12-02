@@ -2,7 +2,7 @@ import type { Session } from '@ory/client'
 import type { AuthorizationPayload } from '@serlo/authorization'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
-import { AuthSessionCookie } from './auth-session-cookie'
+import { AuthSessionCookie } from './cookie/auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 export type AuthenticationPayload = {

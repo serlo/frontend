@@ -5,7 +5,7 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
+import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
 import { useAuth } from '@/auth/use-auth'
 import { useCheckInstance } from '@/auth/use-check-instance'

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 import { filterUnwantedRedirection } from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
-import { fetchAndPersistAuthSession } from '@/auth/fetch-auth-session'
+import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
 import type { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'

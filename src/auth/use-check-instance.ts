@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 
-import { COOKIE_DOMAIN } from './cookie-domain'
+import { COOKIE_DOMAIN } from './cookie/cookie-domain'
 
 // we currently only use this for kratos auth flows
 // if a user is following a link in a kratos mail the user is redirected to de.serlo.org by default
