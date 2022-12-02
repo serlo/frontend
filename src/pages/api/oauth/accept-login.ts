@@ -4,10 +4,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { createGraphqlFetch } from '@/api/graphql-fetch'
 import { AuthSessionCookie } from '@/auth/auth-session-cookie'
 
-export const config = {
-  runtime: 'experimental-edge',
-}
-
 export default async function acceptLogin(
   req: NextApiRequest,
   res: NextApiResponse
