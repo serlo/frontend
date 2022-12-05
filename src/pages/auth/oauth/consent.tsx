@@ -19,7 +19,7 @@ function Consent() {
       return
     }
     // Skip consent because OAuth is only used internally at the moment
-    void oauthHandler('login', String(consent_challenge))
+    void oauthHandler('consent', String(consent_challenge))
 
     return
   }, [router, router.isReady, consent_challenge])
