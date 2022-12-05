@@ -55,6 +55,8 @@ export const oauthHandler = async (type: HandlerType, challenge?: string) => {
   const args = JSON.stringify({ query: queries[type], variables })
 
   try {
+    // this is a quick workaround to make sure requests fom localhost get proxied
+    // we should probably consider to rework createGraphqlFetch instead
     const dummyAuth = { username: '', id: 0 }
     const response = (await createAuthAwareGraphqlFetch(dummyAuth)(args)) as {
       oauth: {
