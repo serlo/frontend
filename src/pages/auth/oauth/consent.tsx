@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { oauthHandler } from '@/auth/oauth-handler'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -17,11 +18,9 @@ function Consent() {
     if (!router.isReady || !consent_challenge) {
       return
     }
-
     // Skip consent because OAuth is only used internally at the moment
-    void router.push(
-      `/api/oauth/accept-consent?consent_challenge=${String(consent_challenge)}`
-    )
+    void oauthHandler('login', String(consent_challenge))
+
     return
   }, [router, router.isReady, consent_challenge])
 

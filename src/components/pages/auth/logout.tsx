@@ -5,6 +5,7 @@ import { filterUnwantedRedirection } from './utils'
 import { AuthSessionCookie } from '@/auth/cookie/auth-session-cookie'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
+import { oauthHandler } from '@/auth/oauth-handler'
 import { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'
 import { useAuthentication } from '@/auth/use-authentication'
@@ -43,17 +44,11 @@ export function Logout({ oauth }: { oauth?: boolean }) {
       .then(({ data }) => {
         kratos
           .submitSelfServiceLogoutFlow(data.logout_token)
-          .then(async () => {
+          .then(() => {
             void fetchAndPersistAuthSession(refreshAuth, null)
 
-            if (oauth) {
-              if (!logout_challenge) return
-              return await router.push(
-                `/api/oauth/accept-logout?logout_challenge=${String(
-                  logout_challenge
-                )}`
-              )
-            }
+            if (oauth) void oauthHandler('logout', String(logout_challenge))
+
             showToastNotice(strings.notices.bye)
             void router.push(redirection)
             return

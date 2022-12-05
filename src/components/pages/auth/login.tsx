@@ -9,8 +9,10 @@ import { filterUnwantedRedirection } from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
+import { oauthHandler } from '@/auth/oauth-handler'
 import type { AxiosError } from '@/auth/types'
 import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Link } from '@/components/content/link'
@@ -24,6 +26,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
   const [flow, setFlow] = useState<SelfServiceLoginFlow>()
   const router = useRouter()
   const checkInstance = useCheckInstance()
+  const auth = useAuthentication()
   const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
   const loginStrings = strings.auth.login
@@ -33,7 +36,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
     flow: flowId,
     refresh,
     aal,
-    login_challenge,
+    login_challenge: loginChallenge,
   } = router.query
 
   useEffect(() => {
@@ -41,6 +44,10 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
     if (!router.isReady || flow) {
       return
+    }
+
+    if (auth && oauth) {
+      void oauthHandler('login', String(loginChallenge))
     }
 
     if (flowId) {
@@ -64,9 +71,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         const data = error.response?.data as { error: { id: string } }
 
         if (oauth && data.error?.id === 'session_already_available') {
-          await router.push(
-            `/api/oauth/accept-login?login_challenge=${String(login_challenge)}`
-          )
+          void oauthHandler('login', String(loginChallenge))
         }
         await handleFlowError(router, FlowType.login, setFlow, strings)(error)
       })
@@ -79,9 +84,10 @@ export function Login({ oauth }: { oauth?: boolean }) {
     returnTo,
     flow,
     oauth,
-    login_challenge,
+    loginChallenge,
     strings,
     checkInstance,
+    auth,
   ])
 
   const showLogout = aal || refresh
@@ -151,16 +157,9 @@ export function Login({ oauth }: { oauth?: boolean }) {
     try {
       await kratos
         .submitSelfServiceLoginFlow(flow.id, values)
-        .then(async ({ data }) => {
+        .then(({ data }) => {
           void fetchAndPersistAuthSession(refreshAuth, data.session)
-          if (oauth) {
-            await router.push(
-              `/api/oauth/accept-login?login_challenge=${String(
-                login_challenge
-              )}`
-            )
-            return
-          }
+          if (oauth) void oauthHandler('login', String(loginChallenge))
           const username =
             getAuthPayloadFromSession(data.session)?.username ?? 'Jane Doe'
           showToastNotice(
