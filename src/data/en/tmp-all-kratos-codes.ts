@@ -48,7 +48,7 @@ export const codes = {
   //   'An email containing a recovery link has been sent to the email address you provided.',
   1070001: 'Password',
   1070002: '%title%',
-  1070003: 'Save',
+  // 1070003: 'Save',
   1070004: 'ID',
   1070005: 'Submit',
   1070006: 'Verify code',

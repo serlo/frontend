@@ -7,6 +7,7 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { loginUrl } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCheckInstance } from '@/auth/use-check-instance'
@@ -43,7 +44,7 @@ export function Verification() {
       setFlow(data)
       if (data.state === SelfServiceVerificationFlowState.PassedChallenge) {
         showToastNotice(emailVerifiedSuccessfully, 'success')
-        return await router.push(returnTo ? String(returnTo) : '/auth/login')
+        return await router.push(returnTo ? String(returnTo) : loginUrl)
       }
     }
 

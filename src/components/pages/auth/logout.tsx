@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
-import { filterUnwantedRedirection } from './utils'
+import { filterUnwantedRedirection, loginUrl, settingsUrl } from './utils'
 import { AuthSessionCookie } from '@/auth/cookie/auth-session-cookie'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
@@ -28,7 +28,7 @@ export function Logout({ oauth }: { oauth?: boolean }) {
 
     const redirection = filterUnwantedRedirection({
       desiredPath: sessionStorage.getItem('previousPathname'),
-      unwantedPaths: ['/auth/settings', 'auth/login'],
+      unwantedPaths: [settingsUrl, loginUrl],
     })
 
     const redirectOnError = () => {

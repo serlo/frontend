@@ -5,7 +5,7 @@ import type {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { filterUnwantedRedirection } from './utils'
+import { filterUnwantedRedirection, registrationUrl } from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
@@ -111,7 +111,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         {showLogout ? <div>{loginStrings.logOut}</div> : null}
         <div className="mx-side mt-20 border-t-2 pt-4">
           {loginStrings.newHere}{' '}
-          <Link href="/auth/registration" className="serlo-button-light">
+          <Link href={registrationUrl} className="serlo-button-light">
             {loginStrings.registerNewAccount}
           </Link>
         </div>

@@ -7,6 +7,7 @@ import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
+import { loginUrl } from './auth/utils'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -88,10 +89,9 @@ export function AddRevision({
         <br />
         Please: Logout and Login again and try to edit again.
         <br />
-        <br />
-        If that does not work head to{' '}
-        <Link href="/auth/login">/auth/login</Link> and make sure you are logged
-        in there.
+        <br /> If that does not work head to{' '}
+        <Link href={loginUrl}>{loginUrl}</Link> and make sure you are logged in
+        there.
       </StaticInfoPanel>
     )
 

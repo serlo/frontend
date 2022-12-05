@@ -6,6 +6,7 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { verificationUrl } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
@@ -75,7 +76,7 @@ export function Registration() {
           {strings.auth.messages.code1080001}{' '}
           <Link
             className="text-brand serlo-link font-bold"
-            href="/auth/verification"
+            href={verificationUrl}
           >
             {strings.auth.verificationLinkText}
           </Link>
