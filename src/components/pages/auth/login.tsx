@@ -48,6 +48,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
     if (auth && oauth) {
       void oauthHandler('login', String(loginChallenge))
+      return
     }
 
     if (flowId) {
