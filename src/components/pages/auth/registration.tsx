@@ -26,6 +26,12 @@ export function Registration() {
   const { return_to: returnTo, flow: flowId } = router.query
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false)
 
+  const reorderAndSetFlow = (origFlow: SelfServiceRegistrationFlow) => {
+    const { nodes: n } = origFlow.ui
+    origFlow.ui.nodes = [n[0], n[1], n[3], n[2], ...n.slice(4)]
+    setFlow(origFlow)
+  }
+
   useEffect(() => {
     checkInstance({ redirect: false })
     if (!router.isReady || flow) return
@@ -33,7 +39,7 @@ export function Registration() {
     if (flowId) {
       kratos
         .getSelfServiceRegistrationFlow(String(flowId))
-        .then(({ data }) => setFlow(data))
+        .then(({ data }) => reorderAndSetFlow(data))
         .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
       return
     }
@@ -42,7 +48,9 @@ export function Registration() {
       .initializeSelfServiceRegistrationFlowForBrowsers(
         returnTo ? String(returnTo) : undefined
       )
-      .then(({ data }) => setFlow(data))
+      .then(({ data }) => {
+        reorderAndSetFlow(data)
+      })
       .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 

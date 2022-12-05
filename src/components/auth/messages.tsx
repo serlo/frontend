@@ -24,6 +24,7 @@ export function Messages({ messages }: MessagesProps) {
                 type={panelType}
                 icon={type === 'info' ? faInfoCircle : faWarning}
               >
+                {' '}
                 <Message uiText={uiText} />
               </StaticInfoPanel>
             )
