@@ -237,7 +237,26 @@ export function handleFlowError<S>(
         await router.push(flowPath)
         return
       case 400:
-        resetFlow(error.response?.data as S)
+        // eslint-disable-next-line no-case-declarations
+        const registrationFlowMessages =
+          flowType === FlowType.registration &&
+          error.response &&
+          hasOwnPropertyTs(error.response, 'data')
+            ? (error.response.data as SelfServiceRegistrationFlow).ui.messages
+            : undefined
+        if (
+          registrationFlowMessages &&
+          registrationFlowMessages.length === 1 &&
+          registrationFlowMessages[0].id === 4000007
+        ) {
+          const newFlow = error.response?.data as SelfServiceRegistrationFlow
+          newFlow.ui.messages = []
+          resetFlow(newFlow as unknown as S)
+          showToastNotice(strings.auth.messages.code4000007, 'warning', 6000)
+        } else {
+          resetFlow(error.response?.data as S)
+        }
+
         return
     }
 
