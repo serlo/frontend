@@ -1,9 +1,10 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
 import {
   SelfServiceRegistrationFlow,
   SubmitSelfServiceRegistrationFlowBody,
 } from '@ory/client'
+import clsx from 'clsx'
 import { useRouter } from 'next/router'
+import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 
 import { verificationUrl } from './utils'
@@ -52,39 +53,63 @@ export function Registration() {
       .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
         shallow: true,
       })
-      .then(() =>
-        kratos
+      .then(() => {
+        nProgress.start()
+        return kratos
           .submitSelfServiceRegistrationFlow(
             String(flow?.id),
             valuesWithLanguage
           )
           .then(() => {
             setIsSuccessfullySubmitted(true)
+            window.scrollTo({ top: 0, behavior: 'smooth' })
           })
           .catch(
             handleFlowError(router, FlowType.registration, setFlow, strings)
           )
-      )
+          .finally(() => {
+            nProgress.done()
+          })
+      })
   }
 
   return (
     <>
-      <PageTitle headTitle title={strings.auth.registerTitle} extraBold />
+      <PageTitle
+        headTitle
+        title={strings.auth.register.registerTitle}
+        extraBold
+      />
 
+      <p className="serlo-p">
+        {replacePlaceholders(strings.auth.register.registerIntro, {
+          break: <br />,
+        })}{' '}
+        👍
+      </p>
       {isSuccessfullySubmitted ? (
-        <StaticInfoPanel key={1} type="info" icon={faInfoCircle}>
-          {strings.auth.messages.code1080001} <br />
-          <Link
-            className="text-brand serlo-link font-bold"
-            href={verificationUrl}
-          >
-            {strings.auth.verificationLinkText}
-          </Link>
+        <StaticInfoPanel key={1} type="info">
+          🎉 {strings.auth.messages.code1080001} <br />
+          <br />
+          <span className="font-normal">
+            {strings.auth.verificationProblem}:<br />
+            <Link
+              className="text-brand serlo-link font-bold"
+              href={verificationUrl}
+            >
+              {strings.auth.verificationLinkText}
+            </Link>
+          </span>
         </StaticInfoPanel>
       ) : null}
 
       {flow ? (
-        <div className="pb-8 flex mx-auto">
+        <div
+          className={clsx(
+            'pb-8 flex mx-auto',
+            isSuccessfullySubmitted && 'opacity-40'
+          )}
+        >
           <Flow
             flow={flow}
             flowType={FlowType.registration}

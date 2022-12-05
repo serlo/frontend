@@ -160,7 +160,7 @@ export function Node({
     if (flowType !== FlowType.registration) return null
     return (
       <p className="-mt-6 text-truegray-500 ml-3 mb-4">
-        {strings.auth.passwordRequirements}
+        {strings.auth.register.passwordRequirements}
       </p>
     )
   }

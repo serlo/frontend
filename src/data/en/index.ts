@@ -342,8 +342,11 @@ export const instanceData = {
     auth: {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.',
-      registerTitle: 'Register your Serlo Account',
-      passwordRequirements: 'At least 8 character, longer is better.',
+      register: {
+        registerTitle: 'Register your Serlo Account',
+        passwordRequirements: 'At least 8 character, longer is better.',
+        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
+      },
       recoverTitle: 'Recover your account',
       recoveryInstructions:
         'Insert and submit your email address. %break% We will then send you an email with a reset link.',
@@ -383,7 +386,7 @@ export const instanceData = {
         code1060001:
           'You successfully recovered your account. Please change your password in the next minutes.',
         code1060002:
-          'An email containing a recovery link has been sent to the email address you provided.',
+          'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link is contains.',
         code1070003: 'Save',
         code1080001:
           'An email containing a verification link has been sent to the email address you provided.',
@@ -411,6 +414,7 @@ export const instanceData = {
         'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Register',
+      verificationProblem: 'In case you did not get it',
       verificationLinkText:
         'Click here to request the verification email again.',
     },
