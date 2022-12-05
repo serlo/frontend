@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 import { AuthSessionCookie } from './cookie/auth-session-cookie'
-import { createGraphqlFetch } from '@/api/graphql-fetch'
+import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
 type HandlerType = 'login' | 'logout' | 'consent'
 
@@ -55,7 +55,8 @@ export const oauthHandler = async (type: HandlerType, challenge?: string) => {
   const args = JSON.stringify({ query: queries[type], variables })
 
   try {
-    const response = (await createGraphqlFetch()(args)) as {
+    const dummyAuth = { username: '', id: 0 }
+    const response = (await createAuthAwareGraphqlFetch(dummyAuth)(args)) as {
       oauth: {
         acceptLogin?: { redirectUri: string }
         acceptConsent?: { redirectUri: string }
