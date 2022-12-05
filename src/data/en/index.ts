@@ -343,6 +343,7 @@ export const instanceData = {
       pleaseLogInLink: 'Please log in',
       pleaseLogInText: 'to use this feature.',
       registerTitle: 'Register your Serlo Account',
+      passwordRequirements: 'At least 8 character, longer is better.',
       recoverTitle: 'Recover your account',
       recoveryInstructions:
         'Insert and submit your email address. %break% We will then send you an email with a reset link.',

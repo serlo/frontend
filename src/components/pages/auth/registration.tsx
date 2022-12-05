@@ -73,7 +73,7 @@ export function Registration() {
 
       {isSuccessfullySubmitted ? (
         <StaticInfoPanel key={1} type="info" icon={faInfoCircle}>
-          {strings.auth.messages.code1080001}{' '}
+          {strings.auth.messages.code1080001} <br />
           <Link
             className="text-brand serlo-link font-bold"
             href={verificationUrl}
@@ -87,6 +87,7 @@ export function Registration() {
         <div className="pb-8 flex mx-auto">
           <Flow
             flow={flow}
+            flowType={FlowType.registration}
             onSubmit={onSubmit}
             contentBeforeSubmit={renderAgreement()}
           />

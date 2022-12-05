@@ -60,7 +60,7 @@ export function Recovery() {
           break: <br />,
         })}
       </p>
-      <Flow onSubmit={onSubmit} flow={flow} />
+      <Flow onSubmit={onSubmit} flowType={FlowType.recovery} flow={flow} />
       <style jsx>{`
         @font-face {
           font-family: 'Karmilla';

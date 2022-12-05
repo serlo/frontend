@@ -108,7 +108,11 @@ export function Verification() {
       {flow ? (
         <>
           <p className="serlo-p">{verifyStrings.instructions}</p>
-          <Flow onSubmit={onSubmit} flow={flow} />
+          <Flow
+            onSubmit={onSubmit}
+            flow={flow}
+            flowType={FlowType.verification}
+          />
         </>
       ) : (
         <LoadingSpinner noText />

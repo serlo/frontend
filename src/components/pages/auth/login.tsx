@@ -98,7 +98,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         />
 
         {flow ? (
-          <Flow flow={flow} onSubmit={onLogin} />
+          <Flow flowType={FlowType.login} flow={flow} onSubmit={onLogin} />
         ) : (
           <LoadingSpinner noText />
         )}

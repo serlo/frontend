@@ -65,10 +65,11 @@ export type SubmitPayload =
 
 export function Flow<T extends SubmitPayload>({
   flow,
+  flowType,
   only,
   onSubmit,
   contentBeforeSubmit,
-}: FlowProps<T>) {
+}: FlowProps<T> & { flowType: FlowType }) {
   const [isLoading, setIsLoading] = useState(false)
 
   const { action, method, nodes, messages } = flow.ui
@@ -117,6 +118,7 @@ export function Flow<T extends SubmitPayload>({
                 disabled={isLoading}
                 isLoading={isLoading}
                 value={values[id]}
+                flowType={flowType}
                 onChange={(value) => {
                   setValues((values) => {
                     return {

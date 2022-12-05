@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import { FormEvent, useState } from 'react'
 
 import { FaIcon } from '../fa-icon'
+import { FlowType } from './flow'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -19,10 +20,18 @@ export interface NodeProps {
   onChange: (value: unknown) => void
   onSubmit: (e: FormEvent | MouseEvent, method?: string) => Promise<void>
   isLoading?: boolean
+  flowType: FlowType
 }
 
-export function Node(props: NodeProps) {
-  const { node, onChange, onSubmit, value, disabled, isLoading } = props
+export function Node({
+  node,
+  flowType,
+  onChange,
+  onSubmit,
+  value,
+  disabled,
+  isLoading,
+}: NodeProps) {
   const { attributes } = node
   const { strings } = useInstanceData()
   const [showPassword, setShowPassword] = useState(false)
@@ -112,13 +121,17 @@ export function Node(props: NodeProps) {
                 }}
               />
             </label>
-            {attributes.type === 'password' ? renderShowHide() : null}
+            {attributes.type === 'password' ? (
+              <>
+                {renderShowHide()}
+                {renderPasswordRequirements()}
+              </>
+            ) : null}
             {messages}
           </div>
         )
     }
   }
-
   // Anchor, Image, Script, Text
   triggerSentry({
     message: 'kratos: tried to render a node which is not an input node',
@@ -140,6 +153,15 @@ export function Node(props: NodeProps) {
           {showPassword ? 'hide' : 'show'}
         </button>
       </div>
+    )
+  }
+
+  function renderPasswordRequirements() {
+    if (flowType !== FlowType.registration) return null
+    return (
+      <p className="-mt-6 text-truegray-500 ml-3 mb-4">
+        {strings.auth.passwordRequirements}
+      </p>
     )
   }
 }

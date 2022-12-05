@@ -72,6 +72,7 @@ export function Settings() {
             onSubmit={onSubmit}
             only="password"
             flow={flow}
+            flowType={FlowType.settings}
           />
         </div>
       ) : null}
