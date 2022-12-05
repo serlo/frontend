@@ -376,7 +376,7 @@ export const instanceData = {
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
-      verificationLinkText: "Klick hier, um ein neue Bestätigungsmail zu erhalten."
+      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
     },
     keys: {
       ctrl: "Strg",
