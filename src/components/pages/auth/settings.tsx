@@ -5,11 +5,12 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
+import { loginUrl, settingsUrl } from './utils'
 import { kratos } from '@/auth/kratos'
-import { useAuth } from '@/auth/use-auth'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Messages } from '@/components/auth/messages'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -18,21 +19,13 @@ export function Settings() {
   const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
   const router = useRouter()
   const checkInstance = useCheckInstance()
-  const { refreshAuth } = useAuth()
   const { strings } = useInstanceData()
+  const auth = useAuthentication()
 
   useEffect(() => {
+    if (!auth) window.location.href = loginUrl
     checkInstance({ redirect: true })
-
-    // quick hack to fix non authed header state
-    void fetchAndPersistAuthSession(refreshAuth).then(() => {
-      const { href } = window.location
-      if (href.includes('flow=') && !href.includes('#refreshed')) {
-        window.location.href = window.location.href + '#refreshed'
-        window.location.reload()
-      }
-    })
-  }, [refreshAuth, checkInstance])
+  }, [auth, checkInstance])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -52,8 +45,15 @@ export function Settings() {
         returnTo ? String(returnTo) : undefined
       )
       .then(({ data }) => setFlow(data))
-      .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
+
+  const loading = !flow
+  const isSuccess = flow && flow.state === 'success'
+  const isForm = flow && flow.state === 'show_form'
 
   return (
     <div className="max-w-[30rem] mx-auto">
@@ -62,19 +62,19 @@ export function Settings() {
         title={`${strings.auth.settings.title} ✨`}
         extraBold
       />
-
-      <p className="serlo-p">{strings.auth.settings.instruction}</p>
-
-      {flow ? (
-        <Flow
-          // hideGlobalMessages
-          onSubmit={onSubmit}
-          only="password"
-          flow={flow}
-        />
-      ) : (
-        <LoadingSpinner noText />
-      )}
+      {loading ? <LoadingSpinner noText /> : null}
+      {isSuccess ? <Messages messages={flow.ui.messages} /> : null}
+      {isForm ? (
+        <div className={isSuccess ? 'hidden' : undefined}>
+          <p className="serlo-p">{strings.auth.settings.instruction}</p>
+          <Flow
+            // hideGlobalMessages
+            onSubmit={onSubmit}
+            only="password"
+            flow={flow}
+          />
+        </div>
+      ) : null}
       <style jsx>{`
         @font-face {
           font-family: 'Karmilla';
@@ -92,7 +92,7 @@ export function Settings() {
   function onSubmit(values: SubmitSelfServiceSettingsFlowBody) {
     if (!flow) return Promise.reject()
     return router
-      .push(`/auth/settings?flow=${flow.id}`, undefined, { shallow: true })
+      .push(`${settingsUrl}?flow=${flow.id}`, undefined, { shallow: true })
       .then(() =>
         kratos
           .submitSelfServiceSettingsFlow(String(flow.id), values)
