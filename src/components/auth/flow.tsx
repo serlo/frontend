@@ -22,7 +22,12 @@ import {
   useState,
 } from 'react'
 
-import { filterUnwantedRedirection } from '../pages/auth/utils'
+import {
+  filterUnwantedRedirection,
+  loginUrl,
+  registrationUrl,
+  verificationUrl,
+} from '../pages/auth/utils'
 import { Messages } from './messages'
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
@@ -184,11 +189,7 @@ export function handleFlowError<S>(
 
         const redirection = filterUnwantedRedirection({
           desiredPath: sessionStorage.getItem('previousPathname'),
-          unwantedPaths: [
-            '/auth/verification',
-            '/auth/login',
-            '/auth/registration',
-          ],
+          unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
 
         await router.push(redirection)

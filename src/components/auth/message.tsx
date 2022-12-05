@@ -1,5 +1,6 @@
 import { UiText } from '@ory/client'
 
+import { verificationUrl } from '../pages/auth/utils'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
@@ -29,7 +30,7 @@ export function Message({
         verificationLinkText: (
           <Link
             className="text-brand serlo-link font-bold"
-            href="/auth/verification"
+            href={verificationUrl}
           >
             {strings.auth.verificationLinkText}
           </Link>

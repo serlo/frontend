@@ -1,3 +1,9 @@
+export const loginUrl = '/auth/login'
+export const registrationUrl = '/auth/registration'
+export const verificationUrl = '/auth/verification'
+export const settingsUrl = '/auth/settings'
+export const logoutUrl = '/auth/logout'
+
 export function filterUnwantedRedirection({
   desiredPath,
   unwantedPaths,
