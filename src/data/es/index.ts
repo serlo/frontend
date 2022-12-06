@@ -322,9 +322,13 @@ export const instanceData = {
     auth: {
       pleaseLogInLink: "Por favor, inicia sesión",
       pleaseLogInText: "para utilizar esta función. ",
-      registerTitle: "Registra tu cuenta de Serlo",
+      register: {
+        registerTitle: 'Register your Serlo Account',
+        passwordRequirements: 'At least 8 characters, longer is better.',
+        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+      },
       recoverTitle: "Recupera tu cuenta",
-      recoveryInstructions: "Introduce y envía tu dirección de correo electrónico. A continuación, te enviaremos un correo con un enlace de restablecimiento.",
+      recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
       verify: {
         title: "Verifica tu email",
         instructions: "Inserta y envía tu dirección de correo electrónico para verificarla.",
@@ -358,7 +362,9 @@ export const instanceData = {
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
-        code1060002: "Se ha enviado un correo electrónico con un enlace de recuperación a la dirección de correo electrónico que proporcionaste.",
+        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
+        code1070003: 'Save',
+        code1070005: 'Submit',
         code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
         code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
         code4000001: '%reason%',
@@ -373,9 +379,12 @@ export const instanceData = {
       },
       usernameInvalid: "Tu nombre de usuario sólo puede contener letras, dígitos, guiones bajos (_) y guiones (-).",
       passwordInvalid: "Lo siento, esta contraseña es demasiado corta. Por favor, elige una que tenga al menos 8 caracteres.",
+      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
+      emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
       registrationAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
       terms: "Términos",
       signUp: "Registrarse",
+      verificationProblem: 'In case you did not get it',
       verificationLinkText: "Haz clic aquí para volver a solicitar el correo electrónico de verificación."
     },
     keys: {
