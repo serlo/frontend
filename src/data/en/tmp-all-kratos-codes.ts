@@ -50,7 +50,7 @@ export const codes = {
   1070002: '%title%',
   // 1070003: 'Save',
   1070004: 'ID',
-  1070005: 'Submit',
+  // 1070005: 'Submit',
   1070006: 'Verify code',
   1070007: 'Email',
   1080001:

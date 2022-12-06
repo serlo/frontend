@@ -388,6 +388,7 @@ export const instanceData = {
         code1060002:
           'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link is contains.',
         code1070003: 'Save',
+        code1070005: 'Submit',
         code1080001:
           'An email containing a verification link has been sent to the email address you provided.',
         code1080002: 'You have successfully verified your email address.',
@@ -410,6 +411,9 @@ export const instanceData = {
         'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       passwordInvalid:
         'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
+      emailInvalid:
+        'Sorry, this is not a valid email address. Check for typos.',
       registrationAgreement:
         'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',

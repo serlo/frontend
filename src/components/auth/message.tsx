@@ -23,10 +23,19 @@ export function Message({
     text
   )
 
+  if ((translatedMessage ?? text).includes('%reason%')) {
+    return (
+      <>
+        {replacePlaceholders(translatedMessage ?? text, {
+          reason: hackyReasonTranslator(),
+        })}
+      </>
+    )
+  }
+
   return (
     <>
       {replacePlaceholders(translatedMessage ?? text, {
-        reason: hackyReasonTranslator(),
         verificationLinkText: (
           <Link
             className="text-brand serlo-link font-bold"
@@ -52,9 +61,17 @@ export function Message({
       return strings.auth.passwordInvalid
     if (searchString.includes('does not match pattern'))
       return strings.auth.usernameInvalid
+    if (searchString.includes('is not valid') && searchString.includes('email'))
+      return strings.auth.emailInvalid
+    if (
+      searchString.includes(
+        'the password is too similar to the user identifier'
+      )
+    )
+      return strings.auth.passwordTooSimilar
 
     // eslint-disable-next-line no-console
-    console.log(text)
+    console.log(searchString)
     triggerSentry({ message: 'kratos-untranslated-reason' })
     return '[unknown reason]'
   }
@@ -71,6 +88,8 @@ export function getKratosMessageString(
     : undefined
 
   if (!translatedMessage) {
+    // eslint-disable-next-line no-console
+    console.log({ codeId })
     triggerSentry({
       message: 'kratos-untranslated-message',
       code: codeId,
