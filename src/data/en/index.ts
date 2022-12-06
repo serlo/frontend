@@ -386,7 +386,7 @@ export const instanceData = {
         code1060001:
           'You successfully recovered your account. Please change your password in the next minutes.',
         code1060002:
-          'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link is contains.',
+          'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
         code1070003: 'Save',
         code1070005: 'Submit',
         code1080001:
