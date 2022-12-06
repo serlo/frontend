@@ -1544,6 +1544,7 @@ export interface Mutation {
   _cache: _CacheMutation;
   entity: EntityMutation;
   notification: NotificationMutation;
+  oauth: OauthMutation;
   page: PageMutation;
   subscription: SubscriptionMutation;
   taxonomyTerm: TaxonomyTermMutation;
@@ -1626,6 +1627,39 @@ export interface NotificationSetStateResponse {
   __typename?: 'NotificationSetStateResponse';
   query: Query;
   success: Scalars['Boolean'];
+}
+
+export interface OauthAcceptInput {
+  challenge: Scalars['String'];
+  session: Scalars['JSON'];
+}
+
+export interface OauthAcceptResponse {
+  __typename?: 'OauthAcceptResponse';
+  redirectUri: Scalars['String'];
+  success: Scalars['Boolean'];
+}
+
+export interface OauthMutation {
+  __typename?: 'OauthMutation';
+  acceptConsent: OauthAcceptResponse;
+  acceptLogin: OauthAcceptResponse;
+  acceptLogout: OauthAcceptResponse;
+}
+
+
+export interface OauthMutationAcceptConsentArgs {
+  input: OauthAcceptInput;
+}
+
+
+export interface OauthMutationAcceptLoginArgs {
+  input: OauthAcceptInput;
+}
+
+
+export interface OauthMutationAcceptLogoutArgs {
+  challenge: Scalars['String'];
 }
 
 export interface Page extends AbstractNavigationChild, AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
@@ -3603,6 +3637,27 @@ export type PotentialSpamUsersQueryVariables = Exact<{
 
 
 export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', potentialSpamUsers: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', id: number, username: string, date: string, lastLogin?: string | null, description?: string | null, isActiveReviewer: boolean, isActiveAuthor: boolean, isActiveDonor: boolean, chatUrl?: string | null, imageUrl: string, motivation?: string | null, roles: { __typename?: 'ScopedRoleConnection', nodes: Array<{ __typename?: 'ScopedRole', scope?: string | null, role: Role }> }, activityByType: { __typename?: 'UserActivityByType', edits: number, comments: number, reviews: number, taxonomy: number } }> } } };
+
+export type Unnamed_2_MutationVariables = Exact<{
+  input: OauthAcceptInput;
+}>;
+
+
+export type Unnamed_2_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptConsent: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+
+export type Unnamed_3_MutationVariables = Exact<{
+  input: OauthAcceptInput;
+}>;
+
+
+export type Unnamed_3_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogin: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+
+export type Unnamed_4_MutationVariables = Exact<{
+  challenge: Scalars['String'];
+}>;
+
+
+export type Unnamed_4_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogout: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
 
 export type UsersByRoleQueryVariables = Exact<{
   role: Role;

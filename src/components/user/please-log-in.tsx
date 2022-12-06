@@ -10,7 +10,7 @@ export function PleaseLogIn({ noWrapper }: { noWrapper?: boolean }) {
   function renderText() {
     return (
       <>
-        <Link href="/api/auth/login" path={[]}>
+        <Link href="/auth/login" path={[]}>
           {strings.auth.pleaseLogInLink}
         </Link>{' '}
         {strings.auth.pleaseLogInText}

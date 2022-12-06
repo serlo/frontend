@@ -409,13 +409,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "सब्सक्रिप्शन"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "पासवर्ड परिवर्तित करें"
     }, {
       url: '/user/settings',
       title: 'Settings'
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "लॉगआउट करें"
     }]
   }],
@@ -877,3 +877,5 @@ export const loggedInData = {
     }
   }
 };
+
+export const kratosMailStrings = {}

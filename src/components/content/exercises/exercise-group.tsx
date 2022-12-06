@@ -49,7 +49,7 @@ export function ExerciseGroup({
         <div className="flex mb-0.5">
           <div className="grow">{groupIntro}</div>
           <div>{license}</div>
-          {loaded && auth.current && (
+          {loaded && auth && (
             <AuthorToolsExercises
               data={{
                 type: ExerciseInlineType.ExerciseGroup,
