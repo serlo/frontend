@@ -26,7 +26,8 @@ export function Registration() {
   const { return_to: returnTo, flow: flowId } = router.query
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false)
 
-  const reorderAndSetFlow = (origFlow: SelfServiceRegistrationFlow) => {
+  const reorderAndSetFlow = (origFlow?: SelfServiceRegistrationFlow) => {
+    if (!origFlow) return
     const { nodes: n } = origFlow.ui
     origFlow.ui.nodes = [n[0], n[1], n[3], n[2], ...n.slice(4)]
     setFlow(origFlow)
@@ -40,7 +41,14 @@ export function Registration() {
       kratos
         .getSelfServiceRegistrationFlow(String(flowId))
         .then(({ data }) => reorderAndSetFlow(data))
-        .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
+        .catch(
+          handleFlowError(
+            router,
+            FlowType.registration,
+            reorderAndSetFlow,
+            strings
+          )
+        )
       return
     }
 
@@ -51,7 +59,14 @@ export function Registration() {
       .then(({ data }) => {
         reorderAndSetFlow(data)
       })
-      .catch(handleFlowError(router, FlowType.registration, setFlow, strings))
+      .catch(
+        handleFlowError(
+          router,
+          FlowType.registration,
+          reorderAndSetFlow,
+          strings
+        )
+      )
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
@@ -73,7 +88,12 @@ export function Registration() {
             window.scrollTo({ top: 0, behavior: 'smooth' })
           })
           .catch(
-            handleFlowError(router, FlowType.registration, setFlow, strings)
+            handleFlowError(
+              router,
+              FlowType.registration,
+              reorderAndSetFlow,
+              strings
+            )
           )
           .finally(() => {
             nProgress.done()

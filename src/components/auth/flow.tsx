@@ -162,7 +162,9 @@ export function Flow<T extends SubmitPayload>({
 export function handleFlowError<S>(
   router: NextRouter,
   flowType: FlowType,
-  resetFlow: Dispatch<SetStateAction<S | undefined>>,
+  resetFlow:
+    | Dispatch<SetStateAction<S | undefined>>
+    | ((flow?: SelfServiceRegistrationFlow) => void),
   strings: InstanceData['strings'],
   throwError?: boolean
 ) {
@@ -254,10 +256,12 @@ export function handleFlowError<S>(
         ) {
           const newFlow = error.response?.data as SelfServiceRegistrationFlow
           newFlow.ui.messages = []
-          resetFlow(newFlow as unknown as S)
+          // @ts-expect-error workaround
+          resetFlow(newFlow)
           showToastNotice(strings.auth.messages.code4000007, 'warning', 6000)
         } else {
-          resetFlow(error.response?.data as S)
+          // @ts-expect-error workaround
+          resetFlow(error.response?.data)
         }
 
         return
