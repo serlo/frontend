@@ -323,12 +323,12 @@ export const instanceData = {
       pleaseLogInLink: "Bitte melde dich an,",
       pleaseLogInText: "um diese Funktion zu benutzen.",
       register: {
-        registerTitle: 'Register your Serlo Account',
-        passwordRequirements: 'At least 8 characters, longer is better.',
-        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+        registerTitle: "Deinen Serlo Account erstellen",
+        passwordRequirements: "Mindestens 8 Zeichen, länger ist besser.",
+        registerIntro: "Du braucht keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst bist du hier genau richtig."
       },
       recoverTitle: "Deinen Account wiederherstellen",
-      recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
+      recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. %break% Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
       verify: {
         title: "Bestätige deine Mailadresse",
         instructions: "Gib hier deine Mailadresse an und schick sie ab, um einen Bestätigungslink per Mail zu bekommen.",
@@ -362,9 +362,9 @@ export const instanceData = {
         code1040003: "Weiter",
         code1050001: "Deine Änderungen wurden gespeichert! 🎉",
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
-        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link is contains.',
-        code1070003: 'Save',
-        code1070005: 'Submit',
+        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
+        code1070003: "Speichern",
+        code1070005: "Absenden",
         code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
         code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
         code4000001: '%reason%',
@@ -379,12 +379,12 @@ export const instanceData = {
       },
       usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
       passwordInvalid: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
-      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
-      emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
+      passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
+      emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach ob du dich vertippt hast.",
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
-      verificationProblem: 'In case you did not get it',
+      verificationProblem: "Wenn du keine Mail bekommen hast",
       verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
     },
     keys: {
