@@ -142,18 +142,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    const redirection = filterUnwantedRedirection({
-      desiredPath: sessionStorage.getItem('previousPathname'),
-      unwantedPaths: ['auth/verification', 'auth/logout'],
+    await router.push(`${router.pathname}?flow=${flow.id}`, undefined, {
+      shallow: true,
     })
 
-    await router.push(
-      `${router.pathname}?flow=${String(flow?.id)}`,
-      undefined,
-      {
-        shallow: true,
-      }
-    )
+    const redirection = filterUnwantedRedirection({
+      desiredPath: sessionStorage.getItem('previousPathname'),
+      unwantedPaths: ['auth/verification', 'auth/logout', 'auth/login'],
+    })
 
     try {
       await kratos
@@ -166,17 +162,12 @@ export function Login({ oauth }: { oauth?: boolean }) {
           showToastNotice(
             strings.notices.welcome.replace('%username%', username)
           )
-          void router.push(flow?.return_to ?? redirection)
+          void router.push(flow.return_to ?? redirection)
           return
         })
         .catch((e: Error) => {
           throw e
         })
-
-      if (flow?.return_to) {
-        window.location.href = flow?.return_to
-        return
-      }
     } catch (e: unknown) {
       try {
         await handleFlowError(
@@ -191,7 +182,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
           setFlow(err.response?.data as SelfServiceLoginFlow)
           return
         }
-
         throw err
       }
     }
