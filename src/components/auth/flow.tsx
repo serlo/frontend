@@ -29,6 +29,8 @@ import {
   verificationUrl,
 } from '../pages/auth/utils'
 import { Messages } from './messages'
+import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
+import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
 import type { InstanceData } from '@/data-types'
@@ -187,6 +189,7 @@ export function handleFlowError<S>(
         window.location.href = data.redirect_browser_to
         return
       case 'session_already_available': {
+        if (!checkLoggedIn()) void fetchAndPersistAuthSession()
         showToastNotice(strings.notices.alreadyLoggedIn)
 
         const redirection = filterUnwantedRedirection({
