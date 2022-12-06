@@ -5,14 +5,13 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { loginUrl, settingsUrl } from './utils'
+import { settingsUrl } from './utils'
 import { kratos } from '@/auth/kratos'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Messages } from '@/components/auth/messages'
 import { PageTitle } from '@/components/content/page-title'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { Guard } from '@/components/guard'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function Settings() {
@@ -20,12 +19,10 @@ export function Settings() {
   const router = useRouter()
   const checkInstance = useCheckInstance()
   const { strings } = useInstanceData()
-  const auth = useAuthentication()
 
   useEffect(() => {
-    if (!auth) window.location.href = loginUrl
     checkInstance({ redirect: true })
-  }, [auth, checkInstance])
+  }, [checkInstance])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -51,7 +48,6 @@ export function Settings() {
       })
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
-  const loading = !flow
   const isSuccess = flow && flow.state === 'success'
   const isForm = flow && flow.state === 'show_form'
 
@@ -62,20 +58,23 @@ export function Settings() {
         title={`${strings.auth.settings.title} ✨`}
         extraBold
       />
-      {loading ? <LoadingSpinner noText /> : null}
-      {isSuccess ? <Messages messages={flow.ui.messages} /> : null}
-      {isForm ? (
-        <div className={isSuccess ? 'hidden' : undefined}>
-          <p className="serlo-p">{strings.auth.settings.instruction}</p>
-          <Flow
-            // hideGlobalMessages
-            onSubmit={onSubmit}
-            only="password"
-            flow={flow}
-            flowType={FlowType.settings}
-          />
-        </div>
-      ) : null}
+      <Guard data={isForm || isSuccess} needsAuth>
+        <>
+          {isSuccess ? <Messages messages={flow.ui.messages} /> : null}
+          {isForm ? (
+            <div className={isSuccess ? 'hidden' : undefined}>
+              <p className="serlo-p">{strings.auth.settings.instruction}</p>
+              <Flow
+                // hideGlobalMessages
+                onSubmit={onSubmit}
+                only="password"
+                flow={flow}
+                flowType={FlowType.settings}
+              />
+            </div>
+          ) : null}
+        </>
+      </Guard>
       <style jsx>{`
         @font-face {
           font-family: 'Karmilla';
