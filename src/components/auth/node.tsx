@@ -11,6 +11,7 @@ import { FlowType } from './flow'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { isPasswordTooEasy } from '@/helper/password-checker'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
@@ -124,7 +125,7 @@ export function Node({
             {attributes.type === 'password' ? (
               <>
                 {renderShowHide()}
-                {renderPasswordRequirements()}
+                {renderPasswordRequirements(value as string)}
               </>
             ) : null}
             {messages}
@@ -156,13 +157,20 @@ export function Node({
     )
   }
 
-  function renderPasswordRequirements() {
+  function renderPasswordRequirements(password: string) {
     if (flowType !== FlowType.registration && flowType !== FlowType.settings)
       return null
     return (
-      <p className="-mt-6 text-truegray-500 ml-3 mb-4">
-        {strings.auth.register.passwordRequirements}
-      </p>
+      <>
+        <p className="-mt-6 text-truegray-500 ml-3 mb-4">
+          {strings.auth.register.passwordRequirements}
+        </p>
+        {isPasswordTooEasy(password) ? (
+          <span className="text-red italic -mt-2 mb-2 block ml-3 special-hyphens-initial">
+            {strings.auth.register.passwordTooEasy}
+          </span>
+        ) : null}
+      </>
     )
   }
 }
