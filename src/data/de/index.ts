@@ -325,7 +325,7 @@ export const instanceData = {
       register: {
         registerTitle: "Deinen Serlo Account erstellen",
         passwordRequirements: "Mindestens 8 Zeichen, länger ist besser.",
-        registerIntro: "Du braucht keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst bist du hier genau richtig."
+        registerIntro: "Du braucht keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst, bist du hier genau richtig."
       },
       recoverTitle: "Deinen Account wiederherstellen",
       recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. %break% Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
@@ -378,7 +378,8 @@ export const instanceData = {
         code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen."
       },
       usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
-      passwordInvalid: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
+      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
       emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach ob du dich vertippt hast.",
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
@@ -947,15 +948,17 @@ export const kratosMailStrings = {
     valid: {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
  
-Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
-{{ .RecoveryURL }}`,
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}
+
+Best of luck from your Serlo team`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
  
-<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
     },
     invalid: {
       subject: "👉 Zugriff auf Account",
