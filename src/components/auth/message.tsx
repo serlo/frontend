@@ -58,7 +58,9 @@ export function Message({
         : ''
     const searchString = reason + text
     if (searchString.includes('password length'))
-      return strings.auth.passwordInvalid
+      return strings.auth.passwordTooShort
+    if (searchString.includes('passwords are limited to a maximum length'))
+      return strings.auth.passwordTooLong
     if (searchString.includes('does not match pattern'))
       return strings.auth.usernameInvalid
     if (searchString.includes('is not valid') && searchString.includes('email'))

@@ -409,8 +409,10 @@ export const instanceData = {
       },
       usernameInvalid:
         'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
-      passwordInvalid:
+      passwordTooShort:
         'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong:
+        'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
       emailInvalid:
         'Sorry, this is not a valid email address. Check for typos.',
