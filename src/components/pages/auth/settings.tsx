@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 import { settingsUrl } from './utils'
+import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
@@ -22,6 +23,7 @@ export function Settings() {
 
   useEffect(() => {
     checkInstance({ redirect: true })
+    void fetchAndPersistAuthSession()
   }, [checkInstance])
 
   const { flow: flowId, return_to: returnTo } = router.query
