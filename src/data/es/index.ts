@@ -378,7 +378,8 @@ export const instanceData = {
         code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo."
       },
       usernameInvalid: "Tu nombre de usuario sólo puede contener letras, dígitos, guiones bajos (_) y guiones (-).",
-      passwordInvalid: "Lo siento, esta contraseña es demasiado corta. Por favor, elige una que tenga al menos 8 caracteres.",
+      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
       emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
       registrationAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
@@ -946,16 +947,18 @@ export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: "👉 Acceso a tu cuenta Serlo",
-      'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
-¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
-  
-Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
-{{ .RecoveryURL }}`,
-      body: `<p>👋 Hola <b>{{ .Identity.traits.username }}</b>,</p>
-<p>¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.</p>
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
  
-<p>Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}
+
+Best of luck from your Serlo team`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+ 
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
     },
     invalid: {
       subject: "👉 Se intentó acceder a la cuenta",
