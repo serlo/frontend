@@ -1,8 +1,8 @@
 export function isPasswordTooEasy(password: string) {
-    if (veryCommonPasswords.includes(password)) {
-      return true
-    }
-    return false
+  if (veryCommonPasswords.includes(password)) {
+    return true
+  }
+  return false
 }
 
 const veryCommonPasswords = [
@@ -83,5 +83,3 @@ const veryCommonPasswords = [
   'passw0rd',
   '11223344',
 ]
-
-
