@@ -157,7 +157,8 @@ export function Node({
   }
 
   function renderPasswordRequirements() {
-    if (flowType !== FlowType.registration) return null
+    if (flowType !== FlowType.registration && flowType !== FlowType.settings)
+      return null
     return (
       <p className="-mt-6 text-truegray-500 ml-3 mb-4">
         {strings.auth.register.passwordRequirements}
