@@ -25,8 +25,7 @@ export function Settings() {
 
   useEffect(() => {
     checkInstance({ redirect: true })
-    void fetchAndPersistAuthSession(refreshAuth)
-  }, [checkInstance, refreshAuth])
+  }, [checkInstance])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
@@ -36,7 +35,13 @@ export function Settings() {
     if (flowId) {
       kratos
         .getSelfServiceSettingsFlow(String(flowId))
-        .then(({ data }) => setFlow(data))
+        .then(({ data }) => {
+          setFlow(data)
+          void fetchAndPersistAuthSession(refreshAuth, {
+            ...data,
+            active: undefined,
+          })
+        })
         .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
       return
     }
@@ -50,7 +55,16 @@ export function Settings() {
         // eslint-disable-next-line no-console
         console.log(error)
       })
-  }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
+  }, [
+    flowId,
+    router,
+    router.isReady,
+    returnTo,
+    flow,
+    strings,
+    checkInstance,
+    refreshAuth,
+  ])
 
   const isSuccess = flow && flow.state === 'success'
   const isForm = flow && flow.state === 'show_form'
