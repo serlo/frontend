@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { settingsUrl } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
+import { useAuth } from '@/auth/use-auth'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
 import { Messages } from '@/components/auth/messages'
@@ -20,11 +21,12 @@ export function Settings() {
   const router = useRouter()
   const checkInstance = useCheckInstance()
   const { strings } = useInstanceData()
+  const { refreshAuth } = useAuth()
 
   useEffect(() => {
     checkInstance({ redirect: true })
-    void fetchAndPersistAuthSession()
-  }, [checkInstance])
+    void fetchAndPersistAuthSession(refreshAuth)
+  }, [checkInstance, refreshAuth])
 
   const { flow: flowId, return_to: returnTo } = router.query
 
