@@ -73,6 +73,8 @@ export function Registration() {
     const valuesWithLanguage = { ...values, 'traits.language': lang }
 
     await router
+      // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
+      // their data when they reload the page.
       .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
         shallow: true,
       })
