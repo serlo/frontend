@@ -378,7 +378,8 @@ export const instanceData = {
         code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.'
       },
       usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
-      passwordInvalid: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
       emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
       registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
@@ -950,12 +951,14 @@ export const kratosMailStrings = {
 Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
  
 To reset your password please open the following link in your browser:
-{{ .RecoveryURL }}`,
+{{ .RecoveryURL }}
+
+Best of luck from your Serlo team`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
  
 <p>To reset your password please open the following link in your browser:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a></p>`
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
     },
     invalid: {
       subject: '👉 Account access attempted',
