@@ -10,8 +10,8 @@ import { FaIcon } from '../fa-icon'
 import { FlowType } from './flow'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
+import { checkForSimplePassword } from '@/helper/check-for-simple-password'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { isPasswordTooEasy } from '@/helper/password-checker'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
@@ -157,7 +157,7 @@ export function Node({
     )
   }
 
-  function renderPasswordRequirements(password: string) {
+  function renderPasswordRequirements(password?: string) {
     if (flowType !== FlowType.registration && flowType !== FlowType.settings)
       return null
     return (
@@ -165,8 +165,8 @@ export function Node({
         <p className="-mt-6 text-truegray-500 ml-3 mb-4">
           {strings.auth.register.passwordRequirements}
         </p>
-        {isPasswordTooEasy(password) ? (
-          <span className="text-red italic -mt-2 mb-2 block ml-3 special-hyphens-initial">
+        {checkForSimplePassword(password) ? (
+          <span className="text-amber-600 italic -mt-2 mb-2 block ml-3 special-hyphens-initial">
             {strings.auth.register.passwordTooEasy}
           </span>
         ) : null}
