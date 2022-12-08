@@ -345,7 +345,7 @@ export const instanceData = {
       register: {
         registerTitle: 'Register your Serlo Account',
         passwordRequirements: 'At least 8 characters, longer is better.',
-        passwordTooEasy: 'This password is quite easy to guess. Make it longer or mix in letters, numbers and special characters.',
+        passwordTooEasy: 'This password is quite easy to guess. Please make it longer or use less common phrases.',
         registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place',
       },
       recoverTitle: 'Recover your account',

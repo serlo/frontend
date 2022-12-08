@@ -1,7 +1,7 @@
 export function checkForSimplePassword(password?: string) {
   if (!password) return false
-  if (/^[0-9]+$/.test(password)) return true
-  if (password.length < 12) {
+  if (/^[0-9]+$/.test(password) && password.length < 16) return true
+  if (password.length < 11) {
     const withoutCommonNumbers = password
       .replace('123', '')
       .replace('1234', '')
