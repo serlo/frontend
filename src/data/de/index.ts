@@ -325,7 +325,7 @@ export const instanceData = {
       register: {
         registerTitle: "Deinen Serlo Account erstellen",
         passwordRequirements: "Mindestens 8 Zeichen, länger ist besser.",
-        registerIntro: "Du braucht keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst, bist du hier genau richtig."
+        registerIntro: "Du brauchst keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst, bist du hier genau richtig."
       },
       recoverTitle: "Deinen Account wiederherstellen",
       recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. %break% Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
@@ -381,7 +381,7 @@ export const instanceData = {
       passwordTooShort: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
       passwordTooLong: "Sorry, dieses Passwort ist zu lang. Bitte wähle ein Passwort, das höchstens 72 Zeichen lang ist.",
       passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
-      emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach ob du dich vertippt hast.",
+      emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach, ob du dich vertippt hast.",
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
