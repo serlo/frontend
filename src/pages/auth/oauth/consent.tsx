@@ -22,7 +22,7 @@ function Consent() {
     void oauthHandler('consent', String(consent_challenge))
 
     return
-  }, [router, router.isReady, consent_challenge])
+  }, [router.isReady, consent_challenge])
 
   return null
 }

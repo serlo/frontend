@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { gql } from 'graphql-request'
 
 import { AuthSessionCookie } from './cookie/auth-session-cookie'
@@ -42,6 +43,8 @@ const throwError = (error?: unknown) => {
 }
 
 export const oauthHandler = async (type: HandlerType, challenge?: string) => {
+  console.log(`starting oauth flow type: "${type}"`)
+  console.log(challenge)
   const session = AuthSessionCookie.parse()
 
   if (!challenge) throwError('no challenge provided!')

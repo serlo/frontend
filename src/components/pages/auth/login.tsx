@@ -46,9 +46,14 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
-    if (auth && oauth) {
-      void oauthHandler('login', String(loginChallenge))
-      return
+    if (oauth) {
+      if (auth) {
+        void oauthHandler('login', String(loginChallenge))
+        return
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('attempted oauth without auth')
+      }
     }
 
     if (flowId) {
