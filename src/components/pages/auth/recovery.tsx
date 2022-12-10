@@ -41,9 +41,7 @@ export function Recovery() {
     return kratos
       .submitSelfServiceRecoveryFlow(String(flow?.id), values)
       .then(({ data }) => setFlow(data))
-      .catch(
-        handleFlowError(router, FlowType.recovery, setFlow, strings, true)
-      )
+      .catch(handleFlowError(router, FlowType.recovery, setFlow, strings, true))
   }
   if (!flow) return null
   return (

@@ -32,9 +32,7 @@ export function Verification() {
   useEffect(() => {
     checkInstance({ redirect: true })
 
-    if (!router.isReady || flow) {
-      return
-    }
+    if (!router.isReady || flow) return
 
     const flowHandler = async ({
       data,
@@ -73,20 +71,10 @@ export function Verification() {
 
   const onSubmit = async (values: SubmitSelfServiceVerificationFlowBody) => {
     return kratos
-      .submitSelfServiceVerificationFlow(
-        String(flow?.id),
-        values,
-        undefined
-      )
+      .submitSelfServiceVerificationFlow(String(flow?.id), values, undefined)
       .then(({ data }) => setFlow(data))
       .catch(
-        handleFlowError(
-          router,
-          FlowType.verification,
-          setFlow,
-          strings,
-          true
-        )
+        handleFlowError(router, FlowType.verification, setFlow, strings, true)
       )
   }
 
