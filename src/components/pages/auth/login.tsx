@@ -153,7 +153,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(({ data }) => {
           void fetchAndPersistAuthSession(refreshAuth, data.session)
-          if (oauth) void oauthHandler('login', String(loginChallenge))
+          if (oauth) return oauthHandler('login', String(loginChallenge))
           const username =
             getAuthPayloadFromSession(data.session)?.username ?? 'Jane Doe'
           showToastNotice(
