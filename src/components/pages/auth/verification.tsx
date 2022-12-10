@@ -71,28 +71,22 @@ export function Verification() {
     checkInstance,
   ])
 
-  const onSubmit = (values: SubmitSelfServiceVerificationFlowBody) => {
-    return router
-      .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
-        shallow: true,
-      })
-      .then(() =>
-        kratos
-          .submitSelfServiceVerificationFlow(
-            String(flow?.id),
-            values,
-            undefined
-          )
-          .then(({ data }) => setFlow(data))
-          .catch(
-            handleFlowError(
-              router,
-              FlowType.verification,
-              setFlow,
-              strings,
-              true
-            )
-          )
+  const onSubmit = async (values: SubmitSelfServiceVerificationFlowBody) => {
+    return kratos
+      .submitSelfServiceVerificationFlow(
+        String(flow?.id),
+        values,
+        undefined
+      )
+      .then(({ data }) => setFlow(data))
+      .catch(
+        handleFlowError(
+          router,
+          FlowType.verification,
+          setFlow,
+          strings,
+          true
+        )
       )
   }
 

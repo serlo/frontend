@@ -37,18 +37,12 @@ export function Recovery() {
       .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
-  const onSubmit = (values: SubmitSelfServiceRecoveryFlowBody) => {
-    return router
-      .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
-        shallow: true,
-      })
-      .then(() =>
-        kratos
-          .submitSelfServiceRecoveryFlow(String(flow?.id), values)
-          .then(({ data }) => setFlow(data))
-          .catch(
-            handleFlowError(router, FlowType.recovery, setFlow, strings, true)
-          )
+  async function onSubmit(values: SubmitSelfServiceRecoveryFlowBody) {
+    return kratos
+      .submitSelfServiceRecoveryFlow(String(flow?.id), values)
+      .then(({ data }) => setFlow(data))
+      .catch(
+        handleFlowError(router, FlowType.recovery, setFlow, strings, true)
       )
   }
   if (!flow) return null
