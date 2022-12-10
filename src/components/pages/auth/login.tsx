@@ -147,9 +147,9 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    await router.push(`${router.pathname}?flow=${flow.id}`, undefined, {
-      shallow: true,
-    })
+
+    router.query.flow = flow.id
+    await router.push(router)
 
     const redirection = filterUnwantedRedirection({
       desiredPath: sessionStorage.getItem('previousPathname'),
