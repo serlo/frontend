@@ -5,7 +5,6 @@ import {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { settingsUrl } from './utils'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
 import { useAuth } from '@/auth/use-auth'
@@ -107,15 +106,11 @@ export function Settings() {
     </div>
   )
 
-  function onSubmit(values: SubmitSelfServiceSettingsFlowBody) {
+  async function onSubmit(values: SubmitSelfServiceSettingsFlowBody) {
     if (!flow) return Promise.reject()
-    return router
-      .push(`${settingsUrl}?flow=${flow.id}`, undefined, { shallow: true })
-      .then(() =>
-        kratos
-          .submitSelfServiceSettingsFlow(String(flow.id), values)
-          .then(({ data }) => setFlow(data))
-          .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
-      )
+    return kratos
+      .submitSelfServiceSettingsFlow(String(flow.id), values)
+      .then(({ data }) => setFlow(data))
+      .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
   }
 }

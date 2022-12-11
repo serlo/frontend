@@ -71,35 +71,23 @@ export function Registration() {
 
   async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
     const valuesWithLanguage = { ...values, 'traits.language': lang }
-
-    await router
-      // On submission, add the flow ID to the URL but do not navigate. This prevents the user loosing
-      // their data when they reload the page.
-      .push(`${router.pathname}?flow=${String(flow?.id)}`, undefined, {
-        shallow: true,
-      })
+    nProgress.start()
+    return kratos
+      .submitSelfServiceRegistrationFlow(String(flow?.id), valuesWithLanguage)
       .then(() => {
-        nProgress.start()
-        return kratos
-          .submitSelfServiceRegistrationFlow(
-            String(flow?.id),
-            valuesWithLanguage
-          )
-          .then(() => {
-            setIsSuccessfullySubmitted(true)
-            window.scrollTo({ top: 0, behavior: 'smooth' })
-          })
-          .catch(
-            handleFlowError(
-              router,
-              FlowType.registration,
-              reorderAndSetFlow,
-              strings
-            )
-          )
-          .finally(() => {
-            nProgress.done()
-          })
+        setIsSuccessfullySubmitted(true)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      })
+      .catch(
+        handleFlowError(
+          router,
+          FlowType.registration,
+          reorderAndSetFlow,
+          strings
+        )
+      )
+      .finally(() => {
+        nProgress.done()
       })
   }
 

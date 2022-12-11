@@ -5,7 +5,14 @@ import type {
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { filterUnwantedRedirection, registrationUrl } from './utils'
+import {
+  filterUnwantedRedirection,
+  loginUrl,
+  logoutUrl,
+  registrationUrl,
+  verificationUrl,
+  recoveryUrl,
+} from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { kratos } from '@/auth/kratos'
@@ -47,13 +54,8 @@ export function Login({ oauth }: { oauth?: boolean }) {
     }
 
     if (oauth) {
-      if (auth) {
-        void oauthHandler('login', String(loginChallenge))
-        return
-      } else {
-        // eslint-disable-next-line no-console
-        console.log('attempted oauth without auth')
-      }
+      void oauthHandler('login', String(loginChallenge))
+      return
     }
 
     if (flowId) {
@@ -124,7 +126,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         <div className="mx-side mt-2 pt-3">
           {replacePlaceholders(loginStrings.forgotPassword, {
             forgotLinkText: (
-              <Link href="/auth/recovery" className="font-bold">
+              <Link href={recoveryUrl} className="font-bold">
                 {loginStrings.forgotLinkText}
               </Link>
             ),
@@ -147,13 +149,10 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
     if (!flow?.id) return
-    await router.push(`${router.pathname}?flow=${flow.id}`, undefined, {
-      shallow: true,
-    })
 
     const redirection = filterUnwantedRedirection({
       desiredPath: sessionStorage.getItem('previousPathname'),
-      unwantedPaths: ['auth/verification', 'auth/logout', 'auth/login'],
+      unwantedPaths: [verificationUrl, logoutUrl, loginUrl, recoveryUrl],
     })
 
     try {
@@ -161,7 +160,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
         .submitSelfServiceLoginFlow(flow.id, values)
         .then(({ data }) => {
           void fetchAndPersistAuthSession(refreshAuth, data.session)
-          if (oauth) void oauthHandler('login', String(loginChallenge))
+          if (oauth) return oauthHandler('login', String(loginChallenge))
           const username =
             getAuthPayloadFromSession(data.session)?.username ?? 'Jane Doe'
           showToastNotice(
