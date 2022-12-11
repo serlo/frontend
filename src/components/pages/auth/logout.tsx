@@ -52,7 +52,10 @@ export function Logout({ oauth }: { oauth?: boolean }) {
           .then(() => {
             void fetchAndPersistAuthSession(refreshAuth, null)
 
-            if (oauth) void oauthHandler('logout', String(logout_challenge))
+            if (oauth) {
+              void oauthHandler('logout', String(logout_challenge))
+              return
+            }
 
             showToastNotice(strings.notices.bye)
             void router.push(redirection)
