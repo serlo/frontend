@@ -4253,11 +4253,11 @@ __metadata:
     "@types/jest": ^29.2.0
     "@types/js-cookie": ^3.0.2
     "@types/katex": ^0.14.0
-    "@types/node": ^16.18.0
+    "@types/node": ^18.11.13
     "@types/nprogress": ^0.2.0
     "@types/prismjs": ^1.26.0
     "@types/qrcode.react": ^1.0.2
-    "@types/ramda": ^0.28.18
+    "@types/ramda": ^0.28.20
     "@types/react": ^18.0.25
     "@types/react-beautiful-dnd": ^13.1.2
     "@types/react-dom": ^18.0.8
@@ -4910,10 +4910,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.18.0":
-  version: 16.18.0
-  resolution: "@types/node@npm:16.18.0"
-  checksum: 4eb4b88012c7d3f527c1b4989cf085479d44ce418fb047fb8d3b545601a3e1fc436de8491b9734debeda8eae241963fb802cea87a5a5698bf5f6f3d489d446a8
+"@types/node@npm:^18.11.13":
+  version: 18.11.13
+  resolution: "@types/node@npm:18.11.13"
+  checksum: b0c1aa3bd2f5df8240e61096a49d6d4be600109b824d23408ec4ba1ec057dc0c60588e09f73b8a60455ad26d367e9c5562fad8403099f885cbc7b4cace83ec4c
   languageName: node
   linkType: hard
 
@@ -4961,7 +4961,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.28.18, @types/ramda@npm:^0.28.5":
+"@types/ramda@npm:^0.28.20":
+  version: 0.28.20
+  resolution: "@types/ramda@npm:0.28.20"
+  dependencies:
+    ts-toolbelt: ^6.15.1
+  checksum: 02c1e958a09724079acd975aefd2e9ae1327097f941c661ca596e2a8e16df3bd0f0755a16ab378eeb562d8624d7614a3159de2a0129e7d8522a2d79699390818
+  languageName: node
+  linkType: hard
+
+"@types/ramda@npm:^0.28.5":
   version: 0.28.18
   resolution: "@types/ramda@npm:0.28.18"
   dependencies:

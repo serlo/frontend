@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-internal-modules
-import mergeDeepRight from 'ramda/src/mergeDeepRight'
+import { mergeDeepRight } from 'ramda'
 
 import { InstanceData, UuidWithRevType } from '@/data-types'
 import {
