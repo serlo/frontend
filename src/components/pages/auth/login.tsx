@@ -53,7 +53,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
-    if (oauth) {
+    if (oauth && auth) {
       void oauthHandler('login', String(loginChallenge))
       return
     }
