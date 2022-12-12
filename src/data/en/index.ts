@@ -369,6 +369,7 @@ export const instanceData = {
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
         forgotLinkText: 'forget your password',
+        validSessionDetected: 'Hey, you are already logged in in another tab. Reload the page to see it!'
       },
       fields: {
         identifier: 'Username or Email address',
