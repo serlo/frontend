@@ -57,7 +57,7 @@ export function ToastNotice() {
     if (window.location.hash === '#just-registered') {
       showToastNotice(strings.loading.oneMomentPlease, 'default', showTime)
       setTimeout(() => {
-        window.location.href = '/api/auth/login'
+        window.location.href = '/no-login'
       }, 400)
     }
 

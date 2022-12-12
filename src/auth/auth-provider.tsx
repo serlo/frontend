@@ -83,14 +83,14 @@ function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
         method: 'POST',
       })
 
-      authenticationPayload.current = parseAuthCookie(refreshToken, clearToken)
+      authenticationPayload.current = null
       pendingRefreshTokenPromise.current = null
     }
 
     const currentCookieValue = parseAuthCookie(refreshToken, clearToken)
     if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
       // Cookie has a newer token than the one we used for the request. So use that instead.
-      authenticationPayload.current = currentCookieValue
+      authenticationPayload.current = null
       return
     }
 

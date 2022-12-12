@@ -16,7 +16,7 @@ export const ProfileRedirectMe: NextPage = () => {
       const url = `/user/${auth.current.id}/${auth.current.username}${hash}`
       window.location.replace(url)
     } else {
-      window.location.replace('/api/auth/login')
+      window.location.replace('/no-login')
     }
   }, [auth])
 
