@@ -63,7 +63,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
             onClose()
           }}
         >
-          <Link className="serlo-button-blue" href="/api/auth/login">
+          <Link className="serlo-button-blue" href="/no-login">
             {modalStrings.loginButton}
           </Link>
         </a>
@@ -73,7 +73,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
             onClose()
           }}
         >
-          <Link className="ml-4 serlo-button-green" href="/user/register">
+          <Link className="ml-4 serlo-button-green" href="/no-login">
             {modalStrings.registerButton}
           </Link>
         </a>
