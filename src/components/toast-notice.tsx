@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import Notification from 'react-notify-toast'
 
-import { MaintenanceBanner } from './maintenance-banner'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { removeHash } from '@/helper/remove-hash'
@@ -91,10 +90,5 @@ export function ToastNotice() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
-    <>
-      <MaintenanceBanner />
-      <Notification />
-    </>
-  )
+  return <Notification />
 }
