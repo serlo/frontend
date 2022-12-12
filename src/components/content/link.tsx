@@ -47,7 +47,6 @@ export function isLegacyLink(_href: string) {
 
   return (
     legacyLinks.includes(_href) ||
-    _href.startsWith('/authorization') ||
     _href.startsWith('/navigation') ||
     _href.startsWith('/entity/repository/add-revision-old/') || // temporary
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language

@@ -73,7 +73,7 @@ export function CommentArea({
   }
 
   function renderContent() {
-    if (!auth.current && commentCount == 0) return null
+    if (!auth && commentCount == 0) return null
 
     return (
       <>
@@ -103,7 +103,7 @@ export function CommentArea({
       <>
         {renderHeading(faQuestionCircle, ` ${strings.comments.question}`)}
         {
-          auth.current === null ? (
+          auth === null ? (
             <PleaseLogIn />
           ) : canDo(AuthThread.createThread) ? (
             <CommentForm
@@ -133,8 +133,7 @@ export function CommentArea({
   }
 
   function renderReplyForm(threadId: string) {
-    if (!auth.current || noForms || !canDo(AuthThread.createComment))
-      return null
+    if (!auth || noForms || !canDo(AuthThread.createComment)) return null
     return (
       <CommentForm
         placeholder={strings.comments.placeholderReply}
@@ -174,7 +173,7 @@ export function CommentArea({
   }
 
   async function onSend(content: string, reply?: boolean, threadId?: string) {
-    if (auth.current === null) return false
+    if (auth === null) return false
 
     if (reply) {
       if (threadId === undefined) return false

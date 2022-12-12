@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react'
 
 import { Link } from '../../content/link'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { loginUrl, registrationUrl } from '@/components/pages/auth/utils'
 import { EntityIdContext } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -63,7 +64,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
             onClose()
           }}
         >
-          <Link className="serlo-button-blue" href="/no-login">
+          <Link className="serlo-button-blue" href={loginUrl}>
             {modalStrings.loginButton}
           </Link>
         </a>
@@ -73,7 +74,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
             onClose()
           }}
         >
-          <Link className="ml-4 serlo-button-green" href="/no-login">
+          <Link className="ml-4 serlo-button-green" href={registrationUrl}>
             {modalStrings.registerButton}
           </Link>
         </a>

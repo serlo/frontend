@@ -45,7 +45,7 @@ export function EditOrInvite({
     UuidType.User,
   ].includes(data.type as UuidType)
 
-  const isInvite = !auth.current && showInvite
+  const isInvite = !auth && showInvite
 
   const hasUnrevised =
     unrevisedRevisions !== undefined && unrevisedRevisions > 0

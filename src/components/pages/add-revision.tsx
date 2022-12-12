@@ -3,9 +3,11 @@ import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
+import { loginUrl } from './auth/utils'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -47,7 +49,7 @@ export function AddRevision({
     }
 
     const makeDamnSureUserIsLoggedIn = async () => {
-      if (auth.current === null) return false
+      if (auth === null) return false
 
       /*
       the better way would be to check if the authenticated cookie is still
@@ -83,7 +85,13 @@ export function AddRevision({
   if (userReady === false)
     return (
       <StaticInfoPanel icon={faWarning} type="failure">
-        Sorry, no editing tonight.
+        Sorry, Something is wrong!
+        <br />
+        Please: Logout and Login again and try to edit again.
+        <br />
+        <br /> If that does not work head to{' '}
+        <Link href={loginUrl}>{loginUrl}</Link> and make sure you are logged in
+        there.
       </StaticInfoPanel>
     )
 

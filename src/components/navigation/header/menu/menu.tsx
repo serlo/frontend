@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
 import { Item } from './item'
+import { NoAuthItem } from './no-auth-item'
+import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 
 const AuthItems = dynamic<{}>(() =>
@@ -10,6 +12,7 @@ const AuthItems = dynamic<{}>(() =>
 )
 
 export function Menu() {
+  const auth = useAuthentication()
   const { headerData } = useInstanceData()
   const [mounted, setMounted] = useState(false)
 
@@ -21,7 +24,7 @@ export function Menu() {
         {headerData.map((link) => (
           <Item key={link.title} link={link} />
         ))}
-        {mounted ? <AuthItems /> : null}
+        {auth ? <AuthItems /> : <NoAuthItem hidden={!mounted} />}
       </List>
     </Root>
   )

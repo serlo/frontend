@@ -14,7 +14,7 @@ const colorClasses = {
 
 interface StaticInfoPanelProps {
   children: ReactNode
-  icon: FaIconProps['icon']
+  icon?: FaIconProps['icon']
   type?: keyof typeof colorClasses
   doNotIndex?: boolean
 }
@@ -35,7 +35,8 @@ export function StaticInfoPanel({
         </Head>
       ) : null}
       <div className={clsx('p-4 my-12 rounded-2xl font-bold', colorClass)}>
-        <FaIcon icon={icon} /> {children}
+        {icon ? <FaIcon icon={icon} /> : null}
+        {children}
       </div>
     </>
   )
