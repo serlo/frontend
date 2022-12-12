@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import Notification from 'react-notify-toast'
 
-import { MaintenanceBanner } from './maintenance-banner'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function ToastNotice() {
@@ -15,10 +14,5 @@ export function ToastNotice() {
     }
   }, [strings.loading.oneMomentPlease])
 
-  return (
-    <>
-      <MaintenanceBanner />
-      <Notification />
-    </>
-  )
+  return <Notification />
 }
