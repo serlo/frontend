@@ -2987,6 +2987,27 @@ export interface _CacheMutationUpdateArgs {
   input: CacheUpdateInput;
 }
 
+export type Unnamed_1_MutationVariables = Exact<{
+  input: OauthAcceptInput;
+}>;
+
+
+export type Unnamed_1_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogin: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+
+export type Unnamed_2_MutationVariables = Exact<{
+  input: OauthAcceptInput;
+}>;
+
+
+export type Unnamed_2_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptConsent: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+
+export type Unnamed_3_MutationVariables = Exact<{
+  challenge: Scalars['String'];
+}>;
+
+
+export type Unnamed_3_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogout: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+
 export type UuidSimpleQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
@@ -2994,10 +3015,10 @@ export type UuidSimpleQueryVariables = Exact<{
 
 export type UuidSimpleQuery = { __typename?: 'Query', uuid?: { __typename: 'Applet', id: number, title: string } | { __typename: 'AppletRevision', id: number, title: string } | { __typename: 'Article', id: number, title: string } | { __typename: 'ArticleRevision', id: number, title: string } | { __typename: 'Comment', id: number, title: string } | { __typename: 'Course', id: number, title: string } | { __typename: 'CoursePage', id: number, title: string, course: { __typename?: 'Course', id: number } } | { __typename: 'CoursePageRevision', id: number, title: string } | { __typename: 'CourseRevision', id: number, title: string } | { __typename: 'Event', id: number, title: string } | { __typename: 'EventRevision', id: number, title: string } | { __typename: 'Exercise', id: number, title: string } | { __typename: 'ExerciseGroup', id: number, title: string } | { __typename: 'ExerciseGroupRevision', id: number, title: string } | { __typename: 'ExerciseRevision', id: number, title: string } | { __typename: 'GroupedExercise', id: number, title: string } | { __typename: 'GroupedExerciseRevision', id: number, title: string } | { __typename: 'Page', id: number, title: string } | { __typename: 'PageRevision', id: number, title: string } | { __typename: 'Solution', id: number, title: string } | { __typename: 'SolutionRevision', id: number, title: string } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, id: number, title: string } | { __typename: 'User', id: number, title: string } | { __typename: 'Video', id: number, title: string } | { __typename: 'VideoRevision', id: number, title: string } | null };
 
-export type Unnamed_1_QueryVariables = Exact<{ [key: string]: never; }>;
+export type Unnamed_4_QueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_1_Query = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', totalCount: number } };
+export type Unnamed_4_Query = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', totalCount: number } };
 
 export type GetEventDataQueryVariables = Exact<{
   actorId?: InputMaybe<Scalars['Int']>;
