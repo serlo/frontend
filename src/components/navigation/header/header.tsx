@@ -6,7 +6,6 @@ import { Link } from '../../content/link'
 import { Menu } from './menu/menu'
 import { MobileMenuButton } from './mobile-menu-button'
 import { SkipMenu } from './skip-menu'
-import { MaintenanceBanner } from '@/components/maintenance-banner'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 
@@ -36,39 +35,36 @@ export function Header() {
   }, [])
 
   return (
-    <>
-      <MaintenanceBanner />
-      <header
-        className={clsx(
-          'text-truegray-700 pt-3',
-          hideQuickbar ? '' : 'bg-brand-100',
-          'pb-9 bg-[url("/_assets/img/header-curve.svg")] bg-no-repeat bg-bottom bg-[length:100vw_3rem]'
-        )}
-      >
-        <SkipMenu />
-        <div className="pt-3 pb-6 px-side lg:px-side-lg">
-          <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
-            {renderLogo()}
-            <div
-              className={clsx(
-                'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
-                'order-last md:order-none lg:order-last ',
-                'w-full md:w-auto',
-                mobileMenuOpen ? '' : 'hidden'
-              )}
-            >
-              <Menu />
-            </div>
-            <div className="hidden md:block lg:hidden basis-full h-0" />
-            {renderQuickbar()}
-            <MobileMenuButton
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              open={mobileMenuOpen}
-            />
+    <header
+      className={clsx(
+        'text-truegray-700 pt-3',
+        hideQuickbar ? '' : 'bg-brand-100',
+        'pb-9 bg-[url("/_assets/img/header-curve.svg")] bg-no-repeat bg-bottom bg-[length:100vw_3rem]'
+      )}
+    >
+      <SkipMenu />
+      <div className="pt-3 pb-6 px-side lg:px-side-lg">
+        <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
+          {renderLogo()}
+          <div
+            className={clsx(
+              'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
+              'order-last md:order-none lg:order-last ',
+              'w-full md:w-auto',
+              mobileMenuOpen ? '' : 'hidden'
+            )}
+          >
+            <Menu />
           </div>
+          <div className="hidden md:block lg:hidden basis-full h-0" />
+          {renderQuickbar()}
+          <MobileMenuButton
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            open={mobileMenuOpen}
+          />
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   )
 
   function renderLogo() {
