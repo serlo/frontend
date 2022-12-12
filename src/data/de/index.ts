@@ -346,7 +346,8 @@ export const instanceData = {
         newHere: "Bist du neu hier?",
         registerNewAccount: "Einen neuen Account anlegen",
         forgotPassword: "Hast du %forgotLinkText%?",
-        forgotLinkText: "dein Passwort vergessen"
+        forgotLinkText: "dein Passwort vergessen",
+        validSessionDetected: 'Hey, you are already logged in in another tab. Reload the page to see it!'
       },
       fields: {
         identifier: "Benutzername oder E-Mailadresse",
