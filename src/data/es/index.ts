@@ -11,9 +11,9 @@ export const instanceData = {
       search: "Buscar",
       login: "Ingresar",
       skipLinks: {
-        sentence: 'Skip to %content% or %footer%',
-        content: 'content',
-        footer: 'footer'
+        sentence: "Saltar a %content% o %footer%",
+        content: "Contenido",
+        footer: "Pie de página"
       }
     },
     search: {
@@ -76,8 +76,8 @@ export const instanceData = {
       editProfile: "Editar perfil y ajustes",
       recycleBin: "Papelera de reciclaje",
       diagon: "Callejón de Diagon",
-      discussions: 'Comments',
-      manageRoles: 'Manage User Roles'
+      discussions: "Comentarios",
+      manageRoles: "Administrar roles de usuario"
     },
     roles: {
       donor: "Donante",
@@ -94,18 +94,18 @@ export const instanceData = {
       pdfNoSolutions: "PDF sin soluciones"
     },
     editOrAdd: {
-      button: 'Edit',
-      addNewEntities: 'Add new content',
-      addNewExercises: 'Add new exercises',
-      editExercises: 'Edit exercises',
-      unrevised: 'Show unrevised revisions',
+      button: "Editar",
+      addNewEntities: "Añadir nuevo contenido",
+      addNewExercises: "Añadir nuevo ejercicio",
+      editExercises: "Editar ejercicios",
+      unrevised: "Mostrar revisiones sin revisar",
       inviteModal: {
-        title: 'Create with us!',
-        text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
-        loginButton: 'Login now',
-        registerButton: 'Register new account',
-        psText: 'You can find out in what ways you can contribute %link%.',
-        psLinkText: 'here'
+        title: "¡Crea con nosotros!",
+        text: "Hola %break% Genial que quieras contribuir a este contenido 👍 %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
+        loginButton: "Inicie sesión",
+        registerButton: "Registrar una nueva cuenta",
+        psText: "Puedes averiguar de qué manera puedes contribuir",
+        psLinkText: "aquí"
       }
     },
     license: {
@@ -195,7 +195,7 @@ export const instanceData = {
       hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario",
-      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
+      commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente."
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -231,17 +231,17 @@ export const instanceData = {
       status: "Estado"
     },
     unrevisedRevisions: {
-      help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
-      reviewers: 'Reviewers',
-      reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
-      help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
-      help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
+      help1: "Todas las ediciones de nuestros autores aparecen aquí. %reviewersLink% comprobará la calidad y aprobará los cambios.",
+      reviewers: "Revisores",
+      reviewersUrl: "https://es.serlo.org/262065",
+      help2: "Todo el mundo puede previsualizar las ediciones y continuar editando. Dentro de la vista previa l@s revisor@s pueden aceptar la edición y también dar su opinión.",
+      help3: "¿Quieres ser revisor@? Ponte en contacto con:%contactLink%.",
       contactPerson: 'LinaMaria',
-      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
-      help4: 'How to review? See our %guidelineLink%.',
-      guideline: 'Guideline for Reviewing',
+      contactPersonUrl: "https://es.serlo.org/user/163773/LinaMaria",
+      help4: "¿Cómo revisar? Mira %guidelineLink%.",
+      guideline: "Directrices para la revisión",
       guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
-      subjectLinks: 'To Subjects',
+      subjectLinks: "Ir a los temas",
       showMoreEntities: "Mostrar todo en %subject%",
       showMoreRevisions: "Mostrar %number% más…",
       newLabelText: "nuevo",
@@ -308,6 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
+      alreadyLoggedIn: "👋 Hola, ya has iniciado la sesión",
       revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
       revisionAccepted: "Revisión aceptada con éxito ✅",
       revisionRejected: "Revisión rechazada con éxito ❎",
@@ -318,13 +319,79 @@ export const instanceData = {
       isLoading: "El contenido está cargando…",
       unknownProblem: "Lo sentimos, hubo un problema al cargar el contenido, por favor inténtalo de nuevo más tarde."
     },
-    login: {
+    auth: {
       pleaseLogInLink: "Por favor, inicia sesión",
-      pleaseLogInText: "para utilizar esta función. "
+      pleaseLogInText: "para utilizar esta función. ",
+      register: {
+        registerTitle: 'Register your Serlo Account',
+        passwordRequirements: 'At least 8 characters, longer is better.',
+        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+      },
+      recoverTitle: "Recupera tu cuenta",
+      recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
+      verify: {
+        title: "Verifica tu email",
+        instructions: "Inserta y envía tu dirección de correo electrónico para verificarla.",
+        alreadyDone: "Has ingresado, por lo que ya has verificado tu correo electrónico 😊."
+      },
+      settings: {
+        title: "Cambiar tu contraseña",
+        instruction: "Introduce tu nueva contraseña."
+      },
+      loggingOut: "Cerrando tu sesión …",
+      login: {
+        confirmAction: "Confirmar acción",
+        signIn: "Inicia sesión con tu cuenta",
+        logOut: "Cerrar sesión",
+        newHere: "¿Eres nuevo aquí?",
+        registerNewAccount: "Registrar una nueva cuenta",
+        forgotPassword: "¿Has %forgotLinkText%?",
+        forgotLinkText: "Contraseña olvidada",
+        validSessionDetected: 'Hey, you are already logged in in another tab. Reload the page to see it!'
+      },
+      fields: {
+        identifier: "Nombre de usuario o dirección de correo electrónico",
+        username: "Nombre de usuario",
+        password: "Contraseña",
+        email: "Correo electrónico"
+      },
+      messages: {
+        code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
+        code1010001: "Iniciar sesión",
+        code1010013: "Continuar",
+        code1040001: "Registrarse",
+        code1040003: "Continuar",
+        code1050001: "Tus cambios han sido guardados! 🎉",
+        code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
+        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
+        code1070003: 'Save',
+        code1070005: 'Submit',
+        code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
+        code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
+        code4000001: '%reason%',
+        code4000002: "%field% hace falta.",
+        code4000005: '%reason%',
+        code4000006: "El nombre de usuario, la dirección de correo electrónico o la contraseña eran incorrectos. Por favor, comprueba si hay errores ortográficos.",
+        code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",
+        code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
+        code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
+        code4060004: "El enlace de recuperación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo",
+        code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo."
+      },
+      usernameInvalid: "Tu nombre de usuario sólo puede contener letras, dígitos, guiones bajos (_) y guiones (-).",
+      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
+      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
+      emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
+      registrationAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
+      terms: "Términos",
+      signUp: "Registrarse",
+      verificationProblem: 'In case you did not get it',
+      verificationLinkText: "Haz clic aquí para volver a solicitar el correo electrónico de verificación."
     },
     keys: {
       ctrl: 'ctrl',
-      return: "retorno"
+      return: "entrar"
     },
     eventLog: {
       currentEvents: "Eventos recientes",
@@ -342,9 +409,9 @@ export const instanceData = {
       setLicense: "%actor% cambió la licencia de %repository%.",
       createEntityLink: "%actor% asoció %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
-      createEntityRevision: '%actor% created %revision% of %entity%.',
-      checkoutRevision: '%actor% checked out %revision% in %repository%.',
-      rejectRevision: '%actor% did not accept %revision% in %repository%.',
+      createEntityRevision: "%actor% creó %revision% de %entity%.",
+      checkoutRevision: "%actor% ha verificado %revision% en %repository%",
+      rejectRevision: "%actor% no aceptó %revision% en %repository%.",
       createTaxonomyLink: "%actor% agregó %child% a %parent%.",
       removeTaxonomyLink: "%actor% eliminó %child% de %parent%.",
       createTaxonomyTerm: "%actor% creó %term%.",
@@ -409,13 +476,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Suscripciones"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "Actualizar contraseña"
     }, {
       url: '/user/settings',
       title: "Configuración"
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "Cerrar sesión"
     }]
   }],
@@ -445,7 +512,7 @@ export const loggedInData = {
       sortCoursePages: "Ordenar páginas del curso",
       sortGroupedExercises: "Ordenar ejercicios agrupados",
       edit: "Editar",
-      editTax: 'Edit Title & Text',
+      editTax: "Editar título y texto",
       unrevisedEdit: "Mostrar revisiones sin revisar",
       organize: "Organizar",
       moveToGrouped: "Mover contenido a otro grupo de ejercicios de texto",
@@ -469,7 +536,7 @@ export const loggedInData = {
       noMails: "desactivar",
       getMails: "activar",
       noNotifications: "cancelar",
-      loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
+      loadedSentence: "Cargado %loadedCount% de %totalCount% entradas.",
       loadMoreLink: "¡Cargar más!"
     },
     revisions: {
@@ -495,7 +562,7 @@ export const loggedInData = {
         save: "Edición guardada con éxito ✅",
         updated: "Actualización exitosa ✅",
         generic: "Éxito 🎉",
-        saveNeedsReview: 'Thank you for your edit 🎉 The reviewers will check it soon and then it will appear on the site.'
+        saveNeedsReview: "Gracias por tu edición 🎉 L@s revisor@s lo comprobarán pronto y entonces aparecerá en el sitio."
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -508,7 +575,7 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
-      noChangesWarning: "Nothing changed so there is no need to save yet",
+      noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
       edtrIo: {
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
@@ -540,7 +607,7 @@ export const loggedInData = {
         spoiler: "Spoiler/desplegable",
         spoilerDesc: "Una caja colapsable.",
         serloTable: "Tabla",
-        serloTableDesc: 'Create pretty tables',
+        serloTableDesc: "Crear tablas bonitas",
         table: "Tabla",
         tableDesc: "Crear tablas usando Markdown.",
         video: "Vídeo",
@@ -548,7 +615,7 @@ export const loggedInData = {
         solutionSeparator: "Separador de Solución",
         solutionSeparatorDesc: "Desglosa la solución en pasos individuales.",
         save: "Guardar",
-        saveWithReview: 'Save and get review',
+        saveWithReview: "Guardar y obtener una revisión",
         cancel: "Cancelar",
         saving: "Guardando…",
         missingChanges: "Tienes que indicar los cambios que has hecho",
@@ -558,7 +625,7 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Puedes guardar la revisión localmente, actualiza la página e intenta guardar de nuevo.",
         revisionSaved: "Revisión guardada",
         saveRevision: "Guardar revisión",
-        changes: 'Describe your changes to the content',
+        changes: "Describe tus cambios en el contenido",
         skipReview: "Omitir la revisión de pares (no recomendado)",
         enableNotifs: "Habilitar notificaciones de serlo.org",
         enableNotifsMail: "Activar notificaciones por correo electrónico",
@@ -846,7 +913,7 @@ export const loggedInData = {
       recycleBin: "Papelera de reciclaje"
     },
     pages: {
-      newPage: 'Add new Page',
+      newPage: "Añadir nueva Página",
       deletedPages: "Páginas borradas"
     },
     taxonomyTermTools: {
@@ -873,7 +940,82 @@ export const loggedInData = {
       }
     },
     roles: {
-      addButton: 'Add as %role%'
+      addButton: "Añadir como %role%"
+    }
+  }
+};
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: "👉 Acceso a tu cuenta Serlo",
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+ 
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}
+
+Best of luck from your Serlo team`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+ 
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
+    },
+    invalid: {
+      subject: "👉 Se intentó acceder a la cuenta",
+      'body.plaintext': `👋¡Hola!
+
+Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en serlo.org.
+
+Pero esta dirección de correo electrónico no está vinculada a un usuario en nuestro sitio web y, por lo tanto, el intento falló.
+
+Si has sido tú, comprueba si te has registrado con una dirección diferente.
+
+De lo contrario, ignora este correo electrónico.
+
+✌️`,
+      body: `<p>👋 ¡Hola!</p>
+<p>Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en serlo.org. <a href="https://serlo.org">serlo.org</a>. </p>
+<p>Pero esta dirección de correo electrónico no está vinculada a un usuario en nuestro sitio web y, por lo tanto, el intento falló.</p>
+<p>Si has sido tú, comprueba si te has registrado con una dirección diferente.</p>
+<p>De lo contrario, ignora este correo electrónico.</p>
+<p>✌️</p>`
+    }
+  },
+  verification: {
+    valid: {
+      subject: "👋 Verifica tu dirección de correo electrónico",
+      'body.plaintext': `Hola {{ .Identity.traits.username }},
+
+      Estamos muy contentos de tenerte en serlo.org🎉
+
+     Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:
+
+{{ .VerificationURL }}
+
+El Apoyo-a-la-Comunidad💚`,
+      body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
+<p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
+<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>El Apozo-a-la-Comunidad💚</p>`
+    },
+    invalid: {
+      subject: `👋 Alguien intentó verificar esta dirección de correo electrónico`,
+      'body.plaintext': `👋 Hola,
+
+Alguien solicitó verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en serlo.org para esta dirección.
+
+Si fuiste tú, comprueba si te registraste usando una dirección diferente.
+
+Si no, por favor ignora este correo electrónico.
+
+✌️`,
+      body: `<p>👋 Hola,</p>
+<p>Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en <a href="https://serlo.org">serlo.org</a>para esta dirección.</p>
+<p>Si fuiste tú, comprueba si te registraste con una dirección diferente.</p>
+<p>De lo contrario, por favor, ignora este correo electrónico.</p>
+<p>✌️</p>`
     }
   }
 };

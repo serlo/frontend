@@ -7,6 +7,7 @@ import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
+import { loginUrl } from './auth/utils'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -46,33 +47,8 @@ export function AddRevision({
       setUserReady(true)
       return
     }
-
-    const makeDamnSureUserIsLoggedIn = async () => {
-      if (auth.current === null) return false
-
-      /*
-      the better way would be to check if the authenticated cookie is still
-      set since this seems to be the only cookie legacy actually removes,
-      but since it's http-only this workaround is way easier.
-      The fetch also makes sure the CSRF tokens are set
-      This is only a hack until we don't use legacy authentication any more 
-      */
-
-      try {
-        const result = await fetch(`/auth/password/change`)
-        const resultHtml = await result.text()
-        return resultHtml.includes('<a href="/auth/logout"')
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error)
-        return false
-      }
-    }
-
-    void makeDamnSureUserIsLoggedIn().then((isLoggedIn) => {
-      setUserReady(isLoggedIn)
-    })
-
+    // TODO: maybe fetch kratos session again here with fetchAndPersist
+    setUserReady(auth !== null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -88,10 +64,9 @@ export function AddRevision({
         <br />
         Please: Logout and Login again and try to edit again.
         <br />
-        <br />
-        If that does not work head to{' '}
-        <Link href="/auth/login">/auth/login</Link> and make sure you are logged
-        in there.
+        <br /> If that does not work head to{' '}
+        <Link href={loginUrl}>{loginUrl}</Link> and make sure you are logged in
+        there.
       </StaticInfoPanel>
     )
 

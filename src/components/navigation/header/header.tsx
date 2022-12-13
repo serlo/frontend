@@ -17,14 +17,21 @@ export function Header() {
   const hideQuickbar = router.route === '/search' || router.route === '/'
 
   useEffect(() => {
-    document.body.addEventListener('keydown', (event) => {
+    const escapeHandler = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMobileMenuOpen(false)
-    })
+    }
+    document.body.addEventListener('keydown', escapeHandler)
 
     // close mobile menu on client side navigation, we need the global Router instance
-    Router.events.on('routeChangeStart', () => {
+    const openMobileMenu = () => {
       setMobileMenuOpen(false)
-    })
+    }
+    Router.events.on('routeChangeStart', openMobileMenu)
+
+    return () => {
+      document.body.removeEventListener('keydown', escapeHandler)
+      Router.events.off('routeChangeStart', openMobileMenu)
+    }
   }, [])
 
   return (

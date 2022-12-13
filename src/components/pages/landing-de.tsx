@@ -31,6 +31,7 @@ export function LandingDE({ data }: LandingDEProps) {
             url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
           font-display: swap;
         }
+
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
@@ -48,12 +49,14 @@ export function LandingDE({ data }: LandingDEProps) {
             background-size: 82%, 100vw 100%;
           }
         }
+
         .underlined {
           padding-right: 1rem;
           white-space: nowrap;
           background: url('/_assets/img/landing/simple-underline.svg') no-repeat
             bottom;
         }
+
         :global(.landing-button-with-wings) {
           &:after,
           &:before {
@@ -84,6 +87,7 @@ export function LandingDE({ data }: LandingDEProps) {
             }
           }
         }
+
         :global(.landing-button-with-wink) {
           &:after,
           &:before {
@@ -92,6 +96,7 @@ export function LandingDE({ data }: LandingDEProps) {
             background-size: 65% !important;
           }
         }
+
         .p-with-wink {
           &:after,
           &:before {
@@ -101,13 +106,16 @@ export function LandingDE({ data }: LandingDEProps) {
             height: 2.5rem;
             opacity: 1;
           }
+
           &:after {
             margin-left: -0.5rem;
           }
+
           &:before {
             margin-left: -1.5rem;
           }
         }
+
         .partner {
           padding-top: 1rem;
           background: url('/_assets/img/landing/footer-container.svg') no-repeat;

@@ -32,7 +32,7 @@ export function CommentAreaAllThreads() {
             instance: lang,
           })}
         </StaticInfoPanel>
-        {auth.current === null ? (
+        {auth === null ? (
           <StaticInfoPanel icon={faWarning} type="warning">
             <PleaseLogIn noWrapper />
           </StaticInfoPanel>
@@ -74,6 +74,7 @@ export function CommentAreaAllThreads() {
             <CommentArea
               commentData={{ active: [thread], archived: [] }}
               highlightedCommentId={latestCommentId}
+              noScroll
             />
           </div>
         </EntityIdProvider>
