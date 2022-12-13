@@ -20,7 +20,7 @@ export function Menu() {
 
   return (
     <Root>
-      <List className="md:text-right block m-0 p-0 relative">
+      <List className="md:text-right block m-0 p-0 relative min-w-[27rem]">
         {headerData.map((link) => (
           <Item key={link.title} link={link} />
         ))}

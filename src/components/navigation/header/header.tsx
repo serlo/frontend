@@ -1,3 +1,4 @@
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -6,15 +7,18 @@ import { Link } from '../../content/link'
 import { Menu } from './menu/menu'
 import { MobileMenuButton } from './mobile-menu-button'
 import { SkipMenu } from './skip-menu'
+import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEvent } from '@/helper/submit-event'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { strings } = useInstanceData()
   const router = useRouter()
 
-  const hideQuickbar = router.route === '/search' || router.route === '/'
+  const isLanding = router.route === '/'
+  const hideQuickbar = router.route === '/search' || isLanding
 
   useEffect(() => {
     const escapeHandler = (event: KeyboardEvent) => {
@@ -91,6 +95,7 @@ export function Header() {
   }
 
   function renderQuickbar() {
+    if (isLanding) return renderSpecialDonationButton()
     if (hideQuickbar) return null
     return (
       <Quickbar
@@ -102,6 +107,20 @@ export function Header() {
         )}
         placeholder={strings.header.search}
       />
+    )
+  }
+
+  function renderSpecialDonationButton() {
+    return (
+      <button
+        className="serlo-button-green absolute text-[0.9rem] right-4 md:right-6 lg:right-12 top-28 md:top-[1.15rem] py-0.75"
+        onClick={() => {
+          submitEvent('spenden-header-menu-click-landing')
+          void router.push('/spenden')
+        }}
+      >
+        <FaIcon icon={faHeart} /> Jetzt Spenden
+      </button>
     )
   }
 }
