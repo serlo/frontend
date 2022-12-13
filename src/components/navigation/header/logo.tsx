@@ -1,42 +1,34 @@
 import clsx from 'clsx'
 
 import { Link } from '@/components/content/link'
+import { useInstanceData } from '@/contexts/instance-context'
 
-const logoTargetWidth = 160
-
-interface LogoProps {
-  subline: string
-  noLink?: boolean
+export interface LogoProps {
+  foldOnMobile?: boolean
 }
 
-export function Logo({ subline, noLink }: LogoProps) {
+export function Logo({ foldOnMobile }: LogoProps) {
+  const { strings } = useInstanceData()
+
   return (
-    <>
-      <div>
-        <Link href={noLink ? undefined : '/'} path={['logo']}>
-          <img
-            className="inline"
-            alt="Serlo"
-            src="/_assets/img/serlo-logo.svg"
-            width={logoTargetWidth}
-            height="80"
-          />
-        </Link>
-      </div>
-      {subline && (
-        <div className="pl-12 pt-2 ml-0.5 print:hidden">
-          <Link
-            href={noLink ? undefined : '/'}
-            path={['logo']}
-            className={clsx(
-              'text-truegray-500 font-medium text-2xl hover:no-underline hover:text-brand',
-              'sm:text-2.5xl sm:tracking-slightly-tighter leading-normal'
-            )}
-          >
-            {subline}
-          </Link>
-        </div>
-      )}
-    </>
+    <Link href="/" path={['logo']} className="w-min sm:w-auto">
+      <img
+        className="inline"
+        alt="Serlo"
+        src="/_assets/img/serlo-logo.svg"
+        width="120"
+        height="80"
+      />
+      <span
+        className={clsx(
+          'font-handwritten text-xl align-text-top text-truegray-700',
+          'inline-block mt-4 ml-2',
+          foldOnMobile &&
+            'ml-9 mt-2 block mobile:inline-block mobile:ml-9 mobile:whitespace-nowrap sm:mt-4 sm:ml-2'
+        )}
+      >
+        {strings.header.slogan}
+      </span>
+    </Link>
   )
 }
