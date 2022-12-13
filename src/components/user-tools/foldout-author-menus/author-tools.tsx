@@ -33,7 +33,6 @@ export enum Tool {
   MoveItems = 'moveItems',
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
-  Organize = 'organize',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
   SortGroupedExercises = 'sortGroupedExercises',
@@ -142,10 +141,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     newEntitySubmenu: {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
-    },
-    organize: {
-      url: `/taxonomy/term/organize/${data.id}`,
-      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     sortEntities: {
       url: `/taxonomy/term/sort/entities/${data.id}`,

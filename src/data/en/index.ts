@@ -567,7 +567,6 @@ export const loggedInData = {
       edit: 'Edit',
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      organize: 'Organize',
       moveToGrouped: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
