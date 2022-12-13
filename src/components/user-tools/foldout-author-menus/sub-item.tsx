@@ -40,7 +40,7 @@ export function SubItem({ title, href, onClick }: SubItemProps) {
       {onClick || isAbsolute || !href ? (
         inner
       ) : (
-        <NextLink href={href} passHref>
+        <NextLink legacyBehavior href={href} passHref>
           {inner}
         </NextLink>
       )}

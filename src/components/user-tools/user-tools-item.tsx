@@ -40,7 +40,7 @@ export function UserToolsItem({
   if (href)
     return (
       <Item>
-        <NextLink href={href} passHref>
+        <NextLink legacyBehavior href={href} passHref>
           {renderLink()}
         </NextLink>
       </Item>

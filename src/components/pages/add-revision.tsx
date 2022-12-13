@@ -13,7 +13,6 @@ import { UuidType } from '@/data-types'
 import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
@@ -80,7 +79,7 @@ export function AddRevision({
       | PageSerializedState
       | TaxonomyCreateOrUpdateMutationData
   ) => {
-    const willNeedReview = hasOwnPropertyTs(data, 'controls')
+    const willNeedReview = Object.hasOwn(data, 'controls')
       ? !(data as OnSaveData).controls.noReview
       : entityNeedsReview
 

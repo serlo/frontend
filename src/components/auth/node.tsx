@@ -10,7 +10,6 @@ import { FaIcon } from '../fa-icon'
 import { FlowType } from './flow'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface NodeProps {
@@ -37,9 +36,12 @@ export function Node({
   const [showPassword, setShowPassword] = useState(false)
 
   if (isUiNodeInputAttributes(attributes)) {
-    const shortName = attributes.name.replace('traits.', '')
-    const fieldName = hasOwnPropertyTs(strings.auth.fields, shortName)
-      ? (strings.auth.fields[shortName] as string)
+    const shortName = attributes.name.replace(
+      'traits.',
+      ''
+    ) as keyof typeof strings.auth.fields
+    const fieldName = Object.hasOwn(strings.auth.fields, shortName)
+      ? strings.auth.fields[shortName]
       : shortName
 
     const messages = node.messages.map((uiText) => {

@@ -7,13 +7,11 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
-import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import {
   TaxonomyTermType,
   UuidSimpleQuery,
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 interface UuidUrlInputProps {
@@ -95,7 +93,7 @@ export function UuidUrlInput({
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
 
     if (
-      hasOwnPropertyTs(uuid, 'type') &&
+      Object.hasOwn(uuid, 'type') &&
       uuid.type &&
       !supportedTaxonomyTypes.includes(uuid.type)
     )
@@ -116,20 +114,13 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <Icon
-            icon={
-              getIconByTypename(
-                uuid.__typename as UuidType
-              ) as EdtrIconDefinition
-            }
-          />{' '}
-          {title}
+          <Icon icon={getIconByTypename(uuid.__typename as UuidType)} /> {title}
         </a>
         {renderButtons(
           uuid.__typename as UuidWithRevType,
           id,
           title ?? getTranslatedType(strings, uuid.__typename),
-          hasOwnPropertyTs(uuid, 'type') ? uuid.type : undefined
+          Object.hasOwn(uuid, 'type') ? uuid.type : undefined
         )}
       </>
     )

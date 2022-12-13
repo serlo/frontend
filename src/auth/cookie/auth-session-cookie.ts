@@ -2,7 +2,6 @@ import type { Session } from '@ory/client'
 import Cookies from 'js-cookie'
 
 import { COOKIE_DOMAIN } from './cookie-domain'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const authCookieName = 'auth-session'
 const sharedCookieConfig = {
@@ -45,11 +44,10 @@ function stripSession(session: Session): Session {
   const { id, identity } = session
   const { id: identityId, schema_id, schema_url } = identity
   const { username, email } = identity.traits as Traits
-
+  const metaDataPublic = identity.metadata_public as Record<string, unknown>
   const legacy_id =
-    identity.metadata_public &&
-    hasOwnPropertyTs(identity.metadata_public, 'legacy_id')
-      ? (identity.metadata_public.legacy_id as number)
+    identity.metadata_public && Object.hasOwn(metaDataPublic, 'legacy_id')
+      ? (metaDataPublic.legacy_id as number)
       : undefined
 
   return {

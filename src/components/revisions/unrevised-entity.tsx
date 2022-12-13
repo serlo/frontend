@@ -1,15 +1,14 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 import clsx from 'clsx'
-import { Fragment } from 'react'
+import { Fragment, PropsWithChildren } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { CompBaseProps, UnrevisedRevisionsData } from '@/data-types'
+import type { UnrevisedRevisionsData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export type UnrevisedRevisionEntity =
   UnrevisedRevisionsData['subjects'][number]['unrevisedEntities']['nodes'][number]
@@ -20,25 +19,25 @@ export interface UnrevisedEntityProps {
 }
 
 function getNodes(entity: UnrevisedRevisionEntity) {
-  if (hasOwnPropertyTs(entity, 'revisions')) {
+  if (Object.hasOwn(entity, 'revisions')) {
     return entity.revisions?.nodes
   }
-  if (hasOwnPropertyTs(entity, 'solutionRevisions')) {
+  if (Object.hasOwn(entity, 'solutionRevisions')) {
     return entity.solutionRevisions.nodes
   }
   return []
 }
 
 function getTitle(entity: UnrevisedRevisionEntity) {
-  if (hasOwnPropertyTs(entity, 'currentRevision') && entity.currentRevision) {
-    if (hasOwnPropertyTs(entity.currentRevision, 'title')) {
+  if (Object.hasOwn(entity, 'currentRevision') && entity.currentRevision) {
+    if (Object.hasOwn(entity.currentRevision, 'title')) {
       return entity.currentRevision.title
     }
   }
 
-  if (hasOwnPropertyTs(entity, 'revisions')) {
+  if (Object.hasOwn(entity, 'revisions')) {
     const node = entity.revisions.nodes[0]
-    if (node && hasOwnPropertyTs(node, 'title')) {
+    if (node && Object.hasOwn(node, 'title')) {
       return node.title
     }
   }
@@ -159,10 +158,11 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   }
 }
 
-const Td: CompBaseProps<{
-  centered?: boolean
-  className?: string
-}> = ({ children, centered, className }) => (
+const Td = ({
+  children,
+  centered,
+  className,
+}: PropsWithChildren<{ centered?: boolean; className?: string }>) => (
   <td
     className={clsx(className, 'serlo-td', centered && 'text-center')}
     style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}

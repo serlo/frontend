@@ -11,7 +11,6 @@ import { isEmpty } from '@edtr-io/store'
 import { Icon, styled } from '@edtr-io/ui'
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons/faUpRightFromSquare'
 
-import { EdtrIconDefinition } from '../edtr-icon-defintion'
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
 import { InlineSettingsInput } from './helpers/inline-settings-input'
@@ -116,7 +115,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   rel="noopener noreferrer"
                 >
                   <OpenInNewTab title={editorStrings.solution.openArticleTab}>
-                    <Icon icon={faUpRightFromSquare as EdtrIconDefinition} />
+                    <Icon icon={faUpRightFromSquare} />
                   </OpenInNewTab>
                 </a>
               </InlineSettings>

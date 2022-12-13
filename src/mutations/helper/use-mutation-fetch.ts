@@ -1,15 +1,15 @@
 import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
 
-import { hasOwnPropertyTs } from '../../helper/has-own-property-ts'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { triggerSentry } from '../../helper/trigger-sentry'
 import { endpoint } from '@/api/endpoint'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import {
+import type {
   EntityMutation,
   NotificationMutation,
+  SetCourseMutation,
   SetEntityResponse,
   ThreadMutation,
   UuidMutation,
@@ -20,6 +20,7 @@ type MutationResponse =
   | UuidMutation
   | NotificationMutation
   | EntityMutation
+  | SetCourseMutation
 
 type ApiErrorType =
   | 'UNAUTHENTICATED'
@@ -49,7 +50,7 @@ export function useMutationFetch() {
         window.location.hostname == 'localhost'
           ? await executeQueryLocally()
           : await executeQuery()
-      if (hasOwnPropertyTs(result, 'entity')) {
+      if (Object.hasOwn(result, 'entity')) {
         const entity = result.entity as EntityMutation
         if (Object.keys(entity)[0].startsWith('set')) {
           const entityResponse = Object.values(entity)[0] as SetEntityResponse
@@ -96,7 +97,7 @@ export function useMutationFetch() {
 function handleError(
   type: ErrorType,
   errorStrings?: { [key in ErrorType]: string },
-  e?: object
+  e?: { message?: string }
 ): false {
   if (!errorStrings) return false
   const message = errorStrings[type] ?? errorStrings['UNKNOWN']
@@ -120,8 +121,11 @@ function handleError(
   }
 
   showToastNotice(message, 'warning')
-  if (e && hasOwnPropertyTs(e, 'message')) {
-    showToastNotice(`"${e.message as string}"`)
+  if (e) {
+    const msg = Object.hasOwn(e, 'message')
+      ? (e.message as string)
+      : 'unknown error'
+    showToastNotice(`"${msg}"`)
   }
   return false
 }

@@ -10,7 +10,6 @@ import { InlineSettings } from '../helpers/inline-settings'
 import { InlineSettingsInput } from '../helpers/inline-settings-input'
 import { SerloAddButton } from '../helpers/serlo-editor-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
@@ -107,9 +106,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                           className="p-1 inline-block"
                         >
                           <OpenInNewTab title={articleStrings.openInTab}>
-                            <Icon
-                              icon={faUpRightFromSquare as EdtrIconDefinition}
-                            />
+                            <Icon icon={faUpRightFromSquare} />
                           </OpenInNewTab>
                         </a>
                       </InlineSettings>
@@ -138,9 +135,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                     {...provided.dragHandleProps}
                     className={buttonClass}
                   >
-                    <Icon
-                      icon={faGripVertical as unknown as EdtrIconDefinition}
-                    />
+                    <Icon icon={faGripVertical} />
                   </button>
                 </div>
               </li>
