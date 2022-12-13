@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { Link } from '../../content/link'
+import { Logo } from './logo'
 import { Menu } from './menu/menu'
 import { MobileMenuButton } from './mobile-menu-button'
 import { SkipMenu } from './skip-menu'
@@ -49,7 +49,7 @@ export function Header() {
       <SkipMenu />
       <div className="pt-3 pb-6 px-side lg:px-side-lg">
         <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
-          {renderLogo()}
+          <Logo foldOnMobile />
           <div
             className={clsx(
               'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
@@ -70,29 +70,6 @@ export function Header() {
       </div>
     </header>
   )
-
-  function renderLogo() {
-    return (
-      <Link href="/" path={['logo']} className="w-min sm:w-auto">
-        <img
-          className="inline"
-          alt="Serlo"
-          src="/_assets/img/serlo-logo.svg"
-          width="120"
-          height="80"
-        />
-        <span
-          className={clsx(
-            'font-handwritten text-xl align-text-top text-truegray-700',
-            'ml-9 mt-2 block mobile:inline-block mobile:ml-9 sm:mt-4 mobile:whitespace-nowrap',
-            'sm:ml-2'
-          )}
-        >
-          Die freie Lernplattform
-        </span>
-      </Link>
-    )
-  }
 
   function renderQuickbar() {
     if (isLanding) return renderSpecialDonationButton()
