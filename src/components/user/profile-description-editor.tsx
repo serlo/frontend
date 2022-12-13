@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie'
-
 import { convertUserByDescription } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { useUserSetDescriptionMutation } from '@/mutations/use-user-set-description-mutation'
@@ -17,23 +15,17 @@ export function ProfileDescriptionEditor({
     const success = await setDescription({
       description: (data as { description: string }).description,
     })
-    return new Promise(
-      (resolve: (value: void | PromiseLike<void>) => void, reject) => {
-        if (success) {
-          resolve()
-          //feedback is handled in mutation
-          // setTimeout(() => {
-          //   window.location.reload()
-          // }, 200)
-        } else {
-          // eslint-disable-next-line no-console
-          console.log(success)
-          // eslint-disable-next-line no-console
-          console.log(data)
-          reject()
-        }
+    return new Promise((resolve: (value: void) => void, reject) => {
+      if (success) {
+        resolve()
+      } else {
+        // eslint-disable-next-line no-console
+        console.error(success)
+        // eslint-disable-next-line no-console
+        console.error(data)
+        reject()
       }
-    )
+    })
   }
 
   const initialState = convertUserByDescription(rawDescription).initialState
@@ -43,11 +35,7 @@ export function ProfileDescriptionEditor({
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div className="edtr-io serlo-editor-hacks">
         <SerloEditor
-          getCsrfToken={() => {
-            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-            return cookies['CSRF']
-          }}
-          needsReview={false}
+          entityNeedsReview={false}
           onSave={onSave}
           type="User"
           initialState={initialState}

@@ -78,7 +78,7 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
         </ExpandableBox>
       </ThemeProvider>
       {props.config.skipControls ? null : (
-        <ToolbarMain subscriptions {...props.state} />
+        <ToolbarMain showSubscriptionOptions {...props.state} />
       )}
     </>
   )

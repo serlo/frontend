@@ -22,9 +22,9 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: UuidWithRevType | UuidType.Page
+  type: UuidWithRevType
   converted?: boolean
-  needsReview: boolean
+  entityNeedsReview: boolean
   id?: number // only for existing
   taxonomyParentId?: number // only for new
   errorType: 'none'
@@ -81,7 +81,7 @@ export async function fetchEditorData(
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType
   )
-  const needsReview = !isTestArea && typeNeedsReview
+  const entityNeedsReview = !isTestArea && typeNeedsReview
 
   if (isError(result)) {
     throw new Error(result.error)
@@ -89,7 +89,7 @@ export async function fetchEditorData(
     return {
       ...result,
       type: data.__typename as UuidWithRevType,
-      needsReview,
+      entityNeedsReview,
       id: repoId,
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,

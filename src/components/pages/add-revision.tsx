@@ -1,6 +1,5 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
 import clsx from 'clsx'
-import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
 import { Link } from '../content/link'
@@ -11,13 +10,14 @@ import { loginUrl } from './auth/utils'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
+import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
-  AddPageRevisionMutationData,
+  OnSaveData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
 } from '@/mutations/use-set-entity-mutation/types'
@@ -27,7 +27,7 @@ import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-crea
 export function AddRevision({
   initialState,
   type,
-  needsReview,
+  entityNeedsReview,
   id,
   taxonomyParentId,
   breadcrumbsData,
@@ -52,6 +52,8 @@ export function AddRevision({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (!setEntityMutation) return null
+
   const isPage = type === UuidType.Page
 
   if (!id && !isPage && !taxonomyParentId) return null
@@ -70,6 +72,41 @@ export function AddRevision({
       </StaticInfoPanel>
     )
 
+  // types needs refactoring here. splitting controls and data would probably make sense
+
+  const onSave = async (
+    data:
+      | SetEntityMutationData
+      | PageSerializedState
+      | TaxonomyCreateOrUpdateMutationData
+  ) => {
+    const willNeedReview = hasOwnPropertyTs(data, 'controls')
+      ? !(data as OnSaveData).controls.noReview
+      : entityNeedsReview
+
+    const success =
+      type === UuidType.Page
+        ? await addPageRevision(data as PageSerializedState)
+        : type === UuidType.TaxonomyTerm
+        ? await taxonomyCreateOrUpdateMutation(
+            data as TaxonomyCreateOrUpdateMutationData
+          )
+        : await setEntityMutation(
+            {
+              ...data,
+              __typename: type,
+            } as SetEntityMutationData,
+            willNeedReview,
+            initialState,
+            taxonomyParentId
+          )
+
+    return new Promise((resolve: (value: void) => void, reject) => {
+      if (success) resolve()
+      else reject()
+    })
+  }
+
   return (
     <>
       {renderBacklink()}
@@ -80,49 +117,8 @@ export function AddRevision({
         )}
       >
         <SerloEditor
-          getCsrfToken={() => {
-            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-            return cookies['CSRF']
-          }}
-          needsReview={needsReview}
-          onSave={async (
-            data:
-              | SetEntityMutationData
-              | AddPageRevisionMutationData
-              | TaxonomyCreateOrUpdateMutationData
-          ) => {
-            const dataWithType = {
-              ...data,
-              __typename: type,
-            }
-
-            // refactor and rename when removing legacy code
-            const skipReview = hasOwnPropertyTs(data, 'controls')
-              ? data.controls.checkout
-              : undefined
-            const _needsReview = skipReview ? false : needsReview
-
-            const success =
-              type === UuidType.Page
-                ? //@ts-expect-error resolve when old code is removed
-                  await addPageRevision(dataWithType)
-                : type === UuidType.TaxonomyTerm
-                ? await taxonomyCreateOrUpdateMutation(
-                    dataWithType as TaxonomyCreateOrUpdateMutationData
-                  )
-                : await setEntityMutation(
-                    //@ts-expect-error resolve when old code is removed
-                    dataWithType,
-                    _needsReview,
-                    initialState,
-                    taxonomyParentId
-                  )
-
-            return new Promise((resolve, reject) => {
-              if (success) resolve()
-              else reject()
-            })
-          }}
+          entityNeedsReview={entityNeedsReview}
+          onSave={onSave}
           type={type}
           initialState={initialState}
         />

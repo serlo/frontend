@@ -21,7 +21,7 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
           <main>
             <AddRevision
               type={UuidType.TaxonomyTerm}
-              needsReview={false}
+              entityNeedsReview={false}
               id={parent}
               initialState={{
                 plugin: 'type-taxonomy',
