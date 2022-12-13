@@ -16,9 +16,8 @@ export function ProfileDescriptionEditor({
       description: (data as { description: string }).description,
     })
     return new Promise((resolve: (value: void) => void, reject) => {
-      if (success) {
-        resolve()
-      } else {
+      if (success) resolve()
+      else {
         // eslint-disable-next-line no-console
         console.error(success)
         // eslint-disable-next-line no-console

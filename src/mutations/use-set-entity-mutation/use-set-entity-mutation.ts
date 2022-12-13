@@ -232,8 +232,7 @@ export function useSetEntityMutation() {
         }
 
         try {
-          const result = await syncLoop()
-          return result
+          return await syncLoop()
         } catch (error) {
           // eslint-disable-next-line no-console
           console.error(error)

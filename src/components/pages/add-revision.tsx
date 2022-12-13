@@ -101,10 +101,7 @@ export function AddRevision({
             taxonomyParentId
           )
 
-    return new Promise((resolve: (value: void) => void, reject) => {
-      if (success) resolve()
-      else reject()
-    })
+    return success ? Promise.resolve() : Promise.reject()
   }
 
   return (
