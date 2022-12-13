@@ -14,9 +14,11 @@ import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import { InstanceData, LoggedInData } from '@/data-types'
+import { LoggedInData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import type { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
+// eslint-disable-next-line no-duplicate-imports
+import type { getInstanceDataByLang as InstanceData } from '@/helper/feature-i18n'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -53,25 +55,8 @@ export function FrontendClientBase({
   authorization,
   loadLoggedInData,
 }: FrontendClientBaseProps) {
-  const { locale } = useRouter()
-  const [instanceData] = useState<InstanceData>(() => {
-    if (typeof window === 'undefined') {
-      // load instance data for server side rendering
-      // Note: using require to avoid webpack bundling it
-      const featureI18n = require('@/helper/feature-i18n') as {
-        getInstanceDataByLang: typeof getInstanceDataByLang
-      }
-      return featureI18n.getInstanceDataByLang(
-        (locale as Instance) ?? Instance.De
-      )
-    } else {
-      // load instance data from client from document tag
-      return JSON.parse(
-        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
-          ?.textContent ?? '{}'
-      ) as ReturnType<typeof getInstanceDataByLang>
-    }
-  })
+  const { locale: routerLocale } = useRouter()
+  const locale = (routerLocale as Instance) ?? Instance.De
 
   useEffect(() => {
     //tiny history
@@ -93,14 +78,11 @@ export function FrontendClientBase({
     }
   })
 
+  const isLoggedIn = checkLoggedIn()
   const [loggedInData, setLoggedInData] = useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
-
-  const isLoggedIn = checkLoggedIn()
-
   useEffect(fetchLoggedInData, [
-    instanceData.lang,
     loggedInData,
     loadLoggedInData,
     isLoggedIn,
@@ -110,8 +92,26 @@ export function FrontendClientBase({
   // dev
   //console.dir(initialProps)
 
+  const getI18n = () => {
+    if (typeof window === 'undefined') {
+      // load instance data for server side rendering
+      // Note: using require to avoid webpack bundling it
+      // const featureI18n = require('@/helper/feature-i18n') as {
+      //   getInstanceDataByLang: typeof getInstanceDataByLang
+      // }
+      // return instanceData
+      return getInstanceDataByLang(locale)
+    } else {
+      // load instance data from client from document tag
+      return JSON.parse(
+        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
+          ?.textContent ?? '{}'
+      ) as ReturnType<typeof InstanceData>
+    }
+  }
+
   return (
-    <InstanceDataProvider value={instanceData}>
+    <InstanceDataProvider value={getI18n()}>
       <PrintMode />
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
@@ -147,9 +147,7 @@ export function FrontendClientBase({
       window.location.hostname === 'localhost'
     )
       return null
-    const cacheValue = sessionStorage.getItem(
-      `___loggedInData_${instanceData.lang}`
-    )
+    const cacheValue = sessionStorage.getItem(`___loggedInData_${locale}`)
     if (!cacheValue) return null
     return JSON.parse(cacheValue) as LoggedInData
   }
@@ -158,12 +156,12 @@ export function FrontendClientBase({
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
     if (isLoggedIn || loadLoggedInData) {
-      fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
+      fetch(frontendOrigin + '/api/locale/' + locale)
         .then((res) => res.json())
         .then((value) => {
           if (value) {
             sessionStorage.setItem(
-              `___loggedInData_${instanceData.lang}`,
+              `___loggedInData_${locale}`,
               JSON.stringify(value)
             )
             setLoggedInData(value as LoggedInData)
