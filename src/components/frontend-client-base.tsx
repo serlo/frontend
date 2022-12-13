@@ -3,12 +3,13 @@ import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
+import { default as ToastNotice } from 'react-notify-toast'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
+import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
@@ -33,7 +34,7 @@ Router.events.on('routeChangeStart', () => {
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
   NProgress.done()
-  // experiment: when using csr and running into an error, try without csr once
+  // when using csr and running into an error, try without csr once
   if (!shallow && document.getElementById('error-page-description') !== null) {
     triggerSentry({ message: 'trying again without csr' })
     setTimeout(() => {
@@ -79,6 +80,9 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.href)
+  })
+
+  useEffect(() => {
     // scroll to comment area to start lazy loading
     if (window.location.hash.startsWith('#comment-')) {
       setTimeout(() => {
@@ -93,10 +97,14 @@ export function FrontendClientBase({
     getCachedLoggedInData()
   )
 
+  const isLoggedIn = checkLoggedIn()
+
   useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
     loadLoggedInData,
+    isLoggedIn,
+    locale,
   ])
 
   // dev
@@ -117,7 +125,7 @@ export function FrontendClientBase({
                 wrapper={(kids) => (
                   <div className="relative">
                     <MaxWidthDiv showNav={showNav}>
-                      <main>{kids}</main>
+                      <main id="content">{kids}</main>
                     </MaxWidthDiv>
                   </div>
                 )}
@@ -149,7 +157,7 @@ export function FrontendClientBase({
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
-    if (cookies['auth-token'] || loadLoggedInData) {
+    if (isLoggedIn || loadLoggedInData) {
       fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
         .then((res) => res.json())
         .then((value) => {

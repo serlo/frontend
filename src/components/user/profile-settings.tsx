@@ -15,11 +15,10 @@ interface ProfileSettingsProps {
 export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   const loggedInData = useLoggedInData()
   const { lang } = useInstanceData()
-
   const auth = useAuthentication()
 
-  if (!auth.current) return null
-  const username = auth.current.username
+  if (!auth) return null
+  const username = auth.username
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.profileSettings

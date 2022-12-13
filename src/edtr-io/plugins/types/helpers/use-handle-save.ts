@@ -3,14 +3,15 @@ import { serializeRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
-import { CsrfContext } from '@/edtr-io/csrf-context'
 import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
-export function useHandleSave(visible: boolean, subscriptions?: boolean) {
+export function useHandleSave(
+  visible: boolean,
+  showSubscriptionOptions?: boolean
+) {
   const store = useScopedStore()
-  const getCsrfToken = useContext(CsrfContext)
-  const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
+  const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -38,33 +39,18 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
   const handleSave = (
     notificationSubscription?: boolean,
     emailSubscription?: boolean,
-    autoCheckout?: boolean
+    manualSkipReview?: boolean
   ) => {
     setPending(true)
 
-    const subscriptionsControls = subscriptions
-      ? {
-          subscription: {
-            subscribe: notificationSubscription ? 1 : 0,
-            mailman: emailSubscription ? 1 : 0,
-          },
-        }
-      : {}
-
-    const checkoutControls =
-      !needsReview || (showSkipCheckout && autoCheckout)
-        ? {
-            checkout: true,
-          }
-        : {}
-
     onSave({
-      ...(serialized as SupportedTypesSerializedState),
-      csrf: getCsrfToken(),
       controls: {
-        ...subscriptionsControls,
-        ...checkoutControls,
+        ...(showSubscriptionOptions
+          ? { notificationSubscription, emailSubscription }
+          : {}),
+        noReview: manualSkipReview || !entityNeedsReview,
       },
+      ...(serialized as SupportedTypesSerializedState),
     })
       .then(() => {
         setTimeout(() => {

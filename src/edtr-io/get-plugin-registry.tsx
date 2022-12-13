@@ -15,9 +15,11 @@ import {
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faWrench } from '@fortawesome/free-solid-svg-icons'
 import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
 import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
 
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
@@ -116,6 +118,16 @@ export function getPluginRegistry(
       description: editorStrings.edtrIo.videoDesc,
       icon: createIcon(faFilm),
     },
+    ...(shouldUseFeature('edtrPasteHack')
+      ? [
+          {
+            name: 'pasteHack',
+            title: 'Paste Hack',
+            description: 'hmmm hack',
+            icon: createIcon(faWrench),
+          },
+        ]
+      : []),
     ...(isExercise
       ? [
           {

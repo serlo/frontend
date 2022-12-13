@@ -85,7 +85,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       <AddButton onClick={() => children.insert()}>
         {editorStrings.course.addCoursePage}
       </AddButton>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </article>
   )
 }

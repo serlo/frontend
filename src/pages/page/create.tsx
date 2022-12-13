@@ -14,7 +14,7 @@ export default renderedPageNoHooks(() => {
     },
     converted: false,
     type: UuidType.Page,
-    needsReview: false,
+    entityNeedsReview: false,
     errorType: 'none',
   } as const
 
@@ -27,9 +27,7 @@ export default renderedPageNoHooks(() => {
         <MaxWidthDiv>
           <main>
             <Guard needsAuth={isProduction ? true : undefined} data>
-              <>
-                <AddRevision {...addRevisionProps} />
-              </>
+              <AddRevision {...addRevisionProps} />
             </Guard>
           </main>
         </MaxWidthDiv>

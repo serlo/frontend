@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "La plateforme d'apprentissage libre",
       search: "Recherche",
-      login: "Se connecter"
+      login: "Se connecter",
+      skipLinks: {
+        sentence: 'Skip to %content% or %footer%',
+        content: 'content',
+        footer: 'footer'
+      }
     },
     search: {
       privacy: "La recherche est fournie par Google. Consultez notre %privacypolicy% pour savoir quelles sont les informations traitées.",
@@ -257,8 +262,8 @@ export const instanceData = {
       backToPrevious: "Retour à la page précédente",
       backToHome: "Aller à notre page d'accueil",
       deletedComment: {
-        title: "Whoops, this is not here anymore",
-        text: "Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚"
+        title: 'Whoops, this is not here anymore',
+        text: 'Sorry, this %type% is no longer online.%break% But it was deleted for a reason and was probably not worth your time anyway 💚'
       }
     },
     print: {
@@ -303,6 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "👋 Bienvenue %username%!",
       bye: "👋 À bientôt !",
+      alreadyLoggedIn: '👋 Hi! You are already logged in',
       revisionSaved: "La révision est enregistrée et sera bientôt révisée 👍",
       revisionAccepted: "La révision a été acceptée avec succès ✅",
       revisionRejected: "La révision a été rejetée avec succès ❎",
@@ -313,9 +319,75 @@ export const instanceData = {
       isLoading: "Chargement de contenu en cours…",
       unknownProblem: "Désolé,une erreure s'est produite lors du chargement du contenu, veuille réessayer plus tard."
     },
-    login: {
-      pleaseLogInLink: "Veuille te connecter",
-      pleaseLogInText: "pour utiliser cette fonctionnalité."
+    auth: {
+      pleaseLogInLink: 'Please log in',
+      pleaseLogInText: 'to use this feature.',
+      register: {
+        registerTitle: 'Register your Serlo Account',
+        passwordRequirements: 'At least 8 characters, longer is better.',
+        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+      },
+      recoverTitle: 'Recover your account',
+      recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
+      verify: {
+        title: 'Verify your email',
+        instructions: 'Insert and submit your email address to verify it.',
+        alreadyDone: 'You are logged in, so you have already verified your email😊.'
+      },
+      settings: {
+        title: 'Change your password',
+        instruction: 'Insert your new password.'
+      },
+      loggingOut: 'Logging you out …',
+      login: {
+        confirmAction: 'Confirm Action',
+        signIn: 'Sign in to your Account',
+        logOut: 'Log out',
+        newHere: 'Are you new here?',
+        registerNewAccount: 'Register new account',
+        forgotPassword: 'Did you %forgotLinkText%?',
+        forgotLinkText: 'forget your password',
+        validSessionDetected: 'Hey, you are already logged in in another tab. Reload the page to see it!'
+      },
+      fields: {
+        identifier: 'Username or Email address',
+        username: 'Username',
+        password: 'Password',
+        email: 'Email'
+      },
+      messages: {
+        code1010003: 'Please confirm this action by verifying that it is you.',
+        code1010001: 'Sign in',
+        code1010013: 'Continue',
+        code1040001: 'Register',
+        code1040003: 'Continue',
+        code1050001: 'Your changes have been saved! 🎉',
+        code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
+        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
+        code1070003: 'Save',
+        code1070005: 'Submit',
+        code1080001: 'An email containing a verification link has been sent to the email address you provided.',
+        code1080002: 'You have successfully verified your email address.',
+        code4000001: '%reason%',
+        code4000002: '%field% is missing.',
+        code4000005: '%reason%',
+        code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
+        code4000007: 'An account with the same email or username exists already.',
+        code4000008: 'The provided authentication code is invalid, please try again.',
+        code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
+        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.'
+      },
+      usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
+      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
+      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
+      emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
+      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      terms: 'Terms',
+      signUp: 'Register',
+      verificationProblem: 'In case you did not get it',
+      verificationLinkText: 'Click here to request the verification email again.'
     },
     keys: {
       ctrl: 'ctrl',
@@ -404,13 +476,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Abonnements"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "Changer le mot de passe"
     }, {
       url: '/user/settings',
       title: 'Settings'
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "Se déconnecter"
     }]
   }],
@@ -502,8 +574,8 @@ export const loggedInData = {
       }
     },
     editor: {
-      confirmRouteChange: "Are you sure you want to leave without saving?",
-      noChangesWarning: "Nothing changed so there is no need to save yet",
+      confirmRouteChange: 'Are you sure you want to leave without saving?',
+      noChangesWarning: 'Nothing changed so there is no need to save yet',
       edtrIo: {
         extendedSettings: "Paramètres avancés",
         close: "Fermer",
@@ -564,7 +636,7 @@ export const loggedInData = {
         settings: "Paramètres",
         equationsTitle: 'Terms and equations',
         equationsDesc: 'Write term manipulations and solve multiline equations.',
-        ready: "Ready to save?"
+        ready: 'Ready to save?'
       },
       anchor: {
         identifier: "identifiant",
@@ -620,8 +692,8 @@ export const loggedInData = {
         columnAndRowHeaders: 'Column and row headers',
         convertToText: 'Convert to text',
         convertToImage: 'Convert to image',
-        row: "row",
-        column: "column",
+        row: 'row',
+        column: 'column',
         addType: 'Add %type%',
         addTypeBefore: 'Add %type% before',
         deleteType: 'Delete %type%',
@@ -788,7 +860,7 @@ export const loggedInData = {
         leftHandSide: "côté gauche",
         transformation: "Transformation",
         mode: 'Mode',
-        transformationExample: "e.g. -3x",
+        transformationExample: 'e.g. -3x',
         transformationOfEquations: 'Transformation of equations',
         transformationOfTerms: 'Transformation of terms',
         addNewRow: 'Add new row',
@@ -846,21 +918,21 @@ export const loggedInData = {
     },
     taxonomyTermTools: {
       copyMove: {
-        title: "Move / Copy Entities in Taxonomy",
-        select: "Select entities to move or copy:",
-        target: "Target term:",
-        link: "Link",
-        moveButtonText: "Move to %type%",
-        copyButtonText: "Copy to %type%",
-        moveSuccess: "Sucessfully moved",
-        copySuccess: "Sucessfully copied",
-        exerciseFolderNotice: "Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead."
+        title: 'Move / Copy Entities in Taxonomy',
+        select: 'Select entities to move or copy:',
+        target: 'Target term:',
+        link: 'Link',
+        moveButtonText: 'Move to %type%',
+        copyButtonText: 'Copy to %type%',
+        moveSuccess: 'Sucessfully moved',
+        copySuccess: 'Sucessfully copied',
+        exerciseFolderNotice: 'Copying or moving the type %exerciseFolder% is not supported at the moment. %break% Please create a new folder and move the contents instead.'
       },
       deleteAdd: {
-        confirmDelete: "Are you sure you want to remove this assignment?",
-        addSuccess: "Sucessfully assigned, reloading …",
-        addNewTitle: "Add new assignment",
-        addButtonText: "Assign"
+        confirmDelete: 'Are you sure you want to remove this assignment?',
+        addSuccess: 'Sucessfully assigned, reloading …',
+        addNewTitle: 'Add new assignment',
+        addButtonText: 'Assign'
       },
       sort: {
         title: 'Sort Entities',
@@ -869,6 +941,82 @@ export const loggedInData = {
     },
     roles: {
       addButton: 'Add as %role%'
+    }
+  }
+};
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: '👉 Access to your Serlo account',
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+ 
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}
+
+Best of luck from your Serlo team`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+ 
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
+    },
+    invalid: {
+      subject: '👉 Account access attempted',
+      'body.plaintext': `👋 Hi there!
+
+You (or someone else) entered this email address when trying to recover access to an account at serlo.org.
+
+But this email address is not linked to a user in our website and therefore the attempt failed.
+
+If it was you, check if you signed up using a different address.
+
+Otherwise please just ignore this email.
+
+✌️`,
+      body: `<p>👋 Hi there!</p>
+<p>You (or someone else) entered this email address when trying to recover access to an account at <a href="https://serlo.org">serlo.org</a>. </p>
+<p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
+<p>If it was you, check if you signed up using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
+<p>✌️</p>`
+    }
+  },
+  verification: {
+    valid: {
+      subject: '👋 Please verify your email address',
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
+
+      We are excited to have you at serlo.org 🎉
+
+      Please verify your brand new account by clicking the following link:
+
+{{ .VerificationURL }}
+
+Your Community-Support 💚`,
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>We are excited to have you at serlo.org 🎉</p>
+<p>Please verify your account by clicking the following link:<br/>
+<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Your Community-Support 💚</p>
+      `
+    },
+    invalid: {
+      subject: `👋 Someone tried to verify this email address`,
+      'body.plaintext': `👋 Hi there,
+
+Someone asked to verify this email address, but we were unable to find an account at serlo.org for this address.
+
+If it was you, check if you registered using a different address.
+
+Otherwise, please just ignore this email.
+
+✌️`,
+      body: `<p>👋 Hi there,</p>
+<p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
+<p>If this was you, check if you registered using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
+<p>✌️</p>`
     }
   }
 };

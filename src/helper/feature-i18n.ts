@@ -7,36 +7,42 @@ import {
   instanceLandingData as deInstanceLandingData,
   serverSideStrings as deServerSideStrings,
   loggedInData as deLoggedInData,
+  kratosMailStrings as deKratosMailStrings,
 } from '@/data/de'
 import {
   instanceData as enInstanceData,
   serverSideStrings as enServerSideStrings,
   instanceLandingData as enInstanceLandingData,
   loggedInData as enLoggedInData,
+  kratosMailStrings as enKratosMailStrings,
 } from '@/data/en'
 import {
   instanceData as esInstanceData,
   instanceLandingData as esInstanceLandingData,
   serverSideStrings as esServerSideStrings,
   loggedInData as esLoggedInData,
+  kratosMailStrings as esKratosMailStrings,
 } from '@/data/es'
 import {
   instanceData as frInstanceData,
   serverSideStrings as frServerSideStrings,
   instanceLandingData as frInstanceLandingData,
   loggedInData as frLoggedInData,
+  kratosMailStrings as frKratosMailStrings,
 } from '@/data/fr'
 import {
   instanceData as hiInstanceData,
   serverSideStrings as hiServerSideStrings,
   instanceLandingData as hiInstanceLandingData,
   loggedInData as hiLoggedInData,
+  kratosMailStrings as hiKratosMailStrings,
 } from '@/data/hi'
 import {
   instanceData as taInstanceData,
   serverSideStrings as taServerSideStrings,
   loggedInData as taLoggedInData,
   instanceLandingData as taInstanceLandingData,
+  kratosMailStrings as taKratosMailStrings,
 } from '@/data/ta'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
@@ -136,6 +142,25 @@ export function getLoggedInData(lang: string) {
       : enLoggedInData
 
   return mergeDeepRight(enData, data) as typeof enLoggedInData
+}
+
+export function getKratosMailStrings(lang: string) {
+  const enData = enKratosMailStrings
+
+  const data =
+    lang == Instance.De
+      ? deKratosMailStrings
+      : lang == Instance.Es
+      ? esKratosMailStrings
+      : lang == Instance.Fr
+      ? frKratosMailStrings
+      : lang == Instance.Ta
+      ? taKratosMailStrings
+      : lang == Instance.Hi
+      ? hiKratosMailStrings
+      : enKratosMailStrings
+
+  return mergeDeepRight(enData, data) as typeof enKratosMailStrings
 }
 
 export function getEntityStringByTypename(

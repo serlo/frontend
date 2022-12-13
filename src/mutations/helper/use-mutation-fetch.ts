@@ -1,7 +1,6 @@
 import { GraphQLError } from 'graphql'
 import { ClientError, GraphQLClient } from 'graphql-request'
 
-import { csrReload } from '../../helper/csr-reload'
 import { showToastNotice } from '../../helper/show-toast-notice'
 import { triggerSentry } from '../../helper/trigger-sentry'
 import { endpoint } from '@/api/endpoint'
@@ -43,14 +42,14 @@ export function useMutationFetch() {
 
   async function mutationFetch(
     query: string,
-    input: unknown,
-    isRetry?: boolean
+    input: unknown
   ): Promise<boolean | number> {
-    if (auth.current === null)
-      return handleError('UNAUTHENTICATED', errorStrings)
-    const usedToken = auth.current.token
+    if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
     try {
-      const result = await executeQuery()
+      const result =
+        window.location.hostname == 'localhost'
+          ? await executeQueryLocally()
+          : await executeQuery()
       if (Object.hasOwn(result, 'entity')) {
         const entity = result.entity as EntityMutation
         if (Object.keys(entity)[0].startsWith('set')) {
@@ -67,23 +66,28 @@ export function useMutationFetch() {
       const type = error ? error.extensions.code : 'UNKNOWN'
       // eslint-disable-next-line no-console
       console.error(error)
-      if (type === 'INVALID_TOKEN' && !isRetry) {
-        await auth.current.refreshToken(usedToken)
-        return await mutationFetch(query, input, true)
-      }
 
       return handleError(type, errorStrings, error)
     }
 
     async function executeQuery(): Promise<MutationResponse> {
       const client = new GraphQLClient(endpoint, {
-        headers: auth.current
-          ? {
-              Authorization: `Bearer ${auth.current.token}`,
-            }
-          : {},
+        credentials: 'include',
       })
       return client.request(query, { input })
+    }
+
+    // proxy calls from localhost to make sure we can send the cookies
+    async function executeQueryLocally(): Promise<MutationResponse> {
+      const result = await fetch('/api/frontend/localhost-graphql-fetch', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        body: JSON.stringify({ query, variables: { input } }),
+      })
+      return (await result.json()) as MutationResponse
     }
   }
 
@@ -102,15 +106,18 @@ function handleError(
   console.error(e)
 
   if (type == 'BAD_USER_INPUT') {
-    triggerSentry({ message: 'Bad unser input in mutation' })
+    triggerSentry({ message: 'API(mutation): bad user input' })
   }
 
   if (type == 'UNKNOWN') {
-    triggerSentry({ message: 'Unknown API error' })
+    triggerSentry({ message: 'API(mutation): unknown error' })
   }
 
   if (type == 'UNAUTHENTICATED') {
-    csrReload()
+    // while this makes sense it can also increases the chance of lost changes when using the edtr.
+    // let's try without for now
+    // csrReload()
+    triggerSentry({ message: 'API(mutation): unauthenticated' })
   }
 
   showToastNotice(message, 'warning')

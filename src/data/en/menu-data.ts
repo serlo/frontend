@@ -100,7 +100,6 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Topics', id: 23593 },
       { title: 'New here?', id: 49386 },
       { title: 'Guidelines', id: 48345 },
-      { title: 'Edit Taxonomy', url: '/taxonomy/term/organize/23593' },
     ],
   },
   {

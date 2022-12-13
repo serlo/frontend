@@ -9,7 +9,12 @@ export const instanceData = {
     header: {
       slogan: "Die freie Lernplattform",
       search: "Suche",
-      login: "Anmelden"
+      login: "Anmelden",
+      skipLinks: {
+        sentence: "Springe zum %content% oder %footer%",
+        content: "Inhalt",
+        footer: "Footer"
+      }
     },
     search: {
       privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
@@ -98,7 +103,7 @@ export const instanceData = {
         title: "Erstelle mit uns Lerninhalte!",
         text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
-        registerButton: "Neues Konto anlegen",
+        registerButton: "Neuen Account anlegen",
         psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
@@ -303,6 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
+      alreadyLoggedIn: "👋 Hi! Du bist schon angemeldet.",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -313,9 +319,75 @@ export const instanceData = {
       isLoading: "Inhalt wird geladen…",
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
-    login: {
+    auth: {
       pleaseLogInLink: "Bitte melde dich an,",
-      pleaseLogInText: "um diese Funktion zu benutzen."
+      pleaseLogInText: "um diese Funktion zu benutzen.",
+      register: {
+        registerTitle: "Deinen Serlo Account erstellen",
+        passwordRequirements: "Mindestens 8 Zeichen, länger ist besser.",
+        registerIntro: "Du brauchst keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst, bist du hier genau richtig."
+      },
+      recoverTitle: "Deinen Account wiederherstellen",
+      recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. %break% Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
+      verify: {
+        title: "Bestätige deine Mailadresse",
+        instructions: "Gib hier deine Mailadresse an und schick sie ab, um einen Bestätigungslink per Mail zu bekommen.",
+        alreadyDone: "Du bist eingeloggt, das heißt deine Mailadresse ist schon bestätigt 😊."
+      },
+      settings: {
+        title: "Dein Passwort ändern",
+        instruction: "Gib hier dein neues Passwort an."
+      },
+      loggingOut: "Du wirst abgemeldet …",
+      login: {
+        confirmAction: "Vorgang bestätigen",
+        signIn: "Mit deinem Account anmelden",
+        logOut: "Abmelden",
+        newHere: "Bist du neu hier?",
+        registerNewAccount: "Einen neuen Account anlegen",
+        forgotPassword: "Hast du %forgotLinkText%?",
+        forgotLinkText: "dein Passwort vergessen",
+        validSessionDetected: "Hey, du bist schon in einem anderen Tab angemeldet. Lade bitte die Seite neu."
+      },
+      fields: {
+        identifier: "Benutzername oder E-Mailadresse",
+        username: "Benutzername",
+        password: "Passwort",
+        email: "E-Mail-Adresse"
+      },
+      messages: {
+        code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
+        code1010001: "Anmelden",
+        code1010013: "Weiter",
+        code1040001: "Account anlegen",
+        code1040003: "Weiter",
+        code1050001: "Deine Änderungen wurden gespeichert! 🎉",
+        code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
+        code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
+        code1070003: "Speichern",
+        code1070005: "Absenden",
+        code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
+        code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
+        code4000001: '%reason%',
+        code4000002: "%field% bitte noch angeben.",
+        code4000005: '%reason%',
+        code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
+        code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
+        code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
+        code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
+        code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen."
+      },
+      usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      passwordTooShort: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
+      passwordTooLong: "Sorry, dieses Passwort ist zu lang. Bitte wähle ein Passwort, das höchstens 72 Zeichen lang ist.",
+      passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
+      emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach, ob du dich vertippt hast.",
+      registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
+      terms: "Nutzungsbedingungen",
+      signUp: "Account anlegen",
+      verificationProblem: "Wenn du keine Mail bekommen hast",
+      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
     },
     keys: {
       ctrl: "Strg",
@@ -404,13 +476,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Abonnements"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "Passwort ändern"
     }, {
       url: '/user/settings',
       title: "Einstellungen"
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "Abmelden"
     }]
   }],
@@ -440,7 +512,7 @@ export const loggedInData = {
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
-      editTax: "Titel & Text bearbeiten",
+      editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
       organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
@@ -815,7 +887,7 @@ export const loggedInData = {
           goToChat: "Gehe zu %chatLink%.",
           signIn: "Melde dich an.",
           goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
-          myAccount: "Mein Konto",
+          myAccount: "Mein Account",
           uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
           refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
           refreshLink: "diesem magischem Link"
@@ -829,8 +901,8 @@ export const loggedInData = {
         toForm: "Motivationsformular"
       },
       delete: {
-        heading: "So kannst du dein Konto löschen",
-        text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
+        heading: "So kannst du deinen Account löschen",
+        text: "Wenn du deinen Account löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
         deleteAccount: "Account löschen"
       }
     },
@@ -849,7 +921,7 @@ export const loggedInData = {
         title: "Inhalte in Ordner verschieben / kopieren",
         select: "Inhalte zum kopieren oder verschieben auswählen:",
         target: "Zielordner:",
-        link: "Link",
+        link: 'Link',
         moveButtonText: "Verschieben zu: %type%",
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
@@ -869,6 +941,80 @@ export const loggedInData = {
     },
     roles: {
       addButton: "Als %role% hinzufügen"
+    }
+  }
+};
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: "👉 Zugang zu deinem Serlo Account",
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
+ 
+Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+{{ .RecoveryURL }}
+
+Viel Erfolg! Dein Serlo Team`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
+ 
+<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
+    },
+    invalid: {
+      subject: "👉 Zugriff auf Account",
+      'body.plaintext': `👋 Hi there!
+
+Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.
+
+Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.
+
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+
+Sonst kannst du diese Mail einfach ignorieren.
+
+✌️`,
+      body: `<p>👋 Hi there!</p>
+<p>Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf <a href="https://serlo.org">serlo.org</a> wiederherzustellen.</p>
+<p>Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>Sonst kannst du diese Mail einfach ignorieren.</p>
+<p>✌️</p>`
+    }
+  },
+  verification: {
+    valid: {
+      subject: "👋 Bitte bestätige deine E-Mail-Adresse",
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
+
+wunderbar dich auf serlo.org zu haben 🎉
+      
+Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
+{{ .VerificationURL }}
+
+Dein Community-Support 💚`,
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>wunderbar dich auf serlo.org zu haben 🎉</p>
+<p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
+<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Dein Community-Support 💚</p>`
+    },
+    invalid: {
+      subject: `👋 Jemand hat versucht diese Mailadresse zu bestätigen`,
+      'body.plaintext': `👋 Hi,
+
+jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf serlo.org mit dieser Adresse verknüpft.
+
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+
+Sonst kannst du diese Mail einfach ignorieren.
+
+✌️`,
+      body: `<p>👋 Hi,</p>
+<p>jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf <a href="https://serlo.org">serlo.org</a> mit dieser Adresse verknüpft.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>sonst kannst du diese Mail einfach ignorieren.</p>
+<p>✌️</p>`
     }
   }
 };

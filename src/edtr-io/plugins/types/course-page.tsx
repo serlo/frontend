@@ -69,7 +69,7 @@ function CoursePageTypeEditor(
       </h1>
       {content.render()}
       {props.config.skipControls ? null : (
-        <ToolbarMain subscriptions {...props.state} />
+        <ToolbarMain showSubscriptionOptions {...props.state} />
       )}
     </article>
   )

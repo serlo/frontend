@@ -92,6 +92,7 @@ export function UserTools({
               fadeIn
             )
       }
+      aria-label="Tool Menu"
     >
       <List
         className={clsx(
@@ -135,7 +136,7 @@ export function UserTools({
           )
         ) : null}
 
-        {auth.current ? (
+        {auth ? (
           data?.type === UuidType.CoursePage ||
           data?.type === UuidType.Course ? (
             <MoreAuthorToolsCourse data={data} aboveContent={aboveContent} />
