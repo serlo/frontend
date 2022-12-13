@@ -34,7 +34,6 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import type { AxiosError } from '@/auth/types'
 import { Node } from '@/components/auth/node'
 import type { InstanceData } from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -108,7 +107,7 @@ export function Flow<T extends SubmitPayload>({
       <div className="mx-side">
         {filteredNodes.map((node) => {
           const isSubmit =
-            hasOwnPropertyTs(node.attributes, 'type') &&
+            Object.hasOwn(node.attributes, 'type') &&
             node.attributes.type === 'submit'
           const id = getNodeId(node)
 
@@ -246,7 +245,7 @@ export function handleFlowError<S>(
         const registrationFlowMessages =
           flowType === FlowType.registration &&
           error.response &&
-          hasOwnPropertyTs(error.response, 'data')
+          Object.hasOwn(error.response, 'data')
             ? (error.response.data as SelfServiceRegistrationFlow).ui.messages
             : undefined
         if (
