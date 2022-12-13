@@ -21,107 +21,6 @@ export function LandingDE({ data }: LandingDEProps) {
 
   return (
     <>
-      <style jsx>{`
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
-
-        .about {
-          padding-top: 7rem;
-          padding-bottom: 5rem;
-          margin: 6rem 0 0 0;
-          background-image: url('/_assets/img/landing/about-big-arrow.svg'),
-            url('/_assets/img/landing/about-container.svg');
-          background-repeat: no-repeat, no-repeat;
-          background-position: 77% 12%;
-          background-size: 200%, 100vw 100%;
-
-          @screen sm {
-            padding-top: 11rem;
-            padding-bottom: 9rem;
-            background-position: 20% 19%;
-            background-size: 82%, 100vw 100%;
-          }
-        }
-
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-
-        :global(.landing-button-with-wings) {
-          &:after,
-          &:before {
-            content: ' ';
-            background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-            position: absolute;
-            margin-top: -0.6rem;
-            width: 4rem;
-            height: 4rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity ease-in 0.2s;
-          }
-
-          &:after {
-            margin-left: 1rem;
-            transform: scaleX(-1);
-          }
-
-          &:before {
-            margin-left: -5rem;
-          }
-
-          &:hover {
-            &:after,
-            &:before {
-              opacity: 1;
-            }
-          }
-        }
-
-        :global(.landing-button-with-wink) {
-          &:after,
-          &:before {
-            background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-            margin-top: -2rem !important;
-            background-size: 65% !important;
-          }
-        }
-
-        .p-with-wink {
-          &:after,
-          &:before {
-            margin-top: -1rem !important;
-            background-size: 75%;
-            width: 2.5rem;
-            height: 2.5rem;
-            opacity: 1;
-          }
-
-          &:after {
-            margin-left: -0.5rem;
-          }
-
-          &:before {
-            margin-left: -1.5rem;
-          }
-        }
-
-        .partner {
-          padding-top: 1rem;
-          background: url('/_assets/img/landing/footer-container.svg') no-repeat;
-          background-size: 100% 100%;
-        }
-      `}</style>
       <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
       <LandingJsonLd />
       <Header />
@@ -231,6 +130,117 @@ export function LandingDE({ data }: LandingDEProps) {
         </section>
       </main>
       <FooterNew />
+      <style jsx>{`
+        // special donation button on landing
+        :global(.navtrigger[href='/spenden']) {
+          display: none;
+        }
+
+        // special donation button on landing
+        :global(.navtrigger[href='/spenden']) {
+          display: none;
+        }
+
+        @font-face {
+          font-family: 'Karmilla';
+          font-style: bolder;
+          font-weight: 800;
+          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+              format('woff2'),
+            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+          font-display: swap;
+        }
+
+        .about {
+          padding-top: 7rem;
+          padding-bottom: 5rem;
+          margin: 6rem 0 0 0;
+          background-image: url('/_assets/img/landing/about-big-arrow.svg'),
+            url('/_assets/img/landing/about-container.svg');
+          background-repeat: no-repeat, no-repeat;
+          background-position: 77% 12%;
+          background-size: 200%, 100vw 100%;
+
+          @screen sm {
+            padding-top: 11rem;
+            padding-bottom: 9rem;
+            background-position: 20% 19%;
+            background-size: 82%, 100vw 100%;
+          }
+        }
+
+        .underlined {
+          padding-right: 1rem;
+          white-space: nowrap;
+          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
+            bottom;
+        }
+
+        :global(.landing-button-with-wings) {
+          &:after,
+          &:before {
+            content: ' ';
+            background: url('/_assets/img/landing/wing-left.svg') no-repeat;
+            position: absolute;
+            margin-top: -0.6rem;
+            width: 4rem;
+            height: 4rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity ease-in 0.2s;
+          }
+
+          &:after {
+            margin-left: 1rem;
+            transform: scaleX(-1);
+          }
+
+          &:before {
+            margin-left: -5rem;
+          }
+
+          &:hover {
+            &:after,
+            &:before {
+              opacity: 1;
+            }
+          }
+        }
+
+        :global(.landing-button-with-wink) {
+          &:after,
+          &:before {
+            background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
+            margin-top: -2rem !important;
+            background-size: 65% !important;
+          }
+        }
+
+        .p-with-wink {
+          &:after,
+          &:before {
+            margin-top: -1rem !important;
+            background-size: 75%;
+            width: 2.5rem;
+            height: 2.5rem;
+            opacity: 1;
+          }
+
+          &:after {
+            margin-left: -0.5rem;
+          }
+
+          &:before {
+            margin-left: -1.5rem;
+          }
+        }
+
+        .partner {
+          padding-top: 1rem;
+          background: url('/_assets/img/landing/footer-container.svg') no-repeat;
+          background-size: 100% 100%;
+        }
+      `}</style>
     </>
   )
 }
