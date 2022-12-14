@@ -40,7 +40,7 @@ export function TestimonialDonationsPage() {
           <img
             src={banner.imageSrc}
             className={clsx(
-              'mx-auto sm:h-fit rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
+              'mx-auto rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
             )}
           />
           <p className="text-base mt-1 font-bold text-gray-700">
