@@ -222,17 +222,18 @@ export function Donations() {
     return (
       <aside className="fixed z-20 bottom-0 left-0 right-0 bg-brand text-center">
         <p className="p-2.5 text-white leading-9">
-          <b className="hidden md:inline">Spendenkonto:</b>
-          <span className="md:ml-4">
-            <b>IBAN</b> DE98 4306 0967 8204 5906 00
+          <span className="hidden mobile:inline pl-4 mobile:ml-0">
+            <b className="hidden md:inline">Spendenkonto:</b>
+            <span className="md:ml-4">
+              <b>IBAN</b> DE98 4306 0967 8204 5906 00
+            </span>
+            <span className="ml-4">
+              <b>BIC</b> GENODEM1GLS
+            </span>
+            <span className="ml-4 hidden sm:inline">GLS Bank</span>
           </span>
-          <br className="block sm:hidden" />
-          <span className="ml-4">
-            <b>BIC</b> GENODEM1GLS
-          </span>
-          <span className="ml-4">GLS Bank</span>
           <a
-            className="serlo-button-green ml-8"
+            className="serlo-button-green mobile:ml-8"
             href="https://www.paypal.me/serlo"
             target="_blank"
             rel="noreferrer"
