@@ -23,6 +23,12 @@ import { renderArticle } from '@/schema/article-renderer'
 
 const ContentPage: NextPage = () => {
   return (
+    <>
+      Sorry, we have disabled Bot or Not for a while. Check Slack to know when
+      it will be enabled again.
+    </>
+  )
+  return (
     <FrontendClientBase
       noHeaderFooter
       noContainers
