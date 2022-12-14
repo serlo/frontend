@@ -56,13 +56,13 @@ export function Donations() {
               <span className="!pr-0 pb-2 underlined">Unterschied</span>.
             </h1>
           </div>
-          <aside className="w-full">
+          <aside className="sm:w-full">
             <img
               src="/_assets/img/donations-image.jpg"
               alt="Kind beim Lernen mit Serlo"
               className={clsx(
                 'rounded-full object-cover object-center aspect-square',
-                'block max-w-[20rem] mx-auto',
+                'block max-w-[20rem] p-side mobile:mx-auto',
                 'sm:max-w-none sm:w-[23rem] sm:h-[23rem] sm:mx-0 sm:ml-auto'
               )}
             />
