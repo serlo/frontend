@@ -278,7 +278,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
               if (bannerRef.current) observer.observe(bannerRef.current)
             }}
             className={clsx(
-              ' sm:h-fit',
+              'mx-auto mb-3',
               isTestimonial
                 ? 'rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
                 : 'scale-x-[-1] sm:px-3 px-16'
@@ -297,7 +297,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           <p className="my-5 font-handwritten mx-side text-[1.32em] text-brand">
             {banner.call}
           </p>
-          <div className="">{banner.text}</div>
+          <div className="text-center sm:text-left">{banner.text}</div>
 
           <p className="block mb-6 mx-auto sm:mb-10 sm:ml-side lg:mb-24">
             <button
