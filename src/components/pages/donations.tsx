@@ -78,21 +78,12 @@ export function Donations() {
           <div className="max-w-2xl mx-auto">
             <section>
               <p className="serlo-p special-hyphens-initial text-left">
+                Fast eine halbe Million Kinder in der Sekundarstufe sind von
+                Armut betroffen und haben erhebliche Probleme in der Schule.{' '}
                 <b>Mit deiner Spende</b> leistest du einen wichtigen Beitrag,
-                dass Kinder und Jugendliche im eigenen Tempo lernen und ihr
-                Potential entfalten können –{' '}
-                <b>unabhängig vom Geldbeutel der Eltern</b>.<br />
-                <a href="#formular" className="serlo-link">
-                  Spende
-                </a>{' '}
-                jetzt einmalig oder regelmäßig!
-              </p>
-              <p className="serlo-p special-hyphens-initial text-left">
-                <b>Deine Wirkung</b>
-                <br /> Mit deiner Unterstützung arbeiten wir gemeinsam daran,
-                Schulen zu wertschätzenden und begeisternden Lernräumen für
-                Schüler*innen zu entwickeln, die sie zu empathischen,
-                selbstbestimmten und engagierten Menschen heranwachsen lassen.
+                dass Kinder und Jugendliche kostenfreien Zugang zu digitalen
+                Lernmaterialien erhalten.{' '}
+                <b>Spende jetzt einmalig oder regelmäßig!</b>
               </p>
             </section>
             <section id="formular" className="mt-12 mx-side">
@@ -104,7 +95,9 @@ export function Donations() {
                 <div id={`twingle-public-embed-${twingleID}`} />
               </PrivacyWrapper>
 
-              <noscript>Bitte Javascript aktivieren</noscript>
+              <noscript>
+                Bitte Javascript aktivieren um über das Formular zu Spenden
+              </noscript>
             </section>
           </div>
 
@@ -133,8 +126,8 @@ export function Donations() {
                 </p>
 
                 <p className="mt-3">
-                  Du hast Fragen? Schreib mir gerne an
-                  <br />
+                  Du hast Fragen? Schreib mir <br className="hidden md:block" />{' '}
+                  gerne an{' '}
                   <a className="serlo-link" href="mailto:spenden@serlo.org">
                     spenden@serlo.org
                   </a>
