@@ -376,9 +376,11 @@ export const instanceData = {
         code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
         code4060004: "El enlace de recuperación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo",
-        code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo."
+        code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo.",
+        code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'
       },
       usernameInvalid: "Tu nombre de usuario sólo puede contener letras, dígitos, guiones bajos (_) y guiones (-).",
+      usernameTooLong: 'Sorry, this username is too long, make sure it\'s 32 characters or less',
       passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
       passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
@@ -514,7 +516,6 @@ export const loggedInData = {
       edit: "Editar",
       editTax: "Editar título y texto",
       unrevisedEdit: "Mostrar revisiones sin revisar",
-      organize: "Organizar",
       moveToGrouped: "Mover contenido a otro grupo de ejercicios de texto",
       moveToTextExercise: "Mover contenido a otro ejercicio de texto",
       sortEntities: "Ordenar contenido",
