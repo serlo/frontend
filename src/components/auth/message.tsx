@@ -73,6 +73,8 @@ export function Message({
       return strings.auth.passwordTooSimilar
     if (searchString.includes('A valid session was detected'))
       return strings.auth.login.validSessionDetected
+    if (searchString.includes('length must be'))
+      return strings.auth.usernameTooLong
 
     // eslint-disable-next-line no-console
     console.log(searchString)
