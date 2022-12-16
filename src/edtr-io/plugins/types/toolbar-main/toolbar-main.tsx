@@ -39,7 +39,7 @@ export function ToolbarMain({
 
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
-  useLeaveConfirm(isChanged && !pending)
+  useLeaveConfirm(isChanged)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null

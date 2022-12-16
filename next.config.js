@@ -58,7 +58,8 @@ module.exports = withBundleAnalyzer({
     defaultLocale: 'de',
     localeDetection: false,
   },
-  reactStrictMode: true,
+  // TODO: reactStrictMode with react18 breaks edtr.io atm
+  reactStrictMode: false,
   productionBrowserSourceMaps: true,
   fallbackNodePolyfills: false,
 })
