@@ -117,12 +117,12 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute inset-0 flex justify-around items-center mobile:-top-12 sm:-top-24"
+          className="absolute inset-0 flex justify-around items-center -top-28 mobile:-top-12 sm:-top-24"
           onClick={confirmLoad}
         >
           <button
             className={clsx(
-              'serlo-button-light',
+              isTwingle ? 'serlo-button-blue' : 'serlo-button-light',
               'group-hover:bg-brand-500 group-hover:text-white'
             )}
             onKeyDown={onKeyDown}
