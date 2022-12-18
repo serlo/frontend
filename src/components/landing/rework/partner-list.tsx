@@ -43,7 +43,7 @@ const partners = [
   },
 ]
 
-export function PartnerListNew() {
+export function PartnerList() {
   return (
     <div
       className={clsx(
