@@ -191,14 +191,16 @@ export function handleFlowError<S>(
         return
       case 'session_already_available': {
         if (!checkLoggedIn()) void fetchAndPersistAuthSession()
-        showToastNotice(strings.notices.alreadyLoggedIn)
+        showToastNotice(strings.notices.alreadyLoggedIn, 'default', 3000)
 
         const redirection = filterUnwantedRedirection({
           desiredPath: sessionStorage.getItem('previousPathname'),
           unwantedPaths: [verificationUrl, loginUrl, registrationUrl],
         })
+        setTimeout(() => {
+          window.location.href = redirection
+        }, 3000)
 
-        await router.push(redirection)
         return
       }
       case 'session_refresh_required':
