@@ -308,7 +308,7 @@ export const instanceData = {
     notices: {
       welcome: '👋 Welcome %username%!',
       bye: '👋 See you soon!',
-      alreadyLoggedIn: '👋 Hi! You are already logged in',
+      alreadyLoggedIn: '👋 Welcome back',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
