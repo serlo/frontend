@@ -19,6 +19,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 600
+          check_interval: 10
       - run: echo "module.exports = {username:'',password:'',userPassword:'123456'}" > secrets.js
       - run: npm ci
       - run: npm run codeceptjs
