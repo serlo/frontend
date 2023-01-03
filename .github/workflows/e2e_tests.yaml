@@ -1,8 +1,10 @@
 name: e2e tests
 on:
-  pull_request:
+  push:
     branches:
-      - test-ci
+      - staging
+      - production
+  pull_request:
 jobs:
   test:
     runs-on: ubuntu-latest
