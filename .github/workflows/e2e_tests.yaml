@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - staging
+      # testing
+      - test-ci
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -13,6 +15,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: 'Entkenntnis/serlo-codecept'
+      - uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: echo "module.exports = {username:'',password:'',userPassword:'123456'}" > secrets.js
       - run: npm ci
       - run: npm run codeceptjs
