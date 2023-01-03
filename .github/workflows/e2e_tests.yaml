@@ -1,0 +1,13 @@
+name: e2e tests
+on:
+  push:
+    branches:
+      - test-ci
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - run: echo "hi"
