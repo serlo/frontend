@@ -308,7 +308,7 @@ export const instanceData = {
     notices: {
       welcome: '👋 Welcome %username%!',
       bye: '👋 See you soon!',
-      alreadyLoggedIn: '👋 Hi! You are already logged in',
+      alreadyLoggedIn: '👋 Welcome back',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -376,9 +376,11 @@ export const instanceData = {
         code4000008: 'The provided authentication code is invalid, please try again.',
         code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
         code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
-        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.'
+        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
+        code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'
       },
       usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      usernameTooLong: 'Sorry, this username is too long, make sure it\'s 32 characters or less',
       passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
       passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
@@ -514,7 +516,6 @@ export const loggedInData = {
       edit: "திருத்தம்",
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      organize: "ஒழுங்குபடுத்த",
       moveToGrouped: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',

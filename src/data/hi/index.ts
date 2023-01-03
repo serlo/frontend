@@ -308,7 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "आपका स्वागत है",
       bye: "👋जल्द ही मिलते हैं!",
-      alreadyLoggedIn: '👋 Hi! You are already logged in',
+      alreadyLoggedIn: '👋 Welcome back',
       revisionSaved: "संशोधन सहेजा गया है और जल्द ही इसकी समीक्षा की जाएगी 👍",
       revisionAccepted: "संशोधन को सफलतापूर्वक स्वीकार कर लिया गया ✅",
       revisionRejected: "संशोधन को सफलतापूर्वक अस्वीकार कर दिया गया ❎",
@@ -376,9 +376,11 @@ export const instanceData = {
         code4000008: 'The provided authentication code is invalid, please try again.',
         code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
         code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
-        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.'
+        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
+        code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'
       },
       usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      usernameTooLong: 'Sorry, this username is too long, make sure it\'s 32 characters or less',
       passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
       passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
@@ -514,7 +516,6 @@ export const loggedInData = {
       edit: "संपादित",
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      organize: "आयोजन",
       moveToGrouped: 'Move content to other grouped-text-exercise',
       moveToTextExercise: "सामग्री को अन्य पाठ-व्यायाम में ले जाएँ",
       sortEntities: "सामग्री को क्रमबद्ध करें",

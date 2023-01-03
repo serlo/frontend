@@ -308,7 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
-      alreadyLoggedIn: "👋 Hi! Du bist schon angemeldet.",
+      alreadyLoggedIn: "👋 Willkommen zurück",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -376,9 +376,11 @@ export const instanceData = {
         code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
         code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
         code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
-        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen."
+        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4070005: "Dieser Bestätigungslink ist leider nicht mehr gültig. Bitte versuche eine neue E-Mail anzufordern."
       },
       usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      usernameTooLong: "Sorry, dieser Benutzername ist zu lang. 32 Zeichen oder weniger sind erlaubt.",
       passwordTooShort: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
       passwordTooLong: "Sorry, dieses Passwort ist zu lang. Bitte wähle ein Passwort, das höchstens 72 Zeichen lang ist.",
       passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
@@ -514,7 +516,6 @@ export const loggedInData = {
       edit: "Überarbeiten",
       editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
-      organize: "Baumstruktur bearbeiten",
       moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
       moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalte sortieren",
