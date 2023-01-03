@@ -1,10 +1,7 @@
 import { COOKIE_DOMAIN } from '@/auth/cookie/cookie-domain'
-import {
-  createApiHandler,
-  config as oryConfig,
-} from '@ory/integrations/next-edge'
+import { createApiHandler, config } from '@ory/integrations/next-edge'
 
-export const config = { ...oryConfig }
+export { config }
 
 const KRATOS_HOSTS = {
   production: process.env.KRATOS_HOST_PRODUCTION,
