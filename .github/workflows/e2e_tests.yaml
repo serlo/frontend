@@ -8,7 +8,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
           node-version: 16.x
-      - run: echo "hi"
+      - uses: actions/checkout@v3
+        with:
+          repository: 'Entkenntnis/serlo-codecept'
+      - run: npm install
+      - run: npm run codeceptjs
