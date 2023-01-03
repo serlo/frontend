@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: 'Entkenntnis/serlo-codecept'
-      - run: npm install
       - run: echo "module.exports = {username:'',password:'',userPassword:'123456'}" > secrets.js
-      - run: HEADLESS=true && npm run codeceptjs --steps
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npm run codeceptjs --steps
