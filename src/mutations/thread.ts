@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 import NProgress from 'nprogress'
-import { mutate } from 'swr'
+import { useSWRConfig } from 'swr'
 
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSWRCacheMutate } from './helper/use-swr-cache-mutate'
@@ -31,6 +31,7 @@ export function useThreadArchivedMutation() {
   const entityId = useEntityId()
   const mutationFetch = useMutationFetch()
   const mutateSWRCache = useSWRCacheMutate()
+  const { mutate } = useSWRConfig()
 
   return async function (input: ThreadSetThreadArchivedInput) {
     NProgress.start()
@@ -60,6 +61,7 @@ export function useSetThreadStateMutation() {
   const entityId = useEntityId()
   const mutationFetch = useMutationFetch()
   const mutateSWRCache = useSWRCacheMutate()
+  const { mutate } = useSWRConfig()
 
   return async function (input: ThreadSetThreadStateInput) {
     const success = await mutationFetch(setThreadStateMutation, input)
@@ -86,6 +88,7 @@ export function useSetCommentStateMutation() {
   const entityId = useEntityId()
   const mutationFetch = useMutationFetch()
   const mutateSWRCache = useSWRCacheMutate()
+  const { mutate } = useSWRConfig()
 
   return async function (input: ThreadSetCommentStateInput) {
     const success = await mutationFetch(setCommentStateMutation, input)
@@ -111,6 +114,7 @@ const createThreadMutation = gql`
 export function useCreateThreadMutation() {
   const mutationFetch = useMutationFetch()
   const mutateSWRCache = useSWRCacheMutate()
+  const { mutate } = useSWRConfig()
 
   return async function (input: ThreadCreateThreadInput) {
     const success = await mutationFetch(createThreadMutation, input)
@@ -136,6 +140,7 @@ const createCommentMutation = gql`
 export function useCreateCommentMutation() {
   const mutationFetch = useMutationFetch()
   const mutateSWRCache = useSWRCacheMutate()
+  const { mutate } = useSWRConfig()
   const entityId = useEntityId()
 
   return async function (input: ThreadCreateCommentInput) {
