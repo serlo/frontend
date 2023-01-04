@@ -1,0 +1,22 @@
+name: e2e tests
+on:
+  push:
+    branches:
+      - staging
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - uses: actions/checkout@v3
+        with:
+          repository: 'serlo/frontend-e2e-tests'
+      - uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 1200
+          check_interval: 20
+      - run: yarn
+      - run: CI=1 yarn test
