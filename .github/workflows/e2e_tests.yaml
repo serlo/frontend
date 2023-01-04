@@ -19,4 +19,4 @@ jobs:
           max_timeout: 1200
           check_interval: 20
       - run: yarn
-      - run: yarn test
+      - run: CI=1 yarn test
