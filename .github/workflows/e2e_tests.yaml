@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - staging
-      # delete after merge
-      - test-ci
 jobs:
   test:
     runs-on: ubuntu-latest
