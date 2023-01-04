@@ -32,9 +32,10 @@ export const preventHover: PointerEventHandler = (event) => {
 export interface ItemProps {
   link: HeaderLinkData
   elementAsIcon?: JSX.Element
+  className?: string
 }
 
-export function Item({ link, elementAsIcon }: ItemProps) {
+export function Item({ link, elementAsIcon, className }: ItemProps) {
   const hasChildren = link.children !== undefined
 
   const textAndIcon = (
@@ -48,7 +49,8 @@ export function Item({ link, elementAsIcon }: ItemProps) {
     <RadixItem
       className={clsx(
         'ease-linear duration-700',
-        'block md:inline-block md:mx-[3px]'
+        'block md:inline-block md:mx-[3px]',
+        className
       )}
       key={link.title}
     >
@@ -58,7 +60,7 @@ export function Item({ link, elementAsIcon }: ItemProps) {
 
   function renderItemNoSub() {
     return (
-      <NextLink href={link.url} passHref>
+      <NextLink legacyBehavior href={link.url} passHref>
         <Link
           className={clsx('group', styledLinkCls)}
           // temporarily track spenden button use

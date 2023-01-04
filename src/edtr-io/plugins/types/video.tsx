@@ -76,7 +76,7 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
         </section>
         <section>{description.render()}</section>
       </article>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </section>
   )
 }

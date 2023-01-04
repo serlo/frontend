@@ -90,9 +90,8 @@ export function MoreAuthorTools({
         return taxNewItems
           ? [Tool.NewEntitySubmenu]
           : [
-              Tool.EditTax,
               Tool.Abo,
-              Tool.Organize,
+              Tool.EditTax,
               Tool.Log,
               Tool.AnalyticsLink,
               Tool.SortEntities,

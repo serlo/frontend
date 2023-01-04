@@ -13,10 +13,10 @@ In our [staging](https://de.serlo-staging.dev/) and [production](https://serlo.o
 
 ### Local installation
 
-You can run the frontend on your local system. Install [Node.js > v12.22.0](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install) then run the following commands:
+You can run the frontend on your local system. Install [Node.js v16](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install) then run the following commands:
 
 ```sh
-git clone https://github.com/serlo/frontend.git
+git clone --filter=blob:none https://github.com/serlo/frontend.git
 cd frontend
 yarn
 yarn dev

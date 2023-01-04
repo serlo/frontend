@@ -51,9 +51,9 @@ export function SubParticipateMega({
           src="/_assets/img/community-menu-bird.svg"
           className="hidden md:block w-[8.1rem] px-side"
         />
-        <NextLink href="/community" passHref>
+        <NextLink legacyBehavior href="/community" passHref>
           <Link className="ml-4 my-3 serlo-button-green text-base rounded-4xl w-max py-[0.1rem]">
-            <span>Hier gehts los!</span>
+            <span>Hier geht&apos;s los!</span>
           </Link>
         </NextLink>
       </>

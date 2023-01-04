@@ -33,7 +33,6 @@ export enum Tool {
   MoveItems = 'moveItems',
   MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
-  Organize = 'organize',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
   SortGroupedExercises = 'sortGroupedExercises',
@@ -143,10 +142,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       renderer: renderNewEntity,
       canDo: canDo(Uuid.create('Entity')),
     },
-    organize: {
-      url: `/taxonomy/term/organize/${data.id}`,
-      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
-    },
     sortEntities: {
       url: `/taxonomy/term/sort/entities/${data.id}`,
       canDo: canDo(Entity.orderChildren),
@@ -226,7 +221,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     } = loggedInStrings.authorMenu
     return (
       <>
-        <li className="border-t-[1px] border-brand-200 mt-2 pt-2"></li>
         {isSubscribed ? (
           renderAboItem(unsubscribeNotifications, false, false)
         ) : (

@@ -1,29 +1,41 @@
+import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { Link } from '../../content/link'
+import { Logo } from './logo'
 import { Menu } from './menu/menu'
 import { MobileMenuButton } from './mobile-menu-button'
+import { SkipMenu } from './skip-menu'
+import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
+import { submitEvent } from '@/helper/submit-event'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { strings } = useInstanceData()
   const router = useRouter()
 
-  const hideQuickbar = router.route === '/search' || router.route === '/'
+  const isLanding = router.route === '/'
+  const hideQuickbar = router.route === '/search' || isLanding
 
   useEffect(() => {
-    document.body.addEventListener('keydown', (event) => {
+    const escapeHandler = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setMobileMenuOpen(false)
-    })
+    }
+    document.body.addEventListener('keydown', escapeHandler)
 
     // close mobile menu on client side navigation, we need the global Router instance
-    Router.events.on('routeChangeStart', () => {
+    const openMobileMenu = () => {
       setMobileMenuOpen(false)
-    })
+    }
+    Router.events.on('routeChangeStart', openMobileMenu)
+
+    return () => {
+      document.body.removeEventListener('keydown', escapeHandler)
+      Router.events.off('routeChangeStart', openMobileMenu)
+    }
   }, [])
 
   return (
@@ -34,9 +46,10 @@ export function Header() {
         'pb-9 bg-[url("/_assets/img/header-curve.svg")] bg-no-repeat bg-bottom bg-[length:100vw_3rem]'
       )}
     >
+      <SkipMenu />
       <div className="pt-3 pb-6 px-side lg:px-side-lg">
         <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
-          {renderLogo()}
+          <Logo foldOnMobile />
           <div
             className={clsx(
               'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
@@ -58,30 +71,8 @@ export function Header() {
     </header>
   )
 
-  function renderLogo() {
-    return (
-      <Link href="/" path={['logo']} className="w-min sm:w-auto">
-        <img
-          className="inline"
-          alt="Serlo"
-          src="/_assets/img/serlo-logo.svg"
-          width="120"
-          height="80"
-        />
-        <span
-          className={clsx(
-            'font-handwritten text-xl align-text-top text-truegray-700',
-            'ml-9 mt-2 block mobile:inline-block mobile:ml-9 sm:mt-4 mobile:whitespace-nowrap',
-            'sm:ml-2'
-          )}
-        >
-          Die freie Lernplattform
-        </span>
-      </Link>
-    )
-  }
-
   function renderQuickbar() {
+    if (isLanding) return renderSpecialDonationButton()
     if (hideQuickbar) return null
     return (
       <Quickbar
@@ -93,6 +84,20 @@ export function Header() {
         )}
         placeholder={strings.header.search}
       />
+    )
+  }
+
+  function renderSpecialDonationButton() {
+    return (
+      <button
+        className="serlo-button-green absolute text-[0.9rem] right-4 md:right-6 lg:right-12 top-28 md:top-[1.15rem] py-0.75"
+        onClick={() => {
+          submitEvent('spenden-header-menu-click-landing')
+          void router.push('/spenden')
+        }}
+      >
+        <FaIcon icon={faHeart} /> Jetzt Spenden
+      </button>
     )
   }
 }

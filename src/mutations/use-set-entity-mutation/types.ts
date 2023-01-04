@@ -1,6 +1,3 @@
-import { NextRouter } from 'next/router'
-
-import { LoggedInData } from '@/data-types'
 import {
   AppletSerializedState,
   ArticleSerializedState,
@@ -26,13 +23,10 @@ import {
 } from '@/fetcher/graphql-types/operations'
 
 export interface OnSaveData {
-  csrf?: string
   controls: {
-    subscription?: {
-      subscribe: number
-      mailman: number
-    }
-    checkout?: boolean
+    notificationSubscription?: boolean
+    emailSubscription?: boolean
+    noReview: boolean // this entity needs no Review or user choose to skip review
   }
 }
 
@@ -78,22 +72,10 @@ export type TaxonomyCreateOrUpdateMutationData = Pick<
 }
 
 export interface SetEntityMutationRunnerData {
-  mutationFetch: (
-    query: string,
-    input: unknown,
-    isRetry?: boolean
-  ) => Promise<boolean | number>
   data: SetEntityMutationData
-  needsReview: boolean
-  loggedInData: LoggedInData | null
   isRecursiveCall?: boolean
-  initialState: {
-    plugin: 'text'
-    state: unknown
-  }
   savedParentId?: number
   taxonomyParentId?: number
-  router: NextRouter
 }
 
 export type ChildFieldsData =

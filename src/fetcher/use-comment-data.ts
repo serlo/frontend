@@ -3,7 +3,6 @@ import useSWR from 'swr'
 
 import { GetCommentsQuery } from './graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const query = gql`
   query getComments($id: Int!) {
@@ -59,7 +58,7 @@ export function useCommentData(id: number) {
   // eslint-disable-next-line no-console
   if (error) console.error(error)
 
-  if (uuid && hasOwnPropertyTs(uuid, 'threads')) {
+  if (uuid && Object.hasOwn(uuid, 'threads')) {
     const threads = uuid.threads.nodes
 
     const activeThreads = threads?.filter((thread) => !thread.archived)

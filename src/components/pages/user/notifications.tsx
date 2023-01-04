@@ -85,7 +85,7 @@ export const Notifications = ({
   }
 
   function setAllToRead() {
-    if (auth.current === null) return
+    if (auth === null) return
 
     const unreadIds = data?.nodes.flatMap((node) =>
       node.unread ? [node.id] : []

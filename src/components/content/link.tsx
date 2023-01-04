@@ -29,7 +29,6 @@ const legacyLinks = [
   '/disable-frontend',
   '/enable-frontend',
   '/beitreten',
-  '/user/register',
 ]
 
 export function isLegacyLink(_href: string) {
@@ -48,9 +47,6 @@ export function isLegacyLink(_href: string) {
 
   return (
     legacyLinks.includes(_href) ||
-    _href.startsWith('/auth/') ||
-    _href.startsWith('/api/auth') ||
-    _href.startsWith('/authorization') ||
     _href.startsWith('/navigation') ||
     _href.startsWith('/entity/repository/add-revision-old/') || // temporary
     _href.includes('.serlo.org') // e.g. community.serlo.org or different language
@@ -123,7 +119,7 @@ function InternalLink({
 
   function renderClientSide(_href: string) {
     return (
-      <NextLink prefetch={false} href={_href}>
+      <NextLink legacyBehavior prefetch={false} href={_href}>
         {renderLink(_href)}
       </NextLink>
     )

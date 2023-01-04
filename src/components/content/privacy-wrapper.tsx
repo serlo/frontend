@@ -1,7 +1,7 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import clsx from 'clsx'
-import { ReactChild, useState, KeyboardEvent } from 'react'
+import { ReactChild, useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -37,6 +37,7 @@ export function PrivacyWrapper({
   const [showIframe, setShowIframe] = useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
   const { checkConsent, giveConsent } = useConsent()
+  const consentGiven = checkConsent(provider)
 
   const { strings } = useInstanceData()
 
@@ -54,6 +55,14 @@ export function PrivacyWrapper({
       confirmLoad()
     }
   }
+
+  useEffect(() => {
+    if (isTwingle && twingleCallback && consentGiven) {
+      confirmLoad()
+    }
+    // only run on first load
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div
@@ -95,7 +104,7 @@ export function PrivacyWrapper({
             alt={`${strings.content.previewImage} ${provider}`}
           />
         </div>
-        {!checkConsent(provider) && (
+        {!consentGiven && (
           <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand cursor-default">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
@@ -108,12 +117,12 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute inset-0 flex justify-around items-center mobile:-top-12 sm:-top-24"
+          className="absolute inset-0 flex justify-around items-center -top-28 mobile:-top-12 sm:-top-24"
           onClick={confirmLoad}
         >
           <button
             className={clsx(
-              'serlo-button-light',
+              isTwingle ? 'serlo-button-blue' : 'serlo-button-light',
               'group-hover:bg-brand-500 group-hover:text-white'
             )}
             onKeyDown={onKeyDown}

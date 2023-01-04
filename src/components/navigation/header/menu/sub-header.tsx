@@ -19,7 +19,7 @@ const headingClasses = /* className={ */ clsx(
 
 export function SubHeader({ item }: SubHeaderProps) {
   return (
-    <NextLink href={item.url} passHref>
+    <NextLink legacyBehavior href={item.url} passHref>
       <Link href={item.url} className="block md:py-[3px] group">
         <span className={headingClasses}>{item.title}</span>
       </Link>

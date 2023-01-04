@@ -15,7 +15,6 @@ import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
-import { useHandleSave } from '../helpers/use-handle-save'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
@@ -25,11 +24,11 @@ import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
   license?: StateTypeReturnType<typeof entity['license']>
-  subscriptions?: boolean
+  showSubscriptionOptions?: boolean
 }
 
 export function ToolbarMain({
-  subscriptions,
+  showSubscriptionOptions,
   changes,
   license,
 }: ToolbarMainProps) {
@@ -38,14 +37,9 @@ export function ToolbarMain({
   const redoable = useScopedSelector(hasRedoActions())
   const isChanged = useScopedSelector(hasPendingChanges())
 
-  const [visible, setVisibility] = useState(false)
+  const [saveModalOpen, setSaveModalOpen] = useState(false)
 
-  const { handleSave, pending, hasError } = useHandleSave(
-    visible,
-    subscriptions
-  )
-
-  useLeaveConfirm(isChanged && !pending)
+  useLeaveConfirm(isChanged)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -65,14 +59,11 @@ export function ToolbarMain({
         document.getElementsByClassName('controls-portal')[0]
       )}
       <SaveModal
-        visible={visible}
-        setVisibility={setVisibility}
-        handleSave={handleSave}
-        pending={pending}
+        open={saveModalOpen}
+        setOpen={setSaveModalOpen}
         changes={changes}
-        hasError={hasError}
         license={license}
-        subscriptions={subscriptions}
+        showSubscriptionOptions={showSubscriptionOptions}
       />
     </>
   )
@@ -105,7 +96,7 @@ export function ToolbarMain({
       <button
         className={clsx('serlo-button-green ml-2')}
         onClick={() => {
-          if (isChanged) setVisibility(true)
+          if (isChanged) setSaveModalOpen(true)
           else
             showToastNotice(
               '👀 ' + loggedInData!.strings.editor.noChangesWarning

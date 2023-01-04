@@ -3,7 +3,7 @@ import {
   instanceToScope,
 } from '@serlo/authorization'
 
-import { useAuth } from '@/auth/auth-provider'
+import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function useCanDo() {

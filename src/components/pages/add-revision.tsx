@@ -1,21 +1,22 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
 import clsx from 'clsx'
-import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
+import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
+import { loginUrl } from './auth/utils'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
+import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
-  AddPageRevisionMutationData,
+  OnSaveData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
 } from '@/mutations/use-set-entity-mutation/types'
@@ -25,7 +26,7 @@ import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-crea
 export function AddRevision({
   initialState,
   type,
-  needsReview,
+  entityNeedsReview,
   id,
   taxonomyParentId,
   breadcrumbsData,
@@ -45,35 +46,12 @@ export function AddRevision({
       setUserReady(true)
       return
     }
-
-    const makeDamnSureUserIsLoggedIn = async () => {
-      if (auth.current === null) return false
-
-      /*
-      the better way would be to check if the authenticated cookie is still
-      set since this seems to be the only cookie legacy actually removes,
-      but since it's http-only this workaround is way easier.
-      The fetch also makes sure the CSRF tokens are set
-      This is only a hack until we rely on the API to save content
-      */
-
-      try {
-        const result = await fetch(`/auth/password/change`)
-        const resultHtml = await result.text()
-        return resultHtml.includes('<a href="/auth/logout"')
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error)
-        return false
-      }
-    }
-
-    void makeDamnSureUserIsLoggedIn().then((isLoggedIn) => {
-      setUserReady(isLoggedIn)
-    })
-
+    // TODO: maybe fetch kratos session again here with fetchAndPersist
+    setUserReady(auth !== null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if (!setEntityMutation) return null
 
   const isPage = type === UuidType.Page
 
@@ -86,8 +64,44 @@ export function AddRevision({
         Sorry, Something is wrong!
         <br />
         Please: Logout and Login again and try to edit again.
+        <br />
+        <br /> If that does not work head to{' '}
+        <Link href={loginUrl}>{loginUrl}</Link> and make sure you are logged in
+        there.
       </StaticInfoPanel>
     )
+
+  // types needs refactoring here. splitting controls and data would probably make sense
+
+  const onSave = async (
+    data:
+      | SetEntityMutationData
+      | PageSerializedState
+      | TaxonomyCreateOrUpdateMutationData
+  ) => {
+    const willNeedReview = Object.hasOwn(data, 'controls')
+      ? !(data as OnSaveData).controls.noReview
+      : entityNeedsReview
+
+    const success =
+      type === UuidType.Page
+        ? await addPageRevision(data as PageSerializedState)
+        : type === UuidType.TaxonomyTerm
+        ? await taxonomyCreateOrUpdateMutation(
+            data as TaxonomyCreateOrUpdateMutationData
+          )
+        : await setEntityMutation(
+            {
+              ...data,
+              __typename: type,
+            } as SetEntityMutationData,
+            willNeedReview,
+            initialState,
+            taxonomyParentId
+          )
+
+    return success ? Promise.resolve() : Promise.reject()
+  }
 
   return (
     <>
@@ -99,49 +113,8 @@ export function AddRevision({
         )}
       >
         <SerloEditor
-          getCsrfToken={() => {
-            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-            return cookies['CSRF']
-          }}
-          needsReview={needsReview}
-          onSave={async (
-            data:
-              | SetEntityMutationData
-              | AddPageRevisionMutationData
-              | TaxonomyCreateOrUpdateMutationData
-          ) => {
-            const dataWithType = {
-              ...data,
-              __typename: type,
-            }
-
-            // refactor and rename when removing legacy code
-            const skipReview = hasOwnPropertyTs(data, 'controls')
-              ? data.controls.checkout
-              : undefined
-            const _needsReview = skipReview ? false : needsReview
-
-            const success =
-              type === UuidType.Page
-                ? //@ts-expect-error resolve when old code is removed
-                  await addPageRevision(dataWithType)
-                : type === UuidType.TaxonomyTerm
-                ? await taxonomyCreateOrUpdateMutation(
-                    dataWithType as TaxonomyCreateOrUpdateMutationData
-                  )
-                : await setEntityMutation(
-                    //@ts-expect-error resolve when old code is removed
-                    dataWithType,
-                    _needsReview,
-                    initialState,
-                    taxonomyParentId
-                  )
-
-            return new Promise((resolve, reject) => {
-              if (success) resolve()
-              else reject()
-            })
-          }}
+          entityNeedsReview={entityNeedsReview}
+          onSave={onSave}
           type={type}
           initialState={initialState}
         />

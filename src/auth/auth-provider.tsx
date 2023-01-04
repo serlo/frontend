@@ -1,35 +1,22 @@
-import { AuthorizationPayload } from '@serlo/authorization'
-import Cookies from 'js-cookie'
-import {
-  createContext,
-  ReactNode,
-  RefObject,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import type { Session } from '@ory/client'
+import type { AuthorizationPayload } from '@serlo/authorization'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
-import { parseAuthCookie } from './parse-auth-cookie'
+import { AuthSessionCookie } from './cookie/auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 
+export type AuthenticationPayload = {
+  username: string
+  id: number
+} | null
+
 export interface AuthContextValue {
-  loggedIn: boolean
-  authenticationPayload: RefObject<AuthenticationPayload>
+  authenticationPayload: AuthenticationPayload
   authorizationPayload: AuthorizationPayload | null
+  refreshAuth: (session: Session | null) => void
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)
-
-export function useAuth(): AuthContextValue {
-  const contextValue = useContext(AuthContext)
-
-  if (contextValue === null) {
-    throw new Error('Attempt to use auth data outside of provider!')
-  }
-
-  return contextValue
-}
 
 export function AuthProvider({
   children,
@@ -38,7 +25,35 @@ export function AuthProvider({
   children: ReactNode
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 }) {
-  const [authenticationPayload, loggedIn] = useAuthentication()
+  const [authenticationPayload, setAuthenticationPayload] = useState(
+    getAuthPayloadFromLocalCookie()
+  )
+
+  function refreshAuth(session: Session | null) {
+    setAuthenticationPayload(getAuthPayloadFromSession(session))
+  }
+
+  useEffect(() => {
+    const refreshWhenVisible = () => {
+      if (!document.visibilityState) return
+      const cookiePayload = getAuthPayloadFromLocalCookie()
+      if (cookiePayload?.id !== authenticationPayload?.id) {
+        setAuthenticationPayload(cookiePayload)
+
+        //TODO: this can vanish edtr changes when updating.
+        // we should probably make sure we save the state to localstorage before
+      }
+    }
+    document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
+    window.addEventListener('online', () => refreshWhenVisible) //on reconnect
+
+    return () => {
+      document.addEventListener('visibilitychange', refreshWhenVisible)
+      window.removeEventListener('online', () => refreshWhenVisible)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const authorizationPayload = useAuthorizationPayload(
     authenticationPayload,
     unauthenticatedAuthorizationPayload
@@ -49,7 +64,7 @@ export function AuthProvider({
       value={{
         authenticationPayload,
         authorizationPayload,
-        loggedIn,
+        refreshAuth,
       }}
     >
       {children}
@@ -57,68 +72,31 @@ export function AuthProvider({
   )
 }
 
-export type AuthenticationPayload = {
-  username: string
-  id: number
-  token: string
-  refreshToken(usedToken: string): Promise<void>
-  clearToken(): void
-} | null
+function getAuthPayloadFromLocalCookie(): AuthenticationPayload {
+  return getAuthPayloadFromSession(AuthSessionCookie.parse())
+}
 
-function useAuthentication(): [RefObject<AuthenticationPayload>, boolean] {
-  const initialValue = parseAuthCookie(refreshToken, clearToken)
-  const authenticationPayload = useRef<AuthenticationPayload>(initialValue)
-  const pendingRefreshTokenPromise = useRef<Promise<void> | null>(null)
-
-  const [loggedIn, setLoggedIn] = useState(() => {
-    return initialValue !== null
-  })
-
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async function refreshToken(usedToken: string) {
-    async function startRefreshTokenPromise(): Promise<void> {
-      if (typeof window === 'undefined') return
-
-      await fetch('/api/auth/refresh-token', {
-        method: 'POST',
-      })
-
-      authenticationPayload.current = parseAuthCookie(refreshToken, clearToken)
-      pendingRefreshTokenPromise.current = null
-    }
-
-    const currentCookieValue = parseAuthCookie(refreshToken, clearToken)
-    if (currentCookieValue === null || currentCookieValue.token !== usedToken) {
-      // Cookie has a newer token than the one we used for the request. So use that instead.
-      authenticationPayload.current = currentCookieValue
-      return
-    }
-
-    if (!pendingRefreshTokenPromise.current) {
-      // Only initiate the token refresh request if it has not been started already.
-      pendingRefreshTokenPromise.current = startRefreshTokenPromise()
-    }
-
-    return pendingRefreshTokenPromise.current
-  }
-
-  function clearToken() {
-    if (!loggedIn) return
-    Cookies.remove('auth-token')
-    setLoggedIn(false)
-  }
-
-  return [authenticationPayload, loggedIn]
+export function getAuthPayloadFromSession(session: Session | null) {
+  return session
+    ? {
+        username: (session.identity.traits as { username: string }).username,
+        id: (
+          session.identity.metadata_public as {
+            legacy_id: number
+          }
+        )?.legacy_id,
+      }
+    : null
 }
 
 function useAuthorizationPayload(
-  authenticationPayload: RefObject<AuthenticationPayload>,
+  authenticationPayload: AuthenticationPayload,
   unauthenticatedAuthorizationPayload?: AuthorizationPayload
 ) {
   async function fetchAuthorizationPayload(
-    authenticationPayload: RefObject<AuthenticationPayload>
+    authenticationPayload: AuthenticationPayload
   ): Promise<AuthorizationPayload> {
-    if (authenticationPayload.current === null) {
+    if (authenticationPayload === null) {
       return unauthenticatedAuthorizationPayload ?? {}
     }
 
@@ -153,7 +131,7 @@ function useAuthorizationPayload(
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authenticationPayload, authenticationPayload.current?.id])
+  }, [authenticationPayload, authenticationPayload?.id])
 
   return authorizationPayload
 }

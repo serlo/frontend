@@ -66,7 +66,7 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         </h1>
       </div>
       <article>{content.render()}</article>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </>
   )
 }

@@ -111,7 +111,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
             if (bannerRef.current != null) observer.observe(bannerRef.current)
           }}
           src={banner.imageSrc}
-          className="mt-6 px-16 max-w-[18rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[12rem] sm:px-3 scale-x-[-1]"
+          className="mt-6 px-16 max-w-[18rem] mx-auto sm:mr-0 sm:max-w-[12rem] sm:px-3 scale-x-[-1]"
         />
         <div className="max-w-2xl mx-auto px-side sm:mt-10 sm:ml-0">
           <p className="mb-4 font-handwritten text-[1.32em] text-brand mx-side">

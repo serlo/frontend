@@ -38,7 +38,7 @@ export function TopicCategory({
 
   if (
     links.length === 0 ||
-    (!auth.current && links.filter((link) => !link.unrevised).length === 0)
+    (!auth && links.filter((link) => !link.unrevised).length === 0)
   )
     return null
 
@@ -60,7 +60,7 @@ export function TopicCategory({
 
   function renderLink(link: TaxonomyLink, i: number) {
     if (link.unrevised && !mounted) return null
-    if (link.unrevised && mounted && !auth.current) return null
+    if (link.unrevised && mounted && !auth) return null
 
     return (
       <li className="block mb-3 leading-cozy" key={link.url + '_' + link.title}>

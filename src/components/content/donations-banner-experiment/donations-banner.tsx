@@ -1,8 +1,10 @@
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
 import { Lazy } from '../lazy'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -12,6 +14,9 @@ import { submitEvent } from '@/helper/submit-event'
 // Round 2
 // 10% Artikel & Aufgabensammlung
 // 100% Ende von Kurs
+// new testimonials
+
+const hideDonationBannerKey = 'hide-donation-banner'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -76,6 +81,88 @@ const articleBanners = [
     ),
     call: 'Wusstest du schon …',
     imageSrc: '/_assets/img/donations/donation-bird.svg',
+    buttonText: '',
+    roles: [],
+    username: '',
+  },
+  {
+    id: 'banner-testimonial-WandaPaetzold',
+    isLong: false,
+    text: (
+      <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+        „ Ich unterstütze Serlo, da ich der Meinung bin, dass ein einfacher
+        Zugang zu Bildung ohne Bezahlung und Werbung ein Grundrecht für jede*n
+        ist und Serlo ermöglicht es mir als Lehrerin, für viel mehr Menschen
+        Wissen zu teilen und zu vermitteln.“
+      </p>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Lehrerin', 'Spenderin'],
+    username: 'WandaPaetzold',
+    imageSrc: 'https://community.serlo.org/avatar/WandaPaetzold',
+  },
+  {
+    id: 'banner-testimonial-Maria_F',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+          „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
+          Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
+          Inhalte verlassen kann.
+          <br />
+          <br />
+          Deswegen unterstütze ich Serlo gern mit einer Spende.“
+        </p>
+      </div>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Lehrerin', 'Spenderin'],
+    username: 'Maria_F',
+    imageSrc: 'https://community.serlo.org/avatar/Maria_F',
+  },
+  {
+    id: 'banner-testimonial-Lena',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+          „ Bildung für alle - und das kostenfrei.
+          <br />
+          Ein so wichtiges Ziel, um der (Chancen-)Gerechtigkeit unserer
+          Gesellschaft ein Stück näher zu kommen!
+          <br />
+          <br />
+          Danke an all die Menschen, die das möglich machen!“
+        </p>
+      </div>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Spenderin'],
+    username: 'Lena',
+    imageSrc: '/_assets/img/donations/lena.jpg',
+  },
+  {
+    id: 'banner-testimonial-Daniel-Flueck',
+    isLong: false,
+    text: (
+      <div className="text-left">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+          „ Ich wünsche mir eine Welt, wo nicht nur Wissen sondern auch der Weg,
+          um Wissen zu erlangen, frei verfügbar ist. <br />
+          Ich hoffe, dass die Bewegung von ‚Open Educational Resources‘ auch
+          eine moderne Didaktik immer mehr in die Klassenzimmer trägt.“
+        </p>
+      </div>
+    ),
+    call: '',
+    buttonText: 'Jetzt auch spenden',
+    roles: ['Spender'],
+    username: 'Daniel-Flueck',
+    imageSrc: 'https://community.serlo.org/avatar/Daniel-Flueck',
   },
 ]
 
@@ -101,6 +188,9 @@ const courseBanner = {
     </div>
   ),
   imageSrc: '/_assets/img/donations/donation-bird.svg',
+  buttonText: '',
+  roles: [],
+  username: '',
 }
 
 type Banner = typeof articleBanners[number]
@@ -132,7 +222,10 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       entityData.typename === UuidType.Article ||
       entityData.typename === UuidType.TaxonomyTerm
 
-    if (lang !== Instance.De || !showOnType || !chanceShow) {
+    const hiddenByUser =
+      sessionStorage.getItem(hideDonationBannerKey) === 'true'
+
+    if (lang !== Instance.De || !showOnType || !chanceShow || hiddenByUser) {
       setBanner(undefined)
       return undefined
     }
@@ -151,39 +244,60 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
 
   if (!banner) return null
 
+  const isTestimonial = banner.id.startsWith('banner-testimonial')
+
   return (
     <Lazy slim>
       <aside
         ref={bannerRef}
         className={clsx(
-          'w-[100vw] relative py-6 px-side text-center text-xl',
+          'w-[100vw] relative py-6 px-side text-center text-xl overflow-x-hidden',
           'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
-          'sm:flex sm:justify-between sm:text-left sm:mx-0 sm:px-0',
-          'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16'
+          'sm:flex sm:justify-between sm:text-left sm:-mx-2 sm:px-0',
+          'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16',
+          'bg-[url("/_assets/img/landing/about-container.svg")]'
         )}
       >
-        <img
-          onLoad={() => {
-            const observer = new IntersectionObserver((entries, _observer) => {
-              const entry = entries[0]
-              if (
-                entry.isIntersecting &&
-                globalThis.hack__lastId !== globalThis.hack__id
-              ) {
-                globalThis.hack__lastId = globalThis.hack__id
-                submitEvent(`spenden-seen-${banner.id}`)
-              }
-            })
-            if (bannerRef.current) observer.observe(bannerRef.current)
-          }}
-          src={banner.imageSrc}
-          className="mt-6 px-16 max-w-[22rem] mx-auto sm:h-fit sm:mr-0 sm:max-w-[15rem] sm:px-3 scale-x-[-1]"
-        />
+        {renderHideButton()}
+        <figure className="mx-auto mt-6 max-w-[22rem] sm:mr-0 sm:max-w-[15rem] text-center">
+          <img
+            src={banner.imageSrc}
+            onLoad={() => {
+              const observer = new IntersectionObserver(
+                (entries, _observer) => {
+                  const entry = entries[0]
+                  if (
+                    entry.isIntersecting &&
+                    globalThis.hack__lastId !== globalThis.hack__id
+                  ) {
+                    globalThis.hack__lastId = globalThis.hack__id
+                    submitEvent(`spenden-seen-${banner.id}`)
+                  }
+                }
+              )
+              if (bannerRef.current) observer.observe(bannerRef.current)
+            }}
+            className={clsx(
+              'mx-auto mb-3',
+              isTestimonial
+                ? 'rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
+                : 'scale-x-[-1] sm:px-3 px-16'
+            )}
+          />
+          {isTestimonial ? (
+            <>
+              <p className="text-base mt-1 font-bold text-gray-700">
+                @{banner.username}
+              </p>
+              {renderRoles(banner.roles)}
+            </>
+          ) : null}
+        </figure>
         <div className="max-w-2xl mx-auto px-side sm:mt-5 sm:ml-0">
-          <p className="my-5 font-handwritten text-[1.32em] text-brand mx-side">
+          <p className="my-5 font-handwritten mx-side text-[1.32em] text-brand">
             {banner.call}
           </p>
-          <div className="">{banner.text}</div>
+          <div className="text-center sm:text-left">{banner.text}</div>
 
           <p className="block mb-6 mx-auto sm:mb-10 sm:ml-side lg:mb-24">
             <button
@@ -193,7 +307,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
                 void router.push('/spenden')
               }}
             >
-              Jetzt spenden
+              {banner.buttonText ? banner.buttonText : 'Jetzt spenden'}{' '}
             </button>
           </p>
         </div>
@@ -221,4 +335,27 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       `}</style>
     </Lazy>
   )
+
+  function renderHideButton() {
+    return (
+      <button
+        title="Banner verstecken"
+        onClick={() => {
+          sessionStorage.setItem(hideDonationBannerKey, 'true')
+          setBanner(undefined)
+        }}
+        className="serlo-button-blue-transparent absolute right-6  bg-[rgba(0,0,0,0.05)] text-truegray-600 w-8 h-8"
+      >
+        <FaIcon icon={faTimes} />
+      </button>
+    )
+  }
+
+  function renderRoles(roles: string[] | undefined) {
+    if (!roles) return null
+
+    return (
+      <b className="block text-[16px] text-brand -mt-1">{roles.join(', ')}</b>
+    )
+  }
 }

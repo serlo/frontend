@@ -8,7 +8,6 @@ import { boxTypeStyle, defaultStyle } from '@/components/content/box'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const types = Object.keys(boxTypeStyle)
 export type BoxType = keyof typeof boxTypeStyle
@@ -20,13 +19,13 @@ export function BoxRenderer(props: BoxProps) {
   const isBlank = typedValue === 'blank'
 
   const style = boxTypeStyle[typedValue]
-  const borderColorClass = hasOwnPropertyTs(style, 'borderColorClass')
+  const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
-  const colorClass = hasOwnPropertyTs(style, 'colorClass')
+  const colorClass = Object.hasOwn(style, 'colorClass')
     ? style.colorClass
     : defaultStyle.colorClass
-  const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
+  const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
   const store = useScopedStore()
   const [contentIsEmpty, setContentIsEmpty] = useState(true)
   const { strings } = useInstanceData()
@@ -120,7 +119,7 @@ export function BoxRenderer(props: BoxProps) {
     return types.map((boxType) => {
       const typedBoxType = boxType as BoxType
       const listStyle = boxTypeStyle[typedBoxType]
-      const listIcon = hasOwnPropertyTs(listStyle, 'icon')
+      const listIcon = Object.hasOwn(listStyle, 'icon')
         ? listStyle.icon
         : undefined
 

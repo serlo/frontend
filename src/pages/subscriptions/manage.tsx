@@ -10,6 +10,8 @@ import {
   ManageSubscriptions,
   SubscriptionNode,
 } from '@/components/pages/manage-subscriptions'
+import { StaticInfoPanel } from '@/components/static-info-panel'
+import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
@@ -50,7 +52,7 @@ function Content() {
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
+  if (!loggedInData) return renderNoAuth()
   const loggedInStrings = loggedInData.strings.subscriptions
 
   return (
@@ -104,6 +106,18 @@ function Content() {
         title={`${strings.pageTitles.subscriptions} (${totalCount || '…'})`}
         headTitle
       />
+    )
+  }
+
+  function renderNoAuth() {
+    return (
+      <>
+        {renderTitle()}
+        <StaticInfoPanel type="info">
+          <br />
+          <PleaseLogIn />
+        </StaticInfoPanel>
+      </>
     )
   }
 }
