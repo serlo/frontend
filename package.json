@@ -98,6 +98,7 @@
     "redux": "^4.2.0",
     "simple-oauth2": "^4.3.0",
     "slate": "^0.87.0",
+    "slate-history": "^0.86.0",
     "slate-plain-serializer": "^0.7.0",
     "slate-react": "^0.88.0",
     "styled-components": "^5.3.6",

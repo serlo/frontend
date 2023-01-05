@@ -10,6 +10,7 @@ import {
   Descendant,
 } from 'slate'
 // Import the Slate components and React plugin.
+import { withHistory } from 'slate-history'
 import {
   Slate,
   Editable,
@@ -74,9 +75,9 @@ const EdtrIoElement = memo(
       <div
         {...props.attributes}
         contentEditable={false}
-        className="border border-black"
+        className="border border-black bg-lime-400 mb-5"
       >
-        <div className="bg-lime-400">
+        <div className="">
           <div className="controls-portal hidden" />
           <div className="edtr-io serlo-editor-hacks">
             <SerloEditor
@@ -104,11 +105,17 @@ const EdtrIoElement = memo(
 )
 
 const DefaultElement = (props: RenderElementProps) => {
-  return <p {...props.attributes}>{props.children}</p>
+  return (
+    <p {...props.attributes} className="serlo-p">
+      {props.children}
+    </p>
+  )
 }
 
 export default function SlateTest() {
-  const [editor] = useState(() => withEditableVoids(withReact(createEditor())))
+  const [editor] = useState(() =>
+    withEditableVoids(withReact(withHistory(createEditor())))
+  )
 
   const renderElement = useCallback((props: RenderElementProps) => {
     switch (props.element.type) {
@@ -120,14 +127,12 @@ export default function SlateTest() {
   }, [])
 
   return (
-    <div className="container mx-auto p-4 bg-pink-200">
-      <FrontendClientBase>
-        <Slate editor={editor} value={initialValue}>
-          <Editable renderElement={renderElement} className="p-4" />
-          <Toolbar />
-        </Slate>
-      </FrontendClientBase>
-    </div>
+    <FrontendClientBase>
+      <Slate editor={editor} value={initialValue}>
+        <Editable renderElement={renderElement} className="p-1 bg-pink-200" />
+        <Toolbar />
+      </Slate>
+    </FrontendClientBase>
   )
 }
 
@@ -171,5 +176,3 @@ function Toolbar() {
     </div>
   )
 }
-
-// WHHHHAAAAAAA
