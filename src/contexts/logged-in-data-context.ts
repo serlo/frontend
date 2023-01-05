@@ -8,6 +8,6 @@ export const LoggedInDataContext = createContext<LoggedInData | null>(null)
 
 export const LoggedInDataProvider = LoggedInDataContext.Provider
 
-export function useLoggedInData() {
-  return getLoggedInData(Instance.De)
+export function useLoggedInData(): LoggedInData | null {
+  return getLoggedInData(Instance.De) as LoggedInData
 }
