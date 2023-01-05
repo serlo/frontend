@@ -205,7 +205,9 @@ export function SaveModal({
     const licenseAgreement =
       license && license.defined
         ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
-        : defaultLicenseAgreement ?? ''
+        : defaultLicenseAgreement
+
+    if (!licenseAgreement) return null
 
     return (
       <label
