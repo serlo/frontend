@@ -56,9 +56,6 @@ module.exports = withBundleAnalyzer({
 
     return config
   },
-  devIndicators: {
-    autoPrerender: false,
-  },
   i18n: {
     locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
     defaultLocale: 'de',
@@ -67,5 +64,7 @@ module.exports = withBundleAnalyzer({
   // TODO: reactStrictMode with react18 breaks edtr.io atm
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
-  fallbackNodePolyfills: false,
+  experimental: {
+    fallbackNodePolyfills: false,
+  },
 })
