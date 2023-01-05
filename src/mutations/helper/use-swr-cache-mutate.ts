@@ -1,7 +1,7 @@
-import { useSWRConfig, mutate } from 'swr'
+import { useSWRConfig } from 'swr'
 
 export function useSWRCacheMutate() {
-  const { cache } = useSWRConfig()
+  const { mutate, cache } = useSWRConfig()
 
   function mutateSWRCaches(shouldBeMutated: (key: string) => boolean) {
     // see https://swr.vercel.app/docs/advanced/cache#mutate-multiple-keys-from-regex

@@ -1,5 +1,7 @@
 import { gql } from 'graphql-request'
-import { mutate, useSWRConfig } from 'swr'
+import { useSWRConfig, Cache } from 'swr'
+// eslint-disable-next-line import/no-internal-modules
+import { ScopedMutator } from 'swr/_internal'
 
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
@@ -27,7 +29,7 @@ const removeMutation = gql`
 
 export function useUserAddOrRemoveRoleMutation() {
   const mutationFetch = useMutationFetch()
-  const { cache } = useSWRConfig()
+  const { mutate, cache } = useSWRConfig()
   const successHandler = useSuccessHandler()
 
   return async function (input: UserRoleInput, isAdd: boolean) {
@@ -38,14 +40,14 @@ export function useUserAddOrRemoveRoleMutation() {
 
     if (success) {
       if (successHandler({ success, toastKey: 'updated' })) {
-        resetUserRolesCache(cache)
+        resetUserRolesCache(cache, mutate)
       }
     }
     return success
   }
 }
 
-function resetUserRolesCache(cache: unknown) {
+function resetUserRolesCache(cache: Cache<any>, mutate: ScopedMutator<any>) {
   if (!(cache instanceof Map)) {
     throw new Error(
       'matchMutate requires the cache provider to be a Map instance'
