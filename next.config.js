@@ -3,7 +3,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer({
-  webpack(config) {
+  webpack(config, { isServer }) {
     config.module.rules.push({
       test: /\.svg$/,
       use: [
@@ -47,6 +47,12 @@ module.exports = withBundleAnalyzer({
     // can be removed if edtr is on react-dnd 16
     config.resolve.alias['react/jsx-runtime.js'] = 'react/jsx-runtime'
     config.resolve.alias['react/jsx-dev-runtime.js'] = 'react/jsx-dev-runtime'
+
+    // fixes problem with frontend-client-base needs language data on server but document is not ready
+    if (!isServer) {
+      // resolve feature-i18n as empty module on client
+      config.resolve.alias['src/helper/feature-i18n'] = false
+    }
 
     return config
   },
