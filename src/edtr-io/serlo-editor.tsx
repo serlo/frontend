@@ -9,9 +9,9 @@ import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
-import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { getLoggedInData } from '@/helper/feature-i18n'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
@@ -55,15 +55,16 @@ export function SerloEditor({
   const userCanSkipReview = canDo(Entity.checkoutRevision)
 
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData)
+  /*if (!loggedInData)
     return (
       <div className="text-center">
         <LoadingSpinner />
       </div>
-    )
+    )*/
 
-  const editorStrings = loggedInData.strings.editor
+  console.log('render editor')
+
+  const editorStrings = getLoggedInData(Instance.De).strings.editor
 
   const plugins = createPlugins({
     registry: getPluginRegistry(type, editorStrings),
