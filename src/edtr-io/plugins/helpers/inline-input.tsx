@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { Value } from 'slate'
 import Plain from 'slate-plain-serializer'
 // @ts-expect-error missing types?
 import { Editor as SlateEditor } from 'slate-react'
+
+import { Value } from '@/edtr-io/slate'
 
 export function InlineInput(props: {
   onChange: (value: string) => void
@@ -11,11 +12,11 @@ export function InlineInput(props: {
   placeholder: string
 }) {
   const { onChange, value, placeholder } = props
-  const [state, setState] = useState(Plain.deserialize(value))
+  const [state, setState] = useState(Plain.deserialize(value) as Value)
 
   useEffect(() => {
     if (Plain.serialize(state) !== value) {
-      setState(Plain.deserialize(value))
+      setState(Plain.deserialize(value) as Value)
     }
     // only update when props change to avoid loops
     // eslint-disable-next-line react-hooks/exhaustive-deps
