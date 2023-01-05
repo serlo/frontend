@@ -4363,9 +4363,9 @@ __metadata:
     react-textarea-autosize: ^8.3.4
     redux: ^4.2.0
     simple-oauth2: ^4.3.0
-    slate: ^0.47.9
+    slate: ^0.87.0
     slate-plain-serializer: ^0.7.0
-    slate-react: ^0.22.0
+    slate-react: ^0.88.0
     styled-components: ^5.3.6
     styled-jsx: ^5.1.0
     styled-jsx-plugin-postcss: ^4.0.1
@@ -9045,6 +9045,13 @@ __metadata:
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
   checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77
+  languageName: node
+  linkType: hard
+
+"immer@npm:^9.0.6":
+  version: 9.0.17
+  resolution: "immer@npm:9.0.17"
+  checksum: 046d562b74f050632d2861042dbcad49a5e86ffe5bb9b8bff6e699b1c7d8478019d9a3be61e72117cecc29826d2caa4fa927a7e10262381144dd33c735b9531c
   languageName: node
   linkType: hard
 
@@ -13831,7 +13838,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slate-react@npm:^0.22.0, slate-react@npm:^0.22.10":
+"slate-react@npm:^0.22.10":
   version: 0.22.10
   resolution: "slate-react@npm:0.22.10"
   dependencies:
@@ -13860,6 +13867,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"slate-react@npm:^0.88.0":
+  version: 0.88.0
+  resolution: "slate-react@npm:0.88.0"
+  dependencies:
+    "@types/is-hotkey": ^0.1.1
+    "@types/lodash": ^4.14.149
+    direction: ^1.0.3
+    is-hotkey: ^0.1.6
+    is-plain-object: ^5.0.0
+    lodash: ^4.17.4
+    scroll-into-view-if-needed: ^2.2.20
+    tiny-invariant: 1.0.6
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+    slate: ">=0.65.3"
+  checksum: e7f41fe94c2d7c885a098d61c674e58f5e9a42a44f8f0bf49083349f0510d494ba64c270ce24f1f0df2c5276ea302b3fd550d95316fdd57272a568263f1046fa
+  languageName: node
+  linkType: hard
+
 "slate@npm:^0.47.0, slate@npm:^0.47.9":
   version: 0.47.9
   resolution: "slate@npm:0.47.9"
@@ -13875,6 +13902,17 @@ __metadata:
   peerDependencies:
     immutable: ">=3.8.1 || >4.0.0-rc"
   checksum: a128d1eaa4c203dbb13d197d69758341df485e42e52aea1739d05939b16df42633949f116ae9b75b95b647ec39b18867ca5c8a05dbe97eeb15cf31bc8d2edc7f
+  languageName: node
+  linkType: hard
+
+"slate@npm:^0.87.0":
+  version: 0.87.0
+  resolution: "slate@npm:0.87.0"
+  dependencies:
+    immer: ^9.0.6
+    is-plain-object: ^5.0.0
+    tiny-warning: ^1.0.3
+  checksum: c1311dd565c7dd6e0a59fb2926c6a26a6fedb46c5c8805d1fa19172fdd5a43d7cdb3635ed32599ae97bb9cb4e4f58a9f54a5fc2fc102367ff83d061cdbe2209e
   languageName: node
   linkType: hard
 

@@ -16,7 +16,7 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import type { getInstanceDataByLang } from '@/helper/feature-i18n'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -58,12 +58,7 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      const featureI18n = require('@/helper/feature-i18n') as {
-        getInstanceDataByLang: typeof getInstanceDataByLang
-      }
-      return featureI18n.getInstanceDataByLang(
-        (locale as Instance) ?? Instance.De
-      )
+      return getInstanceDataByLang((locale as Instance) ?? Instance.De)
     } else {
       // load instance data from client from document tag
       return JSON.parse(

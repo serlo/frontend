@@ -21,6 +21,7 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
 export interface EntityProps {
   data: EntityData

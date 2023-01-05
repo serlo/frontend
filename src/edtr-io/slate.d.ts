@@ -15,7 +15,7 @@
 //                 Kay Delaney <https://github.com/kaydelaney>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
-declare module 'slate' {
+declare module 'slatex' {
   import * as Immutable from 'immutable'
 
   export class Data extends Immutable.Record({}) {

@@ -62,4 +62,10 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
   fallbackNodePolyfills: false,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 })

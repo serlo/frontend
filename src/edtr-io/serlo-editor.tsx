@@ -21,6 +21,7 @@ export interface SerloEditorProps {
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
   type: UuidType
+  onChange?: EditorProps['onChange']
 }
 
 export interface LooseEdtrData {
@@ -48,6 +49,7 @@ export function SerloEditor({
   initialState,
   children,
   type,
+  onChange,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
@@ -95,6 +97,7 @@ export function SerloEditor({
         plugins={plugins}
         initialState={useStored ? stored : initialState}
         editable
+        onChange={onChange}
       >
         {children}
       </Editor>

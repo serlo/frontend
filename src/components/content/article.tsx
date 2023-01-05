@@ -1,3 +1,6 @@
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+
+import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ArticleNodeUuidLink, FrontendArticleNode } from '@/frontend-node-types'
@@ -18,7 +21,13 @@ export function Article({
     <div>
       {renderNested(introduction, 'article-intro')}
       {renderNested(content, 'article-content')}
-
+      <div className="serlo-p text-right mt-8 mb-16">
+        Hat dir der Inhalt geholfen?{' '}
+        <button className="serlo-button-green ml-4">
+          <FaIcon icon={faHeart} className="mr-2" />
+          Danke sagen
+        </button>
+      </div>
       {renderExercises()}
 
       {renderRelatedContent()}
