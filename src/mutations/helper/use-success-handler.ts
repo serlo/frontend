@@ -38,6 +38,7 @@ export function useSuccessHandler() {
 
         if (redirectUrl) {
           if (useHardRedirect) {
+            history.pushState(null, '', successHash)
             window.location.href = redirectUrl
           } else {
             setTimeout(
