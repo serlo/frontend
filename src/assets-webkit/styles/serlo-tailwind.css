@@ -38,7 +38,7 @@
     @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-cozy;
   }
   .serlo-h1 {
-    @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
+    @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl;
   }
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
