@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { loggedInData } from '@/data/en'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { successHash } from '@/helper/use-leave-confirm'
 
 interface SuccessHandlerInput {
   success: boolean | number
@@ -41,7 +42,7 @@ export function useSuccessHandler() {
           } else {
             setTimeout(
               () => {
-                void router.push(redirectUrl)
+                void router.push(redirectUrl + successHash)
               },
               timeout ? timeout : 500
             )
