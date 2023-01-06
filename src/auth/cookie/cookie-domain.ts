@@ -7,6 +7,6 @@ const COOKIE_DOMAINS = {
 export const COOKIE_DOMAIN =
   process.env.NEXT_PUBLIC_ENV === 'production'
     ? COOKIE_DOMAINS['production']
-    : process.env.NEXT_PUBLIC_VERCEL_URL
+    : process.env && process.env.NEXT_PUBLIC_VERCEL_URL
     ? COOKIE_DOMAINS['staging']
     : COOKIE_DOMAINS['local']
