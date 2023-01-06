@@ -80,7 +80,7 @@ export function SerloEditor({
     },
   })
 
-  const stored = getStored()
+  const stored = getStateFromLocalStorage()
   const useStored = stored && confirm(editorStrings.edtrIo.oldRevisionFound)
 
   return (
@@ -109,7 +109,7 @@ export function SerloEditor({
   )
 }
 
-function getStored() {
+function getStateFromLocalStorage() {
   const edtr = localStorage.getItem('edtr')
   if (!edtr) return
 
@@ -117,7 +117,9 @@ function getStored() {
   return state[window.location.pathname]
 }
 
-export function storeState(state?: EditorProps['initialState'] | null) {
+export function storeStateToLocalStorage(
+  state?: EditorProps['initialState'] | null
+) {
   const currentValue = localStorage.getItem('edtr')
   const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
 
