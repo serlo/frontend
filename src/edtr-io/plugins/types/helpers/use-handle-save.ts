@@ -3,7 +3,7 @@ import { serializeRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
-import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
+import { storeStateToLocalStorage, SaveContext } from '@/edtr-io/serlo-editor'
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
 export function useHandleSave(
@@ -27,6 +27,7 @@ export function useHandleSave(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 
+  // TODO: Can we remove this now?
   if (
     serialized !== null &&
     serializedRoot?.plugin === 'type-text-exercise-group' &&
@@ -54,7 +55,7 @@ export function useHandleSave(
     })
       .then(() => {
         setTimeout(() => {
-          storeState(undefined)
+          storeStateToLocalStorage(undefined)
           setPending(false)
           setHasError(false)
         }, 200)

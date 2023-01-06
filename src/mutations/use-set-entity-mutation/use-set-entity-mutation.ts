@@ -19,6 +19,7 @@ import {
 } from '@/edtr-io/editor-response-to-state'
 import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
+import { successHash } from '@/helper/use-leave-confirm'
 
 const equalsWithEmptyStringIsNull = eqBy(
   mapObjIndexed((v) => (v === '' || v === undefined ? null : v))
@@ -132,7 +133,7 @@ export function useSetEntityMutation() {
         const redirectHref = id
           ? getHistoryUrl(id)
           : `/${taxonomyParentId as number}`
-        void router.push(redirectHref)
+        void router.push(redirectHref + successHash)
       }
 
       return true
