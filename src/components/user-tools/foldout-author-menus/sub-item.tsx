@@ -10,7 +10,7 @@ export interface SubItemProps {
 
 const itemClasses = /* className={ */ clsx(
   'serlo-button-blue-transparent font-normal text-base rounded-[12px] special-hyphens-auto',
-  'group-hover:text-white group-hover:bg-brand py-0.25 text-left'
+  'group-hover:text-white group-hover:bg-brand text-left leading-tight py-1'
 )
 
 export function SubItem({ title, href, onClick }: SubItemProps) {
