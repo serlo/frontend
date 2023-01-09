@@ -18,5 +18,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1200
           check_interval: 20
-      - run: yarn
-      - run: CI=1 yarn test
+      - run: npm ci
+      - run: CI=1 npm run test
