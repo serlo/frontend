@@ -44,6 +44,16 @@ export function ScMcExercise({
         <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
+
+            const showFeedbackForAnswer =
+              showFeedback &&
+              selected !== undefined &&
+              answers[selected] &&
+              answers[selected] === answer
+
+            const { feedback, isCorrect } = answer
+            const hasFeedback = hasVisibleContent(feedback)
+
             return (
               <Fragment key={i}>
                 <li className="flex mb-block">
@@ -75,17 +85,13 @@ export function ScMcExercise({
                     {renderNested(answer.content, `scoption${i}`)}
                   </label>
                 </li>
-                {showFeedback &&
-                  selected !== undefined &&
-                  answers[selected] &&
-                  answers[selected] === answer && (
-                    <Feedback correct={answers[selected].isCorrect}>
-                      {renderNested(
-                        answers[selected].feedback,
-                        `scfeedback${selected}`
-                      )}
-                    </Feedback>
-                  )}
+                {showFeedbackForAnswer ? (
+                  <Feedback correct={isCorrect}>
+                    {hasFeedback
+                      ? renderNested(feedback, `scfeedback${selected}`)
+                      : null}
+                  </Feedback>
+                ) : null}
                 {isRevisionView && renderRevisionExtra(answer, true)}
               </Fragment>
             )
