@@ -37,16 +37,10 @@ export function useSuccessHandler() {
         if (toastKey) showToastNotice(successStrings[toastKey], 'success')
 
         if (redirectUrl) {
-          if (useHardRedirect) {
-            history.pushState(null, '', successHash)
-            setTimeout(() => {
-              window.location.href = redirectUrl
-            }, 50)
-          } else {
+          if (useHardRedirect) window.location.href = redirectUrl
+          else {
             setTimeout(
-              () => {
-                void router.push(redirectUrl + successHash)
-              },
+              () => router.push(redirectUrl + successHash),
               timeout ? timeout : 500
             )
           }

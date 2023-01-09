@@ -28,7 +28,6 @@ export function useUserSetDescriptionMutation() {
       success,
       toastKey: 'save',
       redirectUrl: `/user/${auth.id}/${auth.username}`,
-      useHardRedirect: true,
     })
   }
 }

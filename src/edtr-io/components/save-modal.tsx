@@ -44,9 +44,8 @@ export function SaveModal({
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { lang } = useInstanceData()
-
-  const { data: licenseData } = useLicensesFetch(lang)
-  const defaultLicenseAgreement = licenseData?.license.defaultLicense.agreement
+  const defaultLicenseAgreement =
+    useLicensesFetch(lang).data?.license.defaultLicense.agreement
 
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
@@ -202,6 +201,8 @@ export function SaveModal({
   }
 
   function renderLicense() {
+    if (!license) return null
+
     const licenseAgreement =
       license && license.defined
         ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')

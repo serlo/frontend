@@ -7,7 +7,6 @@ import { getRequiredString } from './use-set-entity-mutation/use-set-entity-muta
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
 import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 
 const addMutation = gql`
@@ -43,7 +42,6 @@ export function useAddPageRevision() {
       return false
     }
     const mutationStrings = loggedInData.strings.mutations
-    if (!data.__typename || data.__typename !== UuidType.Page) return false
 
     try {
       const sharedInput = {
@@ -62,7 +60,6 @@ export function useAddPageRevision() {
           success,
           toastKey: 'save',
           redirectUrl: `/${data.id}`,
-          useHardRedirect: true,
         })
       } else {
         // create new page
