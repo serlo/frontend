@@ -64,4 +64,7 @@ module.exports = withBundleAnalyzer({
   // TODO: reactStrictMode with react18 breaks edtr.io atm
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
+  experimental: {
+    fallbackNodePolyfills: false,
+  },
 })
