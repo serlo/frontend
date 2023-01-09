@@ -72,7 +72,6 @@ export function useTaxonomyCreateOrUpdateMutation() {
         success,
         toastKey: 'save',
         redirectUrl: `/${data.id ?? parentIdString}`,
-        useHardRedirect: true,
       })
     } catch (error) {
       // eslint-disable-next-line no-console

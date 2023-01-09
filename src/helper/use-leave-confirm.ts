@@ -13,12 +13,8 @@ export function useLeaveConfirm(protect: boolean) {
   const loggedInData = useLoggedInData()
 
   const onRouteChangeStart = useCallback(
-    (targetUrl: string | undefined) => {
-      if (
-        (targetUrl && targetUrl.includes(successHash)) ||
-        window.location.hash === successHash.substring(1)
-      )
-        return
+    (targetUrl?: string) => {
+      if (targetUrl && targetUrl.includes(successHash)) return
       if (protect) {
         if (window.confirm(loggedInData?.strings.editor.confirmRouteChange)) {
           return true
