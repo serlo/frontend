@@ -24,7 +24,7 @@ export function Menu() {
         {headerData.map((link) => (
           <Item key={link.title} link={link} />
         ))}
-        {auth ? <AuthItems /> : <NoAuthItem hidden={!mounted} />}
+        {auth && mounted ? <AuthItems /> : <NoAuthItem hidden={!mounted} />}
       </List>
     </Root>
   )
