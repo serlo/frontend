@@ -64,7 +64,7 @@ module.exports = withBundleAnalyzer({
   // TODO: reactStrictMode with react18 breaks edtr.io atm
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
-  experimental: {
+  /*experimental: {
     fallbackNodePolyfills: false,
-  },
+  },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
 })
