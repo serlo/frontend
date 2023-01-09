@@ -1,3 +1,4 @@
+import { ThankYou } from './thank-you'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ArticleNodeUuidLink, FrontendArticleNode } from '@/frontend-node-types'
@@ -18,6 +19,8 @@ export function Article({
     <div>
       {renderNested(introduction, 'article-intro')}
       {renderNested(content, 'article-content')}
+
+      <ThankYou />
 
       {renderExercises()}
 
