@@ -48,7 +48,7 @@ export function AuthProvider({
     window.addEventListener('online', () => refreshWhenVisible) //on reconnect
 
     return () => {
-      document.addEventListener('visibilitychange', refreshWhenVisible)
+      document.removeEventListener('visibilitychange', refreshWhenVisible)
       window.removeEventListener('online', () => refreshWhenVisible)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
