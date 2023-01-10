@@ -35,13 +35,14 @@ export function AuthProvider({
 
   useEffect(() => {
     const refreshWhenVisible = () => {
-      if (!document.visibilityState) return
+      if (
+        !document.visibilityState ||
+        window.location.pathname.startsWith('/entity/repository/add-revision') // make sure edtr changes don't disappear
+      )
+        return
       const cookiePayload = getAuthPayloadFromLocalCookie()
       if (cookiePayload?.id !== authenticationPayload?.id) {
         setAuthenticationPayload(cookiePayload)
-
-        //TODO: this can vanish edtr changes when updating.
-        // we should probably make sure we save the state to localstorage before
       }
     }
     document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
