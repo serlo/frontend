@@ -1,6 +1,6 @@
-import { faSpinner } from '@edtr-io/ui'
 import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons/faEyeSlash'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 import { UiNode } from '@ory/client'
 import { isUiNodeInputAttributes } from '@ory/integrations/ui'
 import clsx from 'clsx'
