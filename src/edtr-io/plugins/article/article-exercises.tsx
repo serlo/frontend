@@ -63,7 +63,7 @@ export function ArticleExercises({
           }}
         </Droppable>
       </DragDropContext>
-      <p className="mt-4 mb-1">
+      <div className="mt-4 mb-1">
         {exerciseFolder.title.value ? (
           <>
             {folderHeader}
@@ -72,7 +72,7 @@ export function ArticleExercises({
             </a>
           </>
         ) : null}
-      </p>
+      </div>
     </>
   )
 
