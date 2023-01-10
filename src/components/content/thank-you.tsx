@@ -24,7 +24,7 @@ export function ThankYou() {
           <button
             className="serlo-button-green ml-4"
             onClick={() => {
-              submitEvent(`thank_you_${id}`)
+              submitEvent(`thank_you_article`)
               setSubmitted(true)
             }}
           >
