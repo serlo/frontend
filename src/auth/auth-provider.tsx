@@ -37,12 +37,16 @@ export function AuthProvider({
     const refreshWhenVisible = () => {
       if (!document.visibilityState) return
       const cookiePayload = getAuthPayloadFromLocalCookie()
-      if (cookiePayload?.id !== authenticationPayload?.id) {
-        setAuthenticationPayload(cookiePayload)
 
-        //TODO: this can vanish edtr changes when updating.
-        // we should probably make sure we save the state to localstorage before
-      }
+      // use functional update to get the current value of the payload
+      // returning same value will skip set state
+      setAuthenticationPayload((authenticationPayload) => {
+        if (cookiePayload?.id !== authenticationPayload?.id) {
+          return cookiePayload
+        } else {
+          return authenticationPayload
+        }
+      })
     }
     document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
     window.addEventListener('online', () => refreshWhenVisible) //on reconnect
@@ -51,7 +55,6 @@ export function AuthProvider({
       document.removeEventListener('visibilitychange', refreshWhenVisible)
       window.removeEventListener('online', () => refreshWhenVisible)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const authorizationPayload = useAuthorizationPayload(
