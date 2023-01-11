@@ -5,7 +5,6 @@ import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/be
 import { Entity, UuidType } from '@serlo/authorization'
 import { createContext, ReactNode } from 'react'
 
-import { CsrfContext } from './csrf-context'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
@@ -16,9 +15,8 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 
 export interface SerloEditorProps {
-  getCsrfToken(): string
   children?: ReactNode
-  needsReview: boolean
+  entityNeedsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
@@ -35,27 +33,24 @@ export interface LooseEdtrDataDefined {
 
 export const SaveContext = createContext<{
   onSave: SerloEditorProps['onSave']
-  showSkipCheckout: boolean
-  needsReview: boolean
+  userCanSkipReview: boolean
+  entityNeedsReview: boolean
 }>({
-  onSave: () => {
-    return Promise.reject()
-  },
-  showSkipCheckout: false,
-  needsReview: true,
+  onSave: () => Promise.reject(),
+  userCanSkipReview: false,
+  entityNeedsReview: true,
 })
 
 export function SerloEditor({
-  getCsrfToken,
   onSave,
-  needsReview,
+  entityNeedsReview,
   onError,
   initialState,
   children,
   type,
 }: SerloEditorProps) {
   const canDo = useCanDo()
-  const showSkipCheckout = canDo(Entity.checkoutRevision) && needsReview
+  const userCanSkipReview = canDo(Entity.checkoutRevision)
 
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -85,36 +80,36 @@ export function SerloEditor({
     },
   })
 
-  const stored = getStored()
+  const stored = getStateFromLocalStorage()
   const useStored = stored && confirm(editorStrings.edtrIo.oldRevisionFound)
 
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
-    <CsrfContext.Provider value={getCsrfToken}>
-      <SaveContext.Provider value={{ onSave, showSkipCheckout, needsReview }}>
-        <MathSpan formula="" /> {/* preload formula plugin */}
-        <Editor
-          DocumentEditor={DocumentEditor}
-          onError={onError}
-          plugins={plugins}
-          initialState={useStored ? stored : initialState}
-          editable
-        >
-          {children}
-        </Editor>
-        <style jsx global>{`
-          /* fixes bug in chromium based browsers v105+ */
-          /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
-          div[data-slate-editor] {
-            -webkit-user-modify: read-write !important;
-          }
-        `}</style>
-      </SaveContext.Provider>
-    </CsrfContext.Provider>
+    <SaveContext.Provider
+      value={{ onSave, userCanSkipReview, entityNeedsReview }}
+    >
+      <MathSpan formula="" /> {/* preload formula plugin */}
+      <Editor
+        DocumentEditor={DocumentEditor}
+        onError={onError}
+        plugins={plugins}
+        initialState={useStored ? stored : initialState}
+        editable
+      >
+        {children}
+      </Editor>
+      <style jsx global>{`
+        /* fixes bug in chromium based browsers v105+ */
+        /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
+        div[data-slate-editor] {
+          -webkit-user-modify: read-write !important;
+        }
+      `}</style>
+    </SaveContext.Provider>
   )
 }
 
-function getStored() {
+function getStateFromLocalStorage() {
   const edtr = localStorage.getItem('edtr')
   if (!edtr) return
 
@@ -122,7 +117,9 @@ function getStored() {
   return state[window.location.pathname]
 }
 
-export function storeState(state?: EditorProps['initialState'] | null) {
+export function storeStateToLocalStorage(
+  state?: EditorProps['initialState'] | null
+) {
   const currentValue = localStorage.getItem('edtr')
   const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
 

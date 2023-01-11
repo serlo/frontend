@@ -7,7 +7,6 @@ import { SubTopic } from '../../taxonomy/sub-topic'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { TaxonomySubTerm } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 
 interface SubjectLandingTopicOverviewProps {
@@ -98,7 +97,7 @@ export function SubjectLandingTopicOverview({
             term.description?.[0].type === 'img'
               ? term.description?.[0].src
               : undefined
-          const isExtraTerm = hasOwnPropertyTs(term, 'href')
+          const isExtraTerm = Object.hasOwn(term, 'href')
 
           return (
             <button

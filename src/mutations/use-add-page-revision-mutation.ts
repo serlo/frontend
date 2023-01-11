@@ -3,12 +3,11 @@ import { gql } from 'graphql-request'
 import { showToastNotice } from '../helper/show-toast-notice'
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
-import { AddPageRevisionMutationData } from './use-set-entity-mutation/types'
 import { getRequiredString } from './use-set-entity-mutation/use-set-entity-mutation'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType } from '@/data-types'
+import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 
 const addMutation = gql`
   mutation addPageRevision($input: PageAddRevisionInput!) {
@@ -37,20 +36,21 @@ export function useAddPageRevision() {
   const successHandler = useSuccessHandler()
   const { lang } = useInstanceData()
 
-  return async (data: AddPageRevisionMutationData) => {
+  return async (data: PageSerializedState) => {
     if (!auth || !loggedInData) {
       showToastNotice('Please make sure you are logged in!', 'warning')
       return false
     }
-    if (!data.__typename || data.__typename !== UuidType.Page) return false
+    const mutationStrings = loggedInData.strings.mutations
 
     try {
       const sharedInput = {
-        content: getRequiredString(loggedInData, 'content', data.content),
-        title: getRequiredString(loggedInData, 'title', data.title),
+        content: getRequiredString(mutationStrings, 'content', data.content),
+        title: getRequiredString(mutationStrings, 'title', data.title),
       }
 
       if (data.id) {
+        // change on existing page
         const success = await mutationFetch(addMutation, {
           ...sharedInput,
           pageId: data.id,
@@ -60,9 +60,9 @@ export function useAddPageRevision() {
           success,
           toastKey: 'save',
           redirectUrl: `/${data.id}`,
-          useHardRedirect: true,
         })
       } else {
+        // create new page
         const success = await mutationFetch(createMutation, {
           ...sharedInput,
           discussionsEnabled: false,

@@ -85,7 +85,7 @@ function TextExerciseGroupTypeEditor(
       <AddButton onClick={() => children.insert()}>
         {editorStrings.textExerciseGroup.addExercise}
       </AddButton>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </article>
   )
 

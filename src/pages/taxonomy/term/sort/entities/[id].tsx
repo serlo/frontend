@@ -30,7 +30,6 @@ import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
 } from '@/frontend-node-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -73,7 +72,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       return [
         ...idArray,
         ...taxonomyData[category].map((entity) => {
-          if (hasOwnPropertyTs(entity, 'id')) {
+          if (Object.hasOwn(entity, 'id')) {
             return entity.id
           }
 
@@ -136,7 +135,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       | (FrontendExerciseNode | FrontendExerciseGroupNode)[]
   ): TaxonomyLink[] {
     if (
-      hasOwnPropertyTs(links[0], 'type') &&
+      Object.hasOwn(links[0], 'type') &&
       (links[0].type === 'exercise-group' || links[0].type === 'exercise')
     ) {
       return (links as unknown as TaxonomyData['exercisesContent']).map(

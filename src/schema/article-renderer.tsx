@@ -285,7 +285,11 @@ function renderElement({
     return <Spoiler title={children[0]} body={children[1]} path={path} />
   }
   if (element.type === FrontendNodeType.SpoilerBody) {
-    return <div className="serlo-spoiler-body">{children}</div>
+    return (
+      <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:slide-in-from-top-8 motion-safe:fade-in">
+        {children}
+      </div>
+    )
   }
   if (element.type === FrontendNodeType.SpoilerTitle) {
     return children

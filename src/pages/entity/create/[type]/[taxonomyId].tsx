@@ -14,11 +14,10 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { sharedPathFragments } from '@/fetcher/query-fragments'
 import { testAreaUrlStart } from '@/fetcher/testArea'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-enum AllowedTypes {
+enum AllowedPlugins {
   Article = SerloEntityPluginType.Article,
   Course = SerloEntityPluginType.Course,
   Video = SerloEntityPluginType.Video,
@@ -29,22 +28,20 @@ enum AllowedTypes {
 }
 
 interface EntityCreateProps {
-  entityType: keyof typeof AllowedTypes
+  entityType: keyof typeof AllowedPlugins
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
-  needsReview: boolean
+  entityNeedsReview: boolean
 }
 
 export default renderedPageNoHooks<EntityCreateProps>(
-  ({ taxonomyTerm, entityType, needsReview }) => {
+  ({ taxonomyTerm, entityType, entityNeedsReview }) => {
     const { id: taxonomyParentId } = taxonomyTerm
 
     const addRevisionProps = {
-      initialState: {
-        plugin: AllowedTypes[entityType] as unknown as string,
-      },
+      initialState: { plugin: AllowedPlugins[entityType] as unknown as string },
       converted: false,
       type: UuidType[entityType],
-      needsReview,
+      entityNeedsReview,
       taxonomyParentId,
       errorType: 'none',
     } as const
@@ -59,9 +56,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
           <MaxWidthDiv>
             <main>
               <Guard needsAuth={isProduction ? true : undefined} data>
-                <>
-                  <AddRevision {...addRevisionProps} />
-                </>
+                <AddRevision {...addRevisionProps} />
               </Guard>
             </main>
           </MaxWidthDiv>{' '}
@@ -82,14 +77,14 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     GetTaxonomyTypeQueryVariables
   >(endpoint, getTaxonomyTypeQuery, { id: taxonomyId })
 
-  const entityType = context.params?.type as keyof typeof AllowedTypes
+  const entityType = context.params?.type as keyof typeof AllowedPlugins
   const isValidType =
-    entityType && Object.values(AllowedTypes).includes(entityType)
+    entityType && Object.values(AllowedPlugins).includes(entityType)
 
   if (
     !result ||
     !result.uuid ||
-    !hasOwnPropertyTs(result.uuid, 'type') ||
+    !Object.hasOwn(result.uuid, 'type') ||
     !isValidType
   )
     return { notFound: true }
@@ -102,7 +97,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     props: {
       entityType,
       taxonomyTerm: { ...result.uuid },
-      needsReview: !isTestArea,
+      entityNeedsReview: !isTestArea,
     },
     revalidate: 60 * 30, // 0.5 hours,
   }

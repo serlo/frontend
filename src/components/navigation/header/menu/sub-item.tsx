@@ -32,7 +32,7 @@ export function SubItem({ item }: SubItemProps) {
       {isAbsolute ? (
         inner
       ) : (
-        <NextLink href={item.url} passHref>
+        <NextLink legacyBehavior href={item.url} passHref>
           {inner}
         </NextLink>
       )}

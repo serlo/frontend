@@ -5,7 +5,6 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
@@ -64,7 +63,7 @@ export function ArticleExercises({
           }}
         </Droppable>
       </DragDropContext>
-      <p className="mt-4 mb-1">
+      <div className="mt-4 mb-1">
         {exerciseFolder.title.value ? (
           <>
             {folderHeader}
@@ -73,7 +72,7 @@ export function ArticleExercises({
             </a>
           </>
         ) : null}
-      </p>
+      </div>
     </>
   )
 
@@ -96,7 +95,7 @@ export function ArticleExercises({
                           {...provided.dragHandleProps}
                           className={buttonClass}
                         >
-                          <Icon icon={faGripVertical as EdtrIconDefinition} />
+                          <Icon icon={faGripVertical} />
                         </button>
                         <button
                           title={articleStrings.removeLabel}

@@ -407,9 +407,12 @@ export const instanceData = {
           'The recovery link is not valid or has already been used. Please try requesting an email again',
         code4070001:
           'The verification link is not valid or has already been used. Please try requesting an email again.',
+        code4070005:
+          'Sorry, this verification link is not valid any more. Please try requesting an email again.',
       },
       usernameInvalid:
         'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
+      usernameTooLong: 'Sorry, this username is too long, make sure it\'s 32 characters or less',
       passwordTooShort:
         'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
       passwordTooLong:
@@ -567,7 +570,6 @@ export const loggedInData = {
       edit: 'Edit',
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      organize: 'Organize',
       moveToGrouped: 'Move content to other grouped-text-exercise',
       moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',

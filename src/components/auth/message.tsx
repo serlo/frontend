@@ -3,7 +3,6 @@ import { UiText } from '@ory/client'
 import { verificationUrl } from '../pages/auth/utils'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -52,9 +51,10 @@ export function Message({
 
   // I did not find a clean way to translate those strings kratos provides
   function hackyReasonTranslator() {
+    const typedContext = context as Record<string, unknown>
     const reason =
-      context && hasOwnPropertyTs(context, 'reason')
-        ? (context.reason as string)
+      context && Object.hasOwn(typedContext, 'reason')
+        ? (typedContext.reason as string)
         : ''
     const searchString = reason + text
     if (searchString.includes('password length'))
@@ -73,6 +73,8 @@ export function Message({
       return strings.auth.passwordTooSimilar
     if (searchString.includes('A valid session was detected'))
       return strings.auth.login.validSessionDetected
+    if (searchString.includes('length must be'))
+      return strings.auth.usernameTooLong
 
     // eslint-disable-next-line no-console
     console.log(searchString)
@@ -87,7 +89,7 @@ export function getKratosMessageString(
   fallback: string
 ): string | undefined {
   const codeKey = `code${codeId}`
-  const translatedMessage = hasOwnPropertyTs(messages, codeKey)
+  const translatedMessage = Object.hasOwn(messages, codeKey)
     ? messages[codeKey]
     : undefined
 

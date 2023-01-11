@@ -119,7 +119,7 @@ function InternalLink({
 
   function renderClientSide(_href: string) {
     return (
-      <NextLink prefetch={false} href={_href}>
+      <NextLink legacyBehavior prefetch={false} href={_href}>
         {renderLink(_href)}
       </NextLink>
     )

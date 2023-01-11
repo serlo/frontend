@@ -73,7 +73,7 @@ export function TextExerciseTypeEditor(
         </AddButton>
       )}
       {props.config.skipControls ? null : (
-        <ToolbarMain subscriptions {...props.state} />
+        <ToolbarMain showSubscriptionOptions {...props.state} />
       )}
     </article>
   )

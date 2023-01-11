@@ -8,7 +8,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
-import { TimeAgo } from '@/components/time-ago'
+// import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
@@ -32,14 +32,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     id,
     username,
     description,
-    lastLogin,
+    // lastLogin,
     imageUrl,
     chatUrl,
     date,
     motivation,
     activityByType,
   } = userData
-  const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
+  // const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
@@ -180,12 +180,13 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <aside className="mt-20 text-gray-500 text-sm mx-side">
         <ProfileRoles roles={userData.roles} />
+        {/* Temporarily hidden:
         {lastLoginDate && (
           <p>
             {strings.profiles.lastLogin}:{' '}
             <TimeAgo className="pl-2 font-bold" datetime={lastLoginDate} />
           </p>
-        )}
+        )} */}
       </aside>
     )
   }

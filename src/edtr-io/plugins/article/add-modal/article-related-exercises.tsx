@@ -7,13 +7,11 @@ import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
-import { EdtrIconDefinition } from '@/edtr-io/edtr-icon-defintion'
 import {
   TaxonomyTermType,
   FetchExerciseFolderQuery,
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
 
@@ -60,19 +58,13 @@ export function ArticleRelatedExercises({
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon
-          icon={
-            getIconByTypename(
-              TaxonomyTermType.ExerciseFolder
-            ) as EdtrIconDefinition
-          }
-        />
+        <Icon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
       <div className="mt-4">
         {uuid.children.nodes.map((node) => {
-          return hasOwnPropertyTs(node, 'id') ? renderExercises(node) : null
+          return Object.hasOwn(node, 'id') ? renderExercises(node) : null
         })}
       </div>
     </div>

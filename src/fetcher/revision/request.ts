@@ -12,7 +12,6 @@ import {
 import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export async function requestRevision(
   revisionId: number,
@@ -148,7 +147,7 @@ export async function requestRevision(
       return previousRevision?.id
     }
 
-    const currentRevision = hasOwnPropertyTs(uuid, 'repository')
+    const currentRevision = Object.hasOwn(uuid, 'repository')
       ? uuid.repository.currentRevision
       : undefined
 
@@ -167,29 +166,28 @@ export async function requestRevision(
         thisRevision: {
           id: uuid.id,
           trashed: uuid.trashed,
-          title: hasOwnPropertyTs(uuid, 'title') ? uuid.title : undefined,
-          metaTitle: hasOwnPropertyTs(uuid, 'metaTitle')
+          title: Object.hasOwn(uuid, 'title') ? uuid.title : undefined,
+          metaTitle: Object.hasOwn(uuid, 'metaTitle')
             ? uuid.metaTitle
             : undefined,
-          metaDescription: hasOwnPropertyTs(uuid, 'metaDescription')
+          metaDescription: Object.hasOwn(uuid, 'metaDescription')
             ? uuid.metaDescription
             : undefined,
           content: thisExercise || thisSolution || convertState(uuid.content),
-          url: hasOwnPropertyTs(uuid, 'url') ? uuid.url : undefined,
+          url: Object.hasOwn(uuid, 'url') ? uuid.url : undefined,
         },
         currentRevision: {
           id: uuid.repository.currentRevision?.id,
           title:
-            currentRevision && hasOwnPropertyTs(currentRevision, 'title')
+            currentRevision && Object.hasOwn(currentRevision, 'title')
               ? currentRevision.title
               : undefined,
           metaTitle:
-            currentRevision && hasOwnPropertyTs(currentRevision, 'metaTitle')
+            currentRevision && Object.hasOwn(currentRevision, 'metaTitle')
               ? currentRevision.metaTitle
               : undefined,
           metaDescription:
-            currentRevision &&
-            hasOwnPropertyTs(currentRevision, 'metaDescription')
+            currentRevision && Object.hasOwn(currentRevision, 'metaDescription')
               ? currentRevision.metaDescription
               : undefined,
           content:
@@ -197,11 +195,11 @@ export async function requestRevision(
             currentSolution ||
             convertState(uuid.repository.currentRevision?.content),
           url:
-            currentRevision && hasOwnPropertyTs(currentRevision, 'url')
+            currentRevision && Object.hasOwn(currentRevision, 'url')
               ? currentRevision.url
               : undefined,
         },
-        changes: hasOwnPropertyTs(uuid, 'changes') ? uuid.changes : undefined,
+        changes: Object.hasOwn(uuid, 'changes') ? uuid.changes : undefined,
         user: {
           ...uuid.author,
         },

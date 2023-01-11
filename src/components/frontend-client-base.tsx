@@ -3,11 +3,12 @@ import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
+import { default as ToastNotice } from 'react-notify-toast'
+import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
 import { ConditonalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
@@ -16,7 +17,6 @@ import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import type { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -58,12 +58,7 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      const featureI18n = require('@/helper/feature-i18n') as {
-        getInstanceDataByLang: typeof getInstanceDataByLang
-      }
-      return featureI18n.getInstanceDataByLang(
-        (locale as Instance) ?? Instance.De
-      )
+      return getInstanceDataByLang((locale as Instance) ?? Instance.De)
     } else {
       // load instance data from client from document tag
       return JSON.parse(

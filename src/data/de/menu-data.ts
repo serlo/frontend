@@ -269,10 +269,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'englisch',
     rootId: 25985,
-    entries: [
-      { title: 'Themen', id: 25979 },
-      { title: 'Taxonomy bearbeiten', url: '/taxonomy/term/organize/25979' },
-    ],
+    entries: [{ title: 'Themen', id: 25979 }],
   },
   {
     // subject: 'politik',

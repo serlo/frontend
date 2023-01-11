@@ -4,6 +4,7 @@ import NProgress from 'nprogress'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { loggedInData } from '@/data/en'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { successHash } from '@/helper/use-leave-confirm'
 
 interface SuccessHandlerInput {
   success: boolean | number
@@ -36,13 +37,10 @@ export function useSuccessHandler() {
         if (toastKey) showToastNotice(successStrings[toastKey], 'success')
 
         if (redirectUrl) {
-          if (useHardRedirect) {
-            window.location.href = redirectUrl
-          } else {
+          if (useHardRedirect) window.location.href = redirectUrl
+          else {
             setTimeout(
-              () => {
-                void router.push(redirectUrl)
-              },
+              () => router.push(redirectUrl + successHash),
               timeout ? timeout : 500
             )
           }

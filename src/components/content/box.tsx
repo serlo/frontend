@@ -10,7 +10,6 @@ import clsx from 'clsx'
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendBoxNode } from '@/frontend-node-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export const boxTypeStyle = {
@@ -51,13 +50,13 @@ export function Box({
   const isBlank = boxType === 'blank'
 
   const style = boxTypeStyle[boxType]
-  const borderColorClass = hasOwnPropertyTs(style, 'borderColorClass')
+  const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
-  const colorClass = hasOwnPropertyTs(style, 'colorClass')
+  const colorClass = Object.hasOwn(style, 'colorClass')
     ? style.colorClass
     : defaultStyle.colorClass
-  const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
+  const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
 
   const content = renderNested(children, 'children')
 

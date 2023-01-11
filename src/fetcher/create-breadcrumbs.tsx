@@ -1,6 +1,5 @@
 import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const rootIdsToLandingAlias: Record<number, string> = {
   19767: '/mathe',
@@ -102,7 +101,7 @@ export function createBreadcrumbs(uuid: MainUuidType) {
       breadcrumbs[0] &&
       breadcrumbs[0].id &&
       !isNaN(breadcrumbs[0].id) &&
-      hasOwnPropertyTs(rootIdsToLandingAlias, breadcrumbs[0].id)
+      Object.hasOwn(rootIdsToLandingAlias, breadcrumbs[0].id)
     ) {
       breadcrumbs[0].url = rootIdsToLandingAlias[breadcrumbs[0].id]
     }

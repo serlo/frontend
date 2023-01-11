@@ -2,19 +2,17 @@ import { useScopedStore } from '@edtr-io/core'
 import { serializeRootDocument } from '@edtr-io/store'
 import { useEffect, useState } from 'react'
 
-import { storeState } from '../serlo-editor'
+import { storeStateToLocalStorage } from '../serlo-editor'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export function SaveLocalButton({ visible }: { visible: boolean }) {
+export function SaveLocalButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
   const store = useScopedStore()
 
   useEffect(() => {
     //reset when modal opens
-    if (visible) {
-      setSavedToLocalstorage(false)
-    }
-  }, [visible])
+    if (open) setSavedToLocalstorage(false)
+  }, [open])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -25,7 +23,7 @@ export function SaveLocalButton({ visible }: { visible: boolean }) {
       className="serlo-button-blue mt-3"
       onClick={() => {
         const serializedRoot = serializeRootDocument()(store.getState())
-        storeState(serializedRoot)
+        storeStateToLocalStorage(serializedRoot)
         setSavedToLocalstorage(true)
       }}
     >
