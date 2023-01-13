@@ -17,7 +17,11 @@ export function Article({
   exerciseFolder,
   relatedContent,
   sources,
-}: FrontendArticleNode & { renderNested: RenderNestedFunction }) {
+  showThankYou,
+}: FrontendArticleNode & {
+  renderNested: RenderNestedFunction
+  showThankYou: boolean
+}) {
   const { strings } = useInstanceData()
 
   return (
@@ -25,7 +29,7 @@ export function Article({
       {renderNested(introduction, 'article-intro')}
       {renderNested(content, 'article-content')}
 
-      <ThankYou />
+      {showThankYou && <ThankYou />}
 
       {renderExercises()}
 
