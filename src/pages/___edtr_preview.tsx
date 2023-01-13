@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
-import { useInstanceData } from '@/contexts/instance-context'
-import { loggedInData } from '@/data/de'
+import { instanceData, loggedInData } from '@/data/de'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { createPlugins } from '@/edtr-io/plugins'
 
@@ -40,7 +39,7 @@ const getErrorState = (msg: string) => {
 }
 
 const ContentPage: NextPage = () => {
-  const { strings } = useInstanceData()
+  const { strings } = instanceData
   const [initialState, setInitialState] =
     useState<InitialStateData>(fallbackState)
 
