@@ -1,50 +1,43 @@
-/*import {
-  ProcessedResponse,
-  ResponseDataQuickFix,
-} from '@/fetcher/process-response'*/
-
 import { FrontendContentNode } from '@/frontend-node-types'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
+const rootsWithImage = [
+  'biologie',
+  'chemie',
+  'informatik',
+  'lerntipps',
+  'mathe',
+  'nachhaltigkeit',
+  'mitmachen',
+  'community', // remove when renaming is done
+]
+
+const metaAliases = [
+  '/serlo',
+  '/21423/pädagogisches-konzept',
+  '/features',
+  '/team',
+  '/jobs',
+  '/partner',
+  '/wirkung',
+  '/transparenz',
+  '/geschichte',
+  '/21657/kontakt-und-standorte',
+]
+
 export function getMetaImage(alias: string) {
-  const subject = alias.split('/')[1]
-  let imageSrc = 'serlo.jpg'
-
-  switch (subject) {
-    case 'mathe':
-      imageSrc = 'mathematik.png'
-      break
-    case 'nachhaltigkeit':
-      imageSrc = 'nachhaltigkeit.png'
-      break
-    case 'biologie':
-      imageSrc = 'biologie.png'
-      break
-  }
-
-  return `https://de.${serloDomain}/_assets/img/meta/${imageSrc}`
+  const root = alias.split('/')[1]
+  const imageFileName = rootsWithImage.includes(root)
+    ? root
+    : metaAliases.includes(alias)
+    ? 'meta'
+    : alias.length <= 1
+    ? 'landing'
+    : 'serlo' // fallback, i18n in the future
+  return `https://de.${serloDomain}/_assets/img/meta/${imageFileName}.png`
 }
 
 export function getMetaDescription(content: FrontendContentNode[]): string {
-  /*if (processed.contentType === UuidType.TaxonomyTerm) return
-
-  if (!processed.data) return
-
-  const data = (processed.data as unknown) as ResponseDataQuickFix
-
-  //could have custom description set, return directly
-  if (
-    processed.contentType === 'Article' ||
-    processed.contentType === 'Applet'
-  ) {
-    if (data.metaDescription && data.metaDescription.length > 10) {
-      return data.metaDescription
-    }
-  }
-
-  if (data.value === undefined || data.value.children === undefined) return
-  if (!conte)*/
-
   const slice = content.slice(0, 10)
   const stringified = JSON.stringify(slice)
   const regexp = /"text":"(.)*?"/g

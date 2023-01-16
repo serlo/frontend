@@ -36,7 +36,7 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
         content={
           metaImage
             ? metaImage
-            : `https://${lang}.${serloDomain}/_assets/img/meta/serlo.jpg`
+            : `https://${lang}.${serloDomain}/_assets/img/meta/serlo.png`
         }
       />
     </Head>

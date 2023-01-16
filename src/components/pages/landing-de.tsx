@@ -11,6 +11,7 @@ import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -21,7 +22,12 @@ export function LandingDE({ data }: LandingDEProps) {
 
   return (
     <>
-      <HeadTags data={{ title: 'Serlo – Die freie Lernplattform' }} />
+      <HeadTags
+        data={{
+          title: 'Serlo – Die freie Lernplattform',
+          metaImage: `https://de.${serloDomain}/_assets/img/meta/landing.jpg`,
+        }}
+      />
       <LandingJsonLd />
       <Header />
       <main id="content" className="text-truegray-700">
