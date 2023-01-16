@@ -56,11 +56,6 @@ module.exports = withBundleAnalyzer({
 
     return config
   },
-  i18n: {
-    locales: ['de', 'en', 'ta', 'hi', 'fr', 'es'],
-    defaultLocale: 'de',
-    localeDetection: false,
-  },
   // TODO: reactStrictMode with react18 breaks edtr.io atm
   reactStrictMode: false,
   productionBrowserSourceMaps: true,

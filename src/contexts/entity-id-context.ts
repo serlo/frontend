@@ -7,6 +7,7 @@ export const EntityIdProvider = EntityIdContext.Provider
 export function useEntityId() {
   const data = useContext(EntityIdContext)
   if (!data) {
+    return -1
     throw new Error('Attempt to use entityId outside of provider!')
   }
   return data
