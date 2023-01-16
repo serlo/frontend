@@ -32,7 +32,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         <LandingSubjectsNew data={subjectsData} />
       </section>
 
-      <section className="principles-section">
+      <section className="principles-section bg-brand px-side lg:px-side-lg">
         <PrinciplesGraphic strings={landingStrings} />
       </section>
 
@@ -134,7 +134,6 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           }
         }
         .principles-section {
-          @apply bg-brand px-side lg:px-side-lg;
           text-align: center;
           padding-top: 70px;
           padding-bottom: 70px;

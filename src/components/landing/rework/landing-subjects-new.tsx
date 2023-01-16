@@ -19,7 +19,6 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
           display: flex;
           justify-content: space-evenly;
 
-          @apply px-side lg:px-side-lg;
           flex-direction: row;
           flex-wrap: wrap;
 
@@ -31,7 +30,9 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
           }
         }
       `}</style>
-      <nav>{data.subjects.map(renderSubject)}</nav>
+      <nav className="px-side lg:px-side-lg;">
+        {data.subjects.map(renderSubject)}
+      </nav>
     </>
   )
 
