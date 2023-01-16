@@ -1,7 +1,7 @@
 import { PluginToolbarButton } from '@edtr-io/core'
 import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons/faHistory'
-import request from 'graphql-request'
+import request, { gql } from 'graphql-request'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState } from 'react'
 
@@ -21,9 +21,197 @@ import {
 } from '@/fetcher/graphql-types/operations'
 import { Revisions } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
+import { basicUserDataFragment } from '@/fetcher/user/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
+
+export const revisionHistoryQuery = gql`
+  query revisions($id: Int!) {
+    uuid(id: $id) {
+      id
+      alias
+      __typename
+      title
+      ... on Applet {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Article {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Course {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on CoursePage {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Event {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Exercise {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on ExerciseGroup {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on GroupedExercise {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Page {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            date
+          }
+        }
+      }
+      ... on Video {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+      ... on Solution {
+        currentRevision {
+          id
+        }
+        revisions {
+          nodes {
+            id
+            trashed
+            author {
+              ...basicUserData
+            }
+            changes
+            date
+          }
+        }
+      }
+    }
+  }
+
+  ${basicUserDataFragment}
+`
 
 export function RevisionHistoryLoader<T>(
   props: PropsWithChildren<{
