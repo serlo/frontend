@@ -31,12 +31,7 @@ export function convertTextPluginState(
 
 export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   if (node.type === 'p') {
-    return [
-      {
-        type: FrontendNodeType.SlateP,
-        children: convertTextPluginState(node.children),
-      },
-    ]
+    return handleSemistructedContentOfP(convertTextPluginState(node.children))
   }
   if (node.type === FrontendNodeType.A) {
     const children = convertTextPluginState(node.children)
@@ -199,6 +194,37 @@ function handleSemistructedContentOfPForListItems(
         resultAppendable = false
         return
       }
+      if (resultAppendable && last && last.type == FrontendNodeType.SlateP) {
+        last.children!.push(child)
+      } else {
+        result.push({ type: FrontendNodeType.SlateP, children: [child] })
+        resultAppendable = true
+      }
+    } else {
+      result.push(child)
+      resultAppendable = false
+    }
+  })
+
+  return result
+}
+
+function handleSemistructedContentOfP(
+  input: FrontendContentNode[]
+): FrontendContentNode[] {
+  if (input.length == 0) {
+    return [{ type: FrontendNodeType.SlateP, children: [] }]
+  }
+  // group inline nodes together in p
+  const result: FrontendContentNode[] = []
+  let resultAppendable = false
+  input.forEach((child) => {
+    if (
+      child.type == FrontendNodeType.Text ||
+      child.type == FrontendNodeType.A ||
+      child.type == FrontendNodeType.InlineMath
+    ) {
+      const last = result[result.length - 1]
       if (resultAppendable && last && last.type == FrontendNodeType.SlateP) {
         last.children!.push(child)
       } else {

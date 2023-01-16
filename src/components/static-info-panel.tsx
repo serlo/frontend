@@ -35,7 +35,11 @@ export function StaticInfoPanel({
         </Head>
       ) : null}
       <div className={clsx('p-4 my-12 rounded-2xl font-bold', colorClass)}>
-        {icon ? <FaIcon icon={icon} /> : null}
+        {icon ? (
+          <>
+            <FaIcon icon={icon} />{' '}
+          </>
+        ) : null}
         {children}
       </div>
     </>
