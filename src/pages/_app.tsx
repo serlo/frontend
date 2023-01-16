@@ -1,4 +1,6 @@
 import { AppProps } from 'next/app'
+// eslint-disable-next-line import/no-unassigned-import
+import 'core-js/es/object/has-own'
 
 // add font-faces to global css
 import '@/assets-webkit/fonts/default.css'
