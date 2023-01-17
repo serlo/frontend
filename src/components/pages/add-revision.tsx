@@ -124,8 +124,8 @@ export function AddRevision({
   function renderBacklink() {
     if (!breadcrumbsData) return null
     const backlink = {
-      label: isPage ? 'Pages' : strings.revisions.toContent,
-      url: isPage ? '/pages' : `/${id ?? taxonomyParentId!}`,
+      label: strings.revisions.toContent,
+      url: `/${id ?? taxonomyParentId!}`,
     }
     return <Breadcrumbs data={[...breadcrumbsData, backlink]} />
   }
