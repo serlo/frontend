@@ -46,7 +46,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             padding-left: 0;
             min-width: 40%;
             max-width: 49%;
-            @media (min-wdith: ${breakpoints.sm}) {{
+            @media (min-wdith: ${breakpoints.sm}) {
               min-width: 30%;
             }
 
