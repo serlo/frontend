@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
@@ -8,7 +9,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
-import clsx from 'clsx'
 
 export function Search() {
   const { strings } = useInstanceData()
