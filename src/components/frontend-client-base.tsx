@@ -28,7 +28,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   entityId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
-  instanceData: ReturnType<typeof getInstanceDataByLang>
+  instanceData?: ReturnType<typeof getInstanceDataByLang>
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -83,11 +83,13 @@ export function FrontendClientBase({
   const isLoggedIn = checkLoggedIn()
 
   useEffect(fetchLoggedInData, [
-    instanceData.lang,
     loggedInData,
     loadLoggedInData,
     isLoggedIn,
+    instanceData,
   ])
+
+  if (!instanceData) return null
 
   // dev
   //console.dir(initialProps)
@@ -130,7 +132,7 @@ export function FrontendClientBase({
     )
       return null
     const cacheValue = sessionStorage.getItem(
-      `___loggedInData_${instanceData.lang}`
+      `___loggedInData_${instanceData!.lang}`
     )
     if (!cacheValue) return null
     return JSON.parse(cacheValue) as LoggedInData
@@ -140,12 +142,12 @@ export function FrontendClientBase({
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
     if (loggedInData) return
     if (isLoggedIn || loadLoggedInData) {
-      fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
+      fetch(frontendOrigin + '/api/locale/' + instanceData!.lang)
         .then((res) => res.json())
         .then((value) => {
           if (value) {
             sessionStorage.setItem(
-              `___loggedInData_${instanceData.lang}`,
+              `___loggedInData_${instanceData!.lang}`,
               JSON.stringify(value)
             )
             setLoggedInData(value as LoggedInData)
