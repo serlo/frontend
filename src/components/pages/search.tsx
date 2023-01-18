@@ -8,6 +8,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
+import clsx from 'clsx'
 
 export function Search() {
   const { strings } = useInstanceData()
@@ -31,7 +32,12 @@ export function Search() {
 
   function renderSearch() {
     return (
-      <div className="mx-side">
+      <div
+        className={clsx(
+          'mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter',
+          '[&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter'
+        )}
+      >
         <MaxWidthDiv>
           <GoogleSeachWrapper />
         </MaxWidthDiv>
@@ -43,11 +49,6 @@ export function Search() {
 
           .gsc-search-button {
             height: 2.6rem !important;
-          }
-
-          .gsc-control-cse,
-          .gsc-control-cse * {
-            @apply !font-serlo tracking-slightly-tighter;
           }
 
           .gsc-control-cse {
@@ -62,7 +63,6 @@ export function Search() {
             &,
             .gsc-table-result {
               font-size: 1.125rem !important;
-              @apply !font-serlo tracking-slightly-tighter;
               line-height: 1.7rem !important;
             }
           }

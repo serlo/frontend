@@ -37,14 +37,14 @@ export function LandingInternational({ data }: LandingInternationalProps) {
       </section>
 
       <section className="section">
-        <h2>{landingStrings.wikiTitle}</h2>
+        <h2 className="text-brand">{landingStrings.wikiTitle}</h2>
         <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
       </section>
 
       <section className="image-section" />
 
       <section className="section">
-        <h2>{landingStrings.movementTitle}</h2>
+        <h2 className="text-brand">{landingStrings.movementTitle}</h2>
         <div className="icon-style">
           <ParticipateSVG />
         </div>
@@ -65,7 +65,8 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         .section {
           margin-top: 60px;
           margin-bottom: 60px;
-          @apply px-side lg:px-side-lg;
+          padding-left: 16px;
+          padding-right: 16px;
 
           @screen sm {
             display: flex;
@@ -77,6 +78,8 @@ export function LandingInternational({ data }: LandingInternationalProps) {
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
+            padding-left: 40px;
+            padding-right: 40px;
           }
         }
         .col {
@@ -127,7 +130,6 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         }
         h2 {
           font-size: 1.66rem;
-          @apply text-brand;
           border: 0;
           @screen sm {
             width: 100%;
