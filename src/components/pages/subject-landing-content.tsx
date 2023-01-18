@@ -13,6 +13,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomySubTerm } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { breakpoints } from '@/helper/breakpoints'
 import { getServerSideStrings } from '@/helper/feature-i18n'
 
 interface SubjectLandingContentProps {
@@ -122,7 +123,7 @@ export function SubjectLandingContent({
           background-position: 77% 12%;
           background-size: 100vw 100%;
 
-          @screen sm {
+          @media (min-wdith: ${breakpoints.sm}) {
             padding-top: 4rem;
             margin: 4rem 0 0 0;
             background-position: 20% 19%;

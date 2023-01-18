@@ -11,6 +11,7 @@ import { Quickbar } from '../navigation/quickbar'
 import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
+import { breakpoints } from '@/helper/breakpoints'
 
 export interface LandingDEProps {
   data: InstanceLandingData
@@ -156,7 +157,7 @@ export function LandingDE({ data }: LandingDEProps) {
           background-position: 77% 12%;
           background-size: 200%, 100vw 100%;
 
-          @screen sm {
+          @media (min-wdith: ${breakpoints.sm}) {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;

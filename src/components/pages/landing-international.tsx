@@ -8,6 +8,7 @@ import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
+import { breakpoints } from '@/helper/breakpoints'
 import { colors } from '@/helper/colors'
 
 export interface LandingInternationalProps {
@@ -68,13 +69,13 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           padding-left: 16px;
           padding-right: 16px;
 
-          @screen sm {
+          @media (min-wdith: ${breakpoints.sm}) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
 
-          @screen lg {
+          @media (min-wdith: ${breakpoints.lg}) {
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
@@ -85,7 +86,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         .col {
           margin-top: 40px;
 
-          @screen sm {
+          @media (min-wdith: ${breakpoints.sm}) {
             margin-top: 0;
             margin-right: 30px;
             flex: 1;
@@ -99,7 +100,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
             }
           }
 
-          @screen lg {
+          @media (min-wdith: ${breakpoints.lg}) {
             margin-right: 50px;
           }
           display: flex;
@@ -120,18 +121,18 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
           background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
 
-          @screen sm {
+          @media (min-wdith: ${breakpoints.sm}) {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
           }
 
-          @screen md {
+          @media (min-wdith: ${breakpoints.md}) {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
           }
         }
         h2 {
           font-size: 1.66rem;
           border: 0;
-          @screen sm {
+          @media (min-wdith: ${breakpoints.sm}) {
             width: 100%;
           }
         }
@@ -153,7 +154,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           }
           width: 100px;
           margin-right: 30px;
-          @screen lg {
+          @media (min-wdith: ${breakpoints.lg}) {
             margin-right: 50px;
             width: 120px;
           }
