@@ -1,6 +1,8 @@
+'use client'
+
 import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
-import { Router, useRouter } from 'next/router'
+import { Router } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
@@ -15,8 +17,7 @@ import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
-import { InstanceData, LoggedInData } from '@/data-types'
-import { Instance } from '@/fetcher/graphql-types/operations'
+import { LoggedInData } from '@/data-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -27,6 +28,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   entityId?: number
   authorization?: AuthorizationPayload
   loadLoggedInData?: boolean
+  instanceData: ReturnType<typeof getInstanceDataByLang>
 }>
 
 Router.events.on('routeChangeStart', () => {
@@ -52,22 +54,8 @@ export function FrontendClientBase({
   entityId,
   authorization,
   loadLoggedInData,
+  instanceData,
 }: FrontendClientBaseProps) {
-  const { locale } = useRouter()
-  const [instanceData] = useState<InstanceData>(() => {
-    if (typeof window === 'undefined') {
-      // load instance data for server side rendering
-      // Note: using require to avoid webpack bundling it
-      return getInstanceDataByLang((locale as Instance) ?? Instance.De)
-    } else {
-      // load instance data from client from document tag
-      return JSON.parse(
-        document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
-          ?.textContent ?? '{}'
-      ) as ReturnType<typeof getInstanceDataByLang>
-    }
-  })
-
   useEffect(() => {
     //tiny history
     sessionStorage.setItem(
@@ -99,7 +87,6 @@ export function FrontendClientBase({
     loggedInData,
     loadLoggedInData,
     isLoggedIn,
-    locale,
   ])
 
   // dev

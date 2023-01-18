@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
@@ -77,7 +77,7 @@ function InternalLink({
   ref,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
-  const router = useRouter()
+  const pathName = usePathname()
 
   if (!href || href === undefined || href === '')
     return (
@@ -90,7 +90,7 @@ function InternalLink({
   const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
-  const isContentOnly = router.asPath.startsWith('/content-only/')
+  const isContentOnly = pathName?.startsWith('/content-only/')
 
   if (isAnchor || isMailto) return renderLink(href)
   if (isExternal || forceNoCSR || isContentOnly) return renderLink(href)

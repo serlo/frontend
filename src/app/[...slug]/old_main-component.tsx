@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps } from 'next'
+/*import { GetStaticPaths, GetStaticProps } from 'next'
 
 import { Entity } from '@/components/content/entity'
 import { EntityBase } from '@/components/entity-base'
@@ -80,3 +80,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: 'blocking',
   }
 }
+*/
+export {}

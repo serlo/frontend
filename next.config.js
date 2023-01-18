@@ -67,4 +67,7 @@ module.exports = withBundleAnalyzer({
   /*experimental: {
     fallbackNodePolyfills: false,
   },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
+  experimental: {
+    appDir: true,
+  },
 })

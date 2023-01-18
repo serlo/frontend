@@ -1,6 +1,6 @@
 import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
 import clsx from 'clsx'
-import { Router, useRouter } from 'next/router'
+import { useRouter, usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { Logo } from './logo'
@@ -15,10 +15,11 @@ import { submitEvent } from '@/helper/submit-event'
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { strings } = useInstanceData()
+  const pathname = usePathname()
   const router = useRouter()
 
-  const isLanding = router.route === '/'
-  const hideQuickbar = router.route === '/search' || isLanding
+  const isLanding = pathname === '/'
+  const hideQuickbar = pathname === '/search' || isLanding
 
   useEffect(() => {
     const escapeHandler = (event: KeyboardEvent) => {
@@ -27,14 +28,14 @@ export function Header() {
     document.body.addEventListener('keydown', escapeHandler)
 
     // close mobile menu on client side navigation, we need the global Router instance
-    const openMobileMenu = () => {
+    /*const openMobileMenu = () => {
       setMobileMenuOpen(false)
-    }
-    Router.events.on('routeChangeStart', openMobileMenu)
+    }*/
+    //Router.events.on('routeChangeStart', openMobileMenu)
 
     return () => {
       document.body.removeEventListener('keydown', escapeHandler)
-      Router.events.off('routeChangeStart', openMobileMenu)
+      //Router.events.off('routeChangeStart', openMobileMenu)
     }
   }, [])
 

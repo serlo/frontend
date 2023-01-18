@@ -1,3 +1,5 @@
+'use client'
+
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
 import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'

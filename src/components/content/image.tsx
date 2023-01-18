@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { ReactNode } from 'react'
 
 import { Lazy } from './lazy'
@@ -15,13 +15,13 @@ interface ImageProps {
 }
 
 export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
-  const router = useRouter()
+  const pathname = usePathname()!
   const { strings } = useInstanceData()
 
   const semanticNameSource =
     element.alt && element.alt.length > 3
       ? element.alt
-      : router.asPath.split('/').pop()
+      : pathname.split('/').pop()
   const semanticName = semanticNameSource?.replace(/[^\w+]/g, '')
   const src =
     semanticName && semanticName.length > 3

@@ -1,6 +1,6 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
 import clsx from 'clsx'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
