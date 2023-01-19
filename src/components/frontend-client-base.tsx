@@ -1,16 +1,17 @@
 'use client'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
-import { Router } from 'next/router'
+//import { Router } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
-import { getInstanceDataByLang } from 'src/helper/feature-i18n'
+import type { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
-import { ConditonalWrap } from './conditional-wrap'
-import { HeaderFooter } from './header-footer'
-import { MaxWidthDiv } from './navigation/max-width-div'
+// import { ConditonalWrap } from './conditional-wrap'
+// import { HeaderFooter } from './header-footer'
+// import { MaxWidthDiv } from './navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
@@ -31,7 +32,7 @@ export type FrontendClientBaseProps = PropsWithChildren<{
   instanceData?: ReturnType<typeof getInstanceDataByLang>
 }>
 
-Router.events.on('routeChangeStart', () => {
+/*Router.events.on('routeChangeStart', () => {
   NProgress.start()
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
@@ -44,7 +45,7 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
     }, 300)
   }
 })
-Router.events.on('routeChangeError', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())*/
 
 export function FrontendClientBase({
   children,
@@ -100,7 +101,8 @@ export function FrontendClientBase({
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
           <EntityIdProvider value={entityId || null}>
-            <ConditonalWrap
+            {children}
+            {/*} <ConditonalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
             >
@@ -114,10 +116,9 @@ export function FrontendClientBase({
                   </div>
                 )}
               >
-                {/* should not be necessary…?*/}
                 {children as JSX.Element}
               </ConditonalWrap>
-            </ConditonalWrap>
+                </ConditonalWrap>*/}
             <ToastNotice />
           </EntityIdProvider>
         </LoggedInDataProvider>
