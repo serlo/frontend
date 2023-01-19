@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import { ScriptProps } from 'next/script'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -49,14 +49,14 @@ const pages = [
 export function NewsletterPopup() {
   const { lang } = useInstanceData()
 
-  const shouldLoad =
-    typeof window !== 'undefined' &&
-    lang === Instance.De &&
-    pages.includes(window.location.pathname)
+  const [shouldLoad, setShouldLoad] = useState(false)
 
   useEffect(() => {
+    setShouldLoad(
+      lang === Instance.De && pages.includes(window.location.pathname)
+    )
     return () => document.getElementById('PopupSignupForm_0')?.remove()
-  }, [])
+  }, [lang])
 
   return shouldLoad ? (
     <>
