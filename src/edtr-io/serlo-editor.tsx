@@ -3,7 +3,7 @@ import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
 import { Entity, UuidType } from '@serlo/authorization'
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
@@ -51,7 +51,7 @@ export function SerloEditor({
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
-
+  const [useStored, setUseStored] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
@@ -81,19 +81,49 @@ export function SerloEditor({
   })
 
   const stored = getStateFromLocalStorage()
-  const useStored = stored && confirm(editorStrings.edtrIo.oldRevisionFound)
 
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
     >
+      {stored ? (
+        <div className="bg-brand-100 rounded-2xl m-side mt-12 p-side">
+          {useStored ? (
+            <>
+              Wieder zurück zum Ausgangszustand (Vorsicht, deine Änderungen
+              gehen dabei verloren){' '}
+              <button
+                className="serlo-button-blue mt-2"
+                onClick={() => {
+                  storeStateToLocalStorage(undefined)
+                  setUseStored(false)
+                }}
+              >
+                Änderungen verwerfen
+              </button>
+            </>
+          ) : (
+            <>
+              {editorStrings.edtrIo.oldRevisionFound}{' '}
+              <button
+                className="serlo-button-blue mt-2"
+                onClick={() => {
+                  setUseStored(true)
+                }}
+              >
+                Load it now
+              </button>
+            </>
+          )}
+        </div>
+      ) : null}
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
         DocumentEditor={DocumentEditor}
         onError={onError}
         plugins={plugins}
-        initialState={useStored ? stored : initialState}
+        initialState={stored && useStored ? stored : initialState}
         editable
       >
         {children}
@@ -113,8 +143,8 @@ function getStateFromLocalStorage() {
   const edtr = localStorage.getItem('edtr')
   if (!edtr) return
 
-  const state = JSON.parse(edtr) as LooseEdtrData
-  return state[window.location.pathname]
+  const storedStates = JSON.parse(edtr) as LooseEdtrData
+  return storedStates[window.location.pathname]
 }
 
 export function storeStateToLocalStorage(
