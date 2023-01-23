@@ -579,10 +579,10 @@ export const loggedInData = {
       noChangesWarning: "Bisher hast du nichts geändert",
       edtrIo: {
         localStorage: {
-          found: 'You have locally saved edits of this revision. Do you want to load them?',
-          foundButton: 'Load stored edits',
-          restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
-          restoreInitialButton: 'Delete changes'
+          found: "Du hast lokal gespeicherte Änderungen dieses Inhalts. Möchtest du sie laden?",
+          foundButton: "Änderungen laden",
+          restoreInitial: "Du kannst auch wieder zurück zur Ausgangsversion. Vorsicht, dabei werden deine bisherigen Änderungen gelöscht.",
+          restoreInitialButton: "Änderungen löschen."
         },
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
