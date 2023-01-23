@@ -16,7 +16,7 @@ export function LocalStorageNotice({
 }: LocalStorageNoticeProps) {
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const storageStrings = loggedInData.strings.editor.edtrIo.localStorage
 
   const stored = getStateFromLocalStorage()
 
@@ -24,31 +24,21 @@ export function LocalStorageNotice({
 
   return (
     <div className="bg-brand-100 rounded-2xl m-side mt-12 p-side">
-      {useStored ? (
-        <>
-          Wieder zurück zum Ausgangszustand (Vorsicht, deine Änderungen gehen
-          dabei verloren){' '}
-          <button
-            className="serlo-button-blue mt-2"
-            onClick={() => {
+      <>
+        {storageStrings[useStored ? 'restoreInitial' : 'found']}
+        <br />
+        <button
+          className="serlo-button-blue mt-2"
+          onClick={() => {
+            if (useStored) {
               storeStateToLocalStorage(undefined)
               setUseStored(false)
-            }}
-          >
-            Änderungen verwerfen
-          </button>
-        </>
-      ) : (
-        <>
-          {editorStrings.edtrIo.oldRevisionFound}{' '}
-          <button
-            className="serlo-button-blue mt-2"
-            onClick={() => setUseStored(true)}
-          >
-            Load it now
-          </button>
-        </>
-      )}
+            } else setUseStored(true)
+          }}
+        >
+          {storageStrings[useStored ? 'restoreInitialButton' : 'foundButton']}
+        </button>
+      </>
     </div>
   )
 }
@@ -64,6 +54,8 @@ export function getStateFromLocalStorage() {
 export function storeStateToLocalStorage(
   state?: EditorProps['initialState'] | null
 ) {
+  // eslint-disable-next-line no-console
+  console.log('edtr: saving state in browser localstorage')
   const currentValue = localStorage.getItem('edtr')
   const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
 
