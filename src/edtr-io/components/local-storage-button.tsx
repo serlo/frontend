@@ -2,10 +2,10 @@ import { useScopedStore } from '@edtr-io/core'
 import { serializeRootDocument } from '@edtr-io/store'
 import { useEffect, useState } from 'react'
 
-import { storeStateToLocalStorage } from '../serlo-editor'
+import { storeStateToLocalStorage } from './local-storage-notice'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-export function SaveLocalButton({ open }: { open: boolean }) {
+export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
   const store = useScopedStore()
 

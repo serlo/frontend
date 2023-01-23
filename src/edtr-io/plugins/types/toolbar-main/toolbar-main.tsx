@@ -1,8 +1,4 @@
-import {
-  useScopedDispatch,
-  useScopedSelector,
-  useScopedStore,
-} from '@edtr-io/core'
+import { useScopedDispatch, useScopedSelector } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import {
   redo,
@@ -10,20 +6,18 @@ import {
   hasRedoActions,
   hasUndoActions,
   hasPendingChanges,
-  serializeRootDocument,
 } from '@edtr-io/store'
 import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
 import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo'
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
-import { storeStateToLocalStorage } from '@/edtr-io/serlo-editor'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
@@ -42,20 +36,9 @@ export function ToolbarMain({
   const undoable = useScopedSelector(hasUndoActions())
   const redoable = useScopedSelector(hasRedoActions())
   const isChanged = useScopedSelector(hasPendingChanges())
-  const store = useScopedStore()
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   useLeaveConfirm(isChanged)
-
-  useEffect(() => {
-    if (!isChanged) return
-    const autoSaveInterval = setInterval(() => {
-      const serializedRoot = serializeRootDocument()(store.getState())
-      storeStateToLocalStorage(serializedRoot)
-    }, 10000)
-
-    return () => clearTimeout(autoSaveInterval)
-  }, [isChanged, store])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null

@@ -5,6 +5,11 @@ import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/be
 import { Entity, UuidType } from '@serlo/authorization'
 import { createContext, ReactNode, useState } from 'react'
 
+import {
+  debouncedStoreToLocalStorage,
+  getStateFromLocalStorage,
+  LocalStorageNotice,
+} from './components/local-storage-notice'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
@@ -80,51 +85,23 @@ export function SerloEditor({
     },
   })
 
-  const stored = getStateFromLocalStorage()
-
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
     >
-      {stored ? (
-        <div className="bg-brand-100 rounded-2xl m-side mt-12 p-side">
-          {useStored ? (
-            <>
-              Wieder zurück zum Ausgangszustand (Vorsicht, deine Änderungen
-              gehen dabei verloren){' '}
-              <button
-                className="serlo-button-blue mt-2"
-                onClick={() => {
-                  storeStateToLocalStorage(undefined)
-                  setUseStored(false)
-                }}
-              >
-                Änderungen verwerfen
-              </button>
-            </>
-          ) : (
-            <>
-              {editorStrings.edtrIo.oldRevisionFound}{' '}
-              <button
-                className="serlo-button-blue mt-2"
-                onClick={() => {
-                  setUseStored(true)
-                }}
-              >
-                Load it now
-              </button>
-            </>
-          )}
-        </div>
-      ) : null}
+      <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
         DocumentEditor={DocumentEditor}
         onError={onError}
         plugins={plugins}
-        initialState={stored && useStored ? stored : initialState}
+        initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
+        onChange={({ changed, getDocument }) => {
+          if (!changed) return
+          void debouncedStoreToLocalStorage(getDocument())
+        }}
       >
         {children}
       </Editor>
@@ -137,23 +114,4 @@ export function SerloEditor({
       `}</style>
     </SaveContext.Provider>
   )
-}
-
-function getStateFromLocalStorage() {
-  const edtr = localStorage.getItem('edtr')
-  if (!edtr) return
-
-  const storedStates = JSON.parse(edtr) as LooseEdtrData
-  return storedStates[window.location.pathname]
-}
-
-export function storeStateToLocalStorage(
-  state?: EditorProps['initialState'] | null
-) {
-  const currentValue = localStorage.getItem('edtr')
-  const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
-
-  edtr[window.location.pathname] = state
-
-  localStorage.setItem('edtr', JSON.stringify(edtr))
 }
