@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from 'react'
 import { entity } from '../plugins/types/common/common'
 import { useHandleSave } from '../plugins/types/helpers/use-handle-save'
 import { SaveContext } from '../serlo-editor'
-import { SaveLocalButton } from './save-local-button'
+import { LocalStorageButton } from './local-storage-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
@@ -156,7 +156,7 @@ export function SaveModal({
         {edtrIo.errorSaving}
         <br />
         {edtrIo.saveLocallyAndRefresh}
-        <SaveLocalButton open={open} />
+        <LocalStorageButton open={open} />
       </StaticInfoPanel>
     )
   }

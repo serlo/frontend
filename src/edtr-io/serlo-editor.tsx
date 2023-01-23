@@ -3,8 +3,13 @@ import { Editor, EditorProps } from '@edtr-io/core/beta'
 // eslint-disable-next-line import/no-internal-modules
 import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
 import { Entity, UuidType } from '@serlo/authorization'
-import { createContext, ReactNode } from 'react'
+import { createContext, ReactNode, useState } from 'react'
 
+import {
+  debouncedStoreToLocalStorage,
+  getStateFromLocalStorage,
+  LocalStorageNotice,
+} from './components/local-storage-notice'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
@@ -51,7 +56,7 @@ export function SerloEditor({
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
-
+  const [useStored, setUseStored] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
@@ -80,21 +85,23 @@ export function SerloEditor({
     },
   })
 
-  const stored = getStateFromLocalStorage()
-  const useStored = stored && confirm(editorStrings.edtrIo.oldRevisionFound)
-
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
     >
+      <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
         DocumentEditor={DocumentEditor}
         onError={onError}
         plugins={plugins}
-        initialState={useStored ? stored : initialState}
+        initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
+        onChange={({ changed, getDocument }) => {
+          if (!changed) return
+          void debouncedStoreToLocalStorage(getDocument())
+        }}
       >
         {children}
       </Editor>
@@ -107,23 +114,4 @@ export function SerloEditor({
       `}</style>
     </SaveContext.Provider>
   )
-}
-
-function getStateFromLocalStorage() {
-  const edtr = localStorage.getItem('edtr')
-  if (!edtr) return
-
-  const state = JSON.parse(edtr) as LooseEdtrData
-  return state[window.location.pathname]
-}
-
-export function storeStateToLocalStorage(
-  state?: EditorProps['initialState'] | null
-) {
-  const currentValue = localStorage.getItem('edtr')
-  const edtr = currentValue ? (JSON.parse(currentValue) as LooseEdtrData) : {}
-
-  edtr[window.location.pathname] = state
-
-  localStorage.setItem('edtr', JSON.stringify(edtr))
 }

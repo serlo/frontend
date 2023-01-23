@@ -4487,6 +4487,7 @@ __metadata:
     timeago-react: ^3.0.5
     timeago.js: ^4.0.2
     tippy.js: ^6.3.7
+    ts-debounce: ^4.0.0
     typescript: ^4.6.2
     unfetch: ^4.2.0
   languageName: unknown
@@ -15111,6 +15112,13 @@ __metadata:
   version: 1.0.5
   resolution: "trough@npm:1.0.5"
   checksum: d6c8564903ed00e5258bab92134b020724dbbe83148dc72e4bf6306c03ed8843efa1bcc773fa62410dd89161ecb067432dd5916501793508a9506cacbc408e25
+  languageName: node
+  linkType: hard
+
+"ts-debounce@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "ts-debounce@npm:4.0.0"
+  checksum: e1e509632c5aa09c40d3fa315b3a95b2c2e8813ccc706a400aa08e41f691e658061f34b42a1e8a578a043540d6db198e6ecf3ce26a5356a02a0940985fb1e379
   languageName: node
   linkType: hard
 
