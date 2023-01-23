@@ -578,12 +578,17 @@ export const loggedInData = {
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
       noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
       edtrIo: {
+        localStorage: {
+          found: 'You have locally saved edits of this revision. Do you want to load them?',
+          foundButton: 'Load stored edits',
+          restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
+          restoreInitialButton: 'Delete changes'
+        },
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
         notSupportedYet: "Este tipo de contenido aún no está respaldado por el nuevo editor.",
         editInOld: "Edita el contenido en el antiguo editor.",
         conversionError: "Se produjo un error durante la conversión.",
-        oldRevisionFound: "Hemos encontrado una revisión anterior creada por ti. ¿Deseas restaurarla?",
         notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
         box: "Contenedor",
         boxDesc: "Un contenedor para ejemplos, comillas, advertencias, teoremas, notas…",
