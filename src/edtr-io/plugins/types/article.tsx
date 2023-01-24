@@ -29,7 +29,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const articleStrings = loggedInData.strings.editor.article
 
   return (
     <>
@@ -44,11 +44,11 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.article.seoTitle}
+              label={articleStrings.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.article.seoDesc}
+              label={articleStrings.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -56,7 +56,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={editorStrings.article.title}
+              placeholder={articleStrings.title}
               value={title.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
