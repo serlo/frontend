@@ -6,7 +6,7 @@ import { PropsWithChildren, useState, useEffect } from 'react'
 import { default as ToastNotice } from 'react-notify-toast'
 import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
-import { ConditonalWrap } from './conditional-wrap'
+import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
 import { AuthProvider } from '@/auth/auth-provider'
@@ -111,11 +111,11 @@ export function FrontendClientBase({
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
           <EntityIdProvider value={entityId || null}>
-            <ConditonalWrap
+            <ConditionalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
             >
-              <ConditonalWrap
+              <ConditionalWrap
                 condition={!noContainers}
                 wrapper={(kids) => (
                   <div className="relative">
@@ -127,8 +127,8 @@ export function FrontendClientBase({
               >
                 {/* should not be necessary…?*/}
                 {children as JSX.Element}
-              </ConditonalWrap>
-            </ConditonalWrap>
+              </ConditionalWrap>
+            </ConditionalWrap>
             <ToastNotice />
           </EntityIdProvider>
         </LoggedInDataProvider>
