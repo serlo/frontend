@@ -31,8 +31,10 @@ export function LocalStorageNotice({
           className="serlo-button-blue mt-2"
           onClick={() => {
             if (useStored) {
-              storeStateToLocalStorage(undefined)
-              setUseStored(false)
+              if (window.confirm(storageStrings.confirmRestore)) {
+                storeStateToLocalStorage(undefined)
+                setUseStored(false)
+              }
             } else setUseStored(true)
           }}
         >
