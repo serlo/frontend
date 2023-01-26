@@ -98,7 +98,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </header>
         <style jsx>{`
           header {
-            @media (min-wdith: ${breakpoints.sm}) {
+            @media (min-width: ${breakpoints.sm}) {
               display: grid;
               grid-template-columns: 175px auto;
               grid-template-rows: auto auto;

@@ -69,13 +69,13 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           padding-left: 16px;
           padding-right: 16px;
 
-          @media (min-wdith: ${breakpoints.sm}) {
+          @media (min-width: ${breakpoints.sm}) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
 
-          @media (min-wdith: ${breakpoints.lg}) {
+          @media (min-width: ${breakpoints.lg}) {
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
@@ -86,7 +86,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         .col {
           margin-top: 40px;
 
-          @media (min-wdith: ${breakpoints.sm}) {
+          @media (min-width: ${breakpoints.sm}) {
             margin-top: 0;
             margin-right: 30px;
             flex: 1;
@@ -100,7 +100,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
             }
           }
 
-          @media (min-wdith: ${breakpoints.lg}) {
+          @media (min-width: ${breakpoints.lg}) {
             margin-right: 50px;
           }
           display: flex;
@@ -121,18 +121,18 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
           background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
 
-          @media (min-wdith: ${breakpoints.sm}) {
+          @media (min-width: ${breakpoints.sm}) {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
           }
 
-          @media (min-wdith: ${breakpoints.md}) {
+          @media (min-width: ${breakpoints.md}) {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
           }
         }
         h2 {
           font-size: 1.66rem;
           border: 0;
-          @media (min-wdith: ${breakpoints.sm}) {
+          @media (min-width: ${breakpoints.sm}) {
             width: 100%;
           }
         }
@@ -154,7 +154,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           }
           width: 100px;
           margin-right: 30px;
-          @media (min-wdith: ${breakpoints.lg}) {
+          @media (min-width: ${breakpoints.lg}) {
             margin-right: 50px;
             width: 120px;
           }

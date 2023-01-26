@@ -123,7 +123,7 @@ export function SubjectLandingContent({
           background-position: 77% 12%;
           background-size: 100vw 100%;
 
-          @media (min-wdith: ${breakpoints.sm}) {
+          @media (min-width: ${breakpoints.sm}) {
             padding-top: 4rem;
             margin: 4rem 0 0 0;
             background-position: 20% 19%;

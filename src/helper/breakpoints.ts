@@ -1,3 +1,4 @@
+// keep in sync with tailwind.config.js
 export const breakpoints = {
   mobile: '500px',
   sm: '800px',

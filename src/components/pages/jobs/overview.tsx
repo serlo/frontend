@@ -299,7 +299,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           background-repeat: no-repeat;
           background-size: 100vw 100%;
 
-          @media (min-wdith: ${breakpoints.sm}) {
+          @media (min-width: ${breakpoints.sm}) {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;

@@ -26,12 +26,12 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
           margin: 0 auto;
           max-width: 800px;
 
-          @media (min-wdith: ${breakpoints.lg}) {
+          @media (min-width: ${breakpoints.lg}) {
             margin-top: 40px;
           }
         }
       `}</style>
-      <nav className="px-side lg:px-side-lg;">
+      <nav className="px-side lg:px-side-lg">
         {data.subjects.map(renderSubject)}
       </nav>
     </>
@@ -46,7 +46,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             padding-left: 0;
             min-width: 40%;
             max-width: 49%;
-            @media (min-wdith: ${breakpoints.sm}) {
+            @media (min-width: ${breakpoints.sm}) {
               min-width: 30%;
             }
 
