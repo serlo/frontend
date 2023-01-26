@@ -15,6 +15,7 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { getServerSideStrings } from '@/helper/feature-i18n'
+import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface SubjectLandingContentProps {
   subject: deSubjectLandingSubjects
@@ -35,7 +36,10 @@ export function SubjectLandingContent({
   return (
     <>
       <HeadTags
-        data={{ title: `${data.title} Startseite  - ${instanceData.title}` }}
+        data={{
+          title: `${data.title} Startseite  - ${instanceData.title}`,
+          metaImage: `https://de.${serloDomain}/_assets/img/meta/${subject}.png`,
+        }}
       />
       <Header />
       <main id="content" className="text-truegray-700">

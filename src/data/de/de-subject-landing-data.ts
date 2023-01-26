@@ -78,7 +78,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Vektor- und Pixelgrafik',
       type: UuidType.Article,
       url: '/informatik/57636/vektor-und-pixelgrafik',
-      img: 'https://assets.serlo.org/legacy/573afde7f3fc1_0b64541b7d14bafc97c9ab582b7d480d1b970b39.png',
+      img: 'https://assets.serlo.org/legacy/573f2f1a1060e_decd9b30d5b747d7d4a6627d85d43862fdb22574.svg',
     },
     {
       title: 'Beispiele: Wie verändert Big Data die Welt?',
@@ -96,7 +96,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Aufgaben Vektor- vs. Pixelgrafik',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/informatik/94110/aufgaben-vektor-vs.-pixelgrafik',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg',
+      img: 'https://assets.serlo.org/legacy/57eb81717a07d_67e94a62d819d4381996c582721810e2ced768dc.svg',
     },
     {
       title: 'Definitionen von „Big Data“',
@@ -176,6 +176,12 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       url: '/informatik/65009/bauernhof',
       img: 'https://assets.serlo.org/legacy/58b81febf334a_aab028f7c60aed6f8d489045726e2fd37fada38c.svg',
     },
+    {
+      title: 'Klassenkarte',
+      type: UuidType.Article,
+      url: '/informatik/176564/klassenkarte',
+      img: 'https://assets.serlo.org/5f53755d966c0_07af9cd3278005b66a52dd74343dfb6d9bc63993.png',
+    },
   ],
   mathe: [
     {
@@ -184,120 +190,103 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       url: '/mathe/1531/nullstellen-berechnen',
       img: 'https://assets.serlo.org/61377aba9f512_2314df750800a18c49d3e0d778662e64a84b72c0.svg',
     },
-
     {
       title: 'Gemischte Aufgaben zum Ableiten von Funktionen',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/26408/gemischte-aufgaben-zum-ableiten-von-funktionen',
-      img: 'https://assets.serlo.org/legacy/573d7aa6699a3_6ffaa0ec0cb792e145610ebbb850e6d669154e23.png',
+      img: 'https://assets.serlo.org/legacy/56fd0ebca43d6_eed8b644b10c7f8a3317e85f49c0aa28c5003f5c.png',
     },
-
     {
       title: 'Ableitung',
       type: UuidType.Article,
-      url: '/mathe/1795/ableitung',
+      url: '/1795',
       img: 'https://assets.serlo.org/legacy/9418_oFfNJ7Gbuk.png',
     },
-
     {
       title: 'Was ist ein Bruch?',
       type: UuidType.Article,
       url: '/mathe/1657/was-ist-ein-bruch',
-      img: 'https://assets.serlo.org/legacy/565f5f04936be_c638de8136077bc47af4f12a6802ddd4d4aa76a8.png',
+      img: 'https://assets.serlo.org/legacy/5677e6fd991fe_5a9a93bad3f83c3366da1ab2c2abd84b0a6bde2e.jpg',
     },
-
     {
       title: 'Prozentrechnung mittels Formeln',
       type: UuidType.Article,
       url: '/mathe/2193/prozentrechnung-mittels-formeln',
       img: 'https://assets.serlo.org/legacy/5853e2979411b_fd5b544b8cef41476371af7981b623d16a0d5c62.png',
     },
-
     {
       title: 'Aufgaben zu den binomischen Formeln',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/26312/aufgaben-zu-den-binomischen-formeln',
-      img: 'https://assets.serlo.org/legacy/5321cc011eea7_a6939af75e1532d9027d2bc2e7a8d6721f73beeb.jpg',
+      img: 'https://assets.serlo.org/5ac377b38360e_10d5ffd6d2455801d36977f351888a6b91b8cea3.PNG',
     },
-
     {
       title: 'Aufgaben zu quadratischen Gleichungen',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/26259/aufgaben-zu-quadratischen-gleichungen',
-      img: '',
+      img: 'https://assets.serlo.org/60dc3d9975786_af1246e7034246d52c944a0e321d08e94a2c5f43.svg',
     },
-
     {
       title: 'Allgemeine Form und Scheitelform einer quadratischen Funktion',
       type: UuidType.Article,
       url: '/mathe/2073/allgemeine-form-und-scheitelform-einer-quadratischen-funktion',
       img: 'https://assets.serlo.org/legacy/9076_X8B9yjxux5.png',
     },
-
     {
       title: 'Gemischte Aufgaben zu Gleichungen',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/25103/gemischte-aufgaben-zu-gleichungen',
-      img: '',
+      img: 'https://assets.serlo.org/legacy/5800c316a9dd9_91eac794c866ad1713d386e099d7062936b93469.png',
     },
-
     {
       title:
         'Aufgaben zum Sinus, Kosinus und Tangens im rechtwinkligen Dreieck',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/30680/aufgaben-zum-sinus-kosinus-und-tangens-im-rechtwinkligen-dreieck',
-      img: '',
+      img: 'https://assets.serlo.org/legacy/5735b83f60173_4ead02dfd1a6f94e22fd9953d367fe7d7f0d15c4.png',
     },
-
     {
       title: 'Gleichung',
       type: UuidType.Article,
       url: '/mathe/1717/gleichung',
-      img: 'https://assets.serlo.org/legacy/9076_X8B9yjxux5.png',
+      img: 'https://assets.serlo.org/legacy/5800c316a9dd9_91eac794c866ad1713d386e099d7062936b93469.png',
     },
-
     {
       title: 'Lineares Gleichungssystem',
       type: UuidType.Article,
       url: '/mathe/1749/lineares-gleichungssystem',
       img: 'https://assets.serlo.org/6055fd489a8e4_c84ca1eb92eebea7312822d20289704bb8ecaf03.png',
     },
-
     {
-      title: 'Quadratische Ergänzung',
-      type: UuidType.Article,
-      url: '/mathe/1631/quadratische-erg%C3%A4nzung',
-      img: '',
+      title: 'Aufgaben zu linearen Funktionen und Geradengleichungen',
+      type: TaxonomyTermType.ExerciseFolder,
+      url: '/mathe/31912/aufgaben-zu-linearen-funktionen-und-geradengleichungen',
+      img: 'https://assets.serlo.org/5f350cca0f494_5ec78f08a370295bf2ae1bf7db09e0a64005880c.svg',
     },
-
     {
       title: 'Aufgaben zu den Potenzgesetzen',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/23665/aufgaben-zu-den-potenzgesetzen',
-      img: 'https://assets.serlo.org/5e99543857efc_8be53479c9177f691809e1bbf8a08a92e1ae8bb0.PNG',
+      img: 'https://assets.serlo.org/legacy/57d6c52316d19_1971355c5ef98a65d0b0f144e8e46d90f11d2d44.png',
     },
-
     {
       title: 'Sinus, Kosinus und Tangens',
       type: UuidType.Article,
       url: '/mathe/1565/sinus-kosinus-und-tangens',
       img: 'https://assets.serlo.org/5ab7c782ad7f7_f4111037d697776c337e7bffd142cedd01324bc9.png',
     },
-
     {
       title: 'Aufgaben zu linearen Funktionen und Geradengleichungen',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/31912/aufgaben-zu-linearen-funktionen-und-geradengleichungen',
-      img: 'https://assets.serlo.org/5f3666e0406a5_893f44e18c81875c8bdb3115c41805506e437b4a.svg',
+      img: 'https://assets.serlo.org/legacy/9664_63Oy7O06bX.png',
     },
-
     {
       title: 'Gemischte Aufgaben zur Mengenlehre',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/30023/gemischte-aufgaben-zur-mengenlehre',
-      img: '',
+      img: 'https://assets.serlo.org/legacy/5072_6aHzPhQ74f.png',
     },
-
     {
       title: 'Binomische Formeln',
       type: UuidType.Article,
@@ -525,6 +514,18 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       url: '/nachhaltigkeit/75945/einf%C3%BChrung',
       img: 'https://assets.serlo.org/legacy/5891d85b3af04_db01e11c6f20465916ac724f114be413b8b6fc41.jpg',
     },
+    {
+      title: 'Wir bringen Klimaschutz ins Klassenzimmer',
+      type: UuidType.Course,
+      url: '/nachhaltigkeit/249350/lernmaterial-unterrichtsmaterial-für-jugendliche',
+      img: 'https://images.pexels.com/photos/8106773/pexels-photo-8106773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    },
+    {
+      title: 'Krieg und Klima',
+      type: UuidType.Course,
+      url: '/nachhaltigkeit/249364/jugendliche-zum-krieg-in-der-ukraine',
+      img: 'https://images.pexels.com/photos/11284548/pexels-photo-11284548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    },
   ],
   chemie: [
     {
@@ -710,6 +711,12 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       img: 'https://images.pexels.com/photos/6231720/pexels-photo-6231720.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
     },
     {
+      title: 'Negative Emotionen beim Lernen',
+      type: UuidType.Course,
+      url: '/lerntipps/118552/übersicht',
+      img: 'https://assets.serlo.org/5bac96c5e1c4e_dbda5d3464866cea7b86d6676f848f880512918f.jpg',
+    },
+    {
       title: 'Übungen zum richtigen Lesen von Aufgabenstellungen',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/lerntipps/119344/%C3%BCbungen-zum-richtigen-lesen-von-aufgabenstellungen',
@@ -719,7 +726,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Lernen mit Texten',
       type: UuidType.Course,
       url: '/lerntipps/118315/%C3%BCberblick',
-      img: 'https://assets.serlo.org/5badf0b55e848_c7abe3aac054319b50bc4bbe35c13a3fb17155fb.png',
+      img: 'https://assets.serlo.org/5badd741ceb26_cb17d98e0869f816100bd1db533c5ebba7877e2c.png',
     },
     {
       title: 'Tipps und Tricks zur Herangehensweise an Aufgaben',
@@ -728,10 +735,16 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       img: 'https://images.pexels.com/photos/6237990/pexels-photo-6237990.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
     },
     {
-      title: 'Visuelles Lernen',
+      title: 'Virtuelles Lernen',
       type: UuidType.Course,
       url: '/lerntipps/120637/%C3%BCbersicht',
-      img: 'https://assets.serlo.org/5bbdcd8fdd6fc_a9048ddcdb5dc5abdc61598b5a6eb9c560964e27.jpg',
+      img: 'https://assets.serlo.org/5bbdbac67fdca_d58b38c68fdd97d2c19333c5b4df6fed4495b1b6.jpg',
+    },
+    {
+      title: 'Strategien zum Lernen lernen',
+      type: UuidType.Article,
+      url: '/lerntipps/119275/übersicht',
+      img: 'https://assets.serlo.org/5badc0229f088_b9d90bd48f5907374333f8e554d7aed538650328.png',
     },
   ],
 }

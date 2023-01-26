@@ -53,7 +53,7 @@ describe('check all supported typenames with stored api-data', () => {
       'Serlo.org bietet einfache Erklärungen, Kurse, Lernvideos, Übungen und Musterlösungen mit denen Schüler*innen und Studierende nach ihrem …'
     )
     expect(pageData.metaData?.metaImage).toBe(
-      `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
+      `https://de.${serloDomain}/_assets/img/meta/meta.png`
     )
     assertCorrectHorizonDataFormat(pageData)
 
@@ -432,7 +432,7 @@ describe('check all supported typenames with stored api-data', () => {
       'Ziel dieses Kurses ist es, einen Überblick zur möglichen Vorgehensweise beim Finden von Nullstellen von Polynomfunktionen zu geben. Inhalte …'
     )
     expect(pageData.metaData?.metaImage).toBe(
-      `https://de.${serloDomain}/_assets/img/meta/mathematik.png`
+      `https://de.${serloDomain}/_assets/img/meta/mathe.png`
     )
 
     assertCorrectHorizonDataFormat(pageData)
@@ -458,7 +458,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
 
     expect(pageData.metaData?.metaImage).toBe(
-      `https://de.${serloDomain}/_assets/img/meta/serlo.jpg`
+      `https://de.${serloDomain}/_assets/img/meta/community.png`
     )
     assertCorrectHorizonDataFormat(pageData)
 
@@ -501,6 +501,6 @@ function assertCorrectHorizonDataFormat(pageData: SingleEntityPage) {
 
 function assertCorrectMetaImageLink(pageData: SingleEntityPage | TaxonomyPage) {
   expect(pageData.metaData?.metaImage).toBe(
-    `https://de.${serloDomain}/_assets/img/meta/mathematik.png`
+    `https://de.${serloDomain}/_assets/img/meta/mathe.png`
   )
 }
