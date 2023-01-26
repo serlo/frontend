@@ -5,6 +5,7 @@ import { SubjectIcon } from './subject-icon'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
+import { breakpoints } from '@/helper/breakpoints'
 import { colors } from '@/helper/colors'
 
 interface LandingSubjectsProps {
@@ -19,19 +20,20 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
           display: flex;
           justify-content: space-evenly;
 
-          @apply px-side lg:px-side-lg;
           flex-direction: row;
           flex-wrap: wrap;
 
           margin: 0 auto;
           max-width: 800px;
 
-          @screen lg {
+          @media (min-width: ${breakpoints.lg}) {
             margin-top: 40px;
           }
         }
       `}</style>
-      <nav>{data.subjects.map(renderSubject)}</nav>
+      <nav className="px-side lg:px-side-lg">
+        {data.subjects.map(renderSubject)}
+      </nav>
     </>
   )
 
@@ -44,7 +46,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             padding-left: 0;
             min-width: 40%;
             max-width: 49%;
-            @screen sm {
+            @media (min-width: ${breakpoints.sm}) {
               min-width: 30%;
             }
 

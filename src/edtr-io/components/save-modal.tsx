@@ -92,7 +92,12 @@ export function SaveModal({
       {isOnlyText ? null : (
         <style jsx global>{`
           .ReactModal__Content {
-            @apply mt-8 overflow-y-scroll top-0 translate-y-0 max-h-full bottom-4;
+            overflow-y: auto;
+            top: 0;
+            bottom: 1rem;
+            margin-top: 2rem;
+            transform: translate(-50%, 0);
+            max-height: 100%;
           }
         `}</style>
       )}
@@ -226,17 +231,10 @@ export function SaveModal({
           }}
         />{' '}
         <span
-          className="license-wrapper"
+          className="license-wrapper [&_a]:!text-brand hover:[&_a]:underline"
           dangerouslySetInnerHTML={{ __html: licenseAgreement }}
         />{' '}
         <span className="font-bold text-red-500">*</span>
-        <style jsx global>
-          {`
-            .license-wrapper a {
-              @apply !text-brand hover:underline;
-            }
-          `}
-        </style>
       </label>
     )
   }

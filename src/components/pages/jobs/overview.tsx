@@ -5,6 +5,7 @@ import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { CommunityWallPerson } from '@/data/de/community-people'
+import { breakpoints } from '@/helper/breakpoints'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
@@ -298,7 +299,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           background-repeat: no-repeat;
           background-size: 100vw 100%;
 
-          @screen sm {
+          @media (min-width: ${breakpoints.sm}) {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;

@@ -8,6 +8,7 @@ import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
+import { breakpoints } from '@/helper/breakpoints'
 import { colors } from '@/helper/colors'
 
 export interface LandingInternationalProps {
@@ -32,19 +33,19 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         <LandingSubjectsNew data={subjectsData} />
       </section>
 
-      <section className="principles-section">
+      <section className="principles-section bg-brand px-side lg:px-side-lg">
         <PrinciplesGraphic strings={landingStrings} />
       </section>
 
       <section className="section">
-        <h2>{landingStrings.wikiTitle}</h2>
+        <h2 className="text-brand">{landingStrings.wikiTitle}</h2>
         <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
       </section>
 
       <section className="image-section" />
 
       <section className="section">
-        <h2>{landingStrings.movementTitle}</h2>
+        <h2 className="text-brand">{landingStrings.movementTitle}</h2>
         <div className="icon-style">
           <ParticipateSVG />
         </div>
@@ -65,24 +66,27 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         .section {
           margin-top: 60px;
           margin-bottom: 60px;
-          @apply px-side lg:px-side-lg;
+          padding-left: 16px;
+          padding-right: 16px;
 
-          @screen sm {
+          @media (min-width: ${breakpoints.sm}) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
 
-          @screen lg {
+          @media (min-width: ${breakpoints.lg}) {
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
+            padding-left: 40px;
+            padding-right: 40px;
           }
         }
         .col {
           margin-top: 40px;
 
-          @screen sm {
+          @media (min-width: ${breakpoints.sm}) {
             margin-top: 0;
             margin-right: 30px;
             flex: 1;
@@ -96,7 +100,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
             }
           }
 
-          @screen lg {
+          @media (min-width: ${breakpoints.lg}) {
             margin-right: 50px;
           }
           display: flex;
@@ -117,24 +121,22 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
           background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
 
-          @screen sm {
+          @media (min-width: ${breakpoints.sm}) {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
           }
 
-          @screen md {
+          @media (min-width: ${breakpoints.md}) {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
           }
         }
         h2 {
           font-size: 1.66rem;
-          @apply text-brand;
           border: 0;
-          @screen sm {
+          @media (min-width: ${breakpoints.sm}) {
             width: 100%;
           }
         }
         .principles-section {
-          @apply bg-brand px-side lg:px-side-lg;
           text-align: center;
           padding-top: 70px;
           padding-bottom: 70px;
@@ -152,7 +154,7 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           }
           width: 100px;
           margin-right: 30px;
-          @screen lg {
+          @media (min-width: ${breakpoints.lg}) {
             margin-right: 50px;
             width: 120px;
           }
