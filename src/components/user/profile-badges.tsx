@@ -95,17 +95,17 @@ export function ProfileBadges({
           .badge-container {
             margin-right: 30px;
             width: 65px;
-            :global(> svg) {
-              height: 40px;
-              margin-top: 15px;
-              margin-bottom: 10px;
-            }
-            :global(> *) {
-              display: block;
-              margin-left: auto;
-              margin-right: auto;
-              text-align: center;
-            }
+          }
+          .badge-container :global(> svg) {
+            height: 40px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+          }
+          .badge-container :global(> *) {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
           }
         `}</style>
         <div className="badge-container">

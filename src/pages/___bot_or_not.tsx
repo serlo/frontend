@@ -193,9 +193,9 @@ const BotHunt = () => {
               }
               .buttons a {
                 text-decoration: underline;
-                &:hover {
-                  text-decoration: none;
-                }
+              }
+              .buttons a:hover {
+                text-decoration: none;
               }
             `}</style>
           </li>
@@ -242,10 +242,10 @@ const BotHunt = () => {
         <style jsx>{`
           a {
             text-decoration: underline;
-            &:hover {
-              text-decoration: none;
-              color: #f00;
-            }
+          }
+          a:hover {
+            text-decoration: none;
+            color: #f00;
           }
         `}</style>
       </>

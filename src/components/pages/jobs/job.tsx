@@ -56,10 +56,8 @@ export function Job({ position }: { position: PersonioPosition }) {
         </MaxWidthDiv>
       </div>
       <style jsx global>{`
-        .sane-text-defaults {
-          p {
-            margin-bottom: 1rem !important;
-          }
+        .sane-text-defaults p {
+          margin-bottom: 1rem !important;
         }
         @font-face {
           font-family: 'Karmilla';
