@@ -582,7 +582,8 @@ export const loggedInData = {
           found: "Du hast lokal gespeicherte Änderungen dieses Inhalts. Möchtest du sie laden?",
           foundButton: "Änderungen laden",
           restoreInitial: "Du kannst auch wieder zurück zur Ausgangsversion. Vorsicht, dabei werden deine bisherigen Änderungen gelöscht.",
-          restoreInitialButton: "Änderungen löschen."
+          restoreInitialButton: "Änderungen löschen.",
+          confirmRestore: 'Are you sure you want to delete all your changes?'
         },
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
