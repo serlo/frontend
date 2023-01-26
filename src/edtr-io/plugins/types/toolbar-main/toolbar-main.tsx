@@ -36,7 +36,6 @@ export function ToolbarMain({
   const undoable = useScopedSelector(hasUndoActions())
   const redoable = useScopedSelector(hasRedoActions())
   const isChanged = useScopedSelector(hasPendingChanges())
-
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   useLeaveConfirm(isChanged)

@@ -578,12 +578,18 @@ export const loggedInData = {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
       noChangesWarning: "Bisher hast du nichts geändert",
       edtrIo: {
+        localStorage: {
+          found: "Du hast lokal gespeicherte Änderungen dieses Inhalts. Möchtest du sie laden?",
+          foundButton: "Änderungen laden",
+          restoreInitial: "Du kannst auch wieder zurück zur Ausgangsversion. Vorsicht, dabei werden deine bisherigen Änderungen gelöscht.",
+          restoreInitialButton: "Änderungen löschen",
+          confirmRestore: "Sicher, dass du deine Änderugen unwiderruflich löschen möchtest?"
+        },
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
         notSupportedYet: "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
         editInOld: "Du kannst den Inhalt im alten Editor bearbeiten",
         conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
-        oldRevisionFound: "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
         notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
         box: "Box",
         boxDesc: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",

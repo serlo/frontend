@@ -33,7 +33,6 @@ export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
 
         .wrapper-single {
           :global(pre) {
-            @apply font-serlo;
             font-size: 1.125rem !important;
           }
         }
@@ -51,7 +50,7 @@ export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
           />{' '}
         </div>
       ) : (
-        <div className="wrapper-single">
+        <div className="wrapper-single [&_pre]:font-serlo">
           <ReactDiffViewer
             oldValue={data.currentRevision[mode]}
             newValue={data.thisRevision[mode]}

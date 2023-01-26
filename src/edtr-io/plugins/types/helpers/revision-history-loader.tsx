@@ -85,12 +85,18 @@ export function RevisionHistoryLoader<T>(
       </ModalWithCloseButton>
       <style jsx global>{`
         .ReactModalPortal .ReactModal__Content {
-          @apply w-[900px] max-w-[90vw] max-h-[80vh];
-          @apply translate-y-0 top-8 overflow-y-scroll;
-          @apply pt-0;
+          /* this css colides with save-modal.tsx */
+          width: 900px;
+          max-width: 90vw;
+          max-height: 80vh;
+          top: 2rem;
+          overflow-y: auto;
+          padding-top: 0;
+          transform: translate(-50%, 0);
 
           table {
-            @apply w-auto mt-12;
+            margin-top: 3rem;
+            width: auto;
           }
         }
       `}</style>

@@ -635,14 +635,19 @@ export const loggedInData = {
       confirmRouteChange: 'Are you sure you want to leave without saving?',
       noChangesWarning: 'Nothing changed so there is no need to save yet',
       edtrIo: {
+        localStorage: {
+          found: 'You have locally saved edits of this revision. Do you want to load them?',
+          foundButton: 'Load stored edits',
+          restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
+          restoreInitialButton: 'Delete changes',
+          confirmRestore: 'Are you sure you want to delete all your changes?'
+        },
         extendedSettings: 'Extended Settings',
         close: 'Close',
         notSupportedYet:
           "This content type isn't supported by the new editor, yet.",
         editInOld: 'You can edit the content in the old editor',
         conversionError: 'An error occurred during the conversion.',
-        oldRevisionFound:
-          'We found an old revision created by you. Do you want to restore it?',
         notConverted:
           "This entity hasn't been converted to the new editor, yet.",
         box: 'Container',

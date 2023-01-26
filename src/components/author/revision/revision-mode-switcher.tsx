@@ -26,7 +26,6 @@ export function RevisionModeSwitcher({
     <>
       <style jsx>{`
         .metabar {
-          @apply p-side;
           display: flex;
           justify-content: center;
           position: sticky;
@@ -37,7 +36,7 @@ export function RevisionModeSwitcher({
           background-color: #fff;
         }
       `}</style>
-      <nav className="metabar">{renderButtons()}</nav>
+      <nav className="metabar p-side">{renderButtons()}</nav>
     </>
   )
 

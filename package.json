@@ -106,6 +106,7 @@
     "timeago-react": "^3.0.5",
     "timeago.js": "^4.0.2",
     "tippy.js": "^6.3.7",
+    "ts-debounce": "^4.0.0",
     "unfetch": "^4.2.0"
   },
   "devDependencies": {

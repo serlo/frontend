@@ -18,6 +18,7 @@ import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { breakpoints } from '@/helper/breakpoints'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -97,7 +98,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         </header>
         <style jsx>{`
           header {
-            @screen sm {
+            @media (min-width: ${breakpoints.sm}) {
               display: grid;
               grid-template-columns: 175px auto;
               grid-template-rows: auto auto;

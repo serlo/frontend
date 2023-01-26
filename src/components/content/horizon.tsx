@@ -2,7 +2,6 @@ import clsx from 'clsx'
 
 import { Link } from './link'
 import { HorizonData } from '@/data-types'
-import { submitEvent } from '@/helper/submit-event'
 
 export interface HorizonProps {
   data: HorizonData
@@ -29,13 +28,6 @@ export function Horizon({ data }: HorizonProps) {
             )}
             tabIndex={-1}
             key={index}
-            onClick={() => {
-              submitEvent(
-                `horizon-clicked-${horizonEntry.title
-                  .toLowerCase()
-                  .replace(/[^a-z]+/gi, '')}`
-              )
-            }}
           >
             <Link
               className="text-brand text-left leading-cozy hover:no-underline hover:text-truegray-700"
