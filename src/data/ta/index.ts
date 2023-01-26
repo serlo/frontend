@@ -582,7 +582,8 @@ export const loggedInData = {
           found: 'You have locally saved edits of this revision. Do you want to load them?',
           foundButton: 'Load stored edits',
           restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
-          restoreInitialButton: 'Delete changes'
+          restoreInitialButton: 'Delete changes',
+          confirmRestore: 'Are you sure you want to delete all your changes?'
         },
         extendedSettings: 'Extended Settings',
         close: 'Close',
