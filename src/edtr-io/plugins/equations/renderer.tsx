@@ -31,10 +31,10 @@ export const TransformTd = styled(MathTd)({
   paddingLeft: '5px',
 })
 
-export const ExplanationTr = styled.tr({
-  div: {
-    margin: 0,
-  },
+export const ExplanationTr = styled.tr({ div: { margin: 0 } })
+export const FirstExplanationTr = styled(ExplanationTr)({
+  textAlign: 'center',
+  div: { margin: 0 },
 })
 
 export enum TransformationTarget {
@@ -109,11 +109,11 @@ export function EquationsRenderer({ state }: EquationsProps) {
 
     return (
       <>
-        <ExplanationTr>
+        <FirstExplanationTr>
           <td colSpan={3} className={tdPadding}>
             {state.firstExplanation.render()}
           </td>
-        </ExplanationTr>
+        </FirstExplanationTr>
         <tr style={{ height: '30px' }}>
           <td />
           {renderDownArrow()}
