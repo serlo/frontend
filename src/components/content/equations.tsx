@@ -112,7 +112,7 @@ export function Equations({
 
     return (
       <>
-        <tr className="whitespace-normal text-brandgreen-darker">
+        <tr className="whitespace-normal text-brandgreen-darker text-center">
           <td className="relative -left-side pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
