@@ -43,6 +43,7 @@ export const allCategories = [
   TopicCategoryType.events,
   TopicCategoryCustomType.subterms,
   TopicCategoryCustomType.exercisesContent,
+  TopicCategoryType.exercises,
 ] as const
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
