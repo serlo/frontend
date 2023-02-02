@@ -1,24 +1,28 @@
 import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
 
-const rootIdsToLandingAlias: Record<number, string> = {
-  19767: '/mathe',
-  48492: '/informatik',
-  41108: '/physik',
-  182154: '/lerntipps',
-  24706: '/chemie',
-  58771: '/nachhaltigkeit',
-  23950: '/biologie',
-  25985: '/englisch',
-  79157: '/politik',
-  19882: '/community',
+const landingTaxonomyAliasRewrite: Record<string, BreadcrumbsData[0]> = {
+  '/mathe/5/mathe': { label: 'Mathematik', url: '/mathe' },
+  '/informatik/47899/informatik': { label: 'Informatik', url: '/informatik' },
+  '/nachhaltigkeit/17744/nachhaltigkeit': {
+    label: 'Angewandte Nachhaltigkeit',
+    url: '/nachhaltigkeit',
+  },
+  '/biologie/23362/biologie': { label: 'Biologie', url: '/biologie' },
+  '/community/87993/community': { label: 'Community', url: '/community' },
+  '/chemie/18230/chemie': { label: 'Chemie', url: '/chemie' },
+  '/lerntipps/181883/lerntipps': { label: 'Lerntipps', url: '/lerntipps' },
+}
+
+interface RecursiveTree {
+  title: string
+  alias: string
+  parent: RecursiveTree
 }
 
 export function createBreadcrumbs(uuid: MainUuidType) {
   if (uuid.__typename === UuidType.TaxonomyTerm) {
-    if (uuid.navigation?.path.nodes) {
-      return compat(uuid.navigation?.path.nodes)
-    }
+    return compat(taxonomyParentsToRootToBreadcrumbsData(uuid))
   }
 
   if (uuid.__typename === UuidType.CoursePage) {
@@ -36,6 +40,33 @@ export function createBreadcrumbs(uuid: MainUuidType) {
     return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
   }
 
+  function taxonomyParentsToRootToBreadcrumbsData(
+    taxonomyPath:
+      | Extract<
+          MainUuidType,
+          { __typename: 'Article' }
+        >['taxonomyTerms']['nodes'][0]
+      | undefined
+  ): BreadcrumbsData | undefined {
+    if (taxonomyPath === undefined) return undefined
+    // because we don't have infinite recursion, this is the best we can do now
+    // move this function into the API
+    let current: RecursiveTree = taxonomyPath as RecursiveTree
+    const breadcrumbs: BreadcrumbsData = []
+
+    while (current.alias !== '/3/root' && current.parent) {
+      if (Object.hasOwn(landingTaxonomyAliasRewrite, current.alias)) {
+        breadcrumbs.unshift(landingTaxonomyAliasRewrite[current.alias])
+      } else {
+        breadcrumbs.unshift({ label: current.title, url: current.alias })
+      }
+      // the recursion is limited, so there is a slight type mismatch
+      current = current.parent
+    }
+
+    return breadcrumbs
+  }
+
   function buildFromTaxTerms(
     taxonomyPaths:
       | Extract<
@@ -45,40 +76,30 @@ export function createBreadcrumbs(uuid: MainUuidType) {
       | undefined
   ) {
     if (taxonomyPaths === undefined) return undefined
+    const breadcrumbCandidates = taxonomyPaths.map(
+      taxonomyParentsToRootToBreadcrumbsData
+    )
     let breadcrumbs
-    let backup
 
-    for (const child of taxonomyPaths) {
-      if (!child.navigation) continue
-      const path = child.navigation.path.nodes
+    // select first shortest taxonomy path
+    for (const path of breadcrumbCandidates) {
+      if (!path) continue
       if (!breadcrumbs || breadcrumbs.length > path.length) {
-        // compat: some paths are short-circuited, ignore them
-        if (
-          path.some((x) => x.label === 'Mathematik') &&
-          !path.some((x) => x.label === 'Alle Themen')
-        ) {
-          if (!backup || backup.length > path.length) {
-            backup = path
-          }
-          continue
-        }
-
         breadcrumbs = path
       }
     }
 
-    return breadcrumbs ?? backup
+    return breadcrumbs
   }
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
 
-    if (uuid.__typename == UuidType.TaxonomyTerm) {
+    if (uuid.__typename == UuidType.TaxonomyTerm && breadcrumbs.length > 1) {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }
 
     breadcrumbs = breadcrumbs.filter((entry) => entry.url && entry.label) // compat: remove empty entries
-    breadcrumbs = breadcrumbs.filter((entry) => entry.label !== 'Alle Themen') // compat/test: remove "Alle Themen" because landing pages offer a similar overview
     const shortened: BreadcrumbsData = []
     breadcrumbs.map((entry, i, arr) => {
       const maxItems = 4
@@ -95,16 +116,6 @@ export function createBreadcrumbs(uuid: MainUuidType) {
         shortened.push(entry)
       }
     })
-
-    // use correct urls for subject landing pages
-    if (
-      breadcrumbs[0] &&
-      breadcrumbs[0].id &&
-      !isNaN(breadcrumbs[0].id) &&
-      Object.hasOwn(rootIdsToLandingAlias, breadcrumbs[0].id)
-    ) {
-      breadcrumbs[0].url = rootIdsToLandingAlias[breadcrumbs[0].id]
-    }
 
     return shortened
   }
