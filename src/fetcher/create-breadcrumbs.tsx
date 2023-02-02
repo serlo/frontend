@@ -1,6 +1,9 @@
+import { Instance } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
+import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
+/*// load this information from secondary navigation!
 const landingTaxonomyAliasRewrite: Record<
   number,
   { label?: string; url: string }
@@ -19,7 +22,7 @@ const landingTaxonomyAliasRewrite: Record<
   41108: { url: '/physik' },
   25985: { url: '/englisch' },
   79157: { url: '/politik' },
-}
+}*/
 
 interface RecursiveTree {
   title: string
@@ -34,7 +37,8 @@ export function taxonomyParentsToRootToBreadcrumbsData(
         MainUuidType,
         { __typename: 'Article' }
       >['taxonomyTerms']['nodes'][0]
-    | undefined
+    | undefined,
+  instance: Instance
 ): BreadcrumbsData | undefined {
   if (taxonomyPath === undefined) return undefined
   // because we don't have infinite recursion, this is the best we can do now
@@ -42,11 +46,15 @@ export function taxonomyParentsToRootToBreadcrumbsData(
   let current: RecursiveTree = taxonomyPath as RecursiveTree
   const breadcrumbs: BreadcrumbsData = []
 
-  while (current.alias !== '/3/root' && current.parent) {
-    if (Object.hasOwn(landingTaxonomyAliasRewrite, current.id)) {
+  const { secondaryMenus } = getInstanceDataByLang(instance)
+
+  while (current.id !== 3 && current.parent) {
+    // find subject of this path and rewrite root breadcrumb
+    const matching = secondaryMenus.filter((menu) => menu.rootId === current.id)
+    if (matching.length > 0) {
       breadcrumbs.unshift({
-        label: current.title,
-        ...landingTaxonomyAliasRewrite[current.id],
+        label: matching[0].rootName ?? current.title,
+        url: matching[0].landingUrl,
         id: current.id,
       })
     } else {
@@ -63,13 +71,13 @@ export function taxonomyParentsToRootToBreadcrumbsData(
   return breadcrumbs
 }
 
-export function createBreadcrumbs(uuid: MainUuidType) {
+export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
   if (uuid.__typename === UuidType.TaxonomyTerm) {
-    return compat(taxonomyParentsToRootToBreadcrumbsData(uuid))
+    return compat(taxonomyParentsToRootToBreadcrumbsData(uuid, instance))
   }
 
   if (uuid.__typename === UuidType.CoursePage) {
-    return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms.nodes))
+    return compat(buildFromTaxTerms(uuid.course?.taxonomyTerms.nodes, instance))
   }
 
   if (
@@ -80,7 +88,7 @@ export function createBreadcrumbs(uuid: MainUuidType) {
     uuid.__typename === UuidType.ExerciseGroup ||
     uuid.__typename === UuidType.Course
   ) {
-    return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
+    return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes, instance))
   }
 
   function buildFromTaxTerms(
@@ -89,11 +97,12 @@ export function createBreadcrumbs(uuid: MainUuidType) {
           MainUuidType,
           { __typename: 'Article' }
         >['taxonomyTerms']['nodes']
-      | undefined
+      | undefined,
+    instance: Instance
   ) {
     if (taxonomyPaths === undefined) return undefined
-    const breadcrumbCandidates = taxonomyPaths.map(
-      taxonomyParentsToRootToBreadcrumbsData
+    const breadcrumbCandidates = taxonomyPaths.map((candidate) =>
+      taxonomyParentsToRootToBreadcrumbsData(candidate, instance)
     )
     let breadcrumbs
 

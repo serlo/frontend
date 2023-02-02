@@ -187,7 +187,9 @@ export const footerData: InstanceData['footerData'] = {
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'mathe',
-    rootId: 19767,
+    rootId: 5,
+    rootName: 'Mathematik',
+    landingUrl: '/mathe',
     entries: [
       { title: 'Alle Themen', id: 5 },
       { title: 'Gymnasium', id: 16042 },
@@ -205,7 +207,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'informatik',
-    rootId: 48492,
+    rootId: 47899,
+    landingUrl: '/informatik',
     entries: [
       { title: 'Alle Themen', url: '/informatik/47899/informatik', id: 47899 },
       {
@@ -223,7 +226,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'physik',
-    rootId: 41108,
+    rootId: 41107,
+    landingUrl: '/physik',
     entries: [
       { title: 'Themen', id: 41107 },
       { title: 'Lehrplan', id: 50540 },
@@ -232,7 +236,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'lerntipps',
-    rootId: 182154,
+    rootId: 181883,
+    landingUrl: '/lerntipps',
     entries: [
       { title: 'Alle Themen', id: 181883 },
       { title: 'Bei Serlo-Lerntipps mitarbeiten', id: 242472 },
@@ -240,7 +245,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'chemie',
-    rootId: 24706,
+    rootId: 18230,
+    landingUrl: '/chemie',
     entries: [
       { title: 'Themen', id: 18230 },
       { title: 'Bei Serlo-Chemie mitarbeiten', id: 26633 },
@@ -248,7 +254,9 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'nachhaltigkeit',
-    rootId: 58771,
+    rootId: 17744,
+    rootName: 'Angewandte Nachhaltigkeit',
+    landingUrl: '/nachhaltigkeit',
     entries: [
       { title: 'Alle Themen', id: 17744 },
       { title: 'Bei Serlo-Nachhaltigkeit mitmachen', id: 25294 },
@@ -260,7 +268,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'biologie',
-    rootId: 23950,
+    rootId: 23362,
+    landingUrl: '/biologie',
     entries: [
       { title: 'Themen', id: 23362 },
       { title: 'Bei Serlo-Biologie mitarbeiten', id: 25017 },
@@ -268,17 +277,20 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // subject: 'englisch',
-    rootId: 25985,
+    rootId: 25979,
+    landingUrl: '/englisch',
     entries: [{ title: 'Themen', id: 25979 }],
   },
   {
     // subject: 'politik',
-    rootId: 79157,
+    rootId: 79159,
+    landingUrl: '/politik',
     entries: [{ title: 'Alle Themen', id: 79159 }],
   },
   {
     // community
-    rootId: 19882,
+    rootId: 87993,
+    landingUrl: '/community',
     entries: [
       { title: 'Community', id: 19882 },
       { title: 'Hilfeseiten', id: 88059 },

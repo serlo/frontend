@@ -123,7 +123,9 @@ export interface SecondaryMenuLink {
 }
 
 export interface SecondaryMenuData {
-  rootId?: number
+  rootId?: number // the taxonomy root
+  rootName?: string // alternative name for the root
+  landingUrl?: string // url of the landing page
   entries: SecondaryMenuLink[]
 }
 

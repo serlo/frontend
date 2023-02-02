@@ -50,6 +50,9 @@ export async function fetchEditorData(
   const repoId = parseInt(ids[0])
   const revisionId = parseInt(ids[1])
 
+  const raw_alias = '/' + localeString + '/' + repoId.toString()
+  const { alias, instance } = parseLanguageSubfolder(raw_alias)
+
   if (revisionId && !isNaN(revisionId)) {
     const { uuid } = await request<
       RevisionUuidQuery,
@@ -59,9 +62,6 @@ export async function fetchEditorData(
     })
     data = revisionResponseToResponse(uuid)
   } else {
-    const raw_alias = '/' + localeString + '/' + repoId.toString()
-    const { alias, instance } = parseLanguageSubfolder(raw_alias)
-
     const { uuid } = await request<MainUuidQuery>(endpoint, dataQuery, {
       alias: { instance, path: alias },
     })
@@ -72,7 +72,7 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  const breadcrumbsData = createBreadcrumbs(data)
+  const breadcrumbsData = createBreadcrumbs(data, instance)
 
   const isTestArea =
     breadcrumbsData &&
