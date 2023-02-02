@@ -33,7 +33,7 @@ export function createSecondaryMenu(
 
       if (!breadcrumbs) return undefined
 
-      return findMenuByRootId(breadcrumbs[0].id ?? undefined)
+      return findMenuByRootId(breadcrumbs[0]?.id ?? undefined)
     }
 
     if (uuid.__typename === UuidType.Page) {

@@ -1,20 +1,24 @@
 import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
 
-// TODO: changing label should be optional
-const landingTaxonomyAliasRewrite: Record<number, BreadcrumbsData[0]> = {
+const landingTaxonomyAliasRewrite: Record<
+  number,
+  { label?: string; url: string }
+> = {
   5: { label: 'Mathematik', url: '/mathe' },
-  7899: { label: 'Informatik', url: '/informatik' },
+  7899: { url: '/informatik' },
   17744: {
-    label: 'Angewandte Nachhaltigkeit',
     url: '/nachhaltigkeit',
   },
-  23362: { label: 'Biologie', url: '/biologie' },
-  87993: { label: 'Community', url: '/community' },
-  18230: { label: 'Chemie', url: '/chemie' },
-  181883: { label: 'Lerntipps', url: '/lerntipps' },
+  23362: { url: '/biologie' },
+  87993: { url: '/community' },
+  18230: { url: '/chemie' },
+  181883: { url: '/lerntipps' },
 
-  // TODO: here are some rewrites missing, and check international pages
+  // smaller german subjects
+  41108: { url: '/physik' },
+  25985: { url: '/englisch' },
+  79157: { url: '/politik' },
 }
 
 interface RecursiveTree {
@@ -41,6 +45,7 @@ export function taxonomyParentsToRootToBreadcrumbsData(
   while (current.alias !== '/3/root' && current.parent) {
     if (Object.hasOwn(landingTaxonomyAliasRewrite, current.id)) {
       breadcrumbs.unshift({
+        label: current.title,
         ...landingTaxonomyAliasRewrite[current.id],
         id: current.id,
       })
