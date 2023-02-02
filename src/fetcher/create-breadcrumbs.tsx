@@ -1,23 +1,61 @@
 import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
 
-const landingTaxonomyAliasRewrite: Record<string, BreadcrumbsData[0]> = {
-  '/mathe/5/mathe': { label: 'Mathematik', url: '/mathe' },
-  '/informatik/47899/informatik': { label: 'Informatik', url: '/informatik' },
-  '/nachhaltigkeit/17744/nachhaltigkeit': {
+// TODO: changing label should be optional
+const landingTaxonomyAliasRewrite: Record<number, BreadcrumbsData[0]> = {
+  5: { label: 'Mathematik', url: '/mathe' },
+  7899: { label: 'Informatik', url: '/informatik' },
+  17744: {
     label: 'Angewandte Nachhaltigkeit',
     url: '/nachhaltigkeit',
   },
-  '/biologie/23362/biologie': { label: 'Biologie', url: '/biologie' },
-  '/community/87993/community': { label: 'Community', url: '/community' },
-  '/chemie/18230/chemie': { label: 'Chemie', url: '/chemie' },
-  '/lerntipps/181883/lerntipps': { label: 'Lerntipps', url: '/lerntipps' },
+  23362: { label: 'Biologie', url: '/biologie' },
+  87993: { label: 'Community', url: '/community' },
+  18230: { label: 'Chemie', url: '/chemie' },
+  181883: { label: 'Lerntipps', url: '/lerntipps' },
+
+  // TODO: here are some rewrites missing, and check international pages
 }
 
 interface RecursiveTree {
   title: string
   alias: string
+  id: number
   parent: RecursiveTree
+}
+
+export function taxonomyParentsToRootToBreadcrumbsData(
+  taxonomyPath:
+    | Extract<
+        MainUuidType,
+        { __typename: 'Article' }
+      >['taxonomyTerms']['nodes'][0]
+    | undefined
+): BreadcrumbsData | undefined {
+  if (taxonomyPath === undefined) return undefined
+  // because we don't have infinite recursion, this is the best we can do now
+  // move this function into the API
+  let current: RecursiveTree = taxonomyPath as RecursiveTree
+  const breadcrumbs: BreadcrumbsData = []
+
+  while (current.alias !== '/3/root' && current.parent) {
+    if (Object.hasOwn(landingTaxonomyAliasRewrite, current.id)) {
+      breadcrumbs.unshift({
+        ...landingTaxonomyAliasRewrite[current.id],
+        id: current.id,
+      })
+    } else {
+      breadcrumbs.unshift({
+        label: current.title,
+        url: current.alias,
+        id: current.id,
+      })
+    }
+    // the recursion is limited, so there is a slight type mismatch
+    current = current.parent
+  }
+
+  return breadcrumbs
 }
 
 export function createBreadcrumbs(uuid: MainUuidType) {
@@ -38,33 +76,6 @@ export function createBreadcrumbs(uuid: MainUuidType) {
     uuid.__typename === UuidType.Course
   ) {
     return compat(buildFromTaxTerms(uuid.taxonomyTerms.nodes))
-  }
-
-  function taxonomyParentsToRootToBreadcrumbsData(
-    taxonomyPath:
-      | Extract<
-          MainUuidType,
-          { __typename: 'Article' }
-        >['taxonomyTerms']['nodes'][0]
-      | undefined
-  ): BreadcrumbsData | undefined {
-    if (taxonomyPath === undefined) return undefined
-    // because we don't have infinite recursion, this is the best we can do now
-    // move this function into the API
-    let current: RecursiveTree = taxonomyPath as RecursiveTree
-    const breadcrumbs: BreadcrumbsData = []
-
-    while (current.alias !== '/3/root' && current.parent) {
-      if (Object.hasOwn(landingTaxonomyAliasRewrite, current.alias)) {
-        breadcrumbs.unshift(landingTaxonomyAliasRewrite[current.alias])
-      } else {
-        breadcrumbs.unshift({ label: current.title, url: current.alias })
-      }
-      // the recursion is limited, so there is a slight type mismatch
-      current = current.parent
-    }
-
-    return breadcrumbs
   }
 
   function buildFromTaxTerms(

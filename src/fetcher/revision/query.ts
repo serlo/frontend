@@ -3,8 +3,8 @@ import { gql } from 'graphql-request'
 import {
   sharedExerciseFragments,
   sharedLicenseFragments,
-  sharedPathFragments,
   sharedRevisionFragments,
+  sharedTaxonomyParents,
 } from '../query-fragments'
 
 export const revisionQuery = gql`
@@ -30,7 +30,7 @@ export const revisionQuery = gql`
         ...articleRevision
         changes
         repository {
-          ...taxonomyTerms
+          ...taxonomyTermsV2
           ...license
           trashed
           instance
@@ -74,7 +74,7 @@ export const revisionQuery = gql`
         ...appletRevision
         changes
         repository {
-          ...taxonomyTerms
+          ...taxonomyTermsV2
           ...license
           trashed
           instance
@@ -98,7 +98,7 @@ export const revisionQuery = gql`
         ...courseRevision
         changes
         repository {
-          ...taxonomyTerms
+          ...taxonomyTermsV2
           ...license
           trashed
           instance
@@ -147,7 +147,7 @@ export const revisionQuery = gql`
             }
           }
           course {
-            ...taxonomyTerms
+            ...taxonomyTermsV2
             revisions(unrevised: true) {
               totalCount
             }
@@ -171,6 +171,7 @@ export const revisionQuery = gql`
         changes
         repository {
           ...license
+          ...taxonomyTermsV2
           trashed
           instance
           id
@@ -191,7 +192,7 @@ export const revisionQuery = gql`
         content
         changes
         repository {
-          ...taxonomyTerms
+          ...taxonomyTermsV2
           ...license
           trashed
           instance
@@ -259,6 +260,7 @@ export const revisionQuery = gql`
         cohesive
         repository {
           ...license
+          ...taxonomyTermsV2
           trashed
           instance
           id
@@ -327,7 +329,7 @@ export const revisionQuery = gql`
         ...videoRevision
         changes
         repository {
-          ...taxonomyTerms
+          ...taxonomyTermsV2
           ...license
           trashed
           instance
@@ -350,12 +352,10 @@ export const revisionQuery = gql`
     }
   }
 
-  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+  fragment taxonomyTermsV2 on AbstractTaxonomyTermChild {
     taxonomyTerms {
       nodes {
-        navigation {
-          ...path
-        }
+        ...pathToRoot
       }
     }
   }
@@ -367,7 +367,7 @@ export const revisionQuery = gql`
     metaDescription
   }
 
-  ${sharedPathFragments}
+  ${sharedTaxonomyParents}
   ${sharedLicenseFragments}
   ${sharedExerciseFragments}
   ${sharedRevisionFragments}
