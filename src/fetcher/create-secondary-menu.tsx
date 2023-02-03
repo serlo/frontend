@@ -40,7 +40,7 @@ export function createSecondaryMenu(
       //special case: hide menu on page de.serlo.org/community
       if (uuid.id === 19882) return undefined
 
-      const byRootId = landingPageByAlias(uuid.alias)
+      const byRootId = landingPageByAlias(decodeURIComponent(uuid.alias))
       if (byRootId) return byRootId
 
       return secondaryMenus.find((menu) =>

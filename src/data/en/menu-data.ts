@@ -3,8 +3,12 @@ import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
-    { url: '/23591', title: 'Mathematics', icon: 'math' },
-    { url: '/63179', title: 'Applied Sustainability', icon: 'sustainability' },
+    { url: '/23591/mathematics-homepage', title: 'Mathematics', icon: 'math' },
+    {
+      url: '/63179/applied-sustainability',
+      title: 'Applied Sustainability',
+      icon: 'sustainability',
+    },
   ],
   additionalLinks: [],
 }
@@ -15,9 +19,12 @@ export const headerData: InstanceData['headerData'] = [
     title: 'Subjects',
     icon: 'subject',
     children: [
-      { url: '/63179', title: 'Applied Sustainability' },
-      { url: '/23591', title: 'Mathematics' },
-      { url: '/106103', title: 'Subjects under construction' },
+      { url: '/63179/applied-sustainability', title: 'Applied Sustainability' },
+      { url: '/23591/mathematics-homepage', title: 'Mathematics' },
+      {
+        url: '/community/106103/new-subjects-and-topics',
+        title: 'Subjects under construction',
+      },
     ],
   },
   { url: '/23727', title: 'About Serlo', icon: 'about' },
