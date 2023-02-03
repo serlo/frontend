@@ -57,6 +57,7 @@ export function taxonomyParentsToRootToBreadcrumbsData(
         url: matching[0].landingUrl,
         id: current.id,
       })
+      break // not going further, especially for subjects under construction
     } else {
       breadcrumbs.unshift({
         label: current.title,
