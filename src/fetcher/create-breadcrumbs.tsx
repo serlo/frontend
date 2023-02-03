@@ -3,27 +3,6 @@ import { MainUuidType } from './query-types'
 import { BreadcrumbsData, UuidType } from '@/data-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
-/*// load this information from secondary navigation!
-const landingTaxonomyAliasRewrite: Record<
-  number,
-  { label?: string; url: string }
-> = {
-  5: { label: 'Mathematik', url: '/mathe' },
-  7899: { url: '/informatik' },
-  17744: {
-    url: '/nachhaltigkeit',
-  },
-  23362: { url: '/biologie' },
-  87993: { url: '/community' },
-  18230: { url: '/chemie' },
-  181883: { url: '/lerntipps' },
-
-  // smaller german subjects
-  41108: { url: '/physik' },
-  25985: { url: '/englisch' },
-  79157: { url: '/politik' },
-}*/
-
 interface RecursiveTree {
   title: string
   alias: string
