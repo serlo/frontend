@@ -580,12 +580,3 @@ main b {
 body {
   @apply tracking-slightly-tighter;
 }
-
-/*
- * Fix for misplacement of slate placeholders
- *
- * TODO: Investigate whether we still need this fix after slate upgrade
- */
-span[data-slate-leaf='true'] > span > span[contenteditable='false'] {
-  vertical-align: initial !important;
-}

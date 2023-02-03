@@ -111,6 +111,13 @@ export function SerloEditor({
         div[data-slate-editor] {
           -webkit-user-modify: read-write !important;
         }
+        /*
+         * Fix for misplacement of slate placeholders
+         * TODO: Investigate whether we still need this fix after slate upgrade
+         */
+        span[data-slate-leaf='true'] > span > span[contenteditable='false'] {
+          vertical-align: initial !important;
+        }
       `}</style>
     </SaveContext.Provider>
   )
