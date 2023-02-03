@@ -4488,6 +4488,7 @@ __metadata:
     timeago.js: ^4.0.2
     tippy.js: ^6.3.7
     ts-debounce: ^4.0.0
+    ts-unused-exports: ^9.0.2
     typescript: ^4.6.2
     unfetch: ^4.2.0
   languageName: unknown
@@ -15174,7 +15175,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:^3.14.1":
+"ts-unused-exports@npm:^9.0.2":
+  version: 9.0.2
+  resolution: "ts-unused-exports@npm:9.0.2"
+  dependencies:
+    chalk: ^4.0.0
+    tsconfig-paths: ^3.9.0
+  peerDependencies:
+    typescript: ">=3.8.3"
+  peerDependenciesMeta:
+    typescript:
+      optional: false
+  bin:
+    ts-unused-exports: bin/ts-unused-exports
+  checksum: d706af04931654d7024cf789163ad389ed49e27f7cae66d24dc5061424da1bb4bfb88edd0c6ce8e1c6626f7f03d7557190da0e7a6dba6ec50bbd90ae2d981d58
+  languageName: node
+  linkType: hard
+
+"tsconfig-paths@npm:^3.14.1, tsconfig-paths@npm:^3.9.0":
   version: 3.14.1
   resolution: "tsconfig-paths@npm:3.14.1"
   dependencies:
