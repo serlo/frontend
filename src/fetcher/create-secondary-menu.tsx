@@ -40,7 +40,7 @@ export function createSecondaryMenu(
       //special case: hide menu on page de.serlo.org/community
       if (uuid.id === 19882) return undefined
 
-      const byRootId = findMenuByRootId(uuid.id)
+      const byRootId = landingPageByAlias(uuid.alias)
       if (byRootId) return byRootId
 
       return secondaryMenus.find((menu) =>
@@ -52,6 +52,12 @@ export function createSecondaryMenu(
   function findMenuByRootId(rootId?: number) {
     return rootId
       ? secondaryMenus.find((menu) => menu.rootId === rootId)
+      : undefined
+  }
+
+  function landingPageByAlias(alias?: string) {
+    return alias
+      ? secondaryMenus.find((menu) => menu.landingUrl === alias)
       : undefined
   }
 }
