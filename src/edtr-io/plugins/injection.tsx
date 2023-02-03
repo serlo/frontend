@@ -51,7 +51,7 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const injectionsStrings = loggedInData.strings.editor.injection
 
   if (!props.editable) {
     return <InjectionRenderer src={props.state.value} />
@@ -83,8 +83,8 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       {props.focused && !preview ? (
         <EditorInlineSettings>
           <EditorInput
-            label={editorStrings.injection.serloId}
-            placeholder={editorStrings.injection.placeholder}
+            label={injectionsStrings.serloId}
+            placeholder={injectionsStrings.placeholder}
             value={props.state.value}
             onChange={handleOnChange}
             inputMode="numeric"
@@ -98,8 +98,8 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       {props.renderIntoSettings(
         <>
           <OverlayInput
-            label={editorStrings.injection.serloId}
-            placeholder="Serlo Id (e.g. 1565)"
+            label={injectionsStrings.serloId}
+            placeholder={injectionsStrings.placeholder}
             inputMode="numeric"
             pattern="\d+"
             value={props.state.value}
