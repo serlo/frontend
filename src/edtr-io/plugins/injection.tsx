@@ -84,7 +84,7 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
         <EditorInlineSettings>
           <EditorInput
             label={editorStrings.injection.serloId}
-            placeholder="Serlo Id (e.g. 1565)"
+            placeholder={editorStrings.injection.placeholder}
             value={props.state.value}
             onChange={handleOnChange}
             inputMode="numeric"
