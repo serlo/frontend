@@ -27,17 +27,13 @@ export function SubjectIcon({
           <>
             <MathSVG className="serlo-subject-icon superspecial-math" />
             <style jsx global>{`
-              .serlo-subject-icon-wrapper {
-                .superspecial-math {
-                  transition-duration: 0.6s;
-                }
-                &:hover,
-                &:focus,
-                &:active {
-                  .superspecial-math {
-                    transform: rotateY(-180deg) rotateX(-3deg);
-                  }
-                }
+              .serlo-subject-icon-wrapper .superspecial-math {
+                transition-duration: 0.6s;
+              }
+              .serlo-subject-icon-wrapper:hover .superspecial-math,
+              .serlo-subject-icon-wrapper:focus .superspecial-math,
+              .serlo-subject-icon-wrapper:active .superspecial-math {
+                transform: rotateY(-180deg) rotateX(-3deg);
               }
             `}</style>
           </>
@@ -48,12 +44,10 @@ export function SubjectIcon({
           <>
             <AbcSVG className="serlo-subject-icon superspecial-abc" />
             <style jsx global>{`
-              .serlo-subject-icon-wrapper .superspecial-abc {
-                &:hover,
-                &:focus,
-                &:active {
-                  transform: scale(1.25) rotate(10deg);
-                }
+              .serlo-subject-icon-wrapper .superspecial-abc:hover,
+              .serlo-subject-icon-wrapper .superspecial-abc:focus,
+              .serlo-subject-icon-wrapper .superspecial-abc:active {
+                transform: scale(1.25) rotate(10deg);
               }
             `}</style>
           </>
@@ -64,25 +58,20 @@ export function SubjectIcon({
           <>
             <SustainabilitySVG className="serlo-subject-icon superspecial-sus" />
             <style jsx global>{`
-              .superspecial-sus {
-                path.water {
-                  transform: scale(0) translateY(-30px);
-                  transform-origin: 9% 60%;
-                  transition: transform 0.6s
-                    cubic-bezier(0.175, 0.6, 0.32, 1.275);
-                }
+              .superspecial-sus path.water {
+                transform: scale(0) translateY(-30px);
+                transform-origin: 9% 60%;
+                transition: transform 0.6s cubic-bezier(0.175, 0.6, 0.32, 1.275);
               }
-              .serlo-subject-icon-wrapper {
-                &:hover,
-                &:focus,
-                &:active {
-                  .superspecial-sus {
-                    transform: rotate(-30deg);
-                    .blue.water {
-                      transform: scale(1.08);
-                    }
-                  }
-                }
+              .serlo-subject-icon-wrapper:hover .superspecial-sus,
+              .serlo-subject-icon-wrapper:focus .superspecial-sus,
+              .serlo-subject-icon-wrapper:active .superspecial-sus {
+                transform: rotate(-30deg);
+              }
+              .serlo-subject-icon-wrapper:hover .superspecial-sus .blue.water,
+              .serlo-subject-icon-wrapper:focus .superspecial-sus .blue.water,
+              .serlo-subject-icon-wrapper:active .superspecial-sus .blue.water {
+                transform: scale(1.08);
               }
             `}</style>
           </>
@@ -110,14 +99,10 @@ export function SubjectIcon({
                   transform: translateY(0);
                 }
               }
-              .serlo-subject-icon-wrapper {
-                &:hover,
-                &:focus,
-                &:active {
-                  .superspecial-bio {
-                    animation: jump 0.7s ease-in-out;
-                  }
-                }
+              .serlo-subject-icon-wrapper:hover .superspecial-bio,
+              .serlo-subject-icon-wrapper:focus .superspecial-bio,
+              .serlo-subject-icon-wrapper:active .superspecial-bio {
+                animation: jump 0.7s ease-in-out;
               }
             `}</style>
           </>
@@ -130,31 +115,47 @@ export function SubjectIcon({
             <style jsx global>{`
               .superspecial-informatics {
                 transition: fill ease-in 0.5s;
-                .eye-closed,
-                .sound {
-                  opacity: 0;
-                }
-
-                .eye-closed {
-                  stroke: #000;
-                  stroke-width: 2px;
-                }
+              }
+              .superspecial-informatics .eye-closed,
+              .superspecial-informatics .sound {
+                opacity: 0;
+              }
+              .superspecial-informatics .eye-closed {
+                stroke: #000;
+                stroke-width: 2px;
               }
 
-              .serlo-subject-icon-wrapper {
-                &:hover,
-                &:focus,
-                &:active {
-                  .superspecial-informatics {
-                    .eye-open {
-                      opacity: 0;
-                    }
-                    .eye-closed,
-                    .sound {
-                      opacity: 1;
-                    }
-                  }
-                }
+              .serlo-subject-icon-wrapper:hover
+                .superspecial-informatics
+                .eye-open,
+              .serlo-subject-icon-wrapper:focus
+                .superspecial-informatics
+                .eye-open,
+              .serlo-subject-icon-wrapper:active
+                .superspecial-informatics
+                .eye-open {
+                opacity: 0;
+              }
+
+              .serlo-subject-icon-wrapper:hover
+                .superspecial-informatics
+                .eye-closed,
+              .serlo-subject-icon-wrapper:hover
+                .superspecial-informatics
+                .sound,
+              .serlo-subject-icon-wrapper:focus
+                .superspecial-informatics
+                .eye-closed,
+              .serlo-subject-icon-wrapper:focus
+                .superspecial-informatics
+                .sound,
+              .serlo-subject-icon-wrapper:active
+                .superspecial-informatics
+                .eye-closed,
+              .serlo-subject-icon-wrapper:active
+                .superspecial-informatics
+                .sound {
+                opacity: 1;
               }
             `}</style>
           </>
@@ -164,17 +165,13 @@ export function SubjectIcon({
           <>
             <NewSVG className="serlo-subject-icon superspecial-new" />
             <style jsx global>{`
-              .serlo-subject-icon-wrapper {
-                .superspecial-new {
-                  transform-origin: 50% 60%;
-                }
-                &:hover,
-                &:focus,
-                &:active {
-                  .superspecial-new {
-                    transform: rotate(180deg);
-                  }
-                }
+              .serlo-subject-icon-wrapper .superspecial-new {
+                transform-origin: 50% 60%;
+              }
+              .serlo-subject-icon-wrapper:hover .superspecial-new,
+              .serlo-subject-icon-wrapper:focus .superspecial-new,
+              .serlo-subject-icon-wrapper:active .superspecial-new {
+                transform: rotate(180deg);
               }
             `}</style>
           </>
@@ -188,14 +185,10 @@ export function SubjectIcon({
                 transform: translateX(-43%);
                 transition: transform 0.4s ease-in-out;
               }
-              .serlo-subject-icon-wrapper {
-                &:hover,
-                &:focus,
-                &:active {
-                  .superspecial-geo .world {
-                    transform: translateX(0%);
-                  }
-                }
+              .serlo-subject-icon-wrapper:hover .superspecial-geo .world,
+              .serlo-subject-icon-wrapper:focus .superspecial-geo .world,
+              .serlo-subject-icon-wrapper:active .superspecial-geo .world {
+                transform: translateX(0%);
               }
             `}</style>
           </>
@@ -207,58 +200,69 @@ export function SubjectIcon({
             <ChemistrySVG className="serlo-subject-icon superspecial-chem" />
             <style jsx global>
               {`
-                .superspecial-chem {
-                  .pipette path,
-                  .flask path {
-                    fill: none;
-                    stroke: #000;
-                    stroke-linecap: round;
-                    stroke-width: 1.1px;
-                  }
-                  .chem-contents {
-                    transition: 0.7s ease-in all !important;
-                  }
-                  .drop,
-                  .pipette path {
-                    fill: #becd2b;
-                    transition: all 0.2s ease-in-out;
-                  }
-                  .pipette {
-                    transform: translateY(-5px);
-                    transition: 0.2s ease-in all;
-                    transform-origin: 50% 50%;
-                  }
-                  .drop {
-                    opacity: 0;
-                    transition: 0.2s ease-in transform;
-                    transform: scale(1.3) translateY(5px);
-                    transform-origin: 50% 50%;
-                  }
+                .superspecial-chem .pipette path,
+                .superspecial-chem .flask path {
+                  fill: none;
+                  stroke: #000;
+                  stroke-linecap: round;
+                  stroke-width: 1.1px;
                 }
-                .serlo-subject-icon-wrapper {
-                  &:hover,
-                  &:focus,
-                  &:active {
-                    .superspecial-chem {
-                      .flask {
-                        animation: hickup 0.7s ease-in-out;
-                      }
-                      .contents {
-                        fill: #becd2b !important;
-                        animation: hickup 0.7s ease-in-out;
-                      }
-                      .pipette {
-                        transform: translateY(0) rotate(-3deg);
-                      }
-                      .pipette .pipette-contents {
-                        opacity: 0;
-                      }
-                      .drop {
-                        transform: scale(2) translateY(40px);
-                        opacity: 1;
-                      }
-                    }
-                  }
+                .superspecial-chem .chem-contents {
+                  transition: 0.7s ease-in all !important;
+                }
+                .superspecial-chem .drop,
+                .superspecial-chem .pipette path {
+                  fill: #becd2b;
+                  transition: all 0.2s ease-in-out;
+                }
+                .superspecial-chem .pipette {
+                  transform: translateY(-5px);
+                  transition: 0.2s ease-in all;
+                  transform-origin: 50% 50%;
+                }
+                .superspecial-chem .drop {
+                  opacity: 0;
+                  transition: 0.2s ease-in transform;
+                  transform: scale(1.3) translateY(5px);
+                  transform-origin: 50% 50%;
+                }
+                .serlo-subject-icon-wrapper:hover .superspecial-chem .flask,
+                .serlo-subject-icon-wrapper:focus .superspecial-chem .flask,
+                .serlo-subject-icon-wrapper:active .superspecial-chem .flask {
+                  animation: hickup 0.7s ease-in-out;
+                }
+                .serlo-subject-icon-wrapper:hover .superspecial-chem .contents,
+                .serlo-subject-icon-wrapper:focus .superspecial-chem .contents,
+                .serlo-subject-icon-wrapper:active
+                  .superspecial-chem
+                  .contents {
+                  fill: #becd2b !important;
+                  animation: hickup 0.7s ease-in-out;
+                }
+                .serlo-subject-icon-wrapper:hover .superspecial-chem .pipette,
+                .serlo-subject-icon-wrapper:focus .superspecial-chem .pipette,
+                .serlo-subject-icon-wrapper:active .superspecial-chem .pipette {
+                  transform: translateY(0) rotate(-3deg);
+                }
+                .serlo-subject-icon-wrapper:hover
+                  .superspecial-chem
+                  .pipette
+                  .pipette-contents,
+                .serlo-subject-icon-wrapper:focus
+                  .superspecial-chem
+                  .pipette
+                  .pipette-contents,
+                .serlo-subject-icon-wrapper:active
+                  .superspecial-chem
+                  .pipette
+                  .pipette-contents {
+                  opacity: 0;
+                }
+                .serlo-subject-icon-wrapper:hover .superspecial-chem .drop,
+                .serlo-subject-icon-wrapper:focus .superspecial-chem .drop,
+                .serlo-subject-icon-wrapper:active .superspecial-chem .drop {
+                  transform: scale(2) translateY(40px);
+                  opacity: 1;
                 }
               `}
             </style>

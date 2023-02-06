@@ -17,10 +17,8 @@ const ContentPage: NextPage = () => {
       </Head>
       <DesignGuideSVG className="design-guide mx-auto max-w-5xl h-auto" />
       <style jsx global>{`
-        .design-guide {
-          text {
-            white-space: normal !important;
-          }
+        .design-guide text {
+          white-space: normal !important;
         }
       `}</style>
     </FrontendClientBase>
