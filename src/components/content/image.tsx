@@ -5,6 +5,7 @@ import { Lazy } from './lazy'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { FrontendImgNode } from '@/frontend-node-types'
+import { hasVisibleContent } from '@/helper/has-visible-content'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 interface ImageProps {
@@ -73,6 +74,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
 
   function renderCaption() {
     if (!element.caption) return null
+    if (!hasVisibleContent(element.caption)) return null
     return (
       <div className="italic mt-3">
         {renderNested(element.caption, 'caption')}

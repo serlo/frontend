@@ -308,7 +308,7 @@ export const instanceData = {
     notices: {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
-      alreadyLoggedIn: '👋 Welcome back',
+      alreadyLoggedIn: "👋 Bienvenido de nuevo",
       revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
       revisionAccepted: "Revisión aceptada con éxito ✅",
       revisionRejected: "Revisión rechazada con éxito ❎",
@@ -323,12 +323,12 @@ export const instanceData = {
       pleaseLogInLink: "Por favor, inicia sesión",
       pleaseLogInText: "para utilizar esta función. ",
       register: {
-        registerTitle: 'Register your Serlo Account',
-        passwordRequirements: 'At least 8 characters, longer is better.',
-        registerIntro: 'You do not need an account for studying on serlo.org. %break% If you want to comment, or work on content you came to the right place'
+        registerTitle: "Registra tu cuenta de Serlo.org",
+        passwordRequirements: "Al menos 8 caracteres, si es más largo, mejor.",
+        registerIntro: "No necesitas una cuenta para aprender en serlo.org.  %break%  Si quieres hacer comentarios, o trabajar en contenidos de aprendizaje has venido al lugar adecuado."
       },
       recoverTitle: "Recupera tu cuenta",
-      recoveryInstructions: 'Insert and submit your email address. %break% We will then send you an email with a reset link.',
+      recoveryInstructions: "Introduce y envía tu dirección de correo electrónico. %break%  A continuación, te enviaremos un correo electrónico con un enlace de restablecimiento.",
       verify: {
         title: "Verifica tu email",
         instructions: "Inserta y envía tu dirección de correo electrónico para verificarla.",
@@ -347,7 +347,7 @@ export const instanceData = {
         registerNewAccount: "Registrar una nueva cuenta",
         forgotPassword: "¿Has %forgotLinkText%?",
         forgotLinkText: "Contraseña olvidada",
-        validSessionDetected: 'Hey, you are already logged in in another tab. Reload the page to see it!'
+        validSessionDetected: "Oye, ya has iniciado sesión en otra pestaña. ¡Recarga la página para verlo!"
       },
       fields: {
         identifier: "Nombre de usuario o dirección de correo electrónico",
@@ -363,9 +363,9 @@ export const instanceData = {
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
-        code1060002: 'An email containing a recovery link has been sent to the email address you provided. %break% Check your mailbox and click on the provided link it contains.',
-        code1070003: 'Save',
-        code1070005: 'Submit',
+        code1060002: "Se ha enviado un correo con un enlace de recuperación a la dirección de correo electrónico que proporcionaste. %break% Comprueba tu buzón y haz clic en el enlace que contiene.",
+        code1070003: "Guardar",
+        code1070005: "Enviar",
         code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
         code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
         code4000001: '%reason%',
@@ -377,18 +377,18 @@ export const instanceData = {
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
         code4060004: "El enlace de recuperación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo",
         code4070001: "El enlace de verificación no es válido o ya ha sido utilizado. Por favor, intenta solicitar un correo electrónico de nuevo.",
-        code4070005: 'Sorry, this verification link is not valid any more. Please try requesting an email again.'
+        code4070005: "Lo sentimos, este enlace de verificación ya no es válido. Por favor, intenta solicitar un correo electrónico de nuevo."
       },
       usernameInvalid: "Tu nombre de usuario sólo puede contener letras, dígitos, guiones bajos (_) y guiones (-).",
-      usernameTooLong: 'Sorry, this username is too long, make sure it\'s 32 characters or less',
-      passwordTooShort: 'Sorry, this password is too short. Please choose one that is at least 8 characters long.',
-      passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
-      passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
-      emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
+      usernameTooLong: "Lo sentimos, este nombre de usuario es demasiado largo, asegúrate de que tiene 32 caracteres o menos.",
+      passwordTooShort: "Lo sentimos, esta contraseña es demasiado corta. Por favor, elige una que tenga al menos 8 caracteres.",
+      passwordTooLong: "Lo sentimos, esta contraseña es demasiado larga. Por favor, elige una que tenga un máximo de 72 caracteres.",
+      passwordTooSimilar: "Lo sentimos, esta contraseña es demasiado parecida a tu correo electrónico o nombre de usuario.",
+      emailInvalid: "Lo sentimos, esta dirección de correo electrónico no es válida. Comprueba si hay errores de escritura.",
       registrationAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
       terms: "Términos",
       signUp: "Registrarse",
-      verificationProblem: 'In case you did not get it',
+      verificationProblem: "En caso de que no lo hayas recibido",
       verificationLinkText: "Haz clic aquí para volver a solicitar el correo electrónico de verificación."
     },
     keys: {
@@ -579,8 +579,8 @@ export const loggedInData = {
       noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
       edtrIo: {
         localStorage: {
-          found: 'You have locally saved edits of this revision. Do you want to load them?',
-          foundButton: 'Load stored edits',
+          found: "De esta edición tienes revisiones guardadas localmente. ¿Quieres cargarlas?",
+          foundButton: "Cargar ediciones almacenadas",
           restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
           restoreInitialButton: 'Delete changes',
           confirmRestore: 'Are you sure you want to delete all your changes?'
