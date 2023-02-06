@@ -68,14 +68,18 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           margin-bottom: 60px;
           padding-left: 16px;
           padding-right: 16px;
+        }
 
-          @media (min-width: ${breakpoints.sm}) {
+        @media (min-width: ${breakpoints.sm}) {
+          .section {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
+        }
 
-          @media (min-width: ${breakpoints.lg}) {
+        @media (min-width: ${breakpoints.lg}) {
+          .section {
             max-width: 900px;
             margin-left: auto;
             margin-right: auto;
@@ -85,33 +89,37 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         }
         .col {
           margin-top: 40px;
-
-          @media (min-width: ${breakpoints.sm}) {
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          .col {
             margin-top: 0;
             margin-right: 30px;
             flex: 1;
-
-            & > p {
-              min-height: 80px;
-            }
-
-            &:last-child {
-              margin-right: 0;
-            }
           }
 
-          @media (min-width: ${breakpoints.lg}) {
+          .col > p {
+            min-height: 80px;
+          }
+
+          .col:last-child {
+            margin-right: 0;
+          }
+        }
+        @media (min-width: ${breakpoints.lg}) {
+          .col {
             margin-right: 50px;
           }
+        }
+        .col {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-
-          :global(.a) {
-            /* ? */
-            margin-top: auto;
-          }
-
+        }
+        .col :global(.a) {
+          /* ? */
+          margin-top: auto;
+        }
+        .col {
           margin-bottom: 60px;
         }
         .image-section {
@@ -120,19 +128,23 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           padding-top: 43.75%;
 
           background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
-
-          @media (min-width: ${breakpoints.sm}) {
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          .image-section {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
           }
-
-          @media (min-width: ${breakpoints.md}) {
+        }
+        @media (min-width: ${breakpoints.md}) {
+          .image-section {
             background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
           }
         }
         h2 {
           font-size: 1.66rem;
           border: 0;
-          @media (min-width: ${breakpoints.sm}) {
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          h2 {
             width: 100%;
           }
         }
@@ -140,21 +152,22 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           text-align: center;
           padding-top: 70px;
           padding-bottom: 70px;
-
-          & > :global(svg) {
-            height: 450px;
-            width: 100%;
-            font-family: inherit;
-          }
+        }
+        .principles-section > :global(svg) {
+          height: 450px;
+          width: 100%;
+          font-family: inherit;
+        }
+        .icon-style > :global(path),
+        .icon-style :global(.st0) {
+          fill: ${colors.brandGreen};
         }
         .icon-style {
-          & > :global(path),
-          & :global(.st0) {
-            fill: ${colors.brandGreen};
-          }
           width: 100px;
           margin-right: 30px;
-          @media (min-width: ${breakpoints.lg}) {
+        }
+        @media (min-width: ${breakpoints.lg}) {
+          .icon-style {
             margin-right: 50px;
             width: 120px;
           }

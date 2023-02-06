@@ -23,13 +23,11 @@ export function FooterNew() {
     return (
       <>
         <style jsx>{`
-          nav > :global(a) {
-            &:not(:last-child):after {
-              content: '•';
-              position: absolute;
-              width: 1.2rem;
-              opacity: 0.4;
-            }
+          nav > :global(a):not(:last-child):after {
+            content: '•';
+            position: absolute;
+            width: 1.2rem;
+            opacity: 0.4;
           }
         `}</style>
         <nav className="text-center">

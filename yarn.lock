@@ -4488,6 +4488,7 @@ __metadata:
     timeago.js: ^4.0.2
     tippy.js: ^6.3.7
     ts-debounce: ^4.0.0
+    ts-unused-exports: ^9.0.2
     typescript: ^4.6.2
     unfetch: ^4.2.0
   languageName: unknown
@@ -9176,9 +9177,9 @@ __metadata:
   linkType: hard
 
 "http-cache-semantics@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "http-cache-semantics@npm:4.1.0"
-  checksum: 974de94a81c5474be07f269f9fd8383e92ebb5a448208223bfb39e172a9dbc26feff250192ecc23b9593b3f92098e010406b0f24bd4d588d631f80214648ed42
+  version: 4.1.1
+  resolution: "http-cache-semantics@npm:4.1.1"
+  checksum: 83ac0bc60b17a3a36f9953e7be55e5c8f41acc61b22583060e8dedc9dd5e3607c823a88d0926f9150e571f90946835c7fe150732801010845c72cd8bbff1a236
   languageName: node
   linkType: hard
 
@@ -15174,7 +15175,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:^3.14.1":
+"ts-unused-exports@npm:^9.0.2":
+  version: 9.0.2
+  resolution: "ts-unused-exports@npm:9.0.2"
+  dependencies:
+    chalk: ^4.0.0
+    tsconfig-paths: ^3.9.0
+  peerDependencies:
+    typescript: ">=3.8.3"
+  peerDependenciesMeta:
+    typescript:
+      optional: false
+  bin:
+    ts-unused-exports: bin/ts-unused-exports
+  checksum: d706af04931654d7024cf789163ad389ed49e27f7cae66d24dc5061424da1bb4bfb88edd0c6ce8e1c6626f7f03d7557190da0e7a6dba6ec50bbd90ae2d981d58
+  languageName: node
+  linkType: hard
+
+"tsconfig-paths@npm:^3.14.1, tsconfig-paths@npm:^3.9.0":
   version: 3.14.1
   resolution: "tsconfig-paths@npm:3.14.1"
   dependencies:

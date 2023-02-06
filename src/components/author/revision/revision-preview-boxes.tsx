@@ -107,11 +107,9 @@ export function RevisionPreviewBoxes({
     return (
       <>
         <style jsx>{`
-          .fixH1 {
-            :global(h1) {
-              margin-top: 0;
-              margin-bottom: 0;
-            }
+          .fixH1 :global(h1) {
+            margin-top: 0;
+            margin-bottom: 0;
           }
         `}</style>
         <p className="serlo-p flex justify-between mt-10 mb-1.5">

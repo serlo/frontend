@@ -23,6 +23,7 @@
     "lint:prettier": "yarn _prettier --check",
     "lint:tsc": "tsc --noEmit",
     "lint:next": "yarn _eslint --config .eslintrc-next.js",
+    "show-unused-exports": "ts-unused-exports tsconfig.json --excludePathsFromReport=src/pages/ --excludePathsFromReport=src/fetcher/graphql-types/operations.ts",
     "test": "jest",
     "codegen": "graphql-codegen --config codegen.yml",
     "check:all": "scripts/check-all.sh",
@@ -164,6 +165,7 @@
     "styled-jsx-plugin-postcss": "^4.0.1",
     "tailwindcss": "^3.2.1",
     "tailwindcss-animate": "^1.0.5",
+    "ts-unused-exports": "^9.0.2",
     "typescript": "^4.6.2"
   },
   "packageManager": "yarn@3.2.1",

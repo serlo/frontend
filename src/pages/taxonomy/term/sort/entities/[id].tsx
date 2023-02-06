@@ -36,13 +36,15 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
 
 export const allCategories = [
+  TopicCategoryType.applets,
   TopicCategoryType.articles,
   TopicCategoryType.courses,
-  TopicCategoryType.videos,
-  TopicCategoryType.applets,
   TopicCategoryType.events,
-  TopicCategoryCustomType.subterms,
+  TopicCategoryType.exercises,
+  TopicCategoryType.videos,
   TopicCategoryCustomType.exercisesContent,
+  TopicCategoryCustomType.subterms,
+  // we exclude folders because they are nested and don't appear on top level
 ] as const
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
