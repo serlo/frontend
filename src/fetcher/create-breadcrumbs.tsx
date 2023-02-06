@@ -10,22 +10,33 @@ interface RecursiveTree {
   parent: RecursiveTree
 }
 
+type TaxonomyTermNodes = Extract<
+  MainUuidType,
+  { __typename: 'Article' }
+>['taxonomyTerms']['nodes']
+
 export function taxonomyParentsToRootToBreadcrumbsData(
-  taxonomyPath:
-    | Extract<
-        MainUuidType,
-        { __typename: 'Article' }
-      >['taxonomyTerms']['nodes'][0]
-    | undefined,
+  taxonomyPath: TaxonomyTermNodes[0] | undefined,
   instance: Instance
 ): BreadcrumbsData | undefined {
   if (taxonomyPath === undefined) return undefined
   // because we don't have infinite recursion, this is the best we can do now
   // move this function into the API
-  let current: RecursiveTree = taxonomyPath as RecursiveTree
+  let current = taxonomyPath as RecursiveTree
   const breadcrumbs: BreadcrumbsData = []
 
   const { secondaryMenus } = getInstanceDataByLang(instance)
+
+  function getSubjectName(current: RecursiveTree) {
+    // we what to short circuit taxonomy if entry is part of the meta menu
+    // In this case we need to walk to the subject and extract the name
+    let name = ''
+    while (current.parent && current.id !== 3) {
+      name = current.title
+      current = current.parent
+    }
+    return name
+  }
 
   while (current.id !== 3 && current.parent) {
     // find subject of this path and rewrite root breadcrumb
@@ -38,11 +49,33 @@ export function taxonomyParentsToRootToBreadcrumbsData(
       })
       break // not going further, especially for subjects under construction
     } else {
-      breadcrumbs.unshift({
-        label: current.title,
-        url: current.alias,
-        id: current.id,
-      })
+      // check if this breadcrumb is already part of secondary menu
+      const matching2 = secondaryMenus.filter((menu) =>
+        menu.entries.some((entry) => entry.id == current.id)
+      )
+      if (matching2.length > 0) {
+        const metaMenuEntry = matching2[0].entries.filter(
+          (menu) => menu.id == current.id
+        )[0]
+
+        breadcrumbs.unshift({
+          label: metaMenuEntry.title,
+          url: current.alias,
+          id: current.id,
+        })
+        breadcrumbs.unshift({
+          label: matching2[0].rootName ?? getSubjectName(current),
+          url: matching2[0].landingUrl,
+          id: matching2[0].rootId,
+        })
+        break
+      } else {
+        breadcrumbs.unshift({
+          label: current.title,
+          url: current.alias,
+          id: current.id,
+        })
+      }
     }
     // the recursion is limited, so there is a slight type mismatch
     current = current.parent
@@ -72,12 +105,7 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
   }
 
   function buildFromTaxTerms(
-    taxonomyPaths:
-      | Extract<
-          MainUuidType,
-          { __typename: 'Article' }
-        >['taxonomyTerms']['nodes']
-      | undefined,
+    taxonomyPaths: TaxonomyTermNodes | undefined,
     instance: Instance
   ) {
     if (taxonomyPaths === undefined) return undefined
