@@ -12,7 +12,7 @@ export const instanceData = {
       login: "Ingresar",
       skipLinks: {
         sentence: "Saltar a %content% o %footer%",
-        content: "Contenido",
+        content: "contenido",
         footer: "Pie de página"
       }
     },
@@ -96,7 +96,7 @@ export const instanceData = {
     editOrAdd: {
       button: "Editar",
       addNewEntities: "Añadir nuevo contenido",
-      addNewExercises: "Añadir nuevo ejercicio",
+      addNewExercises: "Añadir nuevos ejercicios",
       editExercises: "Editar ejercicios",
       unrevised: "Mostrar revisiones sin revisar",
       inviteModal: {
@@ -104,7 +104,7 @@ export const instanceData = {
         text: "Hola %break% Genial que quieras contribuir a este contenido 👍 %break% Todo el mundo puede editar, pero necesitas una cuenta para hacerlo.",
         loginButton: "Inicie sesión",
         registerButton: "Registrar una nueva cuenta",
-        psText: "Puedes averiguar de qué manera puedes contribuir",
+        psText: "Puedes averiguar de qué manera puedes contribuir %link%..",
         psLinkText: "aquí"
       }
     },
@@ -232,7 +232,7 @@ export const instanceData = {
     },
     unrevisedRevisions: {
       help1: "Todas las ediciones de nuestros autores aparecen aquí. %reviewersLink% comprobará la calidad y aprobará los cambios.",
-      reviewers: "Revisores",
+      reviewers: "Revisor@s",
       reviewersUrl: "https://es.serlo.org/262065",
       help2: "Todo el mundo puede previsualizar las ediciones y continuar editando. Dentro de la vista previa l@s revisor@s pueden aceptar la edición y también dar su opinión.",
       help3: "¿Quieres ser revisor@? Ponte en contacto con:%contactLink%.",
@@ -332,7 +332,7 @@ export const instanceData = {
       verify: {
         title: "Verifica tu email",
         instructions: "Inserta y envía tu dirección de correo electrónico para verificarla.",
-        alreadyDone: "Has ingresado, por lo que ya has verificado tu correo electrónico 😊."
+        alreadyDone: "Has ingresado,  tu correo electrónico ya lo has verificado 😊."
       },
       settings: {
         title: "Cambiar tu contraseña",
@@ -393,7 +393,7 @@ export const instanceData = {
     },
     keys: {
       ctrl: 'ctrl',
-      return: "entrar"
+      return: "retorno"
     },
     eventLog: {
       currentEvents: "Eventos recientes",
@@ -409,7 +409,7 @@ export const instanceData = {
       createThread: "%actor% ha iniciado %thread% en %object%.",
       createEntity: "%actor% creó %object%.",
       setLicense: "%actor% cambió la licencia de %repository%.",
-      createEntityLink: "%actor% asoció %child% con %parent%.",
+      createEntityLink: "%actor% vinculó %child% con %parent%.",
       removeEntityLink: "%actor% disoció %child% de %parent%.",
       createEntityRevision: "%actor% creó %revision% de %entity%.",
       checkoutRevision: "%actor% ha verificado %revision% en %repository%",
@@ -439,7 +439,7 @@ export const instanceLandingData = {
   lang: Instance["Es"],
   subjectsData: landingSubjectsData,
   strings: {
-    vision: "Somos una organización de base comunitaria sin ánimo de lucro, que apoya el aprendizaje personalizado, y trabaja por la igualdad de oportunidades educativas. Esta plataforma de aprendizaje ofrece miles de artículos de instrucción, videos de aprendizaje y ejercicios de práctica para millones de estudiantes en todo el mundo - completamente gratis. Ahora es el momento de unirte a nosotros en tu idioma.",
+    vision: "Nuestra visión es hacer posible el aprendizaje personalizado y proporcionar recursos educativos de alta calidad en todo el mundo, de forma totalmente gratuita. Serlo.org es una organización de base inspirada en Wikipedia. Ya proporcionamos miles de artículos, vídeos y ejercicios resueltos a cinco millones de estudiantes alemanes cada año. Ahora ha llegado el momento de internacionalizarnos.",
     learnMore: "Aprende más",
     democraticallyStructured: "estructurado democráticamente",
     nonProfit: "sin ánimo de lucro",
@@ -563,7 +563,7 @@ export const loggedInData = {
         save: "Edición guardada con éxito ✅",
         updated: "Actualización exitosa ✅",
         generic: "Éxito 🎉",
-        saveNeedsReview: "Gracias por tu edición 🎉 L@s revisor@s lo comprobarán pronto y entonces aparecerá en el sitio."
+        saveNeedsReview: "Gracias por tu edición 🎉 L@s revisor@s lo comprobarán pronto y luego aparecerá en el sitio."
       },
       errors: {
         UNAUTHENTICATED: "¡Tienes que iniciar sesión para usar esta función!",
@@ -581,13 +581,13 @@ export const loggedInData = {
         localStorage: {
           found: "De esta edición tienes revisiones guardadas localmente. ¿Quieres cargarlas?",
           foundButton: "Cargar ediciones almacenadas",
-          restoreInitial: 'Want to start fresh? Beware that this will delete your current edits!',
-          restoreInitialButton: 'Delete changes',
-          confirmRestore: 'Are you sure you want to delete all your changes?'
+          restoreInitial: "¿Quieres empezar nuevamente? ¡Ten en cuenta que esto eliminará tus ediciones actuales!",
+          restoreInitialButton: "Eliminar cambios",
+          confirmRestore: "¿Estás seguro de que quieres eliminar todos tus cambios?"
         },
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
-        notSupportedYet: "Este tipo de contenido aún no está respaldado por el nuevo editor.",
+        notSupportedYet: "Este tipo de contenido aún no posible en el nuevo editor.",
         editInOld: "Edita el contenido en el antiguo editor.",
         conversionError: "Se produjo un error durante la conversión.",
         notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
@@ -765,7 +765,8 @@ export const loggedInData = {
       injection: {
         illegalInjectionFound: "Entrada ilegal encontrada",
         serloEntitySrc: "entidad de Serlo {{src}}",
-        serloId: 'Serlo ID:'
+        serloId: 'Serlo ID:',
+        placeholder: 'Serlo ID (e.g. 1565)'
       },
       box: {
         type: "Tipo de contenedor",
@@ -954,19 +955,17 @@ export const loggedInData = {
 export const kratosMailStrings = {
   recovery: {
     valid: {
-      subject: "👉 Acceso a tu cuenta Serlo",
-      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+      subject: "👉 Acceso a tu cuenta Serlo.org",
+      'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
+¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
+  
+Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
+{{ .RecoveryURL }}`,
+      body: `<p>👋 Hola <b>{{ .Identity.traits.username }}</b>,</p>
+<p>¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, por favor, ignora este correo.</p>
  
-To reset your password please open the following link in your browser:
-{{ .RecoveryURL }}
-
-Best of luck from your Serlo team`,
-      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
- 
-<p>To reset your password please open the following link in your browser:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
+<p>Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Mucha suerte de parte de tu equipo Serlo.org</p>`
     },
     invalid: {
       subject: "👉 Se intentó acceder a la cuenta",
@@ -1000,12 +999,12 @@ De lo contrario, ignora este correo electrónico.
 
 {{ .VerificationURL }}
 
-El Apoyo-a-la-Comunidad💚`,
+Tu Apoyo-a-la-Comunidad💚      `,
       body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
 <p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
 <a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>El Apozo-a-la-Comunidad💚</p>`
+</p><p>Tu Apoyo-a-la-Comunidad💚</p>`
     },
     invalid: {
       subject: `👋 Alguien intentó verificar esta dirección de correo electrónico`,

@@ -765,7 +765,8 @@ export const loggedInData = {
       injection: {
         illegalInjectionFound: "Injection illégale trouvée",
         serloEntitySrc: "Entité Serlo {{src}}",
-        serloId: 'Serlo ID:'
+        serloId: 'Serlo ID:',
+        placeholder: 'Serlo ID (e.g. 1565)'
       },
       box: {
         type: 'Type of box',
