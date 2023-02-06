@@ -68,7 +68,7 @@ export async function requestPage(
   }
 
   const secondaryMenuData = createSecondaryMenu(uuid, instance)
-  const breadcrumbsData = createBreadcrumbs(uuid)
+  const breadcrumbsData = createBreadcrumbs(uuid, instance)
   const horizonData = instance == Instance.De ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)

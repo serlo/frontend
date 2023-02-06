@@ -330,3 +330,57 @@ export const sharedPathFragments = gql`
     }
   }
 `
+
+// only 10 levels
+export const sharedTaxonomyParents = gql`
+  fragment pathToRoot on TaxonomyTerm {
+    title
+    alias
+    id
+    parent {
+      title
+      alias
+      id
+      parent {
+        title
+        alias
+        id
+        parent {
+          title
+          alias
+          id
+          parent {
+            title
+            alias
+            id
+            parent {
+              title
+              alias
+              id
+              parent {
+                title
+                alias
+                id
+                parent {
+                  title
+                  alias
+                  id
+                  parent {
+                    title
+                    alias
+                    id
+                    parent {
+                      title
+                      alias
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

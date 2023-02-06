@@ -26,10 +26,6 @@ export function revisionResponseToResponse(
     : ''
   const date = '' // just to make type happy, not used
 
-  const taxonomyTerms = Object.hasOwn(uuid.repository, 'taxonomyTerms')
-    ? uuid.repository.taxonomyTerms
-    : { nodes: [{}] }
-
   if (uuid.__typename === UuidRevType.Applet) {
     uuid.__typename
     return {
@@ -44,7 +40,7 @@ export function revisionResponseToResponse(
         date,
       },
       ...repositoryFields,
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
       revisions: uuid.repository.revisions,
       date,
     }
@@ -63,7 +59,7 @@ export function revisionResponseToResponse(
         metaDescription,
         date,
       },
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
     }
@@ -75,7 +71,7 @@ export function revisionResponseToResponse(
       __typename: UuidType.Course,
       ...repositoryFields,
       pages: uuid.repository.pages,
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
     }
   }
 
@@ -107,7 +103,7 @@ export function revisionResponseToResponse(
         content,
       },
       ...repositoryFields,
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
     }
   }
 
@@ -119,7 +115,7 @@ export function revisionResponseToResponse(
         content,
         date,
       },
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
       date,
@@ -137,7 +133,7 @@ export function revisionResponseToResponse(
         date,
       },
       exercises: uuid.repository.exercises,
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
       date,
@@ -196,7 +192,7 @@ export function revisionResponseToResponse(
         title,
         content,
       },
-      taxonomyTerms,
+      taxonomyTerms: uuid.repository.taxonomyTerms,
       ...repositoryFields,
       revisions: uuid.repository.revisions,
     }

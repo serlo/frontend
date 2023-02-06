@@ -25,19 +25,13 @@ export function Breadcrumbs({
       {data &&
         data.map((bcEntry, i) => {
           return (
-            <Fragment key={i}>
-              {renderBreadcrumbEntry(bcEntry, i, asBackButton)}
-            </Fragment>
+            <Fragment key={i}>{renderBreadcrumbEntry(bcEntry, i)}</Fragment>
           )
         })}
     </nav>
   )
 
-  function renderBreadcrumbEntry(
-    bcEntry: BreadcrumbEntry,
-    index: number,
-    asBackButon?: boolean
-  ) {
+  function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
     const withRightArrow = /* className={ */ clsx(
       'serlo-button font-normal mb-1 py-0.5',
       'after:special-content-gt after:absolute after:ml-3 mr-5 after:text-truegray-300'
@@ -65,12 +59,6 @@ export function Breadcrumbs({
             )}
             href={bcEntry.url ?? undefined}
             path={['breadcrumbs', index]}
-            forceNoCSR={
-              index == 0 && !asBackButon /*
-                API is returning wrong alias for subject landing, let cf worker reroute to correct page
-                remove if fixed in database
-              */
-            }
           >
             {bcEntry.label}
           </Link>
