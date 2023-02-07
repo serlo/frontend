@@ -75,6 +75,7 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
     "htmlparser2": "^8.0.1",
+    "immer": "^9.0.19",
     "immutable": "^4.1.0",
     "io-ts": "^2.2.19",
     "js-cookie": "^3.0.1",

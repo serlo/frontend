@@ -4442,6 +4442,7 @@ __metadata:
     graphql: ^16.6.0
     graphql-request: ^5.0.0
     htmlparser2: ^8.0.1
+    immer: ^9.0.19
     immutable: ^4.1.0
     io-ts: ^2.2.19
     jest: ^27.5.1
@@ -9292,6 +9293,13 @@ __metadata:
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
   checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77
+  languageName: node
+  linkType: hard
+
+"immer@npm:^9.0.19":
+  version: 9.0.19
+  resolution: "immer@npm:9.0.19"
+  checksum: f02ee53989989c287cd548a3d817fccf0bfe56db919755ee94a72ea3ae78a00363fba93ee6c010fe54a664380c29c53d44ed4091c6a86cae60957ad2cfabc010
   languageName: node
   linkType: hard
 
