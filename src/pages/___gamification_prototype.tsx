@@ -4,29 +4,41 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 
+import { replaceWithJSX } from '@/helper/replace-with-jsx'
+
 interface TaskData {
   title: string
   earnings: number
   description: string
   h5p: string
+  topic: string
+  solution: string
 }
 
 const tasks: { [key: number]: TaskData } = {
   1: {
     title: 'Start',
-    earnings: 5,
-    description:
-      'Hey, danke dass du den Job übernimmst. Ich schicke dir mal für den Start eine Aufgabe für die Grundschule, irgendwas mit Formen zuordnen, du wirst schon sehen. Wenn du mehr als die Hälfte korrekt löst, dann erhältst du dsa Lösungswort, mit dem du dein Feedback abgeben kannst.',
+    earnings: 10,
+    description: `
+      Hey, cool das du hier bist!
+
+      Ich habe eine dir eine kleine Aufgabe vorbereitet. Sobald du mehr als die Hälfte der Punkte gesammelt hast,
+      erhältst du ein Lösungswort, dass du in der oberen Zeile eintragen kannst.
+
+      Danach bekommst du den Verdienst auf dein Konto gutgeschrieben.
+    `,
     h5p: 'https://app.Lumi.education/run/P46cdL',
+    topic: 'Grundlagen der Mathematik',
+    solution: 'Tonne',
   },
 }
 
 type State = Immutable<{
   sigmas: number
   ui: {
-    currentTab: 'new' | 'complete'
     showTask: number
     showH5p: boolean
+    solutionInput: string
   }
   tasks: number[]
   completed: number[]
@@ -35,7 +47,7 @@ type State = Immutable<{
 const Game: NextPage = () => {
   const [core, setCore] = useState<State>({
     sigmas: 0,
-    ui: { currentTab: 'new', showTask: -1, showH5p: false },
+    ui: { showTask: -1, showH5p: false, solutionInput: '' },
     tasks: [1],
     completed: [],
   })
@@ -43,16 +55,71 @@ const Game: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Mathe Redaktions Simulator</title>
+        <title>Serlo Mathematik Challenge</title>
       </Head>
-      <div className="w-[800px] mx-auto bg-pink-100 px-3">
+      <div className="w-[800px] mx-auto px-3">
         {core.ui.showTask > 0 && (
           <>
             {core.ui.showH5p && (
-              <div className="fixed inset-0 bg-yellow-200">
-                <div className="absolute top-2 right-2">
+              <div className="fixed inset-0 bg-brand">
+                <div className="absolute left-0 top-0 right-0 h-16 bg-brand-150 flex justify-between items-baseline pt-3">
+                  <div className="text-xl ml-4">
+                    {!core.completed.includes(core.ui.showTask) && (
+                      <>
+                        <label>
+                          Lösungswort:{' '}
+                          <input
+                            className="ml-4 p-1 border-2 border-brandgreen rounded w-48 outline-none"
+                            onChange={(e) => {
+                              setCore(
+                                produce((draft) => {
+                                  draft.ui.solutionInput = e.target.value
+                                })
+                              )
+                            }}
+                          />
+                        </label>
+                        <button
+                          className="px-2 py-1 ml-4 bg-brandgreen-200 hover:bg-brandgreen-300 rounded border-brandgreen border-2"
+                          onClick={() => {
+                            if (
+                              tasks[core.ui.showTask].solution.toLowerCase() ===
+                              core.ui.solutionInput.toLowerCase()
+                            ) {
+                              setCore(
+                                produce((draft) => {
+                                  draft.ui.solutionInput = ''
+                                  draft.ui.showH5p = false
+                                  if (
+                                    !draft.completed.includes(core.ui.showTask)
+                                  ) {
+                                    draft.completed.push(core.ui.showTask)
+                                    draft.sigmas +=
+                                      tasks[core.ui.showTask].earnings
+                                    alert(
+                                      `Du hast ${
+                                        tasks[core.ui.showTask].earnings
+                                      } Sigmas erhalten.`
+                                    )
+                                  }
+                                  draft.ui.showTask = -1
+                                })
+                              )
+                            } else {
+                              alert('Falsches Lösungswort')
+                            }
+                          }}
+                        >
+                          Los
+                        </button>
+                      </>
+                    )}
+                  </div>
+                  <div className="font-bold">
+                    {tasks[core.ui.showTask].title}
+                  </div>
                   <button
-                    className="px-2 py-0.5 bg-gray-200 hover:bg-gray-300 rounded"
+                    className="px-2 py-0.5 bg-brand-300 hover:bg-brand-400 rounded block mr-2"
                     onClick={() => {
                       setCore(
                         produce((draft) => {
@@ -84,12 +151,18 @@ const Game: NextPage = () => {
               >
                 zurück
               </button>
-              <span>{tasks[core.ui.showTask].earnings} ∑</span>
+              <div>
+                {!core.completed.includes(core.ui.showTask) && (
+                  <span>{tasks[core.ui.showTask].earnings} ∑</span>
+                )}
+              </div>
             </p>
-            <p className="mt-8 mb-4">{tasks[core.ui.showTask].description}</p>
+            <p className="mt-8 mb-4">
+              {processMiniMarkdown(tasks[core.ui.showTask].description)}
+            </p>
             <p>
               <button
-                className="px-2 py-0.5 bg-green-200 hover:bg-green-300"
+                className="px-2 py-0.5 bg-green-200 hover:bg-green-300 rounded"
                 onClick={() => {
                   setCore(
                     produce((draft) => {
@@ -101,63 +174,40 @@ const Game: NextPage = () => {
                 Lerninhalt öffnen
               </button>
             </p>
-            <p>Feedback</p>
-            <p>
-              Lösungswort: <input />
-            </p>
-            <p>Verständlichkeit: 1 - 5</p>
-            <p>Spaß: 1 - 5</p>
-            <p>Abschicken</p>
           </>
         )}
         {core.ui.showTask < 0 && (
           <>
-            <h1 className="text-3xl pt-8 mb-8">Mathe Redaktions Simulator</h1>
-            <p className="italic">
-              Du wachst eines Tages auf und hast den Job eines Mathe-Redakteur:
-              Du verdienst dein Geld damit, Lerninhalte durchzuklicken und zu
-              bewerten. Ok, denkst du dir, warum auch nicht ...
+            <h1 className="text-4xl pt-14 pb-14 mb-4 text-center bg-brand-150">
+              Serlo Mathematik Challenge
+            </h1>
+            <p className="italic px-2">
+              Teste dein Mathe-Können und verdiene Sigmas, mit denen du neue
+              Aufgaben freischalten kannst. Du kannst aus verschiedenen Themen
+              wählen.
             </p>
-            <p className="my-6">Kontostand: {core.sigmas} ∑</p>
-            <div className="flex my-6 border-b border-black">
-              <button
-                className={clsx(core.ui.currentTab == 'new' && 'font-bold')}
-                onClick={() => {
-                  setCore(
-                    produce((draft) => {
-                      draft.ui.currentTab = 'new'
-                    })
-                  )
-                }}
-              >
-                Neue Aufträge
-              </button>
-              <button
-                className={clsx(
-                  core.ui.currentTab == 'complete' && 'font-bold',
-                  'ml-4'
-                )}
-                onClick={() => {
-                  setCore(
-                    produce((draft) => {
-                      draft.ui.currentTab = 'complete'
-                    })
-                  )
-                }}
-              >
-                abgeschlossen
-              </button>
-            </div>
-            {core.ui.currentTab == 'new' && (
-              <div className="mt-4 pb-4">
+            <p className="my-8 text-center">Kontostand: {core.sigmas} ∑</p>
+            <h2 className="my-4 text-xl font-bold ml-2">Deine Aufgaben</h2>
+            <table className="border-collapse w-full">
+              <thead>
+                <tr>
+                  <th className="p-2 text-left border font-normal">Name</th>
+                  <th className="border font-normal text-left">Thema</th>
+                  <th className="border w-24 font-normal">Verdienst</th>
+                </tr>
+              </thead>
+              <tbody>
                 {core.tasks.map((taskId, i) => {
                   const task = tasks[taskId]
                   if (core.completed.includes(taskId)) {
                     return null
                   } else {
                     return (
-                      <div
-                        className="flex justify-between m-2 bg-white cursor-pointer p-2 rounded"
+                      <tr
+                        className={clsx(
+                          'cursor-pointer hover:bg-brand-300',
+                          i % 2 == 0 ? 'bg-brand-50' : 'bg-brand-150'
+                        )}
                         key={i}
                         onClick={() => {
                           setCore(
@@ -167,19 +217,67 @@ const Game: NextPage = () => {
                           )
                         }}
                       >
-                        <span className="font-bold">{task.title}</span>
-                        <span>{task.earnings} ∑</span>
-                      </div>
+                        <td className="font-bold px-2 py-4 border">
+                          {task.title}
+                        </td>
+                        <td className="border">{task.topic}</td>
+                        <td className="border">{task.earnings} ∑</td>
+                      </tr>
                     )
                   }
                 })}
-              </div>
-            )}
+              </tbody>
+            </table>
+            <h2 className="mt-12 mb-4 text-xl font-bold ml-2">Themen</h2>
+            <p className="ml-2">
+              Grundlagen der Mathematik (Klasse 1. - 5.){' '}
+              <button className="text-brand-600 hover:underline">
+                [neue Aufgabe freischalten (Kosten: 5 ∑)]
+              </button>
+            </p>
+            <h2 className="mt-24 mb-4 text-xl ml-2">abgeschlossen</h2>
+            <table className="border-collapse w-full">
+              <thead>
+                <tr>
+                  <th className="p-2 text-left border font-normal">Name</th>
+                  <th className="border font-normal text-left">Thema</th>
+                </tr>
+              </thead>
+              <tbody>
+                {core.completed.map((taskId, i) => {
+                  const task = tasks[taskId]
+
+                  return (
+                    <tr
+                      className="cursor-pointer hover:bg-brand-100"
+                      key={i}
+                      onClick={() => {
+                        setCore(
+                          produce((draft) => {
+                            draft.ui.showTask = taskId
+                          })
+                        )
+                      }}
+                    >
+                      <td className="p-2 border">{task.title}</td>
+                      <td className="border">{task.topic}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
           </>
         )}
       </div>
     </>
   )
+}
+
+export function processMiniMarkdown(input: string) {
+  const key = { val: 1 }
+  return replaceWithJSX([input], /(^\s*(?:$\s*)*$)/gm, () => (
+    <div className="h-3" key={key.val++}></div>
+  ))
 }
 
 export default Game
