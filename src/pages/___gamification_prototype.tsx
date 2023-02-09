@@ -56,7 +56,7 @@ export default function Game() {
   return (
     <>
       <Head>
-        <title>Zurück zu den Anfängen - Serlo Lernpfad</title>
+        <title>Zu den Anfängen - Serlo Lernpfad</title>
       </Head>
       {core.showTask < 0 && (
         <div
@@ -73,9 +73,9 @@ export default function Game() {
           <div className="h-12"></div>
           <div className="bg-white/50 w-[550px] mx-auto p-4 rounded">
             <p className="text-gray-600">Serlo Lernpfad</p>
-            <h1 className="text-4xl mt-4">Zurück zu den Anfängen</h1>
+            <h1 className="text-4xl mt-4">Zu den Anfängen</h1>
             <p className="mt-4 italic">
-              Eine Reise in die Mathematik der 1. - 5. Klasse
+              Eine Reise zurück in die Mathematik der 1. - 5. Klasse
             </p>
           </div>
           <div className="w-[1200px] h-[1000px] mt-4 relative mx-auto pb-12 relative">
