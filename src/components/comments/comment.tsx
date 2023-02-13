@@ -9,6 +9,7 @@ import { MetaBar } from './meta-bar'
 import { useAuth } from '@/auth/use-auth'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
+import { useEditCommentMutation } from '@/mutations/thread'
 
 interface CommentProps {
   threadId: string
@@ -35,11 +36,14 @@ export function Comment({
   const { author, createdAt, content, id } = data
 
   const [editing, setEditing] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
   const [val, setVal] = useState(content)
+
+  const editCommentMutation = useEditCommentMutation()
 
   const auth = useAuth()
 
-  const isOwn = auth.authenticationPayload?.id === author.id
+  const isOwn = !isParent && auth.authenticationPayload?.id === author.id
 
   // Step 1: Replace formulas
   const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
@@ -103,6 +107,7 @@ export function Comment({
           isOwn={isOwn}
           startEditing={() => {
             setEditing(true)
+            setVal(content)
           }}
         />
       )}
@@ -118,11 +123,19 @@ export function Comment({
           </textarea>
           <button
             className="serlo-button-green ml-4"
-            onClick={() => {
-              alert(val)
+            onClick={async () => {
+              setIsSaving(true)
+              const result = await editCommentMutation({
+                commentId: id,
+                content: val,
+              })
+              if (result) {
+                setIsSaving(false)
+                setEditing(false)
+              }
             }}
           >
-            Speichern
+            {isSaving ? 'wird gespeichert ...' : 'Speichern'}
           </button>
           <button
             className="ml-4"
