@@ -23,6 +23,7 @@ interface DropdownMenuProps {
   highlight: (id: number) => void
   onAnyClick: () => void
   threadId?: string
+  isOwn?: boolean
 }
 
 export function DropdownMenu({
@@ -33,6 +34,7 @@ export function DropdownMenu({
   highlight,
   onAnyClick,
   threadId,
+  isOwn,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
 
@@ -46,6 +48,11 @@ export function DropdownMenu({
     ? canDo(Thread.setThreadState)
     : canDo(Thread.setCommentState)
   const canArchive = isParent && canDo(Thread.setThreadArchived)
+
+  // we assume that the user who can create a comment can also edit it
+  const canEdit =
+    isOwn &&
+    (isParent ? canDo(Thread.createThread) : canDo(Thread.createComment))
 
   const entityId = useEntityId()
 
@@ -62,6 +69,16 @@ export function DropdownMenu({
           <FaIcon icon={faPaperclip} /> {strings.comments.copyLink}
         </>
       )}
+      {canEdit &&
+        buildButton(
+          () => {
+            alert('hi')
+          },
+          <>
+            {' '}
+            <FaIcon icon={faCheck} /> Bearbeiten
+          </>
+        )}
       {canArchive &&
         buildButton(
           onArchiveThread,

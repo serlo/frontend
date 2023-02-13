@@ -6,6 +6,7 @@ import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { CommentsData } from './comment-area'
 import { MetaBar } from './meta-bar'
+import { useAuth } from '@/auth/use-auth'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 
@@ -32,6 +33,10 @@ export function Comment({
 }: CommentProps) {
   const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
+
+  const auth = useAuth()
+
+  const isOwn = auth.authenticationPayload?.id === author.id
 
   // Step 1: Replace formulas
   const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
@@ -91,6 +96,7 @@ export function Comment({
         archived={data.archived}
         id={id}
         highlight={highlight}
+        isOwn={isOwn}
       />
       <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
     </div>
