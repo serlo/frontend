@@ -43,7 +43,7 @@ export function Comment({
 
   const auth = useAuth()
 
-  const isOwn = !isParent && auth.authenticationPayload?.id === author.id
+  const isOwn = auth.authenticationPayload?.id === author.id
 
   // Step 1: Replace formulas
   const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
