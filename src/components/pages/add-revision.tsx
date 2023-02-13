@@ -1,5 +1,6 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
 import clsx from 'clsx'
+import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 import { Link } from '../content/link'
@@ -12,8 +13,10 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
 import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
+import { entity } from '@/edtr-io/plugins/types/common/common'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
@@ -104,6 +107,12 @@ export function AddRevision({
 
   return (
     <>
+      <Head>
+        <title>{`${strings.editOrAdd.button} | ${getTranslatedType(
+          strings,
+          type
+        )}${id ? ` (${id})` : ''}`}</title>
+      </Head>
       {renderBacklink()}
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
