@@ -42,7 +42,7 @@ export function MoreAuthorTools({
   if (!supportedTypes.includes(data.type)) return null
 
   return (
-    <Item className="w-full">
+    <Item>
       <Trigger>
         <UserToolsItem
           title={
