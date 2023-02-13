@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
@@ -33,6 +33,9 @@ export function Comment({
 }: CommentProps) {
   const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
+
+  const [editing, setEditing] = useState(false)
+  const [val, setVal] = useState(content)
 
   const auth = useAuth()
 
@@ -97,8 +100,40 @@ export function Comment({
         id={id}
         highlight={highlight}
         isOwn={isOwn}
+        startEditing={() => {
+          setEditing(true)
+        }}
       />
-      <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
+      {editing ? (
+        <>
+          <textarea
+            className="serlo-p mb-2 break-words whitespace-pre-line w-full border-2"
+            onChange={(e) => {
+              setVal(e.target.value)
+            }}
+          >
+            {val}
+          </textarea>
+          <button
+            className="serlo-button-green ml-4"
+            onClick={() => {
+              alert(val)
+            }}
+          >
+            Speichern
+          </button>
+          <button
+            className="ml-4"
+            onClick={() => {
+              setEditing(false)
+            }}
+          >
+            abbrechen
+          </button>
+        </>
+      ) : (
+        <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
+      )}
     </div>
   )
 }

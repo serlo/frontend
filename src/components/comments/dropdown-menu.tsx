@@ -24,6 +24,7 @@ interface DropdownMenuProps {
   onAnyClick: () => void
   threadId?: string
   isOwn?: boolean
+  startEditing: () => void
 }
 
 export function DropdownMenu({
@@ -35,6 +36,7 @@ export function DropdownMenu({
   onAnyClick,
   threadId,
   isOwn,
+  startEditing,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
 
@@ -71,9 +73,7 @@ export function DropdownMenu({
       )}
       {canEdit &&
         buildButton(
-          () => {
-            alert('hi')
-          },
+          startEditing,
           <>
             {' '}
             <FaIcon icon={faCheck} /> Bearbeiten

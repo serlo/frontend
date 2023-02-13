@@ -18,6 +18,7 @@ export interface MetaBarProps {
   id: number
   highlight: (id: number) => void
   isOwn?: boolean
+  startEditing: () => void
 }
 
 export function MetaBar({
@@ -29,6 +30,7 @@ export function MetaBar({
   highlight,
   threadId,
   isOwn,
+  startEditing,
 }: MetaBarProps) {
   const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
     null
@@ -62,6 +64,7 @@ export function MetaBar({
               id={id}
               archived={archived}
               isOwn={isOwn}
+              startEditing={startEditing}
               highlight={highlight}
               // eslint-disable-next-line @typescript-eslint/unbound-method
               onAnyClick={tippyInstance.hide}
