@@ -91,19 +91,21 @@ export function Comment({
             )
       )}
     >
-      <MetaBar
-        user={author}
-        timestamp={createdAt}
-        isParent={isParent}
-        threadId={threadId}
-        archived={data.archived}
-        id={id}
-        highlight={highlight}
-        isOwn={isOwn}
-        startEditing={() => {
-          setEditing(true)
-        }}
-      />
+      {!editing && (
+        <MetaBar
+          user={author}
+          timestamp={createdAt}
+          isParent={isParent}
+          threadId={threadId}
+          archived={data.archived}
+          id={id}
+          highlight={highlight}
+          isOwn={isOwn}
+          startEditing={() => {
+            setEditing(true)
+          }}
+        />
+      )}
       {editing ? (
         <>
           <textarea
