@@ -29,23 +29,6 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
       ? element.src.replace('/image.', `/${semanticName}.`)
       : element.src
 
-  const wrapInA = (comp: ReactNode) => {
-    if (element.href) {
-      // needs investigation if this could be simplified
-      return (
-        <Link
-          className="w-full block"
-          href={element.href}
-          path={path}
-          noExternalIcon
-        >
-          {comp}
-        </Link>
-      )
-    }
-    return comp
-  }
-
   return (
     <figure
       className="serlo-image-centered"
@@ -56,21 +39,36 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
         style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
         className="mx-auto"
       >
-        {wrapInA(
-          <Lazy>
-            <img
-              className="serlo-img"
-              src={src}
-              alt={element.alt || strings.content.imageAltFallback}
-              itemProp="contentUrl"
-            />
-          </Lazy>
+        {element.href ? (
+          <Link
+            className="w-full block"
+            href={element.href}
+            path={path}
+            noExternalIcon
+          >
+            {renderImage()}
+          </Link>
+        ) : (
+          renderImage()
         )}
         {renderCaption()}
         {extraInfo ?? null}
       </div>
     </figure>
   )
+
+  function renderImage() {
+    return (
+      <Lazy>
+        <img
+          className="serlo-img"
+          src={src}
+          alt={element.alt || strings.content.imageAltFallback}
+          itemProp="contentUrl"
+        />
+      </Lazy>
+    )
+  }
 
   function renderCaption() {
     if (!element.caption) return null
