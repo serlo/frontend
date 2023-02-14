@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 
-import { Lazy } from './lazy'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { FrontendImgNode } from '@/frontend-node-types'
@@ -49,14 +48,13 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
 
   function renderImage() {
     return (
-      <Lazy>
-        <img
-          className="serlo-img"
-          src={semanticSrc}
-          alt={alt || strings.content.imageAltFallback}
-          itemProp="contentUrl"
-        />
-      </Lazy>
+      <img
+        className="serlo-img"
+        src={semanticSrc}
+        alt={alt || strings.content.imageAltFallback}
+        itemProp="contentUrl"
+        loading="lazy"
+      />
     )
   }
 
