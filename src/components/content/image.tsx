@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
 
 import { Lazy } from './lazy'
 import { Link } from './link'
@@ -62,8 +61,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   }
 
   function renderCaption() {
-    if (!caption) return null
-    if (!hasVisibleContent(caption)) return null
+    if (!caption || !hasVisibleContent(caption)) return null
     return (
       <figcaption className="italic mt-3">
         {renderNested(caption, 'caption')}
