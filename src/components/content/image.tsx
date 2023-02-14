@@ -47,7 +47,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   }
 
   return (
-    <div
+    <figure
       className="serlo-image-centered"
       itemScope
       itemType="http://schema.org/ImageObject"
@@ -69,16 +69,16 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
         {renderCaption()}
         {extraInfo ?? null}
       </div>
-    </div>
+    </figure>
   )
 
   function renderCaption() {
     if (!element.caption) return null
     if (!hasVisibleContent(element.caption)) return null
     return (
-      <div className="italic mt-3">
+      <figcaption className="italic mt-3">
         {renderNested(element.caption, 'caption')}
-      </div>
+      </figcaption>
     )
   }
 }
