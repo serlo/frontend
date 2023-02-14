@@ -18,16 +18,15 @@ interface ImageProps {
 export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   const router = useRouter()
   const { strings } = useInstanceData()
+  const { alt, href, maxWidth, src, caption } = element
 
   const semanticNameSource =
-    element.alt && element.alt.length > 3
-      ? element.alt
-      : router.asPath.split('/').pop()
+    alt && alt.length > 3 ? alt : router.asPath.split('/').pop()
   const semanticName = semanticNameSource?.replace(/[^\w+]/g, '')
-  const src =
+  const semanticSrc =
     semanticName && semanticName.length > 3
-      ? element.src.replace('/image.', `/${semanticName}.`)
-      : element.src
+      ? src.replace('/image.', `/${semanticName}.`)
+      : src
 
   return (
     <figure
@@ -35,17 +34,9 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
       itemScope
       itemType="http://schema.org/ImageObject"
     >
-      <div
-        style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
-        className="mx-auto"
-      >
-        {element.href ? (
-          <Link
-            className="w-full block"
-            href={element.href}
-            path={path}
-            noExternalIcon
-          >
+      <div style={maxWidth ? { maxWidth: maxWidth } : {}} className="mx-auto">
+        {href ? (
+          <Link className="w-full block" href={href} path={path} noExternalIcon>
             {renderImage()}
           </Link>
         ) : (
@@ -62,8 +53,8 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
       <Lazy>
         <img
           className="serlo-img"
-          src={src}
-          alt={element.alt || strings.content.imageAltFallback}
+          src={semanticSrc}
+          alt={alt || strings.content.imageAltFallback}
           itemProp="contentUrl"
         />
       </Lazy>
@@ -71,11 +62,11 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   }
 
   function renderCaption() {
-    if (!element.caption) return null
-    if (!hasVisibleContent(element.caption)) return null
+    if (!caption) return null
+    if (!hasVisibleContent(caption)) return null
     return (
       <figcaption className="italic mt-3">
-        {renderNested(element.caption, 'caption')}
+        {renderNested(caption, 'caption')}
       </figcaption>
     )
   }
