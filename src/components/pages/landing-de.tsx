@@ -162,8 +162,10 @@ export function LandingDE({ data }: LandingDEProps) {
           background-repeat: no-repeat, no-repeat;
           background-position: 77% 12%;
           background-size: 200%, 100vw 100%;
+        }
 
-          @media (min-width: ${breakpoints.sm}) {
+        @media (min-width: ${breakpoints.sm}) {
+          .about {
             padding-top: 11rem;
             padding-bottom: 9rem;
             background-position: 20% 19%;
@@ -178,63 +180,55 @@ export function LandingDE({ data }: LandingDEProps) {
             bottom;
         }
 
-        :global(.landing-button-with-wings) {
-          &:after,
-          &:before {
-            content: ' ';
-            background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-            position: absolute;
-            margin-top: -0.6rem;
-            width: 4rem;
-            height: 4rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity ease-in 0.2s;
-          }
-
-          &:after {
-            margin-left: 1rem;
-            transform: scaleX(-1);
-          }
-
-          &:before {
-            margin-left: -5rem;
-          }
-
-          &:hover {
-            &:after,
-            &:before {
-              opacity: 1;
-            }
-          }
+        :global(.landing-button-with-wings):after,
+        :global(.landing-button-with-wings):before {
+          content: ' ';
+          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
+          position: absolute;
+          margin-top: -0.6rem;
+          width: 4rem;
+          height: 4rem;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity ease-in 0.2s;
         }
 
-        :global(.landing-button-with-wink) {
-          &:after,
-          &:before {
-            background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-            margin-top: -2rem !important;
-            background-size: 65% !important;
-          }
+        :global(.landing-button-with-wings):after {
+          margin-left: 1rem;
+          transform: scaleX(-1);
         }
 
-        .p-with-wink {
-          &:after,
-          &:before {
-            margin-top: -1rem !important;
-            background-size: 75%;
-            width: 2.5rem;
-            height: 2.5rem;
-            opacity: 1;
-          }
+        :global(.landing-button-with-wings):before {
+          margin-left: -5rem;
+        }
 
-          &:after {
-            margin-left: -0.5rem;
-          }
+        :global(.landing-button-with-wings):hover:after,
+        :global(.landing-button-with-wings):hover:before {
+          opacity: 1;
+        }
 
-          &:before {
-            margin-left: -1.5rem;
-          }
+        :global(.landing-button-with-wink):after,
+        :global(.landing-button-with-wink):before {
+          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
+          margin-top: -2rem !important;
+          background-size: 65% !important;
+        }
+
+        .p-with-wink:after,
+        .p-with-wink:before {
+          margin-top: -1rem !important;
+          background-size: 75%;
+          width: 2.5rem;
+          height: 2.5rem;
+          opacity: 1;
+        }
+
+        .p-with-wink:after {
+          margin-left: -0.5rem;
+        }
+
+        .p-with-wink:before {
+          margin-left: -1.5rem;
         }
 
         .partner {

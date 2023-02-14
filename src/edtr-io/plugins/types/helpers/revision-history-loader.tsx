@@ -93,11 +93,11 @@ export function RevisionHistoryLoader<T>(
           overflow-y: auto;
           padding-top: 0;
           transform: translate(-50%, 0);
+        }
 
-          table {
-            margin-top: 3rem;
-            width: auto;
-          }
+        .ReactModalPortal .ReactModal__Content table {
+          margin-top: 3rem;
+          width: auto;
         }
       `}</style>
     </div>

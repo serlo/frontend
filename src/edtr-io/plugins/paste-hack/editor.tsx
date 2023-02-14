@@ -113,6 +113,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
             'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
           )}
+          onKeyDown={(e) => e.stopPropagation()}
         />
         <button
           className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"

@@ -25,8 +25,10 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
 
           margin: 0 auto;
           max-width: 800px;
+        }
 
-          @media (min-width: ${breakpoints.lg}) {
+        @media (min-width: ${breakpoints.lg}) {
+          nav {
             margin-top: 40px;
           }
         }
@@ -46,15 +48,17 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             padding-left: 0;
             min-width: 40%;
             max-width: 49%;
-            @media (min-width: ${breakpoints.sm}) {
+          }
+          @media (min-width: ${breakpoints.sm}) {
+            :global(.landing-subjects) {
               min-width: 30%;
             }
-
+          }
+          :global(.landing-subjects) {
             text-align: center;
-
-            &:hover {
-              cursor: pointer;
-            }
+          }
+          :global(.landing-subjects):hover {
+            cursor: pointer;
           }
 
           h2 {
@@ -65,12 +69,12 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             line-height: normal;
             width: auto;
             transition: color 0.4s ease, background-color 0.4s ease;
+          }
 
-            @media (max-width: 799) {
-              &:hover {
-                color: ${colors.brand};
-                background-color: transparent;
-              }
+          @media (max-width: 799) {
+            h2:hover {
+              color: ${colors.brand};
+              background-color: transparent;
             }
           }
         `}</style>

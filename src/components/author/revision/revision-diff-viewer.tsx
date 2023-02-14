@@ -21,20 +21,16 @@ export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
   return (
     <>
       <style jsx>{`
-        .wrapper-split {
-          :global(td) {
-            max-width: 45vw;
-            overflow: scroll;
-          }
-          :global(pre) {
-            font-size: 0.9rem;
-          }
+        .wrapper-split :global(td) {
+          max-width: 45vw;
+          overflow: scroll;
+        }
+        .wrapper-split :global(pre) {
+          font-size: 0.9rem;
         }
 
-        .wrapper-single {
-          :global(pre) {
-            font-size: 1.125rem !important;
-          }
+        .wrapper-single :global(pre) {
+          font-size: 1.125rem !important;
         }
       `}</style>
       {mode == DiffViewerMode.content ? (

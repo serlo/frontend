@@ -1,3 +1,4 @@
+import { taxonomyParentsToRootToBreadcrumbsData } from './create-breadcrumbs'
 import { MainUuidType } from './query-types'
 import { SecondaryMenuData, UuidType } from '@/data-types'
 import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -28,14 +29,18 @@ export function createSecondaryMenu(
     if (uuid.__typename === UuidType.TaxonomyTerm) {
       if (uuid.type === TaxonomyTermType.ExerciseFolder) return undefined
 
-      return findMenuByRootId(uuid.navigation?.path.nodes[0].id ?? undefined)
+      const breadcrumbs = taxonomyParentsToRootToBreadcrumbsData(uuid, instance)
+
+      if (!breadcrumbs) return undefined
+
+      return findMenuByRootId(breadcrumbs[0]?.id ?? undefined)
     }
 
     if (uuid.__typename === UuidType.Page) {
       //special case: hide menu on page de.serlo.org/community
       if (uuid.id === 19882) return undefined
 
-      const byRootId = findMenuByRootId(uuid.id)
+      const byRootId = landingPageByAlias(decodeURIComponent(uuid.alias))
       if (byRootId) return byRootId
 
       return secondaryMenus.find((menu) =>
@@ -47,6 +52,12 @@ export function createSecondaryMenu(
   function findMenuByRootId(rootId?: number) {
     return rootId
       ? secondaryMenus.find((menu) => menu.rootId === rootId)
+      : undefined
+  }
+
+  function landingPageByAlias(alias?: string) {
+    return alias
+      ? secondaryMenus.find((menu) => menu.landingUrl === alias)
       : undefined
   }
 }

@@ -210,10 +210,8 @@ function SerloTableEditor(props: SerloTableProps) {
                   height: 1rem;
                   min-width: 4rem;
                 }
-                .hackdiv {
-                  > div > div > div {
-                    margin-bottom: 0;
-                  }
+                .hackdiv > div > div > div {
+                  margin-bottom: 0;
                 }
               `}</style>
             </div>

@@ -37,7 +37,13 @@ export function CommentArchive({
           {replacePlaceholders(strings.comments.showArchived, {
             threads: strings.entities.threads,
           })}{' '}
-          ▾
+          <span
+            className={
+              showArchived ? 'inline-block rotate-180 translate-y-0.5' : ''
+            }
+          >
+            ▾
+          </span>
         </button>
       </p>
       {showArchived && renderThreads()}
