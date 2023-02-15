@@ -1,8 +1,11 @@
+import clsx from 'clsx'
+
 import { Link } from '@/components/content/link'
 import { getAvatarUrl } from '@/components/user/user-link'
 
 export interface PageTeamRendererProps {
   data: TeamDataEntry[]
+  extraCols?: boolean
 }
 
 export interface TeamDataEntry {
@@ -15,11 +18,19 @@ export interface TeamDataEntry {
   photo: string
 }
 
-export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
+export const PageTeamRenderer = ({
+  data,
+  extraCols,
+}: PageTeamRendererProps) => {
   if (!data || !data.length) return null
 
   return (
-    <div className="mobile: grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14">
+    <div
+      className={clsx(
+        'mobile: grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14',
+        extraCols && 'lg:grid-cols-4'
+      )}
+    >
       {data.map(renderEntry)}
     </div>
   )
