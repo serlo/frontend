@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { Fragment } from 'react'
 
+import { EditorPartnerList } from './editor-partner-list'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { FaIcon } from '@/components/fa-icon'
@@ -279,18 +280,24 @@ export function EditorPresentation() {
               . Just drag and drop your content elements where you need them and
               edit everything live.
             </p>
-            <p className="mt-4 text-xl leading-cozy flex-1">
-              Through its{' '}
-              <b className="tracking-tight">flexible plugin architecture</b> the
-              Serlo Editor can be adapted to your LMS. Everything is{' '}
-              <b className="tracking-tight">open source and free of charge</b>.
-            </p>
+            <div className="mt-4 text-xl leading-cozy flex-1">
+              <p>
+                Through its{' '}
+                <b className="tracking-tight">flexible plugin architecture</b>{' '}
+                the Serlo Editor can be adapted to your LMS. Everything is{' '}
+                <b className="tracking-tight">open source and free of charge</b>
+                .
+              </p>
+              <p className="flex-1 mt-4 text-xl leading-cozy opacity-70 text-sm">
+                * Please note: To date the Serlo Editor is a beta version that
+                is thoroughly tested by authors on the open learning platform
+                serlo.org. It may contain bugs or unfinished features.
+              </p>
+            </div>
           </div>
-          <p className="mt-4 text-xl leading-cozy opacity-70">
-            * Please note: To date the Serlo Editor is a beta version that is
-            thoroughly tested by authors on the open learning platform
-            serlo.org. It may contain bugs or unfinished features.
-          </p>
+          <div className="sm:flex">
+            <p className="flex-1"></p>
+          </div>
         </section>
         <section
           className={clsx(
@@ -400,7 +407,9 @@ export function EditorPresentation() {
         </section>
         <section className={clsx('-mb-6')}>
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
-          <div className="mx-auto max-w-4xl">[list]</div>
+          <div className="mx-auto max-w-4xl">
+            <EditorPartnerList />
+          </div>
         </section>
 
         <section className={clsx('mt-6 text-center')}>
