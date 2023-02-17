@@ -29,8 +29,6 @@ export default class MyDocument extends Document {
     return (
       <Html className="print:serlo-print-style">
         <Head>
-          <meta property="og:site_name" content="Serlo" />
-          <meta property="og:type" content="website" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
