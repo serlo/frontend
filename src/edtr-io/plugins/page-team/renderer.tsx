@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { Link } from '@/components/content/link'
 import { getAvatarUrl } from '@/components/user/user-link'
 
@@ -37,11 +39,14 @@ export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
 
     return (
       <div key={user} className="mb-10 text-center">
-        <img
-          className="rounded-full mb-5 max-w-[11rem] mx-auto"
-          alt={`${firstName} ${lastName}`}
-          src={photo ?? getAvatarUrl(user)}
-        />
+        <div className="mb-5 max-w-[11rem] mx-auto relative aspect-square">
+          <Image
+            src={photo ?? getAvatarUrl(user)}
+            alt={`${firstName} ${lastName}`}
+            fill
+            style={{ borderRadius: '99rem' }}
+          />
+        </div>
         <b>
           {firstName} {lastName}
         </b>

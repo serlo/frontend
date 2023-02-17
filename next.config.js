@@ -67,4 +67,14 @@ module.exports = withBundleAnalyzer({
   /*experimental: {
     fallbackNodePolyfills: false,
   },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.serlo.org',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 })
