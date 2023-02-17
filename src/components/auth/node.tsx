@@ -143,12 +143,12 @@ export function Node({
     if (attributes.name === 'traits.interest') {
       return (
         <select {...basicFields}>
-          <option value=""></option>
-          <option value="parent">Parent</option>
-          <option value="teacher">Teacher</option>
-          <option value="pupil">Pupil</option>
-          <option value="student">Student</option>
-          <option value="other">Other</option>
+          <option value="nothing">{strings.auth.interests.pleaseChoose}</option>
+          <option value="parent">{strings.auth.interests.parent}</option>
+          <option value="teacher">{strings.auth.interests.teacher}</option>
+          <option value="pupil">{strings.auth.interests.pupil}</option>
+          <option value="student">{strings.auth.interests.student}</option>
+          <option value="other">{strings.auth.interests.other}</option>
         </select>
       )
     }
