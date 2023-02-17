@@ -1,98 +1,54 @@
 import clsx from 'clsx'
 import { Fragment } from 'react'
 
+import { BasicPlugins } from './basic-plugins'
 import { EditorPartnerList } from './editor-partner-list'
+import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
-import { FaIcon } from '@/components/fa-icon'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
-import { useInstanceData } from '@/contexts/instance-context'
-import { UuidType } from '@/data-types'
-import { FeaturedContentData } from '@/data/de/de-subject-landing-data'
+// import { UuidType } from '@/data-types'
+// import { FeaturedContentData } from '@/data/de/de-subject-landing-data'
 import {
   PageTeamRenderer,
   TeamDataEntry,
 } from '@/edtr-io/plugins/page-team/renderer'
-import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
-// eslint-disable-next-line import/extensions
-import { getTranslatedType } from '@/helper/get-translated-type'
-import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
-// const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
+const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 // const italicClass = 'text-brand italic font-handwritten text-3xl'
 
-const maxOnMobile = 4
-const exampleContent: FeaturedContentData[] = [
-  {
-    title: 'Das Auge',
-    type: UuidType.Article,
-    url: '/biologie/70830/das-auge',
-    img: 'https://assets.serlo.org/legacy/58edd84b38d59_7374c3b5a6911d6b3fdbbcfad0fa1d9f0a862a5e.jpg',
-  },
-  {
-    title: 'Verdauung des Menschen',
-    type: UuidType.Article,
-    url: '/biologie/64745/verdauung-des-menschen',
-    img: 'https://assets.serlo.org/legacy/580f3ab3a9ffa_d91850964649b000f8250c316108710b949c5ab8.png',
-  },
-  {
-    title: 'Das Endoplasmatische Retikulum',
-    type: UuidType.Article,
-    url: '/biologie/133613/das-endoplasmatische-retikulum',
-    img: 'https://assets.serlo.org/5c97a58091829_5595cf6758a636ee5e8cb24bd457bf2eef8ad7d2.jpg',
-  },
-  {
-    title: 'Der Golgi-Apparat',
-    type: UuidType.Article,
-    url: '/biologie/133567/der-golgi-apparat',
-    img: 'https://assets.serlo.org/5c97665b24dbb_530eab1e397f05fb9a5da9e85a3c42696728f50f.jpg',
-  },
-]
+// const maxOnMobile = 4
+// const exampleContent: FeaturedContentData[] = [
+//   {
+//     title: 'Das Auge',
+//     type: UuidType.Article,
+//     url: '/biologie/70830/das-auge',
+//     img: 'https://assets.serlo.org/legacy/58edd84b38d59_7374c3b5a6911d6b3fdbbcfad0fa1d9f0a862a5e.jpg',
+//   },
+//   {
+//     title: 'Verdauung des Menschen',
+//     type: UuidType.Article,
+//     url: '/biologie/64745/verdauung-des-menschen',
+//     img: 'https://assets.serlo.org/legacy/580f3ab3a9ffa_d91850964649b000f8250c316108710b949c5ab8.png',
+//   },
+//   {
+//     title: 'Das Endoplasmatische Retikulum',
+//     type: UuidType.Article,
+//     url: '/biologie/133613/das-endoplasmatische-retikulum',
+//     img: 'https://assets.serlo.org/5c97a58091829_5595cf6758a636ee5e8cb24bd457bf2eef8ad7d2.jpg',
+//   },
+//   {
+//     title: 'Der Golgi-Apparat',
+//     type: UuidType.Article,
+//     url: '/biologie/133567/der-golgi-apparat',
+//     img: 'https://assets.serlo.org/5c97665b24dbb_530eab1e397f05fb9a5da9e85a3c42696728f50f.jpg',
+//   },
+// ]
 // TODO: (on jobs page) fix share button, fix overflow
-
-const featureData = [
-  {
-    title: 'Basic Features',
-    features: [
-      { title: 'WYSIWYG (What-You-See-Is-What-You-Get) User Experience' },
-      { title: 'Vast content element selection' },
-      { title: 'drag and drop content elements' },
-      { title: 'global undo/redo' },
-      { title: 'Migration Algorithm for new versions of data format ' },
-      { title: 'create templates to pre-structure content for your creators' },
-    ],
-  },
-  {
-    title: 'Standard Content Elements',
-    features: [
-      { title: 'Text' },
-      { title: 'Video' },
-      { title: 'Code' },
-      { title: 'Image' },
-      { title: 'Text+Image' },
-      { title: 'Table' },
-      { title: 'Spoiler' },
-      { title: 'Anchor' },
-      { title: 'Highlighting Box' },
-    ],
-  },
-  {
-    title: 'Learning Content Elements',
-    features: [
-      { title: 'Text Exercise' },
-      { title: 'Input Exercise' },
-      { title: 'Single-Choice Exercise' },
-      { title: 'Multiple-Choice Exercise' },
-      { title: 'Maths Equations' },
-      { title: 'Geogebra Integration' },
-      { title: 'serlo.org content integration Injection' },
-    ],
-  },
-]
 
 const roadmapData = [
   {
@@ -232,7 +188,7 @@ const teamData: TeamDataEntry[] = [
 ]
 
 export function EditorPresentation() {
-  const { strings } = useInstanceData()
+  // const { strings } = useInstanceData()
 
   return (
     <>
@@ -259,86 +215,93 @@ export function EditorPresentation() {
             className={clsx(
               'text-5xl font-extrabold text-center',
               'tracking-tight leading-tight',
-              'mt-3 mx-auto'
+              'mt-3 mx-auto relative'
             )}
           >
             <span className="underlined !pr-0 pb-2">Serlo Editor</span>
-            <sup className="text-brand text-base ml-2 mt-3 absolute">beta*</sup>
+            <sup className="text-brand text-base ml-2 mt-3 absolute">beta</sup>
           </h1>
-          <h2 className={clsx(h2Class, '-mt-6 max-w-lg mx-auto')}>
-            <br />
-            Seamless Creation of Digital Learning Resources
-          </h2>
         </section>
-        <section className={clsx('text-left mt-16 px-4 mx-auto max-w-4xl')}>
+
+        <section
+          className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-6xl')}
+        >
           <div className="sm:flex">
-            <p className="mt-4 text-xl leading-cozy flex-1">
-              The Serlo Editor makes it easy and intuitive for teachers to{' '}
-              <b className="tracking-tight">
-                create multimedia and interactive digital educational resources
-              </b>
-              . Just drag and drop your content elements where you need them and
-              edit everything live.
-            </p>
-            <div className="mt-4 text-xl leading-cozy flex-1">
-              <p>
+            <div className="flex-1 text-xl leading-cozy pl-8 pr-4">
+              <h2 className={clsx(h3Class, 'tracking-tight')}>
+                <br />
+                Seamless Creation of Digital Learning Resources
+              </h2>
+              <p className="mt-4">
+                The Serlo Editor makes it easy and intuitive for teachers to{' '}
+                <b className="tracking-tight">
+                  create multimedia and interactive digital educational
+                  resources
+                </b>
+                . Just drag and drop your content elements where you need them
+                and edit everything live.
+              </p>
+              <p className="mt-4">
                 Through its{' '}
                 <b className="tracking-tight">flexible plugin architecture</b>{' '}
                 the Serlo Editor can be adapted to your LMS. Everything is{' '}
                 <b className="tracking-tight">open source and free of charge</b>
                 .
               </p>
-              <p className="flex-1 mt-4 text-xl leading-cozy opacity-70 text-sm">
-                * Please note: To date the Serlo Editor is a beta version that
-                is thoroughly tested by authors on the open learning platform
-                serlo.org. It may contain bugs or unfinished features.
-              </p>
+            </div>
+            <div className="mt-8 flex-1">
+              <Video src="https://www.youtube.com/watch?v=ugWtuTmiGLM" />
             </div>
           </div>
-          <div className="sm:flex">
-            <p className="flex-1"></p>
-          </div>
         </section>
-        <section
-          className={clsx(
-            'mt-24 sm:flex text-center text-xl max-w-4xl mx-auto px-4'
-          )}
-        >
-          <div className="flex-1">
-            <b className="text-brand font-handwritten text-4xl">20.000+</b>
-            <br />
-            Learning resources have been created with the Serlo Editor
-          </div>
-          <div className="flex-1">
-            <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
-            <br />
-            Users per month learn with Serlo Editor content
-          </div>
-          <div className="flex-1">
-            <b className="text-brand font-handwritten text-4xl">123</b>
-            <br />
-            Authors so far used Serlo Editor to create open educational
-            resources
-          </div>
-        </section>
-        <section className={clsx('partner', 'px-2 mt-24 !pt-20')}>
+
+        {/* <section className="mt-24 pb-16 mb-20 max-w-2xl mx-auto">
           <h3
             className={clsx(
               'text-center text-4xl text-truegray-700 font-bold',
               'leading-cozy tracking-tight',
-              'mx-auto',
+              'mx-auto mb-6',
               h2Class,
               'landing-button-with-wings landing-button-with-wink p-with-wink'
             )}
           >
             Discover the Editor
           </h3>
-          <div className="mt-12 pb-16 mb-20 max-w-2xl mx-auto">
-            <Video src="https://www.youtube.com/watch?v=ugWtuTmiGLM" />
+          
+        </section> */}
+
+        <section className={clsx('partner px-2 mt-0 !pt-20 mb-20')}>
+          <div className="mt-6 pb-12 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
+            <div className="flex-1">
+              <b className="text-brand font-handwritten text-4xl">20.000+</b>
+              <br />
+              Learning resources have been created with the Serlo Editor
+            </div>
+            <div className="flex-1">
+              <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
+              <br />
+              Users per month learn with Serlo Editor content
+            </div>
+            <div className="flex-1">
+              <b className="text-brand font-handwritten text-4xl">123</b>
+              <br />
+              Authors so far used Serlo Editor to create open educational
+              resources
+            </div>
           </div>
         </section>
+        {/* <section className={clsx('partner', 'px-2 mt-24 !pt-20')}>
+          
+        </section> */}
         <section className={clsx('-mb-6')}>
-          <div className="max-w-4xl text-center mx-auto">
+          <div className="max-w-7xl mx-auto">
+            <h2 className={clsx(h2Class, 'mt-12 mb-12')}>Feature Overview</h2>
+            <BasicPlugins />
+            <EducationPlugins />
+            {/* {renderFeatureOverview()} */}
+          </div>
+
+          {/* <div className="max-w-4xl text-center mx-auto">
             <h2 className={h2Class}>Content Examples</h2>
             <div
               className={clsx(
@@ -349,12 +312,9 @@ export function EditorPresentation() {
             >
               {exampleContent.map(renderFeaturedBox)}
             </div>
-          </div>
-          <div className="max-w-7xl mx-auto">
-            <h2 className={clsx(h2Class, 'mt-12 mb-12')}>Feature Overview</h2>
-            {renderFeatureOverview()}
-          </div>
+          </div> */}
         </section>
+
         <section className={clsx('partner about-serlo', 'mt-24 !pt-16 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <img
@@ -362,7 +322,12 @@ export function EditorPresentation() {
               className="mx-auto my-5 max-w-[12rem]"
             />
             <h2 className={clsx(h2Class, 'mb-8')}>Roadmap</h2>
-
+            <p className="mt-4 text-base leading-cozy mb-6">
+              The Serlo Editor is in active develpement. We are currently beta
+              testing with the authors on the open learning platform{' '}
+              <Link href="https://serlo.org">serlo.org</Link>. Some features are
+              not yet reliable.
+            </p>
             {renderRoadmap()}
           </div>
 
@@ -405,6 +370,7 @@ export function EditorPresentation() {
             </div>
           </div>
         </section>
+
         <section className={clsx('-mb-6')}>
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
           <div className="mx-auto max-w-4xl">
@@ -542,82 +508,50 @@ export function EditorPresentation() {
     </>
   )
 
-  function renderFeaturedBox(data: FeaturedContentData, index: number) {
-    return (
-      <Link
-        className={clsx(
-          'text-brand hover:no-underline box-border',
-          'p-2.5 leading-cozy',
-          'rounded hover:shadow-menu hover:text-truegray-700',
-          'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
-          'relative',
-          index >= maxOnMobile ? 'hidden mobile:block' : ''
-        )}
-        href={data.url}
-        key={data.title}
-        path={[]}
-      >
-        <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
-          {data.img ? (
-            <img
-              className={clsx(
-                'object-contain object-center',
-                'mix-blend-multiply opacity-80 transition-all',
-                'group-hover:opacity-100',
-                'aspect-square rounded-lg'
-              )}
-              alt={data.title}
-              src={data.img}
-            />
-          ) : null}
-        </div>
-        <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
-          {data.title}
-        </h4>
-        <span className="block mt-1 font-sm text-brand-400 absolute bottom-2">
-          {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
-        </span>
-      </Link>
-    )
-  }
+  // function renderFeaturedBox(data: FeaturedContentData, index: number) {
+  //   return (
+  //     <Link
+  //       className={clsx(
+  //         'text-brand hover:no-underline box-border',
+  //         'p-2.5 leading-cozy',
+  //         'rounded hover:shadow-menu hover:text-truegray-700',
+  //         'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
+  //         'relative',
+  //         index >= maxOnMobile ? 'hidden mobile:block' : ''
+  //       )}
+  //       href={data.url}
+  //       key={data.title}
+  //       path={[]}
+  //     >
+  //       <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
+  //         {data.img ? (
+  //           <img
+  //             className={clsx(
+  //               'object-contain object-center',
+  //               'mix-blend-multiply opacity-80 transition-all',
+  //               'group-hover:opacity-100',
+  //               'aspect-square rounded-lg'
+  //             )}
+  //             alt={data.title}
+  //             src={data.img}
+  //           />
+  //         ) : null}
+  //       </div>
+  //       <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
+  //         {data.title}
+  //       </h4>
+  //       <span className="block mt-1 font-sm text-brand-400 absolute bottom-2">
+  //         {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
+  //       </span>
+  //     </Link>
+  //   )
+  // }
 
-  function renderTypeIcon(type: UuidType | TaxonomyTermType) {
-    const icon = getIconByTypename(type)
-    return <FaIcon icon={icon} />
-  }
+  // function renderTypeIcon(type: UuidType | TaxonomyTermType) {
+  //   const icon = getIconByTypename(type)
+  //   return <FaIcon icon={icon} />
+  // }
 
-  function renderFeatureOverview() {
-    return (
-      <div className="text-xl text-center sm:flex">
-        {featureData.map(({ title, features }) => {
-          return (
-            <div key={title} className="mb-12 flex-1 px-4">
-              <h3 className={clsx('mb-4 font-handwritten text-brand text-3xl')}>
-                {title}
-              </h3>
-              <ul className="">
-                {features.map(({ title }) => {
-                  return (
-                    <li
-                      key={title}
-                      // className="bg-brand-100 px-2 py-1 rounded-lg inline-block m-1"
-                      className={clsx(
-                        'block px-2 py-2 mb-5',
-                        'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
-                        'text-lg'
-                      )}
-                    >
-                      {title}
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
   function renderRoadmap() {
     return (
       <div className="text-xl text-center sm:flex">
