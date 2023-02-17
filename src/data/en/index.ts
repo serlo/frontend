@@ -376,6 +376,7 @@ export const instanceData = {
         username: 'Username',
         password: 'Password',
         email: 'Email',
+        interest: 'You are here as...'
       },
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
