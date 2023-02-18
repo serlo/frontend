@@ -124,7 +124,7 @@ export function RevisionHistory({
 
   function renderTh(text: string) {
     return (
-      <th className="serlo-th sticky top-0 bg-white border-0 border-b-6">
+      <th className="serlo-th top-0 bg-white border-x-transparent border-t-transparent">
         {text}
       </th>
     )
