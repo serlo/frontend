@@ -143,6 +143,7 @@ export function Node({
     if (attributes.name === 'traits.interest') {
       return (
         <select {...basicFields}>
+          {/* value="" would be accepted, avoid it if you want to enforce users to fill in this field. */}
           <option value="nothing">{strings.auth.interests.pleaseChoose}</option>
           <option value="parent">{strings.auth.interests.parent}</option>
           <option value="teacher">{strings.auth.interests.teacher}</option>
