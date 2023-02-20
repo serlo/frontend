@@ -1,7 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons/faGithubSquare'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons/faEnvelope'
-import { faHouseLaptop } from '@fortawesome/free-solid-svg-icons/faHouseLaptop'
+import { faHouseLaptop, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'

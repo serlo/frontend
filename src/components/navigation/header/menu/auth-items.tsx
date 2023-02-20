@@ -1,4 +1,4 @@
-import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 import { Item } from './item'
 import { NoAuthItem } from './no-auth-item'

@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'

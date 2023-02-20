@@ -1,4 +1,4 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { Router, useRouter } from 'next/router'
 import { useEffect, useState } from 'react'

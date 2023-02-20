@@ -1,5 +1,4 @@
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
+import { faTools, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { List, Item, Trigger, Content } from '@radix-ui/react-navigation-menu'
 
 import { UserToolsItem } from '../user-tools-item'

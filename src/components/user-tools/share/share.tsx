@@ -1,4 +1,4 @@
-import { faShareAlt } from '@fortawesome/free-solid-svg-icons/faShareAlt'
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 

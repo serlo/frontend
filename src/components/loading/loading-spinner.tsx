@@ -1,4 +1,4 @@
-import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
