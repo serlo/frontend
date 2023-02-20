@@ -78,7 +78,6 @@ module.exports = {
           'msw/*',
           'next/*',
           'public/_assets/**/*',
-          '@fortawesome/**',
         ],
       },
     ],

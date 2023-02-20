@@ -1,14 +1,16 @@
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt'
-import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
-import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
-import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
-import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons/faFolderOpen'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
+import {
+  faCalendarAlt,
+  faCircle,
+  faComments,
+  faCubes,
+  faFile,
+  faFolderOpen,
+  faGraduationCap,
+  faNewspaper,
+  faPlayCircle,
+  faUser,
+  faUserEdit,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { FaIconProps } from '@/components/fa-icon'
 import {

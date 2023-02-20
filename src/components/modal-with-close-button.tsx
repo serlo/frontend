@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import type { ReactNode } from 'react'
 import BaseModal from 'react-modal'

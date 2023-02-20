@@ -18,8 +18,7 @@ import {
   focusPrevious,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons/faCirclePlus'
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 

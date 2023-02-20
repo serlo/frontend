@@ -1,4 +1,4 @@
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons/faCaretDown'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import {
   Item as RadixItem,
   Trigger,
