@@ -19,6 +19,9 @@ export const textExerciseGroupTypeState = entityType(
     ...entity,
     content: editorContent(),
     cohesive: boolean(false),
+    /* cohesive field indicated whether the children of a grouped exercise are cohesive
+    this info might be used in the future, but currently has no effect in the frontend.
+    */
   },
   {
     'grouped-text-exercise': list(serializedChild('type-text-exercise')),
