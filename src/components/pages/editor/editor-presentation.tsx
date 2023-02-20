@@ -87,7 +87,6 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Wolfgang',
     lastName: 'Schmid',
-    user: 'wolfgang',
     position: 'Project Lead',
     extraLinkUrl: 'mailto:wolfgang@serlo.org',
     extraLinkText: 'wolfgang@serlo.org',
@@ -97,17 +96,15 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Sebastian',
     lastName: 'Sapiatz',
-    user: 'sebastian-sapiatz',
     position: 'Product Manager',
-    extraLinkUrl: '',
-    extraLinkText: '',
+    extraLinkUrl: 'mailto:sebastian@serlo.org',
+    extraLinkText: 'sebastian@serlo.org',
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
   },
   {
     firstName: 'Josefine',
     lastName: 'Theden-Schow',
-    user: 'josefinets',
     position: 'Partnerships',
     extraLinkUrl: 'mailto:josefine@serlo.org',
     extraLinkText: 'josefine@serlo.org',
@@ -115,19 +112,26 @@ const teamData: TeamDataEntry[] = [
       'https://assets.serlo.org/cea79750-6985-11ed-b282-836733dd2d87/image.jpg',
   },
   {
+    firstName: 'Vitomir',
+    lastName: 'Budimir',
+    position: 'Softwareentwicklung',
+    extraLinkUrl: '',
+    extraLinkText: '',
+    photo:
+      'https://assets.serlo.org/36f5c060-ac80-11ed-9413-878d94834f2e/image.jpg',
+  },
+  {
     firstName: 'Simon',
     lastName: 'Köhl',
-    user: 'simon',
     position: 'Partnerships',
-    extraLinkUrl: 'mailto:simon@serlo.org',
-    extraLinkText: 'simon@serlo.org',
+    extraLinkUrl: '',
+    extraLinkText: '',
     photo:
       'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
   },
   {
     firstName: 'Stephan',
     lastName: 'Kulla',
-    user: 'kulla',
     position: 'Developement',
     extraLinkUrl: '',
     extraLinkText: '',
@@ -135,19 +139,17 @@ const teamData: TeamDataEntry[] = [
       'https://assets.serlo.org/5fc610675ef12_e33cf10d89b893ff3cc99cebf5e1a1686ade44ec.jpg',
   },
   {
-    firstName: 'Anna',
-    lastName: 'Steinberg',
-    user: 'anbestCL',
-    position: 'Developement',
+    firstName: 'David',
+    lastName: 'Li',
+    position: 'Softwareentwicklung',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
-      'https://assets.serlo.org/e8aa0a40-3d96-11ed-b861-af1c5dc40fe0/image.jpg',
+      'https://assets.serlo.org/5d15e1c58bcc9_92a7a86497eed65a3372ce11c948a9c7538ebadf.jpg',
   },
   {
     firstName: 'Lars',
-    lastName: 'Ramussen ',
-    user: 'LarsSerlo',
+    lastName: 'Rasmussen ',
     position: 'Developement',
     extraLinkUrl: '',
     extraLinkText: '',
@@ -155,20 +157,18 @@ const teamData: TeamDataEntry[] = [
       'https://assets.serlo.org/16618150-a09a-11ed-95de-a79d3d5d7bc4/image.jpg',
   },
   {
-    firstName: 'Vitomir',
-    lastName: 'Budimir',
-    user: 'Vitomir Budimir',
-    position: 'Softwareentwicklung',
+    firstName: 'Anna',
+    lastName: 'Steinberg',
+    position: 'Developement',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
-      'https://assets.serlo.org/36f5c060-ac80-11ed-9413-878d94834f2e/image.jpg',
+      'https://assets.serlo.org/e8aa0a40-3d96-11ed-b861-af1c5dc40fe0/image.jpg',
   },
   //Mikey (Softwareentwicklung, ab März)
   {
     firstName: 'Botho',
     lastName: 'Willer',
-    user: 'botho',
     position: 'User Experience Design',
     extraLinkUrl: '',
     extraLinkText: '',
@@ -178,7 +178,6 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Gregor ',
     lastName: 'Zupan ',
-    user: 'Gregor_Z',
     position: 'User Experience Design',
     extraLinkUrl: '',
     extraLinkText: '',
@@ -391,7 +390,7 @@ export function EditorPresentation() {
           </div>
           <div className="mx-auto max-w-4xl">
             <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2>
-            <PageTeamRenderer data={teamData} extraCols />
+            <PageTeamRenderer data={teamData} extraCols compact />
 
             <div className="text-center mt-10 mb-24">
               <a

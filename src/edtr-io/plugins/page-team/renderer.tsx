@@ -6,12 +6,13 @@ import { getAvatarUrl } from '@/components/user/user-link'
 export interface PageTeamRendererProps {
   data: TeamDataEntry[]
   extraCols?: boolean
+  compact?: boolean
 }
 
 export interface TeamDataEntry {
   firstName: string
   lastName: string
-  user: string
+  user?: string
   position: string
   extraLinkUrl: string
   extraLinkText: string
@@ -21,6 +22,7 @@ export interface TeamDataEntry {
 export const PageTeamRenderer = ({
   data,
   extraCols,
+  compact,
 }: PageTeamRendererProps) => {
   if (!data || !data.length) return null
 
@@ -44,24 +46,24 @@ export const PageTeamRenderer = ({
     extraLinkUrl,
     photo,
   }: TeamDataEntry) {
-    if (!user) return null
+    const imageSrc = photo ?? getAvatarUrl(user ?? '?')
 
     return (
-      <div key={user} className="mb-10 text-center">
+      <div key={photo} className="mb-10 text-center">
         <img
           className="rounded-full mb-5 max-w-[11rem] mx-auto"
           alt={`${firstName} ${lastName}`}
-          src={photo ?? getAvatarUrl(user)}
+          src={imageSrc}
         />
         <b>
           {firstName} {lastName}
         </b>
         <br />
-        <Link href={`/user/profile/${user}`}>{user}</Link>
-        <p className="mt-4">{position}</p>
+        {user ? <Link href={`/user/profile/${user}`}>{user}</Link> : null}
+        <p className={compact ? '' : 'mt-4'}>{position}</p>
 
         {extraLinkUrl && extraLinkText ? (
-          <p className="mt-4">
+          <p className={compact ? 'mt-2' : 'mt-4'}>
             <Link href={extraLinkUrl}>{extraLinkText}</Link>
           </p>
         ) : null}
