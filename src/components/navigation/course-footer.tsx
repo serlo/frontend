@@ -1,5 +1,7 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons/faArrowCircleRight'
-import { faArrowCircleUp } from '@fortawesome/free-solid-svg-icons/faArrowCircleUp'
+import {
+  faArrowCircleRight,
+  faArrowCircleUp,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
 

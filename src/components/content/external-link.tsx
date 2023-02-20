@@ -1,4 +1,4 @@
-import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons/faUpRightFromSquare'
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 

@@ -1,5 +1,4 @@
-import { faBars } from '@fortawesome/free-solid-svg-icons/faBars'
-import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
+import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'

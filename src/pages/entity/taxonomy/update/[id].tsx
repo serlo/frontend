@@ -1,4 +1,4 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons/faTrashAlt'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
