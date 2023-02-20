@@ -5,8 +5,10 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { CommentsData } from './comment-area'
+import { CommentForm } from './comment-form'
 import { MetaBar } from './meta-bar'
 import { useAuth } from '@/auth/use-auth'
+import { useInstanceData } from '@/contexts/instance-context'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
 import { useEditCommentMutation } from '@/mutations/thread'
@@ -34,16 +36,18 @@ export function Comment({
 }: CommentProps) {
   const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
+  const { strings } = useInstanceData()
 
   const [editing, setEditing] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
-  const [val, setVal] = useState(content)
 
   const editCommentMutation = useEditCommentMutation()
 
   const auth = useAuth()
 
-  const isOwn = auth.authenticationPayload?.id === author.id
+  const isOwn =
+    auth.authenticationPayload?.id === author.id &&
+    !data.archived &&
+    !data.trashed
 
   // Step 1: Replace formulas
   const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
@@ -95,57 +99,39 @@ export function Comment({
             )
       )}
     >
-      {!editing && (
-        <MetaBar
-          user={author}
-          timestamp={createdAt}
-          isParent={isParent}
-          threadId={threadId}
-          archived={data.archived}
-          id={id}
-          highlight={highlight}
-          isOwn={isOwn}
-          startEditing={() => {
-            setEditing(true)
-            setVal(content)
-          }}
-        />
-      )}
+      <MetaBar
+        user={author}
+        timestamp={createdAt}
+        isParent={isParent}
+        threadId={threadId}
+        archived={data.archived}
+        id={id}
+        highlight={highlight}
+        isOwn={isOwn}
+        startEditing={() => {
+          setEditing(true)
+        }}
+        isEditing={editing}
+        abortEditing={() => {
+          setEditing(false)
+        }}
+      />
       {editing ? (
-        <>
-          <textarea
-            className="serlo-p mb-2 break-words whitespace-pre-line w-full border-2"
-            onChange={(e) => {
-              setVal(e.target.value)
-            }}
-          >
-            {val}
-          </textarea>
-          <button
-            className="serlo-button-green ml-4"
-            onClick={async () => {
-              setIsSaving(true)
-              const result = await editCommentMutation({
-                commentId: id,
-                content: val,
-              })
-              if (result) {
-                setIsSaving(false)
-                setEditing(false)
-              }
-            }}
-          >
-            {isSaving ? 'wird gespeichert ...' : 'Speichern'}
-          </button>
-          <button
-            className="ml-4"
-            onClick={() => {
+        <CommentForm
+          placeholder={strings.comments.placeholder}
+          onSend={async (content) => {
+            const result = await editCommentMutation({
+              commentId: id,
+              content,
+            })
+            if (result) {
               setEditing(false)
-            }}
-          >
-            abbrechen
-          </button>
-        </>
+            }
+            return result
+          }}
+          content={content}
+          isEditing
+        />
       ) : (
         <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
       )}

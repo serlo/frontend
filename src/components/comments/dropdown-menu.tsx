@@ -1,3 +1,4 @@
+import { faPencil } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons/faPaperclip'
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
@@ -76,7 +77,8 @@ export function DropdownMenu({
           startEditing,
           <>
             {' '}
-            <FaIcon icon={faCheck} /> Bearbeiten
+            <FaIcon icon={faPencil} />{' '}
+            {isParent ? 'Thread bearbeiten' : 'Kommentar bearbeiten'}
           </>
         )}
       {canArchive &&

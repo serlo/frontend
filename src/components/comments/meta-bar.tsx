@@ -19,6 +19,8 @@ export interface MetaBarProps {
   highlight: (id: number) => void
   isOwn?: boolean
   startEditing: () => void
+  isEditing?: boolean
+  abortEditing?: () => void
 }
 
 export function MetaBar({
@@ -31,6 +33,8 @@ export function MetaBar({
   threadId,
   isOwn,
   startEditing,
+  isEditing,
+  abortEditing,
 }: MetaBarProps) {
   const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
     null
@@ -51,38 +55,42 @@ export function MetaBar({
         )}
       />
 
-      <Tippy
-        interactive
-        placement="bottom-end"
-        onCreate={(instance) => setTippyInstance(instance)}
-        content={
-          tippyInstance ? (
-            <DropdownMenu
-              isParent={isParent}
-              threadId={threadId}
-              date={date}
-              id={id}
-              archived={archived}
-              isOwn={isOwn}
-              startEditing={startEditing}
-              highlight={highlight}
-              // eslint-disable-next-line @typescript-eslint/unbound-method
-              onAnyClick={tippyInstance.hide}
-            />
-          ) : (
-            ''
-          )
-        }
-      >
-        <button
-          title={date.toLocaleString('de-DE')}
-          className={clsx(
-            'serlo-button font-normal text-brand-500 text-base h-7'
-          )}
+      {isEditing ? (
+        <button onClick={abortEditing}>abbrechen</button>
+      ) : (
+        <Tippy
+          interactive
+          placement="bottom-end"
+          onCreate={(instance) => setTippyInstance(instance)}
+          content={
+            tippyInstance ? (
+              <DropdownMenu
+                isParent={isParent}
+                threadId={threadId}
+                date={date}
+                id={id}
+                archived={archived}
+                isOwn={isOwn}
+                startEditing={startEditing}
+                highlight={highlight}
+                // eslint-disable-next-line @typescript-eslint/unbound-method
+                onAnyClick={tippyInstance.hide}
+              />
+            ) : (
+              ''
+            )
+          }
         >
-          <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />
-        </button>
-      </Tippy>
+          <button
+            title={date.toLocaleString('de-DE')}
+            className={clsx(
+              'serlo-button font-normal text-brand-500 text-base h-7'
+            )}
+          >
+            <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />
+          </button>
+        </Tippy>
+      )}
     </div>
   )
 }
