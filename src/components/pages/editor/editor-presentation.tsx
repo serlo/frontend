@@ -230,7 +230,7 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className={clsx('mt-24 -mb-6 px-4 max-w-7xl mx-auto')}>
+        <section className={clsx('mt-24 -mb-6 px-4 max-w-[85rem] mx-auto')}>
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
           <EditorPartnerList />
         </section>
