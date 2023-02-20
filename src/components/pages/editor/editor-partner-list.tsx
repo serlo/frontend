@@ -2,44 +2,40 @@ import clsx from 'clsx'
 
 const partners = [
   {
-    name: 'Beisheim Stiftung',
-    logo: '/_assets/img/landing/partners/logo_beisheimstiftung.svg',
-    padding: 10,
-  },
-  {
-    name: 'Ludwig-Maximilians-Universität München',
-    logo: '/_assets/img/landing/partners/logo_lmu.svg',
-    padding: 8,
-  },
-  {
-    name: 'Wikimedia Deutschland',
-    logo: '/_assets/img/landing/partners/logo_wikimedia.svg',
-    padding: 0,
-  },
-  {
     name: 'Bundesministerium für Bildung und Forschung',
     logo: '/_assets/img/landing/partners/logo_bmbf.svg',
     padding: 0,
   },
   {
-    name: 'Europäische Kommission',
-    logo: '/_assets/img/landing/partners/logo_eu.svg',
-    padding: 8,
+    name: 'Stifterverband für die Deutsche Wissenschaft e.V.',
+    logo: '/_assets/img/editor/partners/logo_stifterverband.svg',
+    padding: 4,
   },
   {
-    name: 'Deloitte',
-    logo: '/_assets/img/landing/partners/logo_deloitte.svg',
-    padding: 28,
+    name: 'Wikimedia Deutschland e.V',
+    logo: '/_assets/img/editor/partners/logo_wikimedia-de.svg',
+    padding: 3,
+  },
+
+  {
+    name: 'Education Innovation Lab gUG',
+    logo: '/_assets/img/editor/partners/logo_eil.svg',
+    padding: 13,
   },
   {
-    name: 'Hasso-Plattner-Institut',
-    logo: '/_assets/img/landing/partners/logo_hpi.svg',
+    name: 'edu-sharing.net e.V.',
+    logo: '/_assets/img/editor/partners/logo_edusharing.svg',
     padding: 14,
   },
   {
-    name: 'Ashoka Deutschland',
-    logo: '/_assets/img/landing/partners/logo_ashoka.svg',
-    padding: 6,
+    name: 'itslearning GmbH',
+    logo: '/_assets/img/editor/partners/logo_itslearning.svg',
+    padding: 20,
+  },
+  {
+    name: 'Dataport',
+    logo: '/_assets/img/editor/partners/logo_dataport.svg',
+    padding: 14,
   },
 ]
 
@@ -47,8 +43,8 @@ export function EditorPartnerList() {
   return (
     <div
       className={clsx(
-        'mt-auto pb-7 flex flex-wrap justify-evenly mx-side',
-        'sm:justify-center max-w-5xl sm:mx-auto',
+        'mt-auto pb-7 flex flex-wrap justify-evenly',
+        'sm:justify-center',
         'text-gray-800'
       )}
     >
@@ -56,23 +52,15 @@ export function EditorPartnerList() {
     </div>
   )
 
-  function renderPartner({
-    name,
-    logo,
-    padding,
-  }: {
-    name: string
-    logo: string
-    padding: number
-  }) {
+  function renderPartner({ name, logo, padding }: typeof partners[0]) {
     return (
       <img
         key={name}
-        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8"
+        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-12 "
         style={{
           // opacity: '0.6',
           // filter: 'grayscale(1)',
-          mixBlendMode: 'multiply',
+          // mixBlendMode: 'multiply',
           paddingTop: `${padding}px`,
           paddingBottom: `${padding}px`,
         }}
