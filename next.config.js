@@ -77,7 +77,6 @@ module.exports = withBundleAnalyzer({
       transform: '@fortawesome/free-brands-svg-icons/{{member}}',
       skipDefaultConversion: true,
     },
-
     '@fortawesome/free-regular-svg-icons': {
       transform: '@fortawesome/free-regular-svg-icons/{{member}}',
       skipDefaultConversion: true,
