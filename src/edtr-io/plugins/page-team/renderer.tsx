@@ -30,7 +30,7 @@ export const PageTeamRenderer = ({
     <div
       className={clsx(
         'mobile: grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14',
-        extraCols && 'lg:grid-cols-4'
+        extraCols && 'md:grid-cols-4 lg:grid-cols-5'
       )}
     >
       {data.map(renderEntry)}

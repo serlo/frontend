@@ -1,4 +1,5 @@
 import {
+  faCirclePlus,
   faCubes,
   faExpand,
   faFileLines,
@@ -85,28 +86,20 @@ const pluginData = [
     description: '123',
     example: injectionExample,
   },
+  {
+    title: 'And more…',
+    icon: faCirclePlus,
+    description: '',
+    example: <></>,
+  },
 ]
-
-// const featureData = [
-//   {
-//     title: 'Basic Features',
-//     features: [
-//       { title: 'WYSIWYG (What-You-See-Is-What-You-Get) User Experience' },
-//       { title: 'Vast content element selection' },
-//       { title: 'drag and drop content elements' },
-//       { title: 'global undo/redo' },
-//       { title: 'Migration Algorithm for new versions of data format ' },
-//       { title: 'create templates to pre-structure content for your creators' },
-//     ],
-//   },
-// ]
 
 export function EducationPlugins() {
   const [selectedIndex, setSelectedIndex] = useState(0)
 
   return (
     <div className="text-center">
-      <h3 className="mb-4 font-handwritten text-brand text-3xl">
+      <h3 className="mb-4 mt-16 font-handwritten text-brand text-3xl">
         Education Plugins
       </h3>
       <div className="sm:flex">
@@ -153,6 +146,8 @@ export function EducationPlugins() {
     { title, icon }: typeof pluginData[0],
     i: number
   ) {
+    const isLast = i === pluginData.length - 1
+
     return (
       <li
         key={title}
@@ -160,7 +155,13 @@ export function EducationPlugins() {
       >
         <button
           onClick={() => {
-            setSelectedIndex(i)
+            if (isLast) {
+              document.querySelector('#roadmap')?.scrollIntoView({
+                behavior: 'smooth',
+              })
+            } else {
+              setSelectedIndex(i)
+            }
           }}
           className={clsx(
             'whitespace-nowrap p-2 sm:p-3 m-1 rounded-md',
@@ -168,7 +169,7 @@ export function EducationPlugins() {
             selectedIndex === i ? 'bg-brand-100' : ''
           )}
         >
-          <FaIcon icon={icon} className="" /> <b>{title}</b>
+          <FaIcon icon={icon} /> <b>{title}</b>
         </button>
       </li>
     )

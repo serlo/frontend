@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { Fragment } from 'react'
 
 import { BasicPlugins } from './basic-plugins'
+import { EditorFeatures } from './editor-features'
 import { EditorPartnerList } from './editor-partner-list'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
@@ -85,15 +86,6 @@ const roadmapData = [
 
 const teamData: TeamDataEntry[] = [
   {
-    firstName: 'Wolfgang',
-    lastName: 'Schmid',
-    position: 'Project Lead',
-    extraLinkUrl: 'mailto:wolfgang@serlo.org',
-    extraLinkText: 'wolfgang@serlo.org',
-    photo:
-      'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
-  },
-  {
     firstName: 'Sebastian',
     lastName: 'Sapiatz',
     position: 'Product Manager',
@@ -101,6 +93,15 @@ const teamData: TeamDataEntry[] = [
     extraLinkText: 'sebastian@serlo.org',
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
+  },
+  {
+    firstName: 'Wolfgang',
+    lastName: 'Schmid',
+    position: 'Project Lead',
+    extraLinkUrl: 'mailto:wolfgang@serlo.org',
+    extraLinkText: 'wolfgang@serlo.org',
+    photo:
+      'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
   },
   {
     firstName: 'Josefine',
@@ -223,10 +224,10 @@ export function EditorPresentation() {
         </section>
 
         <section
-          className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-6xl')}
+          className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-5xl')}
         >
-          <div className="sm:flex">
-            <div className="flex-1 text-xl leading-cozy pl-8 pr-4">
+          <div className="sm:flex sm:justify-between">
+            <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem]">
               <h2 className={clsx(h3Class, 'tracking-tight')}>
                 <br />
                 Seamless Creation of Digital Learning Resources
@@ -248,7 +249,7 @@ export function EditorPresentation() {
                 .
               </p>
             </div>
-            <div className="mt-8 flex-1">
+            <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[31rem]">
               <Video src="https://www.youtube.com/watch?v=ugWtuTmiGLM" />
             </div>
           </div>
@@ -268,6 +269,33 @@ export function EditorPresentation() {
           </h3>
           
         </section> */}
+        <section className={clsx('partner px-4 mt-12 mb-20 !pt-20 pb-20')}>
+          <div className="max-w-7xl mx-auto">
+            <EditorFeatures />
+          </div>
+        </section>
+
+        <section className={clsx('-mb-6 px-4')}>
+          <div className="max-w-7xl mx-auto mb-28">
+            {/* <h2 className={clsx(h2Class, 'mt-12 mb-12')}>Feature Overview</h2> */}
+            <EducationPlugins />
+            <BasicPlugins />
+            {/* {renderFeatureOverview()} */}
+          </div>
+
+          {/* <div className="max-w-4xl text-center mx-auto">
+            <h2 className={h2Class}>Content Examples</h2>
+            <div
+              className={clsx(
+                'mt-6 flex items-stretch justify-around',
+                'px-side pb-6 flex-wrap',
+                'w-full mx-auto sm:max-w-3xl lg:max-w-max'
+              )}
+            >
+              {exampleContent.map(renderFeaturedBox)}
+            </div>
+          </div> */}
+        </section>
 
         <section className={clsx('partner px-2 mt-0 !pt-20 mb-20')}>
           <div className="mt-6 pb-12 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
@@ -289,52 +317,25 @@ export function EditorPresentation() {
             </div>
           </div>
         </section>
-        {/* <section className={clsx('partner', 'px-2 mt-24 !pt-20')}>
-          
-        </section> */}
-        <section className={clsx('-mb-6')}>
-          <div className="max-w-7xl mx-auto">
-            <h2 className={clsx(h2Class, 'mt-12 mb-12')}>Feature Overview</h2>
-            <BasicPlugins />
-            <EducationPlugins />
-            {/* {renderFeatureOverview()} */}
-          </div>
 
-          {/* <div className="max-w-4xl text-center mx-auto">
-            <h2 className={h2Class}>Content Examples</h2>
-            <div
-              className={clsx(
-                'mt-6 flex items-stretch justify-around',
-                'px-side pb-6 flex-wrap',
-                'w-full mx-auto sm:max-w-3xl lg:max-w-max'
-              )}
-            >
-              {exampleContent.map(renderFeaturedBox)}
-            </div>
-          </div> */}
-        </section>
-
-        <section className={clsx('partner about-serlo', 'mt-24 !pt-16 pb-16')}>
+        <section id="roadmap" className={clsx('mt-24 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
-            <img
-              src="/_assets/img/jobs/impact.svg"
-              className="mx-auto my-5 max-w-[12rem]"
-            />
-            <h2 className={clsx(h2Class, 'mb-8')}>Roadmap</h2>
-            <p className="mt-4 text-base leading-cozy mb-6">
-              The Serlo Editor is in active develpement. We are currently beta
-              testing with the authors on the open learning platform{' '}
-              <Link href="https://serlo.org">serlo.org</Link>. Some features are
-              not yet reliable.
+            <h2 className={clsx(h2Class, 'mb-4')}>Roadmap</h2>
+            <p className="mt-4 text-xl leading-cozy mb-8">
+              The Serlo Editor is in active develpement. <br />
+              We are currently beta testing with the authors on the open
+              learning platform <Link href="/">serlo.org</Link>.
+              <br />
+              Some features might not yet be reliable.
             </p>
             {renderRoadmap()}
           </div>
 
-          <div className="mt-0 text-3xl leading-cozy max-w-4xl text-center mx-auto">
-            <img
+          <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
+            {/* <img
               src="/_assets/img/jobs/gemeinsam.svg"
               className="mx-auto max-w-[12rem]"
-            />
+            /> */}
             <h2 className={clsx(h2Class, 'mb-8')}>Serlo Editor in your LMS</h2>
 
             <div className="text-left">
@@ -370,7 +371,7 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className={clsx('-mb-6')}>
+        <section className={clsx('mt-24 -mb-6')}>
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
           <div className="mx-auto max-w-4xl">
             <EditorPartnerList />
@@ -388,16 +389,16 @@ export function EditorPresentation() {
               <Link href="/serlo">serlo.org/serlo</Link>.
             </p>
           </div>
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto px-4 max-w-7xl">
             <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2>
             <PageTeamRenderer data={teamData} extraCols compact />
 
             <div className="text-center mt-10 mb-24">
               <a
-                href=""
+                href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
                 className="serlo-new-landing-button inline landing-button-with-wings"
               >
-                Sign up to our newsletter to stay updated!
+                Stay updated!
               </a>
             </div>
           </div>
@@ -554,7 +555,7 @@ export function EditorPresentation() {
   function renderRoadmap() {
     return (
       <div className="text-xl text-center sm:flex">
-        {roadmapData.map(({ title, steps }) => {
+        {roadmapData.map(({ title, steps }, colIndex) => {
           return (
             <div key={title} className="mb-12 flex-1 px-4">
               <h3 className={clsx('mb-4 font-handwritten text-brand text-3xl')}>
@@ -577,6 +578,12 @@ export function EditorPresentation() {
                   )
                 })}
               </ul>
+              {colIndex === 0 ? (
+                <img
+                  src="/_assets/img/jobs/impact.svg"
+                  className="my-5 mx-3 opacity-75"
+                />
+              ) : null}
             </div>
           )
         })}

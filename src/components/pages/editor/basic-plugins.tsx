@@ -46,7 +46,7 @@ const commonData = [
 
 export function BasicPlugins() {
   return (
-    <div className="text-center mb-12 mx-4">
+    <div className="text-center mt-8">
       <h3 className="mb-4 font-handwritten text-brand text-3xl">
         Common Plugins
       </h3>
