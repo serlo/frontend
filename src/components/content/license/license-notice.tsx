@@ -1,4 +1,4 @@
-import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons/faCreativeCommons'
+import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 

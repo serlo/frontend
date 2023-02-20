@@ -14,7 +14,7 @@ import {
   faQuoteRight,
   faTable,
 } from '@edtr-io/ui'
-import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import {
   faGripLinesVertical,
   faUsers,

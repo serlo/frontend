@@ -1,5 +1,4 @@
-import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
-import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
+import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, Fragment } from 'react'

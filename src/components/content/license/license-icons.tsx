@@ -1,7 +1,9 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons/faCreativeCommons'
-import { faCreativeCommonsBy } from '@fortawesome/free-brands-svg-icons/faCreativeCommonsBy'
-import { faCreativeCommonsSa } from '@fortawesome/free-brands-svg-icons/faCreativeCommonsSa'
+import {
+  faCreativeCommons,
+  faCreativeCommonsBy,
+  faCreativeCommonsSa,
+} from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 

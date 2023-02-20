@@ -78,8 +78,6 @@ module.exports = {
           'msw/*',
           'next/*',
           'public/_assets/**/*',
-          '@fortawesome/free-brands-svg-icons/*',
-          '@fortawesome/free-regular-svg-icons/*',
         ],
       },
     ],

@@ -1,5 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faGithubSquare } from '@fortawesome/free-brands-svg-icons/faGithubSquare'
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faHouseLaptop, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 

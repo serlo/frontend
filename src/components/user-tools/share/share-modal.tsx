@@ -1,6 +1,8 @@
-import { faFacebookSquare } from '@fortawesome/free-brands-svg-icons/faFacebookSquare'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons/faGoogle'
-import { faWhatsappSquare } from '@fortawesome/free-brands-svg-icons/faWhatsappSquare'
+import {
+  faFacebookSquare,
+  faGoogle,
+  faWhatsappSquare,
+} from '@fortawesome/free-brands-svg-icons'
 import {
   faCompass,
   faCopy,
