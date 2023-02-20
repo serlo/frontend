@@ -7,7 +7,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Sebastian',
     lastName: 'Sapiatz',
-    position: 'Product Manager',
+    position: 'Product Management',
     extraLinkUrl: 'mailto:sebastian@serlo.org',
     extraLinkText: 'sebastian@serlo.org',
     photo:
@@ -34,7 +34,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Vitomir',
     lastName: 'Budimir',
-    position: 'Softwareentwicklung',
+    position: 'Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
@@ -52,7 +52,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Stephan',
     lastName: 'Kulla',
-    position: 'Developement',
+    position: 'Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
@@ -61,7 +61,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'David',
     lastName: 'Li',
-    position: 'Softwareentwicklung',
+    position: 'Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
@@ -70,7 +70,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Lars',
     lastName: 'Rasmussen ',
-    position: 'Developement',
+    position: 'Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
@@ -79,7 +79,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Anna',
     lastName: 'Steinberg',
-    position: 'Developement',
+    position: 'Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
@@ -89,7 +89,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Botho',
     lastName: 'Willer',
-    position: 'User Experience Design',
+    position: 'Design | Software',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
@@ -98,7 +98,7 @@ const teamData: TeamDataEntry[] = [
   {
     firstName: 'Gregor ',
     lastName: 'Zupan ',
-    position: 'User Experience Design',
+    position: 'Design',
     extraLinkUrl: '',
     extraLinkText: '',
     photo:
