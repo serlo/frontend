@@ -38,6 +38,8 @@ export function Login({ oauth }: { oauth?: boolean }) {
   const { strings } = useInstanceData()
   const loginStrings = strings.auth.login
 
+  const [initStarted, setInitStarted] = useState(false)
+
   const {
     return_to: returnTo,
     flow: flowId,
@@ -58,6 +60,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
+    // Currenty not in use
     if (flowId) {
       kratos
         .getSelfServiceLoginFlow(String(flowId))
@@ -66,23 +69,31 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
-    kratos
-      .initializeSelfServiceLoginFlowForBrowsers(
-        Boolean(refresh),
-        aal ? String(aal) : undefined,
-        returnTo ? String(returnTo) : undefined
-      )
-      .then(({ data }) => {
-        setFlow(data)
-      })
-      .catch(async (error: AxiosError) => {
+    // Make sure we only init the flow once
+    if (initStarted) {
+      return
+    }
+
+    setInitStarted(true)
+
+    void (async () => {
+      try {
+        const response = await kratos.initializeSelfServiceLoginFlowForBrowsers(
+          Boolean(refresh),
+          aal ? String(aal) : undefined,
+          returnTo ? String(returnTo) : undefined
+        )
+        setFlow(response.data)
+      } catch (e) {
+        const error = e as AxiosError // is
         const data = error.response?.data as { error: { id: string } }
 
         if (oauth && data.error?.id === 'session_already_available') {
           void oauthHandler('login', String(loginChallenge))
         }
         await handleFlowError(router, FlowType.login, setFlow, strings)(error)
-      })
+      }
+    })()
   }, [
     flowId,
     router,
@@ -96,6 +107,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
     strings,
     checkInstance,
     auth,
+    initStarted,
   ])
 
   const showLogout = aal || refresh
