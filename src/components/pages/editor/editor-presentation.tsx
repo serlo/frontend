@@ -1,20 +1,15 @@
 import clsx from 'clsx'
-import { Fragment } from 'react'
 
 import { BasicPlugins } from './basic-plugins'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList } from './editor-partner-list'
+import { EditorRoadmap } from './editor-roadmap'
+import { EditorTeam } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
-// import { UuidType } from '@/data-types'
-// import { FeaturedContentData } from '@/data/de/de-subject-landing-data'
-import {
-  PageTeamRenderer,
-  TeamDataEntry,
-} from '@/edtr-io/plugins/page-team/renderer'
 import { breakpoints } from '@/helper/breakpoints'
 
 const h2Class =
@@ -50,142 +45,6 @@ const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 //   },
 // ]
 // TODO: (on jobs page) fix share button, fix overflow
-
-const roadmapData = [
-  {
-    title: 'Latest Release',
-    steps: ['Migration Algorithm for new versions of data format'],
-  },
-  {
-    title: 'Next up',
-    steps: [
-      'dozens of smaller UX improvements',
-      'Update Slate to 0.82',
-      'Release of updated data- and exchange-format for Serlo Editor content',
-    ],
-  },
-  {
-    title: 'Soon',
-    steps: [
-      'H5P integration',
-      'Further UX improvements',
-      'Fill-in-the-gap exercises',
-      'Drag & Drop exercises',
-    ],
-  },
-  {
-    title: 'Later',
-    steps: [
-      'More exercise plugins',
-      'Improved focus management',
-      'LMS integrations',
-      'Global copy & paste',
-    ],
-  },
-]
-
-const teamData: TeamDataEntry[] = [
-  {
-    firstName: 'Sebastian',
-    lastName: 'Sapiatz',
-    position: 'Product Manager',
-    extraLinkUrl: 'mailto:sebastian@serlo.org',
-    extraLinkText: 'sebastian@serlo.org',
-    photo:
-      'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
-  },
-  {
-    firstName: 'Wolfgang',
-    lastName: 'Schmid',
-    position: 'Project Lead',
-    extraLinkUrl: 'mailto:wolfgang@serlo.org',
-    extraLinkText: 'wolfgang@serlo.org',
-    photo:
-      'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
-  },
-  {
-    firstName: 'Josefine',
-    lastName: 'Theden-Schow',
-    position: 'Partnerships',
-    extraLinkUrl: 'mailto:josefine@serlo.org',
-    extraLinkText: 'josefine@serlo.org',
-    photo:
-      'https://assets.serlo.org/cea79750-6985-11ed-b282-836733dd2d87/image.jpg',
-  },
-  {
-    firstName: 'Vitomir',
-    lastName: 'Budimir',
-    position: 'Softwareentwicklung',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/36f5c060-ac80-11ed-9413-878d94834f2e/image.jpg',
-  },
-  {
-    firstName: 'Simon',
-    lastName: 'Köhl',
-    position: 'Partnerships',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
-  },
-  {
-    firstName: 'Stephan',
-    lastName: 'Kulla',
-    position: 'Developement',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/5fc610675ef12_e33cf10d89b893ff3cc99cebf5e1a1686ade44ec.jpg',
-  },
-  {
-    firstName: 'David',
-    lastName: 'Li',
-    position: 'Softwareentwicklung',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/5d15e1c58bcc9_92a7a86497eed65a3372ce11c948a9c7538ebadf.jpg',
-  },
-  {
-    firstName: 'Lars',
-    lastName: 'Rasmussen ',
-    position: 'Developement',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/16618150-a09a-11ed-95de-a79d3d5d7bc4/image.jpg',
-  },
-  {
-    firstName: 'Anna',
-    lastName: 'Steinberg',
-    position: 'Developement',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/e8aa0a40-3d96-11ed-b861-af1c5dc40fe0/image.jpg',
-  },
-  //Mikey (Softwareentwicklung, ab März)
-  {
-    firstName: 'Botho',
-    lastName: 'Willer',
-    position: 'User Experience Design',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/legacy/555b0ce89c0fd_a88af44ea94ef2e7139d475f2ec3d4a5df06128c.jpg',
-  },
-  {
-    firstName: 'Gregor ',
-    lastName: 'Zupan ',
-    position: 'User Experience Design',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/98f93f80-a09b-11ed-95de-a79d3d5d7bc4/image.png',
-  },
-]
 
 export function EditorPresentation() {
   // const { strings } = useInstanceData()
@@ -328,7 +187,7 @@ export function EditorPresentation() {
               <br />
               Some features might not yet be reliable.
             </p>
-            {renderRoadmap()}
+            <EditorRoadmap />
           </div>
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
@@ -391,8 +250,7 @@ export function EditorPresentation() {
           </div>
           <div className="mx-auto px-4 max-w-7xl">
             <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2>
-            <PageTeamRenderer data={teamData} extraCols compact />
-
+            <EditorTeam />
             <div className="text-center mt-10 mb-24">
               <a
                 href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
@@ -551,43 +409,4 @@ export function EditorPresentation() {
   //   const icon = getIconByTypename(type)
   //   return <FaIcon icon={icon} />
   // }
-
-  function renderRoadmap() {
-    return (
-      <div className="text-xl text-center sm:flex">
-        {roadmapData.map(({ title, steps }, colIndex) => {
-          return (
-            <div key={title} className="mb-12 flex-1 px-4">
-              <h3 className={clsx('mb-4 font-handwritten text-brand text-3xl')}>
-                {title}
-              </h3>
-              <ul className="">
-                {steps.map((title) => {
-                  return (
-                    <li
-                      key={title}
-                      // className="bg-brand-100 px-2 py-1 rounded-lg inline-block m-1"
-                      className={clsx(
-                        'block px-2 py-2 mb-5',
-                        'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
-                        'text-lg'
-                      )}
-                    >
-                      {title}
-                    </li>
-                  )
-                })}
-              </ul>
-              {colIndex === 0 ? (
-                <img
-                  src="/_assets/img/jobs/impact.svg"
-                  className="my-5 mx-3 opacity-75"
-                />
-              ) : null}
-            </div>
-          )
-        })}
-      </div>
-    )
-  }
 }
