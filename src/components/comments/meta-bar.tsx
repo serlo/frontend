@@ -8,7 +8,6 @@ import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export interface MetaBarProps {
   user: { username: string; id: number }
@@ -18,8 +17,8 @@ export interface MetaBarProps {
   archived?: boolean
   id: number
   highlight: (id: number) => void
+  isEditing: boolean
   startEditing?: () => void
-  abortEditing?: () => void
 }
 
 export function MetaBar({
@@ -30,14 +29,12 @@ export function MetaBar({
   id,
   highlight,
   threadId,
+  isEditing,
   startEditing,
-  abortEditing,
 }: MetaBarProps) {
   const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
     null
   )
-
-  const { strings } = useInstanceData()
 
   const date = new Date(timestamp)
 
@@ -53,16 +50,7 @@ export function MetaBar({
           'hover:text-brand hover:bg-brand-200'
         )}
       />
-
-      {abortEditing ? (
-        <button
-          onClick={abortEditing}
-          // move button a bit down to avoid collision with drop down menu
-          className="text-gray-700 hover:underline -mb-7 inline-block"
-        >
-          {strings.comments.abort}
-        </button>
-      ) : (
+      {isEditing ? null : (
         <Tippy
           interactive
           placement="bottom-end"

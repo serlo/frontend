@@ -77,7 +77,6 @@ export function DropdownMenu({
         buildButton(
           startEditing,
           <>
-            {' '}
             <FaIcon icon={faPencil} /> {strings.comments.edit}
           </>
         )}

@@ -38,7 +38,7 @@ export function Comment({
   const { author, createdAt, content, id } = data
   const { strings } = useInstanceData()
 
-  const [editing, setEditing] = useState(false)
+  const [isEditing, setEditing] = useState(false)
 
   const editCommentMutation = useEditCommentMutation()
 
@@ -55,7 +55,7 @@ export function Comment({
   ))
 
   // Step 2: Replace urls in remaining strings
-  const r2 = replaceWithJSX(
+  const commentContent = replaceWithJSX(
     r1,
     /(https?:\/\/(?:www\.)?(?:[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9]{1,6}\b)(?:[-a-zA-Z0-9@:%_+~#?&//=]*))/g,
     (str, i) => (
@@ -107,39 +107,41 @@ export function Comment({
         archived={data.archived}
         id={id}
         highlight={highlight}
+        isEditing={isEditing}
         startEditing={
-          isOwnEditable && !editing
+          isOwnEditable && !isEditing
             ? () => {
                 setEditing(true)
               }
             : undefined
         }
-        abortEditing={
-          editing
-            ? () => {
-                setEditing(false)
-              }
-            : undefined
-        }
       />
-      {editing ? (
-        <CommentForm
-          placeholder={strings.comments.placeholder}
-          onSend={async (content) => {
-            const result = await editCommentMutation({
-              commentId: id,
-              content,
-            })
-            if (result) {
-              setEditing(false)
-            }
-            return result
-          }}
-          content={content}
-          isEditing
-        />
+      {isEditing ? (
+        <>
+          <CommentForm
+            placeholder={strings.comments.placeholder}
+            onSend={async (content) => {
+              const result = await editCommentMutation({
+                commentId: id,
+                content,
+              })
+              if (result) setEditing(false)
+              return result
+            }}
+            content={content}
+            isEditing
+          />
+          <button
+            onClick={() => setEditing(false)}
+            className="block ml-auto mr-6 -mt-6 serlo-button-blue-transparent text-base"
+          >
+            {strings.comments.cancelEdit}
+          </button>
+        </>
       ) : (
-        <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
+        <p className="serlo-p mb-0 whitespace-pre-line break-words">
+          {commentContent}
+        </p>
       )}
     </div>
   )
