@@ -36,6 +36,7 @@ export function CourseFooter({
     <nav className="mt-10 mb-8 py-5 bg-brand-50 sm:bg-white flex justify-between align-top">
       {previousHref && (
         <Link
+          rel="prev"
           href={previousHref}
           path={['courseback']}
           className="serlo-button-light mx-side hover:no-underline h-fit"
@@ -46,13 +47,14 @@ export function CourseFooter({
       )}
       {nextHref ? (
         <Link
+          rel="next"
           href={nextHref}
           path={['coursenext']}
           className="ml-auto mr-side text-right hover:no-underline"
         >
-          <button className="serlo-button-blue hover:no-underline mb-2">
+          <div className="serlo-button-blue hover:no-underline mb-2">
             <FaIcon icon={faArrowCircleRight} /> {strings.course.next}
-          </button>
+          </div>
           <div className="flex text-lg">
             <b
               className={clsx(

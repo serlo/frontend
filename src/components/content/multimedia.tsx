@@ -52,9 +52,7 @@ export function Multimedia({
   )
 
   function renderLightbox() {
-    if (!isImage(mediaChild) || !open) {
-      return null
-    }
+    if (!isImage(mediaChild) || !open) return null
 
     // simplify after deploy, db-migration and api cache updates
     const label =
