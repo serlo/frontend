@@ -24,8 +24,7 @@ interface DropdownMenuProps {
   highlight: (id: number) => void
   onAnyClick: () => void
   threadId?: string
-  isOwn?: boolean
-  startEditing: () => void
+  startEditing?: () => void
 }
 
 export function DropdownMenu({
@@ -36,7 +35,6 @@ export function DropdownMenu({
   highlight,
   onAnyClick,
   threadId,
-  isOwn,
   startEditing,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
@@ -53,9 +51,9 @@ export function DropdownMenu({
   const canArchive = isParent && canDo(Thread.setThreadArchived)
 
   // we assume that the user who can create a comment can also edit it
-  const canEdit =
-    isOwn &&
-    (isParent ? canDo(Thread.createThread) : canDo(Thread.createComment))
+  const canEdit = isParent
+    ? canDo(Thread.createThread)
+    : canDo(Thread.createComment)
 
   const entityId = useEntityId()
 
@@ -73,12 +71,12 @@ export function DropdownMenu({
         </>
       )}
       {canEdit &&
+        startEditing &&
         buildButton(
           startEditing,
           <>
             {' '}
-            <FaIcon icon={faPencil} />{' '}
-            {isParent ? 'Thread bearbeiten' : 'Kommentar bearbeiten'}
+            <FaIcon icon={faPencil} /> {strings.comments.edit}
           </>
         )}
       {canArchive &&

@@ -44,7 +44,7 @@ export function Comment({
 
   const auth = useAuth()
 
-  const isOwn =
+  const isOwnEditable =
     auth.authenticationPayload?.id === author.id &&
     !data.archived &&
     !data.trashed
@@ -107,14 +107,20 @@ export function Comment({
         archived={data.archived}
         id={id}
         highlight={highlight}
-        isOwn={isOwn}
-        startEditing={() => {
-          setEditing(true)
-        }}
-        isEditing={editing}
-        abortEditing={() => {
-          setEditing(false)
-        }}
+        startEditing={
+          isOwnEditable && !editing
+            ? () => {
+                setEditing(true)
+              }
+            : undefined
+        }
+        abortEditing={
+          editing
+            ? () => {
+                setEditing(false)
+              }
+            : undefined
+        }
       />
       {editing ? (
         <CommentForm

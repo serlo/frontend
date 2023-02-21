@@ -8,6 +8,7 @@ import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface MetaBarProps {
   user: { username: string; id: number }
@@ -17,9 +18,7 @@ export interface MetaBarProps {
   archived?: boolean
   id: number
   highlight: (id: number) => void
-  isOwn?: boolean
-  startEditing: () => void
-  isEditing?: boolean
+  startEditing?: () => void
   abortEditing?: () => void
 }
 
@@ -31,14 +30,14 @@ export function MetaBar({
   id,
   highlight,
   threadId,
-  isOwn,
   startEditing,
-  isEditing,
   abortEditing,
 }: MetaBarProps) {
   const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
     null
   )
+
+  const { strings } = useInstanceData()
 
   const date = new Date(timestamp)
 
@@ -55,8 +54,14 @@ export function MetaBar({
         )}
       />
 
-      {isEditing ? (
-        <button onClick={abortEditing}>abbrechen</button>
+      {abortEditing ? (
+        <button
+          onClick={abortEditing}
+          // move button a bit down to avoid collision with drop down menu
+          className="text-gray-700 hover:underline -mb-7 inline-block"
+        >
+          {strings.comments.abort}
+        </button>
       ) : (
         <Tippy
           interactive
@@ -70,7 +75,6 @@ export function MetaBar({
                 date={date}
                 id={id}
                 archived={archived}
-                isOwn={isOwn}
                 startEditing={startEditing}
                 highlight={highlight}
                 // eslint-disable-next-line @typescript-eslint/unbound-method
