@@ -1,10 +1,12 @@
-import { faBell } from '@fortawesome/free-solid-svg-icons/faBell'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
-import { faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons/faHandHoldingHeart'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
-import { faUserFriends } from '@fortawesome/free-solid-svg-icons/faUserFriends'
+import {
+  faBell,
+  faGraduationCap,
+  faHandHoldingHeart,
+  faInfoCircle,
+  faUser,
+  faUserEdit,
+  faUserFriends,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'

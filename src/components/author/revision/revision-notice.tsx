@@ -1,6 +1,8 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
+import {
+  faXmark,
+  faInfoCircle,
+  faCheck,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'

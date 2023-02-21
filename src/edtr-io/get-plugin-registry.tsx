@@ -14,10 +14,12 @@ import {
   faQuoteRight,
   faTable,
 } from '@edtr-io/ui'
-import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
-import { faWrench } from '@fortawesome/free-solid-svg-icons'
-import { faGripLinesVertical } from '@fortawesome/free-solid-svg-icons/faGripLinesVertical'
-import { faUsers } from '@fortawesome/free-solid-svg-icons/faUsers'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
+import {
+  faGripLinesVertical,
+  faUsers,
+  faWrench,
+} from '@fortawesome/free-solid-svg-icons'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'

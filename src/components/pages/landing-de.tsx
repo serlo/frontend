@@ -26,7 +26,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <HeadTags
         data={{
           title: 'Serlo – Die freie Lernplattform',
-          metaImage: `https://de.${serloDomain}/_assets/img/meta/landing.jpg`,
+          metaImage: `https://de.${serloDomain}/_assets/img/meta/landing.png`,
         }}
       />
       <LandingJsonLd />

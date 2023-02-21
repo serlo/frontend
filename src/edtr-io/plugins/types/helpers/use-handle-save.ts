@@ -28,13 +28,13 @@ export function useHandleSave(
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 
-  // TODO: Can we remove this now?
+  // Currently still needed
   if (
     serialized !== null &&
     serializedRoot?.plugin === 'type-text-exercise-group' &&
     has('cohesive', serialized)
   ) {
-    // legacy server can only handle string attributes
+    // backend can only handle string attributes
     serialized.cohesive = String(serialized.cohesive)
   }
 

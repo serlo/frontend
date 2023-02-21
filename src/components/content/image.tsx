@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
 
-import { Lazy } from './lazy'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { FrontendImgNode } from '@/frontend-node-types'
@@ -18,67 +16,54 @@ interface ImageProps {
 export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   const router = useRouter()
   const { strings } = useInstanceData()
+  const { alt, href, maxWidth, src, caption } = element
 
   const semanticNameSource =
-    element.alt && element.alt.length > 3
-      ? element.alt
-      : router.asPath.split('/').pop()
+    alt && alt.length > 3 ? alt : router.asPath.split('/').pop()
   const semanticName = semanticNameSource?.replace(/[^\w+]/g, '')
-  const src =
+  const semanticSrc =
     semanticName && semanticName.length > 3
-      ? element.src.replace('/image.', `/${semanticName}.`)
-      : element.src
-
-  const wrapInA = (comp: ReactNode) => {
-    if (element.href) {
-      // needs investigation if this could be simplified
-      return (
-        <Link
-          className="w-full block"
-          href={element.href}
-          path={path}
-          noExternalIcon
-        >
-          {comp}
-        </Link>
-      )
-    }
-    return comp
-  }
+      ? src.replace('/image.', `/${semanticName}.`)
+      : src
 
   return (
-    <div
+    <figure
       className="serlo-image-centered"
       itemScope
       itemType="http://schema.org/ImageObject"
     >
-      <div
-        style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
-        className="mx-auto"
-      >
-        {wrapInA(
-          <Lazy>
-            <img
-              className="serlo-img"
-              src={src}
-              alt={element.alt || strings.content.imageAltFallback}
-              itemProp="contentUrl"
-            />
-          </Lazy>
+      <div style={maxWidth ? { maxWidth: maxWidth } : {}} className="mx-auto">
+        {href ? (
+          <Link className="w-full block" href={href} path={path} noExternalIcon>
+            {renderImage()}
+          </Link>
+        ) : (
+          renderImage()
         )}
         {renderCaption()}
         {extraInfo ?? null}
       </div>
-    </div>
+    </figure>
   )
 
-  function renderCaption() {
-    if (!element.caption) return null
-    if (!hasVisibleContent(element.caption)) return null
+  function renderImage() {
     return (
-      <div className="italic mt-3">
-        {renderNested(element.caption, 'caption')}
-      </div>
+      <img
+        className="serlo-img"
+        src={semanticSrc}
+        alt={alt || strings.content.imageAltFallback}
+        itemProp="contentUrl"
+        loading="lazy"
+      />
+    )
+  }
+
+  function renderCaption() {
+    if (!caption || !hasVisibleContent(caption)) return null
+    return (
+      <figcaption className="italic mt-3">
+        {renderNested(caption, 'caption')}
+      </figcaption>
     )
   }
 }

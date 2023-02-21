@@ -1,4 +1,4 @@
-import { faPaypal } from '@fortawesome/free-brands-svg-icons/faPaypal'
+import { faPaypal } from '@fortawesome/free-brands-svg-icons'
 import clsx from 'clsx'
 
 import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'

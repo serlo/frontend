@@ -1,6 +1,8 @@
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
-import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import {
+  faArrowRight,
+  faCopy,
+  faInfoCircle,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 

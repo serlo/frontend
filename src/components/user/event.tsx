@@ -1,5 +1,4 @@
-import { faBellSlash } from '@fortawesome/free-solid-svg-icons/faBellSlash'
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
+import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 
