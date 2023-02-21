@@ -195,7 +195,9 @@ export const instanceData = {
       hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario",
-      commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente."
+      commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente.",
+      edit: 'Edit',
+      abort: 'Abort'
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -956,16 +958,18 @@ export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: "👉 Acceso a tu cuenta Serlo.org",
-      'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
-¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
-  
-Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
-{{ .RecoveryURL }}`,
-      body: `<p>👋 Hola <b>{{ .Identity.traits.username }}</b>,</p>
-<p>¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, por favor, ignora este correo.</p>
- 
-<p>Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Mucha suerte de parte de tu equipo Serlo.org</p>`
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
+
+To reset your password please open the following link in your browser:
+{{ .RecoveryURL }}
+
+Best of luck from your Serlo team`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
+
+<p>To reset your password please open the following link in your browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
     },
     invalid: {
       subject: "👉 Se intentó acceder a la cuenta",
