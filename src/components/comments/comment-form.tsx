@@ -20,6 +20,8 @@ interface CommentFormProps {
   placeholder: string
   reply?: boolean
   threadId?: string
+  content?: string
+  isEditing?: boolean
 }
 
 export function CommentForm({
@@ -27,8 +29,10 @@ export function CommentForm({
   onSend,
   reply,
   threadId,
+  content,
+  isEditing,
 }: CommentFormProps) {
-  const [commentValue, setCommentValue] = useState('')
+  const [commentValue, setCommentValue] = useState(content ?? '')
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
   const textareaRef = useRef<null | HTMLTextAreaElement>(null)
@@ -58,7 +62,7 @@ export function CommentForm({
     <div
       className={clsx(
         'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-        'bg-brandgreen-50',
+        !isEditing && 'bg-brandgreen-50',
         'border-2 border-brandgreen-50 focus-within:border-brandgreen-muted',
         'transition-colors duration-200 ease-in py-1'
       )}

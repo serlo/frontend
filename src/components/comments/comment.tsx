@@ -1,13 +1,17 @@
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Link } from '../content/link'
 import { MathSpanProps } from '../content/math-span'
 import { CommentsData } from './comment-area'
+import { CommentForm } from './comment-form'
 import { MetaBar } from './meta-bar'
+import { useAuth } from '@/auth/use-auth'
+import { useInstanceData } from '@/contexts/instance-context'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
+import { useEditCommentMutation } from '@/mutations/thread'
 
 interface CommentProps {
   threadId: string
@@ -32,6 +36,18 @@ export function Comment({
 }: CommentProps) {
   const commentRef = useRef<HTMLDivElement>(null)
   const { author, createdAt, content, id } = data
+  const { strings } = useInstanceData()
+
+  const [editing, setEditing] = useState(false)
+
+  const editCommentMutation = useEditCommentMutation()
+
+  const auth = useAuth()
+
+  const isOwnEditable =
+    auth.authenticationPayload?.id === author.id &&
+    !data.archived &&
+    !data.trashed
 
   // Step 1: Replace formulas
   const r1 = replaceWithJSX([content], /%%(.+?)%%/g, (str, i) => (
@@ -91,8 +107,40 @@ export function Comment({
         archived={data.archived}
         id={id}
         highlight={highlight}
+        startEditing={
+          isOwnEditable && !editing
+            ? () => {
+                setEditing(true)
+              }
+            : undefined
+        }
+        abortEditing={
+          editing
+            ? () => {
+                setEditing(false)
+              }
+            : undefined
+        }
       />
-      <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
+      {editing ? (
+        <CommentForm
+          placeholder={strings.comments.placeholder}
+          onSend={async (content) => {
+            const result = await editCommentMutation({
+              commentId: id,
+              content,
+            })
+            if (result) {
+              setEditing(false)
+            }
+            return result
+          }}
+          content={content}
+          isEditing
+        />
+      ) : (
+        <p className="serlo-p mb-0 whitespace-pre-line break-words">{r2}</p>
+      )}
     </div>
   )
 }

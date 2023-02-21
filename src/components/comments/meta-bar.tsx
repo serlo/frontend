@@ -8,6 +8,7 @@ import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export interface MetaBarProps {
   user: { username: string; id: number }
@@ -17,6 +18,8 @@ export interface MetaBarProps {
   archived?: boolean
   id: number
   highlight: (id: number) => void
+  startEditing?: () => void
+  abortEditing?: () => void
 }
 
 export function MetaBar({
@@ -27,10 +30,14 @@ export function MetaBar({
   id,
   highlight,
   threadId,
+  startEditing,
+  abortEditing,
 }: MetaBarProps) {
   const [tippyInstance, setTippyInstance] = useState<Instance<Props> | null>(
     null
   )
+
+  const { strings } = useInstanceData()
 
   const date = new Date(timestamp)
 
@@ -47,36 +54,47 @@ export function MetaBar({
         )}
       />
 
-      <Tippy
-        interactive
-        placement="bottom-end"
-        onCreate={(instance) => setTippyInstance(instance)}
-        content={
-          tippyInstance ? (
-            <DropdownMenu
-              isParent={isParent}
-              threadId={threadId}
-              date={date}
-              id={id}
-              archived={archived}
-              highlight={highlight}
-              // eslint-disable-next-line @typescript-eslint/unbound-method
-              onAnyClick={tippyInstance.hide}
-            />
-          ) : (
-            ''
-          )
-        }
-      >
+      {abortEditing ? (
         <button
-          title={date.toLocaleString('de-DE')}
-          className={clsx(
-            'serlo-button font-normal text-brand-500 text-base h-7'
-          )}
+          onClick={abortEditing}
+          // move button a bit down to avoid collision with drop down menu
+          className="text-gray-700 hover:underline -mb-7 inline-block"
         >
-          <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />
+          {strings.comments.abort}
         </button>
-      </Tippy>
+      ) : (
+        <Tippy
+          interactive
+          placement="bottom-end"
+          onCreate={(instance) => setTippyInstance(instance)}
+          content={
+            tippyInstance ? (
+              <DropdownMenu
+                isParent={isParent}
+                threadId={threadId}
+                date={date}
+                id={id}
+                archived={archived}
+                startEditing={startEditing}
+                highlight={highlight}
+                // eslint-disable-next-line @typescript-eslint/unbound-method
+                onAnyClick={tippyInstance.hide}
+              />
+            ) : (
+              ''
+            )
+          }
+        >
+          <button
+            title={date.toLocaleString('de-DE')}
+            className={clsx(
+              'serlo-button font-normal text-brand-500 text-base h-7'
+            )}
+          >
+            <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />
+          </button>
+        </Tippy>
+      )}
     </div>
   )
 }
