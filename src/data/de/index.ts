@@ -195,7 +195,9 @@ export const instanceData = {
       hideReplies: "Einklappen",
       showArchived: "Archivierte %threads% anzeigen",
       copyLink: "Kommentarlink kopieren",
-      commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt."
+      commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt.",
+      edit: "Kommentar bearbeiten",
+      cancelEdit: "Abbrechen"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -766,7 +768,7 @@ export const loggedInData = {
         illegalInjectionFound: "Ungültige Injection gefunden",
         serloEntitySrc: "Serlo Inhalt {{src}}",
         serloId: "Serlo ID",
-        placeholder: 'Serlo ID (e.g. 1565)'
+        placeholder: "Serlo ID (z.B. 1565)"
       },
       box: {
         type: "Art der Box",
@@ -962,7 +964,7 @@ versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du 
 Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}
 
-Viel Erfolg! Dein Serlo Team`,
+Das Serlo-Team wünscht dir viel Erfolg!`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
  

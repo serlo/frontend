@@ -195,7 +195,9 @@ export const instanceData = {
       hideReplies: 'Hide',
       showArchived: "संग्रहीत दिखाएँ %threads%",
       copyLink: "टिप्पणी लिंक कॉपी करें",
-      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.'
+      commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
+      edit: 'Edit comment',
+      cancelEdit: 'Cancel'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
@@ -958,14 +960,14 @@ export const kratosMailStrings = {
       subject: '👉 Access to your Serlo account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
 Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
- 
+
 To reset your password please open the following link in your browser:
 {{ .RecoveryURL }}
 
 Best of luck from your Serlo team`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
- 
+
 <p>To reset your password please open the following link in your browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
     },
