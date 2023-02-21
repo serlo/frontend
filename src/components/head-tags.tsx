@@ -14,31 +14,39 @@ interface HeadTagsProps {
 
 export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
   const { title, contentType, metaDescription, metaImage } = data
-  const { lang } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const router = useRouter()
 
-  const urlSlugArray = Array.isArray(router.query.slug)
-    ? router.query.slug
-    : [router.query.slug]
-  const canonicalHref = `https://${lang}.serlo.org/` + urlSlugArray.join('/')
+  const canonicalHref =
+    `https://${lang}.serlo.org` + router.asPath.split('?')[0]
 
   return (
     <Head>
       <title>{title}</title>
+      <link rel="canonical" href={canonicalHref} />
       {contentType && <meta name="content_type" content={contentType} />}
       {metaDescription && <meta name="description" content={metaDescription} />}
+
+      <meta property="og:site_name" content="serlo.org" />
+      <meta property="og:type" content="website" />
       <meta property="og:title" content={title} />
-      <link rel="canonical" href={canonicalHref} />
+      <meta property="og:url" content={canonicalHref} />
+      <meta
+        property="og:description"
+        content={metaDescription ?? strings.header.slogan}
+      />
       {renderNoIndexMeta()}
       <meta
-        name="image"
         property="og:image"
+        name="image"
         content={
           metaImage
             ? metaImage
             : `https://${lang}.${serloDomain}/_assets/img/meta/serlo.png`
         }
       />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
     </Head>
   )
 

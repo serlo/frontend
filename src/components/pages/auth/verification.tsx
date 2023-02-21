@@ -1,4 +1,4 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import {
   SelfServiceVerificationFlow,
   SelfServiceVerificationFlowState,

@@ -1,5 +1,4 @@
-import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
+import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 

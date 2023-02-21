@@ -1,5 +1,5 @@
-import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Root, List } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
@@ -97,7 +97,7 @@ export function UserTools({
       <List
         className={clsx(
           aboveContent
-            ? 'mr-4 -mt-4 mb-8 flex lg:hidden justify-end'
+            ? 'text-right mobile:text-left mobile:flex mr-4 -mt-4 mb-8 lg:hidden justify-end'
             : 'bg-white rounded-md pointer-events-auto flex-col flex items-start'
         )}
       >

@@ -7,9 +7,7 @@ import {
   hasUndoActions,
   hasPendingChanges,
 } from '@edtr-io/store'
-import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
-import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
-import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo'
+import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'

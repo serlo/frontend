@@ -1,4 +1,4 @@
-import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
+import { faTools } from '@fortawesome/free-solid-svg-icons'
 import {
   Root,
   List,
