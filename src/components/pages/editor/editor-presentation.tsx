@@ -191,10 +191,6 @@ export function EditorPresentation() {
           </div>
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
-            {/* <img
-              src="/_assets/img/jobs/gemeinsam.svg"
-              className="mx-auto max-w-[12rem]"
-            /> */}
             <h2 className={clsx(h2Class, 'mb-8')}>Serlo Editor in your LMS</h2>
 
             <div className="text-left">
@@ -230,13 +226,17 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className={clsx('mt-24 -mb-6 px-4 max-w-[85rem] mx-auto')}>
+        <section
+          className={clsx('partner about-serlo partner px-2 mt-12 !pt-28')}
+        >
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
-          <EditorPartnerList />
-        </section>
+          <div className="max-w-[85rem]">
+            <EditorPartnerList />
+          </div>
+          {/* </section> */}
 
-        <section className={clsx('mt-6 text-center')}>
-          <h2 className={clsx(h2Class, 'mb-8')}>About us</h2>
+          {/* <section className={clsx('mt-20 text-center')}> */}
+          <h2 className={clsx(h2Class, 'mb-8 mt-4')}>About us</h2>
           <div className="text-left mx-auto max-w-4xl">
             <p className="mt-4 text-xl leading-cozy flex-1">
               The Serlo Editor is developed by Serlo Education, a non-profit
@@ -247,7 +247,7 @@ export function EditorPresentation() {
             </p>
           </div>
           <div className="mx-auto px-4 max-w-7xl">
-            <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2>
+            {/* <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2> */}
             <EditorTeam />
             <div className="text-center mt-10 mb-24">
               <a
@@ -258,21 +258,24 @@ export function EditorPresentation() {
               </a>
             </div>
           </div>
+          <footer>
+            <div className="py-8 text-center text-md text-brand pb-[3.5rem] ">
+              <a
+                className="hover:underline"
+                href="/datenschutz"
+                target="_blank"
+              >
+                Datenschutz
+              </a>
+              {' • '}
+              <a className="hover:underline" href="/impressum" target="_blank">
+                Impressum
+              </a>
+            </div>
+          </footer>
         </section>
         {/* <UserTools /> */}
       </div>
-
-      <footer>
-        <div className="bg-white py-8 text-center text-md text-brand mb-[3.5rem] ">
-          <a className="hover:underline" href="/datenschutz" target="_blank">
-            Datenschutz
-          </a>
-          {' • '}
-          <a className="hover:underline" href="/impressum" target="_blank">
-            Impressum
-          </a>
-        </div>
-      </footer>
 
       <style jsx>{`
         :global(main > h1.serlo-h1) {

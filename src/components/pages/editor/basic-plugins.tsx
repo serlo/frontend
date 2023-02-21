@@ -62,10 +62,7 @@ export function BasicPlugins() {
     icon,
   }: typeof commonData[0]) {
     return (
-      <li
-        key={title}
-        className="p-3 m-2 rounded-md shadow-menu hover:bg-brand-50"
-      >
+      <li key={title} className="p-3 m-2 rounded-md shadow-menu">
         <FaIcon icon={icon} className="" /> <b className=" text-xl ">{title}</b>
         <br />
         {description}{' '}

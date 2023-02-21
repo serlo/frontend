@@ -49,8 +49,8 @@ export function EditorRoadmap() {
                     key={title}
                     // className="bg-brand-100 px-2 py-1 rounded-lg inline-block m-1"
                     className={clsx(
-                      'block px-2 py-2 mb-5',
-                      'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
+                      'block px-2 py-1 mb-3 leading-6',
+                      'rounded-xl transition-colors shadow-menu',
                       'text-lg'
                     )}
                   >
