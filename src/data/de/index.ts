@@ -196,8 +196,8 @@ export const instanceData = {
       showArchived: "Archivierte %threads% anzeigen",
       copyLink: "Kommentarlink kopieren",
       commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt.",
-      edit: "Bearbeiten",
-      abort: "Abbrechen"
+      edit: "Kommentar bearbeiten",
+      cancelEdit: "Abbrechen"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -768,7 +768,7 @@ export const loggedInData = {
         illegalInjectionFound: "Ungültige Injection gefunden",
         serloEntitySrc: "Serlo Inhalt {{src}}",
         serloId: "Serlo ID",
-        placeholder: 'Serlo ID (e.g. 1565)'
+        placeholder: "Serlo ID (z.B. 1565)"
       },
       box: {
         type: "Art der Box",
@@ -959,17 +959,17 @@ export const kratosMailStrings = {
     valid: {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
-Are you trying to get access to your account at serlo.org? If not please just ignore this mail.
-
-To reset your password please open the following link in your browser:
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
+ 
+Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}
 
-Best of luck from your Serlo team`,
+Das Serlo-Team wünscht dir viel Erfolg!`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Are you trying to get access to your account at serlo.org? If not please just ignore this mail.</p>
-
-<p>To reset your password please open the following link in your browser:
-<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Best of luck from your Serlo team</p>`
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
+ 
+<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
     },
     invalid: {
       subject: "👉 Zugriff auf Account",
