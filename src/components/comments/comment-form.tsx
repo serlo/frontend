@@ -2,6 +2,7 @@ import {
   faSpinner,
   faReply,
   faArrowRight,
+  faSave,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
@@ -52,10 +53,6 @@ export function CommentForm({
     if (e.code === 'Enter' && e.metaKey) void onSendAction()
   }
 
-  const sendTitle = `${strings.comments.submit}   ${
-    isMac ? '⌘' : strings.keys.ctrl
-  }↵`
-
   const formId = `comment-form${threadId ?? ''}`
 
   return (
@@ -87,6 +84,24 @@ export function CommentForm({
           'placeholder-brandgreen'
         )}
       />
+      {renderButton()}
+    </div>
+  )
+
+  function renderButton() {
+    const sendTitle = `${
+      strings.comments[isEditing ? 'saveEdit' : 'submit']
+    }   ${isMac ? '⌘' : strings.keys.ctrl}↵`
+
+    const icon = isSending
+      ? faSpinner
+      : isEditing
+      ? faSave
+      : reply
+      ? faReply
+      : faArrowRight
+
+    return (
       <button
         title={sendTitle}
         onClick={onSendAction}
@@ -96,13 +111,13 @@ export function CommentForm({
         )}
       >
         <FaIcon
-          icon={isSending ? faSpinner : reply ? faReply : faArrowRight}
+          icon={icon}
           className={clsx(
             reply ? '' : 'pl-0.5',
             isSending && 'animate-spin-slow'
           )}
         />
       </button>
-    </div>
-  )
+    )
+  }
 }
