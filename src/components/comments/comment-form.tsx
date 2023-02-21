@@ -23,6 +23,7 @@ interface CommentFormProps {
   threadId?: string
   content?: string
   isEditing?: boolean
+  cancelEditing?: () => void
 }
 
 export function CommentForm({
@@ -32,6 +33,7 @@ export function CommentForm({
   threadId,
   content,
   isEditing,
+  cancelEditing,
 }: CommentFormProps) {
   const [commentValue, setCommentValue] = useState(content ?? '')
   const { strings } = useInstanceData()
@@ -51,6 +53,7 @@ export function CommentForm({
 
   function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.code === 'Enter' && e.metaKey) void onSendAction()
+    if (e.code === 'Escape' && cancelEditing) void cancelEditing()
   }
 
   const formId = `comment-form${threadId ?? ''}`

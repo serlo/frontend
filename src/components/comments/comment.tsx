@@ -38,7 +38,7 @@ export function Comment({
   const { author, createdAt, content, id } = data
   const { strings } = useInstanceData()
 
-  const [isEditing, setEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   const editCommentMutation = useEditCommentMutation()
 
@@ -111,7 +111,7 @@ export function Comment({
         startEditing={
           isOwnEditable && !isEditing
             ? () => {
-                setEditing(true)
+                setIsEditing(true)
               }
             : undefined
         }
@@ -125,14 +125,15 @@ export function Comment({
                 commentId: id,
                 content,
               })
-              if (result) setEditing(false)
+              if (result) setIsEditing(false)
               return result
             }}
+            cancelEditing={() => setIsEditing(false)}
             content={content}
             isEditing
           />
           <button
-            onClick={() => setEditing(false)}
+            onClick={() => setIsEditing(false)}
             className="block ml-auto mr-6 -mt-6 serlo-button-blue-transparent text-base"
           >
             {strings.comments.cancelEdit}
