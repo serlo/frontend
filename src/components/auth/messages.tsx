@@ -1,5 +1,4 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faInfoCircle, faWarning } from '@fortawesome/free-solid-svg-icons'
 import { UiText } from '@ory/client'
 
 import { StaticInfoPanel } from '../static-info-panel'

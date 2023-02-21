@@ -1,5 +1,4 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import { faXmark } from '@fortawesome/free-solid-svg-icons/faXmark'
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 

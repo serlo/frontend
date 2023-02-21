@@ -1,6 +1,8 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons/faPaperclip'
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import {
+  faCheck,
+  faPaperclip,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
 import clsx from 'clsx'
 

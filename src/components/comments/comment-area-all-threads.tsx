@@ -1,5 +1,4 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
+import { faInfoCircle, faWarning } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'

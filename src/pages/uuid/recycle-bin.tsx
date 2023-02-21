@@ -1,4 +1,4 @@
-import { faTrashRestore } from '@fortawesome/free-solid-svg-icons/faTrashRestore'
+import { faTrashRestore } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 import Head from 'next/head'
 

@@ -1,4 +1,4 @@
-import { faGrinStars } from '@fortawesome/free-solid-svg-icons/faGrinStars'
+import { faGrinStars } from '@fortawesome/free-solid-svg-icons'
 import { useState, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'

@@ -1,5 +1,5 @@
-import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Root, List } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
