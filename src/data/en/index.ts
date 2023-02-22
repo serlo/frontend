@@ -379,7 +379,7 @@ export const instanceData = {
         interest: "I'm here as..."
       },
       interests: {
-        pleaseChoose: 'Please choose one',
+        pleaseChoose: 'please choose',
         parent: 'Parent',
         teacher: 'Teacher',
         pupil: 'Pupil',

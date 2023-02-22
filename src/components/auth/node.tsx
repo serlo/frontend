@@ -139,12 +139,18 @@ export function Node({
         void onChange(e.target.value)
       },
     }
-
     if (attributes.name === 'traits.interest') {
       return (
-        <select {...basicFields}>
-          {/* value="" would be accepted, avoid it if you want to enforce users to fill in this field. */}
-          <option value="nothing">{strings.auth.interests.pleaseChoose}</option>
+        <select
+          {...{
+            ...basicFields,
+            className: basicFields.className + ' [&:invalid]:text-brand-400',
+          }}
+          required
+        >
+          <option value="" disabled selected className="hidden">
+            - {strings.auth.interests.pleaseChoose} -
+          </option>
           <option value="parent">{strings.auth.interests.parent}</option>
           <option value="teacher">{strings.auth.interests.teacher}</option>
           <option value="pupil">{strings.auth.interests.pupil}</option>
