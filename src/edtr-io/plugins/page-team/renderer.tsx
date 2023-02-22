@@ -29,7 +29,7 @@ export const PageTeamRenderer = ({
   return (
     <div
       className={clsx(
-        'mobile: grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14',
+        'mobile:grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14',
         extraCols && 'md:grid-cols-4 lg:grid-cols-5'
       )}
     >
@@ -49,7 +49,7 @@ export const PageTeamRenderer = ({
     const imageSrc = photo ?? getAvatarUrl(user ?? '?')
 
     return (
-      <div key={photo} className="mb-10 text-center">
+      <div key={firstName + lastName} className="mb-10 text-center">
         <img
           className="rounded-full mb-5 max-w-[11rem] mx-auto"
           alt={`${firstName} ${lastName}`}

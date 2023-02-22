@@ -109,6 +109,11 @@ module.exports = {
         underlined: "url('/_assets/img/landing/underlined.svg')",
         'underlined-simple': "url('/_assets/img/landing/simple-underline.svg')",
         wiggle: "url('/_assets/img/landing/wiggle.svg')",
+        orangeBow: "url('/_assets/img/landing/about-container.svg')",
+        blueWave: "url('/_assets/img/landing/footer-container.svg')",
+      },
+      backgroundSize: {
+        '100%': '100% 100%',
       },
       minHeight: {
         8: '32px',

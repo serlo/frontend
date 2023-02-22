@@ -1338,9 +1338,17 @@ export const formulaExample = (
 
 export const injectionExample = (
   <div className="max-h-96 overflow-scroll">
+    <h1 className="serlo-h1 mt-12">Haus der Vierecke</h1>
     <Injection
-      href="/1555"
+      href="/71317"
       renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
     />
+    <style jsx global>
+      {`
+        .serlo-ul {
+          position: relative;
+        }
+      `}
+    </style>
   </div>
 )

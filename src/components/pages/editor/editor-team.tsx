@@ -3,7 +3,7 @@ import {
   TeamDataEntry,
 } from '@/edtr-io/plugins/page-team/renderer'
 
-const teamData: TeamDataEntry[] = [
+export const teamData: TeamDataEntry[] = [
   {
     firstName: 'Sebastian',
     lastName: 'Sapiatz',

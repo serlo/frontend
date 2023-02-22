@@ -111,7 +111,7 @@ export function LandingDE({ data }: LandingDEProps) {
           </h3>
         </section>
 
-        <section className="text-center partner">
+        <section className="text-center bg-blueWave bg-100% pt-4">
           <h3
             className={clsx(
               'text-center text-4xl font-bold',
@@ -229,12 +229,6 @@ export function LandingDE({ data }: LandingDEProps) {
 
         .p-with-wink:before {
           margin-left: -1.5rem;
-        }
-
-        .partner {
-          padding-top: 1rem;
-          background: url('/_assets/img/landing/footer-container.svg') no-repeat;
-          background-size: 100% 100%;
         }
       `}</style>
     </>

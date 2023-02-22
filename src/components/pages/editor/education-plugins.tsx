@@ -13,6 +13,7 @@ import {
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { h2Class } from './editor-presentation'
 import {
   boxExample,
   formulaExample,
@@ -99,9 +100,10 @@ export function EducationPlugins() {
 
   return (
     <div className="text-center">
-      <h3 className="mb-4 mt-16 font-handwritten text-brand text-3xl">
+      {/* <h3 className="mb-4 mt-16 font-handwritten text-brand text-3xl">
         Education Plugins
-      </h3>
+      </h3> */}
+      <h2 className={clsx(h2Class, 'mb-4')}>Content Features</h2>
       <div className="sm:flex">
         {renderPluginsMenu()}
         {renderInfoBox()}

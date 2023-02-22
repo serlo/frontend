@@ -4,7 +4,7 @@ import { BasicPlugins } from './basic-plugins'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
-import { EditorTeam } from './editor-team'
+import { EditorTeam, teamData } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
@@ -12,7 +12,7 @@ import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
 
-const h2Class =
+export const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 // const italicClass = 'text-brand italic font-handwritten text-3xl'
@@ -86,7 +86,7 @@ export function EditorPresentation() {
           className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-5xl')}
         >
           <div className="sm:flex sm:justify-between">
-            <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem]">
+            <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col">
               <h2 className={clsx(h3Class, 'tracking-tight')}>
                 <br />
                 Seamless Creation of Digital Learning Resources
@@ -107,6 +107,7 @@ export function EditorPresentation() {
                 <b className="tracking-tight">open source and free of charge</b>
                 .
               </p>
+              <p className="mt-auto">{renderStayInTouch()}</p>
             </div>
             <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[31rem]">
               <Video src="https://www.youtube.com/watch?v=ugWtuTmiGLM" />
@@ -128,7 +129,9 @@ export function EditorPresentation() {
           </h3>
           
         </section> */}
-        <section className={clsx('partner px-4 mt-12 mb-20 !pt-20 pb-20')}>
+        <section
+          className={clsx('bg-orangeBow bg-100% px-4 mt-12 mb-20 !pt-20 pb-20')}
+        >
           <div className="max-w-7xl mx-auto">
             <EditorFeatures />
           </div>
@@ -156,8 +159,10 @@ export function EditorPresentation() {
           </div> */}
         </section>
 
-        <section className={clsx('partner px-2 mt-0 !pt-20 mb-20')}>
-          <div className="mt-6 pb-12 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
+        <section
+          className={clsx('bg-orangeBow bg-100% px-2 mt-0 !pt-20 mb-20')}
+        >
+          <div className="mt-2 pb-16 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
             <div className="flex-1">
               <b className="text-brand font-handwritten text-4xl">20.000+</b>
               <br />
@@ -188,6 +193,7 @@ export function EditorPresentation() {
               Some features might not yet be reliable.
             </p>
             <EditorRoadmap />
+            <p>{renderStayInTouch()}</p>
           </div>
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
@@ -205,7 +211,7 @@ export function EditorPresentation() {
                 <li>Plugin for the most popular Learning Management Systems</li>
                 <li>As a service</li>
               </ul>
-              <p className="mt-4 text-xl leading-cozy flex-1">
+              <p className="mt-20 text-xl leading-cozy flex-1 text-center">
                 <b className="tracking-tight">
                   Are you interested in implementing the Serlo Editor in your
                   LMS?
@@ -214,23 +220,16 @@ export function EditorPresentation() {
                 Please contact us with your integration requirements or feature
                 requests.
               </p>
-              <div className="text-center mt-10">
-                <a
-                  href=""
-                  className="serlo-new-landing-button inline landing-button-with-wings"
-                >
-                  Get in Touch
-                </a>
-              </div>
+              <div className="text-center mt-8">{renderJosephineContact()}</div>
             </div>
           </div>
         </section>
 
         <section
-          className={clsx('partner about-serlo partner px-2 mt-12 !pt-28')}
+          className={clsx('bg-blueWave bg-100% about-serlo px-2 mt-12 !pt-28')}
         >
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
-          <div className="max-w-[85rem]">
+          <div className="max-w-[85rem] mx-auto">
             <EditorPartnerList />
           </div>
           {/* </section> */}
@@ -246,16 +245,17 @@ export function EditorPresentation() {
               <Link href="/serlo">serlo.org/serlo</Link>.
             </p>
           </div>
-          <div className="mx-auto px-4 max-w-7xl">
+          <div className="mx-auto px-4 max-w-7xl mt-20">
             {/* <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2> */}
             <EditorTeam />
             <div className="text-center mt-10 mb-24">
-              <a
-                href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
-                className="serlo-new-landing-button inline landing-button-with-wings"
-              >
-                Stay updated!
-              </a>
+              <h2 className={clsx(h2Class)}>Connect</h2>
+
+              <p className="mt-4 text-xl leading-cozy flex-1">
+                Leave us you email address and we will reach out to you with
+                updates.
+              </p>
+              <p className="mt-8">{renderStayInTouch(true)}</p>
             </div>
           </div>
           <footer>
@@ -355,17 +355,49 @@ export function EditorPresentation() {
         .p-with-wink:before {
           margin-left: -1.5rem;
         }
-        .partner {
-          padding-top: 1rem;
-          background-image: url('/_assets/img/landing/about-container.svg');
-          background-size: 100% 100%;
-        }
         .about-serlo {
           background-image: url('/_assets/img/landing/footer-container.svg');
+          background-size: 100% 100%;
         }
       `}</style>
     </>
   )
+
+  function renderStayInTouch(final?: boolean) {
+    return (
+      <a
+        href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
+        className={clsx(
+          'serlo-new-landing-button landing-button-with-wings inline-block !mb-8 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors rounded-full',
+          final ? '' : 'bg-brand-200 text-brand hover:text-white'
+        )}
+      >
+        Stay updated!
+      </a>
+    )
+  }
+
+  function renderJosephineContact() {
+    const { firstName, lastName, photo, extraLinkUrl, extraLinkText } =
+      teamData[2]
+
+    return (
+      <div className="text-left flex text-base justify-center">
+        <img
+          className="rounded-full max-w-[6rem] mr-4"
+          alt={`${firstName} ${lastName}`}
+          src={photo}
+        />
+        <div className="h-min self-center -mt-2">
+          <b>
+            {firstName} {lastName}
+          </b>
+          <br />
+          <Link href={extraLinkUrl}>{extraLinkText}</Link>
+        </div>
+      </div>
+    )
+  }
 
   // function renderFeaturedBox(data: FeaturedContentData, index: number) {
   //   return (

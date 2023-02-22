@@ -38,7 +38,7 @@ export function EditorRoadmap() {
     <div className="text-xl text-center sm:flex">
       {roadmapData.map(({ title, steps }, colIndex) => {
         return (
-          <div key={title} className="mb-12 flex-1 px-4">
+          <div key={title} className="flex-1 px-4">
             <h3 className={clsx('mb-4 font-handwritten text-brand text-3xl')}>
               {title}
             </h3>
