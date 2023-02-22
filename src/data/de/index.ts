@@ -197,7 +197,8 @@ export const instanceData = {
       copyLink: "Kommentarlink kopieren",
       commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt.",
       edit: "Kommentar bearbeiten",
-      cancelEdit: "Abbrechen"
+      cancelEdit: "Abbrechen",
+      saveEdit: "Speichern"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",

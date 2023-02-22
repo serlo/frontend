@@ -197,7 +197,8 @@ export const instanceData = {
       copyLink: "टिप्पणी लिंक कॉपी करें",
       commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
       edit: 'Edit comment',
-      cancelEdit: 'Cancel'
+      cancelEdit: 'Cancel',
+      saveEdit: 'Save'
     },
     revisions: {
       toOverview: "अवलोकन पर वापस जाएं",
