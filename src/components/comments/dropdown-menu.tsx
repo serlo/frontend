@@ -2,6 +2,7 @@ import {
   faCheck,
   faPaperclip,
   faTrash,
+  faPencil,
 } from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
 import clsx from 'clsx'
@@ -25,6 +26,7 @@ interface DropdownMenuProps {
   highlight: (id: number) => void
   onAnyClick: () => void
   threadId?: string
+  startEditing?: () => void
 }
 
 export function DropdownMenu({
@@ -35,6 +37,7 @@ export function DropdownMenu({
   highlight,
   onAnyClick,
   threadId,
+  startEditing,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
 
@@ -48,6 +51,11 @@ export function DropdownMenu({
     ? canDo(Thread.setThreadState)
     : canDo(Thread.setCommentState)
   const canArchive = isParent && canDo(Thread.setThreadArchived)
+
+  // we assume that the user who can create a comment can also edit it
+  const canEdit = isParent
+    ? canDo(Thread.createThread)
+    : canDo(Thread.createComment)
 
   const entityId = useEntityId()
 
@@ -64,6 +72,14 @@ export function DropdownMenu({
           <FaIcon icon={faPaperclip} /> {strings.comments.copyLink}
         </>
       )}
+      {canEdit &&
+        startEditing &&
+        buildButton(
+          startEditing,
+          <>
+            <FaIcon icon={faPencil} /> {strings.comments.edit}
+          </>
+        )}
       {canArchive &&
         buildButton(
           onArchiveThread,

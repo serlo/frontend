@@ -3494,6 +3494,13 @@ export type CreateCommentMutationVariables = Exact<{
 
 export type CreateCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', createComment?: { __typename?: 'ThreadCreateCommentResponse', success: boolean } | null } };
 
+export type EditCommentMutationVariables = Exact<{
+  input: ThreadEditCommentInput;
+}>;
+
+
+export type EditCommentMutation = { __typename?: 'Mutation', thread: { __typename?: 'ThreadMutation', editComment?: { __typename?: 'ThreadEditCommentResponse', success: boolean } | null } };
+
 export type AddPageRevisionMutationVariables = Exact<{
   input: PageAddRevisionInput;
 }>;

@@ -1,6 +1,7 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 
 import { Link } from '../link'
 import { LicenseIcons } from './license-icons'
@@ -22,7 +23,13 @@ export function LicenseNotice({
   type,
   path,
 }: LicenseNoticeProps) {
-  const { strings } = useInstanceData()
+  const { lang, strings } = useInstanceData()
+  const router = useRouter()
+  const urlSlugArray = Array.isArray(router.query.slug)
+    ? router.query.slug
+    : [router.query.slug]
+  const canonicalHref = `https://${lang}.serlo.org/` + urlSlugArray.join('/')
+
   const { title, isDefault, url, id, shortTitle } = data
   // only link license
   const titleParts = title.split('CC')
@@ -52,11 +59,31 @@ export function LicenseNotice({
           <a className="serlo-link" href={url} rel="license">
             {licenseName}
           </a>
+          {renderHiddenMeta()}
           {' → '}
           <Link href={`/license/detail/${id}`} path={path}>
             <b>{strings.license.readMore}</b>
           </Link>
         </span>
+      </div>
+    )
+  }
+
+  function renderHiddenMeta() {
+    return (
+      <div className="hidden">
+        <a
+          {...{ 'xmlns:cc': 'http://creativecommons.org/ns#' }}
+          href={canonicalHref}
+          // eslint-disable-next-line react/no-unknown-property
+          property="cc:attributionName"
+          rel="cc:attributionURL"
+        >
+          serlo.org
+        </a>
+        <a rel="license" href={url.split('deed.')[0]}>
+          {licenseName}
+        </a>
       </div>
     )
   }
@@ -101,6 +128,7 @@ export function LicenseNotice({
             </>
           )}
         </Link>
+        {renderHiddenMeta()}
       </>
     )
   }

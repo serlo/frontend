@@ -24,7 +24,6 @@ import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
-import { PageTeamAdapter } from '@/edtr-io/plugins/page-team/frontend'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
 
@@ -48,6 +47,12 @@ const Math = dynamic<MathSpanProps>(() =>
 
 const Code = dynamic<CodeProps>(() =>
   import('../components/content/code').then((mod) => mod.Code)
+)
+
+const PageTeamAdapter = dynamic(() =>
+  import('@/edtr-io/plugins/page-team/frontend').then(
+    (mod) => mod.PageTeamAdapter
+  )
 )
 
 export function renderArticle(

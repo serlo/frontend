@@ -18,6 +18,7 @@ export interface LinkProps {
   unreviewed?: boolean // e.g. user profiles or comments
   tabIndex?: number // menu
   unstyled?: boolean // don't add serlo-link class
+  rel?: string
 }
 
 // note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
@@ -75,6 +76,7 @@ function InternalLink({
   tabIndex,
   unstyled,
   ref,
+  rel,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const router = useRouter()
@@ -132,7 +134,13 @@ function InternalLink({
         href={_href}
         className={unstyled ? className : clsx(className, 'serlo-link')}
         title={title}
-        rel={unreviewed && isExternal ? 'ugc nofollow noreferrer' : undefined}
+        rel={
+          rel
+            ? rel
+            : unreviewed && isExternal
+            ? 'ugc nofollow noreferrer'
+            : undefined
+        }
         target={
           (unreviewed && isExternal) || isContentOnly ? '_blank' : undefined
         }

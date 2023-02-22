@@ -195,7 +195,10 @@ export const instanceData = {
       hideReplies: "Ocultar",
       showArchived: "Mostrar  %threads% archivados",
       copyLink: "Copiar el vínculo del comentario",
-      commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente."
+      commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente.",
+      edit: "Editar comentario",
+      cancelEdit: "Cancelar",
+      saveEdit: 'Save'
     },
     revisions: {
       toOverview: "Volver a Vista general",
