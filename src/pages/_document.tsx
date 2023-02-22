@@ -6,6 +6,7 @@ import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
   fontFamily: 'Karmilla, sans-serif',
+  backgroundColor: '#fff',
 }
 
 // See https://docs.sentry.io/platforms/javascript/install/lazy-load-sentry/
@@ -27,7 +28,7 @@ export default class MyDocument extends Document {
       ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale as Instance)
       : undefined
     return (
-      <Html className="print:serlo-print-style">
+      <Html className="print:serlo-print-style bg-brand-100">
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />

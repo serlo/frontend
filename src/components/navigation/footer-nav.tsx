@@ -19,7 +19,7 @@ interface FooterNavProps {
 
 export function FooterNav({ data }: FooterNavProps) {
   return (
-    <div className="bg-brand-50 pt-2 pb-10">
+    <div className="bg-brand-100 pt-2 pb-10">
       <nav>
         <div className="flex flex-wrap">
           {data.map((category, index) => (

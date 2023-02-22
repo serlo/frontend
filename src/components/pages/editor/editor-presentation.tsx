@@ -64,7 +64,7 @@ export function EditorPresentation() {
       <div
         className={clsx(
           'md:left-[calc(-50vw+50%)] md:relative',
-          'md:text-left md:max-w-[100vw] w-[100vw] md:ml-0',
+          'md:text-left md:ml-0',
           '-mt-12 text-center',
           'text-gray-700'
         )}
@@ -245,10 +245,9 @@ export function EditorPresentation() {
               <Link href="/serlo">serlo.org/serlo</Link>.
             </p>
           </div>
-          <div className="mx-auto px-4 max-w-7xl mt-20">
-            {/* <h2 className={clsx(h2Class, 'mt-16 !-mb-6')}>Team</h2> */}
+          <div className="mx-auto px-4 max-w-7xl">
             <EditorTeam />
-            <div className="text-center mt-10 mb-24">
+            <div className="text-center mb-24">
               <h2 className={clsx(h2Class)}>Connect</h2>
 
               <p className="mt-4 text-xl leading-cozy flex-1">
@@ -358,6 +357,15 @@ export function EditorPresentation() {
         .about-serlo {
           background-image: url('/_assets/img/landing/footer-container.svg');
           background-size: 100% 100%;
+        }
+
+        :global(body) {
+          max-width: 100vw;
+          overflow-x: hidden;
+          background: white;
+        }
+        :global(html) {
+          background-color: #eff7fb;
         }
       `}</style>
     </>
