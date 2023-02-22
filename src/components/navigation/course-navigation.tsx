@@ -1,4 +1,4 @@
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
 

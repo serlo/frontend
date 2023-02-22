@@ -1,4 +1,4 @@
-import { faWarning } from '@fortawesome/free-solid-svg-icons/faWarning'
+import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
