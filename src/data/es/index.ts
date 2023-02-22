@@ -356,7 +356,16 @@ export const instanceData = {
         identifier: "Nombre de usuario o dirección de correo electrónico",
         username: "Nombre de usuario",
         password: "Contraseña",
-        email: "Correo electrónico"
+        email: "Correo electrónico",
+        interest: "I'm here as..."
+      },
+      interests: {
+        pleaseChoose: 'please choose',
+        parent: 'Parent',
+        teacher: 'Teacher',
+        pupil: 'Pupil',
+        student: 'University student',
+        other: 'Other'
       },
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
