@@ -48,7 +48,7 @@ export function BasicPlugins() {
   return (
     <div className="text-center mt-8">
       <h3 className="mb-4 font-handwritten text-brand text-3xl">
-        Common Plugins
+        … and the basics
       </h3>
       <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 text-left">
         {commonData.map(renderCommonCard)}
