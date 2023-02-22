@@ -14,13 +14,13 @@ import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
+import { H5pProps } from '@/components/content/h5p'
 import { Image } from '@/components/content/image'
 import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { SerloTable } from '@/components/content/serlo-table'
-import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
@@ -53,6 +53,10 @@ const PageTeamAdapter = dynamic(() =>
   import('@/edtr-io/plugins/page-team/frontend').then(
     (mod) => mod.PageTeamAdapter
   )
+)
+
+const H5p = dynamic<H5pProps>(() =>
+  import('../components/content/h5p').then((mod) => mod.H5p)
 )
 
 export function renderArticle(
@@ -375,13 +379,6 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.Anchor) {
-    const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
-
-    if (match) {
-      const id = match[1]
-      return <Snack id={parseInt(id)} />
-    }
-
     return (
       <>
         <a id={element.id} />
@@ -457,6 +454,12 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.Code) {
+    const toScan = element.code.trim()
+
+    if (/^https:\/\/app.Lumi.education\/run\/(\w+)$/i.test(toScan)) {
+      return <H5p url={toScan} />
+    }
+
     return (
       <>
         <Code
