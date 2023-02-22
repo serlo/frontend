@@ -51,7 +51,12 @@ export const PageTeamRenderer = ({
 
     return (
       <div key={firstName + lastName} className="mb-10 text-center">
-        <div className="mb-5 max-w-[11rem] mx-auto relative aspect-square">
+        <div
+          className={clsx(
+            'mb-5 mx-auto relative aspect-square',
+            compact ? 'max-w-[8rem]' : 'max-w-[11rem]'
+          )}
+        >
           <Image
             src={imageSrc}
             alt={`${firstName} ${lastName}`}
