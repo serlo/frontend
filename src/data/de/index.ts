@@ -357,15 +357,15 @@ export const instanceData = {
         username: "Benutzername",
         password: "Passwort",
         email: "E-Mail-Adresse",
-        interest: 'Ich bin hier als...'
+        interest: "Ich bin hier als…"
       },
       interests: {
-        pleaseChoose: 'Bitte wähle eines',
-        parent: 'Elternteil',
-        teacher: 'LehrerIn',
-        pupil: 'SchülerIn',
-        student: 'StudentIn',
-        other: 'Sonstige',
+        pleaseChoose: "bitte auswählen",
+        parent: "Elternteil",
+        teacher: "Lehrer*in",
+        pupil: "Schüler*in",
+        student: "Student*in",
+        other: "Sonstige"
       },
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
