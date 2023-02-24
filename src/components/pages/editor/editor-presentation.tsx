@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 
-import { BasicPlugins } from './basic-plugins'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
@@ -141,7 +140,7 @@ export function EditorPresentation() {
           <div className="max-w-7xl mx-auto mb-28">
             {/* <h2 className={clsx(h2Class, 'mt-12 mb-12')}>Feature Overview</h2> */}
             <EducationPlugins />
-            <BasicPlugins />
+            {/* <BasicPlugins /> */}
             {/* {renderFeatureOverview()} */}
           </div>
 
@@ -174,7 +173,7 @@ export function EditorPresentation() {
               Users per month learn with Serlo Editor content
             </div>
             <div className="flex-1">
-              <b className="text-brand font-handwritten text-4xl">123</b>
+              <b className="text-brand font-handwritten text-4xl">500+</b>
               <br />
               Authors so far used Serlo Editor to create open educational
               resources
@@ -185,13 +184,13 @@ export function EditorPresentation() {
         <section id="roadmap" className={clsx('mt-24 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <h2 className={clsx(h2Class, 'mb-4')}>Roadmap</h2>
-            <p className="mt-4 text-xl leading-cozy mb-8">
+            {/* <p className="mt-4 text-xl leading-cozy mb-8">
               The Serlo Editor is in active develpement. <br />
               We are currently beta testing with the authors on the open
               learning platform <Link href="/">serlo.org</Link>.
               <br />
               Some features might not yet be reliable.
-            </p>
+            </p> */}
             <EditorRoadmap />
             <p>{renderStayInTouch()}</p>
           </div>

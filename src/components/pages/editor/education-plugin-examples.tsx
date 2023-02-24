@@ -1337,7 +1337,7 @@ export const formulaExample = (
 )
 
 export const injectionExample = (
-  <div className="max-h-96 overflow-scroll">
+  <>
     <h1 className="serlo-h1 mt-12">Haus der Vierecke</h1>
     <Injection
       href="/71317"
@@ -1350,5 +1350,5 @@ export const injectionExample = (
         }
       `}
     </style>
-  </div>
+  </>
 )
