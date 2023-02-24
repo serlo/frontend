@@ -27,7 +27,7 @@ const features = [
   {
     title: 'Drag and Drop',
     icon: faHandSparkles,
-    description: 'Sort elements with you mouse',
+    description: 'Sort elements with your mouse',
   },
   {
     title: 'Stuctured Content',

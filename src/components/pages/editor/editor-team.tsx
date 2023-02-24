@@ -23,13 +23,13 @@ export const teamData: TeamDataEntry[] = [
       'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
   },
   {
-    firstName: 'Josefine',
-    lastName: 'Theden-Schow',
+    firstName: 'Simon',
+    lastName: 'Köhl',
     position: 'Partnerships',
-    extraLinkUrl: 'mailto:josefine@serlo.org',
-    extraLinkText: 'josefine@serlo.org',
+    extraLinkUrl: 'mailto:simon@serlo.org',
+    extraLinkText: 'simon@serlo.org',
     photo:
-      'https://assets.serlo.org/cea79750-6985-11ed-b282-836733dd2d87/image.jpg',
+      'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
   },
   {
     firstName: 'Vitomir',
@@ -39,15 +39,6 @@ export const teamData: TeamDataEntry[] = [
     extraLinkText: '',
     photo:
       'https://assets.serlo.org/36f5c060-ac80-11ed-9413-878d94834f2e/image.jpg',
-  },
-  {
-    firstName: 'Simon',
-    lastName: 'Köhl',
-    position: 'Partnerships',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
   },
   {
     firstName: 'Stephan',
