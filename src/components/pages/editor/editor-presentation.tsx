@@ -16,38 +16,9 @@ export const h2Class =
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 // const italicClass = 'text-brand italic font-handwritten text-3xl'
 
-// const maxOnMobile = 4
-// const exampleContent: FeaturedContentData[] = [
-//   {
-//     title: 'Das Auge',
-//     type: UuidType.Article,
-//     url: '/biologie/70830/das-auge',
-//     img: 'https://assets.serlo.org/legacy/58edd84b38d59_7374c3b5a6911d6b3fdbbcfad0fa1d9f0a862a5e.jpg',
-//   },
-//   {
-//     title: 'Verdauung des Menschen',
-//     type: UuidType.Article,
-//     url: '/biologie/64745/verdauung-des-menschen',
-//     img: 'https://assets.serlo.org/legacy/580f3ab3a9ffa_d91850964649b000f8250c316108710b949c5ab8.png',
-//   },
-//   {
-//     title: 'Das Endoplasmatische Retikulum',
-//     type: UuidType.Article,
-//     url: '/biologie/133613/das-endoplasmatische-retikulum',
-//     img: 'https://assets.serlo.org/5c97a58091829_5595cf6758a636ee5e8cb24bd457bf2eef8ad7d2.jpg',
-//   },
-//   {
-//     title: 'Der Golgi-Apparat',
-//     type: UuidType.Article,
-//     url: '/biologie/133567/der-golgi-apparat',
-//     img: 'https://assets.serlo.org/5c97665b24dbb_530eab1e397f05fb9a5da9e85a3c42696728f50f.jpg',
-//   },
-// ]
 // TODO: (on jobs page) fix share button, fix overflow
 
 export function EditorPresentation() {
-  // const { strings } = useInstanceData()
-
   return (
     <>
       <HeadTags
@@ -114,20 +85,6 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        {/* <section className="mt-24 pb-16 mb-20 max-w-2xl mx-auto">
-          <h3
-            className={clsx(
-              'text-center text-4xl text-truegray-700 font-bold',
-              'leading-cozy tracking-tight',
-              'mx-auto mb-6',
-              h2Class,
-              'landing-button-with-wings landing-button-with-wink p-with-wink'
-            )}
-          >
-            Discover the Editor
-          </h3>
-          
-        </section> */}
         <section
           className={clsx('bg-orangeBow bg-100% px-4 mt-12 mb-20 !pt-20 pb-20')}
         >
@@ -184,13 +141,6 @@ export function EditorPresentation() {
         <section id="roadmap" className={clsx('mt-24 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <h2 className={clsx(h2Class, 'mb-4')}>Roadmap</h2>
-            {/* <p className="mt-4 text-xl leading-cozy mb-8">
-              The Serlo Editor is in active develpement. <br />
-              We are currently beta testing with the authors on the open
-              learning platform <Link href="/">serlo.org</Link>.
-              <br />
-              Some features might not yet be reliable.
-            </p> */}
             <EditorRoadmap />
             <p>{renderStayInTouch()}</p>
           </div>
@@ -231,9 +181,7 @@ export function EditorPresentation() {
           <div className="max-w-[85rem] mx-auto">
             <EditorPartnerList />
           </div>
-          {/* </section> */}
 
-          {/* <section className={clsx('mt-20 text-center')}> */}
           <h2 className={clsx(h2Class, 'mb-8 mt-4')}>About us</h2>
           <div className="text-left mx-auto max-w-4xl">
             <p className="mt-4 text-xl leading-cozy flex-1">
@@ -405,48 +353,4 @@ export function EditorPresentation() {
       </div>
     )
   }
-
-  // function renderFeaturedBox(data: FeaturedContentData, index: number) {
-  //   return (
-  //     <Link
-  //       className={clsx(
-  //         'text-brand hover:no-underline box-border',
-  //         'p-2.5 leading-cozy',
-  //         'rounded hover:shadow-menu hover:text-truegray-700',
-  //         'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
-  //         'relative',
-  //         index >= maxOnMobile ? 'hidden mobile:block' : ''
-  //       )}
-  //       href={data.url}
-  //       key={data.title}
-  //       path={[]}
-  //     >
-  //       <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
-  //         {data.img ? (
-  //           <img
-  //             className={clsx(
-  //               'object-contain object-center',
-  //               'mix-blend-multiply opacity-80 transition-all',
-  //               'group-hover:opacity-100',
-  //               'aspect-square rounded-lg'
-  //             )}
-  //             alt={data.title}
-  //             src={data.img}
-  //           />
-  //         ) : null}
-  //       </div>
-  //       <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
-  //         {data.title}
-  //       </h4>
-  //       <span className="block mt-1 font-sm text-brand-400 absolute bottom-2">
-  //         {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
-  //       </span>
-  //     </Link>
-  //   )
-  // }
-
-  // function renderTypeIcon(type: UuidType | TaxonomyTermType) {
-  //   const icon = getIconByTypename(type)
-  //   return <FaIcon icon={icon} />
-  // }
 }

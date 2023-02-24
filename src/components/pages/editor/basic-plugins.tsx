@@ -40,8 +40,6 @@ const commonData = [
     icon: faCaretSquareDown,
     description: 'Now you see it, now you don’t',
   },
-  // { title: 'Anchor', icon: faAnchor, description: '123' },
-  // { title: 'Highlighting Box', icon: faIcons, description: '123' },
 ]
 
 export function BasicPlugins() {
