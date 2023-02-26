@@ -82,16 +82,13 @@ export function UserTools({
 
   return (
     <Root
-      className={
+      className={clsx(
+        'serlo-user-tools',
         aboveContent
-          ? fadeIn
-          : clsx(
-              'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
-              'lg:flex hidden items-end pointer-events-none',
-              '[&>div]:!sticky [&>div]:bottom-8',
-              fadeIn
-            )
-      }
+          ? ''
+          : 'absolute z-50 right-8 bottom-8 h-full lg:flex hidden items-end pointer-events-none [&>div]:!sticky [&>div]:bottom-8',
+        fadeIn
+      )}
       aria-label="Tool Menu"
     >
       <List
