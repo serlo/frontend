@@ -139,8 +139,9 @@ export function Node({
     }
 
     if (attributes.name === 'traits.interest') {
+      const optionClass = 'text-brand font-serlo bg-white'
       return (
-        <div className="after:content-['▾'] after:absolute after:-ml-9 after:mt-2.5 after:text-brand after:text-2xl border-solid">
+        <div className="after:content-['▾'] after:absolute after:-ml-9 after:mt-2.5 after:text-brand after:text-2xl border-solid ">
           <select
             {...{
               ...basicFields,
@@ -150,14 +151,29 @@ export function Node({
             }}
             required
           >
-            <option value="" disabled selected className="hidden">
+            <option
+              value=""
+              disabled
+              selected
+              className={clsx('hidden', optionClass)}
+            >
               - {strings.auth.interests.pleaseChoose} -
             </option>
-            <option value="parent">{strings.auth.interests.parent}</option>
-            <option value="teacher">{strings.auth.interests.teacher}</option>
-            <option value="pupil">{strings.auth.interests.pupil}</option>
-            <option value="student">{strings.auth.interests.student}</option>
-            <option value="other">{strings.auth.interests.other}</option>
+            <option value="parent" className={optionClass}>
+              {strings.auth.interests.parent}
+            </option>
+            <option value="teacher" className={optionClass}>
+              {strings.auth.interests.teacher}
+            </option>
+            <option value="pupil" className={optionClass}>
+              {strings.auth.interests.pupil}
+            </option>
+            <option value="student" className={optionClass}>
+              {strings.auth.interests.student}
+            </option>
+            <option value="other" className={optionClass}>
+              {strings.auth.interests.other}
+            </option>
           </select>
         </div>
       )
