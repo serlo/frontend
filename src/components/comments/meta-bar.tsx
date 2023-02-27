@@ -1,4 +1,7 @@
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
+import {
+  faEllipsis,
+  faEllipsisVertical,
+} from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState } from 'react'
@@ -50,42 +53,42 @@ export function MetaBar({
           'hover:text-brand hover:bg-brand-200'
         )}
       />
-      <div>
-        <span className={clsx('text-brand-500 text-base h-7')}>
-          <TimeAgo datetime={date} />
-        </span>
-        {isEditing ? null : (
-          <Tippy
-            interactive
-            placement="bottom-end"
-            onCreate={(instance) => setTippyInstance(instance)}
-            content={
-              tippyInstance ? (
-                <DropdownMenu
-                  isParent={isParent}
-                  threadId={threadId}
-                  date={date}
-                  id={id}
-                  archived={archived}
-                  startEditing={startEditing}
-                  highlight={highlight}
-                  // eslint-disable-next-line @typescript-eslint/unbound-method
-                  onAnyClick={tippyInstance.hide}
-                />
-              ) : (
-                ''
-              )
-            }
-          >
+      {isEditing ? null : (
+        <Tippy
+          interactive
+          placement="bottom-end"
+          onCreate={(instance) => setTippyInstance(instance)}
+          content={
+            tippyInstance ? (
+              <DropdownMenu
+                isParent={isParent}
+                threadId={threadId}
+                date={date}
+                id={id}
+                archived={archived}
+                startEditing={startEditing}
+                highlight={highlight}
+                // eslint-disable-next-line @typescript-eslint/unbound-method
+                onAnyClick={tippyInstance.hide}
+              />
+            ) : (
+              ''
+            )
+          }
+        >
+          <div className="cursor-pointer">
+            <span className={clsx('text-brand-500 text-base')}>
+              <TimeAgo datetime={date} />
+            </span>
             <button
-              className="serlo-button-blue-transparent w-7 h-7 ml-1"
+              className="serlo-button text-brand bg-brand-50 w-7 h-7 ml-1 pr-2 "
               aria-label="Tool Menu"
             >
               <FaIcon icon={faEllipsisVertical} />
             </button>
-          </Tippy>
-        )}
-      </div>
+          </div>
+        </Tippy>
+      )}
     </div>
   )
 }
