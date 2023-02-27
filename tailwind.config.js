@@ -111,6 +111,7 @@ module.exports = {
         wiggle: "url('/_assets/img/landing/wiggle.svg')",
         orangeBow: "url('/_assets/img/landing/about-container.svg')",
         blueWave: "url('/_assets/img/landing/footer-container.svg')",
+        topWaveFromWhite: "url('/_assets/img/landing/top-wave.svg')",
       },
       backgroundSize: {
         '100%': '100% 100%',

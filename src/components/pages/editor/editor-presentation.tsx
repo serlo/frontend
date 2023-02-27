@@ -27,7 +27,7 @@ export function EditorPresentation() {
             'Serlo Editor: Seamless Creation of Digital Learning Resources',
         }}
       />
-      <header className="px-side lg:px-side-lg pt-6 text-center sm:text-left">
+      <header className="px-side lg:px-side-lg pt-6">
         <Logo />
       </header>
 
@@ -35,20 +35,22 @@ export function EditorPresentation() {
         className={clsx(
           'md:left-[calc(-50vw+50%)] md:relative',
           'md:text-left md:ml-0',
-          '-mt-12 text-center',
+          '-mt-12 sm:text-center',
           'text-gray-700'
         )}
       >
         <section className={clsx('font-bold text-center mt-32 px-4')}>
           <h1
             className={clsx(
-              'text-5xl font-extrabold text-center',
+              'text-5xl font-extrabold',
               'tracking-tight leading-tight',
-              'mt-3 mx-auto relative'
+              'mt-3 mx-auto'
             )}
           >
             <span className="underlined !pr-0 pb-2">Serlo Editor</span>
-            <sup className="text-brand text-base ml-2 mt-3 absolute">beta</sup>
+            <sup className="text-brand text-base ml-2 -top-6 inline-block relative">
+              beta
+            </sup>
           </h1>
         </section>
 
@@ -56,7 +58,7 @@ export function EditorPresentation() {
           className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-5xl')}
         >
           <div className="sm:flex sm:justify-between">
-            <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col">
+            <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col pr-2">
               <h2 className={clsx(h3Class, 'tracking-tight')}>
                 <br />
                 Seamless Creation of Digital Learning Resources
@@ -77,9 +79,11 @@ export function EditorPresentation() {
                 <b className="tracking-tight">open source and free of charge</b>
                 .
               </p>
-              <p className="mt-auto">{renderStayInTouch()}</p>
+              <p className="text-center mt-8 md:text-left">
+                {renderStayInTouch()}
+              </p>
             </div>
-            <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[31rem]">
+            <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[32rem] pl-2">
               <Video src="https://www.youtube.com/watch?v=ugWtuTmiGLM" />
             </div>
           </div>
@@ -116,20 +120,20 @@ export function EditorPresentation() {
         </section>
 
         <section
-          className={clsx('bg-orangeBow bg-100% px-2 mt-0 !pt-20 mb-20')}
+          className={clsx('bg-orangeBow bg-100% px-2 mt-0 !pt-16 mb-20')}
         >
           <div className="mt-2 pb-16 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
-            <div className="flex-1">
+            <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">20.000+</b>
               <br />
               Learning resources have been created with the Serlo Editor
             </div>
-            <div className="flex-1">
+            <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
               <br />
               Users per month learn with Serlo Editor content
             </div>
-            <div className="flex-1">
+            <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">500+</b>
               <br />
               Authors so far used Serlo Editor to create open educational
@@ -142,13 +146,13 @@ export function EditorPresentation() {
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <h2 className={clsx(h2Class, 'mb-4')}>Roadmap</h2>
             <EditorRoadmap />
-            <p>{renderStayInTouch()}</p>
+            <p className="mt-12 sm:mt-0">{renderStayInTouch()}</p>
           </div>
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <h2 className={clsx(h2Class, 'mb-8')}>Serlo Editor in your LMS</h2>
 
-            <div className="text-left">
+            <div className="text-left mx-side">
               <p className="mt-4 text-xl leading-cozy flex-1">
                 The Serlo Editor is free of charge and open source. We are going
                 to offer several integration options to support its use in your
@@ -175,7 +179,9 @@ export function EditorPresentation() {
         </section>
 
         <section
-          className={clsx('bg-blueWave bg-100% about-serlo px-2 mt-12 !pt-28')}
+          className={clsx(
+            'bg-brand-100 bg-topWaveFromWhite bg-no-repeat bg-contain bg-top bg-size sm:bg-[length:100%_3vw] px-2 mt-8 pt-20 md:pt-28'
+          )}
         >
           <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
           <div className="max-w-[85rem] mx-auto">
@@ -183,7 +189,7 @@ export function EditorPresentation() {
           </div>
 
           <h2 className={clsx(h2Class, 'mb-8 mt-4')}>About us</h2>
-          <div className="text-left mx-auto max-w-4xl">
+          <div className="text-left mx-side sm:mx-auto max-w-4xl">
             <p className="mt-4 text-xl leading-cozy flex-1">
               The Serlo Editor is developed by Serlo Education, a non-profit
               organization dedicated to providing high quality, free of charge
@@ -194,7 +200,7 @@ export function EditorPresentation() {
           </div>
           <div className="mx-auto px-4 max-w-7xl">
             <EditorTeam />
-            <div className="text-center mb-24">
+            <div className="text-center mb-24 sm:-mt-8">
               <h2 className={clsx(h2Class)}>Connect</h2>
 
               <p className="mt-4 text-xl leading-cozy flex-1">
@@ -301,11 +307,6 @@ export function EditorPresentation() {
         .p-with-wink:before {
           margin-left: -1.5rem;
         }
-        .about-serlo {
-          background-image: url('/_assets/img/landing/footer-container.svg');
-          background-size: 100% 100%;
-        }
-
         :global(body) {
           max-width: 100vw;
           overflow-x: hidden;

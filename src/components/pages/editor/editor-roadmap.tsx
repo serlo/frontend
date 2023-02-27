@@ -38,7 +38,7 @@ export function EditorRoadmap() {
     <div className="text-xl text-center sm:flex">
       {roadmapData.map(({ title, steps }, colIndex) => {
         return (
-          <div key={title} className="flex-1 px-4">
+          <div key={title} className="flex-1 px-4 mt-8">
             <h3 className={clsx('mb-4 font-handwritten text-brand text-3xl')}>
               {title}
             </h3>
@@ -49,7 +49,8 @@ export function EditorRoadmap() {
                     key={title}
                     // className="bg-brand-100 px-2 py-1 rounded-lg inline-block m-1"
                     className={clsx(
-                      'block px-2 py-1 mb-3 leading-6',
+                      'block w-fit mx-auto px-2 py-1 mb-3 leading-6',
+                      'sm:w-auto sm:mx-0',
                       'rounded-xl transition-colors shadow-menu',
                       'text-lg'
                     )}
@@ -62,7 +63,7 @@ export function EditorRoadmap() {
             {colIndex === 0 ? (
               <img
                 src="/_assets/img/jobs/impact.svg"
-                className="my-5 mx-3 opacity-75"
+                className="hidden sm:block my-5 mx-3 opacity-75"
               />
             ) : null}
           </div>
