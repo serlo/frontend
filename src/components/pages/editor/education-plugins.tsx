@@ -194,7 +194,7 @@ export function EducationPlugins() {
 
     return (
       <div className="flex-1 m-3 mt-1 mb-[3.2rem] text-left">
-        <div className="shadow-menu w-full p-8 overflow-y-scroll h-[35rem]">
+        <div className="shadow-menu w-full p-8 overflow-y-scroll md:h-[35rem]">
           <EntityIdProvider value={1555}>
             <p className="text-xl mb-6">{description}</p>
             <div className="border-b-2 border-brand-100 font-bold mb-6">
