@@ -94,7 +94,7 @@ export function UserTools({
       <List
         className={clsx(
           aboveContent
-            ? 'text-right mobile:text-left mobile:flex mr-4 -mt-4 mb-8 lg:hidden justify-end'
+            ? 'text-right sm:text-left mobile:flex mr-4 mt-4 sm:-mt-6 mb-8 lg:hidden justify-end'
             : 'bg-white rounded-md pointer-events-auto flex-col flex items-start'
         )}
       >
