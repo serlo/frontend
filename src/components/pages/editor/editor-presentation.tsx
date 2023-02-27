@@ -169,7 +169,7 @@ export function EditorPresentation() {
                 Please contact us with your integration requirements or feature
                 requests.
               </p>
-              <div className="text-center mt-8">{renderJosephineContact()}</div>
+              <div className="text-center mt-8">{renderContact()}</div>
             </div>
           </div>
         </section>
@@ -332,9 +332,9 @@ export function EditorPresentation() {
     )
   }
 
-  function renderJosephineContact() {
+  function renderContact() {
     const { firstName, lastName, photo, extraLinkUrl, extraLinkText } =
-      teamData[2]
+      teamData[3]
 
     return (
       <div className="text-left flex text-base justify-center">

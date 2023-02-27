@@ -281,7 +281,6 @@ export function EducationPlugins() {
           }}
           className={clsx(
             'whitespace-nowrap px-2 py-1 m-1 rounded-md',
-            'sm:min-w-[7rem] sm:text-right',
             'shadow-menu hover:bg-brand-50',
             selectedTitle === title ? 'bg-brand-100' : ''
           )}
