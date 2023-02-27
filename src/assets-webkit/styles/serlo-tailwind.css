@@ -260,6 +260,19 @@
   }
 
   .serlo-editor-hacks {
+    *[contenteditable]::before {
+      content: 'Toolbar';
+      height: 2.4rem;
+      margin-top: -3.2rem;
+      background-color: #fff0dc;
+      @apply w-full absolute p-2 shadow-menu rounded-t-md z-50;
+    }
+    *[contenteditable]::after {
+      content: ' ';
+      height: 0.2rem;
+      background-color: #fff0dc;
+      @apply w-full absolute mt-2 z-50;
+    }
     h1 {
       @apply mx-side mb-9 mt-4 p-0 font-bold text-3.5xl special-hyphens-auto;
     }
