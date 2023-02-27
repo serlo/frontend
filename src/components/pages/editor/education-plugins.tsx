@@ -164,7 +164,7 @@ const pluginData = [
 export function EducationPlugins() {
   const [selectedTitle, setSelectedTitle] = useState(pluginData[4].title)
   const [selectedCategory, setSelectedCategory] = useState<
-    typeof categories[number]
+    typeof categories[number] | undefined
   >(categories[2])
 
   const categoryRefs = [
@@ -230,17 +230,26 @@ export function EducationPlugins() {
           )
           const categoryRef = categoryRefs[categoryIndex]
           if (!categoryRef) return null
+
           const isSelected = selectedCategory === thisCategory
 
           return (
             <div key={thisCategory} className="mb-4">
               <button
                 className="text-brand font-bold cursor-pointer capitalize mr-1 rounded-full hover:bg-brand-100 px-2"
-                onClick={() => {
-                  setSelectedCategory(thisCategory)
-                }}
+                onClick={() =>
+                  setSelectedCategory(isSelected ? undefined : thisCategory)
+                }
               >
-                {thisCategory} ▾
+                {thisCategory}{' '}
+                <span
+                  className={clsx(
+                    'inline-block transition-transform duration-300',
+                    isSelected && 'rotate-180 translate-y-[1px]'
+                  )}
+                >
+                  ▾
+                </span>
               </button>
               <nav
                 className={clsx(
