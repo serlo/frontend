@@ -63,7 +63,7 @@ export function DropdownMenu({
     <div
       className={clsx(
         'text-right bg-brand-50 py-3 pr-4 pl-2.5',
-        'shadow max-w-65 rounded-lg'
+        'shadow max-w-65 rounded-lg -mt-4'
       )}
     >
       {buildButton(

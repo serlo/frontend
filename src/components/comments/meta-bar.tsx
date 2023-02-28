@@ -1,4 +1,4 @@
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
+import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 import { useState } from 'react'
@@ -39,7 +39,7 @@ export function MetaBar({
   const date = new Date(timestamp)
 
   return (
-    <div className={clsx('mx-side mb-2 flex justify-between')}>
+    <div className="mx-side mb-2 flex justify-between">
       <UserLink
         user={user}
         withIcon
@@ -73,14 +73,17 @@ export function MetaBar({
             )
           }
         >
-          <button
-            title={date.toLocaleString('de-DE')}
-            className={clsx(
-              'serlo-button font-normal text-brand-500 text-base h-7'
-            )}
-          >
-            <TimeAgo datetime={date} /> <FaIcon icon={faCaretDown} />
-          </button>
+          <div className="cursor-pointer">
+            <span className={clsx('text-brand-500 text-base')}>
+              <TimeAgo datetime={date} />
+            </span>
+            <button
+              className="serlo-button text-brand bg-brand-50 w-7 h-7 ml-1 pr-2 "
+              aria-label="Tool Menu"
+            >
+              <FaIcon icon={faEllipsisVertical} />
+            </button>
+          </div>
         </Tippy>
       )}
     </div>
