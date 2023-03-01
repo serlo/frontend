@@ -15,7 +15,6 @@ const KRATOS_HOST =
     process.env.NEXT_PUBLIC_ENV ? process.env.NEXT_PUBLIC_ENV : 'staging'
   ]
 
-// TODO: this should probably be handled in CF Worker instead since it changes independent of Frontend.
 export default createApiHandler({
   apiBaseUrlOverride: KRATOS_HOST,
   forceCookieSecure: true,
