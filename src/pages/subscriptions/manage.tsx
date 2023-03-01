@@ -159,28 +159,16 @@ export const subscriptionsQuery = gql`
               name
             }
             ... on Exercise {
-              taxonomyTerms {
-                nodes {
-                  navigation {
-                    path {
-                      nodes {
-                        label
-                      }
-                    }
-                  }
+              subject {
+                taxonomyTerm {
+                  name
                 }
               }
             }
             ... on ExerciseGroup {
-              taxonomyTerms {
-                nodes {
-                  navigation {
-                    path {
-                      nodes {
-                        label
-                      }
-                    }
-                  }
+              subject {
+                taxonomyTerm {
+                  name
                 }
               }
             }

@@ -50,9 +50,7 @@ export function getRawTitle(
     uuid.__typename === UuidType.Exercise ||
     uuid.__typename === UuidType.ExerciseGroup
   ) {
-    // won't fix right now, but see if we can use the subject field from API
-    const subject =
-      uuid.taxonomyTerms.nodes?.[0]?.navigation?.path.nodes[0].label
+    const subject = uuid.subject?.taxonomyTerm.name
     const typenameString = getTranslatedType(strings, uuid.__typename)
     if (!subject) return typenameString
     return subject + ' ' + typenameString
