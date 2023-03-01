@@ -105,6 +105,11 @@ export const dataQuery = gql`
       }
 
       ... on Exercise {
+        subject {
+          taxonomyTerm {
+            name
+          }
+        }
         ...exercise
         revisions(unrevised: true) {
           totalCount
@@ -122,6 +127,11 @@ export const dataQuery = gql`
       }
 
       ... on ExerciseGroup {
+        subject {
+          taxonomyTerm {
+            name
+          }
+        }
         date
         currentRevision {
           ...exerciseGroupRevision

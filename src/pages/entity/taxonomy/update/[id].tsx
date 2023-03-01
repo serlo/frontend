@@ -2,7 +2,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import request, { gql } from 'graphql-request'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
@@ -13,12 +13,14 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs'
 import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidType, UuidWithRevType } from '@/data-types'
+import { BreadcrumbsData, UuidType, UuidWithRevType } from '@/data-types'
+import { taxonomyParentsToRootToBreadcrumbsData } from '@/fetcher/create-breadcrumbs'
 import {
   TaxonomyTermType,
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
 } from '@/fetcher/graphql-types/operations'
+import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -29,10 +31,7 @@ import {
 
 interface UpdateTaxonomyLinksProps {
   id: number
-  taxonomyTerms: Extract<
-    GetUuidPathsQuery['uuid'],
-    { taxonomyTerms: any }
-  >['taxonomyTerms']['nodes']
+  terms: { id: number; name: string; alias: string; path: BreadcrumbsData }[]
 }
 
 export default renderedPageNoHooks<UpdateTaxonomyLinksProps>((props) => {
@@ -43,7 +42,7 @@ export default renderedPageNoHooks<UpdateTaxonomyLinksProps>((props) => {
   )
 })
 
-function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
+function Content({ id, terms }: UpdateTaxonomyLinksProps) {
   const createEntityLink = useCreateEntityLinkMutation()
   const deleteEntityLink = useDeleteEntityLinkMutation()
   const router = useRouter()
@@ -79,19 +78,18 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
       {renderBackButton()}
       <PageTitle title={loggedInData.strings.authorMenu.editAssignments} />
       <div className="mx-side border-t-2">
-        {taxonomyTerms.map(renderTerm)}
+        {terms.map(renderTerm)}
         <h2 className="mt-12 mb-3 font-bold">{loggedInStrings.addNewTitle}</h2>
         {renderInput()}
       </div>
     </>
   )
 
-  function renderTerm(term: UpdateTaxonomyLinksProps['taxonomyTerms'][number]) {
-    const nodes = term.navigation?.path.nodes
-    if (!nodes || removedTaxIds.includes(term.id)) return null
+  function renderTerm(term: UpdateTaxonomyLinksProps['terms'][number]) {
+    if (!term.path || removedTaxIds.includes(term.id)) return null
 
     return (
-      <div className="py-3 border-b-2 flex">
+      <div className="py-3 border-b-2 flex" key={term.alias}>
         <button
           onClick={() => onDelete(term.id)}
           className="serlo-button-blue-transparent mr-2 text-brand-400"
@@ -99,11 +97,11 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
           <FaIcon icon={faTrashAlt} />
         </button>
         <div>
-          {nodes.slice(0, -1).map((crumb) => (
-            <>
+          {term.path.slice(0, -1).map((crumb) => (
+            <Fragment key={crumb.id}>
               {crumb.label}
               {' > '}
-            </>
+            </Fragment>
           ))}
           <a
             className="text-brand font-bold"
@@ -133,7 +131,7 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
   }
 
   function renderInput() {
-    const existingIds = taxonomyTerms
+    const existingIds = terms
       .map((term) => term.id)
       .filter((id) => !removedTaxIds.includes(id))
 
@@ -189,7 +187,15 @@ export const getStaticProps: GetStaticProps<UpdateTaxonomyLinksProps> = async (
   return {
     props: {
       id,
-      taxonomyTerms: result.uuid?.taxonomyTerms.nodes,
+      terms: result.uuid?.taxonomyTerms.nodes.map((node) => {
+        return {
+          id: node.id,
+          name: node.name,
+          alias: node.alias,
+          path:
+            taxonomyParentsToRootToBreadcrumbsData(node, node.instance) ?? [],
+        }
+      }),
     },
     revalidate: 60 * 1, // 1 min,
   }
@@ -211,16 +217,12 @@ export const getUuidPathsQuery = gql`
             name
             alias
             id
-            navigation {
-              path {
-                nodes {
-                  label
-                }
-              }
-            }
+            instance
+            ...pathToRoot
           }
         }
       }
     }
   }
+  ${sharedTaxonomyParents}
 `
