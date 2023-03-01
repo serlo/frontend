@@ -50,7 +50,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       ? false
       : window.location.href.includes('#comment-')
   )
-  const [randomId] = useState(Math.random().toString())
 
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
@@ -188,8 +187,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           <ScMcExercise
             state={state.interactive.state}
             idBase={`ex-${
-              node.positionOnPage ? node.positionOnPage : randomId
-            }-${node.positionInGroup ? node.positionInGroup : ''}-`}
+              node.positionOnPage ? node.positionOnPage : node.context.id
+            }-${
+              node.positionInGroup ? node.positionInGroup : path?.join('') ?? ''
+            }-`}
             renderNested={renderNested}
             path={path}
             isRevisionView={isRevisionView}
