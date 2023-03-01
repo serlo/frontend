@@ -253,7 +253,17 @@ function renderElement({
     return <p className="serlo-p mb-0 slate-p min-h-[1.33em]">{children}</p>
   }
   if (element.type === FrontendNodeType.SlateContainer) {
-    return <div className="mb-block slate-container">{children}</div>
+    // formulas can overflow the slate container.
+    // the y-overflow is caused by super high elements like integrals
+    // we already add enoough safety-margins, so nothing should be clipped
+    // tested with http://localhost:3000/mathe/1595/das-integral
+    // we can't use overflow-y-visible and overflow-x-auto at the same time, visible defaults to auto
+    // to hide the scrollbars, hidden is necessary
+    return (
+      <div className="mb-block slate-container max-w-full overflow-x-auto overflow-y-hidden">
+        {children}
+      </div>
+    )
   }
   if (element.type === FrontendNodeType.H) {
     const classNames = {
