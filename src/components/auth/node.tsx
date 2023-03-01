@@ -150,13 +150,9 @@ export function Node({
                 ` [&:invalid]:text-brand-400 appearance-none`,
             }}
             required
+            defaultValue=""
           >
-            <option
-              value=""
-              disabled
-              selected
-              className={clsx('hidden', optionClass)}
-            >
+            <option value="" disabled className={clsx('hidden', optionClass)}>
               - {strings.auth.interests.pleaseChoose} -
             </option>
             <option value="parent" className={optionClass}>
