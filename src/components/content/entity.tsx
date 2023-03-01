@@ -54,7 +54,7 @@ export function Entity({ data }: EntityProps) {
       {renderNotices()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/4">
+      <div className="min-h-1/4" key={data.id}>
         {data.content && renderContent(data.content)}
       </div>
       {renderCourseFooter()}
