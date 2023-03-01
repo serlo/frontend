@@ -31,7 +31,7 @@ export function LightBox({ open, onClose, label, src, alt }: LightBoxProps) {
           alt={alt ?? pictureString}
           className="my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]"
         />
-        <p className="pointer-events-auto">{label}</p>
+        <div className="pointer-events-auto">{label}</div>
       </Modal>
     </>
   )
