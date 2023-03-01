@@ -14,11 +14,13 @@ import { PleaseLogIn } from '@/components/user/please-log-in'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
+import { taxonomyParentsToRootToBreadcrumbsData } from '@/fetcher/create-breadcrumbs'
 import {
   TaxonomyTermType,
   GetUuidPathsQuery,
   GetUuidPathsQueryVariables,
 } from '@/fetcher/graphql-types/operations'
+import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -87,7 +89,8 @@ function Content({ id, taxonomyTerms }: UpdateTaxonomyLinksProps) {
   )
 
   function renderTerm(term: UpdateTaxonomyLinksProps['taxonomyTerms'][number]) {
-    const nodes = term.navigation?.path.nodes
+    // TODO: test this change
+    const nodes = taxonomyParentsToRootToBreadcrumbsData(term, term.instance)
     if (!nodes || removedTaxIds.includes(term.id)) return null
 
     return (
@@ -211,16 +214,12 @@ export const getUuidPathsQuery = gql`
             name
             alias
             id
-            navigation {
-              path {
-                nodes {
-                  label
-                }
-              }
-            }
+            instance
+            ...pathToRoot
           }
         }
       }
     }
   }
+  ${sharedTaxonomyParents}
 `
