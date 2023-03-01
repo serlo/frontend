@@ -141,7 +141,7 @@ export function Node({
     if (attributes.name === 'traits.interest') {
       const optionClass = 'text-brand font-serlo bg-white p-1'
       return (
-        <div className="after:content-['▾'] after:absolute after:-ml-9 after:mt-2.5 after:text-brand after:text-2xl border-solid ">
+        <div className="after:content-['▾'] after:absolute after:-ml-9 after:mt-2.5 after:text-brand after:text-2xl border-solid after:pointer-events-none">
           <select
             {...{
               ...basicFields,
