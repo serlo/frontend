@@ -11,21 +11,27 @@ const HYDRA_HOSTS = {
   staging: process.env.HYDRA_HOST_STAGING,
   local: process.env.HYDRA_HOST_LOCAL,
 }
-const HYDRA_HOST = HYDRA_HOSTS[process.env.NEXT_PUBLIC_ENV]
+
+const ENV =
+  process.env.NEXT_PUBLIC_VERCEL_URL && process.env.NEXT_PUBLIC_ENV
+    ? process.env.NEXT_PUBLIC_ENV
+    : 'local'
+
+const HYDRA_HOST = HYDRA_HOSTS[ENV]
 
 const HYDRA_CLIENT_IDS = {
   production: process.env.HYDRA_CLIENT_ID_PRODUCTION,
   staging: process.env.HYDRA_CLIENT_ID_STAGING,
   local: process.env.HYDRA_CLIENT_ID_LOCAL,
 }
-const HYDRA_CLIENT_ID = HYDRA_CLIENT_IDS[process.env.NEXT_PUBLIC_ENV]
+const HYDRA_CLIENT_ID = HYDRA_CLIENT_IDS[ENV]
 
 const HYDRA_CLIENT_SECRETS = {
   production: process.env.HYDRA_CLIENT_SECRET_PRODUCTION,
   staging: process.env.HYDRA_CLIENT_SECRET_STAGING,
   local: process.env.HYDRA_CLIENT_SECRET_LOCAL,
 }
-const HYDRA_CLIENT_SECRET = HYDRA_CLIENT_SECRETS[process.env.NEXT_PUBLIC_ENV]
+const HYDRA_CLIENT_SECRET = HYDRA_CLIENT_SECRETS[ENV]
 
 const config =
   HYDRA_HOST === undefined
