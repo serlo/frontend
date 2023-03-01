@@ -14,7 +14,6 @@ import {
   GetTaxonomyTypeQueryVariables,
 } from '@/fetcher/graphql-types/operations'
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
-import { testAreaUrlStart } from '@/fetcher/testArea'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -95,10 +94,8 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     result.uuid.instance
   )
 
-  // TODO: testing
   const isTestArea =
-    breadcrumbsData &&
-    breadcrumbsData.some((entry) => entry.url?.startsWith(testAreaUrlStart))
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.id == 106082)
 
   return {
     props: {
