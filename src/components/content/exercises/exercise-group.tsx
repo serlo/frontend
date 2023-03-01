@@ -47,7 +47,8 @@ export function ExerciseGroup({
           />
         )}
         <div className="flex mb-0.5">
-          <div className="grow">{groupIntro}</div>
+          {/* explicitly set flex element width to 100% to pass it down to children */}
+          <div className="grow w-full">{groupIntro}</div>
           <div>{license}</div>
           {loaded && auth && (
             <AuthorToolsExercises
