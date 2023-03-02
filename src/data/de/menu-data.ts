@@ -307,7 +307,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // special area for chancenwerk
     rootId: 268835,
-    landingUrl: '/chancenwerk',
+    landingUrl: '/mathe/268835/chancenwerk',
     entries: [
       {
         title: 'Chancenwerk auf Serlo',
