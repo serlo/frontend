@@ -305,6 +305,23 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
+    // chancenwerk,
+    rootId: 268835,
+    landingUrl: '/chancenwerk',
+    entries: [
+      {
+        title: 'Chancenwerk auf Serlo',
+        url: '/mathe/268835/chancenwerk',
+        id: 268835,
+      },
+      {
+        title: 'Ungeprüfte Bearbeitungen',
+        url: '/entity/unrevised#chancenwerk',
+      },
+      { title: 'Serlo Mathematik', url: '/mathe' },
+    ],
+  },
+  {
     entries: [
       { title: 'Über Serlo', id: 18922 },
       { title: 'Pädagogisches Konzept', id: 21423 },
