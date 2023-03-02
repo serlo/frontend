@@ -67,6 +67,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                   href={entry.url}
                   path={[`metamenu${i}`]}
                   className="hover:no-underline block group py-1"
+                  noExternalIcon
                 >
                   <span
                     className={clsx(
