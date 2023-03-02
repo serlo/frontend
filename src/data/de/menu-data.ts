@@ -305,7 +305,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
     ],
   },
   {
-    // chancenwerk,
+    // special area for chancenwerk
     rootId: 268835,
     landingUrl: '/chancenwerk',
     entries: [
