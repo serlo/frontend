@@ -5,15 +5,6 @@ import {
 
 export const teamData: TeamDataEntry[] = [
   {
-    firstName: 'Sebastian',
-    lastName: 'Sapiatz',
-    position: 'Product Management',
-    extraLinkUrl: 'mailto:sebastian@serlo.org',
-    extraLinkText: 'sebastian@serlo.org',
-    photo:
-      'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
-  },
-  {
     firstName: 'Wolfgang',
     lastName: 'Schmid',
     position: 'Project Lead',
@@ -22,6 +13,16 @@ export const teamData: TeamDataEntry[] = [
     photo:
       'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
   },
+  {
+    firstName: 'Sebastian',
+    lastName: 'Sapiatz',
+    position: 'Product Management',
+    extraLinkUrl: 'mailto:sebastian@serlo.org',
+    extraLinkText: 'sebastian@serlo.org',
+    photo:
+      'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
+  },
+
   {
     firstName: 'Josefine',
     lastName: 'Theden-Schow',

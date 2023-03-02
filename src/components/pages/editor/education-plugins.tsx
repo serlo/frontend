@@ -4,7 +4,7 @@ import {
   faFileLines,
   faListCheck,
   faNewspaper,
-  faPhotoVideo,
+  // faPhotoVideo,
   faSquareCheck,
   faSquareRootVariable,
   faTarp,
@@ -25,7 +25,7 @@ import {
   injectionExample,
   inputExample,
   MCExample,
-  multimediaExample,
+  // multimediaExample,
   SCExample,
   textExExample,
 } from './education-plugin-examples'
@@ -33,65 +33,54 @@ import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 
-const categories = ['basic', 'educational', 'exercises'] as const
+const categories = ['educational', 'basic'] as const
 
 const pluginData = [
   {
-    title: 'Semantic Highlighting Box',
-    icon: faExpand,
+    title: 'Single-Choice Exercise',
+    icon: faSquareCheck,
     description:
-      'Boxes can be usedoffer the possibility to highlight important sections for learners. VWith the various box types are “such as example,” “mnemonic” or “quote”, the content can be structured clearly.',
-    example: boxExample,
+      'Single-choice exercises offer different answer options, of which only one is correct. For each answer authors can provide individual feedback to the learners e.g. to explain misconceptions behind common mistakes.',
+    example: SCExample,
     category: 'educational',
   },
   {
-    title: 'Image with Explanation',
-    icon: faPhotoVideo,
-    description: '123',
-    example: multimediaExample,
+    title: 'Multiple-Choice Exercise',
+    icon: faListCheck,
+    description:
+      'Multiple-choice exercises offer different answer options, of which several can be correct. For each answer authors can provide individual feedback to the learners e.g. to explain misconceptions behind common mistakes.',
+    example: MCExample,
+    category: 'educational',
+  },
+  {
+    title: 'Input Exercise',
+    icon: faTarp,
+    description:
+      'An input field appears below the task where a value or a character string can be entered and validated. Authors can add individual feedback to certain answers e.g. to explain misconceptions behind common mistakes.',
+    example: inputExample,
     category: 'educational',
   },
   {
     title: 'Text Exercise',
     icon: faFileLines,
     description:
-      'Text exercises give learners a task and access to a solution to this task. They can be created using text and multimedia.',
+      'Text exercises give learners a task and access to a detailed solution to this task. They can be created using text and multimedia.',
     example: textExExample,
-    category: 'exercises',
-  },
-  {
-    title: 'Input Exercise',
-    icon: faTarp,
-    description:
-      'For an input exercise, an input field appears below the taskexercise where a value or a character string can be entered. Authors can add individual feedback to certain answers like common mistakes.',
-    example: inputExample,
-    category: 'exercises',
-  },
-  {
-    title: 'Single-Choice Exercise',
-    icon: faSquareCheck,
-    description: '123',
-    example: SCExample,
-    category: 'exercises',
-  },
-  {
-    title: 'Multiple-Choice Exercise',
-    icon: faListCheck,
-    description: '123',
-    example: MCExample,
-    category: 'exercises',
+    category: 'educational',
   },
   {
     title: 'Math Formulas',
     icon: faSquareRootVariable,
-    description: '123',
+    description:
+      'Math Formulas are well formatted and correctly displayed and can be created using LaTeX or a visual editor.',
     example: formulaExample,
     category: 'educational',
   },
   {
     title: 'Math Equations',
     icon: faSquareRootVariable,
-    description: '123',
+    description:
+      'With the terms and equations element, we make it simple to implement nicely formatted, multi-line equations and term transformations. Command dashes and additional explanations with links can also be added.',
     example: formulaExample,
     category: 'educational',
   },
@@ -99,15 +88,24 @@ const pluginData = [
     title: 'Geogebra Integration',
     icon: faCubes,
     description:
-      'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. For example, the construction of a geometric figure can be shown step by step, or how a function changes when different values are used for its parameters.',
+      'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. You can create your own applet or choose from the huge free public applet collection on geogebra.org',
     example: <Geogebra id="2470285" />,
     category: 'educational',
   },
   {
     title: 'Serlo Content Integration',
     icon: faNewspaper,
-    description: '123',
+    description:
+      'It is also possible to include other serlo.org content within the learning content being created. Here authors can choose from 23,000 high quality, standardized educational contents like explanations, exercises, solutions, videos and applets in a  vast number of subjects like Maths, Chemistry, Biology, IT, Applied Sustainability, German, English as a foreign language, and many more.',
     example: injectionExample,
+    category: 'educational',
+  },
+  {
+    title: 'Semantic Highlighting Box',
+    icon: faExpand,
+    description:
+      'Boxes offer the possibility to highlight important sections for learners. With the various semantic box types e.g. “example,” “mnemonic” or “quote”, the content can be structured clearly.',
+    example: boxExample,
     category: 'educational',
   },
   // {
@@ -120,45 +118,56 @@ const pluginData = [
   {
     title: 'Text',
     icon: faParagraph,
-    description: 'Rich Text with Bold, Italic, Headings, Links, Lists ...',
+    description:
+      'Rich text can be edited in-line with bold, italic, headings, links, lists, and more.',
     example: <>Example Placeholder</>,
     category: 'basic',
   },
   {
     title: 'Image',
     icon: faImages,
-    description: 'Everything is better with images',
+    description: 'Everything is better with images 🙂',
     example: <>Example Placeholder</>,
     category: 'basic',
   },
   {
     title: 'Video',
     icon: faFilm,
-    description: 'Embed directly from YouTube, Vimeo, Wikimedia Commons',
+    description:
+      'Embed videos directly from YouTube, Vimeo or Wikimedia Commons in your content.',
     example: <>Example Placeholder</>,
     category: 'basic',
   },
   {
     title: 'Code',
     icon: faCode,
-    description: 'Syntax highlighting for code examples',
+    description:
+      'This feature offers special formatting and automatic syntax highlighting for code examples.',
     example: <>Example Placeholder</>,
     category: 'basic',
   },
   {
     title: 'Table',
     icon: faTable,
-    description: 'Easy to build Tables with row/column headers',
+    description: 'Build tables intuitively with row and column headers.',
     example: <>Example Placeholder</>,
     category: 'basic',
   },
   {
     title: 'Spoiler',
     icon: faCaretSquareDown,
-    description: 'Now you see it, now you don’t',
+    description:
+      'Hide additional content – e.g. more detailed context, sub-topics or further information – easily accessible within your content.',
     example: <>Example Placeholder</>,
     category: 'basic',
   },
+  // {
+  //   title: 'Image with Explanation',
+  //   icon: faPhotoVideo,
+  //   description: '123',
+  //   example: multimediaExample,
+  //   category: 'educational',
+  // },
 ]
 
 export function EducationPlugins() {
@@ -213,10 +222,10 @@ export function EducationPlugins() {
             `}
           </style>
         </div>
-        <p className="text-base mt-4">
+        {/* <p className="text-base mt-4">
           The Serlo Editor is in active development. Some features might not yet
           be intuitive and reliable.
-        </p>
+        </p> */}
       </div>
     )
   }

@@ -70,7 +70,7 @@ export function EditorPresentation() {
                   resources
                 </b>
                 . Just drag and drop your content elements where you need them
-                and edit everything live.
+                and edit everything in-line like in Google Docs.
               </p>
               <p className="mt-4">
                 Through its{' '}
@@ -124,9 +124,9 @@ export function EditorPresentation() {
         >
           <div className="mt-2 pb-16 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
             <div className="flex-1 mt-5">
-              <b className="text-brand font-handwritten text-4xl">20.000+</b>
+              <b className="text-brand font-handwritten text-4xl">20,000+</b>
               <br />
-              Learning resources have been created with the Serlo Editor
+              Educational resources have been created with the Serlo Editor
             </div>
             <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
@@ -136,7 +136,7 @@ export function EditorPresentation() {
             <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">500+</b>
               <br />
-              Authors so far used Serlo Editor to create open educational
+              Authors so far used the Serlo Editor to create open educational
               resources
             </div>
           </div>
@@ -155,14 +155,14 @@ export function EditorPresentation() {
             <div className="text-left mx-side">
               <p className="mt-4 text-xl leading-cozy flex-1">
                 The Serlo Editor is free of charge and open source. We are going
-                to offer several integration options to support its use in your
-                LMS, including:
+                to offer all integration options requested by the community.
+                Those might include:
               </p>
               <ul className="serlo-ul text-xl">
-                <li>JavaScript Library</li>
-                <li>Docker Container</li>
-                <li>Plugin for the most popular Learning Management Systems</li>
-                <li>As a service</li>
+                <li>JavaScript library</li>
+                <li>Docker container</li>
+                <li>Plugins for the most popular LMS</li>
+                <li>Software as a service</li>
               </ul>
               <p className="mt-20 text-xl leading-cozy flex-1 text-center">
                 <b className="tracking-tight">
@@ -183,21 +183,31 @@ export function EditorPresentation() {
             'bg-brand-100 bg-topWaveFromWhite bg-no-repeat bg-contain bg-top bg-size sm:bg-[length:100%_3vw] px-2 mt-8 pt-20 md:pt-28'
           )}
         >
-          <h2 className={clsx(h2Class, 'mb-8')}>Partners</h2>
+          <h2 className={clsx(h2Class, 'mb-8')}>About us</h2>
+          <div className="text-left mx-side sm:mx-auto max-w-4xl">
+            <p className="mt-4 text-xl leading-cozy flex-1">
+              The Serlo Editor has been developed by Serlo Education, a
+              non-profit organization dedicated to providing high quality, free
+              of charge and open source educational resources to students and
+              teachers worldwide. Find out more about us on{' '}
+              <Link href="/serlo">serlo.org/serlo</Link>.
+            </p>
+          </div>
+
+          <h3
+            className={clsx(h2Class, 'font-handwritten text-brand mb-8 mt-20')}
+          >
+            Partners
+          </h3>
           <div className="max-w-[85rem] mx-auto">
             <EditorPartnerList />
           </div>
 
-          <h2 className={clsx(h2Class, 'mb-8 mt-4')}>About us</h2>
-          <div className="text-left mx-side sm:mx-auto max-w-4xl">
-            <p className="mt-4 text-xl leading-cozy flex-1">
-              The Serlo Editor is developed by Serlo Education, a non-profit
-              organization dedicated to providing high quality, free of charge
-              and open source educational resources to students and teachers
-              worldwide. Find out more about us on{' '}
-              <Link href="/serlo">serlo.org/serlo</Link>.
-            </p>
-          </div>
+          <h3
+            className={clsx(h2Class, 'font-handwritten text-brand mb-8 mt-3')}
+          >
+            Team
+          </h3>
           <div className="mx-auto px-4 max-w-7xl">
             <EditorTeam />
             <div className="text-center mb-24 sm:-mt-8">
@@ -334,8 +344,14 @@ export function EditorPresentation() {
   }
 
   function renderContact() {
-    const { firstName, lastName, photo, extraLinkUrl, extraLinkText } =
-      teamData[3]
+    const {
+      firstName,
+      lastName,
+      position,
+      photo,
+      extraLinkUrl,
+      extraLinkText,
+    } = teamData[3]
 
     return (
       <div className="text-left flex text-base justify-center">
@@ -349,7 +365,11 @@ export function EditorPresentation() {
             {firstName} {lastName}
           </b>
           <br />
-          <Link href={extraLinkUrl}>{extraLinkText}</Link>
+          {position}
+          <br />
+          <Link href={extraLinkUrl} className="mt-1 inline-block">
+            {extraLinkText}
+          </Link>
         </div>
       </div>
     )

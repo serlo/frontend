@@ -12,27 +12,27 @@ const features = [
   {
     title: 'WYSIWYG Editor',
     icon: faFileLines,
-    description: 'What you see is what the learner sees',
+    description: 'What authors see looks just like what learners see',
   },
   {
-    title: 'Infinite Undo & Redo',
-    icon: faRotateLeft,
-    description: 'We all make mistakes sometimes',
-  },
-  {
-    title: '17+ Content Plugins',
+    title: '17+ Content Elements',
     icon: faCubesStacked,
-    description: 'Including many especially designed for education',
+    description: 'Including many especially designed for supporting education',
   },
   {
     title: 'Drag and Drop',
     icon: faHandSparkles,
-    description: 'Sort elements with you mouse',
+    description: 'Sort elements with your mouse',
+  },
+  {
+    title: 'Infinite Undo & Redo',
+    icon: faRotateLeft,
+    description: 'We all make mistakes sometimes, no worries ;)',
   },
   {
     title: 'Stuctured Content',
     icon: faAlignLeft,
-    description: 'Create custom templates for different content types',
+    description: 'Guide authors with custom content templates',
   },
 ]
 

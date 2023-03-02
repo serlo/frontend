@@ -23,14 +23,14 @@ const partners = [
     padding: 21,
   },
   {
-    name: 'edu-sharing.net e.V.',
-    logo: '/_assets/img/editor/partners/logo_edusharing.svg',
-    padding: 20,
-  },
-  {
     name: 'itslearning GmbH',
     logo: '/_assets/img/editor/partners/logo_itslearning.svg',
     padding: 26,
+  },
+  {
+    name: 'edu-sharing.net e.V.',
+    logo: '/_assets/img/editor/partners/logo_edusharing.svg',
+    padding: 20,
   },
   {
     name: 'Dataport',
