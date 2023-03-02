@@ -318,6 +318,10 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
         title: 'Ungeprüfte Bearbeitungen',
         url: '/entity/unrevised#chancenwerk',
       },
+      {
+        title: 'Zum Chancencampus',
+        url: 'https://www.chancencampus.org/authentication/login',
+      },
       { title: 'Serlo Mathematik', url: '/mathe' },
     ],
   },
