@@ -171,10 +171,10 @@ const pluginData = [
 ]
 
 export function EducationPlugins() {
-  const [selectedTitle, setSelectedTitle] = useState(pluginData[4].title)
+  const [selectedTitle, setSelectedTitle] = useState(pluginData[0].title)
   const [selectedCategory, setSelectedCategory] = useState<
     typeof categories[number] | undefined
-  >(categories[2])
+  >(categories[0])
 
   const categoryRefs = [
     useRef<null | HTMLElement>(null),
