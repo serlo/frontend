@@ -162,8 +162,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         }}
       >
         <span className="w-3.5">{solutionVisible ? '▾' : '▸'}&nbsp;</span>
-        {strings.entities.solution}{' '}
-        {solutionVisible ? strings.content.hide : strings.content.show}
+        {
+          strings.content.exercises[
+            solutionVisible ? 'hideSolution' : 'showSolution'
+          ]
+        }
       </button>
     )
   }
