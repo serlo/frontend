@@ -20,6 +20,7 @@ import { deprecatedPlugin } from './plugins/deprecated'
 import { equationsPlugin } from './plugins/equations'
 import { errorPlugin } from './plugins/error'
 import { exercisePlugin } from './plugins/exercise'
+import { H5pPlugin } from './plugins/h5p'
 import { createHighlightPlugin } from './plugins/highlight'
 import { createImagePlugin } from './plugins/image'
 import { createImportantPlugin } from './plugins/important'
@@ -234,6 +235,7 @@ export function createPlugins({
         },
       },
     }),
+    h5p: H5pPlugin,
     image: createImagePlugin(),
     important: createImportantPlugin(),
     injection: injectionPlugin,
