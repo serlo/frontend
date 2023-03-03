@@ -8,12 +8,12 @@ import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
 import { SerloEntityPluginType } from '@/edtr-io/plugins'
+import { taxonomyParentsToRootToBreadcrumbsData } from '@/fetcher/create-breadcrumbs'
 import {
   GetTaxonomyTypeQuery,
   GetTaxonomyTypeQueryVariables,
 } from '@/fetcher/graphql-types/operations'
-import { sharedPathFragments } from '@/fetcher/query-fragments'
-import { testAreaUrlStart } from '@/fetcher/testArea'
+import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
@@ -89,9 +89,13 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   )
     return { notFound: true }
 
-  const isTestArea = result.uuid.navigation?.path.nodes.some(
-    (node) => node.url === testAreaUrlStart
+  const breadcrumbsData = taxonomyParentsToRootToBreadcrumbsData(
+    result.uuid,
+    result.uuid.instance
   )
+
+  const isTestArea =
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.id == 106082)
 
   return {
     props: {
@@ -117,12 +121,11 @@ export const getTaxonomyTypeQuery = gql`
         id
         alias
         title
+        instance
         type
-        navigation {
-          ...path
-        }
+        ...pathToRoot
       }
     }
   }
-  ${sharedPathFragments}
+  ${sharedTaxonomyParents}
 `

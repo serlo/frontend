@@ -1,4 +1,4 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons/faArrowCircleRight'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'

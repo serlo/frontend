@@ -1,4 +1,4 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'

@@ -50,8 +50,7 @@ export function getRawTitle(
     uuid.__typename === UuidType.Exercise ||
     uuid.__typename === UuidType.ExerciseGroup
   ) {
-    const subject =
-      uuid.taxonomyTerms.nodes?.[0]?.navigation?.path.nodes[0].label
+    const subject = uuid.subject?.taxonomyTerm.name
     const typenameString = getTranslatedType(strings, uuid.__typename)
     if (!subject) return typenameString
     return subject + ' ' + typenameString

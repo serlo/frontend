@@ -1,6 +1,9 @@
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight'
-import { faReply } from '@fortawesome/free-solid-svg-icons/faReply'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
+import {
+  faSpinner,
+  faReply,
+  faArrowRight,
+  faSave,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useRef, ChangeEvent } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -18,6 +21,9 @@ interface CommentFormProps {
   placeholder: string
   reply?: boolean
   threadId?: string
+  content?: string
+  isEditing?: boolean
+  cancelEditing?: () => void
 }
 
 export function CommentForm({
@@ -25,8 +31,11 @@ export function CommentForm({
   onSend,
   reply,
   threadId,
+  content,
+  isEditing,
+  cancelEditing,
 }: CommentFormProps) {
-  const [commentValue, setCommentValue] = useState('')
+  const [commentValue, setCommentValue] = useState(content ?? '')
   const { strings } = useInstanceData()
   const [isSending, setIsSending] = useState(false)
   const textareaRef = useRef<null | HTMLTextAreaElement>(null)
@@ -44,11 +53,8 @@ export function CommentForm({
 
   function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.code === 'Enter' && e.metaKey) void onSendAction()
+    if (e.code === 'Escape' && cancelEditing) void cancelEditing()
   }
-
-  const sendTitle = `${strings.comments.submit}   ${
-    isMac ? '⌘' : strings.keys.ctrl
-  }↵`
 
   const formId = `comment-form${threadId ?? ''}`
 
@@ -56,7 +62,7 @@ export function CommentForm({
     <div
       className={clsx(
         'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-        'bg-brandgreen-50',
+        !isEditing && 'bg-brandgreen-50',
         'border-2 border-brandgreen-50 focus-within:border-brandgreen-muted',
         'transition-colors duration-200 ease-in py-1'
       )}
@@ -81,6 +87,24 @@ export function CommentForm({
           'placeholder-brandgreen'
         )}
       />
+      {renderButton()}
+    </div>
+  )
+
+  function renderButton() {
+    const sendTitle = `${
+      strings.comments[isEditing ? 'saveEdit' : 'submit']
+    }   ${isMac ? '⌘' : strings.keys.ctrl}↵`
+
+    const icon = isSending
+      ? faSpinner
+      : isEditing
+      ? faSave
+      : reply
+      ? faReply
+      : faArrowRight
+
+    return (
       <button
         title={sendTitle}
         onClick={onSendAction}
@@ -90,13 +114,13 @@ export function CommentForm({
         )}
       >
         <FaIcon
-          icon={isSending ? faSpinner : reply ? faReply : faArrowRight}
+          icon={icon}
           className={clsx(
             reply ? '' : 'pl-0.5',
             isSending && 'animate-spin-slow'
           )}
         />
       </button>
-    </div>
-  )
+    )
+  }
 }

@@ -8,6 +8,7 @@ import { useEntityId } from '@/contexts/entity-id-context'
 import {
   ThreadCreateCommentInput,
   ThreadCreateThreadInput,
+  ThreadEditCommentInput,
   ThreadSetCommentStateInput,
   ThreadSetThreadArchivedInput,
   ThreadSetThreadStateInput,
@@ -145,6 +146,33 @@ export function useCreateCommentMutation() {
 
   return async function (input: ThreadCreateCommentInput) {
     const success = await mutationFetch(createCommentMutation, input)
+
+    if (success) {
+      await mutate(`comments::${entityId}`)
+      mutateSWRCache(threadCacheShouldMutate)
+    }
+    return success
+  }
+}
+
+const editCommentMutation = gql`
+  mutation editComment($input: ThreadEditCommentInput!) {
+    thread {
+      editComment(input: $input) {
+        success
+      }
+    }
+  }
+`
+
+export function useEditCommentMutation() {
+  const mutationFetch = useMutationFetch()
+  const mutateSWRCache = useSWRCacheMutate()
+  const { mutate } = useSWRConfig()
+  const entityId = useEntityId()
+
+  return async function (input: ThreadEditCommentInput) {
+    const success = await mutationFetch(editCommentMutation, input)
 
     if (success) {
       await mutate(`comments::${entityId}`)

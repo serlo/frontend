@@ -67,4 +67,29 @@ module.exports = withBundleAnalyzer({
   /*experimental: {
     fallbackNodePolyfills: false,
   },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets.serlo.org',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
+  modularizeImports: {
+    // reduces bundle size by preventing import of barrel file and allow tree shaking / code chunking
+    '@fortawesome/free-solid-svg-icons': {
+      transform: '@fortawesome/free-solid-svg-icons/{{member}}',
+      skipDefaultConversion: true,
+    },
+    '@fortawesome/free-brands-svg-icons': {
+      transform: '@fortawesome/free-brands-svg-icons/{{member}}',
+      skipDefaultConversion: true,
+    },
+    '@fortawesome/free-regular-svg-icons': {
+      transform: '@fortawesome/free-regular-svg-icons/{{member}}',
+      skipDefaultConversion: true,
+    },
+  },
 })

@@ -17,10 +17,8 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
   const { strings, lang } = useInstanceData()
   const router = useRouter()
 
-  const urlSlugArray = Array.isArray(router.query.slug)
-    ? router.query.slug
-    : [router.query.slug]
-  const canonicalHref = `https://${lang}.serlo.org/` + urlSlugArray.join('/')
+  const canonicalHref =
+    `https://${lang}.serlo.org` + router.asPath.split('?')[0]
 
   return (
     <Head>

@@ -1,6 +1,8 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
-import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import {
+  faExclamationCircle,
+  faTools,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
@@ -52,7 +54,7 @@ export function Entity({ data }: EntityProps) {
       {renderNotices()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/4">
+      <div className="min-h-1/4" key={data.id}>
         {data.content && renderContent(data.content)}
       </div>
       {renderCourseFooter()}

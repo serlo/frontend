@@ -1,5 +1,4 @@
-import { faList } from '@fortawesome/free-solid-svg-icons/faList'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
+import { faList, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { Entity } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 

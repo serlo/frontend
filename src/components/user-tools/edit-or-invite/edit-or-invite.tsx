@@ -1,5 +1,4 @@
-import { faClock } from '@fortawesome/free-solid-svg-icons/faClock'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faClock, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { TaxonomyTerm, Uuid } from '@serlo/authorization'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'

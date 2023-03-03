@@ -1,4 +1,4 @@
-import { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
+import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 import { LicenseNotice } from './license/license-notice'

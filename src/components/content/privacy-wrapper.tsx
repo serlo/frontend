@@ -1,7 +1,6 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
+import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { ReactChild, useState, KeyboardEvent, useEffect } from 'react'
+import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,9 +13,9 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 // also borrowed some code
 
 interface PrivacyWrapperProps {
-  children: ReactChild
+  children: JSX.Element
   className?: string
-  placeholder?: ReactChild
+  placeholder?: JSX.Element
   type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
   embedUrl?: string

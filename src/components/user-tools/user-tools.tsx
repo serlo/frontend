@@ -1,5 +1,5 @@
-import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faCircle } from '@fortawesome/free-regular-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Root, List } from '@radix-ui/react-navigation-menu'
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
@@ -82,22 +82,19 @@ export function UserTools({
 
   return (
     <Root
-      className={
+      className={clsx(
+        'serlo-user-tools',
         aboveContent
-          ? fadeIn
-          : clsx(
-              'serlo-user-tools absolute z-50 right-8 bottom-8 h-full',
-              'lg:flex hidden items-end pointer-events-none',
-              '[&>div]:!sticky [&>div]:bottom-8',
-              fadeIn
-            )
-      }
+          ? ''
+          : 'absolute z-50 right-8 bottom-8 h-full lg:flex hidden items-end pointer-events-none [&>div]:!sticky [&>div]:bottom-8',
+        fadeIn
+      )}
       aria-label="Tool Menu"
     >
       <List
         className={clsx(
           aboveContent
-            ? 'text-right mobile:text-left mobile:flex mr-4 -mt-4 mb-8 lg:hidden justify-end'
+            ? 'text-right sm:text-left mobile:flex mr-4 mt-4 sm:-mt-6 mb-8 lg:hidden justify-end'
             : 'bg-white rounded-md pointer-events-auto flex-col flex items-start'
         )}
       >
