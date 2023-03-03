@@ -66,6 +66,7 @@ export function EditorRoadmap() {
               <img
                 src="/_assets/img/jobs/impact.svg"
                 className="hidden sm:block my-5 mx-3 opacity-75"
+                alt=""
               />
             ) : null}
           </div>

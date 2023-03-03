@@ -228,14 +228,13 @@ export function EducationPlugins() {
                 <div className="border-b-2 border-brand-100 font-bold mb-6">
                   Screenshot
                 </div>
-                <div className="">
-                  <img
-                    className="
+                <img
+                  key={image}
+                  className="
                     border-4 rounded-md border-brand-200"
-                    alt={`Screenshot of ${title}`}
-                    src={`/_assets/img/editor/screenshots/${image}`}
-                  />
-                </div>
+                  alt={`Screenshot of ${title}`}
+                  src={`/_assets/img/editor/screenshots/${image}`}
+                />
               </>
             )}
           </EntityIdProvider>
