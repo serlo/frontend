@@ -17,6 +17,7 @@ const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 // const italicClass = 'text-brand italic font-handwritten text-3xl'
 
 // TODO: (on jobs page) fix share button, fix overflow
+// TODO: always redirect to en.serlo.org/editor =
 
 export function EditorPresentation() {
   return (

@@ -14,6 +14,7 @@ import {
   faImages,
   faParagraph,
   faTable,
+  faEquals,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
@@ -21,12 +22,11 @@ import { useRef, useState } from 'react'
 import { h2Class } from './editor-presentation'
 import {
   boxExample,
-  formulaExample,
-  injectionExample,
+  highlighExample,
   inputExample,
   MCExample,
-  // multimediaExample,
   SCExample,
+  spoilerExample,
   textExExample,
 } from './education-plugin-examples'
 import { Geogebra } from '@/components/content/geogebra'
@@ -73,15 +73,17 @@ const pluginData = [
     icon: faSquareRootVariable,
     description:
       'Math Formulas are well formatted and correctly displayed and can be created using LaTeX or a visual editor.',
-    example: formulaExample,
+    example: null,
+    image: 'math-formula.png',
     category: 'educational',
   },
   {
     title: 'Math Equations',
-    icon: faSquareRootVariable,
+    icon: faEquals,
     description:
       'With the terms and equations element, we make it simple to implement nicely formatted, multi-line equations and term transformations. Command dashes and additional explanations with links can also be added.',
-    example: formulaExample,
+    example: null,
+    image: 'math-equations.png',
     category: 'educational',
   },
   {
@@ -97,7 +99,8 @@ const pluginData = [
     icon: faNewspaper,
     description:
       'It is also possible to include other serlo.org content within the learning content being created. Here authors can choose from 23,000 high quality, standardized educational contents like explanations, exercises, solutions, videos and applets in a  vast number of subjects like Maths, Chemistry, Biology, IT, Applied Sustainability, German, English as a foreign language, and many more.',
-    example: injectionExample,
+    example: null,
+    image: 'serlo-injection.png',
     category: 'educational',
   },
   {
@@ -120,14 +123,17 @@ const pluginData = [
     icon: faParagraph,
     description:
       'Rich text can be edited in-line with bold, italic, headings, links, lists, and more.',
-    example: <>Example Placeholder</>,
+    example: null,
+    image: 'text-toolbar.png',
     category: 'basic',
   },
   {
     title: 'Image',
     icon: faImages,
-    description: 'Everything is better with images 🙂',
-    example: <>Example Placeholder</>,
+    description:
+      'Everything looks nicer with images 🙂. You can insert them full width or with your text floating around. ',
+    example: null,
+    image: 'images.png',
     category: 'basic',
   },
   {
@@ -135,7 +141,8 @@ const pluginData = [
     icon: faFilm,
     description:
       'Embed videos directly from YouTube, Vimeo or Wikimedia Commons in your content.',
-    example: <>Example Placeholder</>,
+    example: null,
+    image: 'video.png',
     category: 'basic',
   },
   {
@@ -143,14 +150,15 @@ const pluginData = [
     icon: faCode,
     description:
       'This feature offers special formatting and automatic syntax highlighting for code examples.',
-    example: <>Example Placeholder</>,
+    example: highlighExample,
     category: 'basic',
   },
   {
     title: 'Table',
     icon: faTable,
     description: 'Build tables intuitively with row and column headers.',
-    example: <>Example Placeholder</>,
+    example: null,
+    image: 'table.png',
     category: 'basic',
   },
   {
@@ -158,7 +166,7 @@ const pluginData = [
     icon: faCaretSquareDown,
     description:
       'Hide additional content – e.g. more detailed context, sub-topics or further information – easily accessible within your content.',
-    example: <>Example Placeholder</>,
+    example: spoilerExample,
     category: 'basic',
   },
   // {
@@ -198,26 +206,54 @@ export function EducationPlugins() {
   )
 
   function renderInfoBox() {
-    const { description, example } =
+    const { description, example, image, title } =
       pluginData.find(({ title }) => title === selectedTitle) ?? pluginData[0]
 
     return (
       <div className="flex-1 m-3 mt-1 mb-[3.2rem] text-left">
-        <div className="shadow-menu w-full p-8 overflow-y-scroll md:h-[35rem]">
+        <div className="shadow-menu w-full p-8 overflow-y-scroll md:h-[37rem]">
           <EntityIdProvider value={1555}>
             <p className="text-xl mb-6">{description}</p>
-            <div className="border-b-2 border-brand-100 font-bold mb-6">
-              Example
-            </div>
-            <div className="-ml-side serlo-content-with-spacing-fixes">
-              {example}
-            </div>
+            {example ? (
+              <>
+                <div className="border-b-2 border-brand-100 font-bold mb-3">
+                  Live Example
+                </div>
+                <div className="-ml-side serlo-content-with-spacing-fixes">
+                  {example}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="border-b-2 border-brand-100 font-bold mb-6">
+                  Screenshot
+                </div>
+                <div className="">
+                  <img
+                    className="
+                    border-4 rounded-md border-brand-200"
+                    alt={`Screenshot of ${title}`}
+                    src={`/_assets/img/editor/screenshots/${image}`}
+                  />
+                </div>
+              </>
+            )}
           </EntityIdProvider>
           <style jsx global>
             {`
               .lazyload-wrapper > .print:hidden,
               .lazyload-wrapper > aside {
                 display: none;
+              }
+              .serlo-solution-box > .lazyload-wrapper {
+                display: none;
+              }
+              .serlo-exercise-wrapper {
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+              }
+              .serlo-exercise-wrapper li.flex {
+                margin-bottom: 1rem !important;
               }
             `}
           </style>
