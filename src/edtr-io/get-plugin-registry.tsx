@@ -11,7 +11,6 @@ import {
   faNewspaper,
   faParagraph,
   faPhotoVideo,
-  faQuoteRight,
   faTable,
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
@@ -44,57 +43,10 @@ export function getPluginRegistry(
       icon: createIcon(faParagraph),
     },
     {
-      name: 'blockquote',
-      title: editorStrings.edtrIo.blockquoteTitle,
-      description: editorStrings.edtrIo.quoteDescription,
-      icon: createIcon(faQuoteRight),
-    },
-    {
-      name: 'box',
-      title: editorStrings.edtrIo.box,
-      description: editorStrings.edtrIo.boxDesc,
-      icon: createIcon(faSquare),
-    },
-    {
-      name: 'geogebra',
-      title: editorStrings.edtrIo.geogebraTitle,
-      description: editorStrings.edtrIo.geogebraDesc,
-      icon: createIcon(faCubes),
-    },
-    {
-      name: 'highlight', //source code
-      title: editorStrings.edtrIo.highlightTitle,
-      description: editorStrings.edtrIo.highlightDesc,
-      icon: createIcon(faCode),
-    },
-    {
-      name: 'anchor',
-      title: editorStrings.edtrIo.anchor,
-      description: editorStrings.edtrIo.anchorDesc,
-      icon: createIcon(faAnchor),
-    },
-    {
-      name: 'equations',
-      title: editorStrings.edtrIo.equationsTitle,
-      description: editorStrings.edtrIo.equationsDesc,
-      icon: createIcon(faEquals),
-    },
-    {
       name: 'image',
       title: editorStrings.edtrIo.image,
       description: editorStrings.edtrIo.imageDesc,
       icon: createIcon(faImages),
-    },
-    {
-      name: 'important', // old "Merksatz"
-      title: editorStrings.edtrIo.importantTitle,
-      description: editorStrings.edtrIo.importantDesc,
-    },
-    {
-      name: 'injection',
-      title: editorStrings.edtrIo.injectionTitle,
-      description: editorStrings.edtrIo.injectionDesc,
-      icon: createIcon(faNewspaper),
     },
     {
       name: 'multimedia',
@@ -109,16 +61,52 @@ export function getPluginRegistry(
       icon: createIcon(faCaretSquareDown),
     },
     {
+      name: 'box',
+      title: editorStrings.edtrIo.box,
+      description: editorStrings.edtrIo.boxDesc,
+      icon: createIcon(faSquare),
+    },
+    {
       name: 'serloTable',
       title: editorStrings.edtrIo.serloTable,
       description: editorStrings.edtrIo.serloTableDesc,
       icon: createIcon(faTable),
     },
     {
+      name: 'injection',
+      title: editorStrings.edtrIo.injectionTitle,
+      description: editorStrings.edtrIo.injectionDesc,
+      icon: createIcon(faNewspaper),
+    },
+    {
+      name: 'equations',
+      title: editorStrings.edtrIo.equationsTitle,
+      description: editorStrings.edtrIo.equationsDesc,
+      icon: createIcon(faEquals),
+    },
+    {
+      name: 'geogebra',
+      title: editorStrings.edtrIo.geogebraTitle,
+      description: editorStrings.edtrIo.geogebraDesc,
+      icon: createIcon(faCubes),
+    },
+    {
+      name: 'highlight', //source code
+      title: editorStrings.edtrIo.highlightTitle,
+      description: editorStrings.edtrIo.highlightDesc,
+      icon: createIcon(faCode),
+    },
+    {
       name: 'video',
       title: editorStrings.edtrIo.video,
       description: editorStrings.edtrIo.videoDesc,
       icon: createIcon(faFilm),
+    },
+    {
+      name: 'anchor',
+      title: editorStrings.edtrIo.anchor,
+      description: editorStrings.edtrIo.anchorDesc,
+      icon: createIcon(faAnchor),
     },
     ...(shouldUseFeature('edtrPasteHack')
       ? [
@@ -161,10 +149,5 @@ export function getPluginRegistry(
     ? registry.filter((plugin) => include.includes(plugin.name))
     : registry
 
-  // Filter old plugins, will be removed completely after migration is done
-  const boxFiltered = filteredRegistry.filter(
-    (plugin) => !['blockquote', 'important'].includes(plugin.name)
-  )
-
-  return boxFiltered
+  return filteredRegistry
 }
