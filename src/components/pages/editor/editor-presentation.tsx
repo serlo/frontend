@@ -86,7 +86,7 @@ export function EditorPresentation() {
               </p>
             </div>
             <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[32rem] pl-2">
-              <Video src="https://www.youtube.com/watch?v=ugWtuTmiGLM" />
+              <Video src="https://www.youtube.com/watch?v=wjaPgGdw23w" />
             </div>
           </div>
         </section>
