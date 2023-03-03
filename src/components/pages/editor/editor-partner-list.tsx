@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-const partners = [
+export const partners = [
   {
     name: 'Bundesministerium für Bildung und Forschung',
     logo: '/_assets/img/landing/partners/logo_bmbf.svg',

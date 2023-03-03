@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
 import { EditorFeatures } from './editor-features'
-import { EditorPartnerList } from './editor-partner-list'
+import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
 import { EditorTeam, teamData } from './editor-team'
 import { EducationPlugins } from './education-plugins'
@@ -27,8 +27,9 @@ export function EditorPresentation() {
             'Serlo Editor: Seamless Creation of Digital Learning Resources',
         }}
       />
-      <header className="px-side lg:px-side-lg pt-6">
+      <header className="px-side lg:px-side-lg pt-6 sm:flex sm:justify-between">
         <Logo />
+        {renderSupporterLogo()}
       </header>
 
       <div
@@ -372,6 +373,22 @@ export function EditorPresentation() {
           </Link>
         </div>
       </div>
+    )
+  }
+
+  function renderSupporterLogo() {
+    const { padding, logo, name } = partners[0]
+    return (
+      <img
+        className="hidden sm:block sm:max-h-[6rem]"
+        style={{
+          paddingTop: `${padding}px`,
+          paddingBottom: `${padding}px`,
+        }}
+        src={logo}
+        alt={`Logo von ${name}`}
+        title={name}
+      />
     )
   }
 }
