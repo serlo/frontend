@@ -89,7 +89,7 @@ const pluginData = [
     title: 'Geogebra Integration',
     icon: faCubes,
     description:
-      'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. You can create your own applet or choose from the huge free public applet collection on geogebra.org',
+      'With the GeoGebra applet, moving or interactive graphics can be integrated into the content. You can create your own applet or choose from the huge free public applet collection on geogebra.org.',
     example: <Geogebra id="d4eNMF5R" />,
     category: 'educational',
   },

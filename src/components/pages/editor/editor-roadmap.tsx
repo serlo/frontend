@@ -17,7 +17,7 @@ const roadmapData = [
     title: 'Soon',
     steps: [
       'Integrate H5P elements in Serlo Editor content (new plugin)',
-      'Migration Algorithm from old to new versions of the Serlo Editor data format',
+      'Migration algorithm from old to new versions of the Serlo Editor data format',
       'New data format for easy exchange  between different LMS',
     ],
   },
