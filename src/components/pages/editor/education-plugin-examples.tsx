@@ -1,9 +1,9 @@
-// @ts-nocheck imported data
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck imported data (would actually interesting to see why some of is data is actually not valid )
 import { Box } from '@/components/content/box'
 import { Code } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
-import { Geogebra } from '@/components/content/geogebra'
 import { Injection } from '@/components/content/injection'
 import { MathSpan } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'

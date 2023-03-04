@@ -42,7 +42,6 @@ const DonationsBannerInline = dynamic<DonationsBannerProps>(() =>
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
-  console.log(JSON.stringify(node))
   const { strings } = useInstanceData()
   const [solutionVisible, setSolutionVisible] = useState(
     isPrintMode

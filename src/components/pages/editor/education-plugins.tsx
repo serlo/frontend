@@ -4,7 +4,6 @@ import {
   faFileLines,
   faListCheck,
   faNewspaper,
-  // faPhotoVideo,
   faSquareCheck,
   faSquareRootVariable,
   faTarp,
