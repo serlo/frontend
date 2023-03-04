@@ -334,38 +334,18 @@ export const textExExample = (
         edtrState: {
           content: [
             {
-              type: 'slate-container',
-              children: [
-                {
-                  type: 'h',
-                  level: 3,
-                  children: [
-                    {
-                      type: 'text',
-                      text: 'Ergebnismenge eines Glücksrads bestimmen',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
               type: 'multimedia',
-              mediaWidth: 25,
+              mediaWidth: 50,
               float: 'right',
               media: [
                 {
                   type: 'img',
-                  src: 'https://assets.serlo.org/b170b3a0-71a1-11ed-a696-f999fc1f99f7/image.png',
+                  src: 'https://assets.serlo.org/legacy/1840.png',
                   alt: '',
                   caption: [
                     {
                       type: 'slate-container',
-                      children: [
-                        {
-                          type: 'slate-p',
-                          children: [],
-                        },
-                      ],
+                      children: [{ type: 'slate-p', children: [] }],
                     },
                   ],
                 },
@@ -379,30 +359,22 @@ export const textExExample = (
                       children: [
                         {
                           type: 'text',
-                          text: 'Auf einer Kirmes wird ein Glücksrad gedreht, welches unterschiedliche Farben als Gewinnfelder hat.',
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  type: 'slate-container',
-                  children: [
-                    {
-                      type: 'slate-p',
-                      children: [
-                        {
-                          type: 'text',
-                          text: 'Bestimme die Ergebnismenge ',
+                          text: 'The drawbridge of a castle is ',
                         },
                         {
                           type: 'inline-math',
-                          formula: '\\Omega',
-                          formulaSource: '\\Omega',
+                          formula: '8m',
+                          formulaSource: '8m',
+                        },
+                        { type: 'text', text: ' long and has an angle of ' },
+                        {
+                          type: 'inline-math',
+                          formula: '43^\\circ',
+                          formulaSource: '43^\\circ',
                         },
                         {
                           type: 'text',
-                          text: ' des Glücksrads.',
+                          text: ' between the wall and the chain. How long must a chain be that can be used to fold down the drawbridge?',
                         },
                       ],
                     },
@@ -413,39 +385,24 @@ export const textExExample = (
           ],
         },
         license: {
-          id: 1,
-          url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-          title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0.',
+          id: 9,
+          url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+          title: 'This content is licensed under CC BY-SA 4.0',
           shortTitle: 'CC BY-SA 4.0',
           default: true,
           agreement:
-            'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
+            'By saving this page, you confirm that your contribution (including any edits you have made) is your own work, and that it does not infringe on the rights of third parties. You consent to publishing your contribution under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution/Share-Alike License 4.0</a> and/or under an equivalent license chosen by the Serlo Education e.V. in accordance with the regulations laid out in the <a href="https://en.serlo.org/terms">terms of use</a>. Should the contribution not be your own work, it must be available in accordance with the <a href="https://en.serlo.org/terms">terms of use</a>, and you must agree to comply with any necessary license requests.',
           isDefault: true,
         },
       },
       solution: {
         edtrState: {
           prerequisite: {
-            id: '1501',
-            title: 'Ergebnismenge',
-            href: '/mathe/1501/ergebnismenge',
+            id: '228138',
+            title: 'Sine, Cosine and Tangent',
+            href: '/math/228138/sine-cosine-and-tangent',
           },
-          strategy: [
-            {
-              type: 'slate-container',
-              children: [
-                {
-                  type: 'slate-p',
-                  children: [
-                    {
-                      type: 'text',
-                      text: 'Überlege dir, welche Ergebnisse in diesem Zufallsexperiment möglich sind.',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          strategy: [],
           steps: [
             {
               type: 'slate-container',
@@ -453,22 +410,84 @@ export const textExExample = (
                 {
                   type: 'slate-p',
                   children: [
+                    { type: 'text', text: 'Determine the chain length ' },
+                    { type: 'inline-math', formula: 'k', formulaSource: 'k' },
+                    { type: 'text', text: ' using the sine.' },
+                  ],
+                },
+              ],
+            },
+            {
+              type: 'equations',
+              steps: [
+                {
+                  left: '\\sin\\left(43°\\right)',
+                  leftSource: '\\sin\\left(43°\\right)',
+                  sign: 'equals',
+                  right: '\\frac{8\\text{m}}{k}',
+                  rightSource: '\\frac{8\\text{m}}{k}',
+                  transform: '\\cdot k',
+                  transformSource: '\\cdot k',
+                  explanation: [
                     {
-                      type: 'text',
-                      text: 'Die Ergebnismenge ist ',
+                      type: 'slate-container',
+                      children: [{ type: 'slate-p', children: [] }],
                     },
+                  ],
+                },
+                {
+                  left: '\\sin\\left(43°\\right)\\cdot k',
+                  leftSource: '\\sin\\left(43°\\right)\\cdot k',
+                  sign: 'equals',
+                  right: '8\\ \\text{m}\\ ',
+                  rightSource: '8\\ \\text{m}\\ ',
+                  transform: '\\ :\\sin\\left(43°\\right)',
+                  transformSource: '\\ :\\sin\\left(43°\\right)',
+                  explanation: [
                     {
-                      type: 'inline-math',
-                      formula: '\\Omega=\\{rot, grün, blau, gelb\\}',
-                      formulaSource: '\\Omega=\\{rot, grün, blau, gelb\\}',
+                      type: 'slate-container',
+                      children: [{ type: 'slate-p', children: [] }],
                     },
+                  ],
+                },
+                {
+                  left: 'k',
+                  leftSource: 'k',
+                  sign: 'equals',
+                  right: '\\frac{8\\text{m}}{\\sin\\left(43°\\right)}',
+                  rightSource: '\\frac{8\\text{m}}{\\sin\\left(43°\\right)}',
+                  transform: '',
+                  transformSource: '',
+                  explanation: [
                     {
-                      type: 'text',
-                      text: '.',
+                      type: 'slate-container',
+                      children: [{ type: 'slate-p', children: [] }],
+                    },
+                  ],
+                },
+                {
+                  left: 'k',
+                  leftSource: 'k',
+                  sign: 'almost-equal-to',
+                  right: '11.7\\text{m}\\ ',
+                  rightSource: '11.7\\text{m}\\ ',
+                  transform: '',
+                  transformSource: '',
+                  explanation: [
+                    {
+                      type: 'slate-container',
+                      children: [{ type: 'slate-p', children: [] }],
                     },
                   ],
                 },
               ],
+              firstExplanation: [
+                {
+                  type: 'slate-container',
+                  children: [{ type: 'slate-p', children: [] }],
+                },
+              ],
+              transformationTarget: 'equation',
             },
             {
               type: 'slate-container',
@@ -476,41 +495,15 @@ export const textExExample = (
                 {
                   type: 'slate-p',
                   children: [
-                    {
-                      type: 'text',
-                      text: 'Hierbei spielt es keine Rolle wie groß die Felder sind, denn theoretisch kann jede Farbe gedreht werden, egal wie wahrscheinlich.',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              type: 'slate-container',
-              children: [
-                {
-                  type: 'slate-p',
-                  children: [
-                    {
-                      type: 'text',
-                      text: 'Auch wenn ',
-                    },
+                    { type: 'text', text: 'The chain must be about ' },
                     {
                       type: 'inline-math',
-                      formula: 'rot',
-                      formulaSource: 'rot',
+                      formula: '11.7 m',
+                      formulaSource: '11.7 m',
                     },
                     {
                       type: 'text',
-                      text: ' und ',
-                    },
-                    {
-                      type: 'inline-math',
-                      formula: 'grün',
-                      formulaSource: 'grün',
-                    },
-                    {
-                      type: 'text',
-                      text: ' mehrfach vorkommen, zählen sie in der Ergebnismenge nur einmal.',
+                      text: ' long so that you can lower the drawbridge.',
                     },
                   ],
                 },
@@ -520,21 +513,18 @@ export const textExExample = (
         },
         trashed: false,
         license: {
-          id: 1,
-          url: 'https://creativecommons.org/licenses/by-sa/4.0/deed.de',
-          title: 'Dieses Werk steht unter der freien Lizenz CC BY-SA 4.0.',
+          id: 9,
+          url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+          title: 'This content is licensed under CC BY-SA 4.0',
           shortTitle: 'CC BY-SA 4.0',
           default: true,
           agreement:
-            'Mit dem Speichern dieser Seite versicherst du, dass du deinen Beitrag (damit sind auch Änderungen gemeint) selbst verfasst hast bzw. dass er keine fremden Rechte verletzt. Du willigst ein, deinen Beitrag unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">Creative Commons Attribution/Share-Alike Lizenz 4.0</a> und/oder unter einer gleichwertigen Lizenz zu veröffentlichen, welche der Serlo Education e. V. entsprechend der Regelungen in den <a href="/21654">Nutzungsbedingungen</a> festlegen darf. Falls du den Beitrag nicht selbst verfasst hast, muss er unter den <a href="/21654">Nutzungsbedingungen</a> verfügbar sein und du stimmst zu, notwendigen Lizenzanforderungen zu folgen.',
+            'By saving this page, you confirm that your contribution (including any edits you have made) is your own work, and that it does not infringe on the rights of third parties. You consent to publishing your contribution under the <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution/Share-Alike License 4.0</a> and/or under an equivalent license chosen by the Serlo Education e.V. in accordance with the regulations laid out in the <a href="https://en.serlo.org/terms">terms of use</a>. Should the contribution not be your own work, it must be available in accordance with the <a href="https://en.serlo.org/terms">terms of use</a>, and you must agree to comply with any necessary license requests.',
           isDefault: true,
         },
       },
-      context: {
-        id: 261942,
-        solutionId: 261944,
-      },
-      href: '/mathe/261942/261942',
+      context: { id: 228988, solutionId: 228989 },
+      href: '/math/228988/228988',
       unrevisedRevisions: 0,
     }}
   />
@@ -590,7 +580,35 @@ export const SCExample = (
                       children: [
                         {
                           type: 'slate-p',
-                          children: [{ type: 'text', text: 'Try again.' }],
+                          children: [
+                            { type: 'text', text: 'The past perfect ' },
+                            { type: 'text', text: 'had worn ', strong: true },
+                            {
+                              type: 'text',
+                              text: 'in the subordinate clause, indicates that this is ',
+                            },
+                            {
+                              type: 'text',
+                              text: 'type III if clause',
+                              strong: true,
+                            },
+                            { type: 'text', text: '. ' },
+                            {
+                              type: 'text',
+                              text: 'would + infinitive',
+                              strong: true,
+                            },
+                            { type: 'text', text: ' is used in ' },
+                            {
+                              type: 'text',
+                              text: 'type II if clauses',
+                              strong: true,
+                            },
+                            {
+                              type: 'text',
+                              text: ' and therefore wrong in this case.',
+                            },
+                          ],
                         },
                       ],
                     },
@@ -618,12 +636,76 @@ export const SCExample = (
                       children: [
                         {
                           type: 'slate-p',
-                          children: [{ type: 'text', text: 'Try again.' }],
+                          children: [
+                            { type: 'text', text: 'This is the ' },
+                            {
+                              type: 'text',
+                              text: 'future perfect',
+                              strong: true,
+                            },
+                            { type: 'text', text: ' and not used in ' },
+                            { type: 'text', text: 'if clauses', strong: true },
+                            { type: 'text', text: '.' },
+                          ],
                         },
                       ],
                     },
                   ],
                   originalIndex: 1,
+                },
+                {
+                  content: [
+                    {
+                      type: 'slate-container',
+                      children: [
+                        {
+                          type: 'slate-p',
+                          children: [{ type: 'text', text: 'will not step' }],
+                        },
+                      ],
+                    },
+                  ],
+                  isCorrect: false,
+                  feedback: [
+                    {
+                      type: 'slate-container',
+                      children: [
+                        {
+                          type: 'slate-p',
+                          children: [
+                            { type: 'text', text: 'The past perfect ' },
+                            { type: 'text', text: 'had worn ', strong: true },
+                            {
+                              type: 'text',
+                              text: 'in the subordinate clause, indicates that this is ',
+                            },
+                            {
+                              type: 'text',
+                              text: 'type III if clause',
+                              strong: true,
+                            },
+                            { type: 'text', text: '. W' },
+                            {
+                              type: 'text',
+                              text: 'ill + infinitive',
+                              strong: true,
+                            },
+                            { type: 'text', text: ' is used in ' },
+                            {
+                              type: 'text',
+                              text: 'type I if clauses',
+                              strong: true,
+                            },
+                            {
+                              type: 'text',
+                              text: ' and therefore wrong in this case.',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                  originalIndex: 2,
                 },
                 {
                   content: [
@@ -646,38 +728,34 @@ export const SCExample = (
                       children: [
                         {
                           type: 'slate-p',
-                          children: [{ type: 'text', text: 'Fantastic.' }],
+                          children: [
+                            { type: 'text', text: 'The past perfect ' },
+                            { type: 'text', text: 'had worn ', strong: true },
+                            {
+                              type: 'text',
+                              text: 'in the subordinate clause, indicates that this is ',
+                            },
+                            {
+                              type: 'text',
+                              text: 'type III if clause',
+                              strong: true,
+                            },
+                            {
+                              type: 'text',
+                              text: '. Therefore you need to use ',
+                            },
+                            {
+                              type: 'text',
+                              text: 'would not + present perfect',
+                              strong: true,
+                            },
+                            { type: 'text', text: ' in the main clause.' },
+                          ],
                         },
                       ],
                     },
                   ],
                   originalIndex: 0,
-                },
-                {
-                  content: [
-                    {
-                      type: 'slate-container',
-                      children: [
-                        {
-                          type: 'slate-p',
-                          children: [{ type: 'text', text: 'will not step' }],
-                        },
-                      ],
-                    },
-                  ],
-                  isCorrect: false,
-                  feedback: [
-                    {
-                      type: 'slate-container',
-                      children: [
-                        {
-                          type: 'slate-p',
-                          children: [{ type: 'text', text: 'Try again.' }],
-                        },
-                      ],
-                    },
-                  ],
-                  originalIndex: 2,
                 },
               ],
             },
@@ -813,6 +891,38 @@ export const MCExample = (
                           children: [
                             {
                               type: 'inline-math',
+                              formula: '\\alpha = 150^\\circ',
+                              formulaSource: '\\alpha = 150^\\circ',
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                  isCorrect: true,
+                  feedback: [
+                    {
+                      type: 'slate-container',
+                      children: [
+                        {
+                          type: 'slate-p',
+                          children: [{ type: 'text', text: 'Correct!' }],
+                        },
+                      ],
+                    },
+                  ],
+                  originalIndex: 3,
+                },
+                {
+                  content: [
+                    {
+                      type: 'slate-container',
+                      children: [
+                        {
+                          type: 'slate-p',
+                          children: [
+                            {
+                              type: 'inline-math',
                               formula: '\\alpha = 45^\\circ',
                               formulaSource: '\\alpha = 45^\\circ',
                             },
@@ -891,38 +1001,6 @@ export const MCExample = (
                     },
                   ],
                   originalIndex: 0,
-                },
-                {
-                  content: [
-                    {
-                      type: 'slate-container',
-                      children: [
-                        {
-                          type: 'slate-p',
-                          children: [
-                            {
-                              type: 'inline-math',
-                              formula: '\\alpha = 150^\\circ',
-                              formulaSource: '\\alpha = 150^\\circ',
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                  ],
-                  isCorrect: true,
-                  feedback: [
-                    {
-                      type: 'slate-container',
-                      children: [
-                        {
-                          type: 'slate-p',
-                          children: [{ type: 'text', text: 'Correct!' }],
-                        },
-                      ],
-                    },
-                  ],
-                  originalIndex: 3,
                 },
               ],
             },
@@ -1217,13 +1295,6 @@ export const injectionExample = (
     </style>
   </>
 )
-
-/*
-
-*/
-
-export const geogebraExample = <Geogebra id="pnamhz3d" />
-
 export const highlighExample = (
   <Code
     content={`// global variable: read & write from everywhere
