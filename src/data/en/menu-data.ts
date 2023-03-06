@@ -61,6 +61,10 @@ export const footerData: InstanceData['footerData'] = {
           title: 'API',
           url: `/105250`,
         },
+        {
+          title: 'Serlo Editor',
+          url: `https.//en.${serloDomain}.org/editor`,
+        },
       ],
     },
     {
