@@ -2,9 +2,9 @@ import clsx from 'clsx'
 
 const partners = [
   {
-    name: 'Beisheim Stiftung',
-    logo: '/_assets/img/landing/partners/logo_beisheimstiftung.svg',
-    padding: 10,
+    name: 'Bundesministerium für Bildung und Forschung',
+    logo: '/_assets/img/landing/partners/logo_bmbf.svg',
+    padding: 0,
   },
   {
     name: 'Ludwig-Maximilians-Universität München',
@@ -17,9 +17,9 @@ const partners = [
     padding: 0,
   },
   {
-    name: 'Bundesministerium für Bildung und Forschung',
-    logo: '/_assets/img/landing/partners/logo_bmbf.svg',
-    padding: 0,
+    name: 'Beisheim Stiftung',
+    logo: '/_assets/img/landing/partners/logo_beisheimstiftung.svg',
+    padding: 10,
   },
   {
     name: 'Europäische Kommission',
@@ -32,9 +32,9 @@ const partners = [
     padding: 28,
   },
   {
-    name: 'Hasso-Plattner-Institut',
-    logo: '/_assets/img/landing/partners/logo_hpi.svg',
-    padding: 14,
+    name: 'Technische Universität München',
+    logo: '/_assets/img/landing/partners/logo_tum.svg',
+    padding: 15,
   },
   {
     name: 'Ashoka Deutschland',

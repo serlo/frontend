@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: 'serlo/frontend-e2e-tests'
-      - uses: patrickedqvist/wait-for-vercel-preview@v1.2.0
+      - uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1200

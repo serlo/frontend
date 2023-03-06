@@ -147,7 +147,9 @@ export const instanceData = {
         yourAnswer: "आपका उत्तर",
         chooseOption: "किसी एक विकल्प पर क्लिक करें",
         printModeChooseOption: "किसी एक विकल्प पर क्लिक करें",
-        strategy: 'Solution Strategy'
+        strategy: 'Solution Strategy',
+        showSolution: 'Show solution',
+        hideSolution: 'Hide solution'
       },
       boxTypes: {
         blank: 'Blank',

@@ -102,7 +102,7 @@ export function SubjectLandingContent({
           <SubjectLandingFeatured subject={subject} />
         </section>
 
-        <section className="text-center partner">
+        <section className="text-center bg-blueWave bg-100% pt-4">
           <CommunityWallSubjectLanding subject={subject} />
         </section>
       </main>
@@ -184,11 +184,6 @@ export function SubjectLandingContent({
         }
         .p-with-wink:before {
           margin-left: -1.5rem;
-        }
-        .partner {
-          padding-top: 1rem;
-          background: url('/_assets/img/landing/footer-container.svg') no-repeat;
-          background-size: 100% 100%;
         }
       `}</style>
     </>

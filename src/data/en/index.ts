@@ -154,6 +154,8 @@ export const instanceData = {
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Solution Strategy',
+        showSolution: 'Show solution',
+        hideSolution: 'Hide solution',
       },
       boxTypes: {
         blank: 'Blank',

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Image from 'next/image'
 
 import { Link } from '@/components/content/link'
@@ -5,23 +6,34 @@ import { getAvatarUrl } from '@/components/user/user-link'
 
 export interface PageTeamRendererProps {
   data: TeamDataEntry[]
+  extraCols?: boolean
+  compact?: boolean
 }
 
 export interface TeamDataEntry {
   firstName: string
   lastName: string
-  user: string
+  user?: string
   position: string
   extraLinkUrl: string
   extraLinkText: string
   photo: string
 }
 
-export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
+export const PageTeamRenderer = ({
+  data,
+  extraCols,
+  compact,
+}: PageTeamRendererProps) => {
   if (!data || !data.length) return null
 
   return (
-    <div className="mobile: grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14">
+    <div
+      className={clsx(
+        'mobile:grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14',
+        extraCols && 'md:grid-cols-4 lg:grid-cols-5'
+      )}
+    >
       {data.map(renderEntry)}
     </div>
   )
@@ -35,13 +47,18 @@ export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
     extraLinkUrl,
     photo,
   }: TeamDataEntry) {
-    if (!user) return null
+    const imageSrc = photo ?? getAvatarUrl(user ?? '?')
 
     return (
-      <div key={user} className="mb-10 text-center">
-        <div className="mb-5 max-w-[11rem] mx-auto relative aspect-square">
+      <div key={firstName + lastName} className="mb-10 text-center">
+        <div
+          className={clsx(
+            'mb-5 mx-auto relative aspect-square',
+            compact ? 'max-w-[8rem]' : 'max-w-[11rem]'
+          )}
+        >
           <Image
-            src={photo ?? getAvatarUrl(user)}
+            src={imageSrc}
             alt={`${firstName} ${lastName}`}
             fill
             style={{ borderRadius: '99rem' }}
@@ -51,11 +68,11 @@ export const PageTeamRenderer = ({ data }: PageTeamRendererProps) => {
           {firstName} {lastName}
         </b>
         <br />
-        <Link href={`/user/profile/${user}`}>{user}</Link>
-        <p className="mt-4">{position}</p>
+        {user ? <Link href={`/user/profile/${user}`}>{user}</Link> : null}
+        <p className={compact ? '' : 'mt-4'}>{position}</p>
 
         {extraLinkUrl && extraLinkText ? (
-          <p className="mt-4">
+          <p className={compact ? 'mt-2' : 'mt-4'}>
             <Link href={extraLinkUrl}>{extraLinkText}</Link>
           </p>
         ) : null}
