@@ -332,7 +332,7 @@ export function EditorPresentation() {
       photo,
       extraLinkUrl,
       extraLinkText,
-    } = teamData[3]
+    } = teamData.find((person) => person.firstName === 'Simon')!
 
     return (
       <div className="text-left flex text-base justify-center">
