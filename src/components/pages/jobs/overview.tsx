@@ -197,10 +197,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               </div>
             </div>
           </div>
-          {/* <div className="sm:flex pt-8 justify-center text-left px-side mt-5"></div> */}
         </section>
 
-        <section className={clsx('partner', 'mt-24 !pt-12')}>
+        <section className={clsx('bg-orangeBow bg-100% mt-24 !pt-12')}>
           <h3
             className={clsx(
               'text-center text-4xl text-truegray-700 font-bold',
@@ -253,7 +252,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('partner about-serlo', 'mt-24 !pt-16 pb-16')}>
+        <section className={clsx('bg-blueWave bg-100% mt-24 !pt-16 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <img
               src="/_assets/img/landing/birds.svg"
@@ -355,14 +354,6 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         }
         .p-with-wink:before {
           margin-left: -1.5rem;
-        }
-        .partner {
-          padding-top: 1rem;
-          background-image: url('/_assets/img/landing/about-container.svg');
-          background-size: 100% 100%;
-        }
-        .about-serlo {
-          background-image: url('/_assets/img/landing/footer-container.svg');
         }
       `}</style>
     </>

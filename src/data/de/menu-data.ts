@@ -134,12 +134,16 @@ export const footerData: InstanceData['footerData'] = {
         { title: 'Presse', url: '/presse' },
         { title: 'Kontakt', url: '/kontakt' },
         {
-          title: 'Serlo in anderen Sprachen',
+          title: 'Other Languages',
           url: `https://en.${serloDomain}/global`,
         },
         {
           title: 'API',
           url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
+        },
+        {
+          title: 'Serlo Editor',
+          url: `https.//en.${serloDomain}.org/editor`,
         },
       ],
     },
