@@ -29,6 +29,7 @@ export default class MyDocument extends Document {
       : undefined
     return (
       <Html className="print:serlo-print-style bg-brand-100">
+        {/* background on html for overscroll area */}
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
