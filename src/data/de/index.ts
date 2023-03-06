@@ -148,8 +148,8 @@ export const instanceData = {
         chooseOption: "Klicke auf eine der Optionen",
         printModeChooseOption: "Kreuze eine der Optionen an",
         strategy: "Lösungsstrategie",
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "Lösung anzeigen",
+        hideSolution: "Lösung ausblenden"
       },
       boxTypes: {
         blank: "Blanko",
