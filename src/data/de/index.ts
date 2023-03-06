@@ -372,7 +372,7 @@ export const instanceData = {
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
-        code1010002: "Anmelden mit NBP-Account",
+        code1010002: 'Sign in with NBP Account',
         code1010013: "Weiter",
         code1040001: "Account anlegen",
         code1040003: "Weiter",
