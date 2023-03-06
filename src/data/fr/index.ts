@@ -147,7 +147,9 @@ export const instanceData = {
         yourAnswer: "Ta réponse...",
         chooseOption: "Sélectionne une des options :",
         printModeChooseOption: "Sélectionne une des options :",
-        strategy: "Stratégie de solution"
+        strategy: "Stratégie de solution",
+        showSolution: 'Show solution',
+        hideSolution: 'Hide solution'
       },
       boxTypes: {
         blank: 'Blank',
