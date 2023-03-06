@@ -394,6 +394,7 @@ export const instanceData = {
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
+        code1010002: 'Sign in with NBP Account',
         code1010013: 'Continue',
         code1040001: 'Register',
         code1040003: 'Continue',
