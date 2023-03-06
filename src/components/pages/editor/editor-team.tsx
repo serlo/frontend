@@ -22,16 +22,6 @@ export const teamData: TeamDataEntry[] = [
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
   },
-
-  {
-    firstName: 'Josefine',
-    lastName: 'Theden-Schow',
-    position: 'Partnerships',
-    extraLinkUrl: 'mailto:josefine@serlo.org',
-    extraLinkText: 'josefine@serlo.org',
-    photo:
-      'https://assets.serlo.org/cea79750-6985-11ed-b282-836733dd2d87/image.jpg',
-  },
   {
     firstName: 'Simon',
     lastName: 'Köhl',
