@@ -88,7 +88,7 @@ export function H5pEditor(props: H5pProps) {
           <EditorInlineSettings>
             <EditorInput
               label="URL zu Lumi-Bereitstellung"
-              placeholder="https://app.lumi.education/run/P46cdL"
+              placeholder="https://app.lumi.education/run/J3j0eR"
               value={state.value}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                 //console.log('on input', e.target.value)

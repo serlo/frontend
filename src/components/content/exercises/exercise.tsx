@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
 import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
+import { H5p } from '../h5p'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -206,6 +207,9 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             isRevisionView={isRevisionView}
           />
         )
+      }
+      if (state.interactive.plugin === 'h5p') {
+        return <H5p url={state.interactive.state} />
       }
     }
   }
