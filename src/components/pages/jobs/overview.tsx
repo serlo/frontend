@@ -197,7 +197,6 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               </div>
             </div>
           </div>
-          {/* <div className="sm:flex pt-8 justify-center text-left px-side mt-5"></div> */}
         </section>
 
         <section className={clsx('bg-orangeBow bg-100% mt-24 !pt-12')}>

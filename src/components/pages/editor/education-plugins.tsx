@@ -110,13 +110,6 @@ const pluginData = [
     example: boxExample,
     category: 'educational',
   },
-  // {
-  //   title: 'And more…',
-  //   icon: faCirclePlus,
-  //   description: '',
-  //   example: <></>,
-  //   category: 'educational',
-  // },
   {
     title: 'Text',
     icon: faParagraph,
@@ -168,13 +161,6 @@ const pluginData = [
     example: spoilerExample,
     category: 'basic',
   },
-  // {
-  //   title: 'Image with Explanation',
-  //   icon: faPhotoVideo,
-  //   description: '123',
-  //   example: multimediaExample,
-  //   category: 'educational',
-  // },
 ]
 
 export function EducationPlugins() {
@@ -191,9 +177,6 @@ export function EducationPlugins() {
 
   return (
     <div className="text-center">
-      {/* <h3 className="mb-4 mt-16 font-handwritten text-brand text-3xl">
-        Education Plugins
-      </h3> */}
       <h2 className={clsx(h2Class, 'mb-4')}>Features</h2>
       <div className="sm:flex">
         <div className="mb-4 sm:mt-8 sm:mb-12 sm:w-min text-left sm:text-right">
@@ -256,10 +239,6 @@ export function EducationPlugins() {
             `}
           </style>
         </div>
-        {/* <p className="text-base mt-4">
-          The Serlo Editor is in active development. Some features might not yet
-          be intuitive and reliable.
-        </p> */}
       </div>
     )
   }
@@ -315,22 +294,13 @@ export function EducationPlugins() {
   }
 
   function renderPluginMenuEntry({ title, icon }: typeof pluginData[0]) {
-    // const isLast = i === pluginData.length - 1
-
     return (
       <li
         key={title}
         className="sm:text-right text-sm sm:text-base inline-block sm:block"
       >
         <button
-          onClick={() => {
-            // if (isLast) {
-            //   document.querySelector('#roadmap')?.scrollIntoView({
-            //     behavior: 'smooth',
-            //   })
-            // } else
-            setSelectedTitle(title)
-          }}
+          onClick={() => setSelectedTitle(title)}
           className={clsx(
             'whitespace-nowrap px-2 py-1 m-1 rounded-md',
             'shadow-menu hover:bg-brand-50',

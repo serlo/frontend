@@ -97,24 +97,8 @@ export function EditorPresentation() {
 
         <section className={clsx('-mb-6 px-4')}>
           <div className="max-w-7xl mx-auto mb-28">
-            {/* <h2 className={clsx(h2Class, 'mt-12 mb-12')}>Feature Overview</h2> */}
             <EducationPlugins />
-            {/* <BasicPlugins /> */}
-            {/* {renderFeatureOverview()} */}
           </div>
-
-          {/* <div className="max-w-4xl text-center mx-auto">
-            <h2 className={h2Class}>Content Examples</h2>
-            <div
-              className={clsx(
-                'mt-6 flex items-stretch justify-around',
-                'px-side pb-6 flex-wrap',
-                'w-full mx-auto sm:max-w-3xl lg:max-w-max'
-              )}
-            >
-              {exampleContent.map(renderFeaturedBox)}
-            </div>
-          </div> */}
         </section>
 
         <section
@@ -234,7 +218,6 @@ export function EditorPresentation() {
             </div>
           </footer>
         </section>
-        {/* <UserTools /> */}
       </div>
 
       <style jsx>{`

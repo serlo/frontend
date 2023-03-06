@@ -49,7 +49,6 @@ export function EditorRoadmap() {
                 return (
                   <li
                     key={title}
-                    // className="bg-brand-100 px-2 py-1 rounded-lg inline-block m-1"
                     className={clsx(
                       'block w-fit mx-auto px-2 py-1 mb-3 leading-6',
                       'sm:w-auto sm:mx-0',
