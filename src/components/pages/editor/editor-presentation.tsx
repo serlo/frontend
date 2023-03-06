@@ -192,7 +192,7 @@ export function EditorPresentation() {
           </h3>
           <div className="mx-auto px-4 max-w-7xl">
             <EditorTeam />
-            <div className="text-center mb-24 sm:-mt-8">
+            <div className="text-center mb-24">
               <h2 className={clsx(h2Class)}>Connect</h2>
 
               <p className="mt-4 text-xl leading-cozy flex-1">
