@@ -187,16 +187,19 @@ type H5pRendererProps = H5pProps & {
 }
 
 export function H5pRenderer(props: H5pRendererProps) {
+  const id = /https:\/\/app\.lumi\.education\/run\/(.+)/i.exec(
+    props.state.value
+  )
   return (
     <div className="mx-side mb-block">
       <iframe
-        src={props.state.value}
+        src={`https://app.Lumi.education/api/v1/run/${id ? id[1] : '_'}/embed`}
         width="727"
         height="500"
         allowFullScreen
         allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
       ></iframe>
-      <Script src="https://app.Lumi.education/api/v1/h5p/core/js/h5p-resizer.js" />
+      <Script src="/_assets/h5p-resizer.js" />
     </div>
   )
 }
