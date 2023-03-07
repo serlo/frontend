@@ -177,7 +177,7 @@ export const instanceData = {
       video: "Video abspielen von %provider%",
       applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden",
-      h5p: 'Load Interactive Content'
+      h5p: "Interaktiven Inhalt laden"
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
@@ -774,8 +774,8 @@ export const loggedInData = {
         choiceExercise: "Auswahlaufgabe",
         addInputExercise: "Eingabefeld hinzufügen",
         inputExercise: "Eingabefeld",
-        addH5pExercise: 'Add h5p exercise',
-        h5pExercise: 'H5p exercise',
+        addH5pExercise: "H5P-Inhalt hinzufügen",
+        h5pExercise: "H5P-Inhalt",
         addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
         changeInteractive: "Interaktives Element ändern",
         removeInteractive: "Interaktives Element entfernen"
