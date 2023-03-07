@@ -120,10 +120,12 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
     instance: Instance
   ) {
     if (taxonomyPaths === undefined) return undefined
+
+    // we select first shortest taxonomy path as main taxonomy and show it in breadcrumbs
+    // this happens directly on taxonomy parents and is not taking short-cuircuits into account
     let mainTax
     let count = -1
 
-    // select first shortest taxonomy path
     for (const path of taxonomyPaths) {
       if (!path) continue
       if (count === -1 || count > countParents(path)) {
