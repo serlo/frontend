@@ -185,7 +185,6 @@ export const instanceData = {
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
-      h5p: 'Load Interactive Content'
     },
     comments: {
       question: 'Do you have a question?',
@@ -839,8 +838,6 @@ export const loggedInData = {
         choiceExercise: 'Choice exercise',
         addInputExercise: 'Add input exercise',
         inputExercise: 'Input exercise',
-        addH5pExercise: 'Add h5p exercise',
-        h5pExercise: 'H5p exercise',
         addOptionalInteractiveEx: 'Add an optional interactive exercise:',
         changeInteractive: 'Change interactive element',
         removeInteractive: 'Remove interactive element',
