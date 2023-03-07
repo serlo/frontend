@@ -27,7 +27,7 @@ export function createAuthAwareGraphqlFetch(auth: AuthenticationPayload) {
     if (auth === null) throw new Error('unauthorized')
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return window.location.hostname == 'localhost'
+    return window.location.hostname === 'localhost'
       ? await executeQueryLocally()
       : await executeQuery()
 

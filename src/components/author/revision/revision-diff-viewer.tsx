@@ -33,7 +33,7 @@ export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
           font-size: 1.125rem !important;
         }
       `}</style>
-      {mode == DiffViewerMode.content ? (
+      {mode === DiffViewerMode.content ? (
         <div className="wrapper-split">
           <ReactDiffViewer
             leftTitle={strings.revisions.currentVersion}

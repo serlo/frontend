@@ -69,7 +69,7 @@ export function renderNested(
   return _renderArticle(
     value,
     false,
-    previousPath.concat(pathPrefix.length == 0 ? ['nested'] : pathPrefix)
+    previousPath.concat(pathPrefix.length === 0 ? ['nested'] : pathPrefix)
   )
 }
 

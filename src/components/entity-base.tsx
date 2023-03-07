@@ -97,11 +97,11 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         data={page.breadcrumbsData}
         isTaxonomy={
           page.kind !== 'single-entity' &&
-          !(page.metaData?.contentType == 'topic-folder')
+          !(page.metaData?.contentType === 'topic-folder')
         }
         asBackButton={
-          page.kind == 'single-entity' &&
-          page.entityData.typename == UuidType.GroupedExercise
+          page.kind === 'single-entity' &&
+          page.entityData.typename === UuidType.GroupedExercise
         }
       />
     )

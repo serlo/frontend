@@ -62,11 +62,11 @@ export function taxonomyParentsToRootToBreadcrumbsData(
     } else {
       // check if this breadcrumb is already part of secondary menu
       const matching2 = secondaryMenus.filter((menu) =>
-        menu.entries.some((entry) => entry.id == current.id)
+        menu.entries.some((entry) => entry.id === current.id)
       )
       if (matching2.length > 0) {
         const metaMenuEntry = matching2[0].entries.filter(
-          (menu) => menu.id == current.id
+          (menu) => menu.id === current.id
         )[0]
 
         breadcrumbs.unshift({
@@ -138,7 +138,7 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
 
-    if (uuid.__typename == UuidType.TaxonomyTerm && breadcrumbs.length > 1) {
+    if (uuid.__typename === UuidType.TaxonomyTerm && breadcrumbs.length > 1) {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }
 
@@ -148,7 +148,7 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
       const maxItems = 4
       const overflow = arr.length > maxItems
       const itemsToRemove = arr.length - maxItems
-      const ellipsesItem = overflow && i == 2
+      const ellipsesItem = overflow && i === 2
 
       if (overflow && i > 2 && i < 1 + itemsToRemove) return
       // special case

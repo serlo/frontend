@@ -111,7 +111,9 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         const children = wrapSemistructuredTextInP(
           convert(node.children).filter(
             (child) =>
-              !(child.type == FrontendNodeType.Text && child.text.trim() == '')
+              !(
+                child.type === FrontendNodeType.Text && child.text.trim() === ''
+              )
           )
         )
         return [
@@ -246,7 +248,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
             child.type === FrontendNodeType.InlineMath ||
             (child.type === FrontendNodeType.Text &&
               child.text !== undefined &&
-              child.text.trim() == '')
+              child.text.trim() === '')
         )
       ) {
         return [
@@ -276,7 +278,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       },
     ]
   }
-  if (node.name === 'ul' || node.name == 'ol') {
+  if (node.name === 'ul' || node.name === 'ol') {
     const liChildren: FrontendLiNode[] = []
     // compat: remove whitespace around list items
     convert(node.children).forEach((child) => {
@@ -303,7 +305,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     const children = wrapSemistructuredTextInP(
       convert(node.children).filter(
         (child) =>
-          !(child.type == FrontendNodeType.Text && child.text.trim() == '')
+          !(child.type === FrontendNodeType.Text && child.text.trim() === '')
       )
     )
     return [
@@ -424,8 +426,8 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     }
     // compat: handle empty tag
     if (
-      children.length == 0 ||
-      (children.length == 1 &&
+      children.length === 0 ||
+      (children.length === 1 &&
         children[0].type === FrontendNodeType.Text &&
         children[0].text === '')
     ) {
@@ -464,7 +466,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'blockquote') {
     const children = convert(node.children).filter(
       (child) =>
-        !(child.type == FrontendNodeType.Text && child.text.trim() == '')
+        !(child.type === FrontendNodeType.Text && child.text.trim() === '')
     )
     return [
       {
@@ -537,12 +539,12 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
   let resultAppendable = false
   children.forEach((child) => {
     if (
-      child.type == FrontendNodeType.Text ||
-      child.type == 'a' ||
-      child.type == FrontendNodeType.InlineMath
+      child.type === FrontendNodeType.Text ||
+      child.type === 'a' ||
+      child.type === FrontendNodeType.InlineMath
     ) {
       const last = result[result.length - 1]
-      if (resultAppendable && last && last.type == 'p') {
+      if (resultAppendable && last && last.type === 'p') {
         last.children!.push(child)
       } else {
         result.push({ type: FrontendNodeType.P, children: [child] })
@@ -559,9 +561,9 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
 function unwrapSingleMathInline(children: FrontendContentNode[]) {
   return children.map((child) => {
     if (
-      child.type == 'p' &&
-      child.children?.length == 1 &&
-      child.children[0].type == FrontendNodeType.InlineMath
+      child.type === 'p' &&
+      child.children?.length === 1 &&
+      child.children[0].type === FrontendNodeType.InlineMath
     ) {
       // force conversion to math node
       ;(child.children[0] as unknown as FrontendMathNode).type =

@@ -135,7 +135,7 @@ export function Equations({
 }
 
 function hasContent(content: FrontendContentNode[]): boolean {
-  if (content[0]?.type == 'slate-container')
+  if (content[0]?.type === 'slate-container')
     return hasContent(content[0].children ?? [])
-  return content.some((node) => node?.children?.length || node.type == 'math')
+  return content.some((node) => node?.children?.length || node.type === 'math')
 }

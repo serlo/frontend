@@ -36,10 +36,10 @@ export function Multimedia({
         className={clsx(
           'mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2 relative z-10',
           mediaChildIsImage && 'mobile:cursor-zoom-in',
-          width == 25 && 'mobile:w-1/4',
-          width == 50 && 'mobile:w-1/2',
-          width == 75 && 'mobile:w-3/4',
-          width == 100 && 'mobile:w-full'
+          width === 25 && 'mobile:w-1/4',
+          width === 50 && 'mobile:w-1/2',
+          width === 75 && 'mobile:w-3/4',
+          width === 100 && 'mobile:w-full'
         )}
       >
         {renderNested(media, 'media')}

@@ -52,7 +52,7 @@ export function InputExercise({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key == 'Enter') evaluate()
+          if (e.key === 'Enter') evaluate()
         }}
         placeholder={exStrings.yourAnswer}
       />{' '}

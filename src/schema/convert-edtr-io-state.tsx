@@ -210,7 +210,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'highlight') {
-    if (Object.keys(node.state).length == 0) return [] // ignore empty highlight plugin
+    if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
     return [
       {
         type: FrontendNodeType.Code,
@@ -224,7 +224,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const html = converter.makeHtml(node.state)
     // compat: the markdown converter could return all types of content, only use table nodes.
     const children = convertLegacyState(html).children.filter(
-      (child) => child.type == 'table'
+      (child) => child.type === 'table'
     )
     return children
   }

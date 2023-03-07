@@ -11,7 +11,7 @@ import { isRenderedPage } from '@/helper/rendered-page'
 if (!Object.hasOwn) {
   Object.defineProperty(Object, 'hasOwn', {
     value: function (object: object, property: PropertyKey) {
-      if (object == null) {
+      if (object === null) {
         throw new TypeError('Cannot convert undefined or null to object')
       }
       return Object.prototype.hasOwnProperty.call(Object(object), property)
