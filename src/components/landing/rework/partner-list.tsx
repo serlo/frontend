@@ -22,9 +22,9 @@ const partners = [
     padding: 10,
   },
   {
-    name: 'Europäische Kommission',
+    name: 'Europäische Union',
     logo: '/_assets/img/landing/partners/logo_eu.svg',
-    padding: 8,
+    padding: 0,
   },
   {
     name: 'Deloitte',
@@ -70,9 +70,9 @@ export function PartnerList() {
         key={name}
         className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8"
         style={{
-          opacity: '0.6',
-          filter: 'grayscale(1)',
-          mixBlendMode: 'multiply',
+          // opacity: '0.6',
+          // filter: 'grayscale(1)',
+          // mixBlendMode: 'multiply',
           paddingTop: `${padding}px`,
           paddingBottom: `${padding}px`,
         }}

@@ -24,7 +24,7 @@ export function EditorPresentation() {
             'Serlo Editor: Seamless Creation of Digital Learning Resources',
         }}
       />
-      <header className="px-side lg:px-side-lg pt-6 sm:flex sm:justify-between">
+      <header className="px-side lg:px-side-lg pt-6 pb-8">
         <Logo />
         {renderSupporterLogo()}
       </header>
@@ -358,17 +358,33 @@ export function EditorPresentation() {
 
   function renderSupporterLogo() {
     const { padding, logo, name } = partners[0]
+
+    const euLogo = {
+      name: 'European Union',
+      logo: '/_assets/img/landing/partners/logo_eu.svg',
+      padding: 2,
+    }
     return (
-      <img
-        className="hidden sm:block sm:max-h-[6rem]"
-        style={{
-          paddingTop: `${padding}px`,
-          paddingBottom: `${padding}px`,
-        }}
-        src={logo}
-        alt={`Logo von ${name}`}
-        title={name}
-      />
+      <div className="hidden sm:block sm:w-28 sm:absolute sm:right-8 sm:top-5">
+        <img
+          className="sm:ml-auto"
+          style={{
+            paddingTop: `${padding}px`,
+            paddingBottom: `${padding}px`,
+          }}
+          src={logo}
+          alt={`Logo von ${name}`}
+        />
+        <img
+          className="sm:ml-auto sm:-mt-8"
+          style={{
+            paddingTop: `3px`,
+            paddingBottom: `3px`,
+          }}
+          src={euLogo.logo}
+          alt={`Logo von ${euLogo.name}`}
+        />
+      </div>
     )
   }
 }
