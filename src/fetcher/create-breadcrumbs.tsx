@@ -15,6 +15,17 @@ type TaxonomyTermNodes = Extract<
   { __typename: 'Article' }
 >['taxonomyTerms']['nodes']
 
+function countParents(taxonomyPath: TaxonomyTermNodes[0]) {
+  function count(current: RecursiveTree): number {
+    if (current.parent) {
+      return count(current.parent) + 1
+    } else {
+      return 0
+    }
+  }
+  return count(taxonomyPath as RecursiveTree)
+}
+
 export function taxonomyParentsToRootToBreadcrumbsData(
   taxonomyPath: TaxonomyTermNodes[0] | undefined,
   instance: Instance
@@ -109,20 +120,19 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
     instance: Instance
   ) {
     if (taxonomyPaths === undefined) return undefined
-    const breadcrumbCandidates = taxonomyPaths.map((candidate) =>
-      taxonomyParentsToRootToBreadcrumbsData(candidate, instance)
-    )
-    let breadcrumbs
+    let mainTax
+    let count = -1
 
     // select first shortest taxonomy path
-    for (const path of breadcrumbCandidates) {
+    for (const path of taxonomyPaths) {
       if (!path) continue
-      if (!breadcrumbs || breadcrumbs.length > path.length) {
-        breadcrumbs = path
+      if (count === -1 || count > countParents(path)) {
+        mainTax = path
+        count = countParents(mainTax)
       }
     }
 
-    return breadcrumbs
+    return taxonomyParentsToRootToBreadcrumbsData(mainTax, instance)
   }
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
