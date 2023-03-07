@@ -308,7 +308,10 @@ export interface FrontendSolutionNode {
 
 export interface TaskEdtrState {
   content: FrontendContentNode[] // edtr-io plugin "exercise"
-  interactive?: EdtrPluginScMcExercise | EdtrPluginInputExercise
+  interactive?:
+    | EdtrPluginScMcExercise
+    | EdtrPluginInputExercise
+    | EdtrPluginH5pExercise
 }
 
 export interface SolutionEdtrState {
@@ -407,6 +410,11 @@ export interface FrontendPageLayoutNode {
 export type FrontendPageTeamNode = PageTeamRendererProps & {
   type: FrontendNodeType.PageTeam
   children?: undefined
+}
+
+export interface EdtrPluginH5pExercise {
+  plugin: 'h5p' // edtr-io plugin (directly used in exercise)
+  state: string
 }
 
 export type FrontendVoidNode =

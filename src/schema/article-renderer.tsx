@@ -20,7 +20,6 @@ import { Lazy } from '@/components/content/lazy'
 import type { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { SerloTable } from '@/components/content/serlo-table'
-import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
@@ -385,13 +384,6 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.Anchor) {
-    const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
-
-    if (match) {
-      const id = match[1]
-      return <Snack id={parseInt(id)} />
-    }
-
     return (
       <>
         <a id={element.id} />

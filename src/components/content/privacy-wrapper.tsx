@@ -1,3 +1,4 @@
+import { faFaceGrinStars } from '@fortawesome/free-regular-svg-icons'
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useEffect } from 'react'
@@ -16,7 +17,7 @@ interface PrivacyWrapperProps {
   children: JSX.Element
   className?: string
   placeholder?: JSX.Element
-  type: 'video' | 'applet' | 'twingle'
+  type: 'video' | 'applet' | 'twingle' | 'h5p'
   provider: ExternalProvider
   embedUrl?: string
   twingleCallback?: () => void
@@ -36,7 +37,7 @@ export function PrivacyWrapper({
   const [showIframe, setShowIframe] = useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
   const { checkConsent, giveConsent } = useConsent()
-  const consentGiven = checkConsent(provider)
+  const [consentGiven, setConsentGiven] = useState(false)
 
   const { strings } = useInstanceData()
 
@@ -56,9 +57,11 @@ export function PrivacyWrapper({
   }
 
   useEffect(() => {
+    const consentGiven = checkConsent(provider)
     if (isTwingle && twingleCallback && consentGiven) {
       confirmLoad()
     }
+    setConsentGiven(consentGiven)
     // only run on first load
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -84,6 +87,7 @@ export function PrivacyWrapper({
       provider: provider,
     })
     if (isTwingle && showIframe) return null
+    if (type == 'h5p' && showIframe) return null
 
     const previewImageUrl = isTwingle
       ? '/_assets/img/donations-form.png'
@@ -133,6 +137,8 @@ export function PrivacyWrapper({
                   ? faSpinner
                   : type === 'twingle'
                   ? faHeart
+                  : type == 'h5p'
+                  ? faFaceGrinStars
                   : entityIconMapping[type]
               }
             />{' '}

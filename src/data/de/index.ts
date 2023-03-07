@@ -176,7 +176,8 @@ export const instanceData = {
       text: "Mit einem Klick auf Bild oder Button oben stimmst du zu, dass externe Inhalte von %provider% geladen werden. Dabei können persönliche Daten zu diesem Service übertragen werden – entsprechend unserer %privacypolicy%.",
       video: "Video abspielen von %provider%",
       applet: "Applet laden von %provider%",
-      twingle: "Spendenformular laden"
+      twingle: "Spendenformular laden",
+      h5p: "Interaktiven Inhalt laden"
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
@@ -773,6 +774,8 @@ export const loggedInData = {
         choiceExercise: "Auswahlaufgabe",
         addInputExercise: "Eingabefeld hinzufügen",
         inputExercise: "Eingabefeld",
+        addH5pExercise: 'H5P-Inhalt hinzufügen',
+        h5pExercise: 'H5P-Inhalt',
         addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
         changeInteractive: "Interaktives Element ändern",
         removeInteractive: "Interaktives Element entfernen"
@@ -973,14 +976,14 @@ export const kratosMailStrings = {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
 versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
- 
+
 Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}
 
 Das Serlo-Team wünscht dir viel Erfolg!`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
- 
+
 <p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
     },
@@ -1011,7 +1014,7 @@ Sonst kannst du diese Mail einfach ignorieren.
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
 wunderbar dich auf serlo.org zu haben 🎉
-      
+
 Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 

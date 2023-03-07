@@ -16,11 +16,14 @@ import { PropsWithChildren, useState } from 'react'
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
+import { isProduction } from '@/helper/is-production'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),
   interactive: optional(
-    child<'scMcExercise' | 'inputExercise'>({ plugin: 'scMcExercise' })
+    child<'scMcExercise' | 'inputExercise' | 'h5p'>({
+      plugin: 'scMcExercise',
+    })
   ),
 })
 
@@ -38,7 +41,7 @@ const ButtonContainer = styled.div({
 })
 
 const interactivePlugins: {
-  name: 'scMcExercise' | 'inputExercise'
+  name: 'scMcExercise' | 'inputExercise' | 'h5p'
   addLabel: (editorStrings: LoggedInData['strings']['editor']) => string
   title: (editorStrings: LoggedInData['strings']['editor']) => string
 }[] = [
@@ -61,6 +64,19 @@ const interactivePlugins: {
     },
   },
 ]
+
+// make it deployable, but only visible on staging
+if (!isProduction) {
+  interactivePlugins.push({
+    name: 'h5p',
+    addLabel(editorStrings) {
+      return editorStrings.exercise.addH5pExercise
+    },
+    title(editorStrings) {
+      return editorStrings.exercise.h5pExercise
+    },
+  })
+}
 
 const InlineOptionsWrapper = styled.div({
   position: 'absolute',
