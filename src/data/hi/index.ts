@@ -176,7 +176,8 @@ export const instanceData = {
       text: "ऊपर की छवि या बटन पर क्लिक करके आप सहमत होते हैं कि%provider%  से बाहरी सामग्री लोड हो जाएगी। इसके अलावा व्यक्तिगत डेटा हमारे% privacypolicy% के अनुसार इस सेवा में स्थानांतरित किया जा सकता है।",
       video: "से वीडियो चलाएं %provider%",
       applet: "%provider% से लोड एप्लेट ",
-      twingle: "लोड दान प्रपत्र"
+      twingle: "लोड दान प्रपत्र",
+      h5p: 'Load Interactive Content'
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
@@ -773,6 +774,8 @@ export const loggedInData = {
         choiceExercise: 'Choice exercise',
         addInputExercise: 'Add input exercise',
         inputExercise: 'Input exercise',
+        addH5pExercise: 'Add h5p exercise',
+        h5pExercise: 'H5p exercise',
         addOptionalInteractiveEx: 'Add an optional interactive exercise:',
         changeInteractive: 'Change interactive element',
         removeInteractive: 'Remove interactive element'
