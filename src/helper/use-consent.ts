@@ -5,6 +5,7 @@ export enum ExternalProvider {
   GeoGebra = 'GeoGebra',
   Twingle = 'Twingle',
   GoogleSearch = 'GoogleSearch',
+  H5p = 'H5P',
 }
 
 export function useConsent() {

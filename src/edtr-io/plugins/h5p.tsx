@@ -40,8 +40,10 @@ export const H5pPlugin: EditorPlugin<H5pPluginState> = {
 export function H5pEditor(props: H5pProps) {
   const { state } = props
 
-  const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>('edit')
-  const [url, setUrl] = useState('')
+  const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>(
+    state.value ? 'preview' : 'edit'
+  )
+  const [url, setUrl] = useState(state.value ? state.value : '')
 
   const [error, setError] = useState('')
 

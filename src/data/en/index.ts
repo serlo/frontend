@@ -183,6 +183,7 @@ export const instanceData = {
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
+      h5p: 'Load Interactive Content'
     },
     comments: {
       question: 'Do you have a question?',
