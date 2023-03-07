@@ -33,7 +33,7 @@ export function HighlightEditor(props: HighlightProps) {
 
   const edit = focused && editable
   const [throttledEdit, setEditThrottled] = useState(edit)
-  if (edit != throttledEdit) {
+  if (edit !== throttledEdit) {
     if (!edit) {
       setTimeout(() => {
         setEditThrottled(false)

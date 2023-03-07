@@ -67,7 +67,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       const parentPlugin = getParent(props.id)(store.getState())
 
       if (
-        parentPlugin == null ||
+        parentPlugin === null ||
         serializeDocument(parentPlugin.id)(store.getState())?.plugin !== 'rows'
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'

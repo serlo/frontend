@@ -49,7 +49,7 @@ export const languages: Instance[] = Object.values(Instance)
 
 export function parseLanguageSubfolder(alias: string) {
   for (const lang of languages) {
-    if (alias.startsWith(`/${lang}/`) || alias == `/${lang}`) {
+    if (alias.startsWith(`/${lang}/`) || alias === `/${lang}`) {
       const subalias = alias.substring(3)
       return { alias: subalias === '' ? '/' : subalias, instance: lang }
     }
@@ -71,15 +71,15 @@ export function getInstanceDataByLang(lang: Instance) {
   const enData = enInstanceData
 
   const data =
-    lang == Instance.De
+    lang === Instance.De
       ? deInstanceData
-      : lang == Instance.Es
+      : lang === Instance.Es
       ? esInstanceData
-      : lang == Instance.Fr
+      : lang === Instance.Fr
       ? frInstanceData
-      : lang == Instance.Ta
+      : lang === Instance.Ta
       ? taInstanceData
-      : lang == Instance.Hi
+      : lang === Instance.Hi
       ? hiInstanceData
       : enInstanceData
 
@@ -90,15 +90,15 @@ export function getServerSideStrings(lang: string) {
   const enData = enServerSideStrings
 
   const data =
-    lang == Instance.De
+    lang === Instance.De
       ? deServerSideStrings
-      : lang == Instance.Es
+      : lang === Instance.Es
       ? esServerSideStrings
-      : lang == Instance.Fr
+      : lang === Instance.Fr
       ? frServerSideStrings
-      : lang == Instance.Ta
+      : lang === Instance.Ta
       ? taServerSideStrings
-      : lang == Instance.Hi
+      : lang === Instance.Hi
       ? hiServerSideStrings
       : enServerSideStrings
 
@@ -109,15 +109,15 @@ export function getLandingData(lang: string) {
   const enData = enInstanceLandingData
 
   const data =
-    lang == Instance.De
+    lang === Instance.De
       ? deInstanceLandingData
-      : lang == Instance.Es
+      : lang === Instance.Es
       ? esInstanceLandingData
-      : lang == Instance.Fr
+      : lang === Instance.Fr
       ? frInstanceLandingData
-      : lang == Instance.Ta
+      : lang === Instance.Ta
       ? taInstanceLandingData
-      : lang == Instance.Hi
+      : lang === Instance.Hi
       ? hiInstanceLandingData
       : enInstanceLandingData
 
@@ -128,15 +128,15 @@ export function getLoggedInData(lang: string) {
   const enData = enLoggedInData
 
   const data =
-    lang == Instance.De
+    lang === Instance.De
       ? deLoggedInData
-      : lang == Instance.Es
+      : lang === Instance.Es
       ? esLoggedInData
-      : lang == Instance.Fr
+      : lang === Instance.Fr
       ? frLoggedInData
-      : lang == Instance.Ta
+      : lang === Instance.Ta
       ? taLoggedInData
-      : lang == Instance.Hi
+      : lang === Instance.Hi
       ? hiLoggedInData
       : enLoggedInData
 
@@ -147,15 +147,15 @@ export function getKratosMailStrings(lang: string) {
   const enData = enKratosMailStrings
 
   const data =
-    lang == Instance.De
+    lang === Instance.De
       ? deKratosMailStrings
-      : lang == Instance.Es
+      : lang === Instance.Es
       ? esKratosMailStrings
-      : lang == Instance.Fr
+      : lang === Instance.Fr
       ? frKratosMailStrings
-      : lang == Instance.Ta
+      : lang === Instance.Ta
       ? taKratosMailStrings
-      : lang == Instance.Hi
+      : lang === Instance.Hi
       ? hiKratosMailStrings
       : enKratosMailStrings
 

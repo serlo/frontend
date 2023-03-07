@@ -47,7 +47,7 @@ export function H5pEditor(props: H5pProps) {
 
   const [error, setError] = useState('')
 
-  if (mode == 'edit' || mode == 'loading') {
+  if (mode === 'edit' || mode === 'loading') {
     return (
       <>
         <h2>Einfügen von H5P-Inhalt</h2>
@@ -118,7 +118,7 @@ export function H5pEditor(props: H5pProps) {
         <p>
           <button
             className="mt-2 serlo-button bg-brandgreen-300 disabled:bg-gray-300 disabled:cursor-default"
-            disabled={!!(!url || error || mode == 'loading')}
+            disabled={!!(!url || error || mode === 'loading')}
             onClick={() => {
               setMode('loading')
               void (async () => {
@@ -153,7 +153,7 @@ export function H5pEditor(props: H5pProps) {
               })()
             }}
           >
-            {mode == 'loading' ? '... wird geladen ...' : 'Einfügen'}
+            {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
           </button>
         </p>
         <p className="mt-4 text-gray-500 text-sm">

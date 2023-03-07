@@ -47,7 +47,7 @@ export function useMutationFetch() {
     if (auth === null) return handleError('UNAUTHENTICATED', errorStrings)
     try {
       const result =
-        window.location.hostname == 'localhost'
+        window.location.hostname === 'localhost'
           ? await executeQueryLocally()
           : await executeQuery()
       if (Object.hasOwn(result, 'entity')) {
@@ -105,15 +105,15 @@ function handleError(
   // eslint-disable-next-line no-console
   console.error(e)
 
-  if (type == 'BAD_USER_INPUT') {
+  if (type === 'BAD_USER_INPUT') {
     triggerSentry({ message: 'API(mutation): bad user input' })
   }
 
-  if (type == 'UNKNOWN') {
+  if (type === 'UNKNOWN') {
     triggerSentry({ message: 'API(mutation): unknown error' })
   }
 
-  if (type == 'UNAUTHENTICATED') {
+  if (type === 'UNAUTHENTICATED') {
     // while this makes sense it can also increases the chance of lost changes when using the edtr.
     // let's try without for now
     // csrReload()

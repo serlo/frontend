@@ -66,7 +66,7 @@ function Content() {
             onClick={() => setShowTypename(typename)}
             className={clsx(
               'mr-2 mb-2.5',
-              showTypename == typename
+              showTypename === typename
                 ? 'serlo-button-blue'
                 : 'serlo-button-light'
             )}

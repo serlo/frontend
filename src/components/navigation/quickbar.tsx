@@ -96,18 +96,18 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     {
-      if (e.key == 'Escape') {
+      if (e.key === 'Escape') {
         setQuery('')
       }
-      if (e.key == 'ArrowDown' || e.key == 'ArrowUp' || e.key == 'Enter') {
-        if (e.key == 'ArrowDown' && sel < results.length) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
+        if (e.key === 'ArrowDown' && sel < results.length) {
           setSel(sel + 1)
         }
-        if (e.key == 'ArrowUp' && sel >= 0) {
+        if (e.key === 'ArrowUp' && sel >= 0) {
           setSel(sel - 1)
         }
-        if (e.key == 'Enter') {
-          if (sel == results.length) goToSearch()
+        if (e.key === 'Enter') {
+          if (sel === results.length) goToSearch()
           if (sel >= 0 && sel < results.length) {
             goToResult(results[sel].entry.id, e)
           }
@@ -179,7 +179,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                 onClick={(e) => goToResult(x.entry.id, e)}
                 href={`/${x.entry.id}`}
               >
-                <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
+                <p className={clsx('my-2', { 'bg-brand-50': i === sel })}>
                   <span className="text-sm text-gray-700">
                     {x.entry.path.join(' > ')}
                     {x.entry.path.length > 0 ? ' > ' : ''}
@@ -197,7 +197,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
             ))}
             <p
               className={clsx('text-lg mt-2 text-gray-800', {
-                'bg-brand-50': sel == results.length,
+                'bg-brand-50': sel === results.length,
               })}
             >
               <a

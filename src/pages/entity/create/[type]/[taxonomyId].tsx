@@ -95,7 +95,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
   )
 
   const isTestArea =
-    breadcrumbsData && breadcrumbsData.some((entry) => entry.id == 106082)
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.id === 106082)
 
   return {
     props: {

@@ -162,10 +162,10 @@ function handleSemistructedContentOfPForListItems(
 ) {
   // generate children, split text blocks at new lines
   const children = input.flatMap((child) => {
-    if (child.type == FrontendNodeType.Text && child.text.includes('\n')) {
+    if (child.type === FrontendNodeType.Text && child.text.includes('\n')) {
       return child.text.split('\n').flatMap((text, i) => {
         const value: FrontendTextNode[] = []
-        if (i != 0) {
+        if (i !== 0) {
           value.push({ type: FrontendNodeType.Text, text: '%%%BARRIER%%%' })
         }
         if (text) {
@@ -182,19 +182,19 @@ function handleSemistructedContentOfPForListItems(
   let resultAppendable = false
   children.forEach((child) => {
     if (
-      child.type == FrontendNodeType.Text ||
-      child.type == FrontendNodeType.A ||
-      child.type == FrontendNodeType.InlineMath
+      child.type === FrontendNodeType.Text ||
+      child.type === FrontendNodeType.A ||
+      child.type === FrontendNodeType.InlineMath
     ) {
       const last = result[result.length - 1]
       if (
-        child.type == FrontendNodeType.Text &&
-        child.text == '%%%BARRIER%%%'
+        child.type === FrontendNodeType.Text &&
+        child.text === '%%%BARRIER%%%'
       ) {
         resultAppendable = false
         return
       }
-      if (resultAppendable && last && last.type == FrontendNodeType.SlateP) {
+      if (resultAppendable && last && last.type === FrontendNodeType.SlateP) {
         last.children!.push(child)
       } else {
         result.push({ type: FrontendNodeType.SlateP, children: [child] })
@@ -212,7 +212,7 @@ function handleSemistructedContentOfPForListItems(
 function handleSemistructedContentOfP(
   input: FrontendContentNode[]
 ): FrontendContentNode[] {
-  if (input.length == 0) {
+  if (input.length === 0) {
     return [{ type: FrontendNodeType.SlateP, children: [] }]
   }
   // group inline nodes together in p
@@ -220,12 +220,12 @@ function handleSemistructedContentOfP(
   let resultAppendable = false
   input.forEach((child) => {
     if (
-      child.type == FrontendNodeType.Text ||
-      child.type == FrontendNodeType.A ||
-      child.type == FrontendNodeType.InlineMath
+      child.type === FrontendNodeType.Text ||
+      child.type === FrontendNodeType.A ||
+      child.type === FrontendNodeType.InlineMath
     ) {
       const last = result[result.length - 1]
-      if (resultAppendable && last && last.type == FrontendNodeType.SlateP) {
+      if (resultAppendable && last && last.type === FrontendNodeType.SlateP) {
         last.children!.push(child)
       } else {
         result.push({ type: FrontendNodeType.SlateP, children: [child] })

@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps<UserProps> = async (context) => {
   // /user/{id}/{name}
   const path = '/user/' + (context.params?.userslug as string[]).join('/')
   const pageData = await requestUser(path, context.locale ?? 'de')
-  if (pageData.kind == 'not-found') {
+  if (pageData.kind === 'not-found') {
     return { notFound: true }
   }
   return {

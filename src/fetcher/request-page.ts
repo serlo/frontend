@@ -69,7 +69,7 @@ export async function requestPage(
 
   const secondaryMenuData = createSecondaryMenu(uuid, instance)
   const breadcrumbsData = createBreadcrumbs(uuid, instance)
-  const horizonData = instance == Instance.De ? createHorizon() : undefined
+  const horizonData = instance === Instance.De ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias)
@@ -167,7 +167,7 @@ export async function requestPage(
       },
       newsletterPopup: false,
       breadcrumbsData:
-        uuid.__typename == UuidType.GroupedExercise
+        uuid.__typename === UuidType.GroupedExercise
           ? [
               {
                 label:

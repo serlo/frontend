@@ -67,7 +67,7 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
 
   function getToolsArray() {
     if (!data) return []
-    const noSolution = data.type != ExerciseInlineType.Solution
+    const noSolution = data.type !== ExerciseInlineType.Solution
     return [
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),

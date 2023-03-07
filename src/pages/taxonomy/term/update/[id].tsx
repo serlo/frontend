@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
     | string[]
     | undefined)
 
-  if (result.errorType == 'failed-fetch') {
+  if (result.errorType === 'failed-fetch') {
     return { notFound: true }
   }
 

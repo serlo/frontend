@@ -8,7 +8,7 @@ import { getLandingData } from '@/helper/feature-i18n'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 export default renderedPageNoHooks<LandingProps>(({ pageData }, { router }) => {
-  if (router.locale == 'de') {
+  if (router.locale === 'de') {
     return (
       <FrontendClientBase noContainers noHeaderFooter>
         <LandingDE data={pageData.landingData} />

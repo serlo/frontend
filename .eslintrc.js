@@ -24,6 +24,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-console': 'warn',
     'no-warning-comments': 'warn',
+    eqeqeq: ['error', 'always'],
 
     // @typescript-eslint/eslint-plugin
     '@typescript-eslint/ban-ts-comment': 'warn',

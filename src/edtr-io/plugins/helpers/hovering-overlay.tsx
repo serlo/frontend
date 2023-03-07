@@ -69,7 +69,7 @@ export function HoveringOverlay(props: {
     menu.style.opacity = '1'
     const aboveValue = rect.top - menu.offsetHeight - 6
     // if top becomes negative, place menu below
-    setPositionAbove(props.position == 'above' && aboveValue >= 0)
+    setPositionAbove(props.position === 'above' && aboveValue >= 0)
     menu.style.top = `${
       (positionAbove ? aboveValue : rect.bottom + 6) - parentRect.top
     }px`
