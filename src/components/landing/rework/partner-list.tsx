@@ -43,12 +43,13 @@ const partners = [
   },
 ]
 
-export function PartnerList() {
+export function PartnerList({ inContent }: { inContent?: boolean }) {
   return (
     <div
       className={clsx(
         'mt-auto pb-7 flex flex-wrap justify-evenly mx-side',
         'sm:justify-center max-w-5xl sm:mx-auto',
+        inContent && 'sm:ml-0 sm:!justify-start',
         'text-gray-800'
       )}
     >
@@ -68,11 +69,14 @@ export function PartnerList() {
     return (
       <img
         key={name}
-        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8"
+        className={clsx(
+          'max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8',
+          inContent && '!mb-8 sm:pl-0 sm:pr-12'
+        )}
         style={{
-          // opacity: '0.6',
-          // filter: 'grayscale(1)',
-          // mixBlendMode: 'multiply',
+          opacity: inContent ? '1' : '0.6',
+          filter: inContent ? undefined : 'grayscale(1)',
+          mixBlendMode: inContent ? undefined : 'multiply',
           paddingTop: `${padding}px`,
           paddingBottom: `${padding}px`,
         }}

@@ -53,6 +53,7 @@ export enum FrontendNodeType {
   Equations = 'equations',
   PageLayout = 'pageLayout',
   PageTeam = 'pageTeam',
+  PagePartners = 'pagePartners',
 }
 
 export interface FrontendTextNode {
@@ -412,6 +413,11 @@ export type FrontendPageTeamNode = PageTeamRendererProps & {
   children?: undefined
 }
 
+export interface FrontendPagePartnersNode {
+  type: FrontendNodeType.PagePartners
+  children?: undefined
+}
+
 export interface EdtrPluginH5pExercise {
   plugin: 'h5p' // edtr-io plugin (directly used in exercise)
   state: string
@@ -462,6 +468,7 @@ export type FrontendRestrictedElementNode =
   | FrontendExerciseGroupNode
   | FrontendPageLayoutNode
   | FrontendPageTeamNode
+  | FrontendPagePartnersNode
 
 export type FrontendContentNode =
   | FrontendTextNode
