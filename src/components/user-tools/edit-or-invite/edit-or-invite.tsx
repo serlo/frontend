@@ -86,7 +86,7 @@ export function EditOrInvite({
     if (type === UuidType.Page || type === UuidRevType.Page) {
       return canDo(Uuid.create(UuidRevType.Page)) ? url : undefined
     }
-    if (type == UuidType.TaxonomyTerm)
+    if (type === UuidType.TaxonomyTerm)
       return canDo(TaxonomyTerm.set) ? url : undefined
     return url
   }

@@ -13,7 +13,7 @@ export function useConsent() {
 
   const checkConsent = (provider: ExternalProvider) => {
     if (typeof window === 'undefined') return false
-    return localStorage.getItem(getKey(provider)) == '1'
+    return localStorage.getItem(getKey(provider)) === '1'
   }
 
   const giveConsent = (provider: ExternalProvider) => {

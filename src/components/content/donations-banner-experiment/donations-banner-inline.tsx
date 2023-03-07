@@ -79,7 +79,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     // rerole on entity change
   }, [setBanner, id, lang, place])
 
-  if (banner == null) return null
+  if (!banner) return null
 
   return (
     <Lazy slim>
@@ -108,7 +108,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
               },
               { threshold: 0.8 }
             )
-            if (bannerRef.current != null) observer.observe(bannerRef.current)
+            if (bannerRef.current !== null) observer.observe(bannerRef.current)
           }}
           src={banner.imageSrc}
           className="mt-6 px-16 max-w-[18rem] mx-auto sm:mr-0 sm:max-w-[12rem] sm:px-3 scale-x-[-1]"

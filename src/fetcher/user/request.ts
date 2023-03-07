@@ -37,7 +37,7 @@ export async function requestUser(
           return {
             role: role.role,
             instance:
-              role.scope == null || role.scope === Scope.Serlo
+              !role.scope || role.scope === Scope.Serlo
                 ? null
                 : (role.scope.substring('serlo.org:'.length) as Instance),
           }

@@ -61,10 +61,10 @@ export function CheckoutRejectButtons({
       {!isRejected && !isPage ? renderButton('reject') : null}
 
       <ModalWithCloseButton
-        isOpen={modalMode != null}
+        isOpen={modalMode !== null}
         onCloseClick={onCloseClick}
         title={
-          modalMode != null ? strings.revisions[modalMode].title : undefined
+          modalMode !== null ? strings.revisions[modalMode].title : undefined
         }
       >
         {renderModalContent()}
