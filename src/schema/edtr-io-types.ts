@@ -167,6 +167,11 @@ export interface EdtrPluginPageTeam {
   state: StateTypeSerializedType<PageTeamPluginState>
 }
 
+export interface EdtrPluginPagePartners {
+  plugin: 'pagePartners'
+  state: undefined
+}
+
 export type EdtrState =
   | EdtrPluginArticle
   | EdtrPluginGeogebra
@@ -188,6 +193,7 @@ export type EdtrState =
   | EdtrPluginEquations
   | EdtrPluginPageLayout
   | EdtrPluginPageTeam
+  | EdtrPluginPagePartners
 
 export interface UnknownEdtrState {
   plugin: string

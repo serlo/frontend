@@ -54,6 +54,12 @@ const PageTeamAdapter = dynamic(() =>
   )
 )
 
+const PartnerList = dynamic(() =>
+  import('../components/landing/rework/partner-list').then(
+    (mod) => mod.PartnerList
+  )
+)
+
 export function renderArticle(
   value: FrontendContentNode[],
   ...pathPrefix: string[]
@@ -480,5 +486,7 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.PageTeam)
     return <PageTeamAdapter {...element} />
+  if (element.type === FrontendNodeType.PagePartners)
+    return <PartnerList inContent />
   return null
 }

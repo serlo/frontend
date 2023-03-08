@@ -27,6 +27,7 @@ import { createImportantPlugin } from './plugins/important'
 import { injectionPlugin } from './plugins/injection'
 import { layoutPlugin } from './plugins/layout'
 import { createPageLayoutPlugin } from './plugins/page-layout'
+import { pagePartnersPlugin } from './plugins/page-partners'
 import { pageTeamPlugin } from './plugins/page-team'
 import { pasteHackPlugin } from './plugins/paste-hack'
 import { separatorPlugin } from './plugins/separator'
@@ -274,6 +275,7 @@ export function createPlugins({
     layout: layoutPlugin,
     pageLayout: createPageLayoutPlugin(editorStrings),
     pageTeam: pageTeamPlugin,
+    pagePartners: pagePartnersPlugin,
     pasteHack: pasteHackPlugin,
     multimedia: createMultimediaExplanationPlugin({
       explanation: {

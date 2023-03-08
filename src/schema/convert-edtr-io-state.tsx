@@ -301,10 +301,6 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
 
-  if (node.plugin === 'pageTeam') {
-    return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
-  }
-
   if (node.plugin === 'pageLayout') {
     if (node.state.widthPercent === 0) return []
     return [
@@ -316,5 +312,14 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
+
+  if (node.plugin === 'pageTeam') {
+    return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
+  }
+
+  if (node.plugin === 'pagePartners') {
+    return [{ type: FrontendNodeType.PagePartners }]
+  }
+
   return []
 }
