@@ -15,6 +15,17 @@ type TaxonomyTermNodes = Extract<
   { __typename: 'Article' }
 >['taxonomyTerms']['nodes']
 
+function countParents(taxonomyPath: TaxonomyTermNodes[0]) {
+  function count(current: RecursiveTree): number {
+    if (current.parent) {
+      return count(current.parent) + 1
+    } else {
+      return 0
+    }
+  }
+  return count(taxonomyPath as RecursiveTree)
+}
+
 export function taxonomyParentsToRootToBreadcrumbsData(
   taxonomyPath: TaxonomyTermNodes[0] | undefined,
   instance: Instance
@@ -51,11 +62,11 @@ export function taxonomyParentsToRootToBreadcrumbsData(
     } else {
       // check if this breadcrumb is already part of secondary menu
       const matching2 = secondaryMenus.filter((menu) =>
-        menu.entries.some((entry) => entry.id == current.id)
+        menu.entries.some((entry) => entry.id === current.id)
       )
       if (matching2.length > 0) {
         const metaMenuEntry = matching2[0].entries.filter(
-          (menu) => menu.id == current.id
+          (menu) => menu.id === current.id
         )[0]
 
         breadcrumbs.unshift({
@@ -109,26 +120,27 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
     instance: Instance
   ) {
     if (taxonomyPaths === undefined) return undefined
-    const breadcrumbCandidates = taxonomyPaths.map((candidate) =>
-      taxonomyParentsToRootToBreadcrumbsData(candidate, instance)
-    )
-    let breadcrumbs
 
-    // select first shortest taxonomy path
-    for (const path of breadcrumbCandidates) {
+    // we select first shortest taxonomy path as main taxonomy and show it in breadcrumbs
+    // this happens directly on taxonomy parents and is not taking short-cuircuits into account
+    let mainTax
+    let count = -1
+
+    for (const path of taxonomyPaths) {
       if (!path) continue
-      if (!breadcrumbs || breadcrumbs.length > path.length) {
-        breadcrumbs = path
+      if (count === -1 || count > countParents(path)) {
+        mainTax = path
+        count = countParents(mainTax)
       }
     }
 
-    return breadcrumbs
+    return taxonomyParentsToRootToBreadcrumbsData(mainTax, instance)
   }
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
     if (!breadcrumbs) return breadcrumbs
 
-    if (uuid.__typename == UuidType.TaxonomyTerm && breadcrumbs.length > 1) {
+    if (uuid.__typename === UuidType.TaxonomyTerm && breadcrumbs.length > 1) {
       breadcrumbs = breadcrumbs.slice(0, -1) // compat: remove last entry because it is the entry itself
     }
 
@@ -138,7 +150,7 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
       const maxItems = 4
       const overflow = arr.length > maxItems
       const itemsToRemove = arr.length - maxItems
-      const ellipsesItem = overflow && i == 2
+      const ellipsesItem = overflow && i === 2
 
       if (overflow && i > 2 && i < 1 + itemsToRemove) return
       // special case

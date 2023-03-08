@@ -72,7 +72,7 @@ export function CommentArea({
   }
 
   function renderContent() {
-    if (!auth && commentCount == 0) return null
+    if (!auth && commentCount === 0) return null
 
     return (
       <>

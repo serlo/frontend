@@ -176,7 +176,8 @@ export const instanceData = {
       text: 'By clicking on image or button above you agree that external content from %provider% will be loaded. Also personal data may be transferred to this service in accordance with our %privacypolicy%.',
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
-      twingle: 'Load Donation Form'
+      twingle: 'Load Donation Form',
+      h5p: 'Load Interactive Content'
     },
     comments: {
       question: 'Do you have a question?',
@@ -372,6 +373,7 @@ export const instanceData = {
       messages: {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
+        code1010002: 'Sign in with NBP Account',
         code1010013: 'Continue',
         code1040001: 'Register',
         code1040003: 'Continue',
@@ -772,6 +774,8 @@ export const loggedInData = {
         choiceExercise: 'Choice exercise',
         addInputExercise: 'Add input exercise',
         inputExercise: 'Input exercise',
+        addH5pExercise: 'Add h5p exercise',
+        h5pExercise: 'H5p exercise',
         addOptionalInteractiveEx: 'Add an optional interactive exercise:',
         changeInteractive: 'Change interactive element',
         removeInteractive: 'Remove interactive element'

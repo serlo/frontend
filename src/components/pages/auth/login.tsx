@@ -181,9 +181,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
           void router.push(flow.return_to ?? redirection)
           return
         })
-        .catch((e: Error) => {
-          throw e
-        })
     } catch (e: unknown) {
       try {
         await handleFlowError(

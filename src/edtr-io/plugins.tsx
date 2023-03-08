@@ -20,12 +20,14 @@ import { deprecatedPlugin } from './plugins/deprecated'
 import { equationsPlugin } from './plugins/equations'
 import { errorPlugin } from './plugins/error'
 import { exercisePlugin } from './plugins/exercise'
+import { H5pPlugin } from './plugins/h5p'
 import { createHighlightPlugin } from './plugins/highlight'
 import { createImagePlugin } from './plugins/image'
 import { createImportantPlugin } from './plugins/important'
 import { injectionPlugin } from './plugins/injection'
 import { layoutPlugin } from './plugins/layout'
 import { createPageLayoutPlugin } from './plugins/page-layout'
+import { pagePartnersPlugin } from './plugins/page-partners'
 import { pageTeamPlugin } from './plugins/page-team'
 import { pasteHackPlugin } from './plugins/paste-hack'
 import { separatorPlugin } from './plugins/separator'
@@ -234,6 +236,7 @@ export function createPlugins({
         },
       },
     }),
+    h5p: H5pPlugin,
     image: createImagePlugin(),
     important: createImportantPlugin(),
     injection: injectionPlugin,
@@ -272,6 +275,7 @@ export function createPlugins({
     layout: layoutPlugin,
     pageLayout: createPageLayoutPlugin(editorStrings),
     pageTeam: pageTeamPlugin,
+    pagePartners: pagePartnersPlugin,
     pasteHack: pasteHackPlugin,
     multimedia: createMultimediaExplanationPlugin({
       explanation: {

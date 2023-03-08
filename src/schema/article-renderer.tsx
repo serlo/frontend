@@ -20,7 +20,6 @@ import { Lazy } from '@/components/content/lazy'
 import type { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { SerloTable } from '@/components/content/serlo-table'
-import { Snack } from '@/components/content/snack'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
@@ -55,6 +54,12 @@ const PageTeamAdapter = dynamic(() =>
   )
 )
 
+const PartnerList = dynamic(() =>
+  import('../components/landing/rework/partner-list').then(
+    (mod) => mod.PartnerList
+  )
+)
+
 export function renderArticle(
   value: FrontendContentNode[],
   ...pathPrefix: string[]
@@ -70,7 +75,7 @@ export function renderNested(
   return _renderArticle(
     value,
     false,
-    previousPath.concat(pathPrefix.length == 0 ? ['nested'] : pathPrefix)
+    previousPath.concat(pathPrefix.length === 0 ? ['nested'] : pathPrefix)
   )
 }
 
@@ -385,13 +390,6 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.Anchor) {
-    const match = /\{\{snack ([0-9]+)\}\}/.exec(element.id)
-
-    if (match) {
-      const id = match[1]
-      return <Snack id={parseInt(id)} />
-    }
-
     return (
       <>
         <a id={element.id} />
@@ -488,5 +486,7 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.PageTeam)
     return <PageTeamAdapter {...element} />
+  if (element.type === FrontendNodeType.PagePartners)
+    return <PartnerList inContent />
   return null
 }

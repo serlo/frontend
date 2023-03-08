@@ -124,7 +124,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     return [...allCategories].map((category) => {
       if (!(category in taxonomyData)) return null
       const links = taxonomyData[category]
-      if (!links || !links.length || typeof links == 'boolean') return null
+      if (!links || !links.length || typeof links === 'boolean') return null
 
       return renderCategory(category, exToTaxonomyLinks(links))
     })

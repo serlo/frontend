@@ -36,7 +36,7 @@ export function createExercise(
 
       if (taskState.content) {
         taskState.content = convert(taskState.content)
-        if (taskState.interactive?.plugin == 'scMcExercise') {
+        if (taskState.interactive?.plugin === 'scMcExercise') {
           taskState.interactive.state.answers.forEach((answer, i: number) => {
             answer.feedback = convert(answer.feedback)
             answer.content = convert(answer.content)
@@ -45,7 +45,7 @@ export function createExercise(
           taskState.interactive.state.answers = shuffleArray(
             taskState.interactive.state.answers
           )
-        } else if (taskState.interactive?.plugin == 'inputExercise') {
+        } else if (taskState.interactive?.plugin === 'inputExercise') {
           taskState.interactive.state.answers.forEach((answer) => {
             answer.feedback = convert(answer.feedback)
           })
@@ -88,7 +88,7 @@ function createSolutionData(solution: BareExercise['solution']) {
       const contentJson = JSON.parse(content) as
         | { plugin: 'rows' }
         | { plugin: ''; state: SolutionEdtrState }
-      if (contentJson.plugin == 'rows') {
+      if (contentJson.plugin === 'rows') {
         // half converted, like 189579
         solutionLegacy = convert(contentJson as ConvertNode)
       } else {

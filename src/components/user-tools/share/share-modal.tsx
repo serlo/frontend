@@ -109,7 +109,9 @@ export function ShareModal({
     const pathName = window.location.pathname
     const fileName = `serlo__${pathName.split('/').pop() ?? id}.pdf`
     const host =
-      window.location.hostname == 'localhost' ? `https://${lang}.serlo.org` : ''
+      window.location.hostname === 'localhost'
+        ? `https://${lang}.serlo.org`
+        : ''
 
     return {
       title: strings.share[noSolutions ? 'pdfNoSolutions' : 'pdf'],

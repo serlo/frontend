@@ -53,6 +53,7 @@ export enum FrontendNodeType {
   Equations = 'equations',
   PageLayout = 'pageLayout',
   PageTeam = 'pageTeam',
+  PagePartners = 'pagePartners',
 }
 
 export interface FrontendTextNode {
@@ -308,7 +309,10 @@ export interface FrontendSolutionNode {
 
 export interface TaskEdtrState {
   content: FrontendContentNode[] // edtr-io plugin "exercise"
-  interactive?: EdtrPluginScMcExercise | EdtrPluginInputExercise
+  interactive?:
+    | EdtrPluginScMcExercise
+    | EdtrPluginInputExercise
+    | EdtrPluginH5pExercise
 }
 
 export interface SolutionEdtrState {
@@ -409,6 +413,16 @@ export type FrontendPageTeamNode = PageTeamRendererProps & {
   children?: undefined
 }
 
+export interface FrontendPagePartnersNode {
+  type: FrontendNodeType.PagePartners
+  children?: undefined
+}
+
+export interface EdtrPluginH5pExercise {
+  plugin: 'h5p' // edtr-io plugin (directly used in exercise)
+  state: string
+}
+
 export type FrontendVoidNode =
   | FrontendInlineMathNode
   | FrontendMathNode
@@ -454,6 +468,7 @@ export type FrontendRestrictedElementNode =
   | FrontendExerciseGroupNode
   | FrontendPageLayoutNode
   | FrontendPageTeamNode
+  | FrontendPagePartnersNode
 
 export type FrontendContentNode =
   | FrontendTextNode

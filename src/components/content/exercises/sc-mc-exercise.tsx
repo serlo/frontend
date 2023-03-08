@@ -67,7 +67,7 @@ export function ScMcExercise({
                     onFocus={() => setFocused(i)}
                     onBlur={() => setFocused(undefined)}
                     onKeyDown={(e) => {
-                      if (e.key == 'Enter') setShowFeedback(true)
+                      if (e.key === 'Enter') setShowFeedback(true)
                     }}
                   />
                   <label

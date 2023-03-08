@@ -35,12 +35,12 @@ const legacyLinks = [
 export function isLegacyLink(_href: string) {
   // compat: this is a special frontend route or force frontend use
   if (
-    _href == '/user/notifications' ||
-    _href == '/user/settings' ||
-    _href == '/entity/unrevised' ||
-    _href == '/uuid/recycle-bin' ||
-    _href == '/pages' ||
-    _href == '/authorization/roles' ||
+    _href === '/user/notifications' ||
+    _href === '/user/settings' ||
+    _href === '/entity/unrevised' ||
+    _href === '/uuid/recycle-bin' ||
+    _href === '/pages' ||
+    _href === '/authorization/roles' ||
     _href.startsWith('/taxonomy/term/update/')
   ) {
     return false

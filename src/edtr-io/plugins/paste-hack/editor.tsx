@@ -67,7 +67,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       const parentPlugin = getParent(props.id)(store.getState())
 
       if (
-        parentPlugin == null ||
+        parentPlugin === null ||
         serializeDocument(parentPlugin.id)(store.getState())?.plugin !== 'rows'
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'
@@ -113,6 +113,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
             'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
           )}
+          // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}
         />
         <button
