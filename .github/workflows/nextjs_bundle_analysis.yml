@@ -1,10 +1,14 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+# Info: This workflow is generated with npx -p github:hashicorp/nextjs-bundle-analysis generate
+
 name: 'Next.js Bundle Analysis'
 
 on:
   pull_request:
   push:
     branches:
-      - staging # change this if your default branch is named differently
+      - main # change this if your default branch is named differently
   workflow_dispatch:
 
 defaults:
@@ -12,19 +16,33 @@ defaults:
     # change this if your nextjs app does not live at the root of the repo
     working-directory: ./
 
+permissions:
+  contents: read # for checkout repository
+  actions: read # for fetching base branch bundle stats
+  pull-requests: write # for comments
+
 jobs:
   analyze:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up node
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: 18
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
+
+      # If pnpm is used, you need to switch the previous step with the following one. pnpm does not create a package-lock.json
+      # so the step above will fail to pull dependencies
+      # - uses: pnpm/action-setup@v2
+      #   name: Install pnpm
+      #   id: pnpm-install
+      #   with:
+      #     version: 7
+      #     run_install: true
 
       - name: Restore next build
         uses: actions/cache@v3
@@ -78,6 +96,15 @@ jobs:
         if: success() && github.event.number
         run: ls -laR .next/analyze/base && npx -p nextjs-bundle-analysis compare
 
+      - name: Get Comment Body
+        id: get-comment-body
+        if: success() && github.event.number
+        # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
+        run: |
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$(cat .next/analyze/__bundle_analysis_comment.txt)" >> $GITHUB_OUTPUT
+          echo EOF >> $GITHUB_OUTPUT
+
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         if: success() && github.event.number
@@ -91,13 +118,13 @@ jobs:
         if: success() && github.event.number && steps.fc.outputs.comment-id == 0
         with:
           issue-number: ${{ github.event.number }}
-          body-file: .next/analyze/__bundle_analysis_comment.txt
+          body: ${{ steps.get-comment-body.outputs.body }}
 
       - name: Update Comment
         uses: peter-evans/create-or-update-comment@v2
         if: success() && github.event.number && steps.fc.outputs.comment-id != 0
         with:
           issue-number: ${{ github.event.number }}
-          body-file: .next/analyze/__bundle_analysis_comment.txt
+          body: ${{ steps.get-comment-body.outputs.body }}
           comment-id: ${{ steps.fc.outputs.comment-id }}
           edit-mode: replace
