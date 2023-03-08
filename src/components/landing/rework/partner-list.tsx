@@ -71,7 +71,7 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
         className={clsx(
           'max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 sm:px-8',
           inContent ? 'mb-8 sm:pl-4' : 'mb-16',
-          'opacity-75 hover:opacity-100 transition-opacity'
+          'opacity-80'
         )}
         style={{
           paddingTop: `${padding}px`,
