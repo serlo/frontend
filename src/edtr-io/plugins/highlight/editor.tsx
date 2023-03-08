@@ -14,7 +14,7 @@ export function HighlightEditor(props: HighlightProps) {
     if (!edit) {
       setTimeout(() => {
         setEditThrottled(false)
-      }, 500)
+      }, 100)
     } else {
       setEditThrottled(true)
     }
@@ -26,6 +26,7 @@ export function HighlightEditor(props: HighlightProps) {
         value={state.code.value}
         name="text"
         placeholder={i18n.code.placeholder}
+        spellCheck={false}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           state.code.set(e.target.value)
         }}
@@ -54,16 +55,11 @@ export function HighlightEditor(props: HighlightProps) {
           <select
             onChange={(e) => state.language.set(e.target.value)}
             className="cursor-pointer"
+            value={state.language.value}
           >
             {languages.map((language) => {
               return (
-                <option
-                  key={language}
-                  value={language}
-                  selected={
-                    state.language.value === language ? true : undefined
-                  }
-                >
+                <option key={language} value={language}>
                   {language}
                 </option>
               )
