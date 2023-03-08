@@ -51,6 +51,8 @@ export function HighlightEditor(props: HighlightProps) {
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           state.code.set(e.target.value)
         }}
+        // make sure editor does not create new plugin on enter etc
+        onKeyDown={(e) => e.stopPropagation()}
       >
         {state.code.value}
       </Textarea>
