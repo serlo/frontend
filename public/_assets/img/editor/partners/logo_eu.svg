@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 793.33331 1122.6667" height="1122.6667" width="793.33331"
+    xml:space="preserve" version="1.1">
+    <defs>
+        <clipPath id="clipPath20" clipPathUnits="userSpaceOnUse">
+            <path id="path18" d="M 0,169.5915 H 595 V 672.4084 H 0 Z" />
+        </clipPath>
+    </defs>
+    <g transform="matrix(1.3333333,0,0,-1.3333333,0,1122.6667)" id="g10">
+        <g id="g12" />
+        <g id="g14">
+            <g clip-path="url(#clipPath20)" id="g16">
+                <path id="path22" style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="M 104.5356,372.0654 H 488.2477 V 632.7047 H 104.5356 Z" />
+                <path id="path24" style="fill:#254aa5;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="M 111.9145,379.5867 H 480.869 V 625.5605 H 111.9145 Z" />
+                <path id="path26" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 288.531,571.9666 7.7853,5.6818 7.7853,-5.6818 -2.9625,9.189 7.9068,5.6818 h -9.7462 l -2.9834,9.2979 -2.9834,-9.3084 -9.7421,0.0105 7.9026,-5.6818 -2.9624,-9.189" />
+                <path id="path28" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 248.2407,561.1435 7.7853,5.6818 7.7811,-5.6818 -2.9583,9.1868 7.9026,5.6819 h -9.7462 l -2.9834,9.3105 -2.9834,-9.321 -9.7421,0.0105 7.9026,-5.6819 -2.9582,-9.1868" />
+                <path id="path30" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 226.5462,555.7759 -2.9833,-9.3189 -9.7421,0.008 7.9026,-5.6818 -2.9624,-9.1869 7.7852,5.6818 7.7853,-5.6818 -2.9624,9.1869 7.9026,5.6818 h -9.7421 l -2.9834,9.3105" />
+                <path id="path32" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 215.7315,497.0385 7.7811,-5.6798 -2.9583,9.1869 7.9027,5.6819 h -9.7421 l -2.9834,9.3105 -2.9813,-9.3315 -9.7484,0.021 7.9089,-5.6819 -2.9645,-9.1869 7.7853,5.6798" />
+                <path id="path34" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 229.5296,465.868 -2.9834,9.3084 -2.9833,-9.3188 -9.7421,0.0104 7.9026,-5.6818 -2.9624,-9.189 7.7852,5.6923 7.7853,-5.6923 -2.9624,9.189 7.9026,5.6818 h -9.7421" />
+                <path id="path36" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 259.0659,436.3317 -2.9833,9.3 -2.9771,-9.3105 -9.7484,0.0105 7.9026,-5.6818 -2.9582,-9.189 7.7852,5.6818 7.7811,-5.6818 -2.9582,9.189 7.9026,5.6818 h -9.7463" />
+                <path id="path38" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 299.3039,425.628 -2.9834,9.3105 -2.9771,-9.3189 -9.7484,0.008 7.9026,-5.6797 -2.9561,-9.189 7.7853,5.6818 7.779,-5.6818 -2.9625,9.189 7.9068,5.6797 h -9.7462" />
+                <path id="path40" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 339.5418,436.3317 -2.9771,9.3 -2.9876,-9.3105 -9.7379,0.0105 7.8984,-5.6818 -2.9582,-9.189 7.7853,5.6818 7.7853,-5.6818 -2.9688,9.189 7.9089,5.6818 h -9.7483" />
+                <path id="path42" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 369.0886,465.868 -2.9876,9.3084 -2.9897,-9.3188 -9.7358,0.0104 7.9068,-5.6818 -2.9666,-9.189 7.7853,5.6923 7.7853,-5.6923 -2.9687,9.189 7.9067,5.6818 h -9.7357" />
+                <path id="path44" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 389.5281,506.3406 h -9.7463 l -2.9897,9.3084 -2.9771,-9.3189 -9.7483,0.0105 7.9089,-5.6818 -2.9583,-9.189 7.7748,5.6923 7.7853,-5.6923 -2.9561,9.189 7.9068,5.6818" />
+                <path id="path46" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 358.3157,531.7182 7.7853,5.6818 7.7853,-5.6818 -2.9687,9.189 7.9067,5.6713 h -9.7357 l -2.9876,9.3084 -2.9897,-9.3189 -9.7358,0.0105 7.9068,-5.6713 -2.9666,-9.189" />
+                <path id="path48" style="fill:#fff200;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                    d="m 336.6757,585.3122 -2.9771,-9.321 -9.7483,0.021 7.8984,-5.6923 -2.9583,-9.1869 7.7958,5.6923 7.7748,-5.6923 -2.9561,9.1869 7.9068,5.6923 h -9.7568 l -2.9792,9.3" />
+                <g transform="matrix(2.09507,0,0,2.09507,0,169.5915)" id="g50"><text id="text54"
+                        style="font-variant:normal;font-weight:normal;font-size:18px;font-family:ArialMT;-inkscape-font-specification:ArialMT;writing-mode:lr-tb;fill:#515257;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                        transform="matrix(1,0,0,-1,65.646,22.62)">
+                        <tspan id="tspan52" y="0"
+                            x="0 12.996 23.004 32.004002 37.007999 51.012001 61.02 71.028 81.036003 87.029999 97.038002 102.042 106.038 116.046 126.054 138.06">
+                            NextGenerationEU</tspan>
+                    </text>
+                </g>
+                <g transform="matrix(2.09507,0,0,2.09507,0,169.5915)" id="g56"><text id="text60"
+                        style="font-variant:normal;font-weight:bold;font-size:21px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#254aa5;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                        transform="matrix(1,0,0,-1,85.7354,67.088)">
+                        <tspan id="tspan58" y="0"
+                            x="0 12.831 25.662001 38.493 51.324001 63 75.831001 81.668999 94.5 106.176">Funded by
+                        </tspan>
+                    </text>
+                </g>
+                <g transform="matrix(2.09507,0,0,2.09507,0,169.5915)" id="g62"><text id="text66"
+                        style="font-variant:normal;font-weight:bold;font-size:21px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#254aa5;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                        transform="matrix(1,0,0,-1,41.9819,46.088)">
+                        <tspan id="tspan64" y="0"
+                            x="0 6.993 19.823999 31.5 37.338001 51.345001 64.176003 72.345001 85.176003 98.007004 109.683 121.359 134.19 140.028 155.19 168.021 173.85899 186.69">
+                            the European Union</tspan>
+                    </text>
+                </g>
+                <g transform="matrix(2.09507,0,0,2.09507,0,169.5915)" id="g68"><text id="text72"
+                        style="font-variant:normal;font-weight:bold;font-size:21px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#254aa5;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                        transform="matrix(1,0,0,-1,85.7354,67.088)">
+                        <tspan id="tspan70" y="0"
+                            x="0 12.831 25.662001 38.493 51.324001 63 75.831001 81.668999 94.5 106.176">Funded by
+                        </tspan>
+                    </text>
+                </g>
+                <g transform="matrix(2.09507,0,0,2.09507,0,169.5915)" id="g74"><text id="text78"
+                        style="font-variant:normal;font-weight:bold;font-size:21px;font-family:Arial;-inkscape-font-specification:Arial-BoldMT;writing-mode:lr-tb;fill:#254aa5;fill-opacity:1;fill-rule:nonzero;stroke:none"
+                        transform="matrix(1,0,0,-1,41.9819,46.088)">
+                        <tspan id="tspan76" y="0"
+                            x="0 6.993 19.823999 31.5 37.338001 51.345001 64.176003 72.345001 85.176003 98.007004 109.683 121.359 134.19 140.028 155.19 168.021 173.85899 186.69">
+                            the European Union</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

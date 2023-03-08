@@ -22,9 +22,9 @@ const partners = [
     padding: 10,
   },
   {
-    name: 'Europäische Kommission',
+    name: 'Europäische Union',
     logo: '/_assets/img/landing/partners/logo_eu.svg',
-    padding: 8,
+    padding: 22,
   },
   {
     name: 'Deloitte',
@@ -43,12 +43,12 @@ const partners = [
   },
 ]
 
-export function PartnerList() {
+export function PartnerList({ inContent }: { inContent?: boolean }) {
   return (
     <div
       className={clsx(
-        'mt-auto pb-7 flex flex-wrap justify-evenly mx-side',
-        'sm:justify-center max-w-5xl sm:mx-auto',
+        'mt-auto pb-7 flex flex-wrap  mx-side max-w-5xl sm:mx-auto',
+        inContent ? 'justify-start' : 'justify-evenly sm:justify-center',
         'text-gray-800'
       )}
     >
@@ -68,11 +68,12 @@ export function PartnerList() {
     return (
       <img
         key={name}
-        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 mb-16 sm:px-8"
+        className={clsx(
+          'max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 sm:px-8',
+          inContent ? 'mb-8 sm:pl-4' : 'mb-16',
+          'opacity-80'
+        )}
         style={{
-          opacity: '0.6',
-          filter: 'grayscale(1)',
-          mixBlendMode: 'multiply',
           paddingTop: `${padding}px`,
           paddingBottom: `${padding}px`,
         }}

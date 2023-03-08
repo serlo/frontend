@@ -15,6 +15,7 @@ import {
 } from '@edtr-io/ui'
 import { faSquare } from '@fortawesome/free-regular-svg-icons'
 import {
+  faGrip,
   faGripLinesVertical,
   faUsers,
   faWrench,
@@ -140,6 +141,13 @@ export function getPluginRegistry(
             title: 'Team Overview',
             description: 'Only for the teampages',
             icon: createIcon(faUsers),
+          },
+          {
+            name: 'pagePartners',
+            title: 'Partner List',
+            description:
+              'Only for partner page (List of partner logos like on de.serlo.org/)',
+            icon: createIcon(faGrip),
           },
         ]
       : []),
