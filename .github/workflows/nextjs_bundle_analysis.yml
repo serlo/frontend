@@ -78,16 +78,6 @@ jobs:
         if: success() && github.event.number
         run: ls -laR .next/analyze/base && npx -p nextjs-bundle-analysis compare
 
-      - name: Get comment body
-        id: get-comment-body
-        if: success() && github.event.number
-        run: |
-          body=$(cat .next/analyze/__bundle_analysis_comment.txt)
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "body=$body" >> $GITHUB_OUTPUT
-
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         if: success() && github.event.number
@@ -101,13 +91,13 @@ jobs:
         if: success() && github.event.number && steps.fc.outputs.comment-id == 0
         with:
           issue-number: ${{ github.event.number }}
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body-file: .next/analyze/__bundle_analysis_comment.txt
 
       - name: Update Comment
         uses: peter-evans/create-or-update-comment@v2
         if: success() && github.event.number && steps.fc.outputs.comment-id != 0
         with:
           issue-number: ${{ github.event.number }}
-          body: ${{ steps.get-comment-body.outputs.body }}
+          body-file: .next/analyze/__bundle_analysis_comment.txt
           comment-id: ${{ steps.fc.outputs.comment-id }}
           edit-mode: replace
