@@ -26,7 +26,7 @@ export function EditorPresentation() {
       />
       <header className="px-side lg:px-side-lg pt-6 pb-8">
         <Logo />
-        {renderSupporterLogo()}
+        {renderSupporterLogos()}
       </header>
 
       <div
@@ -356,16 +356,16 @@ export function EditorPresentation() {
     )
   }
 
-  function renderSupporterLogo() {
+  function renderSupporterLogos() {
     const { padding, logo, name } = partners[0]
 
     const euLogo = {
       name: 'European Union',
-      logo: '/_assets/img/landing/partners/logo_eu.svg',
+      logo: '/_assets/img/editor/partners/logo_eu.svg',
       padding: 2,
     }
     return (
-      <div className="hidden sm:block sm:w-28 sm:absolute sm:right-8 sm:top-5">
+      <div className="hidden sm:block sm:w-32 sm:absolute sm:right-8 sm:top-5">
         <img
           className="sm:ml-auto"
           style={{
