@@ -81,8 +81,10 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
   }
 
   useEffect(() => {
-    validateInput(state.value)
-    void checkContent()
+    if (hasState) {
+      validateInput(state.value)
+      void checkContent()
+    }
     // only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
