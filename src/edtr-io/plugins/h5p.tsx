@@ -5,22 +5,15 @@ import {
   string,
   StringStateType,
 } from '@edtr-io/plugin'
-import Script from 'next/script'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+
+import { H5p, parseH5pUrl } from '@/components/content/h5p'
 
 export type H5pPluginState = StringStateType
 export type H5pProps = EditorPluginProps<H5pPluginState>
 
 const h5pLibraryWhitelist = [
-  'H5P.AdvancedText',
-  'FontAwesome',
-  'jQuery.ui',
-  'H5P.JoubelUI',
-  'H5P.Transition',
-  'H5P.FontIcons',
-  'H5P.Question',
   'H5P.DragQuestion',
-  'H5P.TextUtilities',
   'H5P.Blanks',
   'H5P.DragText',
   'H5P.ImageHotspotQuestion',
@@ -30,22 +23,71 @@ export const H5pPlugin: EditorPlugin<H5pPluginState> = {
   Component: H5pEditor,
   config: {},
   state: string(),
-  /*onText(value) {
-      if (/geogebra\.org\/m\/(.+)/.test(value)) {
-        return { state: value }
-      }
-    },*/
 }
 
-export function H5pEditor(props: H5pProps) {
-  const { state } = props
+// Note: This plugin will not be translated for now, as i18n work is deprioritized
+export function H5pEditor({ state, autofocusRef }: H5pProps) {
+  const hasState = !!state.value
 
   const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>(
-    state.value ? 'preview' : 'edit'
+    hasState ? 'preview' : 'edit'
   )
-  const [url, setUrl] = useState(state.value ? state.value : '')
 
   const [error, setError] = useState('')
+  const [downloadUrl, setDownloadUrl] = useState('')
+
+  function validateInput(str: string) {
+    if (!parseH5pUrl(str)) {
+      setError('Die URL muss mit https://app.lumi.education/run/ beginnen.')
+    } else {
+      setError('')
+    }
+  }
+
+  async function checkContent() {
+    const id = parseH5pUrl(state.value)
+    if (!id) {
+      validateInput(state.value)
+    } else {
+      try {
+        const res = await fetch('https://app.lumi.education/api/v1/run/' + id)
+        const json = (await res.json()) as {
+          downloadPath: string
+          integration: {
+            contents: { [key: string]: { library: string } }
+          }
+        }
+        const mainLib = Object.values(
+          json.integration.contents
+        )[0].library.split(' ')[0]
+
+        if (!h5pLibraryWhitelist.includes(mainLib)) {
+          setError(
+            'Unerlaubter Inhaltstyp - nutze bitte nur die vier genannten Inhaltstypen'
+          )
+          setMode('edit')
+        } else {
+          setMode('preview')
+          setDownloadUrl(json.downloadPath)
+        }
+      } catch (e) {
+        // e.g. invalid id
+        setError(
+          'H5P-Inhalt konnte nicht geladen werden, prüfe nochmal die URL'
+        )
+        setMode('edit')
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (hasState) {
+      validateInput(state.value)
+      void checkContent()
+    }
+    // only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (mode === 'edit' || mode === 'loading') {
     return (
@@ -83,7 +125,7 @@ export function H5pEditor(props: H5pProps) {
               Erstelle deinen Inhalt, speichere ihn und klicke dann auf
               &quot;Inhalt bereitstellen&quot;.
             </li>
-            <li>Füge den Bereitstellungslink hier ein:</li>
+            <li>Füge die Verknüpfung zur Bereitstellung hier ein:</li>
           </ul>
         </div>
         <div>
@@ -93,24 +135,13 @@ export function H5pEditor(props: H5pProps) {
               placeholder="https://app.lumi.education/run/J3j0eR"
               value={state.value}
               onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                //console.log('on input', e.target.value)
-                if (
-                  e.target.value
-                    .toLowerCase()
-                    .startsWith('https://app.lumi.education/run/')
-                ) {
-                  setError('')
-                } else {
-                  setError(
-                    'Die URL muss mit https://app.lumi.education/run/ beginnen.'
-                  )
-                }
-                setUrl(e.target.value)
-                state.set(e.target.value)
+                const val = e.target.value
+                validateInput(val)
+                state.set(val)
               }}
               inputWidth="70%"
               width="100%"
-              ref={props.autofocusRef}
+              ref={autofocusRef}
             />
           </EditorInlineSettings>
         </div>
@@ -118,39 +149,10 @@ export function H5pEditor(props: H5pProps) {
         <p>
           <button
             className="mt-2 serlo-button bg-brandgreen-300 disabled:bg-gray-300 disabled:cursor-default"
-            disabled={!!(!url || error || mode === 'loading')}
+            disabled={state.value === '' || error !== '' || mode === 'loading'}
             onClick={() => {
               setMode('loading')
-              void (async () => {
-                const match = /https:\/\/app\.lumi\.education\/run\/(.+)/i.exec(
-                  url
-                )
-                try {
-                  const id = match ? match[1] : ''
-                  const res = await fetch(
-                    'https://app.lumi.education/api/v1/run/' + id
-                  )
-                  const json = (await res.json()) as {
-                    dependencies: { machineName: string }[]
-                  }
-                  if (
-                    !json.dependencies.every((dep) =>
-                      h5pLibraryWhitelist.includes(dep.machineName)
-                    )
-                  ) {
-                    setError(
-                      'Unerlaubte Plugintypen - nutze bitte nur die vier genannten Inhaltstypen'
-                    )
-                    setMode('edit')
-                  }
-                  //console.log(json)
-                  props.state.set(url)
-                  setMode('preview')
-                } catch (e) {
-                  alert(e)
-                  setMode('edit')
-                }
-              })()
+              void checkContent()
             }}
           >
             {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
@@ -169,7 +171,7 @@ export function H5pEditor(props: H5pProps) {
   return (
     <>
       <p className="mb-8">
-        H5P-Inhalt: <strong>{props.state.value}</strong>
+        H5P-Inhalt: <strong>{state.value}</strong>
         <button
           onClick={() => {
             setMode('edit')
@@ -178,30 +180,18 @@ export function H5pEditor(props: H5pProps) {
         >
           Ändern
         </button>
+        {downloadUrl && (
+          <a
+            href={`https://app.lumi.education${downloadUrl}`}
+            className="serlo-link ml-3"
+            target="_blank"
+            rel="noreferrer"
+          >
+            herunterladen
+          </a>
+        )}
       </p>
-      <H5pRenderer {...props} disableCursorEvents />
+      <H5p url={state.value} />
     </>
-  )
-}
-
-type H5pRendererProps = H5pProps & {
-  disableCursorEvents?: boolean
-}
-
-export function H5pRenderer(props: H5pRendererProps) {
-  const id = /https:\/\/app\.lumi\.education\/run\/(.+)/i.exec(
-    props.state.value
-  )
-  return (
-    <div className="mx-side mb-block">
-      <iframe
-        src={`https://app.Lumi.education/api/v1/run/${id ? id[1] : '_'}/embed`}
-        width="727"
-        height="500"
-        allowFullScreen
-        allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
-      ></iframe>
-      <Script src="/_assets/h5p-resizer.js" />
-    </div>
   )
 }

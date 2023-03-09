@@ -5,7 +5,7 @@ export function hasVisibleContent(content: FrontendContentNode[]): boolean {
   return text.trim().length > 0
 }
 
-function extractText(content: FrontendContentNode[]): string {
+export function extractText(content: FrontendContentNode[]): string {
   return content
     .map((node) => {
       if (node.type === 'math') return node.formula

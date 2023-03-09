@@ -1,4 +1,3 @@
-import { faFaceGrinStars } from '@fortawesome/free-regular-svg-icons'
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useEffect } from 'react'
@@ -17,7 +16,7 @@ interface PrivacyWrapperProps {
   children: JSX.Element
   className?: string
   placeholder?: JSX.Element
-  type: 'video' | 'applet' | 'twingle' | 'h5p'
+  type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
   embedUrl?: string
   twingleCallback?: () => void
@@ -87,7 +86,6 @@ export function PrivacyWrapper({
       provider: provider,
     })
     if (isTwingle && showIframe) return null
-    if (type === 'h5p' && showIframe) return null
 
     const previewImageUrl = isTwingle
       ? '/_assets/img/donations-form.png'
@@ -137,8 +135,6 @@ export function PrivacyWrapper({
                   ? faSpinner
                   : type === 'twingle'
                   ? faHeart
-                  : type === 'h5p'
-                  ? faFaceGrinStars
                   : entityIconMapping[type]
               }
             />{' '}
