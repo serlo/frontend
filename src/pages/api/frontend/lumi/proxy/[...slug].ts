@@ -12,5 +12,8 @@ export default async function handler(
   const lumiRes = await fetch(lumiUrl, { method: req.method })
   //console.log(lumiRes.headers.get('Content-Type'))
   res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')
+  if (lumiRes.headers.has('Cache-Control')) {
+    res.setHeader('Cache-Control', lumiRes.headers.get('Cache-Control') ?? '')
+  }
   res.send(Buffer.from(await lumiRes.arrayBuffer()))
 }
