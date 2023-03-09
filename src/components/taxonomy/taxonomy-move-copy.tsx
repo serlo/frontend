@@ -28,6 +28,7 @@ import {
   FrontendNodeType,
 } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { extractText } from '@/helper/has-visible-content'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -255,20 +256,12 @@ export function getPreviewStringFromExercise(
 
   const titleState =
     node.type === FrontendNodeType.Exercise
-      ? node.task.edtrState?.content[0].children?.[0]
-      : node.content[0].children?.[0]
+      ? node.task.edtrState?.content
+      : node.content
 
   if (!titleState) return typeString
 
-  const titleString =
-    (titleState.type === FrontendNodeType.SlateP &&
-      titleState.children?.[0].type === FrontendNodeType.Text &&
-      titleState.children?.[0].text) ||
-    (titleState.children?.[0].type === FrontendNodeType.InlineMath &&
-      titleState.children?.[0].formula) ||
-    (titleState.type === FrontendNodeType.SlateContainer &&
-      titleState.children?.[0].children?.[0].type === FrontendNodeType.Text &&
-      titleState.children?.[0].children?.[0].text)
+  const titleString = extractText(titleState)
 
   if (!titleString) return typeString
 
