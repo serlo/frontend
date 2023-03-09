@@ -1,12 +1,20 @@
 import Script from 'next/script'
 
+import { useInstanceData } from '@/contexts/instance-context'
+
 export interface H5pProps {
   url: string
 }
 
 export function H5p({ url }: H5pProps) {
   const id = /https:\/\/app\.lumi\.education\/run\/(.+)/i.exec(url)
-  const src = `/api/frontend/lumi/embed/${id ? id[1] : '_'}`
+  const { strings } = useInstanceData()
+
+  if (!id) {
+    return <p className="serlo-p">{strings.errors.defaultMessage}</p>
+  }
+
+  const src = `/api/frontend/lumi/embed/${id[1]}`
 
   return (
     <div className="mx-side mb-block">
