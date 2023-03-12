@@ -176,8 +176,7 @@ export const instanceData = {
       text: "ऊपर की छवि या बटन पर क्लिक करके आप सहमत होते हैं कि%provider%  से बाहरी सामग्री लोड हो जाएगी। इसके अलावा व्यक्तिगत डेटा हमारे% privacypolicy% के अनुसार इस सेवा में स्थानांतरित किया जा सकता है।",
       video: "से वीडियो चलाएं %provider%",
       applet: "%provider% से लोड एप्लेट ",
-      twingle: "लोड दान प्रपत्र",
-      h5p: 'Load Interactive Content'
+      twingle: "लोड दान प्रपत्र"
     },
     comments: {
       question: "क्या आपका कोई प्रश्न है?",
