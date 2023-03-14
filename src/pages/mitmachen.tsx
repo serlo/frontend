@@ -4,12 +4,12 @@ import { GetStaticProps } from 'next'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
+import { FooterNew } from '@/components/landing/rework/footer-new'
+import { CommunityWallMitmachen } from '@/components/mitmachen/community-wall-mitmachen'
+import { Header } from '@/components/navigation/header/header'
 import { breakpoints } from '@/helper/breakpoints'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { serloDomain } from '@/helper/urls/serlo-domain'
-import { CommunityWallMitmachen } from '@/components/mitmachen/community-wall-mitmachen'
-import { Header } from '@/components/navigation/header/header'
-import { FooterNew } from '@/components/landing/rework/footer-new'
 
 export default renderedPageNoHooks(() => {
   return (

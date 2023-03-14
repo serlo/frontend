@@ -1,14 +1,13 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
+import { CommunityWallPersons } from '../landing/rework/community-wall/community-wall-persons'
 import { Link } from '@/components/content/link'
 import {
   communityWallPersons,
   CommunityWallPerson,
 } from '@/data/de/community-people'
-import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { shuffleArray } from '@/helper/shuffle-array'
-import { CommunityWallPersons } from '../landing/rework/community-wall/community-wall-persons'
 
 const positions = [
   ['8%', '-8%'],
@@ -39,7 +38,7 @@ export function CommunityWallMitmachen() {
               'max-w-xl mt-20 mx-auto relative z-10 mb-8'
             )}
           >
-            Los geht's
+            Los geht&apos;s
           </h3>
           <p className="text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
             Möchtest du Teil der Serlo Community werden und dadurch freie
