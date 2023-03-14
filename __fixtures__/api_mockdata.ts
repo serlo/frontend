@@ -2553,7 +2553,7 @@ export const courseUuidMock_alias = {
 export const eventUuidMock = {
   __typename: UuidType.Event,
   id: 145590,
-  alias: '/community/veranstaltungen/digital-learning-summer-academy-2020',
+  alias: '/mitmachen/veranstaltungen/digital-learning-summer-academy-2020',
   instance: 'de',
   license: {
     id: 1,
@@ -2572,11 +2572,11 @@ export const eventUuidMock = {
               },
               {
                 label: 'Community Übersicht',
-                url: '/community/-87993',
+                url: '/mitmachen/-87993',
               },
               {
                 label: 'Veranstaltungen',
-                url: '/community/veranstaltungen',
+                url: '/mitmachen/veranstaltungen',
               },
             ],
           },

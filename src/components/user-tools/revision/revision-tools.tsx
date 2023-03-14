@@ -39,7 +39,7 @@ export function RevisionTools({ data, aboveContent }: MoreAuthorToolsProps) {
       {lang === Instance.De && (
         <UserToolsItem
           title={strings.revisions.helpLink}
-          href="/community/140473/hilfeseiten-für-reviewer"
+          href="/mitmachen/140473/hilfeseiten-für-reviewer"
           aboveContent={aboveContent}
           icon={faQuestionCircle}
         />

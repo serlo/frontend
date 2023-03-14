@@ -55,7 +55,7 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
     return (
       <>
         {lang === Instance.De ? (
-          <Link href={`/community/202923/rollen-der-serlo-community#${role}`}>
+          <Link href={`/mitmachen/202923/rollen-der-serlo-community#${role}`}>
             {label}
           </Link>
         ) : (

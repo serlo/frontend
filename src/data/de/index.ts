@@ -238,7 +238,7 @@ export const instanceData = {
     unrevisedRevisions: {
       help1: "Hier landen alle Bearbeitungen der Autor*innen. Diese werden in der Qualitätskontrolle durch die %reviewersLink% überprüft und freigegeben.",
       reviewers: "Reviewer*innen",
-      reviewersUrl: "/community/202923/rollen-der-serlo-community",
+      reviewersUrl: "/mitmachen/202923/rollen-der-serlo-community",
       help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
       help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
       contactPerson: 'LinaMaria',

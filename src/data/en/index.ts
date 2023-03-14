@@ -249,7 +249,7 @@ export const instanceData = {
         'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
       reviewers: 'Reviewers',
       reviewersUrl:
-        'https://de.serlo.org/community/202923/rollen-der-serlo-community',
+        'https://de.serlo.org/mitmachen/202923/rollen-der-serlo-community',
       help2:
         'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
       help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',

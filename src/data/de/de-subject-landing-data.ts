@@ -683,7 +683,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
     {
       title: 'Lernen mit Serlo',
       type: UuidType.Video,
-      url: '/community/74224/lernen-mit-serlo.org',
+      url: '/mitmachen/74224/lernen-mit-serlo.org',
       img: 'https://de.serlo.org/_assets/img/serlo-logo.svg',
     },
     {

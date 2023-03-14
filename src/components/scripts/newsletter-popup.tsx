@@ -13,7 +13,7 @@ const pages = [
   '/abc',
   '/community-werte',
   '/community',
-  '/community/ressourcen-paedagoginnen',
+  '/mitmachen/ressourcen-paedagoginnen',
   '/eltern',
   '/features',
   '/grundprinzipien',

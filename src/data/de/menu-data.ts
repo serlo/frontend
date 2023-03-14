@@ -13,7 +13,7 @@ export const landingSubjectsData: LandingSubjectsData = {
     { url: '/chemie', title: 'Chemie', icon: 'chemistry' },
     { url: '/informatik', title: 'Informatik', icon: 'informatics' },
     {
-      url: '/community/neue-fächer-themen',
+      url: '/mitmachen/neue-fächer-themen',
       title: 'Fächer im Aufbau',
       icon: 'new',
     },
@@ -37,7 +37,7 @@ export const headerData: InstanceData['headerData'] = [
       { url: '/chemie', title: 'Chemie' },
       { url: '/lerntipps', title: 'Lerntipps' },
       {
-        url: '/community/neue-fächer-themen',
+        url: '/mitmachen/neue-fächer-themen',
         title: 'Fächer im Aufbau',
       },
     ],
@@ -86,7 +86,7 @@ export const headerData: InstanceData['headerData'] = [
           },
           {
             title: 'Teste den Editor',
-            url: '/community/106082/testbereich',
+            url: '/mitmachen/106082/testbereich',
           },
           {
             title: 'Schreibe Kommentare',
@@ -139,7 +139,7 @@ export const footerData: InstanceData['footerData'] = {
         },
         {
           title: 'API',
-          url: `https://en.${serloDomain}/community/technology-and-development/content-api`,
+          url: `https://en.${serloDomain}/mitmachen/technology-and-development/content-api`,
         },
         {
           title: 'Serlo Editor',

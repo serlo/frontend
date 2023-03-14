@@ -119,7 +119,7 @@ export function ProfileBadges({
         {lang === Instance.De && anchor ? (
           <Link
             unstyled
-            href={`/community/202923/rollen-der-serlo-community#${anchor}`}
+            href={`/mitmachen/202923/rollen-der-serlo-community#${anchor}`}
           >
             {content}
           </Link>

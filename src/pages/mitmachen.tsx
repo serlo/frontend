@@ -1,6 +1,11 @@
 import clsx from 'clsx'
 import { GetStaticProps } from 'next'
+import Image from 'next/image'
 
+// eslint-disable-next-line import/extensions
+import EventsImage from '@/assets-webkit/img/community/events.png'
+// eslint-disable-next-line import/extensions
+import HelpImage from '@/assets-webkit/img/community/help.png'
 import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
@@ -161,17 +166,17 @@ function Content() {
         </h2>
 
         <div className="sm:flex sm:gap-6">
-          <div className="text-left mt-12 sm:flex-1">
-            <b className="text-brand font-handwritten text-3xl block mb-2">
+          <div className="text-left mt-12 sm:flex-1 sm:h-auto sm:flex sm:flex-col">
+            <b className="text-brand font-handwritten text-3xl block mb-2 ">
               Communitychat
             </b>
-            <p className="text-xl leading-cozy text-truegray-700 max-w-xl">
+            <p className="text-xl leading-cozy text-truegray-700 max-w-xl sm:my-auto">
               Im Serlo Communitychat kannst du dich mit anderen austauschen, die
               serlo.org mitgestalten und verbessern. Dort kannst du auch deine
               Fragen stellen und Probleme melden.
             </p>
             <Link
-              className="serlo-button-light text-xl mt-2 justify-end"
+              className="serlo-button-light text-xl mt-2 justify-end w-fit"
               href="https://community.serlo.org/channel/general"
             >
               Zum Community-Chat
@@ -182,13 +187,12 @@ function Content() {
             <b className="text-brand font-handwritten text-3xl block mb-2">
               Veranstaltungen
             </b>
-            <img
-              src="https://assets.serlo.org/a1754820-7ae9-11ed-9a2b-2f02b04c9535/community.png"
-              alt="REPLACE"
-            />
+            <Link href="/mitmachen/145470/veranstaltungs%C3%BCbersicht">
+              <Image src={EventsImage} alt="" className="rounded-md" />
+            </Link>
             <Link
               className="serlo-button-light text-xl mt-2"
-              href="/community/145470/veranstaltungs%C3%BCbersicht"
+              href="/mitmachen/145470/veranstaltungs%C3%BCbersicht"
             >
               Treffe uns virtuell oder vor Ort!
             </Link>
@@ -198,10 +202,9 @@ function Content() {
             <b className="text-brand font-handwritten text-3xl block mb-2">
               Hilfe
             </b>
-            <img
-              src="https://assets.serlo.org/823a3770-7aeb-11ed-9a2b-2f02b04c9535/community.png"
-              alt="REPLACE"
-            />
+            <Link href="/discussions">
+              <Image src={HelpImage} alt="" className="rounded-md" />
+            </Link>
             <Link
               className="serlo-button-light text-xl mt-2"
               href="/discussions"

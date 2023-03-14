@@ -293,7 +293,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
 
     const shouldRenderEvents =
       (lang === Instance.De &&
-        router.asPath === '/community/142215/veranstaltungen') ||
+        router.asPath === '/mitmachen/142215/veranstaltungen') ||
       (lang !== Instance.De && router.asPath.startsWith('/community'))
 
     const entries = allowedTypes[data.taxonomyType].map((entityType) => {
