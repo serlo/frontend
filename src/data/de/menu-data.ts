@@ -100,7 +100,7 @@ export const headerData: InstanceData['headerData'] = [
       },
       {
         title: 'Zusammenarbeit',
-        url: '/community#zusammenarbeit',
+        url: '/mitmachen#zusammenarbeit',
         children: [
           {
             title: 'Communitychat',
@@ -108,11 +108,11 @@ export const headerData: InstanceData['headerData'] = [
           },
           {
             title: 'Veranstaltungen',
-            url: '/community/145470/veranstaltungs%C3%BCbersicht',
+            url: '/mitmachen/145470/veranstaltungs%C3%BCbersicht',
           },
           {
             title: 'Hilfe',
-            url: '/community/88059/hilfe',
+            url: '/mitmachen/88059/hilfe',
           },
           {
             title: 'Aktivitäten auf der Seite',
@@ -329,6 +329,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Serlo Mathematik', url: '/mathe' },
     ],
   },
+  // "meta" pages
   {
     entries: [
       { title: 'Über Serlo', id: 18922 },
