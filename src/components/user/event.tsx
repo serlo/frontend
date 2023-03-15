@@ -234,7 +234,7 @@ export function Event({
       return renderCommentContent(event.thread.thread.nodes[0].content)
     }
     if (event.__typename === 'CreateCommentNotificationEvent') {
-      return renderCommentContent(event.thread.comment.nodes[0].content)
+      return renderCommentContent(event.comment.content)
     }
   }
 
