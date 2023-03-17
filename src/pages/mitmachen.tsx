@@ -32,7 +32,7 @@ function Content() {
       <HeadTags
         data={{
           title: 'Mitmachen bei Serlo – Die freie Lernplattform',
-          metaImage: `https://de.${serloDomain}/_assets/img/meta/community.png`,
+          metaImage: `https://de.${serloDomain}/_assets/img/meta/mitmachen.png`,
         }}
       />
 

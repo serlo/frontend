@@ -471,7 +471,7 @@ describe('check all supported typenames with stored api-data', () => {
     )
 
     expect(pageData.metaData?.metaImage).toBe(
-      `https://de.${serloDomain}/_assets/img/meta/community.png`
+      `https://de.${serloDomain}/_assets/img/meta/mitmachen.png`
     )
     assertCorrectHorizonDataFormat(pageData)
 
