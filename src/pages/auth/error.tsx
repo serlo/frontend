@@ -1,4 +1,4 @@
-import { SelfServiceError } from '@ory/client'
+import { FlowError } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -15,7 +15,7 @@ export default renderedPageNoHooks(() => (
 ))
 
 function Error() {
-  const [error, setError] = useState<SelfServiceError | string>()
+  const [error, setError] = useState<FlowError | string>()
   const router = useRouter()
   const { id } = router.query
 
@@ -23,7 +23,7 @@ function Error() {
     if (!router.isReady || error) return
 
     kratos
-      .getSelfServiceError(String(id))
+      .getFlowError({ id: String(id) })
       .then(({ data }) => setError(data))
       .catch((err: AxiosError) => {
         // eslint-disable-next-line no-console
