@@ -61,7 +61,8 @@ const interactivePlugins: {
     title(editorStrings) {
       return editorStrings.exercise.inputExercise
     },
-  },{
+  },
+  {
     name: 'h5p',
     addLabel(editorStrings) {
       return editorStrings.exercise.addH5pExercise
@@ -69,7 +70,7 @@ const interactivePlugins: {
     title(editorStrings) {
       return editorStrings.exercise.h5pExercise
     },
-  }
+  },
 ]
 
 const InlineOptionsWrapper = styled.div({
