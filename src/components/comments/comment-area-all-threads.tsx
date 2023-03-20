@@ -16,6 +16,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
@@ -38,21 +39,28 @@ export function CommentAreaAllThreads() {
             instance: lang,
           })}
         </StaticInfoPanel>
-        <div className="mt-[50px] mb-3">
-          <FaIcon icon={faFilter} className="ml-2 mr-3" />
-          Filtern nach:{' '}
-          <select
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value)
-            }}
-          >
-            <option value="">Alle Fächer</option>
-            <option value="czU=">Mathematik</option>
-            <option value="czE3NzQ0">Nachhaltigkeit</option>
-            <option value="czIzMzYy">Biologie</option>
-          </select>
-        </div>
+        {lang === Instance.De && (
+          <div className="mt-[50px] mb-3">
+            <FaIcon icon={faFilter} className="ml-2 mr-3" />
+            Filtern nach
+            <select
+              value={filter}
+              onChange={(e) => {
+                setFilter(e.target.value)
+              }}
+              className="p-3 ml-3 rounded bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100"
+            >
+              <option value="">Alle Fächer</option>
+              <option value="czU=">Mathematik</option>
+              <option value="czE3NzQ0">Nachhaltigkeit</option>
+              <option value="czIzMzYy">Biologie</option>
+              <option value="czE4MjMw">Chemie</option>
+              <option value="czQ3ODk5">Informatik</option>
+              <option value="czEwNjA4MQ==">Fächer im Aufbau</option>
+              <option value="czE4MTg4Mw==">Lerntipps</option>
+            </select>
+          </div>
+        )}
         {auth === null ? (
           <StaticInfoPanel icon={faWarning} type="warning">
             <PleaseLogIn noWrapper />
