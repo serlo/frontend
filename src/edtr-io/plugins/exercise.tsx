@@ -16,7 +16,6 @@ import { PropsWithChildren, useState } from 'react'
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
-import { isProduction } from '@/helper/is-production'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),
@@ -63,11 +62,7 @@ const interactivePlugins: {
       return editorStrings.exercise.inputExercise
     },
   },
-]
-
-// make it deployable, but only visible on staging
-if (!isProduction) {
-  interactivePlugins.push({
+  {
     name: 'h5p',
     addLabel(editorStrings) {
       return editorStrings.exercise.addH5pExercise
@@ -75,8 +70,8 @@ if (!isProduction) {
     title(editorStrings) {
       return editorStrings.exercise.h5pExercise
     },
-  })
-}
+  },
+]
 
 const InlineOptionsWrapper = styled.div({
   position: 'absolute',
