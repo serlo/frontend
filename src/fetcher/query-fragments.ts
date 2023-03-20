@@ -81,6 +81,7 @@ export const sharedEventFragments = gql`
     ... on CreateCommentNotificationEvent {
       comment {
         id
+        content
       }
       thread {
         id
@@ -88,12 +89,6 @@ export const sharedEventFragments = gql`
         thread: comments(first: 1) {
           nodes {
             id
-          }
-        }
-        comment: comments(last: 1) {
-          nodes {
-            id
-            content
           }
         }
       }
