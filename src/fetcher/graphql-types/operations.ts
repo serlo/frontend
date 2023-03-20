@@ -2603,6 +2603,7 @@ export interface ThreadQueryAllThreadsArgs {
   after?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
   instance?: InputMaybe<Instance>;
+  subjectId?: InputMaybe<Scalars['String']>;
 }
 
 export interface ThreadSetCommentStateInput {
@@ -3357,6 +3358,7 @@ export type GetAllThreadsQueryVariables = Exact<{
   first: Scalars['Int'];
   after?: InputMaybe<Scalars['String']>;
   instance?: InputMaybe<Instance>;
+  subjectId?: InputMaybe<Scalars['String']>;
 }>;
 
 

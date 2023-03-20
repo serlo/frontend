@@ -1,4 +1,9 @@
-import { faInfoCircle, faWarning } from '@fortawesome/free-solid-svg-icons'
+import {
+  faInfoCircle,
+  faWarning,
+  faFilter,
+} from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
@@ -17,8 +22,10 @@ import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function CommentAreaAllThreads() {
+  const [filter, setFilter] = useState('')
+
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { commentData, error, loading, loadMore } = useCommentDataAll()
+  const { commentData, error, loading, loadMore } = useCommentDataAll(filter)
   const { lang, strings } = useInstanceData()
   const auth = useAuthentication()
 
@@ -31,6 +38,21 @@ export function CommentAreaAllThreads() {
             instance: lang,
           })}
         </StaticInfoPanel>
+        <div className="mt-[50px] mb-3">
+          <FaIcon icon={faFilter} className="ml-2 mr-3" />
+          Filtern nach:{' '}
+          <select
+            value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value)
+            }}
+          >
+            <option value="">Alle Fächer</option>
+            <option value="czU=">Mathematik</option>
+            <option value="czE3NzQ0">Nachhaltigkeit</option>
+            <option value="czIzMzYy">Biologie</option>
+          </select>
+        </div>
         {auth === null ? (
           <StaticInfoPanel icon={faWarning} type="warning">
             <PleaseLogIn noWrapper />
