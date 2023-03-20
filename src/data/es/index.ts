@@ -176,8 +176,7 @@ export const instanceData = {
       text: "Al hacer clic en la imagen o en el botón superior, aceptas que se cargará el contenido externo de %provider% . También los datos personales pueden ser transferidos a este servicio de acuerdo con nuestro %privacypolicy%.",
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
-      twingle: "Cargar formulario de donación",
-      h5p: 'Load Interactive Content'
+      twingle: "Cargar formulario de donación"
     },
     comments: {
       question: "¿Tienes una pregunta?",
