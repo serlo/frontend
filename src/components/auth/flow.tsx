@@ -1,14 +1,14 @@
 import {
-  SelfServiceLoginFlow,
-  SelfServiceRecoveryFlow,
-  SelfServiceRegistrationFlow,
-  SelfServiceSettingsFlow,
-  SelfServiceVerificationFlow,
-  SubmitSelfServiceLoginFlowBody,
-  SubmitSelfServiceRecoveryFlowBody,
-  SubmitSelfServiceRegistrationFlowBody,
-  SubmitSelfServiceSettingsFlowBody,
-  SubmitSelfServiceVerificationFlowBody,
+  LoginFlow,
+  RecoveryFlow,
+  RegistrationFlow,
+  SettingsFlow,
+  VerificationFlow,
+  UpdateLoginFlowBody,
+  UpdateRecoveryFlowBody,
+  UpdateRegistrationFlowBody,
+  UpdateSettingsFlowBody,
+  UpdateVerificationFlowBody,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
 import { NextRouter } from 'next/router'
@@ -39,11 +39,11 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 
 export interface FlowProps<T extends SubmitPayload> {
   flow:
-    | SelfServiceLoginFlow
-    | SelfServiceRegistrationFlow
-    | SelfServiceRecoveryFlow
-    | SelfServiceSettingsFlow
-    | SelfServiceVerificationFlow
+    | LoginFlow
+    | RegistrationFlow
+    | RecoveryFlow
+    | SettingsFlow
+    | VerificationFlow
   onSubmit: (values: T) => Promise<void>
   only?: string
   contentBeforeSubmit?: ReactNode
@@ -58,11 +58,11 @@ export enum FlowType {
 }
 
 export type SubmitPayload =
-  | SubmitSelfServiceLoginFlowBody
-  | SubmitSelfServiceRegistrationFlowBody
-  | SubmitSelfServiceRecoveryFlowBody
-  | SubmitSelfServiceSettingsFlowBody
-  | SubmitSelfServiceVerificationFlowBody
+  | UpdateLoginFlowBody
+  | UpdateRegistrationFlowBody
+  | UpdateRecoveryFlowBody
+  | UpdateSettingsFlowBody
+  | UpdateVerificationFlowBody
 
 export function Flow<T extends SubmitPayload>({
   flow,
@@ -163,7 +163,7 @@ export function handleFlowError<S>(
   flowType: FlowType,
   resetFlow:
     | Dispatch<SetStateAction<S | undefined>>
-    | ((flow?: SelfServiceRegistrationFlow) => void),
+    | ((flow?: RegistrationFlow) => void),
   strings: InstanceData['strings'],
   throwError?: boolean
 ) {
@@ -248,14 +248,14 @@ export function handleFlowError<S>(
           flowType === FlowType.registration &&
           error.response &&
           Object.hasOwn(error.response, 'data')
-            ? (error.response.data as SelfServiceRegistrationFlow).ui.messages
+            ? (error.response.data as RegistrationFlow).ui.messages
             : undefined
         if (
           registrationFlowMessages &&
           registrationFlowMessages.length === 1 &&
           registrationFlowMessages[0].id === 4000007
         ) {
-          const newFlow = error.response?.data as SelfServiceRegistrationFlow
+          const newFlow = error.response?.data as RegistrationFlow
           newFlow.ui.messages = []
           // @ts-expect-error workaround
           resetFlow(newFlow)
