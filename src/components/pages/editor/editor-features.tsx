@@ -30,7 +30,7 @@ const features = [
     description: 'We all make mistakes sometimes, no worries ;)',
   },
   {
-    title: 'Stuctured Content',
+    title: 'Structured Content',
     icon: faAlignLeft,
     description: 'Guide authors with custom content templates',
   },
