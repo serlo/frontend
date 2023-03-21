@@ -28,6 +28,7 @@ export default async function handler(
     )
 
   //console.log(prepared)
+  res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')
 
   res.send(prepared)
 }
