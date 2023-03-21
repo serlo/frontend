@@ -19,6 +19,13 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Registration() {
+  const [isConsentCheckboxChecked, setIsConsentCheckboxChecked] =
+    useState<boolean>(false)
+  const [
+    hasValidationErrorMissingConsent,
+    setHasValidationErrorMissingConsent,
+  ] = useState<boolean>(false)
+
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
   const checkInstance = useCheckInstance()
@@ -131,7 +138,12 @@ export function Registration() {
           <Flow
             flow={flow}
             flowType={FlowType.registration}
-            onSubmit={onSubmit}
+            onSubmit={
+              isConsentCheckboxChecked
+                ? onSubmit
+                : () =>
+                    Promise.reject(setHasValidationErrorMissingConsent(true))
+            }
             contentBeforeSubmit={renderAgreement()}
           />
           <img
@@ -158,27 +170,58 @@ export function Registration() {
   )
 
   function renderAgreement() {
-    const text = replacePlaceholders(strings.auth.registrationAgreement, {
-      signup: <em>{strings.auth.signUp}</em>,
-      privacypolicy: (
-        <a
-          className="text-brand serlo-link font-bold"
-          href="/privacy"
-          target="_blank"
-        >
-          {strings.entities.privacyPolicy}
-        </a>
-      ),
-      terms: (
-        <a
-          className="text-brand serlo-link font-bold"
-          href="/21654"
-          target="_blank"
-        >
-          {strings.auth.terms}
-        </a>
-      ),
-    })
-    return <div className="mt-12 serlo-p mx-0 text-base">{text}</div>
+    const text = replacePlaceholders(
+      strings.auth.registrationCheckboxAgreement,
+      {
+        privacypolicy: (
+          <a
+            className="text-brand serlo-link font-bold"
+            href="/privacy"
+            target="_blank"
+          >
+            {strings.entities.privacyPolicy}
+          </a>
+        ),
+        terms: (
+          <a
+            className="text-brand serlo-link font-bold"
+            href="/21654"
+            target="_blank"
+          >
+            {strings.auth.terms}
+          </a>
+        ),
+      }
+    )
+
+    return (
+      <div className="mt-12 serlo-p mx-0 text-base">
+        <label className="flex">
+          <input
+            className="mr-2 accent-blue-500"
+            style={{
+              width: '18px',
+              height: '18px',
+            }}
+            type="checkbox"
+            checked={isConsentCheckboxChecked}
+            onChange={() => {
+              if (hasValidationErrorMissingConsent) {
+                setHasValidationErrorMissingConsent(false)
+              }
+              setIsConsentCheckboxChecked(
+                (isCurrentlyChecked) => !isCurrentlyChecked
+              )
+            }}
+          />
+          <span className="leading-5">{text}</span>
+        </label>
+        {hasValidationErrorMissingConsent && (
+          <span className="text-red-500 mt-4">
+            {strings.auth.consentNeededBeforeProceeding}
+          </span>
+        )}
+      </div>
+    )
   }
 }
