@@ -402,7 +402,7 @@ export const instanceData = {
       emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach, ob du dich vertippt hast.",
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen, von denen du dich jederzeit abmelden kannst.",
       registrationCheckboxAgreement:
-      'Ich stimme der %privacypolicy% und den %terms% zu. Ich könnte E-Mail Benachtigungen von Serlo bekommen von denen ich mich jederzeit abmelden kann.',
+      'Ich stimme der %privacypolicy% und den %terms% zu. Ich bin einverstanden E-Mail Benachrichtigungen von Serlo zu erhalten von denen ich mich jederzeit abmelden kann.',
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
       verificationProblem: "Wenn du keine Mail bekommen hast",
