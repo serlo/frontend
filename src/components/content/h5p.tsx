@@ -7,7 +7,7 @@ export interface H5pProps {
 }
 
 export function parseH5pUrl(url: string) {
-  const result = /https:\/\/app\.lumi\.education\/run\/(\w+)/i.exec(url)
+  const result = /https:\/\/app\.lumi\.education\/run\/([\w-]+)/i.exec(url)
   return result ? result[1] : null
 }
 
