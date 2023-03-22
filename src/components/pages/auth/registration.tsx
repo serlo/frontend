@@ -20,11 +20,11 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Registration() {
   const [isConsentCheckboxChecked, setIsConsentCheckboxChecked] =
-    useState<boolean>(false)
+    useState(false)
   const [
     hasValidationErrorMissingConsent,
     setHasValidationErrorMissingConsent,
-  ] = useState<boolean>(false)
+  ] = useState(false)
 
   const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
   const router = useRouter()
