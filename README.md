@@ -22,7 +22,7 @@ yarn
 yarn dev
 ```
 
-The developement server is now live on [localhost:3000](http://localhost:3000).
+The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
 
 ### Libraries
 
