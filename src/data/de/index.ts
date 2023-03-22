@@ -401,6 +401,8 @@ export const instanceData = {
       passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
       emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach, ob du dich vertippt hast.",
       registrationAgreement: "Mit deinem Klick auf %signup% stimmst du der %privacypolicy% und %terms% zu. Du könntest E-Mail Benachtigungen von uns bekommen von denen du dich jederzeit abmelden kannst.",
+      registrationCheckboxAgreement:
+      'Ich stimme der %privacypolicy% und den %terms% zu. Ich könnte E-Mail Benachtigungen von Serlo bekommen von denen ich mich jederzeit abmelden kann.',
       terms: "Nutzungsbedingungen",
       signUp: "Account anlegen",
       verificationProblem: "Wenn du keine Mail bekommen hast",
@@ -975,14 +977,14 @@ export const kratosMailStrings = {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
 versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
- 
+
 Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}
 
 Das Serlo-Team wünscht dir viel Erfolg!`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
- 
+
 <p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
     },
@@ -1013,7 +1015,7 @@ Sonst kannst du diese Mail einfach ignorieren.
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
 wunderbar dich auf serlo.org zu haben 🎉
-      
+
 Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 

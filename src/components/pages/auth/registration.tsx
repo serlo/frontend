@@ -198,7 +198,7 @@ export function Registration() {
       <div className="mt-12 serlo-p mx-0 text-base">
         <label className="flex">
           <input
-            className="mr-2 accent-brand"
+            className="mr-2 accent-brand scale-125"
             style={{
               width: '18px',
               height: '18px',

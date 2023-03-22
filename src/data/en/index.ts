@@ -437,7 +437,7 @@ export const instanceData = {
         'Sorry, this is not a valid email address. Check for typos.',
       registrationCheckboxAgreement:
       'I agree to the %privacypolicy% and %terms%. I may receive email notifications from Serlo and can opt out at any time.',
-      consentNeededBeforeProceeding: 'We need your consent before proceeding',
+      consentNeededBeforeProceeding: 'We need your consent before proceeding.',
       registrationAgreement:
         'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
