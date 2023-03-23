@@ -1,7 +1,4 @@
-import {
-  SelfServiceRecoveryFlow,
-  SubmitSelfServiceRecoveryFlowBody,
-} from '@ory/client'
+import { RecoveryFlow, UpdateRecoveryFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -13,7 +10,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Recovery() {
-  const [flow, setFlow] = useState<SelfServiceRecoveryFlow>()
+  const [flow, setFlow] = useState<RecoveryFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
   const checkInstance = useCheckInstance()
@@ -25,21 +22,24 @@ export function Recovery() {
 
     if (flowId) {
       kratos
-        .getSelfServiceRecoveryFlow(String(flowId))
+        .getRecoveryFlow({ id: String(flowId) })
         .then(({ data }) => setFlow(data))
         .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
       return
     }
 
     kratos
-      .initializeSelfServiceRecoveryFlowForBrowsers()
+      .createBrowserRecoveryFlow()
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
-  async function onSubmit(values: SubmitSelfServiceRecoveryFlowBody) {
+  async function onSubmit(values: UpdateRecoveryFlowBody) {
     return kratos
-      .submitSelfServiceRecoveryFlow(String(flow?.id), values)
+      .updateRecoveryFlow({
+        flow: String(flow?.id),
+        updateRecoveryFlowBody: values,
+      })
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.recovery, setFlow, strings, true))
   }

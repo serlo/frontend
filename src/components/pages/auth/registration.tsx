@@ -1,7 +1,4 @@
-import {
-  SelfServiceRegistrationFlow,
-  SubmitSelfServiceRegistrationFlowBody,
-} from '@ory/client'
+import { RegistrationFlow, UpdateRegistrationFlowBody } from '@ory/client'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
@@ -19,14 +16,14 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Registration() {
-  const [flow, setFlow] = useState<SelfServiceRegistrationFlow>()
+  const [flow, setFlow] = useState<RegistrationFlow>()
   const router = useRouter()
   const checkInstance = useCheckInstance()
   const { lang, strings } = useInstanceData()
   const { return_to: returnTo, flow: flowId } = router.query
   const [isSuccessfullySubmitted, setIsSuccessfullySubmitted] = useState(false)
 
-  const reorderAndSetFlow = (origFlow?: SelfServiceRegistrationFlow) => {
+  const reorderAndSetFlow = (origFlow?: RegistrationFlow) => {
     if (!origFlow) return
     const { nodes: n } = origFlow.ui
     origFlow.ui.nodes = [n[0], n[1], n[3], n[2], ...n.slice(4)]
@@ -39,7 +36,7 @@ export function Registration() {
 
     if (flowId) {
       kratos
-        .getSelfServiceRegistrationFlow(String(flowId))
+        .getRegistrationFlow({ id: String(flowId) })
         .then(({ data }) => reorderAndSetFlow(data))
         .catch(
           handleFlowError(
@@ -53,9 +50,9 @@ export function Registration() {
     }
 
     kratos
-      .initializeSelfServiceRegistrationFlowForBrowsers(
-        returnTo ? String(returnTo) : undefined
-      )
+      .createBrowserRegistrationFlow({
+        returnTo: returnTo ? String(returnTo) : undefined,
+      })
       .then(({ data }) => {
         reorderAndSetFlow(data)
       })
@@ -69,11 +66,14 @@ export function Registration() {
       )
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
-  async function onSubmit(values: SubmitSelfServiceRegistrationFlowBody) {
+  async function onSubmit(values: UpdateRegistrationFlowBody) {
     const valuesWithLanguage = { ...values, 'traits.language': lang }
     nProgress.start()
     return kratos
-      .submitSelfServiceRegistrationFlow(String(flow?.id), valuesWithLanguage)
+      .updateRegistrationFlow({
+        flow: String(flow?.id),
+        updateRegistrationFlowBody: valuesWithLanguage,
+      })
       .then(() => {
         setIsSuccessfullySubmitted(true)
         window.scrollTo({ top: 0, behavior: 'smooth' })

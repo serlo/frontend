@@ -1,7 +1,4 @@
-import {
-  SelfServiceSettingsFlow,
-  SubmitSelfServiceSettingsFlowBody,
-} from '@ory/client'
+import { SettingsFlow, UpdateSettingsFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -16,7 +13,7 @@ import { Guard } from '@/components/guard'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function Settings() {
-  const [flow, setFlow] = useState<SelfServiceSettingsFlow>()
+  const [flow, setFlow] = useState<SettingsFlow>()
   const router = useRouter()
   const checkInstance = useCheckInstance()
   const { strings } = useInstanceData()
@@ -33,7 +30,7 @@ export function Settings() {
 
     if (flowId) {
       kratos
-        .getSelfServiceSettingsFlow(String(flowId))
+        .getSettingsFlow({ id: String(flowId) })
         .then(({ data }) => {
           setFlow(data)
           void fetchAndPersistAuthSession(refreshAuth, {
@@ -46,9 +43,9 @@ export function Settings() {
     }
 
     kratos
-      .initializeSelfServiceSettingsFlowForBrowsers(
-        returnTo ? String(returnTo) : undefined
-      )
+      .createBrowserSettingsFlow({
+        returnTo: returnTo ? String(returnTo) : undefined,
+      })
       .then(({ data }) => setFlow(data))
       .catch((error) => {
         // eslint-disable-next-line no-console
@@ -106,10 +103,13 @@ export function Settings() {
     </div>
   )
 
-  async function onSubmit(values: SubmitSelfServiceSettingsFlowBody) {
+  async function onSubmit(values: UpdateSettingsFlowBody) {
     if (!flow) return Promise.reject()
     return kratos
-      .submitSelfServiceSettingsFlow(String(flow.id), values)
+      .updateSettingsFlow({
+        flow: String(flow.id),
+        updateSettingsFlowBody: values,
+      })
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.settings, setFlow, strings))
   }
