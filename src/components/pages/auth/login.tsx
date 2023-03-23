@@ -58,9 +58,9 @@ export function Login({ oauth }: { oauth?: boolean }) {
     }
 
     // Currenty not in use
-    if (flowId) {
+    if (flowId && typeof flowId === 'string') {
       kratos
-        .getLoginFlow({ id: flowId as string })
+        .getLoginFlow({ id: flowId})
         .then(({ data }) => setFlow(data))
         .catch(handleFlowError(router, FlowType.login, setFlow, strings))
       return
