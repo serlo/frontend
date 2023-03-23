@@ -67,6 +67,9 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       </div>
       <style jsx global>
         {`
+          body {
+            padding-block: 1rem;
+          }
           .serlo-user-tools {
             display: none;
           }
