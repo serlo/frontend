@@ -142,6 +142,9 @@ export function Registration() {
               isConsentCheckboxChecked
                 ? onSubmit
                 : () =>
+                    // This wouldn't need Promise.reject necessarily but it
+                    // simplifies the types and also allows the flow component
+                    // to catch the validation error in the future
                     Promise.reject(setHasValidationErrorMissingConsent(true))
             }
             contentBeforeSubmit={renderAgreement()}
