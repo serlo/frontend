@@ -25,10 +25,42 @@ const equationsState = object({
 })
 
 export type EquationsPluginState = typeof equationsState
-export type EquationsProps = EditorPluginProps<EquationsPluginState>
+/** @public */
+export type EquationsProps = EditorPluginProps<
+  EquationsPluginState,
+  EquationsConfig
+>
 
-export const equationsPlugin: EditorPlugin<EquationsPluginState> = {
-  Component: EquationsEditor,
-  config: {},
-  state: equationsState,
+/**
+ * @param config - {@link EquationsConfig | Plugin configuration}
+ * @public
+ */
+export function createEquationsPlugin(
+  config: EquationsConfig
+): EditorPlugin<EquationsPluginState, EquationsConfig> {
+  return {
+    Component: EquationsEditor,
+    config: config,
+    state: equationsState,
+  }
+}
+
+/** @public */
+export interface EquationsConfig {
+  i18n: {
+    leftHandSide: string
+    transformation: string
+    mode: string
+    transformationExample: string
+    transformationOfEquations: string
+    transformationOfTerms: string
+    addNewRow: string
+    explanation: string
+    term: string
+    rightHandSide: string
+    combineLikeTerms: string
+    setEqual: string
+    firstExplanation: string
+    addNew: string
+  }
 }

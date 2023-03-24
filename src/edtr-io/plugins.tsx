@@ -17,7 +17,7 @@ import type { ComponentType, ReactNode } from 'react'
 import { articlePlugin } from './plugins/article'
 import { createBoxPlugin } from './plugins/box'
 import { deprecatedPlugin } from './plugins/deprecated'
-import { equationsPlugin } from './plugins/equations'
+import { createEquationsPlugin } from './plugins/equations'
 import { errorPlugin } from './plugins/error'
 import { exercisePlugin } from './plugins/exercise'
 import { H5pPlugin } from './plugins/h5p'
@@ -214,7 +214,11 @@ export function createPlugins({
     box: createBoxPlugin(editorStrings),
     error: errorPlugin,
     deprecated: deprecatedPlugin,
-    equations: equationsPlugin,
+    equations: createEquationsPlugin({
+      i18n: {
+        ...editorStrings.equations,
+      },
+    }),
     exercise: exercisePlugin,
     geogebra: createGeogebraPlugin({
       i18n: {

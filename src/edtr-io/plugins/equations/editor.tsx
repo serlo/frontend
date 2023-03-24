@@ -18,7 +18,7 @@ import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
-import { EquationsProps, stepProps } from '.'
+import { EquationsProps, EquationsConfig, stepProps } from '.'
 import {
   EquationsRenderer,
   FirstExplanationTr,
@@ -34,7 +34,6 @@ import {
   TransformTd,
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 enum StepSegment {
   Left = 0,
@@ -59,7 +58,7 @@ const DragButton = styled.span({
 })
 
 export function EquationsEditor(props: EquationsProps) {
-  const { focused, state } = props
+  const { focused, state, config } = props
 
   const store = useScopedStore()
   const focusedElement = useScopedSelector(getFocused())
@@ -103,10 +102,6 @@ export function EquationsEditor(props: EquationsProps) {
     //prevents loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
-
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
 
   if (!nestedFocus) return <EquationsRenderer {...props} />
 
@@ -152,19 +147,17 @@ export function EquationsEditor(props: EquationsProps) {
     >
       {props.renderIntoSettings(
         <div>
-          <label htmlFor="transformationTarget">
-            {editorStrings.equations.mode}:
-          </label>{' '}
+          <label htmlFor="transformationTarget">{config.i18n.mode}:</label>{' '}
           <select
             id="transformationTarget"
             value={transformationTarget}
             onChange={(e) => state.transformationTarget.set(e.target.value)}
           >
             <option value={TransformationTarget.Equation}>
-              {editorStrings.equations.transformationOfEquations}
+              {config.i18n.transformationOfEquations}
             </option>
             <option value={TransformationTarget.Term}>
-              {editorStrings.equations.transformationOfTerms}
+              {config.i18n.transformationOfTerms}
             </option>
           </select>
         </div>
@@ -209,6 +202,7 @@ export function EquationsEditor(props: EquationsProps) {
                                   row={row}
                                   state={step}
                                   transformationTarget={transformationTarget}
+                                  config={config}
                                 />
                                 <td>
                                   <RemoveButton
@@ -253,8 +247,8 @@ export function EquationsEditor(props: EquationsProps) {
                                   row === 0 &&
                                   transformationTarget ===
                                     TransformationTarget.Term
-                                    ? editorStrings.equations.combineLikeTerms
-                                    : editorStrings.equations.explanation,
+                                    ? config.i18n.combineLikeTerms
+                                    : config.i18n.explanation,
                               },
                             })}
                           </td>
@@ -283,7 +277,7 @@ export function EquationsEditor(props: EquationsProps) {
           <td colSpan={3}>
             {state.firstExplanation.render({
               config: {
-                placeholder: editorStrings.equations.firstExplanation,
+                placeholder: config.i18n?.firstExplanation,
               },
             })}
           </td>
@@ -327,7 +321,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <AddButton onClick={() => insertNewEquationWithFocus(state.steps.length)}>
-        {editorStrings.equations.addNew}
+        {config.i18n.addNew}
       </AddButton>
     )
   }
@@ -348,13 +342,11 @@ interface StepEditorProps {
   row: number
   state: StateTypeReturnType<typeof stepProps>
   transformationTarget: TransformationTarget
+  config: EquationsConfig
 }
 
 function StepEditor(props: StepEditorProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
-  const { gridFocus, row, state, transformationTarget } = props
+  const { gridFocus, row, state, transformationTarget, config } = props
 
   return (
     <>
@@ -364,9 +356,7 @@ function StepEditor(props: StepEditorProps) {
         >
           <InlineMath
             focused={gridFocus.isFocused({ row, column: StepSegment.Left })}
-            placeholder={
-              row === 0 ? '3x+1' : `[${editorStrings.equations.leftHandSide}]`
-            }
+            placeholder={row === 0 ? '3x+1' : `[${config.i18n.leftHandSide}]`}
             state={state.left}
             onChange={(src) => state.left.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
@@ -411,8 +401,8 @@ function StepEditor(props: StepEditorProps) {
             row === 0
               ? '4x+3x'
               : transformationTarget === TransformationTarget.Term
-              ? `[${editorStrings.equations.term}]`
-              : `[${editorStrings.equations.rightHandSide}]`
+              ? `[${config.i18n.term}]`
+              : `[${config.i18n.rightHandSide}]`
           }
           state={state.right}
           onChange={(src) => state.right.set(src)}
@@ -434,8 +424,8 @@ function StepEditor(props: StepEditorProps) {
             })}
             placeholder={
               row === 0
-                ? editorStrings.equations.transformationExample
-                : `[${editorStrings.equations.transformation}]`
+                ? config.i18n.transformationExample
+                : `[${config.i18n.transformation}]`
             }
             state={state.transform}
             onChange={(src) => state.transform.set(src)}
