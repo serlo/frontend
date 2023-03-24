@@ -93,7 +93,7 @@ function InternalLink({
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
 
-  // path names map to the page that rendered the site, this is more reliable
+  // pathname maps to the page that rendered the site, this is more reliable
   const isContentOnly = router.pathname.startsWith('/content-only/')
 
   if (isAnchor || isMailto) return renderLink(href)
