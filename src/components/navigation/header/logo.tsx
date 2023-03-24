@@ -22,9 +22,9 @@ export function Logo({ foldOnMobile }: LogoProps) {
       <span
         className={clsx(
           'font-handwritten text-xl align-text-top text-truegray-700',
-          'inline-block mt-4 ml-2',
-          foldOnMobile &&
-            'ml-9 mt-2 block mobile:inline-block mobile:ml-9 mobile:whitespace-nowrap sm:mt-4 sm:ml-2'
+          foldOnMobile
+            ? 'ml-9 mt-2 block mobileExt:inline-block mobileExt:ml-9 mobileExt:whitespace-nowrap sm:mt-4 sm:ml-2'
+            : 'inline-block mt-4 ml-2 absolute'
         )}
       >
         {strings.header.slogan}
