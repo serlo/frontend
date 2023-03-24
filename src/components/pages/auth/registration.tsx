@@ -203,8 +203,12 @@ export function Registration() {
           <input
             className="mr-2 accent-brand scale-125"
             style={{
-              width: '18px',
-              height: '18px',
+              // min-width should fix ios problem with rendering the checkbox
+              // super tiny, see
+              // https://stackoverflow.com/questions/64227252/my-checkbox-inputs-stays-ridiculously-small-on-ios-13-7
+              minWidth: '14px',
+              width: '16px',
+              height: '16px',
             }}
             type="checkbox"
             checked={isConsentCheckboxChecked}
