@@ -48,7 +48,7 @@ export function CommentAreaAllThreads() {
               onChange={(e) => {
                 setFilter(e.target.value)
               }}
-              className="p-3 ml-3 rounded bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100"
+              className="p-3 ml-3 rounded bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100 cursor-pointer"
             >
               <option value="">Alle Fächer</option>
               <option value="czU=">Mathematik</option>
