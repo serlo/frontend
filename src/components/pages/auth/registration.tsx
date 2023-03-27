@@ -201,15 +201,10 @@ export function Registration() {
       <div className="mt-12 serlo-p mx-0 text-base">
         <label className="flex">
           <input
-            className="mr-2 accent-brand scale-125"
-            style={{
-              // min-width should fix ios problem with rendering the checkbox
-              // super tiny, see
-              // https://stackoverflow.com/questions/64227252/my-checkbox-inputs-stays-ridiculously-small-on-ios-13-7
-              minWidth: '14px',
-              width: '16px',
-              height: '16px',
-            }}
+            // min-width should fix ios problem with rendering the checkbox
+            // super tiny, see
+            // https://stackoverflow.com/questions/64227252/my-checkbox-inputs-stays-ridiculously-small-on-ios-13-7
+            className="h-4 w-4 min-w-[14px] mr-2 accent-brand scale-125"
             type="checkbox"
             checked={isConsentCheckboxChecked}
             onChange={() => {
