@@ -26,6 +26,7 @@ import {
   filterUnwantedRedirection,
   loginUrl,
   registrationUrl,
+  VALIDATION_ERROR_TYPE,
   verificationUrl,
 } from '../pages/auth/utils'
 import { Messages } from './messages'
@@ -150,10 +151,18 @@ export function Flow<T extends SubmitPayload>({
     return onSubmit({
       ...values,
       ...(method === undefined ? {} : { method }),
-    } as T).finally(() => {
-      NProgress.done()
-      setIsLoading(false)
-    })
+    } as T)
+      .catch((error: { type?: string }) => {
+        // Right now there is nothing for us to do here when a validation error
+        // is thrown.
+        if (error?.type !== VALIDATION_ERROR_TYPE) {
+          throw error
+        }
+      })
+      .finally(() => {
+        NProgress.done()
+        setIsLoading(false)
+      })
   }
 }
 

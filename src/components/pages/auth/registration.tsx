@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 
-import { verificationUrl } from './utils'
+import { verificationUrl, VALIDATION_ERROR_TYPE } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
@@ -141,11 +141,15 @@ export function Registration() {
             onSubmit={
               isConsentCheckboxChecked
                 ? onSubmit
-                : () =>
+                : () => {
                     // This wouldn't need Promise.reject necessarily but it
                     // simplifies the types and also allows the flow component
-                    // to catch the validation error in the future
-                    Promise.reject(setHasValidationErrorMissingConsent(true))
+                    // to react to validation errors in the future
+                    setHasValidationErrorMissingConsent(true)
+                    return Promise.reject({
+                      type: VALIDATION_ERROR_TYPE,
+                    })
+                  }
             }
             contentBeforeSubmit={renderAgreement()}
           />
