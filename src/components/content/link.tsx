@@ -92,7 +92,9 @@ function InternalLink({
   const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
-  const isContentOnly = router.asPath.startsWith('/content-only/')
+
+  // pathname maps to the page that rendered the site, this is more reliable
+  const isContentOnly = router.pathname.startsWith('/content-only/')
 
   if (isAnchor || isMailto) return renderLink(href)
   if (isExternal || forceNoCSR || isContentOnly) return renderLink(href)

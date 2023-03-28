@@ -1,8 +1,8 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import {
-  SelfServiceVerificationFlow,
-  SelfServiceVerificationFlowState,
-  SubmitSelfServiceVerificationFlowBody,
+  VerificationFlow,
+  VerificationFlowState,
+  UpdateVerificationFlowBody,
 } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -19,7 +19,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Verification() {
-  const [flow, setFlow] = useState<SelfServiceVerificationFlow>()
+  const [flow, setFlow] = useState<VerificationFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
   const auth = useAuthentication()
@@ -34,13 +34,9 @@ export function Verification() {
 
     if (!router.isReady || flow) return
 
-    const flowHandler = async ({
-      data,
-    }: {
-      data: SelfServiceVerificationFlow
-    }) => {
+    const flowHandler = async ({ data }: { data: VerificationFlow }) => {
       setFlow(data)
-      if (data.state === SelfServiceVerificationFlowState.PassedChallenge) {
+      if (data.state === VerificationFlowState.PassedChallenge) {
         showToastNotice(emailVerifiedSuccessfully, 'success')
         return await router.push(returnTo ? String(returnTo) : loginUrl)
       }
@@ -48,14 +44,14 @@ export function Verification() {
 
     if (flowId) {
       kratos
-        .getSelfServiceVerificationFlow(String(flowId))
+        .getVerificationFlow({ id: String(flowId) })
         .then(flowHandler)
         .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
       return
     }
 
     kratos
-      .initializeSelfServiceVerificationFlowForBrowsers()
+      .createBrowserVerificationFlow()
       .then(flowHandler)
       .catch(handleFlowError(router, FlowType.verification, setFlow, strings))
   }, [
@@ -69,9 +65,12 @@ export function Verification() {
     checkInstance,
   ])
 
-  const onSubmit = async (values: SubmitSelfServiceVerificationFlowBody) => {
+  const onSubmit = async (values: UpdateVerificationFlowBody) => {
     return kratos
-      .submitSelfServiceVerificationFlow(String(flow?.id), values, undefined)
+      .updateVerificationFlow({
+        flow: String(flow?.id),
+        updateVerificationFlowBody: values,
+      })
       .then(({ data }) => setFlow(data))
       .catch(
         handleFlowError(router, FlowType.verification, setFlow, strings, true)
