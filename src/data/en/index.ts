@@ -438,8 +438,6 @@ export const instanceData = {
       registrationCheckboxAgreement:
       'I agree to the %privacypolicy% and %terms%. I may receive email notifications from Serlo and can opt out at any time.',
       consentNeededBeforeProceeding: 'We need your consent before proceeding.',
-      registrationAgreement:
-        'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',

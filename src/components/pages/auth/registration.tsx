@@ -219,8 +219,8 @@ export function Registration() {
           <span className="leading-5">{text}</span>
         </label>
         {hasValidationErrorMissingConsent && (
-          <span className="text-red-500 mt-4">
-            {strings.auth.consentNeededBeforeProceeding}
+          <span className="inline-block text-red-500 mt-2">
+            <i>{strings.auth.consentNeededBeforeProceeding}</i>
           </span>
         )}
       </div>

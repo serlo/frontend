@@ -400,7 +400,6 @@ export const instanceData = {
       passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
       emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
-      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
