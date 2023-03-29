@@ -48,7 +48,7 @@ export function Header() {
     >
       <SkipMenu />
       <div className="pt-3 pb-6 px-side lg:px-side-lg">
-        <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
+        <div className="mobileExt:flex mobileExt:justify-between flex-wrap lg:flex-nowrap">
           <Logo foldOnMobile />
           <div
             className={clsx(
@@ -78,7 +78,7 @@ export function Header() {
       <Quickbar
         className={clsx(
           'mt-7 mx-auto text-left font-normal',
-          'mobile:max-w-sm mobile:ml-4 mobile:mr-0 mobile:mt-5 mobile:px-2 mobile:flex-grow',
+          'mobileExt:max-w-sm mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:px-2 mobileExt:flex-grow',
           'md:mt-0 md:max-w-xs',
           'lg:mt-6 lg:max-w-sm'
         )}
@@ -90,7 +90,7 @@ export function Header() {
   function renderSpecialDonationButton() {
     return (
       <button
-        className="serlo-button-green absolute text-[0.9rem] right-4 md:right-6 lg:right-12 top-28 md:top-[1.15rem] py-0.75"
+        className="serlo-button-green absolute text-[0.9rem] right-4 md:right-6 lg:right-12 top-32 md:top-[1.15rem] py-0.75"
         onClick={() => {
           submitEvent('spenden-header-menu-click-landing')
           void router.push('/spenden')

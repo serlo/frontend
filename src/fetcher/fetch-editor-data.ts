@@ -9,6 +9,7 @@ import {
 import { dataQuery } from './query'
 import { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
+import { testAreaId } from './testArea'
 import { endpoint } from '@/api/endpoint'
 import { BreadcrumbsData, UuidType, UuidWithRevType } from '@/data-types'
 import {
@@ -17,7 +18,6 @@ import {
 } from '@/edtr-io/editor-response-to-state'
 import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
 import { SerloEditorProps } from '@/edtr-io/serlo-editor'
-import { testAreaUrlStart } from '@/fetcher/testArea'
 import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
@@ -75,8 +75,7 @@ export async function fetchEditorData(
   const breadcrumbsData = createBreadcrumbs(data, instance)
 
   const isTestArea =
-    breadcrumbsData &&
-    breadcrumbsData.some((entry) => entry.url?.startsWith(testAreaUrlStart))
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.id === testAreaId)
 
   const typeNeedsReview = !noReviewTypes.includes(
     data.__typename as UuidWithRevType

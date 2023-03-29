@@ -1,5 +1,7 @@
-import { Configuration as KratosConfig, V0alpha2Api } from '@ory/client'
+import { Configuration, FrontendApi } from '@ory/client'
 
-export const kratos = new V0alpha2Api(
-  new KratosConfig({ basePath: `/api/.ory` })
-)
+const config = new Configuration({
+  basePath: '/api/.ory',
+})
+
+export const kratos = new FrontendApi(config)

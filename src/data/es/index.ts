@@ -974,14 +974,14 @@ export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: "👉 Acceso a tu cuenta Serlo.org",
-      'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
+      'body.plaintext': `👋 Hola {{ .Identity.traits.username }},
 ¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
-  
+
 Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, por favor, ignora este correo.</p>
- 
+
 <p>Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Mucha suerte de parte de tu equipo Serlo.org</p>`
     },
