@@ -5,12 +5,21 @@ import {
   EditorPlugin,
   EditorPluginProps,
   string,
+  ObjectStateType,
+  StringStateType,
+  ChildStateType,
+  ListStateType
 } from '@edtr-io/plugin'
 
 import { EquationsEditor } from './editor'
-import { Sign } from './sign'
+import { Sign, renderSignToString } from './sign'
 
-export const stepProps = object({
+/** @public */
+export { Sign, renderSignToString }
+
+type StepPropsType = ObjectStateType<{ left: StringStateType, sign: StringStateType, right: StringStateType, transform: StringStateType, explanation: ChildStateType<string, unknown>}>
+
+export const stepProps: StepPropsType = object({
   left: string(''),
   sign: string(Sign.Equals),
   right: string(''),
@@ -18,7 +27,7 @@ export const stepProps = object({
   explanation: child({ plugin: 'text', config: { registry: [] } }),
 })
 
-const equationsState = object({
+const equationsState: ObjectStateType<{ steps: ListStateType<StepPropsType>, firstExplanation: ChildStateType<string, unknown>, transformationTarget: StringStateType }>= object({
   steps: list(stepProps, 2),
   firstExplanation: child({ plugin: 'text', config: { registry: [] } }),
   transformationTarget: string('equation'),

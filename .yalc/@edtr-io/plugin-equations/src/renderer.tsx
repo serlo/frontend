@@ -3,6 +3,7 @@ import { MathRenderer } from '@edtr-io/math'
 import { isEmpty } from '@edtr-io/store'
 import { styled } from '@edtr-io/ui'
 import { Fragment } from 'react'
+import React from 'react'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'

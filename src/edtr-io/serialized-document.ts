@@ -15,7 +15,7 @@ import { VideoPluginState } from '@edtr-io/plugin-video'
 
 import { ArticlePluginState } from './plugins/article'
 import { DeprecatedPluginState } from './plugins/deprecated'
-import { EquationsPluginState } from './plugins/equations'
+import { EquationsPluginState } from '@edtr-io/plugin-equations'
 import { ErrorPluginState } from './plugins/error'
 import { ExercisePluginState } from './plugins/exercise'
 import { ImportantPluginState } from './plugins/important'

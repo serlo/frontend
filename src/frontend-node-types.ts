@@ -1,10 +1,10 @@
 import { LicenseData } from './data-types'
 import { BoxType } from './edtr-io/plugins/box/renderer'
-import { Sign } from './edtr-io/plugins/equations/sign'
+import { Sign } from '@edtr-io/plugin-equations'
 import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
 import { TableType } from './edtr-io/plugins/serlo-table/renderer'
 
-export { Sign } from './edtr-io/plugins/equations/sign'
+export { Sign } from '@edtr-io/plugin-equations'
 
 // The actual content of the page.
 

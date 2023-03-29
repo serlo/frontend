@@ -1,0 +1,55 @@
+{
+  "main": "dist/index.js",
+  "typings": "api/public.d.ts",
+  "files": [
+    "dist",
+    "api",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "@edtr-io/plugin-equations",
+  "version": "2.5.0",
+  "license": "MIT",
+  "author": "edtr.io Consortium",
+  "repository": "edtr-io/edtr-io",
+  "module": "dist/plugin-equations.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/plugin-equations.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/plugin-equations.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "packageManager": "yarn@3.2.1",
+  "dependencies": {
+    "@microsoft/api-extractor": "^7.34.4"
+  },
+  "yalcSig": "fd47ef06b5a60d247f69d64ffbc3bc0c"
+}

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode, Fragment } from 'react'
 
-import { renderSignToString } from '@/edtr-io/plugins/equations/sign'
+import { renderSignToString } from '@edtr-io/plugin-equations'
 import {
   FrontendContentNode,
   FrontendNodeType,

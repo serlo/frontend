@@ -16,6 +16,7 @@ import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { EquationsProps, EquationsConfig, stepProps } from '.'
@@ -145,125 +146,127 @@ export function EquationsEditor(props: EquationsProps) {
         },
       }}
     >
-      {props.renderIntoSettings(
-        <div>
-          <label htmlFor="transformationTarget">{config.i18n.mode}:</label>{' '}
-          <select
-            id="transformationTarget"
-            value={transformationTarget}
-            onChange={(e) => state.transformationTarget.set(e.target.value)}
-          >
-            <option value={TransformationTarget.Equation}>
-              {config.i18n.transformationOfEquations}
-            </option>
-            <option value={TransformationTarget.Term}>
-              {config.i18n.transformationOfTerms}
-            </option>
-          </select>
-        </div>
-      )}
-      <TableWrapper>
-        <DragDropContext
-          onDragEnd={(result) => {
-            const { source, destination } = result
-            if (!destination) return
-            state.steps.move(source.index, destination.index)
-          }}
-        >
-          <Droppable droppableId="default">
-            {(provided) => {
-              return (
-                <Table ref={provided.innerRef} {...provided.droppableProps}>
-                  {renderFirstExplanation()}
-                  {state.steps.map((step, row) => {
-                    return (
-                      <Draggable
-                        key={step.explanation.id}
-                        draggableId={step.explanation.id}
-                        index={row}
-                      >
-                        {(provided) => {
-                          return (
-                            <tbody
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                            >
-                              <tr>
-                                <td>
-                                  <DragButton
-                                    {...provided.dragHandleProps}
-                                    tabIndex={-1}
-                                  >
-                                    <EdtrIcon icon={edtrDragHandle} />
-                                  </DragButton>
-                                </td>
-                                <StepEditor
-                                  gridFocus={gridFocus}
-                                  row={row}
-                                  state={step}
-                                  transformationTarget={transformationTarget}
-                                  config={config}
-                                />
-                                <td>
-                                  <RemoveButton
-                                    tabIndex={-1}
-                                    onClick={() => state.steps.remove(row)}
-                                  >
-                                    <Icon icon={faXmark} />
-                                  </RemoveButton>
-                                </td>
-                              </tr>
-                              {renderExplantionTr()}
-                            </tbody>
-                          )
-                        }}
-                      </Draggable>
-                    )
-
-                    function renderExplantionTr() {
-                      if (row === state.steps.length - 1) return null
-
-                      return (
-                        <ExplanationTr
-                          onFocus={() =>
-                            gridFocus.setFocus({
-                              row,
-                              column: StepSegment.Explanation,
-                            })
-                          }
-                        >
-                          {transformationTarget ===
-                            TransformationTarget.Equation && <td />}
-                          <td />
-                          {!isEmpty(step.explanation.id)(store.getState()) ? (
-                            renderDownArrow()
-                          ) : (
-                            <td />
-                          )}
-                          <td colSpan={2}>
-                            {step.explanation.render({
-                              config: {
-                                placeholder:
-                                  row === 0 &&
-                                  transformationTarget ===
-                                    TransformationTarget.Term
-                                    ? config.i18n.combineLikeTerms
-                                    : config.i18n.explanation,
-                              },
-                            })}
-                          </td>
-                        </ExplanationTr>
-                      )
-                    }
-                  })}
-                  {provided.placeholder}
-                </Table>
-              )
+      <>
+        {props.renderIntoSettings(
+          <div>
+            <label htmlFor="transformationTarget">{config.i18n.mode}:</label>{' '}
+            <select
+              id="transformationTarget"
+              value={transformationTarget}
+              onChange={(e) => state.transformationTarget.set(e.target.value)}
+            >
+              <option value={TransformationTarget.Equation}>
+                {config.i18n.transformationOfEquations}
+              </option>
+              <option value={TransformationTarget.Term}>
+                {config.i18n.transformationOfTerms}
+              </option>
+            </select>
+          </div>
+        )}
+        <TableWrapper>
+          <DragDropContext
+            onDragEnd={(result) => {
+              const { source, destination } = result
+              if (!destination) return
+              state.steps.move(source.index, destination.index)
             }}
-          </Droppable>
-        </DragDropContext>
-        {renderAddButton()}
-      </TableWrapper>
+          >
+            <Droppable droppableId="default">
+              {(provided) => {
+                return (
+                  <Table ref={provided.innerRef} {...provided.droppableProps}>
+                    {renderFirstExplanation()}
+                    {state.steps.map((step, row) => {
+                      return (
+                        <Draggable
+                          key={step.explanation.id}
+                          draggableId={step.explanation.id}
+                          index={row}
+                        >
+                          {(provided) => {
+                            return (
+                              <tbody
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                              >
+                                <tr>
+                                  <td>
+                                    <DragButton
+                                      {...provided.dragHandleProps}
+                                      tabIndex={-1}
+                                    >
+                                      <EdtrIcon icon={edtrDragHandle} />
+                                    </DragButton>
+                                  </td>
+                                  <StepEditor
+                                    gridFocus={gridFocus}
+                                    row={row}
+                                    state={step}
+                                    transformationTarget={transformationTarget}
+                                    config={config}
+                                  />
+                                  <td>
+                                    <RemoveButton
+                                      tabIndex={-1}
+                                      onClick={() => state.steps.remove(row)}
+                                    >
+                                      <Icon icon={faXmark} />
+                                    </RemoveButton>
+                                  </td>
+                                </tr>
+                                {renderExplantionTr()}
+                              </tbody>
+                            )
+                          }}
+                        </Draggable>
+                      )
+
+                      function renderExplantionTr() {
+                        if (row === state.steps.length - 1) return null
+
+                        return (
+                          <ExplanationTr
+                            onFocus={() =>
+                              gridFocus.setFocus({
+                                row,
+                                column: StepSegment.Explanation,
+                              })
+                            }
+                          >
+                            {transformationTarget ===
+                              TransformationTarget.Equation && <td />}
+                            <td />
+                            {!isEmpty(step.explanation.id)(store.getState()) ? (
+                              renderDownArrow()
+                            ) : (
+                              <td />
+                            )}
+                            <td colSpan={2}>
+                              {step.explanation.render({
+                                config: {
+                                  placeholder:
+                                    row === 0 &&
+                                    transformationTarget ===
+                                      TransformationTarget.Term
+                                      ? config.i18n.combineLikeTerms
+                                      : config.i18n.explanation,
+                                },
+                              })}
+                            </td>
+                          </ExplanationTr>
+                        )
+                      }
+                    })}
+                    {provided.placeholder}
+                  </Table>
+                )
+              }}
+            </Droppable>
+          </DragDropContext>
+          {renderAddButton()}
+        </TableWrapper>
+      </>
     </HotKeys>
   )
 
