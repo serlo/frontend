@@ -400,6 +400,8 @@ export const instanceData = {
       passwordTooLong: "Lo sentimos, esta contraseña es demasiado larga. Por favor, elige una que tenga un máximo de 72 caracteres.",
       passwordTooSimilar: "Lo sentimos, esta contraseña es demasiado parecida a tu correo electrónico o nombre de usuario.",
       emailInvalid: "Lo sentimos, esta dirección de correo electrónico no es válida. Comprueba si hay errores de escritura.",
+      registrationCheckboxAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
+      consentNeededBeforeProceeding: 'We need your consent before proceeding.',
       terms: "Términos",
       signUp: "Registrarse",
       verificationProblem: "En caso de que no lo hayas recibido",
@@ -972,14 +974,14 @@ export const kratosMailStrings = {
   recovery: {
     valid: {
       subject: "👉 Acceso a tu cuenta Serlo.org",
-      'body.plaintext': `👋 Hola {{ .Identity.traits.username }},
+      'body.plaintext': `👋 Hola {{ .Identity.traits.username }}, 
 ¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
-
+  
 Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
 {{ .RecoveryURL }}`,
       body: `<p>👋 Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, por favor, ignora este correo.</p>
-
+ 
 <p>Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Mucha suerte de parte de tu equipo Serlo.org</p>`
     },
