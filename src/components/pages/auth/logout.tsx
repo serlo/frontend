@@ -45,10 +45,10 @@ export function Logout({ oauth }: { oauth?: boolean }) {
     if (!auth || !AuthSessionCookie.get()) return
 
     kratos
-      .createSelfServiceLogoutFlowUrlForBrowsers()
+      .createBrowserLogoutFlow()
       .then(({ data }) => {
         kratos
-          .submitSelfServiceLogoutFlow(data.logout_token)
+          .updateLogoutFlow({ token: data.logout_token })
           .then(() => {
             void fetchAndPersistAuthSession(refreshAuth, null)
 

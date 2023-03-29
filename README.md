@@ -24,6 +24,8 @@ yarn dev
 
 The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
 
+Choose language using `http://localhost:3000/{es|de|hi|ta|en|fr}/`
+
 ### Libraries
 
 To make working with this codebase easier a basic understanding of [React](https://beta.reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [Tailwind](https://tailwindcss.com/) and [useSWR](https://swr.vercel.app/) is very helpful.

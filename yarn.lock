@@ -3692,42 +3692,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ory/client@npm:0.2.0-alpha.4":
-  version: 0.2.0-alpha.4
-  resolution: "@ory/client@npm:0.2.0-alpha.4"
+"@ory/client@npm:^1.1.0, @ory/client@npm:^1.1.21":
+  version: 1.1.21
+  resolution: "@ory/client@npm:1.1.21"
   dependencies:
     axios: ^0.21.4
-  checksum: c7cae2309ae929372b8c1f5b31511e3a91eda2c4333df63790bb5b9f0172e751c14fbf8f7408f30e3cc5f96de41fd06d192358ef3ed4494058dfad3775f00d34
+  checksum: 57b7267ef1fd90bccda5d2578f9584b66841a22ba637b2659da3c3f72871a77e980a8fdfc075e7c35175ec449b066d86ba800043b5c81ab7fe543b82f1cc3316
   languageName: node
   linkType: hard
 
-"@ory/client@npm:>=0.0.1-alpha.49":
-  version: 0.0.1-alpha.189
-  resolution: "@ory/client@npm:0.0.1-alpha.189"
+"@ory/integrations@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@ory/integrations@npm:1.1.0"
   dependencies:
-    axios: ^0.21.4
-  checksum: f275d8c6e84cb2b540b04b3cefbfc9adcf843c937ce8aae53cc3aaa252587b5c7ccb2a5ffd133290d539299ad75b3fda074a94d31f0112031c4d16d990c8ebee
-  languageName: node
-  linkType: hard
-
-"@ory/integrations@npm:^0.2.6":
-  version: 0.2.6
-  resolution: "@ory/integrations@npm:0.2.6"
-  dependencies:
-    "@ory/client": ">=0.0.1-alpha.49"
+    "@ory/client": ^1.1.0
     "@types/tldjs": ^2.3.1
     cookie: ^0.4.1
     istextorbinary: ^6.0.0
     next: ">=12.0.10"
-    ory-prettier-styles: ^1.1.2
+    ory-prettier-styles: ^1.3.0
     prettier: ^2.3.2
     request: ^2.88.2
     set-cookie-parser: ^2.4.8
     tldjs: ^2.3.1
   peerDependencies:
-    "@ory/client": ">=0.0.1-alpha.49"
+    "@ory/client": ^0.2.0-alpha.16
     next: ">=12.0.10"
-  checksum: ccff2730636c3cbd499bc858b0a36265ce86d42bf0bfd35cf0d3c4933985a66e3d26fe1fef07971d3b9d8b3e56178461291f377f648a8d27207a667e61d69a35
+  checksum: 38e38fad8e09312672cb3ce227e1547fbce33842e591b090d148f47a4fd8c7cbed21f30c16501f514493739a3507aabb2601f990cef14c557a94912de26321c2
   languageName: node
   linkType: hard
 
@@ -4393,8 +4384,8 @@ __metadata:
     "@graphql-codegen/typescript-graphql-request": ^4.5.7
     "@graphql-codegen/typescript-operations": 2.5.5
     "@next/bundle-analyzer": ^12.3.1
-    "@ory/client": 0.2.0-alpha.4
-    "@ory/integrations": ^0.2.6
+    "@ory/client": ^1.1.21
+    "@ory/integrations": ^1.1.0
     "@radix-ui/react-navigation-menu": ^1.1.1
     "@serlo/authorization": ^0.47.0
     "@serlo/legacy-editor-to-editor": Entkenntnis/tmp-serlo-legacy-editor-to-editor
@@ -12304,7 +12295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ory-prettier-styles@npm:^1.1.2":
+"ory-prettier-styles@npm:^1.3.0":
   version: 1.3.0
   resolution: "ory-prettier-styles@npm:1.3.0"
   checksum: 95398258a4f946c61ca17d510ff742c73463ecaffc9b7c212b3cae42be9283b37498a9dfae4e14b2e1b54e23b48521b672ebae1463d3120f240ef1492afcf3d2
