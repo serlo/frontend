@@ -108,12 +108,10 @@ export function createBreadcrumbs(uuid: MainUuidType, instance: Instance) {
     taxonomyPaths: TaxonomyTermNodes | undefined,
     instance: Instance
   ) {
-    if (taxonomyPaths === undefined) return undefined
+    if (taxonomyPaths === undefined || taxonomyPaths.length === 0)
+      return undefined
 
-    // select first path as main taxonomy
-    const mainTax = taxonomyPaths[0]
-
-    return taxonomyParentsToRootToBreadcrumbsData(mainTax, instance)
+    return taxonomyParentsToRootToBreadcrumbsData(taxonomyPaths[0], instance)
   }
 
   function compat(breadcrumbs: BreadcrumbsData | undefined) {
