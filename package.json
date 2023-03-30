@@ -104,6 +104,7 @@
     "styled-components": "^5.3.6",
     "styled-jsx": "^5.1.0",
     "swr": "^2.0.0",
+    "test-edtr-io": "serlo/test-edtr-io-refactoring",
     "timeago-react": "^3.0.5",
     "timeago.js": "^4.0.2",
     "tippy.js": "^6.3.7",
