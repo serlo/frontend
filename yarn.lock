@@ -1708,9 +1708,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/editor-ui@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/editor-ui@npm:3.0.1"
+"@edtr-io/editor-ui@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/editor-ui@npm:3.0.2"
   dependencies:
     "@edtr-io/ui": ^3.0.1
     "@types/ramda": ^0.28.5
@@ -1731,7 +1731,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 066e092470e8b0a2e6668da91b2102f967e223fd57fc0efd431dddb65ab983835f35269500d8f541f7684aaeafdde85767d5d21a9cf61f5a016cc6ff72c33f04
+  checksum: 0896d26fc97d291fec58992a4302114336a1b463befbb7c3b2ae6c4e215dc7eaefb7200d00a6a6afc1835880e71406d3b85e56e6991d5c0ccf95214d25d715a2
   languageName: node
   linkType: hard
 
@@ -1900,11 +1900,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/math@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/math@npm:3.0.1"
+"@edtr-io/math@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/math@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/ui": ^3.0.1
     "@types/exenv": ^1.2.0
     "@types/katex": ^0.11.1
@@ -1929,15 +1929,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 371c65ad3cc2c118c4c14ff5eaab59f4f33b2d51e44fae715aebcdecd8def57dde9f2cd7994f3ef0d57de1219cf6017671b464417b2d0eb66d9fea96ffcc18db
+  checksum: 4e7ed0d0850ed6784470bed79a5784675628312f97215b6b4835498cb3ad0b592bec48fedfbfbf6cf65fbf7817cabef74cda3e1acf62aeceb27f09a51afaab7f
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-anchor@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-anchor@npm:3.0.1"
+"@edtr-io/plugin-anchor@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-anchor@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@types/react": ^18.0.27
@@ -1955,13 +1955,13 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: c1a68caf0a098071692c2a922615760d837a9a4c1dd930ea33e9fb724636d70d7542aa1d0bbf9de9f26b72a01f10fbd8b3291726a05dd005d6808b5f1c6265f0
+  checksum: 9a2e7262ec58bf5862f37da8ac5a68a628a1c9644b64eac3530e9b3e5cdf34896e40c00a7affa6612e3ccaff1a473125d63caef4d7a60c6eabccddbbd6374116
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-blockquote@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-blockquote@npm:3.0.1"
+"@edtr-io/plugin-blockquote@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-blockquote@npm:3.0.2"
   dependencies:
     "@edtr-io/plugin": ^3.0.1
     "@types/react": ^18.0.27
@@ -1979,15 +1979,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: ea80ecd635fb97525e6ba17d87d92931e6f972e87d2e276c95bb0407f149e5971f8bb614aba381ea93431f7191208f6e6189c1c2b80de7e651a41f43b368e17f
+  checksum: b196329d1b79ce73bb39579ae7762805e617252a25365f143b15985ff48869c888f55e26eb3ae8775f46d71e462b6c2ad29a40d5d176afc40fc3ee296fd02c15
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-geogebra@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-geogebra@npm:3.0.1"
+"@edtr-io/plugin-geogebra@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-geogebra@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@types/lodash": ^4.14.181
@@ -2009,15 +2009,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: a07b5854161a10057a3e9be4e02f7ceec95775eb36e1f9013a27dd23577e4e0431d155a2a4257ee76ef7eabda696ec1d2ce6af6455ca6a7121e739bb604a44fe
+  checksum: 6e70156efc7b53e179adebba87c10b0fab4aa3ba534255816e2c003d9192f7e6e8faed58d9369ea77774978d98f0de23145e1de10cb9af7a85882a3e257b48bb
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-highlight@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-highlight@npm:3.0.1"
+"@edtr-io/plugin-highlight@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-highlight@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@types/ramda": ^0.28.5
@@ -2039,15 +2039,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 9ca63b5fedfb827a49ade1d7d01a691bf08d20259cd75d7d8b81e7b1b387fae4ac623c80607a362abd6af52e8de391cd4b028efbae0802c17d9e695598c925ff
+  checksum: 5d064ba314648a643a31751dd2b3f2fabd4861151ee32d7e3ee2938135d960c4ba971398f21e96525cff6d24e15b2d116e9abd9843770ccf6917a16cd593d5d0
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-image@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-image@npm:3.0.1"
+"@edtr-io/plugin-image@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-image@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/store": ^3.0.1
     "@edtr-io/ui": ^3.0.1
@@ -2068,15 +2068,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: d7574923dee74d0a3bb7bd57e6f8da1cdbba885fd6bc20cd5df3c243594a775f2ad39d5dc430f803987615648dde94a6fb9e62ea4add94cc3328b92d20b250b4
+  checksum: 259412a62d8f387de40cfbdb59d89ebf12f79ccb32769be77921f4163674a1750ff8cab2d684475d16bdc9a23d4941457aecacf56787b9505daa24212c1871ee
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-input-exercise@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-input-exercise@npm:3.0.1"
+"@edtr-io/plugin-input-exercise@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-input-exercise@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/internal__dev-expression": ^3.0.0
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/renderer-ui": ^3.0.1
@@ -2101,15 +2101,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 642cb71adb71cc1b56f73a97a9e9f3581c60c2f4ea763c9e3f5bb8c5accab9e32bf4331f43c1cdec4f5aec0c36d2e7d816f4e95e319e64cfa2832d93503e6c90
+  checksum: 7c93bae6b7a8b836a12ac81b4389fb346f591a2690e51a1229313b6a26ed8979322173c7bdc44ae54459e35ec8292a97b7cb1dd924cadf8f38a4bafc63b444f8
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-multimedia-explanation@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-multimedia-explanation@npm:3.0.1"
+"@edtr-io/plugin-multimedia-explanation@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-multimedia-explanation@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/store": ^3.0.1
     "@edtr-io/ui": ^3.0.1
@@ -2132,7 +2132,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: dbe7b80f0838e600baba714fe2fd2e0a3cdbd02c931f58b5c83ee09051219d18feef2eb74f6df3de6c551b53bc2440f06c2babc727509bf4b8d2bc024cd1fee0
+  checksum: bd58981858bb755ac6beed09fd1437fac5ded0c106f7cd655a60eeb1331e9a3b9d71fd9fc4434b942e2e4638c9d278e30f6595e7a171f426ca05e6cd9b77fec0
   languageName: node
   linkType: hard
 
@@ -2165,11 +2165,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-rows@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-rows@npm:3.0.1"
+"@edtr-io/plugin-rows@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-rows@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/store": ^3.0.1
     "@edtr-io/ui": ^3.0.1
@@ -2190,15 +2190,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 508b095b8dc73bc8e7ae1dd386e18ba34784ac3bec7040f1971f982e4b52ab460e3908fb9b48815c11661c33841dbf8183ed0140eef7e7b6a8078fe6c9e990fb
+  checksum: 4ac714ab0268963166a58a9b6c2de37e73a924c511ea30af27c1599c892fae14564d9359d47bb524f54e6d4fed2d021310c8822009f87cecc5745de51dfe5015
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-sc-mc-exercise@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-sc-mc-exercise@npm:3.0.1"
+"@edtr-io/plugin-sc-mc-exercise@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-sc-mc-exercise@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/renderer-ui": ^3.0.1
     "@edtr-io/store": ^3.0.1
@@ -2220,15 +2220,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: be1c1fed13381313b9dfc7189e9e8a5e4f6b9875afc021c22c2fc2950880fdb54ed9638ea1bf5614adef932813fba2b394a0396779c9997bbea639c4be68a7e0
+  checksum: 3be936125894402009cb0a88160d3d8cb8967f482f0807b45734767a230feb5ac2c219b1f0cd2db06bbe622523ef52a9c71afd525ab1dc5e1c73546c84d4b2d4
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-serlo-injection@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-serlo-injection@npm:3.0.1"
+"@edtr-io/plugin-serlo-injection@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-serlo-injection@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@types/react": ^18.0.27
@@ -2248,15 +2248,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: b0b14b7931f66c6ba2557a84f72ab6aeceb2bd9ba9e3222af1b489d7fd62798943d5f138004a0f7e706dc68ed2368e423d9c26d7e845c98a60179207fa35636a
+  checksum: a763560f05cb18e797fa00df275071a62247f541705aceb2fb8f4e4f99a63b8876d349e3ff806e797bb3e050552c3c13305f2e333484e7e286a9df27452fffb8
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-spoiler@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-spoiler@npm:3.0.1"
+"@edtr-io/plugin-spoiler@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-spoiler@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/renderer-ui": ^3.0.1
     "@edtr-io/ui": ^3.0.1
@@ -2277,15 +2277,15 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: f7333914f1d8dad8c554f09ae115a642a62ba9afa14df618b8c195aff13b39fae635651e28447b350b78de035c7d14ff93b3b004485c6340297a41581c9fb4ec
+  checksum: 989c6a8d283ebba5910719431041c8e6bb98bd1e264dc7c6d7e9b55938b4430be6e98e5c675ea369f518799e7a819f4a2c5539431654165376268ec499138a1d
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-table@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-table@npm:3.0.1"
+"@edtr-io/plugin-table@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-table@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@types/react": ^18.0.27
@@ -2305,7 +2305,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 134fb819c247bb4260227dbdbd3c6a60f304c5bc7043efdecfedd331e8fc6bcfe267112b0eb3a82ec09467d1beb12b3e683ee3df53c12ed00a7e5bd2a826effb
+  checksum: f78f6dc55e2a9fe917f8175bfb94321f7d7f1c07aeb74762295fee4ba1ab8552ee0d2d5eb68011f0a8859a4cd00e0a1b5469a2b282119861efade65c210146b9
   languageName: node
   linkType: hard
 
@@ -2347,15 +2347,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-text@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-text@npm:3.0.1"
+"@edtr-io/plugin-text@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-text@npm:3.0.2"
   dependencies:
     "@convertkit/slate-lists": ^0.2.11
-    "@edtr-io/editor-ui": ^3.0.1
-    "@edtr-io/math": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
+    "@edtr-io/math": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
-    "@edtr-io/plugin-rows": ^3.0.1
+    "@edtr-io/plugin-rows": ^3.0.2
     "@edtr-io/store": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@prezly/slate-lists": ^0.79.5
@@ -2382,7 +2382,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 303d0f5127eb96dbf76e1d00b764117d1fd78b833a5069483816f914efa8b2f6a9d3de5f388d5af7d2ac413cc46657e592e1e9381d38c8acc58ef2a97d77e3e8
+  checksum: 987626aaa4ab8c68f0073c6a1c204a02ef78b5d58e951db25c71c29b46d224030ca46cfd2646aee5f742e6bde3858eda49e2171b683c34f64c4b0c4d8c1def9b
   languageName: node
   linkType: hard
 
@@ -2410,11 +2410,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@edtr-io/plugin-video@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "@edtr-io/plugin-video@npm:3.0.1"
+"@edtr-io/plugin-video@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@edtr-io/plugin-video@npm:3.0.2"
   dependencies:
-    "@edtr-io/editor-ui": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
     "@edtr-io/ui": ^3.0.1
     "@types/ramda": ^0.28.5
@@ -2434,7 +2434,7 @@ __metadata:
     react-is: ">= 17"
     redux: ">= 4"
     styled-components: ">= 4"
-  checksum: 7eae677c539606799ba91ed608c7df85e765e28641cefd2045c29021d5886bd64184cc02e38980a56997f882597a45b53a81a082621c39a6072048acfea3586a
+  checksum: eea77663a650c76c07aa5218c8f2c152c09e14a1656d894e5a3a0dd2b49c1a9a99145d43cddbc5ec2b637f8dffb04774aa287344f4a191bfcab3387497718c66
   languageName: node
   linkType: hard
 
@@ -4729,23 +4729,23 @@ __metadata:
     "@convertkit/slate-lists": ^0.2.11
     "@edtr-io/core": ^3.0.1
     "@edtr-io/default-document-editor": ^3.0.1
-    "@edtr-io/editor-ui": ^3.0.1
-    "@edtr-io/math": ^3.0.1
+    "@edtr-io/editor-ui": ^3.0.2
+    "@edtr-io/math": ^3.0.2
     "@edtr-io/plugin": ^3.0.1
-    "@edtr-io/plugin-anchor": ^3.0.1
-    "@edtr-io/plugin-blockquote": ^3.0.1
-    "@edtr-io/plugin-geogebra": ^3.0.1
-    "@edtr-io/plugin-highlight": ^3.0.1
-    "@edtr-io/plugin-image": ^3.0.1
-    "@edtr-io/plugin-input-exercise": ^3.0.1
-    "@edtr-io/plugin-multimedia-explanation": ^3.0.1
-    "@edtr-io/plugin-rows": ^3.0.1
-    "@edtr-io/plugin-sc-mc-exercise": ^3.0.1
-    "@edtr-io/plugin-serlo-injection": ^3.0.1
-    "@edtr-io/plugin-spoiler": ^3.0.1
-    "@edtr-io/plugin-table": ^3.0.1
-    "@edtr-io/plugin-text": ^3.0.1
-    "@edtr-io/plugin-video": ^3.0.1
+    "@edtr-io/plugin-anchor": ^3.0.2
+    "@edtr-io/plugin-blockquote": ^3.0.2
+    "@edtr-io/plugin-geogebra": ^3.0.2
+    "@edtr-io/plugin-highlight": ^3.0.2
+    "@edtr-io/plugin-image": ^3.0.2
+    "@edtr-io/plugin-input-exercise": ^3.0.2
+    "@edtr-io/plugin-multimedia-explanation": ^3.0.2
+    "@edtr-io/plugin-rows": ^3.0.2
+    "@edtr-io/plugin-sc-mc-exercise": ^3.0.2
+    "@edtr-io/plugin-serlo-injection": ^3.0.2
+    "@edtr-io/plugin-spoiler": ^3.0.2
+    "@edtr-io/plugin-table": ^3.0.2
+    "@edtr-io/plugin-text": ^3.0.2
+    "@edtr-io/plugin-video": ^3.0.2
     "@edtr-io/renderer": ^3.0.1
     "@edtr-io/renderer-ui": ^3.0.1
     "@edtr-io/store": ^3.0.1
