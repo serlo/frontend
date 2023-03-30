@@ -138,10 +138,7 @@ export function convertSlateBlock(node: CustomElement): FrontendContentNode[] {
       },
     ]
   }
-  // @ts-expect-error will be fixed in next release
   if (node.type === 'list-item-child') {
-    // @ts-expect-error  will be fixed in next release
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return convertTextPluginState(node.children)
   }
   return []
