@@ -38,7 +38,7 @@
     "@edtr-io/plugin": "^2.8.2",
     "@edtr-io/plugin-anchor": "^2.8.2",
     "@edtr-io/plugin-blockquote": "^2.8.2",
-    "@edtr-io/plugin-equations": "file:.yalc/@edtr-io/plugin-equations",
+    "@edtr-io/plugin-equations": "^3.0.0",
     "@edtr-io/plugin-geogebra": "^2.8.2",
     "@edtr-io/plugin-highlight": "^2.8.2",
     "@edtr-io/plugin-image": "^2.8.2",
