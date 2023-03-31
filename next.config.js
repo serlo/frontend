@@ -92,4 +92,5 @@ module.exports = withBundleAnalyzer({
       skipDefaultConversion: true,
     },
   },
+  transpilePackages: ['test-edtr-io'],
 })

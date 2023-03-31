@@ -3660,7 +3660,7 @@ __metadata:
 
 "@serlo/legacy-editor-to-editor@Entkenntnis/tmp-serlo-legacy-editor-to-editor":
   version: 0.0.0
-  resolution: "@serlo/legacy-editor-to-editor@https://github.com/Entkenntnis/tmp-serlo-legacy-editor-to-editor.git#commit=ced3bc697c55b7e9da578df3894b90124089c1cb"
+  resolution: "@serlo/legacy-editor-to-editor@https://github.com/Entkenntnis/tmp-serlo-legacy-editor-to-editor.git#commit=e82ffd9fe439f6bd4b6fc0e67ae8c486703dedc2"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^1.0.0
     "@fortawesome/free-solid-svg-icons": ^5.0.0
@@ -3680,7 +3680,7 @@ __metadata:
     styled-components: ^5.0.0
     tslib: ^2.0.0
     uuid: ^8.0.0
-  checksum: 837a445f6f9c8278df55c46a4050fe3448dabfcba846bb4995846b7ee4f6a8c8d3ad431820abb875919f15648bf3f6461b446c0830181f1a2000aa8eca35e31f
+  checksum: 02bb651757b91f8c79f9e83d1380586bf7fe767570022d5b22141d83665bc9b063903023838b962a12ff0abb7ee8891217f651624127f9af284b291c044b2d68
   languageName: node
   linkType: hard
 
@@ -12280,12 +12280,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-mathquill@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "react-mathquill@npm:1.0.2"
+react-mathquill@Entkenntnis/tmp-react-mathquill:
+  version: 1.0.3
+  resolution: "react-mathquill@https://github.com/Entkenntnis/tmp-react-mathquill.git#commit=c0766224949465d8c8776ec0464130ecad8d3381"
   peerDependencies:
-    react: ^17.0.2
-  checksum: b342bd2009411547deeb987ba920e163cda141404a34bf0cc0b9f4deb0158c2c87609388563be5160f52f730f177fbda41a21fadf845f84d3fc4e289ebfab3d2
+    react: ^18.2.0
+  checksum: 50f47865bc754ecd655b4608efc3f861230e69076c37696b8cd99264f47dd22846979fc3f4e39c95dd1be150bd21053bb519425d85d9eb7c20360e062c426458
   languageName: node
   linkType: hard
 
@@ -13989,7 +13989,7 @@ __metadata:
 
 "test-edtr-io@serlo/test-edtr-io-refactoring#dist":
   version: 0.0.0
-  resolution: "test-edtr-io@https://github.com/serlo/test-edtr-io-refactoring.git#commit=1dc539981a7dff8577806e742c32b7bde9d9e8ef"
+  resolution: "test-edtr-io@https://github.com/serlo/test-edtr-io-refactoring.git#commit=ee2ee552e1956da4a1638c81bdfd166739636a84"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^6.0.0
     "@fortawesome/free-solid-svg-icons": ^6.0.0
@@ -14018,7 +14018,7 @@ __metadata:
     react-dom: ^18.0.0
     react-hotkeys: ^2.0.0
     react-markdown: ^6.0.3
-    react-mathquill: ^1.0.2
+    react-mathquill: Entkenntnis/tmp-react-mathquill
     react-modal: ^3.0.0
     react-redux: ^7.2.6
     react-resizable: ^3.0.0
@@ -14034,7 +14034,7 @@ __metadata:
     styled-components: ^5.0.0
     tiny-invariant: ^1.0.0
     tiny-warning: ^1.0.0
-  checksum: 32363dc93a6b508d4113af8d7249d7780cbfd398bf06a7bb5f509e02dd76c95595aaf358877a093e5da35c6402047e992526ab251443842bbf3965502a4fb69c
+  checksum: b7c12c5b4248e407461d8f829adac5a43fea1ef4e6806a13c43ffd51197d872981341531d48fc5fc455213f0479b67edbc66c128e20f2c00e0ff0734a7af5a62
   languageName: node
   linkType: hard
 
