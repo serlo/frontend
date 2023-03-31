@@ -29,7 +29,7 @@
     "check:all": "scripts/check-all.sh",
     "check:api": "node ./scripts/check-api-version.mjs",
     "check:tailwind": "node ./scripts/check-tailwind.js",
-    "upgrade:edtr-io": "yarn up test-edtr-io@serlo/test-edtr-io-refactoring"
+    "upgrade:edtr-io": "yarn up test-edtr-io@serlo/test-edtr-io-refactoring#dist"
   },
   "dependencies": {
     "@edtr-io/core": "^2.8.2",
@@ -105,7 +105,7 @@
     "styled-components": "^5.3.6",
     "styled-jsx": "^5.1.0",
     "swr": "^2.0.0",
-    "test-edtr-io": "serlo/test-edtr-io-refactoring",
+    "test-edtr-io": "serlo/test-edtr-io-refactoring#dist",
     "timeago-react": "^3.0.5",
     "timeago.js": "^4.0.2",
     "tippy.js": "^6.3.7",
