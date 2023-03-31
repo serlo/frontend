@@ -2,9 +2,13 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import { HotKeys, useScopedSelector, useScopedStore } from 'test-edtr-io/core'
-// eslint-disable-next-line import/no-internal-modules
-import { PreferenceContext, setDefaultPreference } from 'test-edtr-io/core'
+import {
+  HotKeys,
+  useScopedSelector,
+  useScopedStore,
+  PreferenceContext,
+  setDefaultPreference,
+} from 'test-edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
 import { AddButton } from 'test-edtr-io/editor-ui'
 import { MathEditor } from 'test-edtr-io/math'

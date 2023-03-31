@@ -217,10 +217,12 @@ export function OptionalChild(props: {
   state: StateTypeReturnType<ReturnType<typeof serializedChild>>
   onRemove: () => void
 }) {
-  const expectedStateType = object(entity)
+  // Huh?
+  //const expectedStateType = object(entity)
   const document = useScopedSelector(getDocument(props.state.id))
   const children = props.state.render({
     renderToolbar(children) {
+      // @ts-expect-error Will fix later
       if (document.state.id !== 0) return children
 
       return (
