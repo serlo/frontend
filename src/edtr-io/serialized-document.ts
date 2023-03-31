@@ -10,7 +10,7 @@ import { RowsPluginState } from 'test-edtr-io/plugin-rows'
 import { ScMcExercisePluginState } from 'test-edtr-io/plugin-sc-mc-exercise'
 import { SpoilerPluginState } from 'test-edtr-io/plugin-spoiler'
 import { TablePluginState } from 'test-edtr-io/plugin-table'
-import { TextPluginState } from 'test-edtr-io/plugin-text'
+import { TextEditorState } from 'test-edtr-io/plugin-text'
 import { VideoPluginState } from 'test-edtr-io/plugin-video'
 
 import { ArticlePluginState } from './plugins/article'
@@ -111,7 +111,7 @@ export type SerializedDocument =
     }
   | {
       plugin: 'text'
-      state: StateTypeSerializedType<TextPluginState>
+      state: StateTypeSerializedType<TextEditorState>
     }
   | {
       plugin: 'video'

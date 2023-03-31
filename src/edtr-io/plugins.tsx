@@ -371,7 +371,6 @@ export function createPlugins({
     }),
     table: tablePlugin,
     text: createTextPlugin({
-      registry,
       i18n: textPluginI18n,
     }),
     video: createVideoPlugin({

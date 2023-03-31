@@ -1,5 +1,5 @@
 import { converter } from '@serlo/markdown'
-import { NewElement, NewNode, NewText } from 'test-edtr-io/plugin-text'
+import { CustomElement, CustomText } from 'test-edtr-io/plugin-text'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
@@ -15,6 +15,8 @@ import {
   Sign,
 } from '@/frontend-node-types'
 
+type CustomNode = CustomElement | CustomText
+
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
@@ -23,14 +25,14 @@ export type ConvertData =
   | EdtrState
   | UnknownEdtrState
   | FrontendContentNode
-  | NewNode
+  | CustomNode
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
-export function isTextPluginState(node: ConvertData): node is NewNode {
+export function isTextPluginState(node: ConvertData): node is CustomNode {
   return (
-    (node as NewElement).type !== undefined ||
-    (node as NewText).text !== undefined
+    (node as CustomElement).type !== undefined ||
+    (node as CustomText).text !== undefined
   )
 }
 
