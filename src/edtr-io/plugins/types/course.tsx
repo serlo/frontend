@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from 'test-edtr-io/editor-ui/internal'
+import { AddButton } from 'test-edtr-io/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,

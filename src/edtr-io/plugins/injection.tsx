@@ -6,7 +6,7 @@ import {
   styled,
 } from 'test-edtr-io/editor-ui'
 // eslint-disable-next-line import/no-internal-modules
-import { PreviewOverlay } from 'test-edtr-io/editor-ui/internal'
+import { PreviewOverlay } from 'test-edtr-io/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from 'test-edtr-io/plugin'
 import { Icon, faNewspaper } from 'test-edtr-io/ui'
 

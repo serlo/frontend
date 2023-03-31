@@ -6,7 +6,7 @@ import { HotKeys, useScopedSelector, useScopedStore } from 'test-edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
 import { PreferenceContext, setDefaultPreference } from 'test-edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from 'test-edtr-io/editor-ui/internal'
+import { AddButton } from 'test-edtr-io/editor-ui'
 import { MathEditor } from 'test-edtr-io/math'
 import { StateTypeReturnType, StringStateType } from 'test-edtr-io/plugin'
 import {
