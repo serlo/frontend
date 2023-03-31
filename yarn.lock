@@ -2383,13 +2383,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-common-types@npm:6.4.0":
-  version: 6.4.0
-  resolution: "@fortawesome/fontawesome-common-types@npm:6.4.0"
-  checksum: a9b79136caa615352bd921cfe2710516321b402cd76c3f0ae68e579a7e3d7645c5a5c0ecd7516c0b207adeeffd1d2174978638d8c0d3c8c937d66fca4f2ff556
-  languageName: node
-  linkType: hard
-
 "@fortawesome/fontawesome-common-types@npm:^0.2.36":
   version: 0.2.36
   resolution: "@fortawesome/fontawesome-common-types@npm:0.2.36"
@@ -2406,12 +2399,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/fontawesome-svg-core@npm:^6.0.0, @fortawesome/fontawesome-svg-core@npm:^6.1.1, @fortawesome/fontawesome-svg-core@npm:^6.2.0":
-  version: 6.4.0
-  resolution: "@fortawesome/fontawesome-svg-core@npm:6.4.0"
+"@fortawesome/fontawesome-svg-core@npm:^6.1.1, @fortawesome/fontawesome-svg-core@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/fontawesome-svg-core@npm:6.2.0"
   dependencies:
-    "@fortawesome/fontawesome-common-types": 6.4.0
-  checksum: 5d4e6c15f814f5ce29053b666d0c7d194dc8ba173d128a38cc5856403a09d4e817e54956d30ed8d48d621f2f5ebcc71756f4e8fe5c5a091c636fc728fcb2362b
+    "@fortawesome/fontawesome-common-types": 6.2.0
+  checksum: 3bae680cba4098bc3a6aee04e655e0c6b6bab2d78e6709dc0a44d106f57a09bc2fd979310108777a373df301273a2a276739056f8984cd8bc5a50d37338c5380
   languageName: node
   linkType: hard
 
@@ -2442,12 +2435,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fortawesome/free-solid-svg-icons@npm:^6.0.0, @fortawesome/free-solid-svg-icons@npm:^6.1.1, @fortawesome/free-solid-svg-icons@npm:^6.2.0":
-  version: 6.4.0
-  resolution: "@fortawesome/free-solid-svg-icons@npm:6.4.0"
+"@fortawesome/free-solid-svg-icons@npm:^6.1.1, @fortawesome/free-solid-svg-icons@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@fortawesome/free-solid-svg-icons@npm:6.2.0"
   dependencies:
-    "@fortawesome/fontawesome-common-types": 6.4.0
-  checksum: efdd1688620be3d52aacaeac36c955571962e174ae981fc697b6e92fb0996b00166d02e7729a59ea93713a514e2c8d564ab1aa79c9653b4cfed0263e4874d070
+    "@fortawesome/fontawesome-common-types": 6.2.0
+  checksum: b5edf24be491e8493028b7fd2158fb73f3a76491087970609c0ef6a4449fd4744312fe768bfcffc90a5ef86b9980f9ab8ebb36927ba8d9854c2fa638ceadb0ac
   languageName: node
   linkType: hard
 
@@ -3440,6 +3433,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/env@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/env@npm:13.0.2"
+  checksum: e84eca92328421d9824a82177b018234b2cd0aa59a482569b7a52b16eaabdafe6343f21bec7d15035cb8ea831929097c7d92c711d295630f6b74a655f9ddcad6
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/env@npm:13.2.3"
@@ -3456,10 +3456,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-android-arm-eabi@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-android-arm-eabi@npm:13.0.2"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@next/swc-android-arm-eabi@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-android-arm-eabi@npm:13.2.3"
   conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@next/swc-android-arm64@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-android-arm64@npm:13.0.2"
+  conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
@@ -3470,10 +3484,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-darwin-arm64@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-darwin-arm64@npm:13.0.2"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@next/swc-darwin-arm64@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-darwin-arm64@npm:13.2.3"
   conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@next/swc-darwin-x64@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-darwin-x64@npm:13.0.2"
+  conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
@@ -3484,10 +3512,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-freebsd-x64@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-freebsd-x64@npm:13.0.2"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
 "@next/swc-freebsd-x64@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-freebsd-x64@npm:13.2.3"
   conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@next/swc-linux-arm-gnueabihf@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-linux-arm-gnueabihf@npm:13.0.2"
+  conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
@@ -3498,10 +3540,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-linux-arm64-gnu@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-linux-arm64-gnu@npm:13.0.2"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@next/swc-linux-arm64-gnu@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-linux-arm64-gnu@npm:13.2.3"
   conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@next/swc-linux-arm64-musl@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-linux-arm64-musl@npm:13.0.2"
+  conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
@@ -3512,10 +3568,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-linux-x64-gnu@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-linux-x64-gnu@npm:13.0.2"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
 "@next/swc-linux-x64-gnu@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-linux-x64-gnu@npm:13.2.3"
   conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@next/swc-linux-x64-musl@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-linux-x64-musl@npm:13.0.2"
+  conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
@@ -3526,6 +3596,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-win32-arm64-msvc@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-win32-arm64-msvc@npm:13.0.2"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@next/swc-win32-arm64-msvc@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-win32-arm64-msvc@npm:13.2.3"
@@ -3533,10 +3610,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@next/swc-win32-ia32-msvc@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-win32-ia32-msvc@npm:13.0.2"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
 "@next/swc-win32-ia32-msvc@npm:13.2.3":
   version: 13.2.3
   resolution: "@next/swc-win32-ia32-msvc@npm:13.2.3"
   conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@next/swc-win32-x64-msvc@npm:13.0.2":
+  version: 13.0.2
+  resolution: "@next/swc-win32-x64-msvc@npm:13.0.2"
+  conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
@@ -4174,59 +4265,59 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redux-saga/core@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "@redux-saga/core@npm:1.2.3"
+"@redux-saga/core@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "@redux-saga/core@npm:1.1.3"
   dependencies:
     "@babel/runtime": ^7.6.3
-    "@redux-saga/deferred": ^1.2.1
-    "@redux-saga/delay-p": ^1.2.1
-    "@redux-saga/is": ^1.1.3
-    "@redux-saga/symbols": ^1.1.3
-    "@redux-saga/types": ^1.2.1
+    "@redux-saga/deferred": ^1.1.2
+    "@redux-saga/delay-p": ^1.1.2
+    "@redux-saga/is": ^1.1.2
+    "@redux-saga/symbols": ^1.1.2
+    "@redux-saga/types": ^1.1.0
     redux: ^4.0.4
     typescript-tuple: ^2.2.1
-  checksum: a18249aa4e771699f103c2e18952d5fc0f65124f88c1fe33f4551b658b5ef7fb2d827091fea3e339c91f324e5d9098f758282d92536e1701bd003812353dd004
+  checksum: b90c90fcba498442631fe5913be665b6cf4efa58d9e37223fa1d4837b7bd85e1be64e156489f5824b28d91e3fa946192020216d762a5c16e4f75d802517c3cb6
   languageName: node
   linkType: hard
 
-"@redux-saga/deferred@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@redux-saga/deferred@npm:1.2.1"
-  checksum: 2caca8d2fe559c74889562dbd7fabc6f139cc24871a41122e2ac8e4c98fb1c44a081d0fc762f13c12d6320fd759ee2b799d57141025fef93ae553c09338c3fff
+"@redux-saga/deferred@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@redux-saga/deferred@npm:1.1.2"
+  checksum: 98bc41ca1cbc716b8b4d5ad3ffb2f04c7fc7298e75736cb197f1d18a084bca8a6e86c0fa547341db200695a45b15110e01d418a9ef32dc5f5ed6274b0e4f234a
   languageName: node
   linkType: hard
 
-"@redux-saga/delay-p@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@redux-saga/delay-p@npm:1.2.1"
+"@redux-saga/delay-p@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@redux-saga/delay-p@npm:1.1.2"
   dependencies:
-    "@redux-saga/symbols": ^1.1.3
-  checksum: 060533ce8ba6b919caa5d47961eb5d8c1d171519fccd5d44208c26a0b94f3f315c8ea440f1b23af70ed53ebd0445b64567d6a0ac9663a6f703dd8088746ce2b5
+    "@redux-saga/symbols": ^1.1.2
+  checksum: 0fda0b8ce947069deb9e35824dedb2393e956174e909e2c17942c6fa519d26f79847fd295832245e80a44c9c352a7154c45ff3389ed998a6ddaee945be68580f
   languageName: node
   linkType: hard
 
-"@redux-saga/is@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@redux-saga/is@npm:1.1.3"
+"@redux-saga/is@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@redux-saga/is@npm:1.1.2"
   dependencies:
-    "@redux-saga/symbols": ^1.1.3
-    "@redux-saga/types": ^1.2.1
-  checksum: 8e24194d365e9a8896fa232a92c09a02a8f881f7a3a0d8004311568762ae3865d40391e4719b789114124f71904160a8942bb285e3fd1611599267bf2ae7d5fc
+    "@redux-saga/symbols": ^1.1.2
+    "@redux-saga/types": ^1.1.0
+  checksum: 18ff4ceb98cd57d00692841a2abb1a13d070561bb8290dd2785b65f792a55641553077231e4986c15b151c115ab5829f7346940c11dc99786dfabcaa293b021b
   languageName: node
   linkType: hard
 
-"@redux-saga/symbols@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@redux-saga/symbols@npm:1.1.3"
-  checksum: 65a8ea23c1ab7b122823f1a4d957f881d48fa50f90898c26db65cac6524f22e2f337b768dadfa87324925b41e3279ff1ebce1c4141e53dc19e74855167b49b74
+"@redux-saga/symbols@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@redux-saga/symbols@npm:1.1.2"
+  checksum: b75b6979a94ebc9b4db76eef84e05427e2134ca5cc0711592fab2aca621725c561213a900a75068f83b97ef85038688c36e088a07fedd8c076bf8ecfa9899044
   languageName: node
   linkType: hard
 
-"@redux-saga/types@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@redux-saga/types@npm:1.2.1"
-  checksum: 754f183bd1bdd589a29d2b976f666e9ee9e6d28e88268538c11f679d019334999676d5425af14d2a99d5c91c0c87a01e7ac1c4d81a656d93dd529df315bbd0c7
+"@redux-saga/types@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@redux-saga/types@npm:1.1.0"
+  checksum: e75a6ddc896007e76bd505dee1b3f8401464036ce9db2f4c4ac469215437d61013c17a54b9c342574bac27f2cb6ae628fe24419d17d9f85cb922181d81ec2321
   languageName: node
   linkType: hard
 
@@ -4384,7 +4475,6 @@ __metadata:
     swr: ^2.0.0
     tailwindcss: ^3.2.1
     tailwindcss-animate: ^1.0.5
-    test-edtr-io: serlo/test-edtr-io-refactoring
     timeago-react: ^3.0.5
     timeago.js: ^4.0.2
     tippy.js: ^6.3.7
@@ -4634,6 +4724,15 @@ __metadata:
     "@svgr/plugin-jsx": ^6.5.0
     "@svgr/plugin-svgo": ^6.5.0
   checksum: 2c0b18b20694b1301e86893e488269882ae136259cc17b4ab47c208c6edcdfeaefa23894b3fe68d36384e26380eafde23571b0cb143aadf538c027d72eb1d702
+  languageName: node
+  linkType: hard
+
+"@swc/helpers@npm:0.4.11":
+  version: 0.4.11
+  resolution: "@swc/helpers@npm:0.4.11"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 736857d524b41a8a4db81094e9b027f554004e0fa3e86325d85bdb38f7e6459ce022db079edb6c61ba0f46fe8583b3e663e95f7acbd13e51b8da6c34e45bba2e
   languageName: node
   linkType: hard
 
@@ -5018,12 +5117,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ramda@npm:^0.28.0, @types/ramda@npm:^0.28.18, @types/ramda@npm:^0.28.5":
-  version: 0.28.23
-  resolution: "@types/ramda@npm:0.28.23"
+"@types/ramda@npm:^0.28.18, @types/ramda@npm:^0.28.5":
+  version: 0.28.18
+  resolution: "@types/ramda@npm:0.28.18"
   dependencies:
     ts-toolbelt: ^6.15.1
-  checksum: 61d7416c0f4f189c6524e093c7546ca2f159553e54d7933836d46aac1332611aa7b02fd8c8bfa98c0865f262fd9e99e06e3d9538deba0bab1f6153cbcf841160
+  checksum: b140b062efefb3f293811783fdaabf43059d0ec1d78c1bc54884e6fc2bcd909ffe845d99d876b4a13972cc57109097c56f2c3a70e31401ede189a035a840465d
   languageName: node
   linkType: hard
 
@@ -5045,12 +5144,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.0.8":
-  version: 18.0.11
-  resolution: "@types/react-dom@npm:18.0.11"
+"@types/react-dom@npm:^18.0.8":
+  version: 18.0.8
+  resolution: "@types/react-dom@npm:18.0.8"
   dependencies:
     "@types/react": "*"
-  checksum: 579691e4d5ec09688087568037c35edf8cfb1ab3e07f6c60029280733ee7b5c06d66df6fcc90786702c93ac8cb13bc7ff16c79ddfc75d082938fbaa36e1cdbf4
+  checksum: 522e5e949d05f35c6037a2290838c9c7ff92a9d06f7d96b993c7c3f5a86d8f3a6337e059c94e6fb0920227f445e5d1ce10fbfe3d9bbd95fb82a5539249d90646
   languageName: node
   linkType: hard
 
@@ -5111,14 +5210,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.0, @types/react@npm:^18.0.25":
-  version: 18.0.31
-  resolution: "@types/react@npm:18.0.31"
+"@types/react@npm:*, @types/react@npm:^18.0.25":
+  version: 18.0.25
+  resolution: "@types/react@npm:18.0.25"
   dependencies:
     "@types/prop-types": "*"
     "@types/scheduler": "*"
     csstype: ^3.0.2
-  checksum: 6befbd5587e266905b50fd6bbd7c1cacd557bddf99e6a9862ca2f1d06df3dca71b9d485a37d010479730f021aab93b852d417c714de5efc2f41be0ff4c09b4db
+  checksum: 231d658c45abdef044a716b4502774f1585d8336d73b2f5bd68f181acbfc874b7a457686ecd29b415b43ed0922c309bab7e2cf96832d188a3f4f1b02f2af760a
   languageName: node
   linkType: hard
 
@@ -5205,7 +5304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/styled-components@npm:^5.0.0, @types/styled-components@npm:^5.1.24, @types/styled-components@npm:^5.1.26":
+"@types/styled-components@npm:^5.1.24, @types/styled-components@npm:^5.1.26":
   version: 5.1.26
   resolution: "@types/styled-components@npm:5.1.26"
   dependencies:
@@ -5287,7 +5386,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.42.0, @typescript-eslint/parser@npm:^5.48.0":
+"@typescript-eslint/parser@npm:^5.42.0":
   version: 5.48.1
   resolution: "@typescript-eslint/parser@npm:5.48.1"
   dependencies:
@@ -5301,6 +5400,23 @@ __metadata:
     typescript:
       optional: true
   checksum: c624d24eb209b4ce7f0a6c8116712363f10a9c9a5138f240e254ff265526ee4b0fd73b7b6b4b6a0e7611bd9934c42036350dd27f96ae2fa4efdade1a7ebd0e9e
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/parser@npm:^5.48.0":
+  version: 5.48.0
+  resolution: "@typescript-eslint/parser@npm:5.48.0"
+  dependencies:
+    "@typescript-eslint/scope-manager": 5.48.0
+    "@typescript-eslint/types": 5.48.0
+    "@typescript-eslint/typescript-estree": 5.48.0
+    debug: ^4.3.4
+  peerDependencies:
+    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 41d5ce5c8742d286fb083523295a4f186e57bbe4e3da63b6b2de1edbafbcbf6d5225ed3405da2c56e2b0fe1d52bb72babc37508d2ee9b86f6fadad3c4a7950d0
   languageName: node
   linkType: hard
 
@@ -8759,7 +8875,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
+  version: 4.2.9
+  resolution: "graceful-fs@npm:4.2.9"
+  checksum: 68ea4e07ff2c041ada184f9278b830375f8e0b75154e3f080af6b70f66172fabb4108d19b3863a96b53fc068a310b9b6493d86d1291acc5f3861eb4b79d26ad6
+  languageName: node
+  linkType: hard
+
+"graceful-fs@npm:^4.2.4":
   version: 4.2.10
   resolution: "graceful-fs@npm:4.2.10"
   checksum: 3f109d70ae123951905d85032ebeae3c2a5a7a997430df00ea30df0e3a6c60cf6689b109654d6fdacd28810a053348c4d14642da1d075049e6be1ba5216218da
@@ -9430,12 +9553,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.10.0, is-core-module@npm:^2.2.0, is-core-module@npm:^2.8.1, is-core-module@npm:^2.9.0":
+"is-core-module@npm:^2.10.0":
   version: 2.11.0
   resolution: "is-core-module@npm:2.11.0"
   dependencies:
     has: ^1.0.3
   checksum: f96fd490c6b48eb4f6d10ba815c6ef13f410b0ba6f7eb8577af51697de523e5f2cd9de1c441b51d27251bf0e4aebc936545e33a5d26d5d51f28d25698d4a8bab
+  languageName: node
+  linkType: hard
+
+"is-core-module@npm:^2.2.0, is-core-module@npm:^2.8.1, is-core-module@npm:^2.9.0":
+  version: 2.10.0
+  resolution: "is-core-module@npm:2.10.0"
+  dependencies:
+    has: ^1.0.3
+  checksum: 0f3f77811f430af3256fa7bbc806f9639534b140f8ee69476f632c3e1eb4e28a38be0b9d1b8ecf596179c841b53576129279df95e7051d694dac4ceb6f967593
   languageName: node
   linkType: hard
 
@@ -11660,7 +11792,76 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:>=12.0.10, next@npm:^13.2.0":
+"next@npm:>=12.0.10":
+  version: 13.0.2
+  resolution: "next@npm:13.0.2"
+  dependencies:
+    "@next/env": 13.0.2
+    "@next/swc-android-arm-eabi": 13.0.2
+    "@next/swc-android-arm64": 13.0.2
+    "@next/swc-darwin-arm64": 13.0.2
+    "@next/swc-darwin-x64": 13.0.2
+    "@next/swc-freebsd-x64": 13.0.2
+    "@next/swc-linux-arm-gnueabihf": 13.0.2
+    "@next/swc-linux-arm64-gnu": 13.0.2
+    "@next/swc-linux-arm64-musl": 13.0.2
+    "@next/swc-linux-x64-gnu": 13.0.2
+    "@next/swc-linux-x64-musl": 13.0.2
+    "@next/swc-win32-arm64-msvc": 13.0.2
+    "@next/swc-win32-ia32-msvc": 13.0.2
+    "@next/swc-win32-x64-msvc": 13.0.2
+    "@swc/helpers": 0.4.11
+    caniuse-lite: ^1.0.30001406
+    postcss: 8.4.14
+    styled-jsx: 5.1.0
+    use-sync-external-store: 1.2.0
+  peerDependencies:
+    fibers: ">= 3.1.0"
+    node-sass: ^6.0.0 || ^7.0.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    sass: ^1.3.0
+  dependenciesMeta:
+    "@next/swc-android-arm-eabi":
+      optional: true
+    "@next/swc-android-arm64":
+      optional: true
+    "@next/swc-darwin-arm64":
+      optional: true
+    "@next/swc-darwin-x64":
+      optional: true
+    "@next/swc-freebsd-x64":
+      optional: true
+    "@next/swc-linux-arm-gnueabihf":
+      optional: true
+    "@next/swc-linux-arm64-gnu":
+      optional: true
+    "@next/swc-linux-arm64-musl":
+      optional: true
+    "@next/swc-linux-x64-gnu":
+      optional: true
+    "@next/swc-linux-x64-musl":
+      optional: true
+    "@next/swc-win32-arm64-msvc":
+      optional: true
+    "@next/swc-win32-ia32-msvc":
+      optional: true
+    "@next/swc-win32-x64-msvc":
+      optional: true
+  peerDependenciesMeta:
+    fibers:
+      optional: true
+    node-sass:
+      optional: true
+    sass:
+      optional: true
+  bin:
+    next: dist/bin/next
+  checksum: f6fea2ee34a8c490834cbd7688cfb346337a4dc8530282bf50ee94e20277ad66cb00a614c92c07f8b00832795eaa3a10847f10c8d540789b0b1b1f2914a3b239
+  languageName: node
+  linkType: hard
+
+"next@npm:^13.2.0":
   version: 13.2.3
   resolution: "next@npm:13.2.3"
   dependencies:
@@ -12865,7 +13066,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.0.0, react-dom@npm:^18.2.0":
+"react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -13181,7 +13382,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.0.0, react@npm:^18.2.0":
+"react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -13230,12 +13431,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-saga@npm:^1.0.0, redux-saga@npm:^1.1.3":
-  version: 1.2.3
-  resolution: "redux-saga@npm:1.2.3"
+"redux-saga@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "redux-saga@npm:1.1.3"
   dependencies:
-    "@redux-saga/core": ^1.2.3
-  checksum: 5c70799272cfbc94e046992d04bbe967e9f86ca3a35aa0c1562e6727e85b96b1a5aae68e180fdbbbc58de453dc22b39d99c81d7c604fbda7c45a8b60a729ef9d
+    "@redux-saga/core": ^1.1.3
+  checksum: 4ea0bf0d4fac4a9101f2fd0798f7c93ed6646781e40dc9082ff1d4d3a9ae24ef2cadf1e3f62d27e5dcf100e2c8febf833bafd1d7033167afcb198013d0136b4a
   languageName: node
   linkType: hard
 
@@ -13450,10 +13651,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^4.0.0, reselect@npm:^4.1.5":
-  version: 4.1.7
-  resolution: "reselect@npm:4.1.7"
-  checksum: 738d8e2b8f0dca154ad29de6a209c9fbca2d70ae6788fd85df87f2c74b95a65bbf2d16d43a9e2faff39de34d17a29d706ba08a6b2ee5660c09589edbd19af7e1
+"reselect@npm:^4.1.5":
+  version: 4.1.5
+  resolution: "reselect@npm:4.1.5"
+  checksum: 54c13c1e795b2ea70cba8384138aebe78adda00cbea303cc94b64da0a70d74c896cc9a03115ae38b8bff990e7a60dcd6452ab68cbec01b0b38c1afda70714cf0
   languageName: node
   linkType: hard
 
@@ -13807,7 +14008,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shortid@npm:^2.0.0, shortid@npm:^2.2.16":
+"shortid@npm:^2.2.16":
   version: 2.2.16
   resolution: "shortid@npm:2.2.16"
   dependencies:
@@ -14477,7 +14678,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-jsx@npm:5.1.1, styled-jsx@npm:^5.1.0":
+"styled-jsx@npm:5.1.0, styled-jsx@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "styled-jsx@npm:5.1.0"
+  dependencies:
+    client-only: 0.0.1
+  peerDependencies:
+    react: ">= 16.8.0 || 17.x.x || ^18.0.0-0"
+  peerDependenciesMeta:
+    "@babel/core":
+      optional: true
+    babel-plugin-macros:
+      optional: true
+  checksum: e5b70476fd9059147dfe35dd912e537e422a7f900cc88f80456c97da495c655598875d64de2199641d627770a7e55ed08be0fd82646bc386791fdb1d0e5af2b1
+  languageName: node
+  linkType: hard
+
+"styled-jsx@npm:5.1.1":
   version: 5.1.1
   resolution: "styled-jsx@npm:5.1.1"
   dependencies:
@@ -14681,32 +14898,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-test-edtr-io@serlo/test-edtr-io-refactoring:
-  version: 0.0.0
-  resolution: "test-edtr-io@https://github.com/serlo/test-edtr-io-refactoring.git#commit=dd2e44524bf81e78eb1d428a6b183fe5c2815605"
-  dependencies:
-    "@fortawesome/fontawesome-svg-core": ^6.0.0
-    "@fortawesome/free-solid-svg-icons": ^6.0.0
-    "@fortawesome/react-fontawesome": ^0.1.0
-    "@types/ramda": ^0.28.0
-    "@types/react": ^18.0.0
-    "@types/react-dom": ^18.0.0
-    "@types/shortid": ^0.0.29
-    "@types/styled-components": ^5.0.0
-    ramda: ^0.28.0
-    react: ^18.0.0
-    react-dom: ^18.0.0
-    redux: ^4.0.0
-    redux-saga: ^1.0.0
-    reselect: ^4.0.0
-    shortid: ^2.0.0
-    styled-components: ^5.0.0
-    tiny-invariant: ^1.0.0
-    tiny-warning: ^1.0.0
-  checksum: f4c6c42d53a63c75c1355e2aab5b00974b86fc99e5ea8965d2557d10afa78cf81dbe51e0071a1386e2deb3a397093eb2c76e9b0affad818cf7df1549c851a642
-  languageName: node
-  linkType: hard
-
 "test-exclude@npm:^6.0.0":
   version: 6.0.0
   resolution: "test-exclude@npm:6.0.0"
@@ -14781,10 +14972,10 @@ test-edtr-io@serlo/test-edtr-io-refactoring:
   languageName: node
   linkType: hard
 
-"tiny-invariant@npm:^1.0.0, tiny-invariant@npm:^1.0.1, tiny-invariant@npm:^1.0.6, tiny-invariant@npm:^1.2.0":
-  version: 1.3.1
-  resolution: "tiny-invariant@npm:1.3.1"
-  checksum: 872dbd1ff20a21303a2fd20ce3a15602cfa7fcf9b228bd694a52e2938224313b5385a1078cb667ed7375d1612194feaca81c4ecbe93121ca1baebe344de4f84c
+"tiny-invariant@npm:^1.0.1, tiny-invariant@npm:^1.0.6, tiny-invariant@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "tiny-invariant@npm:1.2.0"
+  checksum: e09a718a7c4a499ba592cdac61f015d87427a0867ca07f50c11fd9b623f90cdba18937b515d4a5e4f43dac92370498d7bdaee0d0e7a377a61095e02c4a92eade
   languageName: node
   linkType: hard
 
@@ -14795,7 +14986,7 @@ test-edtr-io@serlo/test-edtr-io-refactoring:
   languageName: node
   linkType: hard
 
-"tiny-warning@npm:^1.0.0, tiny-warning@npm:^1.0.3":
+"tiny-warning@npm:^1.0.3":
   version: 1.0.3
   resolution: "tiny-warning@npm:1.0.3"
   checksum: da62c4acac565902f0624b123eed6dd3509bc9a8d30c06e017104bedcf5d35810da8ff72864400ad19c5c7806fc0a8323c68baf3e326af7cb7d969f846100d71
@@ -15457,7 +15648,7 @@ test-edtr-io@serlo/test-edtr-io-refactoring:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
