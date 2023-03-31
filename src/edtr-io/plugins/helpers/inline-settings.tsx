@@ -1,4 +1,4 @@
-import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
+import { faTrashAlt, Icon, styled } from 'test-edtr-io/ui'
 
 import { HoveringOverlay, HoverPosition } from './hovering-overlay'
 

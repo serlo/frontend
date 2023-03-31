@@ -4,7 +4,7 @@ import {
   object,
   EditorPluginProps,
   child,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { PageLayoutEditor } from './editor'
 import { LoggedInData } from '@/data-types'

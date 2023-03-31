@@ -4,7 +4,7 @@ import {
   EditorPluginProps,
   object,
   string,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { BoxRenderer } from './renderer'
 import { LoggedInData } from '@/data-types'

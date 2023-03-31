@@ -1,5 +1,5 @@
-import { styled } from '@edtr-io/ui'
 import { forwardRef } from 'react'
+import { styled } from 'test-edtr-io/ui'
 
 const InlineInputInner = styled.input({
   backgroundColor: 'transparent',

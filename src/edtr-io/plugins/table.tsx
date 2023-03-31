@@ -1,11 +1,11 @@
-import { EditorPlugin } from '@edtr-io/plugin'
+import { converter } from '@serlo/markdown'
+import { EditorPlugin } from 'test-edtr-io/plugin'
 import {
   createTablePlugin,
   TableConfig,
   TablePluginState,
   TableProps,
-} from '@edtr-io/plugin-table'
-import { converter } from '@serlo/markdown'
+} from 'test-edtr-io/plugin-table'
 
 import { renderArticle } from '@/schema/article-renderer'
 import { convertLegacyState } from '@/schema/convert-legacy-state'

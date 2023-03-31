@@ -4,7 +4,7 @@ import {
   object,
   string,
   number,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { editorContent, HeaderInput, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'

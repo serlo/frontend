@@ -1,6 +1,6 @@
-import { LoadedFile, UploadValidator } from '@edtr-io/plugin'
-import { createImagePlugin as createCoreImagePlugin } from '@edtr-io/plugin-image'
 import { gql } from 'graphql-request'
+import { LoadedFile, UploadValidator } from 'test-edtr-io/plugin'
+import { createImagePlugin as createCoreImagePlugin } from 'test-edtr-io/plugin-image'
 import fetch from 'unfetch'
 
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'

@@ -1,6 +1,6 @@
-import { StateTypeReturnType, string } from '@edtr-io/plugin'
 import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
+import { StateTypeReturnType, string } from 'test-edtr-io/plugin'
 
 export function Settings(props: PropsWithChildren<{}>) {
   return <>{props.children}</>

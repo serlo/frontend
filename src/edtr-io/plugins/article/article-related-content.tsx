@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-internal-modules
-import { faTrashAlt, Icon } from '@edtr-io/ui'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { flatten, values } from 'ramda'
 import {
@@ -8,6 +7,7 @@ import {
   DraggableProvidedDragHandleProps,
   Droppable,
 } from 'react-beautiful-dnd'
+import { faTrashAlt, Icon } from 'test-edtr-io/ui'
 
 import { ArticleProps, buttonClass } from '.'
 import { useInstanceData } from '@/contexts/instance-context'

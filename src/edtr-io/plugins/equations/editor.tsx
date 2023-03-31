@@ -1,22 +1,22 @@
-import { HotKeys, useScopedSelector, useScopedStore } from '@edtr-io/core'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { includes } from 'ramda'
+import { useContext, useEffect, useState } from 'react'
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { HotKeys, useScopedSelector, useScopedStore } from 'test-edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { PreferenceContext, setDefaultPreference } from '@edtr-io/core/beta'
+import { PreferenceContext, setDefaultPreference } from 'test-edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
-import { MathEditor } from '@edtr-io/math'
-import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
+import { AddButton } from 'test-edtr-io/editor-ui/internal'
+import { MathEditor } from 'test-edtr-io/math'
+import { StateTypeReturnType, StringStateType } from 'test-edtr-io/plugin'
 import {
   focus,
   focusNext,
   focusPrevious,
   getFocused,
   isEmpty,
-} from '@edtr-io/store'
-import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { includes } from 'ramda'
-import { useContext, useEffect, useState } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+} from 'test-edtr-io/store'
+import { edtrDragHandle, EdtrIcon, Icon, styled } from 'test-edtr-io/ui'
 
 import { EquationsProps, stepProps } from '.'
 import {

@@ -1,4 +1,4 @@
-import { faPlus, Icon } from '@edtr-io/ui'
+import { faPlus, Icon } from 'test-edtr-io/ui'
 
 interface SerloAddButtonProps {
   onClick: () => void

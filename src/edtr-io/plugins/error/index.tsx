@@ -4,7 +4,7 @@ import {
   object,
   scalar,
   string,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 

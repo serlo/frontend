@@ -1,7 +1,7 @@
-import { Icon } from '@edtr-io/ui'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
+import { Icon } from 'test-edtr-io/ui'
 
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'

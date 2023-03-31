@@ -1,9 +1,9 @@
-import { PluginToolbarButton } from '@edtr-io/core'
-import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState } from 'react'
+import { PluginToolbarButton } from 'test-edtr-io/core'
+import { Icon } from 'test-edtr-io/ui'
 
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'

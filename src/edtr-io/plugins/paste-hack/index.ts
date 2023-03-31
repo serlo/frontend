@@ -1,4 +1,4 @@
-import { EditorPlugin, object, EditorPluginProps } from '@edtr-io/plugin'
+import { EditorPlugin, object, EditorPluginProps } from 'test-edtr-io/plugin'
 
 import { PasteHackEditor } from './editor'
 

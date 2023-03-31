@@ -1,8 +1,8 @@
-import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
+import { StateTypeReturnType } from 'test-edtr-io/plugin'
 
 import { entity } from '../plugins/types/common/common'
 import { useHandleSave } from '../plugins/types/helpers/use-handle-save'

@@ -1,8 +1,8 @@
-import { useScopedStore } from '@edtr-io/core'
-import { MathRenderer } from '@edtr-io/math'
-import { isEmpty } from '@edtr-io/store'
-import { styled } from '@edtr-io/ui'
 import { Fragment } from 'react'
+import { useScopedStore } from 'test-edtr-io/core'
+import { MathRenderer } from 'test-edtr-io/math'
+import { isEmpty } from 'test-edtr-io/store'
+import { styled } from 'test-edtr-io/ui'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'

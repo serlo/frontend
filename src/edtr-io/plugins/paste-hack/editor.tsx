@@ -1,14 +1,14 @@
-import { useScopedStore } from '@edtr-io/core'
+import clsx from 'clsx'
+import { either as E } from 'fp-ts'
+import * as t from 'io-ts'
+import { useRef } from 'react'
+import { useScopedStore } from 'test-edtr-io/core'
 import {
   getParent,
   insertChildBefore,
   serializeDocument,
   removeChild,
-} from '@edtr-io/store'
-import clsx from 'clsx'
-import { either as E } from 'fp-ts'
-import * as t from 'io-ts'
-import { useRef } from 'react'
+} from 'test-edtr-io/store'
 
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'

@@ -1,7 +1,7 @@
-import { faTrashAlt, Icon } from '@edtr-io/ui'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { faTrashAlt, Icon } from 'test-edtr-io/ui'
 
 import { ArticleProps } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

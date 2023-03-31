@@ -1,4 +1,4 @@
-import { EditorPlugin, EditorPluginProps, scalar } from '@edtr-io/plugin'
+import { EditorPlugin, EditorPluginProps, scalar } from 'test-edtr-io/plugin'
 
 const separatorState = scalar(undefined)
 

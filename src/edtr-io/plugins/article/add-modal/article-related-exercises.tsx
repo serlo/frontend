@@ -1,5 +1,5 @@
-import { Icon } from '@edtr-io/ui'
 import { gql } from 'graphql-request'
+import { Icon } from 'test-edtr-io/ui'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'

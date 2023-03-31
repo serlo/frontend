@@ -4,7 +4,7 @@ import {
   EditorPluginProps,
   string,
   list,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { PageTeamEditor } from './editor'
 

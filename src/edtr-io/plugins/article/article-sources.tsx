@@ -1,10 +1,10 @@
 // eslint-disable-next-line import/no-internal-modules
-import { faTrashAlt, Icon } from '@edtr-io/ui'
 import {
   faGripVertical,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import { faTrashAlt, Icon } from 'test-edtr-io/ui'
 
 import { ArticleProps, buttonClass, OpenInNewTab } from '.'
 import { InlineInput } from '../helpers/inline-input'

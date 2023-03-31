@@ -1,10 +1,14 @@
-import { OverlayInput } from '@edtr-io/core'
-import { EditorInlineSettings, EditorInput, styled } from '@edtr-io/editor-ui'
-// eslint-disable-next-line import/no-internal-modules
-import { PreviewOverlay } from '@edtr-io/editor-ui/internal'
-import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
-import { Icon, faNewspaper } from '@edtr-io/ui'
 import { ChangeEvent, useEffect, useState } from 'react'
+import { OverlayInput } from 'test-edtr-io/core'
+import {
+  EditorInlineSettings,
+  EditorInput,
+  styled,
+} from 'test-edtr-io/editor-ui'
+// eslint-disable-next-line import/no-internal-modules
+import { PreviewOverlay } from 'test-edtr-io/editor-ui/internal'
+import { EditorPluginProps, string, EditorPlugin } from 'test-edtr-io/plugin'
+import { Icon, faNewspaper } from 'test-edtr-io/ui'
 
 import { Injection } from '@/components/content/injection'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

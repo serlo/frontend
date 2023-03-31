@@ -1,4 +1,11 @@
-import { RowsConfig } from '@edtr-io/plugin-rows'
+import { faSquare } from '@fortawesome/free-regular-svg-icons'
+import {
+  faGrip,
+  faGripLinesVertical,
+  faUsers,
+  faWrench,
+} from '@fortawesome/free-solid-svg-icons'
+import { RowsConfig } from 'test-edtr-io/plugin-rows'
 import {
   createIcon,
   faAnchor,
@@ -12,14 +19,7 @@ import {
   faParagraph,
   faPhotoVideo,
   faTable,
-} from '@edtr-io/ui'
-import { faSquare } from '@fortawesome/free-regular-svg-icons'
-import {
-  faGrip,
-  faGripLinesVertical,
-  faUsers,
-  faWrench,
-} from '@fortawesome/free-solid-svg-icons'
+} from 'test-edtr-io/ui'
 
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'

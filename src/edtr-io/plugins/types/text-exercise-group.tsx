@@ -1,6 +1,11 @@
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
-import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
+import { AddButton } from 'test-edtr-io/editor-ui/internal'
+import {
+  boolean,
+  EditorPlugin,
+  EditorPluginProps,
+  list,
+} from 'test-edtr-io/plugin'
 
 import { SemanticSection } from '../helpers/semantic-section'
 import {

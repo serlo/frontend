@@ -1,7 +1,7 @@
-import { useScopedStore } from '@edtr-io/core'
-import { serializeRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
+import { useScopedStore } from 'test-edtr-io/core'
+import { serializeRootDocument } from 'test-edtr-io/store'
 
 import { storeStateToLocalStorage } from '@/edtr-io/components/local-storage-notice'
 import { SaveContext } from '@/edtr-io/serlo-editor'

@@ -1,4 +1,4 @@
-import { EditorPlugin, child, list, number, object } from '@edtr-io/plugin'
+import { EditorPlugin, child, list, number, object } from 'test-edtr-io/plugin'
 
 import { LayoutRenderer } from './editor'
 

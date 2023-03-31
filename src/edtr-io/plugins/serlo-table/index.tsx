@@ -1,4 +1,7 @@
-import { useScopedSelector, useScopedStore } from '@edtr-io/core'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
+import { KeyboardEvent } from 'react'
+import { useScopedSelector, useScopedStore } from 'test-edtr-io/core'
 import {
   child,
   ChildStateType,
@@ -8,7 +11,7 @@ import {
   object,
   StateTypesReturnType,
   string,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 import {
   getFocused,
   isEmpty,
@@ -16,11 +19,8 @@ import {
   getDocument,
   focusNext,
   focusPrevious,
-} from '@edtr-io/store'
-import { Icon, faImages, faParagraph } from '@edtr-io/ui'
-import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
-import { KeyboardEvent } from 'react'
+} from 'test-edtr-io/store'
+import { Icon, faImages, faParagraph } from 'test-edtr-io/ui'
 
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'

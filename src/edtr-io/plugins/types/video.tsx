@@ -1,5 +1,5 @@
-import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { createVideoPlugin } from '@edtr-io/plugin-video'
+import { EditorPlugin, EditorPluginProps, string } from 'test-edtr-io/plugin'
+import { createVideoPlugin } from 'test-edtr-io/plugin-video'
 
 import { entity, editorContent, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'

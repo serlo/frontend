@@ -1,7 +1,7 @@
-import { EditorPlugin, EditorPluginProps } from '@edtr-io/plugin'
-import { ExpandableBox } from '@edtr-io/renderer-ui'
-import { ThemeProvider } from '@edtr-io/ui'
 import { useCallback } from 'react'
+import { EditorPlugin, EditorPluginProps } from 'test-edtr-io/plugin'
+import { ExpandableBox } from 'test-edtr-io/renderer-ui'
+import { ThemeProvider } from 'test-edtr-io/ui'
 
 import { editorContent, entity, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'

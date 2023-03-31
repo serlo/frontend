@@ -1,4 +1,4 @@
-import { EditorPlugin, EditorPluginProps, object } from '@edtr-io/plugin'
+import { EditorPlugin, EditorPluginProps, object } from 'test-edtr-io/plugin'
 
 import { editorContent } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'

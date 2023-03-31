@@ -1,4 +1,4 @@
-import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
+import { EditorPlugin, EditorPluginProps, string } from 'test-edtr-io/plugin'
 
 import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { RevisionHistoryLoader } from './helpers/revision-history-loader'

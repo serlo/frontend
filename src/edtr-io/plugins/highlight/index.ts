@@ -1,3 +1,4 @@
+import { mergeDeepRight } from 'ramda'
 import {
   boolean,
   BooleanStateType,
@@ -7,9 +8,8 @@ import {
   ObjectStateType,
   string,
   StringStateType,
-} from '@edtr-io/plugin'
-import { DeepPartial } from '@edtr-io/ui'
-import { mergeDeepRight } from 'ramda'
+} from 'test-edtr-io/plugin'
+import { DeepPartial } from 'test-edtr-io/ui'
 
 import { HighlightEditor } from './editor'
 import { HighlightRenderer, HighlightRendererProps } from './renderer'

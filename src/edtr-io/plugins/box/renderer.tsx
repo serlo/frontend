@@ -1,7 +1,7 @@
-import { useScopedStore } from '@edtr-io/core'
-import { isEmptyRows } from '@edtr-io/plugin-rows'
 import clsx from 'clsx'
 import { useState } from 'react'
+import { useScopedStore } from 'test-edtr-io/core'
+import { isEmptyRows } from 'test-edtr-io/plugin-rows'
 
 import { BoxProps } from '.'
 import { boxTypeStyle, defaultStyle } from '@/components/content/box'

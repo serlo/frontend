@@ -3398,6 +3398,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@juggle/resize-observer@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@juggle/resize-observer@npm:3.4.0"
+  checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
+  languageName: node
+  linkType: hard
+
 "@mswjs/cookies@npm:^0.2.2":
   version: 0.2.2
   resolution: "@mswjs/cookies@npm:0.2.2"
@@ -3689,6 +3696,20 @@ __metadata:
   version: 2.11.2
   resolution: "@popperjs/core@npm:2.11.2"
   checksum: 5695bf020eda54636e16a62dc9b5fdd92beaf7b2d19f62fcef049d57c5cff92773562d80cbf760b217c3ec928da310eb24994ab6a00fd39dffa0af9b5dfc01a6
+  languageName: node
+  linkType: hard
+
+"@prezly/slate-lists@npm:^0.79.5":
+  version: 0.79.5
+  resolution: "@prezly/slate-lists@npm:0.79.5"
+  dependencies:
+    is-hotkey: ^0.2.0
+    uuid: ^8.3.0
+  peerDependencies:
+    react: ^16.9.0 || ^17.0.0 || ^18.0.0
+    slate: ^0.91.4
+    slate-react: ^0.91.7
+  checksum: 2ef3dde5111bd1119abcd4771553d38eaa1f78c519a1f5bea54c6d2fcef636ea30df59b9d4220b980a2a9c0ed05c267160a731fbbabdd73df08817769ade0153
   languageName: node
   linkType: hard
 
@@ -9195,6 +9216,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"immer@npm:^9.0.6":
+  version: 9.0.21
+  resolution: "immer@npm:9.0.21"
+  checksum: 70e3c274165995352f6936695f0ef4723c52c92c92dd0e9afdfe008175af39fa28e76aafb3a2ca9d57d1fb8f796efc4dd1e1cc36f18d33fa5b74f3dfb0375432
+  languageName: node
+  linkType: hard
+
 "immutable@npm:^3.8.2":
   version: 3.8.2
   resolution: "immutable@npm:3.8.2"
@@ -13166,6 +13194,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-resizable@npm:^3.0.0":
+  version: 3.0.5
+  resolution: "react-resizable@npm:3.0.5"
+  dependencies:
+    prop-types: 15.x
+    react-draggable: ^4.0.3
+  peerDependencies:
+    react: ">= 16.3"
+  checksum: 616a10205acfaf8cc3aa0824b60f6d037eef87143d8f338cf826deb74a353db9b9baad67a65dc8535fe90840bfc3e1b8a901f9c247033ffeec2f30405ac7528e
+  languageName: node
+  linkType: hard
+
 "react-shallow-renderer@npm:^16.13.1":
   version: 16.14.1
   resolution: "react-shallow-renderer@npm:16.14.1"
@@ -14037,10 +14077,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"slate-react@npm:*":
-  version: 0.72.8
-  resolution: "slate-react@npm:0.72.8"
+"slate-react@npm:*, slate-react@npm:^0.91.0":
+  version: 0.91.11
+  resolution: "slate-react@npm:0.91.11"
   dependencies:
+    "@juggle/resize-observer": ^3.4.0
     "@types/is-hotkey": ^0.1.1
     "@types/lodash": ^4.14.149
     direction: ^1.0.3
@@ -14053,7 +14094,7 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
     slate: ">=0.65.3"
-  checksum: 7582753e71e7785aa19cc68ff23e6f4f4a32510bd4035114f610023529d3b43c85d01616698d8991300314203b474ca718be3831f553d80084737b58fc57ec9a
+  checksum: c0cced1bb756f2ce5429741d8f4e26af5c2c82ad24be62a5a1750f1d9be0bb11ac9fa0c5839f9a43bafef049d894f6e8f367ad2bbe8f175785f5e914de3c7341
   languageName: node
   linkType: hard
 
@@ -14101,6 +14142,17 @@ __metadata:
   peerDependencies:
     immutable: ">=3.8.1 || >4.0.0-rc"
   checksum: a128d1eaa4c203dbb13d197d69758341df485e42e52aea1739d05939b16df42633949f116ae9b75b95b647ec39b18867ca5c8a05dbe97eeb15cf31bc8d2edc7f
+  languageName: node
+  linkType: hard
+
+"slate@npm:^0.91.0":
+  version: 0.91.4
+  resolution: "slate@npm:0.91.4"
+  dependencies:
+    immer: ^9.0.6
+    is-plain-object: ^5.0.0
+    tiny-warning: ^1.0.3
+  checksum: 70164a5106cac7caaa681b0eca5dba5cf172b2c406f769744babb28350906ca92dc496a0d9224911564bd4ee0650a19be7279d917bba02159e1672f37475d74d
   languageName: node
   linkType: hard
 
@@ -14749,27 +14801,41 @@ __metadata:
 
 "test-edtr-io@serlo/test-edtr-io-refactoring#dist":
   version: 0.0.0
-  resolution: "test-edtr-io@https://github.com/serlo/test-edtr-io-refactoring.git#commit=bae83e782df72a2d681516e31dda342415cf95bc"
+  resolution: "test-edtr-io@https://github.com/serlo/test-edtr-io-refactoring.git#commit=e566bdc267be762f7c0e6724ab877423ea67e901"
   dependencies:
     "@fortawesome/fontawesome-svg-core": ^6.0.0
     "@fortawesome/free-solid-svg-icons": ^6.0.0
     "@fortawesome/react-fontawesome": ^0.1.0
+    "@prezly/slate-lists": ^0.79.5
+    algebra.js: ^0.2.6
+    iframe-resizer-react: ^1.1.0
+    isomorphic-unfetch: ^3.1.0
+    katex: ^0.15.3
+    lodash: ^4.17.21
     ramda: ^0.28.0
     react: ^18.0.0
     react-dnd: ^16.0.1
     react-dnd-html5-backend: ^16.0.1
     react-dom: ^18.0.0
     react-hotkeys: ^2.0.0
+    react-markdown: ^6.0.3
+    react-mathquill: ^1.0.2
     react-modal: ^3.0.0
     react-redux: ^7.2.6
+    react-resizable: ^3.0.0
+    react-syntax-highlighter: ^15.5.0
+    react-textarea-autosize: ^8.3.3
     redux: ^4.0.0
     redux-saga: ^1.0.0
+    remark-gfm: ^1.0.0
     reselect: ^4.0.0
     shortid: ^2.0.0
+    slate: ^0.91.0
+    slate-react: ^0.91.0
     styled-components: ^5.0.0
     tiny-invariant: ^1.0.0
     tiny-warning: ^1.0.0
-  checksum: 149ec063917542fb45804b4b27bc676f2ac5cb5fee165ce49342d8fa1a497842543cbcb39ab411ef89688d28ba93fa861b34537294f652b2d780dd6f9a3d8b13
+  checksum: d8e58c97fe9c862276fb42fffd32b1970b5ffd8350834b881eaea7c15f53b96c0577c102dfa824e69fdaf54061799e72fcffd006a5d58be06b181bcb5974848d
   languageName: node
   linkType: hard
 
@@ -15561,7 +15627,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:^8.0.0":
+"uuid@npm:^8.0.0, uuid@npm:^8.3.0":
   version: 8.3.2
   resolution: "uuid@npm:8.3.2"
   bin:

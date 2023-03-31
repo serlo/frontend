@@ -1,5 +1,5 @@
-import { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
+import { NewElement, NewNode, NewText } from 'test-edtr-io/plugin-text'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'

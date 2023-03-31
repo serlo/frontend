@@ -1,4 +1,5 @@
-import { useScopedSelector } from '@edtr-io/core'
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import { useScopedSelector } from 'test-edtr-io/core'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -6,10 +7,9 @@ import {
   object,
   string,
   optional,
-} from '@edtr-io/plugin'
-import { isEmpty } from '@edtr-io/store'
-import { Icon, styled } from '@edtr-io/ui'
-import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+} from 'test-edtr-io/plugin'
+import { isEmpty } from 'test-edtr-io/store'
+import { Icon, styled } from 'test-edtr-io/ui'
 
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'

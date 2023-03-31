@@ -1,4 +1,5 @@
-import { useScopedSelector, PluginToolbarButton } from '@edtr-io/core'
+import { mapObjIndexed } from 'ramda'
+import { useScopedSelector, PluginToolbarButton } from 'test-edtr-io/core'
 import {
   StateType,
   StateTypesSerializedType,
@@ -13,10 +14,9 @@ import {
   object,
   string,
   optional,
-} from '@edtr-io/plugin'
-import { getDocument } from '@edtr-io/store'
-import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
-import { mapObjIndexed } from 'ramda'
+} from 'test-edtr-io/plugin'
+import { getDocument } from 'test-edtr-io/store'
+import { faTrashAlt, Icon, styled } from 'test-edtr-io/ui'
 
 export const licenseState = object({
   id: number(),
@@ -218,9 +218,7 @@ export function OptionalChild(props: {
   onRemove: () => void
 }) {
   const expectedStateType = object(entity)
-  const document = useScopedSelector(getDocument(props.state.id)) as {
-    state: StateTypeValueType<typeof expectedStateType>
-  }
+  const document = useScopedSelector(getDocument(props.state.id)) 
   const children = props.state.render({
     renderToolbar(children) {
       if (document.state.id !== 0) return children

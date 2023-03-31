@@ -1,16 +1,16 @@
-import { useScopedDispatch, useScopedSelector } from '@edtr-io/core'
-import { StateTypeReturnType } from '@edtr-io/plugin'
+import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useScopedDispatch, useScopedSelector } from 'test-edtr-io/core'
+import { StateTypeReturnType } from 'test-edtr-io/plugin'
 import {
   redo,
   undo,
   hasRedoActions,
   hasUndoActions,
   hasPendingChanges,
-} from '@edtr-io/store'
-import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
-import { useState } from 'react'
-import { createPortal } from 'react-dom'
+} from 'test-edtr-io/store'
 
 import { entity } from '../common/common'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'

@@ -3,7 +3,7 @@ import {
   EditorPluginProps,
   object,
   string,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { editorContent, HeaderInput, license, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'

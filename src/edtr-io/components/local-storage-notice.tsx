@@ -1,5 +1,5 @@
-import { EditorProps } from '@edtr-io/core'
 import { Dispatch, SetStateAction } from 'react'
+import { EditorProps } from 'test-edtr-io/core'
 import { debounce } from 'ts-debounce'
 
 import { LooseEdtrData } from '../serlo-editor'

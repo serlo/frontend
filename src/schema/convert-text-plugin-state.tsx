@@ -1,4 +1,4 @@
-import type { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
+import type { NewElement, NewNode, NewText } from 'test-edtr-io/plugin-text'
 
 import { sanitizeLatex } from './sanitize-latex'
 import {

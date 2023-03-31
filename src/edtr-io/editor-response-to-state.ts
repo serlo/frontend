@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-internal-modules
-import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
 import {
   convert,
   isEdtr,
@@ -9,6 +8,7 @@ import {
   OtherPlugin,
   Splish,
 } from '@serlo/legacy-editor-to-editor'
+import { StateType, StateTypeSerializedType } from 'test-edtr-io/plugin'
 
 import { SerloEntityPluginType } from './plugins'
 import { appletTypeState } from './plugins/types/applet'

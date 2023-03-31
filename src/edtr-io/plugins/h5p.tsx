@@ -1,11 +1,11 @@
-import { EditorInput, EditorInlineSettings } from '@edtr-io/editor-ui'
+import { useEffect, useState } from 'react'
+import { EditorInput, EditorInlineSettings } from 'test-edtr-io/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
   string,
   StringStateType,
-} from '@edtr-io/plugin'
-import { useEffect, useState } from 'react'
+} from 'test-edtr-io/plugin'
 
 import { H5p, parseH5pUrl } from '@/components/content/h5p'
 

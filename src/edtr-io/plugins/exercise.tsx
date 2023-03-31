@@ -1,17 +1,17 @@
-import { PluginToolbarButton, useScopedStore } from '@edtr-io/core'
-import { styled } from '@edtr-io/editor-ui'
+import { PropsWithChildren, useState } from 'react'
+import { PluginToolbarButton, useScopedStore } from 'test-edtr-io/core'
+import { styled } from 'test-edtr-io/editor-ui'
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { AddButton } from 'test-edtr-io/editor-ui/internal'
 import {
   EditorPlugin,
   EditorPluginProps,
   child,
   object,
   optional,
-} from '@edtr-io/plugin'
-import { getDocument } from '@edtr-io/store'
-import { Icon, faRandom, faTrashAlt } from '@edtr-io/ui'
-import { PropsWithChildren, useState } from 'react'
+} from 'test-edtr-io/plugin'
+import { getDocument } from 'test-edtr-io/store'
+import { Icon, faRandom, faTrashAlt } from 'test-edtr-io/ui'
 
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

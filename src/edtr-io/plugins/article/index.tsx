@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   child,
   EditorPlugin,
@@ -5,9 +6,8 @@ import {
   list,
   object,
   string,
-} from '@edtr-io/plugin'
-import { styled } from '@edtr-io/ui'
-import { useState } from 'react'
+} from 'test-edtr-io/plugin'
+import { styled } from 'test-edtr-io/ui'
 
 import { SemanticSection } from '../helpers/semantic-section'
 import { SerloAddButton } from '../helpers/serlo-editor-button'

@@ -1,8 +1,8 @@
-import { faSpinner } from '@edtr-io/ui'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
+import { faSpinner } from 'test-edtr-io/ui'
 
 import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'

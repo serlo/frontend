@@ -1,6 +1,6 @@
-import { useScopedStore } from '@edtr-io/core'
-import { serializeRootDocument } from '@edtr-io/store'
 import { useEffect, useState } from 'react'
+import { useScopedStore } from 'test-edtr-io/core'
+import { serializeRootDocument } from 'test-edtr-io/store'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

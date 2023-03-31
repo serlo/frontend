@@ -5,7 +5,7 @@ import {
   EditorPlugin,
   EditorPluginProps,
   string,
-} from '@edtr-io/plugin'
+} from 'test-edtr-io/plugin'
 
 import { EquationsEditor } from './editor'
 import { Sign } from './sign'

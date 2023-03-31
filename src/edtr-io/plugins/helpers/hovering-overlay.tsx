@@ -1,5 +1,5 @@
-import { styled } from '@edtr-io/ui'
 import { createRef, useLayoutEffect, useState } from 'react'
+import { styled } from 'test-edtr-io/ui'
 
 const OverlayTriangle = styled.div<{ positionAbove: boolean }>((props) => {
   const borderPosition = props.positionAbove ? 'borderTop' : 'borderBottom'
