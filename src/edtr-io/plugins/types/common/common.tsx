@@ -218,7 +218,7 @@ export function OptionalChild(props: {
   onRemove: () => void
 }) {
   const expectedStateType = object(entity)
-  const document = useScopedSelector(getDocument(props.state.id)) 
+  const document = useScopedSelector(getDocument(props.state.id))
   const children = props.state.render({
     renderToolbar(children) {
       if (document.state.id !== 0) return children
