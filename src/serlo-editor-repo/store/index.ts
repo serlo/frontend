@@ -6,15 +6,16 @@ export * from './history'
 export * from './plugin'
 export * from './plugins'
 export * from './root'
-export { createSelector, SubReducer } from './helpers'
+export { createSelector } from './helpers'
+export type { SubReducer } from './helpers'
 export { getScope } from './reducer'
-export {
-  createStore,
+export { createStore } from './store'
+export type {
   ChangeListener,
   StoreEnhancerFactory,
   StoreOptions,
 } from './store'
-export {
+export type {
   ActionCreator,
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,

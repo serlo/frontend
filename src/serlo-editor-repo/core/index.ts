@@ -1,13 +1,9 @@
 export { HotKeys, IgnoreKeys, GlobalHotKeys } from 'react-hotkeys'
 
-export { SubDocument, SubDocumentProps } from './sub-document'
-export {
-  Document,
-  Editor,
-  EditorProps,
-  EditorProvider,
-  EditorProviderProps,
-} from './editor'
+export { SubDocument } from './sub-document'
+export type { SubDocumentProps } from './sub-document'
+export { Document, Editor, EditorProvider } from './editor'
+export type { EditorProps, EditorProviderProps } from './editor'
 export {
   ScopeContext,
   ErrorContext,
@@ -22,9 +18,9 @@ export {
 } from './store'
 export {
   DocumentEditorContext,
-  Preference,
   PreferenceContext,
   PluginToolbarContext,
   setDefaultPreference,
 } from './contexts'
+export type { Preference } from './contexts'
 export * from './plugin-toolbar'

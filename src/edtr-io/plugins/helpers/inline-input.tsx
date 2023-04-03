@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+// @ts-expect-error missing types?
 import { Value } from 'slate'
 import Plain from 'slate-plain-serializer'
 // @ts-expect-error missing types?

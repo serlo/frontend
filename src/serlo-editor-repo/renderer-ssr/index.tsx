@@ -22,4 +22,4 @@ export function render<K extends string = string>(props: RendererProps<K>) {
   }
 }
 
-export { RendererProps }
+export type { RendererProps }

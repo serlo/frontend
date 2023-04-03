@@ -1,5 +1,4 @@
 import { PluginToolbar } from '../plugin-toolbar'
-
 import { DefaultPluginToolbarConfig } from './config'
 import { createOverlayButton } from './overlay-button'
 import { createOverlayCheckbox } from './overlay-checkbox'
@@ -30,4 +29,4 @@ export function createDefaultPluginToolbar(
   }
 }
 
-export { DefaultPluginToolbarConfig }
+export type { DefaultPluginToolbarConfig }
