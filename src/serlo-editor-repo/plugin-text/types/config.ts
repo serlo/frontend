@@ -1,7 +1,7 @@
-import { SerializedScalarStateType } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { Descendant, Range } from 'slate'
 
+import { SerializedScalarStateType } from '../../plugin'
+import { DeepPartial } from '../../ui'
 import { Heading } from './text-editor'
 
 /** @public */

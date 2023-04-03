@@ -1,7 +1,7 @@
-import { OverlayButtonProps } from '../plugin-toolbar'
-import { styled } from '../ui'
 import * as React from 'react'
 
+import { OverlayButtonProps } from '../plugin-toolbar'
+import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 
 const Button = styled.button<{ config: DefaultPluginToolbarConfig }>(

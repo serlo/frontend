@@ -5,7 +5,6 @@ import {
   EditorPlugin,
   EditorPluginProps,
 } from '../plugin'
-
 import { BlockquoteRenderer } from './renderer'
 
 /**

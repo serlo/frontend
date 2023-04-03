@@ -1,5 +1,6 @@
-import { styled, faSortDown, faSortUp, Icon, useRendererUiTheme } from '../ui'
 import * as React from 'react'
+
+import { styled, faSortDown, faSortUp, Icon, useRendererUiTheme } from '../ui'
 
 function useExpandableBoxTheme() {
   return useRendererUiTheme('expandableBox', (theme) => {
@@ -77,13 +78,13 @@ export function ExpandableBox(props: ExpandableBoxProps) {
           setCollapsed(!collapsed)
         }}
       >
-        <React.Fragment>
+        <>
           <ToggleIcon
             collapsed={collapsed}
             icon={collapsed ? faSortDown : faSortUp}
           />
           <a>{renderTitle(collapsed)}</a>
-        </React.Fragment>
+        </>
       </Toggle>
       <Content collapsed={collapsed}>{children}</Content>
     </Container>

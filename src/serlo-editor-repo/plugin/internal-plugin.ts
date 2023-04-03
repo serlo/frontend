@@ -1,5 +1,4 @@
 import * as InternalPlugin from '../internal__plugin'
-
 import { StateType } from './internal-plugin-state'
 
 /** @public */

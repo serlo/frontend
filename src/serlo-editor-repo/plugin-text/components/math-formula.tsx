@@ -1,7 +1,7 @@
-import { styled } from '../../ui'
 import KaTeX from 'katex'
 import React from 'react'
 
+import { styled } from '../../ui'
 import type { MathElement } from '../types'
 
 const KaTeXSpan = styled.span<{ element: MathElement }>(({ element }) => {

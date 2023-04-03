@@ -1,8 +1,8 @@
-import { OverlayInput } from '../core'
-import { EditorInput, EditorInlineSettings } from '../editor-ui'
 import * as React from 'react'
 
 import { VideoProps } from '.'
+import { OverlayInput } from '../core'
+import { EditorInput, EditorInlineSettings } from '../editor-ui'
 import { useVideoConfig } from './config'
 import { VideoRenderer } from './renderer'
 
@@ -13,10 +13,10 @@ export const VideoEditor = (props: VideoProps) => {
   if (!editable) return <VideoRenderer {...props} />
 
   return (
-    <React.Fragment>
+    <>
       <VideoRenderer {...props} disableCursorEvents={editable} />
       {props.renderIntoSettings(
-        <React.Fragment>
+        <>
           <OverlayInput
             label={config.i18n.src.label}
             value={state.src.value}
@@ -31,7 +31,7 @@ export const VideoEditor = (props: VideoProps) => {
               state.alt.set(e.target.value)
             }}
           />
-        </React.Fragment>
+        </>
       )}
       {focused ? (
         <EditorInlineSettings>
@@ -47,6 +47,6 @@ export const VideoEditor = (props: VideoProps) => {
           />
         </EditorInlineSettings>
       ) : null}
-    </React.Fragment>
+    </>
   )
 }

@@ -1,7 +1,7 @@
-import { styled, EdtrIcon, edtrPlus } from '../../ui'
 import * as React from 'react'
 
 import { RowsPluginConfig } from '..'
+import { styled, EdtrIcon, edtrPlus } from '../../ui'
 
 const StyledSeparator = styled.div<{ isFirst?: boolean; isLast?: boolean }>(
   ({ isFirst, isLast }) => {

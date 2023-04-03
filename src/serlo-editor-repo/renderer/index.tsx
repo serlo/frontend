@@ -1,10 +1,11 @@
+import * as React from 'react'
+import { createStore } from 'redux'
+
 import { Provider, ScopeContext, SubDocument } from '../core'
 import { invariant } from '../internal__dev-expression'
 import { EditorPlugin, StoreDeserializeHelpers } from '../plugin'
 import { Action, ScopedState, State } from '../store'
 import { CustomTheme, RootThemeProvider } from '../ui'
-import * as React from 'react'
-import { createStore } from 'redux'
 
 /**
  * @param props - The props

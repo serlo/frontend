@@ -1,4 +1,3 @@
-import { EditorPlugin } from '../internal__plugin'
 import * as R from 'ramda'
 import {
   applyMiddleware,
@@ -9,6 +8,7 @@ import {
 } from 'redux'
 import _createSagaMiddleware from 'redux-saga'
 
+import { EditorPlugin } from '../internal__plugin'
 import { Action, InternalAction } from './actions'
 import { reducer } from './reducer'
 import { serializeRootDocument } from './root/reducer'

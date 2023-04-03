@@ -1,7 +1,7 @@
-import { edtrClose, EdtrIcon, edtrSearch, styled } from '../../../ui'
 import * as React from 'react'
 
 import { RowsPluginConfig } from '../..'
+import { edtrClose, EdtrIcon, edtrSearch, styled } from '../../../ui'
 
 const StyledSearch = styled.div({
   paddingTop: '25px',

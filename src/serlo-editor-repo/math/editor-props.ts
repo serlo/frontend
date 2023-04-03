@@ -1,5 +1,4 @@
 import { DeepPartial } from '../ui'
-
 import { MathEditorConfig } from './editor-config'
 
 /** @public */

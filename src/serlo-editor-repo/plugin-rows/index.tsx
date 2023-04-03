@@ -1,3 +1,6 @@
+import * as R from 'ramda'
+import * as React from 'react'
+
 import {
   child,
   ChildStateType,
@@ -8,9 +11,6 @@ import {
   ListStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-import * as R from 'ramda'
-import * as React from 'react'
-
 import { RowsEditor } from './editor'
 
 /**

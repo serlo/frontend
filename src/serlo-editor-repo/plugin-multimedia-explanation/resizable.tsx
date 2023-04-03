@@ -1,6 +1,7 @@
-import { styled } from '../ui'
 import * as React from 'react'
 import { Resizable as ReactResizeable } from 'react-resizable'
+
+import { styled } from '../ui'
 
 const StyledResizable = styled(ReactResizeable)<{
   floating?: 'left' | 'right'

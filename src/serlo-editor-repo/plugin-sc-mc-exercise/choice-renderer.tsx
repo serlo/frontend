@@ -1,8 +1,8 @@
-import { CheckElement } from '../editor-ui'
-import { styled } from '../ui'
 import * as React from 'react'
 
 import { ScMcExercisePluginConfig, ScMcExerciseProps } from '.'
+import { CheckElement } from '../editor-ui'
+import { styled } from '../ui'
 
 const CheckboxContainer = styled.div({
   //width: '5%',

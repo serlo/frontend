@@ -14,7 +14,6 @@ import {
   StringStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-
 import { InputExerciseEditor } from './editor'
 import { InputExerciseType } from './input-exercise-type'
 

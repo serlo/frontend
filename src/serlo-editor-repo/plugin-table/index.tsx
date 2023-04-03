@@ -1,11 +1,11 @@
+import * as React from 'react'
+
 import {
   EditorPlugin,
   EditorPluginProps,
   string,
   StringStateType,
 } from '../plugin'
-import * as React from 'react'
-
 import { TableEditor } from './editor'
 
 /**

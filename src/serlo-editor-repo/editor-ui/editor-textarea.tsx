@@ -1,9 +1,10 @@
-import { IgnoreKeys } from '../core'
-import { styled } from '../ui'
 import * as React from 'react'
 import TextareaAutosize, {
   TextareaAutosizeProps,
 } from 'react-textarea-autosize'
+
+import { IgnoreKeys } from '../core'
+import { styled } from '../ui'
 
 const StyledIgnoreKeys = styled(IgnoreKeys)({
   width: '100%',

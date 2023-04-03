@@ -11,7 +11,7 @@ export function* clipboardSaga() {
 
 function* copySaga(action: CopyAction) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // @ts-ignore SEE LINE ABOVE
+  // @ts-expect-error SEE LINE ABOVE
   const document: SelectorReturnType<typeof serializeDocument> = yield select(
     scopeSelector(serializeDocument, action.scope),
     action.payload

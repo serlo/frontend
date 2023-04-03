@@ -1,3 +1,6 @@
+import * as React from 'react'
+
+import { MultimediaExplanationProps } from '.'
 import { PluginToolbarButton, useScopedSelector } from '../core'
 import {
   hasFocusedDescendant,
@@ -6,9 +9,6 @@ import {
   serializeDocument,
 } from '../store'
 import { styled, faRandom, Icon, faTrashAlt } from '../ui'
-import * as React from 'react'
-
-import { MultimediaExplanationProps } from '.'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
 

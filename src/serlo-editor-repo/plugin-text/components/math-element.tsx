@@ -1,5 +1,3 @@
-import { PreferenceContext } from '../../core'
-import { MathEditor } from '../../math'
 import React, { useContext } from 'react'
 import { Range, Transforms } from 'slate'
 import {
@@ -9,6 +7,8 @@ import {
   useSelected,
 } from 'slate-react'
 
+import { PreferenceContext } from '../../core'
+import { MathEditor } from '../../math'
 import type { MathElement as MathElementType } from '../types'
 import { MathFormula } from './math-formula'
 

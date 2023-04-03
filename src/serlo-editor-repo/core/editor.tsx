@@ -1,3 +1,8 @@
+import * as React from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { configure, GlobalHotKeys } from 'react-hotkeys'
+
 import { createDefaultDocumentEditor } from '../default-document-editor'
 import { createDefaultPluginToolbar } from '../default-plugin-toolbar'
 import { EditorPlugin } from '../internal__plugin'
@@ -15,11 +20,6 @@ import {
   getScope,
 } from '../store'
 import { CustomTheme, RootThemeProvider } from '../ui'
-import * as React from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import { configure, GlobalHotKeys } from 'react-hotkeys'
-
 import {
   DocumentEditorContext,
   PreferenceContextProvider,
@@ -280,10 +280,10 @@ export function InnerDocument<K extends string = string>({
     }
 
     return (
-      <React.Fragment>
+      <>
         {document}
         {children}
-      </React.Fragment>
+      </>
     )
   }
 }

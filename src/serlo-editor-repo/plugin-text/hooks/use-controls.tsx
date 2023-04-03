@@ -1,3 +1,7 @@
+import isHotkey from 'is-hotkey'
+import React, { useCallback, useMemo } from 'react'
+import { Editor as SlateEditor } from 'slate'
+
 import {
   edtrBold,
   edtrClose,
@@ -11,10 +15,6 @@ import {
   faCode,
   Icon,
 } from '../../ui'
-import isHotkey from 'is-hotkey'
-import React, { useCallback, useMemo } from 'react'
-import { Editor as SlateEditor } from 'slate'
-
 import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-icon'
 import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
 import { withLinks, withLists, withMath } from '../plugins'

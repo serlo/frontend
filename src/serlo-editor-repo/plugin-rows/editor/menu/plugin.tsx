@@ -1,7 +1,7 @@
-import { styled, EdtrIcon, edtrDefaultPlugin } from '../../../ui'
 import * as React from 'react'
 
 import { RowsPluginConfig } from '../..'
+import { styled, EdtrIcon, edtrDefaultPlugin } from '../../../ui'
 
 const StyledPlugin = styled.div<{ config: RowsPluginConfig }>(({ config }) => {
   const { theme } = config

@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import {
   boolean,
   BooleanStateType,
@@ -9,8 +11,6 @@ import {
   StringStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-import * as React from 'react'
-
 import { HighlightEditor } from './editor'
 import type { HighlightRendererProps } from './renderer'
 

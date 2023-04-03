@@ -1,5 +1,4 @@
 import { StateTypeValueType } from '../../plugin'
-
 import type { TextEditorState } from '../types'
 
 export const emptyDocumentFactory =

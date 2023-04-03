@@ -1,3 +1,5 @@
+import * as R from 'ramda'
+
 import { useScopedStore } from '../../core'
 import {
   findParent,
@@ -6,7 +8,6 @@ import {
   getFocusTree,
   Node,
 } from '../../store'
-import * as R from 'ramda'
 
 export function useCanDrop(
   id: string,

@@ -1,6 +1,6 @@
-import { styled } from '../../ui'
 import React from 'react'
 
+import { styled } from '../../ui'
 import type { TextEditorPluginConfig } from '../types'
 
 interface SuggestionsProps {

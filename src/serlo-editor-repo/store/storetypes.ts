@@ -1,6 +1,6 @@
-import { EditorPlugin } from '../internal__plugin'
 import { Store as ReduxStore } from 'redux'
 
+import { EditorPlugin } from '../internal__plugin'
 import { Action, InternalAction, ReversibleAction } from './actions'
 
 /**

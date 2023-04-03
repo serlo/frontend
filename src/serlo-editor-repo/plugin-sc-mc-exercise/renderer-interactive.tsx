@@ -1,9 +1,9 @@
-import { StateTypeReturnType } from '../plugin'
-import { Feedback, styled, SubmitButton } from '../renderer-ui'
 import * as R from 'ramda'
 import * as React from 'react'
 
 import { ScMcExercisePluginConfig, ScMcExercisePluginState } from '.'
+import { StateTypeReturnType } from '../plugin'
+import { Feedback, styled, SubmitButton } from '../renderer-ui'
 import { ScMcAnswersRenderer } from './answers-renderer'
 import { ScMcExerciseChoiceRenderer } from './choice-renderer'
 import { ScMcRendererProps } from './renderer'
@@ -53,7 +53,7 @@ export class ScMcRendererInteractive extends React.Component<
   }
   public render() {
     return (
-      <React.Fragment>
+      <>
         <ScMcAnswersRenderer {...this.props} showAnswer={this.showAnswer} />
         {this.showGlobalFeedback()}
         <SubmitButton
@@ -61,7 +61,7 @@ export class ScMcRendererInteractive extends React.Component<
           onClick={this.submitAnswer}
         />
         <div style={{ clear: 'both' }} />
-      </React.Fragment>
+      </>
     )
   }
   private showAnswer = (

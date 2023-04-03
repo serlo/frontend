@@ -1,5 +1,6 @@
-import { EditorThemeProps, styled, useEditorUiTheme } from '../ui'
 import { StyledComponent } from 'styled-components'
+
+import { EditorThemeProps, styled, useEditorUiTheme } from '../ui'
 
 /** @public */
 // TODO: This is a workaround until API extractor supports import() types, see https://github.com/microsoft/rushstack/pull/1916

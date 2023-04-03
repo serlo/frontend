@@ -1,3 +1,9 @@
+import * as R from 'ramda'
+import * as React from 'react'
+import { createPortal } from 'react-dom'
+import { HotKeys, IgnoreKeys } from 'react-hotkeys'
+
+import { SubDocumentProps } from '.'
 import { StateUpdater } from '../../internal__plugin-state'
 import {
   change,
@@ -17,12 +23,6 @@ import {
   ChangeAction,
 } from '../../store'
 import { styled, useTheme } from '../../ui'
-import * as R from 'ramda'
-import * as React from 'react'
-import { createPortal } from 'react-dom'
-import { HotKeys, IgnoreKeys } from 'react-hotkeys'
-
-import { SubDocumentProps } from '.'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
 import { useScopedSelector, useScopedStore } from '../store'
 

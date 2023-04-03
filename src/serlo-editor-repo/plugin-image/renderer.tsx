@@ -1,8 +1,8 @@
-import { isTempFile } from '../plugin'
-import { styled } from '../ui'
 import * as React from 'react'
 
 import { ImageProps } from '.'
+import { isTempFile } from '../plugin'
+import { styled } from '../ui'
 
 const ImgWrapper = styled.div<{ maxWidth: number }>((props) => {
   return {

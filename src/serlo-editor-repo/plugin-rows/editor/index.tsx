@@ -1,10 +1,10 @@
+import * as React from 'react'
+
+import { RowsPluginConfig, RowsProps, RowsPluginState } from '..'
 import { useScopedSelector } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
 import { getPlugins, isFocused } from '../../store'
 import { styled } from '../../ui'
-import * as React from 'react'
-
-import { RowsPluginConfig, RowsProps, RowsPluginState } from '..'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
 import { RowsRenderer } from '../renderer'

@@ -1,8 +1,8 @@
-import { EditorInput } from '../editor-ui'
-import { Icon, faLink, styled } from '../ui'
 import * as React from 'react'
 
 import { AnchorProps } from '.'
+import { EditorInput } from '../editor-ui'
+import { Icon, faLink, styled } from '../ui'
 import { useAnchorConfig } from './config'
 import { AnchorRenderer } from './renderer'
 

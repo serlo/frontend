@@ -1,3 +1,7 @@
+import * as R from 'ramda'
+import * as React from 'react'
+
+import { InputExerciseProps, InputExerciseType } from '.'
 import { OverlayInput, useScopedSelector } from '../core'
 import {
   AddButton,
@@ -6,10 +10,6 @@ import {
   styled,
 } from '../editor-ui'
 import { getFocused } from '../store'
-import * as R from 'ramda'
-import * as React from 'react'
-
-import { InputExerciseProps, InputExerciseType } from '.'
 import { useInputExerciseConfig } from './config'
 import { InputExerciseRenderer } from './renderer'
 
@@ -38,12 +38,12 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   if (!editable) return <InputExerciseRenderer {...props} />
 
   return (
-    <React.Fragment>
+    <>
       <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
         <InputExerciseRenderer {...props} />
       </PreviewOverlay>
       {nestedFocus && !previewActive && (
-        <React.Fragment>
+        <>
           <TypeMenu>
             <label>
               {i18n.type.label}:{' '}
@@ -88,7 +88,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
           <AddButton onClick={() => state.answers.insert()}>
             {i18n.answer.addLabel}
           </AddButton>
-        </React.Fragment>
+        </>
       )}
       {props.renderIntoSettings(
         <OverlayInput
@@ -97,6 +97,6 @@ export function InputExerciseEditor(props: InputExerciseProps) {
           onChange={(e) => state.unit.set(e.target.value)}
         />
       )}
-    </React.Fragment>
+    </>
   )
 }

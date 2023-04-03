@@ -1,5 +1,6 @@
-import { styled, useEditorUiTheme } from '../ui'
 import * as React from 'react'
+
+import { styled, useEditorUiTheme } from '../ui'
 
 const useEditorCheckboxTheme = function () {
   return useEditorUiTheme('checkbox', (theme) => {

@@ -1,8 +1,8 @@
-import { EditorPlugin } from '../../internal__plugin'
 import * as R from 'ramda'
 import { channel, Channel } from 'redux-saga'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
+import { EditorPlugin } from '../../internal__plugin'
 import { InternalAction } from '../actions'
 import { change, ChangeAction, getDocument } from '../documents'
 import { getFocusTree } from '../focus'

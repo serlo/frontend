@@ -1,3 +1,7 @@
+import * as R from 'ramda'
+import * as React from 'react'
+
+import { ScMcExerciseProps } from '.'
 import { useScopedSelector, useScopedStore } from '../core'
 import {
   AddButton,
@@ -6,10 +10,6 @@ import {
   styled,
 } from '../editor-ui'
 import { getFocused, isEmpty as isEmptySelector } from '../store'
-import * as R from 'ramda'
-import * as React from 'react'
-
-import { ScMcExerciseProps } from '.'
 import { useScMcExerciseConfig } from './config'
 import { ScMcExerciseRenderer } from './renderer'
 
@@ -67,7 +67,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <PreviewOverlay
         focused={nestedFocus || false}
         onChange={setPreviewActive}
@@ -76,7 +76,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
         <ScMcExerciseRenderer {...props} isEmpty={isEmpty} />
       </PreviewOverlay>
       {editable && nestedFocus && !previewActive && (
-        <React.Fragment>
+        <>
           <TypeMenu>
             <label>
               {config.i18n.isSingleChoice.label}:{' '}
@@ -113,9 +113,9 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
           <AddButton onClick={addButton}>
             {config.i18n.answer.addLabel}
           </AddButton>
-        </React.Fragment>
+        </>
       )}
-    </React.Fragment>
+    </>
   )
 
   function isEmpty(id: string) {

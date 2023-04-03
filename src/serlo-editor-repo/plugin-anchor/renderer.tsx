@@ -1,7 +1,7 @@
-import { styled } from '../ui'
 import * as React from 'react'
 
 import { AnchorProps } from '.'
+import { styled } from '../ui'
 
 const Anchor = styled.a({
   visibility: 'hidden',

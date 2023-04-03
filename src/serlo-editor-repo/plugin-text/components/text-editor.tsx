@@ -1,6 +1,3 @@
-import { HotKeys } from '../../core'
-import { HoverOverlay } from '../../editor-ui'
-import { EditorPluginProps } from '../../plugin'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import React, {
   createElement,
@@ -18,6 +15,9 @@ import {
   withReact,
 } from 'slate-react'
 
+import { HotKeys } from '../../core'
+import { HoverOverlay } from '../../editor-ui'
+import { EditorPluginProps } from '../../plugin'
 import { useControls } from '../hooks/use-controls'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'

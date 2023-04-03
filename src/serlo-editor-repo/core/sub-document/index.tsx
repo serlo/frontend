@@ -1,7 +1,7 @@
-import { PluginProps } from '../../internal__plugin-state'
-import { undo } from '../../store'
 import * as React from 'react'
 
+import { PluginProps } from '../../internal__plugin-state'
+import { undo } from '../../store'
 import { ScopeContext, ErrorContext, useScopedDispatch } from '../store'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
@@ -53,7 +53,7 @@ export class ErrorBoundary extends React.Component<{
   public render() {
     if (this.state.hasError) {
       return (
-        <React.Fragment>
+        <>
           Leider ist ein Fehler aufgetreten.
           <button
             onClick={() => {
@@ -63,7 +63,7 @@ export class ErrorBoundary extends React.Component<{
           >
             letzte Änderung rückgänging machen
           </button>
-        </React.Fragment>
+        </>
       )
     }
 

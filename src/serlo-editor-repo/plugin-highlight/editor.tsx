@@ -1,8 +1,8 @@
-import { EditorCheckbox, EditorInput, EditorInlineSettings } from '../editor-ui'
-import { styled } from '../ui'
 import * as React from 'react'
 
 import { HighlightProps } from '.'
+import { EditorCheckbox, EditorInput, EditorInlineSettings } from '../editor-ui'
+import { styled } from '../ui'
 import { useHighlightConfig } from './config'
 
 const Textarea = styled.textarea({
@@ -40,7 +40,7 @@ export function HighlightEditor(props: HighlightProps) {
     }
   }
   return throttledEdit || edit ? (
-    <React.Fragment>
+    <>
       <Textarea
         value={state.code.value}
         name="text"
@@ -78,7 +78,7 @@ export function HighlightEditor(props: HighlightProps) {
           />
         </CheckboxContainer>
       </EditorInlineSettings>
-    </React.Fragment>
+    </>
   ) : (
     <Renderer
       config={config}

@@ -1,3 +1,9 @@
+import * as R from 'ramda'
+import * as React from 'react'
+import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
+import { NativeTypes } from 'react-dnd-html5-backend'
+
+import { RowsPluginConfig, RowsPluginState } from '..'
 import { OverlayButton, PluginToolbarButton, useScopedStore } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
 import {
@@ -14,12 +20,6 @@ import {
   Icon,
   styled,
 } from '../../ui'
-import * as R from 'ramda'
-import * as React from 'react'
-import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
-import { NativeTypes } from 'react-dnd-html5-backend'
-
-import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
 
 interface RowDragObject {
@@ -220,7 +220,7 @@ export function RowRenderer({
     return {
       renderSettings(children: React.ReactNode, { close }: { close(): void }) {
         return (
-          <React.Fragment>
+          <>
             {children}
             <hr />
             <ButtonContainer>
@@ -255,19 +255,19 @@ export function RowRenderer({
                 />
               </div>
             </ButtonContainer>
-          </React.Fragment>
+          </>
         )
       },
       renderToolbar(children: React.ReactNode) {
         return (
-          <React.Fragment>
+          <>
             <DragToolbarButton
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
               label={config.i18n.toolbar.dragLabel}
             />
             {children}
-          </React.Fragment>
+          </>
         )
       },
     }
@@ -291,7 +291,7 @@ export function RowRenderer({
     ) : null
 
   return (
-    <React.Fragment>
+    <>
       {draggingAbove ? dropPreview : null}
       <div ref={container}>
         {collectedDragProps.isDragging ? (
@@ -301,7 +301,7 @@ export function RowRenderer({
         )}
       </div>
       {!draggingAbove ? dropPreview : null}
-    </React.Fragment>
+    </>
   )
 
   function isDraggingAbove(monitor: DropTargetMonitor) {

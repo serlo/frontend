@@ -1,6 +1,5 @@
 import { EditorPlugin } from '../../internal__plugin'
 import { StateType } from '../../internal__plugin-state'
-
 import { createSelector, createSubReducer, SubReducer } from '../helpers'
 import { Selector } from '../storetypes'
 

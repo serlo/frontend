@@ -1,4 +1,3 @@
-import { Action, getScope, ScopedState, State } from '../store'
 import * as React from 'react'
 import {
   Provider as ReduxProvider,
@@ -9,6 +8,8 @@ import {
   createStoreHook,
 } from 'react-redux'
 import { Unsubscribe } from 'redux'
+
+import { Action, getScope, ScopedState, State } from '../store'
 
 /** @public */
 export const ScopeContext = React.createContext<{

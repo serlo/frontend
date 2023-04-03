@@ -1,13 +1,13 @@
-import { OverlayButton } from '../core'
-import { EditorButton } from '../editor-ui'
 import * as React from 'react'
 
 import { ImagePluginConfig } from '.'
+import { OverlayButton } from '../core'
+import { EditorButton } from '../editor-ui'
 
 export function Upload(props: UploadProps) {
   const input = React.useRef<HTMLInputElement>(null)
   return (
-    <React.Fragment>
+    <>
       {props.inOverlay ? (
         <OverlayButton onClick={selectFile} label={props.config.i18n.label} />
       ) : (
@@ -27,7 +27,7 @@ export function Upload(props: UploadProps) {
           }
         }}
       />
-    </React.Fragment>
+    </>
   )
 
   function selectFile(e: React.MouseEvent) {

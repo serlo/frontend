@@ -1,7 +1,3 @@
-import { useScopedStore } from '../core'
-import { styled } from '../editor-ui'
-import { Feedback, SubmitButton } from '../renderer-ui'
-import { isEmpty } from '../store'
 import A from 'algebra.js'
 import * as React from 'react'
 
@@ -10,6 +6,10 @@ import {
   InputExerciseProps,
   InputExerciseType,
 } from '.'
+import { useScopedStore } from '../core'
+import { styled } from '../editor-ui'
+import { Feedback, SubmitButton } from '../renderer-ui'
+import { isEmpty } from '../store'
 import { useInputExerciseConfig } from './config'
 
 enum ExerciseState {

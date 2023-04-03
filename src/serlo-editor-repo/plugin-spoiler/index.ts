@@ -10,7 +10,6 @@ import {
   StringStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-
 import { SpoilerEditor } from './editor'
 
 /**

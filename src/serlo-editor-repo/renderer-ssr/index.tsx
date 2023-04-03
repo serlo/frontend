@@ -1,7 +1,8 @@
-import { Renderer, RendererProps } from '../renderer'
 import * as React from 'react'
 import { renderToString } from 'react-dom/server'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
+
+import { Renderer, RendererProps } from '../renderer'
 
 /**
  * @param props - The {@link @edtr-io/renderer#RendererProps | renderer props}

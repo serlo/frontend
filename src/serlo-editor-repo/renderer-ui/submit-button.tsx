@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import {
   styled,
   Icon,
@@ -6,7 +8,6 @@ import {
   useRendererUiTheme,
   RendererUiTheme,
 } from '../ui'
-import * as React from 'react'
 
 /** @internal */
 export enum ExerciseState {

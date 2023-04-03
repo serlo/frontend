@@ -1,5 +1,6 @@
-import * as InternalDocumentEditor from '../../internal__document-editor'
 import * as React from 'react'
+
+import * as InternalDocumentEditor from '../../internal__document-editor'
 
 /** @public */
 export const DocumentEditorContext = React.createContext<

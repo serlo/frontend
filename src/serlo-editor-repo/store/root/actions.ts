@@ -1,5 +1,4 @@
 import { EditorPlugin } from '../../internal__plugin'
-
 import { createActionCreator, createActionWithoutPayload } from '../helpers'
 import {
   ActionCreatorAction,

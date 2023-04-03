@@ -1,3 +1,6 @@
+import * as React from 'react'
+
+import { SerloInjectionProps } from '.'
 import { OverlayInput } from '../core'
 import {
   EditorInlineSettings,
@@ -6,9 +9,6 @@ import {
   styled,
 } from '../editor-ui'
 import { Icon, faNewspaper } from '../ui'
-import * as React from 'react'
-
-import { SerloInjectionProps } from '.'
 import { useSerloInjectionConfig } from './config'
 import { SerloInjectionRenderer } from './renderer'
 
@@ -43,7 +43,7 @@ export const SerloInjectionEditor = (props: SerloInjectionProps) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {cache ? (
         <PreviewOverlay
           focused={props.focused || false}
@@ -86,6 +86,6 @@ export const SerloInjectionEditor = (props: SerloInjectionProps) => {
           }}
         />
       )}
-    </React.Fragment>
+    </>
   )
 }

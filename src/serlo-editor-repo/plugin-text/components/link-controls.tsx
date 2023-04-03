@@ -1,8 +1,8 @@
-import { faExternalLinkAlt, faTrashAlt, Icon, styled } from '../../ui'
 import * as React from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
+import { faExternalLinkAlt, faTrashAlt, Icon, styled } from '../../ui'
 import {
   InlineOverlay,
   InlineOverlayPosition,

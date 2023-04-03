@@ -1,6 +1,6 @@
-import { EditorPlugin, serializedScalar } from '../plugin'
 import { Node } from 'slate'
 
+import { EditorPlugin, serializedScalar } from '../plugin'
 import { TextEditor } from './components/text-editor'
 import type { TextEditorProps } from './components/text-editor'
 import type {

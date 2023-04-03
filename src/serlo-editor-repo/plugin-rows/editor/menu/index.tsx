@@ -1,7 +1,7 @@
-import { styled, EdtrIcon, edtrClose } from '../../../ui'
 import * as React from 'react'
 
 import { RowsPluginConfig } from '../..'
+import { styled, EdtrIcon, edtrClose } from '../../../ui'
 import { Plugin } from './plugin'
 import { Search } from './search'
 

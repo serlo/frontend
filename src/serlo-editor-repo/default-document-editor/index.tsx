@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import { DocumentEditorProps } from '../document-editor'
 import {
   DeepPartial,
@@ -8,7 +10,6 @@ import {
   merge,
   styled,
 } from '../ui'
-import * as React from 'react'
 
 interface ToolbarProps {
   isFocused: boolean
@@ -146,7 +147,7 @@ export function createDefaultDocumentEditor(
     const renderSettingsContent = React.useMemo<typeof renderSettings>(() => {
       return shouldShowSettings
         ? (children, { close }) => (
-            <React.Fragment>
+            <>
               <Header>
                 <H4>{modalTitle}</H4>
                 <BorderlessOverlayButton
@@ -160,7 +161,7 @@ export function createDefaultDocumentEditor(
                 </BorderlessOverlayButton>
               </Header>
               {renderSettings?.(children, { close }) || children}
-            </React.Fragment>
+            </>
           )
         : undefined
     }, [
@@ -175,7 +176,7 @@ export function createDefaultDocumentEditor(
 
     const isAppended = React.useRef(false)
     const toolbar = (
-      <React.Fragment>
+      <>
         {showSettings() ? (
           <PluginToolbarOverlayButton
             label={i18n.settings.buttonLabel}
@@ -196,7 +197,7 @@ export function createDefaultDocumentEditor(
             }
           }}
         />
-      </React.Fragment>
+      </>
     )
 
     return (

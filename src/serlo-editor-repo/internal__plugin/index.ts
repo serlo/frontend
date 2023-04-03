@@ -1,10 +1,11 @@
+import * as React from 'react'
+
 import {
   StateType,
   StateTypeReturnType,
   StateTypeSerializedType,
 } from '../internal__plugin-state'
 import { Theme } from '../ui'
-import * as React from 'react'
 
 /**
  * An Edtr.io plugin

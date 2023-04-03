@@ -1,7 +1,7 @@
-import { styled } from '../../ui'
 import React from 'react'
 import { useSlate } from 'slate-react'
 
+import { styled } from '../../ui'
 import type { TextEditorConfig } from '../types'
 
 export enum InlineOverlayPosition {

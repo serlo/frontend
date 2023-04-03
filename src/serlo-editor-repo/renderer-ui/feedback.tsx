@@ -1,5 +1,6 @@
-import { styled } from '../ui'
 import * as React from 'react'
+
+import { styled } from '../ui'
 
 const ContainerWithBox = styled.div<ContainerProps>({
   backgroundColor: '#fcf8e3',

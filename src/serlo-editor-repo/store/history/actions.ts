@@ -1,5 +1,4 @@
 import { StateExecutor } from '../../internal__plugin-state'
-
 import { ReversibleAction } from '../actions'
 import { createActionCreator, createActionWithoutPayload } from '../helpers'
 import {

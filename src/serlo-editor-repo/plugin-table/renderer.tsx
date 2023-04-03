@@ -1,7 +1,7 @@
-import { Icon, faTable, styled } from '../ui'
 import * as React from 'react'
 
 import { TableProps } from '.'
+import { Icon, faTable, styled } from '../ui'
 import { useTableConfig } from './config'
 
 const TableContainer = styled.div({

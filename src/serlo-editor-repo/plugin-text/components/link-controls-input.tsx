@@ -1,6 +1,6 @@
-import { DeepPartial, styled } from '../../ui'
 import * as React from 'react'
 
+import { DeepPartial, styled } from '../../ui'
 import type { TextEditorPluginConfig } from '../types'
 
 interface InputProps

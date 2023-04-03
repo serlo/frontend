@@ -20,7 +20,6 @@ import {
   child,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-
 import { ImageEditor } from './editor'
 
 /**

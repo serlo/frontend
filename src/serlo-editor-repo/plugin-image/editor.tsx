@@ -1,3 +1,6 @@
+import * as React from 'react'
+
+import { ImageProps } from '.'
 import {
   OverlayButton,
   OverlayCheckbox,
@@ -9,9 +12,6 @@ import { EditorButton, EditorInput, EditorInlineSettings } from '../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../plugin'
 import { isEmpty, hasFocusedChild } from '../store'
 import { EditorThemeProps, Icon, faImages, faRedoAlt, styled } from '../ui'
-import * as React from 'react'
-
-import { ImageProps } from '.'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'

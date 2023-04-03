@@ -1,4 +1,3 @@
-import { useTheme } from '../ui'
 import * as R from 'ramda'
 
 import {
@@ -6,6 +5,7 @@ import {
   InputExercisePluginConfig,
   InputExerciseType,
 } from '.'
+import { useTheme } from '../ui'
 
 export function useInputExerciseConfig(
   config: InputExerciseConfig

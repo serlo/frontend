@@ -1,7 +1,8 @@
+import React, { useContext, useState, useEffect, useRef } from 'react'
+
 import { useScopedStore } from '../../core'
 import { RegistryContext, Registry } from '../../plugin-rows'
 import { replace } from '../../store'
-import React, { useContext, useState, useEffect, useRef } from 'react'
 
 interface useSuggestionsArgs {
   text: string

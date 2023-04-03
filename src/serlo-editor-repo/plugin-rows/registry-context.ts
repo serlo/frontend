@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 import {
   createIcon,
   faAnchor,
@@ -14,7 +16,6 @@ import {
   faPhotoVideo,
   faQuoteRight,
 } from '../ui'
-import * as React from 'react'
 
 export const defaultRegistryPlugins = [
   {

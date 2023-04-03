@@ -1,8 +1,8 @@
-import { EditorTextarea } from '../editor-ui'
-import { styled } from '../ui'
 import * as React from 'react'
 
 import { TableProps } from '.'
+import { EditorTextarea } from '../editor-ui'
+import { styled } from '../ui'
 import { useTableConfig } from './config'
 import { TableRenderer } from './renderer'
 

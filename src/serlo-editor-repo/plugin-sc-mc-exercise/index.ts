@@ -12,7 +12,6 @@ import {
   ObjectStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-
 import { ScMcExerciseEditor } from './editor'
 
 /**

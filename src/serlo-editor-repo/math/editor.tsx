@@ -1,8 +1,8 @@
-import { EditorTextarea, HoverOverlay, styled } from '../editor-ui'
-import { faQuestionCircle, Icon, merge, useEditorTheme } from '../ui'
 import * as React from 'react'
 import Modal from 'react-modal'
 
+import { EditorTextarea, HoverOverlay, styled } from '../editor-ui'
+import { faQuestionCircle, Icon, merge, useEditorTheme } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { MathEditorConfig } from './editor-config'
@@ -169,7 +169,7 @@ export function MathEditor(props: MathEditorProps) {
   })
 
   return (
-    <React.Fragment>
+    <>
       <Modal
         ariaHideApp={false}
         isOpen={helpOpen}
@@ -201,7 +201,7 @@ export function MathEditor(props: MathEditorProps) {
         {config.i18n.helpText(KeySpan)}
       </Modal>
       {renderChildren()}
-    </React.Fragment>
+    </>
   )
 
   function renderChildren() {
@@ -219,7 +219,7 @@ export function MathEditor(props: MathEditorProps) {
     }
 
     return (
-      <React.Fragment>
+      <>
         {useVisualEditor ? (
           <EditorWrapper
             onClick={(e) => {
@@ -283,10 +283,10 @@ export function MathEditor(props: MathEditorProps) {
                 </Button>
               )}
               {hasError && (
-                <React.Fragment>
+                <>
                   {config.i18n.editors.noVisualEditorAvailableMessage}
                   &nbsp;&nbsp;
-                </React.Fragment>
+                </>
               )}
               <br />
               {!useVisualEditor && (
@@ -295,7 +295,7 @@ export function MathEditor(props: MathEditorProps) {
             </div>
           </HoverOverlay>
         )}
-      </React.Fragment>
+      </>
     )
   }
 }

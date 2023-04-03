@@ -1,7 +1,7 @@
-import { OverlayInputProps } from '../plugin-toolbar'
-import { styled } from '../ui'
 import * as React from 'react'
 
+import { OverlayInputProps } from '../plugin-toolbar'
+import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 
 const OverlayInputLabel = styled.label({

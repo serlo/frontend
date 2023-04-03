@@ -1,7 +1,7 @@
-import { EditorInput, EditorInlineSettings } from '../editor-ui'
 import * as React from 'react'
 
 import { GeogebraProps } from '.'
+import { EditorInput, EditorInlineSettings } from '../editor-ui'
 import { useGeogebraConfig } from './config'
 import { GeogebraRenderer } from './renderer'
 

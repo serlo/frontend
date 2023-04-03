@@ -1,7 +1,7 @@
-import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
 import * as React from 'react'
 import Modal from 'react-modal'
 
+import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
 import { StyledIconContainer } from './icon-container'
@@ -17,7 +17,7 @@ export function createPluginToolbarOverlayButton(
   }: PluginToolbarOverlayButtonProps) {
     const [open, setOpen] = React.useState(false)
     return (
-      <React.Fragment>
+      <>
         <WrappedModal
           {...modalProps}
           isOpen={open}
@@ -34,7 +34,7 @@ export function createPluginToolbarOverlayButton(
         >
           <StyledIconContainer>{icon}</StyledIconContainer>
         </Button>
-      </React.Fragment>
+      </>
     )
   }
 }

@@ -1,6 +1,6 @@
-import { PluginToolbarButtonProps } from '../plugin-toolbar'
 import * as React from 'react'
 
+import { PluginToolbarButtonProps } from '../plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
 import { StyledIconContainer } from './icon-container'

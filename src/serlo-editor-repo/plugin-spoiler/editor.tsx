@@ -1,9 +1,9 @@
-import { EditorInput } from '../editor-ui'
-import { ExpandableBox } from '../renderer-ui'
-import { ThemeProvider } from '../ui'
 import * as React from 'react'
 
 import { SpoilerProps } from '.'
+import { EditorInput } from '../editor-ui'
+import { ExpandableBox } from '../renderer-ui'
+import { ThemeProvider } from '../ui'
 import { useSpoilerConfig } from './config'
 
 export function SpoilerEditor(props: SpoilerProps) {
@@ -32,7 +32,7 @@ export function SpoilerEditor(props: SpoilerProps) {
           ref={autofocusRef}
         />
       ) : (
-        <React.Fragment>{state.title.value}</React.Fragment>
+        <>{state.title.value}</>
       )
     },
     [config.i18n.title.placeholder, autofocusRef, editable, state.title]

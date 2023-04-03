@@ -1,9 +1,9 @@
-import { styled } from '../ui'
 import fetch from 'isomorphic-unfetch'
 import lodash from 'lodash'
 import * as React from 'react'
 
 import { GeogebraProps } from '.'
+import { styled } from '../ui'
 
 interface ApiData {
   width: number

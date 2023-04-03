@@ -1,9 +1,9 @@
-import { getDocument, getPlugin } from '../../store'
-import { useTheme } from '../../ui'
 import * as R from 'ramda'
 import * as React from 'react'
 
 import { SubDocumentProps } from '.'
+import { getDocument, getPlugin } from '../../store'
+import { useTheme } from '../../ui'
 import { useScopedSelector } from '../store'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {

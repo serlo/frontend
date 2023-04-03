@@ -1,5 +1,6 @@
-import { styled, Icon, faTimes, faPlus } from '../ui'
 import * as React from 'react'
+
+import { styled, Icon, faTimes, faPlus } from '../ui'
 
 const AddButtonComponent = styled.button({
   margin: '5px 2% 5px 2%',

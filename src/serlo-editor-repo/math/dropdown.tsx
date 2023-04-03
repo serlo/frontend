@@ -1,5 +1,4 @@
 import { styled } from '../ui'
-
 import { MathEditorConfig } from './editor-config'
 
 export const Dropdown = styled.select<{ config: MathEditorConfig }>((props) => {

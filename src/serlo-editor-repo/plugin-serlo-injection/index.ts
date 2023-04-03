@@ -4,7 +4,6 @@ import {
   string,
   StringStateType,
 } from '../plugin'
-
 import { SerloInjectionEditor } from './editor'
 
 /**

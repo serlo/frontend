@@ -1,7 +1,7 @@
-import { Icon, styled, faFilm } from '../ui'
 import * as React from 'react'
 
 import { VideoProps } from '.'
+import { Icon, styled, faFilm } from '../ui'
 
 const VideoPlaceholderWrapper = styled.div({
   position: 'relative',

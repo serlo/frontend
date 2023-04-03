@@ -1,7 +1,7 @@
-import { styled } from '../ui'
 import * as React from 'react'
 
 import { RowsProps } from '.'
+import { styled } from '../ui'
 
 const Row = styled.div({
   marginBottom: '25px',
@@ -9,10 +9,10 @@ const Row = styled.div({
 
 export function RowsRenderer(props: RowsProps) {
   return (
-    <React.Fragment>
+    <>
       {props.state.map((row) => {
         return <Row key={row.id}>{row.render()}</Row>
       })}
-    </React.Fragment>
+    </>
   )
 }

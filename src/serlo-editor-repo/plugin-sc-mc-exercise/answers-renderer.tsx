@@ -1,5 +1,3 @@
-import { StateTypeReturnType } from '../plugin'
-import { styled } from '../renderer-ui'
 import * as R from 'ramda'
 import * as React from 'react'
 
@@ -8,6 +6,8 @@ import {
   ScMcExercisePluginState,
   ScMcExercisePluginConfig,
 } from '.'
+import { StateTypeReturnType } from '../plugin'
+import { styled } from '../renderer-ui'
 import { FetchDimensions } from './fetch-dimensions'
 import { calculateLayoutOptions } from './helpers'
 
@@ -38,14 +38,14 @@ export class ScMcAnswersRenderer extends React.Component<
     if (this.state.remainingOptions.length === 0) return null
     const currentOption = this.state.remainingOptions[0]
     return (
-      <React.Fragment>
+      <>
         {this.state.phase < Phase.finished
           ? this.renderOption(this.state.lastOption)
           : this.renderOption(currentOption)}
         {this.state.phase === Phase.optionTesting
           ? this.tryOption(currentOption)
           : null}
-      </React.Fragment>
+      </>
     )
   }
 

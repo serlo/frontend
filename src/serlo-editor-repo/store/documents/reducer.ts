@@ -1,7 +1,7 @@
-import { EditorPlugin } from '../../internal__plugin'
-import { StoreSerializeHelpers } from '../../internal__plugin-state'
 import * as R from 'ramda'
 
+import { EditorPlugin } from '../../internal__plugin'
+import { StoreSerializeHelpers } from '../../internal__plugin-state'
 import {
   createDeepEqualSelector,
   createSelector,
