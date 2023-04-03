@@ -1,8 +1,7 @@
 import { Node } from 'slate'
 
 import { EditorPlugin, serializedScalar } from '../plugin'
-import { TextEditor } from './components/text-editor'
-import type { TextEditorProps } from './components/text-editor'
+import { TextEditorProps, TextEditor } from './components/text-editor'
 import type {
   CustomElement,
   CustomText,

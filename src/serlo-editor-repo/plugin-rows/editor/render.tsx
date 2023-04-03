@@ -126,7 +126,7 @@ export function RowRenderer({
         }
       }
 
-      if (type == 'row') {
+      if (type === 'row') {
         return {
           isDragging,
           id: monitor.getItem<RowDragObject>().id,

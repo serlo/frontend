@@ -4,8 +4,7 @@ import * as MQ from 'react-mathquill'
 import { MathEditorProps } from './editor-props'
 
 if (typeof window !== 'undefined') {
-  // @ts-expect-error https://github.com/serlo/serlo-editor-issues-and-documentation/issues/68
-  MQ.default?.addStyles ? MQ.default.addStyles() : MQ.addStyles()
+  MQ.addStyles()
 }
 
 function isTouchDevice(): boolean {
@@ -35,9 +34,9 @@ function alternativeSaneKeyboard(
   el.value = ' '
   el.addEventListener('input', () => {
     const value: string = el.value
-    if (value.length == 2) {
+    if (value.length === 2) {
       handler.typedText(value.charAt(1))
-    } else if (value.length == 0) {
+    } else if (value.length === 0) {
       handler.keystroke('Backspace', { preventDefault: () => null })
     }
     setTimeout(() => {
@@ -103,7 +102,7 @@ export function VisualEditor(props: VisualEditorProps) {
   )
 
   function onMount(ref: MathField) {
-    if (ref.latex() == '' && props.state != '') {
+    if (ref.latex() === '' && props.state !== '') {
       props.onError()
     }
     // TODO: Check if this can be removed

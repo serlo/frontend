@@ -22,6 +22,7 @@ const ImgPlaceholderWrapper = styled.div<EditorThemeProps>((props) => {
     width: '100%',
     textAlign: 'center',
     opacity: '0.4',
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     color: props.theme.editor.primary.background,
   }
 })

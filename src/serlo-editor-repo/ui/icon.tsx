@@ -1,3 +1,4 @@
+/* eslint-disable import/no-internal-modules */
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
   FontAwesomeIcon,
@@ -107,9 +108,7 @@ export function createIcon(i: IconDefinition): React.ComponentType {
   }
 }
 
-// @ts-expect-error https://github.com/serlo/serlo-editor-issues-and-documentation/issues/68
-const styledSvg = styled.default?.svg ? styled.default.svg : styled.svg
-const EdtrSVG = styledSvg({
+const EdtrSVG = styled.svg({
   display: 'inline-block',
   verticalAlign: 'middle',
   overflow: 'hidden',

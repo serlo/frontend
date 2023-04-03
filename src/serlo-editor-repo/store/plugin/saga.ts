@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 import { channel, Channel } from 'redux-saga'
+// eslint-disable-next-line import/no-internal-modules
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
 import { EditorPlugin } from '../../internal__plugin'

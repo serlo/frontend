@@ -18,10 +18,12 @@ const InlinePreview = styled.span({
 const ChangeButton = styled.div(({ theme }) => ({
   padding: '5px 5px 5px 10px',
   display: 'inline-block',
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
   borderLeft: `2px solid ${theme.borderColor}`,
   cursor: 'pointer',
   margin: '2px',
   '&:hover': {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     color: theme.hoverColor,
   },
 }))

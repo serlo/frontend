@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-internal-modules
 import { all, call, put, takeEvery } from 'redux-saga/effects'
 
 import { ReversibleAction, setPartialState } from '../actions'

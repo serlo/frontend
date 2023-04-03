@@ -24,9 +24,13 @@ const Wrapper = styled.div({
 })
 
 const Content = styled.div(({ theme }) => ({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   boxShadow: theme.overlay.boxShadow,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   backgroundColor: theme.overlay.backgroundColor,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   color: theme.overlay.color,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   borderRadius: theme.borderRadius,
 }))
 
@@ -39,6 +43,7 @@ const Triangle = styled.div<{ position: InlineOverlayPosition }>(
       height: 0,
       borderLeft: '5px solid transparent',
       borderRight: '5px solid transparent',
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
       [borderPosition]: `10px solid ${theme.borderColor}`,
     }
   }
@@ -55,6 +60,7 @@ export function InlineOverlay({
   initialPosition: InlineOverlayPosition
   hidden?: boolean
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const editor = useSlate()
   const wrapper = React.useRef<HTMLDivElement>(null)
   const triangle = React.useRef<HTMLDivElement>(null)
@@ -63,6 +69,7 @@ export function InlineOverlay({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useLayoutEffect(() => {
     if (!wrapper.current || !triangle.current) return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { selection } = editor
 
     if (!selection) return

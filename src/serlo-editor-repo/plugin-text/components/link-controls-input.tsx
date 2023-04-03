@@ -15,12 +15,16 @@ interface InputProps
 }
 
 const InputInner = styled.input(({ theme }) => ({
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   backgroundColor: theme.backgroundColor,
   border: 'none',
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
   borderBottom: `2px solid ${theme.color}`,
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
   color: theme.color,
   '&:focus': {
     outline: 'none',
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
     borderBottom: `2px solid ${theme.hoverColor}`,
   },
 }))

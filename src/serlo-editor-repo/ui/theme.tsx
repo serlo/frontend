@@ -66,6 +66,7 @@ export function RootThemeProvider(
  *
  * @public
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 export const ThemeContext: React.Context<Theme> = StyledComponents.ThemeContext
 
 /**

@@ -41,7 +41,6 @@
     "@prezly/slate-lists": "^0.79.5",
     "@radix-ui/react-navigation-menu": "^1.1.1",
     "@serlo/authorization": "^0.47.0",
-    "@serlo/legacy-editor-to-editor": "Entkenntnis/tmp-serlo-legacy-editor-to-editor",
     "@serlo/markdown": "Entkenntnis/tmp-serlo-markdown",
     "@tippyjs/react": "^4.2.6",
     "@types/algebra.js": "^0.2.2",

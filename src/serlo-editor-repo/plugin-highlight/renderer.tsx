@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+// eslint-disable-next-line import/no-internal-modules
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
 
 import { HighlightConfig } from '.'
@@ -12,6 +13,7 @@ export function HighlightRenderer(props: HighlightRendererProps) {
     <SyntaxHighlighter
       language={props.language}
       showLineNumbers={props.showLineNumbers}
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       style={style}
       customStyle={{
         overflow: 'auto',

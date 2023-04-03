@@ -133,12 +133,16 @@ function useCachedApiResponse(id?: string): ApiResponse {
         .then((res) => res.json())
         .then((body) => {
           let data: ApiResponse = Error.NotExisting
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           if (body.responses.response.item) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             const {
               width = 800,
               height = 500,
               previewUrl,
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             } = body.responses.response.item
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             data = { width, height, previewUrl }
           }
           cache.current[src] = data

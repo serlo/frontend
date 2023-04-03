@@ -1,8 +1,8 @@
 import * as React from 'react'
 
 import { merge, useTheme } from '../../ui'
-import { TextEditorControl } from '../types'
-import type {
+import {
+  TextEditorControl,
   Heading,
   TextEditorConfig,
   TextEditorPluginConfig,

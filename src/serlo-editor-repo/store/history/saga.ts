@@ -9,6 +9,7 @@ import {
   select,
   take,
   takeEvery,
+  // eslint-disable-next-line import/no-internal-modules
 } from 'redux-saga/effects'
 
 import { applyActions, ReversibleAction } from '../actions'

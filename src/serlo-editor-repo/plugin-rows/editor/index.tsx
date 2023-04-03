@@ -98,7 +98,7 @@ export function RowsEditor(props: RowsProps) {
           config={config}
           isFirst
           isLast={isEditorForRootOfDocument && isDocumentEmpty}
-          focused={props.state.length == 0}
+          focused={props.state.length === 0}
           onClick={() => {
             openMenu(0)
           }}

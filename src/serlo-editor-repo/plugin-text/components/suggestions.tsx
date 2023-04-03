@@ -19,11 +19,15 @@ const Suggestion = styled.div<{ isActive: boolean }>(({ isActive, theme }) => ({
   height: '32px',
   padding: '4px 8px',
   cursor: 'pointer',
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   backgroundColor: isActive
-    ? theme.suggestions.background.highlight
-    : theme.suggestions.background.default,
+    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      theme.suggestions.background.highlight
+    : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      theme.suggestions.background.default,
   borderRadius: '4px',
   '&:hover': {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     background: theme.suggestions.background.highlight,
   },
 }))
