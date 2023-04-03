@@ -621,7 +621,32 @@ function toEdtr(content: EditorState): Edtr {
     return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
   if (isEdtr(content)) return content
 
-  throw 'not supported anymore'
+  return {
+    plugin: 'rows',
+    state: [
+      {
+        plugin: 'text',
+        state: [
+          {
+            type: 'p',
+            children: [
+              {
+                text: 'Diese Revision liegt in einem alten Format vor und ist nicht konvertiert.',
+              },
+            ],
+          },
+          {
+            type: 'p',
+            children: [
+              {
+                text: 'Dieser Inhalt wird nicht mehr unterstützt.',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  }
 }
 
 function serializeEditorState(content: Legacy): SerializedLegacyEditorState
