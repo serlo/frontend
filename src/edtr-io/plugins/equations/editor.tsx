@@ -1,8 +1,8 @@
 import { HotKeys, useScopedSelector, useScopedStore } from '@edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { PreferenceContext, setDefaultPreference } from '@edtr-io/core/beta'
+import { PreferenceContext, setDefaultPreference } from '@edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { AddButton } from '@edtr-io/editor-ui'
 import { MathEditor } from '@edtr-io/math'
 import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
 import {

@@ -9,7 +9,11 @@ import { RowsPluginState } from '@edtr-io/plugin-rows'
 import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection'
 import { SpoilerPluginState } from '@edtr-io/plugin-spoiler'
 import { TablePluginState } from '@edtr-io/plugin-table'
-import { NewElement, NewText, TextPluginState } from '@edtr-io/plugin-text'
+import {
+  CustomElement,
+  CustomText,
+  TextEditorState,
+} from '@edtr-io/plugin-text'
 import { VideoPluginState } from '@edtr-io/plugin-video'
 
 import { BoxPluginState } from '@/edtr-io/plugins/box'
@@ -17,8 +21,8 @@ import { PageLayoutPluginState } from '@/edtr-io/plugins/page-layout'
 import { PageTeamPluginState } from '@/edtr-io/plugins/page-team'
 import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
 
-export type SlateBlockElement = NewElement
-export type SlateTextElement = NewText
+export type SlateBlockElement = CustomElement
+export type SlateTextElement = CustomText
 
 // types for all supported @edtr-io plugins
 
@@ -134,7 +138,7 @@ export interface EdtrPluginImage {
 
 export interface EdtrPluginText {
   plugin: 'text'
-  state: StateTypeSerializedType<TextPluginState>
+  state: StateTypeSerializedType<TextEditorState>
 }
 
 export interface EdtrPluginRows {

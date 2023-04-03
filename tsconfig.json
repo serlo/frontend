@@ -17,7 +17,8 @@
     "target": "es5",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@edtr-io/*": ["src/serlo-editor-repo/*"]
     },
     "incremental": true
   },
