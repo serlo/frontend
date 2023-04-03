@@ -2,13 +2,14 @@
 import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
 
 import {
+  convert,
   isEdtr,
   Edtr,
   Legacy,
   RowsPlugin,
   OtherPlugin,
   Splish,
-} from './legacy-editor-to-editor-types'
+} from './legacy-editor-to-editor'
 import { SerloEntityPluginType } from './plugins'
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
@@ -621,7 +622,11 @@ function toEdtr(content: EditorState): Edtr {
     return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
   if (isEdtr(content)) return content
 
-  throw 'not supported anymore'
+  // fixes https://github.com/serlo/frontend/issues/1563
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  return convert(sanitized)
 }
 
 function serializeEditorState(content: Legacy): SerializedLegacyEditorState

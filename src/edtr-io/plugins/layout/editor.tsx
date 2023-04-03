@@ -5,7 +5,7 @@ import { DocumentState, replace, serializeDocument } from '@edtr-io/store'
 
 import { layoutState } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RowsPlugin } from '@/edtr-io/legacy-editor-to-editor-types'
+import { RowsPlugin } from '@/edtr-io/legacy-editor-to-editor'
 
 const LayoutContainer = styled.div({
   display: 'flex',
