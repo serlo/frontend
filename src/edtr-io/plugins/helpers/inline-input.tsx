@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-// @ts-expect-error Type mismatch between versions, fix someday
-import { Value } from 'slate'
-import Plain from 'slate-plain-serializer'
-// @ts-expect-error Type mismatch between versions, fix someday
-import { Editor as SlateEditor } from 'slate-react'
+
+// FIXME: This place using a single instance of slate, because we want the hovering-overlay
+// to work -> but we need to update it to the new version as well
+
+// replacing it width text input to avoid build errors
+// will need solution here
 
 export function InlineInput(props: {
   onChange: (value: string) => void
@@ -12,33 +13,30 @@ export function InlineInput(props: {
   placeholder: string
 }) {
   const { onChange, value, placeholder } = props
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [state, setState] = useState(Plain.deserialize(value))
+  const [state, setState] = useState(value)
 
   useEffect(() => {
-    if (Plain.serialize(state) !== value) {
-      setState(Plain.deserialize(value))
+    if (state !== value) {
+      setState(value)
     }
     // only update when props change to avoid loops
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   return (
-    <SlateEditor
+    <input
       placeholder={placeholder}
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value={state}
-      onFocus={(event: any, editor: any, next: () => void) => {
+      onFocus={() => {
         setTimeout(() => {
           if (typeof props.onFocus === 'function') {
             props.onFocus()
           }
         })
-        next()
       }}
-      onChange={({ value }: { value: Value }) => {
-        setState(value)
-        onChange(Plain.serialize(value))
+      onChange={(e) => {
+        setState(e.target.value)
+        onChange(e.target.value)
       }}
     />
   )
