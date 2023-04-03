@@ -133,6 +133,7 @@ export function TextEditor(props: TextEditorProps) {
 
 function renderElementWithFocused(focused: boolean) {
   return function renderElement(props: RenderElementProps) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { element, attributes, children } = props
 
     if (element.type === 'h') {
@@ -179,6 +180,7 @@ function renderLeafWithConfig(config: TextEditorConfig) {
   return function renderLeaf(props: RenderLeafProps) {
     const colors = config?.theme?.controls?.colors?.colors
     const { attributes, leaf } = props
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let { children } = props
 
     if (leaf.strong) {

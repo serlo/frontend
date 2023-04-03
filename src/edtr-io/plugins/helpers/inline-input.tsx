@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-// @ts-expect-error missing types?
+// @ts-expect-error Type mismatch between versions, fix someday
 import { Value } from 'slate'
 import Plain from 'slate-plain-serializer'
-// @ts-expect-error missing types?
+// @ts-expect-error Type mismatch between versions, fix someday
 import { Editor as SlateEditor } from 'slate-react'
 
 export function InlineInput(props: {
@@ -12,6 +12,7 @@ export function InlineInput(props: {
   placeholder: string
 }) {
   const { onChange, value, placeholder } = props
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [state, setState] = useState(Plain.deserialize(value))
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export function InlineInput(props: {
   return (
     <SlateEditor
       placeholder={placeholder}
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value={state}
       onFocus={(event: any, editor: any, next: () => void) => {
         setTimeout(() => {

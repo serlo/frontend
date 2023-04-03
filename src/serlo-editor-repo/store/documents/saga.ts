@@ -1,4 +1,5 @@
 import { channel, Channel } from 'redux-saga'
+// eslint-disable-next-line import/no-internal-modules
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 import generate from 'shortid'
 
@@ -248,7 +249,6 @@ function* replaceSaga(action: ReplaceAction) {
   )
   if (!currentDocument) return
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // @ts-expect-error see line above
   const plugin: SelectorReturnType<typeof getPlugin> = yield select(
     scopeSelector(getPlugin, action.scope),
     action.payload.plugin
@@ -352,7 +352,6 @@ export function* handleRecursiveInserts(
   const result = act(helpers)
   for (let doc; (doc = pendingDocs.pop()); ) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    // @ts-expect-error see line above
     const plugin: SelectorReturnType<typeof getPlugin> = yield select(
       scopeSelector(getPlugin, scope),
       doc.plugin

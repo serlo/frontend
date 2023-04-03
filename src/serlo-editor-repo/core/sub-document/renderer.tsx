@@ -21,16 +21,19 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
     return null
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const defaultConfig =
     typeof plugin.config === 'function' ? plugin.config(theme) : plugin.config
   const overrideConfig = (pluginProps && pluginProps.config) || {}
   const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const pluginState = plugin.state.init(document.state, () => {})
 
   return (
     <plugin.Component
       config={config}
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       state={pluginState}
       id={id}
       editable={false}

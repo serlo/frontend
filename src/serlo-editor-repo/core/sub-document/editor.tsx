@@ -204,6 +204,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       return null
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const defaultConfig =
       typeof plugin.config === 'function' ? plugin.config(theme) : plugin.config
     const overrideConfig = (pluginProps && pluginProps.config) || {}
@@ -227,6 +228,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         })
       )
     }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const state = plugin.state.init(document.state, onChange)
 
     return (
@@ -254,6 +256,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               editable
               focused={focused}
               config={config}
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               state={state}
               autofocusRef={autofocusRef}
             />

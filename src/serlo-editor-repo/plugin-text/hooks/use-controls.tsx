@@ -18,8 +18,11 @@ import {
 import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-icon'
 import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
 import { withLinks, withLists, withMath } from '../plugins'
-import { TextEditorControl } from '../types'
-import type { ControlButton, TextEditorPluginConfig } from '../types'
+import {
+  TextEditorControl,
+  ControlButton,
+  TextEditorPluginConfig,
+} from '../types'
 import {
   getColorIndex,
   isAnyColorActive,

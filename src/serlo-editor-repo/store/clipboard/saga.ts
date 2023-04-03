@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-internal-modules
 import { put, select, takeEvery } from 'redux-saga/effects'
 
 import { serializeDocument } from '../documents/reducer'
@@ -11,7 +12,6 @@ export function* clipboardSaga() {
 
 function* copySaga(action: CopyAction) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // @ts-expect-error SEE LINE ABOVE
   const document: SelectorReturnType<typeof serializeDocument> = yield select(
     scopeSelector(serializeDocument, action.scope),
     action.payload

@@ -1,4 +1,5 @@
 import * as React from 'react'
+// eslint-disable-next-line import/no-internal-modules
 import { renderToString } from 'react-dom/server'
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 

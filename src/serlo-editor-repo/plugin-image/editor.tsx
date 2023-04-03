@@ -41,6 +41,7 @@ const OverlayButtonWrapper = styled.div({
 const Failed = styled.div<EditorThemeProps>((props) => {
   return {
     fontWeight: 'bold',
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     color: props.theme.editor.danger.background,
   }
 })

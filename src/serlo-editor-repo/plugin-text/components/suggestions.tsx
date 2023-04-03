@@ -38,9 +38,12 @@ const Container = styled.div({
 
 const StyledText = styled.span<{ isHighlighted: boolean }>(
   ({ isHighlighted, theme }) => ({
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     color: isHighlighted
-      ? theme.suggestions.text.highlight
-      : theme.suggestions.text.default,
+      ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        theme.suggestions.text.highlight
+      : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        theme.suggestions.text.default,
   })
 )
 
