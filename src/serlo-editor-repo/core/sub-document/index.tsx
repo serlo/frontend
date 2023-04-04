@@ -1,3 +1,4 @@
+import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import * as React from 'react'
 
 import { PluginProps } from '../../internal__plugin-state'
@@ -5,6 +6,7 @@ import { undo } from '../../store'
 import { ScopeContext, ErrorContext, useScopedDispatch } from '../store'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
+import { StaticInfoPanel } from '@/components/static-info-panel'
 
 /**
  * Renders a document inside another document
@@ -53,17 +55,18 @@ export class ErrorBoundary extends React.Component<{
   public render() {
     if (this.state.hasError) {
       return (
-        <>
+        <StaticInfoPanel icon={faWarning} type="warning">
           Leider ist ein Fehler aufgetreten.
           <button
             onClick={() => {
               this.props.undo()
               this.setState({ hasError: false })
             }}
+            className="serlo-button-blue block mt-3"
           >
-            letzte Änderung rückgänging machen
+            Letzte Änderung rückgänging machen
           </button>
-        </>
+        </StaticInfoPanel>
       )
     }
 
