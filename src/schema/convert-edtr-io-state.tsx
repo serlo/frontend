@@ -93,7 +93,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const { caption, maxWidth, link, src } = node.state
 
     const convertedCaption = caption ? convert(caption as EdtrState) : undefined
-    const captionTexts = convertedCaption?.[0].children?.[0].children
+
+    const captionTexts = convertedCaption?.[0]?.children?.[0]?.children
 
     // if alt is not set construct plain string from caption
     const alt = node.state.alt
