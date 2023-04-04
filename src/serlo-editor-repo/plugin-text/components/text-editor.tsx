@@ -173,7 +173,7 @@ function renderElementWithFocused(focused: boolean) {
       )
     }
 
-    return <p {...attributes}>{children}</p>
+    return <div {...attributes}>{children}</div>
   }
 }
 

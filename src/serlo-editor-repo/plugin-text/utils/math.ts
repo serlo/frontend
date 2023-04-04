@@ -36,7 +36,13 @@ export function toggleMath(editor: SlateEditor) {
         ],
         { at: selection }
       )
-      Transforms.move(editor, { distance: 1, reverse: true })
+      // Use the previous selection to set the selection at the beginning of the math formula,
+      // and then move it into the math formula to show the editor
+      Transforms.setSelection(editor, {
+        anchor: selection.anchor,
+        focus: selection.anchor,
+      })
+      Transforms.move(editor, { distance: 1 })
     }
   }
 }
