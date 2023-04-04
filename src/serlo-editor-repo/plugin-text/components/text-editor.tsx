@@ -65,6 +65,7 @@ export function TextEditor(props: TextEditorProps) {
     Transforms.setSelection(editor, selection)
 
     if (previousValue.current !== value) {
+      previousValue.current = value
       editor.children = value
     }
   }, [editor, selection, value])
