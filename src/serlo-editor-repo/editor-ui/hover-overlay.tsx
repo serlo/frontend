@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 
 import { styled } from '../ui'
 
@@ -39,32 +39,22 @@ const InlineOverlayContentWrapper = styled.div({
   },
 })
 
-/** @public */
+export type HoverPosition = 'above' | 'below'
+
 export interface HoverOverlayProps {
-  children: React.ReactNode
+  children: ReactNode
   position: 'above' | 'below'
-  anchor?: React.RefObject<HTMLElement>
+  anchor?: RefObject<HTMLElement>
 }
 
-/**
- * @param props - The {@link @edtr-io/editor-ui#HoverOverlayProps | hover overlay props}
- * @public
- */
 export function HoverOverlay(props: HoverOverlayProps) {
-  const overlay = React.createRef<HTMLDivElement>()
-  const triangle = React.createRef<HTMLDivElement>()
-  const [positionAbove, setPositionAbove] = React.useState(
-    props.position === 'above'
-  )
+  const overlay = createRef<HTMLDivElement>()
+  const triangle = createRef<HTMLDivElement>()
+  const [positionAbove, setPositionAbove] = useState(props.position === 'above')
 
   const windowSelection = window.getSelection()
 
-  // This works around a positioning bug. When the hover overlay is shown,
-  // and then the editor loses focus and gets it back again,
-  // the overlay is shown on the last window.getSelection(),
-  // because the useEffect below is not triggered.
-  // TODO: Check if this is necessary of if there is a simpler fix
-  const [nativeSelection, setNativeSelection] = React.useState({
+  const [nativeSelection, setNativeSelection] = useState({
     anchorOffset: windowSelection?.anchorOffset,
     focusNode: windowSelection?.focusNode,
   })
@@ -75,13 +65,13 @@ export function HoverOverlay(props: HoverOverlayProps) {
     })
   }
   document.addEventListener('selectionchange', handleSelectionChange)
-  React.useEffect(() => () => {
+  useEffect(() => () => {
     document.removeEventListener('selectionchange', handleSelectionChange)
   })
 
   const { anchor, children } = props
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!overlay.current || !triangle.current) return
     let rect
     if (anchor && anchor.current !== null) {
