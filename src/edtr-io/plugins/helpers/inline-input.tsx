@@ -1,10 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
+import { createEditor, Descendant } from 'slate'
+import { Editable, Slate, withReact } from 'slate-react'
 
-// FIXME: This place using a single instance of slate, because we want the hovering-overlay
-// to work -> but we need to update it to the new version as well
+import { CustomElement, CustomText } from '@/serlo-editor-repo/plugin-text'
 
-// replacing it width text input to avoid build errors
-// will need solution here
+const serialize = (value: Descendant[]): string => {
+  return ((value[0] as CustomElement).children[0] as CustomText).text
+}
+
+const deserialize = (value: string): Descendant[] => [
+  {
+    type: 'p',
+    children: [{ text: value }],
+  },
+]
 
 export function InlineInput(props: {
   onChange: (value: string) => void
@@ -13,31 +22,29 @@ export function InlineInput(props: {
   placeholder: string
 }) {
   const { onChange, value, placeholder } = props
-  const [state, setState] = useState(value)
 
-  useEffect(() => {
-    if (state !== value) {
-      setState(value)
-    }
-    // only update when props change to avoid loops
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  const initialValue = useMemo(() => deserialize(value), [])
+
+  const [editor] = useState(() => withReact(createEditor()))
 
   return (
-    <input
-      placeholder={placeholder}
-      value={state}
-      onFocus={() => {
-        setTimeout(() => {
-          if (typeof props.onFocus === 'function') {
-            props.onFocus()
-          }
-        })
+    <Slate
+      editor={editor}
+      value={initialValue}
+      onChange={(newValue) => {
+        onChange(serialize(newValue))
       }}
-      onChange={(e) => {
-        setState(e.target.value)
-        onChange(e.target.value)
-      }}
-    />
+    >
+      <Editable
+        placeholder={placeholder}
+        onFocus={() => {
+          setTimeout(() => {
+            if (typeof props.onFocus === 'function') {
+              props.onFocus()
+            }
+          })
+        }}
+      />
+    </Slate>
   )
 }
