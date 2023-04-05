@@ -9,10 +9,14 @@ import {
 
 import { PreferenceContext } from '../../core'
 import { MathEditor } from '../../math'
-import type { MathElement as MathElementType } from '../types'
+import type {
+  MathElement as MathElementType,
+  TextEditorPluginConfig,
+} from '../types'
 import { MathFormula } from './math-formula'
 
 export interface MathElementProps {
+  config: TextEditorPluginConfig
   element: MathElementType
   attributes: RenderElementProps['attributes']
   focused: boolean
@@ -22,6 +26,7 @@ export interface MathElementProps {
 const visualEditorPreferenceKey = 'text:math:visual-editor'
 
 export function MathElement({
+  config,
   element,
   attributes,
   focused,
@@ -72,11 +77,6 @@ export function MathElement({
     ReactEditor.focus(editor)
   }
 
-  /* TODO: We need to define
-    export interface MathEditorProps {
-      config: DeepPartial<MathEditorConfig>
-    }
-  */
   return (
     <span {...attributes} tabIndex={-1}>
       <MathEditor
@@ -100,7 +100,10 @@ export function MathElement({
         onDeleteOutLeft={() => {
           transformOutOfElement({ shouldDelete: true, reverse: true })
         }}
-        config={{}}
+        config={{
+          i18n: config.i18n.math,
+          theme: config.theme,
+        }}
         onEditorChange={(visual) =>
           preferences.setKey(visualEditorPreferenceKey, visual)
         }
