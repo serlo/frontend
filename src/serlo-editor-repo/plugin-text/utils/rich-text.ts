@@ -34,6 +34,7 @@ export function isCodeActive(editor: SlateEditor) {
 }
 
 export function toggleCode(editor: SlateEditor) {
+  trimSelection(editor)
   if (isCodeActive(editor)) {
     SlateEditor.removeMark(editor, 'code')
   } else {
