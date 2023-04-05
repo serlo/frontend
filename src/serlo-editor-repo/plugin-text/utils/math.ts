@@ -1,6 +1,12 @@
-import { Editor as SlateEditor, Range, Transforms, Element } from 'slate'
+import {
+  Editor as SlateEditor,
+  Range,
+  Transforms,
+  Element,
+  Location,
+} from 'slate'
 
-import { selectionHasElement } from './selection'
+import { selectionHasElement, trimSelection } from './selection'
 
 export function isMathActive(editor: SlateEditor) {
   return selectionHasElement((e) => e.type === 'math', editor)
@@ -11,38 +17,41 @@ export function toggleMath(editor: SlateEditor) {
     Transforms.removeNodes(editor, {
       match: (n) => Element.isElement(n) && n.type === 'math',
     })
-  } else {
-    const { selection } = editor
-    if (!selection) return
-    const isCollapsed = Range.isCollapsed(selection)
-
-    if (isCollapsed) {
-      Transforms.insertNodes(editor, {
-        type: 'math',
-        src: '',
-        inline: true,
-        children: [{ text: '' }],
-      })
-    } else {
-      Transforms.insertNodes(
-        editor,
-        [
-          {
-            type: 'math',
-            src: SlateEditor.string(editor, selection) || '',
-            inline: true,
-            children: [],
-          },
-        ],
-        { at: selection }
-      )
-      // Use the previous selection to set the selection at the beginning of the math formula,
-      // and then move it into the math formula to show the editor
-      Transforms.setSelection(editor, {
-        anchor: selection.anchor,
-        focus: selection.anchor,
-      })
-      Transforms.move(editor, { distance: 1 })
-    }
+    return
   }
+
+  const { selection } = editor
+  if (!selection) return
+
+  const isCollapsed = Range.isCollapsed(selection)
+  if (isCollapsed) {
+    Transforms.insertNodes(editor, {
+      type: 'math',
+      src: '',
+      inline: true,
+      children: [{ text: '' }],
+    })
+    return
+  }
+
+  const trimmedSelection = trimSelection(editor)
+  Transforms.insertNodes(
+    editor,
+    [
+      {
+        type: 'math',
+        src: SlateEditor.string(editor, trimmedSelection as Location) || '',
+        inline: true,
+        children: [],
+      },
+    ],
+    { at: trimmedSelection as Location }
+  )
+  // Use the previous selection to set the selection at the beginning of the math formula,
+  // and then move it into the math formula to show the editor
+  Transforms.setSelection(editor, {
+    anchor: selection.anchor,
+    focus: selection.anchor,
+  })
+  Transforms.move(editor, { distance: 1 })
 }

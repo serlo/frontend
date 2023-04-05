@@ -18,7 +18,7 @@ export function selectionHasElement(
   return !!match
 }
 
-export function trimSelection(editor: SlateEditor) {
+export function trimSelection(editor: SlateEditor): Partial<Range> | null {
   const selection = editor.selection
 
   if (!selection) return null
@@ -37,8 +37,12 @@ export function trimSelection(editor: SlateEditor) {
     selectedText = selectedText.substring(0, selectedText.length - 1)
   }
 
-  Transforms.setSelection(editor, {
+  const trimmedSelection = {
     anchor: { ...selection.anchor, offset: anchorOffset },
     focus: { ...selection.focus, offset: focusOffset },
-  })
+  }
+
+  Transforms.setSelection(editor, trimmedSelection)
+
+  return trimmedSelection
 }

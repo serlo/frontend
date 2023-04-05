@@ -1,7 +1,7 @@
 import { Editor as SlateEditor, Element, Node, Range, Transforms } from 'slate'
 
 import type { Link } from '../types'
-import { selectionHasElement } from './selection'
+import { selectionHasElement, trimSelection } from './selection'
 
 function matchLinks(node: Node) {
   return Element.isElement(node) && node.type === 'a'
@@ -34,6 +34,7 @@ export function toggleLink(editor: SlateEditor) {
     return
   }
 
+  trimSelection(editor)
   Transforms.wrapNodes(
     editor,
     {
