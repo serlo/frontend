@@ -76,6 +76,7 @@ export function HoveringToolbarControls(props: HoveringToolbarControlsProps) {
           onMouseDown={(event) => {
             event.preventDefault()
             control.onClick(editor)
+            setSubMenu(undefined)
           }}
           key={index}
         >

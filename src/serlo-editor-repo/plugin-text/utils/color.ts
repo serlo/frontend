@@ -1,4 +1,6 @@
-import { Editor as SlateEditor } from 'slate'
+import { Editor as SlateEditor, Transforms } from 'slate'
+
+import { trimSelection } from './selection'
 
 export const isAnyColorActive = (editor: SlateEditor) =>
   typeof SlateEditor.marks(editor)?.color === 'number'
@@ -11,11 +13,13 @@ export const resetColor = (editor: SlateEditor) => {
 }
 
 export const toggleColor = (colorIndex: number) => (editor: SlateEditor) => {
+  trimSelection(editor)
   if (isColorActive(colorIndex)(editor)) {
     SlateEditor.removeMark(editor, 'color')
   } else {
     SlateEditor.addMark(editor, 'color', colorIndex)
   }
+  Transforms.collapse(editor, { edge: 'end' })
 }
 
 export const getColorIndex = (editor: SlateEditor) => {
