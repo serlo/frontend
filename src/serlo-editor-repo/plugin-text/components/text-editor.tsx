@@ -1,4 +1,5 @@
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
+import { isHotkey } from 'is-hotkey'
 import React, {
   createElement,
   useRef,
@@ -6,7 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { createEditor, Descendant, Node, Transforms } from 'slate'
+import { createEditor, Descendant, Node, Range, Transforms } from 'slate'
 import {
   Editable,
   RenderElementProps,
@@ -21,7 +22,11 @@ import { EditorPluginProps } from '../../plugin'
 import { useControls } from '../hooks/use-controls'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import type { TextEditorConfig, TextEditorState } from '../types'
+import type {
+  TextEditorConfig,
+  TextEditorPluginConfig,
+  TextEditorState,
+} from '../types'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -86,6 +91,25 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
+    // Default Slate left/right behavior is unit:'character'.
+    // This fails to distinguish between two cursor positions, such as
+    // <inline>foo<cursor/></inline> vs <inline>foo</inline><cursor/>.
+    // Here we modify the behavior to unit:'offset'.
+    // This lets the user step in and out of the inline without stepping over characters.
+    // We may wish to customize this further to only use unit:'offset' in specific cases.
+    if (selection && Range.isCollapsed(selection)) {
+      if (isHotkey('left', event)) {
+        event.preventDefault()
+        Transforms.move(editor, { unit: 'offset', reverse: true })
+        return
+      }
+      if (isHotkey('right', event)) {
+        event.preventDefault()
+        Transforms.move(editor, { unit: 'offset' })
+        return
+      }
+    }
+
     suggestions.handleHotkeys(event)
     textControls.handleHotkeys(event, editor)
     markdownShortcuts().onKeyDown(event, editor)
@@ -118,7 +142,7 @@ export function TextEditor(props: TextEditorProps) {
         <Editable
           placeholder={config.placeholder}
           onKeyDown={handleEditableKeyDown}
-          renderElement={renderElementWithFocused(focused)}
+          renderElement={renderElementWithEditorContext(config, focused)}
           renderLeaf={renderLeafWithConfig(config)}
         />
       </Slate>
@@ -132,7 +156,10 @@ export function TextEditor(props: TextEditorProps) {
   )
 }
 
-function renderElementWithFocused(focused: boolean) {
+function renderElementWithEditorContext(
+  config: TextEditorPluginConfig,
+  focused: boolean
+) {
   return function renderElement(props: RenderElementProps) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { element, attributes, children } = props
@@ -164,6 +191,7 @@ function renderElementWithFocused(focused: boolean) {
     if (element.type === 'math') {
       return (
         <MathElement
+          config={config}
           element={element}
           attributes={attributes}
           focused={focused}
