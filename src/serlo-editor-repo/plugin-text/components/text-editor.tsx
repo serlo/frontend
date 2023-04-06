@@ -21,7 +21,7 @@ import { EditorPluginProps } from '../../plugin'
 import { useControls } from '../hooks/use-controls'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import type { TextEditorConfig, TextEditorState } from '../types'
+import { TextEditorConfig, TextEditorControl, TextEditorState } from '../types'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -89,7 +89,8 @@ export function TextEditor(props: TextEditorProps) {
     suggestions.handleHotkeys(event)
     textControls.handleHotkeys(event, editor)
     markdownShortcuts().onKeyDown(event, editor)
-    slateListsOnKeyDown(editor, event)
+    if (config.controls.includes(TextEditorControl.lists))
+      slateListsOnKeyDown(editor, event)
   }
 
   return (
