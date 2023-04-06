@@ -1,4 +1,4 @@
-import { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
+import { CustomElement, CustomText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
@@ -15,6 +15,8 @@ import {
   Sign,
 } from '@/frontend-node-types'
 
+type CustomNode = CustomElement | CustomText
+
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
 }
@@ -23,14 +25,14 @@ export type ConvertData =
   | EdtrState
   | UnknownEdtrState
   | FrontendContentNode
-  | NewNode
+  | CustomNode
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
-export function isTextPluginState(node: ConvertData): node is NewNode {
+export function isTextPluginState(node: ConvertData): node is CustomNode {
   return (
-    (node as NewElement).type !== undefined ||
-    (node as NewText).text !== undefined
+    (node as CustomElement).type !== undefined ||
+    (node as CustomText).text !== undefined
   )
 }
 
@@ -91,7 +93,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const { caption, maxWidth, link, src } = node.state
 
     const convertedCaption = caption ? convert(caption as EdtrState) : undefined
-    const captionTexts = convertedCaption?.[0].children?.[0].children
+
+    const captionTexts = convertedCaption?.[0]?.children?.[0]?.children
 
     // if alt is not set construct plain string from caption
     const alt = node.state.alt

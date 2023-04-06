@@ -1,7 +1,10 @@
 import { OverlayInput } from '@edtr-io/core'
-import { EditorInlineSettings, EditorInput, styled } from '@edtr-io/editor-ui'
-// eslint-disable-next-line import/no-internal-modules
-import { PreviewOverlay } from '@edtr-io/editor-ui/internal'
+import {
+  EditorInlineSettings,
+  EditorInput,
+  styled,
+  PreviewOverlay,
+} from '@edtr-io/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
 import { Icon, faNewspaper } from '@edtr-io/ui'
 import { ChangeEvent, useEffect, useState } from 'react'

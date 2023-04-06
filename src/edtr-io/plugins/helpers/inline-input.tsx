@@ -1,8 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Value } from 'slate'
-import Plain from 'slate-plain-serializer'
-// @ts-expect-error missing types?
-import { Editor as SlateEditor } from 'slate-react'
+import { useMemo, useState } from 'react'
+import { createEditor, Descendant } from 'slate'
+import { Editable, Slate, withReact } from 'slate-react'
+
+import { CustomElement, CustomText } from '@/serlo-editor-repo/plugin-text'
+
+const serialize = (value: Descendant[]): string => {
+  return ((value[0] as CustomElement).children[0] as CustomText).text
+}
+
+const deserialize = (value: string): Descendant[] => [
+  {
+    type: 'p',
+    children: [{ text: value }],
+  },
+]
 
 export function InlineInput(props: {
   onChange: (value: string) => void
@@ -11,32 +22,29 @@ export function InlineInput(props: {
   placeholder: string
 }) {
   const { onChange, value, placeholder } = props
-  const [state, setState] = useState(Plain.deserialize(value))
 
-  useEffect(() => {
-    if (Plain.serialize(state) !== value) {
-      setState(Plain.deserialize(value))
-    }
-    // only update when props change to avoid loops
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  const initialValue = useMemo(() => deserialize(value), [])
+
+  const [editor] = useState(() => withReact(createEditor()))
 
   return (
-    <SlateEditor
-      placeholder={placeholder}
-      value={state}
-      onFocus={(event: any, editor: any, next: () => void) => {
-        setTimeout(() => {
-          if (typeof props.onFocus === 'function') {
-            props.onFocus()
-          }
-        })
-        next()
+    <Slate
+      editor={editor}
+      value={initialValue}
+      onChange={(newValue) => {
+        onChange(serialize(newValue))
       }}
-      onChange={({ value }: { value: Value }) => {
-        setState(value)
-        onChange(Plain.serialize(value))
-      }}
-    />
+    >
+      <Editable
+        placeholder={placeholder}
+        onFocus={() => {
+          setTimeout(() => {
+            if (typeof props.onFocus === 'function') {
+              props.onFocus()
+            }
+          })
+        }}
+      />
+    </Slate>
   )
 }
