@@ -3,6 +3,7 @@ import {
   faWarning,
   faFilter,
 } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { useState } from 'react'
 
 import { Link } from '../content/link'
@@ -42,22 +43,29 @@ export function CommentAreaAllThreads() {
         <div className="mt-[50px] mb-3">
           <FaIcon icon={faFilter} className="ml-2 mr-3" />
           Filtern nach
-          <select
-            value={filter}
-            onChange={(e) => {
-              setFilter(e.target.value)
-            }}
-            className="p-3 ml-3 rounded bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100 cursor-pointer"
+          <span
+            className={clsx(
+              "after:content-['▾'] after:absolute after:-ml-7 after:mt-1.5 after:text-brand after:text-2xl",
+              'border-solid after:pointer-events-none inline-block'
+            )}
           >
-            <option value="">Alle Fächer</option>
-            <option value="czU=">Mathematik</option>
-            <option value="czE3NzQ0">Nachhaltigkeit</option>
-            <option value="czIzMzYy">Biologie</option>
-            <option value="czE4MjMw">Chemie</option>
-            <option value="czQ3ODk5">Informatik</option>
-            <option value="czEwNjA4MQ==">Fächer im Aufbau</option>
-            <option value="czE4MTg4Mw==">Lerntipps</option>
-          </select>
+            <select
+              value={filter}
+              onChange={(e) => {
+                setFilter(e.target.value)
+              }}
+              className="p-3 ml-3 pr-9 rounded-lg bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100 cursor-pointer appearance-none"
+            >
+              <option value="">Alle Fächer</option>
+              <option value="czU=">Mathematik</option>
+              <option value="czE3NzQ0">Nachhaltigkeit</option>
+              <option value="czIzMzYy">Biologie</option>
+              <option value="czE4MjMw">Chemie</option>
+              <option value="czQ3ODk5">Informatik</option>
+              <option value="czEwNjA4MQ==">Fächer im Aufbau</option>
+              <option value="czE4MTg4Mw==">Lerntipps</option>
+            </select>
+          </span>
         </div>
       )}
       <Guard data={commentData} error={error}>
