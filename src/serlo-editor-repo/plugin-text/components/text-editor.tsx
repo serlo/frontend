@@ -6,7 +6,13 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import { createEditor, Descendant, Node, Transforms } from 'slate'
+import {
+  createEditor,
+  Editor as SlateEditor,
+  Descendant,
+  Node,
+  Transforms,
+} from 'slate'
 import {
   Editable,
   RenderElementProps,
@@ -117,10 +123,11 @@ export function TextEditor(props: TextEditorProps) {
     const { clipboardData } = event
 
     const files = getFilesFromDataTransfer(clipboardData)
-    // TODO: Maybe we don't need to manually handle text pasting
     const text = clipboardData.getData('text')
 
-    // TODO: Maybe replace this loop with a direct call of image plugin's onFiles function
+    // Currently, only the image plugin has the `onFiles` method
+    // which handles the copy/pasting of an image
+    // TODO: Maybe replace this loop with a direct call of image plugin's onFiles method
     if (files && files.length > 0) {
       for (const pluginName in plugins) {
         // Check if the current property is the object's own property,
@@ -139,6 +146,24 @@ export function TextEditor(props: TextEditorProps) {
       }
     }
 
+    // Currently, only the video plugin has the `onText` method
+    // which handles the copy/pasting of a video URL
+    // TODO: Maybe replace this loop with a direct call of video plugin's onText method
+    if (text) {
+      for (const key in plugins) {
+        if (!Object.prototype.hasOwnProperty.call(plugins, key)) continue
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const { onText } = plugins[key]
+        if (typeof onText === 'function') {
+          const result = onText(text)
+          if (result !== undefined) {
+            handleResult(key, result)
+            return
+          }
+        }
+      }
+    }
+
     function getFilesFromDataTransfer(clipboardData: DataTransfer) {
       const items = clipboardData.files
       const files: File[] = []
@@ -151,8 +176,7 @@ export function TextEditor(props: TextEditorProps) {
     }
 
     function handleResult(pluginName: string, result: { state?: unknown }) {
-      console.log(pluginName, result)
-      if (mayRemoveChild(id)(store.getState()) && text === '') {
+      if (mayRemoveChild(id)(store.getState()) && Node.string(editor) === '') {
         store.dispatch(
           replace({
             id,
@@ -160,38 +184,42 @@ export function TextEditor(props: TextEditorProps) {
             state: result.state,
           })
         )
-      } else {
-        // const nextSlateState = splitBlockAtSelection(editor)
-        const nextSlateState = {}
-        const parent = getParent(id)(store.getState())
-        if (!parent) return
+        return
+      }
 
-        setTimeout(() => {
-          // insert new text-plugin with the parts after the current cursor position if any
-          if (nextSlateState) {
-            store.dispatch(
-              insertChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: parentPluginName,
-                  state: nextSlateState,
-                },
-              })
-            )
-          }
+      const parent = getParent(id)(store.getState())
+      if (!parent) return
+
+      const insertSplitOffNodes = (splitOffNodes?: Node) => {
+        if (splitOffNodes) {
           store.dispatch(
             insertChildAfter({
               parent: parent.id,
               sibling: id,
               document: {
-                plugin: pluginName,
-                state: result.state,
+                plugin: parentPluginName,
+                state: [splitOffNodes],
               },
             })
           )
-        })
+        }
       }
+      const insertPastedData = () => {
+        store.dispatch(
+          insertChildAfter({
+            parent: parent.id,
+            sibling: id,
+            document: {
+              plugin: pluginName,
+              state: result.state,
+            },
+          })
+        )
+      }
+      splitAndInsertNodeAtSelection(editor, [
+        insertSplitOffNodes,
+        insertPastedData,
+      ])
     }
   }
 
@@ -306,4 +334,35 @@ function renderLeafWithConfig(config: TextEditorConfig) {
     }
     return <span {...attributes}>{children}</span>
   }
+}
+
+function splitAndInsertNodeAtSelection(
+  editor: SlateEditor,
+  storeCallbacks: Array<(nextSlateState?: Node) => void>
+) {
+  // Create a new line at selection
+  Transforms.splitNodes(editor)
+
+  // Get all the nodes after selection as an array.
+  // The first element in the array is always the NodeEntry of the whole editor object.
+  // The middle element is the parent NodeEntry.
+  // The last element is the NodeEntry at selection.
+  // https://docs.slatejs.org/api/nodes/editor#editor.nodes-less-than-t-extends-node-greater-than-editor-editor-options-greater-than-generator-less
+  const nodesArray = Array.from(SlateEditor.nodes(editor))
+
+  // Take the parent NodeEntry
+  const parentElement = nodesArray[1]
+
+  // Take only the node object from the parent NodeEntry
+  const splitOffNodes = parentElement[0]
+
+  // Remove the nodes after selection
+  Transforms.removeNodes(editor)
+
+  // Commit the split-off nodes and the pasted data to the store
+  setTimeout(() => {
+    storeCallbacks.forEach((callback) => {
+      callback(splitOffNodes)
+    })
+  })
 }
