@@ -25,7 +25,6 @@ import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
-import { InlineChromiumBugfix } from './inline-chromium-bugfix'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
@@ -170,9 +169,7 @@ function renderElementWithFocused(focused: boolean) {
     if (element.type === 'a') {
       return (
         <a href={element.href} style={{ cursor: 'pointer' }} {...attributes}>
-          <InlineChromiumBugfix />
           {children}
-          <InlineChromiumBugfix />
         </a>
       )
     }
