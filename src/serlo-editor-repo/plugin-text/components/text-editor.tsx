@@ -151,6 +151,9 @@ export function TextEditor(props: TextEditorProps) {
     // TODO: Maybe replace this loop with a direct call of video plugin's onText method
     if (text) {
       for (const key in plugins) {
+        // Check if the current property is the object's own property,
+        // and not an inherited property (from the prototype)
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in#iterating_own_properties
         if (!Object.prototype.hasOwnProperty.call(plugins, key)) continue
         // eslint-disable-next-line @typescript-eslint/unbound-method
         const { onText } = plugins[key]
@@ -190,21 +193,21 @@ export function TextEditor(props: TextEditorProps) {
       const parent = getParent(id)(store.getState())
       if (!parent) return
 
-      const insertSplitOffNodes = (splitOffNodes?: Node) => {
-        if (splitOffNodes) {
+      const slicedNodes = sliceNodesAfterSelection(editor)
+
+      setTimeout(() => {
+        if (slicedNodes) {
           store.dispatch(
             insertChildAfter({
               parent: parent.id,
               sibling: id,
               document: {
                 plugin: parentPluginName,
-                state: [splitOffNodes],
+                state: slicedNodes,
               },
             })
           )
         }
-      }
-      const insertPastedData = () => {
         store.dispatch(
           insertChildAfter({
             parent: parent.id,
@@ -215,11 +218,7 @@ export function TextEditor(props: TextEditorProps) {
             },
           })
         )
-      }
-      splitAndInsertNodeAtSelection(editor, [
-        insertSplitOffNodes,
-        insertPastedData,
-      ])
+      })
     }
   }
 
@@ -336,33 +335,25 @@ function renderLeafWithConfig(config: TextEditorConfig) {
   }
 }
 
-function splitAndInsertNodeAtSelection(
-  editor: SlateEditor,
-  storeCallbacks: Array<(nextSlateState?: Node) => void>
-) {
+function sliceNodesAfterSelection(editor: SlateEditor) {
+  if (!editor.selection) return
+
   // Create a new line at selection
-  Transforms.splitNodes(editor)
+  SlateEditor.insertBreak(editor)
 
-  // Get all the nodes after selection as an array.
-  // The first element in the array is always the NodeEntry of the whole editor object.
-  // The middle element is the parent NodeEntry.
-  // The last element is the NodeEntry at selection.
-  // https://docs.slatejs.org/api/nodes/editor#editor.nodes-less-than-t-extends-node-greater-than-editor-editor-options-greater-than-generator-less
-  const nodesArray = Array.from(SlateEditor.nodes(editor))
+  const selectionPoint = editor.selection.anchor.path[0]
+  const childrenCount = editor.children.length
 
-  // Take the parent NodeEntry
-  const parentElement = nodesArray[1]
+  // Save the sliced nodes to a constant
+  const slicedNodes = editor.children.slice(selectionPoint, childrenCount)
 
-  // Take only the node object from the parent NodeEntry
-  const splitOffNodes = parentElement[0]
-
-  // Remove the nodes after selection
-  Transforms.removeNodes(editor)
-
-  // Commit the split-off nodes and the pasted data to the store
-  setTimeout(() => {
-    storeCallbacks.forEach((callback) => {
-      callback(splitOffNodes)
-    })
+  // Remove the sliced nodes from the current Slate instance
+  Transforms.removeNodes(editor, {
+    at: {
+      anchor: { offset: 0, path: [selectionPoint] },
+      focus: { offset: 0, path: [childrenCount] },
+    },
   })
+
+  return slicedNodes
 }
