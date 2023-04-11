@@ -37,15 +37,11 @@ const createTextPlugin = (
     },
     deserialize(value) {
       // If the first child of the Element is an empty object,
-      // replace it with an empty Text node
-      // We know it's a paragraph.
+      // replace it with an empty document.
       // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
       const firstChild = (value[0] as CustomElement).children[0]
       if (isEmptyObject(firstChild)) {
-        return {
-          value: [{ type: 'p', children: [{ text: '' }] }],
-          selection: null,
-        }
+        return emptyDocumentFactory()
       }
 
       return { value, selection: null }
