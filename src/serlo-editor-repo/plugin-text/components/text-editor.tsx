@@ -7,14 +7,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
-import {
-  createEditor,
-  Editor as SlateEditor,
-  Descendant,
-  Node,
-  Transforms,
-  Range,
-} from 'slate'
+import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
 import {
   Editable,
   RenderElementProps,
@@ -30,6 +23,7 @@ import { useControls } from '../hooks/use-controls'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { TextEditorConfig, TextEditorControl, TextEditorState } from '../types'
+import { sliceNodesAfterSelection } from '../utils/document'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -360,27 +354,4 @@ function renderLeafWithConfig(config: TextEditorConfig) {
     }
     return <span {...attributes}>{children}</span>
   }
-}
-
-function sliceNodesAfterSelection(editor: SlateEditor) {
-  if (!editor.selection) return
-
-  // Create a new line at selection
-  SlateEditor.insertBreak(editor)
-
-  const selectionPoint = editor.selection.anchor.path[0]
-  const childrenCount = editor.children.length
-
-  // Save the sliced nodes to a constant
-  const slicedNodes = editor.children.slice(selectionPoint, childrenCount)
-
-  // Remove the sliced nodes from the current Slate instance
-  Transforms.removeNodes(editor, {
-    at: {
-      anchor: { offset: 0, path: [selectionPoint] },
-      focus: { offset: 0, path: [childrenCount] },
-    },
-  })
-
-  return slicedNodes
 }
