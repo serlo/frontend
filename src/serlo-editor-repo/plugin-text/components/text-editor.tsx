@@ -1,4 +1,5 @@
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
+import { isKeyHotkey } from 'is-hotkey'
 import React, {
   createElement,
   useRef,
@@ -12,6 +13,7 @@ import {
   Descendant,
   Node,
   Transforms,
+  Range,
 } from 'slate'
 import {
   Editable,
@@ -102,6 +104,31 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
+    /*
+      Special handler for links. If you move right and end up at the right edge of a link,
+      this handler unselects the link, so you can write normal text behind it.
+    */
+    if (editor.selection && Range.isCollapsed(editor.selection)) {
+      if (isKeyHotkey('right', event.nativeEvent)) {
+        const { path, offset } = editor.selection.focus
+        const node = Node.get(editor, path)
+        const parent = Node.parent(editor, path)
+
+        if (node && parent) {
+          if (Object.hasOwn(parent, 'type') && parent.type === 'a') {
+            if (
+              Object.hasOwn(node, 'text') &&
+              node.text.length - 1 === offset
+            ) {
+              Transforms.move(editor)
+              Transforms.move(editor, { unit: 'offset' })
+              event.preventDefault()
+            }
+          }
+        }
+      }
+    }
+
     suggestions.handleHotkeys(event)
     textControls.handleHotkeys(event, editor)
     markdownShortcuts().onKeyDown(event, editor)
