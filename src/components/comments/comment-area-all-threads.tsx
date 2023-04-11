@@ -45,7 +45,7 @@ export function CommentAreaAllThreads() {
           Filtern nach
           <span
             className={clsx(
-              "after:content-['▾'] after:absolute after:-ml-7 after:mt-1.5 after:text-brand after:text-2xl",
+              "after:content-['▾'] after:absolute after:-ml-7 after:mt-1.5 after:text-black after:text-2xl",
               'border-solid after:pointer-events-none inline-block'
             )}
           >
