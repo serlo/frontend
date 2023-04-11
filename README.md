@@ -100,6 +100,12 @@ Generates exact types for some GraphQL queries and mutations. Add yours in `code
 
 All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
 
+## Issues and backlog
+
+Technical issues are opened for bugs and feature that we decided to work on. For improvements and backlogs that will take more resources, we have the Feature-Entwicklungsprozess with its Trello-Board. The backlog is tracked there.
+
+This method should avoid stale issues and make it possible to keep an "zero inbox".
+
 ## More information
 
 You can find more detailed explanations in our wiki. Currently, we have these pages available:
