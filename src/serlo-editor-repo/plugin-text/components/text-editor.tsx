@@ -15,7 +15,7 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HotKeys } from '../../core'
+import { HotKeys, useScopedStore } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useControls } from '../hooks/use-controls'
@@ -27,6 +27,15 @@ import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
+import {
+  getDocument,
+  getParent,
+  getPlugins,
+  insertChildAfter,
+  mayInsertChild,
+  mayRemoveChild,
+  replace,
+} from '@/serlo-editor-repo/store'
 
 /** @public */
 export type TextEditorProps = EditorPluginProps<
@@ -38,6 +47,7 @@ export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
+  const store = useScopedStore()
   const { state, id, editable, focused } = props
   const { selection, value } = state.value
 
@@ -89,8 +99,100 @@ export function TextEditor(props: TextEditorProps) {
     suggestions.handleHotkeys(event)
     textControls.handleHotkeys(event, editor)
     markdownShortcuts().onKeyDown(event, editor)
-    if (config.controls.includes(TextEditorControl.lists))
+    if (config.controls.includes(TextEditorControl.lists)) {
       slateListsOnKeyDown(editor, event)
+    }
+  }
+
+  function handleEditablePaste(event: React.ClipboardEvent) {
+    const document = getDocument(id)(store.getState())
+    if (!document) return
+
+    const mayInsert = mayInsertChild(id)(store.getState())
+    if (!mayInsert) return
+
+    const parentPluginName = document.plugin
+    const plugins = getPlugins()(store.getState())
+
+    const { clipboardData } = event
+
+    const files = getFilesFromDataTransfer(clipboardData)
+    // TODO: Maybe we don't need to manually handle text pasting
+    const text = clipboardData.getData('text')
+
+    // TODO: Maybe replace this loop with a direct call of image plugin's onFiles function
+    if (files && files.length > 0) {
+      for (const pluginName in plugins) {
+        // Check if the current property is the object's own property,
+        // and not an inherited property (from the prototype)
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in#iterating_own_properties
+        if (!Object.prototype.hasOwnProperty.call(plugins, pluginName)) continue
+        // eslint-disable-next-line @typescript-eslint/unbound-method
+        const { onFiles } = plugins[pluginName]
+        if (typeof onFiles === 'function') {
+          const result = onFiles(files)
+          if (result !== undefined) {
+            handleResult(pluginName, result)
+            return
+          }
+        }
+      }
+    }
+
+    function getFilesFromDataTransfer(clipboardData: DataTransfer) {
+      const items = clipboardData.files
+      const files: File[] = []
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i]
+        if (!item) continue
+        files.push(item)
+      }
+      return files
+    }
+
+    function handleResult(pluginName: string, result: { state?: unknown }) {
+      console.log(pluginName, result)
+      if (mayRemoveChild(id)(store.getState()) && text === '') {
+        store.dispatch(
+          replace({
+            id,
+            plugin: pluginName,
+            state: result.state,
+          })
+        )
+      } else {
+        // const nextSlateState = splitBlockAtSelection(editor)
+        const nextSlateState = {}
+        const parent = getParent(id)(store.getState())
+        if (!parent) return
+
+        setTimeout(() => {
+          // insert new text-plugin with the parts after the current cursor position if any
+          if (nextSlateState) {
+            store.dispatch(
+              insertChildAfter({
+                parent: parent.id,
+                sibling: id,
+                document: {
+                  plugin: parentPluginName,
+                  state: nextSlateState,
+                },
+              })
+            )
+          }
+          store.dispatch(
+            insertChildAfter({
+              parent: parent.id,
+              sibling: id,
+              document: {
+                plugin: pluginName,
+                state: result.state,
+              },
+            })
+          )
+        })
+      }
+    }
   }
 
   return (
@@ -119,6 +221,7 @@ export function TextEditor(props: TextEditorProps) {
         <Editable
           placeholder={config.placeholder}
           onKeyDown={handleEditableKeyDown}
+          onPaste={handleEditablePaste}
           renderElement={renderElementWithFocused(focused)}
           renderLeaf={renderLeafWithConfig(config)}
         />
