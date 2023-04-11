@@ -31,53 +31,58 @@ export function CommentAreaAllThreads() {
   const auth = useAuthentication()
 
   return (
-    <Guard data={commentData} error={error}>
-      <>
-        <StaticInfoPanel icon={faInfoCircle} type="info">
-          {replacePlaceholders(strings.comments.commentsOverviewExplanation, {
-            break: <br />,
-            instance: lang,
-          })}
-        </StaticInfoPanel>
-        {lang === Instance.De && (
-          <div className="mt-[50px] mb-3">
-            <FaIcon icon={faFilter} className="ml-2 mr-3" />
-            Filtern nach
-            <select
-              value={filter}
-              onChange={(e) => {
-                setFilter(e.target.value)
-              }}
-              className="p-3 ml-3 rounded bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100 cursor-pointer"
-            >
-              <option value="">Alle Fächer</option>
-              <option value="czU=">Mathematik</option>
-              <option value="czE3NzQ0">Nachhaltigkeit</option>
-              <option value="czIzMzYy">Biologie</option>
-              <option value="czE4MjMw">Chemie</option>
-              <option value="czQ3ODk5">Informatik</option>
-              <option value="czEwNjA4MQ==">Fächer im Aufbau</option>
-              <option value="czE4MTg4Mw==">Lerntipps</option>
-            </select>
-          </div>
-        )}
-        {auth === null ? (
-          <StaticInfoPanel icon={faWarning} type="warning">
-            <PleaseLogIn noWrapper />
-          </StaticInfoPanel>
-        ) : null}
-        {renderThreads()}
-        <div className="border-t-2 border-truegray-300 mx-side mt-24">
-          {loading ? (
-            <LoadingSpinner noText />
-          ) : (
-            <button className="serlo-button-blue mt-5 mb-12" onClick={loadMore}>
-              {strings.actions.loadMore}
-            </button>
-          )}
+    <>
+      <StaticInfoPanel icon={faInfoCircle} type="info">
+        {replacePlaceholders(strings.comments.commentsOverviewExplanation, {
+          break: <br />,
+          instance: lang,
+        })}
+      </StaticInfoPanel>
+      {lang === Instance.De && (
+        <div className="mt-[50px] mb-3">
+          <FaIcon icon={faFilter} className="ml-2 mr-3" />
+          Filtern nach
+          <select
+            value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value)
+            }}
+            className="p-3 ml-3 rounded bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100 cursor-pointer"
+          >
+            <option value="">Alle Fächer</option>
+            <option value="czU=">Mathematik</option>
+            <option value="czE3NzQ0">Nachhaltigkeit</option>
+            <option value="czIzMzYy">Biologie</option>
+            <option value="czE4MjMw">Chemie</option>
+            <option value="czQ3ODk5">Informatik</option>
+            <option value="czEwNjA4MQ==">Fächer im Aufbau</option>
+            <option value="czE4MTg4Mw==">Lerntipps</option>
+          </select>
         </div>
-      </>
-    </Guard>
+      )}
+      <Guard data={commentData} error={error}>
+        <>
+          {auth === null ? (
+            <StaticInfoPanel icon={faWarning} type="warning">
+              <PleaseLogIn noWrapper />
+            </StaticInfoPanel>
+          ) : null}
+          {renderThreads()}
+          <div className="border-t-2 border-truegray-300 mx-side mt-24">
+            {loading ? (
+              <LoadingSpinner noText />
+            ) : (
+              <button
+                className="serlo-button-blue mt-5 mb-12"
+                onClick={loadMore}
+              >
+                {strings.actions.loadMore}
+              </button>
+            )}
+          </div>
+        </>
+      </Guard>
+    </>
   )
 
   function renderThreads() {
