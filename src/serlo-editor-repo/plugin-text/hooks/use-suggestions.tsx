@@ -19,7 +19,6 @@ const hotKeysMap = {
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
-  // TODO: If we keep the hook call in the component, remove this duplicate call
   const store = useScopedStore()
   const { text, id, editable, focused } = args
 
