@@ -4,6 +4,8 @@
 
 Next.js app that serves [serlo.org](https://serlo.org).
 
+Lars test
+
 ## Overview
 
 The frontend turns the data it receives from our [GraphQL API](https://github.com/serlo/api.serlo.org) into pretty views.
