@@ -141,50 +141,24 @@ export function TextEditor(props: TextEditorProps) {
     const parentPluginName = document.plugin
     const plugins = getPlugins()(store.getState())
 
-    const { clipboardData } = event
-
-    const files = getFilesFromDataTransfer(clipboardData)
-    const text = clipboardData.getData('text')
-
-    // Currently, only the image plugin has the `onFiles` method
-    // which handles the copy/pasting of an image
-    // TODO: Maybe replace this loop with a direct call of image plugin's onFiles method
-    if (files && files.length > 0) {
-      for (const pluginName in plugins) {
-        // Check if the current property is the object's own property,
-        // and not an inherited property (from the prototype)
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in#iterating_own_properties
-        if (!Object.prototype.hasOwnProperty.call(plugins, pluginName)) continue
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        const { onFiles } = plugins[pluginName]
-        if (typeof onFiles === 'function') {
-          const result = onFiles(files)
-          if (result !== undefined) {
-            handleResult(pluginName, result)
-            return
-          }
-        }
+    // Handle pasted images
+    const files = getFilesFromDataTransfer(event.clipboardData)
+    const hasFiles = files && files.length > 0
+    if (hasFiles) {
+      const result = plugins.image?.onFiles?.(files)
+      if (result !== undefined) {
+        handleResult('image', result)
+        return
       }
     }
 
-    // Currently, only the video plugin has the `onText` method
-    // which handles the copy/pasting of a video URL
-    // TODO: Maybe replace this loop with a direct call of video plugin's onText method
+    // Hande pasted video URLs
+    const text = event.clipboardData.getData('text')
     if (text) {
-      for (const key in plugins) {
-        // Check if the current property is the object's own property,
-        // and not an inherited property (from the prototype)
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in#iterating_own_properties
-        if (!Object.prototype.hasOwnProperty.call(plugins, key)) continue
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        const { onText } = plugins[key]
-        if (typeof onText === 'function') {
-          const result = onText(text)
-          if (result !== undefined) {
-            handleResult(key, result)
-            return
-          }
-        }
+      const result = plugins.video?.onText?.(text)
+      if (result !== undefined) {
+        handleResult('video', result)
+        return
       }
     }
 
