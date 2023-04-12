@@ -76,7 +76,7 @@
     "react-markdown": "^6.0.3",
     "react-mathquill": "Entkenntnis/tmp-react-mathquill",
     "react-modal": "^3.0.0",
-    "react-notify-toast": "^0.5.1",
+    "react-notify-toast": "Entkenntnis/tmp-react-notify-toast",
     "react-redux": "^7.2.6",
     "react-resizable": "^3.0.0",
     "react-syntax-highlighter": "^15.5.0",
