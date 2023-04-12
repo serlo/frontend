@@ -1,12 +1,6 @@
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import { isKeyHotkey } from 'is-hotkey'
-import React, {
-  createElement,
-  useRef,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import React, { createElement, useRef, useMemo, useState } from 'react'
 import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
 import {
   Editable,
@@ -69,7 +63,7 @@ export function TextEditor(props: TextEditorProps) {
   const previousValue = useRef(value)
   const previousSelection = useRef(selection)
 
-  useEffect(() => {
+  useMemo(() => {
     // The selection can only be null when the text plugin is initialized
     // (In this case an update of the slate editor is not necessary)
     if (!selection) return
