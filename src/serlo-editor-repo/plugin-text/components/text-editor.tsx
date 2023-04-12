@@ -16,18 +16,28 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HotKeys } from '../../core'
+import { HotKeys, useScopedStore } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useControls } from '../hooks/use-controls'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { TextEditorConfig, TextEditorControl, TextEditorState } from '../types'
+import { sliceNodesAfterSelection } from '../utils/document'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
+import {
+  getDocument,
+  getParent,
+  getPlugins,
+  insertChildAfter,
+  mayInsertChild,
+  mayRemoveChild,
+  replace,
+} from '@/serlo-editor-repo/store'
 
 /** @public */
 export type TextEditorProps = EditorPluginProps<
@@ -39,6 +49,7 @@ export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
+  const store = useScopedStore()
   const { state, id, editable, focused } = props
   const { selection, value } = state.value
 
@@ -115,8 +126,77 @@ export function TextEditor(props: TextEditorProps) {
     suggestions.handleHotkeys(event)
     textControls.handleHotkeys(event, editor)
     markdownShortcuts().onKeyDown(event, editor)
-    if (config.controls.includes(TextEditorControl.lists))
+    if (config.controls.includes(TextEditorControl.lists)) {
       slateListsOnKeyDown(editor, event)
+    }
+  }
+
+  function handleEditablePaste(event: React.ClipboardEvent) {
+    const document = getDocument(id)(store.getState())
+    if (!document) return
+
+    const mayInsert = mayInsertChild(id)(store.getState())
+    if (!mayInsert) return
+
+    const parentPluginName = document.plugin
+    const plugins = getPlugins()(store.getState())
+
+    // Handle pasted images
+    const files = Array.from(event.clipboardData.files)
+    if (files?.length > 0) {
+      const imagePluginState = plugins.image?.onFiles?.(files)
+      if (imagePluginState !== undefined) {
+        insertPlugin('image', imagePluginState)
+        return
+      }
+    }
+
+    // Handle pasted video URLs
+    const text = event.clipboardData.getData('text')
+    if (text) {
+      const videoPluginState = plugins.video?.onText?.(text)
+      if (videoPluginState !== undefined) {
+        event.preventDefault()
+        insertPlugin('video', videoPluginState)
+        return
+      }
+    }
+
+    function insertPlugin(plugin: string, { state }: { state?: unknown }) {
+      const pluginAllowsRemovingChild = mayRemoveChild(id)(store.getState())
+      const isEditorEmpty = Node.string(editor) === ''
+      if (pluginAllowsRemovingChild && isEditorEmpty) {
+        store.dispatch(replace({ id, plugin, state }))
+        return
+      }
+
+      const parent = getParent(id)(store.getState())
+      if (!parent) return
+
+      const slicedNodes = sliceNodesAfterSelection(editor)
+
+      setTimeout(() => {
+        if (slicedNodes) {
+          store.dispatch(
+            insertChildAfter({
+              parent: parent.id,
+              sibling: id,
+              document: {
+                plugin: parentPluginName,
+                state: slicedNodes,
+              },
+            })
+          )
+        }
+        store.dispatch(
+          insertChildAfter({
+            parent: parent.id,
+            sibling: id,
+            document: { plugin, state },
+          })
+        )
+      })
+    }
   }
 
   return (
@@ -145,6 +225,7 @@ export function TextEditor(props: TextEditorProps) {
         <Editable
           placeholder={config.placeholder}
           onKeyDown={handleEditableKeyDown}
+          onPaste={handleEditablePaste}
           renderElement={renderElementWithFocused(focused)}
           renderLeaf={renderLeafWithConfig(config)}
         />
