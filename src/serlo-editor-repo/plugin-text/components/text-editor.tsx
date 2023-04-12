@@ -152,11 +152,12 @@ export function TextEditor(props: TextEditorProps) {
       }
     }
 
-    // Hande pasted video URLs
+    // Handle pasted video URLs
     const text = event.clipboardData.getData('text')
     if (text) {
       const result = plugins.video?.onText?.(text)
       if (result !== undefined) {
+        event.preventDefault()
         handleResult('video', result)
         return
       }
