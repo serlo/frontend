@@ -3506,7 +3506,7 @@ __metadata:
     react-markdown: ^6.0.3
     react-mathquill: Entkenntnis/tmp-react-mathquill
     react-modal: ^3.0.0
-    react-notify-toast: ^0.5.1
+    react-notify-toast: Entkenntnis/tmp-react-notify-toast
     react-redux: ^7.2.6
     react-resizable: ^3.0.0
     react-syntax-highlighter: ^15.5.0
@@ -11850,16 +11850,16 @@ react-mathquill@Entkenntnis/tmp-react-mathquill:
   languageName: node
   linkType: hard
 
-"react-notify-toast@npm:^0.5.1":
+react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 0.5.1
-  resolution: "react-notify-toast@npm:0.5.1"
+  resolution: "react-notify-toast@https://github.com/Entkenntnis/tmp-react-notify-toast.git#commit=9315fa4d6076403aab19cb3463f3ede7e80ff622"
   dependencies:
     object-assign: ^4.0.0
     prop-types: ^15.5.8
   peerDependencies:
-    react: ^0.14.7 || ^15.0.0 || ^16.0.0
-    react-dom: ^0.14.7 || ^15.0.0 || ^16.0.0
-  checksum: 810fdc23cbedac8026fbef6aef90f7464131f4edd4c2195ca7dd3f958750c8a3f0412a925211efe5c601352a7a3686e2e568596fb707e9020b07cf6eaf2b3b23
+    react: ^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^0.14.7 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: ed764b1a1644670f3d5a320ccf764fadc89f86b689757bbb346ee053e6b0cab9c624ce56cc02836af2a3ba15dc57b6998c3d015b6f51183f13e6942e79964854
   languageName: node
   linkType: hard
 
