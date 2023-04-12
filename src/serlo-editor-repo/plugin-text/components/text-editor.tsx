@@ -201,6 +201,7 @@ export function TextEditor(props: TextEditorProps) {
 
   return (
     <HotKeys {...hotKeysProps}>
+      {/* Bugfix note: value is correct here after undoing pasting an image. However, handleEditorChange is not called. */}
       <Slate editor={editor} value={value} onChange={handleEditorChange}>
         {editable && focused && (
           <HoveringToolbar
@@ -244,6 +245,8 @@ function renderElementWithFocused(focused: boolean) {
   return function renderElement(props: RenderElementProps) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { element, attributes, children } = props
+
+    // Bugfix note: Here, children[0].props.text is missing part B (`two`) of the splitted text after undoing pasting an image. 
 
     if (element.type === 'h') {
       return createElement(`h${element.level}`, attributes, <>{children}</>)
