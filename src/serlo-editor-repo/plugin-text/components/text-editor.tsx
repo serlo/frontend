@@ -142,9 +142,8 @@ export function TextEditor(props: TextEditorProps) {
     const plugins = getPlugins()(store.getState())
 
     // Handle pasted images
-    const files = getFilesFromDataTransfer(event.clipboardData)
-    const hasFiles = files && files.length > 0
-    if (hasFiles) {
+    const files = Array.from(event.clipboardData.files)
+    if (files?.length > 0) {
       const result = plugins.image?.onFiles?.(files)
       if (result !== undefined) {
         handleResult('image', result)
@@ -161,17 +160,6 @@ export function TextEditor(props: TextEditorProps) {
         handleResult('video', result)
         return
       }
-    }
-
-    function getFilesFromDataTransfer(clipboardData: DataTransfer) {
-      const items = clipboardData.files
-      const files: File[] = []
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i]
-        if (!item) continue
-        files.push(item)
-      }
-      return files
     }
 
     function handleResult(pluginName: string, result: { state?: unknown }) {
