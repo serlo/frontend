@@ -144,9 +144,9 @@ export function TextEditor(props: TextEditorProps) {
     // Handle pasted images
     const files = Array.from(event.clipboardData.files)
     if (files?.length > 0) {
-      const result = plugins.image?.onFiles?.(files)
-      if (result !== undefined) {
-        handleResult('image', result)
+      const imagePluginState = plugins.image?.onFiles?.(files)
+      if (imagePluginState !== undefined) {
+        insertPlugin('image', imagePluginState)
         return
       }
     }
@@ -154,23 +154,19 @@ export function TextEditor(props: TextEditorProps) {
     // Handle pasted video URLs
     const text = event.clipboardData.getData('text')
     if (text) {
-      const result = plugins.video?.onText?.(text)
-      if (result !== undefined) {
+      const videoPluginState = plugins.video?.onText?.(text)
+      if (videoPluginState !== undefined) {
         event.preventDefault()
-        handleResult('video', result)
+        insertPlugin('video', videoPluginState)
         return
       }
     }
 
-    function handleResult(pluginName: string, result: { state?: unknown }) {
-      if (mayRemoveChild(id)(store.getState()) && Node.string(editor) === '') {
-        store.dispatch(
-          replace({
-            id,
-            plugin: pluginName,
-            state: result.state,
-          })
-        )
+    function insertPlugin(plugin: string, { state }: { state?: unknown }) {
+      const pluginAllowsRemovingChild = mayRemoveChild(id)(store.getState())
+      const isEditorEmpty = Node.string(editor) === ''
+      if (pluginAllowsRemovingChild && isEditorEmpty) {
+        store.dispatch(replace({ id, plugin, state }))
         return
       }
 
@@ -196,10 +192,7 @@ export function TextEditor(props: TextEditorProps) {
           insertChildAfter({
             parent: parent.id,
             sibling: id,
-            document: {
-              plugin: pluginName,
-              state: result.state,
-            },
+            document: { plugin, state },
           })
         )
       })
