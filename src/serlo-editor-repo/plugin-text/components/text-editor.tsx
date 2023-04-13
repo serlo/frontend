@@ -16,7 +16,12 @@ import { EditorPluginProps } from '../../plugin'
 import { useControls } from '../hooks/use-controls'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import { TextEditorConfig, TextEditorControl, TextEditorState } from '../types'
+import {
+  TextEditorConfig,
+  TextEditorControl,
+  TextEditorPluginConfig,
+  TextEditorState,
+} from '../types'
 import { sliceNodesAfterSelection } from '../utils/document'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
@@ -220,7 +225,7 @@ export function TextEditor(props: TextEditorProps) {
           placeholder={config.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
-          renderElement={renderElementWithFocused(focused)}
+          renderElement={renderElementWithEditorContext(config, focused)}
           renderLeaf={renderLeafWithConfig(config)}
         />
       </Slate>
@@ -234,7 +239,10 @@ export function TextEditor(props: TextEditorProps) {
   )
 }
 
-function renderElementWithFocused(focused: boolean) {
+function renderElementWithEditorContext(
+  config: TextEditorPluginConfig,
+  focused: boolean
+) {
   return function renderElement(props: RenderElementProps) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { element, attributes, children } = props
@@ -266,6 +274,7 @@ function renderElementWithFocused(focused: boolean) {
     if (element.type === 'math') {
       return (
         <MathElement
+          config={config}
           element={element}
           attributes={attributes}
           focused={focused}
