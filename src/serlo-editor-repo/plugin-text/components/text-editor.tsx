@@ -1,9 +1,16 @@
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
-import { isKeyHotkey } from 'is-hotkey'
-import React, { createElement, useRef, useMemo, useState } from 'react'
+import isHotkey from 'is-hotkey'
+import React, {
+  createElement,
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+} from 'react'
 import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
 import {
   Editable,
+  ReactEditor,
   RenderElementProps,
   RenderLeafProps,
   Slate,
@@ -81,6 +88,18 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [editor, selection, value])
 
+  useEffect(() => {
+    if (focused === false) return
+    // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
+    // See: https://stackoverflow.com/a/61353519
+    setTimeout(() => {
+      Transforms.select(editor, { offset: 0, path: [0, 0] })
+      ReactEditor.focus(editor)
+    })
+    // Editor should be manually focused only on first render
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   function handleEditorChange(newValue: Descendant[]) {
     const isAstChange = editor.operations.some(
       ({ type }) => type !== 'set_selection'
@@ -97,12 +116,10 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
-    /*
-      Special handler for links. If you move right and end up at the right edge of a link,
-      this handler unselects the link, so you can write normal text behind it.
-    */
     if (editor.selection && Range.isCollapsed(editor.selection)) {
-      if (isKeyHotkey('right', event.nativeEvent)) {
+      // Special handler for links. If you move right and end up at the right edge of a link,
+      // this handler unselects the link, so you can write normal text behind it.
+      if (isHotkey('right', event)) {
         const { path, offset } = editor.selection.focus
         const node = Node.get(editor, path)
         const parent = Node.parent(editor, path)
@@ -119,6 +136,36 @@ export function TextEditor(props: TextEditorProps) {
             }
           }
         }
+      }
+
+      // Create a new Slate instance on enter
+      if (isHotkey('enter', event)) {
+        const document = getDocument(id)(store.getState())
+        if (!document) return
+
+        const mayInsert = mayInsertChild(id)(store.getState())
+        if (!mayInsert) return
+
+        const parent = getParent(id)(store.getState())
+        if (!parent) return
+
+        event.preventDefault()
+
+        const slicedNodes = sliceNodesAfterSelection(editor)
+        setTimeout(() => {
+          if (slicedNodes) {
+            store.dispatch(
+              insertChildAfter({
+                parent: parent.id,
+                sibling: id,
+                document: {
+                  plugin: document.plugin,
+                  state: slicedNodes,
+                },
+              })
+            )
+          }
+        })
       }
     }
 
