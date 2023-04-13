@@ -6,7 +6,6 @@ import {
   InternalAction,
   setPartialState,
 } from './actions'
-import { clipboardReducer } from './clipboard/reducer'
 import { documentsReducer } from './documents/reducer'
 import { focusReducer } from './focus/reducer'
 import { createActionWithoutPayload } from './helpers'
@@ -61,7 +60,6 @@ function scopedReducer(
   action: InternalAction
 ) {
   return {
-    clipboard: clipboardReducer(action, scopeState),
     documents: documentsReducer(action, scopeState),
     focus: focusReducer(action, scopeState),
     history: historyReducer(action, scopeState),

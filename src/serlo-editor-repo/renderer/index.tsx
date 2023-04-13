@@ -24,7 +24,6 @@ export function Renderer<K extends string = string>(props: RendererProps<K>) {
               documents: getDocuments(),
               focus: null,
               root: 'root',
-              clipboard: [],
               history: {
                 undoStack: [],
                 redoStack: [],
