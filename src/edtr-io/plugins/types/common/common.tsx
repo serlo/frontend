@@ -253,6 +253,6 @@ export const HeaderInput = styled.input({
   borderBottom: '2px solid transparent',
   '&:focus': {
     outline: 'none',
-    borderColor: '#007ec1',
+    borderColor: '#0076b9',
   },
 })

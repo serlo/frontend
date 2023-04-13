@@ -1022,7 +1022,7 @@ Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
 <p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #0076b9 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Dein Community-Support 💚</p>`
     },
     invalid: {

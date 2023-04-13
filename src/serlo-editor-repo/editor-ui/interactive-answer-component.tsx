@@ -12,7 +12,7 @@ const AddButtonComponent = styled.button({
   minHeight: '50px',
   border: '2px solid lightgrey',
   outline: 'none',
-  '&:hover': { border: '3px solid #007ec1', color: '#007ec1' },
+  '&:hover': { border: '3px solid #0076b9', color: '#0076b9' },
 })
 
 /**
@@ -54,8 +54,8 @@ const RemoveButton = styled.button({
   float: 'right',
   transform: 'translate(50%, -40%)',
   '&:hover': {
-    border: '3px solid #007ec1',
-    color: '#007ec1',
+    border: '3px solid #0076b9',
+    color: '#0076b9',
   },
 })
 
@@ -78,13 +78,13 @@ const FramedContainer = styled.div<{ focused: boolean }>(({ focused }) => {
     },
   }
   const focusedBorders = {
-    border: '3px solid #007ec1',
+    border: '3px solid #0076b9',
     [`${RemoveButton}`]: {
-      border: '3px solid #007ec1',
-      color: '#007ec1',
+      border: '3px solid #0076b9',
+      color: '#0076b9',
     },
     [`${FeedbackField}`]: {
-      borderTop: '2px solid #007ec1',
+      borderTop: '2px solid #0076b9',
     },
   }
 
@@ -105,15 +105,15 @@ const Container = styled.div<{ isRadio: boolean; checked: boolean }>(
       cursor: 'pointer',
       border: checked
         ? isRadio
-          ? '5px solid #007ec1'
-          : '2px solid #007ec1'
+          ? '5px solid #0076b9'
+          : '2px solid #0076b9'
         : '2px solid lightgray',
       borderRadius: isRadio ? '50%' : '15%',
       width: '20px',
       height: '20px',
       display: 'inline-block',
       verticalAlign: 'middle',
-      backgroundColor: checked && !isRadio ? '#007ec1' : 'white',
+      backgroundColor: checked && !isRadio ? '#0076b9' : 'white',
     }
   }
 )

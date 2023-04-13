@@ -1021,7 +1021,7 @@ Tu Apoyo-a-la-Comunidad💚      `,
       body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
 <p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #0076b9 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Tu Apoyo-a-la-Comunidad💚</p>`
     },
     invalid: {
