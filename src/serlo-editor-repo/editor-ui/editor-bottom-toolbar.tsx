@@ -1,14 +1,7 @@
-import { StyledComponent } from 'styled-components'
-
 import { EditorThemeProps, styled, useEditorUiTheme } from '../ui'
 
 /** @public */
-// TODO: This is a workaround until API extractor supports import() types, see https://github.com/microsoft/rushstack/pull/1916
-export const EditorBottomToolbar: StyledComponent<
-  'div',
-  never,
-  EditorThemeProps
-> = styled.div<EditorThemeProps>(() => {
+export const EditorBottomToolbar = styled.div<EditorThemeProps>(() => {
   const theme = useEditorUiTheme('bottomToolbar', (theme) => {
     return {
       backgroundColor: theme.backgroundColor,

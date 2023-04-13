@@ -18,10 +18,9 @@ export const ScopeContext = React.createContext<{
 }>({ scope: '' })
 
 /** @public */
-export const EditorContext = React.createContext<
-  // TODO: This is a workaround until API extractor supports import() types, see https://github.com/microsoft/rushstack/pull/1916
-  ReactReduxContextValue<State>
->(undefined as unknown as ReactReduxContextValue<State>)
+export const EditorContext = React.createContext(
+  undefined as unknown as ReactReduxContextValue<State>
+)
 
 /** @public */
 export const ErrorContext = React.createContext<
