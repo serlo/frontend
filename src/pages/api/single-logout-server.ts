@@ -1,9 +1,7 @@
-export default function handler() {
-  const res = new Response('test')
-  res.headers.append('Set-Cookie', 'ory_kratos_session=test; HttpOnly; Secure;')
-  return res
-}
+import { cookies } from 'next/headers'
 
-export const config = {
-  runtime: 'edge',
+export default function Page() {
+  const cookieStore = cookies()
+  console.log(JSON.stringify(cookieStore))
+  return '...'
 }
