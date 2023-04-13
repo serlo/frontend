@@ -1,7 +1,10 @@
-import { cookies } from 'next/headers'
+import type { NextRequest } from 'next/server'
 
-export default function Page() {
-  const cookieStore = cookies()
-  console.log(JSON.stringify(cookieStore))
-  return '...'
+export const config = {
+  runtime: 'edge',
+}
+
+export default async function handler(req: NextRequest) {
+  const cookies = req.cookies.getAll()
+  return new Response(JSON.stringify(cookies))
 }
