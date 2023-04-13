@@ -23,7 +23,12 @@ export function InlineInput(props: {
 }) {
   const { onChange, value, placeholder } = props
 
-  const initialValue = useMemo(() => deserialize(value), [])
+  const initialValue = useMemo(
+    () => deserialize(value),
+    // initialValue should not be recalculated on rerender
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
 
   const [editor] = useState(() => withReact(createEditor()))
 
