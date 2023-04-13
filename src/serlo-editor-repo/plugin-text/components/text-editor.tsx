@@ -1,6 +1,12 @@
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import { isKeyHotkey } from 'is-hotkey'
-import React, { createElement, useRef, useMemo, useState } from 'react'
+import React, {
+  createElement,
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+} from 'react'
 import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
 import {
   Editable,
@@ -8,6 +14,7 @@ import {
   RenderLeafProps,
   Slate,
   withReact,
+  ReactEditor,
 } from 'slate-react'
 
 import { HotKeys, useScopedStore } from '../../core'
@@ -75,6 +82,15 @@ export function TextEditor(props: TextEditorProps) {
       editor.children = value
     }
   }, [editor, selection, value])
+
+  useEffect(() => {
+    if (focused === false) return
+    // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
+    // See: https://stackoverflow.com/a/61353519
+    setTimeout(() => {
+      ReactEditor.focus(editor)
+    })
+  }, [focused])
 
   function handleEditorChange(newValue: Descendant[]) {
     const isAstChange = editor.operations.some(
