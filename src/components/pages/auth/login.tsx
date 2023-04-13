@@ -9,6 +9,7 @@ import {
   registrationUrl,
   verificationUrl,
   recoveryUrl,
+  changeButtonTypeOfSSOProvider,
 } from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
@@ -57,15 +58,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
-    // Currenty not in use
-    if (flowId && typeof flowId === 'string') {
-      kratos
-        .getLoginFlow({ id: flowId })
-        .then(({ data }) => setFlow(data))
-        .catch(handleFlowError(router, FlowType.login, setFlow, strings))
-      return
-    }
-
     // Make sure we only init the flow once
     if (initStarted) {
       return
@@ -80,7 +72,20 @@ export function Login({ oauth }: { oauth?: boolean }) {
           aal: aal ? String(aal) : undefined,
           returnTo: returnTo ? String(returnTo) : undefined,
         })
-        setFlow(response.data)
+
+        const data = {
+          ...response.data,
+          ui: {
+            ...response.data.ui,
+            nodes: response.data.ui.nodes
+              .map(changeButtonTypeOfSSOProvider)
+              .sort((a, b) =>
+                a.group !== 'oidc' && b.group === 'oidc' ? -1 : 1
+              ),
+          },
+        }
+
+        setFlow(data)
       } catch (e) {
         const error = e as AxiosError // is
         const data = error.response?.data as { error: { id: string } }

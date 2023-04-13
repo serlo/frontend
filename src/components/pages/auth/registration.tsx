@@ -1,10 +1,18 @@
-import { RegistrationFlow, UpdateRegistrationFlowBody } from '@ory/client'
+import {
+  RegistrationFlow,
+  UpdateRegistrationFlowBody,
+  UiNodeInputAttributes,
+} from '@ory/client'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 
-import { verificationUrl, VALIDATION_ERROR_TYPE } from './utils'
+import {
+  verificationUrl,
+  VALIDATION_ERROR_TYPE,
+  changeButtonTypeOfSSOProvider,
+} from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
 import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
@@ -14,6 +22,27 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+
+enum SortOrderInputFields {
+  'csrf_token',
+  'traits.email',
+  'traits.username',
+  'password',
+  'traits.motivation',
+  'traits.submit',
+
+  // Is this still in use?
+  'traits.description',
+
+  // Is this still in use?
+  'traits.profile_image',
+
+  // Is this still in use?
+  'traits.language',
+  'traits.interest',
+  'method',
+  'provider',
+}
 
 export function Registration() {
   const [isConsentCheckboxChecked, setIsConsentCheckboxChecked] =
@@ -32,9 +61,33 @@ export function Registration() {
 
   const reorderAndSetFlow = (origFlow?: RegistrationFlow) => {
     if (!origFlow) return
-    const { nodes: n } = origFlow.ui
-    origFlow.ui.nodes = [n[0], n[1], n[3], n[2], ...n.slice(4)]
-    setFlow(origFlow)
+    const reorderedNodes = origFlow.ui.nodes
+      .map(changeButtonTypeOfSSOProvider)
+      .sort((nodeA, nodeB) => {
+        const aAttributes = nodeA.attributes as UiNodeInputAttributes
+        const bAttributes = nodeB.attributes as UiNodeInputAttributes
+
+        const aIndex =
+          SortOrderInputFields[
+            aAttributes.name as keyof typeof SortOrderInputFields
+          ]
+        const bIndex =
+          SortOrderInputFields[
+            bAttributes.name as keyof typeof SortOrderInputFields
+          ]
+        if (aIndex === undefined || bIndex === undefined) {
+          // eslint-disable-next-line no-console
+          console.warn('Unexpected name attribute value found')
+          return 0
+        }
+
+        return aIndex - bIndex
+      })
+    const newFlow = {
+      ...origFlow,
+      ui: { ...origFlow.ui, nodes: reorderedNodes },
+    }
+    setFlow(newFlow)
   }
 
   useEffect(() => {
