@@ -8,6 +8,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/frontend-node-types'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 import { hasVisibleContent } from '@/helper/has-visible-content'
 import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -105,6 +106,13 @@ export function ScMcExercise({
           )}
           onClick={() => {
             setShowFeedback(true)
+            exerciseSubmission({
+              path: window.location.href,
+              entityId: 123,
+              revisionId: 123,
+              result: 'correct',
+              type: 'sc',
+            })
           }}
         >
           {selected !== undefined
