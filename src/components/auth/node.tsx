@@ -64,7 +64,12 @@ export function Node({
           />
         )
 
-      case 'checkbox':
+      case 'checkbox': {
+        triggerSentry({
+          message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
+        })
+        return null
+      }
       case 'button': {
         const fallbackLabel = 'Could not find translation'
         const label = node.meta.label?.id
