@@ -76,7 +76,7 @@ export function CommentAreaAllThreads() {
             </StaticInfoPanel>
           ) : null}
           {renderThreads()}
-          <div className="border-t-2 border-truegray-300 mx-side mt-24">
+          <div className="border-t-2 border-truegray-300 mx-side mt-24 h-24">
             {loading ? (
               <LoadingSpinner noText />
             ) : (
@@ -94,6 +94,14 @@ export function CommentAreaAllThreads() {
   )
 
   function renderThreads() {
+    if ((!commentData || commentData.length === 0) && filter) {
+      return (
+        <div className="serlo-p mt-16 -mb-8">
+          Keine Kommentare im aktuellen Zeitraum in diesem Fach.
+        </div>
+      )
+    }
+
     return commentData?.map((thread) => {
       const { __typename } = thread.object
       const href = thread.object.alias
