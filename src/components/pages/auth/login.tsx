@@ -2,6 +2,7 @@ import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { changeButtonTypeOfSSOProvider } from './ory-transforms'
 import {
   filterUnwantedRedirection,
   loginUrl,
@@ -9,7 +10,6 @@ import {
   registrationUrl,
   verificationUrl,
   recoveryUrl,
-  changeButtonTypeOfSSOProvider,
 } from './utils'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
