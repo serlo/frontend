@@ -66,13 +66,22 @@ export function Node({
 
       case 'checkbox':
       case 'button': {
+        const fallbackLabel = 'Could not find translation'
         const label = node.meta.label?.id
           ? getKratosMessageString(
               node.meta.label.id,
               strings.auth.messages,
-              'Undefined'
+              node.meta.label?.text || fallbackLabel
             )
-          : 'Could not find translation'
+          : fallbackLabel
+        if (!label || label === 'Could not find translation') {
+          triggerSentry({
+            message: `kratos: tried to render input node with a missing translation: ${
+              node.meta.label?.id || node.meta.label?.text || ''
+            }`,
+          })
+          return null
+        }
         return (
           <div className="mt-10">
             <hr />
@@ -91,7 +100,7 @@ export function Node({
                   className={clsx('animate-spin-slow')}
                 />
               ) : (
-                (label as string)
+                label
               )}
             </button>
           </div>
