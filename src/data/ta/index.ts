@@ -62,8 +62,8 @@ export const instanceData = {
       threads: 'Threads',
       subject: "பாடம்",
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy',
-      content: 'Content'
+      privacyPolicy: "தனியுரிமைக் கொள்கை",
+      content: "உட்பொருள்"
     },
     pageTitles: {
       notifications: 'Your Notifications',
@@ -95,17 +95,17 @@ export const instanceData = {
     },
     editOrAdd: {
       button: "திருத்தம்",
-      addNewEntities: 'Add new content',
+      addNewEntities: "புதிய உள்ளடக்கம் சேர்க்கவும்",
       addNewExercises: 'Add new exercises',
       editExercises: 'Edit exercises',
       unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
-        loginButton: 'Login now',
+        loginButton: "இப்போது உள்நுழைக",
         registerButton: 'Register new account',
         psText: 'You can find out in what ways you can contribute %link%.',
-        psLinkText: 'here'
+        psLinkText: "இங்கே"
       }
     },
     license: {
@@ -127,9 +127,9 @@ export const instanceData = {
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
-      picture: 'Picture',
+      picture: "படம்",
       previewImage: 'Preview Image',
-      imageAltFallback: 'Image',
+      imageAltFallback: "படம்",
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
@@ -148,7 +148,7 @@ export const instanceData = {
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Solution Strategy',
-        showSolution: 'Show solution',
+        showSolution: "விடையைக் காட்டு",
         hideSolution: "விடையை மறைக்கவும்"
       },
       boxTypes: {
@@ -179,7 +179,7 @@ export const instanceData = {
       twingle: 'Load Donation Form'
     },
     comments: {
-      question: 'Do you have a question?',
+      question: "உங்களுக்கு கேள்வி உள்ளதா?",
       commentsOne: "கருத்து",
       commentsMany: "கருத்துகள்",
       submit: "இணைக்க",
@@ -198,9 +198,9 @@ export const instanceData = {
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
       commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
-      edit: 'Edit comment',
+      edit: "திருத்து",
       cancelEdit: 'Cancel',
-      saveEdit: 'Save'
+      saveEdit: "சேமி"
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -227,17 +227,17 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: 'Changes',
-      author: 'Author',
-      date: 'Date',
-      edit: 'Edit',
+      author: "எழுத்தாளர்",
+      date: "தேதி",
+      edit: "திருத்தம்",
       editLabel: 'Create a new revision starting from this specific revision',
-      view: 'Show',
+      view: "காட்டு",
       viewLabel: 'Show this revision',
       status: 'Status'
     },
     unrevisedRevisions: {
       help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
-      reviewers: 'Reviewers',
+      reviewers: "விமர்சகர்கள்",
       reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
       help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
       help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
@@ -246,14 +246,14 @@ export const instanceData = {
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
       guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
-      subjectLinks: 'To Subjects',
+      subjectLinks: "படங்கள்",
       showMoreEntities: 'Show all in %subject%',
       showMoreRevisions: 'Show %number% more…',
-      newLabelText: 'new',
+      newLabelText: "புதிய",
       newLabelNote: 'This is a new entity',
       wipLabelText: 'wip',
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
-      newAuthorText: 'new author',
+      newAuthorText: "புதிய எழுத்தாளர்",
       newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
       noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
     },
@@ -312,8 +312,8 @@ export const instanceData = {
     },
     notices: {
       welcome: '👋 Welcome %username%!',
-      bye: '👋 See you soon!',
-      alreadyLoggedIn: '👋 Welcome back',
+      bye: "👋 விரைவில் சந்திப்போம்!",
+      alreadyLoggedIn: "👋 மீண்டும் வருக",
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -325,7 +325,7 @@ export const instanceData = {
       unknownProblem: 'Sorry, there was a problem loading the content, please try again later.'
     },
     auth: {
-      pleaseLogInLink: 'Please log in',
+      pleaseLogInLink: "நீங்கள் உள்நுழைய வேண்டும்!",
       pleaseLogInText: 'to use this feature.',
       register: {
         registerTitle: 'Register your Serlo Account',
@@ -340,15 +340,15 @@ export const instanceData = {
         alreadyDone: 'You are logged in, so you have already verified your email😊.'
       },
       settings: {
-        title: 'Change your password',
+        title: "உங்கள் கடவுச்சொல்லை மாற்ற",
         instruction: 'Insert your new password.'
       },
       loggingOut: 'Logging you out …',
       login: {
         confirmAction: 'Confirm Action',
         signIn: 'Sign in to your Account',
-        logOut: 'Log out',
-        newHere: 'Are you new here?',
+        logOut: "வெளியேறு",
+        newHere: "நீங்கள் இங்கு புதியவரா?",
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
         forgotLinkText: 'forget your password',
