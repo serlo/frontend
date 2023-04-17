@@ -22,6 +22,7 @@ module.exports = {
           400: '#8EC5E2',
           500: '#51A5D1',
           600: brand,
+          700: '#0076b9', // slighly darker brand blue for better color contrast with white (for smaller text) and light blue.
         },
         brandgreen: {
           DEFAULT: brandGreen,
