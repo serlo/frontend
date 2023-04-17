@@ -29,7 +29,10 @@ import {
   TextEditorPluginConfig,
   TextEditorState,
 } from '../types'
-import { sliceNodesAfterSelection } from '../utils/document'
+import {
+  emptyDocumentFactory,
+  sliceNodesAfterSelection,
+} from '../utils/document'
 import { markdownShortcuts } from '../utils/markdown'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -157,18 +160,16 @@ export function TextEditor(props: TextEditorProps) {
 
         const slicedNodes = sliceNodesAfterSelection(editor)
         setTimeout(() => {
-          if (slicedNodes) {
-            store.dispatch(
-              insertChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes,
-                },
-              })
-            )
-          }
+          store.dispatch(
+            insertChildAfter({
+              parent: parent.id,
+              sibling: id,
+              document: {
+                plugin: document.plugin,
+                state: slicedNodes || emptyDocumentFactory().value,
+              },
+            })
+          )
         })
       }
     }
