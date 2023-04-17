@@ -31,9 +31,11 @@ import {
 } from '../types'
 import {
   emptyDocumentFactory,
+  mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
 import { markdownShortcuts } from '../utils/markdown'
+import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
@@ -96,12 +98,11 @@ export function TextEditor(props: TextEditorProps) {
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
     setTimeout(() => {
-      Transforms.select(editor, { offset: 0, path: [0, 0] })
+      const pointAtStart = { offset: 0, path: [0, 0] }
+      Transforms.select(editor, selection || pointAtStart)
       ReactEditor.focus(editor)
     })
-    // Editor should be manually focused only on first render
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [editor, focused])
 
   function handleEditorChange(newValue: Descendant[]) {
     const isAstChange = editor.operations.some(
@@ -145,7 +146,7 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      // Create a new Slate instance on enter
+      // Create a new Slate instance on "enter" key
       if (isHotkey('enter', event)) {
         const document = getDocument(id)(store.getState())
         if (!document) return
@@ -171,6 +172,31 @@ export function TextEditor(props: TextEditorProps) {
             })
           )
         })
+      }
+
+      // Merge with previous Slate instance on "backspace" key,
+      // or merge with next Slate instance on "delete" key
+      const isBackspaceAtStart =
+        isHotkey('backspace', event) &&
+        isSelectionAtStart(editor, editor.selection)
+      const isDeleteAtEnd =
+        isHotkey('delete', event) && isSelectionAtEnd(editor, editor.selection)
+      if (isBackspaceAtStart || isDeleteAtEnd) {
+        event.preventDefault()
+
+        // Get direction of merge
+        const direction = isBackspaceAtStart ? 'previous' : 'next'
+
+        // Merge plugins within Slate and get the merge value
+        const newValue = mergePlugins(direction, editor, store, id)
+
+        // Update Redux state with the new value
+        if (newValue) {
+          state.set(
+            { value: newValue, selection: editor.selection },
+            ({ value }) => ({ value, selection: previousSelection.current })
+          )
+        }
       }
     }
 
