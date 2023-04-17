@@ -116,9 +116,7 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
-    const isEnterKey = isHotkey('enter', event)
-
-    if (config.noLinebreaks && isEnterKey) {
+    if (config.noLinebreaks && event.key === 'Enter') {
       event.preventDefault()
     }
 
@@ -145,7 +143,7 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Create a new Slate instance on enter
-      if (isEnterKey) {
+      if (isHotkey('enter', event)) {
         const document = getDocument(id)(store.getState())
         if (!document) return
 
