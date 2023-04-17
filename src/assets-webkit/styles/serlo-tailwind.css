@@ -89,7 +89,7 @@
       @apply absolute special-content-list-counter special-increment-list-counter;
       @apply font-bold text-center rounded-full -ml-6;
       @apply mt-0.5 bg-brand-150 w-[17px] h-[17px] text-xs;
-      @apply leading-tight text-brand pt-0.25;
+      @apply leading-tight text-brand-700 pt-0.25;
     }
     & > li {
       @apply mb-2;
