@@ -116,6 +116,12 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
+    const isEnterKey = isHotkey('enter', event)
+
+    if (config.noLinebreaks && isEnterKey) {
+      event.preventDefault()
+    }
+
     if (editor.selection && Range.isCollapsed(editor.selection)) {
       // Special handler for links. If you move right and end up at the right edge of a link,
       // this handler unselects the link, so you can write normal text behind it.
@@ -139,7 +145,7 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Create a new Slate instance on enter
-      if (isHotkey('enter', event)) {
+      if (isEnterKey) {
         const document = getDocument(id)(store.getState())
         if (!document) return
 
