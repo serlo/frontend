@@ -12,7 +12,7 @@ export const instanceData = {
       login: "உள்நுழை",
       skipLinks: {
         sentence: 'Skip to %content% or %footer%',
-        content: 'content',
+        content: "உட்பொருள்",
         footer: 'footer'
       }
     },
@@ -548,26 +548,26 @@ export const loggedInData = {
       showRead: 'Read'
     },
     subscriptions: {
-      mail: 'E-mails',
+      mail: "மின்னஞ்சல்",
       subscription: 'Subscription',
       noMails: 'deactivate',
-      getMails: 'activate',
+      getMails: "செயல்படுத்துங்கள்",
       noNotifications: 'cancel',
       loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
-      loadMoreLink: 'Load more!'
+      loadMoreLink: "மேலும் ஏற்று"
     },
     revisions: {
       checkout: {
-        action: 'Accept',
-        title: 'Accept Revision',
+        action: "ஏற்கிறேன்",
+        title: "திருத்தம் ஏற்கப்பட்டுள்ளது",
         explanation: 'Please give the author some feedback.'
       },
       reject: {
-        action: 'Reject',
+        action: "மறுக்கிறேன்",
         title: 'Reject Revision',
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'Confirm',
+      confirm: "உறுதிப்படுத்தவும்",
       unrevisedTaxNote: 'New content, not accepted yet'
     },
     mutations: {
@@ -602,7 +602,7 @@ export const loggedInData = {
           confirmRestore: 'Are you sure you want to delete all your changes?'
         },
         extendedSettings: 'Extended Settings',
-        close: 'Close',
+        close: "மூடுக",
         notSupportedYet: "This content type isn't supported by the new editor, yet.",
         editInOld: 'You can edit the content in the old editor',
         conversionError: 'An error occurred during the conversion.',
@@ -619,7 +619,7 @@ export const loggedInData = {
         highlightDesc: 'Highlight the syntax of source code.',
         anchor: 'Anchor',
         anchorDesc: 'Insert an anchor.',
-        image: 'Image',
+        image: "படம்",
         imageDesc: 'Upload images.',
         importantTitle: 'Important Statement',
         importantDesc: 'A box to highlight important statements.',
@@ -659,7 +659,7 @@ export const loggedInData = {
         settings: 'Settings',
         equationsTitle: 'Terms and equations',
         equationsDesc: 'Write term manipulations and solve multiline equations.',
-        ready: 'Ready to save?'
+        ready: "சேமிக்கத் தயாரா?"
       },
       anchor: {
         identifier: 'Identifier',
@@ -671,7 +671,7 @@ export const loggedInData = {
       highlight: {
         clickAndEnter: 'Click here and enter your source code…',
         enterHere: 'Enter your source code here',
-        language: 'Language',
+        language: "மொழி",
         enterLanguage: 'Enter language',
         showLineNumbers: 'Show line numbers'
       },
@@ -686,8 +686,8 @@ export const loggedInData = {
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
       multimedia: {
-        image: 'Image',
-        video: 'Video',
+        image: "படம்",
+        video: "காணொளி",
         geogebraTitle: 'GeoGebra Applet',
         changeType: 'Change the multimedia type',
         howImportant: 'How important is the multimedia content?',
@@ -749,20 +749,20 @@ export const loggedInData = {
         shortcuts: 'Shortcuts',
         fraction: 'Fraction',
         superscript: 'Superscript',
-        or: 'or',
+        or: "அல்லது",
         subscript: 'Subscript',
         root: 'Root',
         mathSymbols: 'Math symbols',
         eG: 'e.g.',
-        functions: 'Functions',
+        functions: "செயல்பாடுகள்",
         bold: 'Bold (%ctrlOrCmd% + B)',
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found'
       },
       video: {
         videoUrl: 'Video URL',
-        description: 'Description',
-        title: 'Title',
+        description: "விவரிப்பு:",
+        title: "தலைப்பு",
         url: 'URL',
         seoTitle: 'Title for search engines'
       },
@@ -806,23 +806,23 @@ export const loggedInData = {
         idArticle: 'ID of an article, e.g. 1855',
         openArticleTab: 'Open the article in a new tab:',
         linkTitle: 'Title of the link',
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "விடையைக் காட்டு",
+        hideSolution: "விடையை மறைக்கவும்"
       },
       applet: {
         seoTitle: 'Title for search engines',
         seoDesc: 'Description for search engines',
-        title: 'Title'
+        title: "தலைப்பு"
       },
       article: {
         seoTitle: 'Title for search engines',
         seoDesc: 'Description for search engines',
-        title: 'Title',
-        writeShortIntro: 'Write a short introduction',
+        title: "தலைப்பு",
+        writeShortIntro: "ஒரு சிறிய அறிமுகத்தை எழுதுங்கள்",
         stillWantMore: 'Still want more?',
         moreOnTopic: 'You can find more content on this topic here',
         addSource: 'Add source',
-        removeLabel: 'Remove',
+        removeLabel: "நீக்கு",
         dragLabel: 'Drag to change order',
         openInTab: 'Open in new tab',
         sources: 'Sources',
@@ -834,12 +834,12 @@ export const loggedInData = {
           introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
-          buttonContent: 'Add content',
-          buttonAddType: 'Add %type%',
+          buttonContent: "உள்ளடக்கம் சேர்க்கவும்",
+          buttonAddType: "இணைக்குக %type%",
           title: 'Add related Content or Exercises',
           invalidInput: 'Invalid id or url',
           fetchError: 'Something went wrong, please try later',
-          loading: 'Loading…',
+          loading: "ஏற்றுகிறது...",
           notFound: 'Could not find that content',
           unsupportedType: 'Sorry, type [%type%] is not supported here',
           unsupportedId: 'Sorry, this ID is not supported here',
@@ -849,14 +849,14 @@ export const loggedInData = {
         }
       },
       coursePage: {
-        explanation: 'Explanation',
-        video: 'Video',
-        question: 'Question',
-        title: 'Title'
+        explanation: "விளக்கம்",
+        video: "காணொளி",
+        question: "கேள்வி",
+        title: "தலைப்பு"
       },
       course: {
         seoDesc: 'Description for search engines',
-        title: 'Title',
+        title: "தலைப்பு",
         removeCoursePage: 'Remove course page',
         addCoursePage: 'Add course page'
       },
