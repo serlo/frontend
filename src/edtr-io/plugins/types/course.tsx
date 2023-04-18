@@ -10,10 +10,11 @@ import {
   OptionalChild,
   entityType,
 } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const courseTypeState = entityType(
   {
@@ -42,10 +43,11 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
   return (
     <article>
       {props.renderIntoToolbar(
-        <RevisionHistoryLoader
+        <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Course}
         />
       )}
       {props.renderIntoSettings(
