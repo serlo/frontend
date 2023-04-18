@@ -41,6 +41,8 @@ import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import {
+  focusNext,
+  focusPrevious,
   getDocument,
   getParent,
   getPlugins,
@@ -197,6 +199,20 @@ export function TextEditor(props: TextEditorProps) {
             ({ value }) => ({ value, selection: previousSelection.current })
           )
         }
+      }
+
+      // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
+      const isUpArrowAtStart =
+        isHotkey('up', event) && isSelectionAtStart(editor, editor.selection)
+      if (isUpArrowAtStart) {
+        event.preventDefault()
+        store.dispatch(focusPrevious())
+      }
+      const isDownArrowAtEnd =
+        isHotkey('down', event) && isSelectionAtEnd(editor, editor.selection)
+      if (isDownArrowAtEnd) {
+        event.preventDefault()
+        store.dispatch(focusNext())
       }
     }
 
