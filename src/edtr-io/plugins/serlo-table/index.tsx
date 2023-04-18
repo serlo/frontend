@@ -184,6 +184,7 @@ function SerloTableEditor(props: SerloTableProps) {
                 config: {
                   placeholder: '',
                   controls: isHead ? headerTextControls : cellTextControls,
+                  disableMarkdownShortcuts: isHead,
                 },
               })}
               {renderSwitchButton(cell, isHead, isClear)}
