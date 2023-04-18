@@ -1,9 +1,16 @@
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
-import { isKeyHotkey } from 'is-hotkey'
-import React, { createElement, useRef, useMemo, useState } from 'react'
+import isHotkey from 'is-hotkey'
+import React, {
+  createElement,
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+} from 'react'
 import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
 import {
   Editable,
+  ReactEditor,
   RenderElementProps,
   RenderLeafProps,
   Slate,
@@ -22,8 +29,13 @@ import {
   TextEditorPluginConfig,
   TextEditorState,
 } from '../types'
-import { sliceNodesAfterSelection } from '../utils/document'
+import {
+  emptyDocumentFactory,
+  mergePlugins,
+  sliceNodesAfterSelection,
+} from '../utils/document'
 import { markdownShortcuts } from '../utils/markdown'
+import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
@@ -81,6 +93,17 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [editor, selection, value])
 
+  useEffect(() => {
+    if (focused === false) return
+    // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
+    // See: https://stackoverflow.com/a/61353519
+    setTimeout(() => {
+      const pointAtStart = { offset: 0, path: [0, 0] }
+      Transforms.select(editor, selection || pointAtStart)
+      ReactEditor.focus(editor)
+    })
+  }, [editor, focused])
+
   function handleEditorChange(newValue: Descendant[]) {
     const isAstChange = editor.operations.some(
       ({ type }) => type !== 'set_selection'
@@ -97,12 +120,14 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
-    /*
-      Special handler for links. If you move right and end up at the right edge of a link,
-      this handler unselects the link, so you can write normal text behind it.
-    */
+    if (config.noLinebreaks && event.key === 'Enter') {
+      event.preventDefault()
+    }
+
     if (editor.selection && Range.isCollapsed(editor.selection)) {
-      if (isKeyHotkey('right', event.nativeEvent)) {
+      // Special handler for links. If you move right and end up at the right edge of a link,
+      // this handler unselects the link, so you can write normal text behind it.
+      if (isHotkey('right', event)) {
         const { path, offset } = editor.selection.focus
         const node = Node.get(editor, path)
         const parent = Node.parent(editor, path)
@@ -118,6 +143,59 @@ export function TextEditor(props: TextEditorProps) {
               event.preventDefault()
             }
           }
+        }
+      }
+
+      // Create a new Slate instance on "enter" key
+      if (isHotkey('enter', event)) {
+        const document = getDocument(id)(store.getState())
+        if (!document) return
+
+        const mayInsert = mayInsertChild(id)(store.getState())
+        if (!mayInsert) return
+
+        const parent = getParent(id)(store.getState())
+        if (!parent) return
+
+        event.preventDefault()
+
+        const slicedNodes = sliceNodesAfterSelection(editor)
+        setTimeout(() => {
+          store.dispatch(
+            insertChildAfter({
+              parent: parent.id,
+              sibling: id,
+              document: {
+                plugin: document.plugin,
+                state: slicedNodes || emptyDocumentFactory().value,
+              },
+            })
+          )
+        })
+      }
+
+      // Merge with previous Slate instance on "backspace" key,
+      // or merge with next Slate instance on "delete" key
+      const isBackspaceAtStart =
+        isHotkey('backspace', event) &&
+        isSelectionAtStart(editor, editor.selection)
+      const isDeleteAtEnd =
+        isHotkey('delete', event) && isSelectionAtEnd(editor, editor.selection)
+      if (isBackspaceAtStart || isDeleteAtEnd) {
+        event.preventDefault()
+
+        // Get direction of merge
+        const direction = isBackspaceAtStart ? 'previous' : 'next'
+
+        // Merge plugins within Slate and get the merge value
+        const newValue = mergePlugins(direction, editor, store, id)
+
+        // Update Redux state with the new value
+        if (newValue) {
+          state.set(
+            { value: newValue, selection: editor.selection },
+            ({ value }) => ({ value, selection: previousSelection.current })
+          )
         }
       }
     }

@@ -1,4 +1,4 @@
-import { Store as ReduxStore } from 'redux'
+import { Store as ReduxStore, Unsubscribe } from 'redux'
 
 import { EditorPlugin } from '../internal__plugin'
 import { Action, InternalAction, ReversibleAction } from './actions'
@@ -14,6 +14,13 @@ export type InternalState = Record<string, InternalScopedState>
 export type Store = ReduxStore<State, Action>
 /** @internal */
 export type InternalStore = ReduxStore<InternalState, InternalAction>
+
+/** @public */
+export interface ScopedStore {
+  dispatch: (scopedAction: (scope: string) => Action) => void
+  getState: () => ScopedState
+  subscribe: (listener: () => void) => Unsubscribe
+}
 
 /** @public */
 export interface ScopedState {
