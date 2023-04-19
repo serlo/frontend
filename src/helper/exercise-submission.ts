@@ -17,7 +17,7 @@ export function exerciseSubmission(data: ExerciseSubmissionData) {
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 
-  console.log(data)
+  // console.log(data)
 
   void (async () => {
     await fetch('/api/frontend/exercise-submission', {

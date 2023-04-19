@@ -42,7 +42,7 @@ export default async function handler(
     }
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e)
+    // console.log(e)
   }
   res.send('bad')
 }
