@@ -221,9 +221,13 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       }
       if (state.interactive.plugin === 'h5p') {
         return (
-          <Lazy>
-            <H5p url={state.interactive.state} />
-          </Lazy>
+          <H5p
+            url={state.interactive.state}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
+          />
         )
       }
     }
