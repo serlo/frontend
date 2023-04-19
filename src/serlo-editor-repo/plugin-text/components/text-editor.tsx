@@ -32,6 +32,7 @@ import {
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
+import { isOrderedListActive, isUnorderedListActive } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -149,7 +150,9 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Create a new Slate instance on "enter" key
-      if (isHotkey('enter', event)) {
+      const isListActive =
+        isOrderedListActive(editor) || isUnorderedListActive(editor)
+      if (isHotkey('enter', event) && !isListActive) {
         const document = getDocument(id)(store.getState())
         if (!document) return
 
