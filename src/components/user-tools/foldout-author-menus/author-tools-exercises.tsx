@@ -72,9 +72,7 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
       Tool.Abo,
       ...(hasUnrevised ? [Tool.UnrevisedEdit] : [Tool.Edit, Tool.History]),
       ...(noSolution ? [Tool.SortGroupedExercises] : []),
-      ...(ExerciseInlineType.Solution
-        ? [Tool.MoveToExercise]
-        : [Tool.Curriculum]),
+      ...(ExerciseInlineType.Solution ? [] : [Tool.Curriculum]),
       Tool.ChangeLicense,
       Tool.Log,
       Tool.Trash,
