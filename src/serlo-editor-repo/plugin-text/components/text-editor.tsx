@@ -34,7 +34,6 @@ import {
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
-import { markdownShortcuts } from '../utils/markdown'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -222,7 +221,7 @@ export function TextEditor(props: TextEditorProps) {
     suggestions.handleHotkeys(event)
     textFormattingOptions.handleHotkeys(event, editor)
     if (!config.disableMarkdownShortcuts) {
-      markdownShortcuts().onKeyDown(event, editor)
+      textFormattingOptions.handleMarkdownShortcuts(event, editor)
     }
     if (config.formattingOptions.includes(TextEditorFormattingOption.lists)) {
       slateListsOnKeyDown(editor, event)

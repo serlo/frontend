@@ -1,6 +1,6 @@
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
-import { Editor as SlateEditor } from 'slate'
+import { Node, Editor as SlateEditor } from 'slate'
 
 import {
   edtrBold,
@@ -93,6 +93,27 @@ const registeredHotkeys = (setIsLinkNewlyCreated: SetIsLinkNewlyCreated) => [
   },
 ]
 
+const handleMarkdown = (chars: string, editor: SlateEditor) => {
+  switch (chars) {
+    case '*':
+    case '-':
+    case '+':
+      toggleUnorderedList(editor)
+      return true
+    case '#':
+      toggleHeading(1)(editor)
+      return true
+    case '##':
+      toggleHeading(2)(editor)
+      return true
+    case '###':
+      toggleHeading(3)(editor)
+      return true
+    default:
+      return false
+  }
+}
+
 export const useFormattingOptions = (
   config: TextEditorPluginConfig,
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
@@ -138,10 +159,34 @@ export const useFormattingOptions = (
     [formattingOptions, setIsLinkNewlyCreated]
   )
 
+  const handleMarkdownShortcuts = useCallback(
+    (event: React.KeyboardEvent, editor: SlateEditor) => {
+      if (event.key !== ' ') return
+
+      const { selection } = editor
+      if (!selection) return
+
+      const nodes = Array.from(SlateEditor.nodes(editor, { at: selection }))
+      if (nodes.length < 2) return
+
+      const startBlock = nodes[2][0]
+      const text = Node.string(startBlock)
+      const chars = text.slice(0, selection.focus.offset).replace(/\s*/g, '')
+      const handled = handleMarkdown(chars, editor)
+
+      if (handled) {
+        event.preventDefault()
+        editor.deleteBackward('word')
+      }
+    },
+    []
+  )
+
   return {
     createTextEditor,
     toolbarControls,
     handleHotkeys,
+    handleMarkdownShortcuts,
   }
 }
 
