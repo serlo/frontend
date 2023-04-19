@@ -2,20 +2,20 @@ import * as React from 'react'
 
 import { merge, useTheme } from '../../ui'
 import {
-  TextEditorControl,
+  TextEditorFormattingOption,
   Heading,
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
 
-const defaultEnabledControls: TextEditorControl[] = [
-  TextEditorControl.code,
-  TextEditorControl.colors,
-  TextEditorControl.headings,
-  TextEditorControl.links,
-  TextEditorControl.lists,
-  TextEditorControl.math,
-  TextEditorControl.richText,
+const defaultFormattingOptions: TextEditorFormattingOption[] = [
+  TextEditorFormattingOption.code,
+  TextEditorFormattingOption.colors,
+  TextEditorFormattingOption.headings,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.lists,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.richText,
 ]
 
 const colors = [
@@ -47,7 +47,7 @@ export function useTextConfig(
   const { editor } = useTheme()
 
   return {
-    controls: config.controls || defaultEnabledControls,
+    formattingOptions: config.formattingOptions || defaultFormattingOptions,
     placeholder,
     i18n: merge({
       fallback: {
@@ -169,7 +169,7 @@ export function useTextConfig(
           boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
           color: editor.color,
         },
-        controls: {
+        formattingOptions: {
           colors: {
             colors: colors.map((color) => color.value),
             defaultColor: 'black',

@@ -20,12 +20,12 @@ import {
 import { HotKeys, useScopedStore } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
-import { useControls } from '../hooks/use-controls'
+import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import {
   TextEditorConfig,
-  TextEditorControl,
+  TextEditorFormattingOption,
   TextEditorPluginConfig,
   TextEditorState,
 } from '../types'
@@ -68,8 +68,11 @@ export function TextEditor(props: TextEditorProps) {
 
   const config = useTextConfig(props.config)
 
-  const textControls = useControls(config, setIsLinkNewlyCreated)
-  const { createTextEditor, toolbarControls } = textControls
+  const textFormattingOptions = useFormattingOptions(
+    config,
+    setIsLinkNewlyCreated
+  )
+  const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),
     [createTextEditor]
@@ -217,11 +220,11 @@ export function TextEditor(props: TextEditorProps) {
     }
 
     suggestions.handleHotkeys(event)
-    textControls.handleHotkeys(event, editor)
+    textFormattingOptions.handleHotkeys(event, editor)
     if (!config.disableMarkdownShortcuts) {
       markdownShortcuts().onKeyDown(event, editor)
     }
-    if (config.controls.includes(TextEditorControl.lists)) {
+    if (config.formattingOptions.includes(TextEditorFormattingOption.lists)) {
       slateListsOnKeyDown(editor, event)
     }
   }
@@ -386,7 +389,7 @@ function renderElementWithEditorContext(
 
 function renderLeafWithConfig(config: TextEditorConfig) {
   return function renderLeaf(props: RenderLeafProps) {
-    const colors = config?.theme?.controls?.colors?.colors
+    const colors = config?.theme?.formattingOptions?.colors?.colors
     const { attributes, leaf } = props
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let { children } = props

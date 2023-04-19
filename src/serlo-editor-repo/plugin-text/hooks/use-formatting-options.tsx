@@ -19,7 +19,7 @@ import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-i
 import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
 import { withLinks, withLists, withMath } from '../plugins'
 import {
-  TextEditorControl,
+  TextEditorFormattingOption,
   ControlButton,
   TextEditorPluginConfig,
 } from '../types'
@@ -53,15 +53,15 @@ import {
 type SetIsLinkNewlyCreated = (value: boolean) => void
 
 const textPluginsMapper = {
-  [TextEditorControl.math]: withMath,
-  [TextEditorControl.links]: withLinks,
-  [TextEditorControl.lists]: withLists,
+  [TextEditorFormattingOption.math]: withMath,
+  [TextEditorFormattingOption.links]: withLinks,
+  [TextEditorFormattingOption.lists]: withLists,
 }
 
 const isRegisteredTextPlugin = (
-  control: TextEditorControl
-): control is keyof typeof textPluginsMapper => {
-  return control in textPluginsMapper
+  option: TextEditorFormattingOption
+): option is keyof typeof textPluginsMapper => {
+  return option in textPluginsMapper
 }
 
 const toggleLinkAndFlag =
@@ -73,44 +73,44 @@ const toggleLinkAndFlag =
 const registeredHotkeys = (setIsLinkNewlyCreated: SetIsLinkNewlyCreated) => [
   {
     hotkey: 'mod+b',
-    control: TextEditorControl.richText,
+    option: TextEditorFormattingOption.richText,
     handler: toggleBoldMark,
   },
   {
     hotkey: 'mod+i',
-    control: TextEditorControl.richText,
+    option: TextEditorFormattingOption.richText,
     handler: toggleItalicMark,
   },
   {
     hotkey: 'mod+k',
-    control: TextEditorControl.links,
+    option: TextEditorFormattingOption.links,
     handler: toggleLinkAndFlag(setIsLinkNewlyCreated),
   },
   {
     hotkey: 'mod+m',
-    control: TextEditorControl.math,
+    option: TextEditorFormattingOption.math,
     handler: toggleMath,
   },
 ]
 
-export const useControls = (
+export const useFormattingOptions = (
   config: TextEditorPluginConfig,
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
 ) => {
-  const { controls } = config
+  const { formattingOptions } = config
 
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
-      controls.reduce((currentEditor, currentControl) => {
-        // If there is no control initialization function for the current control,
-        // return the editor as it was received
-        if (!isRegisteredTextPlugin(currentControl)) {
+      formattingOptions.reduce((currentEditor, currentOption) => {
+        // If there is no initialization function for the current
+        // formatting options, return the editor as it was received
+        if (!isRegisteredTextPlugin(currentOption)) {
           return currentEditor
         }
-        // Otherwise, apply the control initialization functions to the editor
-        return textPluginsMapper[currentControl](currentEditor)
+        // Otherwise, apply the initialization function to the editor
+        return textPluginsMapper[currentOption](currentEditor)
       }, baseEditor),
-    [controls]
+    [formattingOptions]
   )
 
   const toolbarControls: ControlButton[] = useMemo(
@@ -121,12 +121,12 @@ export const useControls = (
   const handleHotkeys = useCallback(
     (event: React.KeyboardEvent, editor: SlateEditor) => {
       // Go through the registered hotkeys
-      for (const { hotkey, control, handler } of registeredHotkeys(
+      for (const { hotkey, option, handler } of registeredHotkeys(
         setIsLinkNewlyCreated
       )) {
         // Check if their respective control is enabled
         // and if the keyboard event contains the hotkey combination
-        if (controls.includes(control) && isHotkey(hotkey, event)) {
+        if (formattingOptions.includes(option) && isHotkey(hotkey, event)) {
           // If so, prevent the default event behavior,
           // handle the hotkey and break out of the loop
           event.preventDefault()
@@ -135,7 +135,7 @@ export const useControls = (
         }
       }
     },
-    [controls, setIsLinkNewlyCreated]
+    [formattingOptions, setIsLinkNewlyCreated]
   )
 
   return {
@@ -146,13 +146,13 @@ export const useControls = (
 }
 
 function createToolbarControls(
-  { i18n, theme, controls }: TextEditorPluginConfig,
+  { i18n, theme, formattingOptions }: TextEditorPluginConfig,
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
 ): ControlButton[] {
-  const allControls = [
+  const allFormattingOptions = [
     // Bold
     {
-      name: TextEditorControl.richText,
+      name: TextEditorFormattingOption.richText,
       title: i18n.richText.toggleStrongTitle,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
@@ -160,7 +160,7 @@ function createToolbarControls(
     },
     // Italic
     {
-      name: TextEditorControl.richText,
+      name: TextEditorFormattingOption.richText,
       title: i18n.richText.toggleEmphasizeTitle,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
@@ -168,7 +168,7 @@ function createToolbarControls(
     },
     // Link
     {
-      name: TextEditorControl.links,
+      name: TextEditorFormattingOption.links,
       title: i18n.link.toggleTitle,
       isActive: isLinkActive,
       onClick: toggleLinkAndFlag(setIsLinkNewlyCreated),
@@ -176,14 +176,14 @@ function createToolbarControls(
     },
     // Headings
     {
-      name: TextEditorControl.headings,
+      name: TextEditorFormattingOption.headings,
       title: i18n.headings.openMenuTitle,
       closeMenuTitle: i18n.headings.closeMenuTitle,
       isActive: isAnyHeadingActive,
       renderIcon: () => <EdtrIcon icon={edtrText} />,
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: theme.controls.headings.map((heading) => ({
-        name: TextEditorControl.headings,
+      children: theme.formattingOptions.headings.map((heading) => ({
+        name: TextEditorFormattingOption.headings,
         title: i18n.headings.setHeadingTitle(heading),
         isActive: isHeadingActive(heading),
         onClick: toggleHeading(heading),
@@ -192,31 +192,31 @@ function createToolbarControls(
     },
     // Colors
     {
-      name: TextEditorControl.colors,
+      name: TextEditorFormattingOption.colors,
       title: i18n.colors.openMenuTitle,
       closeMenuTitle: i18n.colors.closeMenuTitle,
       isActive: () => false,
       renderIcon: (editor: SlateEditor) => (
         <HoveringToolbarColorTextIcon
           index={getColorIndex(editor)}
-          colorsTheme={theme.controls.colors}
+          colorsTheme={theme.formattingOptions.colors}
         />
       ),
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
       children: [
         {
-          name: TextEditorControl.colors,
+          name: TextEditorFormattingOption.colors,
           title: i18n.colors.resetColorTitle,
           isActive: (editor: SlateEditor) => !isAnyColorActive(editor),
           onClick: resetColor,
           renderIcon: () => (
             <HoveringToolbarColorIcon
-              color={theme.controls.colors.defaultColor}
+              color={theme.formattingOptions.colors.defaultColor}
             />
           ),
         },
-        ...theme.controls.colors.colors.map((color, colorIndex) => ({
-          name: TextEditorControl.colors,
+        ...theme.formattingOptions.colors.colors.map((color, colorIndex) => ({
+          name: TextEditorFormattingOption.colors,
           title: i18n.colors.colorNames[colorIndex],
           isActive: isColorActive(colorIndex),
           onClick: toggleColor(colorIndex),
@@ -226,7 +226,7 @@ function createToolbarControls(
     },
     // Ordered list
     {
-      name: TextEditorControl.lists,
+      name: TextEditorFormattingOption.lists,
       title: i18n.list.toggleOrderedList,
       isActive: isOrderedListActive,
       onClick: toggleOrderedList,
@@ -234,7 +234,7 @@ function createToolbarControls(
     },
     // Unordered list
     {
-      name: TextEditorControl.lists,
+      name: TextEditorFormattingOption.lists,
       title: i18n.list.toggleUnorderedList,
       isActive: isUnorderedListActive,
       onClick: toggleUnorderedList,
@@ -242,7 +242,7 @@ function createToolbarControls(
     },
     // Math
     {
-      name: TextEditorControl.math,
+      name: TextEditorFormattingOption.math,
       title: i18n.math.toggleTitle,
       isActive: isMathActive,
       onClick: toggleMath,
@@ -250,7 +250,7 @@ function createToolbarControls(
     },
     // Code
     {
-      name: TextEditorControl.code,
+      name: TextEditorFormattingOption.code,
       title: i18n.code.toggleTitle,
       isActive: isCodeActive,
       onClick: toggleCode,
@@ -258,7 +258,7 @@ function createToolbarControls(
     },
   ]
 
-  return allControls.filter((control) =>
-    controls.includes(TextEditorControl[control.name])
+  return allFormattingOptions.filter((option) =>
+    formattingOptions.includes(TextEditorFormattingOption[option.name])
   )
 }

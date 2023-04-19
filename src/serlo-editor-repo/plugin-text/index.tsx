@@ -14,7 +14,7 @@ import type {
   Link,
   MathElement,
   TextEditorConfig,
-  TextEditorControl,
+  TextEditorFormattingOption,
   TextEditorPluginConfig,
   TextEditorState,
 } from './types'
@@ -69,7 +69,7 @@ export type {
   MathElement,
   CustomText,
   TextEditorConfig,
-  TextEditorControl,
+  TextEditorFormattingOption,
   TextEditorPluginConfig,
   TextEditorState,
   TextEditorProps,
