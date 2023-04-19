@@ -199,6 +199,13 @@ export function ScMcExercise({
           className="serlo-button-blue mt-4"
           onClick={() => {
             setShowFeedback(true)
+            exerciseSubmission({
+              path: asPath,
+              entityId: context.entityId,
+              revisionId: context.revisionId,
+              result: allCorrect ? 'correct' : 'wrong',
+              type: 'mc',
+            })
           }}
         >
           {exStrings.check}

@@ -212,6 +212,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             path={path}
             renderNested={renderNested}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
