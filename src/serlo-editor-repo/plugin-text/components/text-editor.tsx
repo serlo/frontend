@@ -220,9 +220,7 @@ export function TextEditor(props: TextEditorProps) {
 
     suggestions.handleHotkeys(event)
     textFormattingOptions.handleHotkeys(event, editor)
-    if (!config.disableMarkdownShortcuts) {
-      textFormattingOptions.handleMarkdownShortcuts(event, editor)
-    }
+    textFormattingOptions.handleMarkdownShortcuts(event, editor)
     if (config.formattingOptions.includes(TextEditorFormattingOption.lists)) {
       slateListsOnKeyDown(editor, event)
     }

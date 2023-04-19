@@ -18,7 +18,6 @@ export interface TextEditorConfig {
   theme?: DeepPartial<TextEditorPluginConfig['theme']>
   blockquote?: string
   noLinebreaks?: boolean
-  disableMarkdownShortcuts?: boolean
 }
 
 /** @public */
@@ -133,5 +132,4 @@ export interface TextEditorPluginConfig {
   theme: Theme
   blockquote?: string
   noLinebreaks?: boolean
-  disableMarkdownShortcuts: boolean
 }

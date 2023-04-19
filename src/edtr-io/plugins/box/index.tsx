@@ -29,7 +29,6 @@ export function createBoxState(
       config: {
         formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
-        disableMarkdownShortcuts: true,
       },
     }),
     anchorId: string(''),

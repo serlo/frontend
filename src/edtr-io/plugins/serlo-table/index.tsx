@@ -186,7 +186,6 @@ function SerloTableEditor(props: SerloTableProps) {
                   formattingOptions: isHead
                     ? headerTextFormattingOptions
                     : cellTextFormattingOptions,
-                  disableMarkdownShortcuts: isHead,
                 },
               })}
               {renderSwitchButton(cell, isHead, isClear)}

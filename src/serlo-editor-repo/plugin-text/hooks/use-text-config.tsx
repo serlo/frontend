@@ -42,7 +42,6 @@ export function useTextConfig(
     theme = {},
     blockquote,
     noLinebreaks,
-    disableMarkdownShortcuts = false,
   } = config
   const { editor } = useTheme()
 
@@ -181,6 +180,5 @@ export function useTextConfig(
     }),
     blockquote,
     noLinebreaks,
-    disableMarkdownShortcuts,
   }
 }

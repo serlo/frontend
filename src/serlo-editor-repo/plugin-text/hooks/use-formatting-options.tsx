@@ -93,26 +93,28 @@ const registeredHotkeys = (setIsLinkNewlyCreated: SetIsLinkNewlyCreated) => [
   },
 ]
 
-const handleMarkdown = (chars: string, editor: SlateEditor) => {
-  switch (chars) {
-    case '*':
-    case '-':
-    case '+':
-      toggleUnorderedList(editor)
-      return true
-    case '#':
-      toggleHeading(1)(editor)
-      return true
-    case '##':
-      toggleHeading(2)(editor)
-      return true
-    case '###':
-      toggleHeading(3)(editor)
-      return true
-    default:
-      return false
-  }
-}
+const registeredMarkdownShortcuts = [
+  {
+    keys: ['*', '-', '+'],
+    option: TextEditorFormattingOption.lists,
+    handler: toggleUnorderedList,
+  },
+  {
+    keys: ['#'],
+    option: TextEditorFormattingOption.headings,
+    handler: toggleHeading(1),
+  },
+  {
+    keys: ['##'],
+    option: TextEditorFormattingOption.headings,
+    handler: toggleHeading(2),
+  },
+  {
+    keys: ['###'],
+    option: TextEditorFormattingOption.headings,
+    handler: toggleHeading(3),
+  },
+]
 
 export const useFormattingOptions = (
   config: TextEditorPluginConfig,
@@ -145,7 +147,7 @@ export const useFormattingOptions = (
       for (const { hotkey, option, handler } of registeredHotkeys(
         setIsLinkNewlyCreated
       )) {
-        // Check if their respective control is enabled
+        // Check if their respective formatting option is enabled
         // and if the keyboard event contains the hotkey combination
         if (formattingOptions.includes(option) && isHotkey(hotkey, event)) {
           // If so, prevent the default event behavior,
@@ -161,25 +163,28 @@ export const useFormattingOptions = (
 
   const handleMarkdownShortcuts = useCallback(
     (event: React.KeyboardEvent, editor: SlateEditor) => {
-      if (event.key !== ' ') return
-
+      // Exit if no selection or space key was not pressed
       const { selection } = editor
-      if (!selection) return
+      if (!selection || event.key !== ' ') return
 
-      const nodes = Array.from(SlateEditor.nodes(editor, { at: selection }))
-      if (nodes.length < 2) return
+      // Get the text before the new empty space
+      const firstNode = SlateEditor.first(editor, selection)
+      const text = Node.string(firstNode[0])
+      const key = text.slice(0, selection.focus.offset).replace(/\s*/g, '')
 
-      const startBlock = nodes[2][0]
-      const text = Node.string(startBlock)
-      const chars = text.slice(0, selection.focus.offset).replace(/\s*/g, '')
-      const handled = handleMarkdown(chars, editor)
-
-      if (handled) {
-        event.preventDefault()
-        editor.deleteBackward('word')
+      // If the text before the new empty space matches one of the registered
+      // markdown shortcuts and that formatting option is enabled,
+      // handle that markdown shortcut and break out of the loop
+      for (const { keys, option, handler } of registeredMarkdownShortcuts) {
+        if (formattingOptions.includes(option) && keys.includes(key)) {
+          event.preventDefault()
+          handler(editor)
+          editor.deleteBackward('word')
+          break
+        }
       }
     },
-    []
+    [formattingOptions]
   )
 
   return {
