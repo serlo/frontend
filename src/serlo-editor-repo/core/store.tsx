@@ -9,7 +9,7 @@ import {
 } from 'react-redux'
 import { Unsubscribe } from 'redux'
 
-import { Action, getScope, ScopedState, State } from '../store'
+import { Action, getScope, ScopedState, ScopedStore, State } from '../store'
 
 /** @public */
 export const ScopeContext = React.createContext<{
@@ -104,7 +104,7 @@ export const useStore = createStoreHook(EditorContext)
 export function useScopedStore(enforcedScope?: string) {
   const scope = useScope(enforcedScope)
   const store = useStore()
-  return React.useMemo(() => {
+  return React.useMemo((): ScopedStore => {
     return {
       dispatch: scopeDispatch(store.dispatch, scope),
       getState: () => {
