@@ -22,7 +22,16 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
 }
 
 const Page: NextPage<Data> = ({ count }) => {
-  return <div>Hi, Anzahl Zeilen in Datenbank: {count}</div>
+  return (
+    <>
+      <div className="w-full">
+        <div className="mx-auto text-xl pt-24 w-fit">Anzahl Aufrufe</div>
+        <div className="w-fit mx-auto text-5xl mt-24 font-bold pb-24">
+          {count}
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default Page
