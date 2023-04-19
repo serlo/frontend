@@ -1,3 +1,4 @@
+import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
@@ -187,11 +188,21 @@ export const useFormattingOptions = (
     [formattingOptions]
   )
 
+  const handleListsShortcuts = useCallback(
+    (event: React.KeyboardEvent, editor: SlateEditor) => {
+      if (formattingOptions.includes(TextEditorFormattingOption.lists)) {
+        return slateListsOnKeyDown(editor, event)
+      }
+    },
+    [formattingOptions]
+  )
+
   return {
     createTextEditor,
     toolbarControls,
     handleHotkeys,
     handleMarkdownShortcuts,
+    handleListsShortcuts,
   }
 }
 

@@ -1,4 +1,3 @@
-import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, {
   createElement,
@@ -25,7 +24,6 @@ import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import {
   TextEditorConfig,
-  TextEditorFormattingOption,
   TextEditorPluginConfig,
   TextEditorState,
 } from '../types'
@@ -221,9 +219,7 @@ export function TextEditor(props: TextEditorProps) {
     suggestions.handleHotkeys(event)
     textFormattingOptions.handleHotkeys(event, editor)
     textFormattingOptions.handleMarkdownShortcuts(event, editor)
-    if (config.formattingOptions.includes(TextEditorFormattingOption.lists)) {
-      slateListsOnKeyDown(editor, event)
-    }
+    textFormattingOptions.handleListsShortcuts(event, editor)
   }
 
   function handleEditablePaste(event: React.ClipboardEvent) {
