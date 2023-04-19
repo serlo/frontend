@@ -24,30 +24,32 @@ export function H5p({ url, context }: H5pProps) {
   const { asPath } = useRouter()
 
   useEffect(() => {
-    window.document.body.addEventListener('h5pExerciseCorrect', (e) => {
-      const e_id = (e as CustomEvent).detail as string
-      if (e_id === id) {
-        exerciseSubmission({
-          path: asPath,
-          entityId: context.entityId,
-          revisionId: context.revisionId,
-          result: 'correct',
-          type: 'h5p',
-        })
-      }
-    })
-    window.document.body.addEventListener('h5pExerciseWrong', (e) => {
-      const e_id = (e as CustomEvent).detail as string
-      if (e_id === id) {
-        exerciseSubmission({
-          path: asPath,
-          entityId: context.entityId,
-          revisionId: context.revisionId,
-          result: 'wrong',
-          type: 'h5p',
-        })
-      }
-    })
+    if (context.entityId > 0) {
+      window.document.body.addEventListener('h5pExerciseCorrect', (e) => {
+        const e_id = (e as CustomEvent).detail as string
+        if (e_id === id) {
+          exerciseSubmission({
+            path: asPath,
+            entityId: context.entityId,
+            revisionId: context.revisionId,
+            result: 'correct',
+            type: 'h5p',
+          })
+        }
+      })
+      window.document.body.addEventListener('h5pExerciseWrong', (e) => {
+        const e_id = (e as CustomEvent).detail as string
+        if (e_id === id) {
+          exerciseSubmission({
+            path: asPath,
+            entityId: context.entityId,
+            revisionId: context.revisionId,
+            result: 'wrong',
+            type: 'h5p',
+          })
+        }
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
