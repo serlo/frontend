@@ -381,6 +381,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             __typename: UuidRevType.Exercise,
             content: exercise.currentRevision?.content ?? '',
             date: '',
+            id: -1,
           },
         }).initialState.state
       })

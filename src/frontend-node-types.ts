@@ -289,6 +289,7 @@ export interface FrontendExerciseNode {
     id: number
     parent?: number
     solutionId?: number
+    revisionId: number
   }
   children?: undefined
   href?: string

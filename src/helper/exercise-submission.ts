@@ -16,8 +16,11 @@ export function exerciseSubmission(data: ExerciseSubmissionData) {
     sessionStorage.setItem(sesionStorageKey, v4())
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
+
+  console.log(data)
+
   void (async () => {
-    await fetch('http://localhost:3030/submit', {
+    await fetch('/api/frontend/exercise-submission', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

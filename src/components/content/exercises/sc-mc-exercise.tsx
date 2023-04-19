@@ -1,6 +1,7 @@
 import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
 import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import { useState, Fragment } from 'react'
 
 import { Feedback } from './feedback'
@@ -18,6 +19,10 @@ export interface ScMcExerciseProps {
   renderNested: RenderNestedFunction
   path?: NodePath
   isRevisionView?: boolean
+  context: {
+    entityId: number
+    revisionId: number
+  }
 }
 
 export function ScMcExercise({
@@ -25,6 +30,7 @@ export function ScMcExercise({
   idBase,
   renderNested,
   isRevisionView,
+  context,
 }: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
   const [selected, setSelected] = useState<number | undefined>(undefined)
@@ -32,6 +38,8 @@ export function ScMcExercise({
   const [focused, setFocused] = useState<number | undefined>(undefined)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
   const exStrings = useInstanceData().strings.content.exercises
+
+  const { asPath } = useRouter()
 
   if (state.isSingleChoice) return renderSingleChoice()
 
@@ -107,10 +115,10 @@ export function ScMcExercise({
           onClick={() => {
             setShowFeedback(true)
             exerciseSubmission({
-              path: window.location.href,
-              entityId: 123,
-              revisionId: 123,
-              result: 'correct',
+              path: asPath,
+              entityId: context.entityId,
+              revisionId: context.revisionId,
+              result: answers[selected ?? 0].isCorrect ? 'correct' : 'wrong',
               type: 'sc',
             })
           }}

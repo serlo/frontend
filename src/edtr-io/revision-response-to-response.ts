@@ -114,6 +114,7 @@ export function revisionResponseToResponse(
       currentRevision: {
         content,
         date,
+        id: -1,
       },
       taxonomyTerms: uuid.repository.taxonomyTerms,
       ...repositoryFields,
@@ -147,6 +148,7 @@ export function revisionResponseToResponse(
       currentRevision: {
         content,
         date,
+        id: -1,
       },
       exerciseGroup: uuid.repository.exerciseGroup,
       ...repositoryFields,

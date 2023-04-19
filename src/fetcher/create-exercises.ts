@@ -73,6 +73,7 @@ export function createExercise(
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
+      revisionId: uuid.currentRevision?.id ?? -1,
     },
     href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
@@ -155,6 +156,7 @@ export function createExerciseGroup(
       exerciseNode.positionInGroup = groupIndex++
       exerciseNode.positionOnPage = pageIndex // compat: page index also to grouped exercise for id generation
       exerciseNode.context.parent = uuid.id
+      exerciseNode.context.revisionId = uuid.currentRevision?.id ?? -1
       children.push(exerciseNode)
     })
   }
