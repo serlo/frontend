@@ -18,7 +18,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment Variables
- .env*.local
+.env*.local
+prisma/.env
 
 .now
 .vercel
