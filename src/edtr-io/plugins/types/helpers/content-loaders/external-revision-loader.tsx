@@ -60,10 +60,18 @@ export function ExternalRevisionLoader<T>({
           </p>
           <div className="mx-side">
             <UuidUrlInput
-              renderButtons={(_typename: string, id: number) => (
+              renderButtons={(
+                _typename: string,
+                id: number,
+                _title: string,
+                _taxType?: unknown,
+                coursePageId?: number
+              ) => (
                 <SerloAddButton
                   text={editorStrings.edtrIo.importOtherButton}
-                  onClick={() => fetchRevisionDataByUuid(id)}
+                  onClick={() =>
+                    fetchRevisionDataByUuid(coursePageId ? coursePageId : id)
+                  }
                 />
               )}
               supportedEntityTypes={[entityType]}

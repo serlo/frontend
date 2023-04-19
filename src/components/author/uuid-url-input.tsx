@@ -21,7 +21,8 @@ interface UuidUrlInputProps {
     typename: UuidWithRevType,
     id: number,
     title: string,
-    taxType?: TaxonomyTermType
+    taxType?: TaxonomyTermType,
+    coursePageId?: number
   ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
@@ -120,7 +121,8 @@ export function UuidUrlInput({
           uuid.__typename as UuidWithRevType,
           id,
           title ?? getTranslatedType(strings, uuid.__typename),
-          Object.hasOwn(uuid, 'type') ? uuid.type : undefined
+          Object.hasOwn(uuid, 'type') ? uuid.type : undefined,
+          uuid.id
         )}
       </>
     )
