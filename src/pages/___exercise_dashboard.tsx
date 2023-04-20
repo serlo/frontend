@@ -11,6 +11,7 @@ interface Data {
     date: string
     sessionsAll: number
     solvedAll: number
+    entityCount: number
     timesMedianAll: number
     solvedCountAll: number
     pages: {
@@ -21,6 +22,7 @@ interface Data {
       solvedMedian: number
       sessionTimes: Bin[]
       timesMedian: number
+      contextPaths: { path: string; count: number }[]
     }[]
   }[]
 }
@@ -52,6 +54,9 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
       solvedAll.add(`${entry.sessionId}-${entry.entityId}`)
     )
 
+    const entityAll = new Set()
+    data.forEach((entry) => entityAll.add(entry.entityId))
+
     const sessionsTimesAllObj = data.reduce((result, obj) => {
       const key = obj.sessionId
       const ts = obj.timestamp.getTime()
@@ -80,12 +85,6 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
     const solvedCountAll = Object.values(solvedBySessionAllObj).map(
       (obj) => obj.solved.size
     )
-
-    /*const sessions = data.reduce((result, obj) => {
-      const uuid = obj.sessionId
-      ;(result[uuid] = result[uuid] || []).push(obj)
-      return result
-    }, {} as { [key: string]: ExerciseSubmission[] })*/
 
     const pagesObj = data.reduce((result, obj) => {
       const path = obj.path
@@ -152,6 +151,24 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
         }
       })
 
+      const otherPaths = data.reduce((result, obj) => {
+        if (!sessions.has(obj.sessionId) || obj.path === page[0]) {
+          return result
+        }
+        const key = obj.path
+        ;(result[key] = result[key] || { ids: new Set() }).ids.add(
+          obj.sessionId
+        )
+        return result
+      }, {} as { [key: string]: { ids: Set<string> } })
+
+      const contextPaths = Object.entries(otherPaths).map((p) => ({
+        path: p[0],
+        count: p[1].ids.size,
+      }))
+
+      contextPaths.sort((a, b) => b.count - a.count)
+
       const solvedBySessionObj = page[1].reduce((result, obj) => {
         const key = obj.sessionId
         ;(result[key] = result[key] || { solved: new Set() }).solved.add(
@@ -194,15 +211,11 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
         solvedMedian: median(solvedCount),
         sessionTimes: binsTime,
         timesMedian: Math.round(median(sessionTimes) / 1000 / 60),
+        contextPaths,
       })
     }
 
     pages.sort((a, b) => b.solved - a.solved)
-
-    //console.log(group)
-    //console.log('number of entries', data.length)
-    //console.log('Number of sessions:', Object.keys(sessions).length)
-    //console.log('Number of pages:', Object.keys(pages).length)
 
     output.groups.push({
       date: group,
@@ -210,6 +223,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
       solvedAll: solvedAll.size,
       timesMedianAll: Math.round(median(sessionTimesAll) / 1000 / 60),
       solvedCountAll: median(solvedCountAll),
+      entityCount: entityAll.size,
       pages,
     })
   }
@@ -251,6 +265,9 @@ const Page: NextPage<Data> = ({ groups }) => {
           Gelöste Aufgaben insgesamt: <strong>{data.solvedAll}</strong>
         </div>
         <div>
+          Anzahl Aufgaben mit Aktivität: <strong>{data.entityCount}</strong>
+        </div>
+        <div>
           Aktive NutzerInnen insgesamt: <strong>{data.sessionsAll}</strong>
         </div>
         <div>
@@ -267,7 +284,7 @@ const Page: NextPage<Data> = ({ groups }) => {
           <div className="bg-brand-50 rounded-xl p-4 mb-16" key={page.path}>
             <div className="text-lg underline mb-2">
               <a
-                href={`https://de.serlo.org/${page.path}`}
+                href={`https://de.serlo.org${page.path}`}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -302,6 +319,27 @@ const Page: NextPage<Data> = ({ groups }) => {
                 </div>
               ))}
             </div>
+            {page.contextPaths.length === 0 ? (
+              <div className="mt-2 italic text-gray-600">
+                NutzerInnen waren nur auf dieser Seite aktiv
+              </div>
+            ) : (
+              <>
+                <div className="mt-2">NutzerInnen bearbeiteten auch:</div>
+                <div className="ml-3">
+                  {page.contextPaths.slice(0, 5).map((entry) => (
+                    <div key={entry.path}>
+                      {entry.path} (x{entry.count})
+                    </div>
+                  ))}
+                </div>
+                {page.contextPaths.length > 5 && (
+                  <div className="ml-3">
+                    + {page.contextPaths.length - 5} mehr
+                  </div>
+                )}
+              </>
+            )}
           </div>
         ))}
       </div>
