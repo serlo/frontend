@@ -47,8 +47,8 @@ The `useFormattingOptions` hook receives the `config` object and exposes these p
 
 1. `createTextEditor` - a function that receives a Slate editor instance and wraps it in all the configured Slate plugins
 2. `toolbarControls` - the configuration for Text plugin's toolbar, including what tools should be available
-3. `handleHotkeys` - keyboard shortcut handlers for configured formatting options
-4. `handleMarkdownShortcuts` - a function that handles markdown shortcuts (like '#') entered by the user and transforms them into formatting if allowed in this context. 
+3. `handleHotkeys` - a function that handles keyboard shortcut (like 'ctrl+b') for configured formatting options
+4. `handleMarkdownShortcuts` - a function that handles markdown shortcuts (like '#') entered by the user and transforms them into formatting if allowed in this context
 
 This approach allows to simply pass an array of desired formatting options (as `formattingOptions` property of the `config` argument) when creating a Text plugin instance, thus making the formatting options easily configurable for the user of Text plugin.
 
