@@ -1,5 +1,5 @@
 import { ExerciseSubmission } from '@prisma/client'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 
@@ -25,6 +25,7 @@ interface Data {
       contextPaths: { path: string; count: number }[]
     }[]
   }[]
+  ts: number
 }
 
 interface Bin {
@@ -32,7 +33,14 @@ interface Bin {
   count: number
 }
 
-export const getServerSideProps: GetServerSideProps<Data> = async () => {
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps: GetStaticProps<Data> = async () => {
   const data = await prisma.exerciseSubmission.findMany()
 
   const groups = data.reduce((result, obj) => {
@@ -41,7 +49,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
     return result
   }, {} as { [key: string]: ExerciseSubmission[] })
 
-  const output: Data = { groups: [] }
+  const output: Data = { groups: [], ts: Date.now() }
 
   for (const group in groups) {
     const data = groups[group]
@@ -100,10 +108,27 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
       const sessions = new Set()
       const solved = new Set()
 
+      page[1].forEach((entry) => {
+        sessions.add(entry.sessionId)
+        if (entry.result === 'correct') {
+          solved.add(`${entry.sessionId}-${entry.entityId}`)
+        }
+      })
+
+      if (
+        page[0] ===
+        '/mathe/63375/aufgaben-zur-berechnung-eines-vektors-zwischen-zwei-punkten'
+      ) {
+        console.log(page[1])
+      }
+
       const sessionTimesObj = page[1].reduce((result, obj) => {
         const key = obj.sessionId
         const ts = obj.timestamp.getTime()
-        const entry = (result[key] = result[key] || { start: ts, end: ts })
+        const entry = (result[key] = result[key] || {
+          start: ts,
+          end: ts,
+        })
         if (ts < entry.start) {
           entry.start = ts
         }
@@ -142,15 +167,6 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
         }
       }
 
-      //sessionTimes.sort((a, b) => b - a)
-
-      page[1].forEach((page) => {
-        sessions.add(page.sessionId)
-        if (page.result === 'correct') {
-          solved.add(`${page.sessionId}-${page.entityId}`)
-        }
-      })
-
       const otherPaths = data.reduce((result, obj) => {
         if (!sessions.has(obj.sessionId) || obj.path === page[0]) {
           return result
@@ -171,9 +187,11 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
 
       const solvedBySessionObj = page[1].reduce((result, obj) => {
         const key = obj.sessionId
-        ;(result[key] = result[key] || { solved: new Set() }).solved.add(
-          obj.entityId
-        )
+        const entry = (result[key] = result[key] || { solved: new Set() })
+        if (obj.result !== 'correct') {
+          return result
+        }
+        entry.solved.add(obj.entityId)
         return result
       }, {} as { [key: string]: { solved: Set<number> } })
 
@@ -230,10 +248,11 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
 
   return {
     props: output,
+    revalidate: 10 * 60, // 10 minutes
   }
 }
 
-const Page: NextPage<Data> = ({ groups }) => {
+const Page: NextPage<Data> = ({ groups, ts }) => {
   const [selectedGroup, setSelectedGroup] = useState(groups.length - 1)
 
   const data = groups[selectedGroup]
@@ -278,11 +297,23 @@ const Page: NextPage<Data> = ({ groups }) => {
           Median Bearbeitungszeit insgesamt:{' '}
           <strong>{data.timesMedianAll} Minuten</strong>
         </div>
+        <div className="mt-4">
+          <small>
+            Dashboard generiert um {new Date(ts).toLocaleString()}, Updates alle
+            10 Minuten. Lade Seite neu für aktuellere Version falls verfügbar.
+          </small>
+        </div>
       </div>
       <div className="mt-16">
-        {data.pages.map((page) => (
-          <div className="bg-brand-50 rounded-xl p-4 mb-16" key={page.path}>
-            <div className="text-lg underline mb-2">
+        {data.pages.map((page, i) => (
+          <div
+            className="bg-brand-50 rounded-xl p-4 mb-16 relative"
+            key={page.path}
+          >
+            <div className="absolute -right-2 -top-2 w-14 h-14 bg-brand rounded-full flex justify-center items-center">
+              <span className="text-white font-bold text-xl">{i + 1}</span>
+            </div>
+            <div className="text-lg hover:underline mb-4 font-bold mr-12">
               <a
                 href={`https://de.serlo.org${page.path}`}
                 target="_blank"
@@ -329,7 +360,15 @@ const Page: NextPage<Data> = ({ groups }) => {
                 <div className="ml-3">
                   {page.contextPaths.slice(0, 5).map((entry) => (
                     <div key={entry.path}>
-                      {entry.path} (x{entry.count})
+                      <a
+                        href={`https://de.serlo.org${entry.path}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="hover:underline"
+                      >
+                        {entry.path}
+                      </a>{' '}
+                      (x{entry.count})
                     </div>
                   ))}
                 </div>
