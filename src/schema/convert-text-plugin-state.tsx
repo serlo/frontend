@@ -1,4 +1,4 @@
-import type { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
+import type { CustomElement, CustomText } from '@edtr-io/plugin-text'
 
 import { sanitizeLatex } from './sanitize-latex'
 import {
@@ -9,18 +9,20 @@ import {
   FrontendTextNode,
 } from '@/frontend-node-types'
 
+type CustomNode = CustomElement | CustomText
+
 const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
-export function isSlateBlock(node: NewNode): node is NewElement {
-  return (node as NewElement).type !== undefined
+export function isSlateBlock(node: CustomNode): node is CustomElement {
+  return (node as CustomElement).type !== undefined
 }
 
-export function isTextNode(node: NewNode): node is NewText {
-  return (node as NewText).text !== undefined
+export function isTextNode(node: CustomNode): node is CustomText {
+  return (node as CustomText).text !== undefined
 }
 
 export function convertTextPluginState(
-  node: NewNode[] | NewNode | undefined
+  node: CustomNode[] | CustomNode | undefined
 ): FrontendContentNode[] {
   if (!node || Object.keys(node).length === 0) return []
   if (Array.isArray(node)) return node.flatMap(convertTextPluginState)
@@ -29,7 +31,7 @@ export function convertTextPluginState(
   return []
 }
 
-export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
+export function convertSlateBlock(node: CustomElement): FrontendContentNode[] {
   if (node.type === 'p') {
     return handleSemistructedContentOfP(convertTextPluginState(node.children))
   }
@@ -142,7 +144,7 @@ export function convertSlateBlock(node: NewElement): FrontendContentNode[] {
   return []
 }
 
-export function convertTextNode(node: NewText): FrontendContentNode[] {
+export function convertTextNode(node: CustomText): FrontendContentNode[] {
   const text = node.text.replace(/\ufeff/g, '')
   if (text === '') return []
   return [

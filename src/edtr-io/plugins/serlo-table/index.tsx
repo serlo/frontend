@@ -26,31 +26,16 @@ import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-const headerTextPlugins = {
-  code: true,
-  colors: false,
-  headings: false,
-  katex: true,
-  links: true,
-  lists: false,
-  math: true,
-  paragraphs: false,
-  richText: false,
-  suggestions: false,
-}
-
-const cellTextPlugins = {
-  code: true,
-  colors: true,
-  headings: false,
-  katex: true,
-  links: true,
-  lists: true,
-  math: true,
-  paragraphs: false,
-  richText: true,
-  suggestions: false,
-}
+const headerTextControls = ['code', 'katex', 'links', 'math']
+const cellTextControls = [
+  'code',
+  'colors',
+  'katex',
+  'links',
+  'lists',
+  'math',
+  'richText',
+]
 
 const tableState = object({
   rows: list(
@@ -198,7 +183,8 @@ function SerloTableEditor(props: SerloTableProps) {
               {cell.content.render({
                 config: {
                   placeholder: '',
-                  plugins: isHead ? headerTextPlugins : cellTextPlugins,
+                  controls: isHead ? headerTextControls : cellTextControls,
+                  disableMarkdownShortcuts: isHead,
                 },
               })}
               {renderSwitchButton(cell, isHead, isClear)}

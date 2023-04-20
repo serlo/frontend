@@ -2,10 +2,10 @@ import { useScopedStore } from '@edtr-io/core'
 import { EditorPluginProps, StateTypeReturnType } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/renderer-ui'
 import { DocumentState, replace, serializeDocument } from '@edtr-io/store'
-import { RowsPlugin } from '@serlo/legacy-editor-to-editor'
 
 import { layoutState } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { RowsPlugin } from '@/edtr-io/legacy-editor-to-editor-types'
 
 const LayoutContainer = styled.div({
   display: 'flex',

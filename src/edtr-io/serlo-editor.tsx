@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
-import { Editor, EditorProps } from '@edtr-io/core/beta'
+import { Editor, EditorProps } from '@edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
+import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor'
 import { Entity, UuidType } from '@serlo/authorization'
 import { createContext, ReactNode, useState } from 'react'
 

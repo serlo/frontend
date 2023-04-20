@@ -27,19 +27,9 @@ export function createBoxState(
     title: child({
       plugin: 'text',
       config: {
-        plugins: {
-          code: true,
-          colors: false,
-          headings: false,
-          katex: true,
-          links: false,
-          lists: false,
-          math: true,
-          paragraphs: false,
-          richText: false,
-          suggestions: false,
-        },
+        controls: ['code', 'katex', 'math'],
         noLinebreaks: true,
+        disableMarkdownShortcuts: true,
       },
     }),
     anchorId: string(''),
