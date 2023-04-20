@@ -7,11 +7,10 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
-  path?: NodePath
   renderNested: RenderNestedFunction
   isRevisionView?: boolean
   context: {

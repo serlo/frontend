@@ -8,13 +8,11 @@ import { LicenseIcons } from './license-icons'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
-import { NodePath } from '@/schema/article-renderer'
 
 interface LicenseNoticeProps {
   data: LicenseData
   minimal?: boolean
   type?: 'video' | 'task' | 'exercise-group' | 'solution'
-  path?: NodePath
 }
 
 export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {

@@ -302,7 +302,7 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.SpoilerContainer) {
     if (!Array.isArray(children)) return null
-    return <Spoiler title={children[0]} body={children[1]} path={path} />
+    return <Spoiler title={children[0]} body={children[1]} />
   }
   if (element.type === FrontendNodeType.SpoilerBody) {
     return (
@@ -384,7 +384,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Geogebra) {
     return (
       <Lazy noPrint>
-        <Geogebra id={element.id} path={path} />
+        <Geogebra id={element.id} />
       </Lazy>
     )
   }
@@ -449,7 +449,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
-        <Video src={element.src} path={path} license={element.license} />
+        <Video src={element.src} license={element.license} />
       </Lazy>
     )
   }

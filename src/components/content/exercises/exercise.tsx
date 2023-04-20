@@ -196,7 +196,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
               node.positionInGroup ? node.positionInGroup : path?.join('') ?? ''
             }-`}
             renderNested={renderNested}
-            path={path}
             isRevisionView={isRevisionView}
             context={{
               entityId: node.context.id,
@@ -209,7 +208,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         return (
           <InputExercise
             data={state.interactive.state}
-            path={path}
             renderNested={renderNested}
             isRevisionView={isRevisionView}
             context={{
@@ -254,8 +252,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderLicense() {
     if (!node.task.license) return null
-    return (
-      <LicenseNotice minimal data={node.task.license} type="task" path={path} />
-    )
+    return <LicenseNotice minimal data={node.task.license} type="task" />
   }
 }

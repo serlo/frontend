@@ -4,14 +4,12 @@ import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendUserData } from '@/data-types'
-import { NodePath } from '@/schema/article-renderer'
 
 export interface UserLinkProps {
   user: FrontendUserData
   withIcon?: boolean
   noBadges?: boolean
   className?: string
-  path?: NodePath
 }
 
 export function UserLink({
