@@ -16,12 +16,13 @@ module.exports = {
           DEFAULT: brand,
           50: '#F4F9FC',
           100: '#EFF7FB',
-          150: '#D9EBF5',
+          150: '#E6F2F9',
           200: '#D9EBF5',
           300: '#BBDCED',
           400: '#8EC5E2',
           500: '#51A5D1',
           600: brand,
+          700: '#0076b9', // slighly darker brand blue for better color contrast with white (for smaller text) and light blue.
         },
         brandgreen: {
           DEFAULT: brandGreen,

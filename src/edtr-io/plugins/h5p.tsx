@@ -191,7 +191,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
           </a>
         )}
       </p>
-      <H5p url={state.value} />
+      <H5p url={state.value} context={{ entityId: -1, revisionId: -1 }} />
     </>
   )
 }

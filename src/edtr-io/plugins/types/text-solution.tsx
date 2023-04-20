@@ -4,9 +4,10 @@ import { ThemeProvider } from '@edtr-io/ui'
 import { useCallback } from 'react'
 
 import { editorContent, entity, entityType } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const textSolutionTypeState = entityType(
   {
@@ -60,10 +61,11 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   return (
     <>
       {props.renderIntoToolbar(
-        <RevisionHistoryLoader
+        <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Solution}
         />
       )}
       <ThemeProvider theme={solutionTheme}>

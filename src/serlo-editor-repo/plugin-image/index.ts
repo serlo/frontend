@@ -48,6 +48,7 @@ export function createImagePlugin(
           config: {
             controls: ['code', 'katex', 'links', 'math', 'richText'],
             noLinebreaks: true,
+            disableMarkdownShortcuts: true,
             blockquote: '',
           },
         })

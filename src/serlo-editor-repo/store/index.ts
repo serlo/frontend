@@ -28,6 +28,7 @@ export type {
   State,
   Store,
   ScopedState,
+  ScopedStore,
   InternalState,
   InternalStore,
   InternalScopedState,

@@ -198,6 +198,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             renderNested={renderNested}
             path={path}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
@@ -208,14 +212,22 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             path={path}
             renderNested={renderNested}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
       if (state.interactive.plugin === 'h5p') {
         return (
-          <Lazy>
-            <H5p url={state.interactive.state} />
-          </Lazy>
+          <H5p
+            url={state.interactive.state}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
+          />
         )
       }
     }
