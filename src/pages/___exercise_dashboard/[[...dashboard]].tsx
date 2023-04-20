@@ -74,7 +74,13 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
   }
 
   const groups = data.reduce((result, obj) => {
-    const dateKey = obj.timestamp.toUTCString().substring(0, 16)
+    const dateKey = obj.timestamp.toLocaleDateString('de-DE', {
+      timeZone: 'Europe/Berlin',
+      weekday: 'short',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    })
     ;(result[dateKey] = result[dateKey] || []).push(obj)
     return result
   }, {} as { [key: string]: ExerciseSubmission[] })
