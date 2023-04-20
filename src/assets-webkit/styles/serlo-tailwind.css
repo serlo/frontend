@@ -10,7 +10,7 @@
 
 @layer components {
   .serlo-link {
-    @apply text-brand no-underline break-words hover:underline;
+    @apply text-brand-700 no-underline break-words hover:underline;
   }
   .serlo-button {
     @apply inline-block transition-all rounded-4xl py-1 px-2;
@@ -26,13 +26,13 @@
     @apply serlo-button text-white bg-brandgreen hover:bg-brandgreen-300;
   }
   .serlo-button-light {
-    @apply serlo-button text-brand bg-brand-100 hover:text-white hover:bg-brand;
+    @apply serlo-button text-brand-700 bg-brand-100 hover:text-white hover:bg-brand;
   }
   .serlo-button-green-transparent {
     @apply serlo-button text-brandgreen bg-transparent hover:text-white hover:bg-brandgreen;
   }
   .serlo-button-blue-transparent {
-    @apply serlo-button text-brand bg-transparent hover:text-white hover:bg-brand;
+    @apply serlo-button text-brand bg-transparent hover:text-white hover:bg-brand-700;
   }
   .serlo-p {
     @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-cozy;
@@ -88,8 +88,8 @@
     & > li:before {
       @apply absolute special-content-list-counter special-increment-list-counter;
       @apply font-bold text-center rounded-full -ml-6;
-      @apply mt-0.5 bg-brand-200 w-4 h-4 text-xs;
-      @apply leading-tight text-brand pt-0.25;
+      @apply mt-0.5 bg-brand-150 w-[17px] h-[17px] text-xs;
+      @apply leading-tight text-brand-700 pt-0.25;
     }
     & > li {
       @apply mb-2;
@@ -251,7 +251,7 @@
   }
 
   .serlo-header-navtrigger[data-state='open'] {
-    @apply bg-brand text-white;
+    @apply bg-brand-700 text-white;
   }
 
   .serlo-fa-icon {

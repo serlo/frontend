@@ -3,7 +3,7 @@ import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
-import { PropsWithChildren, useState } from 'react'
+import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
@@ -25,16 +25,18 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
 
-export function RevisionHistoryLoader<T>(
-  props: PropsWithChildren<{
-    id: number
-    currentRevision: number
-    onSwitchRevision: (data: T) => void
-  }>
-) {
+export function RevisionHistoryLoader<T>({
+  id,
+  currentRevision,
+  onSwitchRevision,
+}: {
+  id: number
+  currentRevision: number
+  onSwitchRevision: (data: T) => void
+}) {
   const [showRevisions, setShowRevisions] = useState(false)
 
-  const revisionsResponse = useRevisionsFetch(props.id)
+  const revisionsResponse = useRevisionsFetch(id)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -48,7 +50,7 @@ export function RevisionHistoryLoader<T>(
 
   const onSelectRevision = (id: number) => {
     //don't select the selected
-    const isCurrentlyLoaded = props.currentRevision === id
+    const isCurrentlyLoaded = currentRevision === id
     if (isCurrentlyLoaded) return null
     fetchRevisionData(id)
   }
@@ -57,14 +59,13 @@ export function RevisionHistoryLoader<T>(
     <div>
       <span
         onClick={() => {
-          if (revisions.length) {
-            setShowRevisions(true)
-          }
+          if (revisions.length) setShowRevisions(true)
         }}
       >
         <PluginToolbarButton
           icon={<Icon icon={faHistory} size="lg" />}
           label={editorStrings.edtrIo.switchRevision}
+          className="pr-0.5 pt-1"
         />
       </span>
 
@@ -80,7 +81,7 @@ export function RevisionHistoryLoader<T>(
           data={revisionsResponse.data?.uuid}
           hideEdit
           onSelectRevision={onSelectRevision}
-          selectedRevisionId={props.currentRevision}
+          selectedRevisionId={currentRevision}
         />
       </ModalWithCloseButton>
       <style jsx global>{`
@@ -132,7 +133,7 @@ export function RevisionHistoryLoader<T>(
         if (isError(converted)) {
           handleError(`editor: revision conversion | ${converted.error}`)
         } else {
-          props.onSwitchRevision(converted.initialState.state as T)
+          onSwitchRevision(converted.initialState.state as T)
           setShowRevisions(false)
         }
       } catch (e) {

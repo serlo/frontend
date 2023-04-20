@@ -52,7 +52,7 @@ export function Header() {
           <Logo foldOnMobile />
           <div
             className={clsx(
-              'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
+              'min-h-[50px] md:block mt-[1.7rem] md:mt-8',
               'order-last md:order-none lg:order-last ',
               'w-full md:w-auto',
               mobileMenuOpen ? '' : 'hidden'

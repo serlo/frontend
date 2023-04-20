@@ -59,10 +59,10 @@ export function InputExercise({
       <input
         className={clsx(
           'print:hidden serlo-input-font-reset',
-          'rounded-3xl py-2 px-3 active:font-bold focus:font-bold ',
-          'border-3 border-brand bg-brand mb-5 text-white',
+          'rounded-3xl py-2 px-3 font-bold',
+          'border-3 border-brand-400 mb-5 text-white focus:border-brand active:border-brand',
           'focus:outline-none focus:bg-white focus:text-brand focus:opacity-100 focus:placeholder-opacity-0',
-          'placeholder-white'
+          'placeholder-brand'
         )}
         type="text"
         value={value}

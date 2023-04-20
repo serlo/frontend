@@ -185,7 +185,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                     {x.entry.path.length > 0 ? ' > ' : ''}
                   </span>
 
-                  <span className="text-lg text-brand group-hover:underline">
+                  <span className="text-lg text-brand-700 group-hover:underline">
                     {x.entry.isTax ? (
                       <>{x.entry.title}&nbsp;&gt;</>
                     ) : (
