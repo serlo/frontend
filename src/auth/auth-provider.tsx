@@ -3,7 +3,9 @@ import type { AuthorizationPayload } from '@serlo/authorization'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from './cookie/auth-session-cookie'
+import { fetchAndPersistAuthSession } from './cookie/fetch-and-persist-auth-session'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { isProduction } from '@/helper/is-production'
 
 export type AuthenticationPayload = {
   username: string
@@ -33,6 +35,13 @@ export function AuthProvider({
     setAuthenticationPayload(getAuthPayloadFromSession(session))
   }
 
+  // check if kratos session still exists (single logout)
+  useEffect(() => {
+    if (authenticationPayload && !isProduction)
+      void fetchAndPersistAuthSession(refreshAuth)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     const refreshWhenVisible = () => {
       if (!document.visibilityState) return
@@ -41,12 +50,14 @@ export function AuthProvider({
       // use functional update to get the current value of the payload
       // returning same value will skip set state
       setAuthenticationPayload((authenticationPayload) => {
-        if (cookiePayload?.id !== authenticationPayload?.id) {
-          return cookiePayload
-        } else {
-          return authenticationPayload
-        }
+        return cookiePayload?.id !== authenticationPayload?.id
+          ? cookiePayload
+          : authenticationPayload
       })
+
+      // check if kratos session still exists (single logout)
+      if (authenticationPayload && !isProduction)
+        void fetchAndPersistAuthSession(refreshAuth)
     }
     document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
     window.addEventListener('online', () => refreshWhenVisible) //on reconnect
@@ -55,6 +66,7 @@ export function AuthProvider({
       document.removeEventListener('visibilitychange', refreshWhenVisible)
       window.removeEventListener('online', () => refreshWhenVisible)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const authorizationPayload = useAuthorizationPayload(
