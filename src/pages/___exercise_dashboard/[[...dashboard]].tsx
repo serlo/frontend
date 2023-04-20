@@ -28,7 +28,7 @@ interface Data {
       contextPaths: { path: string; count: number }[]
     }[]
   }[]
-  ts: number
+  dateString: string
 }
 
 interface Bin {
@@ -79,7 +79,12 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
     return result
   }, {} as { [key: string]: ExerciseSubmission[] })
 
-  const output: Data = { groups: [], ts: Date.now() }
+  const output: Data = {
+    groups: [],
+    dateString: new Date().toLocaleString('de-DE', {
+      timeZone: 'Europe/Berlin',
+    }),
+  }
 
   for (const group in groups) {
     const data = groups[group]
@@ -275,7 +280,7 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
   }
 }
 
-const Page: NextPage<Data> = ({ groups, ts }) => {
+const Page: NextPage<Data> = ({ groups, dateString }) => {
   const [selectedGroup, setSelectedGroup] = useState(groups.length - 1)
 
   const data = groups[selectedGroup]
@@ -322,9 +327,8 @@ const Page: NextPage<Data> = ({ groups, ts }) => {
         </div>
         <div className="mt-4">
           <small>
-            Dashboard generiert um {new Date(ts).toLocaleString('de-DE')},
-            Updates alle 10 Minuten. Lade Seite neu für aktuellere Version falls
-            verfügbar.
+            Dashboard generiert um {dateString}, Updates alle 10 Minuten. Lade
+            Seite neu für aktuellere Version falls verfügbar.
           </small>
         </div>
       </div>
