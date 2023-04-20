@@ -21,7 +21,8 @@ interface UuidUrlInputProps {
     typename: UuidWithRevType,
     id: number,
     title: string,
-    taxType?: TaxonomyTermType
+    taxType?: TaxonomyTermType,
+    coursePageId?: number
   ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
@@ -88,6 +89,8 @@ export function UuidUrlInput({
 
     const id =
       uuid.__typename === UuidType.CoursePage ? uuid.course?.id : uuid.id
+    const coursePageId =
+      uuid.__typename === UuidType.CoursePage ? uuid.id : undefined
 
     if (!supportedEntityTypes.includes(uuid.__typename as UuidWithRevType))
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
@@ -120,7 +123,8 @@ export function UuidUrlInput({
           uuid.__typename as UuidWithRevType,
           id,
           title ?? getTranslatedType(strings, uuid.__typename),
-          Object.hasOwn(uuid, 'type') ? uuid.type : undefined
+          Object.hasOwn(uuid, 'type') ? uuid.type : undefined,
+          coursePageId
         )}
       </>
     )

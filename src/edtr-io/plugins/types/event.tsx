@@ -1,10 +1,11 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 
 import { editorContent, entity, HeaderInput, entityType } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const eventTypeState = entityType(
   {
@@ -33,10 +34,11 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
     <>
       <div className="page-header">
         {props.renderIntoToolbar(
-          <RevisionHistoryLoader
+          <ContentLoaders
             id={props.state.id.value}
             currentRevision={props.state.revision.value}
             onSwitchRevision={props.state.replaceOwnState}
+            entityType={UuidType.Event}
           />
         )}
         {props.renderIntoSettings(
