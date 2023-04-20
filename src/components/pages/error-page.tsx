@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
-import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
