@@ -1,9 +1,12 @@
 import { ExerciseSubmission } from '@prisma/client'
+import request from 'graphql-request'
 import { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useState } from 'react'
 
+import { endpoint } from '@/api/endpoint'
 import { FrontendClientBase } from '@/components/frontend-client-base'
+import { idsQuery } from '@/fetcher/query-ids'
 import { prisma } from '@/helper/prisma'
 
 interface Data {
@@ -42,6 +45,33 @@ export async function getStaticPaths() {
 
 export const getStaticProps: GetStaticProps<Data> = async () => {
   const data = await prisma.exerciseSubmission.findMany()
+
+  const ids: number[] = []
+
+  for (const entry of data) {
+    if (/^\/[\d]+$/.test(entry.path)) {
+      ids.push(parseInt(entry.path.substring(1)))
+    }
+  }
+
+  try {
+    const result = await request<{
+      [key: string]: {
+        alias: string
+        instance: string
+      }
+    }>(endpoint, idsQuery([...new Set(ids)]))
+    for (const entry of data) {
+      if (/^\/[\d]+$/.test(entry.path)) {
+        const key = `uuid${entry.path.substring(1)}`
+        if (result[key]) {
+          entry.path = result[key].alias
+        }
+      }
+    }
+  } catch (e) {
+    //
+  }
 
   const groups = data.reduce((result, obj) => {
     const dateKey = obj.timestamp.toUTCString().substring(0, 16)
@@ -114,13 +144,6 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
           solved.add(`${entry.sessionId}-${entry.entityId}`)
         }
       })
-
-      if (
-        page[0] ===
-        '/mathe/63375/aufgaben-zur-berechnung-eines-vektors-zwischen-zwei-punkten'
-      ) {
-        console.log(page[1])
-      }
 
       const sessionTimesObj = page[1].reduce((result, obj) => {
         const key = obj.sessionId
@@ -299,8 +322,9 @@ const Page: NextPage<Data> = ({ groups, ts }) => {
         </div>
         <div className="mt-4">
           <small>
-            Dashboard generiert um {new Date(ts).toLocaleString()}, Updates alle
-            10 Minuten. Lade Seite neu für aktuellere Version falls verfügbar.
+            Dashboard generiert um {new Date(ts).toLocaleString('de-DE')},
+            Updates alle 10 Minuten. Lade Seite neu für aktuellere Version falls
+            verfügbar.
           </small>
         </div>
       </div>
