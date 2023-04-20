@@ -207,7 +207,7 @@ function renderElement({
       path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
       <>
-        <Link href={element.href} path={path} unreviewed={isOnProfile}>
+        <Link href={element.href} unreviewed={isOnProfile}>
           {children}
         </Link>
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
@@ -291,7 +291,6 @@ function renderElement({
     return (
       <Image
         element={element}
-        path={path}
         extraInfo={
           isRevisionView ? (
             <ExtraRevisionViewInfo element={element} />

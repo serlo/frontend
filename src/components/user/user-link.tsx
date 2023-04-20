@@ -19,17 +19,12 @@ export function UserLink({
   withIcon,
   noBadges,
   className,
-  path,
 }: UserLinkProps) {
   const { strings } = useInstanceData()
 
   return (
     <>
-      <Link
-        href={`/user/${user.id}/${user.username}`}
-        className={className}
-        path={path ?? []}
-      >
+      <Link href={`/user/${user.id}/${user.username}`} className={className}>
         {withIcon && (
           <img
             className="w-9 rounded-full mr-2 align-middle"

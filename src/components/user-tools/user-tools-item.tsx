@@ -54,9 +54,7 @@ export function UserToolsItem({
           onClick()
         }}
       >
-        <Link href="" className={classes}>
-          {inner}
-        </Link>
+        <Link className={classes}>{inner}</Link>
       </Item>
     )
 

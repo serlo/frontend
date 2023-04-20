@@ -17,12 +17,7 @@ interface LicenseNoticeProps {
   path?: NodePath
 }
 
-export function LicenseNotice({
-  data,
-  minimal,
-  type,
-  path,
-}: LicenseNoticeProps) {
+export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   const { lang, strings } = useInstanceData()
   const router = useRouter()
   const urlSlugArray = Array.isArray(router.query.slug)
@@ -61,7 +56,7 @@ export function LicenseNotice({
           </a>
           {renderHiddenMeta()}
           {' → '}
-          <Link href={`/license/detail/${id}`} path={path}>
+          <Link href={`/license/detail/${id}`}>
             <b>{strings.license.readMore}</b>
           </Link>
         </span>
@@ -106,7 +101,6 @@ export function LicenseNotice({
           title={minTitle}
           href={licenseHref}
           noExternalIcon
-          path={path}
         >
           {isDefault ? (
             <FaIcon icon={faCreativeCommons} />
