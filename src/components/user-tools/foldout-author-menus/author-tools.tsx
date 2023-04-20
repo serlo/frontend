@@ -31,7 +31,6 @@ export enum Tool {
   History = 'history',
   Log = 'log',
   MoveItems = 'moveItems',
-  MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
@@ -156,13 +155,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
     },
     moveItems: {
       url: `/taxonomy/term/move/batch/${data.id}`,
-      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
-    },
-    moveToExercise: {
-      url: `/entity/link/move/link/${data.id}/${data.parentId!}`,
-      title: data.grouped
-        ? loggedInStrings.authorMenu.moveToGrouped
-        : loggedInStrings.authorMenu.moveToTextExercise,
       canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
     directLink: {
