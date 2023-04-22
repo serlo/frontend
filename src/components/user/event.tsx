@@ -98,6 +98,7 @@ export function Event({
       case 'CreateCommentNotificationEvent':
         return parseString(strings.events.createComment, {
           thread: renderThread(event.thread),
+          // links to comments need to go through cf worker
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
               {strings.entities.comment}&nbsp;<sup>{event.comment.id}</sup>
@@ -323,6 +324,7 @@ export function Event({
 
   function renderThread(thread: EventThread) {
     const id = thread.thread.nodes[0]?.id
+    // links to comments need to go through cf worker
     return (
       <Link href={`/${id}`} forceNoCSR>
         {strings.entities.thread}&nbsp;<sup>{id}</sup>

@@ -60,7 +60,6 @@ export function Breadcrumbs({
               bcEntry.url && 'hover:bg-brand hover:text-white'
             )}
             href={bcEntry.url ?? undefined}
-            path={['breadcrumbs', index]}
           >
             {bcEntry.label}
           </Link>
@@ -74,7 +73,6 @@ export function Breadcrumbs({
                 'hover:text-white sm:bg-brand-100 sm:hover:bg-brand'
               )}
               href={bcEntry.url ?? undefined}
-              path={['breadcrumbs', index]}
             >
               <span className="sm:hidden pt-0.25 pr-1">{renderIcon()}</span>
               {!isTaxonomy && (

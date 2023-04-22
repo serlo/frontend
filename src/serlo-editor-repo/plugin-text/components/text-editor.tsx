@@ -1,4 +1,3 @@
-import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, {
   createElement,
@@ -20,12 +19,11 @@ import {
 import { HotKeys, useScopedStore } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
-import { useControls } from '../hooks/use-controls'
+import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import {
   TextEditorConfig,
-  TextEditorControl,
   TextEditorPluginConfig,
   TextEditorState,
 } from '../types'
@@ -34,7 +32,7 @@ import {
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
-import { markdownShortcuts } from '../utils/markdown'
+import { isOrderedListActive, isUnorderedListActive } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -68,8 +66,11 @@ export function TextEditor(props: TextEditorProps) {
 
   const config = useTextConfig(props.config)
 
-  const textControls = useControls(config, setIsLinkNewlyCreated)
-  const { createTextEditor, toolbarControls } = textControls
+  const textFormattingOptions = useFormattingOptions(
+    config,
+    setIsLinkNewlyCreated
+  )
+  const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),
     [createTextEditor]
@@ -149,7 +150,9 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Create a new Slate instance on "enter" key
-      if (isHotkey('enter', event)) {
+      const isListActive =
+        isOrderedListActive(editor) || isUnorderedListActive(editor)
+      if (isHotkey('enter', event) && !isListActive) {
         const document = getDocument(id)(store.getState())
         if (!document) return
 
@@ -217,13 +220,9 @@ export function TextEditor(props: TextEditorProps) {
     }
 
     suggestions.handleHotkeys(event)
-    textControls.handleHotkeys(event, editor)
-    if (!config.disableMarkdownShortcuts) {
-      markdownShortcuts().onKeyDown(event, editor)
-    }
-    if (config.controls.includes(TextEditorControl.lists)) {
-      slateListsOnKeyDown(editor, event)
-    }
+    textFormattingOptions.handleHotkeys(event, editor)
+    textFormattingOptions.handleMarkdownShortcuts(event, editor)
+    textFormattingOptions.handleListsShortcuts(event, editor)
   }
 
   function handleEditablePaste(event: React.ClipboardEvent) {
@@ -386,7 +385,7 @@ function renderElementWithEditorContext(
 
 function renderLeafWithConfig(config: TextEditorConfig) {
   return function renderLeaf(props: RenderLeafProps) {
-    const colors = config?.theme?.controls?.colors?.colors
+    const colors = config?.theme?.formattingOptions?.colors?.colors
     const { attributes, leaf } = props
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let { children } = props

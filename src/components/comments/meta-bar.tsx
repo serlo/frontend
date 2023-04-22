@@ -43,7 +43,6 @@ export function MetaBar({
       <UserLink
         user={user}
         withIcon
-        path={['comment-user', id]}
         className={clsx(
           'serlo-button text-brand text-lg font-bold',
           '-ml-1 pl-1 flex items-center hover:no-underline',

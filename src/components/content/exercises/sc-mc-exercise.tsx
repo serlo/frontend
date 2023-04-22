@@ -11,13 +11,12 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { hasVisibleContent } from '@/helper/has-visible-content'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
   renderNested: RenderNestedFunction
-  path?: NodePath
   isRevisionView?: boolean
   context: {
     entityId: number

@@ -8,7 +8,7 @@
   - [Structure](#structure)
   - [Technical decisions](#technical-decisions)
     - [Configuration](#configuration)
-    - [Controls (Text plugin plugins)](#controls-text-plugin-plugins)
+    - [Text formatting options](#text-formatting-options)
     - [Suggestions (`serlo-editor`/`edtr-io` plugins)](#suggestions-serlo-editoredtr-io-plugins)
     - [Saving state to `Redux` store](#saving-state-to-redux-store)
       - [`LinkControls` workaround](#linkcontrols-workaround)
@@ -39,17 +39,18 @@ This argument is then passed to the `useTextConfig` hook, where it's merged with
 
 The `config` object received from the `useTextConfig` hook is then used as the source of truth for configuration across that instance of the Text plugin.
 
-### Controls (Text plugin plugins)
+### Text formatting options
 
 Currently used Slate version only allows Slate plugins to modify the `editor` object. To allow for the same functionality of plugins from the earlier version of `serlo-editor`/`edtr-io`, a hook approach was used ([as recommended by the creator of Slate](https://github.com/ianstormtaylor/slate/issues/3222#issuecomment-573331151)).
 
-The `useControls` hook receives the `config` object and exposes three properties:
+The `useFormattingOptions` hook receives the `config` object and exposes these properties:
 
 1. `createTextEditor` - a function that receives a Slate editor instance and wraps it in all the configured Slate plugins
-2. `toolbarControls` - the configuration for Text plugin's toolbar
-3. `handleHotkeys` - keyboard shortcut handlers for configured controls
+2. `toolbarControls` - the configuration for Text plugin's toolbar, including what tools should be available
+3. `handleHotkeys` - a function that handles keyboard shortcut (like 'ctrl+b') for configured formatting options
+4. `handleMarkdownShortcuts` - a function that handles markdown shortcuts (like '#') entered by the user and transforms them into formatting if allowed in this context
 
-This approach allows to simply pass an array of desired controls (as `controls` property of the `config` argument) when creating a Text plugin instance, thus making the controls easily configurable for the user of Text plugin.
+This approach allows to simply pass an array of desired formatting options (as `formattingOptions` property of the `config` argument) when creating a Text plugin instance, thus making the formatting options easily configurable for the user of Text plugin.
 
 ### Suggestions (`serlo-editor`/`edtr-io` plugins)
 
