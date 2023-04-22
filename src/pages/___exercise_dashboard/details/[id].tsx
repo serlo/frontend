@@ -66,7 +66,6 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
 
   await prettifyLinks(pageData)
 
-  // TODO: generate stats
   const ids = []
   const revisions = []
 
