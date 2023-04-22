@@ -13,16 +13,15 @@ export type TextEditorState = SerializedScalarStateType<
 /** @public */
 export interface TextEditorConfig {
   placeholder?: TextEditorPluginConfig['placeholder']
-  controls?: TextEditorControl[]
+  formattingOptions?: TextEditorFormattingOption[]
   i18n?: DeepPartial<TextEditorPluginConfig['i18n']>
   theme?: DeepPartial<TextEditorPluginConfig['theme']>
   blockquote?: string
   noLinebreaks?: boolean
-  disableMarkdownShortcuts?: boolean
 }
 
 /** @public */
-export enum TextEditorControl {
+export enum TextEditorFormattingOption {
   code = 'code',
   colors = 'colors',
   headings = 'headings',
@@ -119,7 +118,7 @@ interface Theme {
     boxShadow: string
     color: string
   }
-  controls: {
+  formattingOptions: {
     colors: ColorsTheme
     headings: Heading['level'][]
   }
@@ -128,10 +127,9 @@ interface Theme {
 /** @public */
 export interface TextEditorPluginConfig {
   placeholder: string
-  controls: TextEditorControl[]
+  formattingOptions: TextEditorFormattingOption[]
   i18n: I18n
   theme: Theme
   blockquote?: string
   noLinebreaks?: boolean
-  disableMarkdownShortcuts: boolean
 }

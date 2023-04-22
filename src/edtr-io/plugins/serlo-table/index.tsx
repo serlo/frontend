@@ -26,8 +26,8 @@ import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-const headerTextControls = ['code', 'katex', 'links', 'math']
-const cellTextControls = [
+const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
+const cellTextFormattingOptions = [
   'code',
   'colors',
   'katex',
@@ -183,8 +183,9 @@ function SerloTableEditor(props: SerloTableProps) {
               {cell.content.render({
                 config: {
                   placeholder: '',
-                  controls: isHead ? headerTextControls : cellTextControls,
-                  disableMarkdownShortcuts: isHead,
+                  formattingOptions: isHead
+                    ? headerTextFormattingOptions
+                    : cellTextFormattingOptions,
                 },
               })}
               {renderSwitchButton(cell, isHead, isClear)}

@@ -27,9 +27,8 @@ export function createBoxState(
     title: child({
       plugin: 'text',
       config: {
-        controls: ['code', 'katex', 'math'],
+        formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
-        disableMarkdownShortcuts: true,
       },
     }),
     anchorId: string(''),
