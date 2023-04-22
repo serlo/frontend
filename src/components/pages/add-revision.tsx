@@ -9,7 +9,6 @@ import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
 import { loginUrl } from './auth/utils'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
-import { useAuth } from '@/auth/use-auth'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -38,7 +37,6 @@ export function AddRevision({
   const { strings } = useInstanceData()
 
   const auth = useAuthentication()
-  const { refreshAuth } = useAuth()
 
   const setEntityMutation = useSetEntityMutation()
   const addPageRevision = useAddPageRevision()
@@ -48,11 +46,11 @@ export function AddRevision({
 
   useEffect(() => {
     async function confirmAuth() {
-      await fetchAndPersistAuthSession(refreshAuth)
+      await fetchAndPersistAuthSession()
       setUserReady(isProduction ? auth !== null : true)
     }
     void confirmAuth()
-  }, [auth, refreshAuth])
+  }, [auth])
 
   if (!setEntityMutation) return null
 

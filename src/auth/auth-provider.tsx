@@ -3,7 +3,6 @@ import type { AuthorizationPayload } from '@serlo/authorization'
 import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from './cookie/auth-session-cookie'
-import { fetchAndPersistAuthSession } from './cookie/fetch-and-persist-auth-session'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { isProduction } from '@/helper/is-production'
 
@@ -38,7 +37,11 @@ export function AuthProvider({
   // check if kratos session still exists (single logout)
   useEffect(() => {
     if (authenticationPayload && !isProduction)
-      void fetchAndPersistAuthSession(refreshAuth)
+      void (async () => {
+        await (
+          await import('./cookie/fetch-and-persist-auth-session')
+        ).fetchAndPersistAuthSession(refreshAuth)
+      })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -56,8 +59,13 @@ export function AuthProvider({
       })
 
       // check if kratos session still exists (single logout)
-      if (authenticationPayload && !isProduction)
-        void fetchAndPersistAuthSession(refreshAuth)
+      if (authenticationPayload && !isProduction) {
+        void (async () => {
+          await (
+            await import('./cookie/fetch-and-persist-auth-session')
+          ).fetchAndPersistAuthSession(refreshAuth)
+        })()
+      }
     }
     document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
     window.addEventListener('online', () => refreshWhenVisible) //on reconnect
