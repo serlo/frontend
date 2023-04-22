@@ -2,11 +2,9 @@ import clsx from 'clsx'
 
 import { PrivacyWrapper } from './privacy-wrapper'
 import { ExternalProvider } from '@/helper/use-consent'
-import { NodePath } from '@/schema/article-renderer'
 
 export interface GeogebraProps {
   id: string
-  path?: NodePath
 }
 
 export function Geogebra({ id }: GeogebraProps) {

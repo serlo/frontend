@@ -5,53 +5,40 @@ import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { NodePath } from '@/schema/article-renderer'
 
 export interface LinkProps {
   href?: string
   children: ReactNode
   className?: string
   noExternalIcon?: boolean
-  title?: string
-  forceNoCSR?: boolean
-  path?: NodePath
+  forceNoCSR?: boolean //
   unreviewed?: boolean // e.g. user profiles or comments
-  tabIndex?: number // menu
-  unstyled?: boolean // don't add serlo-link class
-  rel?: string
+  title?: string
 }
 
-// note: Previous discussion about fetching this dynamically https://github.com/serlo/frontend/issues/328
-const legacyLinks = [
+// imported from cf worker redirects.ts
+const cfWorkerLinks = [
   '/privacy',
-  '/datenschutz',
   '/imprint',
   '/terms',
+  '/datenschutz',
+  '/nutzungsbedingungen',
+  'impressum',
   '/disable-frontend',
   '/enable-frontend',
+  '/labschool',
+  '/ecec',
+  '/chancenwerk',
+  '/hochschule',
+  '/neuerechtsform',
   '/beitreten',
+  '/global',
 ]
 
-export function isLegacyLink(_href: string) {
-  // compat: this is a special frontend route or force frontend use
-  if (
-    _href === '/user/notifications' ||
-    _href === '/user/settings' ||
-    _href === '/entity/unrevised' ||
-    _href === '/uuid/recycle-bin' ||
-    _href === '/pages' ||
-    _href === '/authorization/roles' ||
-    _href.startsWith('/taxonomy/term/update/')
-  ) {
-    return false
-  }
-
-  return (
-    legacyLinks.includes(_href) ||
-    _href.startsWith('/navigation') ||
-    _href.startsWith('/entity/repository/add-revision-old/') || // temporary
-    _href.includes('.serlo.org') // e.g. community.serlo.org or different language
-  )
+export function shouldUseCSR(href: string) {
+  // do not use CSR for redirects that are handled in the cf-worker
+  // or for serlo subdomains like community.serlo.org or es.serlo.org
+  return !cfWorkerLinks.includes(href) && !href.includes('.serlo.org')
 }
 
 // warning: forwarding ref is crucial for dropdowns to work
@@ -70,20 +57,17 @@ function InternalLink({
   children,
   className,
   noExternalIcon,
-  title,
   forceNoCSR,
   unreviewed,
-  tabIndex,
-  unstyled,
   ref,
-  rel,
+  title,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
   const { lang } = useInstanceData()
   const router = useRouter()
 
   if (!href || href === undefined || href === '')
     return (
-      <a className={className} title={title} tabIndex={tabIndex} ref={ref}>
+      <a className={className} ref={ref} title={title}>
         {children}
       </a>
     )
@@ -92,24 +76,22 @@ function InternalLink({
   const isExternal = isAbsolute && !href.includes('.serlo.org')
   const isAnchor = href.startsWith('#') || href.startsWith('/#')
   const isMailto = href.startsWith('mailto:')
-
   // pathname maps to the page that rendered the site, this is more reliable
   const isContentOnly = router.pathname.startsWith('/content-only/')
 
-  if (isAnchor || isMailto) return renderLink(href)
-  if (isExternal || forceNoCSR || isContentOnly) return renderLink(href)
+  if (isAnchor || isMailto || isExternal || forceNoCSR || isContentOnly)
+    return renderDefaultLink(href)
 
   //at this point only internal links should be left
+  const internalLink = normalizeSerloHref(href)
 
-  const internalLink = normalizeSerloLink(href)
-
-  if (!isLegacyLink(internalLink)) return renderClientSide(internalLink)
+  if (shouldUseCSR(internalLink)) return renderClientSideLink(internalLink)
 
   //fallback
-  return renderLink(href)
+  return renderDefaultLink(internalLink)
 
-  function normalizeSerloLink(_href: string) {
-    // compat: some user are typing \1234 instead of /1234
+  function normalizeSerloHref(_href: string) {
+    // compat: some user use \1234 instead of /1234
     if (/^\\[\d]+$/.test(_href)) {
       return _href.replace('\\', '/')
     }
@@ -121,33 +103,29 @@ function InternalLink({
       : '/' + _href
   }
 
-  function renderClientSide(_href: string) {
+  function renderClientSideLink(_href: string) {
     return (
-      <NextLink legacyBehavior prefetch={false} href={_href}>
-        {renderLink(_href)}
+      <NextLink
+        prefetch={false}
+        href={_href}
+        className={clsx(className, 'serlo-link')}
+        title={title}
+      >
+        {children}
       </NextLink>
     )
   }
 
-  function renderLink(_href: string) {
+  function renderDefaultLink(_href: string) {
+    const openBlank = unreviewed && isExternal
     return (
       // eslint-disable-next-line react/jsx-no-target-blank
       <a
         href={_href}
-        className={unstyled ? className : clsx(className, 'serlo-link')}
+        className={clsx(className, 'serlo-link')}
+        rel={openBlank ? 'ugc nofollow noreferrer' : undefined}
+        target={openBlank || isContentOnly ? '_blank' : undefined}
         title={title}
-        rel={
-          rel
-            ? rel
-            : unreviewed && isExternal
-            ? 'ugc nofollow noreferrer'
-            : undefined
-        }
-        target={
-          (unreviewed && isExternal) || isContentOnly ? '_blank' : undefined
-        }
-        tabIndex={tabIndex}
-        ref={ref}
       >
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}

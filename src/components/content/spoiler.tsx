@@ -2,12 +2,10 @@ import clsx from 'clsx'
 import { ReactNode, useState } from 'react'
 
 import { isPrintMode } from '../print-mode'
-import { NodePath } from '@/schema/article-renderer'
 
 export interface SpoilerProps {
   body: ReactNode
   title: ReactNode
-  path?: NodePath
 }
 
 export function Spoiler({ body, title }: SpoilerProps) {

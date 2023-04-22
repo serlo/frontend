@@ -60,9 +60,7 @@ export function Entity({ data }: EntityProps) {
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
-      {data.licenseData && (
-        <LicenseNotice data={data.licenseData} path={['license']} />
-      )}
+      {data.licenseData && <LicenseNotice data={data.licenseData} />}
     </>
   )
 

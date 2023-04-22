@@ -79,7 +79,6 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
       <>
         <Spoiler
           title={buttonText}
-          path={['profile-settings']}
           body={
             <>
               <p className="serlo-p mt-5">
@@ -111,7 +110,6 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
     return (
       <Spoiler
         title={buttonText}
-        path={['profile-settings']}
         body={
           <>
             <p className="serlo-p mt-5">{intro}</p>

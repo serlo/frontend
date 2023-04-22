@@ -58,9 +58,7 @@ export function Topic({ data }: TopicProps) {
           />
         )}
       </div>
-      {defaultLicense && (
-        <LicenseNotice data={defaultLicense} path={['license']} />
-      )}
+      {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
       {/* Temporary donations banner trial */}
       {isExerciseFolder ? (

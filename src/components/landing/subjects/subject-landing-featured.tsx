@@ -47,6 +47,7 @@ export function SubjectLandingFeatured({
   function renderFeaturedBox(data: FeaturedContentData, index: number) {
     return (
       <Link
+        key={data.title}
         className={clsx(
           'text-brand hover:no-underline box-border',
           'p-2.5 leading-cozy',
@@ -56,8 +57,6 @@ export function SubjectLandingFeatured({
           index >= maxOnMobile ? 'hidden mobile:block' : ''
         )}
         href={data.url}
-        key={data.title}
-        path={[]}
       >
         <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
           {data.img ? (

@@ -47,7 +47,6 @@ function About() {
           <div>
             <Link
               href={footerData.aboutHref}
-              path={['footer_about']}
               className="serlo-button-blue-transparent py-0.5 text-white my-4"
             >
               <FaIcon icon={faChevronCircleRight} className="h-4" />{' '}
@@ -58,7 +57,6 @@ function About() {
         <div className="bg-brandgreen flex justify-around py-4">
           <Link
             href={footerData.participationHref}
-            path={['footer_participation']}
             className="flex flex-col items-center hover:no-underline group"
           >
             <ParticipateIcon className="w-14" />
@@ -68,7 +66,6 @@ function About() {
           </Link>
           <Link
             href={footerData.donationHref}
-            path={['footer_donation']}
             className="flex flex-col items-center hover:no-underline group"
           >
             <DonateIcon className="w-14" />

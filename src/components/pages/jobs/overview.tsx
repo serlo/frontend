@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
@@ -377,8 +378,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                   </h4>
                 ) : null} */}
               <li key={id}>
-                <Link
-                  unstyled
+                <NextLink
                   className={clsx(
                     'block px-5 py-4 mb-5',
                     'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
@@ -389,7 +389,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                   <span className="text-brand font-bold">{name}</span>
                   <br />
                   {renderSubline(position)}
-                </Link>
+                </NextLink>
               </li>
             </Fragment>
           )
