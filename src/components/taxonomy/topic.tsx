@@ -2,6 +2,7 @@ import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
 
+import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
@@ -9,6 +10,7 @@ import { TopicCategories } from './topic-categories'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
+import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
@@ -26,6 +28,7 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 
 export function Topic({ data }: TopicProps) {
   const { strings } = useInstanceData()
+  const exerciseStats = useExerciseFolderStats()
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
   const isTopic = data.taxonomyType === TaxonomyTermType.Topic
@@ -63,7 +66,7 @@ export function Topic({ data }: TopicProps) {
       )}
 
       {/* Temporary donations banner trial */}
-      {isExerciseFolder ? (
+      {isExerciseFolder && !exerciseStats ? (
         <DonationsBanner
           id={data.id}
           entityData={{
@@ -88,18 +91,37 @@ export function Topic({ data }: TopicProps) {
 
   function renderHeader() {
     return (
-      <h1 className="serlo-h1 mt-8 mb-10">
-        {data.title}
-        {isExerciseFolder && (
-          <span title={strings.entities.exerciseFolder}>
-            {' '}
-            <FaIcon
-              icon={faFile}
-              className="text-[1.43rem] align-baseline text-brand-400"
-            />{' '}
-          </span>
+      <>
+        {exerciseStats && (
+          <div className="mt-3">
+            <span className="px-2 py-1 rounded-full bg-fuchsia-300 ml-3 font-bold">
+              Auswertung
+            </span>
+            <br />
+            <br />
+            <Link href="/___exercise_dashboard" className="ml-4">
+              zurück zur Übersicht
+            </Link>
+            <br />
+            <br />
+            <span className="ml-3">
+              Insgesamt <strong>{exerciseStats.fullCount}</strong> NutzerInnen
+            </span>
+          </div>
         )}
-      </h1>
+        <h1 className="serlo-h1 mt-8 mb-10">
+          {data.title}
+          {isExerciseFolder && (
+            <span title={strings.entities.exerciseFolder}>
+              {' '}
+              <FaIcon
+                icon={faFile}
+                className="text-[1.43rem] align-baseline text-brand-400"
+              />{' '}
+            </span>
+          )}
+        </h1>
+      </>
     )
   }
 
@@ -133,6 +155,7 @@ export function Topic({ data }: TopicProps) {
   }
 
   function renderUserTools(setting?: { aboveContent?: boolean }) {
+    if (exerciseStats) return null
     return (
       <UserTools
         data={{ type: UuidType.TaxonomyTerm, ...data }}

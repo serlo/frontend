@@ -13,6 +13,7 @@ import { CommentAreaEntityProps } from '@/components/comments/comment-area-entit
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseInlineType } from '@/data-types'
 import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
@@ -53,6 +54,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   )
 
   const auth = useAuthentication()
+  const exerciseData = useExerciseFolderStats()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => {
     setLoaded(true)
@@ -89,6 +91,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           {renderToolsButton()}
         </div>
 
+        {renderExerciseStats()}
         {renderInteractive()}
         <div className="flex">
           {renderSolutionToggle()}
@@ -256,6 +259,21 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     if (!node.task.license) return null
     return (
       <LicenseNotice minimal data={node.task.license} type="task" path={path} />
+    )
+  }
+
+  function renderExerciseStats() {
+    if (!exerciseData) return null
+
+    const entry = exerciseData.data[node.context.id]
+
+    if (!entry) return null
+
+    return (
+      <div className="p-2 ml-2 border border-fuchsia-400 rounded-xl my-4">
+        {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst nach
+        Versuchen / {entry.wrong} mal nicht gelöst
+      </div>
     )
   }
 }

@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
+import { Link } from '@/components/content/link'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { idsQuery } from '@/fetcher/query-ids'
 import { prisma } from '@/helper/prisma'
@@ -365,14 +366,27 @@ const Page: NextPage<Data> = ({ groups, dateString }) => {
             <div className="absolute -right-2 -top-2 w-14 h-14 bg-brand rounded-full flex justify-center items-center">
               <span className="text-white font-bold text-xl">{i + 1}</span>
             </div>
-            <div className="text-lg hover:underline mb-4 font-bold mr-12">
+            <div className="text-lg mb-4 mr-12">
               <a
                 href={`https://de.serlo.org${page.path}`}
                 target="_blank"
                 rel="noreferrer"
+                className="hover:underline font-bold"
               >
                 {page.path}
-              </a>
+              </a>{' '}
+              <Link
+                href={`/___exercise_dashboard/details/${(() => {
+                  const match = page.path.match(/\/(\d+)\/(.+)/)
+                  if (!match) return 1553
+                  return match[1]
+                })()}`}
+                className="text-black"
+              >
+                <span className="px-2 py-1 rounded-full bg-fuchsia-300 ml-3">
+                  Details
+                </span>
+              </Link>
             </div>
             <div>
               Gelöste Aufgaben: <strong>{page.solved}</strong>
