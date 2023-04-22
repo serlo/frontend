@@ -150,11 +150,13 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       const solved = new Set()
 
       page[1].forEach((entry) => {
-        sessions.add(entry.sessionId)
         if (entry.result === 'correct') {
+          sessions.add(entry.sessionId)
           solved.add(`${entry.sessionId}-${entry.entityId}`)
         }
       })
+
+      if (solved.size === 0) continue
 
       const sessionTimesObj = page[1].reduce((result, obj) => {
         const key = obj.sessionId
@@ -177,24 +179,24 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       )
 
       const binsTime: Bin[] = [
-        { label: '< 2 Minute', count: 0 },
-        { label: '3-5 Minuten', count: 0 },
-        { label: '6-10 Minuten', count: 0 },
-        { label: '11-20 Minuten', count: 0 },
-        { label: '21-60 Minuten', count: 0 },
-        { label: '61+ Minuten', count: 0 },
+        { label: '0 - 1 Minute', count: 0 },
+        { label: '2 - 4 Minuten', count: 0 },
+        { label: '5 - 9 Minuten', count: 0 },
+        { label: '10 - 19 Minuten', count: 0 },
+        { label: '20 -59 Minuten', count: 0 },
+        { label: '60+ Minuten', count: 0 },
       ]
 
       for (const time of sessionTimes) {
-        if (time < 120000) {
+        if (time < 1000 * 60 * 2) {
           binsTime[0].count++
-        } else if (time < 330000) {
+        } else if (time < 1000 * 60 * 5) {
           binsTime[1].count++
-        } else if (time < 600000) {
+        } else if (time < 1000 * 60 * 10) {
           binsTime[2].count++
-        } else if (time < 1200000) {
+        } else if (time < 1000 * 60 * 20) {
           binsTime[3].count++
-        } else if (time < 3600000) {
+        } else if (time < 1000 * 60 * 60) {
           binsTime[4].count++
         } else {
           binsTime[5].count++
@@ -234,7 +236,7 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       )
 
       const bins: Bin[] = [
-        { label: '0-2', count: 0 },
+        { label: '1-2', count: 0 },
         { label: '3-5', count: 0 },
         { label: '6-10', count: 0 },
         { label: '11-20', count: 0 },
@@ -280,6 +282,8 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
     })
   }
 
+  output.groups.reverse()
+
   return {
     props: output,
     revalidate: 10 * 60, // 10 minutes
@@ -287,7 +291,7 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
 }
 
 const Page: NextPage<Data> = ({ groups, dateString }) => {
-  const [selectedGroup, setSelectedGroup] = useState(groups.length - 1)
+  const [selectedGroup, setSelectedGroup] = useState(0)
 
   const data = groups[selectedGroup]
 
@@ -331,12 +335,26 @@ const Page: NextPage<Data> = ({ groups, dateString }) => {
           Median Bearbeitungszeit insgesamt:{' '}
           <strong>{data.timesMedianAll} Minuten</strong>
         </div>
-        <div className="mt-4">
-          <small>
-            Dashboard generiert um {dateString}, Updates alle 10 Minuten. Lade
-            Seite neu für aktuellere Version falls verfügbar.
-          </small>
-        </div>
+      </div>
+      <div className="mt-8 rounded-lg bg-yellow-100 p-4">
+        Dieses Dashboard wertet korrekt gelöste interaktive Aufgaben aus. Das
+        beinhaltet Single/Multiple-Choice, Input und H5P. Aufgaben ohne
+        interaktives Element werden nicht betrachtet.
+        <br />
+        <br />
+        Aktive NutzerInnen haben mindestens eine Aufgabe korrekt gelöst. Die
+        Bearbeitungszeit startet mit der ersten korrekten Lösung und endet mit
+        der letzten korrekten Lösung.
+        <br />
+        <br />
+        Wenn eine NutzerIn eine Aufgabe mehrfach löst, wird das nur einmalig zur
+        Zahl der gelösten Aufgaben hinzugerechnet.
+      </div>
+      <div className="ml-4 mt-3">
+        <small>
+          Dashboard generiert um {dateString}, Updates alle 10 Minuten. Lade
+          Seite neu für aktuellere Version falls verfügbar.
+        </small>
       </div>
       <div className="mt-16">
         {data.pages.map((page, i) => (
