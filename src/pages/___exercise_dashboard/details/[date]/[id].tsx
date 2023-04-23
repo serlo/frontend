@@ -66,6 +66,8 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
 
   await prettifyLinks(pageData)
 
+  const date = (context.params?.date as string) ?? ''
+
   const ids = []
   const revisions = []
 
@@ -90,6 +92,22 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const sessions = new Set()
 
   const data = relevantData.reduce((result, obj) => {
+    const mydate = obj.timestamp
+      .toLocaleDateString('de-DE', {
+        timeZone: 'Europe/Berlin',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+      .replace(/\./g, '-')
+
+    if (
+      mydate !== date ||
+      !(obj.path.includes(`/${id}/`) || obj.path === `/${id}`)
+    ) {
+      return result
+    }
+
     const key = obj.entityId
     const entry = (result[key] = result[key] ?? {
       correct: new Set(),
@@ -121,7 +139,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
-      exerciseStatsData: { data: output, fullCount: sessions.size },
+      exerciseStatsData: { data: output, fullCount: sessions.size, date },
     },
     revalidate: 60 * 10, // 10 min,
   }

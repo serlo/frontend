@@ -13,6 +13,7 @@ import { prisma } from '@/helper/prisma'
 interface Data {
   groups: {
     date: string
+    dateInternal: string
     sessionsAll: number
     solvedAll: number
     entityCount: number
@@ -104,6 +105,15 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       solvedAll.add(`${entry.sessionId}-${entry.entityId}`)
     )
 
+    const date = data[0].timestamp
+      .toLocaleDateString('de-DE', {
+        timeZone: 'Europe/Berlin',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+      .replace(/\./g, '-')
+
     const entityAll = new Set()
     data.forEach((entry) => entityAll.add(entry.entityId))
 
@@ -151,13 +161,13 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       const solved = new Set()
 
       page[1].forEach((entry) => {
+        sessions.add(entry.sessionId)
         if (entry.result === 'correct') {
-          sessions.add(entry.sessionId)
           solved.add(`${entry.sessionId}-${entry.entityId}`)
         }
       })
 
-      if (solved.size === 0) continue
+      //if (solved.size === 0) continue
 
       const sessionTimesObj = page[1].reduce((result, obj) => {
         const key = obj.sessionId
@@ -237,6 +247,7 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       )
 
       const bins: Bin[] = [
+        { label: 'keine', count: 0 },
         { label: '1-2', count: 0 },
         { label: '3-5', count: 0 },
         { label: '6-10', count: 0 },
@@ -245,16 +256,18 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
       ]
 
       for (const time of solvedCount) {
-        if (time <= 2) {
+        if (time === 0) {
           bins[0].count++
-        } else if (time <= 5) {
+        } else if (time <= 2) {
           bins[1].count++
-        } else if (time <= 10) {
+        } else if (time <= 5) {
           bins[2].count++
-        } else if (time <= 20) {
+        } else if (time <= 10) {
           bins[3].count++
-        } else {
+        } else if (time <= 20) {
           bins[4].count++
+        } else {
+          bins[5].count++
         }
       }
 
@@ -274,6 +287,7 @@ export const getStaticProps: GetStaticProps<Data> = async () => {
 
     output.groups.push({
       date: group,
+      dateInternal: date,
       sessionsAll: sessionsAll.size,
       solvedAll: solvedAll.size,
       timesMedianAll: Math.round(median(sessionTimesAll) / 1000 / 60),
@@ -376,7 +390,9 @@ const Page: NextPage<Data> = ({ groups, dateString }) => {
                 {page.path}
               </a>{' '}
               <Link
-                href={`/___exercise_dashboard/details/${(() => {
+                href={`/___exercise_dashboard/details/${
+                  data.dateInternal
+                }/${(() => {
                   const match = page.path.match(/\/(\d+)\/(.+)/)
                   if (!match) return 1553
                   return match[1]

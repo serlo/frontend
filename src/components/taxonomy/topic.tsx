@@ -105,7 +105,8 @@ export function Topic({ data }: TopicProps) {
             <br />
             <br />
             <span className="ml-3">
-              Insgesamt <strong>{exerciseStats.fullCount}</strong> NutzerInnen
+              <strong>{exerciseStats.fullCount}</strong> NutzerInnen am{' '}
+              {exerciseStats.date.replace(/-/g, '.')}
             </span>
           </div>
         )}

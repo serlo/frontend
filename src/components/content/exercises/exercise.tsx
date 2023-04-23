@@ -271,8 +271,30 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     return (
       <div className="p-2 ml-2 border border-fuchsia-400 rounded-xl my-4">
-        {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst nach
-        Versuchen / {entry.wrong} mal nicht gelöst
+        <div>
+          {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst nach
+          Versuchen / {entry.wrong} mal nicht gelöst
+        </div>
+        <div className="mt-2 h-2 w-full bg-gray-300 flex">
+          <div
+            className="bg-green-500"
+            style={{
+              width: `${(entry.correct / exerciseData.fullCount) * 100}%`,
+            }}
+          ></div>
+          <div
+            className="bg-yellow-500"
+            style={{
+              width: `${(entry.afterTrying / exerciseData.fullCount) * 100}%`,
+            }}
+          ></div>
+          <div
+            className="bg-red-500"
+            style={{
+              width: `${(entry.wrong / exerciseData.fullCount) * 100}%`,
+            }}
+          ></div>
+        </div>
       </div>
     )
   }

@@ -5,6 +5,7 @@ export interface ExerciseFolderStatsData {
     [key: string]: { correct: number; wrong: number; afterTrying: number }
   }
   fullCount: number
+  date: string
 }
 
 export const ExerciseFolderStatsContext =
