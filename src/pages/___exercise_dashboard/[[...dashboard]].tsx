@@ -46,7 +46,18 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps<Data> = async () => {
-  const data = await prisma.exerciseSubmission.findMany()
+  // Create a new date object
+  const currentDate = new Date()
+
+  // Get the timestamp value for 3 days ago in milliseconds
+  const timestampFourDaysAgo = currentDate.getTime() - 3 * 24 * 60 * 60 * 1000
+
+  // Create a new date object for 3 days ago using the timestamp value
+  const dateFourDaysAgo = new Date(timestampFourDaysAgo)
+
+  const data = await prisma.exerciseSubmission.findMany({
+    where: { timestamp: { gt: dateFourDaysAgo } },
+  })
 
   const ids: number[] = []
 
