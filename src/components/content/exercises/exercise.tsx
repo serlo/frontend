@@ -271,6 +271,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     return (
       <div className="p-2 ml-2 border border-fuchsia-400 rounded-xl my-4">
+        {!exerciseData.revisions.includes(node.context.revisionId) && (
+          <div className="bg-red-300 px-3 py-1 mt-2 rounded mb-4">
+            Warnung: Daten beziehen sich auf eine andere Revision als angezeigt.
+          </div>
+        )}
         <div>
           {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst nach
           Versuchen / {entry.wrong} mal nicht gelöst

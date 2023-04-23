@@ -69,24 +69,22 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const date = (context.params?.date as string) ?? ''
 
   const ids = []
-  const revisions = []
+  const revisions: number[] = []
 
   if (pageData.kind === 'taxonomy') {
     for (const ex of pageData.taxonomyData.exercisesContent) {
       if (ex.type === FrontendNodeType.Exercise) {
         ids.push(ex.context.id)
-        revisions.push(ex.context.revisionId)
       } else {
         for (const child of ex.children ?? []) {
           ids.push(child.context.id)
-          revisions.push(child.context.revisionId)
         }
       }
     }
   }
 
   const relevantData = await prisma.exerciseSubmission.findMany({
-    where: { AND: { entityId: { in: ids }, revisionId: { in: revisions } } },
+    where: { AND: { entityId: { in: ids } } },
   })
 
   const sessions = new Set()
@@ -120,6 +118,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
       entry.wrong.add(obj.sessionId)
     }
     sessions.add(obj.sessionId)
+    revisions.push(obj.revisionId)
     return result
   }, {} as { [key: string]: { correct: Set<string>; wrong: Set<string> } })
 
@@ -139,7 +138,12 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
-      exerciseStatsData: { data: output, fullCount: sessions.size, date },
+      exerciseStatsData: {
+        data: output,
+        fullCount: sessions.size,
+        date,
+        revisions,
+      },
     },
     revalidate: 60 * 10, // 10 min,
   }
