@@ -314,6 +314,7 @@ export const instanceData = {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
       alreadyLoggedIn: "👋 Willkommen zurück",
+      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
