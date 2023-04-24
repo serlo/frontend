@@ -193,10 +193,13 @@ export const useFormattingOptions = (
       const isListsOptionEnabled = formattingOptions.includes(
         TextEditorFormattingOption.lists
       )
-      const isTab = isHotkey('tab', event)
-      const isShiftTab = isHotkey('shift+tab', event)
+      if (!isListsOptionEnabled) return
 
-      if (isListsOptionEnabled || isTab || isShiftTab) return
+      const isListActive =
+        isOrderedListActive(editor) || isUnorderedListActive(editor)
+      const isTabShortcut =
+        isHotkey('tab', event) || isHotkey('shift+tab', event)
+      if (!isListActive && isTabShortcut) return
 
       return slateListsOnKeyDown(editor, event)
     },
