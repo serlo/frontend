@@ -30,8 +30,22 @@ export function AuthProvider({
     getAuthPayloadFromLocalCookie()
   )
 
-  function refreshAuth(session: Session | null) {
-    setAuthenticationPayload(getAuthPayloadFromSession(session))
+  function refreshAuth(
+    session?: Session | null,
+    cookiePayload?: AuthenticationPayload
+  ) {
+    const newPayload =
+      session !== undefined ? getAuthPayloadFromSession(session) : cookiePayload
+
+    if (newPayload === undefined) return
+
+    // careful: when changed this updates most of the components and can reset state in e.g. the editor!
+    // use functional update to get the current value of the payload
+    // returning same value will skip set state
+    setAuthenticationPayload((authenticationPayload) => {
+      const isChanged = authenticationPayload?.id !== newPayload?.id
+      return isChanged ? newPayload : authenticationPayload
+    })
   }
 
   // check if kratos session still exists (single logout)
@@ -48,15 +62,8 @@ export function AuthProvider({
   useEffect(() => {
     const refreshWhenVisible = () => {
       if (!document.visibilityState) return
-      const cookiePayload = getAuthPayloadFromLocalCookie()
 
-      // use functional update to get the current value of the payload
-      // returning same value will skip set state
-      setAuthenticationPayload((authenticationPayload) => {
-        return cookiePayload?.id !== authenticationPayload?.id
-          ? cookiePayload
-          : authenticationPayload
-      })
+      refreshAuth(undefined, getAuthPayloadFromLocalCookie())
 
       // check if kratos session still exists (single logout)
       if (authenticationPayload && !isProduction) {
