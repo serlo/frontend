@@ -190,9 +190,15 @@ export const useFormattingOptions = (
 
   const handleListsShortcuts = useCallback(
     (event: React.KeyboardEvent, editor: SlateEditor) => {
-      if (formattingOptions.includes(TextEditorFormattingOption.lists)) {
-        return slateListsOnKeyDown(editor, event)
-      }
+      const isListsOptionEnabled = formattingOptions.includes(
+        TextEditorFormattingOption.lists
+      )
+      const isTab = isHotkey('tab', event)
+      const isShiftTab = isHotkey('shift+tab', event)
+
+      if (isListsOptionEnabled || isTab || isShiftTab) return
+
+      return slateListsOnKeyDown(editor, event)
     },
     [formattingOptions]
   )
