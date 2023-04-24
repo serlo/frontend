@@ -7,6 +7,7 @@ export interface ExerciseFolderStatsData {
   fullCount: number
   date: string
   revisions: number[]
+  times: string[]
 }
 
 export const ExerciseFolderStatsContext =

@@ -73,6 +73,8 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const ids = []
   const revisions: number[] = []
 
+  const times: string[] = []
+
   if (pageData.kind === 'taxonomy') {
     for (const ex of pageData.taxonomyData.exercisesContent) {
       if (ex.type === FrontendNodeType.Exercise) {
@@ -88,6 +90,8 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const relevantData = await prisma.exerciseSubmission.findMany({
     where: { AND: { entityId: { in: ids } } },
   })
+
+  relevantData.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
 
   const sessions = new Set()
 
@@ -106,6 +110,16 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
       !(obj.path.includes(`/${id}/`) || obj.path === `/${id}`)
     ) {
       return result
+    }
+
+    if (!sessions.has(obj.sessionId)) {
+      times.push(
+        obj.timestamp.toLocaleTimeString('de-DE', {
+          timeZone: 'Europe/Berlin',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
+      )
     }
 
     const key = obj.entityId
@@ -145,6 +159,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
         fullCount: sessions.size,
         date,
         revisions,
+        times,
       },
     },
     revalidate: 60 * 10, // 10 min,
