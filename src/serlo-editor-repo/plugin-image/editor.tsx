@@ -50,7 +50,6 @@ const Caption = styled.div({
   marginTop: '1rem',
   textAlign: 'center',
   fontStyle: 'italic',
-  'span[contenteditable]': { width: 'auto !important' },
 })
 
 export function ImageEditor(props: ImageProps) {
