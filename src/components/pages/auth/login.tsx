@@ -1,8 +1,11 @@
-import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
+import type { FlowError, LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { changeButtonTypeOfSSOProvider } from './ory-transforms'
+import {
+  changeButtonTypeOfSSOProvider,
+  sortKratosUiNodes,
+} from './ory-transforms'
 import {
   filterUnwantedRedirection,
   loginUrl,
@@ -79,18 +82,16 @@ export function Login({ oauth }: { oauth?: boolean }) {
             ...response.data.ui,
             nodes: response.data.ui.nodes
               .map(changeButtonTypeOfSSOProvider)
-              .sort((a, b) =>
-                a.group !== 'oidc' && b.group === 'oidc' ? -1 : 1
-              ),
+              .sort(sortKratosUiNodes),
           },
         }
 
         setFlow(data)
       } catch (e) {
-        const error = e as AxiosError // is
+        const error = e as AxiosError
         const data = error.response?.data as { error: { id: string } }
 
-        if (oauth && data.error?.id === 'session_already_available') {
+        if (oauth && data?.error?.id === 'session_already_available') {
           void oauthHandler('login', String(loginChallenge))
         }
         await handleFlowError(router, FlowType.login, setFlow, strings)(error)
@@ -190,7 +191,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           FlowType.login,
           setFlow,
           strings
-        )(e as AxiosError)
+        )(e as AxiosError<LoginFlow>)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

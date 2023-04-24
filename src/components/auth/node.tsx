@@ -70,6 +70,7 @@ export function Node({
         })
         return null
       }
+      // provider - NBP button
       case 'button': {
         const fallbackLabel = 'Could not find translation'
         const label = node.meta.label?.id
@@ -99,14 +100,7 @@ export function Node({
               value={(attributes.value as string) || ''}
               disabled={attributes.disabled || disabled}
             >
-              {isLoading ? (
-                <FaIcon
-                  icon={faSpinner}
-                  className={clsx('animate-spin-slow')}
-                />
-              ) : (
-                label
-              )}
+              {label}
             </button>
           </div>
         )
