@@ -42,10 +42,11 @@ export function AuthProvider({
     // careful: when changed this updates most of the components and can reset state in e.g. the editor!
     // use functional update to get the current value of the payload
     // returning same value will skip set state
-    setAuthenticationPayload((authenticationPayload) => {
-      const isChanged = authenticationPayload?.id !== newPayload?.id
-      return isChanged ? newPayload : authenticationPayload
-    })
+    setAuthenticationPayload((authenticationPayload) =>
+      authenticationPayload?.id !== newPayload?.id
+        ? newPayload
+        : authenticationPayload
+    )
   }
 
   // check if kratos session still exists (single logout)
