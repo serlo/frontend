@@ -32,7 +32,9 @@ export default renderedPageNoHooks<DetailsProps>(
             Details sind nur für Aufgabenordner verfügbar.
           </div>
           <div className="mt-2">
-            <Link href="/___exercise_dashboard">zurück</Link>
+            <Link href={'/___exercise_dashboard/' + exerciseStatsData.date}>
+              zurück
+            </Link>
           </div>
         </FrontendClientBase>
       )

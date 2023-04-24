@@ -99,7 +99,10 @@ export function Topic({ data }: TopicProps) {
             </span>
             <br />
             <br />
-            <Link href="/___exercise_dashboard" className="ml-4">
+            <Link
+              href={'/___exercise_dashboard/' + exerciseStats.date}
+              className="ml-4"
+            >
               zurück zur Übersicht
             </Link>
             <br />

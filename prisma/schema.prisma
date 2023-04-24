@@ -19,4 +19,5 @@ model ExerciseSubmission {
   sessionId  String   @db.VarChar(64)
 
   @@index([entityId])
+  @@index([timestamp])
 }
