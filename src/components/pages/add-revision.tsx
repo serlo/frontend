@@ -17,6 +17,7 @@ import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
   OnSaveData,
@@ -50,7 +51,14 @@ export function AddRevision({
       setUserReady(isProduction ? auth !== null : true)
     }
     void confirmAuth()
-  }, [auth])
+
+    // special case for add-revision route
+    if (userReady !== undefined && !auth) {
+      showToastNotice(strings.notices.warningLoggedOut, 'warning', 60000)
+    }
+    // do not rerun on userReady change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth, strings])
 
   if (!setEntityMutation) return null
 

@@ -249,7 +249,7 @@ export function EquationsEditor(props: EquationsProps) {
                           ) : (
                             <td />
                           )}
-                          <td colSpan={2}>
+                          <td colSpan={2} style={{ minWidth: '10rem' }}>
                             {step.explanation.render({
                               config: {
                                 placeholder:

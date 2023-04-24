@@ -196,8 +196,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
               node.positionInGroup ? node.positionInGroup : path?.join('') ?? ''
             }-`}
             renderNested={renderNested}
-            path={path}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
@@ -205,17 +208,24 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         return (
           <InputExercise
             data={state.interactive.state}
-            path={path}
             renderNested={renderNested}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
       if (state.interactive.plugin === 'h5p') {
         return (
-          <Lazy>
-            <H5p url={state.interactive.state} />
-          </Lazy>
+          <H5p
+            url={state.interactive.state}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
+          />
         )
       }
     }
@@ -242,8 +252,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderLicense() {
     if (!node.task.license) return null
-    return (
-      <LicenseNotice minimal data={node.task.license} type="task" path={path} />
-    )
+    return <LicenseNotice minimal data={node.task.license} type="task" />
   }
 }

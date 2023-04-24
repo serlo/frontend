@@ -9,7 +9,7 @@ import {
 } from 'react-redux'
 import { Unsubscribe } from 'redux'
 
-import { Action, getScope, ScopedState, State } from '../store'
+import { Action, getScope, ScopedState, ScopedStore, State } from '../store'
 
 /** @public */
 export const ScopeContext = React.createContext<{
@@ -18,10 +18,9 @@ export const ScopeContext = React.createContext<{
 }>({ scope: '' })
 
 /** @public */
-export const EditorContext = React.createContext<
-  // TODO: This is a workaround until API extractor supports import() types, see https://github.com/microsoft/rushstack/pull/1916
-  ReactReduxContextValue<State>
->(undefined as unknown as ReactReduxContextValue<State>)
+export const EditorContext = React.createContext(
+  undefined as unknown as ReactReduxContextValue<State>
+)
 
 /** @public */
 export const ErrorContext = React.createContext<
@@ -105,7 +104,7 @@ export const useStore = createStoreHook(EditorContext)
 export function useScopedStore(enforcedScope?: string) {
   const scope = useScope(enforcedScope)
   const store = useStore()
-  return React.useMemo(() => {
+  return React.useMemo((): ScopedStore => {
     return {
       dispatch: scopeDispatch(store.dispatch, scope),
       getState: () => {

@@ -1,17 +1,22 @@
 import type A from 'algebra.js'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/frontend-node-types'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { exerciseSubmission } from '@/helper/exercise-submission'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
-  path?: NodePath
   renderNested: RenderNestedFunction
   isRevisionView?: boolean
+  context: {
+    entityId: number
+    revisionId: number
+  }
 }
 
 interface FeedbackData {
@@ -23,11 +28,14 @@ export function InputExercise({
   data,
   renderNested,
   isRevisionView,
+  context,
 }: InputExerciseProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const [A, setA] = useState<typeof import('algebra.js') | null>(null)
   const exStrings = useInstanceData().strings.content.exercises
+
+  const { asPath } = useRouter()
 
   useEffect(() => {
     void import('algebra.js').then((value) => setA(value))
@@ -35,6 +43,13 @@ export function InputExercise({
 
   function evaluate() {
     const feedbackData = checkAnswer()
+    exerciseSubmission({
+      path: asPath,
+      entityId: context.entityId,
+      revisionId: context.revisionId,
+      result: feedbackData.correct ? 'correct' : 'wrong',
+      type: 'input',
+    })
     setFeedback(feedbackData)
   }
 
@@ -43,10 +58,10 @@ export function InputExercise({
       <input
         className={clsx(
           'print:hidden serlo-input-font-reset',
-          'rounded-3xl py-2 px-3 active:font-bold focus:font-bold ',
-          'border-3 border-brand bg-brand mb-5 text-white',
+          'rounded-3xl py-2 px-3 font-bold',
+          'border-3 border-brand-400 mb-5 text-white focus:border-brand active:border-brand',
           'focus:outline-none focus:bg-white focus:text-brand focus:opacity-100 focus:placeholder-opacity-0',
-          'placeholder-white'
+          'placeholder-brand'
         )}
         type="text"
         value={value}

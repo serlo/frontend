@@ -207,7 +207,7 @@ function renderElement({
       path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
       <>
-        <Link href={element.href} path={path} unreviewed={isOnProfile}>
+        <Link href={element.href} unreviewed={isOnProfile}>
           {children}
         </Link>
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
@@ -291,7 +291,6 @@ function renderElement({
     return (
       <Image
         element={element}
-        path={path}
         extraInfo={
           isRevisionView ? (
             <ExtraRevisionViewInfo element={element} />
@@ -303,7 +302,7 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.SpoilerContainer) {
     if (!Array.isArray(children)) return null
-    return <Spoiler title={children[0]} body={children[1]} path={path} />
+    return <Spoiler title={children[0]} body={children[1]} />
   }
   if (element.type === FrontendNodeType.SpoilerBody) {
     return (
@@ -385,7 +384,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Geogebra) {
     return (
       <Lazy noPrint>
-        <Geogebra id={element.id} path={path} />
+        <Geogebra id={element.id} />
       </Lazy>
     )
   }
@@ -450,7 +449,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
-        <Video src={element.src} path={path} license={element.license} />
+        <Video src={element.src} license={element.license} />
       </Lazy>
     )
   }

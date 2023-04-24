@@ -106,7 +106,7 @@ export function PrivacyWrapper({
           />
         </div>
         {!consentGiven && (
-          <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand cursor-default">
+          <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand-700 cursor-default">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (

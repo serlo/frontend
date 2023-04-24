@@ -30,10 +30,9 @@ export function Horizon({ data }: HorizonProps) {
             key={index}
           >
             <Link
-              className="text-brand text-left leading-cozy hover:no-underline hover:text-truegray-700"
+              className="text-brand-700 text-left leading-cozy hover:no-underline hover:text-truegray-700"
               href={horizonEntry.url}
               noExternalIcon
-              path={[]}
             >
               <img
                 className="mb-2.5 pr-1 h-auto"

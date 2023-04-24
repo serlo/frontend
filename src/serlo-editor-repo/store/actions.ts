@@ -1,4 +1,3 @@
-import { ClipboardAction, InternalClipboardAction } from './clipboard/actions'
 import { DocumentsAction, InternalDocumentsAction } from './documents/actions'
 import { FocusAction } from './focus/actions'
 import { createActionCreator } from './helpers'
@@ -33,7 +32,6 @@ export interface ApplyActionsAction {
 
 /** @public */
 export type Action =
-  | ClipboardAction
   | DocumentsAction
   | FocusAction
   | HistoryAction
@@ -44,7 +42,6 @@ export type Action =
 export type InternalAction =
   | Action
   | ApplyActionsAction
-  | InternalClipboardAction
   | InternalDocumentsAction
   | InternalHistoryAction
   | InternalRootAction

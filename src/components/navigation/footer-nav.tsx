@@ -43,7 +43,6 @@ export function FooterNav({ data }: FooterNavProps) {
                     <Link
                       href={link.url}
                       noExternalIcon
-                      path={['footer', index, childindex]}
                       className={clsx(
                         'text-truegray-600 hover:text-black hover:no-underline',
                         'inline-block py-2 sm:py-0 leading-tight sm:border-b-2 hover:border-black border-transparent'

@@ -1,5 +1,4 @@
 export * from './actions'
-export * from './clipboard'
 export * from './documents'
 export * from './focus'
 export * from './history'
@@ -29,6 +28,7 @@ export type {
   State,
   Store,
   ScopedState,
+  ScopedStore,
   InternalState,
   InternalStore,
   InternalScopedState,

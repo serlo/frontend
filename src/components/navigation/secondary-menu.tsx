@@ -30,7 +30,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
           )}
         />
         <ul className="whitespace-nowrap my-3.5 px-4 pt-3" ref={containerRef}>
-          {data.map((entry, i) => {
+          {data.map((entry) => {
             return (
               <li
                 className={clsx(
@@ -41,11 +41,7 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                 key={entry.url}
                 ref={entry.active ? activeRef : null}
               >
-                <Link
-                  href={entry.url}
-                  path={[`metamenu${i}`]}
-                  className="hover:no-underline"
-                >
+                <Link href={entry.url} className="hover:no-underline">
                   {entry.title}
                 </Link>
               </li>
@@ -60,12 +56,11 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
         )}
       >
         <ul>
-          {data.map((entry, i) => {
+          {data.map((entry) => {
             return (
               <li className="mb-1.5" key={entry.title}>
                 <Link
                   href={entry.url}
-                  path={[`metamenu${i}`]}
                   className="hover:no-underline block group py-1"
                   noExternalIcon
                 >

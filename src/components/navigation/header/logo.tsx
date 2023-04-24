@@ -11,7 +11,7 @@ export function Logo({ foldOnMobile }: LogoProps) {
   const { strings } = useInstanceData()
 
   return (
-    <Link href="/" path={['logo']} className="w-min sm:w-auto">
+    <Link href="/" className="w-min sm:w-auto">
       <img
         className="inline"
         alt="Serlo"

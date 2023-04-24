@@ -21,12 +21,7 @@ export interface TopicCategoryProps {
   id?: number
 }
 
-export function TopicCategory({
-  links,
-  full,
-  category,
-  id,
-}: TopicCategoryProps) {
+export function TopicCategory({ links, full, category }: TopicCategoryProps) {
   const [mounted, setMounted] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -58,7 +53,7 @@ export function TopicCategory({
     </ul>
   )
 
-  function renderLink(link: TaxonomyLink, i: number) {
+  function renderLink(link: TaxonomyLink) {
     if (link.unrevised && !mounted) return null
     if (link.unrevised && mounted && !auth) return null
 
@@ -70,7 +65,6 @@ export function TopicCategory({
             'text-[1.2rem]'
           )}
           href={link.url}
-          path={full ? [category, i] : [id!, category, i]}
         >
           {link.title}
           {link.unrevised && (

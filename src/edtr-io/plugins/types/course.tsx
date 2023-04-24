@@ -10,7 +10,7 @@ import {
   OptionalChild,
   entityType,
 } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { RevisionHistoryLoader } from './helpers/content-loaders/revision-history-loader'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

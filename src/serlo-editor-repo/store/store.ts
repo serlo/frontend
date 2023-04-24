@@ -40,7 +40,6 @@ export function createStore<K extends string>(
       documents: {},
       focus: null,
       root: null,
-      clipboard: [],
       history: {
         undoStack: [],
         redoStack: [],

@@ -173,7 +173,7 @@ export function Node({
   function renderInput(attributes: UiNodeInputAttributes) {
     const basicFields = {
       className:
-        'text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-150 focus:bg-brand-150 focus:outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full border-2 border-transparent focus:border-brand border-solid',
+        'text-xl serlo-input-font-reset serlo-button-light hover:bg-brand-200 focus:bg-brand-200 focus:outline-none -ml-1 mt-1 text-brand hover:text-brand px-4 py-2 w-full border-2 border-transparent focus:border-brand border-solid',
       name: attributes.name,
       onChange: (e: { target: { value: string } }) => {
         void onChange(e.target.value)

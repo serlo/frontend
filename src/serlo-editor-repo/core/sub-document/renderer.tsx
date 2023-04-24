@@ -15,7 +15,6 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const theme = useTheme()
   if (!document) return null
   if (!plugin) {
-    // TODO:
     // eslint-disable-next-line no-console
     console.log('Plugin does not exist')
     return null
