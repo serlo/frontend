@@ -53,12 +53,11 @@ export function AddRevision({
     void confirmAuth()
 
     // special case for add-revision route
-    if (
-      window.location.href.includes('entity/repository/add-revision') &&
-      !auth
-    ) {
+    if (userReady !== undefined && !auth) {
       showToastNotice(strings.notices.warningLoggedOut, 'warning', 60000)
     }
+    // do not rerun on userReady change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth, strings])
 
   if (!setEntityMutation) return null
