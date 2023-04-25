@@ -60,22 +60,24 @@ export function HoveringToolbar(props: HoveringToolbarProps) {
 
   return (
     <>
-      <InlineOverlay
-        config={config}
-        initialPosition={initialPosition}
-        hidden={
-          !selection ||
-          !focused ||
-          isSelectionCollapsed ||
-          SlateEditor.string(editor, selection) === ''
-        }
-      >
-        <HoveringToolbarControls
-          theme={config.theme}
-          controls={controls}
-          editor={editor}
-        />
-      </InlineOverlay>
+      {!isSelectionCollapsed && (
+        <InlineOverlay
+          config={config}
+          initialPosition={initialPosition}
+          hidden={
+            !selection ||
+            !focused ||
+            isSelectionCollapsed ||
+            SlateEditor.string(editor, selection) === ''
+          }
+        >
+          <HoveringToolbarControls
+            theme={config.theme}
+            controls={controls}
+            editor={editor}
+          />
+        </InlineOverlay>
+      )}
       <TimeoutBottomToolbarWrapper
         isTouch={isTouchDevice()}
         visible={!!isSelectionCollapsed && isBottomToolbarActive}
