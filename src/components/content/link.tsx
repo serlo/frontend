@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
 import { ExternalLink } from './external-link'
-import { useInstanceData } from '@/contexts/instance-context'
 
 export interface LinkProps {
   href?: string
@@ -17,13 +16,13 @@ export interface LinkProps {
 }
 
 // imported from cf worker redirects.ts
-const cfWorkerLinks = [
+export const cfWorkerLinks = [
   '/privacy',
   '/imprint',
   '/terms',
   '/datenschutz',
   '/nutzungsbedingungen',
-  'impressum',
+  '/impressum',
   '/disable-frontend',
   '/enable-frontend',
   '/labschool',
@@ -34,12 +33,6 @@ const cfWorkerLinks = [
   '/beitreten',
   '/global',
 ]
-
-export function shouldUseCSR(href: string) {
-  // do not use CSR for redirects that are handled in the cf-worker
-  // or for serlo subdomains like community.serlo.org or es.serlo.org
-  return !cfWorkerLinks.includes(href) && !href.includes('.serlo.org')
-}
 
 // warning: forwarding ref is crucial for dropdowns to work
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
@@ -62,57 +55,54 @@ function InternalLink({
   ref,
   title,
 }: LinkProps & { ref?: ForwardedRef<HTMLAnchorElement> }) {
-  const { lang } = useInstanceData()
   const router = useRouter()
 
-  if (!href || href === undefined || href === '')
+  const { parsedHref, clientSide, isExternal, isContentOnly } = parseLink()
+
+  if (parsedHref === '') renderEmptyLink()
+
+  return forceNoCSR || !clientSide
+    ? renderDefaultLink(parsedHref)
+    : renderClientSideLink(parsedHref)
+
+  function parseLink() {
+    if (!href || href === undefined || href === '' || !router.locale)
+      return { parsedHref: '', clientSide: false }
+
+    const _href = href.replace(`https://${router.locale}.serlo.org`, '')
+
+    const isAbsolute = _href.includes('//')
+    const isSerloSubdomain = isAbsolute && _href.includes('.serlo.org') //e.g. community.serlo.org
+    const isExternal = isAbsolute && !isSerloSubdomain
+    const isAnchor = _href.startsWith('#') || _href.startsWith('/#')
+    const isMailto = _href.startsWith('mailto:')
+    // pathname maps to the page that rendered the site, this is more reliable
+    const isContentOnly = router.pathname.startsWith('/content-only/') //router.pathname
+
+    if (isAnchor || isMailto || isSerloSubdomain || isExternal || isContentOnly)
+      return { parsedHref: href, clientSide: false, isExternal, isContentOnly }
+
+    //at this point only internal links should be left
+    const internalHref = /^\\[\d]+$/.test(_href) // compat: e.g. \1234
+      ? _href.replace('\\', '/')
+      : _href.startsWith('/')
+      ? _href
+      : '/' + _href
+
+    // do not use CSR for redirects that are handled in the cf-worker
+    const clientSide = !cfWorkerLinks.includes(href)
+
+    return {
+      parsedHref: internalHref,
+      clientSide,
+    }
+  }
+
+  function renderEmptyLink() {
     return (
       <a className={className} ref={ref} title={title}>
         {children}
       </a>
-    )
-
-  const isAbsolute = href.indexOf('//') > -1
-  const isExternal = isAbsolute && !href.includes('.serlo.org')
-  const isAnchor = href.startsWith('#') || href.startsWith('/#')
-  const isMailto = href.startsWith('mailto:')
-  // pathname maps to the page that rendered the site, this is more reliable
-  const isContentOnly = router.pathname.startsWith('/content-only/')
-
-  if (isAnchor || isMailto || isExternal || forceNoCSR || isContentOnly)
-    return renderDefaultLink(href)
-
-  //at this point only internal links should be left
-  const internalLink = normalizeSerloHref(href)
-
-  if (shouldUseCSR(internalLink)) return renderClientSideLink(internalLink)
-
-  //fallback
-  return renderDefaultLink(internalLink)
-
-  function normalizeSerloHref(_href: string) {
-    // compat: some user use \1234 instead of /1234
-    if (/^\\[\d]+$/.test(_href)) {
-      return _href.replace('\\', '/')
-    }
-
-    return _href.startsWith(`https://${lang}.serlo.org/`)
-      ? _href.replace(`https://${lang}.serlo.org`, '')
-      : _href.startsWith('/')
-      ? _href
-      : '/' + _href
-  }
-
-  function renderClientSideLink(_href: string) {
-    return (
-      <NextLink
-        prefetch={false}
-        href={_href}
-        className={clsx(className, 'serlo-link')}
-        title={title}
-      >
-        {children}
-      </NextLink>
     )
   }
 
@@ -130,6 +120,19 @@ function InternalLink({
         {children}
         {isExternal && !noExternalIcon && <ExternalLink />}
       </a>
+    )
+  }
+
+  function renderClientSideLink(_href: string) {
+    return (
+      <NextLink
+        prefetch={false}
+        href={_href}
+        className={clsx(className, 'serlo-link')}
+        title={title}
+      >
+        {children}
+      </NextLink>
     )
   }
 }

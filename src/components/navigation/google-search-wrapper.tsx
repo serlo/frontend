@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
 
-import { shouldUseCSR } from '../content/link'
+import { cfWorkerLinks } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { submitEvent } from '@/helper/submit-event'
@@ -88,7 +88,7 @@ export function GoogleSeachWrapper() {
           typeof absoluteHref !== 'undefined' &&
           absoluteHref.startsWith(langDomain) &&
           relativeHref !== undefined &&
-          shouldUseCSR(relativeHref)
+          !cfWorkerLinks.includes(relativeHref)
 
         if (isFrontendResultsLink) {
           submitEvent('search-result-click')
