@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 import { RowsPluginConfig, RowsProps, RowsPluginState } from '..'
-import { useScopedSelector } from '../../core'
+import { useScopedSelector, useScopedStore } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
-import { getPlugins, isFocused } from '../../store'
+import { getPlugins, isFocused, getParent } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
@@ -62,6 +62,7 @@ function RowEditor({
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
+  const store = useScopedStore()
   const [menu, setMenu] = React.useState<
     | {
         index: number
@@ -82,7 +83,12 @@ export function RowsEditor(props: RowsProps) {
 
   if (!props.editable) return <RowsRenderer {...props} />
 
-  const isEditorForRootOfDocument = props.id === 'root'
+  // There can be multiple RowsEditor instances within the editor component tree: One for the entire document. Others within certain plugins like box plugin.
+  const isRowEditorForEntireDocument = isParentRootOfDocument()
+  function isParentRootOfDocument() {
+    const parent = getParent(props.id)(store.getState())
+    return parent?.id === 'root'
+  }
   const isDocumentEmpty = props.state.length === 0
 
   return (
@@ -91,13 +97,13 @@ export function RowsEditor(props: RowsProps) {
         style={{
           position: 'relative',
           marginTop: '25px',
-          marginBottom: isEditorForRootOfDocument ? '75px' : undefined,
+          marginBottom: isRowEditorForEntireDocument ? '75px' : undefined,
         }}
       >
         <Separator
           config={config}
           isFirst
-          isLast={isEditorForRootOfDocument && isDocumentEmpty}
+          isLast={isRowEditorForEntireDocument && isDocumentEmpty}
           focused={props.state.length === 0}
           onClick={() => {
             openMenu(0)
@@ -115,7 +121,7 @@ export function RowsEditor(props: RowsProps) {
               index={index}
               rows={props.state}
               row={row}
-              isLastInDocument={isEditorForRootOfDocument && isLastRowEditor}
+              isLastInDocument={isRowEditorForEntireDocument && isLastRowEditor}
             />
           )
         })}
