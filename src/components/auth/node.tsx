@@ -72,22 +72,13 @@ export function Node({
       }
       // provider - NBP button
       case 'button': {
-        const fallbackLabel = 'Could not find translation'
         const label = node.meta.label?.id
           ? getKratosMessageString(
               node.meta.label.id,
               strings.auth.messages,
-              node.meta.label?.text || fallbackLabel
+              node.meta.label?.text ?? strings.auth.messages.code1010002
             )
-          : fallbackLabel
-        if (!label || label === 'Could not find translation') {
-          triggerSentry({
-            message: `kratos: tried to render input node with a missing translation: ${
-              node.meta.label?.id || node.meta.label?.text || ''
-            }`,
-          })
-          return null
-        }
+          : undefined
         return (
           <div className="mt-10">
             <hr />
