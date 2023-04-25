@@ -25,28 +25,36 @@ export function HoveringToolbar(props: HoveringToolbarProps) {
   const { selection } = editor
   const isSelectionCollapsed = selection && Range.isCollapsed(selection)
 
-  const memoized = useRef({ value: text, isSelectionCollapsed })
-  const showBottomToolbar = () => setIsBottomToolbarActive(true)
+  // Save text for later reference
+  const previousTextRef = useRef(text)
+
   useEffect(() => {
-    let debounceTimeout = setTimeout(showBottomToolbar, 2500)
-    const hasValueChanged = memoized.current.value !== text
-    if (
-      hasValueChanged ||
-      memoized.current.isSelectionCollapsed !== isSelectionCollapsed
-    ) {
-      memoized.current = { value: text, isSelectionCollapsed }
-      if (debounceTimeout) {
-        clearTimeout(debounceTimeout)
-      }
-      const timeout = hasValueChanged ? 2500 : 1000
-      if (isSelectionCollapsed) {
-        debounceTimeout = setTimeout(showBottomToolbar, timeout)
-      }
-      setIsBottomToolbarActive(false)
+    let debounceTimeout: ReturnType<typeof setTimeout>
+
+    // Reset the value of isBottomToolbarActive flag
+    setIsBottomToolbarActive(false)
+
+    // Compare the texts from previous and current render
+    const hasValueChanged = previousTextRef.current !== text
+
+    // Update the saved text with the current one
+    previousTextRef.current = text
+
+    // Set timeout duration relative to the type of the change
+    // (longer for text change, shorter for selection change)
+    const timeout = hasValueChanged ? 2500 : 1000
+
+    // If selection is collapsed, start the timeout to show bottom toolbar
+    if (isSelectionCollapsed) {
+      debounceTimeout = setTimeout(
+        () => setIsBottomToolbarActive(true),
+        timeout
+      )
     }
 
+    // If the timeout is active when the component is unmounted, clear it
     return () => {
-      clearTimeout(debounceTimeout)
+      debounceTimeout && clearTimeout(debounceTimeout)
     }
   }, [text, isSelectionCollapsed])
 
