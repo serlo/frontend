@@ -2,10 +2,7 @@ import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import {
-  changeButtonTypeOfSSOProvider,
-  sortKratosUiNodes,
-} from './ory-transforms'
+import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import {
   filterUnwantedRedirection,
   loginUrl,

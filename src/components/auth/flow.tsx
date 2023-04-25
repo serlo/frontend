@@ -25,7 +25,7 @@ import {
 import {
   changeButtonTypeOfSSOProvider,
   sortKratosUiNodes,
-} from '../pages/auth/ory-transforms'
+} from '../pages/auth/ory-helper'
 import {
   filterUnwantedRedirection,
   loginUrl,

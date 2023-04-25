@@ -4,10 +4,7 @@ import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 
-import {
-  changeButtonTypeOfSSOProvider,
-  sortKratosUiNodes,
-} from './ory-transforms'
+import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import { verificationUrl, VALIDATION_ERROR_TYPE } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'

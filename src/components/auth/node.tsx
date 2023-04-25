@@ -99,13 +99,14 @@ export function Node({
 
       case 'submit': {
         // eslint-disable-next-line no-case-declarations
-        const label = node.meta.label?.id
-          ? getKratosMessageString(
-              node.meta.label.id,
-              strings.auth.messages,
-              strings.auth.messages.code1010013
-            )
-          : undefined
+        const label =
+          node.meta.label?.id &&
+          getKratosMessageString(
+            node.meta.label.id,
+            strings.auth.messages,
+            strings.auth.messages.code1010013
+          )
+
         return (
           <button
             className="text-xl serlo-button-green block w-full py-2 mt-10"
