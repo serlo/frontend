@@ -1,4 +1,4 @@
-import type { FlowError, LoginFlow, UpdateLoginFlowBody } from '@ory/client'
+import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
