@@ -375,7 +375,7 @@ export const instanceData = {
         code1010002: "Mit NBP Account anmelden",
         code1010013: "Weiter",
         code1040001: "Account anlegen",
-        code1040002: 'Registriere mit NBP Account',
+        code1040002: 'Mit NBP Account registrieren',
         code1040003: "Weiter mit SSO",
         code1050001: "Deine Änderungen wurden gespeichert! 🎉",
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",

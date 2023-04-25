@@ -42,6 +42,7 @@ enum SortOrderInputFields {
   'traits.language',
   'traits.interest',
   'method',
+  // SSO provider button
   'provider',
 }
 
