@@ -398,6 +398,7 @@ export const instanceData = {
         code1010002: 'Sign in with NBP Account',
         code1010013: 'Continue with SSO',
         code1040001: 'Register',
+        code1040002: 'Register with NBP Account',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001:
