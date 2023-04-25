@@ -64,22 +64,49 @@ export function Node({
           />
         )
 
-      case 'checkbox':
-      case 'button':
+      case 'checkbox': {
         triggerSentry({
           message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
         })
         return null
-
-      case 'submit':
-        // eslint-disable-next-line no-case-declarations
+      }
+      // provider - NBP button
+      case 'button': {
         const label = node.meta.label?.id
           ? getKratosMessageString(
               node.meta.label.id,
               strings.auth.messages,
-              strings.auth.messages.code1010013
+              node.meta.label?.text ?? strings.auth.messages.code1010002
             )
           : undefined
+        return (
+          <div className="mt-10">
+            <hr />
+            <button
+              className="text-xl serlo-button-blue block w-full py-2 mt-10"
+              name={attributes.name}
+              onClick={(e) => {
+                void onSubmit(e, (attributes as { value: string }).value)
+              }}
+              value={(attributes.value as string) || ''}
+              disabled={attributes.disabled || disabled}
+            >
+              {label}
+            </button>
+          </div>
+        )
+      }
+
+      case 'submit': {
+        // eslint-disable-next-line no-case-declarations
+        const label =
+          node.meta.label?.id &&
+          getKratosMessageString(
+            node.meta.label.id,
+            strings.auth.messages,
+            strings.auth.messages.code1010013
+          )
+
         return (
           <button
             className="text-xl serlo-button-green block w-full py-2 mt-10"
@@ -97,6 +124,7 @@ export function Node({
             )}
           </button>
         )
+      }
 
       default:
         if (attributes.disabled || !attributes.required) return null

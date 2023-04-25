@@ -376,8 +376,8 @@ export const instanceData = {
         code1010002: "Mit NBP Account anmelden",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
-        code1040002: "Mit NBP Account registrieren",
-        code1040003: "Weiter",
+        code1040002: 'Mit NBP Account registrieren',
+        code1040003: "Weiter mit SSO",
         code1050001: "Deine Änderungen wurden gespeichert! 🎉",
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
         code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
@@ -980,14 +980,14 @@ export const kratosMailStrings = {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
 versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
- 
+
 Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}
 
 Das Serlo-Team wünscht dir viel Erfolg!`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
- 
+
 <p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
     },
@@ -1018,7 +1018,7 @@ Sonst kannst du diese Mail einfach ignorieren.
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
 wunderbar dich auf serlo.org zu haben 🎉
-      
+
 Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 

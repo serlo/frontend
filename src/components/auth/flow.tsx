@@ -23,6 +23,10 @@ import {
 } from 'react'
 
 import {
+  changeButtonTypeOfSSOProvider,
+  sortKratosUiNodes,
+} from '../pages/auth/ory-helper'
+import {
   filterUnwantedRedirection,
   loginUrl,
   registrationUrl,
@@ -170,9 +174,9 @@ export function Flow<T extends SubmitPayload>({
 export function handleFlowError<S>(
   router: NextRouter,
   flowType: FlowType,
-  resetFlow:
+  setFlow:
     | Dispatch<SetStateAction<S | undefined>>
-    | ((flow?: RegistrationFlow) => void),
+    | ((flow?: RegistrationFlow | LoginFlow) => void),
   strings: InstanceData['strings'],
   throwError?: boolean
 ) {
@@ -220,22 +224,22 @@ export function handleFlowError<S>(
       case 'self_service_flow_return_to_forbidden':
         // The flow expired, let's request a new one.
         // toast.error('The return_to address is not allowed.')
-        resetFlow(undefined)
+        setFlow(undefined)
         await router.push(flowPath)
         return
       case 'self_service_flow_expired':
         // The flow expired, let's request a new one.
-        resetFlow(undefined)
+        setFlow(undefined)
         await router.push(flowPath)
         return
       case 'security_csrf_violation':
         // A CSRF violation occurred. Best to just refresh the flow!
-        resetFlow(undefined)
+        setFlow(undefined)
         await router.push(flowPath)
         return
       case 'security_identity_mismatch':
         // The requested item was intended for someone else. Let's request a new flow...
-        resetFlow(undefined)
+        setFlow(undefined)
         await router.push(flowPath)
         return
       case 'browser_location_change_required':
@@ -248,7 +252,7 @@ export function handleFlowError<S>(
     switch (error.response?.status) {
       case 410:
         // The flow expired, let's request a new one.
-        resetFlow(undefined)
+        setFlow(undefined)
         await router.push(flowPath)
         return
       case 400:
@@ -267,11 +271,20 @@ export function handleFlowError<S>(
           const newFlow = error.response?.data as RegistrationFlow
           newFlow.ui.messages = []
           // @ts-expect-error workaround
-          resetFlow(newFlow)
+          setFlow(newFlow)
           showToastNotice(strings.auth.messages.code4000007, 'warning', 6000)
         } else {
+          const data = error.response?.data as RegistrationFlow | LoginFlow
           // @ts-expect-error workaround
-          resetFlow(error.response?.data)
+          setFlow({
+            ...data,
+            ui: {
+              ...data?.ui,
+              nodes: data?.ui?.nodes
+                .sort(sortKratosUiNodes)
+                .map(changeButtonTypeOfSSOProvider),
+            },
+          })
         }
 
         return
