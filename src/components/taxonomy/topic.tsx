@@ -111,11 +111,26 @@ export function Topic({ data }: TopicProps) {
               <strong>{exerciseStats.fullCount}</strong> NutzerInnen am{' '}
               {exerciseStats.date.replace(/-/g, '.')}
             </span>
-            <br />
-            <br />
-            <span className="ml-3">
-              Startzeiten: {exerciseStats.times.join(' - ')}
-            </span>
+            {exerciseStats.date !== 'all' && (
+              <>
+                <br />
+                <br />
+                <span className="ml-3">
+                  Startzeiten: {exerciseStats.times.join(' - ')}
+                </span>
+                <br />
+                <br />
+                <span className="ml-3">
+                  <Link
+                    href={
+                      '/___exercise_dashboard/details/all/' + data.id.toString()
+                    }
+                  >
+                    Gesamtübersicht
+                  </Link>
+                </span>
+              </>
+            )}
           </div>
         )}
         <h1 className="serlo-h1 mt-8 mb-10">

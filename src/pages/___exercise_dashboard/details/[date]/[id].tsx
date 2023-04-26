@@ -96,19 +96,21 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const sessions = new Set()
 
   const data = relevantData.reduce((result, obj) => {
-    const mydate = obj.timestamp
-      .toLocaleDateString('de-DE', {
-        timeZone: 'Europe/Berlin',
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      })
-      .replace(/\./g, '-')
+    if (date !== 'all') {
+      const mydate = obj.timestamp
+        .toLocaleDateString('de-DE', {
+          timeZone: 'Europe/Berlin',
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+        })
+        .replace(/\./g, '-')
 
-    if (
-      mydate !== date ||
-      !(obj.path.includes(`/${id}/`) || obj.path === `/${id}`)
-    ) {
+      if (mydate !== date) {
+        return result
+      }
+    }
+    if (!(obj.path.includes(`/${id}/`) || obj.path === `/${id}`)) {
       return result
     }
 
