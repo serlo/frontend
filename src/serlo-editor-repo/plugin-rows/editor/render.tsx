@@ -283,7 +283,9 @@ export function RowRenderer({
     drag,
   ])
 
-  dragPreview(drop(dropContainer))
+  setTimeout(() => {
+    dragPreview(drop(dropContainer))
+  })
   const dropPreview =
     collectedDropProps.isDragging &&
     (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (

@@ -219,7 +219,6 @@ function renderElement({
     return (
       <Article
         {...element}
-        showThankYou={!isRevisionView}
         renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
       />
     )

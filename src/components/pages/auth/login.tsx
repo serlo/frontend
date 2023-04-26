@@ -2,6 +2,7 @@ import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import {
   filterUnwantedRedirection,
   loginUrl,
@@ -57,15 +58,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
-    // Currenty not in use
-    if (flowId && typeof flowId === 'string') {
-      kratos
-        .getLoginFlow({ id: flowId })
-        .then(({ data }) => setFlow(data))
-        .catch(handleFlowError(router, FlowType.login, setFlow, strings))
-      return
-    }
-
     // Make sure we only init the flow once
     if (initStarted) {
       return
@@ -80,12 +72,23 @@ export function Login({ oauth }: { oauth?: boolean }) {
           aal: aal ? String(aal) : undefined,
           returnTo: returnTo ? String(returnTo) : undefined,
         })
-        setFlow(response.data)
+
+        const data = {
+          ...response.data,
+          ui: {
+            ...response.data.ui,
+            nodes: response.data.ui.nodes
+              .map(changeButtonTypeOfSSOProvider)
+              .sort(sortKratosUiNodes),
+          },
+        }
+
+        setFlow(data)
       } catch (e) {
-        const error = e as AxiosError // is
+        const error = e as AxiosError
         const data = error.response?.data as { error: { id: string } }
 
-        if (oauth && data.error?.id === 'session_already_available') {
+        if (oauth && data?.error?.id === 'session_already_available') {
           void oauthHandler('login', String(loginChallenge))
         }
         await handleFlowError(router, FlowType.login, setFlow, strings)(error)
@@ -185,7 +188,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
           FlowType.login,
           setFlow,
           strings
-        )(e as AxiosError)
+        )(e as AxiosError<LoginFlow>)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {

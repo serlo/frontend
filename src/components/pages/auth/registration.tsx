@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 
+import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import { verificationUrl, VALIDATION_ERROR_TYPE } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
@@ -32,9 +33,15 @@ export function Registration() {
 
   const reorderAndSetFlow = (origFlow?: RegistrationFlow) => {
     if (!origFlow) return
-    const { nodes: n } = origFlow.ui
-    origFlow.ui.nodes = [n[0], n[1], n[3], n[2], ...n.slice(4)]
-    setFlow(origFlow)
+
+    const reorderedNodes = origFlow.ui.nodes
+      .map(changeButtonTypeOfSSOProvider)
+      .sort(sortKratosUiNodes)
+    const newFlow = {
+      ...origFlow,
+      ui: { ...origFlow.ui, nodes: reorderedNodes },
+    }
+    setFlow(newFlow)
   }
 
   useEffect(() => {
