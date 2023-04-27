@@ -158,7 +158,7 @@ export function Revision({ data }: RevisionProps) {
         <div className="serlo-content-with-spacing-fixes">
           <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
           {char && (
-            <span className="mx-side px-1 mb-10 inline-block bg-yellow-200">
+            <span className="mx-side px-1 mb-10 inline-block bg-yellow-100">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
                   data.typename === UuidRevType.GroupedExercise

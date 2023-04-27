@@ -19,7 +19,7 @@ export enum ExerciseState {
 function useSubmitButtonTheme() {
   return useRendererUiTheme('submitButton', (theme) => {
     return {
-      backgroundColor: '#337ab7',
+      backgroundColor: theme.primary.background,
       hoverBackgroundColor: '#d9edf7',
       color: theme.backgroundColor,
       correctBackgroundColor: theme.success.background,

@@ -43,7 +43,10 @@ module.exports = {
         newgreen: '#2fceb1',
         yellow: {
           DEFAULT: yellow,
-          200: '#FFEED7',
+          300: yellow,
+          200: '#FFDAA3',
+          100: '#FFF1DB',
+          50: '#FFF9F0',
         },
         orange: {
           DEFAULT: colors.orange[900],
@@ -53,6 +56,10 @@ module.exports = {
         red: {
           DEFAULT: colors.red[900],
           100: colors.red[100],
+        },
+        sunflower: {
+          DEFAULT: '#FFBE5E',
+          300: '',
         },
       },
       borderWidth: {
