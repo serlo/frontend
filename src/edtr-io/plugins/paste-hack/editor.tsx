@@ -96,7 +96,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
   function renderDataImport() {
     return (
-      <div className="bg-amber-50 p-4">
+      <div className="bg-yellow-50 p-4">
         <b className="serlo-h4 block ml-0 mb-4">Experimental Import</b>
         <p className="mb-4">
           <a
@@ -117,7 +117,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           onKeyDown={(e) => e.stopPropagation()}
         />
         <button
-          className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
+          className="serlo-button bg-yellow-200 hover:bg-yellow focus:bg-yellow mb-12 text-base"
           onClick={replaceWithStateString}
         >
           Import JSON data now

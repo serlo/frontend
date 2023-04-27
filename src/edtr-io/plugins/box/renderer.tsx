@@ -148,7 +148,7 @@ export function BoxRenderer(props: BoxProps) {
   function renderWarning() {
     return contentIsEmpty ? (
       <div className="text-right mt-1">
-        <span className="bg-amber-100 p-0.5 text-sm">
+        <span className="bg-yellow-100 p-0.5 text-sm">
           ⚠️ {editorStrings.box.emptyContentWarning}
         </span>
       </div>

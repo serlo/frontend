@@ -52,7 +52,7 @@ export const OpenInNewTab = styled.span({
 })
 
 export const buttonClass =
-  'serlo-button text-amber-300 hover:bg-amber-300 hover:text-black w-8'
+  'serlo-button text-yellow hover:bg-yellow hover:text-black w-8'
 
 function ArticleEditor(props: ArticleProps) {
   const { editable, state } = props

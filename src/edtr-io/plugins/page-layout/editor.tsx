@@ -56,7 +56,7 @@ export const PageLayoutEditor: React.FunctionComponent<
 
   function renderLi(percent: number) {
     const childClassName =
-      'm-1 bg-amber-200 group-hover:bg-amber-300 group-focus:bg-amber-300 rounded-sm h-20'
+      'm-1 bg-yellow-200 group-hover:bg-yellow group-focus:bg-yellow rounded-sm h-20'
     const active = percent === widthPercent.value
 
     return (
@@ -67,8 +67,8 @@ export const PageLayoutEditor: React.FunctionComponent<
             widthPercent.set(percent)
           }}
           className={clsx(
-            'bg-amber-100 rounded-lg flex flex-row w-24 h-24 opacity-75 mr-2 p-1',
-            'hover:bg-amber-200 focus:bg-amber-200 group',
+            'bg-yellow-100 rounded-lg flex flex-row w-24 h-24 opacity-75 mr-2 p-1',
+            'hover:bg-yellow-200 focus:bg-yellow-200 group',
             active && 'bg-brand'
           )}
         >

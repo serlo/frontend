@@ -224,7 +224,7 @@ export function ScMcExercise({
     )
       return null
     return (
-      <div className="bg-amber-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
+      <div className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
             [{exStrings.correct}]
