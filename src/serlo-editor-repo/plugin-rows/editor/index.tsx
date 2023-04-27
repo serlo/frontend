@@ -70,13 +70,13 @@ export function RowsEditor(props: RowsProps) {
     | undefined
   >(undefined)
 
-  function openMenu(insertIndex: number) {
-    setMenu({
-      index: insertIndex,
-      onClose: (pluginState) => {
-        props.state.insert(insertIndex, pluginState)
-        setMenu(undefined)
-      },
+  function addNewRow(insertIndex: number) {
+    const pluginState = {
+      plugin: 'text',
+      state: [{ type: 'p', children: [{ text: '/' }] }],
+    }
+    setTimeout(() => {
+      props.state.insert(insertIndex, pluginState)
     })
   }
 
@@ -100,7 +100,7 @@ export function RowsEditor(props: RowsProps) {
           isLast={isEditorForRootOfDocument && isDocumentEmpty}
           focused={props.state.length === 0}
           onClick={() => {
-            openMenu(0)
+            addNewRow(0)
           }}
         />
         {props.state.map((row, index) => {
@@ -110,7 +110,7 @@ export function RowsEditor(props: RowsProps) {
               config={config}
               key={row.id}
               openMenu={() => {
-                openMenu(index + 1)
+                addNewRow(index + 1)
               }}
               index={index}
               rows={props.state}
