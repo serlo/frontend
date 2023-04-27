@@ -10,7 +10,7 @@ import { RegistryContext } from '../registry-context'
 import { RowsRenderer } from '../renderer'
 import { Menu } from './menu'
 import { RowRenderer } from './render'
-import { Separator } from './separator'
+import { RowSeparator } from './row-separator'
 
 const DropContainer = styled.div({
   position: 'relative',
@@ -48,10 +48,11 @@ function RowEditor({
         plugins={plugins}
         dropContainer={dropContainer}
       />
-      <Separator
+      <RowSeparator
         config={config}
         focused={focused}
-        onClick={() => {
+        onClick={(event: React.MouseEvent) => {
+          event.preventDefault()
           openMenu(index + 1)
         }}
         isLast={isLastInDocument}
@@ -94,12 +95,13 @@ export function RowsEditor(props: RowsProps) {
           marginBottom: isEditorForRootOfDocument ? '75px' : undefined,
         }}
       >
-        <Separator
+        <RowSeparator
           config={config}
           isFirst
           isLast={isEditorForRootOfDocument && isDocumentEmpty}
           focused={props.state.length === 0}
-          onClick={() => {
+          onClick={(event: React.MouseEvent) => {
+            event.preventDefault()
             addNewRow(0)
           }}
         />
