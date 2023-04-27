@@ -101,10 +101,17 @@ export function TextEditor(props: TextEditorProps) {
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
     setTimeout(() => {
-      const pointAtStart = { offset: 0, path: [0, 0] }
-      Transforms.select(editor, selection || pointAtStart)
       ReactEditor.focus(editor)
+
+      // Workaround for adding a new editor on enter key press:
+      // If the editor is empty, set the cursor at the start
+      const firstChild = editor.children[0]
+      if ('type' in firstChild && firstChild.type === 'p' && text === '') {
+        Transforms.select(editor, { offset: 0, path: [0, 0] })
+      }
     })
+    // No need to re-focus every time `text` changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, focused])
 
   function handleEditorChange(newValue: Descendant[]) {

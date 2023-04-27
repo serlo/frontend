@@ -54,7 +54,7 @@ export function AddRevision({
 
     // special case for add-revision route
     if (userReady !== undefined && !auth) {
-      showToastNotice(strings.notices.warningLoggedOut, 'warning', 60000)
+      showToastNotice(strings.notices.warningLoggedOut, 'warning', 18000)
     }
     // do not rerun on userReady change
     // eslint-disable-next-line react-hooks/exhaustive-deps
