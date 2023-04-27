@@ -111,7 +111,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           ref={textareaRef}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
+            'bg-yellow-100 border-2 border-yellow-100 focus-within:outline-none focus-within:border-yellow'
           )}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}

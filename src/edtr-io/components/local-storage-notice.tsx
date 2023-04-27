@@ -23,12 +23,12 @@ export function LocalStorageNotice({
   if (!stored) return null
 
   return (
-    <div className="bg-brand-100 rounded-2xl m-side mt-12 p-side">
+    <div className="bg-yellow-50 rounded-2xl m-side mt-12 p-side">
       <>
         {storageStrings[useStored ? 'restoreInitial' : 'found']}
         <br />
         <button
-          className="serlo-button-blue mt-2"
+          className="serlo-button bg-yellow-200 hover:bg-yellow text-truegray-800 mt-2"
           onClick={() => {
             if (useStored) {
               if (window.confirm(storageStrings.confirmRestore)) {
