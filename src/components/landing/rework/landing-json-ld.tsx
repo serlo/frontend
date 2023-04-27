@@ -16,7 +16,7 @@ export function LandingJsonLd() {
         'https://w3id.org/kim/lrmi-profile/draft/context.jsonld',
         {
           '@language': 'de',
-          '@vocab': 'http://schema.org',
+          '@vocab': 'http://schema.org/',
           type: '@type',
           id: '@id',
         },
