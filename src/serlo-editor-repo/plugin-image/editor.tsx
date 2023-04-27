@@ -16,14 +16,13 @@ import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
 
-const ImgPlaceholderWrapper = styled.div<EditorThemeProps>((props) => {
+const ImgPlaceholderWrapper = styled.div<EditorThemeProps>(() => {
   return {
     position: 'relative',
     width: '100%',
     textAlign: 'center',
     opacity: '0.4',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: props.theme.editor.primary.background,
+    color: '#ffbe5e',
   }
 })
 

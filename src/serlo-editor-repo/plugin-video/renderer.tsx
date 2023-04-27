@@ -7,6 +7,7 @@ const VideoPlaceholderWrapper = styled.div({
   position: 'relative',
   width: '100%',
   textAlign: 'center',
+  color: '#ffbe5e',
 })
 
 enum VideoType {
@@ -57,7 +58,9 @@ export function VideoRenderer(props: VideoRendererProps) {
     return (
       <VideoPlaceholderWrapper>
         <Icon icon={faFilm} size="5x" />
-        <p>{props.state.src.value ? 'Fehlerhafte URL' : null}</p>
+        <p className="text-truegray-800">
+          {props.state.src.value ? 'Fehlerhafte URL' : null}
+        </p>
       </VideoPlaceholderWrapper>
     )
   }

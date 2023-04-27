@@ -3,16 +3,16 @@ import * as React from 'react'
 import { styled, Icon, faTimes, faPlus } from '../ui'
 
 const AddButtonComponent = styled.button({
-  margin: '5px 2% 5px 2%',
+  margin: '5px',
   width: '96%',
   borderRadius: '10px',
-  backgroundColor: 'white',
+  backgroundColor: '#FFF1DB',
   textAlign: 'left',
-  color: 'lightgrey',
+  color: '#404040',
   minHeight: '50px',
-  border: '2px solid lightgrey',
+  padding: '5px',
   outline: 'none',
-  '&:hover': { border: '3px solid #007ec1', color: '#007ec1' },
+  '&:hover': { backgroundColor: '#FFDAA3' },
 })
 
 /**
