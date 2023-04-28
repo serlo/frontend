@@ -28,6 +28,7 @@ interface Data {
       sessionTimes: Bin[]
       timesMedian: number
       contextPaths: { path: string; count: number }[]
+      times: string[]
     }[]
   }[]
   dateString: string
@@ -218,10 +219,23 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
     const pages = []
 
     for (const page of pagesArr) {
+      page[1].sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+
+      const times: string[] = []
+
       const sessions = new Set()
       const solved = new Set()
 
       page[1].forEach((entry) => {
+        if (!sessions.has(entry.sessionId)) {
+          times.push(
+            entry.timestamp.toLocaleTimeString('de-DE', {
+              timeZone: 'Europe/Berlin',
+              hour: '2-digit',
+              minute: '2-digit',
+            })
+          )
+        }
         sessions.add(entry.sessionId)
         if (entry.result === 'correct') {
           solved.add(`${entry.sessionId}-${entry.entityId}`)
@@ -341,6 +355,7 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
         sessionTimes: binsTime,
         timesMedian: Math.round(median(sessionTimes) / 1000 / 60),
         contextPaths,
+        times,
       })
     }
 
@@ -530,6 +545,7 @@ const Page: NextPage<Data> = ({
                 )}
               </>
             )}
+            <div className="mt-2">Startzeiten: {page.times.join(' - ')}</div>
           </div>
         ))}
       </div>
