@@ -388,6 +388,8 @@ export const instanceData = {
         code4000001: '%reason%',
         code4000002: "%field% bitte noch angeben.",
         code4000005: '%reason%',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
         code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
         code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
