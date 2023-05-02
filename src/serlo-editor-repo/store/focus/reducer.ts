@@ -138,6 +138,29 @@ export const getFocusPath: Selector<string[] | null, [string?]> =
     return path
   })
 
+/**
+ * [[Selector]] that returns the ancestor plugin types starting from the root of the document up until the given id.
+ */
+export const getPluginTypesOnPathToRoot: Selector<string[] | null, [string]> =
+  createDeepEqualSelector((state, leafId) => {
+    const rootNode = getFocusTree()(state)
+    if (!rootNode) return null
+
+    let currentId = leafId
+    let pluginTypes: string[] = []
+
+    while (currentId !== rootNode.id) {
+      const parentNode = findParent(rootNode, currentId)
+      if (!parentNode) return null
+      const pluginType = getDocument(parentNode.id)(state)?.plugin
+      if (pluginType === undefined) return null
+      pluginTypes = [pluginType, ...pluginTypes]
+      currentId = parentNode.id
+    }
+
+    return pluginTypes
+  })
+
 function handleFocus(
   focusState: ScopedState['focus'],
   state: ScopedState,
