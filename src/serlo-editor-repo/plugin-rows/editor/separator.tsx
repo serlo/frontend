@@ -97,13 +97,15 @@ export function Add({
 export function Separator({
   config,
   isFirst,
-  isLast,
+  isLast = false,
+  visuallyEmphasizeAddButton = false,
   onClick,
   focused,
 }: {
   config: RowsPluginConfig
   isFirst?: boolean
   isLast?: boolean
+  visuallyEmphasizeAddButton?: boolean
   onClick: () => void
   focused?: boolean
 }) {
@@ -114,7 +116,7 @@ export function Separator({
           config={config}
           focused={focused || false}
           onClick={onClick}
-          visuallyEmphasized={isLast}
+          visuallyEmphasized={visuallyEmphasizeAddButton}
         />
       </TriggerArea>
     </StyledSeparator>

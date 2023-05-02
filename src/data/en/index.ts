@@ -412,6 +412,8 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006:
           'The username, email address or password was incorrect. Please check for spelling mistakes.',

@@ -3,7 +3,7 @@ import * as React from 'react'
 import { RowsPluginConfig, RowsProps, RowsPluginState } from '..'
 import { useScopedSelector } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
-import { getPlugins, isFocused } from '../../store'
+import { getPlugins, isFocused, getPluginTypesOnPathToRoot } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
@@ -25,14 +25,16 @@ function RowEditor({
   index,
   row,
   rows,
-  isLastInDocument = false,
+  visuallyEmphasizeAddButton = false,
+  isLast = false,
 }: {
   config: RowsPluginConfig
   openMenu(index: number): void
   index: number
   rows: StateTypeReturnType<RowsPluginState>
   row: StateTypeReturnType<RowsPluginState>[0]
-  isLastInDocument?: boolean
+  visuallyEmphasizeAddButton?: boolean
+  isLast?: boolean
 }) {
   const focused = useScopedSelector(isFocused(row.id))
   const plugins = useScopedSelector(getPlugins())
@@ -54,7 +56,8 @@ function RowEditor({
         onClick={() => {
           openMenu(index + 1)
         }}
-        isLast={isLastInDocument}
+        isLast={isLast}
+        visuallyEmphasizeAddButton={visuallyEmphasizeAddButton}
       />
     </DropContainer>
   )
@@ -62,6 +65,9 @@ function RowEditor({
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
+  const pluginTypesOfAncestors = useScopedSelector(
+    getPluginTypesOnPathToRoot(props.id)
+  )
   const [menu, setMenu] = React.useState<
     | {
         index: number
@@ -82,7 +88,19 @@ export function RowsEditor(props: RowsProps) {
 
   if (!props.editable) return <RowsRenderer {...props} />
 
-  const isEditorForRootOfDocument = props.id === 'root'
+  // Prevent add button being visually emphasized when this RowsEditor is contained within certain plugin types.
+  const visuallyEmphasizeLastAddButton =
+    pluginTypesOfAncestors !== null &&
+    pluginTypesOfAncestors.every((pluginType) => {
+      return (
+        pluginType !== 'box' &&
+        pluginType !== 'spoiler' &&
+        pluginType !== 'multimedia' &&
+        pluginType !== 'important'
+      )
+    }) &&
+    pluginTypesOfAncestors[pluginTypesOfAncestors.length - 1] !== 'rows'
+
   const isDocumentEmpty = props.state.length === 0
 
   return (
@@ -91,13 +109,16 @@ export function RowsEditor(props: RowsProps) {
         style={{
           position: 'relative',
           marginTop: '25px',
-          marginBottom: isEditorForRootOfDocument ? '75px' : undefined,
+          marginBottom: visuallyEmphasizeLastAddButton ? '75px' : undefined,
         }}
       >
         <Separator
           config={config}
           isFirst
-          isLast={isEditorForRootOfDocument && isDocumentEmpty}
+          isLast={isDocumentEmpty}
+          visuallyEmphasizeAddButton={
+            visuallyEmphasizeLastAddButton && isDocumentEmpty
+          }
           focused={props.state.length === 0}
           onClick={() => {
             openMenu(0)
@@ -115,7 +136,10 @@ export function RowsEditor(props: RowsProps) {
               index={index}
               rows={props.state}
               row={row}
-              isLastInDocument={isEditorForRootOfDocument && isLastRowEditor}
+              isLast={isLastRowEditor}
+              visuallyEmphasizeAddButton={
+                visuallyEmphasizeLastAddButton && isLastRowEditor
+              }
             />
           )
         })}
