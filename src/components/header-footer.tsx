@@ -9,15 +9,17 @@ export interface HeaderFooterProps {
 
 export function HeaderFooter({ children }: HeaderFooterProps) {
   return (
-    <>
+    <div
+      className="overflow-x-hidden sm:overflow-visible" /* needed for sticky menu*/
+    >
       <Header />
       <div
         id="content" //anchor
-        className="min-h-[68vh] max-w-full overflow-x-hidden sm:overflow-visible" /* needed for sticky menu*/
+        className="min-h-[68vh] max-w-full"
       >
         {children}
       </div>
       <Footer />
-    </>
+    </div>
   )
 }
