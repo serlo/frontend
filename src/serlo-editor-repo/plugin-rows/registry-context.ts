@@ -17,7 +17,7 @@ import {
   faQuoteRight,
 } from '../ui'
 
-export const defaultRegistryPlugins = [
+const defaultRegistryPlugins = [
   {
     name: 'anchor',
     title: 'Anchor',

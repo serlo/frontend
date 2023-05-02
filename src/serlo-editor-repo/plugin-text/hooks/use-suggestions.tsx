@@ -24,9 +24,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   const plugins = useContext(RegistryContext)
   const allOptions = mapPlugins(plugins, text)
+  const filteredOptions = allOptions.filter(({ name }) => name !== 'text')
   const showSuggestions =
-    editable && focused && text.startsWith('/') && allOptions.length > 0
-  const options = showSuggestions ? allOptions : []
+    editable && focused && text.startsWith('/') && filteredOptions.length > 0
+  const options = showSuggestions ? filteredOptions : []
   const currentValue = text.substring(1)
 
   const closure = useRef({
@@ -88,8 +89,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     handleHotkeys,
   }
 
-  function insertPlugin(plugin: string) {
-    store.dispatch(replace({ id, plugin }))
+  function insertPlugin(pluginName: string) {
+    store.dispatch(replace({ id, plugin: pluginName }))
   }
 
   function handleHotkeys(event: React.KeyboardEvent) {
