@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://priys.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
@@ -20,4 +17,7 @@ model ExerciseSubmission {
   result     String   @db.VarChar(8)
   timestamp  DateTime @default(now())
   sessionId  String   @db.VarChar(64)
+
+  @@index([entityId])
+  @@index([timestamp])
 }
