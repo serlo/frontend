@@ -38,12 +38,19 @@ interface RowSeparatorProps {
   config: RowsPluginConfig
   isFirst?: boolean
   isLast?: boolean
+  visuallyEmphasizeAddButton?: boolean
   onClick: React.MouseEventHandler<HTMLDivElement>
   focused?: boolean
 }
 
-export function RowSeparator(props: RowSeparatorProps) {
-  const { config, isFirst, isLast, onClick, focused } = props
+export function RowSeparator({
+  config,
+  isFirst,
+  isLast = false,
+  visuallyEmphasizeAddButton = false,
+  onClick,
+  focused,
+}: RowSeparatorProps) {
   return (
     <Separator isFirst={isFirst} isLast={isLast}>
       <TriggerArea>
@@ -51,7 +58,7 @@ export function RowSeparator(props: RowSeparatorProps) {
           config={config}
           focused={focused || false}
           onClick={onClick}
-          visuallyEmphasized={isLast}
+          visuallyEmphasized={visuallyEmphasizeAddButton}
         />
       </TriggerArea>
     </Separator>

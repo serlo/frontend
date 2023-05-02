@@ -105,20 +105,6 @@ export function SerloEditor({
       >
         {children}
       </Editor>
-      <style jsx global>{`
-        /* fixes bug in chromium based browsers v105+ */
-        /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
-        div[data-slate-editor] {
-          -webkit-user-modify: read-write !important;
-        }
-        /*
-         * Fix for misplacement of slate placeholders
-         * TODO: Investigate whether we still need this fix after slate upgrade
-         */
-        span[data-slate-leaf='true'] > span > span[contenteditable='false'] {
-          vertical-align: initial !important;
-        }
-      `}</style>
     </SaveContext.Provider>
   )
 }
