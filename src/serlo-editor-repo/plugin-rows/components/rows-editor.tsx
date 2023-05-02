@@ -6,7 +6,6 @@ import { getPluginTypesOnPathToRoot } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
-import { Menu } from './menu'
 import { RowEditor } from './row-editor'
 import { RowSeparator } from './row-separator'
 
@@ -19,21 +18,14 @@ export function RowsEditor(props: RowsProps) {
   const pluginTypesOfAncestors = useScopedSelector(
     getPluginTypesOnPathToRoot(props.id)
   )
-  const [menu, setMenu] = React.useState<
-    | {
-        index: number
-        onClose: (pluginState: { plugin: string; state?: unknown }) => void
-      }
-    | undefined
-  >(undefined)
 
-  function addNewRow(insertIndex: number) {
-    const pluginState = {
+  function insertRowWithSuggestionsOpen(insertIndex: number) {
+    const textPluginWithSuggestions = {
       plugin: 'text',
       state: [{ type: 'p', children: [{ text: '/' }] }],
     }
     setTimeout(() => {
-      props.state.insert(insertIndex, pluginState)
+      props.state.insert(insertIndex, textPluginWithSuggestions)
     })
   }
 
@@ -81,7 +73,7 @@ export function RowsEditor(props: RowsProps) {
           focused={props.state.length === 0}
           onClick={(event: React.MouseEvent) => {
             event.preventDefault()
-            addNewRow(0)
+            insertRowWithSuggestionsOpen(0)
           }}
         />
         {props.state.map((row, index) => {
@@ -90,8 +82,8 @@ export function RowsEditor(props: RowsProps) {
             <RowEditor
               config={config}
               key={row.id}
-              openMenu={() => {
-                addNewRow(index + 1)
+              onAddButtonClick={() => {
+                insertRowWithSuggestionsOpen(index + 1)
               }}
               index={index}
               rows={props.state}
@@ -103,7 +95,6 @@ export function RowsEditor(props: RowsProps) {
             />
           )
         })}
-        {menu ? <Menu menu={menu} setMenu={setMenu} config={config} /> : null}
       </div>
     </RegistryContext.Provider>
   )

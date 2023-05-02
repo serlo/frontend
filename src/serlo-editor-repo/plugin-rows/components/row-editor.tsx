@@ -17,7 +17,7 @@ const DropContainer = styled.div({
 
 interface RowEditorProps {
   config: RowsPluginConfig
-  openMenu(index: number): void
+  onAddButtonClick(index: number): void
   index: number
   rows: StateTypeReturnType<RowsPluginState>
   row: StateTypeReturnType<RowsPluginState>[0]
@@ -27,7 +27,7 @@ interface RowEditorProps {
 
 export function RowEditor({
   config,
-  openMenu,
+  onAddButtonClick,
   index,
   row,
   rows,
@@ -53,7 +53,7 @@ export function RowEditor({
         focused={focused}
         onClick={(event: React.MouseEvent) => {
           event.preventDefault()
-          openMenu(index + 1)
+          onAddButtonClick(index + 1)
         }}
         isLast={isLast}
         visuallyEmphasizeAddButton={visuallyEmphasizeAddButton}
