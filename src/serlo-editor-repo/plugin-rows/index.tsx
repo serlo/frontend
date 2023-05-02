@@ -11,7 +11,7 @@ import {
   ListStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-import { RowsEditor } from './editor'
+import { RowsEditor } from './components/rows-editor'
 
 /**
  * @param config - {@link RowsConfig | Plugin configuration}

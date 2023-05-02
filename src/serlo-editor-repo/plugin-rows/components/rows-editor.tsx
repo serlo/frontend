@@ -1,68 +1,18 @@
 import * as React from 'react'
 
-import { RowsPluginConfig, RowsProps, RowsPluginState } from '..'
+import { RowsProps } from '..'
 import { useScopedSelector } from '../../core'
-import { StateTypeReturnType } from '../../plugin'
-import { getPlugins, isFocused, getPluginTypesOnPathToRoot } from '../../store'
+import { getPluginTypesOnPathToRoot } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
-import { RowsRenderer } from '../renderer'
 import { Menu } from './menu'
-import { RowRenderer } from './render'
+import { RowEditor } from './row-editor'
 import { RowSeparator } from './row-separator'
 
-const DropContainer = styled.div({
-  position: 'relative',
-  // increase dropZone
-  marginLeft: '-50px',
-  paddingLeft: '50px',
+const ReadOnlyRow = styled.div({
+  marginBottom: '25px',
 })
-
-function RowEditor({
-  config,
-  openMenu,
-  index,
-  row,
-  rows,
-  visuallyEmphasizeAddButton = false,
-  isLast = false,
-}: {
-  config: RowsPluginConfig
-  openMenu(index: number): void
-  index: number
-  rows: StateTypeReturnType<RowsPluginState>
-  row: StateTypeReturnType<RowsPluginState>[0]
-  visuallyEmphasizeAddButton?: boolean
-  isLast?: boolean
-}) {
-  const focused = useScopedSelector(isFocused(row.id))
-  const plugins = useScopedSelector(getPlugins())
-  const dropContainer = React.useRef<HTMLDivElement>(null)
-
-  return (
-    <DropContainer key={row.id} ref={dropContainer}>
-      <RowRenderer
-        config={config}
-        row={row}
-        rows={rows}
-        index={index}
-        plugins={plugins}
-        dropContainer={dropContainer}
-      />
-      <RowSeparator
-        config={config}
-        focused={focused}
-        onClick={(event: React.MouseEvent) => {
-          event.preventDefault()
-          openMenu(index + 1)
-        }}
-        isLast={isLast}
-        visuallyEmphasizeAddButton={visuallyEmphasizeAddButton}
-      />
-    </DropContainer>
-  )
-}
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
@@ -87,7 +37,15 @@ export function RowsEditor(props: RowsProps) {
     })
   }
 
-  if (!props.editable) return <RowsRenderer {...props} />
+  if (!props.editable) {
+    return (
+      <>
+        {props.state.map((row) => {
+          return <ReadOnlyRow key={row.id}>{row.render()}</ReadOnlyRow>
+        })}
+      </>
+    )
+  }
 
   // Prevent add button being visually emphasized when this RowsEditor is contained within certain plugin types.
   const visuallyEmphasizeLastAddButton =
