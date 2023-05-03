@@ -1,12 +1,21 @@
 import { styled } from '../ui'
+import { colors } from '@/helper/colors'
 
 export const StyledIconContainer = styled.div({
-  height: '24px',
-  opacity: 0.8,
+  height: '30px',
+  width: '30px',
   cursor: 'pointer',
-  color: 'rgba(51, 51, 51, 0.95)',
+  color: colors.gray,
+  borderRadius: '100rem',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
   '&:hover': {
-    color: '#469bff',
+    backgroundColor: colors.yellow200,
+  },
+
+  '& > svg': {
+    margin: '0 !important',
   },
 })
