@@ -165,17 +165,15 @@ function PrimaryControls(props: ImageProps) {
       case 'link': {
         const { link } = props.state
         return (
-          <>
-            <EditorInput
-              label={i18n.link.href.label}
-              placeholder={i18n.link.href.placeholder}
-              value={link.defined ? link.href.value : ''}
-              onChange={handleChange(props)('href')}
-              width="90%"
-              inputWidth="70%"
-              ref={props.autofocusRef}
-            />
-          </>
+          <EditorInput
+            label={i18n.link.href.label}
+            placeholder={i18n.link.href.placeholder}
+            value={link.defined ? link.href.value : ''}
+            onChange={handleChange(props)('href')}
+            width="90%"
+            inputWidth="70%"
+            ref={props.autofocusRef}
+          />
         )
       }
       default:

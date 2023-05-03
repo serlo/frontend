@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { styled, Icon, faTimes, faPlus } from '../ui'
+import { colors } from '@/helper/colors'
 
 const AddButtonComponent = styled.button({
   margin: '5px',
@@ -54,8 +55,8 @@ const RemoveButton = styled.button({
   float: 'right',
   transform: 'translate(50%, -40%)',
   '&:hover': {
-    border: '3px solid #007ec1',
-    color: '#007ec1',
+    border: `3px solid ${colors.brand}`,
+    color: colors.brand,
   },
 })
 
@@ -78,13 +79,13 @@ const FramedContainer = styled.div<{ focused: boolean }>(({ focused }) => {
     },
   }
   const focusedBorders = {
-    border: '3px solid #007ec1',
+    border: `3px solid ${colors.brand}`,
     [`${RemoveButton}`]: {
-      border: '3px solid #007ec1',
-      color: '#007ec1',
+      border: `3px solid ${colors.brand}`,
+      color: colors.brand,
     },
     [`${FeedbackField}`]: {
-      borderTop: '2px solid #007ec1',
+      borderTop: `2px solid ${colors.brand}`,
     },
   }
 
@@ -105,15 +106,15 @@ const Container = styled.div<{ isRadio: boolean; checked: boolean }>(
       cursor: 'pointer',
       border: checked
         ? isRadio
-          ? '5px solid #007ec1'
-          : '2px solid #007ec1'
+          ? `5px solid ${colors.brand}`
+          : `2px solid ${colors.brand}`
         : '2px solid lightgray',
       borderRadius: isRadio ? '50%' : '15%',
       width: '20px',
       height: '20px',
       display: 'inline-block',
       verticalAlign: 'middle',
-      backgroundColor: checked && !isRadio ? '#007ec1' : 'white',
+      backgroundColor: checked && !isRadio ? colors.brand : 'white',
     }
   }
 )
