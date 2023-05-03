@@ -2,12 +2,13 @@ import * as React from 'react'
 
 import { VideoProps } from '.'
 import { Icon, styled, faFilm } from '../ui'
+import { colors } from '@/helper/colors'
 
 const VideoPlaceholderWrapper = styled.div({
   position: 'relative',
   width: '100%',
   textAlign: 'center',
-  color: '#ffbe5e',
+  color: colors.yellow,
 })
 
 enum VideoType {

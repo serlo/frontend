@@ -15,6 +15,7 @@ import { EditorThemeProps, Icon, faImages, faRedoAlt, styled } from '../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
+import { colors } from '@/helper/colors'
 
 const ImgPlaceholderWrapper = styled.div<EditorThemeProps>(() => {
   return {
@@ -22,7 +23,7 @@ const ImgPlaceholderWrapper = styled.div<EditorThemeProps>(() => {
     width: '100%',
     textAlign: 'center',
     opacity: '0.4',
-    color: '#ffbe5e',
+    color: colors.yellow,
   }
 })
 

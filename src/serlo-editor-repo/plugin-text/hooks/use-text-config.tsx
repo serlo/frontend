@@ -7,6 +7,7 @@ import {
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
+import { articleColors } from '@/helper/colors'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
@@ -18,20 +19,9 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.richText,
 ]
 
-const colors = [
-  {
-    value: '#1794c1',
-    name: 'Blue',
-  },
-  {
-    value: '#469a40',
-    name: 'Green',
-  },
-  {
-    value: '#ff6703',
-    name: 'Orange',
-  },
-]
+const textColors = Object.entries(articleColors).map(([key, value]) => {
+  return { value, name: key.charAt(0).toUpperCase() + key.slice(1) }
+})
 
 export function useTextConfig(
   config: TextEditorConfig
@@ -61,7 +51,7 @@ export function useTextConfig(
           resetColorTitle: 'Reset color',
           openMenuTitle: 'Colors',
           closeMenuTitle: 'Close sub menu',
-          colorNames: colors.map((color) => color.name),
+          colorNames: textColors.map((color) => color.name),
         },
         headings: {
           setHeadingTitle(level: Heading['level']) {
@@ -170,7 +160,7 @@ export function useTextConfig(
         },
         formattingOptions: {
           colors: {
-            colors: colors.map((color) => color.value),
+            colors: textColors.map((color) => color.value),
             defaultColor: 'black',
           },
           headings: [1, 2, 3],

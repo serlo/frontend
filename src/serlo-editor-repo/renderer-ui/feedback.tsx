@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { styled } from '../ui'
+import { colors } from '@/helper/colors'
 
 const ContainerWithBox = styled.div<ContainerProps>({
   backgroundColor: '#fcf8e3',
@@ -12,7 +13,7 @@ const ContainerWithBox = styled.div<ContainerProps>({
 const ContainerWithoutBox = styled.div<ContainerProps>(
   ({ correct, showOnLeft }) => {
     return {
-      color: correct ? '#95bc1a' : '#f7b07c',
+      color: correct ? colors.brandGreen : '#f7b07c',
       fontWeight: 'bold',
       textAlign: showOnLeft ? 'left' : 'right',
     }
