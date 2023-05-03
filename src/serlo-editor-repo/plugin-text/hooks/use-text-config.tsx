@@ -156,10 +156,10 @@ export function useTextConfig(
         suggestions: {
           background: {
             default: 'transparent',
-            highlight: editor.primary.background,
+            highlight: '#FFF5E9',
           },
           text: {
-            default: editor.color,
+            default: '#404040',
             highlight: editor.danger.background,
           },
         },

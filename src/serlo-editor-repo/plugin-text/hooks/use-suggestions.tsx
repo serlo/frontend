@@ -19,16 +19,15 @@ const hotKeysMap = {
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
+  const suggestionsRef = useRef<HTMLDivElement>(null)
   const store = useScopedStore()
   const { text, id, editable, focused } = args
 
   const plugins = useContext(RegistryContext)
-  const allOptions = mapPlugins(plugins, text)
-  const filteredOptions = allOptions.filter(({ name }) => name !== 'text')
+  const filteredOptions = filterPlugins(plugins, text)
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
   const options = showSuggestions ? filteredOptions : []
-  const currentValue = text.substring(1)
 
   const closure = useRef({
     showSuggestions,
@@ -50,10 +49,21 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const handleSelectionChange = (direction: 'up' | 'down') => () => {
     if (closure.current.showSuggestions) {
       setSelected((currentSelected) => {
+        // In case no options are currently visible, reset selection
         const optionsCount = closure.current.options.length
-        const value = direction === 'up' ? optionsCount - 1 : 1
         if (optionsCount === 0) return 0
-        return (currentSelected + value) % optionsCount
+
+        // Determine the index of the newly selected element
+        const value = direction === 'up' ? optionsCount - 1 : 1
+        const selectedElementIndex = (currentSelected + value) % optionsCount
+
+        // Scroll the newly selected element into view
+        const suggestionElements = suggestionsRef?.current?.children
+        const selectedElement = suggestionElements?.item(selectedElementIndex)
+        selectedElement?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+
+        // Save the index of the newly selected element into state
+        return selectedElementIndex
       })
     }
   }
@@ -78,7 +88,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     showSuggestions,
     suggestionsProps: {
       options,
-      currentValue,
+      suggestionsRef,
       selected,
       onMouseDown: insertPlugin,
     },
@@ -103,14 +113,17 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   }
 }
 
-function mapPlugins(registry: Registry, text: string) {
+function filterPlugins(registry: Registry, text: string) {
   const search = text.replace('/', '').toLowerCase()
 
-  const startingWithSearchString = registry.filter(({ title }) => {
-    if (!search.length) return true
+  const withoutTextPlugin = registry.filter(({ name }) => name !== 'text')
+
+  if (!search.length) return withoutTextPlugin
+
+  const startingWithSearchString = withoutTextPlugin.filter(({ title }) => {
     return title?.toLowerCase()?.startsWith(search)
   })
-  const containingSearchString = registry.filter(({ title }) => {
+  const containingSearchString = withoutTextPlugin.filter(({ title }) => {
     const value = title?.toLowerCase()
     return value?.includes(search) && !value?.startsWith(search)
   })

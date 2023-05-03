@@ -60,14 +60,16 @@ export interface RowsConfig extends Omit<RowsPluginConfig, 'i18n' | 'theme'> {
 /** @public */
 export type RowsPluginState = ListStateType<ChildStateType>
 
+export interface RegistryPlugin {
+  name: string
+  title?: string
+  icon?: React.ComponentType
+  description?: string
+}
+
 /** @public */
 export interface RowsPluginConfig {
-  plugins: {
-    name: string
-    title?: string
-    icon?: React.ComponentType
-    description?: string
-  }[]
+  plugins: RegistryPlugin[]
   i18n: {
     menu: {
       searchPlaceholder: string

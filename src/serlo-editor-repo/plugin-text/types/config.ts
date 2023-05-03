@@ -90,7 +90,7 @@ export interface ColorsTheme {
   defaultColor: string
 }
 
-interface Theme {
+export interface Theme {
   backgroundColor: string
   color: string
   hoverColor: string
