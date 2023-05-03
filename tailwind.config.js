@@ -57,10 +57,6 @@ module.exports = {
           DEFAULT: colors.red[900],
           100: colors.red[100],
         },
-        sunflower: {
-          DEFAULT: '#FFBE5E',
-          300: '',
-        },
       },
       borderWidth: {
         3: '3px',
