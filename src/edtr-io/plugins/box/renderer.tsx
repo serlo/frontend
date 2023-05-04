@@ -126,7 +126,7 @@ export function BoxRenderer(props: BoxProps) {
       return (
         <li key={typedBoxType} className="inline-block pr-4 pb-4">
           <button
-            className="serlo-button-light"
+            className="serlo-button bg-yellow-100 hover:bg-yellow text-truegray-600"
             onClick={(event) => {
               event.preventDefault()
               type.set(typedBoxType)
