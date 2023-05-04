@@ -74,7 +74,7 @@ export function LinkControls({
     }
 
     return () => {
-      clearTimeout(timeout)
+      timeout && clearTimeout(timeout)
     }
   }, [element, isLinkNewlyCreated, setIsLinkNewlyCreated])
 
