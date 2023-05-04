@@ -40,7 +40,7 @@ export function SaveModal({
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [skipReview, setSkipReview] = useState(false)
-  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { lang } = useInstanceData()
@@ -66,6 +66,12 @@ export function SaveModal({
     handleSave,
     notificationSubscription,
   ])
+
+  useEffect(() => {
+    // make sure generated change text is used
+    if (!changesText) setChangesText(changes?.value ?? '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
