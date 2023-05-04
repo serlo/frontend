@@ -36,7 +36,7 @@ export function Breadcrumbs({
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
     const withRightArrow = /* className={ */ clsx(
       'serlo-button font-normal mb-1 py-0.5',
-      'after:special-content-gt after:absolute after:ml-3 mr-5 after:text-truegray-300'
+      'after:special-content-gt after:absolute after:ml-3 mr-5 after:text-gray-300'
     ) /*}*/
 
     if (bcEntry.ellipsis) {

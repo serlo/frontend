@@ -59,7 +59,7 @@ export function VideoRenderer(props: VideoRendererProps) {
     return (
       <VideoPlaceholderWrapper>
         <Icon icon={faFilm} size="5x" />
-        <p className="text-truegray-800">
+        <p className="text-almost-black">
           {props.state.src.value ? 'Fehlerhafte URL' : null}
         </p>
       </VideoPlaceholderWrapper>

@@ -174,7 +174,7 @@ export function Donations() {
             'bg-brand-100 text-white p-7 px-side -mb-20 text-center pt-28 -mt-28'
           )}
         >
-          <h3 className="text-truegray-700 font-bold mx-auto text-lg mb-8">
+          <h3 className="text-almost-black font-bold mx-auto text-lg mb-8">
             Partner und Förderer
           </h3>
           <PartnerList />

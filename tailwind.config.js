@@ -45,10 +45,11 @@ module.exports = {
           // 900: '#45570c',
           muted: '#cfe097',
         },
-        truegray: colors.neutral,
+        gray: colors.neutral,
         berry: '#857189',
         newgreen: '#2fceb1',
         'editor-primary': sunflowerColors,
+        'almost-black': '#404040',
         yellow: sunflowerColors,
         orange: {
           DEFAULT: colors.orange[900],

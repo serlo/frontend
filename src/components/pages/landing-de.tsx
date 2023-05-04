@@ -31,7 +31,7 @@ export function LandingDE({ data }: LandingDEProps) {
       />
       <LandingJsonLd />
       <Header />
-      <main id="content" className="text-truegray-700">
+      <main id="content" className="text-almost-black">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
           <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
             <WelcomeMessage />
@@ -125,8 +125,8 @@ export function LandingDE({ data }: LandingDEProps) {
           <Link
             className={clsx(
               'hidden md:inline-block mx-auto mt-12',
-              'font-bold text-xl rounded-lg text-truegray-700 ',
-              'px-8 py-4 tracking-tight border-truegray-700 border-solid border-2',
+              'font-bold text-xl rounded-lg text-almost-black ',
+              'px-8 py-4 tracking-tight border-almost-black border-solid border-2',
               'hover:border-brand-500 hover:no-underline hover:text-brand-500',
               'landing-button-with-wings landing-button-with-wink'
             )}

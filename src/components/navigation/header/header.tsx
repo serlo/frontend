@@ -41,7 +41,7 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'text-truegray-700 pt-3',
+        'text-almost-black pt-3',
         hideQuickbar ? '' : 'bg-brand-100',
         'pb-9 bg-[url("/_assets/img/header-curve.svg")] bg-no-repeat bg-bottom bg-[length:100vw_3rem]'
       )}

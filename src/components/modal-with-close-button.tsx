@@ -46,7 +46,7 @@ export function ModalWithCloseButton({
         title={strings.share.close}
         className={clsx(
           'absolute top-3.5 right-3.5 bg-transparent border-none cursor-pointer',
-          'inline-block text-truegray-800 hover:bg-brand hover:text-white leading-tight',
+          'inline-block text-almost-black hover:bg-brand hover:text-white leading-tight',
           'w-9 h-9 rounded-full text-center '
         )}
       >

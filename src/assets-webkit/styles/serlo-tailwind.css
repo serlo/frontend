@@ -34,6 +34,12 @@
   .serlo-button-blue-transparent {
     @apply serlo-button text-brand bg-transparent hover:text-white hover:bg-brand-700;
   }
+  .serlo-button-editor-primary {
+    @apply serlo-button text-almost-black bg-editor-primary-200 hover:bg-editor-primary;
+  }
+  .serlo-button-editor-secondary {
+    @apply serlo-button text-almost-black bg-editor-primary-100 hover:bg-editor-primary-200;
+  }
   .serlo-p {
     @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-cozy;
   }
