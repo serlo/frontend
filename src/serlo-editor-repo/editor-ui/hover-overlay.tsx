@@ -1,6 +1,7 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 
 import { styled } from '../ui'
+import { colors } from '@/helper/colors'
 
 const HoverOverlayWrapper = styled.div({
   position: 'absolute',
@@ -11,12 +12,12 @@ const HoverOverlayWrapper = styled.div({
   zIndex: 95,
   whiteSpace: 'nowrap',
   boxShadow: '0 1px 4px rgba(0, 0, 0, 0.25)',
-  backgroundColor: '#FFF',
-  color: '#404040',
+  backgroundColor: '#fff',
+  color: colors.almostBlack,
   borderRadius: '3px',
   overflow: 'auto',
   '& a': {
-    color: '#404040',
+    color: colors.almostBlack,
     '&:hover': {
       color: 'rgb(70, 155, 255)',
     },

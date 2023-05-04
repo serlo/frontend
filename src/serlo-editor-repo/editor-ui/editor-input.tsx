@@ -6,7 +6,7 @@ import { colors } from '@/helper/colors'
 const Label = styled.label<{ width: string | undefined }>(({ width }) => {
   return {
     width,
-    color: colors.gray,
+    color: colors.almostBlack,
   }
 })
 
@@ -17,7 +17,7 @@ const Input = styled.input<{ textWidth: string | undefined }>(
       width: textWidth,
       borderRadius: '0.8rem',
       border: `2px solid ${colors.editorPrimary100}`,
-      color: colors.gray,
+      color: colors.almostBlack,
       padding: '3px 10px',
       '&:focus': {
         outline: 'none',

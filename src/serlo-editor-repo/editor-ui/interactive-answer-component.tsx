@@ -9,7 +9,7 @@ const AddButtonComponent = styled.button({
   borderRadius: '10px',
   backgroundColor: colors.editorPrimary100,
   textAlign: 'left',
-  color: '#404040',
+  color: colors.almostBlack,
   minHeight: '50px',
   padding: '5px',
   outline: 'none',
