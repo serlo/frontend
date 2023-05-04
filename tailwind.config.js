@@ -4,11 +4,10 @@ const colors = require('tailwindcss/colors')
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'
-const editorPrimary = '#ffbe5e'
-
-const yellow = {
-  DEFAULT: editorPrimary,
-  300: editorPrimary,
+const sunflower = '#ffbe5e'
+const sunflowerColors = {
+  DEFAULT: sunflower,
+  300: sunflower,
   200: '#ffdaa3',
   100: '#fff1db',
   50: '#fff9f0',
@@ -49,8 +48,8 @@ module.exports = {
         truegray: colors.neutral,
         berry: '#857189',
         newgreen: '#2fceb1',
-        'editor-primary': yellow,
-        yellow,
+        'editor-primary': sunflowerColors,
+        yellow: sunflowerColors,
         orange: {
           DEFAULT: colors.orange[900],
           200: colors.orange[200],
