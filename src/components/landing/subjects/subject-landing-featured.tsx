@@ -51,7 +51,7 @@ export function SubjectLandingFeatured({
         className={clsx(
           'text-brand hover:no-underline box-border',
           'p-2.5 leading-cozy',
-          'rounded hover:shadow-menu hover:text-truegray-700',
+          'rounded hover:shadow-menu hover:text-almost-black',
           'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
           'relative',
           index >= maxOnMobile ? 'hidden mobile:block' : ''

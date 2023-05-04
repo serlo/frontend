@@ -7,7 +7,7 @@ const banner = {
   isLong: false,
   text: (
     <div className="text-center sm:text-left">
-      <p className="my-5 font-handwritten mx-side text-[1em] text-truegray-700 leading-[2.2rem]">
+      <p className="my-5 font-handwritten mx-side text-[1em] text-almost-black leading-[2.2rem]">
         „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
         Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
         Inhalte verlassen kann.

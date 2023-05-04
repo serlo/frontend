@@ -37,7 +37,7 @@ export function CommentAreaAllThreads() {
           </StaticInfoPanel>
         ) : null}
         {renderThreads()}
-        <div className="border-t-2 border-truegray-300 mx-side mt-24">
+        <div className="border-t-2 border-gray-300 mx-side mt-24">
           {loading ? (
             <LoadingSpinner noText />
           ) : (

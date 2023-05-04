@@ -34,6 +34,12 @@
   .serlo-button-blue-transparent {
     @apply serlo-button text-brand bg-transparent hover:text-white hover:bg-brand-700;
   }
+  .serlo-button-editor-primary {
+    @apply serlo-button text-almost-black bg-editor-primary-200 hover:bg-editor-primary;
+  }
+  .serlo-button-editor-secondary {
+    @apply serlo-button text-almost-black bg-editor-primary-100 hover:bg-editor-primary-200;
+  }
   .serlo-p {
     @apply mx-side mt-0 mb-block special-hyphens-auto text-lg leading-cozy;
   }
@@ -43,10 +49,10 @@
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
     @apply text-2.5xl font-bold special-hyphens-auto;
-    @apply text-truegray-900 border-truegray-300 border-b;
+    @apply text-gray-900 border-gray-300 border-b;
   }
   .serlo-h3 {
-    @apply mx-side mt-0 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+    @apply mx-side mt-0 mb-8 pt-3 font-bold text-1.5xl text-gray-900;
   }
   .serlo-h4 {
     @apply mx-side mt-0 mb-5 text-base-plus;
@@ -266,11 +272,11 @@
     h2 {
       @apply mt-0 mb-6 pb-1 pt-6;
       @apply text-2.5xl font-bold special-hyphens-auto;
-      @apply text-truegray-900 border-truegray-300 border-b;
+      @apply text-gray-900 border-gray-300 border-b;
     }
 
     h3 {
-      @apply mt-5 mb-8 pt-3 font-bold text-1.5xl text-truegray-900;
+      @apply mt-5 mb-8 pt-3 font-bold text-1.5xl text-gray-900;
     }
     div[contenteditable] h3 {
       @apply mt-0;

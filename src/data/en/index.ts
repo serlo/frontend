@@ -1,5 +1,6 @@
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data'
+import { colors } from '@/helper/colors'
 
 export const instanceData = {
   lang: Instance['En'],
@@ -1107,7 +1108,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: ${colors.brand} !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `,
     },

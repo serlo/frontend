@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { RowsPluginConfig } from '..'
 import { styled, EdtrIcon, edtrPlus } from '../../ui'
+import { colors } from '@/helper/colors'
 
 const StyledSeparator = styled.div<{ isFirst?: boolean; isLast?: boolean }>(
   ({ isFirst, isLast }) => {
@@ -46,7 +47,7 @@ const AddTrigger = styled.div<{
     zIndex: 70,
 
     '&:hover': {
-      color: theme.highlightColor,
+      color: colors.editorPrimary,
       opacity: 1,
       cursor: 'pointer',
     },

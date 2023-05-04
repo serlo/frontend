@@ -96,7 +96,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
   function renderDataImport() {
     return (
-      <div className="bg-amber-50 p-4">
+      <div className="bg-editor-primary-50 p-4">
         <b className="serlo-h4 block ml-0 mb-4">Experimental Import</b>
         <p className="mb-4">
           <a
@@ -111,13 +111,13 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           ref={textareaRef}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
+            'bg-editor-primary-100 border-2 border-editor-primary-100 focus-within:outline-none focus-within:border-editor-primary'
           )}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}
         />
         <button
-          className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
+          className="serlo-button-editor-secondary mb-12 text-base"
           onClick={replaceWithStateString}
         >
           Import JSON data now

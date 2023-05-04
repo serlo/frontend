@@ -14,7 +14,7 @@ export function ExtraRevisionViewInfo({ element }: ExtraRevisionViewInfoProps) {
     return null
 
   return (
-    <span className="text-sm px-1 bg-yellow-200 break-all">
+    <span className="text-sm px-1 bg-editor-primary-100 break-all">
       {(element.type === 'a' || element.type === 'injection') && element.href}
       {element.type === 'anchor' && element.id}
       {element.type === 'code' &&

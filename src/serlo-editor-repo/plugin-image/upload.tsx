@@ -1,20 +1,17 @@
 import * as React from 'react'
 
 import { ImagePluginConfig } from '.'
-import { OverlayButton } from '../core'
-import { EditorButton } from '../editor-ui'
 
 export function Upload(props: UploadProps) {
   const input = React.useRef<HTMLInputElement>(null)
   return (
     <>
-      {props.inOverlay ? (
-        <OverlayButton onClick={selectFile} label={props.config.i18n.label} />
-      ) : (
-        <EditorButton onClick={selectFile}>
-          {props.config.i18n.label}
-        </EditorButton>
-      )}
+      <button
+        onClick={selectFile}
+        className="serlo-button-editor-secondary text-base h-10 self-end"
+      >
+        {props.config.i18n.label}
+      </button>
       <input
         type="file"
         multiple

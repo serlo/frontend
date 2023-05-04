@@ -46,7 +46,7 @@ export function UuidUrlInput({
   return (
     <div className="my-4 pt-5 border-t-2">
       <input
-        className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 focus:bg-amber-300 w-72"
+        className="serlo-input-font-reset outline-none rounded-xl placeholder-almost-black bg-editor-primary-200 p-2 focus:bg-editor-primary w-72 font-bold placeholder:font-normal"
         placeholder={modalStrings.placeholder}
         onChange={(event) => {
           if (event.target.value.length === 0) {
