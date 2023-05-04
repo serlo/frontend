@@ -98,8 +98,10 @@ export function TextEditor(props: TextEditorProps) {
 
   useEffect(() => {
     if (focused === false) return
+
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
+    let timeout: ReturnType<typeof setTimeout>
     setTimeout(() => {
       ReactEditor.focus(editor)
 
@@ -110,6 +112,9 @@ export function TextEditor(props: TextEditorProps) {
         Transforms.select(editor, { offset: 0, path: [0, 0] })
       }
     })
+    return () => {
+      clearTimeout(timeout)
+    }
     // No need to re-focus every time `text` changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, focused])

@@ -64,11 +64,17 @@ export function LinkControls({
   }, [hasSelectionChanged, selection, editor])
 
   React.useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>
+
     if (element && isLinkNewlyCreated) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         setIsLinkNewlyCreated(false)
         input.current?.focus()
       })
+    }
+
+    return () => {
+      clearTimeout(timeout)
     }
   }, [element, isLinkNewlyCreated, setIsLinkNewlyCreated])
 
