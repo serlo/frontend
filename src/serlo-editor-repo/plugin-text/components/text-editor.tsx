@@ -128,8 +128,6 @@ export function TextEditor(props: TextEditorProps) {
     return () => {
       clearTimeout(timeout)
     }
-    // No need to re-focus every time `text` changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, focused])
 
   function handleEditorChange(newValue: Descendant[]) {
