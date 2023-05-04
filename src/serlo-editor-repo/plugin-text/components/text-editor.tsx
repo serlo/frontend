@@ -122,9 +122,12 @@ export function TextEditor(props: TextEditorProps) {
 
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       ReactEditor.focus(editor)
     })
+    return () => {
+      clearTimeout(timeout)
+    }
   }, [editor, focused])
 
   function handleEditorChange(newValue: Descendant[]) {
