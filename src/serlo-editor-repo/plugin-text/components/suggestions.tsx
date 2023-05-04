@@ -13,37 +13,41 @@ interface SuggestionsProps {
 }
 
 const SuggestionsWrapper = styled.div({
-  maxHeight: '200px',
-  maxWidth: '300px',
+  maxHeight: '387px',
+  maxWidth: '620px',
 })
 
 const Suggestion = styled.div(({ theme }: { theme: Theme }) => ({
-  padding: '5px 12px',
+  padding: '10px 20px',
   cursor: 'pointer',
   display: 'flex',
-  alignItems: 'start',
+  alignItems: 'center',
   backgroundColor: theme.suggestions.background.default,
   '&:hover, &[data-active="true"]': {
     backgroundColor: theme.suggestions.background.highlight,
     [SuggestionIconWrapper]: {
-      border: '0.1px solid #404040',
+      border: '1px solid #ddd',
     },
   },
 }))
 
 const SuggestionIconWrapper = styled.div({
-  border: '0.1px solid transparent',
-  flex: '0 0 40px',
-  marginRight: '8px',
+  border: '1px solid transparent',
+  flex: '0 0 95px',
+  marginRight: '12px',
+  borderRadius: '3px',
+  '& > svg': {
+    borderRadius: '3px',
+  },
 })
 
 const SuggestionTitle = styled.h5({
-  fontSize: '14px',
+  fontSize: '16px',
   fontWeight: 'bold',
 })
 
 const SuggestionDescription = styled.p({
-  fontSize: '12px',
+  fontSize: '16px',
   whiteSpace: 'pre-wrap',
 })
 
