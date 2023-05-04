@@ -62,7 +62,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
           first and afterwards use this button.
         </p>
         <button
-          className="serlo-button bg-editor-primary-200 hover:bg-editor-primary focus:bg-editor-primary mb-12 text-base"
+          className="serlo-button-editor-primary mb-12 text-base"
           onClick={async () => {
             try {
               const response = await fetch(

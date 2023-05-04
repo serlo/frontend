@@ -117,7 +117,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           onKeyDown={(e) => e.stopPropagation()}
         />
         <button
-          className="serlo-button bg-editor-primary-200 hover:bg-editor-primary focus:bg-editor-primary mb-12 text-base"
+          className="serlo-button-editor-secondary mb-12 text-base"
           onClick={replaceWithStateString}
         >
           Import JSON data now

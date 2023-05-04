@@ -77,8 +77,7 @@ export function ArticleExercises({
   )
 
   function renderDraggables() {
-    const buttonClass =
-      'serlo-button bg-editor-primary-100 hover:bg-editor-primary mb-2 mr-2 w-8'
+    const buttonClass = 'serlo-button-editor-secondary mb-2 mr-2 w-8'
 
     return exercises.map((exercise, index) => {
       return (
