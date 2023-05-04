@@ -5,16 +5,14 @@ import {
 } from '@prezly/slate-lists'
 import { Editor as SlateEditor, Element, Node } from 'slate'
 
-import type {
+import {
+  List,
+  ListElementType,
   ListItem,
   ListItemText,
-  OrderedList,
   Paragraph,
-  UnorderedList,
 } from '../types'
 
-// TODO: Use enum for types here as in https://www.npmjs.com/package/@prezly/slate-lists
-// TODO: Fix "as ..." parts in the functions
 export const withLists = (editor: SlateEditor) => {
   const editorWithListsPlugin = withListsPlugin({
     isConvertibleToListTextNode(node: Node) {
@@ -28,38 +26,38 @@ export const withLists = (editor: SlateEditor) => {
         return Element.isElementType(node, type)
       }
       return (
-        Element.isElementType(node, 'ordered-list') ||
-        Element.isElementType(node, 'unordered-list')
+        Element.isElementType(node, ListElementType.ORDERED_LIST) ||
+        Element.isElementType(node, ListElementType.UNORDERED_LIST)
       )
     },
     isListItemNode(node: Node) {
-      return Element.isElementType(node, 'list-item')
+      return Element.isElementType(node, ListElementType.LIST_ITEM)
     },
     isListItemTextNode(node: Node) {
-      return Element.isElementType(node, 'list-item-child')
+      return Element.isElementType(node, ListElementType.LIST_ITEM_TEXT)
     },
     createDefaultTextNode(props = {}) {
       return { children: [{ text: '' }], ...props, type: 'p' } as Paragraph
     },
     createListNode(type: ListType = ListType.UNORDERED, props = {}) {
       const nodeType =
-        type === ListType.ORDERED ? 'ordered-list' : 'unordered-list'
-      return { children: [{ text: '' }], ...props, type: nodeType } as
-        | OrderedList
-        | UnorderedList
+        type === ListType.ORDERED
+          ? ListElementType.ORDERED_LIST
+          : ListElementType.UNORDERED_LIST
+      return { children: [{ text: '' }], ...props, type: nodeType } as List
     },
     createListItemNode(props = {}) {
       return {
         children: [{ text: '' }],
         ...props,
-        type: 'list-item',
+        type: ListElementType.LIST_ITEM,
       } as ListItem
     },
     createListItemTextNode(props = {}) {
       return {
         children: [{ text: '' }],
         ...props,
-        type: 'list-item-child',
+        type: ListElementType.LIST_ITEM_TEXT,
       } as ListItemText
     },
   })
