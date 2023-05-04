@@ -53,7 +53,7 @@ export function CourseNavigation({
                 className={clsx(
                   'text-lg leading-browser',
                   {
-                    'font-semibold text-truegray-800 hover:no-underline':
+                    'font-semibold text-almost-black hover:no-underline':
                       active,
                   },
                   { 'text-brand-300': noCurrentRevision }

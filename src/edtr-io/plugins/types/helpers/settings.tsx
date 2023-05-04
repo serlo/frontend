@@ -24,7 +24,7 @@ Settings.Textarea = function SettingsTextarea({
         }}
         className={clsx(
           'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-          'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
+          'bg-editor-primary-100 border-2 border-editor-primary-100 focus-within:outline-none focus-within:border-editor-primary'
         )}
       />
     </label>

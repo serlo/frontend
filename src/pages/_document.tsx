@@ -1,6 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
 import { Instance } from '@/fetcher/graphql-types/operations'
+import { colors } from '@/helper/colors'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
@@ -55,15 +56,15 @@ export default class MyDocument extends Document {
           <link
             rel="mask-icon"
             href="/_assets/safari-pinned-tab.svg"
-            color="#007ec1"
+            color={colors.brand}
           />
           <link rel="shortcut icon" href="/_assets/favicon.ico" />
-          <meta name="msapplication-TileColor" content="#007ec1" />
+          <meta name="msapplication-TileColor" content={colors.brand} />
           <meta
             name="msapplication-config"
             content="/_assets/browserconfig.xml"
           />
-          <meta name="theme-color" content="#007ec1"></meta>
+          <meta name="theme-color" content={colors.brand}></meta>
           <link
             href="/_assets/opensearch.de.xml"
             rel="search"

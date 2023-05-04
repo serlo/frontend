@@ -1,89 +1,84 @@
 import React from 'react'
 
 import { styled } from '../../ui'
-import type { TextEditorPluginConfig } from '../types'
+import type { TextEditorPluginConfig, Theme } from '../types'
+import type { RegistryPlugin } from '@/serlo-editor-repo/plugin-rows'
 
 interface SuggestionsProps {
   config: TextEditorPluginConfig
-  options: { name: string; title?: string }[]
-  currentValue: string
+  options: RegistryPlugin[]
+  suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
   onMouseDown: (option: string) => void
 }
 
-function escapeRegExp(string: string) {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
+const SuggestionsWrapper = styled.div({
+  maxHeight: '387px',
+  maxWidth: '620px',
+})
 
-const Suggestion = styled.div<{ isActive: boolean }>(({ isActive, theme }) => ({
-  height: '32px',
-  padding: '4px 8px',
+const Suggestion = styled.div(({ theme }: { theme: Theme }) => ({
+  padding: '10px 20px',
   cursor: 'pointer',
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  backgroundColor: isActive
-    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      theme.suggestions.background.highlight
-    : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      theme.suggestions.background.default,
-  borderRadius: '4px',
-  '&:hover': {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    background: theme.suggestions.background.highlight,
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: theme.suggestions.background.default,
+  '&:hover, &[data-active="true"]': {
+    backgroundColor: theme.suggestions.background.highlight,
+    [SuggestionIconWrapper]: {
+      border: '1px solid #ddd',
+    },
   },
 }))
 
-const Container = styled.div({
-  padding: '10px',
+const SuggestionIconWrapper = styled.div({
+  border: '1px solid transparent',
+  flex: '0 0 95px',
+  marginRight: '12px',
+  borderRadius: '3px',
+  '& > svg': {
+    borderRadius: '3px',
+  },
 })
 
-const StyledText = styled.span<{ isHighlighted: boolean }>(
-  ({ isHighlighted, theme }) => ({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    color: isHighlighted
-      ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        theme.suggestions.text.highlight
-      : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        theme.suggestions.text.default,
-  })
-)
+const SuggestionTitle = styled.h5({
+  fontSize: '16px',
+  fontWeight: 'bold',
+})
+
+const SuggestionDescription = styled.p({
+  fontSize: '16px',
+  whiteSpace: 'pre-wrap',
+})
 
 export const Suggestions = (props: SuggestionsProps) => {
-  const { config, options, currentValue, selected, onMouseDown } = props
+  const { config, options, suggestionsRef, selected, onMouseDown } = props
   const { i18n, theme } = config
 
   if (options.length === 0) {
-    return <Container>{i18n.suggestions.noResultsMessage}</Container>
+    return <div>{i18n.suggestions.noResultsMessage}</div>
   }
 
   return (
-    <Container>
-      {options.map(({ name, title }, index) => {
-        const fragments = (title ?? name)
-          .split(new RegExp(`(${escapeRegExp(currentValue)})`, 'i'))
-          .map((text) => ({
-            text,
-            isHighlighted: text.toLowerCase() === currentValue.toLowerCase(),
-          }))
-
-        return (
-          <Suggestion
-            key={index}
-            isActive={index === selected}
-            onMouseDown={() => onMouseDown(name)}
-            theme={theme}
-          >
-            {fragments.map((fragment, fragmentIndex) => (
-              <StyledText
-                key={fragmentIndex}
-                isHighlighted={fragment.isHighlighted}
-                theme={theme}
-              >
-                {fragment.text}
-              </StyledText>
-            ))}
-          </Suggestion>
-        )
-      })}
-    </Container>
+    <SuggestionsWrapper ref={suggestionsRef}>
+      {options.map(({ name, title, description, icon: Icon }, index) => (
+        <Suggestion
+          key={index}
+          data-active={index === selected}
+          onMouseDown={() => onMouseDown(name)}
+          theme={theme}
+        >
+          {Icon && (
+            <SuggestionIconWrapper>
+              <Icon />
+            </SuggestionIconWrapper>
+          )}
+          <div>
+            <SuggestionTitle>{title ?? name}</SuggestionTitle>
+            <SuggestionDescription>{description}</SuggestionDescription>
+          </div>
+        </Suggestion>
+      ))}
+    </SuggestionsWrapper>
   )
 }

@@ -62,7 +62,6 @@ export function TextEditor(props: TextEditorProps) {
 
   const store = useScopedStore()
   const { state, id, editable, focused } = props
-  const { selection, value } = state.value
 
   const config = useTextConfig(props.config)
 
@@ -80,10 +79,11 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ text, id, editable, focused })
   const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
 
-  const previousValue = useRef(value)
-  const previousSelection = useRef(selection)
+  const previousValue = useRef(state.value.value)
+  const previousSelection = useRef(state.value.selection)
 
   useMemo(() => {
+    const { selection, value } = state.value
     // The selection can only be null when the text plugin is initialized
     // (In this case an update of the slate editor is not necessary)
     if (!selection) return
@@ -94,22 +94,36 @@ export function TextEditor(props: TextEditorProps) {
       previousValue.current = value
       editor.children = value
     }
-  }, [editor, selection, value])
+  }, [editor, state.value])
 
+  // Workaround for setting selection when adding a new editor:
   useEffect(() => {
+    // If the editor is not focused, do nothing
     if (focused === false) return
+
+    // If the first child of the editor is not a paragraph, do nothing
+    const isFirstChildParagraph =
+      'type' in editor.children[0] && editor.children[0].type === 'p'
+    if (!isFirstChildParagraph) return
+
+    // Get the current text value of the editor
+    const text = Node.string(editor)
+
+    // If the editor is empty, set the cursor at the start
+    if (text === '') {
+      Transforms.select(editor, { offset: 0, path: [0, 0] })
+    }
+
+    // If the editor only has a forward slash, set the cursor
+    // after it, so that the user can type to filter suggestions
+    if (text === '/') {
+      Transforms.select(editor, { offset: 1, path: [0, 0] })
+    }
 
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
     const timeout = setTimeout(() => {
       ReactEditor.focus(editor)
-
-      // Workaround for adding a new editor on enter key press:
-      // If the editor is empty, set the cursor at the start
-      const firstChild = editor.children[0]
-      if ('type' in firstChild && firstChild.type === 'p' && text === '') {
-        Transforms.select(editor, { offset: 0, path: [0, 0] })
-      }
     })
     return () => {
       clearTimeout(timeout)
@@ -134,15 +148,19 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
+    // If linebreaks are disabled in the config, prevent any enter key handling
     if (config.noLinebreaks && event.key === 'Enter') {
       event.preventDefault()
     }
 
-    if (editor.selection && Range.isCollapsed(editor.selection)) {
+    // Handle specific keyboard commands
+    // (only if selection is collapsed and suggestions are not shown)
+    const { selection } = editor
+    if (selection && Range.isCollapsed(selection) && !showSuggestions) {
       // Special handler for links. If you move right and end up at the right edge of a link,
       // this handler unselects the link, so you can write normal text behind it.
       if (isHotkey('right', event)) {
-        const { path, offset } = editor.selection.focus
+        const { path, offset } = selection.focus
         const node = Node.get(editor, path)
         const parent = Node.parent(editor, path)
 
@@ -193,10 +211,9 @@ export function TextEditor(props: TextEditorProps) {
       // Merge with previous Slate instance on "backspace" key,
       // or merge with next Slate instance on "delete" key
       const isBackspaceAtStart =
-        isHotkey('backspace', event) &&
-        isSelectionAtStart(editor, editor.selection)
+        isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
       const isDeleteAtEnd =
-        isHotkey('delete', event) && isSelectionAtEnd(editor, editor.selection)
+        isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
       if (isBackspaceAtStart || isDeleteAtEnd) {
         event.preventDefault()
 
@@ -208,22 +225,22 @@ export function TextEditor(props: TextEditorProps) {
 
         // Update Redux state with the new value
         if (newValue) {
-          state.set(
-            { value: newValue, selection: editor.selection },
-            ({ value }) => ({ value, selection: previousSelection.current })
-          )
+          state.set({ value: newValue, selection }, ({ value }) => ({
+            value,
+            selection: previousSelection.current,
+          }))
         }
       }
 
       // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
       const isUpArrowAtStart =
-        isHotkey('up', event) && isSelectionAtStart(editor, editor.selection)
+        isHotkey('up', event) && isSelectionAtStart(editor, selection)
       if (isUpArrowAtStart) {
         event.preventDefault()
         store.dispatch(focusPrevious())
       }
       const isDownArrowAtEnd =
-        isHotkey('down', event) && isSelectionAtEnd(editor, editor.selection)
+        isHotkey('down', event) && isSelectionAtEnd(editor, selection)
       if (isDownArrowAtEnd) {
         event.preventDefault()
         store.dispatch(focusNext())
@@ -306,7 +323,11 @@ export function TextEditor(props: TextEditorProps) {
 
   return (
     <HotKeys {...hotKeysProps}>
-      <Slate editor={editor} value={value} onChange={handleEditorChange}>
+      <Slate
+        editor={editor}
+        value={state.value.value}
+        onChange={handleEditorChange}
+      >
         {editable && focused && (
           <HoveringToolbar
             editor={editor}

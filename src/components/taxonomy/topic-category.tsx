@@ -44,7 +44,7 @@ export function TopicCategory({ links, full, category }: TopicCategoryProps) {
       key={category}
       className={clsx('mt-5 first:mt-0', full && 'mb-6 mt-0 mobile:mt-2')}
     >
-      <h4 className="text-truegray-900 text-lg mb-4 font-bold">
+      <h4 className="text-gray-900 text-lg mb-4 font-bold">
         {strings.categories[category]}{' '}
         <FaIcon icon={categoryIconMapping[category]} />
       </h4>

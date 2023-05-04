@@ -100,7 +100,7 @@ export function DropdownMenu({
               : strings.comments.deleteComment}
           </>
         )}
-      <span className={clsx('block text-sm mt-3.5 text-truegray-500')}>
+      <span className={clsx('block text-sm mt-3.5 text-gray-500')}>
         {strings.comments.postedOn} {date.toLocaleString(lang)}
       </span>
     </div>

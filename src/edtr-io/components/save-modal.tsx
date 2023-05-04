@@ -184,7 +184,7 @@ export function SaveModal({
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
+            'bg-yellow-200 border-2 border-yellow-200 focus-within:outline-none focus-within:border-truegray-400'
           )}
         />
       </label>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Modal from 'react-modal'
 
-import { EditorTextarea, HoverOverlay, styled } from '../editor-ui'
+import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
 import { faQuestionCircle, Icon, merge, useEditorTheme } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
@@ -246,7 +246,7 @@ export function MathEditor(props: MathEditorProps) {
           <MathRenderer {...props} ref={anchorRef} />
         )}
         {helpOpen ? null : (
-          <HoverOverlay position="above" anchor={anchorRef}>
+          <HoverOverlayOld position="above" anchor={anchorRef}>
             <div
               onClick={(e) => {
                 e.stopPropagation()
@@ -299,7 +299,7 @@ export function MathEditor(props: MathEditorProps) {
                 <MathEditorTextArea {...props} defaultValue={state} />
               )}
             </div>
-          </HoverOverlay>
+          </HoverOverlayOld>
         )}
       </>
     )

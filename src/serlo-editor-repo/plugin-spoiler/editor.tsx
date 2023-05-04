@@ -1,7 +1,6 @@
 import * as React from 'react'
 
 import { SpoilerProps } from '.'
-import { EditorInput } from '../editor-ui'
 import { ExpandableBox } from '../renderer-ui'
 import { ThemeProvider } from '../ui'
 import { useSpoilerConfig } from './config'
@@ -25,11 +24,12 @@ export function SpoilerEditor(props: SpoilerProps) {
   const renderTitle = React.useCallback(
     (_collapsed: boolean) => {
       return editable ? (
-        <EditorInput
+        <input
           onChange={(e) => state.title.set(e.target.value)}
           value={state.title.value}
           placeholder={config.i18n.title.placeholder}
           ref={autofocusRef}
+          className="bg-transparent p-1 focus:outline-editor-primary"
         />
       ) : (
         <>{state.title.value}</>

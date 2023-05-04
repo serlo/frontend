@@ -35,7 +35,7 @@ export function CommunityWall() {
     <section className="overflow-hidden">
       <h3
         className={clsx(
-          'text-center text-4xl text-truegray-700 font-bold',
+          'text-center text-4xl text-almost-black font-bold',
           'leading-cozy tracking-tight',
           'max-w-2xl mt-32 mx-auto relative z-10 px-2'
         )}
