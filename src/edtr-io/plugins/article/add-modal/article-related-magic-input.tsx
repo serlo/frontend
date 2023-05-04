@@ -43,7 +43,7 @@ export function ArticleRelatedMagicInput({
       <>
         {typename === UuidType.TaxonomyTerm ? (
           <button
-            className="serlo-button bg-yellow-100 hover:bg-yellow-300 text-base leading-browser mr-2"
+            className="serlo-button bg-editor-primary-100 hover:bg-editor-primary-300 text-base leading-browser mr-2"
             onClick={() => {
               showExerciseFolderPreview(id)
               document.getElementById('exerciseFolderScroll')?.scrollIntoView({

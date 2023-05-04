@@ -15,7 +15,7 @@ export function SerloAddButton({
 }: SerloAddButtonProps) {
   return (
     <button
-      className={`serlo-button bg-yellow-100 hover:bg-yellow text-base leading-browser ${
+      className={`serlo-button bg-editor-primary-100 hover:bg-editor-primary text-base leading-browser ${
         className ?? ''
       }`}
       onClick={onClick}

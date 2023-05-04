@@ -91,7 +91,7 @@ export function RevisionPreviewBoxes({
         changes={dataSet.url !== data.currentRevision.url}
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
-        <span className="text-sm px-1 bg-yellow-100">
+        <span className="text-sm px-1 bg-editor-primary-100">
           <b>url:</b> {dataSet.url}
         </span>
       </PreviewBox>

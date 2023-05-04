@@ -29,7 +29,7 @@ export function SpoilerEditor(props: SpoilerProps) {
           value={state.title.value}
           placeholder={config.i18n.title.placeholder}
           ref={autofocusRef}
-          className="bg-transparent p-1 focus:outline-yellow"
+          className="bg-transparent p-1 focus:outline-editor-primary"
         />
       ) : (
         <>{state.title.value}</>

@@ -158,7 +158,7 @@ export function InputExercise({
     return data.answers.map((answer) => (
       <div
         key={answer.value}
-        className="bg-yellow-100 rounded-xl py-2 mb-4 serlo-revision-extra-info"
+        className="bg-editor-primary-100 rounded-xl py-2 mb-4 serlo-revision-extra-info"
       >
         <span className="font-bold text-sm mx-side">
           {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:

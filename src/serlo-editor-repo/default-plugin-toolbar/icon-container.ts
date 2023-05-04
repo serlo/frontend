@@ -12,7 +12,7 @@ export const StyledIconContainer = styled.div({
   justifyContent: 'center',
 
   '&:hover': {
-    backgroundColor: colors.yellow200,
+    backgroundColor: colors.editorPrimary200,
   },
 
   '& > svg': {

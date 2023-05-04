@@ -23,7 +23,7 @@ const ImgPlaceholderWrapper = styled.div<EditorThemeProps>(() => {
     width: '100%',
     textAlign: 'center',
     opacity: '0.4',
-    color: colors.yellow,
+    color: colors.editorPrimary,
   }
 })
 

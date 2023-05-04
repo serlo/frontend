@@ -47,7 +47,7 @@ const AddTrigger = styled.div<{
     zIndex: 70,
 
     '&:hover': {
-      color: colors.yellow,
+      color: colors.editorPrimary,
       opacity: 1,
       cursor: 'pointer',
     },

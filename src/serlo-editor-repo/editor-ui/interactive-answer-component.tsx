@@ -7,13 +7,13 @@ const AddButtonComponent = styled.button({
   margin: '5px',
   width: '96%',
   borderRadius: '10px',
-  backgroundColor: colors.yellow100,
+  backgroundColor: colors.editorPrimary100,
   textAlign: 'left',
   color: '#404040',
   minHeight: '50px',
   padding: '5px',
   outline: 'none',
-  '&:hover': { backgroundColor: colors.yellow200 },
+  '&:hover': { backgroundColor: colors.editorPrimary200 },
 })
 
 /**

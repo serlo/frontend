@@ -13,15 +13,15 @@ const Label = styled.label<{ width: string | undefined }>(({ width }) => {
 const Input = styled.input<{ textWidth: string | undefined }>(
   ({ textWidth }) => {
     return {
-      backgroundColor: colors.yellow100,
+      backgroundColor: colors.editorPrimary100,
       width: textWidth,
       borderRadius: '0.8rem',
-      border: `2px solid ${colors.yellow100}`,
+      border: `2px solid ${colors.editorPrimary100}`,
       color: colors.gray,
       padding: '3px 10px',
       '&:focus': {
         outline: 'none',
-        border: `2px solid ${colors.yellow}`,
+        border: `2px solid ${colors.editorPrimary}`,
       },
     }
   }

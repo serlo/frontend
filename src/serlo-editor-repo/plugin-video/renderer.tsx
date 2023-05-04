@@ -8,7 +8,7 @@ const VideoPlaceholderWrapper = styled.div({
   position: 'relative',
   width: '100%',
   textAlign: 'center',
-  color: colors.yellow,
+  color: colors.editorPrimary,
 })
 
 enum VideoType {

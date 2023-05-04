@@ -78,7 +78,7 @@ export function ArticleExercises({
 
   function renderDraggables() {
     const buttonClass =
-      'serlo-button bg-yellow-100 hover:bg-yellow mb-2 mr-2 w-8'
+      'serlo-button bg-editor-primary-100 hover:bg-editor-primary mb-2 mr-2 w-8'
 
     return exercises.map((exercise, index) => {
       return (

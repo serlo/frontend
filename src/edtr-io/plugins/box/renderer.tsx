@@ -126,7 +126,7 @@ export function BoxRenderer(props: BoxProps) {
       return (
         <li key={typedBoxType} className="inline-block pr-4 pb-4">
           <button
-            className="serlo-button bg-yellow-100 hover:bg-yellow text-truegray-600"
+            className="serlo-button bg-editor-primary-100 hover:bg-editor-primary text-truegray-600"
             onClick={(event) => {
               event.preventDefault()
               type.set(typedBoxType)
@@ -148,7 +148,7 @@ export function BoxRenderer(props: BoxProps) {
   function renderWarning() {
     return contentIsEmpty ? (
       <div className="text-right mt-1">
-        <span className="bg-yellow-100 p-0.5 text-sm">
+        <span className="bg-editor-primary-100 p-0.5 text-sm">
           ⚠️ {editorStrings.box.emptyContentWarning}
         </span>
       </div>
