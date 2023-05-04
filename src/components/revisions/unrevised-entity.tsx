@@ -131,7 +131,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
         {isProbablyNew && renderLabel(newLabelText, newLabelNote)}{' '}
         {isProbablyWIP && renderLabel(wipLabelText, wipLabelNote)}
         {isProbablyImported &&
-          renderLabel(importedContentNote, importedContentText)}
+          renderLabel(importedContentText, importedContentNote)}
       </>
     )
   }
