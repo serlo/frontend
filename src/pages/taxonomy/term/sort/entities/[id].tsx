@@ -200,7 +200,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                <h4 className="text-truegray-900 text-lg mb-4 font-bold">
+                <h4 className="text-gray-900 text-lg mb-4 font-bold">
                   {strings.categories[categoryAdapted]}{' '}
                   <FaIcon icon={categoryIconMapping[categoryAdapted]} />
                 </h4>

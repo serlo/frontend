@@ -27,7 +27,7 @@ export function FooterNav({ data }: FooterNavProps) {
               key={index}
               className="px-side mt-4 pt-0.25 w-full sm:w-1/2 md:w-1/3"
             >
-              <h3 className="font-bold mt-4 mb-2 text-truegray-800">
+              <h3 className="font-bold mt-4 mb-2 text-almost-black">
                 {category.title}
               </h3>
               <ul className="list-none">
@@ -35,7 +35,7 @@ export function FooterNav({ data }: FooterNavProps) {
                   <li
                     key={index + childindex}
                     className={clsx(
-                      "inline-block after:content-['•'] after:text-truegray-600",
+                      "inline-block after:content-['•'] after:text-gray-600",
                       'after:mr-1.5 after:ml-1 last-of-type:after:content-none',
                       'sm:block sm:after:content-none'
                     )}
@@ -44,7 +44,7 @@ export function FooterNav({ data }: FooterNavProps) {
                       href={link.url}
                       noExternalIcon
                       className={clsx(
-                        'text-truegray-600 hover:text-black hover:no-underline',
+                        'text-gray-600 hover:text-black hover:no-underline',
                         'inline-block py-2 sm:py-0 leading-tight sm:border-b-2 hover:border-black border-transparent'
                       )}
                     >

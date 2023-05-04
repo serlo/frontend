@@ -15,15 +15,15 @@ import { EditorThemeProps, Icon, faImages, faRedoAlt, styled } from '../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
+import { colors } from '@/helper/colors'
 
-const ImgPlaceholderWrapper = styled.div<EditorThemeProps>((props) => {
+const ImgPlaceholderWrapper = styled.div<EditorThemeProps>(() => {
   return {
     position: 'relative',
     width: '100%',
     textAlign: 'center',
     opacity: '0.4',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: props.theme.editor.primary.background,
+    color: colors.editorPrimary,
   }
 })
 
@@ -166,17 +166,15 @@ function PrimaryControls(props: ImageProps) {
       case 'link': {
         const { link } = props.state
         return (
-          <>
-            <EditorInput
-              label={i18n.link.href.label}
-              placeholder={i18n.link.href.placeholder}
-              value={link.defined ? link.href.value : ''}
-              onChange={handleChange(props)('href')}
-              width="90%"
-              inputWidth="70%"
-              ref={props.autofocusRef}
-            />
-          </>
+          <EditorInput
+            label={i18n.link.href.label}
+            placeholder={i18n.link.href.placeholder}
+            value={link.defined ? link.href.value : ''}
+            onChange={handleChange(props)('href')}
+            width="90%"
+            inputWidth="70%"
+            ref={props.autofocusRef}
+          />
         )
       }
       default:

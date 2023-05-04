@@ -59,7 +59,7 @@ export function Event({
         )}
       >
         <TimeAgo
-          className="text-sm text-truegray-500"
+          className="text-sm text-gray-500"
           datetime={eventDate}
           dateAsTitle
         />
@@ -229,7 +229,7 @@ export function Event({
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
-      return <div className="text-truegray-500">{event.reason}</div>
+      return <div className="text-gray-500">{event.reason}</div>
     }
     if (event.__typename === 'CreateThreadNotificationEvent') {
       return renderCommentContent(event.thread.thread.nodes[0].content)
@@ -249,7 +249,7 @@ export function Event({
     const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (str, i) => (
       <MathSpan key={`math-${i}`} formula={str} />
     ))
-    return <div className="text-truegray-500">{withMath}</div>
+    return <div className="text-gray-500">{withMath}</div>
   }
 
   function renderObject({
@@ -386,7 +386,7 @@ export function Event({
   function renderTooltip(text?: string) {
     return (
       <span
-        className="text-sm leading-tight block bg-truegray-800 text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
+        className="text-sm leading-tight block bg-almost-black text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
       >
         {text}
       </span>

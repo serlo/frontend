@@ -1,5 +1,6 @@
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data'
+import { colors } from '@/helper/colors'
 
 export const instanceData = {
   lang: Instance['En'],
@@ -412,6 +413,8 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006:
           'The username, email address or password was incorrect. Please check for spelling mistakes.',
@@ -1105,7 +1108,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: ${colors.brand} !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `,
     },

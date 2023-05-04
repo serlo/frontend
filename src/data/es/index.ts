@@ -387,6 +387,8 @@ export const instanceData = {
         code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
         code4000001: '%reason%',
         code4000002: "%field% hace falta.",
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006: "El nombre de usuario, la dirección de correo electrónico o la contraseña eran incorrectos. Por favor, comprueba si hay errores ortográficos.",
         code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",

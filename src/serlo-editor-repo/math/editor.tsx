@@ -77,6 +77,9 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
       onCopy={(event: React.ClipboardEvent) => {
         event.stopPropagation()
       }}
+      onCut={(event: React.ClipboardEvent) => {
+        event.stopPropagation()
+      }}
       onMoveOutRight={props.onMoveOutRight}
       onMoveOutLeft={props.onMoveOutLeft}
       value={latex}

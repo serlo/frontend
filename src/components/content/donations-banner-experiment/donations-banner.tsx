@@ -89,7 +89,7 @@ const articleBanners = [
     id: 'banner-testimonial-WandaPaetzold',
     isLong: false,
     text: (
-      <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+      <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
         „ Ich unterstütze Serlo, da ich der Meinung bin, dass ein einfacher
         Zugang zu Bildung ohne Bezahlung und Werbung ein Grundrecht für jede*n
         ist und Serlo ermöglicht es mir als Lehrerin, für viel mehr Menschen
@@ -107,7 +107,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
           „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
           Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
           Inhalte verlassen kann.
@@ -128,7 +128,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
           „ Bildung für alle - und das kostenfrei.
           <br />
           Ein so wichtiges Ziel, um der (Chancen-)Gerechtigkeit unserer
@@ -150,7 +150,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 font-handwritten mx-side text-[1.05em] text-truegray-700 leading-[2.2rem]">
+        <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
           „ Ich wünsche mir eine Welt, wo nicht nur Wissen sondern auch der Weg,
           um Wissen zu erlangen, frei verfügbar ist. <br />
           Ich hoffe, dass die Bewegung von ‚Open Educational Resources‘ auch
@@ -344,7 +344,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           sessionStorage.setItem(hideDonationBannerKey, 'true')
           setBanner(undefined)
         }}
-        className="serlo-button-blue-transparent absolute right-6  bg-[rgba(0,0,0,0.05)] text-truegray-600 w-8 h-8"
+        className="serlo-button-blue-transparent absolute right-6  bg-[rgba(0,0,0,0.05)] text-gray-600 w-8 h-8"
       >
         <FaIcon icon={faTimes} />
       </button>
