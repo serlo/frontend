@@ -101,8 +101,7 @@ export function TextEditor(props: TextEditorProps) {
 
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
-    let timeout: ReturnType<typeof setTimeout>
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       ReactEditor.focus(editor)
 
       // Workaround for adding a new editor on enter key press:
