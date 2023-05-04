@@ -40,7 +40,6 @@ export function useTextConfig(
     placeholder = 'Write something or add elements with \u2295.',
     i18n = {},
     theme = {},
-    blockquote,
     noLinebreaks,
   } = config
   const { editor } = useTheme()
@@ -50,9 +49,6 @@ export function useTextConfig(
     placeholder,
     i18n: merge({
       fallback: {
-        blockquote: {
-          toggleTitle: 'Quote',
-        },
         code: {
           toggleTitle: 'Code',
         },
@@ -178,7 +174,6 @@ export function useTextConfig(
       },
       values: theme,
     }),
-    blockquote,
     noLinebreaks,
   }
 }
