@@ -1,5 +1,6 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
+import { colors } from '@/helper/colors';
 export const instanceData = {
   lang: Instance["Es"],
   headerData: headerData,
@@ -255,7 +256,10 @@ export const instanceData = {
       wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
       newAuthorText: "nuevo autor",
       newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto.",
-      noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉"
+      noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉",
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -1024,11 +1028,12 @@ De lo contrario, ignora este correo electrónico.
 {{ .VerificationURL }}
 
 Tu Apoyo-a-la-Comunidad💚      `,
-      body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
-<p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>Tu Apoyo-a-la-Comunidad💚</p>`
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>We are excited to have you at serlo.org 🎉</p>
+<p>Please verify your account by clicking the following link:<br/>
+<a style="color: ${colors.brand} !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Your Community-Support 💚</p>
+      `
     },
     invalid: {
       subject: `👋 Alguien intentó verificar esta dirección de correo electrónico`,
