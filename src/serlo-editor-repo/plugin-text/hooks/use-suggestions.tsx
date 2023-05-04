@@ -46,29 +46,43 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
   }, [options.length, selected])
 
+  function handleHotkeys(event: React.KeyboardEvent) {
+    if (closure.current.showSuggestions) {
+      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
+        event.preventDefault()
+        return
+      }
+    }
+  }
+
   const handleSelectionChange = (direction: 'up' | 'down') => () => {
     if (closure.current.showSuggestions) {
       setSelected((currentSelected) => {
-        // In case no options are currently visible, reset selection
         const optionsCount = closure.current.options.length
         if (optionsCount === 0) return 0
 
-        // Determine the index of the newly selected element
-        const value = direction === 'up' ? optionsCount - 1 : 1
-        const selectedElementIndex = (currentSelected + value) % optionsCount
+        const isFirstAndUpPressed = direction === 'up' && currentSelected === 0
+        const isLastAndDownPressed =
+          direction === 'down' && currentSelected === optionsCount - 1
+        if (isFirstAndUpPressed || isLastAndDownPressed) return currentSelected
 
-        // Scroll the newly selected element into view
-        const suggestionElements = suggestionsRef?.current?.children
-        const selectedElement = suggestionElements?.item(selectedElementIndex)
-        selectedElement?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        const value = direction === 'up' ? -1 : 1
+        const selectedElementIndex = currentSelected + value
 
-        // Save the index of the newly selected element into state
+        scrollSuggestionIntoView(selectedElementIndex)
+
         return selectedElementIndex
       })
     }
   }
 
-  const handleSuggestionInsert = () => {
+  function scrollSuggestionIntoView(index: number) {
+    const suggestionElements = suggestionsRef?.current?.children
+    const selectedElement = suggestionElements?.item(index)
+    selectedElement?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  }
+
+  function handleSuggestionInsert() {
     if (closure.current.showSuggestions) {
       const option = closure.current.options[closure.current.selected]
       if (!option) return
@@ -76,6 +90,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
         insertPlugin(option.name)
       })
     }
+  }
+
+  function insertPlugin(pluginName: string) {
+    store.dispatch(replace({ id, plugin: pluginName }))
   }
 
   const hotKeysHandlers = {
@@ -97,19 +115,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       handlers: hotKeysHandlers,
     },
     handleHotkeys,
-  }
-
-  function insertPlugin(pluginName: string) {
-    store.dispatch(replace({ id, plugin: pluginName }))
-  }
-
-  function handleHotkeys(event: React.KeyboardEvent) {
-    if (closure.current.showSuggestions) {
-      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
-        event.preventDefault()
-        return
-      }
-    }
   }
 }
 
