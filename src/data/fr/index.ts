@@ -1,5 +1,6 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
+import { colors } from '@/helper/colors';
 export const instanceData = {
   lang: Instance["Fr"],
   headerData: headerData,
@@ -255,7 +256,10 @@ export const instanceData = {
       wipLabelNote: "Travail en cours. Ne pas encore réviser.",
       newAuthorText: "nouvel auteur",
       newAuthorNote: "C'est l'une des premières modifications de cet auteur. Peut-être, donne-lui la priorité.",
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -1029,7 +1033,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: ${colors.brand} !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },
