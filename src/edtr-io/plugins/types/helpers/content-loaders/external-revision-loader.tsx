@@ -12,6 +12,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import {
+  DeserializeError,
   editorResponseToState,
   isError,
 } from '@/edtr-io/editor-response-to-state'
@@ -117,15 +118,20 @@ export function ExternalRevisionLoader<T>({
         )
         const { uuid } = data
         const converted = editorResponseToState(uuid!)
-
-        if (isError(converted)) {
-          handleError(`editor: revision conversion | ${converted.error}`)
+        if (isError(converted) || !uuid) {
+          handleError(
+            `editor: revision conversion | ${
+              (converted as DeserializeError).error
+            }`
+          )
         } else {
           onSwitchRevision({
             ...(converted.initialState.state as T),
             revision: 0,
             id: 0,
-            meta_title: '', // should we copy this?
+            meta_title: '',
+            meta_description: '',
+            changes: `Content imported from https://serlo.org/${uuid.revision.id}`,
           } as T)
           setShowRevisions(false)
         }
