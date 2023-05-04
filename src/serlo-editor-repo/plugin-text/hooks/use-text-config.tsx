@@ -7,7 +7,7 @@ import {
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
-import { articleColors } from '@/helper/colors'
+import { articleColors, colors } from '@/helper/colors'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
@@ -142,10 +142,10 @@ export function useTextConfig(
         suggestions: {
           background: {
             default: 'transparent',
-            highlight: editor.primary.background,
+            highlight: '#fff5e9',
           },
           text: {
-            default: editor.color,
+            default: colors.almostBlack,
             highlight: editor.danger.background,
           },
         },

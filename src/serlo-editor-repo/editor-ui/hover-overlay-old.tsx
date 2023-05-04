@@ -1,9 +1,22 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 
 import { styled } from '../ui'
-import { colors } from '@/helper/colors'
 
-const HoverOverlayWrapper = styled.div({
+const OverlayTriangle = styled.div<{ positionAbove?: boolean }>(
+  ({ positionAbove = false }) => {
+    const borderPosition = positionAbove ? 'borderTop' : 'borderBottom'
+    return {
+      position: 'relative',
+      width: 0,
+      height: 0,
+      borderLeft: '5px solid transparent',
+      borderRight: '5px solid transparent',
+      [borderPosition]: '10px solid rgba(51,51,51,0.95)',
+    }
+  }
+)
+
+const InlineOverlayWrapper = styled.div({
   position: 'absolute',
   top: '-10000px',
   left: '-10000px',
@@ -11,20 +24,22 @@ const HoverOverlayWrapper = styled.div({
   transition: 'opacity 0.5s',
   zIndex: 95,
   whiteSpace: 'nowrap',
-  boxShadow: '0 1px 4px rgba(0, 0, 0, 0.25)',
-  backgroundColor: '#fff',
-  color: colors.almostBlack,
-  borderRadius: '3px',
-  overflow: 'auto',
+})
+
+const InlineOverlayContentWrapper = styled.div({
+  boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
+  backgroundColor: 'rgba(51,51,51,0.95)',
+  color: '#ffffff',
+  borderRadius: '4px',
   '& a': {
-    color: colors.almostBlack,
+    color: '#ffffff',
     '&:hover': {
       color: 'rgb(70, 155, 255)',
     },
   },
 })
 
-type HoverPosition = 'above' | 'below'
+export type HoverPosition = 'above' | 'below'
 
 interface HoverOverlayProps {
   children: ReactNode
@@ -32,8 +47,10 @@ interface HoverOverlayProps {
   anchor?: RefObject<HTMLElement>
 }
 
-export function HoverOverlay(props: HoverOverlayProps) {
+// TODO: Once all redesign tasks are done, delete this component
+export function HoverOverlayOld(props: HoverOverlayProps) {
   const overlay = createRef<HTMLDivElement>()
+  const triangle = createRef<HTMLDivElement>()
   const [positionAbove, setPositionAbove] = useState(props.position === 'above')
 
   const windowSelection = window.getSelection()
@@ -56,8 +73,7 @@ export function HoverOverlay(props: HoverOverlayProps) {
   const { anchor, children } = props
 
   useEffect(() => {
-    if (!overlay.current) return
-
+    if (!overlay.current || !triangle.current) return
     let rect
     if (anchor && anchor.current !== null) {
       rect = anchor.current.getBoundingClientRect()
@@ -67,10 +83,9 @@ export function HoverOverlay(props: HoverOverlayProps) {
     }
     if (!rect) return
     if (rect.height === 0) return
-
     const menu = overlay.current
+    // menu is set to display:none, shouldn't ever happen
     if (!menu.offsetParent) return
-
     const parentRect = menu.offsetParent.getBoundingClientRect()
     menu.style.opacity = '1'
     const aboveValue = rect.top - menu.offsetHeight - 6
@@ -90,8 +105,16 @@ export function HoverOverlay(props: HoverOverlayProps) {
       ),
       0
     )}px`
+    triangle.current.style.left = `${
+      rect.left -
+      menu.offsetLeft -
+      parentRect.left -
+      triangle.current.offsetWidth / 2 +
+      rect.width / 2
+    }px`
   }, [
     overlay,
+    triangle,
     anchor,
     positionAbove,
     nativeSelection.focusNode,
@@ -99,5 +122,11 @@ export function HoverOverlay(props: HoverOverlayProps) {
     windowSelection,
   ])
 
-  return <HoverOverlayWrapper ref={overlay}>{children}</HoverOverlayWrapper>
+  return (
+    <InlineOverlayWrapper ref={overlay}>
+      {!positionAbove && <OverlayTriangle ref={triangle} />}
+      <InlineOverlayContentWrapper>{children}</InlineOverlayContentWrapper>
+      {positionAbove && <OverlayTriangle positionAbove ref={triangle} />}
+    </InlineOverlayWrapper>
+  )
 }
