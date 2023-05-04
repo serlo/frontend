@@ -16,7 +16,6 @@ export interface TextEditorConfig {
   formattingOptions?: TextEditorFormattingOption[]
   i18n?: DeepPartial<TextEditorPluginConfig['i18n']>
   theme?: DeepPartial<TextEditorPluginConfig['theme']>
-  blockquote?: string
   noLinebreaks?: boolean
 }
 
@@ -34,9 +33,6 @@ export enum TextEditorFormattingOption {
 }
 
 interface I18n {
-  blockquote: {
-    toggleTitle: string
-  }
   code: {
     toggleTitle: string
   }
@@ -130,6 +126,5 @@ export interface TextEditorPluginConfig {
   formattingOptions: TextEditorFormattingOption[]
   i18n: I18n
   theme: Theme
-  blockquote?: string
   noLinebreaks?: boolean
 }
