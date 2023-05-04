@@ -9,6 +9,7 @@ import { SerloAddButton } from '../../../helpers/serlo-editor-button'
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import {
@@ -35,6 +36,7 @@ export function ExternalRevisionLoader<T>({
   const [showRevisions, setShowRevisions] = useState(false)
 
   const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
@@ -125,13 +127,20 @@ export function ExternalRevisionLoader<T>({
             }`
           )
         } else {
+          const displayId =
+            Object.hasOwn(uuid, 'currentRevision') &&
+            uuid.currentRevision &&
+            Object.hasOwn(uuid.currentRevision, 'id')
+              ? uuid.currentRevision.id
+              : uuid.id
+
           onSwitchRevision({
             ...(converted.initialState.state as T),
             revision: 0,
             id: 0,
             meta_title: '',
             meta_description: '',
-            changes: `Content imported from https://serlo.org/${uuid.revision.id}`,
+            changes: `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`,
           } as T)
           setShowRevisions(false)
         }

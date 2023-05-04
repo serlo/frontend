@@ -270,6 +270,9 @@ export const instanceData = {
       newAuthorNote:
         'This is one of the first edits of this author, maybe prioritise this.',
       noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',

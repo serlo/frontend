@@ -82,6 +82,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     if (!revision) return null
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
     const isProbablyWIP = checkWIP(revision.changes)
+    const isProbablyImported = checkImported(revision.changes)
 
     return (
       <tr className={isProbablyWIP ? 'opacity-50' : undefined}>
@@ -89,7 +90,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
           <Link href={viewUrl} className="hover:no-underline text-black">
             {revision.changes || '–'}
           </Link>
-          {renderLabels(isProbablyWIP)}
+          {renderLabels(isProbablyWIP, isProbablyImported)}
         </Td>
         {isOwn ? null : (
           <Td>
@@ -115,14 +116,22 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     )
   }
 
-  function renderLabels(isProbablyWIP: boolean) {
-    const { newLabelNote, newLabelText, wipLabelNote, wipLabelText } =
-      strings.unrevisedRevisions
+  function renderLabels(isProbablyWIP: boolean, isProbablyImported: boolean) {
+    const {
+      newLabelNote,
+      newLabelText,
+      wipLabelNote,
+      wipLabelText,
+      importedContentNote,
+      importedContentText,
+    } = strings.unrevisedRevisions
     return (
       <>
         {' '}
         {isProbablyNew && renderLabel(newLabelText, newLabelNote)}{' '}
         {isProbablyWIP && renderLabel(wipLabelText, wipLabelNote)}
+        {isProbablyImported &&
+          renderLabel(importedContentNote, importedContentText)}
       </>
     )
   }
@@ -155,6 +164,12 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
       'im aufbau',
     ]
     return wipStrings.some((testStr) => changes.toLowerCase().includes(testStr))
+  }
+
+  function checkImported(changes: string) {
+    return changes.includes(
+      strings.unrevisedRevisions.importedContentIdentifier
+    )
   }
 }
 
