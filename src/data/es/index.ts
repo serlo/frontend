@@ -1,6 +1,5 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
-import { colors } from '@/helper/colors';
 export const instanceData = {
   lang: Instance["Es"],
   headerData: headerData,
