@@ -721,7 +721,7 @@ export const loggedInData = {
         enableNotifsMail: 'Enable notifications via e-mail',
         switchRevision: 'Switch to another revision',
         importOther: 'Import content from other entity',
-        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate all of it\'s content here. Do NOT use this to make exact copies are move content.',
+        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate it\'s content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).',
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
         current: 'Current',
