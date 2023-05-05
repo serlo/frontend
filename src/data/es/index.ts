@@ -149,8 +149,8 @@ export const instanceData = {
         chooseOption: "Elige una de las opciones.",
         printModeChooseOption: "Elige una de las opciones.",
         strategy: "Estrategia de solución",
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "Mostrar solución",
+        hideSolution: "Ocultar la solución"
       },
       boxTypes: {
         blank: "Espacio en blanco",
@@ -201,7 +201,7 @@ export const instanceData = {
       commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente.",
       edit: "Editar comentario",
       cancelEdit: "Cancelar",
-      saveEdit: 'Save'
+      saveEdit: "Guardar"
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -257,7 +257,7 @@ export const instanceData = {
       newAuthorText: "nuevo autor",
       newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto.",
       noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉",
-      importedContentText: 'imported',
+      importedContentText: "importado",
       importedContentNote: 'This revision includes imported content',
       importedContentIdentifier: 'Content imported from'
     },
@@ -1031,7 +1031,7 @@ Tu Apoyo-a-la-Comunidad💚      `,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: ${colors.brand} !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },
