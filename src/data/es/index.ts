@@ -1028,11 +1028,11 @@ De lo contrario, ignora este correo electrónico.
 {{ .VerificationURL }}
 
 Tu Apoyo-a-la-Comunidad💚      `,
-      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>We are excited to have you at serlo.org 🎉</p>
-<p>Please verify your account by clicking the following link:<br/>
+      body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
+<p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
+<p>Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:<br/>
 <a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>Your Community-Support 💚</p>
+</p><p>Tu Apoyo-a-la-Comunidad 💚</p>
       `
     },
     invalid: {
