@@ -367,19 +367,19 @@ export const instanceData = {
       },
       interests: {
         pleaseChoose: "Por favor, elige",
-        parent: 'Parent',
-        teacher: 'Teacher',
-        pupil: 'Pupil',
-        student: 'University student',
-        other: 'Other'
+        parent: "Padre o madre",
+        teacher: "Maestro/a",
+        pupil: "Alumno/a",
+        student: "Estudiante universitario",
+        other: "Otro"
       },
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
         code1010001: "Iniciar sesión",
-        code1010002: 'Sign in with NBP Account',
-        code1010013: 'Continue with SSO',
+        code1010002: "Iniciar sesión con mi Cuenta de NBP",
+        code1010013: "Continuar con SSO",
         code1040001: "Registrarse",
-        code1040002: 'Register with NBP Account',
+        code1040002: "Registrarse con una Cuenta NBP",
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
@@ -408,7 +408,7 @@ export const instanceData = {
       passwordTooSimilar: "Lo sentimos, esta contraseña es demasiado parecida a tu correo electrónico o nombre de usuario.",
       emailInvalid: "Lo sentimos, esta dirección de correo electrónico no es válida. Comprueba si hay errores de escritura.",
       registrationCheckboxAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
-      consentNeededBeforeProceeding: 'We need your consent before proceeding.',
+      consentNeededBeforeProceeding: "Necesitamos su consentimiento antes de proceder.",
       terms: "Términos",
       signUp: "Registrarse",
       verificationProblem: "En caso de que no lo hayas recibido",
@@ -658,7 +658,7 @@ export const loggedInData = {
         enableNotifs: "Habilitar notificaciones de serlo.org",
         enableNotifsMail: "Activar notificaciones por correo electrónico",
         switchRevision: "Cambiar a otra revisión",
-        importOther: 'Import content from other entity',
+        importOther: "Importar contenido de otra entidad",
         importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate all of it\'s content here. Do NOT use this to make exact copies are move content.',
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
@@ -1029,10 +1029,9 @@ De lo contrario, ignora este correo electrónico.
 Tu Apoyo-a-la-Comunidad💚      `,
       body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
-<p>Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:<br/>
+<p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
 <a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>Tu Apoyo-a-la-Comunidad 💚</p>
-      `
+</p><p>Tu Apoyo-a-la-Comunidad💚</p>`
     },
     invalid: {
       subject: `👋 Alguien intentó verificar esta dirección de correo electrónico`,
