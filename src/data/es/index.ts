@@ -257,8 +257,8 @@ export const instanceData = {
       newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto.",
       noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉",
       importedContentText: "importado",
-      importedContentNote: 'This revision includes imported content',
-      importedContentIdentifier: 'Content imported from'
+      importedContentNote: "Esta revisión incluye contenido importado",
+      importedContentIdentifier: "Contenido importado de"
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -317,7 +317,7 @@ export const instanceData = {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
       alreadyLoggedIn: "👋 Bienvenido de nuevo",
-      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
+      warningLoggedOut: "⚠️ Has cerrado la sesión. Por favor, inicia sesión de nuevo y luego usa \"Cargar ediciones almacenadas\" para restaurar tus cambios actuales.",
       revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
       revisionAccepted: "Revisión aceptada con éxito ✅",
       revisionRejected: "Revisión rechazada con éxito ❎",
@@ -363,10 +363,10 @@ export const instanceData = {
         username: "Nombre de usuario",
         password: "Contraseña",
         email: "Correo electrónico",
-        interest: "I'm here as..."
+        interest: "Estoy aquí como..."
       },
       interests: {
-        pleaseChoose: 'please choose',
+        pleaseChoose: "Por favor, elige",
         parent: 'Parent',
         teacher: 'Teacher',
         pupil: 'Pupil',
