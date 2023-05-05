@@ -407,7 +407,7 @@ export const instanceData = {
       passwordTooLong: "Lo sentimos, esta contraseña es demasiado larga. Por favor, elige una que tenga un máximo de 72 caracteres.",
       passwordTooSimilar: "Lo sentimos, esta contraseña es demasiado parecida a tu correo electrónico o nombre de usuario.",
       emailInvalid: "Lo sentimos, esta dirección de correo electrónico no es válida. Comprueba si hay errores de escritura.",
-      registrationCheckboxAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
+      registrationCheckboxAgreement: "Estoy de acuerdo con los %privacypolicy% y %terms%. Puedo recibir notificaciones por correo electrónico de Serlo.org y puedo cancelarlas en cualquier momento.",
       consentNeededBeforeProceeding: "Necesitamos su consentimiento antes de proceder.",
       terms: "Términos",
       signUp: "Registrarse",
@@ -659,9 +659,9 @@ export const loggedInData = {
         enableNotifsMail: "Activar notificaciones por correo electrónico",
         switchRevision: "Cambiar a otra revisión",
         importOther: "Importar contenido de otra entidad",
-        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate all of it\'s content here. Do NOT use this to make exact copies are move content.',
-        importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
-        importOtherButton: 'Import content',
+        importOtherExplanation: "Simplemente pega la url o id de otra entidad serlo.org del mismo tipo aquí para duplicar su contenido aquí. NO utilices esto para hacer copias exactas o mover contenido. Los grupos de ejercicios y cursos no están soportados (pero los ejercicios individuales y las páginas del curso si lo están).",
+        importOtherWarning: "Advertencia: ¡Esto sobrescribe todo lo que ya está presente en este editor!",
+        importOtherButton: "Importar contenido",
         current: "Actual",
         author: "Autor",
         createdAt: "¿Cuándo?",
@@ -783,8 +783,8 @@ export const loggedInData = {
         choiceExercise: "Ejercicio de opción múltiple",
         addInputExercise: "Añada ejercicio de respuesta escrita",
         inputExercise: "Ejercicio de respuesta escrita",
-        addH5pExercise: 'Add h5p exercise',
-        h5pExercise: 'H5p exercise',
+        addH5pExercise: "Añadir ejercicio interactivo h5p",
+        h5pExercise: "Ejercicio h5p",
         addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
         changeInteractive: "Cambiar elemento interactivo",
         removeInteractive: "Eliminar elemento interactivo"
@@ -793,7 +793,7 @@ export const loggedInData = {
         illegalInjectionFound: "Entrada ilegal encontrada",
         serloEntitySrc: "entidad de Serlo {{src}}",
         serloId: 'Serlo ID:',
-        placeholder: 'Serlo ID (e.g. 1565)'
+        placeholder: "Serlo ID (p.ej. 1565)"
       },
       box: {
         type: "Tipo de contenedor",
@@ -987,7 +987,9 @@ export const kratosMailStrings = {
 ¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, ignora este correo.
   
 Para restablecer tu contraseña, abre el siguiente enlace en tu navegador:
-{{ .RecoveryURL }}`,
+{{ .RecoveryURL }}
+
+Saludos de tu equipo de Serlo.org`,
       body: `<p>👋 Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>¿Estás intentando acceder a tu cuenta en serlo.org? Si no es así, por favor, ignora este correo.</p>
  
