@@ -1030,11 +1030,10 @@ Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 
 Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
-<p>We are excited to have you at serlo.org 🎉</p>
-<p>Please verify your account by clicking the following link:<br/>
+<p>wunderbar dich auf serlo.org zu haben 🎉</p>
+<p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
 <a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>Your Community-Support 💚</p>
-      `
+</p><p>Dein Community-Support 💚</p>`
     },
     invalid: {
       subject: `👋 Jemand hat versucht diese Mailadresse zu bestätigen`,
