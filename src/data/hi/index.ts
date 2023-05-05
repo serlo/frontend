@@ -255,7 +255,10 @@ export const instanceData = {
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: 'new author',
       newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: "😬 वेबसाइटें कभी-कभी गलतियाँ करती हैं",
@@ -1029,7 +1032,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },

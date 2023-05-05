@@ -148,8 +148,8 @@ export const instanceData = {
         chooseOption: "Elige una de las opciones.",
         printModeChooseOption: "Elige una de las opciones.",
         strategy: "Estrategia de solución",
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "Mostrar solución",
+        hideSolution: "Ocultar la solución"
       },
       boxTypes: {
         blank: "Espacio en blanco",
@@ -200,7 +200,7 @@ export const instanceData = {
       commentsOverviewExplanation: "Aquí puedes ver todos los comentarios que se han escrito al contenido de %instance%.serlo.org. %break% Responde a las preguntas o encuentra contenido que puedas mejorar. %break% El enlace situado encima del comentario te lleva a la entidad correspondiente.",
       edit: "Editar comentario",
       cancelEdit: "Cancelar",
-      saveEdit: 'Save'
+      saveEdit: "Guardar"
     },
     revisions: {
       toOverview: "Volver a Vista general",
@@ -255,7 +255,10 @@ export const instanceData = {
       wipLabelNote: "Marcado como trabajo en progreso. No revises todavía.",
       newAuthorText: "nuevo autor",
       newAuthorNote: "Esta es una de las primeras ediciones de este autor, quizás priorizar esto.",
-      noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉"
+      noUnrevisedRevisions: "No hay contenido sin revisar, ¡todo listo! 🎉",
+      importedContentText: "importado",
+      importedContentNote: "Esta revisión incluye contenido importado",
+      importedContentIdentifier: "Contenido importado de"
     },
     errors: {
       title: "😬 Los sitios web a veces cometen errores…",
@@ -314,7 +317,7 @@ export const instanceData = {
       welcome: "¡Bienvenida/o  %username%!",
       bye: "👋 ¡Nos vemos pronto!",
       alreadyLoggedIn: "👋 Bienvenido de nuevo",
-      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
+      warningLoggedOut: "⚠️ Has cerrado la sesión. Por favor, inicia sesión de nuevo y luego usa \"Cargar ediciones almacenadas\" para restaurar tus cambios actuales.",
       revisionSaved: "La revisión se ha guardado y se revisará pronto 👍",
       revisionAccepted: "Revisión aceptada con éxito ✅",
       revisionRejected: "Revisión rechazada con éxito ❎",
@@ -360,23 +363,23 @@ export const instanceData = {
         username: "Nombre de usuario",
         password: "Contraseña",
         email: "Correo electrónico",
-        interest: "I'm here as..."
+        interest: "Estoy aquí como..."
       },
       interests: {
-        pleaseChoose: 'please choose',
-        parent: 'Parent',
-        teacher: 'Teacher',
-        pupil: 'Pupil',
-        student: 'University student',
-        other: 'Other'
+        pleaseChoose: "Por favor, elige",
+        parent: "Padre o madre",
+        teacher: "Maestro/a",
+        pupil: "Alumno/a",
+        student: "Estudiante universitario",
+        other: "Otro"
       },
       messages: {
         code1010003: "Por favor, confirma esta acción al verificar que eres tú.",
         code1010001: "Iniciar sesión",
-        code1010002: 'Sign in with NBP Account',
-        code1010013: 'Continue with SSO',
+        code1010002: "Iniciar sesión con mi Cuenta de NBP",
+        code1010013: "Continuar con SSO",
         code1040001: "Registrarse",
-        code1040002: 'Register with NBP Account',
+        code1040002: "Registrarse con una Cuenta NBP",
         code1040003: "Continuar",
         code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
@@ -405,7 +408,7 @@ export const instanceData = {
       passwordTooSimilar: "Lo sentimos, esta contraseña es demasiado parecida a tu correo electrónico o nombre de usuario.",
       emailInvalid: "Lo sentimos, esta dirección de correo electrónico no es válida. Comprueba si hay errores de escritura.",
       registrationCheckboxAgreement: "Al hacer clic en %signup%, aceptas nuestra %privacypolicy% y %terms%. Es posible que recibas notificaciones por correo electrónico de nuestra parte y puedes optar por cancelarlas en cualquier momento.",
-      consentNeededBeforeProceeding: 'We need your consent before proceeding.',
+      consentNeededBeforeProceeding: "Necesitamos su consentimiento antes de proceder.",
       terms: "Términos",
       signUp: "Registrarse",
       verificationProblem: "En caso de que no lo hayas recibido",
@@ -655,7 +658,7 @@ export const loggedInData = {
         enableNotifs: "Habilitar notificaciones de serlo.org",
         enableNotifsMail: "Activar notificaciones por correo electrónico",
         switchRevision: "Cambiar a otra revisión",
-        importOther: 'Import content from other entity',
+        importOther: "Importar contenido de otra entidad",
         importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate all of it\'s content here. Do NOT use this to make exact copies are move content.',
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
@@ -1027,7 +1030,7 @@ Tu Apoyo-a-la-Comunidad💚      `,
       body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
 <p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Tu Apoyo-a-la-Comunidad💚</p>`
     },
     invalid: {

@@ -255,7 +255,10 @@ export const instanceData = {
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
       newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review.",
-      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden."
+      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden.",
+      importedContentText: "importiert",
+      importedContentNote: "Diese Bearbeitung enthält importierte Inhalte",
+      importedContentIdentifier: "Inhalt importiert von"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -1028,7 +1031,7 @@ Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
 <p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Dein Community-Support 💚</p>`
     },
     invalid: {
