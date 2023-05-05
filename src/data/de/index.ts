@@ -1029,11 +1029,11 @@ Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 
 Dein Community-Support 💚`,
-      body: `<p>Hallo <b>{{ .Identity.traits.username }}</b>,</p>
-<p>Wir freuen uns, Sie auf Serlo begrüßen zu dürfen. rg 🎉</p>
-<p>Bitte bestätigen Sie Ihr Konto durch Klicken auf den folgenden Link:<br/>
-<a style="color: ${colors.brand} !wichtig;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
-</p><p>Ihr Community-Support 💚</p>
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>We are excited to have you at serlo.org 🎉</p>
+<p>Please verify your account by clicking the following link:<br/>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Your Community-Support 💚</p>
       `
     },
     invalid: {
