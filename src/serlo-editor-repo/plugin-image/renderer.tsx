@@ -1,8 +1,55 @@
-import { Component } from 'react'
-
 import { ImageProps } from '.'
 import { isTempFile } from '../plugin'
 import { styled } from '../ui'
+
+export type ImageRendererProps = ImageProps & {
+  disableMouseEvents?: boolean
+}
+
+export function ImageRenderer({
+  state,
+  disableMouseEvents,
+}: ImageRendererProps) {
+  const alt = state.alt.defined ? state.alt.value : ''
+  return (
+    <div>
+      {state.link.defined && state.link.href.value && !disableMouseEvents ? (
+        <a
+          href={state.link.href.value}
+          {...(state.link.openInNewTab.value
+            ? {
+                target: '_blank',
+                rel: 'noreferrer noopener',
+              }
+            : {})}
+        >
+          {renderImage()}
+        </a>
+      ) : (
+        renderImage()
+      )}
+    </div>
+  )
+
+  function renderImage() {
+    return (
+      <ImgWrapper maxWidth={state.maxWidth.defined ? state.maxWidth.value : 0}>
+        {!isTempFile(state.src.value) ? (
+          <Img src={state.src.value} alt={alt} />
+        ) : state.src.value.loaded ? (
+          <Uploading>
+            <PendingOverlay>
+              <Pending />
+            </PendingOverlay>
+            <Img src={state.src.value.loaded.dataUrl} alt={alt} />
+          </Uploading>
+        ) : (
+          <Img />
+        )}
+      </ImgWrapper>
+    )
+  }
+}
 
 const ImgWrapper = styled.div<{ maxWidth: number }>((props) => {
   return {
@@ -46,50 +93,3 @@ const Pending = styled.div({
     },
   },
 })
-
-export class ImageRenderer extends Component<ImageRendererProps> {
-  public render() {
-    const { state, disableMouseEvents } = this.props
-    const alt = state.alt.defined ? state.alt.value : ''
-    const image = (
-      <ImgWrapper maxWidth={state.maxWidth.defined ? state.maxWidth.value : 0}>
-        {!isTempFile(state.src.value) ? (
-          <Img src={state.src.value} alt={alt} />
-        ) : state.src.value.loaded ? (
-          <Uploading>
-            <PendingOverlay>
-              <Pending />
-            </PendingOverlay>
-            <Img src={state.src.value.loaded.dataUrl} alt={alt} />
-          </Uploading>
-        ) : (
-          <Img />
-        )}
-      </ImgWrapper>
-    )
-
-    return (
-      <div>
-        {state.link.defined && state.link.href.value && !disableMouseEvents ? (
-          <a
-            href={state.link.href.value}
-            {...(state.link.openInNewTab.value
-              ? {
-                  target: '_blank',
-                  rel: 'noreferrer noopener',
-                }
-              : {})}
-          >
-            {image}
-          </a>
-        ) : (
-          image
-        )}
-      </div>
-    )
-  }
-}
-
-export type ImageRendererProps = ImageProps & {
-  disableMouseEvents?: boolean
-}
