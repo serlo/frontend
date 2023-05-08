@@ -4,7 +4,14 @@ const colors = require('tailwindcss/colors')
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'
-const yellow = '#ffbe5e'
+const sunflower = '#ffbe5e'
+const sunflowerColors = {
+  DEFAULT: sunflower,
+  300: sunflower,
+  200: '#ffdaa3',
+  100: '#fff1db',
+  50: '#fff9f0',
+}
 
 module.exports = {
   mode: 'jit',
@@ -14,37 +21,36 @@ module.exports = {
       colors: {
         brand: {
           DEFAULT: brand,
-          50: '#F4F9FC',
-          100: '#EFF7FB',
-          150: '#E6F2F9',
-          200: '#D9EBF5',
-          300: '#BBDCED',
-          400: '#8EC5E2',
-          500: '#51A5D1',
+          50: '#f4f9fc',
+          100: '#eff7fb',
+          150: '#e6f2f9',
+          200: '#d9ebf5',
+          300: '#bbdced',
+          400: '#8ec5e2',
+          500: '#51a5d1',
           600: brand,
           700: '#0076b9', // slighly darker brand blue for better color contrast with white (for smaller text) and light blue.
         },
         brandgreen: {
           DEFAULT: brandGreen,
-          50: '#EDFAC5',
-          100: '#DDF299',
-          200: '#CFED6D',
-          300: '#B9D957',
-          400: '#9FC91C',
+          50: '#edfac5',
+          100: '#ddf299',
+          200: '#cfed6d',
+          300: '#b9d957',
+          400: '#9fc91c',
           500: brandGreen,
-          // 600: '#81A317',
-          // 700: '#6D8A13',
-          // 800: '#5B7310',
-          // 900: '#45570C',
+          // 600: '#81a317',
+          // 700: '#6d8a13',
+          // 800: '#5b7310',
+          // 900: '#45570c',
           muted: '#cfe097',
         },
-        truegray: colors.neutral,
+        gray: colors.neutral,
         berry: '#857189',
         newgreen: '#2fceb1',
-        yellow: {
-          DEFAULT: yellow,
-          200: '#FFEED7',
-        },
+        'editor-primary': sunflowerColors,
+        'almost-black': '#404040',
+        yellow: sunflowerColors,
         orange: {
           DEFAULT: colors.orange[900],
           200: colors.orange[200],

@@ -42,7 +42,7 @@ export function SubjectLandingContent({
         }}
       />
       <Header />
-      <main id="content" className="text-truegray-700">
+      <main id="content" className="text-almost-black">
         <section
           className={clsx(
             'max-w-3xl mx-auto mt-16',
@@ -62,7 +62,7 @@ export function SubjectLandingContent({
                 {data.title}
               </span>
             </h1>
-            <p className="text-2xl leading-cozy text-truegray-700">
+            <p className="text-2xl leading-cozy text-almost-black">
               {data.subline1}
               <br /> {data.subline2}
             </p>
@@ -71,7 +71,7 @@ export function SubjectLandingContent({
         </section>
 
         <section className="max-w-3xl mx-auto mt-10 text-center sm:text-left sm:mt-16">
-          <h2 className="text-truegray-700 font-bold text-lg mb-2">
+          <h2 className="text-almost-black font-bold text-lg mb-2">
             Durchsuche den Bereich {data.title}
           </h2>
 

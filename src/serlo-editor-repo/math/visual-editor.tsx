@@ -95,6 +95,12 @@ export function VisualEditor(props: VisualEditorProps) {
       onChange={(ref) => {
         props.onChange(ref.latex())
       }}
+      onCopy={(event: React.ClipboardEvent) => {
+        event.stopPropagation()
+      }}
+      onCut={(event: React.ClipboardEvent) => {
+        event.stopPropagation()
+      }}
       // @ts-expect-error https://github.com/serlo/serlo-editor-issues-and-documentation/issues/67
       config={mathQuillConfig}
       mathquillDidMount={onMount}

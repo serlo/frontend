@@ -255,7 +255,10 @@ export const instanceData = {
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: "புதிய எழுத்தாளர்",
       newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -656,7 +659,7 @@ export const loggedInData = {
         enableNotifsMail: 'Enable notifications via e-mail',
         switchRevision: 'Switch to another revision',
         importOther: 'Import content from other entity',
-        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate all of it\'s content here. Do NOT use this to make exact copies are move content.',
+        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate it\'s content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).',
         importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
         importOtherButton: 'Import content',
         current: 'Current',
@@ -1029,7 +1032,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },

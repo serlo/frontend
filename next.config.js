@@ -16,38 +16,6 @@ module.exports = withBundleAnalyzer({
       ],
     })
 
-    for (const plugin of config.plugins) {
-      if (plugin.constructor.name === 'UglifyJsPlugin') {
-        plugin.options.sourceMap = true
-        break
-      }
-    }
-
-    // INFO: THIS IS HACKY
-    // very raw hack to avoid including react-dom/server into the client
-    // which is loaded by slate-html-sanitizer
-    const cgs = config.optimization.splitChunks.cacheGroups
-    if (cgs) {
-      // original: (?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/]
-      cgs.framework.test =
-        /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/](?!(server|cjs[\\/]react-dom-server))/
-      // code for debugging
-      /*cgs.framework.test = function (module) {
-        const isMatch =
-          /(?<!node_modules.*)[\\/]node_modules[\\/](react|react-dom|scheduler|prop-types|use-subscription)[\\/](?!(server|cjs[\\/]react-dom-server))/.test(
-            module.nameForCondition() || ''
-          )
-        if (isMatch) console.log(module.nameForCondition())
-        return isMatch
-      }*/
-    }
-
-    // fixes problem with outdated react-dnd version
-    // see https://github.com/react-dnd/react-dnd/issues/3433
-    // can be removed if edtr is on react-dnd 16
-    config.resolve.alias['react/jsx-runtime.js'] = 'react/jsx-runtime'
-    config.resolve.alias['react/jsx-dev-runtime.js'] = 'react/jsx-dev-runtime'
-
     // fixes problem with frontend-client-base needs language data on server but document is not ready
     if (!isServer) {
       // resolve feature-i18n as empty module on client

@@ -15,8 +15,6 @@ export interface TextEditorConfig {
   placeholder?: TextEditorPluginConfig['placeholder']
   formattingOptions?: TextEditorFormattingOption[]
   i18n?: DeepPartial<TextEditorPluginConfig['i18n']>
-  theme?: DeepPartial<TextEditorPluginConfig['theme']>
-  blockquote?: string
   noLinebreaks?: boolean
 }
 
@@ -34,9 +32,6 @@ export enum TextEditorFormattingOption {
 }
 
 interface I18n {
-  blockquote: {
-    toggleTitle: string
-  }
   code: {
     toggleTitle: string
   }
@@ -85,51 +80,10 @@ interface I18n {
   }
 }
 
-export interface ColorsTheme {
-  colors: string[]
-  defaultColor: string
-}
-
-interface Theme {
-  backgroundColor: string
-  color: string
-  hoverColor: string
-  borderColor: string
-  borderRadius: string
-  active: {
-    backgroundColor: string
-    color: string
-  }
-  dropDown: {
-    backgroundColor: string
-  }
-  suggestions: {
-    background: {
-      default: string
-      highlight: string
-    }
-    text: {
-      default: string
-      highlight: string
-    }
-  }
-  overlay: {
-    backgroundColor: string
-    boxShadow: string
-    color: string
-  }
-  formattingOptions: {
-    colors: ColorsTheme
-    headings: Heading['level'][]
-  }
-}
-
 /** @public */
 export interface TextEditorPluginConfig {
   placeholder: string
   formattingOptions: TextEditorFormattingOption[]
   i18n: I18n
-  theme: Theme
-  blockquote?: string
   noLinebreaks?: boolean
 }

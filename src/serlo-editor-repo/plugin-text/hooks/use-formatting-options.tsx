@@ -50,6 +50,7 @@ import {
   toggleHeading,
   toggleItalicMark,
 } from '../utils/rich-text'
+import { textColors } from './use-text-config'
 
 type SetIsLinkNewlyCreated = (value: boolean) => void
 
@@ -216,7 +217,7 @@ export const useFormattingOptions = (
 }
 
 function createToolbarControls(
-  { i18n, theme, formattingOptions }: TextEditorPluginConfig,
+  { i18n, formattingOptions }: TextEditorPluginConfig,
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
 ): ControlButton[] {
   const allFormattingOptions = [
@@ -252,7 +253,7 @@ function createToolbarControls(
       isActive: isAnyHeadingActive,
       renderIcon: () => <EdtrIcon icon={edtrText} />,
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: theme.formattingOptions.headings.map((heading) => ({
+      children: ([1, 2, 3] as const).map((heading) => ({
         name: TextEditorFormattingOption.headings,
         title: i18n.headings.setHeadingTitle(heading),
         isActive: isHeadingActive(heading),
@@ -266,12 +267,11 @@ function createToolbarControls(
       title: i18n.colors.openMenuTitle,
       closeMenuTitle: i18n.colors.closeMenuTitle,
       isActive: () => false,
-      renderIcon: (editor: SlateEditor) => (
-        <HoveringToolbarColorTextIcon
-          index={getColorIndex(editor)}
-          colorsTheme={theme.formattingOptions.colors}
-        />
-      ),
+      renderIcon: (editor: SlateEditor) => {
+        const colorIndex = getColorIndex(editor)
+        const color = colorIndex ? textColors[colorIndex].value : 'black'
+        return <HoveringToolbarColorTextIcon color={color} />
+      },
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
       children: [
         {
@@ -279,18 +279,14 @@ function createToolbarControls(
           title: i18n.colors.resetColorTitle,
           isActive: (editor: SlateEditor) => !isAnyColorActive(editor),
           onClick: resetColor,
-          renderIcon: () => (
-            <HoveringToolbarColorIcon
-              color={theme.formattingOptions.colors.defaultColor}
-            />
-          ),
+          renderIcon: () => <HoveringToolbarColorIcon color="black" />,
         },
-        ...theme.formattingOptions.colors.colors.map((color, colorIndex) => ({
+        ...textColors.map((color, colorIndex) => ({
           name: TextEditorFormattingOption.colors,
           title: i18n.colors.colorNames[colorIndex],
           isActive: isColorActive(colorIndex),
           onClick: toggleColor(colorIndex),
-          renderIcon: () => <HoveringToolbarColorIcon color={color} />,
+          renderIcon: () => <HoveringToolbarColorIcon color={color.value} />,
         })),
       ],
     },

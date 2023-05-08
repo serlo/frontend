@@ -21,7 +21,7 @@ import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
-import { useTextConfig } from '../hooks/use-text-config'
+import { textColors, useTextConfig } from '../hooks/use-text-config'
 import {
   TextEditorConfig,
   TextEditorPluginConfig,
@@ -50,7 +50,6 @@ import {
   replace,
 } from '@/serlo-editor-repo/store'
 
-/** @public */
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
   TextEditorConfig
@@ -62,7 +61,6 @@ export function TextEditor(props: TextEditorProps) {
 
   const store = useScopedStore()
   const { state, id, editable, focused } = props
-  const { selection, value } = state.value
 
   const config = useTextConfig(props.config)
 
@@ -76,14 +74,14 @@ export function TextEditor(props: TextEditorProps) {
     [createTextEditor]
   )
 
-  const text = Node.string(editor)
-  const suggestions = useSuggestions({ text, id, editable, focused })
+  const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
 
-  const previousValue = useRef(value)
-  const previousSelection = useRef(selection)
+  const previousValue = useRef(state.value.value)
+  const previousSelection = useRef(state.value.selection)
 
   useMemo(() => {
+    const { selection, value } = state.value
     // The selection can only be null when the text plugin is initialized
     // (In this case an update of the slate editor is not necessary)
     if (!selection) return
@@ -94,24 +92,46 @@ export function TextEditor(props: TextEditorProps) {
       previousValue.current = value
       editor.children = value
     }
-  }, [editor, selection, value])
+  }, [editor, state.value])
 
+  // Workaround for setting selection when adding a new editor:
   useEffect(() => {
-    if (focused === false) return
+    // Get the current text value of the editor
+    const text = Node.string(editor)
+
+    // If the editor is not focused, remove the suggestions search
+    // and exit the useEffect hook
+    if (focused === false) {
+      if (text.startsWith('/')) {
+        editor.deleteBackward('line')
+      }
+      return
+    }
+
+    // If the first child of the editor is not a paragraph, do nothing
+    const isFirstChildParagraph =
+      'type' in editor.children[0] && editor.children[0].type === 'p'
+    if (!isFirstChildParagraph) return
+
+    // If the editor is empty, set the cursor at the start
+    if (text === '') {
+      Transforms.select(editor, { offset: 0, path: [0, 0] })
+    }
+
+    // If the editor only has a forward slash, set the cursor
+    // after it, so that the user can type to filter suggestions
+    if (text === '/') {
+      Transforms.select(editor, { offset: 1, path: [0, 0] })
+    }
+
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       ReactEditor.focus(editor)
-
-      // Workaround for adding a new editor on enter key press:
-      // If the editor is empty, set the cursor at the start
-      const firstChild = editor.children[0]
-      if ('type' in firstChild && firstChild.type === 'p' && text === '') {
-        Transforms.select(editor, { offset: 0, path: [0, 0] })
-      }
     })
-    // No need to re-focus every time `text` changes
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => {
+      clearTimeout(timeout)
+    }
   }, [editor, focused])
 
   function handleEditorChange(newValue: Descendant[]) {
@@ -130,15 +150,19 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
+    // If linebreaks are disabled in the config, prevent any enter key handling
     if (config.noLinebreaks && event.key === 'Enter') {
       event.preventDefault()
     }
 
-    if (editor.selection && Range.isCollapsed(editor.selection)) {
+    // Handle specific keyboard commands
+    // (only if selection is collapsed and suggestions are not shown)
+    const { selection } = editor
+    if (selection && Range.isCollapsed(selection) && !showSuggestions) {
       // Special handler for links. If you move right and end up at the right edge of a link,
       // this handler unselects the link, so you can write normal text behind it.
       if (isHotkey('right', event)) {
-        const { path, offset } = editor.selection.focus
+        const { path, offset } = selection.focus
         const node = Node.get(editor, path)
         const parent = Node.parent(editor, path)
 
@@ -189,10 +213,9 @@ export function TextEditor(props: TextEditorProps) {
       // Merge with previous Slate instance on "backspace" key,
       // or merge with next Slate instance on "delete" key
       const isBackspaceAtStart =
-        isHotkey('backspace', event) &&
-        isSelectionAtStart(editor, editor.selection)
+        isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
       const isDeleteAtEnd =
-        isHotkey('delete', event) && isSelectionAtEnd(editor, editor.selection)
+        isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
       if (isBackspaceAtStart || isDeleteAtEnd) {
         event.preventDefault()
 
@@ -204,22 +227,22 @@ export function TextEditor(props: TextEditorProps) {
 
         // Update Redux state with the new value
         if (newValue) {
-          state.set(
-            { value: newValue, selection: editor.selection },
-            ({ value }) => ({ value, selection: previousSelection.current })
-          )
+          state.set({ value: newValue, selection }, ({ value }) => ({
+            value,
+            selection: previousSelection.current,
+          }))
         }
       }
 
       // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
       const isUpArrowAtStart =
-        isHotkey('up', event) && isSelectionAtStart(editor, editor.selection)
+        isHotkey('up', event) && isSelectionAtStart(editor, selection)
       if (isUpArrowAtStart) {
         event.preventDefault()
         store.dispatch(focusPrevious())
       }
       const isDownArrowAtEnd =
-        isHotkey('down', event) && isSelectionAtEnd(editor, editor.selection)
+        isHotkey('down', event) && isSelectionAtEnd(editor, selection)
       if (isDownArrowAtEnd) {
         event.preventDefault()
         store.dispatch(focusNext())
@@ -302,13 +325,16 @@ export function TextEditor(props: TextEditorProps) {
 
   return (
     <HotKeys {...hotKeysProps}>
-      <Slate editor={editor} value={value} onChange={handleEditorChange}>
+      <Slate
+        editor={editor}
+        value={state.value.value}
+        onChange={handleEditorChange}
+      >
         {editable && focused && (
           <HoveringToolbar
             editor={editor}
             config={config}
             controls={toolbarControls}
-            text={text}
             focused={focused}
           />
         )}
@@ -328,7 +354,7 @@ export function TextEditor(props: TextEditorProps) {
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={renderElementWithEditorContext(config, focused)}
-          renderLeaf={renderLeafWithConfig(config)}
+          renderLeaf={renderLeaf}
         />
       </Slate>
 
@@ -390,29 +416,27 @@ function renderElementWithEditorContext(
   }
 }
 
-function renderLeafWithConfig(config: TextEditorConfig) {
-  return function renderLeaf(props: RenderLeafProps) {
-    const colors = config?.theme?.formattingOptions?.colors?.colors
-    const { attributes, leaf } = props
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    let { children } = props
+function renderLeaf(props: RenderLeafProps) {
+  const colors = textColors.map((color) => color.value)
+  const { attributes, leaf } = props
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  let { children } = props
 
-    if (leaf.strong) {
-      children = <strong>{children}</strong>
-    }
-    if (typeof leaf.color === 'number' && Array.isArray(colors)) {
-      children = (
-        <span style={{ color: colors?.[leaf.color % colors.length] }}>
-          {children}
-        </span>
-      )
-    }
-    if (leaf.code) {
-      children = <code>{children}</code>
-    }
-    if (leaf.em) {
-      children = <em>{children}</em>
-    }
-    return <span {...attributes}>{children}</span>
+  if (leaf.strong) {
+    children = <strong>{children}</strong>
   }
+  if (typeof leaf.color === 'number' && Array.isArray(colors)) {
+    children = (
+      <span style={{ color: colors?.[leaf.color % colors.length] }}>
+        {children}
+      </span>
+    )
+  }
+  if (leaf.code) {
+    children = <code>{children}</code>
+  }
+  if (leaf.em) {
+    children = <em>{children}</em>
+  }
+  return <span {...attributes}>{children}</span>
 }

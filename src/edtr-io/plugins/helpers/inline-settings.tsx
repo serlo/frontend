@@ -1,5 +1,9 @@
-import { HoverOverlay, HoverPosition } from '@edtr-io/editor-ui/hover-overlay'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
+
+import {
+  HoverOverlayOld,
+  HoverPosition,
+} from '@/serlo-editor-repo/editor-ui/hover-overlay-old'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',
@@ -25,13 +29,13 @@ export function InlineSettings({
   anchor?: React.RefObject<HTMLElement>
 }) {
   return (
-    <HoverOverlay position={position} anchor={props.anchor}>
+    <HoverOverlayOld position={position} anchor={props.anchor}>
       <InlinePreview>{props.children}</InlinePreview>
       {props.onDelete ? (
         <ChangeButton onClick={props.onDelete}>
           <Icon icon={faTrashAlt} />
         </ChangeButton>
       ) : null}
-    </HoverOverlay>
+    </HoverOverlayOld>
   )
 }

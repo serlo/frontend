@@ -18,6 +18,8 @@ import { getDocument } from '@edtr-io/store'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
 import { mapObjIndexed } from 'ramda'
 
+import { colors } from '@/helper/colors'
+
 export const licenseState = object({
   id: number(),
   title: string(),
@@ -253,6 +255,6 @@ export const HeaderInput = styled.input({
   borderBottom: '2px solid transparent',
   '&:focus': {
     outline: 'none',
-    borderColor: '#007ec1',
+    borderColor: colors.brand,
   },
 })

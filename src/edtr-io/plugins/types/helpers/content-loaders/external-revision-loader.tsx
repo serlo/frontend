@@ -9,9 +9,11 @@ import { SerloAddButton } from '../../../helpers/serlo-editor-button'
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import {
+  DeserializeError,
   editorResponseToState,
   isError,
 } from '@/edtr-io/editor-response-to-state'
@@ -34,10 +36,16 @@ export function ExternalRevisionLoader<T>({
   const [showRevisions, setShowRevisions] = useState(false)
 
   const loggedInData = useLoggedInData()
+  const { strings } = useInstanceData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
 
   if (isProduction) return null
+
+  const exerciseTypes = [UuidType.Exercise, UuidType.GroupedExercise]
+  const supportedEntityTypes = exerciseTypes.includes(entityType)
+    ? exerciseTypes
+    : [entityType]
 
   return (
     <div>
@@ -77,7 +85,7 @@ export function ExternalRevisionLoader<T>({
                   }
                 />
               )}
-              supportedEntityTypes={[entityType]}
+              supportedEntityTypes={supportedEntityTypes}
               supportedTaxonomyTypes={[]}
             />
           </div>
@@ -117,15 +125,27 @@ export function ExternalRevisionLoader<T>({
         )
         const { uuid } = data
         const converted = editorResponseToState(uuid!)
-
-        if (isError(converted)) {
-          handleError(`editor: revision conversion | ${converted.error}`)
+        if (isError(converted) || !uuid) {
+          handleError(
+            `editor: revision conversion | ${
+              (converted as DeserializeError).error
+            }`
+          )
         } else {
+          const displayId =
+            Object.hasOwn(uuid, 'currentRevision') &&
+            uuid.currentRevision &&
+            Object.hasOwn(uuid.currentRevision, 'id')
+              ? uuid.currentRevision.id
+              : uuid.id
+
           onSwitchRevision({
             ...(converted.initialState.state as T),
             revision: 0,
             id: 0,
-            meta_title: '', // should we copy this?
+            meta_title: '',
+            meta_description: '',
+            changes: `${strings.unrevisedRevisions.importedContentIdentifier}: https://serlo.org/${displayId}`,
           } as T)
           setShowRevisions(false)
         }

@@ -1,17 +1,6 @@
 import * as React from 'react'
 
-import { styled, faSortDown, faSortUp, Icon, useRendererUiTheme } from '../ui'
-
-function useExpandableBoxTheme() {
-  return useRendererUiTheme('expandableBox', (theme) => {
-    return {
-      containerBorderColor: 'transparent',
-      toggleBackgroundColor: theme.primary.background,
-      toggleBorderColor: 'transparent',
-      toggleColor: theme.primary.background,
-    }
-  })
-}
+import { styled, faSortDown, faSortUp, Icon } from '../ui'
 
 const Container = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   return {
@@ -20,12 +9,14 @@ const Container = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   }
 })
 
+const toggleBackgroundColor = '#eff7fb'
+const toggleColor = '#333'
+
 const Toggle = styled.div<{
   collapsed: boolean
   editable?: boolean
   alwaysVisible?: boolean
 }>(({ collapsed, editable, alwaysVisible }) => {
-  const { toggleBackgroundColor, toggleColor } = useExpandableBoxTheme()
   return {
     backgroundColor:
       alwaysVisible || !collapsed ? toggleBackgroundColor : 'transparent',
@@ -52,7 +43,6 @@ const Content = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
 })
 
 const ToggleIcon = styled(Icon)<{ collapsed: boolean }>(({ collapsed }) => {
-  const { toggleColor } = useExpandableBoxTheme()
   return {
     marginRight: '10px',
     marginBottom: collapsed ? '3px' : '-3px',

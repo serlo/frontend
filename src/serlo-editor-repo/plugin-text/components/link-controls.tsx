@@ -10,23 +10,22 @@ import {
 import type { Link, TextEditorPluginConfig } from '../types'
 import { getLinkElement, isLinkActive } from '../utils/link'
 import { LinkControlsInput } from './link-controls-input'
+import { legacyEditorTheme } from '@/helper/colors'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',
 })
 
-const ChangeButton = styled.div(({ theme }) => ({
+const ChangeButton = styled.div({
   padding: '5px 5px 5px 10px',
   display: 'inline-block',
-  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-  borderLeft: `2px solid ${theme.borderColor}`,
+  borderLeft: `2px solid ${legacyEditorTheme.backgroundColor}`,
   cursor: 'pointer',
   margin: '2px',
   '&:hover': {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: theme.hoverColor,
+    color: legacyEditorTheme.primary.background,
   },
-}))
+})
 
 interface LinkControlsProps {
   hasSelectionChanged: number
@@ -64,11 +63,17 @@ export function LinkControls({
   }, [hasSelectionChanged, selection, editor])
 
   React.useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>
+
     if (element && isLinkNewlyCreated) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         setIsLinkNewlyCreated(false)
         input.current?.focus()
       })
+    }
+
+    return () => {
+      timeout && clearTimeout(timeout)
     }
   }, [element, isLinkNewlyCreated, setIsLinkNewlyCreated])
 
@@ -82,7 +87,6 @@ export function LinkControls({
       <InlinePreview>
         <LinkControlsInput
           ref={input}
-          theme={config.theme}
           value={value}
           placeholder={config.i18n.link.placeholder}
           onChange={(event) => {
@@ -97,7 +101,6 @@ export function LinkControls({
         />
       </InlinePreview>
       <ChangeButton
-        theme={config.theme}
         as="a"
         target="_blank"
         href={value}
@@ -106,7 +109,6 @@ export function LinkControls({
         <Icon icon={faExternalLinkAlt} />
       </ChangeButton>
       <ChangeButton
-        theme={config.theme}
         onClick={() => {
           setElement(null)
           const path = ReactEditor.findPath(editor, element)

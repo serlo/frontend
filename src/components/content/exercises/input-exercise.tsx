@@ -59,7 +59,7 @@ export function InputExercise({
         className={clsx(
           'print:hidden serlo-input-font-reset',
           'rounded-3xl py-2 px-3 font-bold',
-          'border-3 border-brand-400 mb-5 text-white focus:border-brand active:border-brand',
+          'border-3 border-brand-400 mb-5 text-brand focus:border-brand active:border-brand',
           'focus:outline-none focus:bg-white focus:text-brand focus:opacity-100 focus:placeholder-opacity-0',
           'placeholder-brand'
         )}
@@ -158,7 +158,7 @@ export function InputExercise({
     return data.answers.map((answer) => (
       <div
         key={answer.value}
-        className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info"
+        className="bg-editor-primary-100 rounded-xl py-2 mb-4 serlo-revision-extra-info"
       >
         <span className="font-bold text-sm mx-side">
           {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:

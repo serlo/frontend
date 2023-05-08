@@ -3,6 +3,7 @@ import { useSlate } from 'slate-react'
 
 import { styled } from '../../ui'
 import type { TextEditorConfig } from '../types'
+import { legacyEditorTheme } from '@/helper/colors'
 
 export enum InlineOverlayPosition {
   above = 'above',
@@ -23,19 +24,15 @@ const Wrapper = styled.div({
   whiteSpace: 'nowrap',
 })
 
-const Content = styled.div(({ theme }) => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  boxShadow: theme.overlay.boxShadow,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  backgroundColor: theme.overlay.backgroundColor,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  color: theme.overlay.color,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  borderRadius: theme.borderRadius,
-}))
+const Content = styled.div({
+  boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
+  backgroundColor: legacyEditorTheme.backgroundColor,
+  color: legacyEditorTheme.color,
+  borderRadius: '4px',
+})
 
 const Triangle = styled.div<{ position: InlineOverlayPosition }>(
-  ({ theme, position }) => {
+  ({ position }) => {
     const borderPosition = isAbove(position) ? 'borderTop' : 'borderBottom'
     return {
       position: 'relative',
@@ -43,14 +40,12 @@ const Triangle = styled.div<{ position: InlineOverlayPosition }>(
       height: 0,
       borderLeft: '5px solid transparent',
       borderRight: '5px solid transparent',
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-      [borderPosition]: `10px solid ${theme.borderColor}`,
+      [borderPosition]: `10px solid ${legacyEditorTheme.backgroundColor}`,
     }
   }
 )
 
 export function InlineOverlay({
-  config,
   children,
   initialPosition,
   hidden,
@@ -123,13 +118,9 @@ export function InlineOverlay({
 
   return (
     <Wrapper ref={wrapper}>
-      {!isAbove(position) && (
-        <Triangle ref={triangle} theme={config.theme} position={position} />
-      )}
-      <Content theme={config.theme}>{children}</Content>
-      {isAbove(position) && (
-        <Triangle ref={triangle} theme={config.theme} position={position} />
-      )}
+      {!isAbove(position) && <Triangle ref={triangle} position={position} />}
+      <Content>{children}</Content>
+      {isAbove(position) && <Triangle ref={triangle} position={position} />}
     </Wrapper>
   )
 }

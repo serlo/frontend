@@ -3,6 +3,7 @@ import * as React from 'react'
 import { ScMcExercisePluginConfig, ScMcExerciseProps } from '.'
 import { CheckElement } from '../editor-ui'
 import { styled } from '../ui'
+import { colors } from '@/helper/colors'
 
 const CheckboxContainer = styled.div({
   //width: '5%',
@@ -43,7 +44,7 @@ export class ScMcExerciseChoiceRenderer extends React.Component<
         paddingLeft: '20 px',
         color: props.showFeedback
           ? props.isCorrect
-            ? '#95bc1a'
+            ? colors.brandGreen
             : '#f7b07c'
           : 'black',
       }

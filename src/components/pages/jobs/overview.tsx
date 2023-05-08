@@ -203,7 +203,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         <section className={clsx('bg-orangeBow bg-100% mt-24 !pt-12')}>
           <h3
             className={clsx(
-              'text-center text-4xl text-truegray-700 font-bold',
+              'text-center text-4xl text-almost-black font-bold',
               'leading-cozy tracking-tight',
               'mx-auto'
             )}
@@ -227,7 +227,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                 >
                   <img src={src} className="max-h-32 mobile:mx-auto" />
                   <h4
-                    className="text-truegray-700 font-extrabold leading-cozy"
+                    className="text-almost-black font-extrabold leading-cozy"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
                   <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-2 leading-snug special-hyphens-initial">

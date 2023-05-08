@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
+import { Editor as SlateEditor, Node } from 'slate'
 
 import { useScopedStore } from '../../core'
 import { RegistryContext, Registry } from '../../plugin-rows'
 import { replace } from '../../store'
 
 interface useSuggestionsArgs {
-  text: string
+  editor: SlateEditor
   id: string
   editable: boolean
   focused: boolean
@@ -19,15 +20,16 @@ const hotKeysMap = {
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
+  const suggestionsRef = useRef<HTMLDivElement>(null)
   const store = useScopedStore()
-  const { text, id, editable, focused } = args
+  const { editor, id, editable, focused } = args
 
+  const text = Node.string(editor)
   const plugins = useContext(RegistryContext)
-  const allOptions = mapPlugins(plugins, text)
+  const filteredOptions = filterPlugins(plugins, text)
   const showSuggestions =
-    editable && focused && text.startsWith('/') && allOptions.length > 0
-  const options = showSuggestions ? allOptions : []
-  const currentValue = text.substring(1)
+    editable && focused && text.startsWith('/') && filteredOptions.length > 0
+  const options = showSuggestions ? filteredOptions : []
 
   const closure = useRef({
     showSuggestions,
@@ -46,18 +48,43 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
   }, [options.length, selected])
 
+  function handleHotkeys(event: React.KeyboardEvent) {
+    if (closure.current.showSuggestions) {
+      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
+        event.preventDefault()
+        return
+      }
+    }
+  }
+
   const handleSelectionChange = (direction: 'up' | 'down') => () => {
     if (closure.current.showSuggestions) {
       setSelected((currentSelected) => {
         const optionsCount = closure.current.options.length
-        const value = direction === 'up' ? optionsCount - 1 : 1
         if (optionsCount === 0) return 0
-        return (currentSelected + value) % optionsCount
+
+        const isFirstAndUpPressed = direction === 'up' && currentSelected === 0
+        const isLastAndDownPressed =
+          direction === 'down' && currentSelected === optionsCount - 1
+        if (isFirstAndUpPressed || isLastAndDownPressed) return currentSelected
+
+        const value = direction === 'up' ? -1 : 1
+        const selectedElementIndex = currentSelected + value
+
+        scrollSuggestionIntoView(selectedElementIndex)
+
+        return selectedElementIndex
       })
     }
   }
 
-  const handleSuggestionInsert = () => {
+  function scrollSuggestionIntoView(index: number) {
+    const suggestionElements = suggestionsRef?.current?.children
+    const selectedElement = suggestionElements?.item(index)
+    selectedElement?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  }
+
+  function handleSuggestionInsert() {
     if (closure.current.showSuggestions) {
       const option = closure.current.options[closure.current.selected]
       if (!option) return
@@ -65,6 +92,18 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
         insertPlugin(option.name)
       })
     }
+  }
+
+  function insertPlugin(pluginName: string) {
+    // If the text plugin is selected from the suggestions list,
+    // just clear the editor
+    if (pluginName === 'text') {
+      editor.deleteBackward('line')
+      return
+    }
+
+    // Otherwise, replace the text plugin with the selected plugin
+    store.dispatch(replace({ id, plugin: pluginName }))
   }
 
   const hotKeysHandlers = {
@@ -77,9 +116,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     showSuggestions,
     suggestionsProps: {
       options,
-      currentValue,
+      suggestionsRef,
       selected,
       onMouseDown: insertPlugin,
+      onMouseMove: setSelected,
     },
     hotKeysProps: {
       keyMap: hotKeysMap,
@@ -87,26 +127,14 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     },
     handleHotkeys,
   }
-
-  function insertPlugin(plugin: string) {
-    store.dispatch(replace({ id, plugin }))
-  }
-
-  function handleHotkeys(event: React.KeyboardEvent) {
-    if (closure.current.showSuggestions) {
-      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
-        event.preventDefault()
-        return
-      }
-    }
-  }
 }
 
-function mapPlugins(registry: Registry, text: string) {
+function filterPlugins(registry: Registry, text: string) {
   const search = text.replace('/', '').toLowerCase()
 
+  if (!search.length) return registry
+
   const startingWithSearchString = registry.filter(({ title }) => {
-    if (!search.length) return true
     return title?.toLowerCase()?.startsWith(search)
   })
   const containingSearchString = registry.filter(({ title }) => {

@@ -50,7 +50,7 @@ export function FooterNavNew() {
           <li key={url}>
             <Link
               className={clsx(
-                'text-truegray-700 mb-2 w-auto border-transparent border-b-2',
+                'text-almost-black mb-2 w-auto border-transparent border-b-2',
                 'inline-block hover:no-underline hover:border-brand hover:text-brand'
               )}
               href={url}

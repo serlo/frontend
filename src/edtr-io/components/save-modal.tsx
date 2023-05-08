@@ -40,7 +40,7 @@ export function SaveModal({
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
   const [skipReview, setSkipReview] = useState(false)
-  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
   const { lang } = useInstanceData()
@@ -66,6 +66,12 @@ export function SaveModal({
     handleSave,
     notificationSubscription,
   ])
+
+  useEffect(() => {
+    // make sure generated change text is used
+    if (!changesText) setChangesText(changes?.value ?? '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -184,7 +190,7 @@ export function SaveModal({
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-200 border-2 border-brand-200 focus-within:outline-none focus-within:border-brand-500'
+            'bg-yellow-200 border-2 border-yellow-200 focus-within:outline-none focus-within:border-truegray-400'
           )}
         />
       </label>

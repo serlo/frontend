@@ -255,7 +255,10 @@ export const instanceData = {
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
       newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review.",
-      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden."
+      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden.",
+      importedContentText: "importiert",
+      importedContentNote: "Diese Bearbeitung enthält importierte Inhalte",
+      importedContentIdentifier: "Inhalt importiert von"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -314,7 +317,7 @@ export const instanceData = {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
       alreadyLoggedIn: "👋 Willkommen zurück",
-      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
+      warningLoggedOut: "⚠️ Du wurdest abgemeldet. Bitte melde dich wieder an und benutze dann \"Änderungen laden\" um deine aktuellen Änderungen wiederherzustellen.",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -656,7 +659,7 @@ export const loggedInData = {
         enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
         switchRevision: "Andere Version auswählen",
         importOther: "Aus einem anderen Inhalt importieren",
-        importOtherExplanation: "Einfach die URL oder ID eines anderen Inhalts auf serlo.org um den gesamten Content hier einzufügen. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen.",
+        importOtherExplanation: "Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)",
         importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
         importOtherButton: "Inhalte Importieren",
         current: "Aktuell",
@@ -1028,7 +1031,7 @@ Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
 <p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Dein Community-Support 💚</p>`
     },
     invalid: {
