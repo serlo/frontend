@@ -5,12 +5,11 @@ import {
   InputExercisePluginConfig,
   InputExerciseType,
 } from '.'
-import { legacyEditorTheme } from '@/helper/colors'
 
 export function useInputExerciseConfig(
   config: InputExerciseConfig
 ): InputExercisePluginConfig {
-  const { i18n = {}, theme = {} } = config
+  const { i18n = {} } = config
 
   return {
     i18n: R.mergeDeepRight(
@@ -34,10 +33,5 @@ export function useInputExerciseConfig(
       },
       i18n
     ),
-    theme: {
-      borderColor: legacyEditorTheme.primary.background,
-      borderStyle: '3px solid',
-      ...theme,
-    },
   }
 }
