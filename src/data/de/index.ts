@@ -659,7 +659,7 @@ export const loggedInData = {
         enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
         switchRevision: "Andere Version auswählen",
         importOther: "Aus einem anderen Inhalt importieren",
-        importOtherExplanation: "Du kannst den Content eines anderen Inhalts hier importieren.\nFüge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)",
+        importOtherExplanation: "Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)",
         importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
         importOtherButton: "Inhalte Importieren",
         current: "Aktuell",
