@@ -1,5 +1,5 @@
 import { styled } from '../../ui'
-import { legacyEditorTheme } from '@/helper/colors'
+import { colors, legacyEditorTheme } from '@/helper/colors'
 
 export const HoveringToolbarButton = styled.button<{
   active?: boolean
@@ -16,6 +16,6 @@ export const HoveringToolbarButton = styled.button<{
   padding: '0px',
   width: '25px',
   '&:hover': {
-    color: legacyEditorTheme.backgroundColor,
+    color: colors.editorPrimary,
   },
 }))
