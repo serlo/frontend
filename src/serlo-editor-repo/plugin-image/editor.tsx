@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react'
+
 import { ImageProps } from '.'
 import {
   OverlayButton,
@@ -263,9 +265,7 @@ function SettingsControls(props: ImageProps) {
 
 function handleChange(props: ImageProps) {
   return function (name: 'src' | 'description' | 'href') {
-    return (
-      event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-    ) => {
+    return (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       const { state } = props
       const value = event.target.value
 
