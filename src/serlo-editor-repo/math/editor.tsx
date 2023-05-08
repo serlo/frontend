@@ -10,7 +10,6 @@ import { MathEditorProps } from './editor-props'
 import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
-import { legacyEditorTheme } from '@/helper/colors'
 
 const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
   return {
@@ -158,18 +157,6 @@ export function MathEditor(props: MathEditorProps) {
           )
         },
       },
-      theme: {
-        backgroundColor: 'transparent',
-        color: legacyEditorTheme.color,
-        hoverColor: legacyEditorTheme.primary.background,
-        active: {
-          backgroundColor: '#b6b6b6',
-          color: legacyEditorTheme.backgroundColor,
-        },
-        dropDown: {
-          backgroundColor: legacyEditorTheme.backgroundColor,
-        },
-      },
     },
     values: props.config,
   })
@@ -253,17 +240,16 @@ export function MathEditor(props: MathEditorProps) {
               }}
             >
               <Dropdown
-                config={config}
                 value={useVisualEditor ? 'visual' : 'latex'}
                 onChange={(e) => {
                   if (hasError) setHasError(false)
                   props.onEditorChange(e.target.value === 'visual')
                 }}
               >
-                <Option config={config} active={useVisualEditor} value="visual">
+                <Option active={useVisualEditor} value="visual">
                   {config.i18n.editors.visual}
                 </Option>
-                <Option config={config} active={!useVisualEditor} value="latex">
+                <Option active={!useVisualEditor} value="latex">
                   {config.i18n.editors.latex}
                 </Option>
               </Dropdown>
@@ -279,12 +265,7 @@ export function MathEditor(props: MathEditorProps) {
                 />
               )}
               {useVisualEditor && (
-                <Button
-                  config={config}
-                  onMouseDown={() => {
-                    setHelpOpen(true)
-                  }}
-                >
+                <Button onMouseDown={() => setHelpOpen(true)}>
                   <Icon icon={faQuestionCircle} />
                 </Button>
               )}

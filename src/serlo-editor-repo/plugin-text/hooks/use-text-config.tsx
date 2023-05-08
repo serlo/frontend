@@ -7,7 +7,7 @@ import {
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
-import { articleColors, colors, legacyEditorTheme } from '@/helper/colors'
+import { articleColors, legacyEditorTheme } from '@/helper/colors'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
