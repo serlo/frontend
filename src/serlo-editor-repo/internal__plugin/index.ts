@@ -5,7 +5,6 @@ import {
   StateTypeReturnType,
   StateTypeSerializedType,
 } from '../internal__plugin-state'
-import { Theme } from '../ui'
 
 /**
  * An Edtr.io plugin
@@ -25,7 +24,7 @@ export interface EditorPlugin<
   /**
    * Plugin configuration
    */
-  config: Config | ((theme: Theme) => Config)
+  config: Config | (() => Config)
 
   /**
    * [[StateType]] of the plugin

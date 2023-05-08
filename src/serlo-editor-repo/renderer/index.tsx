@@ -5,14 +5,15 @@ import { Provider, ScopeContext, SubDocument } from '../core'
 import { invariant } from '../internal__dev-expression'
 import { EditorPlugin, StoreDeserializeHelpers } from '../plugin'
 import { Action, ScopedState, State } from '../store'
-import { CustomTheme, RootThemeProvider } from '../ui'
 
 /**
  * @param props - The props
  * @public
  */
-export function Renderer<K extends string = string>(props: RendererProps<K>) {
-  const { theme = {}, ...rest } = props
+export function Renderer<K extends string = string>({
+  plugins,
+  state,
+}: RendererProps<K>) {
   const store = React.useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return createStore<any, Action, unknown, unknown>(
@@ -20,7 +21,7 @@ export function Renderer<K extends string = string>(props: RendererProps<K>) {
         if (!state) {
           return {
             main: {
-              plugins: rest.plugins,
+              plugins,
               documents: getDocuments(),
               focus: null,
               root: 'root',
@@ -45,7 +46,7 @@ export function Renderer<K extends string = string>(props: RendererProps<K>) {
       }[] = [
         {
           id: 'root',
-          ...(rest.state || {}),
+          ...(state || {}),
         },
       ]
       const helpers: StoreDeserializeHelpers = {
@@ -55,7 +56,7 @@ export function Renderer<K extends string = string>(props: RendererProps<K>) {
       }
 
       for (let doc; (doc = pendingDocs.pop()); ) {
-        const plugin = rest.plugins[doc.plugin]
+        const plugin = plugins[doc.plugin]
         if (!plugin) {
           invariant(false, `Invalid plugin '${doc.plugin}'`)
           continue
@@ -73,15 +74,13 @@ export function Renderer<K extends string = string>(props: RendererProps<K>) {
       }
       return documents
     }
-  }, [rest.state, rest.plugins])
+  }, [state, plugins])
 
   return (
     <Provider store={store}>
-      <RootThemeProvider theme={theme}>
-        <ScopeContext.Provider value={{ scope: 'main' }}>
-          <SubDocument id="root" />
-        </ScopeContext.Provider>
-      </RootThemeProvider>
+      <ScopeContext.Provider value={{ scope: 'main' }}>
+        <SubDocument id="root" />
+      </ScopeContext.Provider>
     </Provider>
   )
 }
@@ -93,5 +92,4 @@ export interface RendererProps<K extends string = string> {
     plugin: K
     state?: unknown
   }
-  theme?: CustomTheme
 }

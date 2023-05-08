@@ -23,6 +23,10 @@ export const legacyEditorTheme = {
     color: '#ffffff',
     background: '#d9534f',
   },
+  success: {
+    color: '#ffffff',
+    background: '#5cb85c',
+  },
   color: '#EEEEEE',
   backgroundColor: 'rgba(51,51,51,0.95)',
 }

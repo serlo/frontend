@@ -21,5 +21,3 @@ export const styled =
 
 export * from './deep-partial'
 export * from './icon'
-export * from './renderer-theme'
-export * from './theme'
