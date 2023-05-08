@@ -50,7 +50,6 @@ import {
   replace,
 } from '@/serlo-editor-repo/store'
 
-/** @public */
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
   TextEditorConfig
@@ -75,8 +74,7 @@ export function TextEditor(props: TextEditorProps) {
     [createTextEditor]
   )
 
-  const text = Node.string(editor)
-  const suggestions = useSuggestions({ text, id, editable, focused })
+  const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
 
   const previousValue = useRef(state.value.value)
@@ -331,7 +329,6 @@ export function TextEditor(props: TextEditorProps) {
             editor={editor}
             config={config}
             controls={toolbarControls}
-            text={text}
             focused={focused}
           />
         )}

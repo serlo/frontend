@@ -65,7 +65,10 @@ export const Suggestions = (props: SuggestionsProps) => {
         <Suggestion
           key={index}
           data-active={index === selected}
-          onMouseDown={() => onMouseDown(name)}
+          onMouseDown={(event: React.MouseEvent) => {
+            event.preventDefault()
+            onMouseDown(name)
+          }}
           theme={theme}
         >
           {Icon && (
