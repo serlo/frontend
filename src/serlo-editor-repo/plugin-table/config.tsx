@@ -17,6 +17,5 @@ export function useTableConfig(config: TableConfig): TablePluginConfig {
 }
 
 function DefaultMarkdownRenderer({ markdown }: { markdown: string }) {
-  //@ts-expect-error Typescript error locally on my machine (???)
   return <ReactMarkdown plugins={[remarkGfmPlugin]}>{markdown}</ReactMarkdown>
 }
