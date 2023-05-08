@@ -109,20 +109,22 @@ export function SaveModal({
         {renderModalButtons()}
         {link && (
           <div>
-            Dein Link:{' '}
+            <div className="mb-2">Dein Link:</div>
             <input
-              className="p-2 rounded bg-yellow-300 w-[400px]"
+              className="p-2 rounded bg-yellow-300 w-full"
               defaultValue={link}
               readOnly
             />
-            <a
-              href={link}
-              target="_blank"
-              className="ml-4 font-bold text-brand hover:underline"
-              rel="noreferrer"
-            >
-              öffnen
-            </a>
+            <div className="mt-3">
+              <a
+                href={link}
+                target="_blank"
+                className="font-bold text-brand hover:underline"
+                rel="noreferrer"
+              >
+                öffnen
+              </a>
+            </div>
           </div>
         )}
       </div>
