@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
+import { Editor as SlateEditor, Node } from 'slate'
 
 import { useScopedStore } from '../../core'
 import { RegistryContext, Registry } from '../../plugin-rows'
 import { replace } from '../../store'
 
 interface useSuggestionsArgs {
-  text: string
+  editor: SlateEditor
   id: string
   editable: boolean
   focused: boolean
@@ -21,8 +22,9 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const store = useScopedStore()
-  const { text, id, editable, focused } = args
+  const { editor, id, editable, focused } = args
 
+  const text = Node.string(editor)
   const plugins = useContext(RegistryContext)
   const filteredOptions = filterPlugins(plugins, text)
   const showSuggestions =
@@ -93,6 +95,14 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   }
 
   function insertPlugin(pluginName: string) {
+    // If the text plugin is selected from the suggestions list,
+    // just clear the editor
+    if (pluginName === 'text') {
+      editor.deleteBackward('line')
+      return
+    }
+
+    // Otherwise, replace the text plugin with the selected plugin
     store.dispatch(replace({ id, plugin: pluginName }))
   }
 
@@ -109,6 +119,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       suggestionsRef,
       selected,
       onMouseDown: insertPlugin,
+      onMouseMove: setSelected,
     },
     hotKeysProps: {
       keyMap: hotKeysMap,
@@ -121,14 +132,12 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 function filterPlugins(registry: Registry, text: string) {
   const search = text.replace('/', '').toLowerCase()
 
-  const withoutTextPlugin = registry.filter(({ name }) => name !== 'text')
+  if (!search.length) return registry
 
-  if (!search.length) return withoutTextPlugin
-
-  const startingWithSearchString = withoutTextPlugin.filter(({ title }) => {
+  const startingWithSearchString = registry.filter(({ title }) => {
     return title?.toLowerCase()?.startsWith(search)
   })
-  const containingSearchString = withoutTextPlugin.filter(({ title }) => {
+  const containingSearchString = registry.filter(({ title }) => {
     const value = title?.toLowerCase()
     return value?.includes(search) && !value?.startsWith(search)
   })

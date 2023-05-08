@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Editor as SlateEditor, Range } from 'slate'
+import { Editor as SlateEditor, Range, Node } from 'slate'
 
 import type { TextEditorPluginConfig, ControlButton } from '../types'
 import { isTouchDevice } from '../utils/is-touch-device'
@@ -11,7 +11,6 @@ export interface HoveringToolbarProps {
   editor: SlateEditor
   config: TextEditorPluginConfig
   controls: ControlButton[]
-  text: string
   focused: boolean
 }
 
@@ -21,8 +20,9 @@ const initialPosition = isTouchDevice()
 
 export function HoveringToolbar(props: HoveringToolbarProps) {
   const [isBottomToolbarActive, setIsBottomToolbarActive] = useState(false)
-  const { editor, config, controls, text, focused } = props
+  const { editor, config, controls, focused } = props
   const { selection } = editor
+  const text = Node.string(editor)
   const isSelectionCollapsed = selection && Range.isCollapsed(selection)
 
   // Save text for later reference
