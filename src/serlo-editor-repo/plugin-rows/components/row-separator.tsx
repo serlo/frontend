@@ -21,6 +21,7 @@ const Separator = styled.div<SeparatorProps>(({ isFirst, isLast }) => ({
       : 'translateY(100%)',
   top: isFirst ? 0 : undefined,
   bottom: isFirst ? undefined : 0,
+  zIndex: 1,
 }))
 
 const TriggerArea = styled.div({
