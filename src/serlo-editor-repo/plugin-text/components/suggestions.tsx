@@ -10,6 +10,7 @@ interface SuggestionsProps {
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
   onMouseDown: (option: string) => void
+  onMouseMove: (index: number) => void
 }
 
 const SuggestionsWrapper = styled.div({
@@ -23,7 +24,7 @@ const Suggestion = styled.div(({ theme }: { theme: Theme }) => ({
   display: 'flex',
   alignItems: 'center',
   backgroundColor: theme.suggestions.background.default,
-  '&:hover, &[data-active="true"]': {
+  '&[data-active="true"]': {
     backgroundColor: theme.suggestions.background.highlight,
     [SuggestionIconWrapper]: {
       border: '1px solid #ddd',
@@ -51,8 +52,14 @@ const SuggestionDescription = styled.p({
   whiteSpace: 'pre-wrap',
 })
 
-export const Suggestions = (props: SuggestionsProps) => {
-  const { config, options, suggestionsRef, selected, onMouseDown } = props
+export const Suggestions = ({
+  config,
+  options,
+  suggestionsRef,
+  selected,
+  onMouseDown,
+  onMouseMove,
+}: SuggestionsProps) => {
   const { i18n, theme } = config
 
   if (options.length === 0) {
@@ -68,6 +75,9 @@ export const Suggestions = (props: SuggestionsProps) => {
           onMouseDown={(event: React.MouseEvent) => {
             event.preventDefault()
             onMouseDown(name)
+          }}
+          onMouseMove={() => {
+            onMouseMove(index)
           }}
           theme={theme}
         >

@@ -119,6 +119,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       suggestionsRef,
       selected,
       onMouseDown: insertPlugin,
+      onMouseMove: setSelected,
     },
     hotKeysProps: {
       keyMap: hotKeysMap,
