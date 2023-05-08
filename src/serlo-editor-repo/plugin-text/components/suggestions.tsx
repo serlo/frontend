@@ -11,6 +11,7 @@ interface SuggestionsProps {
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
   onMouseDown: (option: string) => void
+  onMouseMove: (index: number) => void
 }
 
 const SuggestionsWrapper = styled.div({
@@ -51,8 +52,14 @@ const SuggestionDescription = styled.p({
   whiteSpace: 'pre-wrap',
 })
 
-export const Suggestions = (props: SuggestionsProps) => {
-  const { config, options, suggestionsRef, selected, onMouseDown } = props
+export const Suggestions = ({
+  config,
+  options,
+  suggestionsRef,
+  selected,
+  onMouseDown,
+  onMouseMove,
+}: SuggestionsProps) => {
   const { i18n } = config
 
   if (options.length === 0) {
@@ -65,7 +72,13 @@ export const Suggestions = (props: SuggestionsProps) => {
         <Suggestion
           key={index}
           data-active={index === selected}
-          onMouseDown={() => onMouseDown(name)}
+          onMouseDown={(event: React.MouseEvent) => {
+            event.preventDefault()
+            onMouseDown(name)
+          }}
+          onMouseMove={() => {
+            onMouseMove(index)
+          }}
         >
           {Icon && (
             <SuggestionIconWrapper>
