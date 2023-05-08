@@ -1,11 +1,10 @@
 import * as R from 'ramda'
 
 import { RowsConfig, RowsPluginConfig } from '.'
-import { useTheme } from '../ui'
+import { legacyEditorTheme } from '@/helper/colors'
 
 export function useRowsConfig(config: RowsConfig): RowsPluginConfig {
   const { i18n = {}, theme = {}, plugins } = config
-  const { editor } = useTheme()
 
   return {
     plugins,
@@ -28,15 +27,15 @@ export function useRowsConfig(config: RowsConfig): RowsPluginConfig {
     ),
     theme: R.mergeDeepRight(
       {
-        color: editor.secondary.color,
-        backgroundColor: editor.primary.color,
-        highlightColor: editor.primary.background,
+        color: legacyEditorTheme.secondary.color,
+        backgroundColor: legacyEditorTheme.primary.color,
+        highlightColor: legacyEditorTheme.primary.background,
         lightBackgroundColor: 'rgb(182,182,182)',
         menu: {
-          highlightColor: editor.primary.background,
+          highlightColor: legacyEditorTheme.primary.background,
           primary: {
             backgroundColor: 'rgba(255, 255, 255, 0.95)',
-            color: editor.backgroundColor,
+            color: legacyEditorTheme.backgroundColor,
           },
           secondary: {
             backgroundColor: 'rgba(0, 0, 0, 0.1)',
@@ -45,7 +44,7 @@ export function useRowsConfig(config: RowsConfig): RowsPluginConfig {
           dropzone: {
             backgroundColor: 'rgb(73, 73, 73)',
             color: '#dbdbdb',
-            highlightColor: editor.primary.background,
+            highlightColor: legacyEditorTheme.primary.background,
             highlightBackgroundColor: 'rgb(60,60,60)',
           },
         },

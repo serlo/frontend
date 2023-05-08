@@ -2,7 +2,7 @@ import * as React from 'react'
 import Modal from 'react-modal'
 
 import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
-import { faQuestionCircle, Icon, merge, useEditorTheme } from '../ui'
+import { faQuestionCircle, Icon, merge } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { MathEditorConfig } from './editor-config'
@@ -10,6 +10,7 @@ import { MathEditorProps } from './editor-props'
 import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
+import { legacyEditorTheme } from '@/helper/colors'
 
 const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
   return {
@@ -110,7 +111,6 @@ export function MathEditor(props: MathEditorProps) {
 
   const useVisualEditor = visual && !hasError
 
-  const editorTheme = useEditorTheme()
   const config = merge<MathEditorConfig>({
     fallback: {
       i18n: {
@@ -160,14 +160,14 @@ export function MathEditor(props: MathEditorProps) {
       },
       theme: {
         backgroundColor: 'transparent',
-        color: editorTheme.editor.color,
-        hoverColor: editorTheme.editor.primary.background,
+        color: legacyEditorTheme.color,
+        hoverColor: legacyEditorTheme.primary.background,
         active: {
           backgroundColor: '#b6b6b6',
-          color: editorTheme.editor.backgroundColor,
+          color: legacyEditorTheme.backgroundColor,
         },
         dropDown: {
-          backgroundColor: editorTheme.editor.backgroundColor,
+          backgroundColor: legacyEditorTheme.backgroundColor,
         },
       },
     },

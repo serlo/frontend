@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-import { merge, useTheme } from '../../ui'
+import { merge } from '../../ui'
 import {
   TextEditorFormattingOption,
   Heading,
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
-import { articleColors, colors } from '@/helper/colors'
+import { articleColors, colors, legacyEditorTheme } from '@/helper/colors'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
@@ -32,7 +32,6 @@ export function useTextConfig(
     theme = {},
     noLinebreaks,
   } = config
-  const { editor } = useTheme()
 
   return {
     formattingOptions: config.formattingOptions || defaultFormattingOptions,
@@ -128,16 +127,16 @@ export function useTextConfig(
     theme: merge({
       fallback: {
         backgroundColor: 'transparent',
-        color: editor.color,
-        hoverColor: editor.primary.background,
-        borderColor: editor.backgroundColor,
+        color: legacyEditorTheme.color,
+        hoverColor: legacyEditorTheme.primary.background,
+        borderColor: legacyEditorTheme.backgroundColor,
         borderRadius: '4px',
         active: {
           backgroundColor: '#b6b6b6',
-          color: editor.backgroundColor,
+          color: legacyEditorTheme.backgroundColor,
         },
         dropDown: {
-          backgroundColor: editor.backgroundColor,
+          backgroundColor: legacyEditorTheme.backgroundColor,
         },
         suggestions: {
           background: {
@@ -146,13 +145,13 @@ export function useTextConfig(
           },
           text: {
             default: colors.almostBlack,
-            highlight: editor.danger.background,
+            highlight: legacyEditorTheme.danger.background,
           },
         },
         overlay: {
-          backgroundColor: editor.backgroundColor,
+          backgroundColor: legacyEditorTheme.backgroundColor,
           boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
-          color: editor.color,
+          color: legacyEditorTheme.color,
         },
         formattingOptions: {
           colors: {

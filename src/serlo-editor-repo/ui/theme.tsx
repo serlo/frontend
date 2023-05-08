@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as StyledComponents from 'styled-components'
 
 import { DeepPartial } from './deep-partial'
-import { defaultEditorTheme, EditorTheme, EditorUiTheme } from './editor-theme'
 import {
   defaultRendererTheme,
   RendererTheme,
@@ -15,8 +14,6 @@ import {
  *
   @public */
 export interface Theme {
-  editor: EditorTheme
-  editorUi: DeepPartial<EditorUiTheme>
   renderer: RendererTheme
   rendererUi: DeepPartial<RendererUiTheme>
 }
@@ -36,8 +33,6 @@ export type CustomTheme = DeepPartial<Theme>
 export type ThemeProps = StyledComponents.ThemeProps<Theme>
 
 const defaultTheme: Theme = {
-  editor: defaultEditorTheme,
-  editorUi: {},
   renderer: defaultRendererTheme,
   rendererUi: {},
 }
