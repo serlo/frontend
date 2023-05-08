@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch'
 import lodash from 'lodash'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import { GeogebraProps } from '.'
 import { styled } from '../ui'
@@ -151,7 +151,7 @@ function useCachedApiResponse(id?: string): ApiResponse {
     }, 500)
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     debouncedRequestAppletData.current(id)
   }, [debouncedRequestAppletData, id])
 
