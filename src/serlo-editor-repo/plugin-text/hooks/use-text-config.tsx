@@ -138,16 +138,6 @@ export function useTextConfig(
         dropDown: {
           backgroundColor: legacyEditorTheme.backgroundColor,
         },
-        suggestions: {
-          background: {
-            default: 'transparent',
-            highlight: '#fff5e9',
-          },
-          text: {
-            default: colors.almostBlack,
-            highlight: legacyEditorTheme.danger.background,
-          },
-        },
         overlay: {
           backgroundColor: legacyEditorTheme.backgroundColor,
           boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',

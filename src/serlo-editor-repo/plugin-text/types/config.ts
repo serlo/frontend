@@ -99,16 +99,6 @@ export interface Theme {
   dropDown: {
     backgroundColor: string
   }
-  suggestions: {
-    background: {
-      default: string
-      highlight: string
-    }
-    text: {
-      default: string
-      highlight: string
-    }
-  }
   overlay: {
     backgroundColor: string
     boxShadow: string
