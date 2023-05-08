@@ -1,5 +1,5 @@
 import A from 'algebra.js'
-import * as React from 'react'
+import { useState, createRef } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
 import { useScopedStore } from '../core'
@@ -34,12 +34,12 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
   const config = useInputExerciseConfig(props.config)
   const { i18n } = config
   const store = useScopedStore()
-  const [feedbackIndex, setFeedbackIndex] = React.useState<number>(-1)
-  const [feedbackVisible, setFeedbackVisible] = React.useState<boolean>()
-  const [exerciseState, setExerciseState] = React.useState<ExerciseState>(
+  const [feedbackIndex, setFeedbackIndex] = useState<number>(-1)
+  const [feedbackVisible, setFeedbackVisible] = useState<boolean>()
+  const [exerciseState, setExerciseState] = useState<ExerciseState>(
     ExerciseState.Default
   )
-  const input = React.createRef<HTMLInputElement>()
+  const input = createRef<HTMLInputElement>()
   const handleWrongAnswer = () => {
     setTimeout(() => {
       setExerciseState(ExerciseState.Default)

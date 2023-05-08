@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef, useContext } from 'react'
 
 import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
 import { PluginToolbarContext } from '../contexts'
@@ -8,11 +8,11 @@ import { PluginToolbarContext } from '../contexts'
  *
  * @public
  */
-export const PluginToolbarButton = React.forwardRef<
+export const PluginToolbarButton = forwardRef<
   HTMLButtonElement,
   PluginToolbarButtonProps
 >(function PluginToolbarButton(props, ref) {
-  const { PluginToolbarButton } = React.useContext(PluginToolbarContext)
+  const { PluginToolbarButton } = useContext(PluginToolbarContext)
   return <PluginToolbarButton {...props} ref={ref} />
 })
 /** @public */

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Component } from 'react'
 
 import { ImageProps } from '.'
 import { isTempFile } from '../plugin'
@@ -47,7 +47,7 @@ const Pending = styled.div({
   },
 })
 
-export class ImageRenderer extends React.Component<ImageRendererProps> {
+export class ImageRenderer extends Component<ImageRendererProps> {
   public render() {
     const { state, disableMouseEvents } = this.props
     const alt = state.alt.defined ? state.alt.value : ''

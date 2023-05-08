@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 import { OverlayInputProps } from '../plugin-toolbar'
 import { styled } from '../ui'
@@ -31,7 +31,7 @@ const OverlayInputInner = styled.input<{ config: DefaultPluginToolbarConfig }>(
 )
 
 export function createOverlayInput(config: DefaultPluginToolbarConfig) {
-  const OverlayInput = React.forwardRef<HTMLInputElement, OverlayInputProps>(
+  const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
     function OverlayInput({ label, ...props }, ref) {
       return (
         <OverlayInputLabel>

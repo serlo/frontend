@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { styled } from '../ui'
 import { legacyEditorTheme } from '@/helper/colors'
 

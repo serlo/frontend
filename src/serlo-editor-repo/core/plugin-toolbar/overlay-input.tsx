@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useContext } from 'react'
 
 import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
 import { PluginToolbarContext } from '../contexts'
@@ -10,7 +10,7 @@ import { PluginToolbarContext } from '../contexts'
  * @public
  */
 export function OverlayInput(props: OverlayInputProps) {
-  const { OverlayInput } = React.useContext(PluginToolbarContext)
+  const { OverlayInput } = useContext(PluginToolbarContext)
   return <OverlayInput {...props} ref={undefined} />
 }
 /** @public */

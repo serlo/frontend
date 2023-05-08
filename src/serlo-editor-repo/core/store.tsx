@@ -1,4 +1,10 @@
-import * as React from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useCallback,
+  useMemo,
+} from 'react'
 import {
   Provider as ReduxProvider,
   ProviderProps,
@@ -12,18 +18,18 @@ import { Unsubscribe } from 'redux'
 import { Action, getScope, ScopedState, ScopedStore, State } from '../store'
 
 /** @public */
-export const ScopeContext = React.createContext<{
+export const ScopeContext = createContext<{
   scope: string
   editable?: boolean
 }>({ scope: '' })
 
 /** @public */
-export const EditorContext = React.createContext(
+export const EditorContext = createContext(
   undefined as unknown as ReactReduxContextValue<State>
 )
 
 /** @public */
-export const ErrorContext = React.createContext<
+export const ErrorContext = createContext<
   ((error: Error, errorInfo: { componentStack: string }) => void) | undefined
 >(undefined)
 
@@ -34,7 +40,7 @@ export const ErrorContext = React.createContext<
  * @public
  */
 export function Provider(
-  props: ProviderProps<Action> & { children: React.ReactNode }
+  props: ProviderProps<Action> & { children: ReactNode }
 ) {
   return <ReduxProvider {...props} context={EditorContext} />
 }
@@ -44,7 +50,7 @@ export function Provider(
  * @public
  */
 export function useScope(enforcedScope?: string) {
-  const { scope } = React.useContext(ScopeContext)
+  const { scope } = useContext(ScopeContext)
   return enforcedScope === undefined ? scope : enforcedScope
 }
 
@@ -60,7 +66,7 @@ export const useDispatch = createDispatchHook(EditorContext)
 export function useScopedDispatch(enforcedScope?: string) {
   const scope = useScope(enforcedScope)
   const dispatch = useDispatch()
-  return React.useCallback(
+  return useCallback(
     (scopedAction: (scope: string) => Action) => {
       dispatch(scopedAction(scope))
     },
@@ -104,7 +110,7 @@ export const useStore = createStoreHook(EditorContext)
 export function useScopedStore(enforcedScope?: string) {
   const scope = useScope(enforcedScope)
   const store = useStore()
-  return React.useMemo((): ScopedStore => {
+  return useMemo((): ScopedStore => {
     return {
       dispatch: scopeDispatch(store.dispatch, scope),
       getState: () => {

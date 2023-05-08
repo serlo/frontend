@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
 import { PluginToolbarButton, useScopedSelector } from '../core'
@@ -84,7 +84,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     plugin: string
     state?: unknown
   } | null = useScopedSelector(serializeDocument(props.state.multimedia.id))
-  const [replacedMultimediaCache, setReplacedMultimediaCache] = React.useState<
+  const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
     Record<string, unknown>
   >({})
   function handleMultimediaChange(selected: string) {
@@ -98,7 +98,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     })
     props.state.multimedia.replace(selected, replacedMultimediaCache[selected])
   }
-  const [showOptions, setShowOptions] = React.useState(false)
+  const [showOptions, setShowOptions] = useState(false)
 
   const pluginSelection = (
     <select
@@ -149,7 +149,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     </>
   )
 
-  const [rowWidth, setRowWidth] = React.useState(0)
+  const [rowWidth, setRowWidth] = useState(0)
 
   const multimediaRendered = props.state.multimedia.render({
     renderToolbar(children) {

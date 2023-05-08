@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Component } from 'react'
 
 import { styled, Icon, faSmile, faCheckCircle } from '../ui'
 import { legacyEditorTheme } from '@/helper/colors'
@@ -43,7 +43,7 @@ const SubmitButtonComponent = styled.button<{ exerciseState: ExerciseState }>(
 )
 
 /** @internal */
-export class SubmitButton extends React.Component<{
+export class SubmitButton extends Component<{
   exerciseState: ExerciseState
   onClick?: () => void
 }> {

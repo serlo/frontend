@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Component } from 'react'
 
 import { ScMcExercisePluginConfig, ScMcExerciseProps } from '.'
 import { CheckElement } from '../editor-ui'
@@ -13,7 +13,7 @@ const CheckboxContainer = styled.div({
   fontWeight: 'bold',
 })
 
-export class ScMcExerciseChoiceRenderer extends React.Component<
+export class ScMcExerciseChoiceRenderer extends Component<
   Omit<ScMcExerciseProps, 'config'> & ChoiceRendererProps
 > {
   public render() {

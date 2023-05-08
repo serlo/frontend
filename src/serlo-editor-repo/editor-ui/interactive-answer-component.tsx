@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Component } from 'react'
 
 import { styled, Icon, faTimes, faPlus } from '../ui'
 import { colors } from '@/helper/colors'
@@ -138,7 +138,7 @@ const Tick = styled.div<{ checked: boolean }>(({ checked }) => {
 })
 
 /** @internal */
-export class CheckElement extends React.Component<CheckElementProps> {
+export class CheckElement extends Component<CheckElementProps> {
   public render() {
     const { isRadio, isActive, handleChange } = this.props
     return (

@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { VideoProps } from '.'
 import { Icon, styled, faFilm } from '../ui'
 import { colors } from '@/helper/colors'
