@@ -13,6 +13,20 @@ import {
   Paragraph,
 } from '../types'
 
+const createListItemTextNode = (
+  props: Partial<ListItemText> = {}
+): ListItemText => ({
+  children: [{ text: '' }],
+  ...props,
+  type: ListElementType.LIST_ITEM_TEXT,
+})
+
+const createListItemNode = (props: Partial<ListItem> = {}): ListItem => ({
+  children: [createListItemTextNode()],
+  ...props,
+  type: ListElementType.LIST_ITEM,
+})
+
 export const withLists = (editor: SlateEditor) => {
   const editorWithListsPlugin = withListsPlugin({
     isConvertibleToListTextNode(node: Node) {
@@ -36,30 +50,25 @@ export const withLists = (editor: SlateEditor) => {
     isListItemTextNode(node: Node) {
       return Element.isElementType(node, ListElementType.LIST_ITEM_TEXT)
     },
-    createDefaultTextNode(props = {}) {
-      return { children: [{ text: '' }], ...props, type: 'p' } as Paragraph
+    createDefaultTextNode(props: Partial<Paragraph> = {}) {
+      return { children: [{ text: '' }], ...props, type: 'p' }
     },
-    createListNode(type: ListType = ListType.UNORDERED, props = {}) {
+    createListNode(
+      type: ListType = ListType.UNORDERED,
+      props: Partial<List> = {}
+    ) {
       const nodeType =
         type === ListType.ORDERED
           ? ListElementType.ORDERED_LIST
           : ListElementType.UNORDERED_LIST
-      return { children: [{ text: '' }], ...props, type: nodeType } as List
-    },
-    createListItemNode(props = {}) {
       return {
-        children: [{ text: '' }],
+        children: [createListItemNode()],
         ...props,
-        type: ListElementType.LIST_ITEM,
-      } as ListItem
+        type: nodeType,
+      }
     },
-    createListItemTextNode(props = {}) {
-      return {
-        children: [{ text: '' }],
-        ...props,
-        type: ListElementType.LIST_ITEM_TEXT,
-      } as ListItemText
-    },
+    createListItemNode,
+    createListItemTextNode,
   })
 
   return withListsReact(editorWithListsPlugin(editor))
