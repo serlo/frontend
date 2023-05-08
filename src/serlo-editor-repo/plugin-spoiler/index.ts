@@ -34,7 +34,6 @@ import { SpoilerEditor } from './editor'
 export interface SpoilerConfig {
   content: ChildStateTypeConfig
   i18n?: DeepPartial<SpoilerPluginConfig['i18n']>
-  theme?: Partial<SpoilerPluginConfig['theme']>
 }
 
 /** @public */
@@ -49,9 +48,6 @@ export interface SpoilerPluginConfig {
     title: {
       placeholder: string
     }
-  }
-  theme: {
-    color: string
   }
 }
 

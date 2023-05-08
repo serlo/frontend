@@ -1,28 +1,21 @@
 import { styled } from '../../ui'
+import { colors } from '@/helper/colors'
 
 export const HoveringToolbarButton = styled.button<{
   active?: boolean
-}>(({ active, theme }) => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  backgroundColor: active
-    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      theme.active.backgroundColor
-    : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      theme.backgroundColor,
+}>(({ active }) => ({
+  color: active ? colors.almostBlack : '#b6b6b6',
+  backgroundColor: active ? colors.editorPrimary200 : 'transparent',
   cursor: 'pointer',
   boxShadow: active ? 'inset 0 1px 3px 0 rgba(0,0,0,0.50)' : undefined,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  color: active ? theme.active.color : theme.color,
   outline: 'none',
   height: '25px',
   border: 'none',
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  borderRadius: theme.borderRadius,
+  borderRadius: '4px',
   margin: '5px',
   padding: '0px',
   width: '25px',
   '&:hover': {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: theme.hoverColor,
+    color: active ? 'black' : colors.editorPrimary,
   },
 }))

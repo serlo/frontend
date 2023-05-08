@@ -1,13 +1,7 @@
 import * as React from 'react'
 
-import {
-  styled,
-  Icon,
-  faSmile,
-  faCheckCircle,
-  useRendererUiTheme,
-  RendererUiTheme,
-} from '../ui'
+import { styled, Icon, faSmile, faCheckCircle } from '../ui'
+import { legacyEditorTheme } from '@/helper/colors'
 
 /** @internal */
 export enum ExerciseState {
@@ -16,49 +10,33 @@ export enum ExerciseState {
   SolvedWrong,
 }
 
-function useSubmitButtonTheme() {
-  return useRendererUiTheme('submitButton', (theme) => {
-    return {
-      backgroundColor: theme.primary.background,
-      hoverBackgroundColor: '#d9edf7',
-      color: theme.backgroundColor,
-      correctBackgroundColor: theme.success.background,
-      wrongBackgroundColor: theme.danger.background,
-    }
-  })
-}
-
-const getBackgroundColor = (
-  theme: RendererUiTheme['submitButton'],
-  exerciseState: ExerciseState
-) => {
+const getBackgroundColor = (exerciseState: ExerciseState) => {
   switch (exerciseState) {
     case ExerciseState.Default: {
-      return theme.backgroundColor
+      return legacyEditorTheme.primary.background
     }
     case ExerciseState.SolvedRight: {
-      return theme.correctBackgroundColor
+      return legacyEditorTheme.success.background
     }
     case ExerciseState.SolvedWrong: {
-      return theme.wrongBackgroundColor
+      return legacyEditorTheme.danger.background
     }
   }
 }
 
 const SubmitButtonComponent = styled.button<{ exerciseState: ExerciseState }>(
   ({ exerciseState }) => {
-    const theme = useSubmitButtonTheme()
     return {
       float: 'right',
       margin: '10px 0px',
       border: 'none',
       padding: '3px',
-      backgroundColor: getBackgroundColor(theme, exerciseState),
-      color: theme.color,
+      backgroundColor: getBackgroundColor(exerciseState),
+      color: legacyEditorTheme.backgroundColor,
       transition: 'background-color .5s ease',
       outline: 'none',
       '&hover': {
-        backgroundColor: theme.hoverBackgroundColor,
+        backgroundColor: '#d9edf7',
       },
     }
   }

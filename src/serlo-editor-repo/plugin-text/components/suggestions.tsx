@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { styled } from '../../ui'
-import type { TextEditorPluginConfig, Theme } from '../types'
+import type { TextEditorPluginConfig } from '../types'
+import { colors } from '@/helper/colors'
 import type { RegistryPlugin } from '@/serlo-editor-repo/plugin-rows'
 
 interface SuggestionsProps {
@@ -18,20 +19,6 @@ const SuggestionsWrapper = styled.div({
   maxWidth: '620px',
 })
 
-const Suggestion = styled.div(({ theme }: { theme: Theme }) => ({
-  padding: '10px 20px',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: theme.suggestions.background.default,
-  '&[data-active="true"]': {
-    backgroundColor: theme.suggestions.background.highlight,
-    [SuggestionIconWrapper]: {
-      border: '1px solid #ddd',
-    },
-  },
-}))
-
 const SuggestionIconWrapper = styled.div({
   border: '1px solid transparent',
   flex: '0 0 95px',
@@ -39,6 +26,19 @@ const SuggestionIconWrapper = styled.div({
   borderRadius: '3px',
   '& > svg': {
     borderRadius: '3px',
+  },
+})
+
+const Suggestion = styled.div({
+  padding: '10px 20px',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  '&:hover, &[data-active="true"]': {
+    backgroundColor: colors.editorPrimary50,
+    [SuggestionIconWrapper]: {
+      border: '1px solid #ddd',
+    },
   },
 })
 
@@ -60,7 +60,7 @@ export const Suggestions = ({
   onMouseDown,
   onMouseMove,
 }: SuggestionsProps) => {
-  const { i18n, theme } = config
+  const { i18n } = config
 
   if (options.length === 0) {
     return <div>{i18n.suggestions.noResultsMessage}</div>
@@ -79,7 +79,6 @@ export const Suggestions = ({
           onMouseMove={() => {
             onMouseMove(index)
           }}
-          theme={theme}
         >
           {Icon && (
             <SuggestionIconWrapper>

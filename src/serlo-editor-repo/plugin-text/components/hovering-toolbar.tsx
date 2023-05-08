@@ -71,11 +71,7 @@ export function HoveringToolbar(props: HoveringToolbarProps) {
             SlateEditor.string(editor, selection) === ''
           }
         >
-          <HoveringToolbarControls
-            theme={config.theme}
-            controls={controls}
-            editor={editor}
-          />
+          <HoveringToolbarControls controls={controls} editor={editor} />
         </InlineOverlay>
       )}
       <TimeoutBottomToolbarWrapper
@@ -83,11 +79,7 @@ export function HoveringToolbar(props: HoveringToolbarProps) {
         visible={!!isSelectionCollapsed && isBottomToolbarActive}
       >
         {isBottomToolbarActive && (
-          <HoveringToolbarControls
-            theme={config.theme}
-            controls={controls}
-            editor={editor}
-          />
+          <HoveringToolbarControls controls={controls} editor={editor} />
         )}
       </TimeoutBottomToolbarWrapper>
     </>

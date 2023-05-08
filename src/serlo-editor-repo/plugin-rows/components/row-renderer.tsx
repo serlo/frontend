@@ -21,6 +21,7 @@ import {
   styled,
 } from '../../ui'
 import { useCanDrop } from './use-can-drop'
+import { legacyEditorTheme } from '@/helper/colors'
 
 interface RowDragObject {
   id: string
@@ -56,12 +57,10 @@ const GrayOut = styled.div({
   opacity: 0.3,
 })
 
-const Inserted = styled.hr<{ config: RowsPluginConfig }>(({ config }) => {
-  return {
-    margin: 0,
-    padding: 0,
-    border: `1px solid ${config.theme.highlightColor}`,
-  }
+const Inserted = styled.hr({
+  margin: 0,
+  padding: 0,
+  border: `1px solid ${legacyEditorTheme.primary.background}`,
 })
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
@@ -289,7 +288,7 @@ export function RowRenderer({
   const dropPreview =
     collectedDropProps.isDragging &&
     (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
-      <Inserted config={config} />
+      <Inserted />
     ) : null
 
   return (

@@ -3,7 +3,6 @@ import * as React from 'react'
 
 import { SubDocumentProps } from '.'
 import { getDocument, getPlugin } from '../../store'
-import { useTheme } from '../../ui'
 import { useScopedSelector } from '../store'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
@@ -12,7 +11,6 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
     (state) => document && getPlugin(document.plugin)(state)
   )
   const focusRef = React.useRef<HTMLInputElement & HTMLTextAreaElement>(null)
-  const theme = useTheme()
   if (!document) return null
   if (!plugin) {
     // eslint-disable-next-line no-console
@@ -22,7 +20,7 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const defaultConfig =
-    typeof plugin.config === 'function' ? plugin.config(theme) : plugin.config
+    typeof plugin.config === 'function' ? plugin.config() : plugin.config
   const overrideConfig = (pluginProps && pluginProps.config) || {}
   const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 

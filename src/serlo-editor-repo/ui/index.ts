@@ -20,7 +20,4 @@ export const styled =
   (__styled.default?.svg ? __styled.default : _styled) as StyledInterface
 
 export * from './deep-partial'
-export * from './editor-theme'
 export * from './icon'
-export * from './renderer-theme'
-export * from './theme'
