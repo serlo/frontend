@@ -54,7 +54,6 @@ export function createRowsPlugin(
 export interface RowsConfig extends Omit<RowsPluginConfig, 'i18n' | 'theme'> {
   content: ChildStateTypeConfig
   i18n?: DeepPartial<RowsPluginConfig['i18n']>
-  theme?: DeepPartial<RowsPluginConfig['theme']>
 }
 
 /** @public */
@@ -83,30 +82,6 @@ export interface RowsPluginConfig {
       dragLabel: string
     }
     addLabel: string
-  }
-  theme: {
-    backgroundColor: string
-    color: string
-    highlightColor: string
-    lightBackgroundColor: string
-
-    menu: {
-      highlightColor: string
-      primary: {
-        backgroundColor: string
-        color: string
-      }
-      secondary: {
-        backgroundColor: string
-        color: string
-      }
-      dropzone: {
-        highlightColor: string
-        backgroundColor: string
-        color: string
-        highlightBackgroundColor: string
-      }
-    }
   }
 }
 

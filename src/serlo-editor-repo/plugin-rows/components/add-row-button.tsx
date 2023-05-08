@@ -1,5 +1,6 @@
 import { RowsPluginConfig } from '..'
 import { styled, EdtrIcon, edtrPlus } from '../../ui'
+import { colors, legacyEditorTheme } from '@/helper/colors'
 
 const AddIcon = styled(EdtrIcon)({
   width: '26px',
@@ -11,8 +12,7 @@ interface AddButtonProps {
   config: RowsPluginConfig
 }
 
-const AddButton = styled.div<AddButtonProps>(({ focused, visible, config }) => {
-  const { theme } = config
+const AddButton = styled.div<AddButtonProps>(({ focused, visible }) => {
   return {
     maxWidth: '100%',
     height: '26px',
@@ -21,16 +21,16 @@ const AddButton = styled.div<AddButtonProps>(({ focused, visible, config }) => {
     gap: '5px',
     justifyContent: 'center',
     alignItems: 'center',
-    color: theme.color,
-    backgroundColor: theme.backgroundColor,
+    color: legacyEditorTheme.secondary.color,
+    backgroundColor: legacyEditorTheme.primary.color,
     padding: '5px 0 10px',
     opacity: visible === 'always' ? 0.6 : focused ? 0.6 : 0,
-    transition: '250ms all ease-in-out 250ms',
+    transition: '150ms all ease-in-out',
     // position: inline ? 'absolute' : 'relative',
     zIndex: 70,
 
     '&:hover': {
-      color: theme.highlightColor,
+      color: colors.editorPrimary,
       opacity: 1,
       cursor: 'pointer',
     },
@@ -56,7 +56,9 @@ export function AddRowButton(props: AddRowButtonProps) {
       onMouseDown={onClick}
     >
       <AddIcon icon={edtrPlus} />
-      {visuallyEmphasized ? <span>{config.i18n.addLabel}</span> : null}
+      {visuallyEmphasized ? (
+        <span className="text-almost-black">{config.i18n.addLabel}</span>
+      ) : null}
     </AddButton>
   )
 }
