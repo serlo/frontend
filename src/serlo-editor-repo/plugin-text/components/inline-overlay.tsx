@@ -40,7 +40,6 @@ const Triangle = styled.div<{ position: InlineOverlayPosition }>(
       height: 0,
       borderLeft: '5px solid transparent',
       borderRight: '5px solid transparent',
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
       [borderPosition]: `10px solid ${legacyEditorTheme.backgroundColor}`,
     }
   }
