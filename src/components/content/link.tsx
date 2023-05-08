@@ -90,7 +90,7 @@ function InternalLink({
       : '/' + _href
 
     // do not use CSR for redirects that are handled in the cf-worker
-    const clientSide = !cfWorkerLinks.includes(href)
+    const clientSide = !cfWorkerLinks.includes(internalHref)
 
     return {
       parsedHref: internalHref,
