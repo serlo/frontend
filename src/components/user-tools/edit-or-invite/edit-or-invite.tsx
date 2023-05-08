@@ -6,7 +6,6 @@ import { useState } from 'react'
 import { AuthorToolsData } from '../foldout-author-menus/author-tools'
 import { UserToolsItem } from '../user-tools-item'
 import type { InviteModalProps } from './invite-modal'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidRevType, UuidType } from '@/data-types'
@@ -30,21 +29,13 @@ export function EditOrInvite({
   unrevisedRevisions,
   aboveContent,
 }: EditOrInviteProps) {
-  const auth = useAuthentication()
   const canDo = useCanDo()
   const { strings } = useInstanceData()
   const [inviteOpen, setInviteOpen] = useState(false)
 
   if (!data) return null
 
-  const showInvite = ![
-    UuidType.Page,
-    UuidType.Event,
-    UuidType.TaxonomyTerm,
-    UuidType.User,
-  ].includes(data.type as UuidType)
-
-  const isInvite = !auth && showInvite
+  const isInvite = false
 
   const hasUnrevised =
     unrevisedRevisions !== undefined && unrevisedRevisions > 0

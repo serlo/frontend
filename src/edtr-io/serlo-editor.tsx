@@ -26,6 +26,7 @@ export interface SerloEditorProps {
   onError?: (error: Error, context: Record<string, string>) => void
   initialState: EditorProps['initialState'] // expects "deserialized" state now
   type: UuidType
+  link?: string
 }
 
 export interface LooseEdtrData {
@@ -40,10 +41,12 @@ export const SaveContext = createContext<{
   onSave: SerloEditorProps['onSave']
   userCanSkipReview: boolean
   entityNeedsReview: boolean
+  link?: string
 }>({
   onSave: () => Promise.reject(),
   userCanSkipReview: false,
   entityNeedsReview: true,
+  link: undefined,
 })
 
 export function SerloEditor({
@@ -53,6 +56,7 @@ export function SerloEditor({
   initialState,
   children,
   type,
+  link,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
@@ -88,7 +92,7 @@ export function SerloEditor({
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
-      value={{ onSave, userCanSkipReview, entityNeedsReview }}
+      value={{ onSave, userCanSkipReview, entityNeedsReview, link }}
     >
       <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}

@@ -7,12 +7,13 @@ import {
   hasUndoActions,
   hasPendingChanges,
 } from '@edtr-io/store'
-import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
+import { faRedo, faShare, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
+import { useHandleSave } from '../helpers/use-handle-save'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
@@ -34,7 +35,8 @@ export function ToolbarMain({
   const undoable = useScopedSelector(hasUndoActions())
   const redoable = useScopedSelector(hasRedoActions())
   const isChanged = useScopedSelector(hasPendingChanges())
-  const [saveModalOpen, setSaveModalOpen] = useState(false)
+  const { link } = useHandleSave(true, true)
+  const [saveModalOpen, setSaveModalOpen] = useState(!!link)
 
   useLeaveConfirm(isChanged)
 
@@ -101,7 +103,7 @@ export function ToolbarMain({
         }}
         title="Save"
       >
-        <FaIcon icon={faSave} /> {loggedInData!.strings.editor.edtrIo.save}
+        <FaIcon icon={faShare} /> Private Link zu dieser Version erstellen
       </button>
     )
   }

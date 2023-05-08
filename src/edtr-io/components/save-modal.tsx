@@ -31,15 +31,15 @@ export function SaveModal({
   changes,
   showSubscriptionOptions,
 }: SaveModalProps) {
-  const { handleSave, pending, hasError } = useHandleSave(
+  const { handleSave, pending, hasError, link } = useHandleSave(
     open,
     showSubscriptionOptions
   )
   const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
-  const [agreement, setAgreement] = useState(false)
-  const [notificationSubscription, setNotificationSubscription] = useState(true)
-  const [emailSubscription, setEmailSubscription] = useState(true)
-  const [skipReview, setSkipReview] = useState(false)
+  const [agreement] = useState(true)
+  const [notificationSubscription] = useState(true)
+  const [emailSubscription] = useState(true)
+  const [skipReview] = useState(false)
   const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
   const [highlightMissingFields, setHighlightMissingFields] = useState(false)
@@ -48,7 +48,7 @@ export function SaveModal({
     useLicensesFetch(lang).data?.license.defaultLicense.agreement
 
   const licenseAccepted = !license || agreement
-  const changesFilled = !changes || changesText
+  const changesFilled = !changes || changesText || true
   const maySave = licenseAccepted && changesFilled
   const showSkipCheckout = userCanSkipReview && entityNeedsReview
   const isOnlyText =
@@ -83,17 +83,40 @@ export function SaveModal({
       onCloseClick={() => {
         setOpen(false)
       }}
-      title={edtrIo.save}
+      title="Privaten Link zu dieser Version erstellen"
     >
       <div className="mx-side">
-        {renderChanges()}
+        <div className="my-8">
+          <ul className="serlo-ul">
+            <li>
+              Mit dem privaten Link kannst du jederzeit auf diese Version des
+              Inhalts zugreifen.
+            </li>
+            <li>
+              Die Version ist fest und kann weder von dir noch von anderen
+              Personen verändert werden.
+            </li>
+            <li>
+              Speichere dir den Link, um den Zugriff auf diese Version zu
+              behalten.
+            </li>
+          </ul>
+        </div>
         {renderLicense()}
-        {renderSubscription()}
-        {renderCheckout()}
         {isOnlyText ? edtrIo.ready : null}
         <hr className="mt-8 mb-8" />
         {renderAlert()}
         {renderModalButtons()}
+        {link && (
+          <div>
+            Dein Link:{' '}
+            <input
+              className="p-2 rounded bg-yellow-300 w-[400px]"
+              defaultValue={link}
+              readOnly
+            />
+          </div>
+        )}
       </div>
       {isOnlyText ? null : (
         <style jsx global>{`
@@ -137,27 +160,12 @@ export function SaveModal({
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
           disabled={pending}
-          title={getSaveHint()}
+          title="Link erstellen"
         >
-          {pending
-            ? edtrIo.saving
-            : (showSkipCheckout && skipReview) || !showSkipCheckout
-            ? edtrIo.save
-            : edtrIo.saveWithReview}
+          Link erstellen
         </button>
       </div>
     )
-  }
-
-  function getSaveHint() {
-    if (maySave) return undefined
-    if (licenseAccepted && !changesFilled) {
-      return edtrIo.missingChanges
-    } else if (!licenseAccepted && changesFilled) {
-      return edtrIo.missingLicenseTerms
-    } else {
-      return edtrIo.missingChangesAndLicenseTerms
-    }
   }
 
   function renderAlert() {
@@ -169,45 +177,6 @@ export function SaveModal({
         {edtrIo.saveLocallyAndRefresh}
         <LocalStorageButton open={open} />
       </StaticInfoPanel>
-    )
-  }
-
-  function renderChanges() {
-    if (!changes) return null
-    return (
-      <label
-        className={clsx(
-          'font-bold',
-          highlightMissingFields && !changesFilled && 'bg-red-100'
-        )}
-      >
-        {edtrIo.changes} <span className="font-bold text-red-500">*</span>
-        <textarea
-          value={changesText}
-          onChange={(e) => {
-            const { value } = e.target as HTMLTextAreaElement
-            setChangesText(value)
-          }}
-          className={clsx(
-            'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-yellow-200 border-2 border-yellow-200 focus-within:outline-none focus-within:border-truegray-400'
-          )}
-        />
-      </label>
-    )
-  }
-
-  function renderCheckout() {
-    if (!showSkipCheckout) return null
-    return (
-      <label>
-        <input
-          type="checkbox"
-          checked={skipReview}
-          onChange={({ target }) => setSkipReview(target.checked)}
-        />{' '}
-        {edtrIo.skipReview}
-      </label>
     )
   }
 
@@ -228,50 +197,12 @@ export function SaveModal({
           highlightMissingFields && !licenseAccepted && 'bg-red-100'
         )}
       >
-        <input
-          type="checkbox"
-          checked={agreement}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setAgreement(checked)
-          }}
-        />{' '}
         <span
           className="license-wrapper [&_a]:!text-brand hover:[&_a]:underline"
           dangerouslySetInnerHTML={{ __html: licenseAgreement }}
         />{' '}
         <span className="font-bold text-red-500">*</span>
       </label>
-    )
-  }
-
-  function renderSubscription() {
-    if (!showSubscriptionOptions) return null
-    return (
-      <>
-        <label className="block pb-2">
-          <input
-            type="checkbox"
-            checked={notificationSubscription}
-            onChange={(e) => {
-              const { checked } = e.target as HTMLInputElement
-              setNotificationSubscription(checked)
-            }}
-          />{' '}
-          {edtrIo.enableNotifs}
-        </label>
-        <label className="block pb-2">
-          <input
-            type="checkbox"
-            checked={emailSubscription}
-            onChange={(e) => {
-              const { checked } = e.target as HTMLInputElement
-              setEmailSubscription(checked)
-            }}
-          />{' '}
-          {edtrIo.enableNotifsMail}
-        </label>
-      </>
     )
   }
 }

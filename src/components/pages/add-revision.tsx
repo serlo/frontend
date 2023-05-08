@@ -2,6 +2,7 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import { generate } from 'shortid'
 
 import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
@@ -12,20 +13,13 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
-import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
+import { ArticleSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
-import {
-  OnSaveData,
-  SetEntityMutationData,
-  TaxonomyCreateOrUpdateMutationData,
-} from '@/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
-import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
 
 export function AddRevision({
   initialState,
@@ -40,10 +34,10 @@ export function AddRevision({
   const auth = useAuthentication()
 
   const setEntityMutation = useSetEntityMutation()
-  const addPageRevision = useAddPageRevision()
-  const taxonomyCreateOrUpdateMutation = useTaxonomyCreateOrUpdateMutation()
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
+
+  const [link, setLink] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     async function confirmAuth() {
@@ -82,13 +76,8 @@ export function AddRevision({
 
   // types needs refactoring here. splitting controls and data would probably make sense
 
-  const onSave = async (
-    data:
-      | SetEntityMutationData
-      | PageSerializedState
-      | TaxonomyCreateOrUpdateMutationData
-  ) => {
-    const willNeedReview = Object.hasOwn(data, 'controls')
+  const onSave = async (data: ArticleSerializedState) => {
+    /*const willNeedReview = Object.hasOwn(data, 'controls')
       ? !(data as OnSaveData).controls.noReview
       : entityNeedsReview
 
@@ -107,9 +96,15 @@ export function AddRevision({
             willNeedReview,
             initialState,
             taxonomyParentId
-          )
+          )*/
+    const key = generate()
+    const content = data.content
+    const title = data.title
+    const id = data.id
+    console.log('on save', key, id, title, content)
+    setLink('http://localhost:3000/private-link/' + key)
 
-    return success ? Promise.resolve() : Promise.reject()
+    return Promise.resolve()
   }
 
   return (
@@ -129,9 +124,11 @@ export function AddRevision({
       >
         <SerloEditor
           entityNeedsReview={entityNeedsReview}
+          // @ts-expect-error Pin it to article
           onSave={onSave}
           type={type}
           initialState={initialState}
+          link={link}
         />
       </div>
     </>

@@ -12,7 +12,7 @@ export function useHandleSave(
   showSubscriptionOptions?: boolean
 ) {
   const store = useScopedStore()
-  const { onSave, entityNeedsReview } = useContext(SaveContext)
+  const { onSave, entityNeedsReview, link } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -69,5 +69,5 @@ export function useHandleSave(
       })
   }
 
-  return { handleSave, pending, hasError }
+  return { handleSave, pending, hasError, link }
 }
