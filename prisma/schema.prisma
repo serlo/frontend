@@ -21,3 +21,11 @@ model ExerciseSubmission {
   @@index([entityId])
   @@index([timestamp])
 }
+
+model PrivateLinkPrototype {
+  key       String   @unique @db.VarChar(64)
+  id        Int
+  content   String   @db.Text
+  title     String   @db.VarChar(128)
+  timestamp DateTime @default(now())
+}

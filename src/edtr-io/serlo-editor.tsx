@@ -8,7 +8,6 @@ import { createContext, ReactNode, useState } from 'react'
 import {
   debouncedStoreToLocalStorage,
   getStateFromLocalStorage,
-  LocalStorageNotice,
 } from './components/local-storage-notice'
 import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
@@ -60,7 +59,7 @@ export function SerloEditor({
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
-  const [useStored, setUseStored] = useState(false)
+  const [useStored] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
@@ -94,7 +93,6 @@ export function SerloEditor({
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview, link }}
     >
-      <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
         DocumentEditor={DocumentEditor}

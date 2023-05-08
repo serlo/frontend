@@ -101,8 +101,20 @@ export function AddRevision({
     const content = data.content
     const title = data.title
     const id = data.id
-    console.log('on save', key, id, title, content)
-    setLink('http://localhost:3000/private-link/' + key)
+
+    void (async () => {
+      await fetch('/api/frontend/private-link', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ key, content, title, id }),
+      })
+    })()
+
+    setLink(
+      'https://frontend-git-poc-remix-serlo.vercel.app/private-link/' + key
+    )
 
     return Promise.resolve()
   }

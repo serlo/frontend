@@ -17,7 +17,6 @@ import { useHandleSave } from '../helpers/use-handle-save'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
-import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
@@ -95,11 +94,7 @@ export function ToolbarMain({
       <button
         className={clsx('serlo-button-green ml-2')}
         onClick={() => {
-          if (isChanged) setSaveModalOpen(true)
-          else
-            showToastNotice(
-              '👀 ' + loggedInData!.strings.editor.noChangesWarning
-            )
+          setSaveModalOpen(true)
         }}
         title="Save"
       >

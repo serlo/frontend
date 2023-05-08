@@ -115,6 +115,14 @@ export function SaveModal({
               defaultValue={link}
               readOnly
             />
+            <a
+              href={link}
+              target="_blank"
+              className="ml-4 font-bold text-brand hover:underline"
+              rel="noreferrer"
+            >
+              öffnen
+            </a>
           </div>
         )}
       </div>
