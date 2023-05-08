@@ -21,7 +21,7 @@ import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
-import { useTextConfig } from '../hooks/use-text-config'
+import { textColors, useTextConfig } from '../hooks/use-text-config'
 import {
   TextEditorConfig,
   TextEditorPluginConfig,
@@ -351,7 +351,7 @@ export function TextEditor(props: TextEditorProps) {
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={renderElementWithEditorContext(config, focused)}
-          renderLeaf={renderLeafWithConfig(config)}
+          renderLeaf={renderLeaf()}
         />
       </Slate>
 
@@ -413,9 +413,9 @@ function renderElementWithEditorContext(
   }
 }
 
-function renderLeafWithConfig(config: TextEditorConfig) {
+function renderLeaf() {
   return function renderLeaf(props: RenderLeafProps) {
-    const colors = config?.theme?.formattingOptions?.colors?.colors
+    const colors = textColors.map((color) => color.value)
     const { attributes, leaf } = props
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     let { children } = props

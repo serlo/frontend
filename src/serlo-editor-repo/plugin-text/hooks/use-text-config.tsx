@@ -7,7 +7,7 @@ import {
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
-import { articleColors, legacyEditorTheme } from '@/helper/colors'
+import { articleColors } from '@/helper/colors'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
@@ -19,7 +19,7 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.richText,
 ]
 
-const textColors = Object.entries(articleColors).map(([key, value]) => {
+export const textColors = Object.entries(articleColors).map(([key, value]) => {
   return { value, name: key.charAt(0).toUpperCase() + key.slice(1) }
 })
 
@@ -29,7 +29,6 @@ export function useTextConfig(
   const {
     placeholder = 'Write something or add elements with \u2295.',
     i18n = {},
-    theme = {},
     noLinebreaks,
   } = config
 
@@ -123,35 +122,6 @@ export function useTextConfig(
         },
       },
       values: i18n,
-    }),
-    theme: merge({
-      fallback: {
-        backgroundColor: 'transparent',
-        color: legacyEditorTheme.color,
-        hoverColor: legacyEditorTheme.primary.background,
-        borderColor: legacyEditorTheme.backgroundColor,
-        borderRadius: '4px',
-        active: {
-          backgroundColor: '#b6b6b6',
-          color: legacyEditorTheme.backgroundColor,
-        },
-        dropDown: {
-          backgroundColor: legacyEditorTheme.backgroundColor,
-        },
-        overlay: {
-          backgroundColor: legacyEditorTheme.backgroundColor,
-          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
-          color: legacyEditorTheme.color,
-        },
-        formattingOptions: {
-          colors: {
-            colors: textColors.map((color) => color.value),
-            defaultColor: 'black',
-          },
-          headings: [1, 2, 3],
-        },
-      },
-      values: theme,
     }),
     noLinebreaks,
   }
