@@ -112,12 +112,20 @@ export const documentsReducer: SubReducer<Record<string, DocumentState>> =
 export const getDocuments: Selector<Record<string, DocumentState>> =
   createSelector((state) => state.documents)
 
-/** @public */
-export const getDocument: Selector<DocumentState | null, [string | null]> =
-  createSelector((state, id) => {
+/**
+ * Creates a selector that gets the document with the given id.
+ *
+ * @param id The id of the document that should be selected
+ * @returns A selector `(ScopedState) => DocumentState`. The returned DocumentState object reference will only change when this document was modified by a redux action.
+ * @example const document = useScopedSelector(getDocument(id)) // Gets the document with the given id and trigger component re-render when this document was modified by a redux action.
+ * @public
+ */
+export function getDocument(id: string | null) {
+  return (scopedState: ScopedState) => {
     if (!id) return null
-    return getDocuments()(state)[id] || null
-  })
+    return getDocuments()(scopedState)[id] || null
+  }
+}
 
 /**
  * Serializes the document with the given `id`
