@@ -45,7 +45,7 @@ export function EditOrInvite({
 
   const title = hasUnrevised
     ? `${strings.editOrAdd.unrevised} (${unrevisedRevisions || ''})`
-    : strings.editOrAdd.button
+    : 'Private Version erstellen'
 
   const icon = hasUnrevised ? faClock : faPencilAlt
 
