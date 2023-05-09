@@ -81,7 +81,6 @@ export const useSelector = createSelectorHook(EditorContext)
  *
  * @param scopedSelector - The selector
  * @returns The value of the selector in the current scope
- * @public
  */
 export function useScopedSelector<T>(
   scopedSelector: (state: ScopedState) => T,

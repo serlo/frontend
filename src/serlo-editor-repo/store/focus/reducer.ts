@@ -158,7 +158,7 @@ export function selectPluginTypesOnPathFromRootTo(
       for (let i = 0; i < ids.length; i++) {
         const document = getDocument(ids[i])(scopedState)
         if (document === null) return null
-        pluginTypes = [document.plugin, ...pluginTypes]
+        pluginTypes = [...pluginTypes, document.plugin]
       }
       return pluginTypes
     },
