@@ -4,9 +4,9 @@ import { useScopedStore } from '../../core'
 import {
   findParent,
   getDocument,
-  getFocusPath,
   getFocusTree,
   Node,
+  selectIdsOnPathFromRootTo,
 } from '../../store'
 
 export function useCanDrop(
@@ -31,7 +31,7 @@ export function useCanDrop(
   }
 
   function wouldDropInOwnChildren(dragId: string) {
-    const focusPath = getFocusPath(id)(store.getState()) || []
+    const focusPath = selectIdsOnPathFromRootTo(id)(store.getState()) || []
     return focusPath.includes(dragId)
   }
 

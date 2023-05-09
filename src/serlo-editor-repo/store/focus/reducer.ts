@@ -1,4 +1,5 @@
 import * as R from 'ramda'
+import * as Reselect from 'reselect'
 
 import {
   pureInsert,
@@ -8,7 +9,6 @@ import {
 } from '../documents/actions'
 import { getDocument } from '../documents/reducer'
 import {
-  createDeepEqualSelector,
   createJsonStringifySelector,
   createSelector,
   createSubReducer,
@@ -112,54 +112,63 @@ export const getParent: Selector<Node | null, [string]> = createSelector(
 )
 
 /**
- * [[Selector]] that returns the focus path from the leaf with the given id
- *
- * @param defaultLeaf - optional id of the document that should be considered as the leaf of the focus path. By default, we use the currently focused document of the current scope
- * @returns an array of ids of the documents that are part of the focus path (i.e. the focused document and their ancestors). `null`, if there exists no focus path
- * @public
+ * Returns a [[Selector]] that returns the ancestor plugin ids starting from the root of the document up until the given id.
  */
-export const getFocusPath: Selector<string[] | null, [string?]> =
-  createDeepEqualSelector((state, defaultLeaf = undefined) => {
-    const leaf = defaultLeaf ? defaultLeaf : getFocused()(state)
-    if (!leaf) return null
-    const root = getFocusTree()(state)
-    if (!root) return null
+export function selectIdsOnPathFromRootTo(
+  leafId: string
+): (state: ScopedState) => string[] | null {
+  return Reselect.createSelector(
+    (scopedState: ScopedState) => scopedState, // TODO Make this only depend on scopedState.documents if possible to avoid running the selector on every change to scopedState.
+    (scopedState: ScopedState) => {
+      // Node tree starting from root of document
+      const nodeTree = getFocusTree()(scopedState)
+      const rootId = nodeTree?.id
+      if (!rootId) return null
 
-    let current = leaf
-    let path: string[] = [leaf]
+      let ids = [leafId]
 
-    while (current !== root.id) {
-      const parent = findParent(root, current)
-      if (!parent) return null
-      current = parent.id
-      path = [current, ...path]
+      while (ids[0] !== rootId) {
+        const parent = findParent(nodeTree, ids[0])
+        if (!parent) return null
+        ids = [parent.id, ...ids]
+      }
+
+      return ids
+    },
+    {
+      memoizeOptions: {
+        resultEqualityCheck: R.equals, // Checks if the resulting array has the same content than on a previous run and if so, returns a cached result. This prevents unnecessary re-renders when used inside `useScopedSelector(...)`
+      },
     }
-
-    return path
-  })
+  )
+}
 
 /**
- * [[Selector]] that returns the ancestor plugin types starting from the root of the document up until the given id.
+ * Returns a [[Selector]] that returns the ancestor plugin types starting from the root of the document up until the given id.
  */
-export const getPluginTypesOnPathToRoot: Selector<string[] | null, [string]> =
-  createDeepEqualSelector((state, leafId) => {
-    const rootNode = getFocusTree()(state)
-    if (!rootNode) return null
-
-    let currentId = leafId
-    let pluginTypes: string[] = []
-
-    while (currentId !== rootNode.id) {
-      const parentNode = findParent(rootNode, currentId)
-      if (!parentNode) return null
-      const pluginType = getDocument(parentNode.id)(state)?.plugin
-      if (pluginType === undefined) return null
-      pluginTypes = [pluginType, ...pluginTypes]
-      currentId = parentNode.id
+export function selectPluginTypesOnPathFromRootTo(
+  leafId: string
+): (state: ScopedState) => string[] | null {
+  return Reselect.createSelector(
+    (scopedState: ScopedState) => scopedState, // TODO Make this only depend on scopedState.documents if possible to avoid running the selector on every change to scopedState.
+    (scopedState) => {
+      const ids = selectIdsOnPathFromRootTo(leafId)(scopedState)
+      if (!ids) return null
+      let pluginTypes: string[] = []
+      for (let i = 0; i < ids.length; i++) {
+        const document = getDocument(ids[i])(scopedState)
+        if (document === null) return null
+        pluginTypes = [document.plugin, ...pluginTypes]
+      }
+      return pluginTypes
+    },
+    {
+      memoizeOptions: {
+        resultEqualityCheck: R.equals, // Checks if the resulting array has the same content than on a previous run and if so, returns a cached result. This prevents unnecessary re-renders when used inside `useScopedSelector(...)`
+      },
     }
-
-    return pluginTypes
-  })
+  )
+}
 
 function handleFocus(
   focusState: ScopedState['focus'],
