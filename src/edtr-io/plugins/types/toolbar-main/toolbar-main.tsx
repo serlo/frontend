@@ -98,7 +98,7 @@ export function ToolbarMain({
         }}
         title="Save"
       >
-        <FaIcon icon={faShare} /> Private Link zu dieser Version erstellen
+        <FaIcon icon={faShare} /> Privaten Link zu dieser Version erstellen
       </button>
     )
   }

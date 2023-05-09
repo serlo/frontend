@@ -31,10 +31,12 @@ export function SaveModal({
   changes,
   showSubscriptionOptions,
 }: SaveModalProps) {
-  const { handleSave, pending, hasError, link } = useHandleSave(
+  const { handleSave, pending, hasError } = useHandleSave(
     open,
     showSubscriptionOptions
   )
+
+  const [link, setLink] = useState<string | undefined>(undefined)
   const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
   const [agreement] = useState(true)
   const [notificationSubscription] = useState(true)
@@ -56,6 +58,8 @@ export function SaveModal({
 
   useEffect(() => {
     if (fireSave) {
+      // @ts-expect-error Passing through window
+      window.__setLink = setLink
       handleSave(notificationSubscription, emailSubscription, skipReview)
       setFireSave(false)
     }
@@ -65,6 +69,7 @@ export function SaveModal({
     fireSave,
     handleSave,
     notificationSubscription,
+    setLink,
   ])
 
   useEffect(() => {
@@ -157,6 +162,7 @@ export function SaveModal({
             if (maySave) {
               changes?.set(changesText)
               setFireSave(true)
+              setLink(undefined)
             } else {
               setHighlightMissingFields(true)
               showToastNotice(

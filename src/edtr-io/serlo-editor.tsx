@@ -55,7 +55,6 @@ export function SerloEditor({
   initialState,
   children,
   type,
-  link,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
@@ -91,7 +90,7 @@ export function SerloEditor({
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
-      value={{ onSave, userCanSkipReview, entityNeedsReview, link }}
+      value={{ onSave, userCanSkipReview, entityNeedsReview }}
     >
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor

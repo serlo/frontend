@@ -37,8 +37,6 @@ export function AddRevision({
 
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
-  const [link, setLink] = useState<string | undefined>(undefined)
-
   useEffect(() => {
     async function confirmAuth() {
       await fetchAndPersistAuthSession()
@@ -111,10 +109,13 @@ export function AddRevision({
         body: JSON.stringify({ key, content, title, id }),
       })
     })()
-
-    setLink(
+    // @ts-expect-error Directly access sub-component
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    window.__setLink(
       'https://frontend-git-poc-remix-serlo.vercel.app/private-link/' + key
     )
+
+    console.log(window.__setLink)
 
     return Promise.resolve()
   }
@@ -140,7 +141,6 @@ export function AddRevision({
           onSave={onSave}
           type={type}
           initialState={initialState}
-          link={link}
         />
       </div>
     </>
