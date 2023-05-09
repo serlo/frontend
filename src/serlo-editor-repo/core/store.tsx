@@ -77,19 +77,21 @@ function scopeDispatch(dispatch: (action: Action) => void, scope: string) {
 /** @public */
 export const useSelector = createSelectorHook(EditorContext)
 /**
- * React Hook to get the value of an selector in the current scope
+ * React Hook to get the value of a selector in the current scope and subscribe to re-renders when the value changes. Similar to `useSelector(...)` from react-redux, just constrained to the current scope.
  *
  * @param scopedSelector - The selector
- * @param enforcedScope - If provided, used as the scope instead of the current scope
  * @returns The value of the selector in the current scope
  * @public
  */
 export function useScopedSelector<T>(
   scopedSelector: (state: ScopedState) => T,
-  enforcedScope?: string
+  equalityFn?: (previous: T, next: T) => boolean
 ) {
-  const scope = useScope(enforcedScope)
-  return useSelector((state) => scopedSelector(getScope(state, scope)))
+  const scope = useScope()
+  return useSelector(
+    (state) => scopedSelector(getScope(state, scope)),
+    equalityFn
+  )
 }
 
 /** @public */
