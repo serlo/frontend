@@ -115,8 +115,6 @@ export function AddRevision({
       'https://frontend-git-poc-remix-serlo.vercel.app/private-link/' + key
     )
 
-    console.log(window.__setLink)
-
     return Promise.resolve()
   }
 
