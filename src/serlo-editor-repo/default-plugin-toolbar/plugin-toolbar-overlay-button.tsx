@@ -83,6 +83,7 @@ function WrappedModal({
           right: 'auto',
           bottom: 'auto',
           margin: '0 auto',
+          transform: 'none',
         },
       }}
     >

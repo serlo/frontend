@@ -86,10 +86,7 @@ export function MathElement({
         readOnly={false}
         visual={isVisualMode}
         disableBlock={false}
-        config={{
-          i18n: config.i18n.math,
-          theme: config.theme,
-        }}
+        config={{ i18n: config.i18n.math }}
         onInlineChange={(inline) => {
           updateElement({ inline })
         }}

@@ -50,7 +50,6 @@ export function createInputExercisePlugin(
 export interface InputExerciseConfig {
   feedback: ChildStateTypeConfig
   i18n?: DeepPartial<InputExercisePluginConfig['i18n']>
-  theme?: Partial<InputExercisePluginConfig['theme']>
 }
 
 /** @public */
@@ -85,7 +84,6 @@ export interface InputExercisePluginConfig {
       wrong: string
     }
   }
-  theme: { borderColor: string; borderStyle: string }
 }
 export { InputExerciseType }
 

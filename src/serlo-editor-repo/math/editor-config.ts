@@ -14,16 +14,4 @@ export interface MathEditorConfig {
       KeySpan: React.ComponentType<{ children: React.ReactNode }>
     ): React.ReactNode
   }
-  theme: {
-    backgroundColor: string
-    color: string
-    hoverColor: string
-    active: {
-      backgroundColor: string
-      color: string
-    }
-    dropDown: {
-      backgroundColor: string
-    }
-  }
 }

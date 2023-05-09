@@ -1,36 +1,33 @@
 import { styled } from '../ui'
-import { MathEditorConfig } from './editor-config'
+import { legacyEditorTheme } from '@/helper/colors'
 
-export const Dropdown = styled.select<{ config: MathEditorConfig }>((props) => {
-  const { theme } = props.config
-  return {
-    backgroundColor: theme.backgroundColor,
-    cursor: 'pointer',
-    color: theme.color,
-    outline: 'none',
-    height: '25px',
-    border: 'none',
-    borderRadius: '4px',
-    margin: '5px',
-    '&:hover': {
-      color: theme.hoverColor,
-    },
-  }
+export const Dropdown = styled.select({
+  backgroundColor: legacyEditorTheme.backgroundColor,
+  cursor: 'pointer',
+  color: legacyEditorTheme.color,
+  outline: 'none',
+  height: '25px',
+  border: 'none',
+  borderRadius: '4px',
+  margin: '5px',
+  '&:hover': {
+    color: legacyEditorTheme.primary.background,
+  },
 })
 
 export const Option = styled.option<{
-  config: MathEditorConfig
   active?: boolean
 }>((props) => {
-  const { theme } = props.config
   return {
     backgroundColor: props.active
-      ? theme.active.backgroundColor
-      : theme.dropDown.backgroundColor,
-    color: props.active ? theme.active.color : theme.color,
+      ? '#b6b6b6'
+      : legacyEditorTheme.backgroundColor,
+    color: props.active
+      ? legacyEditorTheme.backgroundColor
+      : legacyEditorTheme.color,
     cursor: 'pointer',
     '&:hover': {
-      color: theme.hoverColor,
+      color: legacyEditorTheme.primary.background,
     },
   }
 })

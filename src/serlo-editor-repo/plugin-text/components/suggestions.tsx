@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { styled } from '../../ui'
-import type { TextEditorPluginConfig, Theme } from '../types'
+import type { TextEditorPluginConfig } from '../types'
+import { colors } from '@/helper/colors'
 import type { RegistryPlugin } from '@/serlo-editor-repo/plugin-rows'
 
 interface SuggestionsProps {
@@ -10,26 +11,13 @@ interface SuggestionsProps {
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
   onMouseDown: (option: string) => void
+  onMouseMove: (index: number) => void
 }
 
 const SuggestionsWrapper = styled.div({
   maxHeight: '387px',
   maxWidth: '620px',
 })
-
-const Suggestion = styled.div(({ theme }: { theme: Theme }) => ({
-  padding: '10px 20px',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: theme.suggestions.background.default,
-  '&:hover, &[data-active="true"]': {
-    backgroundColor: theme.suggestions.background.highlight,
-    [SuggestionIconWrapper]: {
-      border: '1px solid #ddd',
-    },
-  },
-}))
 
 const SuggestionIconWrapper = styled.div({
   border: '1px solid transparent',
@@ -38,6 +26,19 @@ const SuggestionIconWrapper = styled.div({
   borderRadius: '3px',
   '& > svg': {
     borderRadius: '3px',
+  },
+})
+
+const Suggestion = styled.div({
+  padding: '10px 20px',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  '&:hover, &[data-active="true"]': {
+    backgroundColor: colors.editorPrimary50,
+    [SuggestionIconWrapper]: {
+      border: '1px solid #ddd',
+    },
   },
 })
 
@@ -51,9 +52,15 @@ const SuggestionDescription = styled.p({
   whiteSpace: 'pre-wrap',
 })
 
-export const Suggestions = (props: SuggestionsProps) => {
-  const { config, options, suggestionsRef, selected, onMouseDown } = props
-  const { i18n, theme } = config
+export const Suggestions = ({
+  config,
+  options,
+  suggestionsRef,
+  selected,
+  onMouseDown,
+  onMouseMove,
+}: SuggestionsProps) => {
+  const { i18n } = config
 
   if (options.length === 0) {
     return <div>{i18n.suggestions.noResultsMessage}</div>
@@ -65,8 +72,13 @@ export const Suggestions = (props: SuggestionsProps) => {
         <Suggestion
           key={index}
           data-active={index === selected}
-          onMouseDown={() => onMouseDown(name)}
-          theme={theme}
+          onMouseDown={(event: React.MouseEvent) => {
+            event.preventDefault()
+            onMouseDown(name)
+          }}
+          onMouseMove={() => {
+            onMouseMove(index)
+          }}
         >
           {Icon && (
             <SuggestionIconWrapper>

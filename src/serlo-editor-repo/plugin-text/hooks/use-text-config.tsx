@@ -1,13 +1,13 @@
 import * as React from 'react'
 
-import { merge, useTheme } from '../../ui'
+import { merge } from '../../ui'
 import {
   TextEditorFormattingOption,
   Heading,
   TextEditorConfig,
   TextEditorPluginConfig,
 } from '../types'
-import { articleColors, colors } from '@/helper/colors'
+import { articleColors } from '@/helper/colors'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
@@ -19,7 +19,7 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.richText,
 ]
 
-const textColors = Object.entries(articleColors).map(([key, value]) => {
+export const textColors = Object.entries(articleColors).map(([key, value]) => {
   return { value, name: key.charAt(0).toUpperCase() + key.slice(1) }
 })
 
@@ -29,10 +29,8 @@ export function useTextConfig(
   const {
     placeholder = 'Write something or add elements with \u2295.',
     i18n = {},
-    theme = {},
     noLinebreaks,
   } = config
-  const { editor } = useTheme()
 
   return {
     formattingOptions: config.formattingOptions || defaultFormattingOptions,
@@ -124,45 +122,6 @@ export function useTextConfig(
         },
       },
       values: i18n,
-    }),
-    theme: merge({
-      fallback: {
-        backgroundColor: 'transparent',
-        color: editor.color,
-        hoverColor: editor.primary.background,
-        borderColor: editor.backgroundColor,
-        borderRadius: '4px',
-        active: {
-          backgroundColor: '#b6b6b6',
-          color: editor.backgroundColor,
-        },
-        dropDown: {
-          backgroundColor: editor.backgroundColor,
-        },
-        suggestions: {
-          background: {
-            default: 'transparent',
-            highlight: '#fff5e9',
-          },
-          text: {
-            default: colors.almostBlack,
-            highlight: editor.danger.background,
-          },
-        },
-        overlay: {
-          backgroundColor: editor.backgroundColor,
-          boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
-          color: editor.color,
-        },
-        formattingOptions: {
-          colors: {
-            colors: textColors.map((color) => color.value),
-            defaultColor: 'black',
-          },
-          headings: [1, 2, 3],
-        },
-      },
-      values: theme,
     }),
     noLinebreaks,
   }

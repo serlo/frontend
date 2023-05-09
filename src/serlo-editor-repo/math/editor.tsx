@@ -2,7 +2,7 @@ import * as React from 'react'
 import Modal from 'react-modal'
 
 import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
-import { faQuestionCircle, Icon, merge, useEditorTheme } from '../ui'
+import { faQuestionCircle, Icon, merge } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { MathEditorConfig } from './editor-config'
@@ -110,7 +110,6 @@ export function MathEditor(props: MathEditorProps) {
 
   const useVisualEditor = visual && !hasError
 
-  const editorTheme = useEditorTheme()
   const config = merge<MathEditorConfig>({
     fallback: {
       i18n: {
@@ -156,18 +155,6 @@ export function MathEditor(props: MathEditorProps) {
               </p>
             </>
           )
-        },
-      },
-      theme: {
-        backgroundColor: 'transparent',
-        color: editorTheme.editor.color,
-        hoverColor: editorTheme.editor.primary.background,
-        active: {
-          backgroundColor: '#b6b6b6',
-          color: editorTheme.editor.backgroundColor,
-        },
-        dropDown: {
-          backgroundColor: editorTheme.editor.backgroundColor,
         },
       },
     },
@@ -253,17 +240,16 @@ export function MathEditor(props: MathEditorProps) {
               }}
             >
               <Dropdown
-                config={config}
                 value={useVisualEditor ? 'visual' : 'latex'}
                 onChange={(e) => {
                   if (hasError) setHasError(false)
                   props.onEditorChange(e.target.value === 'visual')
                 }}
               >
-                <Option config={config} active={useVisualEditor} value="visual">
+                <Option active={useVisualEditor} value="visual">
                   {config.i18n.editors.visual}
                 </Option>
-                <Option config={config} active={!useVisualEditor} value="latex">
+                <Option active={!useVisualEditor} value="latex">
                   {config.i18n.editors.latex}
                 </Option>
               </Dropdown>
@@ -279,12 +265,7 @@ export function MathEditor(props: MathEditorProps) {
                 />
               )}
               {useVisualEditor && (
-                <Button
-                  config={config}
-                  onMouseDown={() => {
-                    setHelpOpen(true)
-                  }}
-                >
+                <Button onMouseDown={() => setHelpOpen(true)}>
                   <Icon icon={faQuestionCircle} />
                 </Button>
               )}

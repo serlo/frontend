@@ -1,28 +1,23 @@
 import { styled } from '../ui'
-import { MathEditorConfig } from './editor-config'
+import { legacyEditorTheme } from '@/helper/colors'
 
-export const Button = styled.button(
-  (props: { active?: boolean; config: MathEditorConfig }) => {
-    const { theme } = props.config
-    return {
-      backgroundColor: props.active
-        ? theme.active.backgroundColor
-        : theme.backgroundColor,
-      cursor: 'pointer',
-      boxShadow: props.active
-        ? 'inset 0 1px 3px 0 rgba(0,0,0,0.50)'
-        : undefined,
-      color: props.active ? theme.active.color : theme.color,
-      outline: 'none',
-      height: '25px',
-      border: 'none',
-      borderRadius: '4px',
-      margin: '5px',
-      padding: '0px',
-      width: '25px',
-      '&:hover': {
-        color: theme.hoverColor,
-      },
-    }
+export const Button = styled.button((props: { active?: boolean }) => {
+  return {
+    backgroundColor: props.active ? '#b6b6b6' : 'transparent',
+    cursor: 'pointer',
+    boxShadow: props.active ? 'inset 0 1px 3px 0 rgba(0,0,0,0.50)' : undefined,
+    color: props.active
+      ? legacyEditorTheme.backgroundColor
+      : legacyEditorTheme.color,
+    outline: 'none',
+    height: '25px',
+    border: 'none',
+    borderRadius: '4px',
+    margin: '5px',
+    padding: '0px',
+    width: '25px',
+    '&:hover': {
+      color: legacyEditorTheme.primary.background,
+    },
   }
-)
+})

@@ -21,7 +21,7 @@ import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
-import { useTextConfig } from '../hooks/use-text-config'
+import { textColors, useTextConfig } from '../hooks/use-text-config'
 import {
   TextEditorConfig,
   TextEditorPluginConfig,
@@ -50,7 +50,6 @@ import {
   replace,
 } from '@/serlo-editor-repo/store'
 
-/** @public */
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
   TextEditorConfig
@@ -75,8 +74,7 @@ export function TextEditor(props: TextEditorProps) {
     [createTextEditor]
   )
 
-  const text = Node.string(editor)
-  const suggestions = useSuggestions({ text, id, editable, focused })
+  const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
 
   const previousValue = useRef(state.value.value)
@@ -98,16 +96,22 @@ export function TextEditor(props: TextEditorProps) {
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
-    // If the editor is not focused, do nothing
-    if (focused === false) return
+    // Get the current text value of the editor
+    const text = Node.string(editor)
+
+    // If the editor is not focused, remove the suggestions search
+    // and exit the useEffect hook
+    if (focused === false) {
+      if (text.startsWith('/')) {
+        editor.deleteBackward('line')
+      }
+      return
+    }
 
     // If the first child of the editor is not a paragraph, do nothing
     const isFirstChildParagraph =
       'type' in editor.children[0] && editor.children[0].type === 'p'
     if (!isFirstChildParagraph) return
-
-    // Get the current text value of the editor
-    const text = Node.string(editor)
 
     // If the editor is empty, set the cursor at the start
     if (text === '') {
@@ -331,7 +335,6 @@ export function TextEditor(props: TextEditorProps) {
             editor={editor}
             config={config}
             controls={toolbarControls}
-            text={text}
             focused={focused}
           />
         )}
@@ -351,7 +354,7 @@ export function TextEditor(props: TextEditorProps) {
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={renderElementWithEditorContext(config, focused)}
-          renderLeaf={renderLeafWithConfig(config)}
+          renderLeaf={renderLeaf}
         />
       </Slate>
 
@@ -413,29 +416,27 @@ function renderElementWithEditorContext(
   }
 }
 
-function renderLeafWithConfig(config: TextEditorConfig) {
-  return function renderLeaf(props: RenderLeafProps) {
-    const colors = config?.theme?.formattingOptions?.colors?.colors
-    const { attributes, leaf } = props
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    let { children } = props
+function renderLeaf(props: RenderLeafProps) {
+  const colors = textColors.map((color) => color.value)
+  const { attributes, leaf } = props
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  let { children } = props
 
-    if (leaf.strong) {
-      children = <strong>{children}</strong>
-    }
-    if (typeof leaf.color === 'number' && Array.isArray(colors)) {
-      children = (
-        <span style={{ color: colors?.[leaf.color % colors.length] }}>
-          {children}
-        </span>
-      )
-    }
-    if (leaf.code) {
-      children = <code>{children}</code>
-    }
-    if (leaf.em) {
-      children = <em>{children}</em>
-    }
-    return <span {...attributes}>{children}</span>
+  if (leaf.strong) {
+    children = <strong>{children}</strong>
   }
+  if (typeof leaf.color === 'number' && Array.isArray(colors)) {
+    children = (
+      <span style={{ color: colors?.[leaf.color % colors.length] }}>
+        {children}
+      </span>
+    )
+  }
+  if (leaf.code) {
+    children = <code>{children}</code>
+  }
+  if (leaf.em) {
+    children = <em>{children}</em>
+  }
+  return <span {...attributes}>{children}</span>
 }

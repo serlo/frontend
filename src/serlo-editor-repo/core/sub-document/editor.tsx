@@ -22,7 +22,7 @@ import {
   undo,
   ChangeAction,
 } from '../../store'
-import { styled, useTheme } from '../../ui'
+import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
 import { useScopedSelector, useScopedStore } from '../store'
 
@@ -194,8 +194,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [toolbarRef]
   )
 
-  const theme = useTheme()
-
   return React.useMemo(() => {
     if (!document) return null
     if (!plugin) {
@@ -206,7 +204,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const defaultConfig =
-      typeof plugin.config === 'function' ? plugin.config(theme) : plugin.config
+      typeof plugin.config === 'function' ? plugin.config() : plugin.config
     const overrideConfig = (pluginProps && pluginProps.config) || {}
     const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
@@ -268,7 +266,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     DocumentEditor,
     document,
     plugin,
-    theme,
     pluginProps,
     handleFocus,
     hasSettings,

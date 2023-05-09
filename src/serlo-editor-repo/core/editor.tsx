@@ -19,7 +19,6 @@ import {
   StoreEnhancerFactory,
   getScope,
 } from '../store'
-import { CustomTheme, RootThemeProvider } from '../ui'
 import {
   DocumentEditorContext,
   PreferenceContextProvider,
@@ -174,7 +173,6 @@ export function Document<K extends string = string>(
   return <InnerDocument scope={scope} {...rest} />
 }
 
-const defaultTheme: CustomTheme = {}
 const hotKeysKeyMap = {
   UNDO: ['ctrl+z', 'command+z'],
   REDO: ['ctrl+y', 'command+y', 'ctrl+shift+z', 'command+shift+z'],
@@ -185,7 +183,6 @@ export function InnerDocument<K extends string = string>({
   plugins,
   scope,
   editable,
-  theme = defaultTheme,
   onChange,
   onError,
   DocumentEditor = DefaultDocumentEditor,
@@ -258,13 +255,11 @@ export function InnerDocument<K extends string = string>({
         <ErrorContext.Provider value={onError}>
           <DocumentEditorContext.Provider value={DocumentEditor}>
             <PluginToolbarContext.Provider value={PluginToolbar}>
-              <RootThemeProvider theme={theme}>
-                <PreferenceContextProvider>
-                  <ScopeContext.Provider value={scopeContextValue}>
-                    {renderChildren(id)}
-                  </ScopeContext.Provider>
-                </PreferenceContextProvider>
-              </RootThemeProvider>
+              <PreferenceContextProvider>
+                <ScopeContext.Provider value={scopeContextValue}>
+                  {renderChildren(id)}
+                </ScopeContext.Provider>
+              </PreferenceContextProvider>
             </PluginToolbarContext.Provider>
           </DocumentEditorContext.Provider>
         </ErrorContext.Provider>
@@ -297,7 +292,6 @@ export interface EditorProps<K extends string = string> {
     plugin: string
     state?: unknown
   }
-  theme?: CustomTheme
   onChange?: ChangeListener
   editable?: boolean
   createStoreEnhancer?: StoreEnhancerFactory

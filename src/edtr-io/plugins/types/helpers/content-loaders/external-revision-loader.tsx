@@ -42,6 +42,11 @@ export function ExternalRevisionLoader<T>({
 
   if (isProduction) return null
 
+  const exerciseTypes = [UuidType.Exercise, UuidType.GroupedExercise]
+  const supportedEntityTypes = exerciseTypes.includes(entityType)
+    ? exerciseTypes
+    : [entityType]
+
   return (
     <div>
       <span onClick={() => setShowRevisions(true)}>
@@ -80,7 +85,7 @@ export function ExternalRevisionLoader<T>({
                   }
                 />
               )}
-              supportedEntityTypes={[entityType]}
+              supportedEntityTypes={supportedEntityTypes}
               supportedTaxonomyTypes={[]}
             />
           </div>
