@@ -35,6 +35,11 @@ const createTextPlugin = (
       return value
     },
     deserialize(value) {
+      // sometimes, the value is empty, e.g. https://github.com/serlo/frontend/issues/2411
+      if (value.length === 0) {
+        return emptyDocumentFactory()
+      }
+
       // If the first child of the Element is an empty object,
       // replace it with an empty document.
       // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
