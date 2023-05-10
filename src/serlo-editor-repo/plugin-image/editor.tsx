@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { ImageProps } from '.'
 import {
   OverlayButton,
@@ -56,7 +58,7 @@ export function ImageEditor(props: ImageProps) {
     !state.caption.defined || isEmpty(state.caption.id)(scopedStore.getState())
   const hasFocus = focused || hasFocusedChild(props.id)(scopedStore.getState())
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (editable && !state.caption.defined) {
       state.caption.create({ plugin: 'text' })
     }
