@@ -56,15 +56,20 @@ export function ImageEditor(props: ImageProps) {
     !state.caption.defined || isEmpty(state.caption.id)(scopedStore.getState())
   const hasFocus = focused || hasFocusedChild(props.id)(scopedStore.getState())
 
-  if (!editable)
+  React.useEffect(() => {
+    if (editable && !state.caption.defined) {
+      state.caption.create({ plugin: 'text' })
+    }
+  }, [editable, state.caption])
+
+  if (!editable) {
     return (
       <>
         {renderImage()}
         {captionIsEmpty ? null : renderCaption()}
       </>
     )
-
-  if (!state.caption.defined) state.caption.create({ plugin: 'text' })
+  }
 
   return (
     <>
