@@ -35,7 +35,6 @@ const createTextPlugin = (
       return value
     },
     deserialize(value) {
-      // sometimes, the value is empty, e.g. https://github.com/serlo/frontend/issues/2411
       if (value.length === 0) {
         return emptyDocumentFactory()
       }
