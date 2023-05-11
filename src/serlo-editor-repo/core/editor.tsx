@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useMemo, useEffect, ReactNode, useContext, ContextType } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { configure, GlobalHotKeys } from 'react-hotkeys'
@@ -60,7 +60,7 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
     createStoreEnhancer = (defaultEnhancer) => defaultEnhancer,
     ...rest
   }: EditorProps<K> = props
-  const store = React.useMemo(() => {
+  const store = useMemo(() => {
     return createStore({
       scopes: {
         [MAIN_SCOPE]: rest.plugins,
@@ -99,7 +99,7 @@ export function EditorProvider(props: EditorProviderProps) {
     omitDragDropContext,
     children,
   }: EditorProviderProps = props
-  React.useEffect(() => {
+  useEffect(() => {
     if (mountedProvider) {
       // eslint-disable-next-line no-console
       console.error('You may only render one <EditorProvider />.')
@@ -109,7 +109,7 @@ export function EditorProvider(props: EditorProviderProps) {
       mountedProvider = false
     }
   }, [])
-  const store = React.useMemo(() => {
+  const store = useMemo(() => {
     return createStore({
       scopes: {},
       createEnhancer: createStoreEnhancer,
@@ -127,7 +127,7 @@ export function EditorProvider(props: EditorProviderProps) {
 export interface EditorProviderProps {
   omitDragDropContext?: boolean
   createStoreEnhancer?: StoreEnhancerFactory
-  children: React.ReactNode
+  children: ReactNode
 }
 
 /**
@@ -145,8 +145,8 @@ export function Document<K extends string = string>(
     )
 ) {
   const { scope = MAIN_SCOPE, ...rest } = props
-  const storeContext = React.useContext(EditorContext)
-  React.useEffect(() => {
+  const storeContext = useContext(EditorContext)
+  useEffect(() => {
     const isMainInstance = !rest.mirror
     if (isMainInstance) {
       if (mountedScopes[scope]) {
@@ -203,7 +203,7 @@ export function InnerDocument<K extends string = string>({
   const dispatch = useDispatch()
   // Can't use `useScopedStore` here since `InnerDocument` initializes the scoped state and `ScopeContext`
   const fullStore = useStore()
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof onChange !== 'function') return
     let pendingChanges = getPendingChanges()(
       getScope(fullStore.getState(), scope)
@@ -223,20 +223,20 @@ export function InnerDocument<K extends string = string>({
     })
   }, [onChange, fullStore, scope])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!props.mirror) {
       dispatch(initRoot({ initialState: props.initialState, plugins })(scope))
     }
     // TODO: initRoot changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.initialState, plugins, props.mirror])
-  const scopeContextValue = React.useMemo(() => {
+  const scopeContextValue = useMemo(() => {
     return {
       scope,
       editable,
     }
   }, [scope, editable])
-  const hotKeysHandlers = React.useMemo(() => {
+  const hotKeysHandlers = useMemo(() => {
     return {
       UNDO: () => dispatch(undo()(scope)),
       REDO: () => dispatch(redo()(scope)),
@@ -286,7 +286,7 @@ export function InnerDocument<K extends string = string>({
 /** @public */
 export interface EditorProps<K extends string = string> {
   omitDragDropContext?: boolean
-  children?: React.ReactNode | ((document: React.ReactNode) => React.ReactNode)
+  children?: ReactNode | ((document: ReactNode) => ReactNode)
   plugins: Record<K, EditorPlugin>
   initialState: {
     plugin: string
@@ -295,7 +295,7 @@ export interface EditorProps<K extends string = string> {
   onChange?: ChangeListener
   editable?: boolean
   createStoreEnhancer?: StoreEnhancerFactory
-  onError?: React.ContextType<typeof ErrorContext>
-  DocumentEditor?: React.ContextType<typeof DocumentEditorContext>
-  PluginToolbar?: React.ContextType<typeof PluginToolbarContext>
+  onError?: ContextType<typeof ErrorContext>
+  DocumentEditor?: ContextType<typeof DocumentEditorContext>
+  PluginToolbar?: ContextType<typeof PluginToolbarContext>
 }

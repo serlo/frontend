@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { RowsProps } from '..'
 import { useScopedSelector } from '../../core'
 import { selectPluginTypesOnPathFromRootTo } from '../../store'

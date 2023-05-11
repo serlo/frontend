@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { merge } from '../../ui'
 import {
   TextEditorFormattingOption,

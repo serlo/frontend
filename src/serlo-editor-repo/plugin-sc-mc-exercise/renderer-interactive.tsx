@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { Component, Fragment } from 'react'
 
 import { ScMcExercisePluginConfig, ScMcExercisePluginState } from '.'
 import { StateTypeReturnType } from '../plugin'
@@ -14,7 +14,7 @@ enum ExerciseState {
   SolvedWrong,
 }
 
-export class ScMcRendererInteractive extends React.Component<
+export class ScMcRendererInteractive extends Component<
   ScMcRendererInteractiveProps,
   ScMcRendererState
 > {
@@ -71,7 +71,7 @@ export class ScMcRendererInteractive extends React.Component<
   ): React.ReactNode => {
     const button = this.state.buttons[index]
     return (
-      <React.Fragment key={index}>
+      <Fragment key={index}>
         <ScMcExerciseChoiceRenderer
           index={index}
           onClick={this.selectButton(index)}
@@ -82,7 +82,7 @@ export class ScMcRendererInteractive extends React.Component<
           {answer.content.render()}
         </ScMcExerciseChoiceRenderer>
         {this.props.showFeedback ? this.showFeedback({ button, answer }) : null}
-      </React.Fragment>
+      </Fragment>
     )
   }
 

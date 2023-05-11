@@ -6,7 +6,6 @@
  * {@link @edtr-io/plugin-toolbar# | `@edtr-io/plugin-toolbar`} instead.
  * @packageDocumentation
  */
-import * as React from 'react'
 
 /**
  * The props for {@link PluginToolbar | PluginToolbarButton}

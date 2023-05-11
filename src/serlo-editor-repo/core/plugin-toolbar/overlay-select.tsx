@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useContext } from 'react'
 
 import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
 import { PluginToolbarContext } from '../contexts'
@@ -10,7 +10,7 @@ import { PluginToolbarContext } from '../contexts'
  * @public
  */
 export function OverlaySelect(props: OverlaySelectProps) {
-  const { OverlaySelect } = React.useContext(PluginToolbarContext)
+  const { OverlaySelect } = useContext(PluginToolbarContext)
   return <OverlaySelect {...props} />
 }
 /** @public */

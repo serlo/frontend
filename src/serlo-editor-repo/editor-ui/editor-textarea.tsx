@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 import TextareaAutosize, {
   TextareaAutosizeProps,
 } from 'react-textarea-autosize'
@@ -18,7 +18,7 @@ export interface EditorTextareaProps
 }
 
 /** @public */
-export const EditorTextarea = React.forwardRef<
+export const EditorTextarea = forwardRef<
   HTMLTextAreaElement,
   EditorTextareaProps
 >(function EditorTextarea({ onMoveOutLeft, onMoveOutRight, ...props }, ref) {

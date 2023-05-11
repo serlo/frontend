@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Component, useCallback, useContext } from 'react'
 
 import { PluginProps } from '../../internal__plugin-state'
 import { undo } from '../../store'
@@ -13,9 +13,9 @@ import { SubDocumentRenderer } from './renderer'
  * @public
  */
 export const SubDocument = (props: SubDocumentProps) => {
-  const { editable } = React.useContext(ScopeContext)
+  const { editable } = useContext(ScopeContext)
   const dispatch = useScopedDispatch()
-  const undoMemo = React.useCallback(() => {
+  const undoMemo = useCallback(() => {
     dispatch(undo())
   }, [dispatch])
 
@@ -26,8 +26,8 @@ export const SubDocument = (props: SubDocumentProps) => {
     </ErrorBoundary>
   )
 }
-
-export class ErrorBoundary extends React.Component<{
+// this uses ErrorBoundary functionality that is only available in class components since react 17
+export class ErrorBoundary extends Component<{
   undo: () => void
   children: React.ReactNode
 }> {

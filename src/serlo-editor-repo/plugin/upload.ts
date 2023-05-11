@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { StateType } from './internal-plugin-state'
 import { asyncScalar } from './scalar'
@@ -111,8 +111,8 @@ export function usePendingFilesUploader<T>(
   files: UploadStateReturnType<T>[],
   uploadHandler: UploadHandler<T>
 ) {
-  const [uploading, setUploading] = React.useState(0)
-  React.useEffect(() => {
+  const [uploading, setUploading] = useState(0)
+  useEffect(() => {
     // everything uploaded already
     if (uploading >= files.length) return
     const fileState = files[uploading]

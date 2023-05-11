@@ -1,10 +1,10 @@
-import * as React from 'react'
+import { createContext, ComponentType } from 'react'
 
 import * as InternalDocumentEditor from '../../internal__document-editor'
 
 /** @public */
-export const DocumentEditorContext = React.createContext<
-  React.ComponentType<DocumentEditorProps>
->(undefined as unknown as React.ComponentType<DocumentEditorProps>)
+export const DocumentEditorContext = createContext<
+  ComponentType<DocumentEditorProps>
+>(undefined as unknown as ComponentType<DocumentEditorProps>)
 /** @public */
 export type DocumentEditorProps = InternalDocumentEditor.DocumentEditorProps

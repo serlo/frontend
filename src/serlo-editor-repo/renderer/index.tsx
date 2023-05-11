@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useMemo } from 'react'
 import { createStore } from 'redux'
 
 import { Provider, ScopeContext, SubDocument } from '../core'
@@ -14,7 +14,7 @@ export function Renderer<K extends string = string>({
   plugins,
   state,
 }: RendererProps<K>) {
-  const store = React.useMemo(() => {
+  const store = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return createStore<any, Action, unknown, unknown>(
       (state: State | undefined) => {

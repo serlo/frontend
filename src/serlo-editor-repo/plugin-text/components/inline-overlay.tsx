@@ -1,4 +1,4 @@
-import React from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { useSlate } from 'slate-react'
 
 import { styled } from '../../ui'
@@ -57,12 +57,12 @@ export function InlineOverlay({
 }) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const editor = useSlate()
-  const wrapper = React.useRef<HTMLDivElement>(null)
-  const triangle = React.useRef<HTMLDivElement>(null)
-  const [position, setPosition] = React.useState(initialPosition)
+  const wrapper = useRef<HTMLDivElement>(null)
+  const triangle = useRef<HTMLDivElement>(null)
+  const [position, setPosition] = useState(initialPosition)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     if (!wrapper.current || !triangle.current) return
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { selection } = editor

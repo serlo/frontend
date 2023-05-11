@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { BlockquoteProps } from '.'
 
 export function BlockquoteRenderer(props: BlockquoteProps) {
