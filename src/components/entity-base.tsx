@@ -42,13 +42,21 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const [survey, setSurvey] = useState(false)
 
+  function handler(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      handleModalInput()
+    }
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setSurvey(true)
+      document.addEventListener('keydown', handler)
     }, 20000)
 
     return () => {
       clearTimeout(timer)
+      document.removeEventListener('keydown', handler)
     }
   }, [])
 
@@ -61,26 +69,58 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     <>
       {survey && (
         <div className="fixed inset-0 bg-black/30 z-[1000] flex justify-center items-center">
-          <div className="h-[300px] w-[500px] bg-white z-[1200] rounded-xl relative mx-side">
-            <button className="-right-3 -top-3 w-12 h-12 rounded-full absolute serlo-button-blue flex justify-center items-center">
+          <div className="w-[500px] bg-white z-[1200] rounded-xl relative mx-side text-center">
+            <button
+              className="-right-3 -top-3 w-12 h-12 rounded-full absolute serlo-button-blue flex justify-center items-center"
+              onClick={() => {
+                handleModalInput()
+              }}
+            >
               <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
             </button>
-            <p className="text-almost-black mx-side mt-4">
+            <p className="text-almost-black mx-side mt-4 italic">
               Wir stellen regelmäßig Fragen auf der Plattform, um unser
               Lernangebot für dich weiter zu verbessern.
             </p>
-            <p className="serlo-p italic text-2xl mt-6">
+            <p className="serlo-p font-bold text-2xl mt-6">
               Bekommst du zu Hause Hilfe, wenn du beim Lernen nicht
               weiterkommst?
             </p>
 
             <p className="flex justify-around">
-              <button className="serlo-button-blue w-24">JA</button>
-              <button className="serlo-button-blue w-24">NEIN</button>
+              <button
+                className="serlo-button-blue w-24"
+                onClick={() => {
+                  handleModalInput()
+                }}
+              >
+                JA
+              </button>
+              <button
+                className="serlo-button-blue w-24"
+                onClick={() => {
+                  handleModalInput()
+                }}
+              >
+                SELTEN
+              </button>
+              <button
+                className="serlo-button-blue w-24"
+                onClick={() => {
+                  handleModalInput()
+                }}
+              >
+                NEIN
+              </button>
             </p>
 
-            <p className="text-center mt-8">
-              <button className="hover:underline">
+            <p className="mt-8 mb-8">
+              <button
+                className="underline"
+                onClick={() => {
+                  handleModalInput()
+                }}
+              >
                 Ich bin keine Schüler*in.
               </button>
             </p>
@@ -147,5 +187,10 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
         }
       />
     )
+  }
+
+  function handleModalInput() {
+    setSurvey(false)
+    document.removeEventListener('keydown', handler)
   }
 }
