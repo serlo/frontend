@@ -7,11 +7,9 @@ import { PluginToolbarContext } from '../contexts'
  * Renders the {@link @edtr-io/plugin-toolbar#PluginToolbar | OverlayCheckbox}
  *
  * @param props - {@link @edtr-io/plugin-toolbar#OverlayCheckboxProps}
- * @public
  */
 export function OverlayCheckbox(props: OverlayCheckboxProps) {
   const { OverlayCheckbox } = useContext(PluginToolbarContext)
   return <OverlayCheckbox {...props} />
 }
-/** @public */
 export type OverlayCheckboxProps = InternalPluginToolbar.OverlayCheckboxProps

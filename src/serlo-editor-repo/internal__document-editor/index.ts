@@ -3,7 +3,6 @@ import { PluginToolbar } from '../internal__plugin-toolbar'
 /**
  * Allows to override the default rendering behavior of the document editor
  *
- * @beta
  */
 export interface DocumentEditorProps {
   /**

@@ -14,7 +14,6 @@ import { SpoilerEditor } from './editor'
 
 /**
  * @param config - {@link SpoilerConfig | Plugin configuration}
- * @public
  */ export function createSpoilerPlugin(
   config: SpoilerConfig
 ): EditorPlugin<SpoilerPluginState, SpoilerConfig> {
@@ -30,19 +29,16 @@ import { SpoilerEditor } from './editor'
   }
 }
 
-/** @public */
 export interface SpoilerConfig {
   content: ChildStateTypeConfig
   i18n?: DeepPartial<SpoilerPluginConfig['i18n']>
 }
 
-/** @public */
 export type SpoilerPluginState = ObjectStateType<{
   title: StringStateType
   content: ChildStateType
 }>
 
-/** @public */
 export interface SpoilerPluginConfig {
   i18n: {
     title: {
@@ -51,5 +47,4 @@ export interface SpoilerPluginConfig {
   }
 }
 
-/** @public */
 export type SpoilerProps = EditorPluginProps<SpoilerPluginState, SpoilerConfig>

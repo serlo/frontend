@@ -50,10 +50,6 @@ const ToggleIcon = styled(Icon)<{ collapsed: boolean }>(({ collapsed }) => {
   }
 })
 
-/**
- * @param props - The props
- * @public
- */
 export function ExpandableBox(props: ExpandableBoxProps) {
   const { children, editable, alwaysVisible, renderTitle } = props
   const [collapsed, setCollapsed] = useState(!editable)
@@ -80,7 +76,6 @@ export function ExpandableBox(props: ExpandableBoxProps) {
     </Container>
   )
 }
-/** @public */
 export interface ExpandableBoxProps {
   children?: React.ReactNode
   editable?: boolean

@@ -6,7 +6,6 @@ import { PluginToolbarContext } from '../contexts'
 /**
  * Renders the {@link @edtr-io/plugin-toolbar#PluginToolbar | PluginToolbarButton}
  *
- * @public
  */
 export const PluginToolbarButton = forwardRef<
   HTMLButtonElement,
@@ -15,6 +14,5 @@ export const PluginToolbarButton = forwardRef<
   const { PluginToolbarButton } = useContext(PluginToolbarContext)
   return <PluginToolbarButton {...props} ref={ref} />
 })
-/** @public */
 export type PluginToolbarButtonProps =
   InternalPluginToolbar.PluginToolbarButtonProps

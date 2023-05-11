@@ -10,27 +10,22 @@ import {
   ScopedState,
 } from './storetypes'
 
-/** @public */
 export const setPartialState = createActionCreator<
   'SetPartialState',
   Partial<ScopedState>
 >('SetPartialState')
-/** @public */
 export type SetPartialState = ActionCreatorAction<typeof setPartialState>
 
-/** @internal */
 export const applyActions: ActionCreatorWithPayload<
   'ApplyActions',
   InternalAction[]
 > = createActionCreator('ApplyActions')
-/** @internal */
 export interface ApplyActionsAction {
   type: 'ApplyActions'
   payload: InternalAction[]
   scope: string
 }
 
-/** @public */
 export type Action =
   | DocumentsAction
   | FocusAction
@@ -38,7 +33,6 @@ export type Action =
   | PluginAction
   | RootAction
   | SetPartialState
-/** @internal */
 export type InternalAction =
   | Action
   | ApplyActionsAction
@@ -46,7 +40,6 @@ export type InternalAction =
   | InternalHistoryAction
   | InternalRootAction
 
-/** @internal */
 export interface ReversibleAction<
   A extends InternalAction = InternalAction,
   R extends InternalAction = InternalAction

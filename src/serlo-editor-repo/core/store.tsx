@@ -17,18 +17,15 @@ import { Unsubscribe } from 'redux'
 
 import { Action, getScope, ScopedState, ScopedStore, State } from '../store'
 
-/** @public */
 export const ScopeContext = createContext<{
   scope: string
   editable?: boolean
 }>({ scope: '' })
 
-/** @public */
 export const EditorContext = createContext(
   undefined as unknown as ReactReduxContextValue<State>
 )
 
-/** @public */
 export const ErrorContext = createContext<
   ((error: Error, errorInfo: { componentStack: string }) => void) | undefined
 >(undefined)
@@ -37,7 +34,6 @@ export const ErrorContext = createContext<
  * Store Provider
  *
  * @param props - The {@link https://react-redux.js.org/api/provider#props | ProviderProps}
- * @public
  */
 export function Provider(
   props: ProviderProps<Action> & { children: ReactNode }
@@ -47,21 +43,18 @@ export function Provider(
 
 /**
  * @param enforcedScope - If provided, used as the scope instead of the current scope
- * @public
  */
 export function useScope(enforcedScope?: string) {
   const { scope } = useContext(ScopeContext)
   return enforcedScope === undefined ? scope : enforcedScope
 }
 
-/** @public */
 export const useDispatch = createDispatchHook(EditorContext)
 
 /**
  * React Hook to dispatch an action in the current scope
  *
  * @param enforcedScope - If provided, used as the scope instead of the current scope
- * @public
  */
 export function useScopedDispatch(enforcedScope?: string) {
   const scope = useScope(enforcedScope)
@@ -80,7 +73,6 @@ function scopeDispatch(dispatch: (action: Action) => void, scope: string) {
   }
 }
 
-/** @public */
 export const useSelector = createSelectorHook(EditorContext)
 /**
  * React Hook to get the value of a selector in the current scope and subscribe to re-renders when the value changes. Similar to `useSelector(...)` from react-redux, just constrained to the current scope.
@@ -99,14 +91,12 @@ export function useScopedSelector<T>(
   )
 }
 
-/** @public */
 export const useStore = createStoreHook(EditorContext)
 /**
  * React Hook to obtain a reference to the scoped store
  *
  * @param enforcedScope - If provided, used as the scope instead of the current scope
  * @returns The scoped store
- * @public
  */
 export function useScopedStore(enforcedScope?: string) {
   const scope = useScope(enforcedScope)

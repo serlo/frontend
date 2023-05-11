@@ -1,7 +1,6 @@
 import { createActionCreator } from '../helpers'
 import { ActionCreatorAction, ActionCreatorWithPayload } from '../storetypes'
 
-/** @public */
 export const insertChildBefore = createActionCreator<
   'InsertChildBefore',
   {
@@ -13,11 +12,9 @@ export const insertChildBefore = createActionCreator<
     }
   }
 >('InsertChildBefore')
-/** @public */
 export type InsertChildBeforeAction = ActionCreatorAction<
   typeof insertChildBefore
 >
-/** @public */
 export const insertChildAfter: ActionCreatorWithPayload<
   'InsertChildAfter',
   {
@@ -29,12 +26,10 @@ export const insertChildAfter: ActionCreatorWithPayload<
     }
   }
 > = createActionCreator('InsertChildAfter')
-/** @public */
 export type InsertChildAfterAction = ActionCreatorAction<
   typeof insertChildAfter
 >
 
-/** @public */
 export const removeChild: ActionCreatorWithPayload<
   'RemoveChild',
   {
@@ -42,10 +37,8 @@ export const removeChild: ActionCreatorWithPayload<
     child: string
   }
 > = createActionCreator('RemoveChild')
-/** @public */
 export type RemoveChildAction = ActionCreatorAction<typeof removeChild>
 
-/** @public */
 export type PluginAction =
   | InsertChildBeforeAction
   | InsertChildAfterAction

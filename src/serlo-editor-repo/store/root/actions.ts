@@ -6,7 +6,6 @@ import {
   ActionCreatorWithPayload,
 } from '../storetypes'
 
-/** @public */
 export const initRoot: ActionCreatorWithPayload<
   'InitRoot',
   {
@@ -17,15 +16,10 @@ export const initRoot: ActionCreatorWithPayload<
     plugins: Record<string, EditorPlugin>
   }
 > = createActionCreator('InitRoot')
-/** @public */
 export type InitRootAction = ActionCreatorAction<typeof initRoot>
-/** @internal */
 export const pureInitRoot: ActionCreatorWithoutPayload<'PureInitRoot'> =
   createActionWithoutPayload('PureInitRoot')
-/** @internal */
 export type PureInitRootAction = ActionCreatorAction<typeof pureInitRoot>
 
-/** @public */
 export type RootAction = InitRootAction
-/** @internal */
 export type InternalRootAction = PureInitRootAction

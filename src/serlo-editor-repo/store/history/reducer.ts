@@ -20,7 +20,6 @@ import {
   PureUndoAction,
 } from './actions'
 
-/** @internal */
 export const historyReducer: SubReducer<HistoryState> = createSubReducer(
   'history',
   {
@@ -84,33 +83,26 @@ export const historyReducer: SubReducer<HistoryState> = createSubReducer(
   }
 )
 
-/** @internal */
 export const getHistory: InternalSelector<HistoryState> =
   createInternalSelector((state) => state.history)
 
-/** @public */
 export const getPendingChanges: Selector<number> = createSelector(
   (state) => state.history.pendingChanges
 )
 
-/** @public */
 export const hasPendingChanges: Selector<boolean> = createSelector(
   (state) => getPendingChanges()(state) !== 0
 )
 
-/** @public */
 export const hasUndoActions: Selector<boolean> = createSelector(
   (state) => state.history.undoStack.length > 0
 )
 
-/** @public */
 export const hasRedoActions: Selector<boolean> = createSelector(
   (state) => state.history.redoStack.length > 0
 )
 
-/** @internal */
 export const getUndoStack: InternalSelector<ReversibleAction[][]> =
   createInternalSelector((state) => getHistory()(state).undoStack)
-/** @internal */
 export const getRedoStack: InternalSelector<ReversibleAction[][]> =
   createInternalSelector((state) => getHistory()(state).redoStack)

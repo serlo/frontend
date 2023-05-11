@@ -25,7 +25,6 @@ import {
  * @param state - The current {@link State | state} or `undefined`
  * @param action - The {@link Action | action} to dispatch
  * @returns The new {@link State | state}
- * @internal
  */
 export function reducer(
   state: InternalState = {},
@@ -74,7 +73,6 @@ function scopedReducer(
  * @param state - The current {@link State | state}
  * @param scope - The scope
  * @returns The {@link ScopedState | state} of the specified scope
- * @public
  */
 export function getScope(state: State, scope: string): ScopedState {
   const scopedState = state[scope]

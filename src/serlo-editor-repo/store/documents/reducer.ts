@@ -27,7 +27,6 @@ import {
   PureReplaceTextAction,
 } from './actions'
 
-/** @internal */
 export const documentsReducer: SubReducer<Record<string, DocumentState>> =
   createSubReducer(
     'documents',
@@ -108,7 +107,6 @@ export const documentsReducer: SubReducer<Record<string, DocumentState>> =
     }
   )
 
-/** @public */
 export const getDocuments: Selector<Record<string, DocumentState>> =
   createSelector((state) => state.documents)
 
@@ -118,7 +116,6 @@ export const getDocuments: Selector<Record<string, DocumentState>> =
  * @param id The id of the document that should be selected
  * @returns A selector `(ScopedState) => DocumentState`. The returned DocumentState object reference will only change when this document was modified by a redux action.
  * @example const document = useScopedSelector(getDocument(id)) // Gets the document with the given id and trigger component re-render when this document was modified by a redux action.
- * @public
  */
 export function getDocument(id: string | null) {
   return (scopedState: ScopedState) => {
@@ -132,7 +129,6 @@ export function getDocument(id: string | null) {
  *
  * @param id - The id of the document
  * @returns The serialization
- * @public
  */
 export const serializeDocument: Selector<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -153,7 +149,6 @@ export const serializeDocument: Selector<
   }
 })
 
-/** @public */
 export const isEmpty = createSelector((state, id: string) => {
   const doc = getDocument(id)(state)
   if (!doc) return false
@@ -163,11 +158,7 @@ export const isEmpty = createSelector((state, id: string) => {
 
 /**
  * Checks whether the given document is empty
- *
- * @param doc - The document
- * @param plugin - The plugin
  * @returns `True` if the specified document is empty
- * @public
  */
 export function isDocumentEmpty(
   doc: DocumentState | null,

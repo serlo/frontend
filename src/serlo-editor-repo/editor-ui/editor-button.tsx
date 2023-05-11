@@ -1,7 +1,6 @@
 import { styled } from '../ui'
 import { legacyEditorTheme } from '@/helper/colors'
 
-/** @public */
 export const EditorButton = styled.button(() => {
   return {
     margin: '3px',

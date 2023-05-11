@@ -27,7 +27,6 @@ import {
   focusPrevious,
 } from './actions'
 
-/** @internal */
 export const focusReducer: SubReducer<string | null> = createSubReducer(
   'focus',
   null,
@@ -57,7 +56,6 @@ export const focusReducer: SubReducer<string | null> = createSubReducer(
  * [[Selector]] that returns the id of the focused element (if there is any)
  *
  * @returns id of the focused element (`null` if there is no focused element)
- * @public
  */
 export const getFocused: Selector<string | null, []> = createSelector(
   (state) => state.focus
@@ -68,7 +66,6 @@ export const getFocused: Selector<string | null, []> = createSelector(
  *
  * @param id - id of the document to check
  * @returns `true` if the given document is focused
- * @public
  */
 export const isFocused: Selector<boolean, [string]> = createSelector(
   (state, id: string) => getFocused()(state) === id
@@ -79,7 +76,6 @@ export const isFocused: Selector<boolean, [string]> = createSelector(
  *
  * @param id - optional id of the document that should be considered as the root of the focus tree. By default, we use the root document of the current scope
  * @returns the [[focus tree|Node]] if it exists (`null` otherwise)
- * @public
  */
 export const getFocusTree: Selector<Node | null, [string?]> =
   createJsonStringifySelector((state, id = undefined) => {
@@ -103,7 +99,6 @@ export const getFocusTree: Selector<Node | null, [string?]> =
     }
   })
 
-/** @public */
 export const getParent: Selector<Node | null, [string]> = createSelector(
   (state, id) => {
     const root = getFocusTree()(state)
@@ -189,7 +184,6 @@ function handleFocus(
  *
  * @param id - id of the document to check
  * @returns `true` if the given document has a focused child
- * @public
  */
 export const hasFocusedChild: Selector<boolean, [string]> = createSelector(
   (state, id: string) => {
@@ -205,7 +199,6 @@ export const hasFocusedChild: Selector<boolean, [string]> = createSelector(
  *
  * @param id - id of the document to check
  * @returns `true` if the given document has a focused descendant
- * @public
  */
 export const hasFocusedDescendant: Selector<boolean, [string]> = createSelector(
   (state, id: string): boolean => {
@@ -225,7 +218,6 @@ export const hasFocusedDescendant: Selector<boolean, [string]> = createSelector(
  * @param root - focus tree
  * @param from - id of the current document
  * @returns the id of the next document if it exists (`null` otherwise)
- * @public
  */
 export function findNextNode(root: Node, from: string): string | null {
   const parent = findParent(root, from)
@@ -255,7 +247,6 @@ export function findNextNode(root: Node, from: string): string | null {
  * @param root - focus tree
  * @param from - id of the current document
  * @returns the id of the previous document if it exists (`null` otherwise)
- * @public
  */
 export function findPreviousNode(root: Node, from: string): string | null {
   const parent = findParent(root, from)
@@ -284,7 +275,6 @@ export function findPreviousNode(root: Node, from: string): string | null {
  * @param root - focus tree
  * @param id - id of the current node
  * @returns the `Node` of the parent, if the id exists in the focus tree. (`null` otherwise)
- * @public
  */
 export function findParent(root: Node, id: string): Node | null {
   if (root.id === id) {
@@ -306,7 +296,6 @@ export function findParent(root: Node, id: string): Node | null {
   return null
 }
 
-/** @public */
 export interface Node {
   id: string
   children?: Node[]

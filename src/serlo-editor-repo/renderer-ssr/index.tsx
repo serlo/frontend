@@ -6,7 +6,6 @@ import { Renderer, RendererProps } from '../renderer'
 
 /**
  * @param props - The {@link @edtr-io/renderer#RendererProps | renderer props}
- * @public
  */
 export function render<K extends string = string>(props: RendererProps<K>) {
   const sheet = new ServerStyleSheet()

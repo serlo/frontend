@@ -1,7 +1,6 @@
 import { styled, Icon, faSmile, faCheckCircle } from '../ui'
 import { legacyEditorTheme } from '@/helper/colors'
 
-/** @internal */
 export enum ExerciseState {
   Default = 1,
   SolvedRight,
@@ -40,7 +39,6 @@ const SubmitButtonComponent = styled.button<{ exerciseState: ExerciseState }>(
   }
 )
 
-/** @internal */
 export function SubmitButton({
   exerciseState,
   onClick,

@@ -42,10 +42,6 @@ const ActivateButton = styled.button({
   margin: 'auto',
 })
 
-/**
- * @param props - Props
- * @internal
- */
 export function PreviewOverlay(props: PreviewOverlayProps) {
   const [active, setActiveState] = useState(false)
   const scope = useScope()
@@ -108,7 +104,6 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   )
 }
 
-/** @internal */
 export interface PreviewOverlayProps {
   children: React.ReactNode
   focused: boolean
