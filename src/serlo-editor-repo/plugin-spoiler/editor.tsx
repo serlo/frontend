@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useCallback } from 'react'
 
 import { SpoilerProps } from '.'
 import { ExpandableBox } from '../renderer-ui'
@@ -8,7 +8,7 @@ export function SpoilerEditor(props: SpoilerProps) {
   const { state, editable, autofocusRef } = props
   const config = useSpoilerConfig(props.config)
 
-  const renderTitle = React.useCallback(
+  const renderTitle = useCallback(
     (_collapsed: boolean) => {
       return editable ? (
         <input

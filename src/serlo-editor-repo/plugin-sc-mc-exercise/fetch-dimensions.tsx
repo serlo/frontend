@@ -1,8 +1,8 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { Component } from 'react'
 
 /** @public */
-export class FetchDimensions extends React.Component<
+export class FetchDimensions extends Component<
   FetchDimensionsProps,
   FetchDimensionsState
 > {

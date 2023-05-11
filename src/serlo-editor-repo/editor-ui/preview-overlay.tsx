@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
 import { ScopeContext, useScope } from '../core'
 import { styled } from '../ui'
@@ -47,11 +47,11 @@ const ActivateButton = styled.button({
  * @internal
  */
 export function PreviewOverlay(props: PreviewOverlayProps) {
-  const [active, setActiveState] = React.useState(false)
+  const [active, setActiveState] = useState(false)
   const scope = useScope()
   const { onChange } = props
 
-  const setActive = React.useCallback(
+  const setActive = useCallback(
     (active: boolean) => {
       if (typeof onChange === 'function') {
         onChange(active)
@@ -60,7 +60,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
     },
     [onChange]
   )
-  React.useEffect(() => {
+  useEffect(() => {
     if (!props.focused && active) {
       setActive(false)
     }

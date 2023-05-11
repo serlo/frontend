@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { PluginToolbar } from '../internal__plugin-toolbar'
 
 /**

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { PrismAsyncLight as SyntaxHighlighter } from 'react-syntax-highlighter'
 // eslint-disable-next-line import/no-internal-modules
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'

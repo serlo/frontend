@@ -1,5 +1,4 @@
 import * as R from 'ramda'
-import * as React from 'react'
 import { generate } from 'shortid'
 
 import { SubDocument } from '../core'

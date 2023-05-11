@@ -1,9 +1,9 @@
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { ImagePluginConfig } from '.'
 
 export function Upload(props: UploadProps) {
-  const input = React.useRef<HTMLInputElement>(null)
+  const input = useRef<HTMLInputElement>(null)
   return (
     <>
       <button

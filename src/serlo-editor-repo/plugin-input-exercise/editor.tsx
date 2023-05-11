@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
 import { OverlayInput, useScopedSelector } from '../core'
@@ -33,7 +33,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       focusedElement,
       props.state.answers.map((answer) => answer.feedback.id)
     )
-  const [previewActive, setPreviewActive] = React.useState(false)
+  const [previewActive, setPreviewActive] = useState(false)
 
   if (!editable) return <InputExerciseRenderer {...props} />
 

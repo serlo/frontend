@@ -5,7 +5,7 @@ import {
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome'
 import * as R from 'ramda'
-import * as React from 'react'
+import { ComponentType } from 'react'
 import styled from 'styled-components'
 
 /**
@@ -100,7 +100,7 @@ export { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
  * @returns A component for the specified icon
  * @public
  */
-export function createIcon(i: IconDefinition): React.ComponentType {
+export function createIcon(i: IconDefinition): ComponentType {
   return function I() {
     return <Icon icon={i} size="4x" />
   }

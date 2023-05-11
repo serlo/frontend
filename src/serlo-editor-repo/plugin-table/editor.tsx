@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { TableProps } from '.'
 import { EditorTextarea } from '../editor-ui'
 import { styled } from '../ui'

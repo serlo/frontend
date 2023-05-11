@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
 import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
@@ -15,7 +15,7 @@ export function createPluginToolbarOverlayButton(
     label,
     ...modalProps
   }: PluginToolbarOverlayButtonProps) {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
     return (
       <>
         <WrappedModal
@@ -45,7 +45,7 @@ function WrappedModal({
   ...props
 }: Pick<PluginToolbarOverlayButtonProps, 'contentRef' | 'renderContent'> &
   Omit<Modal.Props, 'contentRef'> & { onRequestClose(): void }) {
-  const appended = React.useRef(false)
+  const appended = useRef(false)
   const children = (
     <div
       ref={(ref) => {

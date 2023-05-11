@@ -1,9 +1,9 @@
-import * as React from 'react'
+import { createContext } from 'react'
 
 import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
 
 /** @public */
-export const PluginToolbarContext = React.createContext<PluginToolbar>(
+export const PluginToolbarContext = createContext<PluginToolbar>(
   undefined as unknown as PluginToolbar
 )
 /** @public */

@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
@@ -80,9 +80,9 @@ export function RowRenderer({
   plugins: SelectorReturnType<typeof getPlugins>
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
-  const container = React.useRef<HTMLDivElement>(null)
-  const [draggingAbove, setDraggingAbove] = React.useState(true)
-  const allowedPlugins = React.useMemo(() => {
+  const container = useRef<HTMLDivElement>(null)
+  const [draggingAbove, setDraggingAbove] = useState(true)
+  const allowedPlugins = useMemo(() => {
     return config.plugins.map((plugin) => plugin.name)
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)

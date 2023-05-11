@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
 import { useScopedSelector, useScopedStore } from '../core'
@@ -60,7 +60,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   }
 
   const nestedFocus = focused || R.includes(focusedElement, children)
-  const [previewActive, setPreviewActive] = React.useState(false)
+  const [previewActive, setPreviewActive] = useState(false)
 
   if (!editable) {
     return <ScMcExerciseRenderer {...props} isEmpty={isEmpty} />
