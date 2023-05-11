@@ -6,10 +6,6 @@ import { invariant } from '../internal__dev-expression'
 import { EditorPlugin, StoreDeserializeHelpers } from '../plugin'
 import { Action, ScopedState, State } from '../store'
 
-/**
- * @param props - The props
- * @public
- */
 export function Renderer<K extends string = string>({
   plugins,
   state,
@@ -85,7 +81,6 @@ export function Renderer<K extends string = string>({
   )
 }
 
-/** @public */
 export interface RendererProps<K extends string = string> {
   plugins: Record<K, EditorPlugin>
   state: {

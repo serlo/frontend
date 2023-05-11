@@ -10,7 +10,6 @@ import {
 
 /**
  * @param params - The params
- * @public
  */
 export function child<K extends string, S = unknown>(
   params: ChildStateTypeConfig
@@ -61,7 +60,6 @@ export function child<K extends string, S = unknown>(
   }
 }
 
-/** @public */
 export type ChildStateType<K extends string = string, S = unknown> = StateType<
   { plugin: K; state?: S },
   string,
@@ -73,7 +71,6 @@ export type ChildStateType<K extends string = string, S = unknown> = StateType<
   }
 >
 
-/** @public */
 export interface ChildStateTypeConfig<K extends string = string, S = unknown> {
   plugin: K
   initialState?: S

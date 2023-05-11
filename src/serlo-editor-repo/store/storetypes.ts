@@ -6,23 +6,17 @@ import { Action, InternalAction, ReversibleAction } from './actions'
 /**
  * Store state
  */
-/** @public */
 export type State = Record<string, ScopedState>
-/** @internal */
 export type InternalState = Record<string, InternalScopedState>
-/** @public */
 export type Store = ReduxStore<State, Action>
-/** @internal */
 export type InternalStore = ReduxStore<InternalState, InternalAction>
 
-/** @public */
 export interface ScopedStore {
   dispatch: (scopedAction: (scope: string) => Action) => void
   getState: () => ScopedState
   subscribe: (listener: () => void) => Unsubscribe
 }
 
-/** @public */
 export interface ScopedState {
   plugins: Record<string, EditorPlugin>
   documents: Record<string, DocumentState>
@@ -35,18 +29,15 @@ export interface ScopedState {
   }
 }
 
-/** @internal */
 export interface InternalScopedState extends ScopedState {
   history: HistoryState
 }
 
-/** @public */
 export interface DocumentState {
   plugin: string
   state: unknown
 }
 
-/** @internal */
 export interface HistoryState {
   initialState?: {
     documents: ScopedState['documents']
@@ -60,11 +51,9 @@ export interface HistoryState {
  * Action creators
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/** @public */
 export type ActionCreator<T = string, P = any> =
   | ActionCreatorWithoutPayload<T>
   | ActionCreatorWithPayload<T, P>
-/** @public */
 export interface ActionCreatorWithoutPayload<T = string> {
   (): (scope: string) => {
     type: T
@@ -72,7 +61,6 @@ export interface ActionCreatorWithoutPayload<T = string> {
   }
   type: T
 }
-/** @public */
 export interface ActionCreatorWithPayload<T = string, P = any> {
   (payload: P): (scope: string) => {
     type: T
@@ -81,7 +69,6 @@ export interface ActionCreatorWithPayload<T = string, P = any> {
   }
   type: T
 }
-/** @public */
 export type ActionCreatorAction<T extends ActionCreator> = ReturnType<
   ReturnType<T>
 >
@@ -89,20 +76,16 @@ export type ActionCreatorAction<T extends ActionCreator> = ReturnType<
 /**
  * Selectors
  */
-/** @public */
 export type Selector<T = any, P extends any[] = []> = (
   ...args: P
 ) => (scopedState: ScopedState) => T
-/** @internal */
 export type InternalSelector<T = any, P extends any[] = []> = (
   ...args: P
 ) => (scopedState: InternalScopedState) => T
 
-/** @public */
 export type SelectorReturnType<T extends Selector<any, any>> = ReturnType<
   ReturnType<T>
 >
-/** @internal */
 export type InternalSelectorReturnType<T extends InternalSelector<any, any>> =
   ReturnType<ReturnType<T>>
 /* eslint-enable @typescript-eslint/no-explicit-any */

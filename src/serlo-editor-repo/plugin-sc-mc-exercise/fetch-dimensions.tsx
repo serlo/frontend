@@ -1,7 +1,6 @@
 import * as R from 'ramda'
 import { Component } from 'react'
 
-/** @public */
 export class FetchDimensions extends Component<
   FetchDimensionsProps,
   FetchDimensionsState
@@ -71,7 +70,6 @@ export class FetchDimensions extends Component<
   private done = false
 }
 
-/** @public */
 export interface FetchDimensionsProps {
   length: number
   render: (
@@ -80,7 +78,6 @@ export interface FetchDimensionsProps {
   onDone: (dimensions: Dimensions) => void
 }
 
-/** @public */
 export interface Dimensions {
   heights: number[]
   widths: number[]
@@ -89,7 +86,6 @@ export interface Dimensions {
   clientHeights: number[]
   clientWidths: number[]
 }
-/** @public */
 export interface FetchDimensionsState {
   heights: (number | null)[]
   widths: (number | null)[]

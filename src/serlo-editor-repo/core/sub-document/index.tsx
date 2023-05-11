@@ -10,7 +10,6 @@ import { SubDocumentRenderer } from './renderer'
  * Renders a document inside another document
  *
  * @param props - The {@link SubDocumentProps}
- * @public
  */
 export const SubDocument = (props: SubDocumentProps) => {
   const { editable } = useContext(ScopeContext)
@@ -73,7 +72,6 @@ export class ErrorBoundary extends Component<{
   }
 }
 
-/** @public */
 export interface SubDocumentProps {
   id: string
   pluginProps?: PluginProps

@@ -23,7 +23,6 @@ const store: { [key: string]: unknown } = {}
  *
  * @param key - The preference
  * @param val - The value
- * @beta
  */
 export function setDefaultPreference(key: string, val: unknown) {
   store[key] = val

@@ -6,7 +6,6 @@ import {
   DocumentState,
 } from '../storetypes'
 
-/** @public */
 export const insert = createActionCreator<
   'Insert',
   {
@@ -15,30 +14,22 @@ export const insert = createActionCreator<
     state?: unknown
   }
 >('Insert')
-/** @public */
 export type InsertAction = ActionCreatorAction<typeof insert>
-/** @internal */
 export const pureInsert = createActionCreator<
   'PureInsert',
   {
     id: string
   } & DocumentState
 >('PureInsert')
-/** @internal */
 export type PureInsertAction = ActionCreatorAction<typeof pureInsert>
 
-/** @public */
 export const remove = createActionCreator<'Remove', string>('Remove')
-/** @public */
 export type RemoveAction = ActionCreatorAction<typeof remove>
-/** @internal */
 export const pureRemove = createActionCreator<'PureRemove', string>(
   'PureRemove'
 )
-/** @internal */
 export type PureRemoveAction = ActionCreatorAction<typeof pureRemove>
 
-/** @public */
 export const change: ActionCreatorWithPayload<
   'Change',
   {
@@ -50,17 +41,13 @@ export const change: ActionCreatorWithPayload<
     reverse?: (previousState: unknown) => unknown
   }
 > = createActionCreator('Change')
-/** @public */
 export type ChangeAction = ActionCreatorAction<typeof change>
-/** @internal */
 export const pureChange: ActionCreatorWithPayload<
   'PureChange',
   { id: string; state: unknown }
 > = createActionCreator('PureChange')
-/** @internal */
 export type PureChangeAction = ActionCreatorAction<typeof pureChange>
 
-/** @public */
 export const wrap: ActionCreatorWithPayload<
   'Wrap',
   {
@@ -68,9 +55,7 @@ export const wrap: ActionCreatorWithPayload<
     document: (id: string) => DocumentState
   }
 > = createActionCreator('Wrap')
-/** @public */
 export type WrapAction = ActionCreatorAction<typeof wrap>
-/** @internal */
 export const pureWrap: ActionCreatorWithPayload<
   'PureWrap',
   {
@@ -79,10 +64,8 @@ export const pureWrap: ActionCreatorWithPayload<
     document: DocumentState
   }
 > = createActionCreator('PureWrap')
-/** @internal */
 export type PureWrapAction = ActionCreatorAction<typeof pureWrap>
 
-/** @public */
 export const unwrap: ActionCreatorWithPayload<
   'Unwrap',
   {
@@ -90,9 +73,7 @@ export const unwrap: ActionCreatorWithPayload<
     oldId: string
   }
 > = createActionCreator('Unwrap')
-/** @public */
 export type UnwrapAction = ActionCreatorAction<typeof unwrap>
-/** @internal */
 export const pureUnwrap: ActionCreatorWithPayload<
   'PureUnwrap',
   {
@@ -100,10 +81,8 @@ export const pureUnwrap: ActionCreatorWithPayload<
     oldId: string
   }
 > = createActionCreator('PureUnwrap')
-/** @internal */
 export type PureUnwrapAction = ActionCreatorAction<typeof pureUnwrap>
 
-/** @public */
 export const replace: ActionCreatorWithPayload<
   'Replace',
   {
@@ -112,9 +91,7 @@ export const replace: ActionCreatorWithPayload<
     state?: unknown
   }
 > = createActionCreator('Replace')
-/** @public */
 export type ReplaceAction = ActionCreatorAction<typeof replace>
-/** @internal */
 export const pureReplace: ActionCreatorWithPayload<
   'PureReplace',
   {
@@ -123,10 +100,8 @@ export const pureReplace: ActionCreatorWithPayload<
     state?: unknown
   }
 > = createActionCreator('PureReplace')
-/** @internal */
 export type PureReplaceAction = ActionCreatorAction<typeof pureReplace>
 
-/** @public */
 export const replaceText: ActionCreatorWithPayload<
   'ReplaceText',
   {
@@ -134,9 +109,7 @@ export const replaceText: ActionCreatorWithPayload<
     document: (id: string) => DocumentState
   }
 > = createActionCreator('ReplaceText')
-/** @public */
 export type ReplaceTextAction = ActionCreatorAction<typeof replaceText>
-/** @internal */
 export const pureReplaceText: ActionCreatorWithPayload<
   'PureReplaceText',
   {
@@ -145,10 +118,8 @@ export const pureReplaceText: ActionCreatorWithPayload<
     document: DocumentState
   }
 > = createActionCreator('PureReplaceText')
-/** @internal */
 export type PureReplaceTextAction = ActionCreatorAction<typeof pureReplaceText>
 
-/** @public */
 export type DocumentsAction =
   | InsertAction
   | RemoveAction
@@ -157,7 +128,6 @@ export type DocumentsAction =
   | UnwrapAction
   | ReplaceAction
   | ReplaceTextAction
-/** @internal */
 export type InternalDocumentsAction =
   | PureInsertAction
   | PureRemoveAction

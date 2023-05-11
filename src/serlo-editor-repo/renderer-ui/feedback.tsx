@@ -23,10 +23,6 @@ interface ContainerProps {
   showOnLeft?: boolean
 }
 
-/**
- * @param props - The props
- * @internal
- */
 export function Feedback(props: FeedbackProps) {
   const { boxFree, children, isTrueAnswer, showOnLeft } = props
   const Container = boxFree ? ContainerWithoutBox : ContainerWithBox
@@ -38,7 +34,6 @@ export function Feedback(props: FeedbackProps) {
   )
 }
 
-/** @internal */
 export interface FeedbackProps {
   children?: React.ReactNode
   boxFree?: boolean

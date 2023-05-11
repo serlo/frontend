@@ -23,7 +23,6 @@ import { isEmptyObject } from './utils/object'
 /**
  * @param config - {@link TextEditorConfig | Plugin configuration}
  * @returns The text plugin
- * @public
  */
 const createTextPlugin = (
   config: TextEditorConfig

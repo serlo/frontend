@@ -2,37 +2,30 @@ import { StateExecutor, StateType, StateUpdater } from './internal-plugin-state'
 
 /**
  * @param initialValue - The initial value
- * @public
  */
 export function boolean(initialValue?: boolean): BooleanStateType {
   return scalar<boolean>(initialValue || false)
 }
-/** @public */
 export type BooleanStateType = ScalarStateType<boolean>
 
 /**
  * @param initialValue - The initial value
- * @public
  */
 export function number(initialValue?: number): NumberStateType {
   return scalar<number>(initialValue || 0)
 }
-/** @public */
 export type NumberStateType = ScalarStateType<number>
 
 /**
  * @param initialValue - The initial value
- * @public
  */
 export function string(initialValue?: string): StringStateType {
   return scalar<string>(initialValue || '')
 }
-/** @public */
 export type StringStateType = ScalarStateType<string>
 
 /**
  * @param initialState - The initial value
- * @public
  */
 export function scalar<S>(initialState: S): ScalarStateType<S> {
   return serializedScalar<S, S>(initialState, {
@@ -44,13 +37,11 @@ export function scalar<S>(initialState: S): ScalarStateType<S> {
     },
   })
 }
-/** @public */
 export type ScalarStateType<S> = SerializedScalarStateType<S, S>
 
 /**
  * @param initialState - The initial state
  * @param serializer - The {@link Serializer | serializer}
- * @public
  */
 export function serializedScalar<S, T>(
   initialState: T,
@@ -97,7 +88,6 @@ export function serializedScalar<S, T>(
     ...serializer,
   }
 }
-/** @public */
 export type SerializedScalarStateType<S, T> = StateType<
   S,
   T,
@@ -110,7 +100,6 @@ export type SerializedScalarStateType<S, T> = StateType<
     ): void
   }
 >
-/** @public */
 export interface Serializer<S, T> {
   deserialize(serialized: S): T
   serialize(deserialized: T): S
@@ -119,7 +108,6 @@ export interface Serializer<S, T> {
 /**
  * @param initial - The initialValue
  * @param isTemporaryValue - Checks whether the given value is temporary
- * @public
  */
 export function asyncScalar<T, Temp>(
   initial: T,
@@ -196,7 +184,6 @@ export function asyncScalar<T, Temp>(
     },
   }
 }
-/** @public */
 export type AsyncScalarStateType<T, Temp> = StateType<
   T,
   T | Temp,

@@ -1,4 +1,3 @@
-/** @public */
 export interface MathEditorConfig {
   i18n: {
     placeholder: string

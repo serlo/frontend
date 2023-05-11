@@ -13,7 +13,6 @@ import { createPluginToolbarOverlayButton } from './plugin-toolbar-overlay-butto
  *
  * @param config - Optional configuration
  * @returns The default {@link @edtr-io/plugin-toolbar#PluginToolbar | plugin toolbar}
- * @beta
  */
 export function createDefaultPluginToolbar(
   config: DefaultPluginToolbarConfig = { primaryColor: 'rgb(70, 155, 255)' }

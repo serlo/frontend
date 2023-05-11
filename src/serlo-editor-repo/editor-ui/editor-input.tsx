@@ -27,7 +27,6 @@ const Input = styled.input<{ textWidth: string | undefined }>(
   }
 )
 
-/** @public */
 export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
   function EditorInput({ label, ...props }, ref) {
     return (
@@ -39,7 +38,6 @@ export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
   }
 )
 
-/** @public */
 export interface EditorInputProps
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,

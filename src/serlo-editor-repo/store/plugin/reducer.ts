@@ -4,7 +4,6 @@ import { createSelector } from '../helpers'
 import { getPlugin } from '../plugins'
 import { Selector } from '../storetypes'
 
-/** @public */
 export const mayInsertChild: Selector<boolean, [string]> = createSelector(
   (state, sibling: string) => {
     const root = getFocusTree()(state)
@@ -19,7 +18,6 @@ export const mayInsertChild: Selector<boolean, [string]> = createSelector(
     return typeof plugin.insertChild === 'function'
   }
 )
-/** @public */
 export const mayRemoveChild: Selector<boolean, [string]> = createSelector(
   (state, sibling: string) => {
     const root = getFocusTree()(state)

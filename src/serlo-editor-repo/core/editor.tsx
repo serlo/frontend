@@ -51,9 +51,6 @@ const mountedScopes: Record<string, boolean> = {}
 
 /**
  * Renders a single editor for an Edtr.io document
- *
- * @param props - The {@link EditorProps | props}
- * @public
  */
 export function Editor<K extends string = string>(props: EditorProps<K>) {
   const {
@@ -89,9 +86,6 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
 
 /**
  * Hydrates the required contexts
- *
- * @param props - The props
- * @beta
  */
 export function EditorProvider(props: EditorProviderProps) {
   const {
@@ -123,7 +117,6 @@ export function EditorProvider(props: EditorProviderProps) {
   if (omitDragDropContext) return child
   return <DndProvider backend={HTML5Backend}>{child}</DndProvider>
 }
-/** @public */
 export interface EditorProviderProps {
   omitDragDropContext?: boolean
   createStoreEnhancer?: StoreEnhancerFactory
@@ -132,9 +125,7 @@ export interface EditorProviderProps {
 
 /**
  * Renders an editor for an Edtr.io document
- *
  * @param props - The {@link EditorProps | props} for the document
- * @beta
  */
 export function Document<K extends string = string>(
   props: Omit<EditorProps<K>, 'initialState'> & {
@@ -283,7 +274,6 @@ export function InnerDocument<K extends string = string>({
   }
 }
 
-/** @public */
 export interface EditorProps<K extends string = string> {
   omitDragDropContext?: boolean
   children?: ReactNode | ((document: ReactNode) => ReactNode)
