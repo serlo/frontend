@@ -51,7 +51,7 @@ export interface FlowProps<T extends SubmitPayload> {
     | VerificationFlow
   onSubmit: (values: T) => Promise<void>
   only?: string
-  contentBeforeSubmit?: ReactNode
+  contentAfterLastTrait?: ReactNode
 }
 
 export enum FlowType {
@@ -74,7 +74,7 @@ export function Flow<T extends SubmitPayload>({
   flowType,
   only,
   onSubmit,
-  contentBeforeSubmit,
+  contentAfterLastTrait,
 }: FlowProps<T> & { flowType: FlowType }) {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -111,15 +111,12 @@ export function Flow<T extends SubmitPayload>({
 
       <div className="mx-side">
         {filteredNodes.map((node) => {
-          const isSubmit =
-            Object.hasOwn(node.attributes, 'type') &&
-            (node.attributes.type === 'submit' ||
-              node.attributes.type === 'button')
+          const isLastTrait =
+            Object.hasOwn(node.attributes, 'name') &&
+            node.attributes.name === 'traits.interest'
           const id = getNodeId(node)
-
           return (
             <Fragment key={id}>
-              {isSubmit && contentBeforeSubmit ? contentBeforeSubmit : null}
               <Node
                 node={node}
                 disabled={isLoading}
@@ -136,6 +133,7 @@ export function Flow<T extends SubmitPayload>({
                 }}
                 onSubmit={handleSubmit}
               />
+              {isLastTrait ? contentAfterLastTrait : null}
             </Fragment>
           )
         })}
