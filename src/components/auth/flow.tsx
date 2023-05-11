@@ -113,7 +113,8 @@ export function Flow<T extends SubmitPayload>({
         {filteredNodes.map((node) => {
           const isSubmit =
             Object.hasOwn(node.attributes, 'type') &&
-            node.attributes.type === 'submit'
+            (node.attributes.type === 'submit' ||
+              node.attributes.type === 'button')
           const id = getNodeId(node)
 
           return (
