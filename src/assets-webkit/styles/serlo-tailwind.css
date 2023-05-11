@@ -456,6 +456,15 @@
       transition: all 0.2s ease-in-out;
     }
   }
+
+  .serlo-tooltip-trigger {
+    @apply relative;
+
+    &:hover > .serlo-tooltip,
+    &:focus > .serlo-tooltip {
+      @apply pointer-events-auto opacity-100;
+    }
+  }
 }
 
 /* print and pdf styles */
