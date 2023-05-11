@@ -3,7 +3,6 @@ import * as R from 'ramda'
 /**
  * Transforms a type by making all its properties optional, recursively.
  *
- * @public
  */
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
@@ -24,13 +23,11 @@ export type DeepPartial<T> = {
  *
  * @param payload - An object containing `fallback` and `values`
  * @returns The merged object
- * @public
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
 export function merge<T extends {}>(payload: MergePayload<T>) {
   return R.mergeDeepRight(payload.fallback, payload.values) as T
 }
-/** @public */
 export interface MergePayload<T> {
   fallback: T
   values: DeepPartial<T>

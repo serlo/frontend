@@ -38,7 +38,6 @@ export function HighlightRenderer(props: HighlightRendererProps) {
   )
 }
 
-/** @public */
 export interface HighlightRendererProps {
   config: HighlightPluginConfig
   code: string

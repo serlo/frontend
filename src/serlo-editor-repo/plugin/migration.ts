@@ -6,7 +6,6 @@ import {
 
 /**
  * @param type - The initial {@link @edtr-io/internal__plugin-state#StateType | state type} to start the migration from
- * @public
  */
 export function migratable<S, T, R>(
   type: StateType<S, T, R>
@@ -76,13 +75,11 @@ function isVersionized<S>(
   return (state as Versionized<S>).__version__ === version
 }
 
-/** @public */
 export interface Versionized<S> {
   __version__: number
   value: S
 }
 
-/** @public */
 export interface MigratableStateType<InitialS, AllS, S, T, R>
   extends StateType<InitialS | Versionized<AllS>, T, R> {
   migrate<S1, T1, R1>(

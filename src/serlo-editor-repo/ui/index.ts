@@ -13,7 +13,6 @@ const __styled = _styled as any
 /**
  * Re-export of {@link https://styled-components.com/docs/api#primary | `styled` in `styled-components` }
  *
- * @public
  */
 export const styled =
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

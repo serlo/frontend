@@ -3,13 +3,11 @@ import { forwardRef } from 'react'
 
 import { MathEditorProps } from './editor-props'
 
-/** @public */
 export type MathRendererProps = Pick<
   MathEditorProps,
   'state' | 'inline' | 'additionalContainerProps'
 >
 
-/** @public */
 export const MathRenderer = forwardRef<HTMLSpanElement, MathRendererProps>(
   function MathRenderer({ state, inline, additionalContainerProps }, ref) {
     const html = KaTeX.renderToString(getFormula(), {

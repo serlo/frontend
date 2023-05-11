@@ -99,7 +99,6 @@ const KeySpan = styled.span({
 
 /**
  * @param props - The {@link @edtr-io/math#MathEditorProps | math editor props}
- * @public
  */
 export function MathEditor(props: MathEditorProps) {
   const anchorRef = createRef<HTMLDivElement>()

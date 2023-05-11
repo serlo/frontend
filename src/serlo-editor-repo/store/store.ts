@@ -22,7 +22,6 @@ const createSagaMiddleware = _createSagaMiddleware
  *
  * @param options - The options
  * @returns The Edtr.io store
- * @public
  */
 export function createStore<K extends string>(
   options: StoreOptions<K>
@@ -60,18 +59,15 @@ export function createStore<K extends string>(
   return { store }
 }
 
-/** @public */
 export interface StoreOptions<K extends string> {
   scopes: Record<string, Record<K, EditorPlugin>>
   createEnhancer: StoreEnhancerFactory
 }
 
-/** @public */
 export type StoreEnhancerFactory = (
   defaultEnhancer: StoreEnhancer
 ) => StoreEnhancer
 
-/** @public */
 export type ChangeListener = (payload: {
   changed: boolean
   getDocument: () => SelectorReturnType<typeof serializeRootDocument>

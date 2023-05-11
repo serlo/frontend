@@ -10,14 +10,12 @@ const StyledIgnoreKeys = styled(IgnoreKeys)({
   width: '100%',
 })
 
-/** @public */
 export interface EditorTextareaProps
   extends Omit<TextareaAutosizeProps, 'as' | 'ref'> {
   onMoveOutRight?(): void
   onMoveOutLeft?(): void
 }
 
-/** @public */
 export const EditorTextarea = forwardRef<
   HTMLTextAreaElement,
   EditorTextareaProps
