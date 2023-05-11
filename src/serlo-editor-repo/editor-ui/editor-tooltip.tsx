@@ -16,12 +16,17 @@ export function EditorTooltip({
     isMac ? '⌘' : strings.keys.ctrl
   )
 
+  const blockEvent = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+  }
+
   return (
     <span
       className="serlo-tooltip pointer-events-none opacity-0 transition-opacity hover:block absolute cursor-default bottom-full pb-[0.7rem]"
-      onClick={(e) => e.stopPropagation()}
-      onMouseDown={(e) => e.stopPropagation()}
-      onMouseUp={(e) => e.stopPropagation()}
+      onClick={blockEvent}
+      onMouseDown={blockEvent}
+      onMouseUp={blockEvent}
     >
       <span className="block text-sm font-bold bg-almost-black py-1.5 px-2 rounded z-50 text-center text-white w-80 max-w-fit ">
         {text}
