@@ -158,7 +158,7 @@ export function Registration() {
                     })
                   }
             }
-            contentBeforeSubmit={renderAgreement()}
+            contentAfterLastTrait={renderAgreement()}
           />
           <img
             src="/_assets/img/community-menu-bird.svg"
