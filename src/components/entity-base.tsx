@@ -16,12 +16,14 @@ import { MaxWidthDiv } from './navigation/max-width-div'
 import { SecondaryMenu } from './navigation/secondary-menu'
 import { NewsletterPopup } from './scripts/newsletter-popup'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
+import { useInstanceData } from '@/contexts/instance-context'
 import {
   EntityPageBase,
   SingleEntityPage,
   TaxonomyPage,
   UuidType,
 } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { shuffleArray } from '@/helper/shuffle-array'
 
@@ -46,6 +48,7 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const [survey, setSurvey] = useState(false)
   const { asPath } = useRouter()
+  const { lang } = useInstanceData()
   const [answers] = useState(
     shuffleArray([
       <button
@@ -208,6 +211,11 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
 
     // pop-up already shown - but only for production
     if (Cookies.get('serlo-survey-beta-123-shown')) {
+      return
+    }
+
+    // only in german version
+    if (lang !== Instance.De) {
       return
     }
 
