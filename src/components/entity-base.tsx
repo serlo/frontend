@@ -1,5 +1,7 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { ReactNode, useEffect, useState } from 'react'
 
 import { CommentAreaEntityProps } from './comments/comment-area-entity'
@@ -20,6 +22,8 @@ import {
   TaxonomyPage,
   UuidType,
 } from '@/data-types'
+import { isProduction } from '@/helper/is-production'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 export interface EntityBaseProps {
   children: ReactNode
@@ -41,23 +45,55 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const [survey, setSurvey] = useState(false)
+  const { asPath } = useRouter()
+  const [answers] = useState(
+    shuffleArray([
+      <button
+        key="yes"
+        className="serlo-button-blue w-24"
+        onClick={() => {
+          handleModalInput('yes')
+        }}
+      >
+        JA
+      </button>,
+      <button
+        key="rarely"
+        className="serlo-button-blue w-24"
+        onClick={() => {
+          handleModalInput('rarely')
+        }}
+      >
+        SELTEN
+      </button>,
+      <button
+        key="no"
+        className="serlo-button-blue w-24"
+        onClick={() => {
+          handleModalInput('no')
+        }}
+      >
+        NEIN
+      </button>,
+    ])
+  )
 
   function handler(e: KeyboardEvent) {
-    if (e.key === 'Escape') {
-      handleModalInput()
+    if (e.key === 'Escape' && survey) {
+      handleModalInput('exit')
     }
   }
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setSurvey(true)
-      document.addEventListener('keydown', handler)
+      triggerPopup()
     }, 20000)
 
     return () => {
       clearTimeout(timer)
       document.removeEventListener('keydown', handler)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const noComments =
@@ -73,7 +109,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
             <button
               className="-right-3 -top-3 w-12 h-12 rounded-full absolute serlo-button-blue flex justify-center items-center"
               onClick={() => {
-                handleModalInput()
+                handleModalInput('exit')
               }}
             >
               <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
@@ -87,41 +123,16 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               weiterkommst?
             </p>
 
-            <p className="flex justify-around">
-              <button
-                className="serlo-button-blue w-24"
-                onClick={() => {
-                  handleModalInput()
-                }}
-              >
-                JA
-              </button>
-              <button
-                className="serlo-button-blue w-24"
-                onClick={() => {
-                  handleModalInput()
-                }}
-              >
-                SELTEN
-              </button>
-              <button
-                className="serlo-button-blue w-24"
-                onClick={() => {
-                  handleModalInput()
-                }}
-              >
-                NEIN
-              </button>
-            </p>
+            <p className="flex justify-around">{answers}</p>
 
             <p className="mt-8 mb-8">
               <button
                 className="underline"
                 onClick={() => {
-                  handleModalInput()
+                  handleModalInput('noStudent')
                 }}
               >
-                Ich bin keine Schüler*in.
+                Ich bin keine Schüler*in
               </button>
             </p>
           </div>
@@ -189,8 +200,63 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     )
   }
 
-  function handleModalInput() {
+  function triggerPopup() {
+    // pop-up already visible
+    if (survey) {
+      return
+    }
+
+    // pop-up already shown - but only for production
+    if (isProduction && Cookies.get('serlo-survey-beta-123-shown')) {
+      return
+    }
+
+    const startDate = new Date('2023-05-16T00:00:00+02:00')
+    const endDate = new Date('2023-05-17T00:00:00+02:00')
+
+    // pop-up will vanish after survey run
+    if (Date.now() > endDate.getTime()) {
+      return
+    }
+
+    if (isProduction) {
+      // don't show in production before the start date
+      if (Date.now() < startDate.getTime()) {
+        return
+      }
+    }
+
+    Cookies.set('serlo-survey-beta-123-shown', '1', {
+      expires: 7,
+      sameSite: 'Lax',
+    })
+
+    setSurvey(true)
+    submitEvent('show')
+    document.addEventListener('keydown', handler)
+  }
+
+  function handleModalInput(
+    event: 'exit' | 'yes' | 'no' | 'rarely' | 'noStudent'
+  ) {
+    submitEvent(event)
     setSurvey(false)
     document.removeEventListener('keydown', handler)
+  }
+
+  function submitEvent(event: string) {
+    void (async () => {
+      await fetch('/api/frontend/survey-submission', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          event,
+          path: asPath,
+          isProduction,
+        }),
+      })
+    })()
   }
 }
