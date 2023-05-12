@@ -207,7 +207,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     }
 
     // pop-up already shown - but only for production
-    if (isProduction && Cookies.get('serlo-survey-beta-123-shown')) {
+    if (Cookies.get('serlo-survey-beta-123-shown')) {
       return
     }
 
@@ -226,10 +226,12 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       }
     }
 
-    Cookies.set('serlo-survey-beta-123-shown', '1', {
-      expires: 7,
-      sameSite: 'Lax',
-    })
+    if (isProduction) {
+      Cookies.set('serlo-survey-beta-123-shown', '1', {
+        expires: 7,
+        sameSite: 'Lax',
+      })
+    }
 
     setSurvey(true)
     submitEvent('show')
