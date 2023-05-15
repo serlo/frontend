@@ -1,7 +1,7 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Hi"],
+  lang: Instance['En'],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -459,7 +459,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Hi"],
+  lang: Instance['En'],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "हम नॉनप्रॉफिट आर्गेनाइजेशन संगठन हैं जो व्यक्तिगत शिक्षा का समर्थन करते हैं और समान शैक्षणिक अवसरों के लिए काम करते हैं। यह सीखने का मंच दुनिया भर के लाखों छात्रों के लिए हजारों निर्देशक लेख, वीडियो के माध्यम से सीखना और अभ्यास प्रदान करता है - पूरी तरह से नि: शुल्क। अब हिंदी में हमसे जुड़ने का समय है।",
@@ -505,7 +505,7 @@ export const loggedInData = {
       title: "पासवर्ड परिवर्तित करें"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "सेटिंग्स"
     }, {
       url: '/auth/logout',
       title: "लॉगआउट करें"
@@ -768,12 +768,16 @@ export const loggedInData = {
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found'
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: 'Video URL',
         description: 'Description',
         title: 'Title',
         url: 'URL',
-        seoTitle: 'Title for search engines'
+        seoTitle: 'Title for search engines',
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: 'This part of the document could not be converted.'
