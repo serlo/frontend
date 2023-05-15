@@ -38,6 +38,8 @@ import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   focusNext,
   focusPrevious,
@@ -60,6 +62,7 @@ export function TextEditor(props: TextEditorProps) {
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
   const store = useScopedStore()
+  const loggedInData = useLoggedInData()
   const { state, id, editable, focused } = props
 
   const config = useTextConfig(props.config)
@@ -260,6 +263,9 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditablePaste(event: React.ClipboardEvent) {
+    const isListActive =
+      isOrderedListActive(editor) || isUnorderedListActive(editor)
+
     const document = getDocument(id)(store.getState())
     if (!document) return
 
@@ -274,6 +280,13 @@ export function TextEditor(props: TextEditorProps) {
     if (files?.length > 0) {
       const imagePluginState = plugins.image?.onFiles?.(files)
       if (imagePluginState !== undefined) {
+        if (isListActive) {
+          if (!loggedInData) return
+          const { noImagePasteInLists } = loggedInData.strings.editor.image
+          showToastNotice(noImagePasteInLists, 'warning')
+          return
+        }
+
         insertPlugin('image', imagePluginState)
         return
       }
@@ -285,6 +298,14 @@ export function TextEditor(props: TextEditorProps) {
       const videoPluginState = plugins.video?.onText?.(text)
       if (videoPluginState !== undefined) {
         event.preventDefault()
+
+        if (isListActive) {
+          if (!loggedInData) return
+          const { noVideoPasteInLists } = loggedInData.strings.editor.video
+          showToastNotice(noVideoPasteInLists, 'warning')
+          return
+        }
+
         insertPlugin('video', videoPluginState)
         return
       }

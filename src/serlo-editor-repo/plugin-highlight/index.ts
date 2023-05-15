@@ -14,7 +14,6 @@ import type { HighlightRendererProps } from './renderer'
 
 /**
  * @param config - {@link HighlightConfig | Plugin configuration}
- * @public
  */
 export function createHighlightPlugin(
   config: HighlightConfig = {}
@@ -30,20 +29,17 @@ export function createHighlightPlugin(
   }
 }
 
-/** @public */
 export interface HighlightConfig {
   Renderer?: HighlightPluginConfig['Renderer']
   i18n?: DeepPartial<HighlightPluginConfig['i18n']>
 }
 
-/** @public */
 export type HighlightPluginState = ObjectStateType<{
   code: StringStateType
   language: StringStateType
   showLineNumbers: BooleanStateType
 }>
 
-/** @public */
 export interface HighlightPluginConfig {
   Renderer: React.ComponentType<HighlightRendererProps>
   i18n: {
@@ -62,7 +58,6 @@ export interface HighlightPluginConfig {
 }
 export { HighlightRendererProps }
 
-/** @public */
 export type HighlightProps = EditorPluginProps<
   HighlightPluginState,
   HighlightConfig

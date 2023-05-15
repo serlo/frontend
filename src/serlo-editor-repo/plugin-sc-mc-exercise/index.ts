@@ -16,7 +16,6 @@ import { ScMcExerciseEditor } from './editor'
 
 /**
  * @param config - {@link ScMcExerciseConfig | Plugin configuration}
- * @public
  */
 export function createScMcExercisePlugin(
   config: ScMcExerciseConfig
@@ -43,7 +42,6 @@ export function createScMcExercisePlugin(
   }
 }
 
-/** @public */
 export interface ScMcExerciseConfig
   extends Omit<ScMcExercisePluginConfig, 'i18n'> {
   content: ChildStateTypeConfig
@@ -51,7 +49,6 @@ export interface ScMcExerciseConfig
   i18n?: DeepPartial<ScMcExercisePluginConfig['i18n']>
 }
 
-/** @public */
 export type ScMcExercisePluginState = ObjectStateType<{
   isSingleChoice: BooleanStateType
   answers: ListStateType<
@@ -63,7 +60,6 @@ export type ScMcExercisePluginState = ObjectStateType<{
   >
 }>
 
-/** @public */
 export interface ScMcExercisePluginConfig {
   i18n: {
     types: { singleChoice: string; multipleChoice: string }
@@ -82,7 +78,6 @@ export interface ScMcExercisePluginConfig {
   }
 }
 
-/** @public */
 export type ScMcExerciseProps = EditorPluginProps<
   ScMcExercisePluginState,
   ScMcExerciseConfig

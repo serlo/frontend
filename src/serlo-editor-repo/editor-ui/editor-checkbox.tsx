@@ -36,10 +36,6 @@ const Toggle = styled.div<{ value?: boolean }>(({ value }) => {
   }
 })
 
-/**
- * @param props - Props
- * @public
- */
 export function EditorCheckbox(props: EditorCheckboxProps) {
   const { checked, onChange, label } = props
   return (
@@ -58,7 +54,6 @@ export function EditorCheckbox(props: EditorCheckboxProps) {
   )
 }
 
-/** @public */
 export interface EditorCheckboxProps {
   checked?: boolean
   onChange?: (checked: boolean) => void

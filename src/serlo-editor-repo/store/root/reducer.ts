@@ -3,7 +3,6 @@ import { createSelector, createSubReducer, SubReducer } from '../helpers'
 import { SelectorReturnType, Selector } from '../storetypes'
 import { pureInitRoot, PureInitRootAction } from './actions'
 
-/** @internal */
 export const rootReducer: SubReducer<string | null> = createSubReducer(
   'root',
   null,
@@ -14,11 +13,9 @@ export const rootReducer: SubReducer<string | null> = createSubReducer(
   }
 )
 
-/** @public */
 export const getRoot: Selector<string | null> = createSelector(
   (state) => state.root
 )
-/** @public */
 export const serializeRootDocument: Selector<{
   plugin: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

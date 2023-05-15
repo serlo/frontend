@@ -14,10 +14,6 @@ const AddButtonComponent = styled.button({
   '&:hover': { backgroundColor: colors.editorPrimary200 },
 })
 
-/**
- * @param props - Props
- * @internal
- */
 export function AddButton(props: AddButtonProps) {
   return (
     <AddButtonComponent title={props.title} onMouseDown={props.onClick}>
@@ -25,7 +21,6 @@ export function AddButton(props: AddButtonProps) {
     </AddButtonComponent>
   )
 }
-/** @internal */
 export interface AddButtonProps {
   onClick: () => void
   children: string
@@ -135,7 +130,6 @@ const Tick = styled.div<{ checked: boolean }>(({ checked }) => {
   }
 })
 
-/** @internal */
 export function CheckElement({
   isRadio,
   isActive,
@@ -158,10 +152,6 @@ const BlockLabel = styled.label({
   display: 'block',
 })
 
-/**
- * @param props - Props
- * @internal
- */
 export function InteractiveAnswer(props: InteractiveAnswerProps) {
   return (
     <AnswerContainer>
@@ -197,7 +187,6 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
   )
 }
 
-/** @internal */
 export interface InteractiveAnswerProps {
   isRadio?: boolean
   isActive?: boolean
@@ -214,7 +203,6 @@ export interface InteractiveAnswerProps {
   }
 }
 
-/** @internal */
 export interface CheckElementProps {
   isRadio: boolean
   isActive: boolean

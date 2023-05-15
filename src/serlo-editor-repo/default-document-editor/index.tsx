@@ -112,7 +112,6 @@ const BorderlessOverlayButton = styled.button({
  *
  * @param config - Configuration
  * @returns The default {@link @edtr-io/document-editor#DocumentEditorProps | document editor}
- * @beta
  */
 export function createDefaultDocumentEditor(
   config: DefaultDocumentEditorConfig = {}

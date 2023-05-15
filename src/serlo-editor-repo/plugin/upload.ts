@@ -5,7 +5,6 @@ import { asyncScalar } from './scalar'
 
 /**
  * @param defaultState - The default state
- * @public
  */
 export function upload<T>(defaultState: T): UploadStateType<T> {
   const state = asyncScalar<T, TempFile>(defaultState, isTempFile)
@@ -59,14 +58,12 @@ export function upload<T>(defaultState: T): UploadStateType<T> {
   }
 }
 
-/** @public */
 export type UploadStateType<T> = StateType<
   FileState<T>,
   FileState<T>,
   UploadStateReturnType<T>
 >
 
-/** @public */
 export interface UploadStateReturnType<T> {
   get(): FileState<T>
   value: FileState<T>
@@ -94,7 +91,6 @@ function readFile(file: File): Promise<LoadedFile> {
 /**
  * @param file - The {@link UploadStateReturnType | upload state type}
  * @param uploadHandler - The {@link UploadHandler | upload handler}
- * @public
  */
 export function usePendingFileUploader<T>(
   file: UploadStateReturnType<T>,
@@ -105,7 +101,6 @@ export function usePendingFileUploader<T>(
 /**
  * @param files - The {@link UploadStateReturnType | upload state type}
  * @param uploadHandler - The {@link UploadHandler | upload handler}
- * @public
  */
 export function usePendingFilesUploader<T>(
   files: UploadStateReturnType<T>[],
@@ -135,34 +130,28 @@ export function usePendingFilesUploader<T>(
     }
   }, [files, uploadHandler, uploading])
 }
-/** @public */
 export type UploadHandler<T> = (file: File) => Promise<T>
 
-/** @public */
 export type UploadValidator<E = unknown> = (
   file: File
 ) => { valid: true } | { valid: false; errors: E }
 
-/** @public */
 export interface TempFile {
   uploadHandled?: boolean
   pending?: File
   failed?: File
   loaded?: LoadedFile
 }
-/** @public */
 export type FileState<T> = T | TempFile
 
 /**
  * @param state - The current {@link FileState | state}
- * @public
  */
 export function isTempFile<T>(state: FileState<T>): state is TempFile {
   const file = state as TempFile
   return !!(file.pending || file.failed || file.loaded)
 }
 
-/** @public */
 export interface LoadedFile {
   file: File
   dataUrl: string
