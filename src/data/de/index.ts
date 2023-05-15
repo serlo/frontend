@@ -374,34 +374,34 @@ export const instanceData = {
         other: "Sonstige"
       },
       messages: {
-        code1010003: 'Please confirm this action by verifying that it is you.',
-        code1010001: 'Sign in',
+        code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
+        code1010001: "Anmelden",
         code1010002: "Mit NBP Account anmelden",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
         code1040002: "Mit NBP Account registrieren",
-        code1040003: 'Continue',
-        code1050001: 'Your changes have been saved! 🎉',
-        code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
+        code1040003: "Weiter",
+        code1050001: "Deine Änderungen wurden gespeichert! 🎉",
+        code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
         code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
         code1070003: "Speichern",
         code1070005: "Absenden",
-        code1080001: 'An email containing a verification link has been sent to the email address you provided.',
-        code1080002: 'You have successfully verified your email address.',
+        code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
+        code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
         code4000001: '%reason%',
-        code4000002: '%field% is missing.',
+        code4000002: "%field% bitte noch angeben.",
         // Should map to usernameInvalid
         code4000004: '%reason%',
         code4000005: '%reason%',
-        code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
-        code4000007: 'An account with the same email or username exists already.',
-        code4000008: 'The provided authentication code is invalid, please try again.',
-        code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
-        code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
-        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
+        code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
+        code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
+        code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
+        code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
+        code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
         code4070005: "Dieser Bestätigungslink ist leider nicht mehr gültig. Bitte versuche eine neue E-Mail anzufordern."
       },
-      usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      usernameInvalid: 'Your username may only contain letters, digits, underscores (_) and hyphens (-).',
       usernameTooLong: "Sorry, dieser Benutzername ist zu lang. 32 Zeichen oder weniger sind erlaubt.",
       passwordTooShort: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
       passwordTooLong: "Sorry, dieses Passwort ist zu lang. Bitte wähle ein Passwort, das höchstens 72 Zeichen lang ist.",
@@ -769,7 +769,7 @@ export const loggedInData = {
         noItemsFound: "keine Einträge gefunden"
       },
       image: {
-        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+        noImagePasteInLists: "Einfügen von Bildern ist innerhalb von Listen nicht möglich."
       },
       video: {
         videoUrl: 'Video URL',
@@ -777,7 +777,7 @@ export const loggedInData = {
         title: "Titel",
         url: 'URL',
         seoTitle: "Titel für Suchmaschinen",
-        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
+        noVideoPasteInLists: "Einfügen von Videos ist innerhalb von Listen nicht möglich."
       },
       error: {
         convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
@@ -986,7 +986,7 @@ export const loggedInData = {
 export const kratosMailStrings = {
   recovery: {
     valid: {
-      subject: "👉 Zugang zu deinem Serlo Account",
+      subject: '👉 Access to your Serlo account',
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
 versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
  
@@ -1001,37 +1001,38 @@ Das Serlo-Team wünscht dir viel Erfolg!`,
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
     },
     invalid: {
-      subject: "👉 Zugriff auf Account",
+      subject: '👉 Account access attempted',
       'body.plaintext': `👋 Hi there!
 
-Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.
+You (or someone else) entered this email address when trying to recover access to an account at serlo.org.
 
-Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.
+But this email address is not linked to a user in our website and therefore the attempt failed.
 
-Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+If it was you, check if you signed up using a different address.
 
-Sonst kannst du diese Mail einfach ignorieren.
+Otherwise please just ignore this email.
 
 ✌️`,
       body: `<p>👋 Hi there!</p>
-<p>Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf <a href="https://serlo.org">serlo.org</a> wiederherzustellen.</p>
-<p>Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.</p>
-<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
-<p>Sonst kannst du diese Mail einfach ignorieren.</p>
+<p>You (or someone else) entered this email address when trying to recover access to an account at <a href="https://serlo.org">serlo.org</a>. </p>
+<p>But this email address is not linked to a user in our website and therefore the attempt failed.</p>
+<p>If it was you, check if you signed up using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
 <p>✌️</p>`
     }
   },
   verification: {
     valid: {
-      subject: "👋 Bitte bestätige deine E-Mail-Adresse",
+      subject: '👋 Please verify your email address',
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
-wunderbar dich auf serlo.org zu haben 🎉
-      
-Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
+      We are excited to have you at serlo.org 🎉
+
+      Please verify your brand new account by clicking the following link:
+
 {{ .VerificationURL }}
 
-Dein Community-Support 💚`,
+Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
 <p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
@@ -1039,20 +1040,20 @@ Dein Community-Support 💚`,
 </p><p>Dein Community-Support 💚</p>`
     },
     invalid: {
-      subject: `👋 Jemand hat versucht diese Mailadresse zu bestätigen`,
-      'body.plaintext': `👋 Hi,
+      subject: `👋 Someone tried to verify this email address`,
+      'body.plaintext': `👋 Hi there,
 
-jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf serlo.org mit dieser Adresse verknüpft.
+Someone asked to verify this email address, but we were unable to find an account at serlo.org for this address.
 
-Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+If it was you, check if you registered using a different address.
 
-Sonst kannst du diese Mail einfach ignorieren.
+Otherwise, please just ignore this email.
 
 ✌️`,
-      body: `<p>👋 Hi,</p>
-<p>jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf <a href="https://serlo.org">serlo.org</a> mit dieser Adresse verknüpft.</p>
-<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
-<p>sonst kannst du diese Mail einfach ignorieren.</p>
+      body: `<p>👋 Hi there,</p>
+<p>Someone asked to verify this email address, but we were unable to find an account at <a href="https://serlo.org">serlo.org</a> for this address.</p>
+<p>If this was you, check if you registered using a different address.</p>
+<p>Otherwise, please just ignore this email.</p>
 <p>✌️</p>`
     }
   }
