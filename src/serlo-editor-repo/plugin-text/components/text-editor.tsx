@@ -127,7 +127,11 @@ export function TextEditor(props: TextEditorProps) {
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
     const timeout = setTimeout(() => {
-      ReactEditor.focus(editor)
+      try {
+        ReactEditor.focus(editor)
+      } catch (error) {
+        // Focusing did not work but ignore it.
+      }
     })
     return () => {
       clearTimeout(timeout)
