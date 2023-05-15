@@ -1,6 +1,6 @@
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: 'en',
+  lang: "es",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -458,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: 'en',
+  lang: "es",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Nuestra visión es hacer posible el aprendizaje personalizado y proporcionar recursos educativos de alta calidad en todo el mundo, de forma totalmente gratuita. Serlo.org es una organización de base inspirada en Wikipedia. Ya proporcionamos miles de artículos, vídeos y ejercicios resueltos a cinco millones de estudiantes alemanes cada año. Ahora ha llegado el momento de internacionalizarnos.",
