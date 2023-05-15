@@ -381,19 +381,19 @@ export const instanceData = {
         code1040001: "Registrarse",
         code1040002: "Registrarse con una Cuenta NBP",
         code1040003: "Continuar",
-        code1050001: "¡Tus cambios han sido guardados! 🎉",
+        code1050001: "Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
         code1060002: "Se ha enviado un correo con un enlace de recuperación a la dirección de correo electrónico que proporcionaste. %break% Comprueba tu buzón y haz clic en el enlace que contiene.",
         code1070003: "Guardar",
         code1070005: "Enviar",
-        code1080001: "Se ha enviado un correo electrónico con un enlace de recuperación a la dirección de correo que proporcionaste.",
-        code1080002: "Has validado tu dirección de correo electrónico exitosamente.",
+        code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
+        code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
         code4000001: '%reason%',
         code4000002: "%field% hace falta.",
         // Should map to usernameInvalid
         code4000004: '%reason%',
         code4000005: '%reason%',
-        code4000006: "El nombre de usuario, la dirección de correo electrónico o la contraseña eran incorrectos. Por favor, comprueba si hay errores de escritura.",
+        code4000006: "El nombre de usuario, la dirección de correo electrónico o la contraseña eran incorrectos. Por favor, comprueba si hay errores ortográficos.",
         code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",
         code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
@@ -1002,7 +1002,7 @@ Saludos de tu equipo de Serlo.org`,
     },
     invalid: {
       subject: "👉 Se intentó acceder a la cuenta",
-      'body.plaintext': `👋 ¡Hola!
+      'body.plaintext': `👋¡Hola!
 
 Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en serlo.org.
 
@@ -1013,27 +1013,26 @@ Si has sido tú, comprueba si te has registrado con una dirección diferente.
 De lo contrario, ignora este correo electrónico.
 
 ✌️`,
-      body: `<p>👋 Hi there!</p>
-<p>Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en <a href="https://serlo.org">serlo.org</a>. </p>
+      body: `<p>👋 ¡Hola!</p>
+<p>Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en serlo.org. <a href="https://serlo.org">serlo.org</a>. </p>
 <p>Pero esta dirección de correo electrónico no está vinculada a un usuario en nuestro sitio web y, por lo tanto, el intento falló.</p>
-<p>Si has sido tú, comprueba si te has registrado con otra dirección.</p>
-<p>De lo contrario, por favor, ignora este correo electrónico.</p>
+<p>Si has sido tú, comprueba si te has registrado con una dirección diferente.</p>
+<p>De lo contrario, ignora este correo electrónico.</p>
 <p>✌️</p>`
     }
   },
   verification: {
     valid: {
       subject: "👋 Verifica tu dirección de correo electrónico",
-      'body.plaintext': `Hi {{ .Identity.traits.username }},
+      'body.plaintext': `Hola {{ .Identity.traits.username }},
 
       Estamos muy contentos de tenerte en serlo.org🎉
 
-      Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:
-
+     Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:
 
 {{ .VerificationURL }}
 
-Tu Apoyo-a-la-Comunidad 💚`,
+Tu Apoyo-a-la-Comunidad💚      `,
       body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
 <p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
@@ -1044,14 +1043,16 @@ Tu Apoyo-a-la-Comunidad 💚`,
       subject: `👋 Alguien intentó verificar esta dirección de correo electrónico`,
       'body.plaintext': `👋 Hola,
 
-Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en serlo.org para esta dirección.
+Alguien solicitó verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en serlo.org para esta dirección.
 
-Si has sido tú, comprueba si te has registrado con otra dirección.
+Si fuiste tú, comprueba si te registraste usando una dirección diferente.
 
-De lo contrario, por favor, ignora este correo electrónico.`,
+Si no, por favor ignora este correo electrónico.
+
+✌️`,
       body: `<p>👋 Hola,</p>
-<p>Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en  <a href="https://serlo.org">serlo.org</a>  para esta dirección.</p>
-<p>Si has sido tú, comprueba si te has registrado con otra dirección.</p>
+<p>Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en <a href="https://serlo.org">serlo.org</a>para esta dirección.</p>
+<p>Si fuiste tú, comprueba si te registraste con una dirección diferente.</p>
 <p>De lo contrario, por favor, ignora este correo electrónico.</p>
 <p>✌️</p>`
     }
