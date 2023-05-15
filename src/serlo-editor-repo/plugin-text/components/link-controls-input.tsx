@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 import { styled } from '../../ui'
 import { legacyEditorTheme } from '@/helper/colors'
@@ -31,4 +31,4 @@ const InputRefForward: React.ForwardRefRenderFunction<
   return <InputInner {...props} ref={ref} />
 }
 
-export const LinkControlsInput = React.forwardRef(InputRefForward)
+export const LinkControlsInput = forwardRef(InputRefForward)

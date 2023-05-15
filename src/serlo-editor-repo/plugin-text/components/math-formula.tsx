@@ -1,5 +1,4 @@
 import KaTeX from 'katex'
-import React from 'react'
 
 import { styled } from '../../ui'
 import type { MathElement } from '../types'

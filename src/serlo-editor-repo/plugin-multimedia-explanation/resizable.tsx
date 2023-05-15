@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 import { Resizable as ReactResizeable } from 'react-resizable'
 
 import { styled } from '../ui'
@@ -62,18 +62,14 @@ const Floating = styled.div<{
   }
 })
 
-/**
- * @param props - Props
- * @public
- */
 export function Resizable(props: React.PropsWithChildren<ResizableProps>) {
   const stepWidth = Math.round(props.rowWidth / props.steps)
-  const [widthInPercent, setWidthInPercent] = React.useState(
+  const [widthInPercent, setWidthInPercent] = useState(
     (props.widthInSteps * 100) / props.steps
   )
-  const [width, setWidth] = React.useState(props.widthInSteps * stepWidth)
+  const [width, setWidth] = useState(props.widthInSteps * stepWidth)
 
-  React.useEffect(() => {
+  useEffect(() => {
     setWidthInPercent((props.widthInSteps * 100) / props.steps)
     setWidth(props.widthInSteps * stepWidth)
   }, [props.widthInSteps, props.steps, stepWidth])
@@ -145,7 +141,6 @@ export function Resizable(props: React.PropsWithChildren<ResizableProps>) {
   }
 }
 
-/** @public */
 export interface ResizableProps {
   className?: string
   rowWidth: number

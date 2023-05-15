@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { SubDocumentProps } from '.'
 import { getDocument, getPlugin } from '../../store'
@@ -10,7 +10,7 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const plugin = useScopedSelector(
     (state) => document && getPlugin(document.plugin)(state)
   )
-  const focusRef = React.useRef<HTMLInputElement & HTMLTextAreaElement>(null)
+  const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
   if (!document) return null
   if (!plugin) {
     // eslint-disable-next-line no-console

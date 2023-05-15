@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 import { PluginToolbarButtonProps } from '../plugin-toolbar'
 import { Button } from './button'
@@ -6,7 +6,7 @@ import { DefaultPluginToolbarConfig } from './config'
 import { StyledIconContainer } from './icon-container'
 
 export function createPluginToolbarButton(_config: DefaultPluginToolbarConfig) {
-  const PluginToolbarButton = React.forwardRef<
+  const PluginToolbarButton = forwardRef<
     HTMLButtonElement,
     PluginToolbarButtonProps
   >(function PluginToolbarButton(props, ref) {

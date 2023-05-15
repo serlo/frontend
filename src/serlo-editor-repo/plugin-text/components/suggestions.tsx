@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { styled } from '../../ui'
 import type { TextEditorPluginConfig } from '../types'
 import { colors } from '@/helper/colors'

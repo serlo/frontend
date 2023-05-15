@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { edtrColorText, EdtrIcon, styled } from '../../ui'
 
 interface HoveringToolbarColorTextIconProps {

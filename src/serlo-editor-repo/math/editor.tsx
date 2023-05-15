@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
 import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
@@ -46,9 +46,9 @@ const mathEditorTextareaStyle = {
 }
 
 const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
-  const [latex, setLatex] = React.useState(props.defaultValue)
+  const [latex, setLatex] = useState(props.defaultValue)
   const { onChange } = props
-  const parentOnChange = React.useCallback(
+  const parentOnChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value
       setLatex(value)
@@ -58,8 +58,8 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
   )
 
   // Autofocus textarea
-  const textareaRef = React.createRef<HTMLTextAreaElement>()
-  React.useEffect(() => {
+  const textareaRef = createRef<HTMLTextAreaElement>()
+  useEffect(() => {
     const textarea = textareaRef.current
     if (textarea)
       // Timeout is needed because hovering overlay is positioned only after render of this
@@ -99,12 +99,11 @@ const KeySpan = styled.span({
 
 /**
  * @param props - The {@link @edtr-io/math#MathEditorProps | math editor props}
- * @public
  */
 export function MathEditor(props: MathEditorProps) {
-  const anchorRef = React.createRef<HTMLDivElement>()
-  const [helpOpen, setHelpOpen] = React.useState(false)
-  const [hasError, setHasError] = React.useState(false)
+  const anchorRef = createRef<HTMLDivElement>()
+  const [helpOpen, setHelpOpen] = useState(false)
+  const [hasError, setHasError] = useState(false)
 
   const { visual, readOnly, state, disableBlock } = props
 

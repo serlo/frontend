@@ -8,7 +8,6 @@ import { AnchorEditor } from './editor'
 
 /**
  * @param config - {@link AnchorConfig | Plugin configuration}
- * @public
  */
 export function createAnchorPlugin(
   config: AnchorConfig = {}
@@ -20,15 +19,12 @@ export function createAnchorPlugin(
   }
 }
 
-/** @public */
 export interface AnchorConfig {
   i18n?: Partial<AnchorPluginConfig['i18n']>
 }
 
-/** @public */
 export type AnchorPluginState = StringStateType
 
-/** @public */
 export interface AnchorPluginConfig {
   i18n: {
     label: string
@@ -36,5 +32,4 @@ export interface AnchorPluginConfig {
   }
 }
 
-/** @public */
 export type AnchorProps = EditorPluginProps<AnchorPluginState, AnchorConfig>

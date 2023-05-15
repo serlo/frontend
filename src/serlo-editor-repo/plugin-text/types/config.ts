@@ -4,13 +4,11 @@ import { SerializedScalarStateType } from '../../plugin'
 import { DeepPartial } from '../../ui'
 import { Heading } from './text-editor'
 
-/** @public */
 export type TextEditorState = SerializedScalarStateType<
   Descendant[],
   { value: Descendant[]; selection: Range | null }
 >
 
-/** @public */
 export interface TextEditorConfig {
   placeholder?: TextEditorPluginConfig['placeholder']
   formattingOptions?: TextEditorFormattingOption[]
@@ -18,7 +16,6 @@ export interface TextEditorConfig {
   noLinebreaks?: boolean
 }
 
-/** @public */
 export enum TextEditorFormattingOption {
   code = 'code',
   colors = 'colors',
@@ -80,7 +77,6 @@ interface I18n {
   }
 }
 
-/** @public */
 export interface TextEditorPluginConfig {
   placeholder: string
   formattingOptions: TextEditorFormattingOption[]

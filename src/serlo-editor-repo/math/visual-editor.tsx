@@ -1,4 +1,3 @@
-import * as React from 'react'
 import * as MQ from 'react-mathquill'
 
 import { MathEditorProps } from './editor-props'

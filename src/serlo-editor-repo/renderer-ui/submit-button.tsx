@@ -1,9 +1,6 @@
-import * as React from 'react'
-
 import { styled, Icon, faSmile, faCheckCircle } from '../ui'
 import { legacyEditorTheme } from '@/helper/colors'
 
-/** @internal */
 export enum ExerciseState {
   Default = 1,
   SolvedRight,
@@ -42,29 +39,26 @@ const SubmitButtonComponent = styled.button<{ exerciseState: ExerciseState }>(
   }
 )
 
-/** @internal */
-export class SubmitButton extends React.Component<{
+export function SubmitButton({
+  exerciseState,
+  onClick,
+}: {
   exerciseState: ExerciseState
   onClick?: () => void
-}> {
-  public render() {
-    return (
-      <SubmitButtonComponent
-        exerciseState={this.props.exerciseState}
-        onClick={this.props.onClick}
-      >
-        {this.props.exerciseState === ExerciseState.SolvedRight ? (
-          <span>
-            <Icon icon={faSmile} />
-            Stimmt!
-          </span>
-        ) : (
-          <span>
-            <Icon icon={faCheckCircle} />
-            Stimmt’s?
-          </span>
-        )}
-      </SubmitButtonComponent>
-    )
-  }
+}) {
+  return (
+    <SubmitButtonComponent exerciseState={exerciseState} onClick={onClick}>
+      {exerciseState === ExerciseState.SolvedRight ? (
+        <span>
+          <Icon icon={faSmile} />
+          Stimmt!
+        </span>
+      ) : (
+        <span>
+          <Icon icon={faCheckCircle} />
+          Stimmt’s?
+        </span>
+      )}
+    </SubmitButtonComponent>
+  )
 }

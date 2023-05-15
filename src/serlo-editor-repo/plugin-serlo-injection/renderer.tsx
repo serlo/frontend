@@ -1,5 +1,4 @@
 import IframeResizer from 'iframe-resizer-react'
-import * as React from 'react'
 
 import { styled } from '../ui'
 

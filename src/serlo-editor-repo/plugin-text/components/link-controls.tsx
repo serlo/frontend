@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
@@ -42,13 +42,13 @@ export function LinkControls({
   isLinkNewlyCreated,
   setIsLinkNewlyCreated,
 }: LinkControlsProps) {
-  const [element, setElement] = React.useState<Link | null>(null)
-  const [value, setValue] = React.useState('')
-  const input = React.useRef<HTMLInputElement>(null)
+  const [element, setElement] = useState<Link | null>(null)
+  const [value, setValue] = useState('')
+  const input = useRef<HTMLInputElement>(null)
 
   const { selection } = editor
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!selection) return
 
     const isCollapsed = selection && Range.isCollapsed(selection)
@@ -62,7 +62,7 @@ export function LinkControls({
     }
   }, [hasSelectionChanged, selection, editor])
 
-  React.useEffect(() => {
+  useEffect(() => {
     let timeout: ReturnType<typeof setTimeout>
 
     if (element && isLinkNewlyCreated) {

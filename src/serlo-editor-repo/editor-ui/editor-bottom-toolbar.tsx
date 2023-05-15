@@ -1,7 +1,6 @@
 import { styled } from '../ui'
 import { legacyEditorTheme } from '@/helper/colors'
 
-/** @public */
 export const EditorBottomToolbar = styled.div({
   boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
   backgroundColor: legacyEditorTheme.backgroundColor,

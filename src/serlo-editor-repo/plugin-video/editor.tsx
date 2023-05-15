@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { VideoProps } from '.'
 import { OverlayInput } from '../core'
 import { EditorInput, EditorInlineSettings } from '../editor-ui'

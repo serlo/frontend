@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useMemo } from 'react'
 import { createStore } from 'redux'
 
 import { Provider, ScopeContext, SubDocument } from '../core'
@@ -6,15 +6,11 @@ import { invariant } from '../internal__dev-expression'
 import { EditorPlugin, StoreDeserializeHelpers } from '../plugin'
 import { Action, ScopedState, State } from '../store'
 
-/**
- * @param props - The props
- * @public
- */
 export function Renderer<K extends string = string>({
   plugins,
   state,
 }: RendererProps<K>) {
-  const store = React.useMemo(() => {
+  const store = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return createStore<any, Action, unknown, unknown>(
       (state: State | undefined) => {
@@ -85,7 +81,6 @@ export function Renderer<K extends string = string>({
   )
 }
 
-/** @public */
 export interface RendererProps<K extends string = string> {
   plugins: Record<K, EditorPlugin>
   state: {

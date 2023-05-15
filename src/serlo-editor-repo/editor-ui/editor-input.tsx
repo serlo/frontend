@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
 import { styled } from '../ui'
 import { colors } from '@/helper/colors'
@@ -27,8 +27,7 @@ const Input = styled.input<{ textWidth: string | undefined }>(
   }
 )
 
-/** @public */
-export const EditorInput = React.forwardRef<HTMLInputElement, EditorInputProps>(
+export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
   function EditorInput({ label, ...props }, ref) {
     return (
       <Label width={props.width}>
@@ -39,7 +38,6 @@ export const EditorInput = React.forwardRef<HTMLInputElement, EditorInputProps>(
   }
 )
 
-/** @public */
 export interface EditorInputProps
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,

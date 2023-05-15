@@ -6,12 +6,10 @@
  * {@link @edtr-io/plugin-toolbar# | `@edtr-io/plugin-toolbar`} instead.
  * @packageDocumentation
  */
-import * as React from 'react'
 
 /**
  * The props for {@link PluginToolbar | PluginToolbarButton}
  *
- * @beta
  */
 export interface PluginToolbarButtonProps {
   className?: string
@@ -24,7 +22,6 @@ export interface PluginToolbarButtonProps {
 /**
  * The props for {@link PluginToolbar | PluginToolbarOverlayButton}
  *
- * @beta
  */
 export interface PluginToolbarOverlayButtonProps {
   className?: string
@@ -40,7 +37,6 @@ export interface PluginToolbarOverlayButtonProps {
 /**
  * The props for {@link PluginToolbar | OverlayButton}
  *
- * @beta
  */
 export interface OverlayButtonProps {
   className?: string
@@ -52,7 +48,6 @@ export interface OverlayButtonProps {
 /**
  * The props for {@link PluginToolbar | OverlayCheckbox}
  *
- * @beta
  */
 export interface OverlayCheckboxProps {
   checked?: boolean
@@ -63,7 +58,6 @@ export interface OverlayCheckboxProps {
 /**
  * The props for {@link PluginToolbar | OverlayInput}
  *
- * @beta
  */
 export interface OverlayInputProps
   extends React.DetailedHTMLProps<
@@ -76,7 +70,6 @@ export interface OverlayInputProps
 /**
  * The props for {@link PluginToolbar | OverlaySelect}
  *
- * @beta
  */
 export interface OverlaySelectProps
   extends React.DetailedHTMLProps<
@@ -91,7 +84,6 @@ export interface OverlaySelectProps
 /**
  * The props for {@link PluginToolbar | OverlayTextarea}
  *
- * @beta
  */
 export interface OverlayTextareaProps
   extends React.DetailedHTMLProps<
@@ -104,7 +96,6 @@ export interface OverlayTextareaProps
 /**
  * Describes the available components for the plugin toolbar
  *
- * @beta
  */
 export interface PluginToolbar {
   OverlayButton: React.ComponentType<OverlayButtonProps>

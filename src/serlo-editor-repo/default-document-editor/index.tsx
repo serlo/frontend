@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useMemo, useRef } from 'react'
 
 import { DocumentEditorProps } from '../document-editor'
 import {
@@ -112,7 +112,6 @@ const BorderlessOverlayButton = styled.button({
  *
  * @param config - Configuration
  * @returns The default {@link @edtr-io/document-editor#DocumentEditorProps | document editor}
- * @beta
  */
 export function createDefaultDocumentEditor(
   config: DefaultDocumentEditorConfig = {}
@@ -128,7 +127,7 @@ export function createDefaultDocumentEditor(
     hasToolbar,
     PluginToolbar,
   }: DocumentEditorProps) {
-    const [hasHover, setHasHover] = React.useState(false)
+    const [hasHover, setHasHover] = useState(false)
     const { OverlayButton, PluginToolbarOverlayButton } = PluginToolbar
 
     const i18n = merge<DefaultDocumentEditorI18n>({
@@ -144,7 +143,7 @@ export function createDefaultDocumentEditor(
     const { modalTitle, modalCloseLabel } = i18n.settings
 
     const shouldShowSettings = showSettings()
-    const renderSettingsContent = React.useMemo<typeof renderSettings>(() => {
+    const renderSettingsContent = useMemo<typeof renderSettings>(() => {
       return shouldShowSettings
         ? (children, { close }) => (
             <>
@@ -174,7 +173,7 @@ export function createDefaultDocumentEditor(
     const isFocused = focused && (showSettings() || showToolbar())
     const isHovered = hasHover && (showSettings() || showToolbar())
 
-    const isAppended = React.useRef(false)
+    const isAppended = useRef(false)
     const toolbar = (
       <>
         {showSettings() ? (

@@ -1,5 +1,12 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 
@@ -43,8 +50,8 @@ type HotKeysHandlers = {
 }
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSettings, setHasSettings] = React.useState(false)
-  const [hasToolbar, setHasToolbar] = React.useState(false)
+  const [hasSettings, setHasSettings] = useState(false)
+  const [hasToolbar, setHasToolbar] = useState(false)
   const document = useScopedSelector(getDocument(id))
   const focused = useScopedSelector(isFocused(id))
   const plugin = useScopedSelector(
@@ -52,20 +59,18 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
   const store = useScopedStore()
 
-  const container = React.useRef<HTMLDivElement>(null)
-  const settingsRef = React.useRef<HTMLDivElement>(
+  const container = useRef<HTMLDivElement>(null)
+  const settingsRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
   )
-  const toolbarRef = React.useRef<HTMLDivElement>(
+  const toolbarRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
   )
-  const DocumentEditor = React.useContext(DocumentEditorContext)
-  const PluginToolbar = React.useContext(PluginToolbarContext)
-  const autofocusRef = React.useRef<HTMLInputElement & HTMLTextAreaElement>(
-    null
-  )
+  const DocumentEditor = useContext(DocumentEditorContext)
+  const PluginToolbar = useContext(PluginToolbarContext)
+  const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (focused) {
       setTimeout(() => {
         if (autofocusRef.current) {
@@ -75,7 +80,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     }
   }, [focused])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       focused &&
       container.current &&
@@ -89,7 +94,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focused, plugin])
 
-  const hotKeysHandlers = React.useMemo((): HotKeysHandlers => {
+  const hotKeysHandlers = useMemo((): HotKeysHandlers => {
     return {
       FOCUS_PREVIOUS: (e) => {
         handleKeyDown(e, () => {
@@ -154,7 +159,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     }
   }, [id, store, plugin])
 
-  const handleFocus = React.useCallback(
+  const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
@@ -166,7 +171,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [store, focused, id]
   )
 
-  const renderIntoSettings = React.useCallback(
+  const renderIntoSettings = useCallback(
     (children: React.ReactNode) => {
       return (
         <RenderIntoSettings
@@ -180,7 +185,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [settingsRef]
   )
 
-  const renderIntoToolbar = React.useCallback(
+  const renderIntoToolbar = useCallback(
     (children: React.ReactNode) => {
       return (
         <RenderIntoToolbar
@@ -194,7 +199,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [toolbarRef]
   )
 
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (!document) return null
     if (!plugin) {
       // eslint-disable-next-line no-console
@@ -289,7 +294,7 @@ function RenderIntoSettings({
   setHasSettings: (value: boolean) => void
   settingsRef: React.MutableRefObject<HTMLDivElement>
 }) {
-  React.useEffect(() => {
+  useEffect(() => {
     setHasSettings(true)
   })
   if (!settingsRef.current) return null
@@ -305,7 +310,7 @@ function RenderIntoToolbar({
   setHasToolbar: (value: boolean) => void
   toolbarRef: React.MutableRefObject<HTMLDivElement>
 }) {
-  React.useEffect(() => {
+  useEffect(() => {
     setHasToolbar(true)
   })
   if (!toolbarRef.current) return null

@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { Component } from 'react'
 
 import {
   ScMcExerciseProps,
@@ -17,7 +17,7 @@ enum Phase {
   finished = 2,
 }
 
-export class ScMcAnswersRenderer extends React.Component<
+export class ScMcAnswersRenderer extends Component<
   Omit<ScMcExerciseProps, 'config'> & {
     config: ScMcExercisePluginConfig
     showAnswer: (

@@ -9,7 +9,6 @@ import { BlockquoteRenderer } from './renderer'
 
 /**
  * @param config - {@link BlockquoteConfig | Plugin configuration}
- * @public
  */
 export function createBlockquotePlugin(
   config: BlockquoteConfig
@@ -25,13 +24,10 @@ export function createBlockquotePlugin(
   }
 }
 
-/** @public */
 export interface BlockquoteConfig {
   content: ChildStateTypeConfig
 }
 
-/** @public */
 export type BlockquotePluginState = ChildStateType
 
-/** @public */
 export type BlockquoteProps = EditorPluginProps<BlockquotePluginState>
