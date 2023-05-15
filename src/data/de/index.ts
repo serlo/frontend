@@ -1,7 +1,7 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["De"],
+  lang: Instance['En'],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -374,31 +374,31 @@ export const instanceData = {
         other: "Sonstige"
       },
       messages: {
-        code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
-        code1010001: "Anmelden",
+        code1010003: 'Please confirm this action by verifying that it is you.',
+        code1010001: 'Sign in',
         code1010002: "Mit NBP Account anmelden",
         code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
         code1040002: "Mit NBP Account registrieren",
-        code1040003: "Weiter",
-        code1050001: "Deine Änderungen wurden gespeichert! 🎉",
-        code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
+        code1040003: 'Continue',
+        code1050001: 'Your changes have been saved! 🎉',
+        code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
         code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
         code1070003: "Speichern",
         code1070005: "Absenden",
-        code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
-        code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
+        code1080001: 'An email containing a verification link has been sent to the email address you provided.',
+        code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
-        code4000002: "%field% bitte noch angeben.",
+        code4000002: '%field% is missing.',
         // Should map to usernameInvalid
         code4000004: '%reason%',
         code4000005: '%reason%',
-        code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
-        code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
-        code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
-        code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
-        code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
-        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
+        code4000007: 'An account with the same email or username exists already.',
+        code4000008: 'The provided authentication code is invalid, please try again.',
+        code4000010: 'Have you already verified your email address?.%break% %verificationLinkText%',
+        code4060004: 'The recovery link is not valid or has already been used. Please try requesting an email again',
+        code4070001: 'The verification link is not valid or has already been used. Please try requesting an email again.',
         code4070005: "Dieser Bestätigungslink ist leider nicht mehr gültig. Bitte versuche eine neue E-Mail anzufordern."
       },
       usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
@@ -459,7 +459,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["De"],
+  lang: Instance['En'],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -768,12 +768,16 @@ export const loggedInData = {
         italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: 'Video URL',
         description: "Beschreibung",
         title: "Titel",
         url: 'URL',
-        seoTitle: "Titel für Suchmaschinen"
+        seoTitle: "Titel für Suchmaschinen",
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
