@@ -44,6 +44,11 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
 })
 Router.events.on('routeChangeError', () => NProgress.done())
 
+// assumes that the lang-strings in the i18n files are actually valid Instance strings
+type FixedInstanceData = ReturnType<typeof getInstanceDataByLang> & {
+  lang: Instance
+}
+
 export function FrontendClientBase({
   children,
   noHeaderFooter,
@@ -58,13 +63,15 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      return getInstanceDataByLang((locale as Instance) ?? Instance.De)
+      return getInstanceDataByLang(
+        (locale as Instance) ?? Instance.De
+      ) as FixedInstanceData
     } else {
       // load instance data from client from document tag
       return JSON.parse(
         document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
           ?.textContent ?? '{}'
-      ) as ReturnType<typeof getInstanceDataByLang>
+      ) as FixedInstanceData
     }
   })
 
