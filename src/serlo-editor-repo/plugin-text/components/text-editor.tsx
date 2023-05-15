@@ -279,7 +279,7 @@ export function TextEditor(props: TextEditorProps) {
         if (isListActive) {
           if (!loggedInData) return
           const { noImagePasteInLists } = loggedInData.strings.editor.image
-          showToastNotice(noImagePasteInLists, 'warning', 6000)
+          showToastNotice(noImagePasteInLists, 'warning')
           return
         }
 
@@ -298,7 +298,7 @@ export function TextEditor(props: TextEditorProps) {
         if (isListActive) {
           if (!loggedInData) return
           const { noVideoPasteInLists } = loggedInData.strings.editor.video
-          showToastNotice(noVideoPasteInLists, 'warning', 6000)
+          showToastNotice(noVideoPasteInLists, 'warning')
           return
         }
 
