@@ -1,7 +1,7 @@
 import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Es"],
+  lang: Instance['En'],
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -381,19 +381,19 @@ export const instanceData = {
         code1040001: "Registrarse",
         code1040002: "Registrarse con una Cuenta NBP",
         code1040003: "Continuar",
-        code1050001: "Tus cambios han sido guardados! 🎉",
+        code1050001: "¡Tus cambios han sido guardados! 🎉",
         code1060001: "Has recuperado tu cuenta con éxito. Por favor, cambia tu contraseña en los próximos minutos.",
         code1060002: "Se ha enviado un correo con un enlace de recuperación a la dirección de correo electrónico que proporcionaste. %break% Comprueba tu buzón y haz clic en el enlace que contiene.",
         code1070003: "Guardar",
         code1070005: "Enviar",
-        code1080001: "Se ha enviado un correo electrónico con un enlace de verificación a la dirección de correo electrónico que proporcionaste.",
-        code1080002: "Has verificado correctamente tu dirección de correo electrónico.",
+        code1080001: "Se ha enviado un correo electrónico con un enlace de recuperación a la dirección de correo que proporcionaste.",
+        code1080002: "Has validado tu dirección de correo electrónico exitosamente.",
         code4000001: '%reason%',
         code4000002: "%field% hace falta.",
         // Should map to usernameInvalid
         code4000004: '%reason%',
         code4000005: '%reason%',
-        code4000006: "El nombre de usuario, la dirección de correo electrónico o la contraseña eran incorrectos. Por favor, comprueba si hay errores ortográficos.",
+        code4000006: "El nombre de usuario, la dirección de correo electrónico o la contraseña eran incorrectos. Por favor, comprueba si hay errores de escritura.",
         code4000007: "Ya existe una cuenta con el mismo correo electrónico o nombre de usuario.",
         code4000008: "El código de autentificación proporcionado no es válido, por favor, inténtalo de nuevo.",
         code4000010: "¿Has verificado ya tu dirección de correo electrónico?%break%%verificationLinkText%",
@@ -459,7 +459,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Es"],
+  lang: Instance['En'],
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Nuestra visión es hacer posible el aprendizaje personalizado y proporcionar recursos educativos de alta calidad en todo el mundo, de forma totalmente gratuita. Serlo.org es una organización de base inspirada en Wikipedia. Ya proporcionamos miles de artículos, vídeos y ejercicios resueltos a cinco millones de estudiantes alemanes cada año. Ahora ha llegado el momento de internacionalizarnos.",
@@ -768,12 +768,16 @@ export const loggedInData = {
         italic: "Itálica (%ctrlOrCmd% + I)",
         noItemsFound: "Elementos no encontrados"
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: "URL del vídeo",
         description: "Descripción",
         title: "Título",
         url: 'URL',
-        seoTitle: "Título para motores de búsqueda"
+        seoTitle: "Título para motores de búsqueda",
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: "Esta parte del documento no pudo ser convertida."
@@ -998,7 +1002,7 @@ Saludos de tu equipo de Serlo.org`,
     },
     invalid: {
       subject: "👉 Se intentó acceder a la cuenta",
-      'body.plaintext': `👋¡Hola!
+      'body.plaintext': `👋 ¡Hola!
 
 Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en serlo.org.
 
@@ -1009,26 +1013,27 @@ Si has sido tú, comprueba si te has registrado con una dirección diferente.
 De lo contrario, ignora este correo electrónico.
 
 ✌️`,
-      body: `<p>👋 ¡Hola!</p>
-<p>Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en serlo.org. <a href="https://serlo.org">serlo.org</a>. </p>
+      body: `<p>👋 Hi there!</p>
+<p>Tú (u otra persona) has introducido esta dirección de correo electrónico al intentar recuperar el acceso a una cuenta en <a href="https://serlo.org">serlo.org</a>. </p>
 <p>Pero esta dirección de correo electrónico no está vinculada a un usuario en nuestro sitio web y, por lo tanto, el intento falló.</p>
-<p>Si has sido tú, comprueba si te has registrado con una dirección diferente.</p>
-<p>De lo contrario, ignora este correo electrónico.</p>
+<p>Si has sido tú, comprueba si te has registrado con otra dirección.</p>
+<p>De lo contrario, por favor, ignora este correo electrónico.</p>
 <p>✌️</p>`
     }
   },
   verification: {
     valid: {
       subject: "👋 Verifica tu dirección de correo electrónico",
-      'body.plaintext': `Hola {{ .Identity.traits.username }},
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
 
       Estamos muy contentos de tenerte en serlo.org🎉
 
-     Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:
+      Por favor, verifica tu nueva cuenta haciendo clic en el siguiente enlace:
+
 
 {{ .VerificationURL }}
 
-Tu Apoyo-a-la-Comunidad💚      `,
+Tu Apoyo-a-la-Comunidad 💚`,
       body: `<p>Hola <b>{{ .Identity.traits.username }}</b>,</p>
 <p>Estamos muy contentos de tenerte en serlo.org 🎉</p>
 <p>Por favor, verifica tu cuenta haciendo clic en el siguiente enlace:<br/>
@@ -1039,16 +1044,14 @@ Tu Apoyo-a-la-Comunidad💚      `,
       subject: `👋 Alguien intentó verificar esta dirección de correo electrónico`,
       'body.plaintext': `👋 Hola,
 
-Alguien solicitó verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en serlo.org para esta dirección.
+Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en serlo.org para esta dirección.
 
-Si fuiste tú, comprueba si te registraste usando una dirección diferente.
+Si has sido tú, comprueba si te has registrado con otra dirección.
 
-Si no, por favor ignora este correo electrónico.
-
-✌️`,
+De lo contrario, por favor, ignora este correo electrónico.`,
       body: `<p>👋 Hola,</p>
-<p>Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en <a href="https://serlo.org">serlo.org</a>para esta dirección.</p>
-<p>Si fuiste tú, comprueba si te registraste con una dirección diferente.</p>
+<p>Alguien pidió verificar esta dirección de correo electrónico, pero no pudimos encontrar una cuenta en  <a href="https://serlo.org">serlo.org</a>  para esta dirección.</p>
+<p>Si has sido tú, comprueba si te has registrado con otra dirección.</p>
 <p>De lo contrario, por favor, ignora este correo electrónico.</p>
 <p>✌️</p>`
     }
