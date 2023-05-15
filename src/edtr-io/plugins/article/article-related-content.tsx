@@ -145,14 +145,14 @@ export function ArticleRelatedContent({
           onClick={() => data[category].remove(index)}
         >
           <EditorTooltip text={articleStrings.removeLabel} />
-          <Icon icon={faTrashAlt} />
+          <Icon icon={faTrashAlt} aria-hidden="true" />
         </button>
         <button
           {...dragHandleProps}
           className={`${buttonClass} serlo-tooltip-trigger`}
         >
           <EditorTooltip text={articleStrings.dragLabel} />
-          <Icon icon={faGripVertical} />
+          <Icon icon={faGripVertical} aria-hidden="true" />
         </button>
       </>
     )
