@@ -10,11 +10,12 @@ interface SurveyProps {
   yes: number
   rarely: number
   no: number
+  noStudent: number
 }
 
 export default renderedPageNoHooks<SurveyProps>(
-  ({ shown, exit, yes, rarely, no }) => {
-    const unknown = shown - exit - yes - rarely - no
+  ({ shown, exit, yes, rarely, no, noStudent }) => {
+    const unknown = shown - exit - yes - rarely - no - noStudent
 
     function showNumAndPercent(num: number) {
       return (
@@ -34,6 +35,7 @@ export default renderedPageNoHooks<SurveyProps>(
           <p>Ja: {showNumAndPercent(yes)}</p>
           <p>Selten: {showNumAndPercent(rarely)}</p>
           <p>Nein: {showNumAndPercent(no)}</p>
+          <p>Keine Schüler*in: {showNumAndPercent(noStudent)}</p>
           <p className="text-gray-600">
             Sonstiges: {showNumAndPercent(unknown)}
           </p>
@@ -53,7 +55,8 @@ export const getServerSideProps: GetServerSideProps<SurveyProps> = async () => {
     exit = 0,
     yes = 0,
     rarely = 0,
-    no = 0
+    no = 0,
+    noStudent = 0
 
   data.forEach((entry) => {
     if (entry.isProduction) {
@@ -67,6 +70,8 @@ export const getServerSideProps: GetServerSideProps<SurveyProps> = async () => {
         rarely++
       } else if (entry.event === 'no') {
         no++
+      } else if (entry.event === 'noStudent') {
+        noStudent++
       }
     }
   })
@@ -78,6 +83,7 @@ export const getServerSideProps: GetServerSideProps<SurveyProps> = async () => {
       yes,
       no,
       rarely,
+      noStudent,
     },
   }
 }
