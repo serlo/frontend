@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance['En'],
+  lang: 'en',
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -459,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance['En'],
+  lang: 'en',
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Notre vision est de permettre un apprentissage personnalisé et de fournir des ressources éducatives de haute qualité dans le monde entier - complètement gratuit. Serlo est une organisation de base inspirée par Wikipédia. Nous fournissons déjà des milliers d'articles, de vidéos et d'exercices résolus à cinq millions d'étudiants allemands chaque année.\nIl est maintenant temps de passer à l'international.",
