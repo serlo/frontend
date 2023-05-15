@@ -462,7 +462,7 @@
 
     &:hover > .serlo-tooltip,
     &:focus > .serlo-tooltip {
-      @apply pointer-events-auto opacity-100;
+      @apply pointer-events-auto opacity-95 not-sr-only absolute pb-[0.7rem];
     }
   }
 }
