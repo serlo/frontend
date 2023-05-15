@@ -32,7 +32,7 @@ export function createPluginToolbarOverlayButton(
             setOpen(true)
           }}
         >
-          <EditorTooltip text={label} className="-ml-4 !pb-2" hideOnHover />
+          <EditorTooltip text={label} className="-ml-4 !pb-2" />
           <StyledIconContainer>{icon}</StyledIconContainer>
         </Button>
       </>

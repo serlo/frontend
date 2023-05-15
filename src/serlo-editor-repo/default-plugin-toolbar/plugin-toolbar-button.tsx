@@ -18,7 +18,7 @@ export function createPluginToolbarButton(_config: DefaultPluginToolbarConfig) {
           ref={ref}
           onClick={onClick}
         >
-          <EditorTooltip text={label} className="-ml-4 !pb-2" hideOnHover />
+          <EditorTooltip text={label} className="-ml-4 !pb-2" />
           <StyledIconContainer>{icon}</StyledIconContainer>
         </Button>
       </div>
