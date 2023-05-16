@@ -133,7 +133,11 @@ export function TextEditor(props: TextEditorProps) {
       try {
         ReactEditor.focus(editor)
       } catch (error) {
-        // Focusing did not work but ignore it.
+        // Focusing did not work. Continue anyway.
+        console.warn(
+          'Failed to focus text editor. Continued execution. Details:'
+        )
+        console.warn(error)
       }
     })
     return () => {
