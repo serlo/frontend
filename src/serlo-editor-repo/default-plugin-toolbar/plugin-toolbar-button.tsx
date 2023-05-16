@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 
+import { EditorTooltip } from '../editor-ui/editor-tooltip'
 import { PluginToolbarButtonProps } from '../plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
@@ -9,16 +10,16 @@ export function createPluginToolbarButton(_config: DefaultPluginToolbarConfig) {
   const PluginToolbarButton = forwardRef<
     HTMLButtonElement,
     PluginToolbarButtonProps
-  >(function PluginToolbarButton(props, ref) {
+  >(function PluginToolbarButton({ className, label, onClick, icon }, ref) {
     return (
       <div>
         <Button
-          className={props.className}
-          title={props.label}
+          className={`${className ?? ''} serlo-tooltip-trigger`}
           ref={ref}
-          onClick={props.onClick}
+          onClick={onClick}
         >
-          <StyledIconContainer>{props.icon}</StyledIconContainer>
+          <EditorTooltip text={label} className="-ml-4 !pb-2" />
+          <StyledIconContainer aria-hidden="true">{icon}</StyledIconContainer>
         </Button>
       </div>
     )

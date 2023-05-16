@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
+import { EditorTooltip } from '../editor-ui/editor-tooltip'
 import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
@@ -26,13 +27,13 @@ export function createPluginToolbarOverlayButton(
           }}
         />
         <Button
-          className={className}
+          className={`${className ?? ''} serlo-tooltip-trigger`}
           onClick={() => {
             setOpen(true)
           }}
-          title={label}
         >
-          <StyledIconContainer>{icon}</StyledIconContainer>
+          <EditorTooltip text={label} className="-ml-4 !pb-2" />
+          <StyledIconContainer aria-hidden="true">{icon}</StyledIconContainer>
         </Button>
       </>
     )
