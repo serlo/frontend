@@ -4,7 +4,7 @@ export const withMath = (editor: SlateEditor) => {
   const { isInline, isVoid } = editor
 
   editor.isInline = (element) => {
-    return element.type === 'math' ? true : isInline(element)
+    return element.type === 'math' ? element.inline : isInline(element)
   }
 
   editor.isVoid = (element) => {

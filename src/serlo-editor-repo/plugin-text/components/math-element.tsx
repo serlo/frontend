@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Range, Transforms } from 'slate'
+import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
   ReactEditor,
   RenderElementProps,
@@ -11,6 +11,7 @@ import { PreferenceContext } from '../../core'
 import { MathEditor } from '../../math'
 import type {
   MathElement as MathElementType,
+  Paragraph,
   TextEditorPluginConfig,
 } from '../types'
 import { MathFormula } from './math-formula'
@@ -44,7 +45,9 @@ export function MathElement({
 
   if (!shouldShowMathEditor) {
     return (
-      <span {...attributes}>
+      // Slate void elements need to set attributes and contentEditable={false}
+      // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
+      <span {...attributes} contentEditable={false}>
         <MathFormula element={element} />
         {children}
       </span>
@@ -57,6 +60,85 @@ export function MathElement({
     const path = ReactEditor.findPath(editor, element)
 
     Transforms.setNodes(editor, update, { at: path })
+  }
+
+  /**
+   * Applys slate node transformations when MathElement is changed from inline to block type and backwards.
+   */
+  function handleInlineChange(newInlineValue: boolean) {
+    // Editor.withoutNormalizing prevents automatically deleting elements by slate normalization until all transformations are done.
+    Editor.withoutNormalizing(editor, () => {
+      const path = ReactEditor.findPath(editor, element)
+
+      // Set property `inline` on MathElement to new value
+      Transforms.setNodes(editor, { inline: newInlineValue }, { at: path })
+
+      newInlineValue ? transformNodeToInline() : transformNodeToBlock()
+
+      function transformNodeToInline() {
+        // We can be sure that Node at `path` has type MathElementType here
+        const mathElement = Node.get(editor, path) as MathElementType
+
+        // Remove math element
+        Transforms.removeNodes(editor, { at: path })
+
+        // Re-add math element inside p element
+        const newNode: Paragraph = {
+          type: 'p',
+          children: [
+            { text: '' },
+            {
+              ...mathElement,
+            },
+            { text: '' },
+          ],
+        }
+        Transforms.insertNodes(editor, newNode, { at: path })
+
+        const hasSiblingAfter = Node.has(editor, Path.next(path))
+        if (hasSiblingAfter) {
+          const nextSiblingPath = Path.next(path)
+          // Merge next sibling node with newNode
+          Transforms.mergeNodes(editor, { at: nextSiblingPath })
+        }
+
+        const hasSiblingBefore = path[path.length - 1] !== 0
+        if (hasSiblingBefore) {
+          // Merge newNode with previous sibling node
+          Transforms.mergeNodes(editor, { at: path })
+        }
+      }
+
+      function transformNodeToBlock() {
+        // Take the MathElement and lift it up one node level. This automatically splits siblings before and after the MathElement.
+        // Example:
+        // {
+        //   type: 'p',
+        //   children: [
+        //     { text: 'Bla' },
+        //     { type: 'math', ... },
+        //     { text: 'MoreBla' },
+        //   ]
+        // }
+        //
+        // becomes
+        //
+        // {
+        //   type: 'p',
+        //   children: [
+        //     { text: 'Bla' },
+        //   ]
+        // },
+        // { type: 'math', ... },
+        // {
+        //   type: 'p',
+        //   children: [
+        //     { text: 'MoreBla' },
+        //   ]
+        // }
+        Transforms.liftNodes(editor, { at: path })
+      }
+    })
   }
 
   function transformOutOfElement({
@@ -78,7 +160,10 @@ export function MathElement({
   }
 
   return (
-    <span {...attributes} tabIndex={-1}>
+    // Slate void elements need to set attributes and contentEditable={false}
+    // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
+    // TODO Maybe return a div when math element is not an inline but a block type.
+    <span {...attributes} tabIndex={-1} contentEditable={false}>
       <MathEditor
         autofocus
         state={element.src}
@@ -87,9 +172,7 @@ export function MathElement({
         visual={isVisualMode}
         disableBlock={false}
         config={{ i18n: config.i18n.math }}
-        onInlineChange={(inline) => {
-          updateElement({ inline })
-        }}
+        onInlineChange={handleInlineChange}
         onChange={(src) => updateElement({ src })}
         onMoveOutRight={transformOutOfElement}
         onMoveOutLeft={() => {
