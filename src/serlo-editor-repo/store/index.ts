@@ -9,11 +9,7 @@ export { createSelector } from './helpers'
 export type { SubReducer } from './helpers'
 export { getScope } from './reducer'
 export { createStore } from './store'
-export type {
-  ChangeListener,
-  StoreEnhancerFactory,
-  StoreOptions,
-} from './store'
+export type { ChangeListener, StoreOptions } from './store'
 export type {
   ActionCreator,
   ActionCreatorWithoutPayload,

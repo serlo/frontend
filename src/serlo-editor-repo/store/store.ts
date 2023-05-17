@@ -4,7 +4,6 @@ import {
   createStore as createReduxStore,
   PreloadedState,
   Store,
-  StoreEnhancer,
 } from 'redux'
 import _createSagaMiddleware from 'redux-saga'
 
@@ -28,10 +27,9 @@ export function createStore<K extends string>(
 ): {
   store: Store<State, Action>
 } {
-  const { scopes, createEnhancer } = options
+  const { scopes } = options
   const sagaMiddleware = createSagaMiddleware()
-  const defaultEnhancer = applyMiddleware(sagaMiddleware)
-  const enhancer = createEnhancer(defaultEnhancer)
+  const middlewareEnhancer = applyMiddleware(sagaMiddleware)
 
   const initialStates = R.mapObjIndexed((scope) => {
     return {
@@ -52,7 +50,7 @@ export function createStore<K extends string>(
     reducer,
     // Redux does something weird with `unknown` values.
     initialStates as unknown as PreloadedState<InternalState>,
-    enhancer
+    middlewareEnhancer
   ) as Store<State, Action>
   sagaMiddleware.run(saga)
 
@@ -61,12 +59,7 @@ export function createStore<K extends string>(
 
 export interface StoreOptions<K extends string> {
   scopes: Record<string, Record<K, EditorPlugin>>
-  createEnhancer: StoreEnhancerFactory
 }
-
-export type StoreEnhancerFactory = (
-  defaultEnhancer: StoreEnhancer
-) => StoreEnhancer
 
 export type ChangeListener = (payload: {
   changed: boolean

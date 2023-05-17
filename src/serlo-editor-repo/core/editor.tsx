@@ -16,7 +16,6 @@ import {
   serializeRootDocument,
   createStore,
   ChangeListener,
-  StoreEnhancerFactory,
   getScope,
 } from '../store'
 import {
@@ -53,16 +52,11 @@ const mountedScopes: Record<string, boolean> = {}
  * Renders a single editor for an Edtr.io document
  */
 export function Editor<K extends string = string>(props: EditorProps<K>) {
-  const {
-    createStoreEnhancer = (defaultEnhancer) => defaultEnhancer,
-    ...rest
-  }: EditorProps<K> = props
   const store = useMemo(() => {
     return createStore({
       scopes: {
-        [MAIN_SCOPE]: rest.plugins,
+        [MAIN_SCOPE]: props.plugins,
       },
-      createEnhancer: createStoreEnhancer,
     }).store
     // We want to create the store only once
     // TODO: add effects that handle changes to plugins and defaultPlugin (by dispatching an action)
@@ -74,12 +68,12 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
   function renderChildren() {
     const children = (
       <InnerDocument
-        {...rest}
+        {...props}
         scope={MAIN_SCOPE}
-        editable={rest.editable === undefined ? true : rest.editable}
+        editable={props.editable === undefined ? true : props.editable}
       />
     )
-    if (rest.omitDragDropContext) return children
+    if (props.omitDragDropContext) return children
     return <DndProvider backend={HTML5Backend}>{children}</DndProvider>
   }
 }
@@ -88,11 +82,7 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
  * Hydrates the required contexts
  */
 export function EditorProvider(props: EditorProviderProps) {
-  const {
-    createStoreEnhancer = (defaultEnhancer) => defaultEnhancer,
-    omitDragDropContext,
-    children,
-  }: EditorProviderProps = props
+  const { omitDragDropContext, children }: EditorProviderProps = props
   useEffect(() => {
     if (mountedProvider) {
       // eslint-disable-next-line no-console
@@ -106,7 +96,6 @@ export function EditorProvider(props: EditorProviderProps) {
   const store = useMemo(() => {
     return createStore({
       scopes: {},
-      createEnhancer: createStoreEnhancer,
     }).store
     // We want to create the store only once
     // TODO: add effects that handle changes to plugins and defaultPlugin (by dispatching an action)
@@ -119,7 +108,6 @@ export function EditorProvider(props: EditorProviderProps) {
 }
 export interface EditorProviderProps {
   omitDragDropContext?: boolean
-  createStoreEnhancer?: StoreEnhancerFactory
   children: ReactNode
 }
 
@@ -284,7 +272,6 @@ export interface EditorProps<K extends string = string> {
   }
   onChange?: ChangeListener
   editable?: boolean
-  createStoreEnhancer?: StoreEnhancerFactory
   onError?: ContextType<typeof ErrorContext>
   DocumentEditor?: ContextType<typeof DocumentEditorContext>
   PluginToolbar?: ContextType<typeof PluginToolbarContext>
