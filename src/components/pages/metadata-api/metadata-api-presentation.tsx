@@ -74,7 +74,7 @@ export function MetadataApiPresentation() {
           </div>
         </section>
 
-        <section id="roadmap" className={clsx('mt-24 pb-16')}>
+        <section className={clsx('mt-24 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto"></div>
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
