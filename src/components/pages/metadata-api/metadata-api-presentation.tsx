@@ -191,7 +191,7 @@ const CodeSnippets = () => {
   const [activeTab, setActiveTab] = useState<string>('Node.js')
 
   return (
-    <div className="tabs">
+    <div className="tabs text-center">
       <div className="tab-list">
         {['Node.js', 'Python', 'Rust'].map((tabName) => (
           <button
