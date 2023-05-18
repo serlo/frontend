@@ -1,6 +1,6 @@
 import * as R from 'ramda'
 
-import { useScopedStore } from '../../core'
+import { useStore } from '../../core'
 import {
   findParent,
   getDocument,
@@ -14,7 +14,7 @@ export function useCanDrop(
   draggingAbove: boolean,
   allowedPlugins: string[]
 ) {
-  const store = useScopedStore()
+  const store = useStore()
 
   return function (dragId?: string) {
     return (

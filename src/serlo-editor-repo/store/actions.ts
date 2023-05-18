@@ -4,15 +4,11 @@ import { createActionCreator } from './helpers'
 import { HistoryAction, InternalHistoryAction } from './history/actions'
 import { PluginAction } from './plugin/actions'
 import { InternalRootAction, RootAction } from './root/actions'
-import {
-  ActionCreatorAction,
-  ActionCreatorWithPayload,
-  ScopedState,
-} from './storetypes'
+import { ActionCreatorAction, ActionCreatorWithPayload, State } from './types'
 
 export const setPartialState = createActionCreator<
   'SetPartialState',
-  Partial<ScopedState>
+  Partial<State>
 >('SetPartialState')
 export type SetPartialState = ActionCreatorAction<typeof setPartialState>
 
@@ -23,7 +19,6 @@ export const applyActions: ActionCreatorWithPayload<
 export interface ApplyActionsAction {
   type: 'ApplyActions'
   payload: InternalAction[]
-  scope: string
 }
 
 export type Action =

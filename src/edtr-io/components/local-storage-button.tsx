@@ -1,4 +1,4 @@
-import { useScopedStore } from '@edtr-io/core'
+import { useStore } from '@edtr-io/core'
 import { serializeRootDocument } from '@edtr-io/store'
 import { useEffect, useState } from 'react'
 
@@ -7,7 +7,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
-  const store = useScopedStore()
+  const store = useStore()
 
   useEffect(() => {
     //reset when modal opens

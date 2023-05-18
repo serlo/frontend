@@ -1,4 +1,4 @@
-import { useScopedStore } from '@edtr-io/core'
+import { useStore } from '@edtr-io/core'
 import { isEmptyRows } from '@edtr-io/plugin-rows'
 import clsx from 'clsx'
 import { useState } from 'react'
@@ -26,7 +26,7 @@ export function BoxRenderer(props: BoxProps) {
     ? style.colorClass
     : defaultStyle.colorClass
   const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
-  const store = useScopedStore()
+  const store = useStore()
   const [contentIsEmpty, setContentIsEmpty] = useState(true)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()

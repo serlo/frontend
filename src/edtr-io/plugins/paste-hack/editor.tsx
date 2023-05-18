@@ -1,4 +1,4 @@
-import { useScopedStore } from '@edtr-io/core'
+import { useStore } from '@edtr-io/core'
 import {
   getParent,
   insertChildBefore,
@@ -42,7 +42,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
-  const store = useScopedStore()
+  const store = useStore()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   function throwError(error?: unknown) {

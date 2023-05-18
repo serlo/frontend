@@ -7,9 +7,9 @@ import { EditorPlugin } from '../../internal__plugin'
 import { InternalAction } from '../actions'
 import { change, ChangeAction, getDocument } from '../documents'
 import { getFocusTree } from '../focus'
-import { scopeSelector } from '../helpers'
+import { workaroundCurrySelectorArguments } from '../helpers'
 import { getPlugin } from '../plugins'
-import { SelectorReturnType } from '../storetypes'
+import { SelectorReturnType } from '../types'
 import {
   insertChildAfter,
   InsertChildAfterAction,
@@ -27,10 +27,10 @@ export function* pluginSaga() {
   ])
 }
 
-function* insertChildBeforeSaga({ payload, scope }: InsertChildBeforeAction) {
+function* insertChildBeforeSaga({ payload }: InsertChildBeforeAction) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const parent: SelectorReturnType<typeof getFocusTree> = yield select(
-    scopeSelector(getFocusTree, scope),
+    workaroundCurrySelectorArguments(getFocusTree),
     payload.parent
   )
   if (!parent || !parent.children) return
@@ -43,21 +43,19 @@ function* insertChildBeforeSaga({ payload, scope }: InsertChildBeforeAction) {
     parent: payload.parent,
     previousSibling: index === 0 ? undefined : parent.children[index - 1].id,
     document: payload.document,
-    scope,
   })
 }
 
-function* insertChildAfterSaga({ payload, scope }: InsertChildAfterAction) {
+function* insertChildAfterSaga({ payload }: InsertChildAfterAction) {
   yield call(insertChild, {
     parent: payload.parent,
     previousSibling: payload.sibling,
     document: payload.document,
-    scope,
   })
 }
 
-function* removeChildSaga({ payload, scope }: RemoveChildAction) {
-  yield call(createPlugin, payload.parent, scope, (plugin, state) => {
+function* removeChildSaga({ payload }: RemoveChildAction) {
+  yield call(createPlugin, payload.parent, (plugin, state) => {
     if (typeof plugin.removeChild !== 'function') return
     plugin.removeChild(state, payload.child)
   })
@@ -67,9 +65,8 @@ function* insertChild(payload: {
   parent: string
   previousSibling?: string
   document?: { plugin: string; state?: unknown }
-  scope: string
 }) {
-  yield call(createPlugin, payload.parent, payload.scope, (plugin, state) => {
+  yield call(createPlugin, payload.parent, (plugin, state) => {
     if (typeof plugin.insertChild !== 'function') return
     plugin.insertChild(state, {
       previousSibling: payload.previousSibling,
@@ -80,18 +77,17 @@ function* insertChild(payload: {
 
 function* createPlugin(
   id: string,
-  scope: string,
   f: (plugin: EditorPlugin, state: unknown) => void
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const document: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   if (!document) return
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const plugin: SelectorReturnType<typeof getPlugin> = yield select(
-    scopeSelector(getPlugin, scope),
+    workaroundCurrySelectorArguments(getPlugin),
     document.plugin
   )
   if (!plugin) return
@@ -106,7 +102,7 @@ function* createPlugin(
         executor: additional?.executor,
       },
       reverse: additional?.reverse,
-    })(scope)
+    })
     chan.put(action)
   })
   f(plugin, state)

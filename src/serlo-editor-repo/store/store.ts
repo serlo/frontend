@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import {
   applyMiddleware,
   createStore as createReduxStore,
@@ -7,12 +6,12 @@ import {
 } from 'redux'
 import _createSagaMiddleware from 'redux-saga'
 
-import { EditorPlugin } from '../internal__plugin'
 import { Action, InternalAction } from './actions'
 import { reducer } from './reducer'
 import { serializeRootDocument } from './root/reducer'
 import { saga } from './saga'
-import { InternalState, SelectorReturnType, State } from './storetypes'
+import { initialState } from './state'
+import { SelectorReturnType, State } from './types'
 
 const createSagaMiddleware = _createSagaMiddleware
 
@@ -22,43 +21,22 @@ const createSagaMiddleware = _createSagaMiddleware
  * @param options - The options
  * @returns The Edtr.io store
  */
-export function createStore<K extends string>(
-  options: StoreOptions<K>
-): {
+export function createStore(): {
   store: Store<State, Action>
 } {
-  const { scopes } = options
   const sagaMiddleware = createSagaMiddleware()
   const middlewareEnhancer = applyMiddleware(sagaMiddleware)
 
-  const initialStates = R.mapObjIndexed((scope) => {
-    return {
-      plugins: scope,
-      documents: {},
-      focus: null,
-      root: null,
-      history: {
-        undoStack: [],
-        redoStack: [],
-        pendingChanges: 0,
-      },
-    }
-  }, scopes)
-
   // eslint-disable-next-line @typescript-eslint/ban-types
-  const store = createReduxStore<InternalState, InternalAction, {}, {}>(
+  const store = createReduxStore<State, InternalAction, {}, {}>(
     reducer,
     // Redux does something weird with `unknown` values.
-    initialStates as unknown as PreloadedState<InternalState>,
+    initialState as unknown as PreloadedState<State>,
     middlewareEnhancer
   ) as Store<State, Action>
   sagaMiddleware.run(saga)
 
   return { store }
-}
-
-export interface StoreOptions<K extends string> {
-  scopes: Record<string, Record<K, EditorPlugin>>
 }
 
 export type ChangeListener = (payload: {

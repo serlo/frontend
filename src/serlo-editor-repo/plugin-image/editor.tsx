@@ -6,7 +6,7 @@ import {
   OverlayCheckbox,
   OverlayInput,
   OverlayTextarea,
-  useScopedStore,
+  useStore,
 } from '../core'
 import { EditorButton, EditorInput, EditorInlineSettings } from '../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../plugin'
@@ -50,13 +50,13 @@ const Caption = styled.div({
 export function ImageEditor(props: ImageProps) {
   const { editable, focused, state } = props
   const config = useImageConfig(props.config)
-  const scopedStore = useScopedStore()
+  const store = useStore()
   usePendingFileUploader(state.src, config.upload)
   const { i18n } = config
 
   const captionIsEmpty =
-    !state.caption.defined || isEmpty(state.caption.id)(scopedStore.getState())
-  const hasFocus = focused || hasFocusedChild(props.id)(scopedStore.getState())
+    !state.caption.defined || isEmpty(state.caption.id)(store.getState())
+  const hasFocus = focused || hasFocusedChild(props.id)(store.getState())
 
   useEffect(() => {
     if (editable && !state.caption.defined) {

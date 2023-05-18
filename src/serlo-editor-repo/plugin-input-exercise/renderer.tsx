@@ -2,7 +2,7 @@ import A from 'algebra.js'
 import { useState, createRef } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
-import { useScopedStore } from '../core'
+import { useStore } from '../core'
 import { styled } from '../editor-ui'
 import { Feedback, SubmitButton } from '../renderer-ui'
 import { isEmpty } from '../store'
@@ -33,7 +33,7 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
   const { state } = props
   const config = useInputExerciseConfig(props.config)
   const { i18n } = config
-  const store = useScopedStore()
+  const store = useStore()
   const [feedbackIndex, setFeedbackIndex] = useState<number>(-1)
   const [feedbackVisible, setFeedbackVisible] = useState<boolean>()
   const [exerciseState, setExerciseState] = useState<ExerciseState>(

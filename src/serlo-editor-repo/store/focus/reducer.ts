@@ -16,7 +16,7 @@ import {
 } from '../helpers'
 import { getPlugin } from '../plugins/reducer'
 import { getRoot } from '../root/reducer'
-import { ScopedState, Selector } from '../storetypes'
+import { State, Selector } from '../types'
 import {
   blur,
   BlurAction,
@@ -74,7 +74,7 @@ export const isFocused: Selector<boolean, [string]> = createSelector(
 /**
  * [[Selector]] that returns the focus tree from the root document with the given id
  *
- * @param id - optional id of the document that should be considered as the root of the focus tree. By default, we use the root document of the current scope
+ * @param id - optional id of the document that should be considered as the root of the focus tree. By default, we use the root document
  * @returns the [[focus tree|Node]] if it exists (`null` otherwise)
  */
 export const getFocusTree: Selector<Node | null, [string?]> =
@@ -109,7 +109,7 @@ export const getParent: Selector<Node | null, [string]> = createSelector(
 /**
  * [[Selector]] that returns the focus path from the leaf with the given id
  *
- * @param defaultLeaf - optional id of the document that should be considered as the leaf of the focus path. By default, we use the currently focused document of the current scope
+ * @param defaultLeaf - optional id of the document that should be considered as the leaf of the focus path. By default, we use the currently focused document
  * @returns an array of ids of the documents that are part of the focus path (i.e. the focused document and their ancestors). `null`, if there exists no focus path
  */
 export const getFocusPath: Selector<string[] | null, [string?]> =
@@ -156,8 +156,8 @@ export const getPluginTypesOnPathToRoot: Selector<string[] | null, [string]> =
   })
 
 function handleFocus(
-  focusState: ScopedState['focus'],
-  state: ScopedState,
+  focusState: State['focus'],
+  state: State,
   findNode: typeof findNextNode
 ) {
   const from = focusState

@@ -3,7 +3,7 @@ import {
   ActionCreatorAction,
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
-} from '../storetypes'
+} from '../types'
 
 export const blur: ActionCreatorWithoutPayload<'Blur'> =
   createActionWithoutPayload('Blur')

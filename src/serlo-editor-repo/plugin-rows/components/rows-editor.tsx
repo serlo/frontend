@@ -1,5 +1,5 @@
 import { RowsProps } from '..'
-import { useScopedSelector } from '../../core'
+import { useSelector } from '../../core'
 import { getPluginTypesOnPathToRoot } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
@@ -13,7 +13,7 @@ const ReadOnlyRow = styled.div({
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
-  const pluginTypesOfAncestors = useScopedSelector(
+  const pluginTypesOfAncestors = useSelector(
     getPluginTypesOnPathToRoot(props.id)
   )
 

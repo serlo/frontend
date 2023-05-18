@@ -3,11 +3,11 @@ import { useRef } from 'react'
 
 import { SubDocumentProps } from '.'
 import { getDocument, getPlugin } from '../../store'
-import { useScopedSelector } from '../store'
+import { useSelector } from '../store'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
-  const document = useScopedSelector(getDocument(id))
-  const plugin = useScopedSelector(
+  const document = useSelector(getDocument(id))
+  const plugin = useSelector(
     (state) => document && getPlugin(document.plugin)(state)
   )
   const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)

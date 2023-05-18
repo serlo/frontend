@@ -1,4 +1,4 @@
-import { useScopedStore } from '@edtr-io/core'
+import { useStore } from '@edtr-io/core'
 import { MathRenderer } from '@edtr-io/math'
 import { isEmpty } from '@edtr-io/store'
 import { styled } from '@edtr-io/ui'
@@ -43,7 +43,7 @@ export enum TransformationTarget {
 }
 
 export function EquationsRenderer({ state }: EquationsProps) {
-  const store = useScopedStore()
+  const store = useStore()
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
   )

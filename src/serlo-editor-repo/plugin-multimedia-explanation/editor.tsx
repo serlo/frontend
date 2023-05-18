@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
-import { PluginToolbarButton, useScopedSelector } from '../core'
+import { PluginToolbarButton, useSelector } from '../core'
 import {
   hasFocusedDescendant,
   isEmpty,
@@ -67,23 +67,19 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
     props.state.illustrating.set(e.target.value === 'illustrating')
   }
-  const textFocused = useScopedSelector(
+  const textFocused = useSelector(
     hasFocusedDescendant(props.state.explanation.id)
   )
 
-  const multimediaFocused = useScopedSelector(
-    isFocused(props.state.multimedia.id)
-  )
+  const multimediaFocused = useSelector(isFocused(props.state.multimedia.id))
 
   const hasFocus = props.focused || multimediaFocused || textFocused
-  const withoutMultimedia = useScopedSelector(
-    isEmpty(props.state.multimedia.id)
-  )
+  const withoutMultimedia = useSelector(isEmpty(props.state.multimedia.id))
 
   const multimedia: {
     plugin: string
     state?: unknown
-  } | null = useScopedSelector(serializeDocument(props.state.multimedia.id))
+  } | null = useSelector(serializeDocument(props.state.multimedia.id))
   const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
     Record<string, unknown>
   >({})

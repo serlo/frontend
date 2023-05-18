@@ -16,7 +16,7 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HotKeys, useScopedStore } from '../../core'
+import { HotKeys, useStore } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
@@ -61,7 +61,7 @@ export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
-  const store = useScopedStore()
+  const store = useStore()
   const loggedInData = useLoggedInData()
   const { state, id, editable, focused } = props
 

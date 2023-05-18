@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
 import { createStore } from 'redux'
 
-import { Provider, ScopeContext, SubDocument } from '../core'
+import { Provider, EditableContext, SubDocument } from '../core'
 import { invariant } from '../internal__dev-expression'
 import { EditorPlugin, StoreDeserializeHelpers } from '../plugin'
-import { Action, ScopedState, State } from '../store'
+import { Action, State } from '../store'
 
 export function Renderer<K extends string = string>({
   plugins,
@@ -16,16 +16,14 @@ export function Renderer<K extends string = string>({
       (state: State | undefined) => {
         if (!state) {
           return {
-            main: {
-              plugins,
-              documents: getDocuments(),
-              focus: null,
-              root: 'root',
-              history: {
-                undoStack: [],
-                redoStack: [],
-                pendingChanges: 0,
-              },
+            plugins,
+            documents: getDocuments(),
+            focus: null,
+            root: 'root',
+            history: {
+              undoStack: [],
+              redoStack: [],
+              pendingChanges: 0,
             },
           }
         }
@@ -33,8 +31,8 @@ export function Renderer<K extends string = string>({
       }
     )
 
-    function getDocuments(): ScopedState['documents'] {
-      const documents: ScopedState['documents'] = {}
+    function getDocuments(): State['documents'] {
+      const documents: State['documents'] = {}
       const pendingDocs: {
         id: string
         plugin: K
@@ -74,9 +72,9 @@ export function Renderer<K extends string = string>({
 
   return (
     <Provider store={store}>
-      <ScopeContext.Provider value={{ scope: 'main' }}>
+      <EditableContext.Provider value>
         <SubDocument id="root" />
-      </ScopeContext.Provider>
+      </EditableContext.Provider>
     </Provider>
   )
 }

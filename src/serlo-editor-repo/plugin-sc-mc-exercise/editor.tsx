@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
-import { useScopedSelector, useScopedStore } from '../core'
+import { useSelector, useStore } from '../core'
 import {
   AddButton,
   InteractiveAnswer,
@@ -19,8 +19,8 @@ const TypeMenu = styled.div({
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const config = useScMcExerciseConfig(props.config)
-  const store = useScopedStore()
-  const focusedElement = useScopedSelector(getFocused())
+  const store = useStore()
+  const focusedElement = useSelector(getFocused())
 
   const { editable, focused, state } = props
   const children = R.flatten(

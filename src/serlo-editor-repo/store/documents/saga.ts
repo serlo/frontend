@@ -9,10 +9,10 @@ import {
   StoreDeserializeHelpers,
 } from '../../internal__plugin-state'
 import { ReversibleAction } from '../actions'
-import { scopeSelector } from '../helpers'
+import { workaroundCurrySelectorArguments } from '../helpers'
 import { commit, temporaryCommit } from '../history/actions'
 import { getPlugin } from '../plugins/reducer'
-import { SelectorReturnType } from '../storetypes'
+import { SelectorReturnType } from '../types'
 import {
   change,
   ChangeAction,
@@ -60,40 +60,39 @@ function* insertSaga(action: InsertAction) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [actions]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
-    action.scope,
     () => {},
     [initialState]
   )
-  yield put(commit(actions)(action.scope))
+  yield put(commit(actions))
 }
 
 function* removeSaga(action: RemoveAction) {
   const id = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const doc: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, action.scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   if (!doc) return
 
   const actions: ReversibleAction[] = [
     {
-      action: pureRemove(id)(action.scope),
+      action: pureRemove(id),
       reverse: pureInsert({
         id,
         plugin: doc.plugin,
         state: doc.state,
-      })(action.scope),
+      }),
     },
   ]
-  yield put(commit(actions)(action.scope))
+  yield put(commit(actions))
 }
 
 function* changeSaga(action: ChangeAction) {
   const { id, state: stateHandler, reverse } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const document: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, action.scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   if (!document) return
@@ -101,7 +100,6 @@ function* changeSaga(action: ChangeAction) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [actions, state]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
-    action.scope,
     (helpers: StoreDeserializeHelpers) => {
       return stateHandler.initial(document.state, helpers)
     }
@@ -111,21 +109,21 @@ function* changeSaga(action: ChangeAction) {
     state: unknown
   ): ReversibleAction<PureChangeAction, PureChangeAction> => {
     return {
-      action: pureChange({ id, state })(action.scope),
+      action: pureChange({ id, state }),
       reverse: pureChange({
         id,
         state:
           typeof reverse === 'function'
             ? reverse(document.state)
             : document.state,
-      })(action.scope),
+      }),
     }
   }
 
   actions.push(createChange(state))
 
   if (!stateHandler.executor) {
-    yield put(commit(actions)(action.scope))
+    yield put(commit(actions))
   } else {
     // async change, handle with stateHandler.resolver
 
@@ -145,7 +143,6 @@ function* changeSaga(action: ChangeAction) {
             function stateResolve(updater) {
               chan.put({
                 resolve: updater,
-                scope: action.scope,
                 callback: (resolveActions, state) => {
                   resolve([...resolveActions, createChange(state)])
                 },
@@ -154,7 +151,6 @@ function* changeSaga(action: ChangeAction) {
             function stateReject(updater) {
               chan.put({
                 reject: updater,
-                scope: action.scope,
                 callback: (resolveActions, state) => {
                   reject([...resolveActions, createChange(state)])
                 },
@@ -163,7 +159,6 @@ function* changeSaga(action: ChangeAction) {
             function stateNext(updater) {
               chan.put({
                 next: updater,
-                scope: action.scope,
                 callback: (resolveActions, state) => {
                   next([...resolveActions, createChange(state)])
                 },
@@ -171,7 +166,7 @@ function* changeSaga(action: ChangeAction) {
             }
           )
         },
-      })(action.scope)
+      })
     )
 
     while (true) {
@@ -180,7 +175,7 @@ function* changeSaga(action: ChangeAction) {
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const currentDocument: SelectorReturnType<typeof getDocument> =
-        yield select(scopeSelector(getDocument, action.scope), id)
+        yield select(workaroundCurrySelectorArguments(getDocument), id)
       if (!currentDocument) continue
 
       const updater =
@@ -190,7 +185,6 @@ function* changeSaga(action: ChangeAction) {
       const [resolveActions, pureResolveState]: [ReversibleAction[], unknown] =
         yield call(
           handleRecursiveInserts,
-          action.scope,
           (helpers: StoreDeserializeHelpers) => {
             return updater(currentDocument.state, helpers)
           }
@@ -207,50 +201,48 @@ function* wrapSaga(action: WrapAction) {
   const { id, document: documentHandler } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, action.scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   const newId = generate()
   if (!currentDocument) return
   const reversibleAction: ReversibleAction<PureWrapAction, PureUnwrapAction> = {
-    action: pureWrap({ id, newId, document: documentHandler(newId) })(
-      action.scope
-    ),
-    reverse: pureUnwrap({ id, oldId: newId })(action.scope),
+    action: pureWrap({ id, newId, document: documentHandler(newId) }),
+    reverse: pureUnwrap({ id, oldId: newId }),
   }
-  yield put(commit([reversibleAction])(action.scope))
+  yield put(commit([reversibleAction]))
 }
 
 function* unwrapSaga(action: UnwrapAction) {
   const { id, oldId } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, action.scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   if (!currentDocument) return
   const reversibleAction: ReversibleAction<PureUnwrapAction, PureWrapAction> = {
-    action: pureUnwrap({ id, oldId })(action.scope),
+    action: pureUnwrap({ id, oldId }),
     reverse: pureWrap({
       id,
       newId: oldId,
       document: currentDocument,
-    })(action.scope),
+    }),
   }
-  yield put(commit([reversibleAction])(action.scope))
+  yield put(commit([reversibleAction]))
 }
 
 function* replaceSaga(action: ReplaceAction) {
   const { id } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, action.scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   if (!currentDocument) return
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const plugin: SelectorReturnType<typeof getPlugin> = yield select(
-    scopeSelector(getPlugin, action.scope),
+    workaroundCurrySelectorArguments(getPlugin),
     action.payload.plugin
   )
   if (!plugin) return
@@ -273,7 +265,6 @@ function* replaceSaga(action: ReplaceAction) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [actions]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
-    action.scope,
     () => {},
     pendingDocs
   )
@@ -286,21 +277,21 @@ function* replaceSaga(action: ReplaceAction) {
       id,
       plugin: action.payload.plugin,
       state: pluginState,
-    })(action.scope),
+    }),
     reverse: pureReplace({
       id,
       plugin: currentDocument.plugin,
       state: currentDocument.state,
-    })(action.scope),
+    }),
   }
-  yield put(commit([...actions, reversibleAction])(action.scope))
+  yield put(commit([...actions, reversibleAction]))
 }
 
 function* replaceTextSaga(action: ReplaceTextAction) {
   const { id, document: documentHandler } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    scopeSelector(getDocument, action.scope),
+    workaroundCurrySelectorArguments(getDocument),
     id
   )
   const newId = generate()
@@ -312,29 +303,25 @@ function* replaceTextSaga(action: ReplaceTextAction) {
     PureReplaceTextAction,
     PureReplaceTextAction
   > = {
-    action: pureReplaceText({ id, newId, document: documentHandler(newId) })(
-      action.scope
-    ),
+    action: pureReplaceText({ id, newId, document: documentHandler(newId) }),
     // TODO: here, we should delete the document with newId
     reverse: pureReplaceText({
       id: newId,
       newId: id,
       document: currentDocument,
-    })(action.scope),
+    }),
   }
-  yield put(commit([reversibleAction])(action.scope))
+  yield put(commit([reversibleAction]))
 }
 
 interface ChannelAction {
   resolve?: StateUpdater<unknown>
   next?: StateUpdater<unknown>
   reject?: StateUpdater<unknown>
-  scope: string
   callback: (actions: ReversibleAction[], pureState: unknown) => void
 }
 
 export function* handleRecursiveInserts(
-  scope: string,
   act: (helpers: StoreDeserializeHelpers) => unknown,
   initialDocuments: { id: string; plugin: string; state?: unknown }[] = []
 ) {
@@ -353,7 +340,7 @@ export function* handleRecursiveInserts(
   for (let doc; (doc = pendingDocs.pop()); ) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const plugin: SelectorReturnType<typeof getPlugin> = yield select(
-      scopeSelector(getPlugin, scope),
+      workaroundCurrySelectorArguments(getPlugin),
       doc.plugin
     )
     if (!plugin) {
@@ -368,19 +355,19 @@ export function* handleRecursiveInserts(
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const currentDocument: SelectorReturnType<typeof getDocument> =
-      yield select(scopeSelector(getDocument, scope), doc.id)
+      yield select(workaroundCurrySelectorArguments(getDocument), doc.id)
     if (currentDocument) {
       actions.push({
         action: pureReplace({
           id: doc.id,
           plugin: doc.plugin,
           state,
-        })(scope),
+        }),
         reverse: pureReplace({
           id: doc.id,
           plugin: currentDocument.plugin,
           state: currentDocument.state,
-        })(scope),
+        }),
       })
     } else {
       actions.push({
@@ -388,8 +375,8 @@ export function* handleRecursiveInserts(
           id: doc.id,
           plugin: doc.plugin,
           state,
-        })(scope),
-        reverse: pureRemove(doc.id)(scope),
+        }),
+        reverse: pureRemove(doc.id),
       })
     }
   }

@@ -2,7 +2,7 @@ import { getDocument } from '../documents'
 import { findParent, getFocusTree } from '../focus'
 import { createSelector } from '../helpers'
 import { getPlugin } from '../plugins'
-import { Selector } from '../storetypes'
+import { Selector } from '../types'
 
 export const mayInsertChild: Selector<boolean, [string]> = createSelector(
   (state, sibling: string) => {

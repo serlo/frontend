@@ -9,7 +9,7 @@ import {
   SubReducer,
 } from '../helpers'
 import { getPlugin } from '../plugins/reducer'
-import { DocumentState, ScopedState, Selector } from '../storetypes'
+import { DocumentState, State, Selector } from '../types'
 import {
   pureInsert,
   PureInsertAction,
@@ -126,7 +126,7 @@ export const serializeDocument: Selector<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   { plugin: string; state: any } | null,
   [string | null]
-> = createDeepEqualSelector((state: ScopedState, id) => {
+> = createDeepEqualSelector((state: State, id) => {
   const doc = getDocument(id)(state)
   if (!doc) return null
   const plugin = getPlugin(doc.plugin)(state)

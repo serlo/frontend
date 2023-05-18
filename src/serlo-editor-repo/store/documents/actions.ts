@@ -4,7 +4,7 @@ import {
   ActionCreatorAction,
   ActionCreatorWithPayload,
   DocumentState,
-} from '../storetypes'
+} from '../types'
 
 export const insert = createActionCreator<
   'Insert',

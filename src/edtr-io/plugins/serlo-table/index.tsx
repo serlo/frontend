@@ -1,4 +1,4 @@
-import { useScopedSelector, useScopedStore } from '@edtr-io/core'
+import { useSelector, useStore } from '@edtr-io/core'
 import {
   child,
   ChildStateType,
@@ -67,9 +67,9 @@ const newCell = { content: { plugin: 'text' } }
 
 function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
-  const store = useScopedStore()
+  const store = useStore()
 
-  const focusedElement = useScopedSelector(getFocused())
+  const focusedElement = useSelector(getFocused())
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   const loggedInData = useLoggedInData()

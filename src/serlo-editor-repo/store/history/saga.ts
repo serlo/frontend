@@ -13,8 +13,8 @@ import {
 } from 'redux-saga/effects'
 
 import { applyActions, ReversibleAction } from '../actions'
-import { scopeSelector } from '../helpers'
-import { InternalSelectorReturnType, SelectorReturnType } from '../storetypes'
+import { workaroundCurrySelectorArguments } from '../helpers'
+import { SelectorReturnType } from '../types'
 import {
   undo,
   redo,
@@ -24,9 +24,6 @@ import {
   pureCommit,
   reset,
   pureReset,
-  UndoAction,
-  RedoAction,
-  ResetAction,
   temporaryCommit,
   TemporaryCommitAction,
   CommitAction,
@@ -50,7 +47,7 @@ function* temporaryCommitSaga(action: TemporaryCommitAction) {
     pureCommit({
       combine: false,
       actions,
-    })(action.scope)
+    })
   )
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const chan: Channel<ChannelAction> = yield call(channel)
@@ -59,7 +56,6 @@ function* temporaryCommitSaga(action: TemporaryCommitAction) {
     return function (finalActions: ReversibleAction[]) {
       chan.put({
         [type]: finalActions,
-        scope: action.scope,
         tempActions: actions,
       })
     }
@@ -78,7 +74,6 @@ interface ChannelAction {
   resolve?: ReversibleAction[]
   next?: ReversibleAction[]
   reject?: ReversibleAction[]
-  scope: string
   tempActions: ReversibleAction[]
 }
 
@@ -90,8 +85,8 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
     const tempActions = payload.tempActions
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const stack: InternalSelectorReturnType<typeof getUndoStack> = yield select(
-      scopeSelector(getUndoStack, payload.scope)
+    const stack: SelectorReturnType<typeof getUndoStack> = yield select(
+      workaroundCurrySelectorArguments(getUndoStack)
     )
 
     const replays = R.takeWhile((replay) => replay !== tempActions, stack)
@@ -130,7 +125,7 @@ function* commitSaga() {
   while (true) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const action: CommitAction = yield take(commit.type)
-    yield call(executeCommit, action.payload, false, action.scope)
+    yield call(executeCommit, action.payload, false)
 
     while (true) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -145,62 +140,60 @@ function* commitSaga() {
       }
 
       if (action) {
-        yield call(executeCommit, action.payload, true, action.scope)
+        yield call(executeCommit, action.payload, true)
       }
     }
   }
 }
 
-function* executeCommit(
-  actions: ReversibleAction[],
-  combine: boolean,
-  scope: string
-) {
+function* executeCommit(actions: ReversibleAction[], combine: boolean) {
   yield all(actions.map((action) => put(action.action)))
   yield put(
     pureCommit({
       combine,
       actions,
-    })(scope)
+    })
   )
 }
 
-function* undoSaga(action: UndoAction) {
+function* undoSaga() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const undoStack: InternalSelectorReturnType<typeof getUndoStack> =
-    yield select(scopeSelector(getUndoStack, action.scope))
+  const undoStack: SelectorReturnType<typeof getUndoStack> = yield select(
+    workaroundCurrySelectorArguments(getUndoStack)
+  )
   const toUndo = R.head(undoStack)
   if (!toUndo) return
 
   const actions = R.reverse(toUndo).map(
     (reversibleAction) => reversibleAction.reverse
   )
-  yield put(applyActions(actions)(action.scope))
-  yield put(pureUndo()(action.scope))
+  yield put(applyActions(actions))
+  yield put(pureUndo())
 }
 
-function* redoSaga(action: RedoAction) {
+function* redoSaga() {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const redoStack: InternalSelectorReturnType<typeof getRedoStack> =
-    yield select(scopeSelector(getRedoStack, action.scope))
+  const redoStack: SelectorReturnType<typeof getRedoStack> = yield select(
+    workaroundCurrySelectorArguments(getRedoStack)
+  )
   const replay = R.head(redoStack)
   if (!replay) return
   const actions = replay.map((reversibleAction) => reversibleAction.action)
-  yield put(applyActions(actions)(action.scope))
-  yield put(pureRedo()(action.scope))
+  yield put(applyActions(actions))
+  yield put(pureRedo())
 }
 
-function* resetSaga(action: ResetAction) {
+function* resetSaga() {
   while (true) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const pendingChanges: SelectorReturnType<typeof getPendingChanges> =
-      yield select(scopeSelector(getPendingChanges, action.scope))
+      yield select(workaroundCurrySelectorArguments(getPendingChanges))
     if (pendingChanges === 0) break
     else if (pendingChanges < 0) {
-      yield call(redoSaga, redo()(action.scope))
+      yield call(redoSaga)
     } else {
-      yield call(undoSaga, undo()(action.scope))
+      yield call(undoSaga)
     }
   }
-  yield put(pureReset()(action.scope))
+  yield put(pureReset())
 }

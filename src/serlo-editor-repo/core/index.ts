@@ -5,16 +5,12 @@ export type { SubDocumentProps } from './sub-document'
 export { Document, Editor, EditorProvider } from './editor'
 export type { EditorProps, EditorProviderProps } from './editor'
 export {
-  ScopeContext,
+  EditableContext,
   ErrorContext,
   Provider,
   useDispatch,
   useSelector,
   useStore,
-  useScope,
-  useScopedDispatch,
-  useScopedSelector,
-  useScopedStore,
 } from './store'
 export {
   DocumentEditorContext,

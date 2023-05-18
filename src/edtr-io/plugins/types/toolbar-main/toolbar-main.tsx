@@ -1,4 +1,4 @@
-import { useScopedDispatch, useScopedSelector } from '@edtr-io/core'
+import { useDispatch, useSelector } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import {
   redo,
@@ -30,10 +30,10 @@ export function ToolbarMain({
   changes,
   license,
 }: ToolbarMainProps) {
-  const dispatch = useScopedDispatch()
-  const undoable = useScopedSelector(hasUndoActions())
-  const redoable = useScopedSelector(hasRedoActions())
-  const isChanged = useScopedSelector(hasPendingChanges())
+  const dispatch = useDispatch()
+  const undoable = useSelector(hasUndoActions())
+  const redoable = useSelector(hasRedoActions())
+  const isChanged = useSelector(hasPendingChanges())
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   useLeaveConfirm(isChanged)

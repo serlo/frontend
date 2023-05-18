@@ -2,13 +2,8 @@ import * as R from 'ramda'
 
 import { ReversibleAction } from '../actions'
 import { getDocuments } from '../documents/reducer'
-import {
-  createInternalSelector,
-  createSelector,
-  createSubReducer,
-  SubReducer,
-} from '../helpers'
-import { HistoryState, InternalSelector, Selector } from '../storetypes'
+import { createSelector, createSubReducer, SubReducer } from '../helpers'
+import { HistoryState, Selector } from '../types'
 import {
   persist,
   PersistAction,
@@ -83,9 +78,6 @@ export const historyReducer: SubReducer<HistoryState> = createSubReducer(
   }
 )
 
-export const getHistory: InternalSelector<HistoryState> =
-  createInternalSelector((state) => state.history)
-
 export const getPendingChanges: Selector<number> = createSelector(
   (state) => state.history.pendingChanges
 )
@@ -102,7 +94,9 @@ export const hasRedoActions: Selector<boolean> = createSelector(
   (state) => state.history.redoStack.length > 0
 )
 
-export const getUndoStack: InternalSelector<ReversibleAction[][]> =
-  createInternalSelector((state) => getHistory()(state).undoStack)
-export const getRedoStack: InternalSelector<ReversibleAction[][]> =
-  createInternalSelector((state) => getHistory()(state).redoStack)
+export const getUndoStack: Selector<ReversibleAction[][]> = createSelector(
+  (state) => state.history.undoStack
+)
+export const getRedoStack: Selector<ReversibleAction[][]> = createSelector(
+  (state) => state.history.redoStack
+)

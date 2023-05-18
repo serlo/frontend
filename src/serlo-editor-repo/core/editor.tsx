@@ -16,7 +16,6 @@ import {
   serializeRootDocument,
   createStore,
   ChangeListener,
-  getScope,
 } from '../store'
 import {
   DocumentEditorContext,
@@ -26,7 +25,7 @@ import {
 import {
   Provider,
   EditorContext,
-  ScopeContext,
+  EditableContext,
   ErrorContext,
   useSelector,
   useDispatch,
@@ -43,24 +42,14 @@ configure({
 const DefaultDocumentEditor = createDefaultDocumentEditor()
 const DefaultPluginToolbar = createDefaultPluginToolbar()
 
-const MAIN_SCOPE = 'main'
-
 let mountedProvider = false
-const mountedScopes: Record<string, boolean> = {}
 
 /**
  * Renders a single editor for an Edtr.io document
  */
 export function Editor<K extends string = string>(props: EditorProps<K>) {
   const store = useMemo(() => {
-    return createStore({
-      scopes: {
-        [MAIN_SCOPE]: props.plugins,
-      },
-    }).store
-    // We want to create the store only once
-    // TODO: add effects that handle changes to plugins and defaultPlugin (by dispatching an action)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return createStore().store
   }, [])
 
   return <Provider store={store}>{renderChildren()}</Provider>
@@ -69,7 +58,6 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
     const children = (
       <InnerDocument
         {...props}
-        scope={MAIN_SCOPE}
         editable={props.editable === undefined ? true : props.editable}
       />
     )
@@ -94,12 +82,7 @@ export function EditorProvider(props: EditorProviderProps) {
     }
   }, [])
   const store = useMemo(() => {
-    return createStore({
-      scopes: {},
-    }).store
-    // We want to create the store only once
-    // TODO: add effects that handle changes to plugins and defaultPlugin (by dispatching an action)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return createStore().store
   }, [])
 
   const child = <Provider store={store}>{children}</Provider>
@@ -116,30 +99,13 @@ export interface EditorProviderProps {
  * @param props - The {@link EditorProps | props} for the document
  */
 export function Document<K extends string = string>(
-  props: Omit<EditorProps<K>, 'initialState'> & {
-    scope: string
-  } & (
+  props: Omit<EditorProps<K>, 'initialState'> &
+    (
       | { mirror: true; initialState?: unknown }
       | { mirror?: false; initialState: EditorProps<K>['initialState'] }
     )
 ) {
-  const { scope = MAIN_SCOPE, ...rest } = props
   const storeContext = useContext(EditorContext)
-  useEffect(() => {
-    const isMainInstance = !rest.mirror
-    if (isMainInstance) {
-      if (mountedScopes[scope]) {
-        // eslint-disable-next-line no-console
-        console.error(
-          `There are multiple main instances for scope ${scope}. Please set the mirror prop to true to all but one instance.`
-        )
-        mountedScopes[scope] = true
-        return () => {
-          mountedScopes[scope] = false
-        }
-      }
-    }
-  }, [rest.mirror, scope])
 
   if (!storeContext) {
     // eslint-disable-next-line no-console
@@ -149,7 +115,7 @@ export function Document<K extends string = string>(
     return null
   }
 
-  return <InnerDocument scope={scope} {...rest} />
+  return <InnerDocument {...props} />
 }
 
 const hotKeysKeyMap = {
@@ -160,67 +126,51 @@ const hotKeysKeyMap = {
 export function InnerDocument<K extends string = string>({
   children,
   plugins,
-  scope,
   editable,
   onChange,
   onError,
   DocumentEditor = DefaultDocumentEditor,
   PluginToolbar = DefaultPluginToolbar,
   ...props
-}: Omit<EditorProps<K>, 'initialState'> & {
-  scope: string
-} & (
+}: Omit<EditorProps<K>, 'initialState'> &
+  (
     | { mirror: true; initialState?: unknown }
     | { mirror?: false; initialState: EditorProps<K>['initialState'] }
   )) {
-  // Can't use `useScopedSelector` here since `InnerDocument` initializes the scoped state and `ScopeContext`
   const id = useSelector((state) => {
-    const scopedState = state[scope]
-    if (!scopedState) return null
-    return getRoot()(scopedState)
+    return getRoot()(state)
   })
   const dispatch = useDispatch()
-  // Can't use `useScopedStore` here since `InnerDocument` initializes the scoped state and `ScopeContext`
   const fullStore = useStore()
   useEffect(() => {
     if (typeof onChange !== 'function') return
-    let pendingChanges = getPendingChanges()(
-      getScope(fullStore.getState(), scope)
-    )
+    let pendingChanges = getPendingChanges()(fullStore.getState())
     return fullStore.subscribe(() => {
-      const currentPendingChanges = getPendingChanges()(
-        getScope(fullStore.getState(), scope)
-      )
+      const currentPendingChanges = getPendingChanges()(fullStore.getState())
       if (currentPendingChanges !== pendingChanges) {
         onChange({
-          changed: hasPendingChanges()(getScope(fullStore.getState(), scope)),
-          getDocument: () =>
-            serializeRootDocument()(getScope(fullStore.getState(), scope)),
+          changed: hasPendingChanges()(fullStore.getState()),
+          getDocument: () => serializeRootDocument()(fullStore.getState()),
         })
         pendingChanges = currentPendingChanges
       }
     })
-  }, [onChange, fullStore, scope])
+  }, [onChange, fullStore])
 
   useEffect(() => {
     if (!props.mirror) {
-      dispatch(initRoot({ initialState: props.initialState, plugins })(scope))
+      dispatch(initRoot({ initialState: props.initialState, plugins }))
     }
-    // TODO: initRoot changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.initialState, plugins, props.mirror])
-  const scopeContextValue = useMemo(() => {
-    return {
-      scope,
-      editable,
-    }
-  }, [scope, editable])
-  const hotKeysHandlers = useMemo(() => {
-    return {
-      UNDO: () => dispatch(undo()(scope)),
-      REDO: () => dispatch(redo()(scope)),
-    }
-  }, [dispatch, scope])
+  const editableContextValue = useMemo(() => editable ?? true, [editable])
+  const hotKeysHandlers = useMemo(
+    () => ({
+      UNDO: () => dispatch(undo()),
+      REDO: () => dispatch(redo()),
+    }),
+    [dispatch]
+  )
 
   if (!id) return null
 
@@ -235,9 +185,9 @@ export function InnerDocument<K extends string = string>({
           <DocumentEditorContext.Provider value={DocumentEditor}>
             <PluginToolbarContext.Provider value={PluginToolbar}>
               <PreferenceContextProvider>
-                <ScopeContext.Provider value={scopeContextValue}>
+                <EditableContext.Provider value={editableContextValue}>
                   {renderChildren(id)}
-                </ScopeContext.Provider>
+                </EditableContext.Provider>
               </PreferenceContextProvider>
             </PluginToolbarContext.Provider>
           </DocumentEditorContext.Provider>

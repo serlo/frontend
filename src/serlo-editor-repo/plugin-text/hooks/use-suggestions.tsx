@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Editor as SlateEditor, Node } from 'slate'
 
-import { useScopedStore } from '../../core'
+import { useStore } from '../../core'
 import { RegistryContext, Registry } from '../../plugin-rows'
 import { replace } from '../../store'
 
@@ -21,7 +21,7 @@ const hotKeysMap = {
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
-  const store = useScopedStore()
+  const store = useStore()
   const { editor, id, editable, focused } = args
 
   const text = Node.string(editor)

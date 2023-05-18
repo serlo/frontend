@@ -1,4 +1,4 @@
-import { useScopedSelector } from '@edtr-io/core'
+import { useSelector } from '@edtr-io/core'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -43,7 +43,7 @@ const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
 
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
-  const hasStrategy = !useScopedSelector(isEmpty(strategy.id))
+  const hasStrategy = !useSelector(isEmpty(strategy.id))
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null

@@ -6,7 +6,7 @@ import { getPlugins, isFocused } from '../../store'
 import { styled } from '../../ui'
 import { RowRenderer } from './row-renderer'
 import { RowSeparator } from './row-separator'
-import { useScopedSelector } from '@/serlo-editor-repo/core'
+import { useSelector } from '@/serlo-editor-repo/core'
 
 const DropContainer = styled.div({
   position: 'relative',
@@ -34,8 +34,8 @@ export function RowEditor({
   visuallyEmphasizeAddButton = false,
   isLast = false,
 }: RowEditorProps) {
-  const focused = useScopedSelector(isFocused(row.id))
-  const plugins = useScopedSelector(getPlugins())
+  const focused = useSelector(isFocused(row.id))
+  const plugins = useSelector(getPlugins())
   const dropContainer = useRef<HTMLDivElement>(null)
 
   return (

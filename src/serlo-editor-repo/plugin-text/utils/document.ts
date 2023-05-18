@@ -4,7 +4,7 @@ import { StateTypeValueType } from '../../plugin'
 import type { TextEditorState } from '../types'
 import { isSelectionAtEnd } from './selection'
 import {
-  ScopedStore,
+  Store,
   focusNext,
   focusPrevious,
   getDocument,
@@ -54,7 +54,7 @@ export function sliceNodesAfterSelection(editor: SlateEditor) {
 export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
-  store: ScopedStore,
+  store: Store,
   id: string
 ) {
   const mayRemove = mayRemoveChild(id)(store.getState())

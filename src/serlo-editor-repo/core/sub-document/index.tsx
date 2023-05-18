@@ -2,7 +2,7 @@ import { Component, useCallback, useContext } from 'react'
 
 import { PluginProps } from '../../internal__plugin-state'
 import { undo } from '../../store'
-import { ScopeContext, ErrorContext, useScopedDispatch } from '../store'
+import { EditableContext, ErrorContext, useDispatch } from '../store'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
 
@@ -12,8 +12,8 @@ import { SubDocumentRenderer } from './renderer'
  * @param props - The {@link SubDocumentProps}
  */
 export const SubDocument = (props: SubDocumentProps) => {
-  const { editable } = useContext(ScopeContext)
-  const dispatch = useScopedDispatch()
+  const editable = useContext(EditableContext)
+  const dispatch = useDispatch()
   const undoMemo = useCallback(() => {
     dispatch(undo())
   }, [dispatch])

@@ -1,4 +1,4 @@
-import { useScopedStore } from '@edtr-io/core'
+import { useStore } from '@edtr-io/core'
 import { serializeRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ export function useHandleSave(
   visible: boolean,
   showSubscriptionOptions?: boolean
 ) {
-  const store = useScopedStore()
+  const store = useStore()
   const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)

@@ -1,7 +1,7 @@
 import {
   HotKeys,
-  useScopedSelector,
-  useScopedStore,
+  useSelector,
+  useStore,
   PreferenceContext,
   setDefaultPreference,
 } from '@edtr-io/core'
@@ -64,8 +64,8 @@ const DragButton = styled.span({
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
-  const store = useScopedStore()
-  const focusedElement = useScopedSelector(getFocused())
+  const store = useStore()
+  const focusedElement = useSelector(getFocused())
   const nestedFocus =
     focused ||
     includes(

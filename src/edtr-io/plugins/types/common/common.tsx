@@ -1,4 +1,4 @@
-import { useScopedSelector, PluginToolbarButton } from '@edtr-io/core'
+import { useSelector, PluginToolbarButton } from '@edtr-io/core'
 import {
   StateType,
   StateTypesSerializedType,
@@ -220,7 +220,7 @@ export function OptionalChild(props: {
   onRemove: () => void
 }) {
   const expectedStateType = object(entity)
-  const document = useScopedSelector(getDocument(props.state.id)) as {
+  const document = useSelector(getDocument(props.state.id)) as {
     state: StateTypeValueType<typeof expectedStateType>
   }
   const children = props.state.render({

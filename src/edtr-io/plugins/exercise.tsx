@@ -1,4 +1,4 @@
-import { PluginToolbarButton, useScopedStore } from '@edtr-io/core'
+import { PluginToolbarButton, useStore } from '@edtr-io/core'
 import { styled, AddButton } from '@edtr-io/editor-ui'
 import {
   EditorPlugin,
@@ -106,7 +106,7 @@ const Option = styled.div({
 })
 
 function ExerciseEditor({ editable, state }: ExerciseProps) {
-  const store = useScopedStore()
+  const store = useStore()
   const { content, interactive } = state
   const [showOptions, setShowOptions] = useState(false)
 

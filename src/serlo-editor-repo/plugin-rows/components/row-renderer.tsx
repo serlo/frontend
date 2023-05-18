@@ -4,7 +4,7 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { OverlayButton, PluginToolbarButton, useScopedStore } from '../../core'
+import { OverlayButton, PluginToolbarButton, useStore } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
 import {
   DocumentState,
@@ -86,7 +86,7 @@ export function RowRenderer({
     return config.plugins.map((plugin) => plugin.name)
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
-  const store = useScopedStore()
+  const store = useStore()
 
   const [collectedDragProps, drag, dragPreview] = useDrag({
     type: 'row',

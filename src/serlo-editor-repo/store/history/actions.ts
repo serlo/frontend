@@ -5,7 +5,7 @@ import {
   ActionCreatorAction,
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
-} from '../storetypes'
+} from '../types'
 
 export const persist = createActionWithoutPayload<'Persist'>('Persist')
 export type PersistAction = ActionCreatorAction<typeof persist>
@@ -20,7 +20,6 @@ export const commit: ActionCreatorWithPayload<'Commit', ReversibleAction[]> =
 export interface CommitAction {
   type: 'Commit'
   payload: ReversibleAction[]
-  scope: string
 }
 
 export const pureCommit: ActionCreatorWithPayload<
@@ -36,7 +35,6 @@ export interface PureCommitAction {
     combine: boolean
     actions: ReversibleAction[]
   }
-  scope: string
 }
 
 export const temporaryCommit: ActionCreatorWithPayload<
@@ -52,7 +50,6 @@ export interface TemporaryCommitAction {
     initial: ReversibleAction[]
     executor?: StateExecutor<ReversibleAction[]>
   }
-  scope: string
 }
 
 export const undo: ActionCreatorWithoutPayload<'Undo'> =

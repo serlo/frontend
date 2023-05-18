@@ -31,7 +31,7 @@ import {
 } from '../../store'
 import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
-import { useScopedSelector, useScopedStore } from '../store'
+import { useSelector, useStore } from '../store'
 
 const StyledDocument = styled.div({
   outline: 'none',
@@ -52,12 +52,12 @@ type HotKeysHandlers = {
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSettings, setHasSettings] = useState(false)
   const [hasToolbar, setHasToolbar] = useState(false)
-  const document = useScopedSelector(getDocument(id))
-  const focused = useScopedSelector(isFocused(id))
-  const plugin = useScopedSelector(
+  const document = useSelector(getDocument(id))
+  const focused = useSelector(isFocused(id))
+  const plugin = useSelector(
     (state) => document && getPlugin(document.plugin)(state)
   )
-  const store = useScopedStore()
+  const store = useStore()
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(

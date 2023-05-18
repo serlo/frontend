@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import { useState } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
-import { OverlayInput, useScopedSelector } from '../core'
+import { OverlayInput, useSelector } from '../core'
 import {
   AddButton,
   InteractiveAnswer,
@@ -26,7 +26,7 @@ const TypeMenu = styled.div({
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused, config } = props
   const { i18n } = useInputExerciseConfig(config)
-  const focusedElement = useScopedSelector(getFocused())
+  const focusedElement = useSelector(getFocused())
   const nestedFocus =
     focused ||
     R.includes(
