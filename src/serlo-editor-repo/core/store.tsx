@@ -31,8 +31,10 @@ export function Provider(
   return <ReduxProvider {...props} context={EditorContext} />
 }
 
+/**
+ * Custom Redux hooks created in order not to clash with consumer's Redux context
+ * https://react-redux.js.org/api/hooks#custom-context
+ */
 export const useDispatch = createDispatchHook(EditorContext)
-
 export const useSelector = createSelectorHook(EditorContext)
-
 export const useStore = createStoreHook(EditorContext)
