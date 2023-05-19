@@ -4,13 +4,13 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { OverlayButton, PluginToolbarButton, useStore } from '../../core'
+import { OverlayButton, PluginToolbarButton } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
 import {
+  store,
   DocumentState,
-  getPlugins,
-  SelectorReturnType,
-  serializeDocument,
+  selectPlugins,
+  selectSerializedDocument,
 } from '../../store'
 import {
   edtrDragHandle,
@@ -77,7 +77,7 @@ export function RowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: SelectorReturnType<typeof getPlugins>
+  plugins: ReturnType<typeof selectPlugins>
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
   const container = useRef<HTMLDivElement>(null)
@@ -86,12 +86,11 @@ export function RowRenderer({
     return config.plugins.map((plugin) => plugin.name)
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
-  const store = useStore()
 
   const [collectedDragProps, drag, dragPreview] = useDrag({
     type: 'row',
     item: () => {
-      const serialized = serializeDocument(row.id)(store.getState())
+      const serialized = selectSerializedDocument(store.getState(), row.id)
       return {
         id: row.id,
         serialized,
@@ -226,7 +225,10 @@ export function RowRenderer({
               <Left>
                 <BorderlessOverlayButton
                   onClick={() => {
-                    const document = serializeDocument(row.id)(store.getState())
+                    const document = selectSerializedDocument(
+                      store.getState(),
+                      row.id
+                    )
                     if (!document) return
                     rows.insert(index, document)
                     close()
@@ -276,7 +278,6 @@ export function RowRenderer({
     config.i18n.settings.closeLabel,
     config.i18n.toolbar.dragLabel,
     row.id,
-    store,
     rows,
     index,
     drag,

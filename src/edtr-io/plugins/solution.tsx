@@ -1,4 +1,3 @@
-import { useSelector } from '@edtr-io/core'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -7,7 +6,7 @@ import {
   string,
   optional,
 } from '@edtr-io/plugin'
-import { isEmpty } from '@edtr-io/store'
+import { selectIsDocumentEmpty, useAppSelector } from '@edtr-io/store'
 import { Icon, styled } from '@edtr-io/ui'
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
@@ -43,7 +42,9 @@ const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
 
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
-  const hasStrategy = !useSelector(isEmpty(strategy.id))
+  const hasStrategy = !useAppSelector((state) =>
+    selectIsDocumentEmpty(state, strategy.id)
+  )
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null

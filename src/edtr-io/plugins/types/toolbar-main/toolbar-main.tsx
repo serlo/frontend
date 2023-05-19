@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import {
   redo,
   undo,
-  hasRedoActions,
-  hasUndoActions,
-  hasPendingChanges,
+  selectHasRedoActions,
+  selectHasUndoActions,
+  selectHasPendingChanges,
+  useAppDispatch,
+  useAppSelector,
 } from '@edtr-io/store'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
@@ -30,10 +31,10 @@ export function ToolbarMain({
   changes,
   license,
 }: ToolbarMainProps) {
-  const dispatch = useDispatch()
-  const undoable = useSelector(hasUndoActions())
-  const redoable = useSelector(hasRedoActions())
-  const isChanged = useSelector(hasPendingChanges())
+  const dispatch = useAppDispatch()
+  const undoable = useAppSelector(selectHasUndoActions)
+  const redoable = useAppSelector(selectHasRedoActions)
+  const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   useLeaveConfirm(isChanged)
@@ -77,8 +78,8 @@ export function ToolbarMain({
           'serlo-button',
           disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
         )}
-        onClick={() => {
-          dispatch(action())
+        onClick={async () => {
+          await dispatch(action())
         }}
         disabled={disabled}
         title={title}

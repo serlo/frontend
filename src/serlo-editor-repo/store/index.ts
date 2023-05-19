@@ -1,23 +1,14 @@
-export * from './actions'
 export * from './documents'
 export * from './focus'
 export * from './history'
 export * from './plugin'
 export * from './plugins'
 export * from './root'
-export { createSelector } from './helpers'
-export type { SubReducer } from './helpers'
-export { createStore } from './store'
-export type { ChangeListener } from './store'
+export { store, useAppDispatch, useAppSelector } from './store'
+export type { RootStore } from './store'
 export type {
-  ActionCreator,
-  ActionCreatorWithoutPayload,
-  ActionCreatorWithPayload,
-  ActionCreatorAction,
+  ChangeListener,
   DocumentState,
-  HistoryState,
-  Selector,
-  SelectorReturnType,
+  ReversibleAction,
   State,
-  Store,
 } from './types'

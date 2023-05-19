@@ -1,5 +1,4 @@
-import { useStore } from '@edtr-io/core'
-import { serializeRootDocument } from '@edtr-io/store'
+import { store, selectSerializedRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
@@ -11,7 +10,6 @@ export function useHandleSave(
   visible: boolean,
   showSubscriptionOptions?: boolean
 ) {
-  const store = useStore()
   const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
@@ -24,7 +22,7 @@ export function useHandleSave(
     }
   }, [visible])
 
-  const serializedRoot = serializeRootDocument()(store.getState())
+  const serializedRoot = selectSerializedRootDocument(store.getState())
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 

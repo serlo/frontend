@@ -4,14 +4,14 @@ import { StateTypeValueType } from '../../plugin'
 import type { TextEditorState } from '../types'
 import { isSelectionAtEnd } from './selection'
 import {
-  Store,
   focusNext,
   focusPrevious,
-  getDocument,
-  getParent,
-  mayInsertChild,
-  mayRemoveChild,
+  selectDocument,
+  selectParent,
+  selectMayInsertChild,
+  selectMayRemoveChild,
   removeChild,
+  RootStore,
 } from '@/serlo-editor-repo/store'
 
 interface DocumentState {
@@ -54,24 +54,24 @@ export function sliceNodesAfterSelection(editor: SlateEditor) {
 export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
-  store: Store,
+  store: RootStore,
   id: string
 ) {
-  const mayRemove = mayRemoveChild(id)(store.getState())
-  const parent = getParent(id)(store.getState())
+  const mayRemove = selectMayRemoveChild(store.getState(), id)
+  const parent = selectParent(store.getState(), id)
   if (!mayRemove || !parent) return
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
   if (Node.string(editor) === '') {
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
-    store.dispatch(focusAction())
+    store.dispatch(focusAction(store.getState()))
     store.dispatch(removeChild({ parent: parent.id, child: id }))
     return
   }
 
-  const mayInsert = mayInsertChild(id)(store.getState())
-  const currentDocument = getDocument(id)(store.getState())
+  const mayInsert = selectMayInsertChild(store.getState(), id)
+  const currentDocument = selectDocument(store.getState(), id)
   if (!mayInsert || !currentDocument) return
 
   const allChildrenOfParent = parent.children || []
@@ -86,7 +86,10 @@ export function mergePlugins(
 
     // Exit if unable to get value of previous sibling
     const previousSibling = allChildrenOfParent[indexWithinParent - 1]
-    const previousDocument = getDocument(previousSibling.id)(store.getState())
+    const previousDocument = selectDocument(
+      store.getState(),
+      previousSibling.id
+    )
     if (!previousDocument) return
 
     // If previous and current plugin are both text plugins
@@ -124,7 +127,7 @@ export function mergePlugins(
 
     // Exit if unable to get value of next sibling
     const nextSibling = allChildrenOfParent[indexWithinParent + 1]
-    const nextDocument = getDocument(nextSibling.id)(store.getState())
+    const nextDocument = selectDocument(store.getState(), nextSibling.id)
     if (!nextDocument) return
 
     // If next and current plugin are both text plugins

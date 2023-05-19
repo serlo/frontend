@@ -13,25 +13,25 @@ import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 import { SubDocumentProps } from '.'
 import { StateUpdater } from '../../internal__plugin-state'
 import {
+  store,
   change,
   focus,
   focusNext,
   focusPrevious,
-  getDocument,
-  mayRemoveChild,
-  getParent,
-  getPlugin,
+  selectDocument,
+  selectMayRemoveChild,
+  selectParent,
+  selectPlugin,
   insertChildAfter,
-  isEmpty,
-  isFocused,
+  selectIsDocumentEmpty,
+  selectIsFocused,
   redo,
   removeChild,
   undo,
-  ChangeAction,
+  useAppSelector,
 } from '../../store'
 import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
-import { useSelector, useStore } from '../store'
 
 const StyledDocument = styled.div({
   outline: 'none',
@@ -52,12 +52,11 @@ type HotKeysHandlers = {
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSettings, setHasSettings] = useState(false)
   const [hasToolbar, setHasToolbar] = useState(false)
-  const document = useSelector(getDocument(id))
-  const focused = useSelector(isFocused(id))
-  const plugin = useSelector(
-    (state) => document && getPlugin(document.plugin)(state)
+  const document = useAppSelector((state) => selectDocument(state, id))
+  const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const plugin = useAppSelector(
+    (state) => document && selectPlugin(state, document.plugin)
   )
-  const store = useStore()
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
@@ -98,17 +97,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return {
       FOCUS_PREVIOUS: (e) => {
         handleKeyDown(e, () => {
-          store.dispatch(focusPrevious())
+          store.dispatch(focusPrevious)
         })
       },
       FOCUS_NEXT: (e) => {
         handleKeyDown(e, () => {
-          store.dispatch(focusNext())
+          store.dispatch(focusNext)
         })
       },
       INSERT_DEFAULT_PLUGIN: (e) => {
         handleKeyDown(e, () => {
-          const parent = getParent(id)(store.getState())
+          const parent = selectParent(store.getState(), id)
           if (!parent) return
           store.dispatch(
             insertChildAfter({
@@ -119,17 +118,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         })
       },
       DELETE_EMPTY: (e) => {
-        if (isEmpty(id)(store.getState())) {
+        if (selectIsDocumentEmpty(store.getState(), id)) {
           handleKeyDown(e, () => {
             if (!e) return
-            if (mayRemoveChild(id)(store.getState())) {
-              const parent = getParent(id)(store.getState())
+            if (selectMayRemoveChild(store.getState(), id)) {
+              const parent = selectParent(store.getState(), id)
               if (!parent) return
 
               if (e.key === 'Backspace') {
-                store.dispatch(focusPrevious())
+                store.dispatch(focusPrevious)
               } else if (e.key === 'Delete') {
-                store.dispatch(focusNext())
+                store.dispatch(focusNext)
               }
               store.dispatch(removeChild({ parent: parent.id, child: id }))
             }
@@ -137,11 +136,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         }
       },
       // TODO: workaround for https://github.com/edtr-io/edtr-io/issues/272
-      UNDO: () => {
-        store.dispatch(undo())
+      UNDO: async () => {
+        await store.dispatch(undo())
       },
-      REDO: () => {
-        store.dispatch(redo())
+      REDO: async () => {
+        await store.dispatch(redo())
       },
     }
 
@@ -157,7 +156,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       e && e.preventDefault()
       next()
     }
-  }, [id, store, plugin])
+  }, [id, plugin])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -168,7 +167,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         store.dispatch(focus(id))
       }
     },
-    [store, focused, id]
+    [focused, id]
   )
 
   const renderIntoSettings = useCallback(
@@ -216,8 +215,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const onChange = (
       initial: StateUpdater<unknown>,
       additional: {
-        executor?: ChangeAction['payload']['state']['executor']
-        reverse?: ChangeAction['payload']['reverse']
+        executor?: ReturnType<typeof change>['payload']['state']['executor']
+        reverse?: ReturnType<typeof change>['payload']['reverse']
       } = {}
     ) => {
       store.dispatch(
@@ -281,7 +280,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     renderIntoToolbar,
     id,
     hotKeysHandlers,
-    store,
   ])
 }
 

@@ -1,11 +1,11 @@
 import * as R from 'ramda'
 
-import { useStore } from '../../core'
 import {
+  store,
   findParent,
-  getDocument,
-  getFocusPath,
-  getFocusTree,
+  selectDocument,
+  selectFocusPath,
+  selectFocusTree,
   Node,
 } from '../../store'
 
@@ -14,8 +14,6 @@ export function useCanDrop(
   draggingAbove: boolean,
   allowedPlugins: string[]
 ) {
-  const store = useStore()
-
   return function (dragId?: string) {
     return (
       dragId &&
@@ -26,17 +24,17 @@ export function useCanDrop(
   }
 
   function isAllowedPlugin(dragId: string) {
-    const doc = getDocument(dragId)(store.getState())
+    const doc = selectDocument(store.getState(), dragId)
     return doc && allowedPlugins.includes(doc.plugin)
   }
 
   function wouldDropInOwnChildren(dragId: string) {
-    const focusPath = getFocusPath(id)(store.getState()) || []
+    const focusPath = selectFocusPath(store.getState(), id) || []
     return focusPath.includes(dragId)
   }
 
   function wouldDropAtInitialPosition(dragId: string) {
-    const focusTree = getFocusTree()(store.getState())
+    const focusTree = selectFocusTree(store.getState())
     if (!focusTree) return true
     const parent = findParent(focusTree, dragId)
 

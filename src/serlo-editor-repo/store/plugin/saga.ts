@@ -1,36 +1,31 @@
 import * as R from 'ramda'
 import { channel, Channel } from 'redux-saga'
-// eslint-disable-next-line import/no-internal-modules
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
 import { EditorPlugin } from '../../internal__plugin'
-import { InternalAction } from '../actions'
-import { change, ChangeAction, getDocument } from '../documents'
-import { getFocusTree } from '../focus'
-import { workaroundCurrySelectorArguments } from '../helpers'
-import { getPlugin } from '../plugins'
-import { SelectorReturnType } from '../types'
+import { change, selectDocument } from '../documents'
+import { selectFocusTree } from '../focus'
+import { selectPlugin } from '../plugins'
 import {
   insertChildAfter,
-  InsertChildAfterAction,
   insertChildBefore,
-  InsertChildBeforeAction,
   removeChild,
-  RemoveChildAction,
-} from './actions'
+} from './saga-actions'
 
 export function* pluginSaga() {
   yield all([
-    takeEvery(insertChildBefore.type, insertChildBeforeSaga),
-    takeEvery(insertChildAfter.type, insertChildAfterSaga),
-    takeEvery(removeChild.type, removeChildSaga),
+    takeEvery(insertChildBefore, insertChildBeforeSaga),
+    takeEvery(insertChildAfter, insertChildAfterSaga),
+    takeEvery(removeChild, removeChildSaga),
   ])
 }
 
-function* insertChildBeforeSaga({ payload }: InsertChildBeforeAction) {
+function* insertChildBeforeSaga({
+  payload,
+}: ReturnType<typeof insertChildBefore>) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const parent: SelectorReturnType<typeof getFocusTree> = yield select(
-    workaroundCurrySelectorArguments(getFocusTree),
+  const parent: ReturnType<typeof selectFocusTree> = yield select(
+    selectFocusTree,
     payload.parent
   )
   if (!parent || !parent.children) return
@@ -46,7 +41,9 @@ function* insertChildBeforeSaga({ payload }: InsertChildBeforeAction) {
   })
 }
 
-function* insertChildAfterSaga({ payload }: InsertChildAfterAction) {
+function* insertChildAfterSaga({
+  payload,
+}: ReturnType<typeof insertChildAfter>) {
   yield call(insertChild, {
     parent: payload.parent,
     previousSibling: payload.sibling,
@@ -54,7 +51,7 @@ function* insertChildAfterSaga({ payload }: InsertChildAfterAction) {
   })
 }
 
-function* removeChildSaga({ payload }: RemoveChildAction) {
+function* removeChildSaga({ payload }: ReturnType<typeof removeChild>) {
   yield call(createPlugin, payload.parent, (plugin, state) => {
     if (typeof plugin.removeChild !== 'function') return
     plugin.removeChild(state, payload.child)
@@ -80,19 +77,19 @@ function* createPlugin(
   f: (plugin: EditorPlugin, state: unknown) => void
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const document: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const document: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   if (!document) return
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const plugin: SelectorReturnType<typeof getPlugin> = yield select(
-    workaroundCurrySelectorArguments(getPlugin),
+  const plugin: ReturnType<typeof selectPlugin> = yield select(
+    selectPlugin,
     document.plugin
   )
   if (!plugin) return
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const chan: Channel<InternalAction> = yield call(channel)
+  const chan: Channel<{ payload: unknown; type: string }> = yield call(channel)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const state = plugin.state.init(document.state, (initial, additional) => {
     const action = change({
@@ -109,10 +106,10 @@ function* createPlugin(
   chan.close()
   yield call(channelSaga, chan)
 
-  function* channelSaga(chan: Channel<InternalAction>) {
+  function* channelSaga(chan: Channel<{ payload: unknown; type: string }>) {
     while (true) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const action: ChangeAction = yield take(chan)
+      const action: ReturnType<typeof change> = yield take(chan)
       yield put(action)
     }
   }

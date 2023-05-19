@@ -1,4 +1,3 @@
-import { useSelector, useStore } from '@edtr-io/core'
 import {
   child,
   ChildStateType,
@@ -10,12 +9,14 @@ import {
   string,
 } from '@edtr-io/plugin'
 import {
-  getFocused,
-  isEmpty,
+  store,
+  selectFocused,
+  selectIsDocumentEmpty,
   focus,
-  getDocument,
+  selectDocument,
   focusNext,
   focusPrevious,
+  useAppSelector,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -67,9 +68,8 @@ const newCell = { content: { plugin: 'text' } }
 
 function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
-  const store = useStore()
 
-  const focusedElement = useSelector(getFocused())
+  const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   const loggedInData = useLoggedInData()
@@ -98,7 +98,7 @@ function SerloTableEditor(props: SerloTableProps) {
         cells: row.columns.map((cell) => {
           return (
             <div className="pr-2 min-h-[2rem]" key={cell.content.id}>
-              {!isEmpty(cell.content.id)(store.getState()) &&
+              {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
                 cell.content.render()}
             </div>
           )
@@ -135,8 +135,8 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
-    store.dispatch(focusNext())
-    store.dispatch(focusPrevious())
+    store.dispatch(focusNext)
+    store.dispatch(focusPrevious)
   }
 
   function renderActiveCellsIntoObject() {
@@ -150,7 +150,10 @@ function SerloTableEditor(props: SerloTableProps) {
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
           const dispatchFocus = () => store.dispatch(focus(cell.content.id))
-          const isClear = isEmpty(cell.content.id)(store.getState())
+          const isClear = selectIsDocumentEmpty(
+            store.getState(),
+            cell.content.id
+          )
 
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
@@ -216,7 +219,7 @@ function SerloTableEditor(props: SerloTableProps) {
   ) {
     const isFocused = cell.content.id === focusedElement
     const isImage =
-      getDocument(cell.content.id)(store.getState())?.plugin === 'image'
+      selectDocument(store.getState(), cell.content.id)?.plugin === 'image'
 
     if (isHead || !isFocused || !isClear) return null
 
@@ -336,14 +339,14 @@ function SerloTableEditor(props: SerloTableProps) {
 
   function isEmptyRow(rowIndex: number) {
     return rows[rowIndex].columns.every((cell) =>
-      isEmpty(cell.content.id)(store.getState())
+      selectIsDocumentEmpty(store.getState(), cell.content.id)
     )
   }
 
   function isEmptyCol(colIndex: number) {
     return rows.every((row) => {
       const cell = row.columns[colIndex]
-      return isEmpty(cell.content.id)(store.getState())
+      return selectIsDocumentEmpty(store.getState(), cell.content.id)
     })
   }
 

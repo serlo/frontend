@@ -1,7 +1,11 @@
-import { useStore } from '@edtr-io/core'
 import { EditorPluginProps, StateTypeReturnType } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/renderer-ui'
-import { DocumentState, replace, serializeDocument } from '@edtr-io/store'
+import {
+  store,
+  DocumentState,
+  replace,
+  selectSerializedDocument,
+} from '@edtr-io/store'
 
 import { layoutState } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -47,7 +51,6 @@ export const LayoutRenderer: React.FunctionComponent<
     remove?: () => void
   }
 > = (props) => {
-  const store = useStore()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
@@ -85,7 +88,7 @@ export const LayoutRenderer: React.FunctionComponent<
     const documents: DocumentState[] = []
 
     props.state.forEach((item) => {
-      const element = serializeDocument(item.child.id)(store.getState())
+      const element = selectSerializedDocument(store.getState(), item.child.id)
 
       if (!element) return
       if (element.plugin === 'rows') {
@@ -136,11 +139,13 @@ export const LayoutRenderer: React.FunctionComponent<
       explanationColumn: Column
       multimediaColumn: Column
     }) {
-      const explanation = serializeDocument(explanationColumn.child.id)(
-        store.getState()
+      const explanation = selectSerializedDocument(
+        store.getState(),
+        explanationColumn.child.id
       )
-      const multimedia = serializeDocument(multimediaColumn.child.id)(
-        store.getState()
+      const multimedia = selectSerializedDocument(
+        store.getState(),
+        multimediaColumn.child.id
       )
       if (!explanation || !multimedia) return
       store.dispatch(
@@ -162,7 +167,10 @@ export const LayoutRenderer: React.FunctionComponent<
   }
 
   function isMultimediaColumn(column: Column) {
-    const columnDocument = serializeDocument(column.child.id)(store.getState())
+    const columnDocument = selectSerializedDocument(
+      store.getState(),
+      column.child.id
+    )
     if (!columnDocument || !(columnDocument.state instanceof Array))
       return false
 

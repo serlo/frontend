@@ -1,45 +1,33 @@
-import {
-  applyMiddleware,
-  createStore as createReduxStore,
-  PreloadedState,
-  Store,
-} from 'redux'
-import _createSagaMiddleware from 'redux-saga'
+import { configureStore } from '@reduxjs/toolkit'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import createSagaMiddleware from 'redux-saga'
 
-import { Action, InternalAction } from './actions'
-import { reducer } from './reducer'
-import { serializeRootDocument } from './root/reducer'
+import { documentsSlice } from './documents'
+import { focusSlice } from './focus'
+import { historySlice } from './history'
+import { pluginsSlice } from './plugins'
+import { rootSlice } from './root'
 import { saga } from './saga'
-import { initialState } from './state'
-import { SelectorReturnType, State } from './types'
 
-const createSagaMiddleware = _createSagaMiddleware
+const sagaMiddleware = createSagaMiddleware()
 
-/**
- * Creates the Edtr.io store
- *
- * @param options - The options
- * @returns The Edtr.io store
- */
-export function createStore(): {
-  store: Store<State, Action>
-} {
-  const sagaMiddleware = createSagaMiddleware()
-  const middlewareEnhancer = applyMiddleware(sagaMiddleware)
+export const store = configureStore({
+  reducer: {
+    documents: documentsSlice.reducer,
+    focus: focusSlice.reducer,
+    history: historySlice.reducer,
+    plugins: pluginsSlice.reducer,
+    root: rootSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat([sagaMiddleware]),
+})
+sagaMiddleware.run(saga)
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const store = createReduxStore<State, InternalAction, {}, {}>(
-    reducer,
-    // Redux does something weird with `unknown` values.
-    initialState as unknown as PreloadedState<State>,
-    middlewareEnhancer
-  ) as Store<State, Action>
-  sagaMiddleware.run(saga)
-
-  return { store }
-}
-
-export type ChangeListener = (payload: {
-  changed: boolean
-  getDocument: () => SelectorReturnType<typeof serializeRootDocument>
-}) => void
+export type RootStore = typeof store
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

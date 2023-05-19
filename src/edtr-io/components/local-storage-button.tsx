@@ -1,5 +1,4 @@
-import { useStore } from '@edtr-io/core'
-import { serializeRootDocument } from '@edtr-io/store'
+import { store, selectSerializedRootDocument } from '@edtr-io/store'
 import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
@@ -7,7 +6,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
-  const store = useStore()
 
   useEffect(() => {
     //reset when modal opens
@@ -22,7 +20,7 @@ export function LocalStorageButton({ open }: { open: boolean }) {
     <button
       className="serlo-button-blue mt-3"
       onClick={() => {
-        const serializedRoot = serializeRootDocument()(store.getState())
+        const serializedRoot = selectSerializedRootDocument(store.getState())
         storeStateToLocalStorage(serializedRoot)
         setSavedToLocalstorage(true)
       }}

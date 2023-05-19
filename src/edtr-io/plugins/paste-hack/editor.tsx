@@ -1,8 +1,8 @@
-import { useStore } from '@edtr-io/core'
 import {
-  getParent,
+  store,
+  selectParent,
   insertChildBefore,
-  serializeDocument,
+  selectSerializedDocument,
   removeChild,
 } from '@edtr-io/store'
 import clsx from 'clsx'
@@ -42,7 +42,6 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
-  const store = useStore()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   function throwError(error?: unknown) {
@@ -64,11 +63,12 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       const content = decoded.right
 
-      const parentPlugin = getParent(props.id)(store.getState())
+      const parentPlugin = selectParent(store.getState(), props.id)
 
       if (
         parentPlugin === null ||
-        serializeDocument(parentPlugin.id)(store.getState())?.plugin !== 'rows'
+        selectSerializedDocument(store.getState(), parentPlugin.id)?.plugin !==
+          'rows'
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'
         showToastNotice(msg)

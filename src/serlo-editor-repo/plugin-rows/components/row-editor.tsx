@@ -2,11 +2,10 @@ import { useRef } from 'react'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { StateTypeReturnType } from '../../plugin'
-import { getPlugins, isFocused } from '../../store'
+import { selectPlugins, selectIsFocused, useAppSelector } from '../../store'
 import { styled } from '../../ui'
 import { RowRenderer } from './row-renderer'
 import { RowSeparator } from './row-separator'
-import { useSelector } from '@/serlo-editor-repo/core'
 
 const DropContainer = styled.div({
   position: 'relative',
@@ -34,8 +33,8 @@ export function RowEditor({
   visuallyEmphasizeAddButton = false,
   isLast = false,
 }: RowEditorProps) {
-  const focused = useSelector(isFocused(row.id))
-  const plugins = useSelector(getPlugins())
+  const focused = useAppSelector((state) => selectIsFocused(state, row.id))
+  const plugins = useAppSelector((state) => selectPlugins(state))
   const dropContainer = useRef<HTMLDivElement>(null)
 
   return (

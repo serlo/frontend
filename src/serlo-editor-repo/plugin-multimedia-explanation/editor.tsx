@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
-import { PluginToolbarButton, useSelector } from '../core'
+import { PluginToolbarButton } from '../core'
 import {
-  hasFocusedDescendant,
-  isEmpty,
-  isFocused,
-  serializeDocument,
+  selectHasFocusedDescendant,
+  selectIsDocumentEmpty,
+  selectIsFocused,
+  selectSerializedDocument,
+  useAppSelector,
 } from '../store'
 import { styled, faRandom, Icon, faTrashAlt } from '../ui'
 import { useMultimediaExplanationConfig } from './config'
@@ -67,19 +68,25 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
     props.state.illustrating.set(e.target.value === 'illustrating')
   }
-  const textFocused = useSelector(
-    hasFocusedDescendant(props.state.explanation.id)
+  const textFocused = useAppSelector((state) =>
+    selectHasFocusedDescendant(state, props.state.explanation.id)
   )
 
-  const multimediaFocused = useSelector(isFocused(props.state.multimedia.id))
+  const multimediaFocused = useAppSelector((state) =>
+    selectIsFocused(state, props.state.multimedia.id)
+  )
 
   const hasFocus = props.focused || multimediaFocused || textFocused
-  const withoutMultimedia = useSelector(isEmpty(props.state.multimedia.id))
+  const withoutMultimedia = useAppSelector((state) =>
+    selectIsDocumentEmpty(state, props.state.multimedia.id)
+  )
 
   const multimedia: {
     plugin: string
     state?: unknown
-  } | null = useSelector(serializeDocument(props.state.multimedia.id))
+  } | null = useAppSelector((state) =>
+    selectSerializedDocument(state, props.state.multimedia.id)
+  )
   const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
     Record<string, unknown>
   >({})

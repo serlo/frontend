@@ -1,7 +1,8 @@
-import { useMemo, useEffect, ReactNode, useContext, ContextType } from 'react'
+import { useMemo, useEffect, ReactNode, ContextType } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { configure, GlobalHotKeys } from 'react-hotkeys'
+import { Provider } from 'react-redux'
 
 import { createDefaultDocumentEditor } from '../default-document-editor'
 import { createDefaultPluginToolbar } from '../default-plugin-toolbar'
@@ -10,27 +11,22 @@ import {
   initRoot,
   undo,
   redo,
-  getPendingChanges,
-  getRoot,
-  hasPendingChanges,
-  serializeRootDocument,
-  createStore,
+  selectPendingChanges,
+  selectRoot,
+  selectHasPendingChanges,
+  selectSerializedRootDocument,
+  store,
   ChangeListener,
+  useAppDispatch,
+  useAppSelector,
 } from '../store'
 import {
   DocumentEditorContext,
+  EditableContext,
+  ErrorContext,
   PreferenceContextProvider,
   PluginToolbarContext,
 } from './contexts'
-import {
-  Provider,
-  EditorContext,
-  EditableContext,
-  ErrorContext,
-  useSelector,
-  useDispatch,
-  useStore,
-} from './store'
 import { SubDocument } from './sub-document'
 
 configure({
@@ -48,10 +44,6 @@ let mountedProvider = false
  * Renders a single editor for an Edtr.io document
  */
 export function Editor<K extends string = string>(props: EditorProps<K>) {
-  const store = useMemo(() => {
-    return createStore().store
-  }, [])
-
   return <Provider store={store}>{renderChildren()}</Provider>
 
   function renderChildren() {
@@ -81,10 +73,6 @@ export function EditorProvider(props: EditorProviderProps) {
       mountedProvider = false
     }
   }, [])
-  const store = useMemo(() => {
-    return createStore().store
-  }, [])
-
   const child = <Provider store={store}>{children}</Provider>
   if (omitDragDropContext) return child
   return <DndProvider backend={HTML5Backend}>{child}</DndProvider>
@@ -92,30 +80,6 @@ export function EditorProvider(props: EditorProviderProps) {
 export interface EditorProviderProps {
   omitDragDropContext?: boolean
   children: ReactNode
-}
-
-/**
- * Renders an editor for an Edtr.io document
- * @param props - The {@link EditorProps | props} for the document
- */
-export function Document<K extends string = string>(
-  props: Omit<EditorProps<K>, 'initialState'> &
-    (
-      | { mirror: true; initialState?: unknown }
-      | { mirror?: false; initialState: EditorProps<K>['initialState'] }
-    )
-) {
-  const storeContext = useContext(EditorContext)
-
-  if (!storeContext) {
-    // eslint-disable-next-line no-console
-    console.error(
-      'Could not connect to Redux Store. Please make sure to wrap all instances of Document in an EditorProvider'
-    )
-    return null
-  }
-
-  return <InnerDocument {...props} />
 }
 
 const hotKeysKeyMap = {
@@ -137,25 +101,22 @@ export function InnerDocument<K extends string = string>({
     | { mirror: true; initialState?: unknown }
     | { mirror?: false; initialState: EditorProps<K>['initialState'] }
   )) {
-  const id = useSelector((state) => {
-    return getRoot()(state)
-  })
-  const dispatch = useDispatch()
-  const fullStore = useStore()
+  const id = useAppSelector(selectRoot)
+  const dispatch = useAppDispatch()
   useEffect(() => {
     if (typeof onChange !== 'function') return
-    let pendingChanges = getPendingChanges()(fullStore.getState())
-    return fullStore.subscribe(() => {
-      const currentPendingChanges = getPendingChanges()(fullStore.getState())
+    let pendingChanges = selectPendingChanges(store.getState())
+    return store.subscribe(() => {
+      const currentPendingChanges = selectPendingChanges(store.getState())
       if (currentPendingChanges !== pendingChanges) {
         onChange({
-          changed: hasPendingChanges()(fullStore.getState()),
-          getDocument: () => serializeRootDocument()(fullStore.getState()),
+          changed: selectHasPendingChanges(store.getState()),
+          getDocument: () => selectSerializedRootDocument(store.getState()),
         })
         pendingChanges = currentPendingChanges
       }
     })
-  }, [onChange, fullStore])
+  }, [onChange])
 
   useEffect(() => {
     if (!props.mirror) {

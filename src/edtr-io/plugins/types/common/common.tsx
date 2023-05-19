@@ -1,4 +1,4 @@
-import { useSelector, PluginToolbarButton } from '@edtr-io/core'
+import { PluginToolbarButton } from '@edtr-io/core'
 import {
   StateType,
   StateTypesSerializedType,
@@ -14,7 +14,7 @@ import {
   string,
   optional,
 } from '@edtr-io/plugin'
-import { getDocument } from '@edtr-io/store'
+import { selectDocument, useAppSelector } from '@edtr-io/store'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
 import { mapObjIndexed } from 'ramda'
 
@@ -220,7 +220,9 @@ export function OptionalChild(props: {
   onRemove: () => void
 }) {
   const expectedStateType = object(entity)
-  const document = useSelector(getDocument(props.state.id)) as {
+  const document = useAppSelector((state) =>
+    selectDocument(state, props.state.id)
+  ) as {
     state: StateTypeValueType<typeof expectedStateType>
   }
   const children = props.state.render({

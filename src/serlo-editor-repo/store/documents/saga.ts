@@ -1,61 +1,46 @@
 import { channel, Channel } from 'redux-saga'
-// eslint-disable-next-line import/no-internal-modules
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 import generate from 'shortid'
 
+import {
+  selectDocument,
+  change,
+  insert,
+  pureChange,
+  pureInsert,
+  pureRemove,
+  pureReplace,
+  pureUnwrap,
+  pureWrap,
+  remove,
+  replace,
+  replaceText,
+  pureReplaceText,
+  unwrap,
+  wrap,
+} from '.'
+import type { ReversibleAction } from '..'
 import { invariant } from '../../internal__dev-expression'
 import {
   StateUpdater,
   StoreDeserializeHelpers,
 } from '../../internal__plugin-state'
-import { ReversibleAction } from '../actions'
-import { workaroundCurrySelectorArguments } from '../helpers'
-import { commit, temporaryCommit } from '../history/actions'
-import { getPlugin } from '../plugins/reducer'
-import { SelectorReturnType } from '../types'
-import {
-  change,
-  ChangeAction,
-  insert,
-  InsertAction,
-  pureChange,
-  PureChangeAction,
-  pureInsert,
-  pureRemove,
-  pureReplace,
-  PureReplaceAction,
-  pureUnwrap,
-  PureUnwrapAction,
-  pureWrap,
-  PureWrapAction,
-  remove,
-  RemoveAction,
-  replace,
-  ReplaceAction,
-  replaceText,
-  ReplaceTextAction,
-  pureReplaceText,
-  PureReplaceTextAction,
-  unwrap,
-  UnwrapAction,
-  wrap,
-  WrapAction,
-} from './actions'
-import { getDocument } from './reducer'
+import { commit, temporaryCommit } from '../history'
+import { selectPlugin } from '../plugins'
 
 export function* documentsSaga() {
   yield all([
-    takeEvery(insert.type, insertSaga),
-    takeEvery(remove.type, removeSaga),
-    takeEvery(change.type, changeSaga),
-    takeEvery(wrap.type, wrapSaga),
-    takeEvery(unwrap.type, unwrapSaga),
-    takeEvery(replace.type, replaceSaga),
-    takeEvery(replaceText.type, replaceTextSaga),
+    takeEvery(insert, insertSaga),
+    takeEvery(remove, removeSaga),
+    takeEvery(change, changeSaga),
+    takeEvery(wrap, wrapSaga),
+    takeEvery(unwrap, unwrapSaga),
+    takeEvery(replace, replaceSaga),
+    takeEvery(replaceText, replaceTextSaga),
   ])
 }
 
-function* insertSaga(action: InsertAction) {
+function* insertSaga(action: ReturnType<typeof insert>) {
   const initialState = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [actions]: [ReversibleAction[], unknown] = yield call(
@@ -66,11 +51,11 @@ function* insertSaga(action: InsertAction) {
   yield put(commit(actions))
 }
 
-function* removeSaga(action: RemoveAction) {
+function* removeSaga(action: ReturnType<typeof remove>) {
   const id = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const doc: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const doc: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   if (!doc) return
@@ -88,11 +73,11 @@ function* removeSaga(action: RemoveAction) {
   yield put(commit(actions))
 }
 
-function* changeSaga(action: ChangeAction) {
+function* changeSaga(action: ReturnType<typeof change>) {
   const { id, state: stateHandler, reverse } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const document: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const document: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   if (!document) return
@@ -105,9 +90,7 @@ function* changeSaga(action: ChangeAction) {
     }
   )
 
-  const createChange = (
-    state: unknown
-  ): ReversibleAction<PureChangeAction, PureChangeAction> => {
+  const createChange = (state: unknown): ReversibleAction => {
     return {
       action: pureChange({ id, state }),
       reverse: pureChange({
@@ -129,7 +112,6 @@ function* changeSaga(action: ChangeAction) {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const chan: Channel<ChannelAction> = yield call(channel)
-
     yield put(
       temporaryCommit({
         initial: actions,
@@ -174,8 +156,10 @@ function* changeSaga(action: ChangeAction) {
       const payload: ChannelAction = yield take(chan)
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const currentDocument: SelectorReturnType<typeof getDocument> =
-        yield select(workaroundCurrySelectorArguments(getDocument), id)
+      const currentDocument: ReturnType<typeof selectDocument> = yield select(
+        selectDocument,
+        id
+      )
       if (!currentDocument) continue
 
       const updater =
@@ -197,31 +181,31 @@ function* changeSaga(action: ChangeAction) {
   }
 }
 
-function* wrapSaga(action: WrapAction) {
+function* wrapSaga(action: ReturnType<typeof wrap>) {
   const { id, document: documentHandler } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const currentDocument: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   const newId = generate()
   if (!currentDocument) return
-  const reversibleAction: ReversibleAction<PureWrapAction, PureUnwrapAction> = {
+  const reversibleAction: ReversibleAction = {
     action: pureWrap({ id, newId, document: documentHandler(newId) }),
     reverse: pureUnwrap({ id, oldId: newId }),
   }
   yield put(commit([reversibleAction]))
 }
 
-function* unwrapSaga(action: UnwrapAction) {
+function* unwrapSaga(action: ReturnType<typeof unwrap>) {
   const { id, oldId } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const currentDocument: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   if (!currentDocument) return
-  const reversibleAction: ReversibleAction<PureUnwrapAction, PureWrapAction> = {
+  const reversibleAction: ReversibleAction = {
     action: pureUnwrap({ id, oldId }),
     reverse: pureWrap({
       id,
@@ -232,17 +216,17 @@ function* unwrapSaga(action: UnwrapAction) {
   yield put(commit([reversibleAction]))
 }
 
-function* replaceSaga(action: ReplaceAction) {
+function* replaceSaga(action: ReturnType<typeof replace>) {
   const { id } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const currentDocument: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   if (!currentDocument) return
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const plugin: SelectorReturnType<typeof getPlugin> = yield select(
-    workaroundCurrySelectorArguments(getPlugin),
+  const plugin: ReturnType<typeof selectPlugin> = yield select(
+    selectPlugin,
     action.payload.plugin
   )
   if (!plugin) return
@@ -269,10 +253,7 @@ function* replaceSaga(action: ReplaceAction) {
     pendingDocs
   )
 
-  const reversibleAction: ReversibleAction<
-    PureReplaceAction,
-    PureReplaceAction
-  > = {
+  const reversibleAction: ReversibleAction = {
     action: pureReplace({
       id,
       plugin: action.payload.plugin,
@@ -287,11 +268,11 @@ function* replaceSaga(action: ReplaceAction) {
   yield put(commit([...actions, reversibleAction]))
 }
 
-function* replaceTextSaga(action: ReplaceTextAction) {
+function* replaceTextSaga(action: ReturnType<typeof replaceText>) {
   const { id, document: documentHandler } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: SelectorReturnType<typeof getDocument> = yield select(
-    workaroundCurrySelectorArguments(getDocument),
+  const currentDocument: ReturnType<typeof selectDocument> = yield select(
+    selectDocument,
     id
   )
   const newId = generate()
@@ -299,10 +280,7 @@ function* replaceTextSaga(action: ReplaceTextAction) {
   // TODO: give previous doc new id
   // TODO: pass new id to document handler
   if (!currentDocument) return
-  const reversibleAction: ReversibleAction<
-    PureReplaceTextAction,
-    PureReplaceTextAction
-  > = {
+  const reversibleAction: ReversibleAction = {
     action: pureReplaceText({ id, newId, document: documentHandler(newId) }),
     // TODO: here, we should delete the document with newId
     reverse: pureReplaceText({
@@ -339,8 +317,8 @@ export function* handleRecursiveInserts(
   const result = act(helpers)
   for (let doc; (doc = pendingDocs.pop()); ) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const plugin: SelectorReturnType<typeof getPlugin> = yield select(
-      workaroundCurrySelectorArguments(getPlugin),
+    const plugin: ReturnType<typeof selectPlugin> = yield select(
+      selectPlugin,
       doc.plugin
     )
     if (!plugin) {
@@ -354,8 +332,10 @@ export function* handleRecursiveInserts(
       state = plugin.state.deserialize(doc.state, helpers)
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const currentDocument: SelectorReturnType<typeof getDocument> =
-      yield select(workaroundCurrySelectorArguments(getDocument), doc.id)
+    const currentDocument: ReturnType<typeof selectDocument> = yield select(
+      selectDocument,
+      doc.id
+    )
     if (currentDocument) {
       actions.push({
         action: pureReplace({

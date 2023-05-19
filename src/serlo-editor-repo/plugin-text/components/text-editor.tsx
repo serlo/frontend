@@ -16,7 +16,7 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HotKeys, useStore } from '../../core'
+import { HotKeys } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
@@ -41,14 +41,15 @@ import { Suggestions } from './suggestions'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
+  store,
   focusNext,
   focusPrevious,
-  getDocument,
-  getParent,
-  getPlugins,
+  selectDocument,
+  selectParent,
+  selectPlugins,
   insertChildAfter,
-  mayInsertChild,
-  mayRemoveChild,
+  selectMayInsertChild,
+  selectMayRemoveChild,
   replace,
 } from '@/serlo-editor-repo/store'
 
@@ -61,7 +62,6 @@ export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
-  const store = useStore()
   const loggedInData = useLoggedInData()
   const { state, id, editable, focused } = props
 
@@ -134,9 +134,11 @@ export function TextEditor(props: TextEditorProps) {
         ReactEditor.focus(editor)
       } catch (error) {
         // Focusing did not work. Continue anyway.
+        // eslint-disable-next-line no-console
         console.warn(
           'Failed to focus text editor. Continued execution. Details:'
         )
+        // eslint-disable-next-line no-console
         console.warn(error)
       }
     })
@@ -195,13 +197,13 @@ export function TextEditor(props: TextEditorProps) {
       const isListActive =
         isOrderedListActive(editor) || isUnorderedListActive(editor)
       if (isHotkey('enter', event) && !isListActive) {
-        const document = getDocument(id)(store.getState())
+        const document = selectDocument(store.getState(), id)
         if (!document) return
 
-        const mayInsert = mayInsertChild(id)(store.getState())
+        const mayInsert = selectMayInsertChild(store.getState(), id)
         if (!mayInsert) return
 
-        const parent = getParent(id)(store.getState())
+        const parent = selectParent(store.getState(), id)
         if (!parent) return
 
         event.preventDefault()
@@ -250,13 +252,13 @@ export function TextEditor(props: TextEditorProps) {
         isHotkey('up', event) && isSelectionAtStart(editor, selection)
       if (isUpArrowAtStart) {
         event.preventDefault()
-        store.dispatch(focusPrevious())
+        store.dispatch(focusPrevious)
       }
       const isDownArrowAtEnd =
         isHotkey('down', event) && isSelectionAtEnd(editor, selection)
       if (isDownArrowAtEnd) {
         event.preventDefault()
-        store.dispatch(focusNext())
+        store.dispatch(focusNext)
       }
     }
 
@@ -270,14 +272,14 @@ export function TextEditor(props: TextEditorProps) {
     const isListActive =
       isOrderedListActive(editor) || isUnorderedListActive(editor)
 
-    const document = getDocument(id)(store.getState())
+    const document = selectDocument(store.getState(), id)
     if (!document) return
 
-    const mayInsert = mayInsertChild(id)(store.getState())
+    const mayInsert = selectMayInsertChild(store.getState(), id)
     if (!mayInsert) return
 
     const parentPluginName = document.plugin
-    const plugins = getPlugins()(store.getState())
+    const plugins = selectPlugins(store.getState())
 
     // Handle pasted images
     const files = Array.from(event.clipboardData.files)
@@ -316,14 +318,17 @@ export function TextEditor(props: TextEditorProps) {
     }
 
     function insertPlugin(plugin: string, { state }: { state?: unknown }) {
-      const pluginAllowsRemovingChild = mayRemoveChild(id)(store.getState())
+      const pluginAllowsRemovingChild = selectMayRemoveChild(
+        store.getState(),
+        id
+      )
       const isEditorEmpty = Node.string(editor) === ''
       if (pluginAllowsRemovingChild && isEditorEmpty) {
         store.dispatch(replace({ id, plugin, state }))
         return
       }
 
-      const parent = getParent(id)(store.getState())
+      const parent = selectParent(store.getState(), id)
       if (!parent) return
 
       const slicedNodes = sliceNodesAfterSelection(editor)

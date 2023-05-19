@@ -1,12 +1,6 @@
-import { Store as ReduxStore } from 'redux'
+import { Action } from '@reduxjs/toolkit'
 
 import { EditorPlugin } from '../internal__plugin'
-import { Action, ReversibleAction } from './actions'
-
-/**
- * Store state
- */
-export type Store = ReduxStore<State, Action>
 
 export interface State {
   plugins: Record<string, EditorPlugin>
@@ -21,7 +15,7 @@ export interface DocumentState {
   state: unknown
 }
 
-export interface HistoryState {
+interface HistoryState {
   initialState?: {
     documents: State['documents']
   }
@@ -30,35 +24,12 @@ export interface HistoryState {
   pendingChanges: number
 }
 
-/**
- * Action creators
- */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type ActionCreator<T = string, P = any> =
-  | ActionCreatorWithoutPayload<T>
-  | ActionCreatorWithPayload<T, P>
-export interface ActionCreatorWithoutPayload<T = string> {
-  (): {
-    type: T
-  }
-  type: T
+export interface ReversibleAction {
+  action: Action
+  reverse: Action
 }
-export interface ActionCreatorWithPayload<T = string, P = any> {
-  (payload: P): {
-    type: T
-    payload: P
-  }
-  type: T
-}
-export type ActionCreatorAction<T extends ActionCreator> = ReturnType<T>
 
-/**
- * Selectors
- */
-export type Selector<T = any, P extends any[] = []> = (
-  ...args: P
-) => (State: State) => T
-
-export type SelectorReturnType<T extends Selector<any, any>> = ReturnType<
-  ReturnType<T>
->
+export type ChangeListener = (payload: {
+  changed: boolean
+  getDocument: () => DocumentState | null
+}) => void
