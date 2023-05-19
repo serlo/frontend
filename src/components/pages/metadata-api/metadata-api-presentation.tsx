@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
+import { EditorContact } from '../editor/editor-contact'
 import { Link } from '@/components/content/link'
 
-export function MetadataApiPresentation() {
+export const MetadataApiPresentation = () => {
   return (
     <>
       <div
@@ -83,8 +84,8 @@ export function MetadataApiPresentation() {
             </h2>
             <div className="text-left mx-side">
               <p className="mt-4 text-xl leading-cozy flex-1">
-                Join our growing community by integrating our content through
-                the Serlo Metadata API into your apps and change the future of
+                Join our growing community by linking to our content through the
+                Serlo Metadata API from your apps and change the future of
                 education with us!
               </p>
               <p className="mt-2 text-xl leading-cozy">
@@ -105,7 +106,7 @@ export function MetadataApiPresentation() {
                   <Link href="https://wirlernenonline.de/">
                     WirLernenOnline
                   </Link>{' '}
-                  that have already integrated our content
+                  that have already integrated our metadata
                 </li>
                 <li>
                   Fully compliant with the state of the art{' '}
@@ -120,6 +121,20 @@ export function MetadataApiPresentation() {
         <CodeSnippets />
         <div className="mt-4" />
         <ExampleResponse />
+        <p className="mt-20 text-xl leading-cozy flex-1 text-center">
+          <b className="tracking-tight">
+            Are you interested in using our Metadata API?
+          </b>
+          <br />
+          Contact us with your integration requirements or read more about the
+          Metadata API in our{' '}
+          <Link href="https://github.com/serlo/documentation/wiki/Metadata-API">
+            Wiki
+          </Link>
+        </p>
+        <div className="text-center mt-8 mb-8">
+          <EditorContact lastName="Kulla" />
+        </div>
       </div>
     </>
   )
@@ -127,64 +142,122 @@ export function MetadataApiPresentation() {
 
 const codeSnippets: Record<string, string> = {
   'Node.js': `
-const fetch = require('node-fetch');
+    const fetch = require('node-fetch');
 
-const payload = {
-  first: 10,
-  after: 1234,
-  instance: 'de',
-  modified_after: '2023-05-17T00:00:00Z'
-};
+    const payload = {
+      first: 10,
+      after: 1234,
+      instance: 'de',
+      modified_after: '2023-05-17T00:00:00Z'
+    };
 
-fetch('https://api.serlo.org/graphql', {
-  method: 'POST',
-  body: JSON.stringify(payload),
-  headers: { 'Content-Type': 'application/json' }
-})
-.then(res => res.json())
-.then(json => console.log(json));
+    fetch('https://api.serlo.org/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: \`
+          query($first: Int, $after: Int, $instance: String, $modified_after: String) {
+            metadata {
+              entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
+                nodes
+              }
+            }
+          }
+        \`,
+        variables: payload,
+      }),
+    })
+    .then(res => res.json())
+    .then(json => console.log(json));
   `,
   Python: `
-import requests
-import json
+    import requests
 
-payload = {
-  "first": 10,
-  "after": 1234,
-  "instance": "de",
-  "modified_after": "2023-05-17T00:00:00Z"
-}
+    payload = {
+      "first": 10,
+      "after": 1234,
+      "instance": "de",
+      "modified_after": "2023-05-17T00:00:00Z"
+    }
 
-response = requests.post('https://api.serlo.org/graphql',
-  data=json.dumps(payload),
-  headers={'Content-Type': 'application/json'})
+    response = requests.post(
+      "https://api.serlo.org/graphql",
+      headers={"Content-Type": "application/json"},
+      json={
+        "query": """
+          query($first: Int, $after: Int, $instance: String, $modified_after: String) {
+            metadata {
+              entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
+                nodes
+              }
+            }
+          }
+        """,
+        "variables": payload,
+      },
+    )
 
-print(response.json())
-`,
+    print(response.json())
+  `,
   Rust: `
-use reqwest::Client;
-use serde_json::json;
+    use reqwest::header;
+    use serde_json::json;
 
-#[tokio::main]
-async fn main() -> Result<(), reqwest::Error> {
-  let client = Client::new();
+    #[tokio::main]
+    async fn main() -> Result<(), reqwest::Error> {
+      let client = reqwest::Client::new();
+      let payload = json!({
+        "first": 10,
+        "after": 1234,
+        "instance": "de",
+        "modified_after": "2023-05-17T00:00:00Z"
+      });
+      let res = client.post("https://api.serlo.org/graphql")
+        .header(header::CONTENT_TYPE, "application/json")
+        .body(json!({
+          "query": "
+            query($first: Int, $after: Int, $instance: String, $modified_after: String) {
+              metadata {
+                entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
+                  nodes
+                }
+              }
+            }
+          ",
+          "variables": payload
+        }).to_string())
+        .send().await?;
 
-  let payload = json!({
-    "first": 10,
-    "after": 1234,
-    "instance": "de",
-    "modified_after": "2023-05-17T00:00:00Z"
-  });
+      let body = res.text().await?;
+      println!("{}", body);
 
-  let res = client.post("https://api.serlo.org/graphql")
-    .json(&payload)
-    .send()
-    .await?;
-
-  let response_json: serde_json::Value = res.json().await?;
-
-  println!("{:#?}", response_json);
-}`,
+      Ok(())
+    }
+  `,
+  curl: `
+  curl -X POST \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "query": "
+      query($first: Int, $after: Int, $instance: String, $modified_after: String) {
+        metadata {
+          entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
+            nodes
+          }
+        }
+      }
+    ",
+    "variables": {
+      "first": 10,
+      "after": 1234,
+      "instance": "de",
+      "modified_after": "2023-05-17T00:00:00Z"
+    }
+  }' \\
+  https://api.serlo.org/graphql
+`,
 }
 
 const CodeSnippets = () => {
@@ -193,7 +266,7 @@ const CodeSnippets = () => {
   return (
     <div className="tabs text-center">
       <div className="tab-list">
-        {['Node.js', 'Python', 'Rust'].map((tabName) => (
+        {Object.keys(codeSnippets).map((tabName) => (
           <button
             key={tabName}
             onClick={() => setActiveTab(tabName)}
@@ -212,7 +285,7 @@ const CodeSnippets = () => {
         >
           Copy
         </button>
-        <pre className="text-left ml-4">
+        <pre className="text-left ml-4 overflow-x-auto">
           <code>{codeSnippets[activeTab]}</code>
         </pre>
       </div>

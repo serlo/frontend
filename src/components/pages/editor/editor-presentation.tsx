@@ -10,6 +10,7 @@ import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
+import { EditorContact } from './editor-contact'
 
 export const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
@@ -155,7 +156,9 @@ export function EditorPresentation() {
                 Please contact us with your integration requirements or feature
                 requests.
               </p>
-              <div className="text-center mt-8">{renderContact()}</div>
+              <div className="text-center mt-8">
+                <EditorContact firstName='Simon' />
+              </div>
             </div>
           </div>
         </section>
@@ -321,38 +324,6 @@ export function EditorPresentation() {
       >
         Stay updated!
       </a>
-    )
-  }
-
-  function renderContact() {
-    const {
-      firstName,
-      lastName,
-      position,
-      photo,
-      extraLinkUrl,
-      extraLinkText,
-    } = teamData.find((person) => person.firstName === 'Simon')!
-
-    return (
-      <div className="text-left flex text-base justify-center">
-        <img
-          className="rounded-full max-w-[6rem] mr-4"
-          alt={`${firstName} ${lastName}`}
-          src={photo}
-        />
-        <div className="h-min self-center -mt-2">
-          <b>
-            {firstName} {lastName}
-          </b>
-          <br />
-          {position}
-          <br />
-          <Link href={extraLinkUrl} className="mt-1 inline-block">
-            {extraLinkText}
-          </Link>
-        </div>
-      </div>
     )
   }
 

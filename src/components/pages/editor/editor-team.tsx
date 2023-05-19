@@ -44,8 +44,8 @@ export const teamData: TeamDataEntry[] = [
     firstName: 'Stephan',
     lastName: 'Kulla',
     position: 'Software',
-    extraLinkUrl: '',
-    extraLinkText: '',
+    extraLinkUrl: 'mailto:kulla@serlo.org',
+    extraLinkText: 'kulla@serlo.org',
     photo:
       'https://assets.serlo.org/5fc610675ef12_e33cf10d89b893ff3cc99cebf5e1a1686ade44ec.jpg',
   },
