@@ -11,9 +11,9 @@ import {
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
+import { ClientOnlyPortal } from './client-only-portal'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
@@ -44,7 +44,7 @@ export function ToolbarMain({
 
   return (
     <>
-      {createPortal(
+      <ClientOnlyPortal selector=".controls-portal">
         <nav
           className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
@@ -53,9 +53,8 @@ export function ToolbarMain({
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
-        </nav>,
-        document.getElementsByClassName('controls-portal')[0]
-      )}
+        </nav>
+      </ClientOnlyPortal>
       <SaveModal
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
