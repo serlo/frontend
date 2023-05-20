@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 import {
   applyMiddleware,
+  compose,
   createStore as createReduxStore,
   PreloadedState,
   Store,
@@ -17,6 +18,11 @@ import { InternalState, SelectorReturnType, State } from './storetypes'
 
 const createSagaMiddleware = _createSagaMiddleware
 
+const composeEnhancers =
+  (typeof window !== 'undefined' &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+  compose
+
 /**
  * Creates the Edtr.io store
  *
@@ -31,7 +37,7 @@ export function createStore<K extends string>(
   const { scopes, createEnhancer } = options
   const sagaMiddleware = createSagaMiddleware()
   const defaultEnhancer = applyMiddleware(sagaMiddleware)
-  const enhancer = createEnhancer(defaultEnhancer)
+  const enhancer = composeEnhancers(defaultEnhancer)
 
   const initialStates = R.mapObjIndexed((scope) => {
     return {
