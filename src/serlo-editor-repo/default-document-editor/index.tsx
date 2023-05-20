@@ -16,12 +16,6 @@ interface ToolbarProps {
   isHovered: boolean
 }
 
-interface ContainerProps {
-  noHeight?: boolean
-  isFocused?: boolean
-  isHovered?: boolean
-}
-
 const ToolbarContent = styled.div<ToolbarProps>(({ isFocused, isHovered }) => ({
   backgroundColor: '#fff',
   borderRadius: '5px 0 0 5px',
@@ -59,14 +53,10 @@ const ToolbarContainer = styled.div<ToolbarProps>(
   })
 )
 
-const Container = styled.div<ContainerProps>(
-  ({ noHeight, isFocused, isHovered }: ContainerProps) => ({
-    ...(!noHeight
-      ? {
-          minHeight: '10px',
-          marginBottom: '25px',
-        }
-      : {}),
+const Container = styled.div<Partial<ToolbarProps>>(
+  ({ isFocused, isHovered }) => ({
+    minHeight: '10px',
+    marginBottom: '25px',
     position: 'relative',
     borderLeft: '2px solid transparent',
     paddingLeft: '5px',
@@ -107,12 +97,6 @@ const BorderlessOverlayButton = styled.button({
   minWidth: '0 !important',
 })
 
-/**
- * Creates the default {@link @edtr-io/document-editor#DocumentEditorProps | document editor}
- *
- * @param config - Configuration
- * @returns The default {@link @edtr-io/document-editor#DocumentEditorProps | document editor}
- */
 export function createDefaultDocumentEditor(
   config: DefaultDocumentEditorConfig = {}
 ): React.ComponentType<DocumentEditorProps> {
@@ -236,12 +220,10 @@ export function createDefaultDocumentEditor(
   }
 }
 
-/** @beta */
 export interface DefaultDocumentEditorConfig {
   i18n?: DeepPartial<DefaultDocumentEditorI18n>
 }
 
-/** @beta */
 export interface DefaultDocumentEditorI18n {
   settings: {
     buttonLabel: string
