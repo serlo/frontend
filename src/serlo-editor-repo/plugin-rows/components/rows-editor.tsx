@@ -1,5 +1,5 @@
 import { RowsProps } from '..'
-import { selectPluginTypesOnPathToRoot, useAppSelector } from '../../store'
+import { selectAncestorPluginTypes, useAppSelector } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
@@ -13,7 +13,7 @@ const ReadOnlyRow = styled.div({
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
   const pluginTypesOfAncestors = useAppSelector((state) =>
-    selectPluginTypesOnPathToRoot(state, props.id)
+    selectAncestorPluginTypes(state, props.id)
   )
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {

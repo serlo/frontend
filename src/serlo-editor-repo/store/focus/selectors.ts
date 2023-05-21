@@ -54,7 +54,7 @@ export const selectParent = createSelector(
   }
 )
 
-export const selectFocusPath = createDeepEqualSelector(
+export const selectAncestorPluginIds = createDeepEqualSelector(
   [(state: State) => state, (_state, defaultLeaf?: string) => defaultLeaf],
   (state, defaultLeaf = undefined) => {
     const leaf = defaultLeaf ? defaultLeaf : selectFocused(state)
@@ -76,7 +76,7 @@ export const selectFocusPath = createDeepEqualSelector(
   }
 )
 
-export const selectPluginTypesOnPathToRoot = createDeepEqualSelector(
+export const selectAncestorPluginTypes = createDeepEqualSelector(
   [(state: State) => state, (_state, leafId: string) => leafId],
   (state, leafId) => {
     const rootNode = selectFocusTree(state)

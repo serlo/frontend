@@ -4,7 +4,7 @@ import {
   store,
   findParent,
   selectDocument,
-  selectFocusPath,
+  selectAncestorPluginIds,
   selectFocusTree,
   Node,
 } from '../../store'
@@ -29,7 +29,7 @@ export function useCanDrop(
   }
 
   function wouldDropInOwnChildren(dragId: string) {
-    const focusPath = selectFocusPath(store.getState(), id) || []
+    const focusPath = selectAncestorPluginIds(store.getState(), id) || []
     return focusPath.includes(dragId)
   }
 
