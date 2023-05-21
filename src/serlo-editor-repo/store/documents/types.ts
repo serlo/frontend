@@ -13,17 +13,6 @@ export type PureChangeActionPayload = PayloadAction<{
   state: unknown
 }>
 
-export type PureWrapActionPayload = PayloadAction<{
-  id: string
-  newId: string
-  document: DocumentState
-}>
-
-export type PureUnwrapActionPayload = PayloadAction<{
-  id: string
-  oldId: string
-}>
-
 export type PureReplaceActionPayload = PayloadAction<{
   id: string
   plugin: string
