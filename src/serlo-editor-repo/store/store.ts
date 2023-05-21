@@ -21,6 +21,9 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
+      // TODO: Create and link an issue to fix mutations and remove this prop (issue #1)
+      immutableCheck: false,
+      // TODO: Create and link an issue to fix non-serializable props in state and remove this prop (issue #2)
       serializableCheck: false,
     }).concat([sagaMiddleware]),
 })
