@@ -10,14 +10,10 @@ import {
   pureInsert,
   pureRemove,
   pureReplace,
-  pureUnwrap,
-  pureWrap,
   remove,
   replace,
   replaceText,
   pureReplaceText,
-  unwrap,
-  wrap,
 } from '.'
 import type { ReversibleAction } from '..'
 import { invariant } from '../../internal__dev-expression'
@@ -33,8 +29,6 @@ export function* documentsSaga() {
     takeEvery(insert, insertSaga),
     takeEvery(remove, removeSaga),
     takeEvery(change, changeSaga),
-    takeEvery(wrap, wrapSaga),
-    takeEvery(unwrap, unwrapSaga),
     takeEvery(replace, replaceSaga),
     takeEvery(replaceText, replaceTextSaga),
   ])
@@ -179,41 +173,6 @@ function* changeSaga(action: ReturnType<typeof change>) {
       }
     }
   }
-}
-
-function* wrapSaga(action: ReturnType<typeof wrap>) {
-  const { id, document: documentHandler } = action.payload
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: ReturnType<typeof selectDocument> = yield select(
-    selectDocument,
-    id
-  )
-  const newId = generate()
-  if (!currentDocument) return
-  const reversibleAction: ReversibleAction = {
-    action: pureWrap({ id, newId, document: documentHandler(newId) }),
-    reverse: pureUnwrap({ id, oldId: newId }),
-  }
-  yield put(commit([reversibleAction]))
-}
-
-function* unwrapSaga(action: ReturnType<typeof unwrap>) {
-  const { id, oldId } = action.payload
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: ReturnType<typeof selectDocument> = yield select(
-    selectDocument,
-    id
-  )
-  if (!currentDocument) return
-  const reversibleAction: ReversibleAction = {
-    action: pureUnwrap({ id, oldId }),
-    reverse: pureWrap({
-      id,
-      newId: oldId,
-      document: currentDocument,
-    }),
-  }
-  yield put(commit([reversibleAction]))
 }
 
 function* replaceSaga(action: ReturnType<typeof replace>) {
