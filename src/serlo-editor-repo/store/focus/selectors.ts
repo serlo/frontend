@@ -10,7 +10,7 @@ import { selectPlugin } from '../plugins'
 import { selectRoot } from '../root'
 import { State } from '../types'
 import { findParent } from './helpers'
-import type { Node } from './types'
+import type { FocusTreeNode } from './types'
 
 const selectSelf = (state: State) => state.focus
 
@@ -21,30 +21,32 @@ export const selectIsFocused = createSelector(
   (focus, id: string) => focus === id
 )
 
-export const selectFocusTree: (state: State, id?: string) => Node | null =
-  createJsonStringifySelector(
-    [(state: State) => state, (_state, id?: string) => id],
-    (state, id = undefined) => {
-      const root = id ? id : selectRoot(state)
-      if (!root) return null
-      const document = selectDocument(state, root)
-      if (!document) return null
-      const plugin = selectPlugin(state, document.plugin)
-      if (!plugin) return null
+export const selectFocusTree: (
+  state: State,
+  id?: string
+) => FocusTreeNode | null = createJsonStringifySelector(
+  [(state: State) => state, (_state, id?: string) => id],
+  (state, id = undefined) => {
+    const root = id ? id : selectRoot(state)
+    if (!root) return null
+    const document = selectDocument(state, root)
+    if (!document) return null
+    const plugin = selectPlugin(state, document.plugin)
+    if (!plugin) return null
 
-      const children = plugin.state
-        .getFocusableChildren(document.state)
-        .map((child) => {
-          const subtree = selectFocusTree(state, child.id)
-          return subtree || child
-        })
+    const children = plugin.state
+      .getFocusableChildren(document.state)
+      .map((child) => {
+        const subtree = selectFocusTree(state, child.id)
+        return subtree || child
+      })
 
-      return {
-        id: root,
-        children,
-      }
+    return {
+      id: root,
+      children,
     }
-  )
+  }
+)
 
 export const selectParent = createSelector(
   [(state: State) => state, (_state, id: string) => id],

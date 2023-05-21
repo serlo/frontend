@@ -28,8 +28,3 @@ export interface ReversibleAction {
   action: Action
   reverse: Action
 }
-
-export type ChangeListener = (payload: {
-  changed: boolean
-  getDocument: () => DocumentState | null
-}) => void

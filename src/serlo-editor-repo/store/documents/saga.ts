@@ -1,22 +1,16 @@
 import { channel, Channel } from 'redux-saga'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
-import generate from 'shortid'
 
 import {
   selectDocument,
   change,
-  insert,
   pureChange,
   pureInsert,
   pureRemove,
   pureReplace,
-  remove,
   replace,
-  replaceText,
-  pureReplaceText,
 } from '.'
 import type { ReversibleAction } from '..'
-import { invariant } from '../../internal__dev-expression'
 import {
   StateUpdater,
   StoreDeserializeHelpers,
@@ -25,46 +19,7 @@ import { commit, temporaryCommit } from '../history'
 import { selectPlugin } from '../plugins'
 
 export function* documentsSaga() {
-  yield all([
-    takeEvery(insert, insertSaga),
-    takeEvery(remove, removeSaga),
-    takeEvery(change, changeSaga),
-    takeEvery(replace, replaceSaga),
-    takeEvery(replaceText, replaceTextSaga),
-  ])
-}
-
-function* insertSaga(action: ReturnType<typeof insert>) {
-  const initialState = action.payload
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [actions]: [ReversibleAction[], unknown] = yield call(
-    handleRecursiveInserts,
-    () => {},
-    [initialState]
-  )
-  yield put(commit(actions))
-}
-
-function* removeSaga(action: ReturnType<typeof remove>) {
-  const id = action.payload
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const doc: ReturnType<typeof selectDocument> = yield select(
-    selectDocument,
-    id
-  )
-  if (!doc) return
-
-  const actions: ReversibleAction[] = [
-    {
-      action: pureRemove(id),
-      reverse: pureInsert({
-        id,
-        plugin: doc.plugin,
-        state: doc.state,
-      }),
-    },
-  ]
-  yield put(commit(actions))
+  yield all([takeEvery(change, changeSaga), takeEvery(replace, replaceSaga)])
 }
 
 function* changeSaga(action: ReturnType<typeof change>) {
@@ -227,30 +182,6 @@ function* replaceSaga(action: ReturnType<typeof replace>) {
   yield put(commit([...actions, reversibleAction]))
 }
 
-function* replaceTextSaga(action: ReturnType<typeof replaceText>) {
-  const { id, document: documentHandler } = action.payload
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const currentDocument: ReturnType<typeof selectDocument> = yield select(
-    selectDocument,
-    id
-  )
-  const newId = generate()
-
-  // TODO: give previous doc new id
-  // TODO: pass new id to document handler
-  if (!currentDocument) return
-  const reversibleAction: ReversibleAction = {
-    action: pureReplaceText({ id, newId, document: documentHandler(newId) }),
-    // TODO: here, we should delete the document with newId
-    reverse: pureReplaceText({
-      id: newId,
-      newId: id,
-      document: currentDocument,
-    }),
-  }
-  yield put(commit([reversibleAction]))
-}
-
 interface ChannelAction {
   resolve?: StateUpdater<unknown>
   next?: StateUpdater<unknown>
@@ -281,7 +212,8 @@ export function* handleRecursiveInserts(
       doc.plugin
     )
     if (!plugin) {
-      invariant(false, `Invalid plugin '${doc.plugin}'`)
+      // eslint-disable-next-line no-console
+      console.warn(`Invalid plugin '${doc.plugin}'`)
       continue
     }
     let state: unknown

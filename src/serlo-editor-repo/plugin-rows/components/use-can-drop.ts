@@ -6,7 +6,7 @@ import {
   selectDocument,
   selectAncestorPluginIds,
   selectFocusTree,
-  Node,
+  FocusTreeNode,
 } from '../../store'
 
 export function useCanDrop(
@@ -49,7 +49,7 @@ export function useCanDrop(
   }
 
   function getChildPosition(
-    parent: Node | null,
+    parent: FocusTreeNode | null,
     childId: string
   ): number | null {
     if (!parent) return null

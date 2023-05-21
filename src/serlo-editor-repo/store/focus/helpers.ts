@@ -1,6 +1,6 @@
 import { State } from '../types'
 import { selectFocusTree } from './selectors'
-import type { Node } from './types'
+import type { FocusTreeNode } from './types'
 
 export function handleFocus(
   focusState: State['focus'],
@@ -16,7 +16,7 @@ export function handleFocus(
   return next
 }
 
-export function findNextNode(root: Node, from: string): string | null {
+export function findNextNode(root: FocusTreeNode, from: string): string | null {
   const parent = findParent(root, from)
   if (!parent || parent.id === from) return null
   const { children } = parent
@@ -38,7 +38,10 @@ export function findNextNode(root: Node, from: string): string | null {
   return findNextNode(root, parent.id)
 }
 
-export function findPreviousNode(root: Node, from: string): string | null {
+export function findPreviousNode(
+  root: FocusTreeNode,
+  from: string
+): string | null {
   const parent = findParent(root, from)
   if (!parent || parent.id === from) return null
   const { children } = parent
@@ -59,7 +62,10 @@ export function findPreviousNode(root: Node, from: string): string | null {
   return findPreviousNode(root, parent.id)
 }
 
-export function findParent(root: Node, id: string): Node | null {
+export function findParent(
+  root: FocusTreeNode,
+  id: string
+): FocusTreeNode | null {
   if (root.id === id) {
     return root
   }

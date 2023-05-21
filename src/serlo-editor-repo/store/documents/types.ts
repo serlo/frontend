@@ -16,9 +16,3 @@ export type PureReplaceAction = PayloadAction<{
   plugin: string
   state?: unknown
 }>
-
-export type PureReplaceTextAction = PayloadAction<{
-  id: string
-  newId: string
-  document: DocumentState
-}>

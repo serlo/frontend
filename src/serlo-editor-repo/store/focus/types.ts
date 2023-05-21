@@ -1,4 +1,4 @@
-export interface Node {
+export interface FocusTreeNode {
   id: string
-  children?: Node[]
+  children?: FocusTreeNode[]
 }

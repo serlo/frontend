@@ -16,9 +16,9 @@ import {
   selectHasPendingChanges,
   selectSerializedRootDocument,
   store,
-  ChangeListener,
   useAppDispatch,
   useAppSelector,
+  DocumentState,
 } from '../store'
 import {
   DocumentEditorContext,
@@ -180,7 +180,10 @@ export interface EditorProps<K extends string = string> {
     plugin: string
     state?: unknown
   }
-  onChange?: ChangeListener
+  onChange?: (payload: {
+    changed: boolean
+    getDocument: () => DocumentState | null
+  }) => void
   editable?: boolean
   onError?: ContextType<typeof ErrorContext>
   DocumentEditor?: ContextType<typeof DocumentEditorContext>

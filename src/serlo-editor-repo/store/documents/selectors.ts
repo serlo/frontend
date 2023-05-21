@@ -1,10 +1,10 @@
 import { createSelector } from '@reduxjs/toolkit'
+import * as R from 'ramda'
 
 import { StoreSerializeHelpers } from '../../internal__plugin-state'
 import { createDeepEqualSelector } from '../helpers'
 import { selectPlugin } from '../plugins'
 import { State } from '../types'
-import { isDocumentEmpty } from './helpers'
 
 const selectSelf = (state: State) => state.documents
 
@@ -44,7 +44,20 @@ export const selectIsDocumentEmpty = createSelector(
   (state, id: string) => {
     const doc = selectDocument(state, id)
     if (!doc) return false
+
     const plugin = selectPlugin(state, doc.plugin)
-    return isDocumentEmpty(doc, plugin)
+    if (!plugin) return false
+
+    if (typeof plugin.isEmpty === 'function') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      const state = plugin.state.init(doc.state, () => {})
+      return plugin.isEmpty(state)
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const initialState = plugin.state.createInitialState({
+      createDocument: () => {},
+    })
+    return R.equals(doc.state, initialState)
   }
 )

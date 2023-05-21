@@ -6,9 +6,4 @@ export * from './plugins'
 export * from './root'
 export { store, useAppDispatch, useAppSelector } from './store'
 export type { RootStore } from './store'
-export type {
-  ChangeListener,
-  DocumentState,
-  ReversibleAction,
-  State,
-} from './types'
+export type { DocumentState, ReversibleAction, State } from './types'

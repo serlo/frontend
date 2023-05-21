@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { isPureInsertAction, isPureReplaceTextAction } from '../documents'
+import { isPureInsertAction } from '../documents'
 import { State } from '../types'
 import { handleFocus, findNextNode, findPreviousNode } from './helpers'
 
@@ -10,9 +10,6 @@ export const focusSlice = createSlice({
   name: 'focus',
   initialState,
   reducers: {
-    blur() {
-      return null
-    },
     focus(_state, action: PayloadAction<string>) {
       return action.payload
     },
@@ -24,18 +21,12 @@ export const focusSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addMatcher(
-        // Always focus the newly inserted document
-        isPureInsertAction,
-        (_state, action) => action.payload.id
-      )
-      .addMatcher(
-        // Always focus the document with replaced text
-        isPureReplaceTextAction,
-        (_state, action) => action.payload.newId
-      )
+    builder.addMatcher(
+      // Always focus the newly inserted document
+      isPureInsertAction,
+      (_state, action) => action.payload.id
+    )
   },
 })
 
-export const { blur, focus, focusNext, focusPrevious } = focusSlice.actions
+export const { focus, focusNext, focusPrevious } = focusSlice.actions
