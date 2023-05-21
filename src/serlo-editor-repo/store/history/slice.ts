@@ -5,7 +5,7 @@ import { addRawReducers } from '../helpers'
 import type { AppDispatch } from '../store'
 import type { State } from '../types'
 import { selectRedoStack, selectUndoStack } from './selectors'
-import type { PersistActionPayload, PureCommitActionPayload } from './types'
+import type { PersistAction, PureCommitAction } from './types'
 
 const initialState: State['history'] = {
   undoStack: [],
@@ -49,7 +49,7 @@ export const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    persist(state, action: PersistActionPayload) {
+    persist(state, action: PersistAction) {
       state.initialState = state.initialState || {
         documents: action.payload,
       }
@@ -82,8 +82,7 @@ export const historySlice = createSlice({
 // TODO: Create and link an issue to fix mutations and remove this reducer (issue #1)
 const { pureCommit } = addRawReducers(historySlice, {
   pureCommit: (state, action) => {
-    const { combine, actions } =
-      action.payload as PureCommitActionPayload['payload']
+    const { combine, actions } = action.payload as PureCommitAction['payload']
     let actionsToCommit = actions
     const { undoStack } = state
 
