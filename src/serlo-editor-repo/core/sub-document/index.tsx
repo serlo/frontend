@@ -14,8 +14,8 @@ import { SubDocumentRenderer } from './renderer'
 export const SubDocument = (props: SubDocumentProps) => {
   const editable = useContext(EditableContext)
   const dispatch = useAppDispatch()
-  const undoMemo = useCallback(async () => {
-    await dispatch(undo())
+  const undoMemo = useCallback(() => {
+    void dispatch(undo())
   }, [dispatch])
 
   const Component = editable ? SubDocumentEditor : SubDocumentRenderer

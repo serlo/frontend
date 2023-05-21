@@ -77,8 +77,8 @@ export function ToolbarMain({
           'serlo-button',
           disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
         )}
-        onClick={async () => {
-          await dispatch(action())
+        onClick={() => {
+          void dispatch(action())
         }}
         disabled={disabled}
         title={title}

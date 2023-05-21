@@ -136,11 +136,11 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         }
       },
       // TODO: workaround for https://github.com/edtr-io/edtr-io/issues/272
-      UNDO: async () => {
-        await store.dispatch(undo())
+      UNDO: () => {
+        void store.dispatch(undo())
       },
-      REDO: async () => {
-        await store.dispatch(redo())
+      REDO: () => {
+        void store.dispatch(redo())
       },
     }
 
