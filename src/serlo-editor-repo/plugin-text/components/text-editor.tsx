@@ -48,8 +48,7 @@ import {
   selectParent,
   selectPlugins,
   insertChildAfter,
-  selectMayInsertChild,
-  selectMayRemoveChild,
+  selectMayManipulateSiblings,
   replace,
 } from '@/serlo-editor-repo/store'
 
@@ -200,8 +199,11 @@ export function TextEditor(props: TextEditorProps) {
         const document = selectDocument(store.getState(), id)
         if (!document) return
 
-        const mayInsert = selectMayInsertChild(store.getState(), id)
-        if (!mayInsert) return
+        const mayManipulateSiblings = selectMayManipulateSiblings(
+          store.getState(),
+          id
+        )
+        if (!mayManipulateSiblings) return
 
         const parent = selectParent(store.getState(), id)
         if (!parent) return
@@ -275,8 +277,11 @@ export function TextEditor(props: TextEditorProps) {
     const document = selectDocument(store.getState(), id)
     if (!document) return
 
-    const mayInsert = selectMayInsertChild(store.getState(), id)
-    if (!mayInsert) return
+    const mayManipulateSiblings = selectMayManipulateSiblings(
+      store.getState(),
+      id
+    )
+    if (!mayManipulateSiblings) return
 
     const parentPluginName = document.plugin
     const plugins = selectPlugins(store.getState())
@@ -318,12 +323,12 @@ export function TextEditor(props: TextEditorProps) {
     }
 
     function insertPlugin(plugin: string, { state }: { state?: unknown }) {
-      const pluginAllowsRemovingChild = selectMayRemoveChild(
+      const mayManipulateSiblings = selectMayManipulateSiblings(
         store.getState(),
         id
       )
       const isEditorEmpty = Node.string(editor) === ''
-      if (pluginAllowsRemovingChild && isEditorEmpty) {
+      if (mayManipulateSiblings && isEditorEmpty) {
         store.dispatch(replace({ id, plugin, state }))
         return
       }

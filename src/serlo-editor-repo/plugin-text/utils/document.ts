@@ -8,8 +8,7 @@ import {
   focusPrevious,
   selectDocument,
   selectParent,
-  selectMayInsertChild,
-  selectMayRemoveChild,
+  selectMayManipulateSiblings,
   removeChild,
   RootStore,
 } from '@/serlo-editor-repo/store'
@@ -57,9 +56,12 @@ export function mergePlugins(
   store: RootStore,
   id: string
 ) {
-  const mayRemove = selectMayRemoveChild(store.getState(), id)
+  const mayManipulateSiblings = selectMayManipulateSiblings(
+    store.getState(),
+    id
+  )
   const parent = selectParent(store.getState(), id)
-  if (!mayRemove || !parent) return
+  if (!mayManipulateSiblings || !parent) return
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
@@ -70,9 +72,8 @@ export function mergePlugins(
     return
   }
 
-  const mayInsert = selectMayInsertChild(store.getState(), id)
   const currentDocument = selectDocument(store.getState(), id)
-  if (!mayInsert || !currentDocument) return
+  if (!currentDocument) return
 
   const allChildrenOfParent = parent.children || []
   const indexWithinParent = allChildrenOfParent.findIndex(

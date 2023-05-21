@@ -19,7 +19,7 @@ import {
   focusNext,
   focusPrevious,
   selectDocument,
-  selectMayRemoveChild,
+  selectMayManipulateSiblings,
   selectParent,
   selectPlugin,
   insertChildAfter,
@@ -121,7 +121,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         if (selectIsDocumentEmpty(store.getState(), id)) {
           handleKeyDown(e, () => {
             if (!e) return
-            if (selectMayRemoveChild(store.getState(), id)) {
+            if (selectMayManipulateSiblings(store.getState(), id)) {
               const parent = selectParent(store.getState(), id)
               if (!parent) return
 
