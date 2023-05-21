@@ -87,7 +87,7 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
     )
 
     // replace in history
-    // TODO: Create and link an issue to fix this mutation (issue #1)
+    // TODO: https://github.com/serlo/backlog/issues/126
     replaceInArray(tempActions, finalActions)
     if (payload.resolve || payload.reject) {
       break

@@ -21,7 +21,7 @@ export const createJsonStringifySelector = createSelectorCreator(
  *   1. legacy edtr-io store relies on action mutations during async operations.
  *   2. Redux Saga doesn't allow frozen actions in `put` calls.
  */
-// TODO: Create and link an issue to fix mutations and remove this helper (issue #1)
+// TODO: https://github.com/serlo/backlog/issues/126
 export function addRawReducers<S>(
   slice: Slice<S>,
   reducers: Record<string, (state: S, action: AnyAction) => S>

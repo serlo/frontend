@@ -79,7 +79,7 @@ export const historySlice = createSlice({
   },
 })
 
-// TODO: Create and link an issue to fix mutations and remove this reducer (issue #1)
+// TODO: https://github.com/serlo/backlog/issues/126
 const { pureCommit } = addRawReducers(historySlice, {
   pureCommit: (state, action) => {
     const { combine, actions } = action.payload as PureCommitAction['payload']
