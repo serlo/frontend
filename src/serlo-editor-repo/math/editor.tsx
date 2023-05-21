@@ -66,7 +66,7 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
       setTimeout(() => {
         textarea.focus()
       })
-    // componentDidMount behaviour
+    // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

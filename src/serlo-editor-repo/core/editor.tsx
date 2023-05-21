@@ -122,8 +122,7 @@ export function InnerDocument<K extends string = string>({
     if (!props.mirror) {
       dispatch(initRoot({ initialState: props.initialState, plugins }))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.initialState, plugins, props.mirror])
+  }, [props.initialState, plugins, props.mirror, dispatch])
   const editableContextValue = useMemo(() => editable ?? true, [editable])
   const hotKeysHandlers = useMemo(
     () => ({
