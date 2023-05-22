@@ -20,6 +20,7 @@ import { HotKeys } from '../../core'
 import { HoverOverlay } from '../../editor-ui'
 import { EditorPluginProps } from '../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
+import { useMergePlugins } from '../hooks/use-merge-plugins'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { textColors, useTextConfig } from '../hooks/use-text-config'
 import {
@@ -29,7 +30,6 @@ import {
 } from '../types'
 import {
   emptyDocumentFactory,
-  mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
 import { isOrderedListActive, isUnorderedListActive } from '../utils/list'
@@ -41,7 +41,6 @@ import { Suggestions } from './suggestions'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import {
-  store,
   focusNext,
   focusPrevious,
   selectDocument,
@@ -50,6 +49,9 @@ import {
   insertChildAfter,
   selectMayManipulateSiblings,
   replace,
+  useAppDispatch,
+  useAppSelector,
+  selectFocusTree,
 } from '@/serlo-editor-repo/store'
 
 export type TextEditorProps = EditorPluginProps<
@@ -61,8 +63,18 @@ export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
+  const dispatch = useAppDispatch()
+
   const loggedInData = useLoggedInData()
   const { state, id, editable, focused } = props
+
+  const document = useAppSelector((state) => selectDocument(state, id))
+  const parent = useAppSelector((state) => selectParent(state, id))
+  const mayManipulateSiblings = useAppSelector((state) =>
+    selectMayManipulateSiblings(state, id)
+  )
+  const plugins = useAppSelector(selectPlugins)
+  const focusTree = useAppSelector(selectFocusTree)
 
   const config = useTextConfig(props.config)
 
@@ -76,6 +88,7 @@ export function TextEditor(props: TextEditorProps) {
     [createTextEditor]
   )
 
+  const mergePlugins = useMergePlugins(editor, id)
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
 
@@ -196,23 +209,13 @@ export function TextEditor(props: TextEditorProps) {
       const isListActive =
         isOrderedListActive(editor) || isUnorderedListActive(editor)
       if (isHotkey('enter', event) && !isListActive) {
-        const document = selectDocument(store.getState(), id)
-        if (!document) return
-
-        const mayManipulateSiblings = selectMayManipulateSiblings(
-          store.getState(),
-          id
-        )
-        if (!mayManipulateSiblings) return
-
-        const parent = selectParent(store.getState(), id)
-        if (!parent) return
+        if (!document || !mayManipulateSiblings || !parent) return
 
         event.preventDefault()
 
         const slicedNodes = sliceNodesAfterSelection(editor)
         setTimeout(() => {
-          store.dispatch(
+          dispatch(
             insertChildAfter({
               parent: parent.id,
               sibling: id,
@@ -238,9 +241,9 @@ export function TextEditor(props: TextEditorProps) {
         const direction = isBackspaceAtStart ? 'previous' : 'next'
 
         // Merge plugins within Slate and get the merge value
-        const newValue = mergePlugins(direction, editor, store, id)
+        const newValue = mergePlugins(direction)
 
-        // Update Redux state with the new value
+        // Update Redux document state with the new value
         if (newValue) {
           state.set({ value: newValue, selection }, ({ value }) => ({
             value,
@@ -254,13 +257,13 @@ export function TextEditor(props: TextEditorProps) {
         isHotkey('up', event) && isSelectionAtStart(editor, selection)
       if (isUpArrowAtStart) {
         event.preventDefault()
-        store.dispatch(focusPrevious)
+        dispatch(focusPrevious(focusTree))
       }
       const isDownArrowAtEnd =
         isHotkey('down', event) && isSelectionAtEnd(editor, selection)
       if (isDownArrowAtEnd) {
         event.preventDefault()
-        store.dispatch(focusNext)
+        dispatch(focusNext(focusTree))
       }
     }
 
@@ -274,17 +277,9 @@ export function TextEditor(props: TextEditorProps) {
     const isListActive =
       isOrderedListActive(editor) || isUnorderedListActive(editor)
 
-    const document = selectDocument(store.getState(), id)
-    if (!document) return
-
-    const mayManipulateSiblings = selectMayManipulateSiblings(
-      store.getState(),
-      id
-    )
-    if (!mayManipulateSiblings) return
+    if (!document || !mayManipulateSiblings) return
 
     const parentPluginName = document.plugin
-    const plugins = selectPlugins(store.getState())
 
     // Handle pasted images
     const files = Array.from(event.clipboardData.files)
@@ -323,24 +318,19 @@ export function TextEditor(props: TextEditorProps) {
     }
 
     function insertPlugin(plugin: string, { state }: { state?: unknown }) {
-      const mayManipulateSiblings = selectMayManipulateSiblings(
-        store.getState(),
-        id
-      )
       const isEditorEmpty = Node.string(editor) === ''
       if (mayManipulateSiblings && isEditorEmpty) {
-        store.dispatch(replace({ id, plugin, state }))
+        dispatch(replace({ id, plugin, state }))
         return
       }
 
-      const parent = selectParent(store.getState(), id)
       if (!parent) return
 
       const slicedNodes = sliceNodesAfterSelection(editor)
 
       setTimeout(() => {
         if (slicedNodes) {
-          store.dispatch(
+          dispatch(
             insertChildAfter({
               parent: parent.id,
               sibling: id,
@@ -351,7 +341,7 @@ export function TextEditor(props: TextEditorProps) {
             })
           )
         }
-        store.dispatch(
+        dispatch(
           insertChildAfter({
             parent: parent.id,
             sibling: id,

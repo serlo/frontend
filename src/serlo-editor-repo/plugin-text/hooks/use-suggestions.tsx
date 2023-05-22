@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Editor as SlateEditor, Node } from 'slate'
 
 import { RegistryContext, Registry } from '../../plugin-rows'
-import { store, replace } from '../../store'
+import { replace, useAppDispatch } from '../../store'
 
 interface useSuggestionsArgs {
   editor: SlateEditor
@@ -18,6 +18,7 @@ const hotKeysMap = {
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
+  const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
@@ -101,7 +102,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
 
     // Otherwise, replace the text plugin with the selected plugin
-    store.dispatch(replace({ id, plugin: pluginName }))
+    dispatch(replace({ id, plugin: pluginName }))
   }
 
   const hotKeysHandlers = {

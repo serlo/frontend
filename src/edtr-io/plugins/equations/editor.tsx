@@ -10,6 +10,8 @@ import {
   selectFocused,
   selectIsDocumentEmpty,
   useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
 } from '@edtr-io/store'
 import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -60,6 +62,8 @@ const DragButton = styled.span({
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
+  const dispatch = useAppDispatch()
+  const focusTree = useAppSelector(selectFocusTree)
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
@@ -76,16 +80,16 @@ export function EquationsEditor(props: EquationsProps) {
   const gridFocus = useGridFocus({
     rows: state.steps.length,
     columns: 4,
-    focusNext: () => store.dispatch(focusNext),
-    focusPrevious: () => store.dispatch(focusPrevious),
+    focusNext: () => dispatch(focusNext(focusTree)),
+    focusPrevious: () => dispatch(focusPrevious(focusTree)),
     transformationTarget,
     onFocusChanged: (state) => {
       if (state === 'firstExplanation') {
-        store.dispatch(focus(props.state.firstExplanation.id))
+        dispatch(focus(props.state.firstExplanation.id))
       } else if (state.column === StepSegment.Explanation) {
-        store.dispatch(focus(props.state.steps[state.row].explanation.id))
+        dispatch(focus(props.state.steps[state.row].explanation.id))
       } else {
-        store.dispatch(focus(props.id))
+        dispatch(focus(props.id))
       }
     },
   })
@@ -96,7 +100,7 @@ export function EquationsEditor(props: EquationsProps) {
         row: 0,
         column: firstColumn(transformationTarget),
       })
-      store.dispatch(focus(props.id))
+      dispatch(focus(props.id))
     }
     //prevents loop
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -2,7 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { isPureInsertAction } from '../documents'
 import { State } from '../types'
-import { handleFocus, findNextNode, findPreviousNode } from './helpers'
+import { findNextNode, findPreviousNode } from './helpers'
+import { FocusTreeNode } from './types'
 
 const initialState: State['focus'] = null as State['focus']
 
@@ -13,11 +14,17 @@ export const focusSlice = createSlice({
     focus(_state, action: PayloadAction<string>) {
       return action.payload
     },
-    focusNext(state, action: PayloadAction<State>) {
-      return handleFocus(state, action.payload, findNextNode)
+    focusNext(state, action: PayloadAction<FocusTreeNode | null>) {
+      if (!state || !action.payload) return state
+      const next = findNextNode(action.payload, state)
+      if (!next) return state
+      return next
     },
-    focusPrevious(state, action: PayloadAction<State>) {
-      return handleFocus(state, action.payload, findPreviousNode)
+    focusPrevious(state, action: PayloadAction<FocusTreeNode | null>) {
+      if (!state || !action.payload) return state
+      const next = findPreviousNode(action.payload, state)
+      if (!next) return state
+      return next
     },
   },
   extraReducers: (builder) => {

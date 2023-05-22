@@ -7,10 +7,10 @@ import { RowsPluginConfig, RowsPluginState } from '..'
 import { OverlayButton, PluginToolbarButton } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
 import {
-  store,
   DocumentState,
   selectPlugins,
   selectSerializedDocument,
+  useAppSelector,
 } from '../../store'
 import {
   edtrDragHandle,
@@ -85,15 +85,17 @@ export function RowRenderer({
   const allowedPlugins = useMemo(() => {
     return config.plugins.map((plugin) => plugin.name)
   }, [config])
+  const serializedRowDocument = useAppSelector((state) =>
+    selectSerializedDocument(state, row.id)
+  )
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
   const [collectedDragProps, drag, dragPreview] = useDrag({
     type: 'row',
     item: () => {
-      const serialized = selectSerializedDocument(store.getState(), row.id)
       return {
         id: row.id,
-        serialized,
+        serialized: serializedRowDocument,
         onDrop() {
           rows.set((list) => {
             const i = R.findIndex((id) => id === row.id, list)
@@ -225,12 +227,8 @@ export function RowRenderer({
               <Left>
                 <BorderlessOverlayButton
                   onClick={() => {
-                    const document = selectSerializedDocument(
-                      store.getState(),
-                      row.id
-                    )
-                    if (!document) return
-                    rows.insert(index, document)
+                    if (!serializedRowDocument) return
+                    rows.insert(index, serializedRowDocument)
                     close()
                   }}
                   label={config.i18n.settings.duplicateLabel}
@@ -277,10 +275,10 @@ export function RowRenderer({
     config.i18n.settings.removeLabel,
     config.i18n.settings.closeLabel,
     config.i18n.toolbar.dragLabel,
-    row.id,
     rows,
     index,
     drag,
+    serializedRowDocument,
   ])
 
   setTimeout(() => {

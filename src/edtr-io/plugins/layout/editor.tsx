@@ -5,6 +5,7 @@ import {
   DocumentState,
   replace,
   selectSerializedDocument,
+  useAppDispatch,
 } from '@edtr-io/store'
 
 import { layoutState } from '.'
@@ -51,6 +52,7 @@ export const LayoutRenderer: React.FunctionComponent<
     remove?: () => void
   }
 > = (props) => {
+  const dispatch = useAppDispatch()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
@@ -100,7 +102,7 @@ export const LayoutRenderer: React.FunctionComponent<
       }
     })
 
-    store.dispatch(
+    dispatch(
       replace({
         id: props.id,
         plugin: 'rows',
@@ -148,7 +150,7 @@ export const LayoutRenderer: React.FunctionComponent<
         multimediaColumn.child.id
       )
       if (!explanation || !multimedia) return
-      store.dispatch(
+      dispatch(
         replace({
           id: props.id,
           plugin: 'multimedia',

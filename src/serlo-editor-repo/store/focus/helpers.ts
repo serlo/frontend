@@ -1,20 +1,4 @@
-import { State } from '../types'
-import { selectFocusTree } from './selectors'
 import type { FocusTreeNode } from './types'
-
-export function handleFocus(
-  focusState: State['focus'],
-  state: State,
-  findNode: typeof findNextNode
-) {
-  const from = focusState
-  if (!from) return focusState
-  const root = selectFocusTree(state)
-  if (!root) return focusState
-  const next = findNode(root, from)
-  if (!next) return focusState
-  return next
-}
 
 export function findNextNode(root: FocusTreeNode, from: string): string | null {
   const parent = findParent(root, from)

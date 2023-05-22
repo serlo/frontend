@@ -4,6 +4,7 @@ import {
   insertChildBefore,
   selectSerializedDocument,
   removeChild,
+  useAppDispatch,
 } from '@edtr-io/store'
 import clsx from 'clsx'
 import { either as E } from 'fp-ts'
@@ -42,6 +43,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
+  const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   function throwError(error?: unknown) {
@@ -78,7 +80,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       }
 
       for (const document of content.state) {
-        store.dispatch(
+        dispatch(
           insertChildBefore({
             parent: parentPlugin.id,
             sibling: props.id,
@@ -86,7 +88,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
           })
         )
       }
-      store.dispatch(removeChild({ parent: parentPlugin.id, child: props.id }))
+      dispatch(removeChild({ parent: parentPlugin.id, child: props.id }))
     } catch (error) {
       throwError(error)
     }

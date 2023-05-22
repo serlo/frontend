@@ -17,6 +17,8 @@ import {
   focusNext,
   focusPrevious,
   useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -69,6 +71,8 @@ const newCell = { content: { plugin: 'text' } }
 function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
 
+  const dispatch = useAppDispatch()
+  const focusTree = useAppSelector(selectFocusTree)
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
@@ -135,8 +139,8 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
-    store.dispatch(focusNext)
-    store.dispatch(focusPrevious)
+    dispatch(focusNext(focusTree))
+    dispatch(focusPrevious(focusTree))
   }
 
   function renderActiveCellsIntoObject() {
@@ -149,7 +153,7 @@ function SerloTableEditor(props: SerloTableProps) {
           const isLast =
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => store.dispatch(focus(cell.content.id))
+          const dispatchFocus = () => dispatch(focus(cell.content.id))
           const isClear = selectIsDocumentEmpty(
             store.getState(),
             cell.content.id

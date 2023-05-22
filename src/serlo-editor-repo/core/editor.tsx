@@ -103,6 +103,7 @@ export function InnerDocument<K extends string = string>({
   )) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
+
   useEffect(() => {
     if (typeof onChange !== 'function') return
     let pendingChanges = selectPendingChanges(store.getState())
