@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
   ReactEditor,
@@ -36,6 +36,20 @@ export function MathElement({
   const editor = useSlate()
   const selected = useSelected()
   const preferences = useContext(PreferenceContext)
+
+  const isInsideListElement = useMemo(() => {
+    const path = ReactEditor.findPath(editor, element)
+    const ancestorNodes = [...Node.ancestors(editor, path)]
+    return ancestorNodes.some((ancestor) => {
+      const ancestorPath = ancestor[1]
+      const ancestorNode = Node.get(editor, ancestorPath)
+      return (
+        'type' in ancestorNode &&
+        (ancestorNode.type === 'ordered-list' ||
+          ancestorNode.type === 'unordered-list')
+      )
+    })
+  }, [editor, element])
 
   const shouldShowMathEditor =
     focused &&
@@ -176,7 +190,7 @@ export function MathElement({
         inline={element.inline}
         readOnly={false}
         visual={isVisualMode}
-        disableBlock={false}
+        disableBlock={isInsideListElement}
         config={{ i18n: config.i18n.math }}
         onInlineChange={handleInlineChange}
         onChange={(src) => updateElement({ src })}
