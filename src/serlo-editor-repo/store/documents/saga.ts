@@ -64,7 +64,7 @@ function* changeSaga(action: ReturnType<typeof change>) {
     yield put(
       temporaryCommit({
         initial: actions,
-        executor: (resolve, reject, next) => {
+        executor: (resolve, reject) => {
           if (!stateHandler.executor) {
             resolve(actions)
             return
@@ -84,14 +84,6 @@ function* changeSaga(action: ReturnType<typeof change>) {
                 reject: updater,
                 callback: (resolveActions, state) => {
                   reject([...resolveActions, createChange(state)])
-                },
-              })
-            },
-            function stateNext(updater) {
-              chan.put({
-                next: updater,
-                callback: (resolveActions, state) => {
-                  next([...resolveActions, createChange(state)])
                 },
               })
             }

@@ -21,8 +21,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // TODO: https://github.com/serlo/backlog/issues/126
-      immutableCheck: false,
       // TODO: https://github.com/serlo/backlog/issues/127
       serializableCheck: false,
     }).concat([sagaMiddleware]),

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import * as R from 'ramda'
 
-import { addRawReducers } from '../helpers'
 import type { AppDispatch } from '../store'
 import type { State } from '../types'
 import { selectRedoStack, selectUndoStack } from './selectors'
@@ -55,6 +54,25 @@ export const historySlice = createSlice({
       }
       state.pendingChanges = 0
     },
+    pureCommit: (state, action: PureCommitAction) => {
+      const { combine, actions } = action.payload
+      let actionsToCommit = actions
+      const { undoStack } = state
+
+      state.undoStack = calculateNewUndoStack()
+      state.redoStack = []
+      state.pendingChanges = state.pendingChanges + actions.length
+
+      function calculateNewUndoStack() {
+        if (combine && undoStack.length > 0) {
+          const previousActions = undoStack[0]
+          actionsToCommit = [...previousActions, ...actionsToCommit]
+          return [actionsToCommit, ...R.tail(undoStack)]
+        }
+
+        return [actionsToCommit, ...undoStack]
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -79,32 +97,4 @@ export const historySlice = createSlice({
   },
 })
 
-// TODO: https://github.com/serlo/backlog/issues/126
-const { pureCommit } = addRawReducers(historySlice, {
-  pureCommit: (state, action) => {
-    const { combine, actions } = action.payload as PureCommitAction['payload']
-    let actionsToCommit = actions
-    const { undoStack } = state
-
-    return {
-      ...state,
-      undoStack: calculateNewUndoStack(),
-      redoStack: [],
-      pendingChanges: state.pendingChanges + actions.length,
-    }
-
-    function calculateNewUndoStack() {
-      if (combine && undoStack.length > 0) {
-        const previousActions = undoStack[0]
-        actionsToCommit = [...previousActions, ...actionsToCommit]
-        return [actionsToCommit, ...R.tail(undoStack)]
-      }
-
-      return [actionsToCommit, ...undoStack]
-    }
-  },
-})
-
-export const { persist } = historySlice.actions
-
-export { pureCommit }
+export const { persist, pureCommit } = historySlice.actions

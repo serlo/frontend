@@ -6,12 +6,11 @@ import {
   delay,
   put,
   race,
-  select,
   take,
   takeEvery,
 } from 'redux-saga/effects'
 
-import { commit, pureCommit, temporaryCommit, selectUndoStack } from '.'
+import { commit, pureCommit, temporaryCommit } from '.'
 import type { ReversibleAction } from '..'
 
 export function* historySaga() {
@@ -19,30 +18,22 @@ export function* historySaga() {
 }
 
 function* temporaryCommitSaga(action: ReturnType<typeof temporaryCommit>) {
-  const actions = action.payload.initial
-  yield all(actions.map((action) => put(action.action)))
-  yield put(
-    pureCommit({
-      combine: false,
-      actions,
-    })
-  )
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const chan: Channel<ChannelAction> = yield call(channel)
 
-  function createPutToChannel(type: 'resolve' | 'reject' | 'next') {
+  function createPutToChannel(type: 'resolve' | 'reject') {
     return function (finalActions: ReversibleAction[]) {
       chan.put({
         [type]: finalActions,
-        tempActions: actions,
+        tempActions: action.payload.initial,
       })
     }
   }
+
   if (action.payload.executor) {
     action.payload.executor(
       createPutToChannel('resolve'),
-      createPutToChannel('reject'),
-      createPutToChannel('next')
+      createPutToChannel('reject')
     )
     yield call(resolveSaga, chan)
   }
@@ -50,7 +41,6 @@ function* temporaryCommitSaga(action: ReturnType<typeof temporaryCommit>) {
 
 interface ChannelAction {
   resolve?: ReversibleAction[]
-  next?: ReversibleAction[]
   reject?: ReversibleAction[]
   tempActions: ReversibleAction[]
 }
@@ -59,45 +49,20 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
   while (true) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const payload: ChannelAction = yield take(chan)
-    const finalActions = payload.resolve || payload.next || payload.reject || []
-    const tempActions = payload.tempActions
+    const actions = payload.resolve || payload.reject || []
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const stack: ReturnType<typeof selectUndoStack> = yield select(
-      selectUndoStack
-    )
+    yield put(pureCommit({ combine: false, actions }))
 
-    const replays = R.takeWhile((replay) => replay !== tempActions, stack)
-    // revert all actions until the temporary actions
-    yield all(
-      replays.map((replay) => {
-        return all(replay.map((a) => put(a.reverse)))
-      })
-    )
-    // then revert the temporary action
-    yield all(tempActions.map((a) => put(a.reverse)))
+    // Saga will silently fail if a frozen action is passed to `put`.
+    // Therefore, we first clone the action.
+    // More info: https://github.com/redux-saga/redux-saga/issues/1254
+    yield all(actions.map((a) => put(R.clone(a.action))))
 
-    // apply final actions and all reverted actions
-    yield all(finalActions.map((a) => put(a.action)))
-
-    yield all(
-      replays.map((replay) => {
-        return all(replay.map((a) => put(a.action)))
-      })
-    )
-
-    // replace in history
-    // TODO: https://github.com/serlo/backlog/issues/126
-    replaceInArray(tempActions, finalActions)
     if (payload.resolve || payload.reject) {
       break
     }
   }
   chan.close()
-}
-
-function replaceInArray<T>(arr: T[], arr2: T[]) {
-  arr.splice(0, arr.length, ...arr2)
 }
 
 function* commitSaga() {
