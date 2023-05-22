@@ -10,14 +10,23 @@ import {
   takeEvery,
 } from 'redux-saga/effects'
 
-import { commit, pureCommit, temporaryCommit } from '.'
+import {
+  runCommitActionToHistorySaga,
+  pureCommitActionToHistory,
+  runCommitTemporaryActionToHistorySaga,
+} from '.'
 import type { ReversibleAction } from '..'
 
 export function* historySaga() {
-  yield all([call(commitSaga), takeEvery(temporaryCommit, temporaryCommitSaga)])
+  yield all([
+    call(commitSaga),
+    takeEvery(runCommitTemporaryActionToHistorySaga, temporaryCommitSaga),
+  ])
 }
 
-function* temporaryCommitSaga(action: ReturnType<typeof temporaryCommit>) {
+function* temporaryCommitSaga(
+  action: ReturnType<typeof runCommitTemporaryActionToHistorySaga>
+) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const chan: Channel<ChannelAction> = yield call(channel)
 
@@ -51,7 +60,7 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
     const payload: ChannelAction = yield take(chan)
     const actions = payload.resolve || payload.reject || []
 
-    yield put(pureCommit({ combine: false, actions }))
+    yield put(pureCommitActionToHistory({ combine: false, actions }))
 
     // Saga will silently fail if a frozen action is passed to `put`.
     // Therefore, we first clone the action.
@@ -68,7 +77,9 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
 function* commitSaga() {
   while (true) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const action: ReturnType<typeof commit> = yield take(commit.type)
+    const action: ReturnType<typeof runCommitActionToHistorySaga> = yield take(
+      runCommitActionToHistorySaga.type
+    )
     yield call(executeCommit, action.payload, false)
 
     while (true) {
@@ -76,8 +87,11 @@ function* commitSaga() {
       const {
         action,
         timeout,
-      }: { action: ReturnType<typeof commit>; timeout: boolean } = yield race({
-        action: take(commit.type),
+      }: {
+        action: ReturnType<typeof runCommitActionToHistorySaga>
+        timeout: boolean
+      } = yield race({
+        action: take(runCommitActionToHistorySaga.type),
         timeout: delay(1000),
       })
 
@@ -95,7 +109,7 @@ function* commitSaga() {
 function* executeCommit(actions: ReversibleAction[], combine: boolean) {
   yield all(actions.map((action) => put(action.action)))
   yield put(
-    pureCommit({
+    pureCommitActionToHistory({
       combine,
       actions,
     })

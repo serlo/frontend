@@ -1,9 +1,9 @@
 import {
   store,
   selectParent,
-  insertChildBefore,
+  insertPluginChildBefore,
   selectSerializedDocument,
-  removeChild,
+  removePluginChild,
   useAppDispatch,
 } from '@edtr-io/store'
 import clsx from 'clsx'
@@ -81,14 +81,14 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       for (const document of content.state) {
         dispatch(
-          insertChildBefore({
+          insertPluginChildBefore({
             parent: parentPlugin.id,
             sibling: props.id,
             document,
           })
         )
       }
-      dispatch(removeChild({ parent: parentPlugin.id, child: props.id }))
+      dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
     } catch (error) {
       throwError(error)
     }

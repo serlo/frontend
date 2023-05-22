@@ -1,24 +1,24 @@
 import { createAction } from '@reduxjs/toolkit'
 
-export const insertChildBefore = createAction<{
+export const insertPluginChildBefore = createAction<{
   parent: string
   sibling: string
   document?: {
     plugin: string
     state?: unknown
   }
-}>('plugin/insertChildBefore')
+}>('plugin/insertPluginChildBefore')
 
-export const insertChildAfter = createAction<{
+export const insertPluginChildAfter = createAction<{
   parent: string
   sibling?: string
   document?: {
     plugin: string
     state?: unknown
   }
-}>('plugin/insertChildAfter')
+}>('plugin/insertPluginChildAfter')
 
-export const removeChild = createAction<{
+export const removePluginChild = createAction<{
   parent: string
   child: string
-}>('plugin/removeChild')
+}>('plugin/removePluginChild')

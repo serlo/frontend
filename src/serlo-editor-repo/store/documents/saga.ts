@@ -3,26 +3,32 @@ import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
 import {
   selectDocument,
-  change,
-  pureChange,
-  pureInsert,
-  pureRemove,
-  pureReplace,
-  replace,
+  runChangeDocumentSaga,
+  pureChangeDocument,
+  pureInsertDocument,
+  pureRemoveDocument,
+  pureReplaceDocument,
+  runReplaceDocumentSaga,
 } from '.'
 import type { ReversibleAction } from '..'
 import {
   StateUpdater,
   StoreDeserializeHelpers,
 } from '../../internal__plugin-state'
-import { commit, temporaryCommit } from '../history'
+import {
+  runCommitActionToHistorySaga,
+  runCommitTemporaryActionToHistorySaga,
+} from '../history'
 import { selectPlugin } from '../plugins'
 
 export function* documentsSaga() {
-  yield all([takeEvery(change, changeSaga), takeEvery(replace, replaceSaga)])
+  yield all([
+    takeEvery(runChangeDocumentSaga, changeDocumentSaga),
+    takeEvery(runReplaceDocumentSaga, replaceDocumentSaga),
+  ])
 }
 
-function* changeSaga(action: ReturnType<typeof change>) {
+function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
   const { id, state: stateHandler, reverse } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const document: ReturnType<typeof selectDocument> = yield select(
@@ -41,8 +47,8 @@ function* changeSaga(action: ReturnType<typeof change>) {
 
   const createChange = (state: unknown): ReversibleAction => {
     return {
-      action: pureChange({ id, state }),
-      reverse: pureChange({
+      action: pureChangeDocument({ id, state }),
+      reverse: pureChangeDocument({
         id,
         state:
           typeof reverse === 'function'
@@ -55,14 +61,14 @@ function* changeSaga(action: ReturnType<typeof change>) {
   actions.push(createChange(state))
 
   if (!stateHandler.executor) {
-    yield put(commit(actions))
+    yield put(runCommitActionToHistorySaga(actions))
   } else {
     // async change, handle with stateHandler.resolver
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const chan: Channel<ChannelAction> = yield call(channel)
     yield put(
-      temporaryCommit({
+      runCommitTemporaryActionToHistorySaga({
         initial: actions,
         executor: (resolve, reject) => {
           if (!stateHandler.executor) {
@@ -122,7 +128,9 @@ function* changeSaga(action: ReturnType<typeof change>) {
   }
 }
 
-function* replaceSaga(action: ReturnType<typeof replace>) {
+function* replaceDocumentSaga(
+  action: ReturnType<typeof runReplaceDocumentSaga>
+) {
   const { id } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: ReturnType<typeof selectDocument> = yield select(
@@ -160,18 +168,18 @@ function* replaceSaga(action: ReturnType<typeof replace>) {
   )
 
   const reversibleAction: ReversibleAction = {
-    action: pureReplace({
+    action: pureReplaceDocument({
       id,
       plugin: action.payload.plugin,
       state: pluginState,
     }),
-    reverse: pureReplace({
+    reverse: pureReplaceDocument({
       id,
       plugin: currentDocument.plugin,
       state: currentDocument.state,
     }),
   }
-  yield put(commit([...actions, reversibleAction]))
+  yield put(runCommitActionToHistorySaga([...actions, reversibleAction]))
 }
 
 interface ChannelAction {
@@ -221,12 +229,12 @@ export function* handleRecursiveInserts(
     )
     if (currentDocument) {
       actions.push({
-        action: pureReplace({
+        action: pureReplaceDocument({
           id: doc.id,
           plugin: doc.plugin,
           state,
         }),
-        reverse: pureReplace({
+        reverse: pureReplaceDocument({
           id: doc.id,
           plugin: currentDocument.plugin,
           state: currentDocument.state,
@@ -234,12 +242,12 @@ export function* handleRecursiveInserts(
       })
     } else {
       actions.push({
-        action: pureInsert({
+        action: pureInsertDocument({
           id: doc.id,
           plugin: doc.plugin,
           state,
         }),
-        reverse: pureRemove(doc.id),
+        reverse: pureRemoveDocument(doc.id),
       })
     }
   }

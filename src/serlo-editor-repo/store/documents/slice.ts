@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { State } from '../types'
 import type {
-  PureChangeAction,
-  PureInsertAction,
-  PureRemoveAction,
-  PureReplaceAction,
+  PureChangeDocumentAction,
+  PureInsertDocumentAction,
+  PureRemoveDocumentAction,
+  PureReplaceDocumentAction,
 } from './types'
 
 const initialState: State['documents'] = {}
@@ -14,22 +14,22 @@ export const documentsSlice = createSlice({
   name: 'documents',
   initialState,
   reducers: {
-    pureInsert(state, action: PureInsertAction) {
+    pureInsertDocument(state, action: PureInsertDocumentAction) {
       const { id, plugin: type, state: pluginState } = action.payload
       state[id] = {
         plugin: type,
         state: pluginState,
       }
     },
-    pureRemove(state, action: PureRemoveAction) {
+    pureRemoveDocument(state, action: PureRemoveDocumentAction) {
       delete state[action.payload]
     },
-    pureChange(state, action: PureChangeAction) {
+    pureChangeDocument(state, action: PureChangeDocumentAction) {
       const { id, state: pluginState } = action.payload
       if (!state[id]) return state
       state[id].state = pluginState
     },
-    pureReplace(state, action: PureReplaceAction) {
+    pureReplaceDocument(state, action: PureReplaceDocumentAction) {
       const { id, plugin: type, state: pluginState } = action.payload
       state[id] = {
         plugin: type,
@@ -39,5 +39,9 @@ export const documentsSlice = createSlice({
   },
 })
 
-export const { pureInsert, pureRemove, pureChange, pureReplace } =
-  documentsSlice.actions
+export const {
+  pureInsertDocument,
+  pureRemoveDocument,
+  pureChangeDocument,
+  pureReplaceDocument,
+} = documentsSlice.actions

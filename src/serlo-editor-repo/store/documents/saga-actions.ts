@@ -2,17 +2,17 @@ import { createAction } from '@reduxjs/toolkit'
 
 import { StateExecutor, StateUpdater } from '../../internal__plugin-state'
 
-export const change = createAction<{
+export const runChangeDocumentSaga = createAction<{
   id: string
   state: {
     initial: StateUpdater<unknown>
     executor?: StateExecutor<StateUpdater<unknown>>
   }
   reverse?: (previousState: unknown) => unknown
-}>('documents/change')
+}>('documents/runChangeDocumentSaga')
 
-export const replace = createAction<{
+export const runReplaceDocumentSaga = createAction<{
   id: string
   plugin: string
   state?: unknown
-}>('documents/replace')
+}>('documents/runReplaceDocumentSaga')

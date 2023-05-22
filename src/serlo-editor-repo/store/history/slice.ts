@@ -4,7 +4,10 @@ import * as R from 'ramda'
 import type { AppDispatch } from '../store'
 import type { State } from '../types'
 import { selectRedoStack, selectUndoStack } from './selectors'
-import type { PersistAction, PureCommitAction } from './types'
+import type {
+  PersistHistoryAction,
+  PureCommitActionToHistoryAction,
+} from './types'
 
 const initialState: State['history'] = {
   undoStack: [],
@@ -48,13 +51,16 @@ export const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    persist(state, action: PersistAction) {
+    persistHistory(state, action: PersistHistoryAction) {
       state.initialState = state.initialState || {
         documents: action.payload,
       }
       state.pendingChanges = 0
     },
-    pureCommit: (state, action: PureCommitAction) => {
+    pureCommitActionToHistory: (
+      state,
+      action: PureCommitActionToHistoryAction
+    ) => {
       const { combine, actions } = action.payload
       let actionsToCommit = actions
       const { undoStack } = state
@@ -97,4 +103,5 @@ export const historySlice = createSlice({
   },
 })
 
-export const { persist, pureCommit } = historySlice.actions
+export const { persistHistory, pureCommitActionToHistory } =
+  historySlice.actions

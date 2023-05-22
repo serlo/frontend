@@ -46,9 +46,9 @@ import {
   selectDocument,
   selectParent,
   selectPlugins,
-  insertChildAfter,
+  insertPluginChildAfter,
   selectMayManipulateSiblings,
-  replace,
+  runReplaceDocumentSaga,
   useAppDispatch,
   useAppSelector,
   selectFocusTree,
@@ -216,7 +216,7 @@ export function TextEditor(props: TextEditorProps) {
         const slicedNodes = sliceNodesAfterSelection(editor)
         setTimeout(() => {
           dispatch(
-            insertChildAfter({
+            insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
               document: {
@@ -320,7 +320,7 @@ export function TextEditor(props: TextEditorProps) {
     function insertPlugin(plugin: string, { state }: { state?: unknown }) {
       const isEditorEmpty = Node.string(editor) === ''
       if (mayManipulateSiblings && isEditorEmpty) {
-        dispatch(replace({ id, plugin, state }))
+        dispatch(runReplaceDocumentSaga({ id, plugin, state }))
         return
       }
 
@@ -331,7 +331,7 @@ export function TextEditor(props: TextEditorProps) {
       setTimeout(() => {
         if (slicedNodes) {
           dispatch(
-            insertChildAfter({
+            insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
               document: {
@@ -342,7 +342,7 @@ export function TextEditor(props: TextEditorProps) {
           )
         }
         dispatch(
-          insertChildAfter({
+          insertPluginChildAfter({
             parent: parent.id,
             sibling: id,
             document: { plugin, state },

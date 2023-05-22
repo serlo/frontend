@@ -2,9 +2,9 @@ import { PayloadAction } from '@reduxjs/toolkit'
 
 import type { ReversibleAction, State } from '../types'
 
-export type PersistAction = PayloadAction<State['documents']>
+export type PersistHistoryAction = PayloadAction<State['documents']>
 
-export type PureCommitAction = PayloadAction<{
+export type PureCommitActionToHistoryAction = PayloadAction<{
   combine: boolean
   actions: ReversibleAction[]
 }>

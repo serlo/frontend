@@ -1,17 +1,17 @@
 import { all, call, put, select, takeEvery } from 'redux-saga/effects'
 
-import { initRoot, pureInitRoot } from '.'
+import { runInitRootSaga, pureInitRoot } from '.'
 import type { ReversibleAction } from '..'
 import { selectDocuments } from '../documents'
 import { handleRecursiveInserts } from '../documents/saga'
-import { persist } from '../history'
+import { persistHistory } from '../history'
 import { setPlugins } from '../plugins/slice'
 
 export function* rootSaga() {
-  yield takeEvery(initRoot, initRootSaga)
+  yield takeEvery(runInitRootSaga, initRootSaga)
 }
 
-function* initRootSaga(action: ReturnType<typeof initRoot>) {
+function* initRootSaga(action: ReturnType<typeof runInitRootSaga>) {
   yield put(setPlugins(action.payload.plugins))
   yield put(pureInitRoot())
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -26,5 +26,5 @@ function* initRootSaga(action: ReturnType<typeof initRoot>) {
   const documents: ReturnType<typeof selectDocuments> = yield select(
     selectDocuments
   )
-  yield put(persist(documents))
+  yield put(persistHistory(documents))
 }

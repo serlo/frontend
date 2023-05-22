@@ -3,26 +3,26 @@ import { channel, Channel } from 'redux-saga'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
 import { EditorPlugin } from '../../internal__plugin'
-import { change, selectDocument } from '../documents'
+import { runChangeDocumentSaga, selectDocument } from '../documents'
 import { selectFocusTree } from '../focus'
 import { selectPlugin } from '../plugins'
 import {
-  insertChildAfter,
-  insertChildBefore,
-  removeChild,
+  insertPluginChildAfter,
+  insertPluginChildBefore,
+  removePluginChild,
 } from './saga-actions'
 
 export function* pluginSaga() {
   yield all([
-    takeEvery(insertChildBefore, insertChildBeforeSaga),
-    takeEvery(insertChildAfter, insertChildAfterSaga),
-    takeEvery(removeChild, removeChildSaga),
+    takeEvery(insertPluginChildBefore, insertChildBeforeSaga),
+    takeEvery(insertPluginChildAfter, insertChildAfterSaga),
+    takeEvery(removePluginChild, removeChildSaga),
   ])
 }
 
 function* insertChildBeforeSaga({
   payload,
-}: ReturnType<typeof insertChildBefore>) {
+}: ReturnType<typeof insertPluginChildBefore>) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const parent: ReturnType<typeof selectFocusTree> = yield select(
     selectFocusTree,
@@ -43,7 +43,7 @@ function* insertChildBeforeSaga({
 
 function* insertChildAfterSaga({
   payload,
-}: ReturnType<typeof insertChildAfter>) {
+}: ReturnType<typeof insertPluginChildAfter>) {
   yield call(insertChild, {
     parent: payload.parent,
     previousSibling: payload.sibling,
@@ -51,7 +51,7 @@ function* insertChildAfterSaga({
   })
 }
 
-function* removeChildSaga({ payload }: ReturnType<typeof removeChild>) {
+function* removeChildSaga({ payload }: ReturnType<typeof removePluginChild>) {
   yield call(createPlugin, payload.parent, (plugin, state) => {
     if (typeof plugin.removeChild !== 'function') return
     plugin.removeChild(state, payload.child)
@@ -92,7 +92,7 @@ function* createPlugin(
   const chan: Channel<{ payload: unknown; type: string }> = yield call(channel)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const state = plugin.state.init(document.state, (initial, additional) => {
-    const action = change({
+    const action = runChangeDocumentSaga({
       id,
       state: {
         initial,
@@ -109,7 +109,7 @@ function* createPlugin(
   function* channelSaga(chan: Channel<{ payload: unknown; type: string }>) {
     while (true) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const action: ReturnType<typeof change> = yield take(chan)
+      const action: ReturnType<typeof runChangeDocumentSaga> = yield take(chan)
       yield put(action)
     }
   }

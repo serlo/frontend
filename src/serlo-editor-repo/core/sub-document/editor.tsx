@@ -13,7 +13,7 @@ import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 import { SubDocumentProps } from '.'
 import { StateUpdater } from '../../internal__plugin-state'
 import {
-  change,
+  runChangeDocumentSaga,
   focus,
   focusNext,
   focusPrevious,
@@ -21,11 +21,11 @@ import {
   selectMayManipulateSiblings,
   selectParent,
   selectPlugin,
-  insertChildAfter,
+  insertPluginChildAfter,
   selectIsDocumentEmpty,
   selectIsFocused,
   redo,
-  removeChild,
+  removePluginChild,
   undo,
   useAppSelector,
   selectFocusTree,
@@ -119,7 +119,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         handleKeyDown(e, () => {
           if (!parent) return
           dispatch(
-            insertChildAfter({
+            insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
             })
@@ -138,7 +138,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               } else if (e.key === 'Delete') {
                 dispatch(focusNext(focusTree))
               }
-              dispatch(removeChild({ parent: parent.id, child: id }))
+              dispatch(removePluginChild({ parent: parent.id, child: id }))
             }
           })
         }
@@ -231,12 +231,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const onChange = (
       initial: StateUpdater<unknown>,
       additional: {
-        executor?: ReturnType<typeof change>['payload']['state']['executor']
-        reverse?: ReturnType<typeof change>['payload']['reverse']
+        executor?: ReturnType<
+          typeof runChangeDocumentSaga
+        >['payload']['state']['executor']
+        reverse?: ReturnType<typeof runChangeDocumentSaga>['payload']['reverse']
       } = {}
     ) => {
       dispatch(
-        change({
+        runChangeDocumentSaga({
           id,
           state: {
             initial,

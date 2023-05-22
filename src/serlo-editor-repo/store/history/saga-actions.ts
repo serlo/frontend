@@ -3,9 +3,11 @@ import { createAction } from '@reduxjs/toolkit'
 import type { ReversibleAction } from '..'
 import { StateExecutor } from '../../internal__plugin-state'
 
-export const commit = createAction<ReversibleAction[]>('history/commit')
+export const runCommitActionToHistorySaga = createAction<ReversibleAction[]>(
+  'history/commitActionToHistory'
+)
 
-export const temporaryCommit = createAction<{
+export const runCommitTemporaryActionToHistorySaga = createAction<{
   initial: ReversibleAction[]
   executor?: StateExecutor<ReversibleAction[]>
-}>('history/temporaryCommit')
+}>('history/commitTemporaryActionToHistory')

@@ -3,7 +3,7 @@ import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
 import {
   focusNext,
   focusPrevious,
-  removeChild,
+  removePluginChild,
   selectDocument,
   selectFocusTree,
   selectMayManipulateSiblings,
@@ -43,7 +43,7 @@ export function useMergePlugins(editor: SlateEditor, id: string) {
     if (Node.string(editor) === '') {
       const focusAction = direction === 'previous' ? focusPrevious : focusNext
       dispatch(focusAction(focusTree))
-      dispatch(removeChild({ parent: parent.id, child: id }))
+      dispatch(removePluginChild({ parent: parent.id, child: id }))
       return
     }
 
@@ -64,7 +64,9 @@ export function useMergePlugins(editor: SlateEditor, id: string) {
       newValue = [...previousDocumentValue, ...editor.children]
 
       // Remove the merged plugin
-      dispatch(removeChild({ parent: parent.id, child: previousSibling.id }))
+      dispatch(
+        removePluginChild({ parent: parent.id, child: previousSibling.id })
+      )
       // Set selection where it was before the merge
       Transforms.select(editor, {
         offset: 0,
@@ -85,7 +87,7 @@ export function useMergePlugins(editor: SlateEditor, id: string) {
       newValue = [...editor.children, ...nextDocumentValue]
 
       // Remove the merged plugin
-      dispatch(removeChild({ parent: parent.id, child: nextSibling.id }))
+      dispatch(removePluginChild({ parent: parent.id, child: nextSibling.id }))
     }
 
     // Apply the merge value to current Slate instance

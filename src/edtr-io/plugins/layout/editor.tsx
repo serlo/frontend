@@ -3,7 +3,7 @@ import { styled } from '@edtr-io/renderer-ui'
 import {
   store,
   DocumentState,
-  replace,
+  runReplaceDocumentSaga,
   selectSerializedDocument,
   useAppDispatch,
 } from '@edtr-io/store'
@@ -103,7 +103,7 @@ export const LayoutRenderer: React.FunctionComponent<
     })
 
     dispatch(
-      replace({
+      runReplaceDocumentSaga({
         id: props.id,
         plugin: 'rows',
         state: documents,
@@ -151,7 +151,7 @@ export const LayoutRenderer: React.FunctionComponent<
       )
       if (!explanation || !multimedia) return
       dispatch(
-        replace({
+        runReplaceDocumentSaga({
           id: props.id,
           plugin: 'multimedia',
           state: {

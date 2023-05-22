@@ -8,7 +8,7 @@ import { createDefaultDocumentEditor } from '../default-document-editor'
 import { createDefaultPluginToolbar } from '../default-plugin-toolbar'
 import { EditorPlugin } from '../internal__plugin'
 import {
-  initRoot,
+  runInitRootSaga,
   undo,
   redo,
   selectPendingChanges,
@@ -121,7 +121,7 @@ export function InnerDocument<K extends string = string>({
 
   useEffect(() => {
     if (!props.mirror) {
-      dispatch(initRoot({ initialState: props.initialState, plugins }))
+      dispatch(runInitRootSaga({ initialState: props.initialState, plugins }))
     }
   }, [props.initialState, plugins, props.mirror, dispatch])
   const editableContextValue = useMemo(() => editable ?? true, [editable])
