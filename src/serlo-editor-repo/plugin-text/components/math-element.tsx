@@ -63,7 +63,7 @@ export function MathElement({
   }
 
   /**
-   * Applys slate node transformations when MathElement is changed from inline to block type and backwards.
+   * Applies slate node transformations when MathElement is changed from inline to block type and backwards.
    */
   function handleInlineChange(newInlineValue: boolean) {
     // Editor.withoutNormalizing prevents automatically deleting elements by slate normalization until all transformations are done.
@@ -95,17 +95,23 @@ export function MathElement({
         }
         Transforms.insertNodes(editor, newNode, { at: path })
 
-        const hasSiblingAfter = Node.has(editor, Path.next(path))
+        const nextSiblingPath = Path.next(path)
+        const hasSiblingAfter = Node.has(editor, nextSiblingPath)
         if (hasSiblingAfter) {
-          const nextSiblingPath = Path.next(path)
-          // Merge next sibling node with newNode
-          Transforms.mergeNodes(editor, { at: nextSiblingPath })
+          const nodeAfter = Node.get(editor, nextSiblingPath)
+          if ('type' in nodeAfter && nodeAfter.type === 'p') {
+            // Merge next sibling node with newNode
+            Transforms.mergeNodes(editor, { at: nextSiblingPath })
+          }
         }
 
         const hasSiblingBefore = path[path.length - 1] !== 0
         if (hasSiblingBefore) {
-          // Merge newNode with previous sibling node
-          Transforms.mergeNodes(editor, { at: path })
+          const nodeBefore = Node.get(editor, Path.previous(path))
+          if ('type' in nodeBefore && nodeBefore.type === 'p') {
+            // Merge newNode with previous sibling node
+            Transforms.mergeNodes(editor, { at: path })
+          }
         }
       }
 
