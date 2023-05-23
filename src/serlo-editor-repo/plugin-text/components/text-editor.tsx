@@ -23,6 +23,7 @@ import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { textColors, useTextConfig } from '../hooks/use-text-config'
 import {
+  ListElementType,
   TextEditorConfig,
   TextEditorPluginConfig,
   TextEditorState,
@@ -32,7 +33,7 @@ import {
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
-import { isOrderedListActive, isUnorderedListActive } from '../utils/list'
+import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -192,8 +193,7 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Create a new Slate instance on "enter" key
-      const isListActive =
-        isOrderedListActive(editor) || isUnorderedListActive(editor)
+      const isListActive = isSelectionWithinList(editor)
       if (isHotkey('enter', event) && !isListActive) {
         const document = getDocument(id)(store.getState())
         if (!document) return
@@ -267,8 +267,7 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditablePaste(event: React.ClipboardEvent) {
-    const isListActive =
-      isOrderedListActive(editor) || isUnorderedListActive(editor)
+    const isListActive = isSelectionWithinList(editor)
 
     const document = getDocument(id)(store.getState())
     if (!document) return
@@ -415,16 +414,16 @@ function renderElementWithEditorContext(
       )
     }
 
-    if (element.type === 'unordered-list') {
+    if (element.type === ListElementType.UNORDERED_LIST) {
       return <ul {...attributes}>{children}</ul>
     }
-    if (element.type === 'ordered-list') {
+    if (element.type === ListElementType.ORDERED_LIST) {
       return <ol {...attributes}>{children}</ol>
     }
-    if (element.type === 'list-item') {
+    if (element.type === ListElementType.LIST_ITEM) {
       return <li {...attributes}>{children}</li>
     }
-    if (element.type === 'list-item-child') {
+    if (element.type === ListElementType.LIST_ITEM_TEXT) {
       return <div {...attributes}>{children}</div>
     }
 

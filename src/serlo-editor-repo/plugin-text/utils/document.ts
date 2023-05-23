@@ -1,4 +1,11 @@
-import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
+import {
+  Descendant,
+  Element,
+  Node,
+  Editor as SlateEditor,
+  Transforms,
+  Location,
+} from 'slate'
 
 import { StateTypeValueType } from '../../plugin'
 import type { TextEditorState } from '../types'
@@ -149,4 +156,22 @@ export function mergePlugins(
       return newValue
     }
   }
+}
+
+export function existsInAncestors(
+  predicate: (element: Element) => boolean,
+  { location }: { location: Location },
+  editor: SlateEditor
+) {
+  const matchingNodes = Array.from(
+    SlateEditor.nodes(editor, {
+      at: location,
+      match: (node) =>
+        !SlateEditor.isEditor(node) &&
+        Element.isElement(node) &&
+        predicate(node),
+    })
+  )
+
+  return matchingNodes.length !== 0
 }
