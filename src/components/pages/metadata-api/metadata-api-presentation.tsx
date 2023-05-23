@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { useState } from 'react'
 
 import { EditorContact } from '../editor/editor-contact'
 import { Link } from '@/components/content/link'
@@ -26,7 +25,6 @@ export const MetadataApiPresentation = () => {
             <span className="underlined !pr-0 pb-2">Metadata API</span>
           </h1>
         </section>
-
         <section
           className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-5xl')}
         >
@@ -38,15 +36,14 @@ export const MetadataApiPresentation = () => {
               </h2>
               <p className="mt-4">
                 Our new Metadata API makes it easy to integrate thousands of
-                Serlo articles, courses, videos, and interactive exercises. Just
-                read on and take a look at the codesnippets below to get
-                started.
+                Serlo articles, courses, videos, and interactive exercises.
               </p>
               <p className="mt-4">
                 Our metadata API is completely free and it only takes a few
                 lines of code to integrate a vast repository of educational
                 resources into your app!
               </p>
+              <CallToAction />
             </div>
             <div className="sm:flex-1 mt-8 ml-4 -mx-side sm:max-w-[32rem] rounded-lg overflow-hidden">
               <img
@@ -56,7 +53,6 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-
         <section
           className={clsx('bg-orangeBow bg-100% px-2 mt-0 !pt-16 mb-20')}
         >
@@ -74,7 +70,6 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-
         <section className={clsx('mt-24 pb-16')}>
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto"></div>
 
@@ -100,7 +95,7 @@ export const MetadataApiPresentation = () => {
                   Retrieve metadata of all our articles, videos, courses and
                   quizzes
                 </li>
-                <li>Easy to use interface</li>
+                <li>Easy to use - GraphQL interface</li>
                 <li>
                   Follow popular aggregators such as{' '}
                   <Link href="https://wirlernenonline.de/">
@@ -118,9 +113,8 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-        <CodeSnippets />
-        <div className="mt-4" />
-        <ExampleResponse />
+
+        <CallToAction />
         <p className="mt-20 text-xl leading-cozy flex-1 text-center">
           <b className="tracking-tight">
             Are you interested in using our Metadata API?
@@ -132,7 +126,7 @@ export const MetadataApiPresentation = () => {
             Wiki
           </Link>
         </p>
-        <div className="text-center mt-8 mb-8">
+        <div className="text-center mt-8 mb-14">
           <EditorContact lastName="Kulla" />
         </div>
       </div>
@@ -140,271 +134,11 @@ export const MetadataApiPresentation = () => {
   )
 }
 
-const codeSnippets: Record<string, string> = {
-  'Node.js': `
-    const fetch = require('node-fetch');
-
-    const payload = {
-      first: 10,
-      after: 1234,
-      instance: 'de',
-      modified_after: '2023-05-17T00:00:00Z'
-    };
-
-    fetch('https://api.serlo.org/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: \`
-          query($first: Int, $after: Int, $instance: String, $modified_after: String) {
-            metadata {
-              entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
-                nodes
-              }
-            }
-          }
-        \`,
-        variables: payload,
-      }),
-    })
-    .then(res => res.json())
-    .then(json => console.log(json));
-  `,
-  Python: `
-    import requests
-
-    payload = {
-      "first": 10,
-      "after": 1234,
-      "instance": "de",
-      "modified_after": "2023-05-17T00:00:00Z"
-    }
-
-    response = requests.post(
-      "https://api.serlo.org/graphql",
-      headers={"Content-Type": "application/json"},
-      json={
-        "query": """
-          query($first: Int, $after: Int, $instance: String, $modified_after: String) {
-            metadata {
-              entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
-                nodes
-              }
-            }
-          }
-        """,
-        "variables": payload,
-      },
-    )
-
-    print(response.json())
-  `,
-  Rust: `
-    use reqwest::header;
-    use serde_json::json;
-
-    #[tokio::main]
-    async fn main() -> Result<(), reqwest::Error> {
-      let client = reqwest::Client::new();
-      let payload = json!({
-        "first": 10,
-        "after": 1234,
-        "instance": "de",
-        "modified_after": "2023-05-17T00:00:00Z"
-      });
-      let res = client.post("https://api.serlo.org/graphql")
-        .header(header::CONTENT_TYPE, "application/json")
-        .body(json!({
-          "query": "
-            query($first: Int, $after: Int, $instance: String, $modified_after: String) {
-              metadata {
-                entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
-                  nodes
-                }
-              }
-            }
-          ",
-          "variables": payload
-        }).to_string())
-        .send().await?;
-
-      let body = res.text().await?;
-      println!("{}", body);
-
-      Ok(())
-    }
-  `,
-  curl: `
-  curl -X POST \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "query": "
-      query($first: Int, $after: Int, $instance: String, $modified_after: String) {
-        metadata {
-          entities(first: $first, after: $after, instance: $instance, modified_after: $modified_after) {
-            nodes
-          }
-        }
-      }
-    ",
-    "variables": {
-      "first": 10,
-      "after": 1234,
-      "instance": "de",
-      "modified_after": "2023-05-17T00:00:00Z"
-    }
-  }' \\
-  https://api.serlo.org/graphql
-`,
-}
-
-const CodeSnippets = () => {
-  const [activeTab, setActiveTab] = useState<string>('Node.js')
-
-  return (
-    <div className="tabs text-center">
-      <div className="tab-list">
-        {Object.keys(codeSnippets).map((tabName) => (
-          <button
-            key={tabName}
-            onClick={() => setActiveTab(tabName)}
-            className={`tab py-2 px-4 rounded-t-lg ${
-              activeTab === tabName ? 'bg-gray-200' : 'bg-white'
-            }`}
-          >
-            {tabName}
-          </button>
-        ))}
-      </div>
-      <div className="tab-content p-4 border-t-2 border-gray-200 rounded-b-lg relative">
-        <button
-          onClick={() => navigator.clipboard.writeText(codeSnippets[activeTab])}
-          className="absolute right-2 top-2 text-gray-400 hover:text-gray-600"
-        >
-          Copy
-        </button>
-        <pre className="text-left ml-4 overflow-x-auto">
-          <code>{codeSnippets[activeTab]}</code>
-        </pre>
-      </div>
-    </div>
-  )
-}
-
-const exampleJsonResponse = `
-"@context": [
-  "https://w3id.org/kim/lrmi-profile/draft/context.jsonld",
-  {
-    "@language": "de",
-    "@vocab": "http://schema.org/",
-    "type": "@type",
-    "id": "@id"
-  }
-],
-"id": "https://serlo.org/18865",
-"type": [ "LearningResource", "Video" ],
-"creator": [
-  {
-    "id": "https://serlo.org/22573",
-    "name": "12600e93",
-    "type": "Person",
-    "affiliation": {
-      "id": "https://serlo.org/#organization",
-      "type": "Organization",
-      "name": "Serlo Education e.V.",
-    },
-  },
-  {
-    "id": "https://serlo.org/15478",
-    "name": "125f467c",
-    "type": "Person",
-    "affiliation": {
-      "id": "https://serlo.org/#organization",
-      "type": "Organization",
-      "name": "Serlo Education e.V.",
-    },
-  },
-  {
-    "id": "https://serlo.org/15491",
-    "name": "125f4a84",
-    "type": "Person",
-    "affiliation": {
-      "id": "https://serlo.org/#organization",
-      "type": "Organization",
-      "name": "Serlo Education e.V.",
-    },
-  }
-],
-"dateCreated": "2014-03-17T16:18:44+00:00",
-"dateModified": "2014-05-01T09:22:14+00:00",
-"headline": "Satz des Pythagoras",
-"identifier": {
-  "propertyID": "UUID",
-  "type": "PropertyValue",
-  "value": 18865
-},
-"inLanguage": [ "de" ],
-"interactivityType": { "id": "http://purl.org/dcx/lrmi-vocabs/interactivityType/active" },
-"isAccessibleForFree": true,
-"isFamilyFriendly": true,
-"learningResourceType": [
-  { "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/video" },
-  { "id": "http://w3id.org/openeduhub/vocabs/learningResourceType/audiovisual_medium" },
-],
-"license": { "id": "https://creativecommons.org/licenses/by-sa/4.0/" },
-"mainEntityOfPage": {
-  "id": "https://serlo.org/metadata-api",
-  "provider": {
-    "id": "https://serlo.org/#organization",
-    "type": "Organization",
-    "name": "Serlo Education e.V."
-  },
-},
-"maintainer": {
-  "id": "https://serlo.org/#organization",
-  "type": "Organization",
-  "name": "Serlo Education e.V.",
-},
-"name": "Satz des Pythagoras",
-"isPartOf": [
-  { "id": "https://serlo.org/1381" },
-  { "id": "https://serlo.org/16214" },
-],
-"publisher": [
-  {
-    "id": "https://serlo.org/#organization",
-    "type": "Organization",
-    "name": "Serlo Education e.V.",
-  },
-],
-"version": "https://serlo.org/24383"
-`
-
-const ExampleResponse = () => {
-  const [isOpen, setIsOpen] = useState(false)
-
-  return (
-    <div className="w-full max-w-xl px-4 py-3 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800 mb-8">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full text-left cursor-pointer px-4 py-2 -mx-3 focus:outline-none"
-      >
-        <span className="font-semibold text-gray-700 dark:text-gray-200 inline">
-          Example Response
-        </span>
-        <span className="text-gray-700 dark:text-gray-200 float-right">
-          {isOpen ? '-' : '+'}
-        </span>
-      </button>
-      {isOpen && (
-        <div className="mt-2  px-4 py-2 bg-gray-100 dark:bg-gray-700">
-          <pre className="text-gray-700 dark:text-gray-200 overflow-x-auto text-left">
-            <code>{exampleJsonResponse}</code>
-          </pre>
-        </div>
-      )}
-    </div>
-  )
-}
+const CallToAction = () => (
+  <Link
+    className="text-center text-2xl font-bold underline mt-12"
+    href="https://github.com/serlo/documentation/wiki/Metadata-API"
+  >
+    Explore developer docs!
+  </Link>
+)

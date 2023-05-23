@@ -1,16 +1,16 @@
 import clsx from 'clsx'
 
+import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
-import { EditorTeam, teamData } from './editor-team'
+import { EditorTeam } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
-import { EditorContact } from './editor-contact'
 
 export const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
@@ -157,7 +157,7 @@ export function EditorPresentation() {
                 requests.
               </p>
               <div className="text-center mt-8">
-                <EditorContact firstName='Simon' />
+                <EditorContact firstName="Simon" />
               </div>
             </div>
           </div>
