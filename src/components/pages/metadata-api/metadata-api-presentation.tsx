@@ -28,7 +28,7 @@ export const MetadataApiPresentation = () => {
         <section
           className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-5xl')}
         >
-          <div className="sm:flex sm:justify-between">
+          <div className="sm:flex sm:justify-between sm:space-x-4">
             <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col pr-2">
               <h2 className="text-gray-700 text-[1.3rem] font-extrabold tracking-tight">
                 <br />
@@ -45,7 +45,7 @@ export const MetadataApiPresentation = () => {
               </p>
               <CallToAction />
             </div>
-            <div className="sm:flex-1 mt-8 ml-4 -mx-side sm:max-w-[32rem] rounded-lg overflow-hidden">
+            <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[32rem] rounded-lg overflow-hidden px-4">
               <img
                 src="/_assets/img/metadata/metadata.png"
                 alt="A bird flying over a stack of documents"
