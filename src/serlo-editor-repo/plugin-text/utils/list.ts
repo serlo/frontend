@@ -2,11 +2,14 @@ import { ListsEditor, ListType } from '@prezly/slate-lists'
 import { Element, Editor as SlateEditor } from 'slate'
 import { ReactEditor } from 'slate-react'
 
+import { ListElementType } from '../types'
 import { existsInAncestors } from './document'
 
 export function isElementWithinList(element: Element, editor: SlateEditor) {
   return existsInAncestors(
-    (elem) => elem.type === 'unordered-list' || elem.type === 'ordered-list',
+    (elem) =>
+      elem.type === ListElementType.ORDERED_LIST ||
+      elem.type === ListElementType.UNORDERED_LIST,
     { location: ReactEditor.findPath(editor, element) },
     editor
   )
@@ -14,7 +17,7 @@ export function isElementWithinList(element: Element, editor: SlateEditor) {
 
 export function isSelectionWithinList(
   editor: SlateEditor,
-  listType?: 'unordered-list' | 'ordered-list'
+  listType?: ListElementType
 ) {
   if (!editor.selection) return false
 
@@ -22,7 +25,8 @@ export function isSelectionWithinList(
     (element) => {
       return listType
         ? element.type === listType
-        : element.type === 'ordered-list' || element.type === 'unordered-list'
+        : element.type === ListElementType.ORDERED_LIST ||
+            element.type === ListElementType.UNORDERED_LIST
     },
     { location: SlateEditor.unhangRange(editor, editor.selection) },
     editor
@@ -30,11 +34,11 @@ export function isSelectionWithinList(
 }
 
 export function isSelectionWithinUnorderedList(editor: SlateEditor) {
-  return isSelectionWithinList(editor, 'unordered-list')
+  return isSelectionWithinList(editor, ListElementType.UNORDERED_LIST)
 }
 
 export function isSelectionWithinOrderedList(editor: SlateEditor) {
-  return isSelectionWithinList(editor, 'ordered-list')
+  return isSelectionWithinList(editor, ListElementType.ORDERED_LIST)
 }
 
 export function toggleOrderedList(editor: SlateEditor) {

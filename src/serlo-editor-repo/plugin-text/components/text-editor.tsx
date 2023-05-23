@@ -23,6 +23,7 @@ import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { textColors, useTextConfig } from '../hooks/use-text-config'
 import {
+  ListElementType,
   TextEditorConfig,
   TextEditorPluginConfig,
   TextEditorState,
@@ -413,16 +414,16 @@ function renderElementWithEditorContext(
       )
     }
 
-    if (element.type === 'unordered-list') {
+    if (element.type === ListElementType.UNORDERED_LIST) {
       return <ul {...attributes}>{children}</ul>
     }
-    if (element.type === 'ordered-list') {
+    if (element.type === ListElementType.ORDERED_LIST) {
       return <ol {...attributes}>{children}</ol>
     }
-    if (element.type === 'list-item') {
+    if (element.type === ListElementType.LIST_ITEM) {
       return <li {...attributes}>{children}</li>
     }
-    if (element.type === 'list-item-child') {
+    if (element.type === ListElementType.LIST_ITEM_TEXT) {
       return <div {...attributes}>{children}</div>
     }
 
