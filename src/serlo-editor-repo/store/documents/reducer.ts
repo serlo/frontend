@@ -112,6 +112,7 @@ export const getDocuments: Selector<Record<string, DocumentState>> =
 
 export const getDocument: Selector<DocumentState | null, [string | null]> =
   createSelector((state, id) => {
+    console.log('getDocument', id)
     if (!id) return null
     return getDocuments()(state)[id] || null
   })
