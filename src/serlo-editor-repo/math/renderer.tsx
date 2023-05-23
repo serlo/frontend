@@ -1,5 +1,5 @@
 import KaTeX from 'katex'
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 
 import { MathEditorProps } from './editor-props'
 
@@ -8,8 +8,11 @@ export type MathRendererProps = Pick<
   'state' | 'inline' | 'additionalContainerProps'
 >
 
-export const MathRenderer = forwardRef<HTMLSpanElement, MathRendererProps>(
-  function MathRenderer({ state, inline, additionalContainerProps }, ref) {
+export const MathRenderer = React.memo(
+  forwardRef<HTMLSpanElement, MathRendererProps>(function MathRenderer(
+    { state, inline, additionalContainerProps },
+    ref
+  ) {
     const html = KaTeX.renderToString(getFormula(), {
       displayMode: false,
       throwOnError: false,
@@ -37,5 +40,5 @@ export const MathRenderer = forwardRef<HTMLSpanElement, MathRendererProps>(
       if (!inline) return `\\displaystyle ${state}`
       return state
     }
-  }
+  })
 )

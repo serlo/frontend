@@ -13,7 +13,7 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   if (!document) return null
   if (!plugin) {
     // eslint-disable-next-line no-console
-    console.log('Plugin does not exist')
+    console.warn('Plugin does not exist')
     return null
   }
 

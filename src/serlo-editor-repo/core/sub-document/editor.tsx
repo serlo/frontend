@@ -30,6 +30,7 @@ import {
   useAppSelector,
   selectFocusTree,
   useAppDispatch,
+  store,
 } from '../../store'
 import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
@@ -58,7 +59,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const isDocumentEmpty = useAppSelector((state) =>
     selectIsDocumentEmpty(state, id)
   )
-  const parent = useAppSelector((state) => selectParent(state, id))
   const mayManipulateSiblings = useAppSelector((state) =>
     selectMayManipulateSiblings(state, id)
   )
@@ -66,7 +66,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const plugin = useAppSelector(
     (state) => document && selectPlugin(state, document.plugin)
   )
-  const focusTree = useAppSelector(selectFocusTree)
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
@@ -107,16 +106,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return {
       FOCUS_PREVIOUS: (e) => {
         handleKeyDown(e, () => {
-          dispatch(focusPrevious(focusTree))
+          dispatch(focusPrevious(selectFocusTree(store.getState())))
         })
       },
       FOCUS_NEXT: (e) => {
         handleKeyDown(e, () => {
-          dispatch(focusNext(focusTree))
+          dispatch(focusNext(selectFocusTree(store.getState())))
         })
       },
       INSERT_DEFAULT_PLUGIN: (e) => {
         handleKeyDown(e, () => {
+          const parent = selectParent(store.getState(), id)
           if (!parent) return
           dispatch(
             insertPluginChildAfter({
@@ -131,12 +131,13 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           handleKeyDown(e, () => {
             if (!e) return
             if (mayManipulateSiblings) {
+              const parent = selectParent(store.getState(), id)
               if (!parent) return
 
               if (e.key === 'Backspace') {
-                dispatch(focusPrevious(focusTree))
+                dispatch(focusPrevious(selectFocusTree(store.getState())))
               } else if (e.key === 'Delete') {
-                dispatch(focusNext(focusTree))
+                dispatch(focusNext(selectFocusTree(store.getState())))
               }
               dispatch(removePluginChild({ parent: parent.id, child: id }))
             }
@@ -164,15 +165,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       e && e.preventDefault()
       next()
     }
-  }, [
-    id,
-    plugin,
-    dispatch,
-    focusTree,
-    isDocumentEmpty,
-    mayManipulateSiblings,
-    parent,
-  ])
+  }, [id, plugin, dispatch, isDocumentEmpty, mayManipulateSiblings])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -218,7 +211,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     if (!document) return null
     if (!plugin) {
       // eslint-disable-next-line no-console
-      console.log('Plugin does not exist')
+      console.warn('Plugin does not exist')
       return null
     }
 

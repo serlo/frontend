@@ -72,7 +72,6 @@ function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
 
   const dispatch = useAppDispatch()
-  const focusTree = useAppSelector(selectFocusTree)
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
@@ -139,6 +138,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
+    const focusTree = selectFocusTree(store.getState())
     dispatch(focusNext(focusTree))
     dispatch(focusPrevious(focusTree))
   }

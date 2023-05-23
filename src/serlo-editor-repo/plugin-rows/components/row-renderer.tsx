@@ -10,7 +10,7 @@ import {
   DocumentState,
   selectPlugins,
   selectSerializedDocument,
-  useAppSelector,
+  store,
 } from '../../store'
 import {
   edtrDragHandle,
@@ -85,9 +85,6 @@ export function RowRenderer({
   const allowedPlugins = useMemo(() => {
     return config.plugins.map((plugin) => plugin.name)
   }, [config])
-  const serializedRowDocument = useAppSelector((state) =>
-    selectSerializedDocument(state, row.id)
-  )
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
   const [collectedDragProps, drag, dragPreview] = useDrag({
@@ -95,7 +92,7 @@ export function RowRenderer({
     item: () => {
       return {
         id: row.id,
-        serialized: serializedRowDocument,
+        serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
           rows.set((list) => {
             const i = R.findIndex((id) => id === row.id, list)
@@ -227,8 +224,12 @@ export function RowRenderer({
               <Left>
                 <BorderlessOverlayButton
                   onClick={() => {
-                    if (!serializedRowDocument) return
-                    rows.insert(index, serializedRowDocument)
+                    const document = selectSerializedDocument(
+                      store.getState(),
+                      row.id
+                    )
+                    if (!document) return
+                    rows.insert(index, document)
                     close()
                   }}
                   label={config.i18n.settings.duplicateLabel}
@@ -276,9 +277,9 @@ export function RowRenderer({
     config.i18n.settings.closeLabel,
     config.i18n.toolbar.dragLabel,
     rows,
+    row.id,
     index,
     drag,
-    serializedRowDocument,
   ])
 
   setTimeout(() => {
