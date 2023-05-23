@@ -14,7 +14,7 @@ export const MetadataApiPresentation = () => {
           'text-gray-700'
         )}
       >
-        <section className={clsx('font-bold text-center mt-32 px-4')}>
+        <section className="font-bold text-center mt-32 px-4">
           <h1
             className={clsx(
               'text-5xl font-extrabold',
@@ -25,9 +25,7 @@ export const MetadataApiPresentation = () => {
             <span className="underlined !pr-0 pb-2">Metadata API</span>
           </h1>
         </section>
-        <section
-          className={clsx('text-left mt-16 mb-16 px-4 mx-auto max-w-5xl')}
-        >
+        <section className="text-left mt-16 mb-16 px-4 mx-auto max-w-5xl">
           <div className="sm:flex sm:justify-between sm:space-x-4">
             <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col pr-2">
               <h2 className="text-gray-700 text-[1.3rem] font-extrabold tracking-tight">
@@ -53,9 +51,7 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-        <section
-          className={clsx('bg-orangeBow bg-100% px-2 mt-0 !pt-16 mb-20')}
-        >
+        <section className="bg-orangeBow bg-100% px-2 mt-0 !pt-16 mb-20">
           <div className="mt-2 pb-16 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
             <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">20,000+</b>
@@ -70,7 +66,7 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-        <section className={clsx('mt-24 pb-16')}>
+        <section className="mt-24 pb-16">
           <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto"></div>
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
@@ -115,7 +111,7 @@ export const MetadataApiPresentation = () => {
         </section>
 
         <CallToAction alignment="center" />
-        <p className="mt-20 text-xl leading-cozy flex-1 text-center">
+        <p className="mt-24 text-xl leading-cozy flex-1 text-center">
           <b className="tracking-tight">
             Are you interested in using our Metadata API?
           </b>
@@ -130,26 +126,6 @@ export const MetadataApiPresentation = () => {
           <EditorContact lastName="Kulla" />
         </div>
       </div>
-    </>
-  )
-}
-
-interface CallToActionProps {
-  alignment?: 'center' | 'left'
-}
-
-const CallToAction: React.FC<CallToActionProps> = ({ alignment = 'left' }) => {
-  const alignmentClasses =
-    alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
-  return (
-    <>
-      <Link
-        className={`serlo-new-landing-button landing-button-with-wings !mb-8 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors mt-12 max-w-xs mx-auto ${alignmentClasses}`}
-        href="https://github.com/serlo/documentation/wiki/Metadata-API"
-        noExternalIcon
-      >
-        Discover developer docs!
-      </Link>
       <style jsx>
         {`
           :global(.landing-button-with-wings):after,
@@ -184,5 +160,23 @@ const CallToAction: React.FC<CallToActionProps> = ({ alignment = 'left' }) => {
         `}
       </style>
     </>
+  )
+}
+
+interface CallToActionProps {
+  alignment?: 'center' | 'left'
+}
+
+const CallToAction: React.FC<CallToActionProps> = ({ alignment = 'left' }) => {
+  const alignmentClasses =
+    alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
+  return (
+    <Link
+      className={`serlo-new-landing-button landing-button-with-wings mb-12 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors mt-12 max-w-xs mx-auto ${alignmentClasses}`}
+      href="https://github.com/serlo/documentation/wiki/Metadata-API"
+      noExternalIcon
+    >
+      Discover developer docs!
+    </Link>
   )
 }
