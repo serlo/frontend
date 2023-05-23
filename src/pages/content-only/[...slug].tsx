@@ -13,7 +13,7 @@ import { prettifyLinks } from '@/fetcher/prettify-links'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-// Fontend to support Content-API
+// Frontend to support Content-API
 // https://github.com/serlo/serlo.org/wiki/Content-API
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {

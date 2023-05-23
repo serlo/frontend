@@ -33,7 +33,7 @@ export function EditorHelp() {
         <div>
           <iframe
             src="https://de.serlo.org/content-only/90231"
-            className="w-full mx-side mt-[5vh] h-[93vh] bg-gray-50"
+            className="w-[95%] mx-side mt-[5vh] h-[95vh] max-h-[750px] bg-gray-50"
           />
         </div>
       </ModalWithCloseButton>
