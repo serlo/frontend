@@ -12,6 +12,7 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
+import { EditorHelp } from '@/edtr-io/components/help/editor-help'
 import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
@@ -133,6 +134,7 @@ export function AddRevision({
           type={type}
           initialState={initialState}
         />
+        <EditorHelp />
       </div>
     </>
   )
