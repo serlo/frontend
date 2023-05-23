@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { styled } from '../../ui'
+import { styled } from '../../../ui'
 import { legacyEditorTheme } from '@/helper/colors'
 
 interface InputProps

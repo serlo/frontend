@@ -2,30 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
-import { faExternalLinkAlt, faTrashAlt, Icon, styled } from '../../ui'
-import {
-  InlineOverlay,
-  InlineOverlayPosition,
-} from '../components/inline-overlay'
-import type { Link, TextEditorPluginConfig } from '../types'
-import { getLinkElement, isLinkActive } from '../utils/link'
-import { LinkControlsInput } from './link-controls-input'
-import { legacyEditorTheme } from '@/helper/colors'
-
-const InlinePreview = styled.span({
-  padding: '0px 8px',
-})
-
-const ChangeButton = styled.div({
-  padding: '5px 5px 5px 10px',
-  display: 'inline-block',
-  borderLeft: `2px solid ${legacyEditorTheme.backgroundColor}`,
-  cursor: 'pointer',
-  margin: '2px',
-  '&:hover': {
-    color: legacyEditorTheme.primary.background,
-  },
-})
+import { InlineOverlayPosition } from '../../components/inline-overlay'
+import type { Link, TextEditorPluginConfig } from '../../types'
+import { getLinkElement, isLinkActive } from '../../utils/link'
+import { InlineOverlayWhite } from '../inline-overlay-white'
+import { LinkContentSearch } from './link-content-search'
 
 interface LinkControlsProps {
   hasSelectionChanged: number
@@ -80,43 +61,24 @@ export function LinkControls({
   if (!element) return null
 
   return (
-    <InlineOverlay
+    <InlineOverlayWhite
       config={config}
       initialPosition={InlineOverlayPosition.below}
     >
-      <InlinePreview>
-        <LinkControlsInput
-          ref={input}
-          value={value}
-          placeholder={config.i18n.link.placeholder}
-          onChange={(event) => {
-            setValue(event.target.value)
-            const path = ReactEditor.findPath(editor, element)
-            Transforms.setNodes(
-              editor,
-              { href: event.target.value },
-              { at: path }
-            )
-          }}
-        />
-      </InlinePreview>
-      <ChangeButton
-        as="a"
-        target="_blank"
-        href={value}
-        rel="noopener noreferrer"
-      >
-        <Icon icon={faExternalLinkAlt} />
-      </ChangeButton>
-      <ChangeButton
-        onClick={() => {
+      <LinkContentSearch
+        setValue={(href: string) => {
+          setValue(href)
+          const path = ReactEditor.findPath(editor, element)
+          Transforms.setNodes(editor, { href: href }, { at: path })
+        }}
+        removeLink={() => {
           setElement(null)
           const path = ReactEditor.findPath(editor, element)
           Transforms.unwrapNodes(editor, { at: path })
         }}
-      >
-        <Icon icon={faTrashAlt} />
-      </ChangeButton>
-    </InlineOverlay>
+        value={value}
+      />
+      {/* placeholder={config.i18n.link.placeholder} */}
+    </InlineOverlayWhite>
   )
 }

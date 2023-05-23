@@ -241,12 +241,19 @@ export function findResults(data: QuickbarData, query: string) {
 
   for (const entry of data) {
     let score = 0
-    const preparedQuery = query.toLowerCase().trim()
-    if (entry.titleLower.includes(preparedQuery)) {
+    const preparedQuery = (query.charAt(0) === '/' ? query.slice(1) : query)
+      .toLowerCase()
+      .trim()
+    if (
+      entry.titleLower.includes(preparedQuery) ||
+      preparedQuery === entry.id
+    ) {
       score += 100
       if (entry.titleLower.startsWith(preparedQuery)) {
         score += 10
       } else if (entry.titleLower.includes(' ' + preparedQuery)) {
+        score += 8
+      } else if (preparedQuery.includes(entry.id)) {
         score += 8
       }
     } else {

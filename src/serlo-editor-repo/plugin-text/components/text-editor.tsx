@@ -36,7 +36,7 @@ import {
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
-import { LinkControls } from './link-controls'
+import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
