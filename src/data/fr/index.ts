@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Fr"],
+  lang: "fr",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -459,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Fr"],
+  lang: "fr",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Notre vision est de permettre un apprentissage personnalisé et de fournir des ressources éducatives de haute qualité dans le monde entier - complètement gratuit. Serlo est une organisation de base inspirée par Wikipédia. Nous fournissons déjà des milliers d'articles, de vidéos et d'exercices résolus à cinq millions d'étudiants allemands chaque année.\nIl est maintenant temps de passer à l'international.",
@@ -505,7 +504,7 @@ export const loggedInData = {
       title: "Changer le mot de passe"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "Réglages"
     }, {
       url: '/auth/logout',
       title: "Se déconnecter"
@@ -768,12 +767,16 @@ export const loggedInData = {
         italic: "Italique (%ctrlOrCmd% + I)",
         noItemsFound: "Aucun élément trouvé"
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: "URL de la vidéo",
         description: 'Description',
         title: "Titre",
         url: 'URL',
-        seoTitle: "Titre pour les moteurs de recherche"
+        seoTitle: "Titre pour les moteurs de recherche",
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: "Cette partie du document n'a pas pu être convertie."

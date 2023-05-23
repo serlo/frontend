@@ -18,9 +18,13 @@ const initialPosition = isTouchDevice()
   ? InlineOverlayPosition.below
   : InlineOverlayPosition.above
 
-export function HoveringToolbar(props: HoveringToolbarProps) {
+export function HoveringToolbar({
+  editor,
+  config,
+  controls,
+  focused,
+}: HoveringToolbarProps) {
   const [isBottomToolbarActive, setIsBottomToolbarActive] = useState(false)
-  const { editor, config, controls, focused } = props
   const { selection } = editor
   const text = Node.string(editor)
   const isSelectionCollapsed = selection && Range.isCollapsed(selection)

@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["De"],
+  lang: "de",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -459,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["De"],
+  lang: "de",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -768,12 +767,16 @@ export const loggedInData = {
         italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
+      image: {
+        noImagePasteInLists: "Einfügen von Bildern ist innerhalb von Listen nicht möglich."
+      },
       video: {
         videoUrl: 'Video URL',
         description: "Beschreibung",
         title: "Titel",
         url: 'URL',
-        seoTitle: "Titel für Suchmaschinen"
+        seoTitle: "Titel für Suchmaschinen",
+        noVideoPasteInLists: "Einfügen von Videos ist innerhalb von Listen nicht möglich."
       },
       error: {
         convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
