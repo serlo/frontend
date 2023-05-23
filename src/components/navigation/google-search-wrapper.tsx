@@ -5,7 +5,6 @@ import { useState, useRef, useEffect } from 'react'
 import { cfWorkerLinks } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { submitEvent } from '@/helper/submit-event'
 
 /* 
   Uses Google Programmable Search
@@ -31,7 +30,6 @@ export function GoogleSeachWrapper() {
 
   //init
   useEffect(() => {
-    submitEvent('search-showing-results')
     loadSearchScripts()
     activateSearch()
   })
@@ -91,7 +89,6 @@ export function GoogleSeachWrapper() {
           !cfWorkerLinks.includes(relativeHref)
 
         if (isFrontendResultsLink) {
-          submitEvent('search-result-click')
           if (!e.metaKey && !e.ctrlKey) {
             e.preventDefault()
             void router.push(relativeHref).then(() => {

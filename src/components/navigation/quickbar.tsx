@@ -5,7 +5,6 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
-import { submitEvent } from '@/helper/submit-event'
 
 interface QuickbarDataEntry {
   title: string
@@ -38,7 +37,14 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const overlayWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (query && !data) fetchData()
+    const effectFetch = async () => {
+      const fetchedData = await fetchData(subject)
+      if (fetchedData) setData(fetchedData)
+    }
+
+    if (query && !data) {
+      effectFetch().catch(console.error)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, data, subject])
 
@@ -73,7 +79,6 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     }, 200)
 
   const goToSearch = () => {
-    submitEvent('quickbar-to-search')
     // not using router since the hacky search component does not refresh easily
     window.location.href = `/search?q=${encodeURIComponent(query)}`
   }
@@ -85,7 +90,6 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault()
-    submitEvent('quickbar-direct-hit')
     const url = `/${id}`
 
     if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
@@ -213,26 +217,6 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     )
   }
 
-  function fetchData() {
-    void fetch('https://de.serlo.org/api/stats/quickbar.json')
-      .then((res) => res.json())
-      .then((data: QuickbarData) => {
-        data.forEach((entry) => {
-          entry.pathLower = entry.path.map((x) => x.toLowerCase())
-          entry.titleLower = entry.title.toLowerCase()
-        })
-
-        const subjectLower = subject?.toLowerCase() ?? ''
-
-        const filteredData = subject
-          ? data.filter((entry) =>
-              entry.root?.toLowerCase().startsWith(subjectLower)
-            )
-          : data
-        submitEvent('quickbar-activated')
-        setData(filteredData)
-      })
-  }
   function findResults() {
     if (!data || !query) return
 
@@ -286,4 +270,22 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       }
     }
   }
+}
+
+export async function fetchData(subject?: string) {
+  const req = await fetch('https://de.serlo.org/api/stats/quickbar.json')
+  const data = (await req.json()) as QuickbarData
+
+  data.forEach((entry) => {
+    entry.pathLower = entry.path.map((x) => x.toLowerCase())
+    entry.titleLower = entry.title.toLowerCase()
+  })
+
+  const subjectLower = subject?.toLowerCase() ?? ''
+
+  const filteredData = subject
+    ? data.filter((entry) => entry.root?.toLowerCase().startsWith(subjectLower))
+    : data
+
+  return filteredData
 }

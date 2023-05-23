@@ -7,7 +7,6 @@ import { GoogleSeachWrapper } from '../navigation/google-search-wrapper'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { submitEvent } from '@/helper/submit-event'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function Search() {
@@ -112,7 +111,6 @@ export function Search() {
         <button
           className="serlo-button serlo-make-interactive-primary mt-2 mb-1 block py-0.5"
           onClick={() => {
-            submitEvent('search-consented')
             giveConsent(ExternalProvider.GoogleSearch)
             window.location.reload()
           }}
