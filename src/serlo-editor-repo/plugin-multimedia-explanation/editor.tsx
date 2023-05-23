@@ -3,15 +3,22 @@ import { useState } from 'react'
 import { MultimediaExplanationProps } from '.'
 import { PluginToolbarButton } from '../core'
 import {
+  selectDocument,
   selectHasFocusedDescendant,
   selectIsDocumentEmpty,
   selectIsFocused,
   selectSerializedDocument,
+  store,
   useAppSelector,
 } from '../store'
 import { styled, faRandom, Icon, faTrashAlt } from '../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
+
+interface MultimediaDocument {
+  plugin: string
+  state?: unknown
+}
 
 const STEPS = 4
 const BREAKPOINT = 650
@@ -81,22 +88,22 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     selectIsDocumentEmpty(state, props.state.multimedia.id)
   )
 
-  const multimedia: {
-    plugin: string
-    state?: unknown
-  } | null = useAppSelector((state) =>
-    selectSerializedDocument(state, props.state.multimedia.id)
+  const multimediaDocument: MultimediaDocument | null = useAppSelector(
+    (state) => selectDocument(state, props.state.multimedia.id)
   )
   const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
     Record<string, unknown>
   >({})
   function handleMultimediaChange(selected: string) {
     setReplacedMultimediaCache((current) => {
-      if (!multimedia) return current
+      const multimediaSerializedDocument: MultimediaDocument | null =
+        selectSerializedDocument(store.getState(), props.state.multimedia.id)
+      if (!multimediaSerializedDocument) return current
 
       return {
         ...current,
-        [multimedia.plugin]: multimedia.state,
+        [multimediaSerializedDocument.plugin]:
+          multimediaSerializedDocument.state,
       }
     })
     props.state.multimedia.replace(selected, replacedMultimediaCache[selected])
@@ -105,7 +112,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
 
   const pluginSelection = (
     <select
-      value={multimedia ? multimedia.plugin : ''}
+      value={multimediaDocument ? multimediaDocument.plugin : ''}
       onChange={(e) => handleMultimediaChange(e.target.value)}
     >
       {props.config.plugins.map((plugin) => {
@@ -178,7 +185,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               label={config.i18n.reset}
               onClick={() => {
                 props.state.multimedia.replace(
-                  multimedia?.plugin ?? props.config.plugins[0].name
+                  multimediaDocument?.plugin ?? props.config.plugins[0].name
                 )
               }}
             />
@@ -186,7 +193,9 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               <InlineOptions>
                 {props.config.plugins
                   .filter(
-                    (plugin) => !multimedia || plugin.name !== multimedia.plugin
+                    (plugin) =>
+                      !multimediaDocument ||
+                      plugin.name !== multimediaDocument.plugin
                   )
                   .map((plugin, i) => {
                     return (
