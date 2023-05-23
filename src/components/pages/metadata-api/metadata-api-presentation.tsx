@@ -114,7 +114,7 @@ export const MetadataApiPresentation = () => {
           </div>
         </section>
 
-        <CallToAction />
+        <CallToAction alignment="center" />
         <p className="mt-20 text-xl leading-cozy flex-1 text-center">
           <b className="tracking-tight">
             Are you interested in using our Metadata API?
@@ -134,12 +134,20 @@ export const MetadataApiPresentation = () => {
   )
 }
 
-const CallToAction = () => (
-  <Link
-    className="serlo-new-landing-button landing-button-with-wings mt-12 max-w-xs ml-auto mr-auto"
-    href="https://github.com/serlo/documentation/wiki/Metadata-API"
-    noExternalIcon
-  >
-    Discover developer docs!
-  </Link>
-)
+interface CallToActionProps {
+  alignment?: 'center' | 'left'
+}
+
+const CallToAction: React.FC<CallToActionProps> = ({ alignment = 'left' }) => {
+  const alignmentClasses =
+    alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
+  return (
+    <Link
+      className={`serlo-new-landing-button landing-button-with-wings mt-12 max-w-xs mx-auto ${alignmentClasses}`}
+      href="https://github.com/serlo/documentation/wiki/Metadata-API"
+      noExternalIcon
+    >
+      Discover developer docs!
+    </Link>
+  )
+}
