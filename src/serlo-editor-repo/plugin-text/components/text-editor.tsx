@@ -32,7 +32,7 @@ import {
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
-import { isOrderedListActive, isUnorderedListActive } from '../utils/list'
+import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
@@ -192,8 +192,7 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Create a new Slate instance on "enter" key
-      const isListActive =
-        isOrderedListActive(editor) || isUnorderedListActive(editor)
+      const isListActive = isSelectionWithinList(editor)
       if (isHotkey('enter', event) && !isListActive) {
         const document = getDocument(id)(store.getState())
         if (!document) return
@@ -267,8 +266,7 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditablePaste(event: React.ClipboardEvent) {
-    const isListActive =
-      isOrderedListActive(editor) || isUnorderedListActive(editor)
+    const isListActive = isSelectionWithinList(editor)
 
     const document = getDocument(id)(store.getState())
     if (!document) return

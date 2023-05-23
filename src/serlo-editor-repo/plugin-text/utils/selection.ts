@@ -7,22 +7,19 @@ import {
   Point,
 } from 'slate'
 
+import { existsInAncestors } from './document'
+
 export function selectionHasElement(
   predicate: (element: Element) => boolean,
   editor: SlateEditor
 ) {
-  const { selection } = editor
-  if (!selection) return false
+  if (!editor.selection) return false
 
-  const [match] = Array.from(
-    SlateEditor.nodes(editor, {
-      at: SlateEditor.unhangRange(editor, selection),
-      match: (n) =>
-        !SlateEditor.isEditor(n) && Element.isElement(n) && predicate(n),
-    })
+  return existsInAncestors(
+    predicate,
+    { location: SlateEditor.unhangRange(editor, editor.selection) },
+    editor
   )
-
-  return !!match
 }
 
 export function trimSelection(editor: SlateEditor): Partial<Range> | null {

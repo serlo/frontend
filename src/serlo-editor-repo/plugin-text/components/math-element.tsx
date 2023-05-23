@@ -14,6 +14,7 @@ import type {
   Paragraph,
   TextEditorPluginConfig,
 } from '../types'
+import { isElementWithinList } from '../utils/list'
 import { MathFormula } from './math-formula'
 
 export interface MathElementProps {
@@ -38,17 +39,7 @@ export function MathElement({
   const preferences = useContext(PreferenceContext)
 
   const isInsideListElement = useMemo(() => {
-    const path = ReactEditor.findPath(editor, element)
-    const ancestorNodes = [...Node.ancestors(editor, path)]
-    return ancestorNodes.some((ancestor) => {
-      const ancestorPath = ancestor[1]
-      const ancestorNode = Node.get(editor, ancestorPath)
-      return (
-        'type' in ancestorNode &&
-        (ancestorNode.type === 'ordered-list' ||
-          ancestorNode.type === 'unordered-list')
-      )
-    })
+    return isElementWithinList(element, editor)
   }, [editor, element])
 
   const shouldShowMathEditor =
