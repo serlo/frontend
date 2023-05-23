@@ -18,6 +18,12 @@ import { InternalState, SelectorReturnType, State } from './storetypes'
 
 const createSagaMiddleware = _createSagaMiddleware
 
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
+  }
+}
+
 const composeEnhancers =
   (typeof window !== 'undefined' &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
@@ -34,7 +40,7 @@ export function createStore<K extends string>(
 ): {
   store: Store<State, Action>
 } {
-  const { scopes, createEnhancer } = options
+  const { scopes } = options
   const sagaMiddleware = createSagaMiddleware()
   const defaultEnhancer = applyMiddleware(sagaMiddleware)
   const enhancer = composeEnhancers(defaultEnhancer)
