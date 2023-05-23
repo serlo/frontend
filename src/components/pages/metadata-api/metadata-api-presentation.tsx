@@ -136,9 +136,10 @@ export const MetadataApiPresentation = () => {
 
 const CallToAction = () => (
   <Link
-    className="text-center text-2xl font-bold underline mt-12"
+    className="serlo-new-landing-button landing-button-with-wings mt-12 max-w-xs ml-auto mr-auto"
     href="https://github.com/serlo/documentation/wiki/Metadata-API"
+    noExternalIcon
   >
-    Explore developer docs!
+    Discover developer docs!
   </Link>
 )
