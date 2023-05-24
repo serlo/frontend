@@ -18,7 +18,6 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 
 // TODO: quickbar data only available in de.serlo.org! how should we handle other instances?
 // TODO: quickbar data does not have type for icon
-// TODO: investigate if we can restore cursor position when closing etc
 
 // based on Quickbar, duplicates some code
 
@@ -139,7 +138,7 @@ export function LinkContentSearch({
     return (
       <input
         type="text"
-        className="mx-side w-[26rem] border-3 border-editor-primary-50 bg-editor-primary-100 rounded-xl mt-2 pl-5 pr-12 h-12 align-end hover:border-editor-primary-100 focus:border-editor-primary-200 outline-none"
+        className="mx-side w-[25rem] border-3 border-editor-primary-50 bg-editor-primary-100 rounded-xl mt-2 pl-3 pr-12 h-12 align-end hover:border-editor-primary-100 focus:border-editor-primary-200 outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
         placeholder="Stichwort oder Link"
@@ -151,7 +150,11 @@ export function LinkContentSearch({
   function renderResetButton() {
     return (
       <div
-        className="absolute top-1.5 right-0 bottom-0 flex items-center justify-center w-10 cursor-pointer text-gray-700"
+        className={clsx(
+          'absolute top-4 right-6 flex items-center justify-center w-8 h-8',
+          'serlo-button-editor-secondary',
+          'cursor-pointer text-gray-700'
+        )}
         onClick={() => {
           setQuery('')
           setTimeout(() => {

@@ -30,9 +30,9 @@ export function LinkControls({
     const isCollapsed = selection && Range.isCollapsed(selection)
 
     if (isCollapsed && isLinkActive(editor)) {
-      const element = getLinkElement(editor) || null
-      setElement(element)
-      setValue(element ? element.href : '')
+      const linkElement = getLinkElement(editor) || null
+      setElement(linkElement)
+      setValue(linkElement ? linkElement.href : '')
     } else {
       setElement(null)
     }
@@ -50,11 +50,13 @@ export function LinkControls({
           setValue(href)
           const path = ReactEditor.findPath(editor, element)
           Transforms.setNodes(editor, { href: href }, { at: path })
+          ReactEditor.focus(editor)
         }}
         removeLink={() => {
           setElement(null)
           const path = ReactEditor.findPath(editor, element)
           Transforms.unwrapNodes(editor, { at: path })
+          ReactEditor.focus(editor)
         }}
         value={value}
       />
