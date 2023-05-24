@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
@@ -25,7 +25,6 @@ export function LinkControls({
 }: LinkControlsProps) {
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
-  const input = useRef<HTMLInputElement>(null)
 
   const { selection } = editor
 
@@ -42,21 +41,6 @@ export function LinkControls({
       setElement(null)
     }
   }, [hasSelectionChanged, selection, editor])
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>
-
-    if (element && isLinkNewlyCreated) {
-      timeout = setTimeout(() => {
-        setIsLinkNewlyCreated(false)
-        input.current?.focus()
-      })
-    }
-
-    return () => {
-      timeout && clearTimeout(timeout)
-    }
-  }, [element, isLinkNewlyCreated, setIsLinkNewlyCreated])
 
   if (!element) return null
 
@@ -77,6 +61,8 @@ export function LinkControls({
           Transforms.unwrapNodes(editor, { at: path })
         }}
         value={value}
+        shouldFocus={isLinkNewlyCreated}
+        afterFocusing={() => setIsLinkNewlyCreated(false)}
       />
       {/* placeholder={config.i18n.link.placeholder} */}
     </InlineOverlayWhite>

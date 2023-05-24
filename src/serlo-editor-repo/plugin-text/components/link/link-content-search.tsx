@@ -26,10 +26,14 @@ export function LinkContentSearch({
   value,
   setValue,
   removeLink,
+  shouldFocus,
+  afterFocusing,
 }: {
   value: string
   setValue: (href: string) => void
   removeLink: () => void
+  shouldFocus: boolean
+  afterFocusing: () => void
 }) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState(value)
@@ -59,6 +63,20 @@ export function LinkContentSearch({
   useEffect(() => {
     setSel(0)
   }, [query, data, value])
+
+  useEffect(() => {
+    if (!shouldFocus) return
+
+    const timeout = setTimeout(() => {
+      if (inputRef.current) inputRef.current.focus()
+      afterFocusing()
+    })
+
+    return () => {
+      timeout && clearTimeout(timeout)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
 
   const results = data ? findResults(data, query) : []
 
