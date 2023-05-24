@@ -188,6 +188,26 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
+      // Special handler for links. When pressing Enter while editing a link-text
+      // the link should not continue in the next line. Instead a new line with normal text is created.
+      if (event.key === 'Enter') {
+        const { path, offset } = selection.focus
+        const node = Node.get(editor, path)
+        const parent = Node.parent(editor, path)
+
+        if (node && parent) {
+          if (
+            Object.hasOwn(parent, 'type') &&
+            parent.type === 'a' &&
+            Object.hasOwn(node, 'text') &&
+            node.text.length === offset
+          ) {
+            Transforms.move(editor)
+            event.preventDefault()
+          }
+        }
+      }
+
       // Create a new Slate instance on "enter" key
       const isListActive = isSelectionWithinList(editor)
       if (isHotkey('enter', event) && !isListActive) {
