@@ -16,8 +16,9 @@ import {
 } from '@/components/navigation/quickbar'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
-//TODO: quickbar data only available in de.serlo.org! how should we handle other instances?
-//TODO: quickbar data does not have type for icon
+// TODO: quickbar data only available in de.serlo.org! how should we handle other instances?
+// TODO: quickbar data does not have type for icon
+// TODO: investigate if we can restore cursor position when closing etc
 
 // based on Quickbar, duplicates some code
 
@@ -35,12 +36,11 @@ export function LinkContentSearch({
   const inputRef = useRef<HTMLInputElement>(null)
   const [sel, setSel] = useState(-1)
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
-  const wrapper = useRef<HTMLDivElement>(null)
-  const resultsWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setIsEditMode(value.length === 0)
     setQuery(value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   useEffect(() => {
@@ -87,7 +87,8 @@ export function LinkContentSearch({
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     {
       if (e.key === 'Escape') {
-        setQuery('')
+        if (query) setQuery('')
+        else removeLink()
       }
       if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
         if (e.key === 'ArrowDown' && sel < results.length) {
@@ -106,7 +107,7 @@ export function LinkContentSearch({
   }
 
   return (
-    <div className="" ref={wrapper}>
+    <>
       {isEditMode ? (
         <>
           <label className="block px-side pt-4">
@@ -121,7 +122,7 @@ export function LinkContentSearch({
       ) : (
         <>{renderSetEntry()}</>
       )}
-    </div>
+    </>
   )
 
   function renderInput() {
@@ -159,18 +160,18 @@ export function LinkContentSearch({
   function renderResults() {
     if (!query) return null
     return (
-      <div ref={resultsWrapper} className="mt-4 group">
+      <div className="mt-4 group">
         <>
           {results.map(({ entry }, i) =>
             renderEntry(entry.title, i, `/${entry.id}`, entry.path.join(' > '))
           )}
-          <p
+          <div
             className={clsx('text-lg mt-2 text-gray-800', {
               'bg-brand-50': sel === results.length,
             })}
           >
             {renderEntry(query, results.length, query, 'Eigener Link', true)}
-          </p>
+          </div>
         </>
       </div>
     )

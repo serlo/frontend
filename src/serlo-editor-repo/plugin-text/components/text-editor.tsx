@@ -162,6 +162,9 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
+    // stop slate from loosing focus when using esc
+    if (event.key === 'Escape') return false
+
     // If linebreaks are disabled in the config, prevent any enter key handling
     if (config.noLinebreaks && event.key === 'Enter') {
       event.preventDefault()
