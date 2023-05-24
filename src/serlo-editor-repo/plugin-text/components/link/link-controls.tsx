@@ -9,13 +9,13 @@ import { InlineOverlayWhite } from '../inline-overlay-white'
 import { LinkContentSearch } from './link-content-search'
 
 interface LinkControlsProps {
-  hasSelectionChanged: number
+  selectionChanged: number
   editor: SlateEditor
   config: TextEditorPluginConfig
 }
 
 export function LinkControls({
-  hasSelectionChanged,
+  selectionChanged,
   editor,
   config,
 }: LinkControlsProps) {
@@ -36,7 +36,7 @@ export function LinkControls({
     } else {
       setElement(null)
     }
-  }, [hasSelectionChanged, selection, editor])
+  }, [selectionChanged, selection, editor])
 
   if (!element) return null
 

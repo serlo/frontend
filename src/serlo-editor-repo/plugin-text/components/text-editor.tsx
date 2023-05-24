@@ -59,7 +59,7 @@ export type TextEditorProps = EditorPluginProps<
 >
 
 export function TextEditor(props: TextEditorProps) {
-  const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
+  const [selectionChanged, setSelectionChanged] = useState(0)
 
   const store = useScopedStore()
   const loggedInData = useLoggedInData()
@@ -153,7 +153,7 @@ export function TextEditor(props: TextEditorProps) {
         ({ value }) => ({ value, selection: previousSelection.current })
       )
     }
-    setHasSelectionChanged((selection) => selection + 1)
+    setSelectionChanged((selection) => selection + 1)
     previousSelection.current = editor.selection
   }
 
@@ -387,7 +387,7 @@ export function TextEditor(props: TextEditorProps) {
         {editable && focused && (
           <>
             <LinkControls
-              hasSelectionChanged={hasSelectionChanged}
+              selectionChanged={selectionChanged}
               editor={editor}
               config={config}
             />
