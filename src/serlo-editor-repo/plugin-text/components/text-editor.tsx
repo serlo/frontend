@@ -358,25 +358,6 @@ export function TextEditor(props: TextEditorProps) {
         value={state.value.value}
         onChange={handleEditorChange}
       >
-        {editable && focused && (
-          <HoveringToolbar
-            editor={editor}
-            config={config}
-            controls={toolbarControls}
-            focused={focused}
-          />
-        )}
-
-        {editable && focused && (
-          <LinkControls
-            hasSelectionChanged={hasSelectionChanged}
-            editor={editor}
-            config={config}
-            isLinkNewlyCreated={isLinkNewlyCreated}
-            setIsLinkNewlyCreated={setIsLinkNewlyCreated}
-          />
-        )}
-
         <Editable
           placeholder={config.placeholder}
           onKeyDown={handleEditableKeyDown}
@@ -384,6 +365,23 @@ export function TextEditor(props: TextEditorProps) {
           renderElement={renderElementWithEditorContext(config, focused)}
           renderLeaf={renderLeaf}
         />
+        {editable && focused && (
+          <>
+            <LinkControls
+              hasSelectionChanged={hasSelectionChanged}
+              editor={editor}
+              config={config}
+              isLinkNewlyCreated={isLinkNewlyCreated}
+              setIsLinkNewlyCreated={setIsLinkNewlyCreated}
+            />
+            <HoveringToolbar
+              editor={editor}
+              config={config}
+              controls={toolbarControls}
+              focused={focused}
+            />
+          </>
+        )}
       </Slate>
 
       {showSuggestions && (
