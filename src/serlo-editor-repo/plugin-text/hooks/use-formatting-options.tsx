@@ -53,8 +53,6 @@ import {
 } from '../utils/rich-text'
 import { textColors } from './use-text-config'
 
-type SetIsLinkNewlyCreated = (value: boolean) => void
-
 const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,
   [TextEditorFormattingOption.links]: withLinks,
@@ -67,13 +65,7 @@ const isRegisteredTextPlugin = (
   return option in textPluginsMapper
 }
 
-const toggleLinkAndFlag =
-  (setIsLinkNewlyCreated: SetIsLinkNewlyCreated) => (editor: SlateEditor) => {
-    toggleLink(editor)
-    setIsLinkNewlyCreated(true)
-  }
-
-const registeredHotkeys = (setIsLinkNewlyCreated: SetIsLinkNewlyCreated) => [
+const registeredHotkeys = () => [
   {
     hotkey: 'mod+b',
     option: TextEditorFormattingOption.richText,
@@ -87,7 +79,7 @@ const registeredHotkeys = (setIsLinkNewlyCreated: SetIsLinkNewlyCreated) => [
   {
     hotkey: 'mod+k',
     option: TextEditorFormattingOption.links,
-    handler: toggleLinkAndFlag(setIsLinkNewlyCreated),
+    handler: toggleLink,
   },
   {
     hotkey: 'mod+m',
@@ -119,10 +111,7 @@ const registeredMarkdownShortcuts = [
   },
 ]
 
-export const useFormattingOptions = (
-  config: TextEditorPluginConfig,
-  setIsLinkNewlyCreated: SetIsLinkNewlyCreated
-) => {
+export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   const { formattingOptions } = config
 
   const createTextEditor = useCallback(
@@ -140,16 +129,14 @@ export const useFormattingOptions = (
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-    () => createToolbarControls(config, setIsLinkNewlyCreated),
-    [config, setIsLinkNewlyCreated]
+    () => createToolbarControls(config),
+    [config]
   )
 
   const handleHotkeys = useCallback(
     (event: React.KeyboardEvent, editor: SlateEditor) => {
       // Go through the registered hotkeys
-      for (const { hotkey, option, handler } of registeredHotkeys(
-        setIsLinkNewlyCreated
-      )) {
+      for (const { hotkey, option, handler } of registeredHotkeys()) {
         // Check if their respective formatting option is enabled
         // and if the keyboard event contains the hotkey combination
         if (formattingOptions.includes(option) && isHotkey(hotkey, event)) {
@@ -161,7 +148,7 @@ export const useFormattingOptions = (
         }
       }
     },
-    [formattingOptions, setIsLinkNewlyCreated]
+    [formattingOptions]
   )
 
   const handleMarkdownShortcuts = useCallback(
@@ -216,10 +203,10 @@ export const useFormattingOptions = (
   }
 }
 
-function createToolbarControls(
-  { i18n, formattingOptions }: TextEditorPluginConfig,
-  setIsLinkNewlyCreated: SetIsLinkNewlyCreated
-): ControlButton[] {
+function createToolbarControls({
+  i18n,
+  formattingOptions,
+}: TextEditorPluginConfig): ControlButton[] {
   const allFormattingOptions = [
     // Bold
     {
@@ -242,7 +229,7 @@ function createToolbarControls(
       name: TextEditorFormattingOption.links,
       title: i18n.link.toggleTitle,
       isActive: isLinkActive,
-      onClick: toggleLinkAndFlag(setIsLinkNewlyCreated),
+      onClick: toggleLink,
       renderIcon: () => <EdtrIcon icon={edtrLink} />,
     },
     // Headings

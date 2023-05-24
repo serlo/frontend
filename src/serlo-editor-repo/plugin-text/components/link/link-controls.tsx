@@ -12,16 +12,12 @@ interface LinkControlsProps {
   hasSelectionChanged: number
   editor: SlateEditor
   config: TextEditorPluginConfig
-  isLinkNewlyCreated: boolean
-  setIsLinkNewlyCreated: (value: boolean) => void
 }
 
 export function LinkControls({
   hasSelectionChanged,
   editor,
   config,
-  isLinkNewlyCreated,
-  setIsLinkNewlyCreated,
 }: LinkControlsProps) {
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
@@ -61,8 +57,6 @@ export function LinkControls({
           Transforms.unwrapNodes(editor, { at: path })
         }}
         value={value}
-        shouldFocus={isLinkNewlyCreated}
-        afterFocusing={() => setIsLinkNewlyCreated(false)}
       />
       {/* placeholder={config.i18n.link.placeholder} */}
     </InlineOverlayWhite>

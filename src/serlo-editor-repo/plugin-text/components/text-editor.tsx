@@ -60,7 +60,6 @@ export type TextEditorProps = EditorPluginProps<
 
 export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
-  const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
 
   const store = useScopedStore()
   const loggedInData = useLoggedInData()
@@ -68,10 +67,7 @@ export function TextEditor(props: TextEditorProps) {
 
   const config = useTextConfig(props.config)
 
-  const textFormattingOptions = useFormattingOptions(
-    config,
-    setIsLinkNewlyCreated
-  )
+  const textFormattingOptions = useFormattingOptions(config)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),
@@ -374,8 +370,6 @@ export function TextEditor(props: TextEditorProps) {
               hasSelectionChanged={hasSelectionChanged}
               editor={editor}
               config={config}
-              isLinkNewlyCreated={isLinkNewlyCreated}
-              setIsLinkNewlyCreated={setIsLinkNewlyCreated}
             />
             <HoveringToolbar
               editor={editor}
