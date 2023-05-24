@@ -58,7 +58,6 @@ export function LinkContentSearch({
 
   useEffect(() => {
     setSel(0)
-    // setOpen(!!(query && data))
   }, [query, data, value])
 
   const results = data ? findResults(data, query) : []
@@ -134,10 +133,6 @@ export function LinkContentSearch({
         onChange={(value) => setQuery(value.target.value)}
         placeholder="Stichwort oder Link"
         ref={inputRef}
-        // onBlur={() => setOpen(false)}
-        // onFocus={() => {
-        //   //   if (query && data) setOpen(true)
-        // }}
         onKeyDown={onKeyDown}
       />
     )
@@ -237,7 +232,7 @@ export function LinkContentSearch({
           href={value}
           target="_blank"
           className={clsx(
-            'serlo-link font-bold',
+            'serlo-link font-bold whitespace-normal max-w-[27rem]',
             isCustomLink ? '!text-gray-800' : 'text-brand'
           )}
           rel="noreferrer"
