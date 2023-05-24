@@ -162,9 +162,6 @@ export function TextEditor(props: TextEditorProps) {
   }
 
   function handleEditableKeyDown(event: React.KeyboardEvent) {
-    // stop slate from loosing focus when using esc
-    if (event.key === 'Escape') return false
-
     // If linebreaks are disabled in the config, prevent any enter key handling
     if (config.noLinebreaks && event.key === 'Enter') {
       event.preventDefault()
@@ -266,6 +263,9 @@ export function TextEditor(props: TextEditorProps) {
     suggestions.handleHotkeys(event)
     textFormattingOptions.handleHotkeys(event, editor)
     textFormattingOptions.handleMarkdownShortcuts(event, editor)
+
+    // stop list plugin from bluring slate on esc
+    if (event.key === 'Escape') return false
     textFormattingOptions.handleListsShortcuts(event, editor)
   }
 
