@@ -188,8 +188,7 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      // Special handler for links. When pressing Enter while editing a link-text
-      // the link should not continue in the next line. Instead a new line with normal text is created.
+      // Special handler for links. Handle linebreaks while editing a link text
       if (event.key === 'Enter') {
         const { path, offset } = selection.focus
         const node = Node.get(editor, path)
@@ -199,11 +198,17 @@ export function TextEditor(props: TextEditorProps) {
           if (
             Object.hasOwn(parent, 'type') &&
             parent.type === 'a' &&
-            Object.hasOwn(node, 'text') &&
-            node.text.length === offset
+            Object.hasOwn(node, 'text')
           ) {
-            Transforms.move(editor)
+            // cursor is on left of link (but still on link): normal line break
+            if (offset === 0) return
+
+            // cursor is right of link(but still on link): line break without continuing link
+            // normal text in new line
             event.preventDefault()
+            if (node.text.length === offset) Transforms.move(editor)
+            // cursor is somewhere inside link: no line break, no action
+            else return false
           }
         }
       }

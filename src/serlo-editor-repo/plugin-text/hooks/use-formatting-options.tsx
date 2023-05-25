@@ -65,7 +65,7 @@ const isRegisteredTextPlugin = (
   return option in textPluginsMapper
 }
 
-const registeredHotkeys = () => [
+const registeredHotkeys = [
   {
     hotkey: 'mod+b',
     option: TextEditorFormattingOption.richText,
@@ -136,7 +136,7 @@ export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   const handleHotkeys = useCallback(
     (event: React.KeyboardEvent, editor: SlateEditor) => {
       // Go through the registered hotkeys
-      for (const { hotkey, option, handler } of registeredHotkeys()) {
+      for (const { hotkey, option, handler } of registeredHotkeys) {
         // Check if their respective formatting option is enabled
         // and if the keyboard event contains the hotkey combination
         if (formattingOptions.includes(option) && isHotkey(hotkey, event)) {
