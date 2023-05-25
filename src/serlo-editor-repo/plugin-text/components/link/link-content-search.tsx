@@ -147,11 +147,7 @@ export function LinkContentSearch({
   function renderResetButton() {
     return (
       <div
-        className={clsx(
-          'absolute top-4 right-6 flex items-center justify-center w-8 h-8',
-          'serlo-button-editor-secondary',
-          'cursor-pointer text-gray-700'
-        )}
+        className="absolute top-4 right-6 flex items-center justify-center w-8 h-8 serlo-button-editor-secondary cursor-pointer text-gray-700"
         onClick={() => {
           setQuery('')
           setTimeout(() => {

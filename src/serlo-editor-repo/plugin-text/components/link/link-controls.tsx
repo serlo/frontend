@@ -9,13 +9,13 @@ import { InlineOverlayWhite } from '../inline-overlay-white'
 import { LinkContentSearch } from './link-content-search'
 
 interface LinkControlsProps {
-  selectionChanged: number
+  isSelectionChanged: number
   editor: SlateEditor
   config: TextEditorPluginConfig
 }
 
 export function LinkControls({
-  selectionChanged,
+  isSelectionChanged: selectionChanged,
   editor,
   config,
 }: LinkControlsProps) {
