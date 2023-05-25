@@ -50,6 +50,9 @@ export function LinkControls({
           setValue(href)
           const path = ReactEditor.findPath(editor, element)
           Transforms.setNodes(editor, { href: href }, { at: path })
+          // move cursor out of link
+          Transforms.move(editor)
+          Transforms.move(editor, { unit: 'offset' })
           ReactEditor.focus(editor)
         }}
         removeLink={() => {
@@ -59,6 +62,9 @@ export function LinkControls({
           ReactEditor.focus(editor)
         }}
         value={value}
+        shouldFocus={
+          element.href === '' && element.children[0].text.trim() !== ''
+        }
       />
       {/* placeholder={config.i18n.link.placeholder} */}
     </InlineOverlayWhite>

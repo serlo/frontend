@@ -25,10 +25,12 @@ export function LinkContentSearch({
   value,
   setValue,
   removeLink,
+  shouldFocus,
 }: {
   value: string
   setValue: (href: string) => void
   removeLink: () => void
+  shouldFocus: boolean
 }) {
   const [data, setData] = useState<QuickbarData | null>(null)
   const [query, setQuery] = useState(value)
@@ -37,19 +39,21 @@ export function LinkContentSearch({
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
 
   useEffect(() => {
-    const activateEdit = value.length === 0
-
-    setIsEditMode(activateEdit)
+    setIsEditMode(value.length === 0)
     setQuery(value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
+
+  useEffect(() => {
+    if (!shouldFocus) return
 
     const timeout = setTimeout(() => {
-      if (inputRef.current) inputRef.current.focus()
+      if (shouldFocus && inputRef.current) inputRef.current.focus()
     })
 
     return () => {
       timeout && clearTimeout(timeout)
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
@@ -152,7 +156,7 @@ export function LinkContentSearch({
           setQuery('')
           setTimeout(() => {
             inputRef.current?.focus()
-          }, 0)
+          })
         }}
       >
         <FaIcon icon={faXmark} />
