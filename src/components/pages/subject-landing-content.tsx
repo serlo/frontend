@@ -58,7 +58,7 @@ export function SubjectLandingContent({
                 'mt-3 mb-10'
               )}
             >
-              <span className="w-min pb-3 underlined inline-block max-w-[27rem] !whitespace-normal">
+              <span className="w-min pb-3 serlo-underlined inline-block max-w-[27rem] !whitespace-normal">
                 {data.title}
               </span>
             </h1>
@@ -126,12 +126,6 @@ export function SubjectLandingContent({
             background-position: 20% 19%;
             background-size: 100vw 100%;
           }
-        }
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
         }
       `}</style>
     </>

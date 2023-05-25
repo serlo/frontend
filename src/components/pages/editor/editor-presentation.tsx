@@ -46,7 +46,7 @@ export function EditorPresentation() {
               'mt-3 mx-auto'
             )}
           >
-            <span className="underlined !pr-0 pb-2">Serlo Editor</span>
+            <span className="serlo-underlined !pr-0 pb-2">Serlo Editor</span>
             <sup className="text-brand text-base ml-2 -top-6 inline-block relative">
               beta
             </sup>
@@ -242,12 +242,6 @@ export function EditorPresentation() {
             background-position: 20% 19%;
             background-size: 82%, 100vw 100%;
           }
-        }
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
         }
         :global(body) {
           max-width: 100vw;

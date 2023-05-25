@@ -505,6 +505,10 @@
       @apply -ml-6;
     }
   }
+
+  .serlo-underlined {
+    @apply whitespace-nowrap pr-4 bg-underlined-simple bg-no-repeat bg-bottom;
+  }
 }
 
 /* print and pdf styles */

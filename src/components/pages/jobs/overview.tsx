@@ -152,7 +152,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               )}
             >
               Digitale Bildung braucht{' '}
-              <span className="underlined !pr-0">dich&thinsp;!</span>
+              <span className="serlo-underlined !pr-0">dich&thinsp;!</span>
             </h1>
           </div>
           <aside className="w-full">
@@ -292,12 +292,6 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             background-position: 20% 19%;
             background-size: 82%, 100vw 100%;
           }
-        }
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
         }
       `}</style>
     </>

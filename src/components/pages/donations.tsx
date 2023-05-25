@@ -53,7 +53,7 @@ export function Donations() {
               )}
             >
               Deine Spende macht einen{' '}
-              <span className="!pr-0 pb-2 underlined">Unterschied</span>.
+              <span className="!pr-0 pb-2 serlo-underlined">Unterschied</span>.
             </h1>
           </div>
           <aside className="sm:w-full">
@@ -190,14 +190,6 @@ export function Donations() {
         </div>
       </footer>
       {renderFloatingBanner()}
-      <style jsx>{`
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-      `}</style>
     </>
   )
 

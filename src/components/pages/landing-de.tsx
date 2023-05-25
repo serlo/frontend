@@ -43,7 +43,8 @@ export function LandingDE({ data }: LandingDEProps) {
               'max-w-2xl mt-3 mb-6 mx-auto'
             )}
           >
-            Was möchtest du <span className="pb-2 underlined">lernen ?</span>
+            Was möchtest du{' '}
+            <span className="pb-2 serlo-underlined">lernen ?</span>
           </h1>
           <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto">
             <Quickbar />
@@ -76,7 +77,7 @@ export function LandingDE({ data }: LandingDEProps) {
             </b>
             .{' '}
             <span
-              className="font-handwritten text-brand underlined"
+              className="font-handwritten text-brand serlo-underlined"
               style={{ fontSize: '1.2em' }}
             >
               Für immer!
@@ -160,13 +161,6 @@ export function LandingDE({ data }: LandingDEProps) {
             background-position: 20% 19%;
             background-size: 82%, 100vw 100%;
           }
-        }
-
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
         }
       `}</style>
     </>

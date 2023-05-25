@@ -22,7 +22,7 @@ export const MetadataApiPresentation = () => {
               'mt-3 mx-auto'
             )}
           >
-            <span className="underlined !pr-0 pb-2">Metadata API</span>
+            <span className="serlo-underlined !pr-0 pb-2">Metadata API</span>
           </h1>
         </section>
         <section className="text-left mt-16 mb-16 px-4 mx-auto max-w-5xl">
