@@ -33,7 +33,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <Header />
       <main id="content" className="text-almost-black">
         <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
-          <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
+          <p className="text-brand font-handwritten text-3xl serlo-add-eyebrows">
             <WelcomeMessage />
           </p>
           <h1
@@ -87,7 +87,7 @@ export function LandingDE({ data }: LandingDEProps) {
             Serlo.
           </p>
           <Link
-            className="serlo-new-landing-button inline landing-button-with-wings"
+            className="serlo-new-landing-button inline serlo-button-with-wings"
             href="/serlo"
           >
             Mehr über uns
@@ -128,7 +128,7 @@ export function LandingDE({ data }: LandingDEProps) {
               'font-bold text-xl rounded-lg text-almost-black ',
               'px-8 py-4 tracking-tight border-almost-black border-solid border-2',
               'hover:border-brand-500 hover:no-underline hover:text-brand-500',
-              'landing-button-with-wings landing-button-with-wink'
+              'serlo-button-with-eyebrows'
             )}
             href="/partner"
           >
@@ -178,57 +178,6 @@ export function LandingDE({ data }: LandingDEProps) {
           white-space: nowrap;
           background: url('/_assets/img/landing/simple-underline.svg') no-repeat
             bottom;
-        }
-
-        :global(.landing-button-with-wings):after,
-        :global(.landing-button-with-wings):before {
-          content: ' ';
-          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-          position: absolute;
-          margin-top: -0.6rem;
-          width: 4rem;
-          height: 4rem;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity ease-in 0.2s;
-        }
-
-        :global(.landing-button-with-wings):after {
-          margin-left: 1rem;
-          transform: scaleX(-1);
-        }
-
-        :global(.landing-button-with-wings):before {
-          margin-left: -5rem;
-        }
-
-        :global(.landing-button-with-wings):hover:after,
-        :global(.landing-button-with-wings):hover:before {
-          opacity: 1;
-        }
-
-        :global(.landing-button-with-wink):after,
-        :global(.landing-button-with-wink):before {
-          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-          margin-top: -2rem !important;
-          background-size: 65% !important;
-        }
-
-        .p-with-wink:after,
-        .p-with-wink:before {
-          margin-top: -1rem !important;
-          background-size: 75%;
-          width: 2.5rem;
-          height: 2.5rem;
-          opacity: 1;
-        }
-
-        .p-with-wink:after {
-          margin-left: -0.5rem;
-        }
-
-        .p-with-wink:before {
-          margin-left: -1.5rem;
         }
       `}</style>
     </>

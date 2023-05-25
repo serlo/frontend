@@ -139,35 +139,6 @@ export const MetadataApiPresentation = () => {
               url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
             font-display: swap;
           }
-          :global(.landing-button-with-wings):after,
-          :global(.landing-button-with-wings):before {
-            content: ' ';
-            background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-            position: absolute;
-            margin-top: -0.6rem;
-            width: 4rem;
-            height: 4rem;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity ease-in 0.2s;
-          }
-          :global(.landing-button-with-wings):after {
-            margin-left: 1rem;
-            transform: scaleX(-1);
-          }
-          :global(.landing-button-with-wings):before {
-            margin-left: -5rem;
-          }
-          :global(.landing-button-with-wings):hover:after,
-          :global(.landing-button-with-wings):hover:before {
-            opacity: 1;
-          }
-          :global(.landing-button-with-wink):after,
-          :global(.landing-button-with-wink):before {
-            background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-            margin-top: -2rem !important;
-            background-size: 65% !important;
-          }
         `}
       </style>
     </>
@@ -182,12 +153,11 @@ const CallToAction: React.FC<CallToActionProps> = ({ alignment = 'left' }) => {
   const alignmentClasses =
     alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
   return (
-    <Link
-      className={`serlo-new-landing-button landing-button-with-wings mb-12 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors mt-12 max-w-xs mx-auto ${alignmentClasses}`}
+    <a
+      className={`serlo-new-landing-button serlo-button-with-wings mb-12 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors mt-12 max-w-xs mx-auto ${alignmentClasses}`}
       href="https://github.com/serlo/documentation/wiki/Metadata-API"
-      noExternalIcon
     >
       Discover developer docs!
-    </Link>
+    </a>
   )
 }

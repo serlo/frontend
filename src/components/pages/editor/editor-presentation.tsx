@@ -258,49 +258,6 @@ export function EditorPresentation() {
           background: url('/_assets/img/landing/simple-underline.svg') no-repeat
             bottom;
         }
-        :global(.landing-button-with-wings):after,
-        :global(.landing-button-with-wings):before {
-          content: ' ';
-          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-          position: absolute;
-          margin-top: -0.6rem;
-          width: 4rem;
-          height: 4rem;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity ease-in 0.2s;
-        }
-        :global(.landing-button-with-wings):after {
-          margin-left: 1rem;
-          transform: scaleX(-1);
-        }
-        :global(.landing-button-with-wings):before {
-          margin-left: -5rem;
-        }
-        :global(.landing-button-with-wings):hover:after,
-        :global(.landing-button-with-wings):hover:before {
-          opacity: 1;
-        }
-        :global(.landing-button-with-wink):after,
-        :global(.landing-button-with-wink):before {
-          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-          margin-top: -2rem !important;
-          background-size: 65% !important;
-        }
-        .p-with-wink:after,
-        .p-with-wink:before {
-          margin-top: -1rem !important;
-          background-size: 75%;
-          width: 2.5rem;
-          height: 2.5rem;
-          opacity: 1;
-        }
-        .p-with-wink:after {
-          margin-left: -0.5rem;
-        }
-        .p-with-wink:before {
-          margin-left: -1.5rem;
-        }
         :global(body) {
           max-width: 100vw;
           overflow-x: hidden;
@@ -318,7 +275,7 @@ export function EditorPresentation() {
       <a
         href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
         className={clsx(
-          'serlo-new-landing-button landing-button-with-wings inline-block !mb-8 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors rounded-full',
+          'serlo-new-landing-button serlo-button-with-wings inline-block !mb-8 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors rounded-full',
           final ? '' : 'bg-brand-200 text-brand hover:text-white'
         )}
       >
