@@ -54,14 +54,11 @@ export function LinkContentSearch({
   }, [value])
 
   useEffect(() => {
-    const effectFetch = async () => {
-      const fetchedData = await fetchQuickbarData()
-      if (fetchedData) setData(fetchedData)
-    }
-
     if (query && !data) {
-      // eslint-disable-next-line no-console
-      effectFetch().catch(console.error)
+      fetchQuickbarData()
+        .then((fetchedData) => fetchedData && setData(fetchedData))
+        // eslint-disable-next-line no-console
+        .catch(console.error)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, data])

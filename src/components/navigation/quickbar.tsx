@@ -37,13 +37,11 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const overlayWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const effectFetch = async () => {
-      const fetchedData = await fetchQuickbarData(subject)
-      if (fetchedData) setData(fetchedData)
-    }
-
     if (query && !data) {
-      effectFetch().catch(console.error)
+      fetchQuickbarData(subject)
+        .then((fetchedData) => fetchedData && setData(fetchedData))
+        // eslint-disable-next-line no-console
+        .catch(console.error)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, data, subject])
