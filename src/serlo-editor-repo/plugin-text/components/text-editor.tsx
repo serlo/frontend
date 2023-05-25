@@ -176,10 +176,7 @@ export function TextEditor(props: TextEditorProps) {
 
         if (node && parent) {
           if (Object.hasOwn(parent, 'type') && parent.type === 'a') {
-            if (
-              Object.hasOwn(node, 'text') &&
-              node.text.length - 1 === offset
-            ) {
+            if (Object.hasOwn(node, 'text') && node.text.length - 1 <= offset) {
               Transforms.move(editor)
               Transforms.move(editor, { unit: 'offset' })
               event.preventDefault()
