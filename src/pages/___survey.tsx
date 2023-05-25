@@ -116,7 +116,7 @@ export const getServerSideProps: GetServerSideProps<SurveyProps> = async () => {
   })
 
   for (let i = 0; i < 24; i++) {
-    const stats = buildStats(hourly[i])
+    //const stats = buildStats(hourly[i])
     /*function toPercent(num: number) {
       return Math.round((num / stats.shown) * 1000) / 10
     }
@@ -127,7 +127,7 @@ export const getServerSideProps: GetServerSideProps<SurveyProps> = async () => {
         stats.rarely
       )}% No: ${toPercent(stats.no)}% noStudent: ${toPercent(stats.noStudent)}%`
     )*/
-    console.log(
+    /*console.log(
       `${stats.exit},${
         stats.shown -
         stats.yes -
@@ -136,36 +136,27 @@ export const getServerSideProps: GetServerSideProps<SurveyProps> = async () => {
         stats.noStudent -
         stats.exit
       },${stats.yes},${stats.rarely},${stats.no},${stats.noStudent}`
-    )
+    )*/
   }
 
   // sort by path
 
   const groupedByPath = timeboxedData.reduce((result, obj) => {
+    if (obj.event !== 'yes') return result
     const key = obj.path
     const entry = (result[key] = result[key] || { data: [] })
     entry.data.push(obj)
     return result
   }, {} as { [key: string]: { data: TestSurvey[] } })
 
-  const paths = Object.entries(groupedByPath)
-    .map((entry) => {
-      return {
-        path: entry[0],
-        count:
-          entry[1].data.filter(
-            (entry) =>
-              entry.event === 'yes' ||
-              entry.event === 'no' ||
-              entry.event === 'rarely' ||
-              entry.event === 'noStudent'
-          ).length / entry[1].data.length,
-        sum: entry[1].data.length,
-      }
-    })
-    .filter((entry) => entry.sum >= 10)
+  const paths = Object.entries(groupedByPath).map((entry) => {
+    return {
+      path: entry[0],
+      sum: entry[1].data.length,
+    }
+  })
 
-  paths.sort((a, b) => b.count - a.count)
+  paths.sort((a, b) => b.sum - a.sum)
 
   console.log(paths.slice(0, 20))
 
