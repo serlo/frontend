@@ -107,27 +107,38 @@ export const MetadataApiPresentation = () => {
                 </li>
               </ul>
             </div>
+            <CallToAction alignment="center" />
           </div>
         </section>
 
-        <CallToAction alignment="center" />
-        <p className="mt-24 text-xl leading-cozy flex-1 text-center">
-          <b className="tracking-tight">
-            Are you interested in using our Metadata API?
-          </b>
-          <br />
-          Contact us with your integration requirements or read more about the
-          Metadata API in our{' '}
-          <Link href="https://github.com/serlo/documentation/wiki/Metadata-API">
-            Wiki
-          </Link>
-        </p>
-        <div className="text-center mt-8 mb-14">
-          <EditorContact lastName="Kulla" />
-        </div>
+        <section className="mt-8 mb-32">
+          <p className="text-xl leading-cozy flex-1 text-center">
+            <b className="tracking-tight">
+              Are you interested in using our Metadata API?
+            </b>
+            <br />
+            Contact us with your integration requirements or read more about the
+            Metadata API in our{' '}
+            <Link href="https://github.com/serlo/documentation/wiki/Metadata-API">
+              Wiki
+            </Link>
+          </p>
+          <div className="text-center mt-8 mb-14">
+            <EditorContact lastName="Kulla" />
+          </div>
+        </section>
       </div>
       <style jsx>
         {`
+          @font-face {
+            font-family: 'Karmilla';
+            font-style: bolder;
+            font-weight: 800;
+            src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
+                format('woff2'),
+              url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
+            font-display: swap;
+          }
           :global(.landing-button-with-wings):after,
           :global(.landing-button-with-wings):before {
             content: ' ';
