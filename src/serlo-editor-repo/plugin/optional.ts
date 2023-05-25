@@ -65,16 +65,13 @@ export function optional<D extends StateType>(
         return onChange(wrapStateUpdater(initial), {
           executor:
             typeof executor === 'function'
-              ? (resolve, reject, next) => {
+              ? (resolve, reject) => {
                   executor(
                     (value) => {
                       resolve(wrapStateUpdater(value))
                     },
                     (value) => {
                       reject(wrapStateUpdater(value))
-                    },
-                    (value) => {
-                      next(wrapStateUpdater(value))
                     }
                   )
                 }

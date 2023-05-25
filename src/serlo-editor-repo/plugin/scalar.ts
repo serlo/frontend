@@ -138,15 +138,13 @@ export function asyncScalar<T, Temp>(
               executor: executor
                 ? (
                     resolve: (updater: StateUpdater<T | Temp>) => void,
-                    reject: (updater: StateUpdater<T | Temp>) => void,
-                    next: (updater: StateUpdater<T | Temp>) => void
+                    reject: (updater: StateUpdater<T | Temp>) => void
                   ) => {
                     if (!executor) return
 
                     executor(
                       wrapResolverParam(resolve),
-                      wrapResolverParam(reject),
-                      wrapResolverParam(next)
+                      wrapResolverParam(reject)
                     )
                   }
                 : undefined,

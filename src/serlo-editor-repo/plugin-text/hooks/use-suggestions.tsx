@@ -1,9 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Editor as SlateEditor, Node } from 'slate'
 
-import { useScopedStore } from '../../core'
 import { RegistryContext, Registry } from '../../plugin-rows'
-import { replace } from '../../store'
+import { runReplaceDocumentSaga, useAppDispatch } from '../../store'
 
 interface useSuggestionsArgs {
   editor: SlateEditor
@@ -19,9 +18,9 @@ const hotKeysMap = {
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
+  const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
-  const store = useScopedStore()
   const { editor, id, editable, focused } = args
 
   const text = Node.string(editor)
@@ -103,7 +102,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
 
     // Otherwise, replace the text plugin with the selected plugin
-    store.dispatch(replace({ id, plugin: pluginName }))
+    dispatch(runReplaceDocumentSaga({ id, plugin: pluginName }))
   }
 
   const hotKeysHandlers = {

@@ -1,5 +1,5 @@
-import { useScopedStore } from '@edtr-io/core'
-import { isEmptyRows } from '@edtr-io/plugin-rows'
+import { selectIsEmptyRows } from '@edtr-io/plugin-rows'
+import { store } from '@edtr-io/store'
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -26,7 +26,6 @@ export function BoxRenderer(props: BoxProps) {
     ? style.colorClass
     : defaultStyle.colorClass
   const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
-  const store = useScopedStore()
   const [contentIsEmpty, setContentIsEmpty] = useState(true)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -34,7 +33,8 @@ export function BoxRenderer(props: BoxProps) {
   const editorStrings = loggedInData.strings.editor
 
   const checkContentEmpty = () => {
-    const isEmptyNow = isEmptyRows(content.get())(store.getState()) ?? true
+    const isEmptyNow =
+      selectIsEmptyRows(store.getState(), content.get()) ?? true
     if (isEmptyNow !== contentIsEmpty) setContentIsEmpty(isEmptyNow)
   }
 
