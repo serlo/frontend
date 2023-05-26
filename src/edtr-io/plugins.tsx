@@ -106,6 +106,7 @@ export function createPlugins({
       placeholder: editorStrings.text.linkOverlay.placeholder,
       inputLabel: editorStrings.text.linkOverlay.inputLabel,
       customLink: editorStrings.text.linkOverlay.customLink,
+      invalidLinkWarning: editorStrings.text.linkOverlay.invalidLinkWarning,
       openInNewTabTitle: editorStrings.text.openInNewTab,
     },
     list: {

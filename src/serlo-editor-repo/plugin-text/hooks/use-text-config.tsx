@@ -59,6 +59,8 @@ export function useTextConfig(
           customLink: 'Link',
           edit: 'Edit Link',
           remove: 'Remove Link',
+          invalidLinkWarning:
+            'Please provide a valid link that starts with http(s)://…',
           openInNewTabTitle: 'Open in new tab',
         },
         list: {

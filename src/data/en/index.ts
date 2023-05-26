@@ -813,6 +813,7 @@ export const loggedInData = {
           edit: 'Edit Link',
           remove: 'Remove Link',
           customLink: 'Custom Link',
+          invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
         },
         openInNewTab: 'Open in new tab',
         orderedList: 'Ordered list',

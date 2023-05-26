@@ -53,6 +53,7 @@ interface I18n {
     remove: string
     customLink: string
     openInNewTabTitle: string
+    invalidLinkWarning: string
   }
   list: {
     toggleOrderedList: string

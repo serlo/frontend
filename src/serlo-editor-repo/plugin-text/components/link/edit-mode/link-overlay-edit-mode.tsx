@@ -1,14 +1,11 @@
 import clsx from 'clsx'
 import { useEffect, useState, KeyboardEvent } from 'react'
 
-import { checkSerloIdHref } from '../utils'
 import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { TextEditorPluginConfig } from '@/serlo-editor-repo/plugin-text/types'
-
-// TODO: quickbar data does not have type for icon
 
 // based on Quickbar, duplicates some code
 
@@ -49,16 +46,13 @@ export function LinkOverlayEditMode({
       activeIndex < results.length ? `/${results[activeIndex].entry.id}` : query
 
     if (
-      checkSerloIdHref(href) ||
+      href.startsWith('/') ||
       href.startsWith('http://') ||
       href.startsWith('https://')
     ) {
       setHref(href)
     } else {
-      showToastNotice(
-        'Hmm, das schaut leider nach einem ungültigen Link aus.',
-        'warning'
-      )
+      showToastNotice(config.i18n.link.invalidLinkWarning, 'warning', 5000)
     }
   }
 

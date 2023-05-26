@@ -7,7 +7,6 @@ import {
 import clsx from 'clsx'
 
 import { TextEditorPluginConfig } from '../../types'
-import { checkSerloIdHref } from './utils'
 import { FaIcon } from '@/components/fa-icon'
 import { QuickbarData } from '@/components/navigation/quickbar'
 import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
@@ -25,7 +24,10 @@ export function LinkOverlayWithHref({
   setIsEditMode: (mode: boolean) => void
   quickbarData: QuickbarData | null
 }) {
-  const serloId = checkSerloIdHref(value) ? value.slice(1) : undefined
+  const serloId =
+    value.startsWith('/') && value.slice(1).match(/^\d+$/)
+      ? value.slice(1)
+      : undefined
   const entry = quickbarData?.find((entry) => entry.id === serloId)
   const isCustomLink = !serloId && !value.includes('serlo.org/')
 
