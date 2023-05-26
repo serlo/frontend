@@ -109,7 +109,6 @@ export function LinkOverlayEditMode({
               title={entry.title}
               pathHeader={entry.path.join(' > ')}
               index={index}
-              href={`/${entry.id}`}
             />
           ))}
           <div
@@ -123,7 +122,6 @@ export function LinkOverlayEditMode({
               title={query}
               pathHeader={config.i18n.link.customLink}
               index={results.length}
-              href={query}
               isCustomLink
             />
           </div>
