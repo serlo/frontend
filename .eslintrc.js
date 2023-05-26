@@ -169,4 +169,5 @@ module.exports = {
     'next.config.js',
     'jest.config.js',
   ],
+  root: true,
 }
