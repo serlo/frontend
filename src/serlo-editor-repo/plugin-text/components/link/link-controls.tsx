@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
-import { InlineOverlayPosition } from '../../components/inline-overlay'
 import type { Link, TextEditorPluginConfig } from '../../types'
 import { getLinkElement, isLinkActive } from '../../utils/link'
-import { InlineOverlayWhite } from '../inline-overlay-white'
-import { LinkContentSearch } from './link-content-search'
+import { InlineOverlayBelowWhite } from '../inline-overlay-below-white'
+import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
+import { LinkOverlayWithHref } from './link-overlay-with-href'
+import {
+  QuickbarData,
+  fetchQuickbarData,
+} from '@/components/navigation/quickbar'
 
 interface LinkControlsProps {
   isSelectionChanged: number
@@ -15,14 +19,18 @@ interface LinkControlsProps {
 }
 
 export function LinkControls({
-  isSelectionChanged: selectionChanged,
+  isSelectionChanged,
   editor,
   config,
 }: LinkControlsProps) {
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
+  const [isEditMode, setIsEditMode] = useState(value.length === 0)
+  const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
 
   const { selection } = editor
+
+  console.log(config)
 
   useEffect(() => {
     if (!selection) return
@@ -36,37 +44,62 @@ export function LinkControls({
     } else {
       setElement(null)
     }
-  }, [selectionChanged, selection, editor])
+  }, [isSelectionChanged, selection, editor])
+
+  useEffect(() => {
+    if (element && !quickbarData) {
+      fetchQuickbarData()
+        .then((fetchedData) => fetchedData && setQuickbarData(fetchedData))
+        // eslint-disable-next-line no-console
+        .catch(console.error)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [element, quickbarData])
+
+  useEffect(() => {
+    setIsEditMode(value.length === 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [element])
+
+  function removeLink() {
+    setElement(null)
+    const path = ReactEditor.findPath(editor, element!)
+    Transforms.unwrapNodes(editor, { at: path })
+    ReactEditor.focus(editor)
+  }
+
+  function setHref(href: string) {
+    setValue(href)
+    const path = ReactEditor.findPath(editor, element!)
+    Transforms.setNodes(editor, { href: href }, { at: path })
+    // move cursor out of link
+    Transforms.move(editor, { unit: 'offset' })
+    ReactEditor.focus(editor)
+  }
 
   if (!element) return null
 
+  const shouldFocus = isEditMode && element.children[0].text.trim() !== ''
+
   return (
-    <InlineOverlayWhite
-      config={config}
-      initialPosition={InlineOverlayPosition.below}
-    >
-      <LinkContentSearch
-        setValue={(href: string) => {
-          setValue(href)
-          const path = ReactEditor.findPath(editor, element)
-          Transforms.setNodes(editor, { href: href }, { at: path })
-          // move cursor out of link
-          Transforms.move(editor)
-          Transforms.move(editor, { unit: 'offset' })
-          ReactEditor.focus(editor)
-        }}
-        removeLink={() => {
-          setElement(null)
-          const path = ReactEditor.findPath(editor, element)
-          Transforms.unwrapNodes(editor, { at: path })
-          ReactEditor.focus(editor)
-        }}
-        value={value}
-        shouldFocus={
-          element.href === '' && element.children[0].text.trim() !== ''
-        }
-      />
+    <InlineOverlayBelowWhite shouldUpdate={element}>
+      {isEditMode ? (
+        <LinkOverlayEditMode
+          setHref={setHref}
+          removeLink={removeLink}
+          value={value}
+          shouldFocus={shouldFocus}
+          quickbarData={quickbarData}
+        />
+      ) : (
+        <LinkOverlayWithHref
+          value={value}
+          removeLink={removeLink}
+          setIsEditMode={setIsEditMode}
+          quickbarData={quickbarData}
+        />
+      )}
       {/* placeholder={config.i18n.link.placeholder} */}
-    </InlineOverlayWhite>
+    </InlineOverlayBelowWhite>
   )
 }
