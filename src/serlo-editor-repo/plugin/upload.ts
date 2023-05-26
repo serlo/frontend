@@ -22,21 +22,9 @@ export function upload<T>(defaultState: T): UploadStateType<T> {
         isPending: isTempFile(s.value) && !!s.value.pending,
         upload(file: File, handler: UploadHandler<T>): Promise<T> {
           const uploaded = handler(file)
-          s.set(defaultState, (resolve, reject, next) => {
-            const read = readFile(file)
-            let uploadFinished = false
-
-            void read.then((loaded: LoadedFile) => {
-              if (!uploadFinished) {
-                next(() => {
-                  return { uploadHandled: true, loaded }
-                })
-              }
-            })
-
+          s.set(defaultState, (resolve, reject) => {
             uploaded
               .then((uploaded) => {
-                uploadFinished = true
                 return uploaded
               })
               .then((uploaded) => {
@@ -72,20 +60,6 @@ export interface UploadStateReturnType<T> {
   set(
     value: FileState<T> | ((currentValue: FileState<T>) => FileState<T>)
   ): void
-}
-
-function readFile(file: File): Promise<LoadedFile> {
-  return new Promise((resolve) => {
-    const reader = new FileReader()
-
-    reader.onload = function (e: ProgressEvent) {
-      if (!e.target) return
-      const { result } = e.target as unknown as { result: string }
-      resolve({ file, dataUrl: result })
-    }
-
-    reader.readAsDataURL(file)
-  })
 }
 
 /**

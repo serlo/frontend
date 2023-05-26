@@ -1,74 +1,34 @@
-import * as R from 'ramda'
-import {
-  applyMiddleware,
-  createStore as createReduxStore,
-  PreloadedState,
-  Store,
-  StoreEnhancer,
-} from 'redux'
-import _createSagaMiddleware from 'redux-saga'
+import { configureStore } from '@reduxjs/toolkit'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
+import createSagaMiddleware from 'redux-saga'
 
-import { EditorPlugin } from '../internal__plugin'
-import { Action, InternalAction } from './actions'
-import { reducer } from './reducer'
-import { serializeRootDocument } from './root/reducer'
+import { documentsSlice } from './documents'
+import { focusSlice } from './focus'
+import { historySlice } from './history'
+import { pluginsSlice } from './plugins'
+import { rootSlice } from './root'
 import { saga } from './saga'
-import { InternalState, SelectorReturnType, State } from './storetypes'
 
-const createSagaMiddleware = _createSagaMiddleware
+const sagaMiddleware = createSagaMiddleware()
 
-/**
- * Creates the Edtr.io store
- *
- * @param options - The options
- * @returns The Edtr.io store
- */
-export function createStore<K extends string>(
-  options: StoreOptions<K>
-): {
-  store: Store<State, Action>
-} {
-  const { scopes, createEnhancer } = options
-  const sagaMiddleware = createSagaMiddleware()
-  const defaultEnhancer = applyMiddleware(sagaMiddleware)
-  const enhancer = createEnhancer(defaultEnhancer)
+export const store = configureStore({
+  reducer: {
+    documents: documentsSlice.reducer,
+    focus: focusSlice.reducer,
+    history: historySlice.reducer,
+    plugins: pluginsSlice.reducer,
+    root: rootSlice.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      // TODO: https://github.com/serlo/backlog/issues/127
+      serializableCheck: false,
+    }).concat([sagaMiddleware]),
+})
+sagaMiddleware.run(saga)
 
-  const initialStates = R.mapObjIndexed((scope) => {
-    return {
-      plugins: scope,
-      documents: {},
-      focus: null,
-      root: null,
-      history: {
-        undoStack: [],
-        redoStack: [],
-        pendingChanges: 0,
-      },
-    }
-  }, scopes)
-
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const store = createReduxStore<InternalState, InternalAction, {}, {}>(
-    reducer,
-    // Redux does something weird with `unknown` values.
-    initialStates as unknown as PreloadedState<InternalState>,
-    enhancer
-  ) as Store<State, Action>
-  sagaMiddleware.run(saga)
-
-  return { store }
-}
-
-export interface StoreOptions<K extends string> {
-  scopes: Record<string, Record<K, EditorPlugin>>
-  createEnhancer: StoreEnhancerFactory
-}
-
-export type StoreEnhancerFactory = (
-  defaultEnhancer: StoreEnhancer
-) => StoreEnhancer
-
-export type ChangeListener = (payload: {
-  changed: boolean
-  getDocument: () => SelectorReturnType<typeof serializeRootDocument>
-}) => void
+export type RootStore = typeof store
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
