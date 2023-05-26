@@ -49,6 +49,7 @@ import { videoTypePlugin } from './plugins/types/video'
 import { SerializedDocument } from './serialized-document'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { isMac } from '@/helper/client-detection'
 
 export enum SerloEntityPluginType {
@@ -73,11 +74,13 @@ export function createPlugins({
   strings,
   registry,
   type,
+  instance,
 }: {
   editorStrings: LoggedInData['strings']['editor']
   strings: InstanceData['strings']
   registry: RowsConfig['plugins']
   type: string
+  instance: Instance
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
   const replaceKeyStrings = (input: string) => {
@@ -375,7 +378,7 @@ export function createPlugins({
     table: tablePlugin,
     text: createTextPlugin({
       i18n: textPluginI18n,
-      serloLinkSearch: true,
+      serloLinkSearch: instance === Instance.De,
     }),
     video: createVideoPlugin({
       i18n: {

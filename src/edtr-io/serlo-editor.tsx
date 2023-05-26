@@ -57,7 +57,7 @@ export function SerloEditor({
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
   const [useStored, setUseStored] = useState(false)
-  const { strings } = useInstanceData()
+  const { strings, lang } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -73,6 +73,7 @@ export function SerloEditor({
     type,
     editorStrings,
     strings,
+    instance: lang,
   })
 
   const DocumentEditor = createDefaultDocumentEditor({

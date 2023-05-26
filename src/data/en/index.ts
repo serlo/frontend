@@ -808,8 +808,8 @@ export const loggedInData = {
         headings: 'Headings',
         link: 'Link (%ctrlOrCmd% + K)',
         linkOverlay: {
-          placeholder: 'Keyword or link',
-          inputLabel: 'Search for a Serlo content or paste a link …',
+          placeholder: 'https://… or /1234',
+          inputLabel: 'Paste or type a link',
           edit: 'Edit Link',
           remove: 'Remove Link',
           customLink: 'Custom Link',
