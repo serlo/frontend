@@ -1,7 +1,14 @@
-import {
-  PageTeamRenderer,
-  TeamDataEntry,
-} from '@/edtr-io/plugins/page-team/renderer'
+import { PageTeamRenderer } from '@/edtr-io/plugins/page-team/renderer'
+
+export interface TeamDataEntry {
+  firstName: string
+  lastName: string
+  user?: string
+  position: string
+  extraLinkUrl: string
+  extraLinkText: string
+  photo: string
+}
 
 export const teamData: TeamDataEntry[] = [
   {
@@ -10,7 +17,6 @@ export const teamData: TeamDataEntry[] = [
     position: 'Project Lead',
     extraLinkUrl: 'mailto:wolfgang@serlo.org',
     extraLinkText: 'wolfgang@serlo.org',
-    isEditorContactPerson: true,
     photo:
       'https://assets.serlo.org/5fc60fd578266_ef388187d8288b790cf5378e160278301df24c16.jpg',
   },
@@ -20,7 +26,6 @@ export const teamData: TeamDataEntry[] = [
     position: 'Product Management',
     extraLinkUrl: 'mailto:sebastian@serlo.org',
     extraLinkText: 'sebastian@serlo.org',
-    isEditorContactPerson: true,
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
   },
@@ -30,7 +35,6 @@ export const teamData: TeamDataEntry[] = [
     position: 'Partnerships',
     extraLinkUrl: 'mailto:simon@serlo.org',
     extraLinkText: 'simon@serlo.org',
-    isEditorContactPerson: true,
     photo:
       'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
   },
@@ -47,9 +51,8 @@ export const teamData: TeamDataEntry[] = [
     firstName: 'Stephan',
     lastName: 'Kulla',
     position: 'Software',
-    extraLinkUrl: 'mailto:kulla@serlo.org',
-    extraLinkText: 'kulla@serlo.org',
-    isEditorContactPerson: false,
+    extraLinkUrl: '',
+    extraLinkText: '',
     photo:
       'https://assets.serlo.org/5fc610675ef12_e33cf10d89b893ff3cc99cebf5e1a1686ade44ec.jpg',
   },

@@ -1,9 +1,26 @@
 import clsx from 'clsx'
 
 import { EditorContact } from '../editor/editor-contact'
+import { TeamDataEntry, teamData } from '../editor/editor-team'
 import { Link } from '@/components/content/link'
 
 export const MetadataApiPresentation = () => {
+  const kulla = teamData.find(({ lastName }) => lastName === 'Kulla')
+  if (!kulla) {
+    throw new Error('Contact person could not be found.')
+  }
+
+  /**
+   * To have the contact data of Kulla rendered, without including it in the
+   * editor-team (which would render his contact data on the editor page too),
+   * we are including it here.
+   */
+  const mainContactPerson: TeamDataEntry = {
+    ...kulla,
+    extraLinkUrl: 'mailto:kulla@serlo.org',
+    extraLinkText: 'kulla@serlo.org',
+  }
+
   return (
     <>
       <div
@@ -62,7 +79,7 @@ export const MetadataApiPresentation = () => {
             <div className="flex-1 mt-5">
               <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
               <br />
-              Users per month already learn with Serlo
+              Users per month are already learning with the materials
             </div>
           </div>
         </section>
@@ -124,7 +141,7 @@ export const MetadataApiPresentation = () => {
             </Link>
           </p>
           <div className="text-center mt-8 mb-14">
-            <EditorContact lastName="Kulla" />
+            <EditorContact contact={mainContactPerson} />
           </div>
         </section>
       </div>

@@ -2,23 +2,13 @@ import clsx from 'clsx'
 import Image from 'next/image'
 
 import { Link } from '@/components/content/link'
+import { TeamDataEntry } from '@/components/pages/editor/editor-team'
 import { getAvatarUrl } from '@/components/user/user-link'
 
 export interface PageTeamRendererProps {
   data: TeamDataEntry[]
   extraCols?: boolean
   compact?: boolean
-}
-
-export interface TeamDataEntry {
-  firstName: string
-  lastName: string
-  user?: string
-  position: string
-  isEditorContactPerson?: boolean
-  extraLinkUrl: string
-  extraLinkText: string
-  photo: string
 }
 
 export const PageTeamRenderer = ({
@@ -44,7 +34,6 @@ export const PageTeamRenderer = ({
     lastName,
     user,
     position,
-    isEditorContactPerson,
     extraLinkText,
     extraLinkUrl,
     photo,
@@ -73,7 +62,7 @@ export const PageTeamRenderer = ({
         {user ? <Link href={`/user/profile/${user}`}>{user}</Link> : null}
         <p className={compact ? '' : 'mt-4'}>{position}</p>
 
-        {isEditorContactPerson && extraLinkUrl && extraLinkText ? (
+        {extraLinkUrl && extraLinkText ? (
           <p className={compact ? 'mt-2' : 'mt-4'}>
             <Link href={extraLinkUrl}>{extraLinkText}</Link>
           </p>
