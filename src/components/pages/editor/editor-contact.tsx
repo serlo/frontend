@@ -1,20 +1,12 @@
 import Link from 'next/link'
-import { FC } from 'react'
 
 import { teamData } from './editor-team'
 
-type IEditorContactProps =
+type EditorContactProps =
   | { firstName: string; lastName?: string }
   | { firstName?: string; lastName: string }
 
-export const EditorContact: FC<IEditorContactProps> = ({
-  firstName,
-  lastName,
-}) => {
-  if (!firstName && !lastName) {
-    throw new Error('firstName or lastName must be provided')
-  }
-
+export function EditorContact({ firstName, lastName }: EditorContactProps) {
   const {
     firstName: contactFirstName,
     lastName: contactLastName,
@@ -25,6 +17,10 @@ export const EditorContact: FC<IEditorContactProps> = ({
   } = teamData.find((person) =>
     firstName ? person.firstName === firstName : person.lastName === lastName
   )!
+
+  if (!contactFirstName || !contactLastName) {
+    throw new Error('firstName or lastName must be provided')
+  }
 
   return (
     <div className="text-left flex text-base justify-center">

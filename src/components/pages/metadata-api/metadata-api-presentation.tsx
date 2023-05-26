@@ -136,7 +136,7 @@ interface CallToActionProps {
   alignment?: 'center' | 'left'
 }
 
-const CallToAction: React.FC<CallToActionProps> = ({ alignment = 'left' }) => {
+function CallToAction({ alignment = 'left' }: CallToActionProps) {
   const alignmentClasses =
     alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
   return (

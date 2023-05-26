@@ -15,6 +15,7 @@ export interface TeamDataEntry {
   lastName: string
   user?: string
   position: string
+  isEditorContactPerson?: boolean
   extraLinkUrl: string
   extraLinkText: string
   photo: string
@@ -43,6 +44,7 @@ export const PageTeamRenderer = ({
     lastName,
     user,
     position,
+    isEditorContactPerson,
     extraLinkText,
     extraLinkUrl,
     photo,
@@ -71,7 +73,7 @@ export const PageTeamRenderer = ({
         {user ? <Link href={`/user/profile/${user}`}>{user}</Link> : null}
         <p className={compact ? '' : 'mt-4'}>{position}</p>
 
-        {extraLinkUrl && extraLinkText ? (
+        {isEditorContactPerson && extraLinkUrl && extraLinkText ? (
           <p className={compact ? 'mt-2' : 'mt-4'}>
             <Link href={extraLinkUrl}>{extraLinkText}</Link>
           </p>
