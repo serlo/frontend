@@ -6,19 +6,21 @@ import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { TextEditorPluginConfig } from '@/serlo-editor-repo/plugin-text/types'
 
-// TODO: quickbar data only available in de.serlo.org! how should we handle other instances?
 // TODO: quickbar data does not have type for icon
 
 // based on Quickbar, duplicates some code
 
 export function LinkOverlayEditMode({
+  config,
   value,
   setHref,
   removeLink,
   shouldFocus,
   quickbarData,
 }: {
+  config: TextEditorPluginConfig
   value: string
   setHref: (href: string) => void
   removeLink: () => void
@@ -85,7 +87,7 @@ export function LinkOverlayEditMode({
   return (
     <>
       <label className="block px-side pt-4">
-        Suche einen Serlo Inhalt oder füge einen Link ein …
+        {config.i18n.link.inputLabel}
       </label>
       <div className="relative w-[27rem]">
         <EditModeInput
@@ -94,6 +96,7 @@ export function LinkOverlayEditMode({
           setQuery={setQuery}
           shouldFocus={shouldFocus}
           value={value}
+          placeholder={config.i18n.link.placeholder}
         />
       </div>
       {query ? (
@@ -118,7 +121,7 @@ export function LinkOverlayEditMode({
               selectedIndex={selectedIndex}
               chooseEntry={chooseEntry}
               title={query}
-              pathHeader="Eigener Link"
+              pathHeader={config.i18n.link.customLink}
               index={results.length}
               href={query}
               isCustomLink

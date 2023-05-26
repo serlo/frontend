@@ -103,7 +103,9 @@ export function createPlugins({
     },
     link: {
       toggleTitle: replaceKeyStrings(editorStrings.text.link),
-      placeholder: editorStrings.text.enterUrl,
+      placeholder: editorStrings.text.linkOverlay.placeholder,
+      inputLabel: editorStrings.text.linkOverlay.inputLabel,
+      customLink: editorStrings.text.linkOverlay.customLink,
       openInNewTabTitle: editorStrings.text.openInNewTab,
     },
     list: {
@@ -372,6 +374,7 @@ export function createPlugins({
     table: tablePlugin,
     text: createTextPlugin({
       i18n: textPluginI18n,
+      serloLinkSearch: true,
     }),
     video: createVideoPlugin({
       i18n: {

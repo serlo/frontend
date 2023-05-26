@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
+import { useTextConfig } from '../../hooks/use-text-config'
 import type { Link, TextEditorPluginConfig } from '../../types'
 import { getLinkElement, isLinkActive } from '../../utils/link'
 import { InlineOverlayBelowWhite } from '../inline-overlay-below-white'
@@ -30,7 +31,7 @@ export function LinkControls({
 
   const { selection } = editor
 
-  console.log(config)
+  const { serloLinkSearch } = useTextConfig(config)
 
   useEffect(() => {
     if (!selection) return
@@ -47,6 +48,7 @@ export function LinkControls({
   }, [isSelectionChanged, selection, editor])
 
   useEffect(() => {
+    if (!serloLinkSearch) return
     if (element && !quickbarData) {
       fetchQuickbarData()
         .then((fetchedData) => fetchedData && setQuickbarData(fetchedData))
@@ -54,7 +56,7 @@ export function LinkControls({
         .catch(console.error)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [element, quickbarData])
+  }, [element, quickbarData, serloLinkSearch])
 
   useEffect(() => {
     setIsEditMode(value.length === 0)
@@ -85,6 +87,7 @@ export function LinkControls({
     <InlineOverlayBelowWhite shouldUpdate={element}>
       {isEditMode ? (
         <LinkOverlayEditMode
+          config={config}
           setHref={setHref}
           removeLink={removeLink}
           value={value}
@@ -93,13 +96,13 @@ export function LinkControls({
         />
       ) : (
         <LinkOverlayWithHref
+          config={config}
           value={value}
           removeLink={removeLink}
           setIsEditMode={setIsEditMode}
           quickbarData={quickbarData}
         />
       )}
-      {/* placeholder={config.i18n.link.placeholder} */}
     </InlineOverlayBelowWhite>
   )
 }

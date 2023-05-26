@@ -3,27 +3,20 @@ import { useEffect, useRef, KeyboardEvent } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 
-// TODO: quickbar data only available in de.serlo.org! how should we handle other instances?
-// TODO: quickbar data does not have type for icon
-
-// based on Quickbar, duplicates some code
-
 export function EditModeInput({
   query,
   setQuery,
   shouldFocus,
   value,
   onKeyDown,
+  placeholder,
 }: {
   query: string
   setQuery: (query: string) => void
   shouldFocus: boolean
   value: string
   onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void
-  // setHref: (href: string) => void
-  // removeLink: () => void
-  // shouldFocus: boolean
-  // quickbarData: QuickbarData | null
+  placeholder: string
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -47,7 +40,7 @@ export function EditModeInput({
         className="mx-side w-[25rem] border-3 border-editor-primary-50 bg-editor-primary-100 rounded-xl mt-2 pl-3 pr-12 h-12 align-end hover:border-editor-primary-100 focus:border-editor-primary-200 outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
-        placeholder="Stichwort oder Link"
+        placeholder={placeholder}
         ref={inputRef}
         onKeyDown={onKeyDown}
       />
