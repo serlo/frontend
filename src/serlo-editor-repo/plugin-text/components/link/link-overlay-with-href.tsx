@@ -10,6 +10,7 @@ import { TextEditorPluginConfig } from '../../types'
 import { checkSerloIdHref } from './utils'
 import { FaIcon } from '@/components/fa-icon'
 import { QuickbarData } from '@/components/navigation/quickbar'
+import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
 
 export function LinkOverlayWithHref({
   config,
@@ -28,15 +29,13 @@ export function LinkOverlayWithHref({
   const entry = quickbarData?.find((entry) => entry.id === serloId)
   const isCustomLink = !serloId && !value.includes('serlo.org/')
 
-  // TODO: Add tooltips
-
   return (
     <div className="flex items-center px-side py-2">
       <a
         href={value}
         target="_blank"
         className={clsx(
-          'serlo-link font-bold whitespace-normal max-w-[27rem]',
+          'serlo-link serlo-tooltip-trigger outline-none focus:underline font-bold whitespace-normal max-w-[27rem]',
           isCustomLink ? '!text-gray-800' : 'text-brand'
         )}
         rel="noreferrer"
@@ -46,21 +45,28 @@ export function LinkOverlayWithHref({
           className="mr-2"
         />
         {entry ? `${entry.title} (${value})` : value}
-        <span className="sr-only">{config.i18n.link.openInNewTabTitle}</span>
+        <EditorTooltip
+          text={config.i18n.link.openInNewTabTitle}
+          className="!-ml-1 !pb-2"
+        />
       </a>
       <button
         onClick={() => setIsEditMode(true)}
-        className="serlo-button-editor-secondary w-10 h-10 ml-4"
+        className="serlo-button-editor-secondary serlo-tooltip-trigger w-10 h-10 ml-4"
       >
         <FaIcon icon={faPencilAlt} />
-        <span className="sr-only">{config.i18n.link.edit}</span>
+        <EditorTooltip text={config.i18n.link.edit} className="!-ml-2 !pb-2" />
       </button>
       <button
         onClick={removeLink}
-        className="serlo-button-editor-secondary w-10 h-10 ml-2"
+        className="serlo-button-editor-secondary serlo-tooltip-trigger w-10 h-10 ml-2"
       >
         <FaIcon icon={faTrashAlt} />
         <span className="sr-only">{config.i18n.link.remove}</span>
+        <EditorTooltip
+          text={config.i18n.link.remove}
+          className="!-ml-2 !pb-2"
+        />
       </button>
     </div>
   )
