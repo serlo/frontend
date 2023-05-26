@@ -55,12 +55,27 @@ const tableState = object({
 })
 
 export type SerloTablePluginState = typeof tableState
-export type SerloTableProps = EditorPluginProps<SerloTablePluginState>
+export type SerloTableProps = EditorPluginProps<
+  SerloTablePluginState,
+  SerloTableConfig
+>
 
-export const serloTablePlugin: EditorPlugin<SerloTablePluginState> = {
-  Component: SerloTableEditor,
-  config: {},
-  state: tableState,
+export interface SerloTableConfig {
+  allowImageInTableCells: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
+}
+
+const defaultConfig: SerloTableConfig = {
+  allowImageInTableCells: true,
+}
+
+export function createSerloTablePlugin(
+  config = defaultConfig
+): EditorPlugin<SerloTablePluginState, SerloTableConfig> {
+  return {
+    Component: SerloTableEditor,
+    config: config,
+    state: tableState,
+  }
 }
 
 const newCell = { content: { plugin: 'text' } }
@@ -188,7 +203,9 @@ function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 },
               })}
-              {renderSwitchButton(cell, isHead, isClear)}
+              {props.config.allowImageInTableCells
+                ? renderSwitchButton(cell, isHead, isClear)
+                : null}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
                 .serlo-td,
