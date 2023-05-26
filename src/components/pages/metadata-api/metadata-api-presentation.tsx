@@ -37,9 +37,9 @@ export const MetadataApiPresentation = () => {
                 Serlo articles, courses, videos, and interactive exercises.
               </p>
               <p className="mt-4">
-                Our metadata API is completely free and it only takes a few
-                lines of code to integrate a vast repository of educational
-                resources into your app!
+                The API is completely free and it only takes a few lines of code
+                to integrate a vast repository of educational resources into
+                your app or website!
               </p>
               <CallToAction />
             </div>
@@ -71,13 +71,13 @@ export const MetadataApiPresentation = () => {
 
           <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
             <h2 className="text-center text-4xl leading-cozy tracking-tight font-extrabold mb-4">
-              Development and license
+              Develop with the Serlo Metadata API
             </h2>
             <div className="text-left mx-side">
               <p className="mt-4 text-xl leading-cozy flex-1">
                 Join our growing community by linking to our content through the
-                Serlo Metadata API from your apps and change the future of
-                education with us!
+                Serlo Metadata API from your apps/website and change the future
+                of education with us!
               </p>
               <p className="mt-2 text-xl leading-cozy">
                 Licensed under,{' '}
@@ -91,7 +91,7 @@ export const MetadataApiPresentation = () => {
                   Retrieve metadata of all our articles, videos, courses and
                   quizzes
                 </li>
-                <li>Easy to use - GraphQL interface</li>
+                <li>Easy to use GraphQL interface</li>
                 <li>
                   Follow popular aggregators such as{' '}
                   <Link href="https://wirlernenonline.de/">
