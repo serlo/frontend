@@ -3,8 +3,10 @@ import { useEffect, useState, KeyboardEvent } from 'react'
 
 import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useTextConfig } from '@/serlo-editor-repo/plugin-text/hooks/use-text-config'
 import { TextEditorPluginConfig } from '@/serlo-editor-repo/plugin-text/types'
 
 // based on Quickbar, duplicates some code
@@ -27,14 +29,16 @@ export function LinkOverlayEditMode({
   const [query, setQuery] = useState(value)
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
+  const { serloLinkSearch } = useTextConfig(config)
+
   useEffect(() => {
     setQuery(value)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
   useEffect(() => {
-    setSelectedIndex(0)
-  }, [query, quickbarData, value])
+    if (serloLinkSearch) setSelectedIndex(0)
+  }, [query, quickbarData, value, serloLinkSearch])
 
   const results = quickbarData ? findResults(quickbarData, query) : []
 
@@ -78,6 +82,8 @@ export function LinkOverlayEditMode({
     }
   }
 
+  const isLoading = serloLinkSearch && !quickbarData
+
   return (
     <>
       <label className="block px-side pt-4">
@@ -95,6 +101,7 @@ export function LinkOverlayEditMode({
       </div>
       {query ? (
         <div className="mt-4 group">
+          {isLoading ? <LoadingSpinner /> : null}
           {results.map(({ entry }, index) => (
             <EditModeResultEntry
               key={entry.id}
