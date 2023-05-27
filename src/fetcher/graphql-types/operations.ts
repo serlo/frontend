@@ -2815,7 +2815,7 @@ export interface UserMutationSetEmailArgs {
 export interface UserQuery {
   __typename?: 'UserQuery';
   potentialSpamUsers: UserConnection;
-  usersByRole: UserConnection;
+  usersByRole: UserWithPermissionsConnection;
 }
 
 
@@ -2862,6 +2862,16 @@ export interface UserSetEmailResponse {
   email: Scalars['String'];
   success: Scalars['Boolean'];
   username: Scalars['String'];
+}
+
+export interface UserWithPermissionsConnection {
+  __typename?: 'UserWithPermissionsConnection';
+  edges: Array<UserEdge>;
+  inheritance?: Maybe<Array<Role>>;
+  nodes: Array<User>;
+  pageInfo: PageInfo;
+  permissions: Array<Scalars['String']>;
+  totalCount: Scalars['Int'];
 }
 
 export interface UuidMutation {
@@ -3010,6 +3020,11 @@ export interface _CacheMutationSetArgs {
 export interface _CacheMutationUpdateArgs {
   input: CacheUpdateInput;
 }
+
+export type QuickbarSingleEntityQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QuickbarSingleEntityQuery = { __typename?: 'Query', singleQuery?: { __typename?: 'Applet', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'AppletRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename: 'Article', id: number, alias: string, trashed: boolean, title: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } | { __typename?: 'ArticleRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'Comment', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'Course', id: number, alias: string, trashed: boolean, title: string } | { __typename: 'CoursePage', id: number, alias: string, trashed: boolean, title: string, course: { __typename?: 'Course', title: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null }> } } } | { __typename?: 'CoursePageRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'CourseRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'Event', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'EventRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'Exercise', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'ExerciseGroup', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'ExerciseGroupRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'ExerciseRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'GroupedExercise', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'GroupedExerciseRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename: 'Page', id: number, alias: string, trashed: boolean, title: string, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null } | { __typename?: 'PageRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'Solution', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'SolutionRevision', id: number, alias: string, trashed: boolean, title: string } | { __typename: 'TaxonomyTerm', id: number, alias: string, trashed: boolean, title: string, navigation?: { __typename?: 'Navigation', path: { __typename?: 'NavigationNodeConnection', nodes: Array<{ __typename?: 'NavigationNode', label: string }> } } | null } | { __typename?: 'User', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'Video', id: number, alias: string, trashed: boolean, title: string } | { __typename?: 'VideoRevision', id: number, alias: string, trashed: boolean, title: string } | null };
 
 export type Unnamed_1_MutationVariables = Exact<{
   input: OauthAcceptInput;
@@ -3692,6 +3707,11 @@ export type PotentialSpamUsersQueryVariables = Exact<{
 
 export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', potentialSpamUsers: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', id: number, username: string, date: string, lastLogin?: string | null, description?: string | null, isActiveReviewer: boolean, isActiveAuthor: boolean, isActiveDonor: boolean, chatUrl?: string | null, imageUrl: string, motivation?: string | null, roles: { __typename?: 'ScopedRoleConnection', nodes: Array<{ __typename?: 'ScopedRole', scope?: string | null, role: Role }> }, activityByType: { __typename?: 'UserActivityByType', edits: number, comments: number, reviews: number, taxonomy: number } }> } } };
 
+export type Unnamed_5_QueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type Unnamed_5_Query = { __typename?: 'Query', metadata: { __typename?: 'MetadataQuery', entities: { __typename?: 'EntityMetadataConnection', nodes: Array<any>, pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean } } } };
+
 export type UsersByRoleQueryVariables = Exact<{
   role: Role;
   instance: Instance;
@@ -3700,7 +3720,7 @@ export type UsersByRoleQueryVariables = Exact<{
 }>;
 
 
-export type UsersByRoleQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', usersByRole: { __typename?: 'UserConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', username: string, alias: string }> } } };
+export type UsersByRoleQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', usersByRole: { __typename?: 'UserWithPermissionsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', username: string, alias: string }> } } };
 
 export type GetTaxonomyTypeQueryVariables = Exact<{
   id: Scalars['Int'];
