@@ -33,8 +33,9 @@ import {
 } from '../utils/color'
 import { isLinkActive, toggleLink } from '../utils/link'
 import {
-  isOrderedListActive,
-  isUnorderedListActive,
+  isSelectionWithinList,
+  isSelectionWithinOrderedList,
+  isSelectionWithinUnorderedList,
   toggleOrderedList,
   toggleUnorderedList,
 } from '../utils/list'
@@ -196,8 +197,7 @@ export const useFormattingOptions = (
       )
       if (!isListsOptionEnabled) return
 
-      const isListActive =
-        isOrderedListActive(editor) || isUnorderedListActive(editor)
+      const isListActive = isSelectionWithinList(editor)
       const isTabShortcut =
         isHotkey('tab', event) || isHotkey('shift+tab', event)
       if (!isListActive && isTabShortcut) return
@@ -294,7 +294,7 @@ function createToolbarControls(
     {
       name: TextEditorFormattingOption.lists,
       title: i18n.list.toggleOrderedList,
-      isActive: isOrderedListActive,
+      isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
       renderIcon: () => <EdtrIcon icon={edtrListNumbered} />,
     },
@@ -302,7 +302,7 @@ function createToolbarControls(
     {
       name: TextEditorFormattingOption.lists,
       title: i18n.list.toggleUnorderedList,
-      isActive: isUnorderedListActive,
+      isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
       renderIcon: () => <EdtrIcon icon={edtrListBullets} />,
     },
