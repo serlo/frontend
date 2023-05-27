@@ -43,7 +43,7 @@ export function EditorPartnerList() {
   return (
     <div
       className={clsx(
-        'mt-auto pb-7 flex flex-wrap justify-evenly',
+        'mt-auto flex flex-wrap justify-evenly pb-7',
         'sm:justify-center',
         'text-gray-800'
       )}
@@ -56,7 +56,7 @@ export function EditorPartnerList() {
     return (
       <img
         key={name}
-        className="max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-7 mb-12"
+        className="mb-12 max-h-[4.5rem] max-w-[20rem] px-7 sm:max-h-[5.3rem] md:max-h-24"
         style={{
           paddingTop: `${padding}px`,
           paddingBottom: `${padding}px`,

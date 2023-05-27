@@ -94,7 +94,7 @@ export function Comment({
           ? 'rounded-2xl'
           : clsx(
               'border-l-6 border-brand-200',
-              'pt-1 pb-0.5 pl-1 mt-8 mb-5 ml-4',
+              'mt-8 mb-5 ml-4 pt-1 pb-0.5 pl-1',
               'rounded-r-2xl'
             )
       )}
@@ -134,7 +134,7 @@ export function Comment({
           />
           <button
             onClick={() => setIsEditing(false)}
-            className="block ml-auto mr-6 -mt-6 serlo-button-blue-transparent text-base"
+            className="serlo-button-blue-transparent ml-auto mr-6 -mt-6 block text-base"
           >
             {strings.comments.cancelEdit}
           </button>

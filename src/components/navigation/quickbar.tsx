@@ -132,7 +132,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     return (
       <input
         type="text"
-        className="border-2 border-brand-200 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
+        className="align-end h-12 w-full rounded-3xl border-2 border-brand-200 pl-5 pr-12 outline-none hover:shadow focus:shadow"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder ?? '... heute lerne ich'}
@@ -148,7 +148,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   function renderResetButton() {
     return (
       <div
-        className="absolute top-0 right-0 bottom-0 flex items-center justify-center w-12 cursor-pointer text-gray-300"
+        className="absolute top-0 right-0 bottom-0 flex w-12 cursor-pointer items-center justify-center text-gray-300"
         onClick={() => {
           setQuery('')
           setTimeout(() => {
@@ -166,7 +166,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         ref={overlayWrapper}
         className={clsx(
           'absolute left-side right-side mt-2 ml-2 max-w-2xl',
-          'px-5 pb-2 border rounded-xl shadow bg-white z-20',
+          'z-20 rounded-xl border bg-white px-5 pb-2 shadow',
           open ? '' : 'hidden'
         )}
       >
@@ -175,7 +175,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
             {results.map((x, i) => (
               <a
                 key={i}
-                className="serlo-link cursor-pointer hover:no-underline group"
+                className="group serlo-link cursor-pointer hover:no-underline"
                 onClick={(e) => goToResult(x.entry.id, e)}
                 href={`/${x.entry.id}`}
               >
@@ -196,7 +196,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
               </a>
             ))}
             <p
-              className={clsx('text-lg mt-2 text-gray-800', {
+              className={clsx('mt-2 text-lg text-gray-800', {
                 'bg-brand-50': sel === results.length,
               })}
             >

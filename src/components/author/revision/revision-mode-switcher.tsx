@@ -67,7 +67,7 @@ export function RevisionModeSwitcher({
         className={clsx(
           'serlo-button-blue-transparent',
           'ml-1',
-          displayMode === mode && 'text-white bg-brand'
+          displayMode === mode && 'bg-brand text-white'
         )}
       >
         {title}

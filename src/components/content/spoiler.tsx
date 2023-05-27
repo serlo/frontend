@@ -12,14 +12,14 @@ export function Spoiler({ body, title }: SpoilerProps) {
   const [open, setOpen] = useState(isPrintMode)
 
   return (
-    <div className="flex flex-col mb-block mobile:mx-side">
+    <div className="mb-block flex flex-col mobile:mx-side">
       <button
         onClick={() => setOpen(!open)}
         className={clsx(
-          'serlo-input-font-reset text-lg text-left leading-normal',
-          'bg-brand-100 text-almost-black border-none rounded-xl',
-          'm-0 py-2.5 px-side transition-colors z-10',
-          open && 'text-white bg-brand rounded-bl-none'
+          'serlo-input-font-reset text-left text-lg leading-normal',
+          'rounded-xl border-none bg-brand-100 text-almost-black',
+          'z-10 m-0 py-2.5 px-side transition-colors',
+          open && 'rounded-bl-none bg-brand text-white'
         )}
       >
         <span className="flex">

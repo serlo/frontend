@@ -7,12 +7,12 @@ const banner = {
   isLong: false,
   text: (
     <div className="text-center sm:text-left">
-      <p className="my-5 font-handwritten mx-side text-[1em] text-almost-black leading-[2.2rem]">
+      <p className="my-5 mx-side font-handwritten text-[1em] leading-[2.2rem] text-almost-black">
         „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
         Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
         Inhalte verlassen kann.
         <br />
-        <span className="block mt-3">
+        <span className="mt-3 block">
           Deswegen unterstütze ich Serlo gern mit einer Spende.“
         </span>
       </p>
@@ -28,27 +28,27 @@ export function TestimonialDonationsPage() {
     <Lazy>
       <aside
         className={clsx(
-          'relative mt-20 z-10',
-          'pb-12 pt-6 text-center text-2xl overflow-x-hidden',
-          'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
-          'sm:flex sm:justify-between sm:text-left sm:px-0',
-          'pb-14 my-16 mt-24',
+          'relative z-10 mt-20',
+          'overflow-x-hidden pb-12 pt-6 text-center text-2xl',
+          'bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat',
+          'sm:flex sm:justify-between sm:px-0 sm:text-left',
+          'my-16 mt-24 pb-14',
           'bg-[url("/_assets/img/landing/about-container.svg")]'
         )}
       >
-        <figure className="mx-auto mt-6 max-w-[22rem] sm:mr-0 sm:max-w-[15rem] text-center">
+        <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
           <img
             src={banner.imageSrc}
             className={clsx(
-              'mx-auto rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
+              'mx-auto max-w-[12rem] rounded-full sm:mt-2 sm:p-3'
             )}
           />
-          <p className="text-base mt-1 font-bold text-gray-700">
+          <p className="mt-1 text-base font-bold text-gray-700">
             @{banner.username}
           </p>
           {renderRoles(banner.roles)}
         </figure>
-        <div className="max-w-2xl mx-auto px-side sm:mt-8 lg:mt-12 sm:ml-0">
+        <div className="mx-auto max-w-2xl px-side sm:mt-8 sm:ml-0 lg:mt-12">
           {banner.text}
         </div>
       </aside>
@@ -59,7 +59,7 @@ export function TestimonialDonationsPage() {
     if (!roles) return null
 
     return (
-      <b className="block text-[16px] text-brand -mt-1">{roles.join(', ')}</b>
+      <b className="-mt-1 block text-[16px] text-brand">{roles.join(', ')}</b>
     )
   }
 }

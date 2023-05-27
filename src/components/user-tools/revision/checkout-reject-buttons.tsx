@@ -119,8 +119,8 @@ export function CheckoutRejectButtons({
           }}
           onKeyDown={onKeyDown}
           className={clsx(
-            'bold w-full border-0 box-border outline-none',
-            'rounded-xl my-5 pr-14 pl-4 py-2 min-h-[80px]',
+            'bold box-border w-full border-0 outline-none',
+            'my-5 min-h-[80px] rounded-xl py-2 pr-14 pl-4',
             'bg-brand-50 focus-visible:bg-brand-200'
           )}
         />

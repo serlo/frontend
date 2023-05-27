@@ -86,7 +86,7 @@ export function UserTools({
         'serlo-user-tools',
         aboveContent
           ? ''
-          : 'absolute z-50 right-8 bottom-8 h-full lg:flex hidden items-end pointer-events-none [&>div]:!sticky [&>div]:bottom-8',
+          : 'pointer-events-none absolute right-8 bottom-8 z-50 hidden h-full items-end lg:flex [&>div]:!sticky [&>div]:bottom-8',
         fadeIn
       )}
       aria-label="Tool Menu"
@@ -94,8 +94,8 @@ export function UserTools({
       <List
         className={clsx(
           aboveContent
-            ? 'text-right sm:text-left mobile:flex mr-4 mt-4 sm:-mt-6 mb-8 lg:hidden justify-end'
-            : 'bg-white rounded-md pointer-events-auto flex-col flex items-start'
+            ? 'mr-4 mt-4 mb-8 justify-end text-right mobile:flex sm:-mt-6 sm:text-left lg:hidden'
+            : 'pointer-events-auto flex flex-col items-start rounded-md bg-white'
         )}
       >
         {renderButtons()}

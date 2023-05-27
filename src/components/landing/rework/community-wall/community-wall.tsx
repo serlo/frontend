@@ -35,41 +35,41 @@ export function CommunityWall() {
     <section className="overflow-hidden">
       <h3
         className={clsx(
-          'text-center text-4xl text-almost-black font-bold',
+          'text-center text-4xl font-bold text-almost-black',
           'leading-cozy tracking-tight',
-          'max-w-2xl mt-32 mx-auto relative z-10 px-2'
+          'relative z-10 mx-auto mt-32 max-w-2xl px-2'
         )}
       >
         Wir sind eine große, ehrenamtliche Community und gestalten Serlo
-        <p className="text-brand italic font-handwritten text-5xl">
+        <p className="font-handwritten text-5xl italic text-brand">
           gemeinsam.
         </p>
       </h3>
-      <div className="relative z-0 h-0 w-full mt-1">
+      <div className="relative z-0 mt-1 h-0 w-full">
         <div
           className={clsx(
-            'absolute inset-0 -mt-14 h-32 ml-5',
-            'bg-circled-and-arrow bg-no-repeat bg-top bg-contain'
+            'absolute inset-0 -mt-14 ml-5 h-32',
+            'bg-circled-and-arrow bg-contain bg-top bg-no-repeat'
           )}
         ></div>
       </div>
 
-      <div className="mt-16 z-10 flex justify-center relative">
+      <div className="relative z-10 mt-16 flex justify-center">
         <div className="group text-center">
           <Link
-            className="serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline"
+            className="serlo-new-landing-button inline-block hover:no-underline group-hover:bg-brand-500"
             href="/mitmachen"
           >
             Magst du mitmachen?
           </Link>
           <div className="relative">
-            <div className="absolute flex justify-center inset-0">
+            <div className="absolute inset-0 flex justify-center">
               <div
                 className={clsx(
-                  'pointer-events-none select-none w-72 h-5',
-                  'group-hover:opacity-100 opacity-0 group-hover:rotate-1',
-                  'transition-all ease-linear duration-200',
-                  'bg-underlined bg-contain bg-no-repeat bg-top'
+                  'pointer-events-none h-5 w-72 select-none',
+                  'opacity-0 group-hover:rotate-1 group-hover:opacity-100',
+                  'transition-all duration-200 ease-linear',
+                  'bg-underlined bg-contain bg-top bg-no-repeat'
                 )}
               />
             </div>
@@ -80,7 +80,7 @@ export function CommunityWall() {
       <div
         className={clsx(
           'flex flex-wrap justify-evenly',
-          'md:relative md:block md:mb-72 md:h-630'
+          'md:relative md:mb-72 md:block md:h-630'
         )}
       >
         <CommunityWallPersons persons={persons} positions={positions} />

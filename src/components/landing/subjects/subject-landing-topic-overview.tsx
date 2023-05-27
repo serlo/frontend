@@ -48,7 +48,7 @@ export function SubjectLandingTopicOverview({
   return (
     <div>
       {renderMenu()}
-      <div className="pt-3 md:pt-6 md:ml-16 image-hack" ref={topicContainer}>
+      <div className="image-hack pt-3 md:ml-16 md:pt-6" ref={topicContainer}>
         <MaxWidthDiv>
           {selectedIndex > -1 ? (
             <SubTopic
@@ -103,10 +103,10 @@ export function SubjectLandingTopicOverview({
             <button
               key={term.title}
               className={clsx(
-                'font-bold text-brand text-left',
-                'flex w-auto p-2 m-2 text-left min-h-[4rem]',
-                'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
-                isActive ? 'text-black bg-brand/10 hover:bg-brand/10' : '',
+                'text-left font-bold text-brand',
+                'm-2 flex min-h-[4rem] w-auto p-2 text-left',
+                'rounded-xl shadow-menu transition-colors hover:bg-brand/5',
+                isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : '',
                 src ? '' : 'pl-16'
               )}
               onClick={() =>
@@ -114,7 +114,7 @@ export function SubjectLandingTopicOverview({
               }
             >
               {src ? (
-                <img src={src} className="w-12 h-12 object-cover mr-2" />
+                <img src={src} className="mr-2 h-12 w-12 object-cover" />
               ) : null}
               {term.title.replace(' und ', ' & ')}
             </button>

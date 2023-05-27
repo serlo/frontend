@@ -25,7 +25,7 @@ export function UserLink({
       <Link href={`/user/${user.id}/${user.username}`} className={className}>
         {withIcon && (
           <img
-            className="w-9 rounded-full mr-2 align-middle"
+            className="mr-2 w-9 rounded-full align-middle"
             src={getAvatarUrl(user.username)}
             alt={`User-Avatar: ${user.username}`}
           />
@@ -39,20 +39,20 @@ export function UserLink({
   function renderBadges() {
     return (
       <>
-        <span className="inline-block align-text-bottom ml-[3px]">
+        <span className="ml-[3px] inline-block align-text-bottom">
           {user.isActiveReviewer && (
             <span title={strings.roles.reviewer}>
-              <ReviewerBadge className="w-4 h-auto ml-1 inline" />
+              <ReviewerBadge className="ml-1 inline h-auto w-4" />
             </span>
           )}
           {user.isActiveAuthor && (
             <span title={strings.roles.author}>
-              <AuthorBadge className="w-4 h-auto ml-1 inline" />
+              <AuthorBadge className="ml-1 inline h-auto w-4" />
             </span>
           )}
           {user.isActiveDonor && (
             <span title={strings.roles.donor}>
-              <DonorBadge className="w-4 h-auto ml-1 inline" />
+              <DonorBadge className="ml-1 inline h-auto w-4" />
             </span>
           )}
         </span>

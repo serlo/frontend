@@ -25,11 +25,11 @@ function About() {
   const { footerData, strings } = useInstanceData()
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="bg-brand w-full min-h-[54px] relative">
+      <div className="relative min-h-[54px] w-full bg-brand">
         <div
           className={clsx(
             'absolute right-4 top-2 text-white hover:bg-brand-500',
-            'w-10 h-10 items-center justify-center rounded-full flex',
+            'flex h-10 w-10 items-center justify-center rounded-full',
             'cursor-pointer transition-colors'
           )}
           onClick={() => window.scrollTo(0, 0)}
@@ -38,38 +38,38 @@ function About() {
           <FaIcon icon={faChevronUp} className="h-5" />
         </div>
       </div>
-      <div className="text-lg shrink">
-        <div className="bg-brand-500 text-white pt-8 pb-4 px-side md:px-side-lg">
-          <div className="font-bold my-1">{strings.footer.summaryHeading}</div>
+      <div className="shrink text-lg">
+        <div className="bg-brand-500 px-side pt-8 pb-4 text-white md:px-side-lg">
+          <div className="my-1 font-bold">{strings.footer.summaryHeading}</div>
           <div className="mt-4 leading-browser">
             {strings.footer.summaryText}
           </div>
           <div>
             <Link
               href={footerData.aboutHref}
-              className="serlo-button-blue-transparent py-0.5 text-white my-4"
+              className="serlo-button-blue-transparent my-4 py-0.5 text-white"
             >
               <FaIcon icon={faChevronCircleRight} className="h-4" />{' '}
               {strings.footer.learnMore}
             </Link>
           </div>
         </div>
-        <div className="bg-brandgreen flex justify-around py-4">
+        <div className="flex justify-around bg-brandgreen py-4">
           <Link
             href={footerData.participationHref}
-            className="flex flex-col items-center hover:no-underline group"
+            className="group flex flex-col items-center hover:no-underline"
           >
             <ParticipateIcon className="w-14" />
-            <div className="serlo-button py-0.5 mt-2 text-white hover:bg-brand group-hover:bg-brand">
+            <div className="serlo-button mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.participate}
             </div>
           </Link>
           <Link
             href={footerData.donationHref}
-            className="flex flex-col items-center hover:no-underline group"
+            className="group flex flex-col items-center hover:no-underline"
           >
             <DonateIcon className="w-14" />
-            <div className="serlo-button py-0.5 mt-2 text-white hover:bg-brand group-hover:bg-brand">
+            <div className="serlo-button mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.donate}
             </div>
           </Link>

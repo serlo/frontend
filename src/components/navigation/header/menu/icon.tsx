@@ -36,11 +36,11 @@ export function Icon({ elementOrIcon }: IconProps) {
     <span
       aria-hidden
       className={clsx(
-        'w-10 h-10 rounded-full flex justify-center items-center mr-2.5',
+        'mr-2.5 flex h-10 w-10 items-center justify-center rounded-full',
         'bg-brand-200 text-brand-500',
         isIcon
           ? 'md:hidden'
-          : 'md:w-auto md:h-auto md:inline-block md:mr-0 md:bg-transparent'
+          : 'md:mr-0 md:inline-block md:h-auto md:w-auto md:bg-transparent'
       )}
     >
       {isIcon ? (

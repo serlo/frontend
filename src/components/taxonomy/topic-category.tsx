@@ -44,7 +44,7 @@ export function TopicCategory({ links, full, category }: TopicCategoryProps) {
       key={category}
       className={clsx('mt-5 first:mt-0', full && 'mb-6 mt-0 mobile:mt-2')}
     >
-      <h4 className="text-gray-900 text-lg mb-4 font-bold">
+      <h4 className="mb-4 text-lg font-bold text-gray-900">
         {strings.categories[category]}{' '}
         <FaIcon icon={categoryIconMapping[category]} />
       </h4>
@@ -58,7 +58,7 @@ export function TopicCategory({ links, full, category }: TopicCategoryProps) {
     if (link.unrevised && mounted && !auth) return null
 
     return (
-      <li className="block mb-3 leading-cozy" key={link.url + '_' + link.title}>
+      <li className="mb-3 block leading-cozy" key={link.url + '_' + link.title}>
         <Link
           className={clsx(
             link.unrevised ? 'opacity-60' : undefined,

@@ -69,7 +69,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     )
 
   return (
-    <div className="serlo-exercise-wrapper pt-2 mb-10">
+    <div className="serlo-exercise-wrapper mb-10 pt-2">
       {renderExerciseContent()}
     </div>
   )
@@ -119,7 +119,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     return (
       <div className="serlo-solution-box">
-        {authorTools && <div className="text-right -mt-2">{authorTools}</div>}
+        {authorTools && <div className="-mt-2 text-right">{authorTools}</div>}
         {renderNested(
           [
             {

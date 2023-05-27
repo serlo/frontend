@@ -179,7 +179,7 @@ export function EducationPlugins() {
     <div className="text-center">
       <h2 className={clsx(h2Class, 'mb-4')}>Features</h2>
       <div className="sm:flex">
-        <div className="mb-4 sm:mt-8 sm:mb-12 sm:w-min text-left sm:text-right">
+        <div className="mb-4 text-left sm:mt-8 sm:mb-12 sm:w-min sm:text-right">
           {renderPluginsMenu()}
         </div>
         {renderInfoBox()}
@@ -192,28 +192,28 @@ export function EducationPlugins() {
       pluginData.find(({ title }) => title === selectedTitle) ?? pluginData[0]
 
     return (
-      <div className="flex-1 m-3 mt-1 mb-[3.2rem] text-left">
-        <div className="shadow-menu w-full p-8 overflow-y-scroll md:h-[37rem]">
+      <div className="m-3 mt-1 mb-[3.2rem] flex-1 text-left">
+        <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
           <EntityIdProvider value={1555}>
-            <p className="text-xl mb-6">{description}</p>
+            <p className="mb-6 text-xl">{description}</p>
             {example ? (
               <>
-                <div className="border-b-2 border-brand-100 font-bold mb-3">
+                <div className="mb-3 border-b-2 border-brand-100 font-bold">
                   Live Example
                 </div>
-                <div className="-ml-side serlo-content-with-spacing-fixes">
+                <div className="serlo-content-with-spacing-fixes -ml-side">
                   {example}
                 </div>
               </>
             ) : (
               <>
-                <div className="border-b-2 border-brand-100 font-bold mb-6">
+                <div className="mb-6 border-b-2 border-brand-100 font-bold">
                   Screenshot
                 </div>
                 <img
                   key={image}
                   className="
-                    border-4 rounded-md border-brand-200"
+                    rounded-md border-4 border-brand-200"
                   alt={`Screenshot of ${title}`}
                   src={`/_assets/img/editor/screenshots/${image}`}
                 />
@@ -258,7 +258,7 @@ export function EducationPlugins() {
           return (
             <div key={thisCategory} className="mb-4">
               <button
-                className="text-brand font-bold cursor-pointer capitalize mr-1 rounded-full hover:bg-brand-100 px-2"
+                className="mr-1 cursor-pointer rounded-full px-2 font-bold capitalize text-brand hover:bg-brand-100"
                 onClick={() =>
                   setSelectedCategory(isSelected ? undefined : thisCategory)
                 }
@@ -267,7 +267,7 @@ export function EducationPlugins() {
                 <span
                   className={clsx(
                     'inline-block transition-transform duration-300',
-                    isSelected && 'rotate-180 translate-y-[1px]'
+                    isSelected && 'translate-y-[1px] rotate-180'
                   )}
                 >
                   ▾
@@ -297,12 +297,12 @@ export function EducationPlugins() {
     return (
       <li
         key={title}
-        className="sm:text-right text-sm sm:text-base inline-block sm:block"
+        className="inline-block text-sm sm:block sm:text-right sm:text-base"
       >
         <button
           onClick={() => setSelectedTitle(title)}
           className={clsx(
-            'whitespace-nowrap px-2 py-1 m-1 rounded-md',
+            'm-1 whitespace-nowrap rounded-md px-2 py-1',
             'shadow-menu hover:bg-brand-50',
             selectedTitle === title ? 'bg-brand-100' : ''
           )}

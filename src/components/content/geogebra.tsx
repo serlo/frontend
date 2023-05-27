@@ -18,10 +18,10 @@ export function Geogebra({ id }: GeogebraProps) {
         embedUrl={url}
         className="print:hidden"
       >
-        <div className="p-0 block h-0 overflow-hidden">
+        <div className="block h-0 overflow-hidden p-0">
           <iframe
             className={clsx(
-              'z-10 absolute top-0 left-0 w-full',
+              'absolute top-0 left-0 z-10 w-full',
               'h-full border-none bg-black bg-opacity-30'
             )}
             title={appletId}

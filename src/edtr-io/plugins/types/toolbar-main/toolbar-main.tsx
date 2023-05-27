@@ -46,7 +46,7 @@ export function ToolbarMain({
     <>
       <ClientOnlyPortal selector=".controls-portal">
         <nav
-          className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
+          className={clsx('flex w-full justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
           <div>
             {renderHistoryButton('Undo', faUndo, undo, !undoable)}
@@ -75,7 +75,7 @@ export function ToolbarMain({
       <button
         className={clsx(
           'serlo-button',
-          disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
+          disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
         )}
         onClick={() => {
           void dispatch(action())

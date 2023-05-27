@@ -21,18 +21,18 @@ const possibleBanners: { [key in DonationsBannerProps['place']]: Banner[] } = {
       call: 'Hat dir diese Aufgabe weitergeholfen?',
       text: (
         <div className="text-left">
-          <p className="serlo-p special-hyphens-initial leading-6">
+          <p className="serlo-p leading-6 special-hyphens-initial">
             Wir möchten <b>mehr interaktive Aufgaben</b> entwickeln, die
             Nutzbarkeit auf Smartphones verbessern und es Schüler*innen
             ermöglichen, eigene Lernziele zu definieren und ihren eigenen
             Lernstand zu speichern.
           </p>
-          <p className="serlo-p special-hyphens-initial leading-6">
+          <p className="serlo-p leading-6 special-hyphens-initial">
             All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für
             immer kostenlos und frei von Werbung bleiben wird, sind wir auf
             Spenden angewiesen.
           </p>
-          <p className="serlo-p special-hyphens-initial leading-6 font-bold">
+          <p className="serlo-p font-bold leading-6 special-hyphens-initial">
             Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
           </p>
         </div>
@@ -86,10 +86,10 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
       <aside
         ref={bannerRef}
         className={clsx(
-          'px-side text-center text-lg pb-5',
-          'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
-          'sm:flex sm:justify-between sm:text-left sm:mx-0 sm:px-0',
-          'lg:text-xl lg:py-4 lg:my-4'
+          'px-side pb-5 text-center text-lg',
+          'bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat',
+          'sm:mx-0 sm:flex sm:justify-between sm:px-0 sm:text-left',
+          'lg:my-4 lg:py-4 lg:text-xl'
         )}
       >
         <img
@@ -111,15 +111,15 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
             if (bannerRef.current !== null) observer.observe(bannerRef.current)
           }}
           src={banner.imageSrc}
-          className="mt-6 px-16 max-w-[18rem] mx-auto sm:mr-0 sm:max-w-[12rem] sm:px-3 scale-x-[-1]"
+          className="mx-auto mt-6 max-w-[18rem] scale-x-[-1] px-16 sm:mr-0 sm:max-w-[12rem] sm:px-3"
         />
-        <div className="max-w-2xl mx-auto px-side sm:mt-10 sm:ml-0">
-          <p className="mb-4 font-handwritten text-[1.32em] text-brand mx-side">
+        <div className="mx-auto max-w-2xl px-side sm:mt-10 sm:ml-0">
+          <p className="mx-side mb-4 font-handwritten text-[1.32em] text-brand">
             {banner.call}
           </p>
           <div className="">{banner.text}</div>
 
-          <p className="block mb-6 mx-auto sm:mb-10 sm:ml-side lg:mb-8">
+          <p className="mx-auto mb-6 block sm:mb-10 sm:ml-side lg:mb-8">
             <button
               className="serlo-button-green"
               onClick={() => {

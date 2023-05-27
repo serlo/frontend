@@ -34,7 +34,7 @@ export function StaticInfoPanel({
           <meta name="robots" content="noindex" />
         </Head>
       ) : null}
-      <div className={clsx('p-4 my-12 rounded-2xl font-bold', colorClass)}>
+      <div className={clsx('my-12 rounded-2xl p-4 font-bold', colorClass)}>
         {icon ? (
           <>
             <FaIcon icon={icon} />{' '}

@@ -36,8 +36,8 @@ export function SubjectLandingFeatured({
     <div
       className={clsx(
         'flex items-stretch justify-around',
-        'px-side pb-6 flex-wrap',
-        'w-full mx-auto sm:max-w-3xl lg:max-w-max '
+        'flex-wrap px-side pb-6',
+        'mx-auto w-full sm:max-w-3xl lg:max-w-max '
       )}
     >
       {content.map(renderFeaturedBox)}
@@ -49,21 +49,21 @@ export function SubjectLandingFeatured({
       <Link
         key={data.title}
         className={clsx(
-          'text-brand hover:no-underline box-border',
+          'box-border text-brand hover:no-underline',
           'p-2.5 leading-cozy',
-          'rounded hover:shadow-menu hover:text-almost-black',
-          'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
+          'rounded hover:text-almost-black hover:shadow-menu',
+          'group mx-2 mb-4 w-36 text-left transition-all mobile:w-52 lg:w-44 xl:w-48',
           'relative',
           index >= maxOnMobile ? 'hidden mobile:block' : ''
         )}
         href={data.url}
       >
-        <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
+        <div className="mb-2.5 mr-5 rounded-lg bg-brand-100 transition-all group-hover:bg-white">
           {data.img ? (
             <img
               className={clsx(
                 'object-contain object-center',
-                'mix-blend-multiply opacity-80 transition-all',
+                'opacity-80 mix-blend-multiply transition-all',
                 'group-hover:opacity-100',
                 'aspect-square rounded-lg'
               )}
@@ -73,8 +73,8 @@ export function SubjectLandingFeatured({
           ) : (
             <div
               className={clsx(
-                'opacity-80 transition-all group-hover:opacity-100 aspect-square',
-                'flex align-middle items-center justify-center text-4xl',
+                'aspect-square opacity-80 transition-all group-hover:opacity-100',
+                'flex items-center justify-center align-middle text-4xl',
                 'text-brand-300'
               )}
             >
@@ -82,10 +82,10 @@ export function SubjectLandingFeatured({
             </div>
           )}
         </div>
-        <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
+        <h4 className="mx-0 mt-1 mb-10 break-normal text-xl font-bold special-hyphens-auto">
           {data.title}
         </h4>
-        <span className="block mt-1 font-sm text-brand-400 absolute bottom-2">
+        <span className="font-sm absolute bottom-2 mt-1 block text-brand-400">
           {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
         </span>
       </Link>

@@ -31,7 +31,7 @@ export interface CodeProps {
 export function Code({ content, language, showLineNumbers }: CodeProps) {
   // SyntaxHighlighter has own styles on pre, so wrap in div to use own classes
   return (
-    <div className="mb-block mt-1 border-l-8 border-brand-400 mx-side">
+    <div className="mx-side mb-block mt-1 border-l-8 border-brand-400">
       <SyntaxHighlighter
         language={language.toLowerCase()}
         showLineNumbers={showLineNumbers}

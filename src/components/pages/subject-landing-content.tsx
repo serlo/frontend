@@ -45,20 +45,20 @@ export function SubjectLandingContent({
       <main id="content" className="text-almost-black">
         <section
           className={clsx(
-            'max-w-3xl mx-auto mt-16',
-            'md:mt-14 sm:flex',
+            'mx-auto mt-16 max-w-3xl',
+            'sm:flex md:mt-14',
             'text-center sm:text-left'
           )}
         >
           <div>
             <h1
               className={clsx(
-                'text-4xl sm:text-6xl font-extrabold',
+                'text-4xl font-extrabold sm:text-6xl',
                 'tracking-tight',
                 'mt-3 mb-10'
               )}
             >
-              <span className="w-min pb-3 underlined inline-block max-w-[27rem] !whitespace-normal">
+              <span className="underlined inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
                 {data.title}
               </span>
             </h1>
@@ -70,19 +70,19 @@ export function SubjectLandingContent({
           {renderIcon()}
         </section>
 
-        <section className="max-w-3xl mx-auto mt-10 text-center sm:text-left sm:mt-16">
-          <h2 className="text-almost-black font-bold text-lg mb-2">
+        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-16 sm:text-left">
+          <h2 className="mb-2 text-lg font-bold text-almost-black">
             Durchsuche den Bereich {data.title}
           </h2>
 
           <Quickbar
             subject={data.title}
-            className="max-w-sm sm:px-0 sm:-ml-1 md:max-w-2xl md:pr-4"
+            className="max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
           />
         </section>
 
         <section className={clsx('text-center', 'themen')}>
-          <p className="text-3xl mt-4 mb-12 font-extrabold tracking-tight">
+          <p className="mt-4 mb-12 text-3xl font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
           <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
@@ -93,7 +93,7 @@ export function SubjectLandingContent({
             className={clsx(
               'text-3xl font-extrabold',
               'tracking-tight',
-              'max-w-2xl mt-3 pb-10 mx-auto'
+              'mx-auto mt-3 max-w-2xl pb-10'
             )}
           >
             <span className="pb-2">Beliebte Inhalte</span>
@@ -102,7 +102,7 @@ export function SubjectLandingContent({
           <SubjectLandingFeatured subject={subject} />
         </section>
 
-        <section className="text-center bg-blueWave bg-100% pt-4">
+        <section className="bg-blueWave bg-100% pt-4 text-center">
           <CommunityWallSubjectLanding subject={subject} />
         </section>
       </main>

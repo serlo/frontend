@@ -124,7 +124,7 @@ export function AddRevision({
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
-          'max-w-[816px] mx-auto mb-24 edtr-io serlo-editor-hacks'
+          'edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]'
         )}
       >
         <SerloEditor

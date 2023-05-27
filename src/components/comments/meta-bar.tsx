@@ -44,9 +44,9 @@ export function MetaBar({
         user={user}
         withIcon
         className={clsx(
-          'serlo-button text-brand text-lg font-bold',
-          '-ml-1 pl-1 flex items-center hover:no-underline',
-          'hover:text-brand hover:bg-brand-200'
+          'serlo-button text-lg font-bold text-brand',
+          '-ml-1 flex items-center pl-1 hover:no-underline',
+          'hover:bg-brand-200 hover:text-brand'
         )}
       />
       {isEditing ? null : (
@@ -73,11 +73,11 @@ export function MetaBar({
           }
         >
           <div className="cursor-pointer">
-            <span className={clsx('text-brand-500 text-base')}>
+            <span className={clsx('text-base text-brand-500')}>
               <TimeAgo datetime={date} />
             </span>
             <button
-              className="serlo-button text-brand bg-brand-50 w-7 h-7 ml-1 pr-2 "
+              className="serlo-button ml-1 h-7 w-7 bg-brand-50 pr-2 text-brand "
               aria-label="Tool Menu"
             >
               <FaIcon icon={faEllipsisVertical} />

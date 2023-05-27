@@ -43,7 +43,7 @@ export function ProfileBadges({
   ].filter(isDefined)
 
   return badges.length > 0 ? (
-    <div className="flex justify-center sm:justify-start mx-side">
+    <div className="mx-side flex justify-center sm:justify-start">
       {badges.map((badge, index) => (
         <Fragment key={index}>{badge}</Fragment>
       ))}

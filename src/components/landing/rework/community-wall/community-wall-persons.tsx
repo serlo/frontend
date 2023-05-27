@@ -27,37 +27,37 @@ export function CommunityWallPersons({
         <Fragment key={name}>
           <figure
             className={clsx(
-              'mt-12 mx-1 text-center group',
-              'w-1/3v sm:w-1/4v md:w-1/8v md:absolute z-30',
+              'group mx-1 mt-12 text-center',
+              'z-30 w-1/3v sm:w-1/4v md:absolute md:w-1/8v',
               'max-w-[13rem]',
               hideMobile && 'hidden md:block'
             )}
             style={{ left, top }}
           >
-            <div className="relative w-full z-0">
+            <div className="relative z-0 w-full">
               <div
                 className={clsx(
-                  'bg-wiggle absolute -left-12 -right-12 pb-6/5',
-                  'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
-                  'transition-all ease-linear duration-200 group-hover:rotate-1'
+                  'absolute -left-12 -right-12 bg-wiggle pb-6/5',
+                  'bg-contain bg-no-repeat opacity-0 group-hover:opacity-100',
+                  'transition-all duration-200 ease-linear group-hover:rotate-1'
                 )}
               ></div>
             </div>
             <Link
-              className="hover:no-underline relative z-10 whitespace-nowrap"
+              className="relative z-10 whitespace-nowrap hover:no-underline"
               href={`/user/profile/${name}`}
             >
               <img
                 src={imgSrc}
                 alt={`Avatar von ${name}`}
-                className="rounded-full w-full aspect-square object-cover"
+                className="aspect-square w-full rounded-full object-cover"
               />
-              <p className="text-base mt-2 mb-2 font-bold text-gray-700">
+              <p className="mt-2 mb-2 text-base font-bold text-gray-700">
                 @{name}
               </p>
               <span
                 className={clsx(
-                  'text-white text-base font-bold px-2 py-1',
+                  'px-2 py-1 text-base font-bold text-white',
                   'rounded-2xl',
                   role.includes('Autor')
                     ? 'bg-yellow'
@@ -72,7 +72,7 @@ export function CommunityWallPersons({
               </span>
             </Link>
           </figure>
-          {lineBreak && <div className="md:hidden h-0 w-full"></div>}
+          {lineBreak && <div className="h-0 w-full md:hidden"></div>}
         </Fragment>
       )
     })

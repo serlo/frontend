@@ -34,17 +34,17 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="serlo-p special-hyphens-initial leading-6">
+        <p className="serlo-p leading-6 special-hyphens-initial">
           … dass in Deutschland pro Jahr über 1,1 Millionen Schüler*innen teure
           Nachhilfe in Anspruch nehmen? Die Corona-Pandemie hat den Bedarf noch
           größer gemacht. Aber nicht jede Familie kann sich das leisten!
         </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
+        <p className="serlo-p leading-6 special-hyphens-initial">
           Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
           hochwertigen Lernmaterialien für{' '}
           <b>alle Schüler*innen komplett kostenlos</b>.
         </p>
-        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
+        <p className="serlo-p font-bold leading-6 special-hyphens-initial">
           Mit deiner Spende, groß oder klein, kannst du diese Arbeit
           unterstützen.
         </p>
@@ -58,7 +58,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="serlo-p special-hyphens-initial leading-6">
+        <p className="serlo-p leading-6 special-hyphens-initial">
           … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
           engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
           Pädagog*innen für das gemeinsame Ziel:{' '}
@@ -68,13 +68,13 @@ const articleBanners = [
           </b>
           .
         </p>
-        <p className="serlo-p special-hyphens-initial leading-6">
+        <p className="serlo-p leading-6 special-hyphens-initial">
           Als nächstes möchten wir gerne weitere Übungsformate für Serlo
           entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
           Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
           eigenen Lernstand zu speichern.
         </p>
-        <p className="serlo-p special-hyphens-initial leading-6 font-bold">
+        <p className="serlo-p font-bold leading-6 special-hyphens-initial">
           Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
@@ -89,7 +89,7 @@ const articleBanners = [
     id: 'banner-testimonial-WandaPaetzold',
     isLong: false,
     text: (
-      <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
+      <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
         „ Ich unterstütze Serlo, da ich der Meinung bin, dass ein einfacher
         Zugang zu Bildung ohne Bezahlung und Werbung ein Grundrecht für jede*n
         ist und Serlo ermöglicht es mir als Lehrerin, für viel mehr Menschen
@@ -107,7 +107,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
+        <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
           „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
           Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
           Inhalte verlassen kann.
@@ -128,7 +128,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
+        <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
           „ Bildung für alle - und das kostenfrei.
           <br />
           Ein so wichtiges Ziel, um der (Chancen-)Gerechtigkeit unserer
@@ -150,7 +150,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 font-handwritten mx-side text-[1.05em] text-almost-black leading-[2.2rem]">
+        <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
           „ Ich wünsche mir eine Welt, wo nicht nur Wissen sondern auch der Weg,
           um Wissen zu erlangen, frei verfügbar ist. <br />
           Ich hoffe, dass die Bewegung von ‚Open Educational Resources‘ auch
@@ -172,17 +172,17 @@ const courseBanner = {
   call: 'Hat dir dieser Kurs weitergeholfen?',
   text: (
     <div className="text-left">
-      <p className="serlo-p special-hyphens-initial leading-6">
+      <p className="serlo-p leading-6 special-hyphens-initial">
         Wir möchten <b>mehr kleinschrittige Kurse</b> entwickeln, die
         Nutzbarkeit auf Smartphones verbessern und es Schüler*innen ermöglichen,
         eigene Lernziele zu definieren und ihren eigenen Lernstand zu speichern.
       </p>
-      <p className="serlo-p special-hyphens-initial leading-6">
+      <p className="serlo-p leading-6 special-hyphens-initial">
         All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für immer
         kostenlos und frei von Werbung bleiben wird, sind wir auf Spenden
         angewiesen.
       </p>
-      <p className="serlo-p special-hyphens-initial leading-6 font-bold">
+      <p className="serlo-p font-bold leading-6 special-hyphens-initial">
         Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
       </p>
     </div>
@@ -251,15 +251,15 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       <aside
         ref={bannerRef}
         className={clsx(
-          'w-[100vw] relative py-6 px-side text-center text-xl overflow-x-hidden',
-          'bg-[url("/_assets/img/landing/about-container.svg")] bg-no-repeat bg-bottom bg-[length:100vw_100%]',
-          'sm:flex sm:justify-between sm:text-left sm:-mx-2 sm:px-0',
-          'sm:max-w-[100vw] lg:text-2xl lg:py-10 lg:my-16',
+          'relative w-[100vw] overflow-x-hidden py-6 px-side text-center text-xl',
+          'bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat',
+          'sm:-mx-2 sm:flex sm:justify-between sm:px-0 sm:text-left',
+          'sm:max-w-[100vw] lg:my-16 lg:py-10 lg:text-2xl',
           'bg-[url("/_assets/img/landing/about-container.svg")]'
         )}
       >
         {renderHideButton()}
-        <figure className="mx-auto mt-6 max-w-[22rem] sm:mr-0 sm:max-w-[15rem] text-center">
+        <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
           <img
             src={banner.imageSrc}
             onLoad={() => {
@@ -280,26 +280,26 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
             className={clsx(
               'mx-auto mb-3',
               isTestimonial
-                ? 'rounded-full max-w-[12rem] sm:mt-2 sm:p-3'
-                : 'scale-x-[-1] sm:px-3 px-16'
+                ? 'max-w-[12rem] rounded-full sm:mt-2 sm:p-3'
+                : 'scale-x-[-1] px-16 sm:px-3'
             )}
           />
           {isTestimonial ? (
             <>
-              <p className="text-base mt-1 font-bold text-gray-700">
+              <p className="mt-1 text-base font-bold text-gray-700">
                 @{banner.username}
               </p>
               {renderRoles(banner.roles)}
             </>
           ) : null}
         </figure>
-        <div className="max-w-2xl mx-auto px-side sm:mt-5 sm:ml-0">
-          <p className="my-5 font-handwritten mx-side text-[1.32em] text-brand">
+        <div className="mx-auto max-w-2xl px-side sm:mt-5 sm:ml-0">
+          <p className="my-5 mx-side font-handwritten text-[1.32em] text-brand">
             {banner.call}
           </p>
           <div className="text-center sm:text-left">{banner.text}</div>
 
-          <p className="block mb-6 mx-auto sm:mb-10 sm:ml-side lg:mb-24">
+          <p className="mx-auto mb-6 block sm:mb-10 sm:ml-side lg:mb-24">
             <button
               className="serlo-button-green"
               onClick={() => {
@@ -344,7 +344,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
           sessionStorage.setItem(hideDonationBannerKey, 'true')
           setBanner(undefined)
         }}
-        className="serlo-button-blue-transparent absolute right-6  bg-[rgba(0,0,0,0.05)] text-gray-600 w-8 h-8"
+        className="serlo-button-blue-transparent absolute right-6  h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
       >
         <FaIcon icon={faTimes} />
       </button>
@@ -355,7 +355,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     if (!roles) return null
 
     return (
-      <b className="block text-[16px] text-brand -mt-1">{roles.join(', ')}</b>
+      <b className="-mt-1 block text-[16px] text-brand">{roles.join(', ')}</b>
     )
   }
 }

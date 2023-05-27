@@ -15,7 +15,7 @@ export function MaxWidthDiv({
   return (
     <div
       className={clsx(
-        'max-w-screen-sm mx-auto',
+        'mx-auto max-w-screen-sm',
         !noMarginBottom && 'mb-24',
         'sm:ml-[51px]',
         showNav ? 'md:ml-[200px] lg:ml-auto' : 'md:ml-auto'

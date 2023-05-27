@@ -134,7 +134,7 @@ export function ShareModal({
       title={strings.share.title}
       className="top-1/2"
     >
-      <div className="sm:float-right mx-side mb-4 sm:mb-0">
+      <div className="mx-side mb-4 sm:float-right sm:mb-0">
         <QRCode value={shareUrl} renderAs="svg" fgColor={colors.brand} />
       </div>
       {renderShareInput()}
@@ -156,9 +156,9 @@ export function ShareModal({
       <>
         <input /*ShareInput*/
           className={clsx(
-            'rounded-2xl border-none py-1 px-2.5 w-[250px]',
+            'w-[250px] rounded-2xl border-none py-1 px-2.5',
             'ml-3 mb-2 mr-0 bg-brandgreen-50',
-            'focus:outline-none focus:shadow-input'
+            'focus:shadow-input focus:outline-none'
           )}
           ref={shareInputRef}
           onFocus={(e) => e.target.select()}
@@ -178,7 +178,7 @@ export function ShareModal({
 
   function renderButtons(list: (EntryData | null)[]) {
     return (
-      <div className="flex items-start flex-col sm:flex-row mt-4">
+      <div className="mt-4 flex flex-col items-start sm:flex-row">
         {list.map((entry: EntryData | null) => {
           if (!entry) return null
           return (

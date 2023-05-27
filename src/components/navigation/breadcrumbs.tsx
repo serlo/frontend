@@ -43,7 +43,7 @@ export function Breadcrumbs({
       return (
         <span
           className={clsx(
-            'hidden sm:inline-block cursor-default',
+            'hidden cursor-default sm:inline-block',
             withRightArrow
           )}
         >
@@ -69,14 +69,14 @@ export function Breadcrumbs({
           <>
             <Link
               className={clsx(
-                'serlo-button py-0.5 bg-brand-200 hover:bg-brand-400',
+                'serlo-button bg-brand-200 py-0.5 hover:bg-brand-400',
                 'hover:text-white sm:bg-brand-100 sm:hover:bg-brand'
               )}
               href={bcEntry.url ?? undefined}
             >
-              <span className="sm:hidden pt-0.25 pr-1">{renderIcon()}</span>
+              <span className="pt-0.25 pr-1 sm:hidden">{renderIcon()}</span>
               {!isTaxonomy && (
-                <span className="hidden sm:inline text-base pt-0.25 pr-1">
+                <span className="hidden pt-0.25 pr-1 text-base sm:inline">
                   {renderIcon()}
                 </span>
               )}

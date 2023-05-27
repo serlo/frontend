@@ -125,8 +125,8 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
       <div
         className={clsx(
-          'md:left-[calc(-50vw+50%)] md:relative',
-          'md:text-left md:max-w-[100vw] w-[100vw] md:ml-0',
+          'md:relative md:left-[calc(-50vw+50%)]',
+          'w-[100vw] md:ml-0 md:max-w-[100vw] md:text-left',
           '-mt-12 text-center',
           'text-gray-700'
         )}
@@ -137,10 +137,10 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         <section
           className={clsx(
             'sm:flex sm:flex-row-reverse',
-            'sm:text-left font-bold'
+            'font-bold sm:text-left'
           )}
         >
-          <div className="w-full px-2 mt-12 sm:mt-32 sm:ml-10">
+          <div className="mt-12 w-full px-2 sm:mt-32 sm:ml-10">
             <p
               className={clsx(
                 italicClass,
@@ -152,8 +152,8 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             <h1
               className={clsx(
                 'text-5xl font-extrabold',
-                'tracking-tight leading-tight',
-                'max-w-md mt-3 mb-6 mx-auto sm:ml-0'
+                'leading-tight tracking-tight',
+                'mx-auto mt-3 mb-6 max-w-md sm:ml-0'
               )}
             >
               Digitale Bildung braucht{' '}
@@ -164,28 +164,28 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             <img
               src="/_assets/img/jobs/jobs-header.jpg"
               className={clsx(
-                'rounded-full object-cover object-left mx-side aspect-square',
-                'w-[90vw] max-w-[28rem] mx-auto',
-                'sm:w-[28rem] sm:h-[28rem] sm:mx-0 sm:ml-auto'
+                'mx-side aspect-square rounded-full object-cover object-left',
+                'mx-auto w-[90vw] max-w-[28rem]',
+                'sm:mx-0 sm:ml-auto sm:h-[28rem] sm:w-[28rem]'
               )}
             />
           </aside>
         </section>
 
-        <section className={clsx('text-center mt-3 px-2')}>
+        <section className={clsx('mt-3 px-2 text-center')}>
           <h3
             style={{ hyphens: 'auto' }}
-            className={clsx(h2Class, 'inline-block mt-12 pb-3')}
+            className={clsx(h2Class, 'mt-12 inline-block pb-3')}
             id="stellen"
           >
             Unsere offenen Stellen
           </h3>
-          <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
-            <div className="max-w-xl w-full mx-auto sm:mr-4">
+          <div className="mt-5 justify-center px-side pt-8 text-left sm:flex">
+            <div className="mx-auto w-full max-w-xl sm:mr-4">
               <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamtlich</h3>
               {renderPositions(jobs)}
             </div>
-            <div className="max-w-xl w-full mx-auto sm:ml-4">
+            <div className="mx-auto w-full max-w-xl sm:ml-4">
               <div>
                 <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-16 sm:mt-0')}>
                   Ehrenamtlich
@@ -200,10 +200,10 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('bg-orangeBow bg-100% mt-24 !pt-12')}>
+        <section className={clsx('mt-24 bg-orangeBow bg-100% !pt-12')}>
           <h3
             className={clsx(
-              'text-center text-4xl text-almost-black font-bold',
+              'text-center text-4xl font-bold text-almost-black',
               'leading-cozy tracking-tight',
               'mx-auto'
             )}
@@ -214,23 +214,23 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </h3>
           <div
             className={clsx(
-              'relative text-[1.3rem] text-left pb-16 mb-12',
-              'pt-4 lg:mb-16 md:pb-16',
-              'grid grid-cols-2 md:grid-cols-3 max-w-2xl md:max-w-4xl mx-auto'
+              'relative mb-12 pb-16 text-left text-[1.3rem]',
+              'pt-4 md:pb-16 lg:mb-16',
+              'mx-auto grid max-w-2xl grid-cols-2 md:max-w-4xl md:grid-cols-3'
             )}
           >
             {specials.map(({ src, title, content }) => {
               return (
                 <div
                   key={title}
-                  className="w-full -mb-5 sm:mb-4 mobile:text-center px-2 tracking-slightly-tighter"
+                  className="-mb-5 w-full px-2 tracking-slightly-tighter mobile:text-center sm:mb-4"
                 >
                   <img src={src} className="max-h-32 mobile:mx-auto" />
                   <h4
-                    className="text-almost-black font-extrabold leading-cozy"
+                    className="font-extrabold leading-cozy text-almost-black"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
-                  <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-2 leading-snug special-hyphens-initial">
+                  <p className="serlo-p mx-auto mt-2 max-w-65 text-lg font-normal leading-snug special-hyphens-initial">
                     {content}
                   </p>
                 </div>
@@ -240,9 +240,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         </section>
 
         <section className={clsx('mt-18 -mb-8')}>
-          <div className="max-w-4xl text-center mx-auto">
+          <div className="mx-auto max-w-4xl text-center">
             <p className={clsx(h2Class, 'mt-8')}>Noch Fragen?</p>
-            <p className="text-[1.3rem] mt-3">
+            <p className="mt-3 text-[1.3rem]">
               Dann schreib uns an{' '}
               <a className="text-brand underline" href="mailto:jobs@serlo.org">
                 jobs@serlo.org
@@ -253,18 +253,18 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('bg-blueWave bg-100% mt-24 !pt-16 pb-16')}>
-          <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
+        <section className={clsx('mt-24 bg-blueWave bg-100% !pt-16 pb-16')}>
+          <div className="mx-auto max-w-4xl text-center text-3xl leading-cozy">
             <img
               src="/_assets/img/landing/birds.svg"
               className="mx-auto my-5"
             />
-            <p className="mb-8 max-w-2xl px-2 mx-auto font-bold">
+            <p className="mx-auto mb-8 max-w-2xl px-2 font-bold">
               Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
               digitale Transformation unserer Schulen ein.
             </p>
             <Link
-              className="serlo-new-landing-button inline landing-button-with-wings"
+              className="landing-button-with-wings serlo-new-landing-button inline"
               href="/serlo"
             >
               Mehr über Serlo
@@ -380,13 +380,13 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               <li key={id}>
                 <NextLink
                   className={clsx(
-                    'block px-5 py-4 mb-5',
-                    'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
+                    'mb-5 block px-5 py-4',
+                    'rounded-xl shadow-menu transition-colors hover:bg-brand/5',
                     'text-lg'
                   )}
                   href={`/jobs/${id}`}
                 >
-                  <span className="text-brand font-bold">{name}</span>
+                  <span className="font-bold text-brand">{name}</span>
                   <br />
                   {renderSubline(position)}
                 </NextLink>
@@ -403,29 +403,29 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       <figure
         key={name}
         className={clsx(
-          'mt-12 text-center group',
+          'group mt-12 text-center',
           'sm:w-1/3v',
-          'max-w-[20rem] mx-auto'
+          'mx-auto max-w-[20rem]'
         )}
       >
         <div className="relative w-full">
           <div
             className={clsx(
-              'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
-              'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
-              'transition-all ease-linear duration-200 group-hover:rotate-1'
+              'absolute left-5 top-5 right-12 bg-wiggle pb-6/5',
+              'bg-contain bg-no-repeat opacity-0 group-hover:opacity-100',
+              'transition-all duration-200 ease-linear group-hover:rotate-1'
             )}
           ></div>
         </div>
         <img
           src={imgSrc}
           alt={`Avatar von ${name}`}
-          className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
+          className="relative z-10 -mb-12 aspect-square w-full rounded-full object-cover p-12"
         />
-        <p className="text-base mt-2 font-bold">@{name}</p>
+        <p className="mt-2 text-base font-bold">@{name}</p>
         <span
           className={clsx(
-            'text-brand font-handwritten text-xl font-bold px-2 py-1',
+            'px-2 py-1 font-handwritten text-xl font-bold text-brand',
             'rounded-2xl'
           )}
         >

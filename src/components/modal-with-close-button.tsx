@@ -37,7 +37,7 @@ export function ModalWithCloseButton({
       isOpen={isOpen}
       onRequestClose={onCloseClick}
       shouldReturnFocusAfterClose={false}
-      className={clsx(ModalClsx, 'w-[500px] top-[40%] pb-10', className)}
+      className={clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)}
     >
       {title && <h2 className="serlo-h2">{title}</h2>}
       {children}
@@ -45,9 +45,9 @@ export function ModalWithCloseButton({
         onClick={onCloseClick}
         title={strings.share.close}
         className={clsx(
-          'absolute top-3.5 right-3.5 bg-transparent border-none cursor-pointer',
-          'inline-block text-almost-black hover:bg-brand hover:text-white leading-tight',
-          'w-9 h-9 rounded-full text-center '
+          'absolute top-3.5 right-3.5 cursor-pointer border-none bg-transparent',
+          'inline-block leading-tight text-almost-black hover:bg-brand hover:text-white',
+          'h-9 w-9 rounded-full text-center '
         )}
       >
         <FaIcon icon={faXmark} className="h-5" />

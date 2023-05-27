@@ -23,8 +23,8 @@ Settings.Textarea = function SettingsTextarea({
           state.set(value)
         }}
         className={clsx(
-          'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-          'bg-editor-primary-100 border-2 border-editor-primary-100 focus-within:outline-none focus-within:border-editor-primary'
+          'mt-1 mb-7 flex w-full items-center rounded-2xl p-2',
+          'border-2 border-editor-primary-100 bg-editor-primary-100 focus-within:border-editor-primary focus-within:outline-none'
         )}
       />
     </label>

@@ -22,7 +22,7 @@ export function SubItem({ item }: SubItemProps) {
   const isAbsolute = item.url.indexOf('//') > -1
 
   const inner = (
-    <Link href={item.url} className="block md:py-[3px] group">
+    <Link href={item.url} className="group block md:py-[3px]">
       <span className={itemClasses}>{item.title}</span>
     </Link>
   )

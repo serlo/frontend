@@ -14,8 +14,8 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
   return (
     <section
       className={clsx(
-        'flex justify-center flex-wrap my-20 max-w-lg mx-auto',
-        'sm:justify-between sm:flex-nowrap sm:max-w-none'
+        'my-20 mx-auto flex max-w-lg flex-wrap justify-center',
+        'sm:max-w-none sm:flex-nowrap sm:justify-between'
       )}
     >
       {renderGraph('edits', 3000)}

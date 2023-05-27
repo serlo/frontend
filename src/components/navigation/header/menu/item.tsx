@@ -48,8 +48,8 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
   return (
     <RadixItem
       className={clsx(
-        'ease-linear duration-700',
-        'block md:inline-block md:mx-[3px]',
+        'duration-700 ease-linear',
+        'block md:mx-[3px] md:inline-block',
         className
       )}
       key={link.title}

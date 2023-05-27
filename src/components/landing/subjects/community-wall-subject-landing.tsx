@@ -37,18 +37,18 @@ export function CommunityWallSubjectLanding({
 
   return (
     <>
-      <div className="z-10 justify-center relative mt-32">
-        <div className="md:absolute text-center w-full z-20">
+      <div className="relative z-10 mt-32 justify-center">
+        <div className="z-20 w-full text-center md:absolute">
           <h3
             className={clsx(
               'text-center text-3xl font-extrabold',
               'leading-cozy tracking-tight',
-              'max-w-xl mt-20 mx-auto relative z-10 mb-8'
+              'relative z-10 mx-auto mt-20 mb-8 max-w-xl'
             )}
           >
             Lust, das Fach {title} mitzugestalten?
           </h3>
-          <p className="jsx-1406289065 text-xl leading-cozy text-almost-black max-w-xl mx-auto">
+          <p className="jsx-1406289065 mx-auto max-w-xl text-xl leading-cozy text-almost-black">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
             Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von{' '}
@@ -58,7 +58,7 @@ export function CommunityWallSubjectLanding({
           <div className="group text-center">
             <Link
               className={clsx(
-                'serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline',
+                'serlo-new-landing-button inline-block hover:no-underline group-hover:bg-brand-500',
                 'mt-6 py-2 px-4 text-lg'
               )}
               href={contributeLink}
@@ -66,13 +66,13 @@ export function CommunityWallSubjectLanding({
               Mitmachen
             </Link>
             <div className="relative">
-              <div className="absolute flex justify-center inset-0">
+              <div className="absolute inset-0 flex justify-center">
                 <div
                   className={clsx(
-                    'pointer-events-none select-none h-5 w-48',
-                    'group-hover:opacity-100 opacity-0 group-hover:rotate-1',
-                    'transition-all ease-linear duration-200',
-                    'bg-underlined bg-contain bg-no-repeat bg-top'
+                    'pointer-events-none h-5 w-48 select-none',
+                    'opacity-0 group-hover:rotate-1 group-hover:opacity-100',
+                    'transition-all duration-200 ease-linear',
+                    'bg-underlined bg-contain bg-top bg-no-repeat'
                   )}
                 />
               </div>
@@ -82,8 +82,8 @@ export function CommunityWallSubjectLanding({
 
         <div
           className={clsx(
-            'flex flex-wrap justify-evenly lg:max-w-[85rem] lg:mx-auto',
-            'md:block md:pb-12 md:h-630 md:relative'
+            'flex flex-wrap justify-evenly lg:mx-auto lg:max-w-[85rem]',
+            'md:relative md:block md:h-630 md:pb-12'
           )}
         >
           <CommunityWallPersons

@@ -62,8 +62,8 @@ export function DropdownMenu({
   return (
     <div
       className={clsx(
-        'text-right bg-brand-50 py-3 pr-4 pl-2.5',
-        'shadow max-w-65 rounded-lg -mt-4'
+        'bg-brand-50 py-3 pr-4 pl-2.5 text-right',
+        '-mt-4 max-w-65 rounded-lg shadow'
       )}
     >
       {buildButton(
@@ -100,7 +100,7 @@ export function DropdownMenu({
               : strings.comments.deleteComment}
           </>
         )}
-      <span className={clsx('block text-sm mt-3.5 text-gray-500')}>
+      <span className={clsx('mt-3.5 block text-sm text-gray-500')}>
         {strings.comments.postedOn} {date.toLocaleString(lang)}
       </span>
     </div>

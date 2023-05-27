@@ -112,7 +112,7 @@ export function SaveModal({
 
   function renderModalButtons() {
     return (
-      <div className="mt-4 text-right mx-side">
+      <div className="mx-side mt-4 text-right">
         <button
           className="serlo-button-transparent"
           onClick={() => setOpen(false)}
@@ -189,8 +189,8 @@ export function SaveModal({
             setChangesText(value)
           }}
           className={clsx(
-            'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-yellow-200 border-2 border-yellow-200 focus-within:outline-none focus-within:border-truegray-400'
+            'mt-1 mb-7 flex w-full items-center rounded-2xl p-2',
+            'focus-within:border-truegray-400 border-2 border-yellow-200 bg-yellow-200 focus-within:outline-none'
           )}
         />
       </label>

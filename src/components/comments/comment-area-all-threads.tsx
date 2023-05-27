@@ -37,7 +37,7 @@ export function CommentAreaAllThreads() {
           </StaticInfoPanel>
         ) : null}
         {renderThreads()}
-        <div className="border-t-2 border-gray-300 mx-side mt-24">
+        <div className="mx-side mt-24 border-t-2 border-gray-300">
           {loading ? (
             <LoadingSpinner noText />
           ) : (
@@ -59,7 +59,7 @@ export function CommentAreaAllThreads() {
       return (
         <EntityIdProvider key={thread.id} value={thread.object.id}>
           <div className="mb-16">
-            <div className="border-b-2 mt-16 mb-5 mx-side">
+            <div className="mx-side mt-16 mb-5 border-b-2">
               <b>
                 <FaIcon icon={getIconByTypename(__typename as UuidType)} />{' '}
                 {getTranslatedType(strings, __typename)}

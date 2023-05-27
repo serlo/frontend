@@ -165,7 +165,7 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
     return (
       <code
         key={key}
-        className="bg-brand-100 text-brand p-1 rounded-sm text-base"
+        className="rounded-sm bg-brand-100 p-1 text-base text-brand"
       >
         {children}
       </code>
@@ -254,7 +254,7 @@ function renderElement({
     return <p className="serlo-p">{children}</p>
   }
   if (element.type === FrontendNodeType.SlateP) {
-    return <p className="serlo-p mb-0 slate-p min-h-[1.33em]">{children}</p>
+    return <p className="slate-p serlo-p mb-0 min-h-[1.33em]">{children}</p>
   }
   if (element.type === FrontendNodeType.SlateContainer) {
     // formulas can overflow the slate container.
@@ -264,7 +264,7 @@ function renderElement({
     // we can't use overflow-y-visible and overflow-x-auto at the same time, visible defaults to auto
     // to hide the scrollbars, hidden is necessary
     return (
-      <div className="mb-block slate-container max-w-full overflow-x-auto overflow-y-hidden">
+      <div className="slate-container mb-block max-w-full overflow-x-auto overflow-y-hidden">
         {children}
       </div>
     )
@@ -305,7 +305,7 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.SpoilerBody) {
     return (
-      <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:slide-in-from-top-8 motion-safe:fade-in">
+      <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-8">
         {children}
       </div>
     )

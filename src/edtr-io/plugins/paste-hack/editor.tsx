@@ -99,7 +99,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   function renderDataImport() {
     return (
       <div className="bg-editor-primary-50 p-4">
-        <b className="serlo-h4 block ml-0 mb-4">Experimental Import</b>
+        <b className="serlo-h4 ml-0 mb-4 block">Experimental Import</b>
         <p className="mb-4">
           <a
             href="https://gist.github.com/elbotho/f3e39b0cdaf0cfc8e59e585e2650fb04"
@@ -112,8 +112,8 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
         <textarea
           ref={textareaRef}
           className={clsx(
-            'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-editor-primary-100 border-2 border-editor-primary-100 focus-within:outline-none focus-within:border-editor-primary'
+            'mt-1 mb-7 flex w-full items-center rounded-2xl p-2',
+            'border-2 border-editor-primary-100 bg-editor-primary-100 focus-within:border-editor-primary focus-within:outline-none'
           )}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}

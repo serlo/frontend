@@ -38,7 +38,7 @@ export function UnreadNotificationsCount({
   return (
     <span
       className={clsx(
-        'relative inline-block w-5 h-[1em]',
+        'relative inline-block h-[1em] w-5',
         count > 0 && 'text-brand',
         'notification-count-span'
       )}
@@ -46,14 +46,14 @@ export function UnreadNotificationsCount({
       {icon && (
         <FaIcon
           icon={icon}
-          className="absolute inset-0 w-5 h-6 group-hover:text-white group-active:text-white"
+          className="absolute inset-0 h-6 w-5 group-hover:text-white group-active:text-white"
         />
       )}
       <span
         className={clsx(
-          'block text-sm absolute mt-0.25 text-white',
-          'z-50 text-center w-5',
-          'group-hover:text-brand group-active:text-brand transition-all'
+          'absolute mt-0.25 block text-sm text-white',
+          'z-50 w-5 text-center',
+          'transition-all group-hover:text-brand group-active:text-brand'
         )}
       >
         {displayCount}

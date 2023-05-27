@@ -16,7 +16,7 @@ export function Snack({ id }: SnackProps) {
       <div className="flex flex-col items-center">
         <img
           src="https://assets.serlo.org/60c866871453d_2cfd88a1c1e0d977c69240ba81c35279b9faa46f.jpg"
-          className="rounded-2xl w-96 cursor-pointer"
+          className="w-96 cursor-pointer rounded-2xl"
           onClick={() => setActive(true)}
         />
         <button
@@ -39,14 +39,14 @@ export function Snack({ id }: SnackProps) {
     )
   } else {
     return (
-      <div className="bg-white my-20" style={{ height: '70vh', width: '100%' }}>
+      <div className="my-20 bg-white" style={{ height: '70vh', width: '100%' }}>
         <iframe
           src={`https://www.learningsnacks.de/embed/${id}`}
           style={{ width: '100%', height: '100%' }}
         ></iframe>
         <a
           href={`https://www.learningsnacks.de/share/${id}`}
-          className="relative my-4 h-5 text-center float-right"
+          className="relative float-right my-4 h-5 text-center"
         >
           © siehe Snack
         </a>

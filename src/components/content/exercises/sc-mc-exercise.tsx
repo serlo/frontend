@@ -47,7 +47,7 @@ export function ScMcExercise({
   function renderSingleChoice() {
     return (
       <div className="mx-side mb-block">
-        <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
+        <ul className="m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
@@ -62,9 +62,9 @@ export function ScMcExercise({
 
             return (
               <Fragment key={i}>
-                <li className="flex mb-block">
+                <li className="mb-block flex">
                   <input
-                    className="opacity-0 w-0.25"
+                    className="w-0.25 opacity-0"
                     id={id}
                     type="radio"
                     checked={selected === i}
@@ -86,7 +86,7 @@ export function ScMcExercise({
                   >
                     <FaIcon
                       icon={selected === i ? faCheckCircle : faCircle}
-                      className="text-xl mt-0.5 text-brand"
+                      className="mt-0.5 text-xl text-brand"
                     />
                     {renderNested(answer.content, `scoption${i}`)}
                   </label>
@@ -109,7 +109,7 @@ export function ScMcExercise({
             'serlo-button-blue',
             'mt-4',
             selected === undefined &&
-              'opacity-100 bg-transparent text-gray-400 pointer-events-none'
+              'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}
           onClick={() => {
             setShowFeedback(true)
@@ -146,7 +146,7 @@ export function ScMcExercise({
 
     return (
       <div className="mx-side mb-block">
-        <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
+        <ul className="m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
@@ -154,9 +154,9 @@ export function ScMcExercise({
 
             return (
               <Fragment key={i}>
-                <li className="flex mb-block">
+                <li className="mb-block flex">
                   <input
-                    className="opacity-0 w-0.25"
+                    className="w-0.25 opacity-0"
                     id={id}
                     type="checkbox"
                     checked={selectedArray[i]}
@@ -177,7 +177,7 @@ export function ScMcExercise({
                   >
                     <FaIcon
                       icon={selectedArray[i] ? faCheckSquare : faSquare}
-                      className="text-xl mt-0.5 text-brand"
+                      className="mt-0.5 text-xl text-brand"
                     />
                     {renderNested(answer.content, `mcoption${i}`)}
                   </label>
@@ -224,9 +224,9 @@ export function ScMcExercise({
     )
       return null
     return (
-      <div className="bg-editor-primary-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
+      <div className="serlo-revision-extra-info mb-4 rounded-xl bg-editor-primary-200 py-2">
         {answer.isCorrect && (
-          <span className="font-bold text-sm mx-side">
+          <span className="mx-side text-sm font-bold">
             [{exStrings.correct}]
           </span>
         )}

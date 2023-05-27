@@ -29,7 +29,7 @@ export function SubItem({ title, href, onClick }: SubItemProps) {
             }
           : undefined
       }
-      className="block md:py-[3px] group"
+      className="group block md:py-[3px]"
     >
       {text}
     </Link>

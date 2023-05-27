@@ -91,7 +91,7 @@ export function RevisionPreviewBoxes({
         changes={dataSet.url !== data.currentRevision.url}
       >
         {isVideo ? <Video src={dataSet.url} /> : <Geogebra id={dataSet.url} />}
-        <span className="text-sm px-1 bg-editor-primary-100">
+        <span className="bg-editor-primary-100 px-1 text-sm">
           <b>url:</b> {dataSet.url}
         </span>
       </PreviewBox>
@@ -112,7 +112,7 @@ export function RevisionPreviewBoxes({
             margin-bottom: 0;
           }
         `}</style>
-        <p className="serlo-p flex justify-between mt-10 mb-1.5">
+        <p className="serlo-p mt-10 mb-1.5 flex justify-between">
           <b title={changes ? strings.revisions.hasChanges : undefined}>
             {title}
             {changes && <span className="text-sm">{' 🟠'}</span>}
@@ -124,7 +124,7 @@ export function RevisionPreviewBoxes({
               data.typename === UuidRevType.GroupedExercise) &&
               '!py-2',
             withPadding && 'p-side',
-            'text-lg py-7 border border-brand-400 rounded-2xl',
+            'rounded-2xl border border-brand-400 py-7 text-lg',
             'fixH1'
           )}
         >

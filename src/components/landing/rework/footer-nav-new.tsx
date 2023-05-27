@@ -10,19 +10,19 @@ export function FooterNavNew() {
   return (
     <nav
       className={clsx(
-        'text-center mobile:text-left mobile:flex flex-wrap',
+        'flex-wrap text-center mobile:flex mobile:text-left',
         'justify-center md:justify-between'
       )}
     >
-      <div className="md:mr-5 text-center md:text-left">
-        <h1 className="font-handwritten text-4xl -mt-2 mb-10">
+      <div className="text-center md:mr-5 md:text-left">
+        <h1 className="-mt-2 mb-10 font-handwritten text-4xl">
           Serlo:
           <br />
           Die freie Lernplattform
         </h1>
         <div className="mx-auto md:mx-0" style={{ maxWidth: '190px' }}>
           <Link
-            className="serlo-new-landing-button md:mx-0 max-w-xs"
+            className="serlo-new-landing-button max-w-xs md:mx-0"
             href="/mitmachen"
           >
             Mitmachen
@@ -45,13 +45,13 @@ export function FooterNavNew() {
 
   function renderFooterNavChildren(items: { url: string; title: string }[]) {
     return (
-      <ul className="mobile:max-w-30p mobile:mr-8 mt-8 mobile:mt-0">
+      <ul className="mt-8 mobile:mr-8 mobile:mt-0 mobile:max-w-30p">
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link
               className={clsx(
-                'text-almost-black mb-2 w-auto border-transparent border-b-2',
-                'inline-block hover:no-underline hover:border-brand hover:text-brand'
+                'mb-2 w-auto border-b-2 border-transparent text-almost-black',
+                'inline-block hover:border-brand hover:text-brand hover:no-underline'
               )}
               href={url}
               noExternalIcon

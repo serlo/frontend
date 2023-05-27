@@ -32,20 +32,20 @@ export function LandingDE({ data }: LandingDEProps) {
       <LandingJsonLd />
       <Header />
       <main id="content" className="text-almost-black">
-        <section className="text-center max-w-3xl mx-auto mt-20 md:mt-[11vh] font-bold px-2">
-          <p className="text-brand font-handwritten text-3xl landing-button-with-wings landing-button-with-wink p-with-wink">
+        <section className="mx-auto mt-20 max-w-3xl px-2 text-center font-bold md:mt-[11vh]">
+          <p className="landing-button-with-wings landing-button-with-wink p-with-wink font-handwritten text-3xl text-brand">
             <WelcomeMessage />
           </p>
           <h1
             className={clsx(
               'text-center text-5xl font-extrabold',
               'tracking-tight',
-              'max-w-2xl mt-3 mb-6 mx-auto'
+              'mx-auto mt-3 mb-6 max-w-2xl'
             )}
           >
-            Was möchtest du <span className="pb-2 underlined">lernen ?</span>
+            Was möchtest du <span className="underlined pb-2">lernen ?</span>
           </h1>
-          <div className="mt-10 mb-8 text-left font-normal max-w-2xl mx-auto">
+          <div className="mx-auto mt-10 mb-8 max-w-2xl text-left font-normal">
             <Quickbar />
           </div>
           <p className="text-3xl leading-cozy">
@@ -63,11 +63,11 @@ export function LandingDE({ data }: LandingDEProps) {
         <section
           className={clsx(
             'text-center text-4xl',
-            'tracking-tight font-bold mt-7',
+            'mt-7 font-bold tracking-tight',
             'about'
           )}
         >
-          <p className="mb-8 max-w-2xl px-2 mx-auto">
+          <p className="mx-auto mb-8 max-w-2xl px-2">
             Unsere Lernplattform wird von einem gemeinnützigen Verein
             entwickelt. Sie ist komplett{' '}
             <b className="font-extrabold">
@@ -76,18 +76,18 @@ export function LandingDE({ data }: LandingDEProps) {
             </b>
             .{' '}
             <span
-              className="font-handwritten text-brand underlined"
+              className="underlined font-handwritten text-brand"
               style={{ fontSize: '1.2em' }}
             >
               Für immer!
             </span>
           </p>
-          <p className="mb-8 max-w-2xl px-2 mx-auto">
+          <p className="mx-auto mb-8 max-w-2xl px-2">
             Jeden Monat nutzen über eine Million Schüler*innen und Lehrkräfte
             Serlo.
           </p>
           <Link
-            className="serlo-new-landing-button inline landing-button-with-wings"
+            className="landing-button-with-wings serlo-new-landing-button inline"
             href="/serlo"
           >
             Mehr über uns
@@ -96,14 +96,14 @@ export function LandingDE({ data }: LandingDEProps) {
 
         <CommunityWall />
 
-        <section className="mt-20 mb-20 mx-side">
+        <section className="mx-side mt-20 mb-20">
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
             style={{ hyphens: 'auto' }}
             className={clsx(
               'text-center text-4xl font-bold',
               'leading-cozy tracking-tight',
-              'max-w-2xl mt-7 mx-auto'
+              'mx-auto mt-7 max-w-2xl'
             )}
           >
             Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
@@ -111,12 +111,12 @@ export function LandingDE({ data }: LandingDEProps) {
           </h3>
         </section>
 
-        <section className="text-center bg-blueWave bg-100% pt-4">
+        <section className="bg-blueWave bg-100% pt-4 text-center">
           <h3
             className={clsx(
               'text-center text-4xl font-bold',
               'leading-cozy tracking-tight',
-              'max-w-2xl mt-32 mx-auto relative z-10 mb-16'
+              'relative z-10 mx-auto mt-32 mb-16 max-w-2xl'
             )}
           >
             Partner und Förderer
@@ -124,10 +124,10 @@ export function LandingDE({ data }: LandingDEProps) {
           <PartnerList />
           <Link
             className={clsx(
-              'hidden md:inline-block mx-auto mt-12',
-              'font-bold text-xl rounded-lg text-almost-black ',
-              'px-8 py-4 tracking-tight border-almost-black border-solid border-2',
-              'hover:border-brand-500 hover:no-underline hover:text-brand-500',
+              'mx-auto mt-12 hidden md:inline-block',
+              'rounded-lg text-xl font-bold text-almost-black ',
+              'border-2 border-solid border-almost-black px-8 py-4 tracking-tight',
+              'hover:border-brand-500 hover:text-brand-500 hover:no-underline',
               'landing-button-with-wings landing-button-with-wink'
             )}
             href="/partner"

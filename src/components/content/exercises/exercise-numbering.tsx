@@ -14,10 +14,10 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
     <Link
       href={href}
       className={clsx(
-        'block h-12 w-12 mx-side mb-5 pt-1 rounded-full',
+        'mx-side mb-5 block h-12 w-12 rounded-full pt-1',
         'sm:absolute sm:-mt-2.5 sm:-ml-10 md:-ml-14',
-        'text-white text-4xl text-center font-bold bg-brand',
-        'hover:no-underline hover:bg-brand-400'
+        'bg-brand text-center text-4xl font-bold text-white',
+        'hover:bg-brand-400 hover:no-underline'
       )}
     >
       {index + 1}

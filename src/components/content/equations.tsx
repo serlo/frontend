@@ -31,7 +31,7 @@ export function Equations({
   transformationTarget,
 }: EquationProps) {
   return (
-    <div className="overflow-x-auto py-2.5 mx-side mb-7">
+    <div className="mx-side mb-7 overflow-x-auto py-2.5">
       <table>
         <tbody className="whitespace-nowrap">
           {renderFirstExplanation()}
@@ -71,7 +71,7 @@ export function Equations({
           )}
         </tr>
         {hasContent(step.explanation) && (
-          <tr className="whitespace-normal text-brandgreen-darker">
+          <tr className="text-brandgreen-darker whitespace-normal">
             <td />
             {renderDownArrow()}
             <td colSpan={2} className="relative -left-side px-1 pt-1 pb-3">
@@ -87,7 +87,7 @@ export function Equations({
       align?: 'text-left' | 'text-right' | 'text-center'
     ) {
       return (
-        <td className={clsx('align-baseline text-lg px-1 pt-1 pb-3', align)}>
+        <td className={clsx('px-1 pt-1 pb-3 align-baseline text-lg', align)}>
           {content}
         </td>
       )
@@ -112,7 +112,7 @@ export function Equations({
 
     return (
       <>
-        <tr className="whitespace-normal text-brandgreen-darker text-center">
+        <tr className="text-brandgreen-darker whitespace-normal text-center">
           <td className="relative -left-side pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
@@ -127,7 +127,7 @@ export function Equations({
 
   function renderDownArrow() {
     return (
-      <td className="text-4xl text-center" style={{ fontFamily: 'serif' }}>
+      <td className="text-center text-4xl" style={{ fontFamily: 'serif' }}>
         <div className="-mt-3">&darr;</div>
       </td>
     )

@@ -11,7 +11,7 @@ export function SkipMenu() {
     <div
       className={clsx(
         'sr-only focus-within:not-sr-only focus-within:absolute',
-        'left-side top-side bg-yellow rounded-md focus-within:p-side'
+        'left-side top-side rounded-md bg-yellow focus-within:p-side'
       )}
     >
       {replacePlaceholders(skipStrings.sentence, {

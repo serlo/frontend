@@ -64,7 +64,7 @@ export function CommentForm({
         'mx-side mt-4 mb-7 flex items-center rounded-2xl',
         !isEditing && 'bg-brandgreen-50',
         'border-2 border-brandgreen-50 focus-within:border-brandgreen-muted',
-        'transition-colors duration-200 ease-in py-1'
+        'py-1 transition-colors duration-200 ease-in'
       )}
     >
       <label htmlFor={formId} className="sr-only">
@@ -82,7 +82,7 @@ export function CommentForm({
         minRows={1}
         className={clsx(
           'serlo-input-font-reset w-full text-lg',
-          'text-black border-0 bg-transparent resize-none focus:!outline-none',
+          'resize-none border-0 bg-transparent text-black focus:!outline-none',
           reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
           'placeholder-brandgreen'
         )}
@@ -109,8 +109,8 @@ export function CommentForm({
         title={sendTitle}
         onClick={onSendAction}
         className={clsx(
-          'serlo-button-green pl-2 self-end',
-          reply ? 'text-base w-8 h-8 mr-1' : 'text-2xl w-10 my-1 mr-2'
+          'serlo-button-green self-end pl-2',
+          reply ? 'mr-1 h-8 w-8 text-base' : 'my-1 mr-2 w-10 text-2xl'
         )}
       >
         <FaIcon
