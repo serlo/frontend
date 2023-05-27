@@ -1,6 +1,6 @@
 import request, { gql } from 'graphql-request'
 
-import { getMonthlyViews } from './_fetch_monthly_views'
+import { getMonthlyViews } from './_fetch-monthly-views'
 import { parseEntry } from './_parse-entry'
 import {
   Instance,
