@@ -14,8 +14,6 @@ import {
 export function convertTable(
   legacyState: EdtrPluginTable
 ): EdtrPluginSerloTable | undefined {
-  // console.log(legacyState.state)
-
   const html = converter.makeHtml(legacyState.state)
   // console.log(html)
   return convertHTMLtoState(html)
@@ -34,7 +32,7 @@ function convertHTMLtoState(html: string): EdtrPluginSerloTable | undefined {
 
   const tHeadAndTBody = table.children.filter((child) => child.type === 'tag')
   if (tHeadAndTBody.length !== 2) {
-    console.error('Unexpected state, skipping this table!')
+    console.error('Unexpected state (no header or body), skipping this table!')
     return undefined
   }
 
@@ -119,12 +117,17 @@ function convertContentNode(
     }
 
     if (node.name === 'span' && node.attribs.class === 'mathInline') {
-      if (node.children.length !== 1) {
+      if (
+        node.children.length !== 1 ||
+        !Object.hasOwn(node.children[0], 'children')
+      ) {
+        console.log(node.children)
         console.log(
           'content: mathInline has unexpected state, content will be empty'
         )
         return { text: '' }
       }
+
       const mathContent =
         node.children[0].children[0].data?.replace(/%%/g, '') ?? ''
       // not working as expected?!

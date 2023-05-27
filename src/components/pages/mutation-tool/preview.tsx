@@ -10,7 +10,7 @@ export const MutationPreview = ({
   tablesState: EdtrPluginTable[]
 }) => {
   const convertedTables = tablesState.map(convertTable)
-
+  // console.log(tablesState)
   return (
     <>
       {tablesState.map((table, i) => {
@@ -45,7 +45,7 @@ export const MutationPreview = ({
           type="article"
           initialState={{
             plugin: 'rows',
-            state: convertedTables,
+            state: convertedTables.filter(Boolean),
           }}
         />
       </div>
