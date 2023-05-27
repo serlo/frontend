@@ -1,0 +1,44 @@
+import { Content, List } from '@radix-ui/react-navigation-menu'
+import clsx from 'clsx'
+
+import { preventHover } from './item'
+import { SubItem } from './sub-item'
+import { SubParticipateMega } from './sub-participate-mega'
+import { useInstanceData } from '@/contexts/instance-context'
+import { HeaderLinkData } from '@/data-types'
+
+export interface SubContentProps {
+  subItems: HeaderLinkData[]
+  parent: HeaderLinkData
+}
+
+export function SubContent({ subItems, parent }: SubContentProps) {
+  const { lang } = useInstanceData()
+  if (!subItems) return null
+
+  const isLast = parent.icon === 'user'
+  const isParticipate =
+    parent.icon === 'participate' || parent.icon === 'community'
+  const isParticipateMega = isParticipate && lang === 'de'
+
+  return (
+    <Content
+      className={clsx(
+        'text-left md:absolute md:z-[999] md:pt-2',
+        (isLast || isParticipate) && 'md:right-0'
+      )}
+      onPointerEnter={preventHover}
+      onPointerLeave={preventHover}
+    >
+      {isParticipateMega ? (
+        <SubParticipateMega subItems={subItems} parent={parent} />
+      ) : (
+        <List className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0">
+          {subItems.map((item) => (
+            <SubItem key={item.title} item={item} parent={parent} />
+          ))}
+        </List>
+      )}
+    </Content>
+  )
+}

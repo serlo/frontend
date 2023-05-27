@@ -1,16 +1,17 @@
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
-import { faHandPointRight } from '@fortawesome/free-solid-svg-icons/faHandPointRight'
-import { faLightbulb } from '@fortawesome/free-solid-svg-icons/faLightbulb'
-import { faMapSigns } from '@fortawesome/free-solid-svg-icons/faMapSigns'
-import { faQuoteRight } from '@fortawesome/free-solid-svg-icons/faQuoteRight'
-import { faScroll } from '@fortawesome/free-solid-svg-icons/faScroll'
-import { faThumbtack } from '@fortawesome/free-solid-svg-icons/faThumbtack'
+import {
+  faExclamationTriangle,
+  faHandPointRight,
+  faLightbulb,
+  faMapSigns,
+  faQuoteRight,
+  faScroll,
+  faThumbtack,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { FrontendBoxNode } from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { FrontendBoxNode } from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export const boxTypeStyle = {
@@ -46,19 +47,18 @@ export function Box({
   renderNested,
 }: BoxProps) {
   const { strings } = useInstanceData()
-
-  if (!children || !children.length) return null
+  if (!children || !children.length || !boxType) return null
 
   const isBlank = boxType === 'blank'
 
   const style = boxTypeStyle[boxType]
-  const borderColorClass = hasOwnPropertyTs(style, 'borderColorClass')
+  const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
-  const colorClass = hasOwnPropertyTs(style, 'colorClass')
+  const colorClass = Object.hasOwn(style, 'colorClass')
     ? style.colorClass
     : defaultStyle.colorClass
-  const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
+  const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
 
   const content = renderNested(children, 'children')
 
@@ -66,16 +66,13 @@ export function Box({
     <figure
       id={anchorId}
       className={clsx(
-        'mx-side border-3 pt-[7px] pb-side mb-6 rounded-xl relative',
+        'serlo-box overflow-auto',
+        'mx-side border-3 pt-[2px] pb-side mb-6 rounded-xl relative',
         borderColorClass
       )}
     >
       {renderHeader()}
-      {boxType === 'quote' ? (
-        <blockquote>{content}</blockquote>
-      ) : (
-        <div>{content}</div>
-      )}
+      {boxType === 'quote' ? <blockquote>{content}</blockquote> : content}
     </figure>
   )
 
@@ -83,7 +80,7 @@ export function Box({
     const unwrappedTitle = title?.[0].children
 
     return (
-      <figcaption className="px-side pb-3 pt-1 text-lg">
+      <figcaption className="px-side pb-2 pt-2.5 text-lg">
         <a className="no-underline" href={'#' + anchorId}>
           {isBlank ? null : (
             <>

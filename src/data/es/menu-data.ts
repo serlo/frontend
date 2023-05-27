@@ -1,11 +1,11 @@
 import { serloDomain } from '../../helper/urls/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
-    { url: '/169578', title: 'Aprender matemáticas', icon: 'math' },
+    { url: '/matemáticas', title: 'Aprender matemáticas', icon: 'math' },
     {
-      url: '/241982',
+      url: '/241982/sostenibilidad-aplicada',
       title: 'Sostenibilidad aplicada',
       icon: 'sustainability',
     },
@@ -33,10 +33,16 @@ export const headerData: InstanceData['headerData'] = [
     title: 'Temas',
     icon: 'subject',
     children: [
-      { url: '/169578', title: 'Matemáticas' },
-      { url: '/241982', title: 'Sostenibilidad aplicada' },
-      { url: '/229701', title: 'Estudios en Diásporas Africanas' },
-      { url: '/community/sandbox', title: 'Sandbox' },
+      { url: '/matemáticas', title: 'Matemáticas' },
+      {
+        url: '/241982/sostenibilidad-aplicada',
+        title: 'Sostenibilidad aplicada',
+      },
+      {
+        url: '/229701/estudios-en-diásporas-africanas-para-la-escuela',
+        title: 'Estudios en Diásporas Africanas',
+      },
+      { url: '/community/sandbox', title: 'Test Area' },
     ],
   },
   { url: '/serlo', title: 'Sobre Serlo', icon: 'about' },
@@ -53,6 +59,7 @@ export const headerData: InstanceData['headerData'] = [
       { url: 'https://community.serlo.org/', title: 'Chat para autores' },
       { url: '/170539', title: 'Páginas de ayuda' },
       { url: '/entity/unrevised', title: 'Cambios en revisión' },
+      { url: '/discussions', title: 'Todos los comentarios' },
     ],
   },
 ]
@@ -81,7 +88,7 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
@@ -112,7 +119,8 @@ export const footerData: InstanceData['footerData'] = {
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'estudios en diásporas africanas para la escuela',
-    rootId: 229701,
+    rootId: 242308,
+    landingUrl: '/229701/estudios-en-diásporas-africanas-para-la-escuela',
     entries: [
       { title: 'Todos los temas', id: 242308 },
       { title: '¿Eres nuevo aquí?', id: 180775 },
@@ -121,11 +129,13 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'sostenibilidad aplicada',
     rootId: 242851,
+    landingUrl: '/241982/sostenibilidad-aplicada',
     entries: [{ title: '¿Eres nuevo aquí?', id: 180775 }],
   },
   {
     // subject: "matemáticas'",
-    rootId: 169578,
+    rootId: 169580,
+    landingUrl: '/matemáticas',
     entries: [
       { title: 'Todos los temas', id: 169580 },
       { title: ' ¿Eres nuevo aquí?', id: 180775 },
@@ -133,13 +143,14 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   },
   {
     // comunidad
-    rootId: 112258,
+    rootId: 164234,
+    landingUrl: '/community',
     entries: [
       { title: 'Páginas de ayuda', id: 170539 },
       { title: ' Recursos para educadores', id: 182103 },
-      { title: 'Sandbox', id: 164237 },
-      { title: 'Todas las actividades en Serlo', url: '/event/history' },
-      { title: 'Todos los comentarios en Serlo', url: '/discussions' },
+      { title: 'Test Area', id: 164237 },
+      { title: 'Todas las actividades', url: '/event/history' },
+      { title: 'Todos los comentarios', url: '/discussions' },
       { title: 'Operaciones en revisión', url: '/entity/unrevised' },
     ],
   },

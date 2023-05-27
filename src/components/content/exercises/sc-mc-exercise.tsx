@@ -1,24 +1,27 @@
-import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle'
-import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons/faCheckSquare'
+import { faCircle, faSquare } from '@fortawesome/free-regular-svg-icons'
+import { faCheckCircle, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import { useState, Fragment } from 'react'
 
 import { Feedback } from './feedback'
 import { FaIcon } from '@/components/fa-icon'
 import { isPrintMode } from '@/components/print-mode'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EdtrPluginScMcExercise } from '@/data-types'
+import { EdtrPluginScMcExercise } from '@/frontend-node-types'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 import { hasVisibleContent } from '@/helper/has-visible-content'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ScMcExerciseProps {
   state: EdtrPluginScMcExercise['state']
   idBase: string
   renderNested: RenderNestedFunction
-  path?: NodePath
   isRevisionView?: boolean
+  context: {
+    entityId: number
+    revisionId: number
+  }
 }
 
 export function ScMcExercise({
@@ -26,6 +29,7 @@ export function ScMcExercise({
   idBase,
   renderNested,
   isRevisionView,
+  context,
 }: ScMcExerciseProps) {
   const answers = state.answers.slice(0)
   const [selected, setSelected] = useState<number | undefined>(undefined)
@@ -33,6 +37,8 @@ export function ScMcExercise({
   const [focused, setFocused] = useState<number | undefined>(undefined)
   const [selectedArray, setSelectedArray] = useState(answers.map(() => false))
   const exStrings = useInstanceData().strings.content.exercises
+
+  const { asPath } = useRouter()
 
   if (state.isSingleChoice) return renderSingleChoice()
 
@@ -44,6 +50,16 @@ export function ScMcExercise({
         <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
+
+            const showFeedbackForAnswer =
+              showFeedback &&
+              selected !== undefined &&
+              answers[selected] &&
+              answers[selected] === answer
+
+            const { feedback, isCorrect } = answer
+            const hasFeedback = hasVisibleContent(feedback)
+
             return (
               <Fragment key={i}>
                 <li className="flex mb-block">
@@ -59,7 +75,7 @@ export function ScMcExercise({
                     onFocus={() => setFocused(i)}
                     onBlur={() => setFocused(undefined)}
                     onKeyDown={(e) => {
-                      if (e.key == 'Enter') setShowFeedback(true)
+                      if (e.key === 'Enter') setShowFeedback(true)
                     }}
                   />
                   <label
@@ -75,17 +91,13 @@ export function ScMcExercise({
                     {renderNested(answer.content, `scoption${i}`)}
                   </label>
                 </li>
-                {showFeedback &&
-                  selected !== undefined &&
-                  answers[selected] &&
-                  answers[selected] === answer && (
-                    <Feedback correct={answers[selected].isCorrect}>
-                      {renderNested(
-                        answers[selected].feedback,
-                        `scfeedback${selected}`
-                      )}
-                    </Feedback>
-                  )}
+                {showFeedbackForAnswer ? (
+                  <Feedback correct={isCorrect}>
+                    {hasFeedback
+                      ? renderNested(feedback, `scfeedback${selected}`)
+                      : null}
+                  </Feedback>
+                ) : null}
                 {isRevisionView && renderRevisionExtra(answer, true)}
               </Fragment>
             )
@@ -101,9 +113,14 @@ export function ScMcExercise({
           )}
           onClick={() => {
             setShowFeedback(true)
+            exerciseSubmission({
+              path: asPath,
+              entityId: context.entityId,
+              revisionId: context.revisionId,
+              result: answers[selected ?? 0].isCorrect ? 'correct' : 'wrong',
+              type: 'sc',
+            })
           }}
-          //blur-hack, use https://caniuse.com/#feat=css-focus-visible when supported
-          onPointerUp={(e) => e.currentTarget.blur()}
         >
           {selected !== undefined
             ? exStrings.check
@@ -116,12 +133,17 @@ export function ScMcExercise({
   }
 
   function renderMultipleChoice() {
+    const correctCount = answers.filter((answer) => answer.isCorrect).length
     const selectedCount = selectedArray.filter(Boolean).length
-    let missedCount = 0
-    const correct = answers.every((answer, i) => {
-      if (answer.isCorrect && selectedArray[i] === false) missedCount++
-      return answer.isCorrect === selectedArray[i]
-    })
+    const selectedCorrectCount = answers.filter(
+      (answer, i) => answer.isCorrect && selectedArray[i]
+    ).length
+    const selectedFalseCount = selectedCount - selectedCorrectCount
+    const allCorrect =
+      selectedCorrectCount === correctCount && selectedFalseCount === 0
+    const missedSome =
+      selectedCorrectCount > 0 && !allCorrect && selectedFalseCount === 0
+
     return (
       <div className="mx-side mb-block">
         <ul className="flex flex-col flex-wrap p-0 m-0 list-none overflow-auto">
@@ -170,17 +192,20 @@ export function ScMcExercise({
           })}
         </ul>
         {showFeedback && (
-          <Feedback
-            correct={correct}
-            missedSome={selectedCount > 0 && missedCount > 0}
-          />
+          <Feedback correct={allCorrect} missedSome={missedSome} />
         )}
         <button
           className="serlo-button-blue mt-4"
           onClick={() => {
             setShowFeedback(true)
+            exerciseSubmission({
+              path: asPath,
+              entityId: context.entityId,
+              revisionId: context.revisionId,
+              result: allCorrect ? 'correct' : 'wrong',
+              type: 'mc',
+            })
           }}
-          onPointerUp={(e) => e.currentTarget.blur()}
         >
           {exStrings.check}
         </button>
@@ -199,7 +224,7 @@ export function ScMcExercise({
     )
       return null
     return (
-      <div className="bg-amber-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
+      <div className="bg-editor-primary-200 rounded-xl py-2 mb-4 serlo-revision-extra-info">
         {answer.isCorrect && (
           <span className="font-bold text-sm mx-side">
             [{exStrings.correct}]

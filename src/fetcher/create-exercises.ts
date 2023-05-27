@@ -2,6 +2,7 @@ import { convertState } from './convert-state'
 import { createInlineLicense } from './create-inline-license'
 import { RevisionUuidQuery } from './graphql-types/operations'
 import { MainUuidType } from './query-types'
+import { UuidType } from '@/data-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
@@ -9,7 +10,8 @@ import {
   SolutionEdtrState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
-} from '@/data-types'
+  FrontendNodeType,
+} from '@/frontend-node-types'
 import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
@@ -34,7 +36,7 @@ export function createExercise(
 
       if (taskState.content) {
         taskState.content = convert(taskState.content)
-        if (taskState.interactive?.plugin == 'scMcExercise') {
+        if (taskState.interactive?.plugin === 'scMcExercise') {
           taskState.interactive.state.answers.forEach((answer, i: number) => {
             answer.feedback = convert(answer.feedback)
             answer.content = convert(answer.content)
@@ -43,7 +45,7 @@ export function createExercise(
           taskState.interactive.state.answers = shuffleArray(
             taskState.interactive.state.answers
           )
-        } else if (taskState.interactive?.plugin == 'inputExercise') {
+        } else if (taskState.interactive?.plugin === 'inputExercise') {
           taskState.interactive.state.answers.forEach((answer) => {
             answer.feedback = convert(answer.feedback)
           })
@@ -58,7 +60,7 @@ export function createExercise(
     }
   }
   return {
-    type: 'exercise',
+    type: FrontendNodeType.Exercise,
     grouped: false,
     positionOnPage: index,
     trashed: uuid.trashed,
@@ -71,6 +73,7 @@ export function createExercise(
     context: {
       id: uuid.id,
       solutionId: uuid.solution?.id,
+      revisionId: uuid.currentRevision?.id ?? -1,
     },
     href: uuid.alias,
     unrevisedRevisions: uuid.revisions?.totalCount,
@@ -86,7 +89,7 @@ function createSolutionData(solution: BareExercise['solution']) {
       const contentJson = JSON.parse(content) as
         | { plugin: 'rows' }
         | { plugin: ''; state: SolutionEdtrState }
-      if (contentJson.plugin == 'rows') {
+      if (contentJson.plugin === 'rows') {
         // half converted, like 189579
         solutionLegacy = convert(contentJson as ConvertNode)
       } else {
@@ -119,9 +122,9 @@ export function createSolution(
   >
 ): FrontendSolutionNode {
   return {
-    type: 'solution',
+    type: FrontendNodeType.Solution,
     solution: createSolutionData({
-      __typename: 'Solution',
+      __typename: UuidType.Solution,
       license: uuid.repository.license,
       id: uuid.id,
       trashed: uuid.trashed,
@@ -153,12 +156,13 @@ export function createExerciseGroup(
       exerciseNode.positionInGroup = groupIndex++
       exerciseNode.positionOnPage = pageIndex // compat: page index also to grouped exercise for id generation
       exerciseNode.context.parent = uuid.id
+      exerciseNode.context.revisionId = uuid.currentRevision?.id ?? -1
       children.push(exerciseNode)
     })
   }
 
   return {
-    type: 'exercise-group',
+    type: FrontendNodeType.ExerciseGroup,
     content: convertState(uuid.currentRevision?.content),
     positionOnPage: pageIndex,
     license: createInlineLicense(uuid.license),

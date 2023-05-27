@@ -1,54 +1,50 @@
-import { useScopedDispatch, useScopedSelector } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import {
   redo,
   undo,
-  hasRedoActions,
-  hasUndoActions,
-  hasPendingChanges,
+  selectHasRedoActions,
+  selectHasUndoActions,
+  selectHasPendingChanges,
+  useAppDispatch,
+  useAppSelector,
 } from '@edtr-io/store'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faRedo } from '@fortawesome/free-solid-svg-icons/faRedo'
-import { faSave } from '@fortawesome/free-solid-svg-icons/faSave'
-import { faUndo } from '@fortawesome/free-solid-svg-icons/faUndo'
+import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
-import { useHandleSave } from '../helpers/use-handle-save'
-import { FaIcon } from '@/components/fa-icon'
+import { ClientOnlyPortal } from './client-only-portal'
+import { FaIcon, FaIconProps } from '@/components/fa-icon'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
   license?: StateTypeReturnType<typeof entity['license']>
-  subscriptions?: boolean
+  showSubscriptionOptions?: boolean
 }
 
 export function ToolbarMain({
-  subscriptions,
+  showSubscriptionOptions,
   changes,
   license,
 }: ToolbarMainProps) {
-  const dispatch = useScopedDispatch()
-  const undoable = useScopedSelector(hasUndoActions())
-  const redoable = useScopedSelector(hasRedoActions())
-  const isChanged = useScopedSelector(hasPendingChanges())
+  const dispatch = useAppDispatch()
+  const undoable = useAppSelector(selectHasUndoActions)
+  const redoable = useAppSelector(selectHasRedoActions)
+  const isChanged = useAppSelector(selectHasPendingChanges)
+  const [saveModalOpen, setSaveModalOpen] = useState(false)
 
-  const [visible, setVisibility] = useState(false)
+  useLeaveConfirm(isChanged)
 
-  const { handleSave, pending, hasError } = useHandleSave(
-    visible,
-    subscriptions
-  )
-
-  useLeaveConfirm(isChanged && !pending)
+  const loggedInData = useLoggedInData()
+  if (!loggedInData) return null
 
   return (
     <>
-      {createPortal(
+      <ClientOnlyPortal selector=".controls-portal">
         <nav
           className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
@@ -57,25 +53,21 @@ export function ToolbarMain({
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
-        </nav>,
-        document.getElementsByClassName('controls-portal')[0]
-      )}
+        </nav>
+      </ClientOnlyPortal>
       <SaveModal
-        visible={visible}
-        setVisibility={setVisibility}
-        handleSave={handleSave}
-        pending={pending}
+        open={saveModalOpen}
+        setOpen={setSaveModalOpen}
         changes={changes}
-        hasError={hasError}
         license={license}
-        subscriptions={subscriptions}
+        showSubscriptionOptions={showSubscriptionOptions}
       />
     </>
   )
 
   function renderHistoryButton(
     title: string,
-    icon: IconDefinition,
+    icon: FaIconProps['icon'],
     action: typeof undo | typeof redo,
     disabled: boolean
   ) {
@@ -86,7 +78,7 @@ export function ToolbarMain({
           disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
         )}
         onClick={() => {
-          dispatch(action())
+          void dispatch(action())
         }}
         disabled={disabled}
         title={title}
@@ -97,18 +89,19 @@ export function ToolbarMain({
   }
 
   function renderSaveButton() {
-    const isDisabled = !isChanged
     return (
       <button
-        className={clsx(
-          'serlo-button ml-2',
-          isDisabled ? 'text-gray-300 cursor-default' : 'serlo-button-green'
-        )}
-        onClick={() => setVisibility(true)}
-        disabled={isDisabled}
+        className={clsx('serlo-button-green ml-2')}
+        onClick={() => {
+          if (isChanged) setSaveModalOpen(true)
+          else
+            showToastNotice(
+              '👀 ' + loggedInData!.strings.editor.noChangesWarning
+            )
+        }}
         title="Save"
       >
-        <FaIcon icon={faSave} />
+        <FaIcon icon={faSave} /> {loggedInData!.strings.editor.edtrIo.save}
       </button>
     )
   }

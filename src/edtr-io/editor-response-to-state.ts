@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-internal-modules
 import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
+
 import {
-  convert,
   isEdtr,
   Edtr,
   Legacy,
   RowsPlugin,
   OtherPlugin,
   Splish,
-} from '@serlo/legacy-editor-to-editor'
-
+} from './legacy-editor-to-editor-types'
+import { SerloEntityPluginType } from './plugins'
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
 import { Entity, License, Uuid } from './plugins/types/common/common'
@@ -23,8 +23,8 @@ import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
 import { textSolutionTypeState } from './plugins/types/text-solution'
 import { userTypeState } from './plugins/types/user'
 import { videoTypeState } from './plugins/types/video'
+import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
@@ -70,15 +70,15 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
   const content =
     currentRev && 'content' in currentRev ? currentRev.content : ''
   const meta_title =
-    currentRev && hasOwnPropertyTs(currentRev, 'metaTitle')
+    currentRev && Object.hasOwn(currentRev, 'metaTitle')
       ? currentRev.metaTitle
       : ''
   const meta_description =
-    currentRev && hasOwnPropertyTs(currentRev, 'metaDescription')
+    currentRev && Object.hasOwn(currentRev, 'metaDescription')
       ? currentRev.metaDescription
       : ''
   const revision =
-    currentRev && hasOwnPropertyTs(currentRev, 'id') ? currentRev.id : 0
+    currentRev && Object.hasOwn(currentRev, 'id') ? currentRev.id : 0
 
   const entityFields = {
     id,
@@ -112,7 +112,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'applet' })
     return {
       initialState: {
-        plugin: 'type-applet',
+        plugin: SerloEntityPluginType.Applet,
         state: {
           ...entityFields,
           revision,
@@ -134,7 +134,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'article' })
     return {
       initialState: {
-        plugin: 'type-article',
+        plugin: SerloEntityPluginType.Article,
         state: {
           ...entityFields,
           revision,
@@ -187,7 +187,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'course' })
     return {
       initialState: {
-        plugin: 'type-course',
+        plugin: SerloEntityPluginType.Course,
         state: {
           ...entityFields,
           revision,
@@ -226,7 +226,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
-        plugin: 'type-course-page',
+        plugin: SerloEntityPluginType.CoursePage,
         state: {
           id: uuid.id,
           license: license!, // there could be cases where this is not correct
@@ -251,7 +251,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
-        plugin: 'type-event',
+        plugin: SerloEntityPluginType.Event,
         state: {
           ...entityFields,
           revision,
@@ -272,7 +272,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
-        plugin: 'type-page',
+        plugin: SerloEntityPluginType.Page,
         state: {
           ...entityFields,
           title,
@@ -289,7 +289,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
       initialState: {
-        plugin: 'type-taxonomy',
+        plugin: SerloEntityPluginType.Taxonomy,
         state: {
           id: uuid.id,
           parent: uuid.parent?.id ?? 0,
@@ -315,7 +315,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
     return {
       initialState: {
-        plugin: 'type-text-exercise',
+        plugin: SerloEntityPluginType.TextExercise,
         state: {
           id: uuid.id,
           license: license!,
@@ -326,7 +326,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
               ? convertTextSolution({
                   ...uuid.solution,
                   alias: uuid.alias,
-                  __typename: 'Solution',
+                  __typename: UuidType.Solution,
                   instance: uuid.instance,
                   exercise: uuid,
                 }).initialState.state
@@ -370,7 +370,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       .map((exercise) => {
         return convertTextExercise({
           ...exercise,
-          __typename: 'Exercise',
+          __typename: UuidType.Exercise,
           taxonomyTerms: { nodes: [] },
           revisions: {
             __typename: 'ExerciseRevisionConnection',
@@ -378,16 +378,17 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           },
           currentRevision: {
             ...exercise.currentRevision,
-            __typename: 'ExerciseRevision',
+            __typename: UuidRevType.Exercise,
             content: exercise.currentRevision?.content ?? '',
             date: '',
+            id: -1,
           },
         }).initialState.state
       })
 
     return {
       initialState: {
-        plugin: 'type-text-exercise-group',
+        plugin: SerloEntityPluginType.TextExerciseGroup,
         state: {
           ...entityFields,
           changes: '',
@@ -409,7 +410,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     const solutionContent = uuid.currentRevision?.content ?? ''
     return {
       initialState: {
-        plugin: 'type-text-solution',
+        plugin: SerloEntityPluginType.TextSolution,
         state: {
           id: uuid.id,
           license: license!,
@@ -451,7 +452,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'video' })
     return {
       initialState: {
-        plugin: 'type-video',
+        plugin: SerloEntityPluginType.Video,
         state: {
           ...entityFields,
           changes: '',
@@ -471,7 +472,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 export function convertUserByDescription(description?: string | null) {
   return {
     initialState: {
-      plugin: 'type-user',
+      plugin: SerloEntityPluginType.User,
       state: {
         description: serializeEditorState(
           toEdtr(convertEditorState(description ?? ''))
@@ -483,7 +484,7 @@ export function convertUserByDescription(description?: string | null) {
 }
 
 export interface AppletSerializedState extends Entity {
-  __typename?: 'Applet'
+  __typename?: UuidType.Applet
   title?: string
   url?: string
   content: SerializedEditorState
@@ -493,7 +494,7 @@ export interface AppletSerializedState extends Entity {
 }
 
 export interface ArticleSerializedState extends Entity {
-  __typename?: 'Article'
+  __typename?: UuidType.Article
   title?: string
   content: SerializedEditorState
   reasoning?: SerializedEditorState
@@ -502,7 +503,7 @@ export interface ArticleSerializedState extends Entity {
 }
 
 export interface CourseSerializedState extends Entity {
-  __typename?: 'Course'
+  __typename?: UuidType.Course
   title?: string
   description: SerializedEditorState
   content?: SerializedEditorState // just to simplify types, will not be set
@@ -512,14 +513,14 @@ export interface CourseSerializedState extends Entity {
 }
 
 export interface CoursePageSerializedState extends Entity {
-  __typename?: 'CoursePage'
+  __typename?: UuidType.CoursePage
   title?: string
   icon?: 'explanation' | 'play' | 'question'
   content: SerializedEditorState
 }
 
 export interface EventSerializedState extends Entity {
-  __typename?: 'Event'
+  __typename?: UuidType.Event
   title?: string
   content: SerializedEditorState
   meta_title?: string
@@ -527,13 +528,13 @@ export interface EventSerializedState extends Entity {
 }
 
 export interface PageSerializedState extends Uuid, License {
-  __typename?: 'Page'
+  __typename?: UuidType.Page
   title?: string
   content: SerializedEditorState
 }
 
 export interface TaxonomySerializedState extends Uuid {
-  __typename?: 'TaxonomyTerm'
+  __typename?: UuidType.TaxonomyTerm
   term: {
     name: string
   }
@@ -544,7 +545,7 @@ export interface TaxonomySerializedState extends Uuid {
 }
 
 export interface TextExerciseSerializedState extends Entity {
-  __typename?: 'Exercise'
+  __typename?: UuidType.Exercise
   content: SerializedEditorState
   'text-solution'?: TextSolutionSerializedState
   'single-choice-right-answer'?: {
@@ -574,24 +575,24 @@ interface InputType {
 }
 
 export interface TextExerciseGroupSerializedState extends Entity {
-  __typename?: 'ExerciseGroup'
+  __typename?: UuidType.ExerciseGroup
   cohesive?: string
   content: SerializedEditorState
   'grouped-text-exercise'?: TextExerciseSerializedState[]
 }
 
 export interface TextSolutionSerializedState extends Entity {
-  __typename?: 'Solution'
+  __typename?: UuidType.Solution
   content: SerializedEditorState
 }
 
 export interface UserSerializedState extends Uuid {
-  __typename?: 'User'
+  __typename?: UuidType.User
   description: SerializedEditorState
 }
 
 export interface VideoSerializedState extends Entity {
-  __typename?: 'Video'
+  __typename?: UuidType.Video
   title?: string
   description: SerializedEditorState
   content?: string
@@ -621,11 +622,32 @@ function toEdtr(content: EditorState): Edtr {
     return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
   if (isEdtr(content)) return content
 
-  // fixes https://github.com/serlo/frontend/issues/1563
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  return convert(sanitized)
+  return {
+    plugin: 'rows',
+    state: [
+      {
+        plugin: 'text',
+        state: [
+          {
+            type: 'p',
+            children: [
+              {
+                text: 'Diese Revision liegt in einem alten Format vor und ist nicht konvertiert.',
+              },
+            ],
+          },
+          {
+            type: 'p',
+            children: [
+              {
+                text: 'Dieser Inhalt wird nicht mehr unterstützt.',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  }
 }
 
 function serializeEditorState(content: Legacy): SerializedLegacyEditorState

@@ -1,11 +1,12 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons/faArrowCircleRight'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 
 import { SubjectIcon } from './subject-icon'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { LandingSubjectLink, LandingSubjectsData } from '@/data-types'
-import { theme } from '@/theme'
+import { breakpoints } from '@/helper/breakpoints'
+import { colors } from '@/helper/colors'
 
 interface LandingSubjectsProps {
   data: LandingSubjectsData
@@ -19,19 +20,22 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
           display: flex;
           justify-content: space-evenly;
 
-          @apply px-side lg:px-side-lg;
           flex-direction: row;
           flex-wrap: wrap;
 
           margin: 0 auto;
           max-width: 800px;
+        }
 
-          @screen lg {
+        @media (min-width: ${breakpoints.lg}) {
+          nav {
             margin-top: 40px;
           }
         }
       `}</style>
-      <nav>{data.subjects.map(renderSubject)}</nav>
+      <nav className="px-side lg:px-side-lg">
+        {data.subjects.map(renderSubject)}
+      </nav>
     </>
   )
 
@@ -44,15 +48,17 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             padding-left: 0;
             min-width: 40%;
             max-width: 49%;
-            @screen sm {
+          }
+          @media (min-width: ${breakpoints.sm}) {
+            :global(.landing-subjects) {
               min-width: 30%;
             }
-
+          }
+          :global(.landing-subjects) {
             text-align: center;
-
-            &:hover {
-              cursor: pointer;
-            }
+          }
+          :global(.landing-subjects):hover {
+            cursor: pointer;
           }
 
           h2 {
@@ -63,12 +69,12 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
             line-height: normal;
             width: auto;
             transition: color 0.4s ease, background-color 0.4s ease;
+          }
 
-            @media (max-width: ${theme.breakpointsMax.sm}) {
-              &:hover {
-                color: ${theme.colors.brand};
-                background-color: transparent;
-              }
+          @media (max-width: 799) {
+            h2:hover {
+              color: ${colors.brand};
+              background-color: transparent;
             }
           }
         `}</style>
@@ -79,7 +85,7 @@ export function LandingSubjectsNew({ data }: LandingSubjectsProps) {
         >
           {' '}
           <SubjectIcon subject={icon} />
-          <h2 className="group-hover:bg-brand-150 group-hover:text-brand serlo-button-blue-transparent">
+          <h2 className="group-hover:bg-brand-200 group-hover:text-brand serlo-button-blue-transparent">
             {title}
             <span className="align-middle ml-1.5">
               <FaIcon icon={faArrowCircleRight} />

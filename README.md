@@ -6,40 +6,43 @@ Next.js app that serves [serlo.org](https://serlo.org).
 
 ## Overview
 
-The frontend fetches data from the [API server](https://github.com/serlo/api.serlo.org) and renders it to a web page. A standalone deployment of the frontend is enough to view most parts of Serlo.
-
-In a more complete environment, the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that handles routing and redirections. Many editing features are still handled by our [legacy server](https://github.com/serlo/serlo.org).
-
-Deployment of the staging environment: https://frontend-git-staging-serlo.vercel.app
+The frontend turns the data it receives from our [GraphQL API](https://github.com/serlo/api.serlo.org) into pretty views.
+In our [staging](https://de.serlo-staging.dev/) and [production](https://serlo.org/) enviroments the frontend sits behind a [cloudflare worker](https://github.com/serlo/serlo.org-cloudflare-worker) that mostly does redirects and could be used for A/B testing etc.
 
 ## Getting started
 
 ### Local installation
 
-You can run the frontend on your local system. For that, install [Node.js > v12.22.0](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install).
-
-Then, run following commands:
+You can run the frontend on your local system. Install [Node.js v16](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install) then run the following commands:
 
 ```sh
-git clone https://github.com/serlo/frontend.git
+git clone --filter=blob:none https://github.com/serlo/frontend.git
 cd frontend
 yarn
 yarn dev
 ```
 
-The server is now running on [localhost:3000](http://localhost:3000).
+The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
 
-### next.js framework
+Choose language using `http://localhost:3000/{es|de|hi|ta|en|fr}/`
 
-The frontend is built with [next.js](https://nextjs.org/) and uses many features of it. A good way to get started in this repo is to make yourself familiar with next.js. This will make it quite clear how the system is working. Features we use include (and are not limited to):
+### Libraries
 
-- Server-Side Rendering
-- Router
-- Internationalization
-- Incremental Page Generation
-- TypeScript
+To make working with this codebase easier a basic understanding of [React](https://beta.reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [Tailwind](https://tailwindcss.com/) and [useSWR](https://swr.vercel.app/) is very helpful.
 
-## Repository
+### Next.js
+
+The frontend is built with the [Next.js React Framework](https://nextjs.org/). A good way to get started in this repo is to make yourself familiar with Next.js.
+
+Some of the features we use:
+
+- [Routing](https://nextjs.org/docs/routing/introduction)
+- [Internationalised Routing](https://nextjs.org/docs/advanced-features/i18n-routing)
+- [Static Site Generation](https://nextjs.org/docs/basic-features/data-fetching/get-static-props)
+- [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration)
+- …
+
+## Repository Overview
 
 Here are some useful places:
 
@@ -96,6 +99,12 @@ yarn codegen
 Generates exact types for some GraphQL queries and mutations. Add yours in `codegen.yml`.
 
 All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
+
+## Issues and backlog
+
+Technical issues are opened for bugs and feature that we decided to work on. For improvements and backlogs that will take more resources, we have the Feature-Entwicklungsprozess with its Trello-Board. The backlog is tracked there.
+
+This method should avoid stale issues and make it possible to keep an "zero inbox".
 
 ## More information
 

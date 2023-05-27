@@ -1,40 +1,42 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import Cookies from 'js-cookie'
+import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
+import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
-import { shouldUseFeature } from '../user/profile-experimental'
+import { loginUrl } from './auth/utils'
+import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
+import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
 import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
-import { useAddPageRevision } from '@/helper/mutations/use-add-page-revision-mutation'
+import { getTranslatedType } from '@/helper/get-translated-type'
+import { isProduction } from '@/helper/is-production'
+import { showToastNotice } from '@/helper/show-toast-notice'
+import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
-  AddPageRevisionMutationData,
+  OnSaveData,
   SetEntityMutationData,
   TaxonomyCreateOrUpdateMutationData,
-} from '@/helper/mutations/use-set-entity-mutation/types'
-import { useSetEntityMutation } from '@/helper/mutations/use-set-entity-mutation/use-set-entity-mutation'
-import { useTaxonomyCreateOrUpdateMutation } from '@/helper/mutations/use-taxonomy-create-or-update-mutation'
+} from '@/mutations/use-set-entity-mutation/types'
+import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
+import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
 
 export function AddRevision({
   initialState,
   type,
-  needsReview,
+  entityNeedsReview,
   id,
+  taxonomyParentId,
   breadcrumbsData,
 }: EditorPageData) {
   const { strings } = useInstanceData()
   const auth = useAuthentication()
-
-  const backlink = {
-    label: strings.revisions.toContent,
-    url: `/${id}`,
-  }
 
   const setEntityMutation = useSetEntityMutation()
   const addPageRevision = useAddPageRevision()
@@ -43,39 +45,25 @@ export function AddRevision({
   const [userReady, setUserReady] = useState<boolean | undefined>(undefined)
 
   useEffect(() => {
-    if (window.location.hostname === 'localhost') {
-      setUserReady(true)
-      return
+    async function confirmAuth() {
+      await fetchAndPersistAuthSession()
+      setUserReady(isProduction ? auth !== null : true)
     }
+    void confirmAuth()
 
-    const makeDamnSureUserIsLoggedIn = async () => {
-      if (auth.current === null) return false
-
-      /*
-      the better way would be to check if the authenticated cookie is still
-      set since this seems to be the only cookie legacy actually removes,
-      but since it's http-only this workaround is way easier.
-      The fetch also makes sure the CSRF tokens are set
-      This is only a hack until we rely on the API to save content
-      */
-
-      try {
-        const result = await fetch(`/auth/password/change`)
-        const resultHtml = await result.text()
-        return resultHtml.includes('<a href="/auth/logout"')
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error)
-        return false
-      }
+    // special case for add-revision route
+    if (userReady !== undefined && !auth) {
+      showToastNotice(strings.notices.warningLoggedOut, 'warning', 18000)
     }
-
-    void makeDamnSureUserIsLoggedIn().then((isLoggedIn) => {
-      setUserReady(isLoggedIn)
-    })
-
+    // do not rerun on userReady change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [auth, strings])
+
+  if (!setEntityMutation) return null
+
+  const isPage = type === UuidType.Page
+
+  if (!id && !isPage && !taxonomyParentId) return null
 
   if (userReady === undefined) return <LoadingSpinner noText />
   if (userReady === false)
@@ -84,144 +72,76 @@ export function AddRevision({
         Sorry, Something is wrong!
         <br />
         Please: Logout and Login again and try to edit again.
+        <br />
+        <br /> If that does not work head to{' '}
+        <Link href={loginUrl}>{loginUrl}</Link> and make sure you are logged in
+        there.
       </StaticInfoPanel>
     )
 
-  const supportedTypes = [
-    'Applet',
-    'Article',
-    'Course',
-    'CoursePage',
-    'Event',
-    'Solution',
-    'Video',
-    'Exercise',
-    'ExerciseGroup',
-    'GroupedExercise',
-    'Page',
-    'TaxonomyTerm',
-  ]
-  console.log(initialState)
-  console.log(JSON.stringify(initialState))
+  // types needs refactoring here. splitting controls and data would probably make sense
+
+  const onSave = async (
+    data:
+      | SetEntityMutationData
+      | PageSerializedState
+      | TaxonomyCreateOrUpdateMutationData
+  ) => {
+    const willNeedReview = Object.hasOwn(data, 'controls')
+      ? !(data as OnSaveData).controls.noReview
+      : entityNeedsReview
+
+    const success =
+      type === UuidType.Page
+        ? await addPageRevision(data as PageSerializedState)
+        : type === UuidType.TaxonomyTerm
+        ? await taxonomyCreateOrUpdateMutation(
+            data as TaxonomyCreateOrUpdateMutationData
+          )
+        : await setEntityMutation(
+            {
+              ...data,
+              __typename: type,
+            } as SetEntityMutationData,
+            willNeedReview,
+            initialState,
+            taxonomyParentId
+          )
+
+    return success ? Promise.resolve() : Promise.reject()
+  }
 
   return (
     <>
-      <Breadcrumbs
-        data={breadcrumbsData ? [...breadcrumbsData, backlink] : [backlink]}
-        noIcon
-      />
+      <Head>
+        <title>{`${strings.editOrAdd.button} | ${getTranslatedType(
+          strings,
+          type
+        )}${id ? ` (${id})` : ''}`}</title>
+      </Head>
+      {renderBacklink()}
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
-          'max-w-[816px] mx-auto mb-24 edtr-io serlo-editor-hacks'
+          'edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]'
         )}
       >
         <SerloEditor
-          getCsrfToken={() => {
-            const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-            return cookies['CSRF']
-          }}
-          needsReview={needsReview}
-          onSave={async (
-            data:
-              | SetEntityMutationData
-              | AddPageRevisionMutationData
-              | TaxonomyCreateOrUpdateMutationData
-          ) => {
-            if (
-              shouldUseFeature('addRevisionMutation') &&
-              supportedTypes.includes(type)
-            ) {
-              // eslint-disable-next-line no-console
-              console.log('using api endpoint to save')
-
-              const dataWithType = {
-                ...data,
-                __typename: type,
-              }
-
-              // refactor and rename when removing legacy code
-              const skipReview = hasOwnPropertyTs(data, 'controls')
-                ? data.controls.checkout
-                : undefined
-              const _needsReview = skipReview ? false : needsReview
-
-              const success =
-                type === 'Page'
-                  ? //@ts-expect-error resolve when old code is removed
-                    await addPageRevision(dataWithType)
-                  : type === 'TaxonomyTerm'
-                  ? await taxonomyCreateOrUpdateMutation(
-                      dataWithType as TaxonomyCreateOrUpdateMutationData
-                    )
-                  : await setEntityMutation(
-                      //@ts-expect-error resolve when old code is removed
-                      dataWithType,
-                      _needsReview,
-                      initialState
-                    )
-
-              return new Promise((resolve, reject) => {
-                if (success) resolve()
-                else reject()
-              })
-            }
-
-            return new Promise((resolve, reject) => {
-              fetch(window.location.pathname, {
-                method: 'POST',
-                headers: {
-                  'X-Requested-with': 'XMLHttpRequest',
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  'X-From': 'legacy-serlo.org',
-                },
-                body: JSON.stringify(data),
-              })
-                .then((response) => response.json())
-                .then(
-                  (data: {
-                    success: boolean
-                    redirect: string
-                    errors: object
-                  }) => {
-                    if (data.success && data.redirect) {
-                      resolve()
-
-                      // override behaviour for taxonomy term
-                      if (
-                        data.redirect.includes('/taxonomy/term/update/') ||
-                        data.redirect.includes('/taxonomy/term/create/')
-                      ) {
-                        const id = data.redirect.match(/[\d]+$/)
-                        if (id && id[0]) {
-                          window.location.href = `/${id[0]}`
-                          return
-                        }
-                      }
-
-                      window.location.href =
-                        data.redirect.length > 5
-                          ? data.redirect
-                          : window.location.href
-                    } else {
-                      // eslint-disable-next-line no-console
-                      console.error(data.errors)
-                      reject()
-                    }
-                  }
-                )
-                .catch((value) => {
-                  // eslint-disable-next-line no-console
-                  console.error(value)
-                  reject(value)
-                })
-            })
-          }}
+          entityNeedsReview={entityNeedsReview}
+          onSave={onSave}
           type={type}
           initialState={initialState}
         />
       </div>
     </>
   )
+
+  function renderBacklink() {
+    if (!breadcrumbsData) return null
+    const backlink = {
+      label: strings.revisions.toContent,
+      url: `/${id ?? taxonomyParentId!}`,
+    }
+    return <Breadcrumbs data={[...breadcrumbsData, backlink]} />
+  }
 }

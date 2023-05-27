@@ -8,11 +8,16 @@ export const instanceData = {
     header: {
       slogan: "Die freie Lernplattform",
       search: "Suche",
-      login: "Anmelden"
+      login: "Anmelden",
+      skipLinks: {
+        sentence: "Springe zum %content% oder %footer%",
+        content: "Inhalt",
+        footer: "Footer"
+      }
     },
     search: {
       privacy: "Die Suche wird von Google bereitgestellt. Schau dir unsere %privacypolicy% an, um herauszufinden, welche Informationen verarbeitet werden.",
-      agree: "Zustimmen"
+      agree: "Zustimmen um zu suchen"
     },
     footer: {
       summaryHeading: "Serlo.org ist die Wikipedia fürs Lernen.",
@@ -29,7 +34,10 @@ export const instanceData = {
       applets: 'Applets',
       folders: "Bereiche",
       exercises: "Aufgaben",
-      events: "Veranstaltungen"
+      events: "Veranstaltungen",
+      unrevised: "Ungeprüft",
+      subterms: "Unter-Themenbereich",
+      exercisesContent: "Aufgaben-Inhalte"
     },
     entities: {
       applet: 'Applet',
@@ -66,7 +74,9 @@ export const instanceData = {
       userEditsMine: "Meine ungeprüften Bearbeitungen",
       editProfile: "Profil bearbeiten & Einstellungen",
       recycleBin: "Papierkorb",
-      diagon: "Winkelgasse"
+      diagon: "Winkelgasse",
+      discussions: "Kommentare",
+      manageRoles: "User-Rollen verwalten"
     },
     roles: {
       donor: "Spender*in",
@@ -82,15 +92,18 @@ export const instanceData = {
       pdf: "Als PDF herunterladen",
       pdfNoSolutions: "PDF ohne Lösungen"
     },
-    edit: {
-      button: "Inhalt überarbeiten",
+    editOrAdd: {
+      button: "Überarbeiten",
+      addNewEntities: "Inhalt hinzufügen",
+      addNewExercises: "Aufgabe hinzufügen",
+      editExercises: "Aufgaben überarbeiten",
       unrevised: "Zeige neue Bearbeitungen",
       inviteModal: {
-        title: "Erstelle mit uns!",
-        text: "Hallo! %break% Großartig, dass du zu diesem Inhalt beitragen möchtest 👍 %break% Jeder kann bearbeiten, aber du brauchst einen Account.",
+        title: "Erstelle mit uns Lerninhalte!",
+        text: "Hallo! %break% Spitze, dass du etwas zu diesem Inhalt beitragen möchtest 👍\nJede*r kann Inhalte bearbeiten, aber du brauchst einen Account.\n\n",
         loginButton: "Jetzt einloggen",
-        registerButton: "Neues Konto anlegen",
-        psText: "%link% kannst du herrausfinden, auf welche Arten du beitragen kannst.",
+        registerButton: "Neuen Account anlegen",
+        psText: "%link% kannst du herausfinden, auf welche Arten du beitragen kannst.",
         psLinkText: "Hier"
       }
     },
@@ -133,7 +146,9 @@ export const instanceData = {
         yourAnswer: "Deine Antwort…",
         chooseOption: "Klicke auf eine der Optionen",
         printModeChooseOption: "Kreuze eine der Optionen an",
-        strategy: "Lösungsstrategie"
+        strategy: "Lösungsstrategie",
+        showSolution: "Lösung anzeigen",
+        hideSolution: "Lösung ausblenden"
       },
       boxTypes: {
         blank: "Blanko",
@@ -180,7 +195,11 @@ export const instanceData = {
       showMoreReplies: "%number% weitere Kommentare",
       hideReplies: "Einklappen",
       showArchived: "Archivierte %threads% anzeigen",
-      copyLink: "Kommentarlink kopieren"
+      copyLink: "Kommentarlink kopieren",
+      commentsOverviewExplanation: "Hier siehst du eine Liste mit allen Kommentaren, die zu den Inhalten auf %instance%.serlo.org hinterlassen wurden. %break% Beantworte Fragen oder finde Inhalte, die du verbessern und überarbeiten kannst. %break% Der Link über dem Kommentar bringt dich zum entsprechenden Inhalt.",
+      edit: "Kommentar bearbeiten",
+      cancelEdit: "Abbrechen",
+      saveEdit: "Speichern"
     },
     revisions: {
       toOverview: "Zurück zur Übersicht",
@@ -216,8 +235,17 @@ export const instanceData = {
       status: 'Status'
     },
     unrevisedRevisions: {
-      supportLinks: "Wie reviewe ich?",
-      guideline: "Review Hilfeseite",
+      help1: "Hier landen alle Bearbeitungen der Autor*innen. Diese werden in der Qualitätskontrolle durch die %reviewersLink% überprüft und freigegeben.",
+      reviewers: "Reviewer*innen",
+      reviewersUrl: "/community/202923/rollen-der-serlo-community",
+      help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
+      help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
+      contactPerson: 'LinaMaria',
+      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
+      help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
+      guideline: "Anleitung",
+      guidelineUrl: "/140473",
+      subjectLinks: "Direkt zum Fach",
       showMoreEntities: "Alle in %subject% anzeigen",
       showMoreRevisions: "%number weitere anzeigen",
       newLabelText: "neu",
@@ -226,7 +254,10 @@ export const instanceData = {
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
       newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review.",
-      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden."
+      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden.",
+      importedContentText: "importiert",
+      importedContentNote: "Diese Bearbeitung enthält importierte Inhalte",
+      importedContentIdentifier: "Inhalt importiert von"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -239,7 +270,7 @@ export const instanceData = {
       backToHome: "Zur Startseite",
       deletedComment: {
         title: "Hoppla, das gibt's hier nicht mehr",
-        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde aus absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
+        text: "Sorry, dieser %type% ist nicht mehr online.%break% Aber er wurde absichtlich gelöscht und war deine Zeit wahrscheinlich sowieso nicht wert 💚"
       }
     },
     print: {
@@ -284,6 +315,8 @@ export const instanceData = {
     notices: {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
+      alreadyLoggedIn: "👋 Willkommen zurück",
+      warningLoggedOut: "⚠️ Du wurdest abgemeldet. Bitte melde dich wieder an und benutze dann \"Änderungen laden\" um deine aktuellen Änderungen wiederherzustellen.",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -294,9 +327,91 @@ export const instanceData = {
       isLoading: "Inhalt wird geladen…",
       unknownProblem: "Es gab ein Problem beim Laden des Inhalts. Bitte versuche es später noch einmal."
     },
-    login: {
-      pleaseLogInLink: "Bitte melde dich an",
-      pleaseLogInText: "um diese Funktion zu benutzen."
+    auth: {
+      pleaseLogInLink: "Bitte melde dich an,",
+      pleaseLogInText: "um diese Funktion zu benutzen.",
+      register: {
+        registerTitle: "Deinen Serlo Account erstellen",
+        passwordRequirements: "Mindestens 8 Zeichen, länger ist besser.",
+        registerIntro: "Du brauchst keinen Account zum Lernen auf serlo.org. %break% Aber wenn du kommentieren oder mitwirken willst, bist du hier genau richtig."
+      },
+      recoverTitle: "Deinen Account wiederherstellen",
+      recoveryInstructions: "Gib hier deine Mailadresse an und schick sie uns. %break% Du bekommst dann eine Mail mit einem Link zum Passwort-Zurücksetzen.",
+      verify: {
+        title: "Bestätige deine Mailadresse",
+        instructions: "Gib hier deine Mailadresse an und schick sie ab, um einen Bestätigungslink per Mail zu bekommen.",
+        alreadyDone: "Du bist eingeloggt, das heißt deine Mailadresse ist schon bestätigt 😊."
+      },
+      settings: {
+        title: "Dein Passwort ändern",
+        instruction: "Gib hier dein neues Passwort an."
+      },
+      loggingOut: "Du wirst abgemeldet …",
+      login: {
+        confirmAction: "Vorgang bestätigen",
+        signIn: "Mit deinem Account anmelden",
+        logOut: "Abmelden",
+        newHere: "Bist du neu hier?",
+        registerNewAccount: "Einen neuen Account anlegen",
+        forgotPassword: "Hast du %forgotLinkText%?",
+        forgotLinkText: "dein Passwort vergessen",
+        validSessionDetected: "Hey, du bist schon in einem anderen Tab angemeldet. Lade bitte die Seite neu."
+      },
+      fields: {
+        identifier: "Benutzername oder E-Mailadresse",
+        username: "Benutzername",
+        password: "Passwort",
+        email: "E-Mail-Adresse",
+        interest: "Ich bin hier als…"
+      },
+      interests: {
+        pleaseChoose: "bitte auswählen",
+        parent: "Elternteil",
+        teacher: "Lehrer*in",
+        pupil: "Schüler*in",
+        student: "Student*in",
+        other: "Sonstige"
+      },
+      messages: {
+        code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
+        code1010001: "Anmelden",
+        code1010002: "Mit NBP Account anmelden",
+        code1010013: "Weiter mit SSO",
+        code1040001: "Account anlegen",
+        code1040002: "Mit NBP Account registrieren",
+        code1040003: "Weiter",
+        code1050001: "Deine Änderungen wurden gespeichert! 🎉",
+        code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
+        code1060002: "Wir haben dir eine E-Mail mit einem Link zum Wiederherstellen an die angegebene Adresse geschickt. %break% Schau in deine Mailbox und benutze den Link.",
+        code1070003: "Speichern",
+        code1070005: "Absenden",
+        code1080001: "Eine E-Mail mit einem Bestätigungslink wurde an die angegebene E-Mail-Adresse gesendet.",
+        code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
+        code4000001: '%reason%',
+        code4000002: "%field% bitte noch angeben.",
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
+        code4000005: '%reason%',
+        code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
+        code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
+        code4000008: "Der Bestätigungscode ist ungültig. Bitte versuche es nochmal.",
+        code4000010: "Hast du deine E-Mailadresse schon bestätigt?.%break% %verificationLinkText%",
+        code4060004: "Der Link zum Wiederherstellen ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4070001: "Der Bestätigungslink ist nicht gültig oder wurde schon benutzt. Bitte versuche dir noch mal einen Link zuschicken zu lassen.",
+        code4070005: "Dieser Bestätigungslink ist leider nicht mehr gültig. Bitte versuche eine neue E-Mail anzufordern."
+      },
+      usernameInvalid: "Der Benutzername darf nur aus Buchstaben, Ziffern, Unterstrichen (_) und Bindestrichen (-) bestehen.",
+      usernameTooLong: "Sorry, dieser Benutzername ist zu lang. 32 Zeichen oder weniger sind erlaubt.",
+      passwordTooShort: "Leider ist dieses Passwort zu kurz. Bitte wähle ein Passwort, das mindestens 8 Zeichen lang ist.",
+      passwordTooLong: "Sorry, dieses Passwort ist zu lang. Bitte wähle ein Passwort, das höchstens 72 Zeichen lang ist.",
+      passwordTooSimilar: "Sorry, dieses Passwort ist deiner Mailadresse oder deinem Benutzernamen zu ähnlich.",
+      emailInvalid: "Sorry, das ist keine gültige E-Mail-Adresse. Schau nach, ob du dich vertippt hast.",
+      registrationCheckboxAgreement: "Ich stimme der %privacypolicy% und den %terms% zu. Ich bin einverstanden E-Mail Benachrichtigungen von Serlo zu erhalten von denen ich mich jederzeit abmelden kann.",
+      consentNeededBeforeProceeding: "Wir brauchen dein Einverständnis, um fortzufahren.",
+      terms: "Nutzungsbedingungen",
+      signUp: "Account anlegen",
+      verificationProblem: "Wenn du keine Mail bekommen hast",
+      verificationLinkText: "Klick hier, um eine neue Bestätigungsmail zu erhalten."
     },
     keys: {
       ctrl: "Strg",
@@ -313,7 +428,7 @@ export const instanceData = {
       setThreadStateArchived: "%actor% hat eine %thread% archiviert.",
       setThreadStateUnarchived: "%actor% hat eine %thread% aus dem Archiv geholt.",
       createComment: "%actor% hat einen %comment% in einer %thread% erstellt.",
-      createThread: "%actor% hat eine %thread% in einem/einer %object% erstellt.",
+      createThread: "%actor% hat eine %thread% in %object% erstellt.",
       createEntity: "%actor% hat %object% erstellt.",
       setLicense: "%actor% hat die Lizenz von %repository% geändert.",
       createEntityLink: "%actor% hat %child% zugewiesen zu %parent%.",
@@ -385,13 +500,13 @@ export const loggedInData = {
       url: '/subscriptions/manage',
       title: "Abonnements"
     }, {
-      url: '/auth/password/change',
+      url: '/auth/settings',
       title: "Passwort ändern"
     }, {
       url: '/user/settings',
       title: "Einstellungen"
     }, {
-      url: '/api/auth/logout',
+      url: '/auth/logout',
       title: "Abmelden"
     }]
   }],
@@ -421,10 +536,8 @@ export const loggedInData = {
       sortCoursePages: "Kursseiten sortieren",
       sortGroupedExercises: "Teilaufgaben sortieren",
       edit: "Überarbeiten",
+      editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
-      organize: "Baumstruktur bearbeiten",
-      moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
-      moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalte sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
@@ -444,7 +557,7 @@ export const loggedInData = {
       noMails: "deaktivieren",
       getMails: "aktivieren",
       noNotifications: "abbestellen",
-      loadedSentence: "%loadedCount% von %totalCount% Abonnements geladen.",
+      loadedSentence: "%loadedCount% von %totalCount% Einträgen geladen.",
       loadMoreLink: "Mehr laden!"
     },
     revisions: {
@@ -469,7 +582,8 @@ export const loggedInData = {
         reject: "Bearbeitung wurde nicht akzeptiert ❌",
         save: "Bearbeitung erfolgreich gespeichert ✅",
         updated: "Erfolgreich aktualisiert",
-        generic: "Hat geklappt 🎉"
+        generic: "Hat geklappt 🎉",
+        saveNeedsReview: "Danke für deine Bearbeitung 🎉 Die Reviewer*innen prüfen sie bald und dann ist sie auf der Seite sichtbar."
       },
       errors: {
         UNAUTHENTICATED: "Für diese Funktion musst du dich einloggen!",
@@ -482,13 +596,20 @@ export const loggedInData = {
     },
     editor: {
       confirmRouteChange: "Willst du wirklich die Seite verlassen ohne zu speichern?",
+      noChangesWarning: "Bisher hast du nichts geändert",
       edtrIo: {
+        localStorage: {
+          found: "Du hast lokal gespeicherte Änderungen dieses Inhalts. Möchtest du sie laden?",
+          foundButton: "Änderungen laden",
+          restoreInitial: "Du kannst auch wieder zurück zur Ausgangsversion. Vorsicht, dabei werden deine bisherigen Änderungen gelöscht.",
+          restoreInitialButton: "Änderungen löschen",
+          confirmRestore: "Sicher, dass du deine Änderugen unwiderruflich löschen möchtest?"
+        },
         extendedSettings: "Erweiterte Einstellungen",
         close: "Schließen",
         notSupportedYet: "Dieser Inhaltstyp wird vom neuen Editor noch nicht unterstützt.",
         editInOld: "Du kannst den Inhalt im alten Editor bearbeiten",
         conversionError: "Leider trat ein Fehler bei der Konvertierung auf.",
-        oldRevisionFound: "Wir haben eine alte Bearbeitung von dir gefunden. Möchtest du diese wiederherstellen?",
         notConverted: "Dieser Inhalt wurde noch nicht im neuen Editor bearbeitet.",
         box: "Box",
         boxDesc: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
@@ -513,7 +634,7 @@ export const loggedInData = {
         spoiler: 'Spoiler',
         spoilerDesc: "In diese ausklappbare Box kannst du zum Beispiel Exkurse hinzufügen.",
         serloTable: "Tabelle",
-        serloTableDesc: "(Testlauf für neues Plugin) Tabellen erstellen",
+        serloTableDesc: "Schöne Tabellen erstellen.",
         table: "Tabelle",
         tableDesc: "Erstelle eine Tabelle mit Markdown.",
         video: 'Video',
@@ -521,6 +642,7 @@ export const loggedInData = {
         solutionSeparator: "Lösungs-Trenner",
         solutionSeparatorDesc: "Unterteile die Lösung in einzelne Lösungsschritte.",
         save: "Speichern",
+        saveWithReview: "Speichern und reviewen lassen",
         cancel: "Abbrechen",
         saving: "Speichert…",
         missingChanges: "Du musst zuerst die Änderungen ausfüllen.",
@@ -530,11 +652,15 @@ export const loggedInData = {
         saveLocallyAndRefresh: "Du kannst die Bearbeitung lokal zwischenspeichern, dann die Seite neu laden und es erneut versuchen.",
         revisionSaved: "Bearbeitung gespeichert",
         saveRevision: "Bearbeitung zwischenspeichern",
-        changes: "Änderungen",
+        changes: "Beschreibe deine Änderungen am Inhalt",
         skipReview: "Bearbeitung ohne Review freischalten (nicht empfohlen)",
         enableNotifs: "Benachrichtigungen auf serlo.org erhalten",
         enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
         switchRevision: "Andere Version auswählen",
+        importOther: "Aus einem anderen Inhalt importieren",
+        importOtherExplanation: "Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)",
+        importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
+        importOtherButton: "Inhalte Importieren",
         current: "Aktuell",
         author: "Verfasser",
         createdAt: "Zeitstempel",
@@ -641,12 +767,16 @@ export const loggedInData = {
         italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
+      image: {
+        noImagePasteInLists: "Einfügen von Bildern ist innerhalb von Listen nicht möglich."
+      },
       video: {
         videoUrl: 'Video URL',
         description: "Beschreibung",
         title: "Titel",
         url: 'URL',
-        seoTitle: "Titel für Suchmaschinen"
+        seoTitle: "Titel für Suchmaschinen",
+        noVideoPasteInLists: "Einfügen von Videos ist innerhalb von Listen nicht möglich."
       },
       error: {
         convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
@@ -656,6 +786,8 @@ export const loggedInData = {
         choiceExercise: "Auswahlaufgabe",
         addInputExercise: "Eingabefeld hinzufügen",
         inputExercise: "Eingabefeld",
+        addH5pExercise: "H5P-Inhalt hinzufügen",
+        h5pExercise: "H5P-Inhalt",
         addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
         changeInteractive: "Interaktives Element ändern",
         removeInteractive: "Interaktives Element entfernen"
@@ -663,7 +795,8 @@ export const loggedInData = {
       injection: {
         illegalInjectionFound: "Ungültige Injection gefunden",
         serloEntitySrc: "Serlo Inhalt {{src}}",
-        serloId: "Serlo ID"
+        serloId: "Serlo ID",
+        placeholder: "Serlo ID (z.B. 1565)"
       },
       box: {
         type: "Art der Box",
@@ -709,7 +842,7 @@ export const loggedInData = {
         sourceUrl: "Optionaler Link",
         moreInFolder: "Weitere Aufgaben zum Thema findest du im folgenden Aufgabenordner",
         addModal: {
-          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder einen %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
+          introText: "Was würde den Lernenden nach dem Artikel weiterhelfen?%break% Hier kannst du %exercises% einbetten oder eine %exerciseFolder% verlinken. %break% Oder du kannst weiterführende %articles%, %courses% oder %videos% empehlen.",
           introText2: "Du kannst entweder eine Serlo ID oder einen Link einfügen, oder unten Inhalte aus dem Elternordner einfügen.",
           buttonEx: "Aufgaben hinzufügen",
           buttonExFolder: "Aufgabenordner auswählen",
@@ -792,7 +925,7 @@ export const loggedInData = {
           goToChat: "Gehe zu %chatLink%.",
           signIn: "Melde dich an.",
           goToMyAccount: "Gehe im Usermenü auf %myAccountLink%.",
-          myAccount: "Mein Konto",
+          myAccount: "Mein Account",
           uploadPicture: "Lade ein neues Bild hoch (ein quadratisches!) und klicke oben auf \"Änderungen speichern\".",
           refreshPage: "Komme hierher zurück und aktualisiere dein Bild mit %refreshLink%.",
           refreshLink: "diesem magischem Link"
@@ -806,8 +939,8 @@ export const loggedInData = {
         toForm: "Motivationsformular"
       },
       delete: {
-        heading: "So kannst du dein Konto löschen",
-        text: "Wenn du dein Konto löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
+        heading: "So kannst du deinen Account löschen",
+        text: "Wenn du deinen Account löschen möchtest, schreib uns bitte unter %mailLink%.%break% Bitte schreibe von deiner registrierten E-Mail-Adresse und gib %subjectLine% als Betreff an.",
         deleteAccount: "Account löschen"
       }
     },
@@ -818,6 +951,7 @@ export const loggedInData = {
       recycleBin: "Papierkorb"
     },
     pages: {
+      newPage: "Neue Seite erstellen",
       deletedPages: "Gelöschte Seiten"
     },
     taxonomyTermTools: {
@@ -825,7 +959,7 @@ export const loggedInData = {
         title: "Inhalte in Ordner verschieben / kopieren",
         select: "Inhalte zum kopieren oder verschieben auswählen:",
         target: "Zielordner:",
-        link: "Link",
+        link: 'Link',
         moveButtonText: "Verschieben zu: %type%",
         copyButtonText: "Kopieren zu %type% ",
         moveSuccess: "Erfolgreich verschoben",
@@ -842,6 +976,83 @@ export const loggedInData = {
         title: "Inhalte sortieren",
         saveButtonText: "Reihenfolge speichern"
       }
+    },
+    roles: {
+      addButton: "Als %role% hinzufügen"
+    }
+  }
+};
+export const kratosMailStrings = {
+  recovery: {
+    valid: {
+      subject: "👉 Zugang zu deinem Serlo Account",
+      'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
+versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
+ 
+Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+{{ .RecoveryURL }}
+
+Das Serlo-Team wünscht dir viel Erfolg!`,
+      body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
+ 
+<p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
+<a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
+    },
+    invalid: {
+      subject: "👉 Zugriff auf Account",
+      'body.plaintext': `👋 Hi there!
+
+Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf serlo.org wiederherzustellen.
+
+Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.
+
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+
+Sonst kannst du diese Mail einfach ignorieren.
+
+✌️`,
+      body: `<p>👋 Hi there!</p>
+<p>Du (oder jemand anderes) hat versucht, mit dieser E-Mail-Adresse den Zugang zu einem Account auf <a href="https://serlo.org">serlo.org</a> wiederherzustellen.</p>
+<p>Allerdings ist diese E-Mail-Adresse nicht mit einem Account bei uns verknüpft und deshalb hat das nicht geklappt.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>Sonst kannst du diese Mail einfach ignorieren.</p>
+<p>✌️</p>`
+    }
+  },
+  verification: {
+    valid: {
+      subject: "👋 Bitte bestätige deine E-Mail-Adresse",
+      'body.plaintext': `Hi {{ .Identity.traits.username }},
+
+wunderbar dich auf serlo.org zu haben 🎉
+      
+Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
+{{ .VerificationURL }}
+
+Dein Community-Support 💚`,
+      body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
+<p>wunderbar dich auf serlo.org zu haben 🎉</p>
+<p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+</p><p>Dein Community-Support 💚</p>`
+    },
+    invalid: {
+      subject: `👋 Jemand hat versucht diese Mailadresse zu bestätigen`,
+      'body.plaintext': `👋 Hi,
+
+jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf serlo.org mit dieser Adresse verknüpft.
+
+Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.
+
+Sonst kannst du diese Mail einfach ignorieren.
+
+✌️`,
+      body: `<p>👋 Hi,</p>
+<p>jemand hat versucht, diese E-Mail-Adresse zu bestätigen, aber es ist kein Account auf <a href="https://serlo.org">serlo.org</a> mit dieser Adresse verknüpft.</p>
+<p>Wenn du das warst, überprüfe bitte, ob du dich mit einer anderen Adresse angemeldet hast.</p>
+<p>sonst kannst du diese Mail einfach ignorieren.</p>
+<p>✌️</p>`
     }
   }
 };

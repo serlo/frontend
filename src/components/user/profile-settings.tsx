@@ -5,6 +5,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Spoiler } from '@/components/content/spoiler'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 interface ProfileSettingsProps {
@@ -14,11 +15,10 @@ interface ProfileSettingsProps {
 export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   const loggedInData = useLoggedInData()
   const { lang } = useInstanceData()
-
   const auth = useAuthentication()
 
-  if (!auth.current) return null
-  const username = auth.current.username
+  if (!auth) return null
+  const username = auth.username
 
   if (!loggedInData) return null
   const loggedInStrings = loggedInData.strings.profileSettings
@@ -79,7 +79,6 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
       <>
         <Spoiler
           title={buttonText}
-          path={['profile-settings']}
           body={
             <>
               <p className="serlo-p mt-5">
@@ -104,14 +103,13 @@ export function ProfileSettings({ rawDescription }: ProfileSettingsProps) {
   }
 
   function renderHowToEditMotivation() {
-    if (lang !== 'de') return null
+    if (lang !== Instance.De) return null
     const { buttonText, intro, privacy, toForm } = loggedInStrings.motivation
     const editUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdb_My7YAVNA7ha9XnBcYCZDk36cOqgcWkBqowatbefX0IzEg/viewform?usp=pp_url&entry.14483495=${username}`
 
     return (
       <Spoiler
         title={buttonText}
-        path={['profile-settings']}
         body={
           <>
             <p className="serlo-p mt-5">{intro}</p>

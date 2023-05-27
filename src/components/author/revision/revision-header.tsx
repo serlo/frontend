@@ -1,4 +1,4 @@
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons/faArrowCircleLeft'
+import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
 import { DisplayModes } from './revision'
@@ -12,6 +12,7 @@ import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
 export interface RevisionHeaderProps {
@@ -87,13 +88,12 @@ export function RevisionHeader({
   )
 
   function renderEntityIcon() {
-    if (!data.type) return null
     return (
-      <span title={strings.entities[data.type]}>
+      <span title={getTranslatedType(strings, data.typename)}>
         {' '}
         <FaIcon
-          className="text-brand-lighter text-2.5xl"
-          icon={getIconByTypename(data.type)}
+          className="text-brand-400 text-2.5xl"
+          icon={getIconByTypename(data.typename)}
         />{' '}
       </span>
     )

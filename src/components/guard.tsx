@@ -4,7 +4,6 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { LoadingError } from '@/components/loading/loading-error'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { PleaseLogIn } from '@/components/user/please-log-in'
-import { shouldUseNewAuth } from '@/helper/feature-auth'
 
 export interface GuardProps {
   data?: any
@@ -15,7 +14,7 @@ export interface GuardProps {
 
 export function Guard({ children, data, error, needsAuth }: GuardProps) {
   const auth = useAuthentication()
-  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     if (needsAuth) setMounted(true)
@@ -23,7 +22,7 @@ export function Guard({ children, data, error, needsAuth }: GuardProps) {
 
   if (needsAuth && !mounted) return null
 
-  if (needsAuth && auth.current === null) return <PleaseLogIn />
+  if (needsAuth && auth === null) return <PleaseLogIn />
 
   if (!data && !error) return <LoadingSpinner noText />
   if (error) return <LoadingError error={error.toString()} />

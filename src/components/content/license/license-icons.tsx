@@ -1,11 +1,13 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons/faCreativeCommons'
-import { faCreativeCommonsBy } from '@fortawesome/free-brands-svg-icons/faCreativeCommonsBy'
-import { faCreativeCommonsSa } from '@fortawesome/free-brands-svg-icons/faCreativeCommonsSa'
-import { faSlash } from '@fortawesome/free-solid-svg-icons/faSlash'
+import {
+  faCreativeCommons,
+  faCreativeCommonsBy,
+  faCreativeCommonsSa,
+} from '@fortawesome/free-brands-svg-icons'
+import { faSlash } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
-import { FaIcon } from '../../fa-icon'
+import { FaIcon } from '@/components/fa-icon'
 
 interface LicenseIconsProps {
   title: string
@@ -45,7 +47,7 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
     return (
       <FaIcon
         className={clsx(
-          'text-brand-lighter mb-0.25 mobile:text-[2rem] mobile:mt-0.25 mobile:mr-1',
+          'text-brand-400 mb-0.25 mobile:text-[2rem] mobile:mt-0.25 mobile:mr-1',
           props.className
         )}
         icon={props.icon}

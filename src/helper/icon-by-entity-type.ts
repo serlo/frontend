@@ -1,21 +1,29 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons/faCalendarAlt'
-import { faCircle } from '@fortawesome/free-solid-svg-icons/faCircle'
-import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
-import { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
-import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons/faFolderOpen'
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
-import { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons/faPlayCircle'
-import { faUser } from '@fortawesome/free-solid-svg-icons/faUser'
-import { faUserEdit } from '@fortawesome/free-solid-svg-icons/faUserEdit'
+import {
+  faCalendarAlt,
+  faCircle,
+  faComments,
+  faCubes,
+  faFile,
+  faFolderOpen,
+  faGraduationCap,
+  faNewspaper,
+  faPlayCircle,
+  faUser,
+  faUserEdit,
+} from '@fortawesome/free-solid-svg-icons'
 
-import { TopicCategoryTypes } from '@/data-types'
+import { FaIconProps } from '@/components/fa-icon'
+import {
+  TopicCategoryCustomType,
+  TopicCategoryType,
+  UuidWithRevType,
+} from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
-export const categoryIconMapping: {
-  [K in TopicCategoryTypes]: IconDefinition
-} = {
+export const categoryIconMapping: Record<
+  TopicCategoryType | TopicCategoryCustomType,
+  FaIconProps['icon']
+> = {
   articles: faNewspaper,
   courses: faGraduationCap,
   videos: faPlayCircle,
@@ -23,11 +31,17 @@ export const categoryIconMapping: {
   folders: faFolderOpen,
   exercises: faFile,
   events: faCalendarAlt,
+  unrevised: faCircle,
+  subterms: faFolderOpen,
+  exercisesContent: faFile,
 }
 
-export function getIconByTypename(typename: string) {
-  const typenameLowerCase =
-    typename.toLowerCase() as keyof typeof entityIconMapping
+export function getIconByTypename(
+  typename: UuidWithRevType | TaxonomyTermType
+) {
+  const typenameLowerCase = typename
+    .replace('Revision', '')
+    .toLowerCase() as keyof typeof entityIconMapping
   return entityIconMapping[typenameLowerCase] ?? faCircle
 }
 

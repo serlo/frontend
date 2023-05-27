@@ -1,21 +1,16 @@
-import { Entity } from '@serlo/authorization'
-import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
-import type { CheckoutRejectButtonsProps } from './checkout-reject-buttons'
 import { RevisionHeader } from './revision-header'
 import {
   RevisionPreviewBoxes,
   RevisionPreviewBoxesProps,
 } from './revision-preview-boxes'
-import { useAuthentication } from '@/auth/use-authentication'
-import { useCanDo } from '@/auth/use-can-do'
 import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import { RevisionData, UuidRevType } from '@/data-types'
 import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
@@ -25,11 +20,6 @@ export interface RevisionProps {
   data: RevisionData
 }
 
-const CheckoutRejectButtons = dynamic<CheckoutRejectButtonsProps>(() =>
-  import('@/components/author/revision/checkout-reject-buttons').then(
-    (mod) => mod.CheckoutRejectButtons
-  )
-)
 export enum DisplayModes {
   This = 'this',
   SideBySide = 'sidebyside',
@@ -37,11 +27,8 @@ export enum DisplayModes {
 }
 
 export function Revision({ data }: RevisionProps) {
-  const auth = useAuthentication()
+  // const auth = useAuthentication()
   const { strings } = useInstanceData()
-  const canDo = useCanDo()
-  const canCheckoutAndReject =
-    canDo(Entity.checkoutRevision) && canDo(Entity.rejectRevision)
   const isCurrentRevision = data.thisRevision.id === data.currentRevision.id
   const hasCurrentRevision = data.currentRevision.id !== undefined
   const isRejected = data.thisRevision.trashed
@@ -51,7 +38,7 @@ export function Revision({ data }: RevisionProps) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    if (window.location.hash.substr(1) === DisplayModes.SideBySide) {
+    if (window.location.hash.substring(1) === DisplayModes.SideBySide) {
       setDisplayMode(DisplayModes.SideBySide)
       removeHash()
     }
@@ -129,15 +116,10 @@ export function Revision({ data }: RevisionProps) {
           type: data.typename,
           id: data.repository.id,
           revisionId: data.thisRevision.id,
-          checkoutRejectButtons:
-            auth.current && canCheckoutAndReject ? (
-              <CheckoutRejectButtons
-                revisionId={data.thisRevision.id}
-                isRejected={isRejected}
-                isCurrent={isCurrentRevision}
-                isPage={data.typename === 'PageRevision'}
-              />
-            ) : undefined,
+          revisionData: {
+            rejected: isRejected,
+            current: isCurrentRevision,
+          },
         }}
       />
     )
@@ -145,7 +127,11 @@ export function Revision({ data }: RevisionProps) {
 
   function renderExercisePreview() {
     if (
-      !['solution', 'exerciseGroup', 'groupedExercise'].includes(data.type) ||
+      ![
+        UuidRevType.Solution,
+        UuidRevType.ExerciseGroup,
+        UuidRevType.GroupedExercise,
+      ].includes(data.typename) ||
       data.repository.parentId === undefined
     )
       return null
@@ -172,10 +158,10 @@ export function Revision({ data }: RevisionProps) {
         <div className="serlo-content-with-spacing-fixes">
           <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
           {char && (
-            <span className="mx-side px-1 mb-10 inline-block bg-yellow-200">
+            <span className="mx-side px-1 mb-10 inline-block bg-editor-primary-100">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
-                  data.type === 'groupedExercise'
+                  data.typename === UuidRevType.GroupedExercise
                     ? strings.content.exercises.task
                     : strings.entities.solution,
                 title: (

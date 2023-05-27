@@ -1,62 +1,77 @@
 import { StateTypeReturnType } from '@edtr-io/plugin'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
 
 import { entity } from '../plugins/types/common/common'
+import { useHandleSave } from '../plugins/types/helpers/use-handle-save'
 import { SaveContext } from '../serlo-editor'
-import { SaveLocalButton } from './save-local-button'
+import { LocalStorageButton } from './local-storage-button'
+import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 
 export interface SaveModalProps {
-  visible: boolean
-  setVisibility: (arg0: boolean) => void
-  handleSave: (arg0?: boolean, arg1?: boolean, arg2?: boolean) => void
-  pending: boolean
+  open: boolean
+  setOpen: (arg0: boolean) => void
   changes?: StateTypeReturnType<typeof entity['changes']>
-  hasError: boolean
   license?: StateTypeReturnType<typeof entity['license']>
-  subscriptions?: boolean
+  showSubscriptionOptions?: boolean
 }
 
 export function SaveModal({
-  visible,
-  setVisibility,
-  pending,
+  open,
+  setOpen,
   license,
-  handleSave,
   changes,
-  subscriptions,
-  hasError,
+  showSubscriptionOptions,
 }: SaveModalProps) {
-  const { showSkipCheckout } = useContext(SaveContext)
+  const { handleSave, pending, hasError } = useHandleSave(
+    open,
+    showSubscriptionOptions
+  )
+  const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
   const [agreement, setAgreement] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
-  const [autoCheckout, setAutoCheckout] = useState(false)
-  const [changesText, setChangesText] = useState(changes?.value ?? '')
+  const [skipReview, setSkipReview] = useState(false)
+  const [changesText, setChangesText] = useState(changes?.value ?? '?')
   const [fireSave, setFireSave] = useState(false)
+  const [highlightMissingFields, setHighlightMissingFields] = useState(false)
+  const { lang } = useInstanceData()
+  const defaultLicenseAgreement =
+    useLicensesFetch(lang).data?.license.defaultLicense.agreement
 
   const licenseAccepted = !license || agreement
   const changesFilled = !changes || changesText
   const maySave = licenseAccepted && changesFilled
-  const buttonDisabled = !maySave || pending
-  const isOnlyText = !showSkipCheckout && !subscriptions && !license && !changes
+  const showSkipCheckout = userCanSkipReview && entityNeedsReview
+  const isOnlyText =
+    !showSkipCheckout && !showSubscriptionOptions && !license && !changes
 
   useEffect(() => {
     if (fireSave) {
-      handleSave(notificationSubscription, emailSubscription, autoCheckout)
+      handleSave(notificationSubscription, emailSubscription, skipReview)
       setFireSave(false)
     }
   }, [
-    autoCheckout,
+    skipReview,
     emailSubscription,
     fireSave,
     handleSave,
     notificationSubscription,
   ])
+
+  useEffect(() => {
+    // make sure generated change text is used
+    if (!changesText) setChangesText(changes?.value ?? '')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -64,9 +79,9 @@ export function SaveModal({
 
   return (
     <ModalWithCloseButton
-      isOpen={visible}
+      isOpen={open}
       onCloseClick={() => {
-        setVisibility(false)
+        setOpen(false)
       }}
       title={edtrIo.save}
     >
@@ -83,7 +98,12 @@ export function SaveModal({
       {isOnlyText ? null : (
         <style jsx global>{`
           .ReactModal__Content {
-            @apply mt-8 overflow-y-scroll top-0 translate-y-0 max-h-full bottom-4;
+            overflow-y: auto;
+            top: 0;
+            bottom: 1rem;
+            margin-top: 2rem;
+            transform: translate(-50%, 0);
+            max-height: 100%;
           }
         `}</style>
       )}
@@ -95,27 +115,35 @@ export function SaveModal({
       <div className="mt-4 text-right mx-side">
         <button
           className="serlo-button-transparent"
-          onClick={() => {
-            setVisibility(false)
-          }}
+          onClick={() => setOpen(false)}
         >
           {edtrIo.cancel}
         </button>
         <button
           onClick={() => {
-            changes?.set(changesText)
-            setFireSave(true)
+            if (maySave) {
+              changes?.set(changesText)
+              setFireSave(true)
+            } else {
+              setHighlightMissingFields(true)
+              showToastNotice(
+                loggedInData!.strings.mutations.errors.valueMissing,
+                'warning'
+              )
+            }
           }}
           className={clsx(
             'serlo-button ml-2',
-            buttonDisabled
-              ? 'cursor-default text-gray-300'
-              : 'serlo-button-green'
+            pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
-          disabled={buttonDisabled}
+          disabled={pending}
           title={getSaveHint()}
         >
-          {pending ? edtrIo.saving : edtrIo.save}
+          {pending
+            ? edtrIo.saving
+            : (showSkipCheckout && skipReview) || !showSkipCheckout
+            ? edtrIo.save
+            : edtrIo.saveWithReview}
         </button>
       </div>
     )
@@ -139,7 +167,7 @@ export function SaveModal({
         {edtrIo.errorSaving}
         <br />
         {edtrIo.saveLocallyAndRefresh}
-        <SaveLocalButton visible={visible} />
+        <LocalStorageButton open={open} />
       </StaticInfoPanel>
     )
   }
@@ -147,8 +175,13 @@ export function SaveModal({
   function renderChanges() {
     if (!changes) return null
     return (
-      <label className="font-bold">
-        {edtrIo.changes}
+      <label
+        className={clsx(
+          'font-bold',
+          highlightMissingFields && !changesFilled && 'bg-red-100'
+        )}
+      >
+        {edtrIo.changes} <span className="font-bold text-red-500">*</span>
         <textarea
           value={changesText}
           onChange={(e) => {
@@ -157,7 +190,7 @@ export function SaveModal({
           }}
           className={clsx(
             'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-brand-150 border-2 border-brand-150 focus-within:outline-none focus-within:border-brand-light'
+            'bg-yellow-200 border-2 border-yellow-200 focus-within:outline-none focus-within:border-truegray-400'
           )}
         />
       </label>
@@ -170,11 +203,8 @@ export function SaveModal({
       <label>
         <input
           type="checkbox"
-          checked={autoCheckout}
-          onChange={(e) => {
-            const { checked } = e.target as HTMLInputElement
-            setAutoCheckout(checked)
-          }}
+          checked={skipReview}
+          onChange={({ target }) => setSkipReview(target.checked)}
         />{' '}
         {edtrIo.skipReview}
       </label>
@@ -184,12 +214,20 @@ export function SaveModal({
   function renderLicense() {
     if (!license) return null
 
-    const licenseAgreement = license.agreement.value.replace(
-      /<a href/g,
-      '<a target="_blank" href'
-    )
+    const licenseAgreement =
+      license && license.defined
+        ? license.agreement.value.replace(/<a href/g, '<a target="_blank" href')
+        : defaultLicenseAgreement
+
+    if (!licenseAgreement) return null
+
     return (
-      <label className="block pb-2">
+      <label
+        className={clsx(
+          'block pb-2',
+          highlightMissingFields && !licenseAccepted && 'bg-red-100'
+        )}
+      >
         <input
           type="checkbox"
           checked={agreement}
@@ -199,22 +237,16 @@ export function SaveModal({
           }}
         />{' '}
         <span
-          className="license-wrapper"
+          className="license-wrapper [&_a]:!text-brand hover:[&_a]:underline"
           dangerouslySetInnerHTML={{ __html: licenseAgreement }}
-        />
-        <style jsx global>
-          {`
-            .license-wrapper a {
-              @apply !text-brand hover:underline;
-            }
-          `}
-        </style>
+        />{' '}
+        <span className="font-bold text-red-500">*</span>
       </label>
     )
   }
 
   function renderSubscription() {
-    if (!subscriptions) return null
+    if (!showSubscriptionOptions) return null
     return (
       <>
         <label className="block pb-2">
@@ -242,4 +274,24 @@ export function SaveModal({
       </>
     )
   }
+}
+
+const licensesQuery = gql`
+  query defaultLicenseAgreement($instance: Instance!) {
+    license {
+      defaultLicense(instance: $instance) {
+        agreement
+      }
+    }
+  }
+`
+
+function useLicensesFetch(instance: string) {
+  return useGraphqlSwr<DefaultLicenseAgreementQuery>({
+    query: licensesQuery,
+    variables: { instance },
+    config: {
+      refreshInterval: 24 * 60 * 60 * 1000, // day
+    },
+  })
 }

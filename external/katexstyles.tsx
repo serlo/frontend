@@ -23,6 +23,7 @@ export const KaTeXStyles = () => (
       height: 1px;
       width: 1px;
       overflow: hidden;
+      user-select: none;
     }
     .katex .katex-html {
       /* \newline is an empty block at top level, between .base elements */

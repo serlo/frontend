@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect, KeyboardEvent } from 'react'
@@ -84,6 +84,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       | KeyboardEvent<HTMLInputElement>
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
+    event.preventDefault()
     submitEvent('quickbar-direct-hit')
     const url = `/${id}`
 
@@ -95,18 +96,18 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     {
-      if (e.key == 'Escape') {
+      if (e.key === 'Escape') {
         setQuery('')
       }
-      if (e.key == 'ArrowDown' || e.key == 'ArrowUp' || e.key == 'Enter') {
-        if (e.key == 'ArrowDown' && sel < results.length) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
+        if (e.key === 'ArrowDown' && sel < results.length) {
           setSel(sel + 1)
         }
-        if (e.key == 'ArrowUp' && sel >= 0) {
+        if (e.key === 'ArrowUp' && sel >= 0) {
           setSel(sel - 1)
         }
-        if (e.key == 'Enter') {
-          if (sel == results.length) goToSearch()
+        if (e.key === 'Enter') {
+          if (sel === results.length) goToSearch()
           if (sel >= 0 && sel < results.length) {
             goToResult(results[sel].entry.id, e)
           }
@@ -131,7 +132,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     return (
       <input
         type="text"
-        className="border-2 border-brand-150 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
+        className="border-2 border-brand-200 rounded-3xl pl-5 pr-12 h-12 w-full align-end hover:shadow focus:shadow outline-none"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder ?? '... heute lerne ich'}
@@ -155,7 +156,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
           }, 0)
         }}
       >
-        <FaIcon icon={faTimes} />
+        <FaIcon icon={faXmark} />
       </div>
     )
   }
@@ -176,14 +177,15 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                 key={i}
                 className="serlo-link cursor-pointer hover:no-underline group"
                 onClick={(e) => goToResult(x.entry.id, e)}
+                href={`/${x.entry.id}`}
               >
-                <p className={clsx('my-2', { 'bg-brand-50': i == sel })}>
+                <p className={clsx('my-2', { 'bg-brand-50': i === sel })}>
                   <span className="text-sm text-gray-700">
                     {x.entry.path.join(' > ')}
                     {x.entry.path.length > 0 ? ' > ' : ''}
                   </span>
 
-                  <span className="text-lg text-brand group-hover:underline">
+                  <span className="text-lg text-brand-700 group-hover:underline">
                     {x.entry.isTax ? (
                       <>{x.entry.title}&nbsp;&gt;</>
                     ) : (
@@ -195,7 +197,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
             ))}
             <p
               className={clsx('text-lg mt-2 text-gray-800', {
-                'bg-brand-50': sel == results.length,
+                'bg-brand-50': sel === results.length,
               })}
             >
               <a

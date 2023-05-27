@@ -1,69 +1,68 @@
-import { ReactNode } from 'react'
+import { useRouter } from 'next/router'
 
-import { Lazy } from './lazy'
 import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { FrontendImgNode } from '@/data-types'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import type { FrontendImgNode } from '@/frontend-node-types'
+import { hasVisibleContent } from '@/helper/has-visible-content'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 interface ImageProps {
   element: FrontendImgNode
-  path: NodePath
   extraInfo?: JSX.Element
   renderNested: RenderNestedFunction
 }
 
-export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
+export function Image({ element, extraInfo, renderNested }: ImageProps) {
+  const router = useRouter()
   const { strings } = useInstanceData()
-  const wrapInA = (comp: ReactNode) => {
-    if (element.href) {
-      // needs investigation if this could be simplified
-      return (
-        <Link
-          className="w-full block"
-          href={element.href}
-          path={path}
-          noExternalIcon
-        >
-          {comp}
-        </Link>
-      )
-    }
-    return comp
-  }
+  const { alt, href, maxWidth, src, caption } = element
+
+  const semanticNameSource =
+    alt && alt.length > 3 ? alt : router.asPath.split('/').pop()
+  const semanticName = semanticNameSource?.replace(/[^\w+]/g, '')
+  const semanticSrc =
+    semanticName && semanticName.length > 3
+      ? src.replace('/image.', `/${semanticName}.`)
+      : src
 
   return (
-    <div
+    <figure
       className="serlo-image-centered"
       itemScope
       itemType="http://schema.org/ImageObject"
     >
-      <div
-        style={element.maxWidth ? { maxWidth: element.maxWidth } : {}}
-        className="mx-auto"
-      >
-        {wrapInA(
-          <Lazy>
-            <img
-              className="serlo-img"
-              src={element.src}
-              alt={element.alt || strings.content.imageAltFallback}
-              itemProp="contentUrl"
-            />
-          </Lazy>
+      <div style={maxWidth ? { maxWidth: maxWidth } : {}} className="mx-auto">
+        {href ? (
+          <Link className="w-full block" href={href} noExternalIcon>
+            {renderImage()}
+          </Link>
+        ) : (
+          renderImage()
         )}
         {renderCaption()}
         {extraInfo ?? null}
       </div>
-    </div>
+    </figure>
   )
 
-  function renderCaption() {
-    if (!element.caption) return null
+  function renderImage() {
     return (
-      <div className="italic mt-3">
-        {renderNested(element.caption, 'caption')}
-      </div>
+      <img
+        className="serlo-img"
+        src={semanticSrc}
+        alt={alt || strings.content.imageAltFallback}
+        itemProp="contentUrl"
+        loading="lazy"
+      />
+    )
+  }
+
+  function renderCaption() {
+    if (!caption || !hasVisibleContent(caption)) return null
+    return (
+      <figcaption className="italic mt-3">
+        {renderNested(caption, 'caption')}
+      </figcaption>
     )
   }
 }

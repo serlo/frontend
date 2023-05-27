@@ -5,10 +5,12 @@ import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
+import { UuidType } from '@/data-types'
 import {
   featuredContent,
   FeaturedContentData,
 } from '@/data/de/de-subject-landing-data'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { shuffleArray } from '@/helper/shuffle-array'
@@ -45,17 +47,16 @@ export function SubjectLandingFeatured({
   function renderFeaturedBox(data: FeaturedContentData, index: number) {
     return (
       <Link
+        key={data.title}
         className={clsx(
           'text-brand hover:no-underline box-border',
           'p-2.5 leading-cozy',
-          'rounded hover:shadow-menu hover:text-truegray-700',
+          'rounded hover:shadow-menu hover:text-almost-black',
           'mb-4 mx-2 w-36 mobile:w-52 lg:w-44 group xl:w-48 transition-all text-left',
           'relative',
           index >= maxOnMobile ? 'hidden mobile:block' : ''
         )}
         href={data.url}
-        key={data.title}
-        path={[]}
       >
         <div className="mb-2.5 mr-5 bg-brand-100 group-hover:bg-white rounded-lg transition-all">
           {data.img ? (
@@ -84,14 +85,14 @@ export function SubjectLandingFeatured({
         <h4 className="font-bold text-xl mx-0 mt-1 mb-10 break-normal special-hyphens-auto">
           {data.title}
         </h4>
-        <span className="block mt-1 font-sm text-brand-lighter absolute bottom-2">
+        <span className="block mt-1 font-sm text-brand-400 absolute bottom-2">
           {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
         </span>
       </Link>
     )
   }
 
-  function renderTypeIcon(type: string) {
+  function renderTypeIcon(type: UuidType | TaxonomyTermType) {
     const icon = getIconByTypename(type)
     return <FaIcon icon={icon} />
   }

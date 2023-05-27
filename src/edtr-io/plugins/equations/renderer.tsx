@@ -1,8 +1,7 @@
-import { useScopedStore } from '@edtr-io/core'
 import { MathRenderer } from '@edtr-io/math'
-import { isEmpty } from '@edtr-io/store'
+import { store, selectIsDocumentEmpty } from '@edtr-io/store'
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
+import { Fragment } from 'react'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
@@ -31,11 +30,10 @@ export const TransformTd = styled(MathTd)({
   paddingLeft: '5px',
 })
 
-export const ExplanationTr = styled.tr({
-  color: '#688312',
-  div: {
-    margin: 0,
-  },
+export const ExplanationTr = styled.tr({ div: { margin: 0 } })
+export const FirstExplanationTr = styled(ExplanationTr)({
+  textAlign: 'center',
+  div: { margin: 0 },
 })
 
 export enum TransformationTarget {
@@ -44,7 +42,6 @@ export enum TransformationTarget {
 }
 
 export function EquationsRenderer({ state }: EquationsProps) {
-  const store = useScopedStore()
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
   )
@@ -58,7 +55,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
           {renderFirstExplanation()}
           {state.steps.map((step, row) => {
             return (
-              <React.Fragment key={row}>
+              <Fragment key={row}>
                 <tr>
                   <LeftTd className={tdPadding}>
                     {step.left.value ? (
@@ -88,7 +85,10 @@ export function EquationsRenderer({ state }: EquationsProps) {
                     ) : null}
                   </TransformTd>
                 </tr>
-                {isEmpty(step.explanation.id)(store.getState()) ? null : (
+                {selectIsDocumentEmpty(
+                  store.getState(),
+                  step.explanation.id
+                ) ? null : (
                   <ExplanationTr>
                     <td />
                     {renderDownArrow()}
@@ -97,7 +97,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
                     </td>
                   </ExplanationTr>
                 )}
-              </React.Fragment>
+              </Fragment>
             )
           })}
         </tbody>
@@ -106,15 +106,16 @@ export function EquationsRenderer({ state }: EquationsProps) {
   )
 
   function renderFirstExplanation() {
-    if (isEmpty(state.firstExplanation.id)(store.getState())) return
+    if (selectIsDocumentEmpty(store.getState(), state.firstExplanation.id))
+      return
 
     return (
       <>
-        <ExplanationTr>
+        <FirstExplanationTr>
           <td colSpan={3} className={tdPadding}>
             {state.firstExplanation.render()}
           </td>
-        </ExplanationTr>
+        </FirstExplanationTr>
         <tr style={{ height: '30px' }}>
           <td />
           {renderDownArrow()}
@@ -140,7 +141,7 @@ export function renderDownArrow() {
         >
           <path
             d="M 0,0 l 10,5 l -10,5"
-            stroke="#688312"
+            stroke="#000"
             stroke-width="2"
             fill="none"
             vector-effect="non-scaling-size"
@@ -153,7 +154,7 @@ export function renderDownArrow() {
         y1="0%"
         x2="10"
         y2="99%"
-        stroke="#688312"
+        stroke="#000"
         stroke-width="2"
         marker-end="url(#arrow)"
         vector-effect="non-scaling-stroke"

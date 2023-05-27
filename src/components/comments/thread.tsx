@@ -12,6 +12,7 @@ interface ThreadProps {
   renderReplyForm?: (threadId: string) => ReactNode
   toggleChildren?: (threadId: string) => void
   highlight: (o: number) => void
+  noScroll?: boolean
 }
 
 export function Thread({
@@ -21,6 +22,7 @@ export function Thread({
   highlight,
   toggleChildren,
   highlightedCommentId,
+  noScroll,
 }: ThreadProps) {
   const { strings } = useInstanceData()
 
@@ -91,6 +93,7 @@ export function Thread({
           isParent={isParent}
           isHighlight={isHighlight}
           highlight={highlight}
+          noScroll={noScroll}
         />
       )
     })

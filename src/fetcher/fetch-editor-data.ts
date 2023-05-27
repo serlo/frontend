@@ -9,8 +9,9 @@ import {
 import { dataQuery } from './query'
 import { MainUuidType } from './query-types'
 import { revisionQuery } from './revision/query'
+import { testAreaId } from './testArea'
 import { endpoint } from '@/api/endpoint'
-import { BreadcrumbsData } from '@/data-types'
+import { BreadcrumbsData, UuidType, UuidWithRevType } from '@/data-types'
 import {
   editorResponseToState,
   isError,
@@ -21,10 +22,11 @@ import { parseLanguageSubfolder } from '@/helper/feature-i18n'
 
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
-  type: string
+  type: UuidWithRevType
   converted?: boolean
-  needsReview: boolean
-  id: number
+  entityNeedsReview: boolean
+  id?: number // only for existing
+  taxonomyParentId?: number // only for new
   errorType: 'none'
   breadcrumbsData?: BreadcrumbsData | null
 }
@@ -32,6 +34,12 @@ export interface EditorPageData {
 export interface EditorFetchErrorData {
   errorType: 'failed-fetch'
 }
+
+const noReviewTypes: UuidWithRevType[] = [
+  UuidType.TaxonomyTerm,
+  UuidType.Page,
+  UuidType.User,
+]
 
 export async function fetchEditorData(
   localeString: string,
@@ -42,6 +50,9 @@ export async function fetchEditorData(
   const repoId = parseInt(ids[0])
   const revisionId = parseInt(ids[1])
 
+  const raw_alias = '/' + localeString + '/' + repoId.toString()
+  const { alias, instance } = parseLanguageSubfolder(raw_alias)
+
   if (revisionId && !isNaN(revisionId)) {
     const { uuid } = await request<
       RevisionUuidQuery,
@@ -51,9 +62,6 @@ export async function fetchEditorData(
     })
     data = revisionResponseToResponse(uuid)
   } else {
-    const raw_alias = '/' + localeString + '/' + repoId.toString()
-    const { alias, instance } = parseLanguageSubfolder(raw_alias)
-
     const { uuid } = await request<MainUuidQuery>(endpoint, dataQuery, {
       alias: { instance, path: alias },
     })
@@ -64,25 +72,23 @@ export async function fetchEditorData(
 
   const result = editorResponseToState(data)
 
-  const breadcrumbsData = createBreadcrumbs(data)
+  const breadcrumbsData = createBreadcrumbs(data, instance)
 
-  const isSandbox =
-    breadcrumbsData &&
-    breadcrumbsData.filter(
-      (entry) => entry.url == '/community/106082/sandkasten'
-    ).length > 0
+  const isTestArea =
+    breadcrumbsData && breadcrumbsData.some((entry) => entry.id === testAreaId)
 
-  const noReviewTypes = ['TaxonomyTerm', 'Page', 'User']
-  const typeNeedsReview = !noReviewTypes.includes(data.__typename)
-  const needsReview = !isSandbox && typeNeedsReview
+  const typeNeedsReview = !noReviewTypes.includes(
+    data.__typename as UuidWithRevType
+  )
+  const entityNeedsReview = !isTestArea && typeNeedsReview
 
   if (isError(result)) {
     throw new Error(result.error)
   } else {
     return {
       ...result,
-      type: data.__typename,
-      needsReview,
+      type: data.__typename as UuidWithRevType,
+      entityNeedsReview,
       id: repoId,
       errorType: 'none',
       breadcrumbsData: breadcrumbsData ?? null,

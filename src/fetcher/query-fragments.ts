@@ -81,11 +81,12 @@ export const sharedEventFragments = gql`
     ... on CreateCommentNotificationEvent {
       comment {
         id
+        content
       }
       thread {
         id
         title
-        comments(first: 1) {
+        thread: comments(first: 1) {
           nodes {
             id
           }
@@ -134,7 +135,7 @@ export const sharedEventFragments = gql`
     ... on CreateThreadNotificationEvent {
       thread {
         id
-        comments(first: 1) {
+        thread: comments(first: 1) {
           nodes {
             id
             content
@@ -201,7 +202,7 @@ export const sharedEventFragments = gql`
       archived
       thread {
         id
-        comments(first: 1) {
+        thread: comments(first: 1) {
           nodes {
             id
           }
@@ -281,6 +282,7 @@ export const sharedExerciseFragments = gql`
     trashed
     date
     currentRevision {
+      id
       content
       date
     }
@@ -320,6 +322,60 @@ export const sharedPathFragments = gql`
         label
         url
         id
+      }
+    }
+  }
+`
+
+// only 10 levels
+export const sharedTaxonomyParents = gql`
+  fragment pathToRoot on TaxonomyTerm {
+    title
+    alias
+    id
+    parent {
+      title
+      alias
+      id
+      parent {
+        title
+        alias
+        id
+        parent {
+          title
+          alias
+          id
+          parent {
+            title
+            alias
+            id
+            parent {
+              title
+              alias
+              id
+              parent {
+                title
+                alias
+                id
+                parent {
+                  title
+                  alias
+                  id
+                  parent {
+                    title
+                    alias
+                    id
+                    parent {
+                      title
+                      alias
+                      id
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }

@@ -1,4 +1,4 @@
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt'
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '../fa-icon'
 
@@ -7,7 +7,7 @@ export function ExternalLink() {
     <>
       {' '}
       <FaIcon
-        icon={faExternalLinkAlt}
+        icon={faUpRightFromSquare}
         style={{ verticalAlign: 0, fontSize: '0.75em' }}
       />
     </>

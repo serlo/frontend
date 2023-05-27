@@ -5,19 +5,20 @@ import Head from 'next/head'
 import { MouseEvent, useRef, useState } from 'react'
 
 import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
-import { useAuthentication } from '@/auth/use-authentication'
 import { useCanDo } from '@/auth/use-can-do'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { TimeAgo } from '@/components/time-ago'
 import { ProfileRoles } from '@/components/user/profile-roles'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { FrontendContentNode, UserPage } from '@/data-types'
+import { UserPage } from '@/data-types'
 import { convertState } from '@/fetcher/convert-state'
-import { sharedUserFragment } from '@/fetcher/user/query'
+import { PotentialSpamUsersQuery } from '@/fetcher/graphql-types/operations'
+import { sharedUserFragments } from '@/fetcher/user/query'
 import { isMac } from '@/helper/client-detection'
-import { mutationFetch } from '@/helper/mutations/helper'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useMutationFetch } from '@/mutations/helper/use-mutation-fetch'
 import { renderArticle } from '@/schema/article-renderer'
 
 const ContentPage: NextPage = () => {
@@ -48,7 +49,7 @@ const titles = [
 ]
 
 const BotHunt = () => {
-  const auth = useAuthentication()
+  const mutationFetch = useMutationFetch()
   const [removedIds, setRemovedIds] = useState<number[]>([])
   const manualInputRef = useRef<HTMLInputElement>(null)
 
@@ -58,16 +59,17 @@ const BotHunt = () => {
   const canDo = useCanDo()
   const canDelete = canDo(User.deleteBot)
 
+  const { lang } = useInstanceData()
+
   const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const { mutations } = loggedInData.strings
+  if (!loggedInData) return <>log in first</>
 
   async function remove(id: number) {
     const input = {
       botIds: [id],
     }
 
-    const success = await mutationFetch(auth, mutation, input, mutations.errors)
+    const success = await mutationFetch(mutation, input)
     if (success) {
       setRemovedIds([...removedIds, id])
       showToastNotice(`# ${id} removed 💥`, 'warning')
@@ -191,9 +193,9 @@ const BotHunt = () => {
               }
               .buttons a {
                 text-decoration: underline;
-                &:hover {
-                  text-decoration: none;
-                }
+              }
+              .buttons a:hover {
+                text-decoration: none;
               }
             `}</style>
           </li>
@@ -240,10 +242,10 @@ const BotHunt = () => {
         <style jsx>{`
           a {
             text-decoration: underline;
-            &:hover {
-              text-decoration: none;
-              color: #f00;
-            }
+          }
+          a:hover {
+            text-decoration: none;
+            color: #f00;
           }
         `}</style>
       </>
@@ -264,10 +266,8 @@ const BotHunt = () => {
     )
   }
 
-  function renderRoles(roles: UserPage['userData']['roles']) {
-    // @ts-expect-error mistreating types here, sorry, not sorry.
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const nodes = roles.nodes as UserPage['userData']['roles']
+  function renderRoles(roles: Node['roles']) {
+    const nodes = roles.nodes
 
     if (nodes.length === 1) {
       return null
@@ -275,13 +275,16 @@ const BotHunt = () => {
 
     return (
       <span className="block">
-        <ProfileRoles roles={nodes} />
+        <ProfileRoles
+          roles={nodes.map((node) => {
+            return { role: node.role, instance: lang }
+          })}
+        />
       </span>
     )
   }
 
-  function renderDescription(description?: FrontendContentNode[] | null) {
-    const stringDescription = description as unknown as string
+  function renderDescription(stringDescription?: string | null) {
     if (!stringDescription || stringDescription === 'NULL') return null
     const desc = convertState(stringDescription)
 
@@ -374,16 +377,21 @@ const mutation = gql`
   }
 `
 
+type Node =
+  PotentialSpamUsersQuery['user']['potentialSpamUsers']['nodes'][number]
+
 function usePotentialSpamUsersFetch() {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  return useGraphqlSwrPaginationWithAuth<UserPage['userData']>({
+  return useGraphqlSwrPaginationWithAuth<Node>({
     query: potentialSpamUsersQuery,
     variables: { first: 20 },
     config: {
       refreshInterval: 10 * 60 * 1000, // 10min
     },
     getConnection(data) {
-      return (data.user as { potentialSpamUsers: object }).potentialSpamUsers
+      return (
+        data.user as { potentialSpamUsers: PotentialSpamUsersQuery['user'] }
+      ).potentialSpamUsers
     },
   })
 }
@@ -405,5 +413,5 @@ const potentialSpamUsersQuery = gql`
     }
   }
 
-  ${sharedUserFragment}
+  ${sharedUserFragments}
 `

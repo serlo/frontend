@@ -35,7 +35,7 @@ export function CommunityWall() {
     <section className="overflow-hidden">
       <h3
         className={clsx(
-          'text-center text-4xl text-truegray-700 font-bold',
+          'text-center text-4xl text-almost-black font-bold',
           'leading-cozy tracking-tight',
           'max-w-2xl mt-32 mx-auto relative z-10 px-2'
         )}
@@ -57,7 +57,7 @@ export function CommunityWall() {
       <div className="mt-16 z-10 flex justify-center relative">
         <div className="group text-center">
           <Link
-            className="serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline"
+            className="serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline"
             href="/mitmachen"
           >
             Magst du mitmachen?

@@ -1,4 +1,3 @@
-import { useScopedSelector } from '@edtr-io/core'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -7,9 +6,9 @@ import {
   string,
   optional,
 } from '@edtr-io/plugin'
-import { isEmpty } from '@edtr-io/store'
-import { Icon, faExternalLinkAlt, styled } from '@edtr-io/ui'
-import * as React from 'react'
+import { selectIsDocumentEmpty, useAppSelector } from '@edtr-io/store'
+import { Icon, styled } from '@edtr-io/ui'
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
 import { InlineInput } from './helpers/inline-input'
 import { InlineSettings } from './helpers/inline-settings'
@@ -43,7 +42,9 @@ const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
 
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
-  const hasStrategy = !useScopedSelector(isEmpty(strategy.id))
+  const hasStrategy = !useAppSelector((state) =>
+    selectIsDocumentEmpty(state, strategy.id)
+  )
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -115,7 +116,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   rel="noopener noreferrer"
                 >
                   <OpenInNewTab title={editorStrings.solution.openArticleTab}>
-                    <Icon icon={faExternalLinkAlt} />
+                    <Icon icon={faUpRightFromSquare} />
                   </OpenInNewTab>
                 </a>
               </InlineSettings>

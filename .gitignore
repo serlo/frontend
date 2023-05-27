@@ -18,8 +18,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Environment Variables
-.env
-.env.build
+.env*.local
+prisma/.env
 
 .now
 .vercel
@@ -35,3 +35,6 @@ tsconfig.tsbuildinfo
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# asdf-vm
+.tool-versions

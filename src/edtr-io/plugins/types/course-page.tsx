@@ -1,10 +1,11 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import * as React from 'react'
+import { useEffect } from 'react'
 
 import { entity, editorContent, HeaderInput, entityType } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const coursePageTypeState = entityType(
   {
@@ -35,7 +36,7 @@ function CoursePageTypeEditor(
 ) {
   const { title, content, icon } = props.state
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!['explanation', 'question', 'play'].includes(icon.value)) {
       icon.set('explanation')
     }
@@ -48,10 +49,11 @@ function CoursePageTypeEditor(
   return (
     <article>
       {props.renderIntoToolbar(
-        <RevisionHistoryLoader
+        <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.CoursePage}
         />
       )}
       <h1>
@@ -69,7 +71,7 @@ function CoursePageTypeEditor(
       </h1>
       {content.render()}
       {props.config.skipControls ? null : (
-        <ToolbarMain subscriptions {...props.state} />
+        <ToolbarMain showSubscriptionOptions {...props.state} />
       )}
     </article>
   )

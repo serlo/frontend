@@ -1,5 +1,7 @@
-import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons/faArrowCircleLeft'
-import { faFolderOpen } from '@fortawesome/free-solid-svg-icons/faFolderOpen'
+import {
+  faArrowCircleLeft,
+  faFolderOpen,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { Fragment } from 'react'
 
@@ -25,22 +27,16 @@ export function Breadcrumbs({
       {data &&
         data.map((bcEntry, i) => {
           return (
-            <Fragment key={i}>
-              {renderBreadcrumbEntry(bcEntry, i, asBackButton)}
-            </Fragment>
+            <Fragment key={i}>{renderBreadcrumbEntry(bcEntry, i)}</Fragment>
           )
         })}
     </nav>
   )
 
-  function renderBreadcrumbEntry(
-    bcEntry: BreadcrumbEntry,
-    index: number,
-    asBackButon?: boolean
-  ) {
+  function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
     const withRightArrow = /* className={ */ clsx(
       'serlo-button font-normal mb-1 py-0.5',
-      'after:special-content-gt after:absolute after:ml-3 mr-5 after:text-truegray-300'
+      'after:special-content-gt after:absolute after:ml-3 mr-5 after:text-gray-300'
     ) /*}*/
 
     if (bcEntry.ellipsis) {
@@ -64,13 +60,6 @@ export function Breadcrumbs({
               bcEntry.url && 'hover:bg-brand hover:text-white'
             )}
             href={bcEntry.url ?? undefined}
-            path={['breadcrumbs', index]}
-            forceNoCSR={
-              index == 0 && !asBackButon /*
-                API is returning wrong alias for subject landing, let cf worker reroute to correct page
-                remove if fixed in database
-              */
-            }
           >
             {bcEntry.label}
           </Link>
@@ -80,11 +69,10 @@ export function Breadcrumbs({
           <>
             <Link
               className={clsx(
-                'serlo-button py-0.5 bg-brand-150 hover:bg-brand-lighter',
+                'serlo-button py-0.5 bg-brand-200 hover:bg-brand-400',
                 'hover:text-white sm:bg-brand-100 sm:hover:bg-brand'
               )}
               href={bcEntry.url ?? undefined}
-              path={['breadcrumbs', index]}
             >
               <span className="sm:hidden pt-0.25 pr-1">{renderIcon()}</span>
               {!isTaxonomy && (

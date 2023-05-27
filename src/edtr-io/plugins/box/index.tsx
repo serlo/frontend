@@ -18,7 +18,6 @@ export function createBoxState(
     'image',
     'equations',
     'multimedia',
-    'table',
     'serloTable',
     'highlight',
   ])
@@ -28,18 +27,7 @@ export function createBoxState(
     title: child({
       plugin: 'text',
       config: {
-        plugins: {
-          code: true,
-          colors: false,
-          headings: false,
-          katex: true,
-          links: false,
-          lists: false,
-          math: true,
-          paragraphs: false,
-          richText: false,
-          suggestions: false,
-        },
+        formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
       },
     }),

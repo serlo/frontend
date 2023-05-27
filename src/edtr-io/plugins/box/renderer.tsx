@@ -1,5 +1,5 @@
-import { useScopedStore } from '@edtr-io/core'
-import { isEmptyRows } from '@edtr-io/plugin-rows'
+import { selectIsEmptyRows } from '@edtr-io/plugin-rows'
+import { store } from '@edtr-io/store'
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -8,7 +8,6 @@ import { boxTypeStyle, defaultStyle } from '@/components/content/box'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 const types = Object.keys(boxTypeStyle)
 export type BoxType = keyof typeof boxTypeStyle
@@ -20,14 +19,13 @@ export function BoxRenderer(props: BoxProps) {
   const isBlank = typedValue === 'blank'
 
   const style = boxTypeStyle[typedValue]
-  const borderColorClass = hasOwnPropertyTs(style, 'borderColorClass')
+  const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
-  const colorClass = hasOwnPropertyTs(style, 'colorClass')
+  const colorClass = Object.hasOwn(style, 'colorClass')
     ? style.colorClass
     : defaultStyle.colorClass
-  const icon = hasOwnPropertyTs(style, 'icon') ? style.icon : undefined
-  const store = useScopedStore()
+  const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
   const [contentIsEmpty, setContentIsEmpty] = useState(true)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -35,7 +33,8 @@ export function BoxRenderer(props: BoxProps) {
   const editorStrings = loggedInData.strings.editor
 
   const checkContentEmpty = () => {
-    const isEmptyNow = isEmptyRows(content.get())(store.getState()) ?? true
+    const isEmptyNow =
+      selectIsEmptyRows(store.getState(), content.get()) ?? true
     if (isEmptyNow !== contentIsEmpty) setContentIsEmpty(isEmptyNow)
   }
 
@@ -120,14 +119,14 @@ export function BoxRenderer(props: BoxProps) {
     return types.map((boxType) => {
       const typedBoxType = boxType as BoxType
       const listStyle = boxTypeStyle[typedBoxType]
-      const listIcon = hasOwnPropertyTs(listStyle, 'icon')
+      const listIcon = Object.hasOwn(listStyle, 'icon')
         ? listStyle.icon
         : undefined
 
       return (
         <li key={typedBoxType} className="inline-block pr-4 pb-4">
           <button
-            className="serlo-button-light"
+            className="serlo-button-editor-secondary"
             onClick={(event) => {
               event.preventDefault()
               type.set(typedBoxType)
@@ -149,7 +148,7 @@ export function BoxRenderer(props: BoxProps) {
   function renderWarning() {
     return contentIsEmpty ? (
       <div className="text-right mt-1">
-        <span className="bg-amber-100 p-0.5 text-sm">
+        <span className="bg-editor-primary-100 p-0.5 text-sm">
           ⚠️ {editorStrings.box.emptyContentWarning}
         </span>
       </div>

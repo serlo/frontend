@@ -1,7 +1,6 @@
-import { faHeart } from '@fortawesome/free-solid-svg-icons/faHeart'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
+import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { ReactChild, useState, KeyboardEvent } from 'react'
+import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -14,9 +13,9 @@ import { ExternalProvider, useConsent } from '@/helper/use-consent'
 // also borrowed some code
 
 interface PrivacyWrapperProps {
-  children: ReactChild
+  children: JSX.Element
   className?: string
-  placeholder?: ReactChild
+  placeholder?: JSX.Element
   type: 'video' | 'applet' | 'twingle'
   provider: ExternalProvider
   embedUrl?: string
@@ -37,6 +36,7 @@ export function PrivacyWrapper({
   const [showIframe, setShowIframe] = useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
   const { checkConsent, giveConsent } = useConsent()
+  const [consentGiven, setConsentGiven] = useState(false)
 
   const { strings } = useInstanceData()
 
@@ -54,6 +54,16 @@ export function PrivacyWrapper({
       confirmLoad()
     }
   }
+
+  useEffect(() => {
+    const consentGiven = checkConsent(provider)
+    if (isTwingle && twingleCallback && consentGiven) {
+      confirmLoad()
+    }
+    setConsentGiven(consentGiven)
+    // only run on first load
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div
@@ -95,8 +105,8 @@ export function PrivacyWrapper({
             alt={`${strings.content.previewImage} ${provider}`}
           />
         </div>
-        {!checkConsent(provider) && (
-          <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand cursor-default">
+        {!consentGiven && (
+          <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand-700 cursor-default">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (
@@ -108,13 +118,13 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute inset-0 flex justify-around items-center mobile:-top-12 sm:-top-24"
+          className="absolute inset-0 flex justify-around items-center -top-28 mobile:-top-12 sm:-top-24"
           onClick={confirmLoad}
         >
           <button
             className={clsx(
-              'serlo-button-light',
-              'group-hover:bg-brand-light group-hover:text-white'
+              isTwingle ? 'serlo-button-blue' : 'serlo-button-light',
+              'group-hover:bg-brand-500 group-hover:text-white'
             )}
             onKeyDown={onKeyDown}
           >

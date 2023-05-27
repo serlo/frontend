@@ -32,13 +32,18 @@ export function CommentArchive({
       <p className="serlo-p">
         <button
           onClick={toogleShowArchived}
-          onPointerUp={(e) => e.currentTarget.blur()}
           className="serlo-button-light mt-4"
         >
           {replacePlaceholders(strings.comments.showArchived, {
             threads: strings.entities.threads,
           })}{' '}
-          ▾
+          <span
+            className={
+              showArchived ? 'inline-block rotate-180 translate-y-0.5' : ''
+            }
+          >
+            ▾
+          </span>
         </button>
       </p>
       {showArchived && renderThreads()}

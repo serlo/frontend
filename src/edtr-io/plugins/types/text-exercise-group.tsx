@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { AddButton } from '@edtr-io/editor-ui'
 import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import { SemanticSection } from '../helpers/semantic-section'
 import {
@@ -11,15 +10,19 @@ import {
   OptionalChild,
   entityType,
 } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const textExerciseGroupTypeState = entityType(
   {
     ...entity,
     content: editorContent(),
     cohesive: boolean(false),
+    /* cohesive field indicated whether the children of a grouped exercise are cohesive
+    this info might be used in the future, but currently has no effect in the frontend.
+    */
   },
   {
     'grouped-text-exercise': list(serializedChild('type-text-exercise')),
@@ -58,10 +61,11 @@ function TextExerciseGroupTypeEditor(
   return (
     <article className="exercisegroup">
       {props.renderIntoToolbar(
-        <RevisionHistoryLoader
+        <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.ExerciseGroup}
         />
       )}
       <section className="row">
@@ -86,7 +90,7 @@ function TextExerciseGroupTypeEditor(
       <AddButton onClick={() => children.insert()}>
         {editorStrings.textExerciseGroup.addExercise}
       </AddButton>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </article>
   )
 

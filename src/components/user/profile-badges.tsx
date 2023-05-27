@@ -1,11 +1,12 @@
+import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
 
-import { Link } from '../content/link'
 import AuthorBadge from '@/assets-webkit/img/community/badge-author.svg'
 import DonorBadge from '@/assets-webkit/img/community/badge-donor.svg'
 import ReviewerBadge from '@/assets-webkit/img/community/badge-reviewer.svg'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { isDefined } from '@/helper/utils'
 
 export function ProfileBadges({
@@ -90,42 +91,35 @@ export function ProfileBadges({
   }) {
     const content = (
       <>
-        <style jsx>{`
-          .badge-container {
-            margin-right: 30px;
-            width: 65px;
-            :global(> svg) {
-              height: 40px;
-              margin-top: 15px;
-              margin-bottom: 10px;
-            }
-            :global(> *) {
-              display: block;
-              margin-left: auto;
-              margin-right: auto;
-              text-align: center;
-            }
-          }
-        `}</style>
         <div className="badge-container">
           {Badge}
           <p className="text-sm leading-tight">{name}</p>
         </div>
+        <style jsx>{`
+          .badge-container {
+            margin-right: 30px;
+            width: 65px;
+          }
+          .badge-container :global(> svg) {
+            height: 40px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+          }
+          .badge-container :global(> *) {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+          }
+        `}</style>
       </>
     )
-    return (
-      <>
-        {lang === 'de' && anchor ? (
-          <Link
-            unstyled
-            href={`/community/202923/rollen-der-serlo-community#${anchor}`}
-          >
-            {content}
-          </Link>
-        ) : (
-          content
-        )}
-      </>
+    return lang === Instance.De && anchor ? (
+      <NextLink href={`/community/202923/rollen-der-serlo-community#${anchor}`}>
+        {content}
+      </NextLink>
+    ) : (
+      content
     )
   }
 }

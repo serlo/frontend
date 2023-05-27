@@ -1,11 +1,17 @@
-const { tint, lighten } = require('polished')
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
 
 // base colors
 const brand = '#007ec1'
 const brandGreen = '#95bc1a'
-const yellow = '#ffbe5e'
+const sunflower = '#ffbe5e'
+const sunflowerColors = {
+  DEFAULT: sunflower,
+  300: sunflower,
+  200: '#ffdaa3',
+  100: '#fff1db',
+  50: '#fff9f0',
+}
 
 module.exports = {
   mode: 'jit',
@@ -15,25 +21,36 @@ module.exports = {
       colors: {
         brand: {
           DEFAULT: brand,
-          light: tint(0.3, brand), // <- lightBlue
-          lighter: tint(0.55, brand), // <- lighterBlue
-          300: tint(0.73, brand),
-          150: tint(0.85, brand), // <-lightBlueBackground
-          100: tint(0.94, brand), // <- bluewhite
-          50: tint(0.96, brand), // <- lightBackground
+          50: '#f4f9fc',
+          100: '#eff7fb',
+          150: '#e6f2f9',
+          200: '#d9ebf5',
+          300: '#bbdced',
+          400: '#8ec5e2',
+          500: '#51a5d1',
+          600: brand,
+          700: '#0076b9', // slighly darker brand blue for better color contrast with white (for smaller text) and light blue.
         },
         brandgreen: {
           DEFAULT: brandGreen,
-          light: lighten(0.35, brandGreen),
-          lighter: lighten(0.45, brandGreen),
+          50: '#edfac5',
+          100: '#ddf299',
+          200: '#cfed6d',
+          300: '#b9d957',
+          400: '#9fc91c',
+          500: brandGreen,
+          // 600: '#81a317',
+          // 700: '#6d8a13',
+          // 800: '#5b7310',
+          // 900: '#45570c',
+          muted: '#cfe097',
         },
-        truegray: colors.neutral,
+        gray: colors.neutral,
         berry: '#857189',
         newgreen: '#2fceb1',
-        yellow: {
-          DEFAULT: yellow,
-          200: tint(0.75, yellow),
-        },
+        'editor-primary': sunflowerColors,
+        'almost-black': '#404040',
+        yellow: sunflowerColors,
         orange: {
           DEFAULT: colors.orange[900],
           200: colors.orange[200],
@@ -97,7 +114,14 @@ module.exports = {
         'circled-and-arrow':
           "url('/_assets/img/landing/circled_and_arrow.svg')",
         underlined: "url('/_assets/img/landing/underlined.svg')",
+        'underlined-simple': "url('/_assets/img/landing/simple-underline.svg')",
         wiggle: "url('/_assets/img/landing/wiggle.svg')",
+        orangeBow: "url('/_assets/img/landing/about-container.svg')",
+        blueWave: "url('/_assets/img/landing/footer-container.svg')",
+        topWaveFromWhite: "url('/_assets/img/landing/top-wave.svg')",
+      },
+      backgroundSize: {
+        '100%': '100% 100%',
       },
       minHeight: {
         8: '32px',
@@ -129,6 +153,7 @@ module.exports = {
     },
     screens: {
       mobile: '500px',
+      mobileExt: '550px',
       sm: '800px',
       md: '1024px',
       lg: '1216px',
@@ -137,6 +162,7 @@ module.exports = {
     },
   },
   plugins: [
+    require('tailwindcss-animate'),
     plugin(function ({ addUtilities, addComponents }) {
       // Custom utilities all start with `special-*`
       // They use css that is not covered by tailwind
@@ -163,6 +189,9 @@ module.exports = {
         '.special-hyphens-auto': {
           hyphens: 'auto',
         },
+        '.special-hyphens-initial': {
+          hyphens: 'initial',
+        },
         'special-no-page-breaks-inside': {
           'page-break-inside': 'avoid',
         },
@@ -175,22 +204,26 @@ module.exports = {
 }
 
 function extractCSSClasses() {
-  const css = require('fs').readFileSync(
-    require('path').join(
-      __dirname,
-      '/src/assets-webkit/styles/serlo-tailwind.css'
-    ),
-    'utf-8'
-  )
+  try {
+    const css = require('fs').readFileSync(
+      require('path').join(
+        __dirname,
+        '/src/assets-webkit/styles/serlo-tailwind.css'
+      ),
+      'utf-8'
+    )
 
-  const regex = /\.serlo\-[^ \:\{\n,]+/gm
-  let m = ''
-  const components = {}
+    const regex = /\.serlo\-[^ \:\{\n,]+/gm
+    let m = ''
+    const components = {}
 
-  while ((m = regex.exec(css)) !== null) {
-    // The result can be accessed through the `m`-variable.
-    components[m[0]] = {}
+    while ((m = regex.exec(css)) !== null) {
+      // The result can be accessed through the `m`-variable.
+      components[m[0]] = {}
+    }
+
+    return components
+  } catch (error) {
+    // don't run on client, no problem
   }
-
-  return components
 }

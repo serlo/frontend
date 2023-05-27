@@ -3,8 +3,8 @@ import { gql } from 'graphql-request'
 import {
   sharedExerciseFragments,
   sharedLicenseFragments,
-  sharedPathFragments,
   sharedRevisionFragments,
+  sharedTaxonomyParents,
 } from './query-fragments'
 
 export const dataQuery = gql`
@@ -22,15 +22,12 @@ export const dataQuery = gql`
       }
 
       ... on AbstractTaxonomyTermChild {
-        ...taxonomyTerms
+        ...taxonomyTermsV2
       }
 
       ... on Page {
         currentRevision {
           ...pageRevision
-        }
-        navigation {
-          ...path
         }
       }
 
@@ -100,7 +97,7 @@ export const dataQuery = gql`
               trashed
             }
           }
-          ...taxonomyTerms
+          ...taxonomyTermsV2
           revisions(unrevised: true) {
             totalCount
           }
@@ -108,6 +105,11 @@ export const dataQuery = gql`
       }
 
       ... on Exercise {
+        subject {
+          taxonomyTerm {
+            name
+          }
+        }
         ...exercise
         revisions(unrevised: true) {
           totalCount
@@ -125,6 +127,11 @@ export const dataQuery = gql`
       }
 
       ... on ExerciseGroup {
+        subject {
+          taxonomyTerm {
+            name
+          }
+        }
         date
         currentRevision {
           ...exerciseGroupRevision
@@ -173,7 +180,7 @@ export const dataQuery = gql`
           content
           metaDescription
         }
-        ...taxonomyTerms
+        ...taxonomyTermsV2
       }
 
       ... on TaxonomyTerm {
@@ -188,9 +195,7 @@ export const dataQuery = gql`
         parent {
           id
         }
-        navigation {
-          ...path
-        }
+        ...pathToRoot
         children {
           nodes {
             trashed
@@ -246,12 +251,10 @@ export const dataQuery = gql`
     }
   }
 
-  fragment taxonomyTerms on AbstractTaxonomyTermChild {
+  fragment taxonomyTermsV2 on AbstractTaxonomyTermChild {
     taxonomyTerms {
       nodes {
-        navigation {
-          ...path
-        }
+        ...pathToRoot
       }
     }
   }
@@ -331,7 +334,7 @@ export const dataQuery = gql`
     }
   }
 
-  ${sharedPathFragments}
+  ${sharedTaxonomyParents}
   ${sharedLicenseFragments}
   ${sharedExerciseFragments}
   ${sharedRevisionFragments}

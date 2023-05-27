@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { AddButton } from '@edtr-io/editor-ui'
 import { EditorPlugin, EditorPluginProps, list, string } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import {
   editorContent,
@@ -11,7 +10,7 @@ import {
   OptionalChild,
   entityType,
 } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { RevisionHistoryLoader } from './helpers/content-loaders/revision-history-loader'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -86,7 +85,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       <AddButton onClick={() => children.insert()}>
         {editorStrings.course.addCoursePage}
       </AddButton>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </article>
   )
 }

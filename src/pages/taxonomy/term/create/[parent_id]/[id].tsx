@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
+import { UuidType } from '@/data-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
 interface TaxonomyTermCreateProps {
@@ -19,15 +20,14 @@ export default renderedPageNoHooks<TaxonomyTermCreateProps>(({ parent }) => {
         <MaxWidthDiv>
           <main>
             <AddRevision
-              type="TaxonomyTerm"
-              needsReview={false}
+              type={UuidType.TaxonomyTerm}
+              entityNeedsReview={false}
               id={parent}
               initialState={{
                 plugin: 'type-taxonomy',
                 state: {
                   term: { name: '' },
-                  description:
-                    '{"plugin":"rows","state":[{"plugin":"text","state":[{"type":"p","children":[{}]}]}]}' /*hacky way of building valid empty state*/,
+                  description: '{"plugin":"rows"}',
                 },
               }}
               errorType="none"
@@ -43,7 +43,6 @@ export const getServerSideProps: GetServerSideProps<
   TaxonomyTermCreateProps
 > = async (context) => {
   const parent = parseInt((context.params?.id as string) ?? '')
-
   return {
     props: { parent },
   }

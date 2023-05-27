@@ -1,10 +1,8 @@
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import { faComments } from '@fortawesome/free-solid-svg-icons/faComments'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
+import { faComments, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { Thread as AuthThread } from '@serlo/authorization'
 import { Fragment, useState } from 'react'
 
-import { FaIcon } from '../fa-icon'
+import { FaIcon, FaIconProps } from '../fa-icon'
 import { PleaseLogIn } from '../user/please-log-in'
 import { CommentArchive } from './comment-archive'
 import { CommentForm } from './comment-form'
@@ -17,7 +15,7 @@ import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
 import {
   useCreateThreadMutation,
   useCreateCommentMutation,
-} from '@/helper/mutations/thread'
+} from '@/mutations/thread'
 
 export type ThreadsData = GetCommentsNode[] | GetAllThreadsNode[]
 export type CommentsData =
@@ -34,6 +32,7 @@ export interface CommentAreaProps {
   noForms?: boolean
   highlightedCommentId?: number
   setHighlightedCommentId?: (id: number) => void
+  noScroll?: boolean
 }
 
 export function CommentArea({
@@ -43,18 +42,23 @@ export function CommentArea({
   noForms,
   highlightedCommentId,
   setHighlightedCommentId,
+  noScroll,
 }: CommentAreaProps) {
   const { strings } = useInstanceData()
   const auth = useAuthentication()
-  const [showThreadChildren, setShowThreadChildren] = useState<string[]>([])
   const createThread = useCreateThreadMutation()
   const createComment = useCreateCommentMutation()
 
   const canDo = useCanDo()
 
   const showAll =
-    typeof window !== 'undefined' &&
-    window.location.hash.startsWith('#comment-')
+    (typeof window !== 'undefined' &&
+      window.location.hash.startsWith('#comment-')) ||
+    highlightedCommentId !== undefined
+
+  const [showThreadChildren, setShowThreadChildren] = useState<string[]>(
+    showAll ? commentData.active?.map(({ id }) => id) ?? [] : []
+  )
 
   return (
     <>
@@ -68,7 +72,7 @@ export function CommentArea({
   }
 
   function renderContent() {
-    if (!auth.current && commentCount == 0) return null
+    if (!auth && commentCount === 0) return null
 
     return (
       <>
@@ -98,7 +102,7 @@ export function CommentArea({
       <>
         {renderHeading(faQuestionCircle, ` ${strings.comments.question}`)}
         {
-          auth.current === null ? (
+          auth === null ? (
             <PleaseLogIn />
           ) : canDo(AuthThread.createThread) ? (
             <CommentForm
@@ -116,19 +120,19 @@ export function CommentArea({
       <Fragment key={thread.id}>
         <Thread
           thread={thread}
-          showChildren={showAll ? true : showThreadChildren.includes(thread.id)}
+          showChildren={showThreadChildren.includes(thread.id)}
           highlightedCommentId={highlightedCommentId}
           renderReplyForm={renderReplyForm}
           highlight={highlight}
           toggleChildren={onToggleThreadChildren}
+          noScroll={noScroll}
         />
       </Fragment>
     ))
   }
 
   function renderReplyForm(threadId: string) {
-    if (!auth.current || noForms || !canDo(AuthThread.createComment))
-      return null
+    if (!auth || noForms || !canDo(AuthThread.createComment)) return null
     return (
       <CommentForm
         placeholder={strings.comments.placeholderReply}
@@ -158,17 +162,17 @@ export function CommentArea({
     )
   }
 
-  function renderHeading(icon: IconDefinition, text: string) {
+  function renderHeading(icon: FaIconProps['icon'], text: string) {
     return (
       <h2 className="serlo-h2 border-b-0 mt-10">
-        <FaIcon className="text-2.5xl text-brand-lighter" icon={icon} />
+        <FaIcon className="text-2.5xl text-brand-400" icon={icon} />
         {text}
       </h2>
     )
   }
 
   async function onSend(content: string, reply?: boolean, threadId?: string) {
-    if (auth.current === null) return false
+    if (auth === null) return false
 
     if (reply) {
       if (threadId === undefined) return false

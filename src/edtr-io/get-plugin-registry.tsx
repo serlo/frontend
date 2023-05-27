@@ -1,24 +1,25 @@
 import { RowsConfig } from '@edtr-io/plugin-rows'
+import { createIcon } from '@edtr-io/ui'
 import {
-  createIcon,
-  faAnchor,
-  faCaretSquareDown,
-  faCode,
-  faCubes,
-  faEquals,
-  faFilm,
-  faImages,
-  faNewspaper,
-  faParagraph,
-  faPhotoVideo,
-  faQuoteRight,
-  faTable,
-} from '@edtr-io/ui'
-import { faSquare } from '@fortawesome/free-regular-svg-icons/faSquare'
-import { faGripLinesVertical, faUsers } from '@fortawesome/free-solid-svg-icons'
+  faGrip,
+  faGripLinesVertical,
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons'
 
+import IconBox from '@/assets-webkit/img/editor/icon-box.svg'
+import IconEquation from '@/assets-webkit/img/editor/icon-equation.svg'
+import IconFallback from '@/assets-webkit/img/editor/icon-fallback.svg'
+import IconGeogebra from '@/assets-webkit/img/editor/icon-geogebra.svg'
+import IconHighlight from '@/assets-webkit/img/editor/icon-highlight.svg'
+import IconImage from '@/assets-webkit/img/editor/icon-image.svg'
+import IconInjection from '@/assets-webkit/img/editor/icon-injection.svg'
+import IconMultimedia from '@/assets-webkit/img/editor/icon-multimedia.svg'
+import IconSpoiler from '@/assets-webkit/img/editor/icon-spoiler.svg'
+import IconTable from '@/assets-webkit/img/editor/icon-table.svg'
+import IconText from '@/assets-webkit/img/editor/icon-text.svg'
+import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
-import { LoggedInData } from '@/data-types'
+import { LoggedInData, UuidType } from '@/data-types'
 
 export function getPluginRegistry(
   type: string,
@@ -30,98 +31,91 @@ export function getPluginRegistry(
     'text-exercise',
     'text-exercise-group',
   ].includes(type)
-  const isPage = type === 'Page'
+  const isPage = type === UuidType.Page
 
   const registry = [
     {
       name: 'text',
       title: editorStrings.edtrIo.text,
       description: editorStrings.edtrIo.textDesc,
-      icon: createIcon(faParagraph),
-    },
-    {
-      name: 'blockquote',
-      title: editorStrings.edtrIo.blockquoteTitle,
-      description: editorStrings.edtrIo.quoteDescription,
-      icon: createIcon(faQuoteRight),
-    },
-    {
-      name: 'box',
-      title: editorStrings.edtrIo.box,
-      description: editorStrings.edtrIo.boxDesc,
-      icon: createIcon(faSquare),
-    },
-    {
-      name: 'geogebra',
-      title: editorStrings.edtrIo.geogebraTitle,
-      description: editorStrings.edtrIo.geogebraDesc,
-      icon: createIcon(faCubes),
-    },
-    {
-      name: 'highlight', //source code
-      title: editorStrings.edtrIo.highlightTitle,
-      description: editorStrings.edtrIo.highlightDesc,
-      icon: createIcon(faCode),
-    },
-    {
-      name: 'anchor',
-      title: editorStrings.edtrIo.anchor,
-      description: editorStrings.edtrIo.anchorDesc,
-      icon: createIcon(faAnchor),
-    },
-    {
-      name: 'equations',
-      title: editorStrings.edtrIo.equationsTitle,
-      description: editorStrings.edtrIo.equationsDesc,
-      icon: createIcon(faEquals),
+      icon: IconText as React.ComponentType,
     },
     {
       name: 'image',
       title: editorStrings.edtrIo.image,
       description: editorStrings.edtrIo.imageDesc,
-      icon: createIcon(faImages),
-    },
-    {
-      name: 'important', // old "Merksatz"
-      title: editorStrings.edtrIo.importantTitle,
-      description: editorStrings.edtrIo.importantDesc,
-    },
-    {
-      name: 'injection',
-      title: editorStrings.edtrIo.injectionTitle,
-      description: editorStrings.edtrIo.injectionDesc,
-      icon: createIcon(faNewspaper),
+      icon: IconImage as React.ComponentType,
     },
     {
       name: 'multimedia',
       title: editorStrings.edtrIo.multimediaTitle,
       description: editorStrings.edtrIo.multimediaDesc,
-      icon: createIcon(faPhotoVideo),
+      icon: IconMultimedia as React.ComponentType,
     },
     {
       name: 'spoiler',
       title: editorStrings.edtrIo.spoiler,
       description: editorStrings.edtrIo.spoilerDesc,
-      icon: createIcon(faCaretSquareDown),
+      icon: IconSpoiler as React.ComponentType,
     },
     {
-      name: 'table',
-      title: editorStrings.edtrIo.table,
-      description: editorStrings.edtrIo.tableDesc,
-      icon: createIcon(faTable),
+      name: 'box',
+      title: editorStrings.edtrIo.box,
+      description: editorStrings.edtrIo.boxDesc,
+      icon: IconBox as React.ComponentType,
     },
     {
       name: 'serloTable',
       title: editorStrings.edtrIo.serloTable,
       description: editorStrings.edtrIo.serloTableDesc,
-      icon: createIcon(faTable),
+      icon: IconTable as React.ComponentType,
+    },
+    {
+      name: 'injection',
+      title: editorStrings.edtrIo.injectionTitle,
+      description: editorStrings.edtrIo.injectionDesc,
+      icon: IconInjection as React.ComponentType,
+    },
+    {
+      name: 'equations',
+      title: editorStrings.edtrIo.equationsTitle,
+      description: editorStrings.edtrIo.equationsDesc,
+      icon: IconEquation as React.ComponentType,
+    },
+    {
+      name: 'geogebra',
+      title: editorStrings.edtrIo.geogebraTitle,
+      description: editorStrings.edtrIo.geogebraDesc,
+      icon: IconGeogebra as React.ComponentType,
+    },
+    {
+      name: 'highlight', //source code
+      title: editorStrings.edtrIo.highlightTitle,
+      description: editorStrings.edtrIo.highlightDesc,
+      icon: IconHighlight as React.ComponentType,
     },
     {
       name: 'video',
       title: editorStrings.edtrIo.video,
       description: editorStrings.edtrIo.videoDesc,
-      icon: createIcon(faFilm),
+      icon: IconVideo as React.ComponentType,
     },
+    {
+      name: 'anchor',
+      title: editorStrings.edtrIo.anchor,
+      description: editorStrings.edtrIo.anchorDesc,
+      icon: IconFallback as React.ComponentType,
+    },
+    ...(shouldUseFeature('edtrPasteHack')
+      ? [
+          {
+            name: 'pasteHack',
+            title: 'Paste Hack',
+            description: 'hmmm hack',
+            icon: IconFallback as React.ComponentType,
+          },
+        ]
+      : []),
     ...(isExercise
       ? [
           {
@@ -131,7 +125,7 @@ export function getPluginRegistry(
           },
         ]
       : []),
-    ...(isPage && shouldUseFeature('pagePlugins')
+    ...(isPage
       ? [
           {
             name: 'pageLayout',
@@ -145,6 +139,13 @@ export function getPluginRegistry(
             description: 'Only for the teampages',
             icon: createIcon(faUsers),
           },
+          {
+            name: 'pagePartners',
+            title: 'Partner List',
+            description:
+              'Only for partner page (List of partner logos like on de.serlo.org/)',
+            icon: createIcon(faGrip),
+          },
         ]
       : []),
   ]
@@ -153,17 +154,5 @@ export function getPluginRegistry(
     ? registry.filter((plugin) => include.includes(plugin.name))
     : registry
 
-  // Filter old plugins, will be removed completely after migration is done
-  const boxFiltered = filteredRegistry.filter(
-    (plugin) => !['blockquote', 'important'].includes(plugin.name)
-  )
-
-  // Testing new table plugin
-  const showNewTable = shouldUseFeature('tablePlugin')
-
-  const tableFiltered = showNewTable
-    ? boxFiltered.filter((plugin) => plugin.name !== 'table')
-    : boxFiltered.filter((plugin) => plugin.name !== 'serloTable')
-
-  return tableFiltered
+  return filteredRegistry
 }

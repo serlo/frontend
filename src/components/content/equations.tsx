@@ -1,10 +1,13 @@
 import clsx from 'clsx'
-import { shade } from 'polished'
 import { ReactNode, Fragment } from 'react'
 
-import { FrontendContentNode, Sign } from '@/data-types'
+import { renderSignToString } from '@/edtr-io/plugins/equations/sign'
+import {
+  FrontendContentNode,
+  FrontendNodeType,
+  Sign,
+} from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
-import { theme } from '@/theme'
 
 export interface StepProps {
   left: string
@@ -27,8 +30,6 @@ export function Equations({
   renderNested,
   transformationTarget,
 }: EquationProps) {
-  const explanationColor = shade(0.3, theme.colors.brandGreen)
-
   return (
     <div className="overflow-x-auto py-2.5 mx-side mb-7">
       <table>
@@ -70,7 +71,7 @@ export function Equations({
           )}
         </tr>
         {hasContent(step.explanation) && (
-          <tr className="whitespace-normal" style={{ color: explanationColor }}>
+          <tr className="whitespace-normal text-brandgreen-darker">
             <td />
             {renderDownArrow()}
             <td colSpan={2} className="relative -left-side px-1 pt-1 pb-3">
@@ -97,7 +98,11 @@ export function Equations({
     }
 
     function renderFormula(formula: string, key: string) {
-      return renderNested([{ type: 'inline-math', formula }], `step${i}`, key)
+      return renderNested(
+        [{ type: FrontendNodeType.InlineMath, formula }],
+        `step${i}`,
+        key
+      )
     }
   }
 
@@ -107,12 +112,12 @@ export function Equations({
 
     return (
       <>
-        <tr className="whitespace-normal" style={{ color: explanationColor }}>
+        <tr className="whitespace-normal text-brandgreen-darker text-center">
           <td className="relative -left-side pb-4" colSpan={3}>
             {renderNested(firstExplanation, 'firstExplanation')}
           </td>
         </tr>
-        <tr style={{ color: explanationColor }}>
+        <tr className="text-brandgreen-darker">
           <td />
           {renderDownArrow()}
         </tr>
@@ -129,25 +134,8 @@ export function Equations({
   }
 }
 
-function renderSignToString(sign: Sign): string {
-  switch (sign) {
-    case Sign.Equals:
-      return '='
-    case Sign.GreaterThan:
-      return '>'
-    case Sign.GreaterThanOrEqual:
-      return '≥'
-    case Sign.LessThan:
-      return '<'
-    case Sign.LessThanOrEqual:
-      return '≤'
-    case Sign.AlmostEqualTo:
-      return '≈'
-  }
-}
-
 function hasContent(content: FrontendContentNode[]): boolean {
-  if (content[0]?.type == 'slate-container')
+  if (content[0]?.type === 'slate-container')
     return hasContent(content[0].children ?? [])
-  return content.some((node) => node?.children?.length || node.type == 'math')
+  return content.some((node) => node?.children?.length || node.type === 'math')
 }

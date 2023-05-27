@@ -6,29 +6,23 @@ import { useState } from 'react'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
+import {
+  TaxonomyTermType,
+  UuidSimpleQuery,
+} from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 
-// const supportedEntityTypes = [
-//   'Article',
-//   'Course',
-//   'CoursePage',
-//   'Video',
-//   'Exercise',
-//   'ExerciseGroup',
-//   'GroupedExercise',
-//   'TaxonomyTerm',
-// ]
-
 interface UuidUrlInputProps {
-  supportedEntityTypes: string[]
-  supportedTaxonomyTypes: string[]
+  supportedEntityTypes: UuidWithRevType[]
+  supportedTaxonomyTypes: TaxonomyTermType[]
   renderButtons: (
-    typename: string,
+    typename: UuidWithRevType,
     id: number,
     title: string,
-    taxType?: string
+    taxType?: TaxonomyTermType,
+    coursePageId?: number
   ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
@@ -52,7 +46,7 @@ export function UuidUrlInput({
   return (
     <div className="my-4 pt-5 border-t-2">
       <input
-        className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 focus:bg-amber-300 w-72"
+        className="serlo-input-font-reset outline-none rounded-xl placeholder-almost-black bg-editor-primary-200 p-2 focus:bg-editor-primary w-72 font-bold placeholder:font-normal"
         placeholder={modalStrings.placeholder}
         onChange={(event) => {
           if (event.target.value.length === 0) {
@@ -89,28 +83,20 @@ export function UuidUrlInput({
     const { uuid } = data
     if (!uuid) return modalStrings.notFound
 
-    const [id, title, __typename] =
-      uuid.__typename === 'CoursePage'
-        ? [
-            uuid.course?.id,
-            uuid.course?.currentRevision?.title,
-            uuid.__typename,
-          ]
-        : uuid.__typename === 'TaxonomyTerm'
-        ? [uuid.id, uuid.name, uuid.__typename]
-        : uuid.__typename.includes('Exercise')
-        ? [
-            uuid.id,
-            getTranslatedType(strings, uuid.__typename),
-            uuid.__typename,
-          ]
-        : [uuid.id, uuid.currentRevision?.title, uuid.__typename]
+    const title = uuid.__typename.includes(UuidType.Exercise)
+      ? getTranslatedType(strings, uuid.__typename)
+      : uuid.title
 
-    if (!supportedEntityTypes.includes(uuid.__typename))
+    const id =
+      uuid.__typename === UuidType.CoursePage ? uuid.course?.id : uuid.id
+    const coursePageId =
+      uuid.__typename === UuidType.CoursePage ? uuid.id : undefined
+
+    if (!supportedEntityTypes.includes(uuid.__typename as UuidWithRevType))
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
 
     if (
-      hasOwnPropertyTs(uuid, 'type') &&
+      Object.hasOwn(uuid, 'type') &&
       uuid.type &&
       !supportedTaxonomyTypes.includes(uuid.type)
     )
@@ -120,7 +106,7 @@ export function UuidUrlInput({
       return modalStrings.unsupportedId
 
     if (!id) return modalStrings.notFound
-    if (!uuid.__typename.includes('Exercise') && !title)
+    if (!uuid.__typename.includes(UuidType.Exercise) && !title)
       return modalStrings.notFound
 
     return (
@@ -131,13 +117,14 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <Icon icon={getIconByTypename(__typename)} /> {title}
+          <Icon icon={getIconByTypename(uuid.__typename as UuidType)} /> {title}
         </a>
         {renderButtons(
-          uuid.__typename,
+          uuid.__typename as UuidWithRevType,
           id,
           title ?? getTranslatedType(strings, uuid.__typename),
-          hasOwnPropertyTs(uuid, 'type') ? uuid.type : undefined
+          Object.hasOwn(uuid, 'type') ? uuid.type : undefined,
+          coursePageId
         )}
       </>
     )
@@ -145,35 +132,17 @@ export function UuidUrlInput({
 }
 
 const uuidSimpleQuery = gql`
-  query uuidSimpleQuery($id: Int!) {
+  query uuidSimple($id: Int!) {
     uuid(id: $id) {
       id
       __typename
-      ... on Article {
-        currentRevision {
-          title
-        }
-      }
-      ... on Course {
-        currentRevision {
-          title
-        }
-      }
+      title
       ... on CoursePage {
         course {
           id
-          currentRevision {
-            title
-          }
-        }
-      }
-      ... on Video {
-        currentRevision {
-          title
         }
       }
       ... on TaxonomyTerm {
-        name
         type
       }
     }
@@ -181,17 +150,8 @@ const uuidSimpleQuery = gql`
 `
 
 function useSimpleUuidFetch(maybeUuid: null | false | number) {
-  return useGraphqlSwr<{
-    uuid: {
-      id: number
-      __typename: string
-      currentRevision?: { title?: string }
-      course?: { id: number; currentRevision?: { title?: string } }
-      name?: string
-      type?: string
-    }
-  }>({
-    noKey: maybeUuid === false,
+  return useGraphqlSwr<UuidSimpleQuery>({
+    noKey: !maybeUuid,
     query: uuidSimpleQuery,
     variables: { id: maybeUuid },
     config: {

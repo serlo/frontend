@@ -1,10 +1,14 @@
 import { serloDomain } from '../../helper/urls/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [
-    { url: '/23591', title: 'Mathematics', icon: 'math' },
-    { url: '/63179', title: 'Applied Sustainability', icon: 'sustainability' },
+    { url: '/23591/mathematics-homepage', title: 'Mathematics', icon: 'math' },
+    {
+      url: '/63179/applied-sustainability',
+      title: 'Applied Sustainability',
+      icon: 'sustainability',
+    },
   ],
   additionalLinks: [],
 }
@@ -15,9 +19,12 @@ export const headerData: InstanceData['headerData'] = [
     title: 'Subjects',
     icon: 'subject',
     children: [
-      { url: '/63179', title: 'Applied Sustainability' },
-      { url: '/23591', title: 'Mathematics' },
-      { url: '/106103', title: 'Subjects under construction' },
+      { url: '/63179/applied-sustainability', title: 'Applied Sustainability' },
+      { url: '/23591/mathematics-homepage', title: 'Mathematics' },
+      {
+        url: '/community/106103/new-subjects-and-topics',
+        title: 'Subjects under construction',
+      },
     ],
   },
   { url: '/23727', title: 'About Serlo', icon: 'about' },
@@ -33,6 +40,7 @@ export const headerData: InstanceData['headerData'] = [
       },
       { url: 'https://community.serlo.org/', title: 'Chat for authors' },
       { url: '/entity/unrevised', title: 'Unrevised changes' },
+      { url: '/discussions', title: 'List of all comments' },
     ],
   },
 ]
@@ -53,6 +61,10 @@ export const footerData: InstanceData['footerData'] = {
           title: 'API',
           url: `/105250`,
         },
+        {
+          title: 'Serlo Editor',
+          url: `https://en.${serloDomain}/editor`,
+        },
       ],
     },
     {
@@ -61,12 +73,12 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'Newsletter',
           url: 'https://serlo.us7.list-manage.com/subscribe?u=23f4b04bf70ea485a766e532d&amp;id=a7bb2bbc4f',
-          icon: 'newsletter',
+          icon: FooterIcon.newsletter,
         },
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
@@ -94,25 +106,24 @@ export const footerData: InstanceData['footerData'] = {
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'math',
-    rootId: 23591,
+    rootId: 23593,
+    landingUrl: '/23591/mathematics-homepage',
     entries: [
       { title: 'Topics', id: 23593 },
       { title: 'New here?', id: 49386 },
       { title: 'Guidelines', id: 48345 },
-      { title: 'Edit Taxonomy', url: '/taxonomy/term/organize/23593' },
     ],
   },
   {
     // subject: 'music',
     rootId: 48415,
-    entries: [
-      { title: 'Music', id: 48404 },
-      { title: 'Topics', id: 48415 },
-    ],
+    landingUrl: '/48404/music',
+    entries: [{ title: 'Topics', id: 48415 }],
   },
   {
     // subject: 'sustainability',
-    rootId: 63179,
+    rootId: 112089,
+    landingUrl: '/63179/applied-sustainability',
     entries: [
       { title: 'Topics', id: 112089 },
       { title: 'New here?', id: 56861 },
@@ -123,10 +134,8 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'sex-education',
     rootId: 78339,
-    entries: [
-      { title: 'Sex Education', id: 78337 },
-      { title: 'Topics', id: 78339 },
-    ],
+    landingUrl: '/78337/sex-education',
+    entries: [{ title: 'Topics', id: 78339 }],
   },
   {
     rootId: 35587,
@@ -134,7 +143,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
       { title: 'Community', id: 35587 },
       { title: 'Help for Editors', id: 84500 },
       { title: 'New Subjects and Topics', id: 106103 },
-      { title: 'Sandbox for Authors', id: 106102 },
+      { title: 'Test Area for Authors', id: 106102 },
       { title: 'All Activities on Serlo', url: '/event/history' },
       { title: 'All Discussions', url: '/discussions' },
       { title: 'Start new Serlo teams', id: 48538 },

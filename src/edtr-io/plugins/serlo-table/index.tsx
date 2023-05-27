@@ -1,4 +1,3 @@
-import { useScopedSelector, useScopedStore } from '@edtr-io/core'
 import {
   child,
   ChildStateType,
@@ -10,16 +9,19 @@ import {
   string,
 } from '@edtr-io/plugin'
 import {
-  getFocused,
-  isEmpty,
+  store,
+  selectFocused,
+  selectIsDocumentEmpty,
   focus,
-  getDocument,
+  selectDocument,
   focusNext,
   focusPrevious,
+  useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons/faTrashCan'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
@@ -27,31 +29,16 @@ import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
-const headerTextPlugins = {
-  code: true,
-  colors: false,
-  headings: false,
-  katex: true,
-  links: true,
-  lists: false,
-  math: true,
-  paragraphs: false,
-  richText: false,
-  suggestions: false,
-}
-
-const cellTextPlugins = {
-  code: true,
-  colors: true,
-  headings: false,
-  katex: true,
-  links: true,
-  lists: true,
-  math: true,
-  paragraphs: false,
-  richText: true,
-  suggestions: false,
-}
+const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
+const cellTextFormattingOptions = [
+  'code',
+  'colors',
+  'katex',
+  'links',
+  'lists',
+  'math',
+  'richText',
+]
 
 const tableState = object({
   rows: list(
@@ -83,9 +70,9 @@ const newCell = { content: { plugin: 'text' } }
 
 function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
-  const store = useScopedStore()
 
-  const focusedElement = useScopedSelector(getFocused())
+  const dispatch = useAppDispatch()
+  const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   const loggedInData = useLoggedInData()
@@ -114,7 +101,7 @@ function SerloTableEditor(props: SerloTableProps) {
         cells: row.columns.map((cell) => {
           return (
             <div className="pr-2 min-h-[2rem]" key={cell.content.id}>
-              {!isEmpty(cell.content.id)(store.getState()) &&
+              {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
                 cell.content.render()}
             </div>
           )
@@ -141,7 +128,7 @@ function SerloTableEditor(props: SerloTableProps) {
             e.target.querySelector('.hackdiv')?.focus()
           }}
         >
-          <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
+          <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
           {renderAddButton(true)}
         </div>
 
@@ -151,8 +138,9 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
-    store.dispatch(focusNext())
-    store.dispatch(focusPrevious())
+    const focusTree = selectFocusTree(store.getState())
+    dispatch(focusNext(focusTree))
+    dispatch(focusPrevious(focusTree))
   }
 
   function renderActiveCellsIntoObject() {
@@ -165,8 +153,11 @@ function SerloTableEditor(props: SerloTableProps) {
           const isLast =
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => store.dispatch(focus(cell.content.id))
-          const isClear = isEmpty(cell.content.id)(store.getState())
+          const dispatchFocus = () => dispatch(focus(cell.content.id))
+          const isClear = selectIsDocumentEmpty(
+            store.getState(),
+            cell.content.id
+          )
 
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
@@ -199,7 +190,9 @@ function SerloTableEditor(props: SerloTableProps) {
               {cell.content.render({
                 config: {
                   placeholder: '',
-                  plugins: isHead ? headerTextPlugins : cellTextPlugins,
+                  formattingOptions: isHead
+                    ? headerTextFormattingOptions
+                    : cellTextFormattingOptions,
                 },
               })}
               {renderSwitchButton(cell, isHead, isClear)}
@@ -210,10 +203,8 @@ function SerloTableEditor(props: SerloTableProps) {
                   height: 1rem;
                   min-width: 4rem;
                 }
-                .hackdiv {
-                  > div > div > div {
-                    margin-bottom: 0;
-                  }
+                .hackdiv > div > div > div {
+                  margin-bottom: 0;
                 }
               `}</style>
             </div>
@@ -232,7 +223,7 @@ function SerloTableEditor(props: SerloTableProps) {
   ) {
     const isFocused = cell.content.id === focusedElement
     const isImage =
-      getDocument(cell.content.id)(store.getState())?.plugin === 'image'
+      selectDocument(store.getState(), cell.content.id)?.plugin === 'image'
 
     if (isHead || !isFocused || !isClear) return null
 
@@ -333,7 +324,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function getButtonStyle() {
-    return clsx('serlo-button-blue-transparent text-brand-lighter')
+    return clsx('serlo-button-blue-transparent text-brand-400')
   }
 
   function insertRow(beforeIndex?: number) {
@@ -352,14 +343,14 @@ function SerloTableEditor(props: SerloTableProps) {
 
   function isEmptyRow(rowIndex: number) {
     return rows[rowIndex].columns.every((cell) =>
-      isEmpty(cell.content.id)(store.getState())
+      selectIsDocumentEmpty(store.getState(), cell.content.id)
     )
   }
 
   function isEmptyCol(colIndex: number) {
     return rows.every((row) => {
       const cell = row.columns[colIndex]
-      return isEmpty(cell.content.id)(store.getState())
+      return selectIsDocumentEmpty(store.getState(), cell.content.id)
     })
   }
 

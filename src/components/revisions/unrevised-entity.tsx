@@ -1,15 +1,14 @@
-import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { Fragment } from 'react'
+import { Fragment, PropsWithChildren } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { UserLink } from '@/components/user/user-link'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { CompBaseProps, UnrevisedRevisionsData } from '@/data-types'
+import type { UnrevisedRevisionsData } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 
 export type UnrevisedRevisionEntity =
   UnrevisedRevisionsData['subjects'][number]['unrevisedEntities']['nodes'][number]
@@ -20,25 +19,25 @@ export interface UnrevisedEntityProps {
 }
 
 function getNodes(entity: UnrevisedRevisionEntity) {
-  if (hasOwnPropertyTs(entity, 'revisions')) {
+  if (Object.hasOwn(entity, 'revisions')) {
     return entity.revisions?.nodes
   }
-  if (hasOwnPropertyTs(entity, 'solutionRevisions')) {
+  if (Object.hasOwn(entity, 'solutionRevisions')) {
     return entity.solutionRevisions.nodes
   }
   return []
 }
 
 function getTitle(entity: UnrevisedRevisionEntity) {
-  if (hasOwnPropertyTs(entity, 'currentRevision') && entity.currentRevision) {
-    if (hasOwnPropertyTs(entity.currentRevision, 'title')) {
+  if (Object.hasOwn(entity, 'currentRevision') && entity.currentRevision) {
+    if (Object.hasOwn(entity.currentRevision, 'title')) {
       return entity.currentRevision.title
     }
   }
 
-  if (hasOwnPropertyTs(entity, 'revisions')) {
+  if (Object.hasOwn(entity, 'revisions')) {
     const node = entity.revisions.nodes[0]
-    if (node && hasOwnPropertyTs(node, 'title')) {
+    if (node && Object.hasOwn(node, 'title')) {
       return node.title
     }
   }
@@ -50,9 +49,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
   const { strings } = useInstanceData()
 
   const nodes = getNodes(entity)
-
   const title = getTitle(entity)
-
   const isProbablyNew = entity.currentRevision === null
 
   return (
@@ -85,14 +82,15 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     if (!revision) return null
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
     const isProbablyWIP = checkWIP(revision.changes)
+    const isProbablyImported = checkImported(revision.changes)
 
     return (
       <tr className={isProbablyWIP ? 'opacity-50' : undefined}>
-        <Td className="pl-0 w-1/2">
+        <Td className="pl-0 w-1/2 pt-2.5">
           <Link href={viewUrl} className="hover:no-underline text-black">
             {revision.changes || '–'}
           </Link>
-          {renderLabels(isProbablyWIP)}
+          {renderLabels(isProbablyWIP, isProbablyImported)}
         </Td>
         {isOwn ? null : (
           <Td>
@@ -100,15 +98,17 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
             {revision.author.isNewAuthor && renderAuthorLabel()}
           </Td>
         )}
-        <Td className="w-1/6">
+        <Td className="w-1/6 pt-2.5">
           <TimeAgo datetime={new Date(revision.date)} dateAsTitle />
         </Td>
-        <Td centered className="w-1/6">
+        <Td centered className="w-1/6 text-right">
           <Link
-            className="serlo-button-light my-0 mx-auto text-base"
-            title={strings.revisionHistory.viewLabel}
+            className="serlo-button-light my-0 ml-auto text-base group transition-none hover:bg-brand-100 hover:text-brand"
             href={viewUrl}
           >
+            <span className="hidden group-hover:inline">
+              {strings.revisionHistory.view}
+            </span>{' '}
             <FaIcon icon={faEye} />
           </Link>
         </Td>
@@ -116,14 +116,22 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     )
   }
 
-  function renderLabels(isProbablyWIP: boolean) {
-    const { newLabelNote, newLabelText, wipLabelNote, wipLabelText } =
-      strings.unrevisedRevisions
+  function renderLabels(isProbablyWIP: boolean, isProbablyImported: boolean) {
+    const {
+      newLabelNote,
+      newLabelText,
+      wipLabelNote,
+      wipLabelText,
+      importedContentNote,
+      importedContentText,
+    } = strings.unrevisedRevisions
     return (
       <>
         {' '}
         {isProbablyNew && renderLabel(newLabelText, newLabelNote)}{' '}
         {isProbablyWIP && renderLabel(wipLabelText, wipLabelNote)}
+        {isProbablyImported &&
+          renderLabel(importedContentText, importedContentNote)}
       </>
     )
   }
@@ -157,12 +165,19 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     ]
     return wipStrings.some((testStr) => changes.toLowerCase().includes(testStr))
   }
+
+  function checkImported(changes: string) {
+    return changes.includes(
+      strings.unrevisedRevisions.importedContentIdentifier
+    )
+  }
 }
 
-const Td: CompBaseProps<{
-  centered?: boolean
-  className?: string
-}> = ({ children, centered, className }) => (
+const Td = ({
+  children,
+  centered,
+  className,
+}: PropsWithChildren<{ centered?: boolean; className?: string }>) => (
   <td
     className={clsx(className, 'serlo-td', centered && 'text-center')}
     style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}

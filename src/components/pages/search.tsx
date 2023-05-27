@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
@@ -31,7 +32,12 @@ export function Search() {
 
   function renderSearch() {
     return (
-      <div className="mx-side">
+      <div
+        className={clsx(
+          'mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter',
+          '[&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter'
+        )}
+      >
         <MaxWidthDiv>
           <GoogleSeachWrapper />
         </MaxWidthDiv>
@@ -45,42 +51,35 @@ export function Search() {
             height: 2.6rem !important;
           }
 
-          .gsc-control-cse,
-          .gsc-control-cse * {
-            @apply !font-serlo tracking-slightly-tighter;
-          }
-
           .gsc-control-cse {
             padding: 0 !important;
-            .gs-spelling,
-            .gs-result .gs-title,
-            .gs-result .gs-title * {
-              font-size: 1.125rem !important;
-              text-decoration: none;
-            }
+          }
 
-            &,
-            .gsc-table-result {
-              font-size: 1.125rem !important;
-              @apply !font-serlo tracking-slightly-tighter;
-              line-height: 1.7rem !important;
-            }
+          .gsc-control-cse .gs-spelling,
+          .gsc-control-cse .gs-result .gs-title,
+          .gsc-control-cse .gs-result .gs-title * {
+            font-size: 1.125rem !important;
+            text-decoration: none;
+          }
+
+          .gsc-control-cse,
+          .gsc-control-cse .gsc-table-result {
+            font-size: 1.125rem !important;
+            line-height: 1.7rem !important;
           }
 
           .gsc-refinementHeader {
             margin-top: 2rem;
           }
 
-          .gsc-control-wrapper-cse {
-            .gsc-url-top,
-            div.gs-per-result-labels {
-              display: none;
-            }
+          .gsc-control-wrapper-cse .gsc-url-top,
+          .gsc-control-wrapper-cse div.gs-per-result-labels {
+            display: none;
+          }
 
-            div.gs-title {
-              margin-top: 10px;
-              margin-bottom: 4px;
-            }
+          .gsc-control-wrapper-cse div.gs-title {
+            margin-top: 10px;
+            margin-bottom: 4px;
           }
 
           .gsc-webResult .gsc-result {

@@ -1,18 +1,19 @@
-import { faBellSlash } from '@fortawesome/free-solid-svg-icons/faBellSlash'
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
+import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 
+import { MathSpan } from '../content/math-span'
 import { FaIcon } from '../fa-icon'
 import { UserLink } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
-import { LoggedInData } from '@/data-types'
+import { LoggedInData, UuidType } from '@/data-types'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { replaceWithJSX } from '@/helper/replace-with-jsx'
 
 type Event = GetNotificationsQuery['notifications']['nodes'][number]['event']
 
@@ -58,15 +59,15 @@ export function Event({
         )}
       >
         <TimeAgo
-          className="text-sm text-truegray-500"
+          className="text-sm text-gray-500"
           datetime={eventDate}
           dateAsTitle
         />
-        <div className={clsx('mb-2 mt-0.25', unread && 'font-bold')}>
+        <div className={clsx('mb-2 mt-0.25 pr-24', unread && 'font-bold')}>
           {unread && <span className="text-brand">● </span>}
           {renderText()}
         </div>
-        {renderReason()}
+        {renderAdditionalText()}
         {renderButtons()}
       </div>
     </>
@@ -97,16 +98,17 @@ export function Event({
       case 'CreateCommentNotificationEvent':
         return parseString(strings.events.createComment, {
           thread: renderThread(event.thread),
+          // links to comments need to go through cf worker
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
-              {`${strings.entities.comment} ${event.comment.id}`}
+              {strings.entities.comment}&nbsp;<sup>{event.comment.id}</sup>
             </Link>
           ),
         })
 
       case 'CreateThreadNotificationEvent':
         // for invite to chat mvp
-        if (event.object.id === auth.current?.id) {
+        if (event.object.id === auth?.id) {
           return parseString(strings.events.inviteToChat, {
             chatLink: (
               <a className="serlo-link" href="https://community.serlo.org">
@@ -115,7 +117,7 @@ export function Event({
             ),
             comment: (
               <p className="font-normal">
-                &quot;{event.thread.comments.nodes[0].content}&quot;
+                &quot;{event.thread.thread.nodes[0].content}&quot;
               </p>
             ),
           })
@@ -220,46 +222,112 @@ export function Event({
     }
   }
 
-  function renderReason() {
+  function renderAdditionalText() {
     if (noPrivateContent) return null
+
     if (
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
-      return <div className="text-truegray-500" /*Content*/>{event.reason}</div>
+      return <div className="text-gray-500">{event.reason}</div>
     }
+    if (event.__typename === 'CreateThreadNotificationEvent') {
+      return renderCommentContent(event.thread.thread.nodes[0].content)
+    }
+    if (event.__typename === 'CreateCommentNotificationEvent') {
+      return renderCommentContent(event.comment.content)
+    }
+  }
+
+  function renderCommentContent(content?: string) {
+    if (!content) return null
+    const maxLength = 200
+    const shortened =
+      content.length > maxLength
+        ? content.substring(0, maxLength) + '…'
+        : content
+    const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (str, i) => (
+      <MathSpan key={`math-${i}`} formula={str} />
+    ))
+    return <div className="text-gray-500">{withMath}</div>
   }
 
   function renderObject({
     alias,
     title,
     __typename,
+    id,
   }: EventObject | EventParent) {
-    return <Link href={alias}>{renderTitle(title, __typename)}</Link>
+    return (
+      <Link href={alias}>
+        <>
+          {renderTitle(title, __typename as UuidType, id)}
+          {shouldRenderParent(__typename as UuidType) ? (
+            <>{renderParent(title, __typename as UuidType)}</>
+          ) : null}
+        </>
+      </Link>
+    )
   }
 
-  function renderTitle(title: string, type: string) {
-    const typeString = getEntityStringByTypename(type, strings)
-    const preposition = ['Exercise', 'GroupedExercise', 'Solution'].includes(
-      type
-    )
+  function shouldRenderParent(typename: UuidType) {
+    return [
+      UuidType.Exercise,
+      UuidType.GroupedExercise,
+      UuidType.Solution,
+      UuidType.Thread,
+      UuidType.Comment,
+    ].includes(typename)
+  }
+
+  function renderParent(title: string, typename: UuidType) {
+    const preposition = [
+      UuidType.Exercise,
+      UuidType.GroupedExercise,
+      UuidType.Solution,
+    ].includes(typename)
       ? strings.events.entityInParentPreposition
-      : ['Thread', 'Comment'].includes(type)
+      : [UuidType.Thread, UuidType.Comment].includes(typename)
       ? strings.events.commentInParentPreposition
       : ''
 
-    return preposition ? `${typeString} (${preposition} ${title})` : title
+    return ` (${preposition} ${title})`
+  }
+
+  function renderTitle(title: string, typename: UuidType, id: number) {
+    if (
+      [
+        UuidType.Exercise,
+        UuidType.GroupedExercise,
+        UuidType.Solution,
+        UuidType.Thread,
+        UuidType.Comment,
+      ].includes(typename)
+    ) {
+      return (
+        <>
+          {getEntityStringByTypename(typename, strings)}&nbsp;<sup>{id}</sup>
+        </>
+      )
+    } else {
+      return <>{title}</>
+    }
   }
 
   function renderRevision(id: number) {
-    return <Link href={`/${id}`}>{`${strings.entities.revision} ${id}`}</Link>
+    return (
+      <Link href={`/${id}`}>
+        {strings.entities.revision}&nbsp;<sup>{id}</sup>
+      </Link>
+    )
   }
 
   function renderThread(thread: EventThread) {
-    const id = thread.comments?.nodes[0]?.id
+    const id = thread.thread.nodes[0]?.id
+    // links to comments need to go through cf worker
     return (
       <Link href={`/${id}`} forceNoCSR>
-        {`${strings.entities.thread} ${id}`}
+        {strings.entities.thread}&nbsp;<sup>{id}</sup>
       </Link>
     )
   }
@@ -267,7 +335,7 @@ export function Event({
   function renderButtons() {
     if (!setToRead) return null
     return (
-      <div className="absolute flex right-5 top-8" /*ButtonWrapper*/>
+      <div className="absolute flex right-5 top-11" /*ButtonWrapper*/>
         {renderMuteButton()}
         {unread && renderReadButton()}
       </div>
@@ -318,7 +386,7 @@ export function Event({
   function renderTooltip(text?: string) {
     return (
       <span
-        className="text-sm leading-tight block bg-truegray-800 text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
+        className="text-sm leading-tight block bg-almost-black text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
       >
         {text}
       </span>

@@ -1,42 +1,47 @@
-// eslint-disable-next-line import/no-internal-modules
-import mergeDeepRight from 'ramda/src/mergeDeepRight'
+import { mergeDeepRight } from 'ramda'
 
-import { InstanceData } from '@/data-types'
+import { InstanceData, UuidWithRevType } from '@/data-types'
 import {
   instanceData as deInstanceData,
   instanceLandingData as deInstanceLandingData,
   serverSideStrings as deServerSideStrings,
   loggedInData as deLoggedInData,
+  kratosMailStrings as deKratosMailStrings,
 } from '@/data/de'
 import {
   instanceData as enInstanceData,
   serverSideStrings as enServerSideStrings,
   instanceLandingData as enInstanceLandingData,
   loggedInData as enLoggedInData,
+  kratosMailStrings as enKratosMailStrings,
 } from '@/data/en'
 import {
   instanceData as esInstanceData,
   instanceLandingData as esInstanceLandingData,
   serverSideStrings as esServerSideStrings,
   loggedInData as esLoggedInData,
+  kratosMailStrings as esKratosMailStrings,
 } from '@/data/es'
 import {
   instanceData as frInstanceData,
   serverSideStrings as frServerSideStrings,
   instanceLandingData as frInstanceLandingData,
   loggedInData as frLoggedInData,
+  kratosMailStrings as frKratosMailStrings,
 } from '@/data/fr'
 import {
   instanceData as hiInstanceData,
   serverSideStrings as hiServerSideStrings,
   instanceLandingData as hiInstanceLandingData,
   loggedInData as hiLoggedInData,
+  kratosMailStrings as hiKratosMailStrings,
 } from '@/data/hi'
 import {
   instanceData as taInstanceData,
   serverSideStrings as taServerSideStrings,
   loggedInData as taLoggedInData,
   instanceLandingData as taInstanceLandingData,
+  kratosMailStrings as taKratosMailStrings,
 } from '@/data/ta'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
@@ -44,12 +49,12 @@ export const languages: Instance[] = Object.values(Instance)
 
 export function parseLanguageSubfolder(alias: string) {
   for (const lang of languages) {
-    if (alias.startsWith(`/${lang}/`) || alias == `/${lang}`) {
+    if (alias.startsWith(`/${lang}/`) || alias === `/${lang}`) {
       const subalias = alias.substring(3)
       return { alias: subalias === '' ? '/' : subalias, instance: lang }
     }
   }
-  return { alias, instance: 'de' }
+  return { alias, instance: Instance.De }
 }
 
 export function isOnLanguageSubdomain() {
@@ -62,19 +67,19 @@ export function isOnLanguageSubdomain() {
   return false
 }
 
-export function getInstanceDataByLang(lang: string) {
+export function getInstanceDataByLang(lang: Instance) {
   const enData = enInstanceData
 
   const data =
-    lang == 'de'
+    lang === Instance.De
       ? deInstanceData
-      : lang == 'es'
+      : lang === Instance.Es
       ? esInstanceData
-      : lang == 'fr'
+      : lang === Instance.Fr
       ? frInstanceData
-      : lang == 'ta'
+      : lang === Instance.Ta
       ? taInstanceData
-      : lang == 'hi'
+      : lang === Instance.Hi
       ? hiInstanceData
       : enInstanceData
 
@@ -85,15 +90,15 @@ export function getServerSideStrings(lang: string) {
   const enData = enServerSideStrings
 
   const data =
-    lang == 'de'
+    lang === Instance.De
       ? deServerSideStrings
-      : lang == 'es'
+      : lang === Instance.Es
       ? esServerSideStrings
-      : lang == 'fr'
+      : lang === Instance.Fr
       ? frServerSideStrings
-      : lang == 'ta'
+      : lang === Instance.Ta
       ? taServerSideStrings
-      : lang == 'hi'
+      : lang === Instance.Hi
       ? hiServerSideStrings
       : enServerSideStrings
 
@@ -104,15 +109,15 @@ export function getLandingData(lang: string) {
   const enData = enInstanceLandingData
 
   const data =
-    lang == 'de'
+    lang === Instance.De
       ? deInstanceLandingData
-      : lang == 'es'
+      : lang === Instance.Es
       ? esInstanceLandingData
-      : lang == 'fr'
+      : lang === Instance.Fr
       ? frInstanceLandingData
-      : lang == 'ta'
+      : lang === Instance.Ta
       ? taInstanceLandingData
-      : lang == 'hi'
+      : lang === Instance.Hi
       ? hiInstanceLandingData
       : enInstanceLandingData
 
@@ -123,25 +128,45 @@ export function getLoggedInData(lang: string) {
   const enData = enLoggedInData
 
   const data =
-    lang == 'de'
+    lang === Instance.De
       ? deLoggedInData
-      : lang == 'es'
+      : lang === Instance.Es
       ? esLoggedInData
-      : lang == 'fr'
+      : lang === Instance.Fr
       ? frLoggedInData
-      : lang == 'ta'
+      : lang === Instance.Ta
       ? taLoggedInData
-      : lang == 'hi'
+      : lang === Instance.Hi
       ? hiLoggedInData
       : enLoggedInData
 
   return mergeDeepRight(enData, data) as typeof enLoggedInData
 }
 
+export function getKratosMailStrings(lang: string) {
+  const enData = enKratosMailStrings
+
+  const data =
+    lang === Instance.De
+      ? deKratosMailStrings
+      : lang === Instance.Es
+      ? esKratosMailStrings
+      : lang === Instance.Fr
+      ? frKratosMailStrings
+      : lang === Instance.Ta
+      ? taKratosMailStrings
+      : lang === Instance.Hi
+      ? hiKratosMailStrings
+      : enKratosMailStrings
+
+  return mergeDeepRight(enData, data) as typeof enKratosMailStrings
+}
+
 export function getEntityStringByTypename(
-  typename: string | undefined,
+  typename: UuidWithRevType | undefined,
   strings: InstanceData['strings']
 ) {
+  const typenameNoRevs = typename?.replace('Revision', '')
   const lookup = {
     Page: strings.entities.page,
     Article: strings.entities.article,
@@ -160,8 +185,8 @@ export function getEntityStringByTypename(
     fallback: strings.entities.content,
   }
 
-  if (typename && typename in lookup) {
-    return lookup[typename as keyof typeof lookup]
+  if (typenameNoRevs && typenameNoRevs in lookup) {
+    return lookup[typenameNoRevs as keyof typeof lookup]
   }
   return lookup.fallback
 }

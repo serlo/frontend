@@ -1,4 +1,3 @@
-import { Instance } from './graphql-types/operations'
 import { prettifyLinks } from './prettify-links'
 import { requestPage } from './request-page'
 import { RequestPageData } from '@/data-types'
@@ -10,7 +9,7 @@ export async function fetchPageData(
 ): Promise<RequestPageData> {
   const { alias, instance } = parseLanguageSubfolder(raw_alias)
 
-  const pageData = await requestPage(alias, instance as Instance)
+  const pageData = await requestPage(alias, instance)
   await prettifyLinks(pageData)
   return pageData
 }

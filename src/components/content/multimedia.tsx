@@ -7,8 +7,7 @@ import type {
   FrontendMultiMediaNode,
   FrontendImgNode,
   FrontendContentNode,
-} from '@/data-types'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+} from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
@@ -37,10 +36,10 @@ export function Multimedia({
         className={clsx(
           'mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2 relative z-10',
           mediaChildIsImage && 'mobile:cursor-zoom-in',
-          width == 25 && 'mobile:w-1/4',
-          width == 50 && 'mobile:w-1/2',
-          width == 75 && 'mobile:w-3/4',
-          width == 100 && 'mobile:w-full'
+          width === 25 && 'mobile:w-1/4',
+          width === 50 && 'mobile:w-1/2',
+          width === 75 && 'mobile:w-3/4',
+          width === 100 && 'mobile:w-full'
         )}
       >
         {renderNested(media, 'media')}
@@ -53,13 +52,11 @@ export function Multimedia({
   )
 
   function renderLightbox() {
-    if (!isImage(mediaChild) || !open) {
-      return null
-    }
+    if (!isImage(mediaChild) || !open) return null
 
     // simplify after deploy, db-migration and api cache updates
     const label =
-      hasOwnPropertyTs(mediaChild, 'caption') && mediaChild.caption
+      Object.hasOwn(mediaChild, 'caption') && mediaChild.caption
         ? renderNested(mediaChild.caption) ?? undefined
         : undefined
 

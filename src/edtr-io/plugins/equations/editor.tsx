@@ -1,25 +1,28 @@
-import { HotKeys, useScopedSelector, useScopedStore } from '@edtr-io/core'
-// eslint-disable-next-line import/no-internal-modules
-import { PreferenceContext, setDefaultPreference } from '@edtr-io/core/beta'
-// eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { HotKeys, PreferenceContext, setDefaultPreference } from '@edtr-io/core'
+import { AddButton } from '@edtr-io/editor-ui'
 import { MathEditor } from '@edtr-io/math'
 import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
 import {
+  store,
   focus,
   focusNext,
   focusPrevious,
-  getFocused,
-  isEmpty,
+  selectFocused,
+  selectIsDocumentEmpty,
+  useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
 } from '@edtr-io/store'
-import { edtrDragHandle, EdtrIcon, faTimes, Icon, styled } from '@edtr-io/ui'
-import * as R from 'ramda'
-import * as React from 'react'
+import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { includes } from 'ramda'
+import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { EquationsProps, stepProps } from '.'
 import {
   EquationsRenderer,
+  FirstExplanationTr,
   ExplanationTr,
   LeftTd,
   MathTd,
@@ -59,11 +62,12 @@ const DragButton = styled.span({
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
-  const store = useScopedStore()
-  const focusedElement = useScopedSelector(getFocused())
+  const dispatch = useAppDispatch()
+  const focusTree = useAppSelector(selectFocusTree)
+  const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
-    R.includes(
+    includes(
       focusedElement,
       props.state.steps.map((step) => step.explanation.id)
     ) ||
@@ -76,27 +80,27 @@ export function EquationsEditor(props: EquationsProps) {
   const gridFocus = useGridFocus({
     rows: state.steps.length,
     columns: 4,
-    focusNext: () => store.dispatch(focusNext()),
-    focusPrevious: () => store.dispatch(focusPrevious()),
+    focusNext: () => dispatch(focusNext(focusTree)),
+    focusPrevious: () => dispatch(focusPrevious(focusTree)),
     transformationTarget,
     onFocusChanged: (state) => {
       if (state === 'firstExplanation') {
-        store.dispatch(focus(props.state.firstExplanation.id))
+        dispatch(focus(props.state.firstExplanation.id))
       } else if (state.column === StepSegment.Explanation) {
-        store.dispatch(focus(props.state.steps[state.row].explanation.id))
+        dispatch(focus(props.state.steps[state.row].explanation.id))
       } else {
-        store.dispatch(focus(props.id))
+        dispatch(focus(props.id))
       }
     },
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (nestedFocus) {
       gridFocus.setFocus({
         row: 0,
         column: firstColumn(transformationTarget),
       })
-      store.dispatch(focus(props.id))
+      dispatch(focus(props.id))
     }
     //prevents loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -213,7 +217,7 @@ export function EquationsEditor(props: EquationsProps) {
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
-                                    <Icon icon={faTimes} />
+                                    <Icon icon={faXmark} />
                                   </RemoveButton>
                                 </td>
                               </tr>
@@ -239,12 +243,15 @@ export function EquationsEditor(props: EquationsProps) {
                           {transformationTarget ===
                             TransformationTarget.Equation && <td />}
                           <td />
-                          {!isEmpty(step.explanation.id)(store.getState()) ? (
+                          {!selectIsDocumentEmpty(
+                            store.getState(),
+                            step.explanation.id
+                          ) ? (
                             renderDownArrow()
                           ) : (
                             <td />
                           )}
-                          <td colSpan={2}>
+                          <td colSpan={2} style={{ minWidth: '10rem' }}>
                             {step.explanation.render({
                               config: {
                                 placeholder:
@@ -276,7 +283,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <tbody onFocus={() => gridFocus.setFocus('firstExplanation')}>
-        <ExplanationTr>
+        <FirstExplanationTr>
           <td />
           <td colSpan={3}>
             {state.firstExplanation.render({
@@ -285,11 +292,11 @@ export function EquationsEditor(props: EquationsProps) {
               },
             })}
           </td>
-        </ExplanationTr>
+        </FirstExplanationTr>
         <tr style={{ height: '30px' }}>
           <td />
           <td />
-          {!isEmpty(state.firstExplanation.id)(store.getState())
+          {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)
             ? renderDownArrow()
             : null}
         </tr>
@@ -387,6 +394,7 @@ function StepEditor(props: StepEditorProps) {
               Sign.LessThan,
               Sign.GreaterThanOrEqual,
               Sign.LessThanOrEqual,
+              Sign.NotEqualTo,
               Sign.AlmostEqualTo,
               Sign.Estimates,
             ].map((sign) => {
@@ -467,7 +475,7 @@ function InlineMath(props: InlineMathProps) {
     suffix = '',
   } = props
 
-  const preferences = React.useContext(PreferenceContext)
+  const preferences = useContext(PreferenceContext)
 
   return (
     <MathEditor
@@ -518,7 +526,7 @@ function useGridFocus({
   onFocusChanged: (args: GridFocusState) => void
   transformationTarget: TransformationTarget
 }): GridFocus {
-  const [focus, setFocusState] = React.useState<GridFocusState | null>(null)
+  const [focus, setFocusState] = useState<GridFocusState | null>(null)
   const setFocus = (state: GridFocusState) => {
     onFocusChanged(state)
     setFocusState(state)

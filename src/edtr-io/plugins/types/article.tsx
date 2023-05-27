@@ -2,10 +2,11 @@ import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import { ChangeEvent } from 'react'
 
 import { editorContent, entity, HeaderInput, entityType } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const articleTypeState = entityType(
   {
@@ -29,26 +30,27 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const articleStrings = loggedInData.strings.editor.article
 
   return (
     <>
       <div className="page-header">
         {props.renderIntoToolbar(
-          <RevisionHistoryLoader
+          <ContentLoaders
             id={props.state.id.value}
             currentRevision={props.state.revision.value}
             onSwitchRevision={props.state.replaceOwnState}
+            entityType={UuidType.Article}
           />
         )}
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.article.seoTitle}
+              label={articleStrings.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.article.seoDesc}
+              label={articleStrings.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -56,7 +58,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         <h1>
           {props.editable ? (
             <HeaderInput
-              placeholder={editorStrings.article.title}
+              placeholder={articleStrings.title}
               value={title.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)
@@ -68,7 +70,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         </h1>
       </div>
       <div itemProp="articleBody">{content.render()}</div>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </>
   )
 }

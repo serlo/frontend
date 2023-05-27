@@ -1,5 +1,5 @@
 import { serloDomain } from '../../helper/urls/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [],
@@ -13,7 +13,7 @@ export const headerData: InstanceData['headerData'] = [
     icon: 'subject',
     children: [
       { url: '/141585', title: 'Mathématiques' },
-      { url: '/148617', title: 'Conseils pour apprendre' },
+      { url: '/conseils-pour-apprendre', title: 'Conseils pour apprendre' },
       { url: '/141604', title: 'Nouvelle matières' },
     ],
   },
@@ -58,7 +58,7 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
@@ -86,7 +86,8 @@ export const footerData: InstanceData['footerData'] = {
 export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // subject: 'conseils-pour-apprendre',
-    rootId: 148617,
+    rootId: 204968,
+    landingUrl: '/conseils-pour-apprendre',
     entries: [{ title: 'Tous les thèmes', id: 204968 }],
   },
 ]

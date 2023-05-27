@@ -1,4 +1,4 @@
-import { faGraduationCap } from '@fortawesome/free-solid-svg-icons/faGraduationCap'
+import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
 
@@ -23,7 +23,7 @@ export function CourseNavigation({
   return (
     <nav
       id="course-overview"
-      className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5 sm:pb-11 border-b-2 border-brand-150 "
+      className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5 sm:pb-11 border-b-2 border-brand-200 "
     >
       <p className="serlo-p mb-0 mt-4 font-bold text-[1rem]">
         <FaIcon icon={faGraduationCap} /> Kurs
@@ -53,7 +53,7 @@ export function CourseNavigation({
                 className={clsx(
                   'text-lg leading-browser',
                   {
-                    'font-semibold text-truegray-800 hover:no-underline':
+                    'font-semibold text-almost-black hover:no-underline':
                       active,
                   },
                   { 'text-brand-300': noCurrentRevision }

@@ -1,5 +1,4 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
@@ -8,7 +7,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
-import { TimeAgo } from '@/components/time-ago'
+// import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
@@ -16,7 +15,9 @@ import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UserPage } from '@/data-types'
+import { UserPage, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { breakpoints } from '@/helper/breakpoints'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface ProfileProps {
@@ -31,14 +32,14 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     id,
     username,
     description,
-    lastLogin,
+    // lastLogin,
     imageUrl,
     chatUrl,
     date,
     motivation,
     activityByType,
   } = userData
-  const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
+  // const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
@@ -54,7 +55,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     new Date().getTime() - new Date(date).getTime() < 1 * hourInMilliseconds
 
   useEffect(() => {
-    setIsOwnProfile(auth.current?.username === username)
+    setIsOwnProfile(auth?.username === username)
   }, [auth, username])
 
   return (
@@ -95,8 +96,8 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
           />
         </header>
         <style jsx>{`
-          header {
-            @screen sm {
+          @media (min-width: ${breakpoints.sm}) {
+            header {
               display: grid;
               grid-template-columns: 175px auto;
               grid-template-rows: auto auto;
@@ -179,12 +180,13 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     return (
       <aside className="mt-20 text-gray-500 text-sm mx-side">
         <ProfileRoles roles={userData.roles} />
+        {/* Temporarily hidden:
         {lastLoginDate && (
           <p>
             {strings.profiles.lastLogin}:{' '}
             <TimeAgo className="pl-2 font-bold" datetime={lastLoginDate} />
           </p>
-        )}
+        )} */}
       </aside>
     )
   }
@@ -195,7 +197,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         id={id}
         hideEditProfile={!isOwnProfile}
         data={{
-          type: 'Profile',
+          type: UuidType.User,
           id: id,
         }}
       />
@@ -203,7 +205,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   }
 
   function renderEditMotivationLink() {
-    if (lang !== 'de') return null
+    if (lang !== Instance.De) return null
     return (
       <p className="serlo-p text-sm text-right ml-auto mt-3">
         <Link

@@ -63,7 +63,7 @@ export function ArticleExercises({
           }}
         </Droppable>
       </DragDropContext>
-      <p className="mt-4 mb-1">
+      <div className="mt-4 mb-1">
         {exerciseFolder.title.value ? (
           <>
             {folderHeader}
@@ -72,13 +72,12 @@ export function ArticleExercises({
             </a>
           </>
         ) : null}
-      </p>
+      </div>
     </>
   )
 
   function renderDraggables() {
-    const buttonClass =
-      'serlo-button bg-amber-100 hover:bg-amber-300 mb-2 mr-2 w-8'
+    const buttonClass = 'serlo-button-editor-secondary mb-2 mr-2 w-8'
 
     return exercises.map((exercise, index) => {
       return (

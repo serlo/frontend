@@ -1,4 +1,3 @@
-import { TaxonomyTermType } from '@serlo/api'
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
@@ -18,7 +17,9 @@ import {
 } from './graphql-types/operations'
 import { dataQuery } from './query'
 import { endpoint } from '@/api/endpoint'
-import { RequestPageData } from '@/data-types'
+import { RequestPageData, UuidRevType, UuidType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
+import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
@@ -39,17 +40,17 @@ export async function requestPage(
   if (!uuid) return { kind: 'not-found' }
   // Can be deleted if CFWorker redirects those for us
   if (
-    uuid.__typename === 'ArticleRevision' ||
-    uuid.__typename === 'PageRevision' ||
-    uuid.__typename === 'CoursePageRevision' ||
-    uuid.__typename === 'VideoRevision' ||
-    uuid.__typename === 'EventRevision' ||
-    uuid.__typename === 'AppletRevision' ||
-    uuid.__typename === 'GroupedExerciseRevision' ||
-    uuid.__typename === 'ExerciseRevision' ||
-    uuid.__typename === 'ExerciseGroupRevision' ||
-    uuid.__typename === 'SolutionRevision' ||
-    uuid.__typename === 'CourseRevision'
+    uuid.__typename === UuidRevType.Article ||
+    uuid.__typename === UuidRevType.Page ||
+    uuid.__typename === UuidRevType.CoursePage ||
+    uuid.__typename === UuidRevType.Video ||
+    uuid.__typename === UuidRevType.Event ||
+    uuid.__typename === UuidRevType.Applet ||
+    uuid.__typename === UuidRevType.GroupedExercise ||
+    uuid.__typename === UuidRevType.Exercise ||
+    uuid.__typename === UuidRevType.ExerciseGroup ||
+    uuid.__typename === UuidRevType.Solution ||
+    uuid.__typename === UuidRevType.Course
   ) {
     return {
       kind: 'redirect',
@@ -60,21 +61,21 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename == 'Comment') return { kind: 'not-found' } // no content for comments
+  if (uuid.__typename === UuidType.Comment) return { kind: 'not-found' } // no content for comments
 
-  if (uuid.__typename === 'Solution') {
+  if (uuid.__typename === UuidType.Solution) {
     return await requestPage(`/${uuid.exercise.id}`, instance)
   }
 
   const secondaryMenuData = createSecondaryMenu(uuid, instance)
-  const breadcrumbsData = createBreadcrumbs(uuid)
-  const horizonData = instance == 'de' ? createHorizon() : undefined
+  const breadcrumbsData = createBreadcrumbs(uuid, instance)
+  const horizonData = instance === Instance.De ? createHorizon() : undefined
   const cacheKey = `/${instance}${alias}`
   const title = createTitle(uuid, instance)
   const metaImage = getMetaImage(uuid.alias)
 
   // Special case for event history, User profiles are requested in user/request.ts
-  if (uuid.__typename === 'User') {
+  if (uuid.__typename === UuidType.User) {
     return {
       kind: 'user/events',
       userData: {
@@ -85,7 +86,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Course') {
+  if (uuid.__typename === UuidType.Course) {
     const firstPage = uuid.pages.filter(
       (page) => page.currentRevision !== null
     )[0]?.alias
@@ -108,9 +109,8 @@ export async function requestPage(
         entityData: {
           id: uuid.id,
           alias: uuid.alias,
-          typename: uuid.__typename,
+          typename: UuidType.Course,
           title: uuid.currentRevision?.title ?? '',
-          categoryIcon: 'course',
           isUnrevised: !uuid.currentRevision,
           courseData: {
             id: uuid.id,
@@ -129,7 +129,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'TaxonomyTerm') {
+  if (uuid.__typename === UuidType.TaxonomyTerm) {
     return {
       kind: 'taxonomy',
       taxonomyData: buildTaxonomyData(uuid),
@@ -149,14 +149,17 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Exercise' || uuid.__typename === 'GroupedExercise') {
+  if (
+    uuid.__typename === UuidType.Exercise ||
+    uuid.__typename === UuidType.GroupedExercise
+  ) {
     const exercise = [createExercise(uuid)]
     return {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
-        typename: uuid.__typename,
+        typename: uuid.__typename as UuidType,
         trashed: uuid.trashed,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
@@ -164,7 +167,7 @@ export async function requestPage(
       },
       newsletterPopup: false,
       breadcrumbsData:
-        uuid.__typename == 'GroupedExercise'
+        uuid.__typename === UuidType.GroupedExercise
           ? [
               {
                 label:
@@ -177,7 +180,9 @@ export async function requestPage(
       metaData: {
         title,
         contentType:
-          uuid.__typename === 'Exercise' ? 'text-exercise' : 'groupedexercise',
+          uuid.__typename === UuidType.Exercise
+            ? 'text-exercise'
+            : 'groupedexercise',
         metaImage,
         metaDescription: getMetaDescription(exercise),
       },
@@ -187,14 +192,14 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'ExerciseGroup') {
+  if (uuid.__typename === UuidType.ExerciseGroup) {
     const exercise = [createExerciseGroup(uuid)]
     return {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
-        typename: uuid.__typename,
+        typename: UuidType.ExerciseGroup,
         content: exercise,
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
@@ -215,14 +220,14 @@ export async function requestPage(
 
   const content = convertState(uuid.currentRevision?.content)
 
-  if (uuid.__typename === 'Event') {
+  if (uuid.__typename === UuidType.Event) {
     return {
       kind: 'single-entity',
       entityData: {
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Event,
         content,
         isUnrevised: false,
       },
@@ -239,7 +244,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Page') {
+  if (uuid.__typename === UuidType.Page) {
     return {
       kind: 'single-entity',
       newsletterPopup: true,
@@ -247,7 +252,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Page,
         revisionId: uuid.currentRevision?.id,
         title: uuid.currentRevision?.title ?? '',
         content,
@@ -269,7 +274,7 @@ export async function requestPage(
 
   const licenseData = { ...uuid.license, isDefault: uuid.license.default }
 
-  if (uuid.__typename === 'Article') {
+  if (uuid.__typename === UuidType.Article) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -277,7 +282,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Article,
         title: uuid.currentRevision?.title ?? uuid.revisions?.nodes[0]?.title,
         content,
         licenseData,
@@ -286,7 +291,6 @@ export async function requestPage(
           useArticleTag: true,
           setContentAsSection: true,
         },
-        categoryIcon: 'article',
         unrevisedRevisions: uuid.revisions?.totalCount,
         isUnrevised: !uuid.currentRevision,
       },
@@ -307,7 +311,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Video') {
+  if (uuid.__typename === UuidType.Video) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -315,17 +319,16 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Video,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
-            type: 'video',
+            type: FrontendNodeType.Video,
             src: uuid.currentRevision?.url!,
             license: createInlineLicense(uuid.license),
           },
           ...content,
         ],
-        categoryIcon: 'video',
         schemaData: {
           wrapWithItemType: 'http://schema.org/VideoObject',
         },
@@ -346,7 +349,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'Applet') {
+  if (uuid.__typename === UuidType.Applet) {
     return {
       kind: 'single-entity',
       newsletterPopup: false,
@@ -354,11 +357,11 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.Applet,
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
-            type: 'geogebra',
+            type: FrontendNodeType.Geogebra,
             id: uuid.currentRevision?.url ?? '',
           },
           ...content,
@@ -385,7 +388,7 @@ export async function requestPage(
     }
   }
 
-  if (uuid.__typename === 'CoursePage') {
+  if (uuid.__typename === UuidType.CoursePage) {
     const pagesToShow =
       uuid.course && uuid.course.pages
         ? uuid.course.pages.filter(
@@ -418,7 +421,7 @@ export async function requestPage(
         id: uuid.id,
         alias: uuid.alias,
         trashed: uuid.trashed,
-        typename: uuid.__typename,
+        typename: UuidType.CoursePage,
         title: uuid.currentRevision?.title ?? '',
         content,
         licenseData,
@@ -427,7 +430,6 @@ export async function requestPage(
           useArticleTag: true,
           setContentAsSection: true,
         },
-        categoryIcon: 'coursePage',
         courseData: {
           id: uuid.course.id,
           title: uuid.course.currentRevision?.title ?? '',

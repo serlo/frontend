@@ -1,10 +1,13 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { colors } from '@/helper/colors'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { htmlEscapeStringForJson } from '@/helper/html-escape'
 
 const bodyStyles = {
   fontFamily: 'Karmilla, sans-serif',
+  backgroundColor: '#fff',
 }
 
 // See https://docs.sentry.io/platforms/javascript/install/lazy-load-sentry/
@@ -13,7 +16,7 @@ const sentryLoader = `
     window.Sentry.init({
       environment: "${process.env.NEXT_PUBLIC_ENV}",
       release: "frontend@${
-        process.env.NEXT_PUBLIC_COMMIT_SHA?.substr(0, 7) ?? ''
+        process.env.NEXT_PUBLIC_COMMIT_SHA?.substring(0, 7) ?? ''
       }"
     });
     window.Sentry.forceLoad();
@@ -23,13 +26,15 @@ const sentryLoader = `
 export default class MyDocument extends Document {
   render() {
     const langData = this.props.__NEXT_DATA__.locale
-      ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale)
+      ? getInstanceDataByLang(this.props.__NEXT_DATA__.locale as Instance)
       : undefined
     return (
-      <Html className="print:serlo-print-style">
+      <Html className="print:serlo-print-style bg-brand-100">
+        {/* background on html for overscroll area */}
         <Head>
           <meta property="og:site_name" content="Serlo" />
           <meta property="og:type" content="website" />
+          <meta name="robots" content="max-image-preview:large" />
           <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -51,15 +56,15 @@ export default class MyDocument extends Document {
           <link
             rel="mask-icon"
             href="/_assets/safari-pinned-tab.svg"
-            color="#007ec1"
+            color={colors.brand}
           />
           <link rel="shortcut icon" href="/_assets/favicon.ico" />
-          <meta name="msapplication-TileColor" content="#007ec1" />
+          <meta name="msapplication-TileColor" content={colors.brand} />
           <meta
             name="msapplication-config"
             content="/_assets/browserconfig.xml"
           />
-          <meta name="theme-color" content="#007ec1"></meta>
+          <meta name="theme-color" content={colors.brand}></meta>
           <link
             href="/_assets/opensearch.de.xml"
             rel="search"

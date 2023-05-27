@@ -1,6 +1,6 @@
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { ArticleNodeUuidLink, FrontendArticleNode } from '@/data-types'
+import { ArticleNodeUuidLink, FrontendArticleNode } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export function Article({
@@ -11,7 +11,9 @@ export function Article({
   exerciseFolder,
   relatedContent,
   sources,
-}: FrontendArticleNode & { renderNested: RenderNestedFunction }) {
+}: FrontendArticleNode & {
+  renderNested: RenderNestedFunction
+}) {
   const { strings } = useInstanceData()
 
   return (

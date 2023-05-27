@@ -1,5 +1,4 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import * as React from 'react'
 
 import {
   entity,
@@ -8,10 +7,11 @@ import {
   HeaderInput,
   entityType,
 } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const appletTypeState = entityType(
   {
@@ -41,10 +41,11 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
     <div>
       <div className="page-header">
         {props.renderIntoToolbar(
-          <RevisionHistoryLoader
+          <ContentLoaders
             id={props.state.id.value}
             currentRevision={props.state.revision.value}
             onSwitchRevision={props.state.replaceOwnState}
+            entityType={UuidType.Applet}
           />
         )}
         {props.renderIntoSettings(
@@ -77,7 +78,7 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         {url.render()}
         {content.render()}
       </article>
-      <ToolbarMain subscriptions {...props.state} />
+      <ToolbarMain showSubscriptionOptions {...props.state} />
     </div>
   )
 }

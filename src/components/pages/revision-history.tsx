@@ -1,5 +1,4 @@
-import { faEye } from '@fortawesome/free-solid-svg-icons/faEye'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
+import { faEye, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
@@ -7,12 +6,12 @@ import { UserLink } from '../user/user-link'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
 import { useInstanceData } from '@/contexts/instance-context'
-import type { HistoryRevisionData, HistoryRevisionsData } from '@/data-types'
+import { Revision, Revisions } from '@/fetcher/query-types'
+import { colors } from '@/helper/colors'
 import { getEditUrl } from '@/helper/urls/get-edit-url'
-import { theme } from '@/theme'
 
 export interface RevisionHistoryProps {
-  data?: HistoryRevisionsData
+  data?: Revisions
   hideEdit?: boolean
   onSelectRevision?: (id: number) => void
   selectedRevisionId?: number
@@ -48,7 +47,7 @@ export function RevisionHistory({
     </table>
   )
 
-  function renderRow(entry: HistoryRevisionData) {
+  function renderRow(entry: Revision) {
     const isCurrent = entry.id === data!.currentRevision?.id
     const viewUrl = `/entity/repository/compare/${data!.id}/${entry.id}`
     const editUrl = getEditUrl(data!.id, entry.id)
@@ -59,9 +58,11 @@ export function RevisionHistory({
       (isCurrent && selectedRevisionId === undefined)
     const isActiveEditorLink = isEditorLink && !isImportant
 
+    const changes = Object.hasOwn(entry, 'changes') ? entry.changes : '–'
+
     return (
       <tr key={entry.id} className={isImportant ? 'bg-brand-50' : undefined}>
-        <td className="serlo-td" style={{ textAlign: 'left' }}>
+        <td className="serlo-td border-x-transparent">
           <Link
             title={strings.revisionHistory.viewLabel}
             href={isEditorLink ? undefined : viewUrl}
@@ -75,19 +76,22 @@ export function RevisionHistory({
                 isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
               }
             >
-              {entry.changes || '–'}
+              {changes}
             </span>
           </Link>
         </td>
-        <td className="serlo-td"> {getStatus(entry.trashed, isCurrent)}</td>
-        <td className="serlo-td" style={{ textAlign: 'left' }}>
+        <td className="serlo-td border-x-transparent text-center">
+          {' '}
+          {getStatus(entry.trashed, isCurrent)}
+        </td>
+        <td className="serlo-td border-x-transparent">
           <UserLink user={entry.author} />
         </td>
-        <td className="serlo-td" style={{ textAlign: 'left' }}>
+        <td className="serlo-td border-x-transparent">
           <TimeAgo datetime={new Date(entry.date)} dateAsTitle />
         </td>
         <td
-          className="serlo-td"
+          className="serlo-td border-x-transparent text-center"
           onClick={
             isActiveEditorLink ? () => handleOnClick(entry.id) : undefined
           }
@@ -103,7 +107,7 @@ export function RevisionHistory({
           )}
         </td>
         {!hideEdit && (
-          <td className="serlo-td">
+          <td className="serlo-td border-x-transparent text-center">
             <Link
               className="serlo-button-light my-0 mx-auto text-base"
               title={strings.revisionHistory.editLabel}
@@ -113,19 +117,16 @@ export function RevisionHistory({
             </Link>
           </td>
         )}
-        <style jsx>
-          {`
-            border-left-color: transparent;
-            border-right-color: transparent;
-            text-align: center;
-          `}
-        </style>
       </tr>
     )
   }
 
   function renderTh(text: string) {
-    return <th className="serlo-th sticky top-0 bg-white border-0">{text}</th>
+    return (
+      <th className="serlo-th top-0 bg-white border-x-transparent border-t-transparent">
+        {text}
+      </th>
+    )
   }
 
   function getStatus(trashed?: boolean, isCurrent?: boolean) {
@@ -136,7 +137,7 @@ export function RevisionHistory({
           backgroundColor: trashed
             ? '#c56c6c'
             : isCurrent
-            ? theme.colors.brandGreen
+            ? colors.brandGreen
             : '#eee',
         }}
         title={

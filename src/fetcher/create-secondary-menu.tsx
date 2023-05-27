@@ -1,14 +1,17 @@
-import { Instance, TaxonomyTermType } from '@serlo/api'
-
+import { taxonomyParentsToRootToBreadcrumbsData } from './create-breadcrumbs'
 import { MainUuidType } from './query-types'
-import { SecondaryMenuData } from '@/data-types'
+import { SecondaryMenuData, UuidType } from '@/data-types'
+import { Instance, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 
 export function createSecondaryMenu(
   uuid: MainUuidType,
   instance: Instance
 ): SecondaryMenuData['entries'] | undefined {
-  if (uuid.__typename !== 'Page' && uuid.__typename !== 'TaxonomyTerm')
+  if (
+    uuid.__typename !== UuidType.Page &&
+    uuid.__typename !== UuidType.TaxonomyTerm
+  )
     return undefined
 
   const { secondaryMenus } = getInstanceDataByLang(instance)
@@ -23,14 +26,21 @@ export function createSecondaryMenu(
   function getMenu() {
     if (!secondaryMenus) return undefined
 
-    if (uuid.__typename === 'TaxonomyTerm') {
+    if (uuid.__typename === UuidType.TaxonomyTerm) {
       if (uuid.type === TaxonomyTermType.ExerciseFolder) return undefined
 
-      return findMenuByRootId(uuid.navigation?.path.nodes[0].id ?? undefined)
+      const breadcrumbs = taxonomyParentsToRootToBreadcrumbsData(uuid, instance)
+
+      if (!breadcrumbs) return undefined
+
+      return findMenuByRootId(breadcrumbs[0]?.id ?? undefined)
     }
 
-    if (uuid.__typename === 'Page') {
-      const byRootId = findMenuByRootId(uuid.id)
+    if (uuid.__typename === UuidType.Page) {
+      //special case: hide menu on page de.serlo.org/community
+      if (uuid.id === 19882) return undefined
+
+      const byRootId = landingPageByAlias(decodeURIComponent(uuid.alias))
       if (byRootId) return byRootId
 
       return secondaryMenus.find((menu) =>
@@ -42,6 +52,12 @@ export function createSecondaryMenu(
   function findMenuByRootId(rootId?: number) {
     return rootId
       ? secondaryMenus.find((menu) => menu.rootId === rootId)
+      : undefined
+  }
+
+  function landingPageByAlias(alias?: string) {
+    return alias
+      ? secondaryMenus.find((menu) => menu.landingUrl === alias)
       : undefined
   }
 }

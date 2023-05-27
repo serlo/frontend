@@ -1,36 +1,21 @@
-import { faHourglassEmpty } from '@fortawesome/free-solid-svg-icons/faHourglassEmpty'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
 import { isProduction } from '@/helper/is-production'
 
 export const features = {
-  tablePlugin: {
-    cookieName: 'useTablePlugin',
+  edtrPasteHack: {
+    cookieName: 'useEdtrPasteHack',
     isActive: false,
     activeInDev: true,
-  },
-  addRevisionMutation: {
-    cookieName: 'useAddRevisionMutation',
-    isActive: false,
-    activeInDev: true,
-  },
-  pagePlugins: {
-    cookieName: 'usePagePlugins',
-    isActive: false,
-    activeInDev: true,
-  },
-  legacyEditor: {
-    cookieName: 'useLegacyEditor',
-    isActive: faHourglassEmpty,
-    activeInDev: false,
+    hideInProduction: true,
   },
   legacyDesign: {
     cookieName: 'useFrontend',
     isActive: false,
     activeInDev: false,
+    hideInProduction: false,
   },
 }
 
@@ -39,18 +24,16 @@ const showExperimentsStorageKey = 'showExperiments'
 type FeatureKey = keyof typeof features
 
 export function shouldUseFeature(featureKey: FeatureKey) {
-  if (typeof window === 'undefined' || !hasOwnPropertyTs(features, featureKey))
+  if (typeof window === 'undefined' || !Object.hasOwn(features, featureKey))
     return false
 
-  const hasYesCookie = document.cookie.includes(
-    features[featureKey].cookieName + '=1'
-  )
-  const hasNoCookie = document.cookie.includes(
-    features[featureKey].cookieName + '=0'
-  )
+  const feature = features[featureKey]
+
+  const hasYesCookie = document.cookie.includes(feature.cookieName + '=1')
+  const hasNoCookie = document.cookie.includes(feature.cookieName + '=0')
   return isProduction
-    ? hasYesCookie
-    : hasYesCookie || (features[featureKey].activeInDev && !hasNoCookie)
+    ? hasYesCookie && feature.hideInProduction === false
+    : hasYesCookie || (feature.activeInDev && !hasNoCookie)
 }
 
 export function ProfileExperimental() {
@@ -93,23 +76,14 @@ export function ProfileExperimental() {
       <h2 className="serlo-h2" id="experiments">
         🧪 Experimente
       </h2>
-      {features.tablePlugin && (
+      {features.edtrPasteHack && (
         <div>
           <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('tablePlugin')} Editor: New Table Plugin 📋
-          </h3>
-          <p className="serlo-p">Das neue Table Plugin zum testen.</p>
-        </div>
-      )}
-      {features.addRevisionMutation && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('addRevisionMutation')} Revisions Speichern
-            über die neue Infrastruktur ⚠️
+            {renderFeatureButton('edtrPasteHack')} Edtr: Einfügen von Edtr-State
+            JSON 🛠
           </h3>
           <p className="serlo-p">
-            Bearbeitungen werden direkt über die API gespeichert. Vorsicht: Noch
-            nicht ausführlich getestet.
+            Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
           </p>
         </div>
       )}
@@ -123,34 +97,6 @@ export function ProfileExperimental() {
           <p className="serlo-p">
             Zurück ins alte Design, sollte nur noch bei akuten Problemen oder
             zum Vergleichen mit den neuen Design benutzt werden.
-          </p>
-        </div>
-      )}
-      {features.legacyEditor && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('legacyEditor')} Legacy-Editor ⚠️
-          </h3>
-          <p className="serlo-p">
-            Wenn du Probleme mit dem Editor hast, kannst du hier den alten
-            Editor aktivieren.
-            <br />
-            Zusätzlich die Probleme dann bitte{' '}
-            <a href="https://community.serlo.org/channel/software-features-and-bugs">
-              gleich melden
-            </a>
-            , weil wir den Legacy-Editor in absehbarer Zeit ganz abschalten
-            werden. Danke!
-          </p>
-        </div>
-      )}
-      {features.pagePlugins && (
-        <div>
-          <h3 className="serlo-h3 mb-3">
-            {renderFeatureButton('pagePlugins')} Plugins für Statische Seiten ⚠️
-          </h3>
-          <p className="serlo-p">
-            Teamplugin und Layoutplugin. Bitte nur auf Anfrage testen.
           </p>
         </div>
       )}

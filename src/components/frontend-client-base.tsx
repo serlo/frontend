@@ -1,22 +1,22 @@
-import { AuthorizationPayload } from '@serlo/authorization'
+import type { AuthorizationPayload } from '@serlo/authorization'
 import Cookies from 'js-cookie'
 import { Router, useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { PropsWithChildren, useState, useEffect } from 'react'
+import { default as ToastNotice } from 'react-notify-toast'
+import { getInstanceDataByLang } from 'src/helper/feature-i18n'
 
-import { ConditonalWrap } from './conditional-wrap'
+import { ConditionalWrap } from './conditional-wrap'
 import { HeaderFooter } from './header-footer'
 import { MaxWidthDiv } from './navigation/max-width-div'
-import { ToastNotice } from './toast-notice'
 import { AuthProvider } from '@/auth/auth-provider'
+import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { PrintMode } from '@/components/print-mode'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { InstanceDataProvider } from '@/contexts/instance-context'
-import { LoggedInComponentsProvider } from '@/contexts/logged-in-components'
 import { LoggedInDataProvider } from '@/contexts/logged-in-data-context'
 import { InstanceData, LoggedInData } from '@/data-types'
-import type { getInstanceDataByLang } from '@/helper/feature-i18n'
-import type { LoggedInStuff } from '@/helper/logged-in-stuff-chunk'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { frontendOrigin } from '@/helper/urls/frontent-origin'
 
@@ -34,7 +34,7 @@ Router.events.on('routeChangeStart', () => {
 })
 Router.events.on('routeChangeComplete', (url, { shallow }) => {
   NProgress.done()
-  // experiment: when using csr and running into an error, try without csr once
+  // when using csr and running into an error, try without csr once
   if (!shallow && document.getElementById('error-page-description') !== null) {
     triggerSentry({ message: 'trying again without csr' })
     setTimeout(() => {
@@ -43,6 +43,11 @@ Router.events.on('routeChangeComplete', (url, { shallow }) => {
   }
 })
 Router.events.on('routeChangeError', () => NProgress.done())
+
+// assumes that the lang-strings in the i18n files are actually valid Instance strings
+type FixedInstanceData = ReturnType<typeof getInstanceDataByLang> & {
+  lang: Instance
+}
 
 export function FrontendClientBase({
   children,
@@ -58,20 +63,17 @@ export function FrontendClientBase({
     if (typeof window === 'undefined') {
       // load instance data for server side rendering
       // Note: using require to avoid webpack bundling it
-      const featureI18n = require('@/helper/feature-i18n') as {
-        getInstanceDataByLang: typeof getInstanceDataByLang
-      }
-      return featureI18n.getInstanceDataByLang(locale!)
+      return getInstanceDataByLang(
+        (locale as Instance) ?? Instance.De
+      ) as FixedInstanceData
     } else {
       // load instance data from client from document tag
       return JSON.parse(
         document.getElementById('__FRONTEND_CLIENT_INSTANCE_DATA__')
           ?.textContent ?? '{}'
-      ) as ReturnType<typeof getInstanceDataByLang>
+      ) as FixedInstanceData
     }
   })
-
-  //useEffect(storePageData, [initialProps])
 
   useEffect(() => {
     //tiny history
@@ -80,6 +82,9 @@ export function FrontendClientBase({
       sessionStorage.getItem('currentPathname') || ''
     )
     sessionStorage.setItem('currentPathname', window.location.href)
+  })
+
+  useEffect(() => {
     // scroll to comment area to start lazy loading
     if (window.location.hash.startsWith('#comment-')) {
       setTimeout(() => {
@@ -90,20 +95,18 @@ export function FrontendClientBase({
     }
   })
 
-  // const auth = useAuthentication('frontend-client-base')
   const [loggedInData, setLoggedInData] = useState<LoggedInData | null>(
     getCachedLoggedInData()
   )
-  const [loggedInComponents, setLoggedInComponents] =
-    useState<LoggedInStuff | null>(null)
 
-  //console.log('Comps', loggedInComponents)
+  const isLoggedIn = checkLoggedIn()
 
   useEffect(fetchLoggedInData, [
     instanceData.lang,
     loggedInData,
-    loggedInComponents,
     loadLoggedInData,
+    isLoggedIn,
+    locale,
   ])
 
   // dev
@@ -112,33 +115,31 @@ export function FrontendClientBase({
   return (
     <InstanceDataProvider value={instanceData}>
       <PrintMode />
-      <LoggedInComponentsProvider value={loggedInComponents}>
-        <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
-          <LoggedInDataProvider value={loggedInData}>
-            <EntityIdProvider value={entityId || null}>
-              <ConditonalWrap
-                condition={!noHeaderFooter}
-                wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+      <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
+        <LoggedInDataProvider value={loggedInData}>
+          <EntityIdProvider value={entityId || null}>
+            <ConditionalWrap
+              condition={!noHeaderFooter}
+              wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
+            >
+              <ConditionalWrap
+                condition={!noContainers}
+                wrapper={(kids) => (
+                  <div className="relative">
+                    <MaxWidthDiv showNav={showNav}>
+                      <main id="content">{kids}</main>
+                    </MaxWidthDiv>
+                  </div>
+                )}
               >
-                <ConditonalWrap
-                  condition={!noContainers}
-                  wrapper={(kids) => (
-                    <div className="relative">
-                      <MaxWidthDiv showNav={showNav}>
-                        <main>{kids}</main>
-                      </MaxWidthDiv>
-                    </div>
-                  )}
-                >
-                  {/* should not be necessary…?*/}
-                  {children as JSX.Element}
-                </ConditonalWrap>
-              </ConditonalWrap>
-              <ToastNotice />
-            </EntityIdProvider>
-          </LoggedInDataProvider>
-        </AuthProvider>
-      </LoggedInComponentsProvider>
+                {/* should not be necessary…?*/}
+                {children as JSX.Element}
+              </ConditionalWrap>
+            </ConditionalWrap>
+            <ToastNotice />
+          </EntityIdProvider>
+        </LoggedInDataProvider>
+      </AuthProvider>
     </InstanceDataProvider>
   )
 
@@ -157,27 +158,18 @@ export function FrontendClientBase({
 
   function fetchLoggedInData() {
     const cookies = typeof window === 'undefined' ? {} : Cookies.get()
-    if (cookies['auth-token'] || loadLoggedInData) {
-      Promise.all([
-        !loggedInData
-          ? fetch(frontendOrigin + '/api/locale/' + instanceData.lang).then(
-              (res) => res.json()
-            )
-          : false,
-        !loggedInComponents ? import('@/helper/logged-in-stuff-chunk') : false,
-      ])
-        .then((values) => {
-          if (values[0]) {
+    if (loggedInData) return
+    if (isLoggedIn || loadLoggedInData) {
+      fetch(frontendOrigin + '/api/locale/' + instanceData.lang)
+        .then((res) => res.json())
+        .then((value) => {
+          if (value) {
             sessionStorage.setItem(
               `___loggedInData_${instanceData.lang}`,
-              JSON.stringify(values[0])
+              JSON.stringify(value)
             )
-            setLoggedInData(values[0] as LoggedInData)
+            setLoggedInData(value as LoggedInData)
           }
-          if (values[1])
-            setLoggedInComponents(
-              (values[1] as { Components: LoggedInStuff }).Components
-            )
         })
         .catch(() => {})
       if (!cookies['__serlo_preview__']) {

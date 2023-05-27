@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { EntityBaseProps } from './entity-base'
 import { useInstanceData } from '@/contexts/instance-context'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import { UuidType } from '@/data-types'
 
 interface JsonLdProps {
   data: EntityBaseProps['page']
@@ -10,7 +10,7 @@ interface JsonLdProps {
 }
 
 // courses are not supported since we redirect them to first course page anyway
-const typeStrings = {
+const typeStrings: Partial<Record<UuidType, string>> = {
   Article: 'Article',
   Applet: 'WebApplication',
   Course: 'Article',
@@ -26,9 +26,9 @@ export function JsonLd({ data, id }: JsonLdProps) {
 
   const isEntity = data.kind === 'single-entity'
   const isTaxonomy = data.kind === 'taxonomy'
-  const entityType = isEntity ? data.entityData.typename : 'TaxonomyTerm'
+  const entityType = isEntity ? data.entityData.typename : UuidType.TaxonomyTerm
 
-  if (!hasOwnPropertyTs(typeStrings, entityType)) return null
+  if (!Object.hasOwn(typeStrings, entityType)) return null
   const typeString = typeStrings[entityType]
 
   return (
@@ -55,7 +55,7 @@ export function JsonLd({ data, id }: JsonLdProps) {
         : undefined
 
     const isPartOf =
-      entityType === 'CoursePage' && isEntity
+      entityType === UuidType.CoursePage && isEntity
         ? data.entityData?.courseData?.id
           ? getIRI(data.entityData.courseData.id)
           : undefined
@@ -132,7 +132,9 @@ export function JsonLd({ data, id }: JsonLdProps) {
       ],
       isPartOf,
       applicationCategory:
-        entityType === 'Applet' ? 'https://www.geogebra.org/' : undefined,
+        entityType === UuidType.Applet
+          ? 'https://www.geogebra.org/'
+          : undefined,
       hasPart,
       collectionSize,
       about,

@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-deprecated
 import { parseDOM } from 'htmlparser2'
 
 import { sanitizeLatex } from './sanitize-latex'
@@ -11,7 +12,8 @@ import {
   FrontendTextNode,
   FrontendInlineMathNode,
   FrontendMathNode,
-} from '@/data-types'
+  FrontendNodeType,
+} from '@/frontend-node-types'
 
 // Result of the htmlparser
 export interface LegacyNode {
@@ -30,6 +32,7 @@ export interface LegacyNode {
 }
 
 export function convertLegacyState(html: string) {
+  // eslint-disable-next-line import/no-deprecated
   const dom = parseDOM(html) as unknown as LegacyNode
   return { children: convert(dom) }
 }
@@ -41,7 +44,7 @@ function convert(node: LegacyNode[] | LegacyNode): FrontendContentNode[] {
 
   if (Array.isArray(node)) return node.flatMap(convert)
   if (node.type === 'tag') return convertTags(node)
-  if (node.type === 'text') return convertText(node)
+  if (node.type === FrontendNodeType.Text) return convertText(node)
 
   return []
 }
@@ -68,7 +71,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         })
         return [
           {
-            type: 'row',
+            type: FrontendNodeType.Row,
             children: colChildren,
           },
         ]
@@ -77,7 +80,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         const children = wrapSemistructuredTextInP(convert(node.children))
         return [
           {
-            type: 'col',
+            type: FrontendNodeType.Col,
             size: parseInt(className.substring(1)),
             children,
           },
@@ -91,7 +94,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         )
           return [
             {
-              type: 'spoiler-container',
+              type: FrontendNodeType.SpoilerContainer,
               children: [children[0], children[1]],
             },
           ]
@@ -99,7 +102,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       if (className === 'spoiler-teaser panel-heading') {
         return [
           {
-            type: 'spoiler-title',
+            type: FrontendNodeType.SpoilerTitle,
             children: convert(node.children.slice(1)),
           },
         ]
@@ -107,12 +110,15 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       if (className === 'spoiler-content panel-body') {
         const children = wrapSemistructuredTextInP(
           convert(node.children).filter(
-            (child) => !(child.type == 'text' && child.text.trim() == '')
+            (child) =>
+              !(
+                child.type === FrontendNodeType.Text && child.text.trim() === ''
+              )
           )
         )
         return [
           {
-            type: 'spoiler-body',
+            type: FrontendNodeType.SpoilerBody,
             children,
           },
         ]
@@ -124,7 +130,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (match) {
           return [
             {
-              type: 'geogebra',
+              type: FrontendNodeType.Geogebra,
               id: match[1],
             },
           ]
@@ -132,7 +138,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (href.includes('assets.serlo.org')) {
           return [
             {
-              type: 'img',
+              type: FrontendNodeType.Img,
               src: href,
               alt: 'Bild',
             },
@@ -140,7 +146,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         }
         return [
           {
-            type: 'injection',
+            type: FrontendNodeType.Injection,
             href: href.trim(),
           },
         ]
@@ -167,7 +173,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (!formula) return []
         return [
           {
-            type: 'inline-math',
+            type: FrontendNodeType.InlineMath,
             formula: sanitizeLatex(formula),
             formulaSource: formula,
           },
@@ -185,7 +191,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (!formula) return []
         return [
           {
-            type: 'math',
+            type: FrontendNodeType.Math,
             formula: sanitizeLatex(formula),
             formulaSource: formula,
           },
@@ -213,7 +219,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (child.type === 'math') {
           if (current.length > 0) {
             result.push({
-              type: 'p',
+              type: FrontendNodeType.P,
               children: current,
             })
             current = []
@@ -225,27 +231,29 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       })
       if (current.length > 0) {
         result.push({
-          type: 'p',
+          type: FrontendNodeType.P,
           children: current,
         })
       }
       return result
     }
     // compat: convert single inline-math in paragraph to block formula
-    const inlineMaths = children.filter((child) => child.type === 'inline-math')
+    const inlineMaths = children.filter(
+      (child) => child.type === FrontendNodeType.InlineMath
+    )
     if (inlineMaths.length === 1) {
       if (
         children.every(
           (child) =>
-            child.type === 'inline-math' ||
-            (child.type === 'text' &&
+            child.type === FrontendNodeType.InlineMath ||
+            (child.type === FrontendNodeType.Text &&
               child.text !== undefined &&
-              child.text.trim() == '')
+              child.text.trim() === '')
         )
       ) {
         return [
           {
-            type: 'math',
+            type: FrontendNodeType.Math,
             formula: (inlineMaths[0] as FrontendInlineMathNode).formula,
             formulaSource: (inlineMaths[0] as FrontendInlineMathNode)
               .formulaSource,
@@ -256,7 +264,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
 
     return [
       {
-        type: 'p',
+        type: FrontendNodeType.P,
         children,
       },
     ]
@@ -264,17 +272,21 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'img') {
     return [
       {
-        type: 'img',
+        type: FrontendNodeType.Img,
         src: node.attribs.src!,
         alt: node.attribs.alt!,
       },
     ]
   }
-  if (node.name === 'ul' || node.name == 'ol') {
+  if (node.name === 'ul' || node.name === 'ol') {
     const liChildren: FrontendLiNode[] = []
     // compat: remove whitespace around list items
     convert(node.children).forEach((child) => {
-      if (child.type === 'text' && child.text && child.text.trim() === '') {
+      if (
+        child.type === FrontendNodeType.Text &&
+        child.text &&
+        child.text.trim() === ''
+      ) {
         return
       }
       if (child.type === 'li') {
@@ -283,7 +295,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     })
     return [
       {
-        type: node.name,
+        type: node.name === 'ol' ? FrontendNodeType.Ol : FrontendNodeType.Ul,
         children: liChildren,
       },
     ]
@@ -292,12 +304,13 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     // compat: wrap li in p only if there are only inlines
     const children = wrapSemistructuredTextInP(
       convert(node.children).filter(
-        (child) => !(child.type == 'text' && child.text.trim() == '')
+        (child) =>
+          !(child.type === FrontendNodeType.Text && child.text.trim() === '')
       )
     )
     return [
       {
-        type: 'li',
+        type: FrontendNodeType.Li,
         children,
       },
     ]
@@ -309,7 +322,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         trChildren.push(child)
       }
     })
-    return [{ type: 'table', children: trChildren }]
+    return [{ type: FrontendNodeType.Table, children: trChildren }]
   }
   if (node.name === 'thead') {
     return convert(node.children)
@@ -326,7 +339,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     })
     return [
       {
-        type: 'tr',
+        type: FrontendNodeType.Tr,
         children: tdthChildren,
       },
     ]
@@ -335,7 +348,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     const children = wrapSemistructuredTextInP(convert(node.children))
     return [
       {
-        type: 'th',
+        type: FrontendNodeType.Th,
         children,
       },
     ]
@@ -349,7 +362,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     const children = wrapSemistructuredTextInP(convert(node.children))
     return [
       {
-        type: 'td',
+        type: FrontendNodeType.Td,
         children,
       },
     ]
@@ -357,7 +370,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'h2') {
     return [
       {
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 2,
         id: node.attribs.id,
         children: convert(node.children),
@@ -367,7 +380,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'h3') {
     return [
       {
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 3,
         id: node.attribs.id,
         children: convert(node.children),
@@ -377,7 +390,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'h4') {
     return [
       {
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 4,
         id: node.attribs.id,
         children: convert(node.children),
@@ -387,7 +400,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'h5') {
     return [
       {
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 5,
         id: node.attribs.id,
         children: convert(node.children),
@@ -398,7 +411,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'h1') {
     return [
       {
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 2,
         children: convert(node.children),
       },
@@ -413,17 +426,17 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     }
     // compat: handle empty tag
     if (
-      children.length == 0 ||
-      (children.length == 1 &&
-        children[0].type === 'text' &&
+      children.length === 0 ||
+      (children.length === 1 &&
+        children[0].type === FrontendNodeType.Text &&
         children[0].text === '')
     ) {
-      children = [{ type: 'text', text: node.attribs.href! }]
+      children = [{ type: FrontendNodeType.Text, text: node.attribs.href! }]
     }
     if (!node.attribs.href) return []
     return [
       {
-        type: 'a',
+        type: FrontendNodeType.A,
         // compat: replace absolute urls in german language version
         href: node.attribs.href ?? '',
         children,
@@ -444,7 +457,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   }
   // compat: ignore breaks
   if (node.name === 'br') {
-    return [{ type: 'text', text: ' ' }]
+    return [{ type: FrontendNodeType.Text, text: ' ' }]
   }
   // compat: ignore horizontal lines
   if (node.name === 'hr') {
@@ -452,11 +465,12 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   }
   if (node.name === 'blockquote') {
     const children = convert(node.children).filter(
-      (child) => !(child.type == 'text' && child.text.trim() == '')
+      (child) =>
+        !(child.type === FrontendNodeType.Text && child.text.trim() === '')
     )
     return [
       {
-        type: 'important',
+        type: FrontendNodeType.Important,
         children,
       },
     ]
@@ -466,7 +480,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     if (code) {
       return [
         {
-          type: 'code',
+          type: FrontendNodeType.Code,
           code,
           language: '',
           showLineNumbers: false,
@@ -502,7 +516,7 @@ function convertText(node: LegacyNode): FrontendContentNode[] {
     })
   // compat: remove empty text
   if (!text) return []
-  return [{ type: 'text', text }]
+  return [{ type: FrontendNodeType.Text, text }]
 }
 
 function makeFormat(
@@ -510,7 +524,7 @@ function makeFormat(
   fn: (child: FrontendTextNode) => void
 ): FrontendContentNode[] {
   return array.map((child) => {
-    if (child.type === 'text' && child.text !== undefined) {
+    if (child.type === FrontendNodeType.Text && child.text !== undefined) {
       fn(child)
     }
     if (Array.isArray(child.children)) {
@@ -525,15 +539,15 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
   let resultAppendable = false
   children.forEach((child) => {
     if (
-      child.type == 'text' ||
-      child.type == 'a' ||
-      child.type == 'inline-math'
+      child.type === FrontendNodeType.Text ||
+      child.type === 'a' ||
+      child.type === FrontendNodeType.InlineMath
     ) {
       const last = result[result.length - 1]
-      if (resultAppendable && last && last.type == 'p') {
+      if (resultAppendable && last && last.type === 'p') {
         last.children!.push(child)
       } else {
-        result.push({ type: 'p', children: [child] })
+        result.push({ type: FrontendNodeType.P, children: [child] })
         resultAppendable = true
       }
     } else {
@@ -547,12 +561,13 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
 function unwrapSingleMathInline(children: FrontendContentNode[]) {
   return children.map((child) => {
     if (
-      child.type == 'p' &&
-      child.children?.length == 1 &&
-      child.children[0].type == 'inline-math'
+      child.type === 'p' &&
+      child.children?.length === 1 &&
+      child.children[0].type === FrontendNodeType.InlineMath
     ) {
       // force conversion to math node
-      ;(child.children[0] as unknown as FrontendMathNode).type = 'math'
+      ;(child.children[0] as unknown as FrontendMathNode).type =
+        FrontendNodeType.Math
       return child.children[0]
     }
     return child

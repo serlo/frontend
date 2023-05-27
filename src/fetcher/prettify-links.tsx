@@ -2,7 +2,8 @@ import { request } from 'graphql-request'
 
 import { idsQuery } from './query-ids'
 import { endpoint } from '@/api/endpoint'
-import { RequestPageData, FrontendContentNode } from '@/data-types'
+import { RequestPageData } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 export async function prettifyLinks(pageData: RequestPageData) {
@@ -69,7 +70,7 @@ export async function prettifyLinks(pageData: RequestPageData) {
             const id =
               typeof prereq.id === 'string' ? parseInt(prereq.id) : prereq.id
             prereq.href = `/${prereq.id ?? ''}` //fallback
-            if (id && Number.isInteger(id)) {
+            if (id && Number.isInteger(id) && id < Math.pow(2, 31)) {
               ids.push(id)
               callbacks.push({
                 id,

@@ -30,22 +30,18 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
           )}
         />
         <ul className="whitespace-nowrap my-3.5 px-4 pt-3" ref={containerRef}>
-          {data.map((entry, i) => {
+          {data.map((entry) => {
             return (
               <li
                 className={clsx(
                   'inline-block mr-4 py-[3px] font-bold text-[0.9rem]',
                   'border-b-2',
-                  entry.active ? 'border-brand' : 'border-brand-150'
+                  entry.active ? 'border-brand' : 'border-brand-200'
                 )}
                 key={entry.url}
                 ref={entry.active ? activeRef : null}
               >
-                <Link
-                  href={entry.url}
-                  path={[`metamenu${i}`]}
-                  className="hover:no-underline"
-                >
+                <Link href={entry.url} className="hover:no-underline">
                   {entry.title}
                 </Link>
               </li>
@@ -60,20 +56,25 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
         )}
       >
         <ul>
-          {data.map((entry, i) => {
+          {data.map((entry) => {
             return (
-              <li className="mb-3.5" key={entry.title}>
+              <li className="mb-1.5" key={entry.title}>
                 <Link
                   href={entry.url}
-                  path={[`metamenu${i}`]}
-                  className={clsx(
-                    'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
-                    entry.active
-                      ? 'text-black bg-brand-150'
-                      : 'serlo-button-blue-transparent'
-                  )}
+                  className="hover:no-underline block group py-1"
+                  noExternalIcon
                 >
-                  {entry.title}
+                  <span
+                    className={clsx(
+                      'serlo-button rounded-xl tracking-slightly-tighter py-[3px]',
+                      'group-hover:text-white group-hover:bg-brand',
+                      entry.active
+                        ? 'text-black bg-brand-200'
+                        : 'serlo-button-blue-transparent'
+                    )}
+                  >
+                    {entry.title}
+                  </span>
                 </Link>
               </li>
             )

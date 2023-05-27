@@ -1,20 +1,19 @@
 import { TopicCategory } from './topic-category'
-import { TaxonomyData, TaxonomySubTerm, TopicCategoryTypes } from '@/data-types'
+import {
+  TaxonomyData,
+  TaxonomySubTerm,
+  TopicCategoryCustomType,
+  TopicCategoryType,
+} from '@/data-types'
 
 export const allCategories = [
-  'articles',
-  'exercises',
-  'videos',
-  'applets',
-  'courses',
-  'folders',
-  'events',
-  'unrevised',
-] as TopicCategoryTypes[]
+  ...Object.values(TopicCategoryType),
+  TopicCategoryCustomType.unrevised,
+] as const
 
 export interface TopicCategoriesProps {
   data: TaxonomySubTerm | TaxonomyData
-  categories?: TopicCategoryTypes[]
+  categories?: (TopicCategoryType | TopicCategoryCustomType.unrevised)[]
   subid?: number
   full?: boolean
 }
@@ -34,7 +33,7 @@ export function TopicCategories({
     return (categories ?? allCategories).map((category) => {
       if (!(category in data)) return null
       const links = (data as TaxonomySubTerm)[category]
-      if (!links || typeof links == 'boolean') return null
+      if (!links || typeof links === 'boolean') return null
       return (
         <TopicCategory
           key={category}

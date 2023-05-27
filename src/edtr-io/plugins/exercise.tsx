@@ -1,7 +1,5 @@
-import { PluginToolbarButton, useScopedStore } from '@edtr-io/core'
-import { styled } from '@edtr-io/editor-ui'
-// eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { PluginToolbarButton } from '@edtr-io/core'
+import { styled, AddButton } from '@edtr-io/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -9,9 +7,9 @@ import {
   object,
   optional,
 } from '@edtr-io/plugin'
-import { getDocument } from '@edtr-io/store'
+import { store, selectDocument } from '@edtr-io/store'
 import { Icon, faRandom, faTrashAlt } from '@edtr-io/ui'
-import * as React from 'react'
+import { PropsWithChildren, useState } from 'react'
 
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -20,7 +18,9 @@ import { LoggedInData } from '@/data-types'
 const exerciseState = object({
   content: child({ plugin: 'rows' }),
   interactive: optional(
-    child<'scMcExercise' | 'inputExercise'>({ plugin: 'scMcExercise' })
+    child<'scMcExercise' | 'inputExercise' | 'h5p'>({
+      plugin: 'scMcExercise',
+    })
   ),
 })
 
@@ -38,7 +38,7 @@ const ButtonContainer = styled.div({
 })
 
 const interactivePlugins: {
-  name: 'scMcExercise' | 'inputExercise'
+  name: 'scMcExercise' | 'inputExercise' | 'h5p'
   addLabel: (editorStrings: LoggedInData['strings']['editor']) => string
   title: (editorStrings: LoggedInData['strings']['editor']) => string
 }[] = [
@@ -60,6 +60,15 @@ const interactivePlugins: {
       return editorStrings.exercise.inputExercise
     },
   },
+  {
+    name: 'h5p',
+    addLabel(editorStrings) {
+      return editorStrings.exercise.addH5pExercise
+    },
+    title(editorStrings) {
+      return editorStrings.exercise.h5pExercise
+    },
+  },
 ]
 
 const InlineOptionsWrapper = styled.div({
@@ -77,7 +86,7 @@ const InlineOptionsContentWrapper = styled.div({
   borderRadius: '4px',
 })
 
-function InlineOptions(props: React.PropsWithChildren<{}>) {
+function InlineOptions(props: PropsWithChildren<{}>) {
   return (
     <InlineOptionsWrapper>
       <InlineOptionsContentWrapper>
@@ -97,9 +106,8 @@ const Option = styled.div({
 })
 
 function ExerciseEditor({ editable, state }: ExerciseProps) {
-  const store = useScopedStore()
   const { content, interactive } = state
-  const [showOptions, setShowOptions] = React.useState(false)
+  const [showOptions, setShowOptions] = useState(false)
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
@@ -201,7 +209,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
 
   function getCurrentInteractivePlugin() {
     if (!interactive.defined) return null
-    const doc = getDocument(interactive.id)(store.getState())
+    const doc = selectDocument(store.getState(), interactive.id)
     return doc && doc.plugin
   }
 }

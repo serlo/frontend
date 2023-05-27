@@ -1,4 +1,4 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -77,7 +77,7 @@ export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
     context.params?.id as string[] | undefined
   )
 
-  if (result.errorType == 'failed-fetch') {
+  if (result.errorType === 'failed-fetch') {
     return { notFound: true }
   }
 

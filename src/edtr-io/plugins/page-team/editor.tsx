@@ -3,6 +3,7 @@ import * as t from 'io-ts'
 
 import { PageTeamPluginProps } from '.'
 import { PageTeamRenderer } from './renderer'
+import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 const TeamDataDecoder = t.array(
@@ -22,6 +23,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
 ) => {
   const { data } = props.state
   const noData = !data || data.length === 0
+  const { lang } = useInstanceData()
 
   const rendererData = data.map((entry) => {
     return {
@@ -46,7 +48,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
 
   function renderDataImport() {
     return (
-      <div className="bg-amber-50 p-4">
+      <div className="bg-editor-primary-50 p-4">
         <b className="serlo-h4 block ml-0 mb-4">Supply data to plugin</b>
         <p className="mb-4">
           Make your changes in{' '}
@@ -60,11 +62,11 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
           first and afterwards use this button.
         </p>
         <button
-          className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
+          className="serlo-button-editor-primary mb-12 text-base"
           onClick={async () => {
             try {
               const response = await fetch(
-                'https://opensheet.elk.sh/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/teamdata'
+                `https://opensheet.elk.sh/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/teamdata_${lang}`
               )
               const teamData = TeamDataDecoder.decode(
                 (await response.json()) as unknown

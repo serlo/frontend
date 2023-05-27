@@ -1,5 +1,4 @@
 import { Icon } from '@edtr-io/ui'
-import { TaxonomyTermType } from '@serlo/api'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -7,31 +6,49 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { Injection } from '@/components/content/injection'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType, UuidWithRevType } from '@/data-types'
+import {
+  TaxonomyTermType,
+  FetchExerciseFolderQuery,
+} from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
-  addEntry: (id: number, typename: string, title?: string) => void
+  addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
 }
+
+type ChildNodes = Extract<
+  FetchExerciseFolderQuery['uuid'],
+  { type: any }
+>['children']['nodes']
+type ChildNode = Extract<ChildNodes[number], { id: any }>
 
 export function ArticleRelatedExercises({
   exerciseFolderId,
   addEntry,
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
-
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const articleStrings = loggedInData.strings.editor.article
 
-  const errorReturn = <p>Sorry, something went wrong</p>
+  const errorReturn = <p>Sorry, something went wrong.</p>
 
-  if (!data || error) return errorReturn
+  if (error) return errorReturn
+  if (!data) return <p>…</p>
+
   const { uuid } = data
-  if (uuid.type !== TaxonomyTermType.ExerciseFolder) return errorReturn
+
+  if (
+    uuid?.__typename !== UuidType.TaxonomyTerm ||
+    uuid.type !== TaxonomyTermType.ExerciseFolder
+  ) {
+    return errorReturn
+  }
 
   return (
     <div className="mt-5 border-t-2 pt-6">
@@ -45,7 +62,11 @@ export function ArticleRelatedExercises({
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:
-      <div className="mt-4">{uuid.children.nodes.map(renderExercises)}</div>
+      <div className="mt-4">
+        {uuid.children.nodes.map((node) => {
+          return Object.hasOwn(node, 'id') ? renderExercises(node) : null
+        })}
+      </div>
     </div>
   )
 
@@ -69,7 +90,7 @@ export function ArticleRelatedExercises({
             getTranslatedType(strings, __typename)
           )}
           onClick={() => {
-            addEntry(id, 'Exercise')
+            addEntry(id, UuidType.Exercise)
           }}
         />
       </div>
@@ -78,21 +99,25 @@ export function ArticleRelatedExercises({
 }
 
 const fetchExerciseFolderQuery = gql`
-  query fetchExerciseFolderQuery($id: Int!) {
+  query fetchExerciseFolder($id: Int!) {
     uuid(id: $id) {
       ... on TaxonomyTerm {
+        __typename
         type
         children {
           nodes {
-            id
-            trashed
-            __typename
             ... on Exercise {
+              id
+              trashed
+              __typename
               currentRevision {
                 id
               }
             }
             ... on ExerciseGroup {
+              id
+              trashed
+              __typename
               currentRevision {
                 id
               }
@@ -104,26 +129,8 @@ const fetchExerciseFolderQuery = gql`
   }
 `
 
-interface ChildNode {
-  __typename: string
-  id: number
-  trashed: boolean
-  currentRevision?: {
-    id: number
-  }
-}
-
-interface FetchExerciseFolderType {
-  uuid: {
-    type: string
-    children: {
-      nodes: ChildNode[]
-    }
-  }
-}
-
 function useFetchExerciseFolder(id: number) {
-  return useGraphqlSwr<FetchExerciseFolderType>({
+  return useGraphqlSwr<FetchExerciseFolderQuery>({
     query: fetchExerciseFolderQuery,
     variables: { id },
     config: {

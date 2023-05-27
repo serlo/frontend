@@ -1,23 +1,24 @@
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons/faExclamationCircle'
-import { faTools } from '@fortawesome/free-solid-svg-icons/faTools'
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import {
+  faExclamationCircle,
+  faTools,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import dynamic from 'next/dynamic'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
-import { InviteModalProps } from '../user-tools/invite-modal'
 import { HSpace } from './h-space'
 import { Link } from './link'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { EntityData, FrontendContentNode } from '@/data-types'
+import { EntityData, UuidType } from '@/data-types'
+import { FrontendContentNode } from '@/frontend-node-types'
+import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
@@ -27,18 +28,8 @@ export interface EntityProps {
   data: EntityData
 }
 
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
-)
-
-const InviteModal = dynamic<InviteModalProps>(() =>
-  import('@/components/user-tools/invite-modal').then((mod) => mod.InviteModal)
-)
-
 export function Entity({ data }: EntityProps) {
   // state@/components/comments/comment-area
-  const [shareOpen, setShareOpen] = useState(false)
-  const [inviteOpen, setInviteOpen] = useState(false)
 
   // courseNav: start opened when only some entries
   const [courseNavOpen, setCourseNavOpen] = useState(
@@ -63,17 +54,13 @@ export function Entity({ data }: EntityProps) {
       {renderNotices()}
       {renderStyledH1()}
       {renderUserTools({ aboveContent: true })}
-      <div className="min-h-1/4">
+      <div className="min-h-1/4" key={data.id}>
         {data.content && renderContent(data.content)}
       </div>
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
-      {renderShareModal()}
-      {renderInviteModal()}
-      {data.licenseData && (
-        <LicenseNotice data={data.licenseData} path={['license']} />
-      )}
+      {data.licenseData && <LicenseNotice data={data.licenseData} />}
     </>
   )
 
@@ -93,7 +80,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <span
         className={clsx(
-          'text-xl text-center font-bold text-brand bg-brand-150',
+          'text-xl text-center font-bold text-brand bg-brand-200',
           'inline-block justify-center align-middle h-7 w-7',
           'rounded-full mr-1.5 -mt-1.5'
         )}
@@ -104,13 +91,17 @@ export function Entity({ data }: EntityProps) {
   }
 
   function renderEntityIcon() {
-    if (!data.categoryIcon || data.categoryIcon === 'coursePage') return null
+    if (
+      data.typename === UuidType.CoursePage ||
+      data.typename === UuidType.Page
+    )
+      return null
     return (
-      <span title={strings.entities[data.categoryIcon]}>
+      <span title={getTranslatedType(strings, data.typename)}>
         {' '}
         <FaIcon
-          icon={getIconByTypename(data.categoryIcon)}
-          className="text-brand-lighter text-2.5xl"
+          icon={getIconByTypename(data.typename)}
+          className="text-brand-400 text-2.5xl"
         />{' '}
       </span>
     )
@@ -148,8 +139,6 @@ export function Entity({ data }: EntityProps) {
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
-        onShare={() => setShareOpen(true)}
-        onInvite={() => setInviteOpen(true)}
         aboveContent={setting?.aboveContent}
         id={data.id}
         unrevisedRevisions={data.unrevisedRevisions}
@@ -164,30 +153,6 @@ export function Entity({ data }: EntityProps) {
           unrevisedCourseRevisions: data.unrevisedCourseRevisions,
         }}
       />
-    )
-  }
-
-  function renderShareModal() {
-    const showPdf = [
-      'Page',
-      'Article',
-      'CoursePage',
-      'ExerciseGroup',
-      'Exercise',
-      'Solution',
-    ].includes(data.typename)
-    return (
-      <ShareModal
-        isOpen={shareOpen}
-        onClose={() => setShareOpen(false)}
-        showPdf={showPdf}
-      />
-    )
-  }
-
-  function renderInviteModal() {
-    return (
-      <InviteModal isOpen={inviteOpen} onClose={() => setInviteOpen(false)} />
     )
   }
 

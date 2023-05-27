@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps<RevisionProps> = async (
     context.locale! as Instance
   )
 
-  if (pageData.kind == 'not-found') {
+  if (pageData.kind === 'not-found') {
     return { notFound: true }
   }
 

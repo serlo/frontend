@@ -8,7 +8,10 @@ import { useInstanceData } from '@/contexts/instance-context'
 export function FooterNew() {
   const { footerData } = useInstanceData()
   return (
-    <footer className="px-side lg:px-36 pb-10 font-bold text-truegray-700 bg-brand-100">
+    <footer
+      id="footer"
+      className="px-side lg:px-36 pb-10 font-bold text-almost-black bg-brand-100"
+    >
       <Separator />
       <FooterNavNew />
       <Separator />
@@ -20,13 +23,11 @@ export function FooterNew() {
     return (
       <>
         <style jsx>{`
-          nav > :global(a) {
-            &:not(:last-child):after {
-              content: '•';
-              position: absolute;
-              width: 1.2rem;
-              opacity: 0.4;
-            }
+          nav > :global(a):not(:last-child):after {
+            content: '•';
+            position: absolute;
+            width: 1.2rem;
+            opacity: 0.4;
           }
         `}</style>
         <nav className="text-center">
@@ -34,7 +35,7 @@ export function FooterNew() {
             return (
               <Fragment key={title}>
                 <Link
-                  className="text-truegray-700 mobile:whitespace-nowrap pr-4"
+                  className="text-almost-black mobile:whitespace-nowrap pr-4"
                   href={url}
                   noExternalIcon
                 >

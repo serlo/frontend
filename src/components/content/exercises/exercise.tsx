@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
 
+import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
+import { H5p } from '../h5p'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -10,9 +12,10 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInComponents } from '@/contexts/logged-in-components'
-import { FrontendExerciseNode } from '@/data-types'
+import { ExerciseInlineType } from '@/data-types'
+import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -27,6 +30,18 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   )
 )
 
+const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
+  import(
+    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+  ).then((mod) => mod.AuthorToolsExercises)
+)
+
+const DonationsBannerInline = dynamic<DonationsBannerProps>(() =>
+  import(
+    '@/components/content/donations-banner-experiment/donations-banner-inline'
+  ).then((mod) => mod.DonationsBannerInline)
+)
+
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setSolutionVisible] = useState(
@@ -36,7 +51,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       ? false
       : window.location.href.includes('#comment-')
   )
-  const [randomId] = useState(Math.random().toString())
 
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
@@ -44,7 +58,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     setLoaded(true)
   }, [])
 
-  const loggedInComponents = useLoggedInComponents()
   const isRevisionView =
     path && typeof path[0] === 'string' && path[0].startsWith('revision')
 
@@ -92,11 +105,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       !node.solution.license.isDefault && (
         <LicenseNotice minimal data={node.solution.license} type="solution" />
       )
-    const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
-    const authorTools = ExerciseAuthorTools && loaded && auth.current && (
-      <ExerciseAuthorTools
+    const authorTools = loaded && auth && (
+      <AuthorToolsExercises
         data={{
-          type: '_SolutionInline',
+          type: ExerciseInlineType.Solution,
           id: node.context.solutionId!,
           parentId: node.context.id,
           grouped: node.grouped,
@@ -111,7 +123,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {renderNested(
           [
             {
-              type: 'solution',
+              type: FrontendNodeType.Solution,
               solution: node.solution,
               context: { id: node.context.solutionId! },
             },
@@ -122,6 +134,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {node.context.solutionId && (
           <Lazy>
             <CommentAreaEntity entityId={node.context.solutionId} />
+            {/* Temporary donations banner trial */}
+            <DonationsBannerInline id={node.context.id} place="solution" />
           </Lazy>
         )}
       </div>
@@ -146,11 +160,13 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         onClick={() => {
           setSolutionVisible(!solutionVisible)
         }}
-        onPointerUp={(e) => e.currentTarget.blur()} //hack, use https://caniuse.com/#feat=css-focus-visible when supported
       >
         <span className="w-3.5">{solutionVisible ? '▾' : '▸'}&nbsp;</span>
-        {strings.entities.solution}{' '}
-        {solutionVisible ? strings.content.hide : strings.content.show}
+        {
+          strings.content.exercises[
+            solutionVisible ? 'hideSolution' : 'showSolution'
+          ]
+        }
       </button>
     )
   }
@@ -175,11 +191,16 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           <ScMcExercise
             state={state.interactive.state}
             idBase={`ex-${
-              node.positionOnPage ? node.positionOnPage : randomId
-            }-${node.positionInGroup ? node.positionInGroup : ''}-`}
+              node.positionOnPage ? node.positionOnPage : node.context.id
+            }-${
+              node.positionInGroup ? node.positionInGroup : path?.join('') ?? ''
+            }-`}
             renderNested={renderNested}
-            path={path}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
@@ -187,9 +208,23 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         return (
           <InputExercise
             data={state.interactive.state}
-            path={path}
             renderNested={renderNested}
             isRevisionView={isRevisionView}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
+          />
+        )
+      }
+      if (state.interactive.plugin === 'h5p') {
+        return (
+          <H5p
+            url={state.interactive.state}
+            context={{
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+            }}
           />
         )
       }
@@ -198,13 +233,12 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderToolsButton() {
     if (isRevisionView) return null
-    const ExerciseAuthorTools = loggedInComponents?.ExerciseAuthorTools
     return (
       <>
-        {loaded && auth.current && ExerciseAuthorTools && (
-          <ExerciseAuthorTools
+        {loaded && auth && (
+          <AuthorToolsExercises
             data={{
-              type: '_ExerciseInline',
+              type: ExerciseInlineType.Exercise,
               trashed: node.trashed,
               id: node.context.id,
               grouped: node.grouped,
@@ -218,8 +252,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderLicense() {
     if (!node.task.license) return null
-    return (
-      <LicenseNotice minimal data={node.task.license} type="task" path={path} />
-    )
+    return <LicenseNotice minimal data={node.task.license} type="task" />
   }
 }

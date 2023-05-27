@@ -1,4 +1,4 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { useAuthentication } from '@/auth/use-authentication'
@@ -8,8 +8,8 @@ import { Event } from '@/components/user/event'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { GetNotificationsQuery } from '@/fetcher/graphql-types/operations'
-import { useSetNotificationStateMutation } from '@/helper/mutations/use-set-notification-state-mutation'
-import { useSubscriptionSetMutation } from '@/helper/mutations/use-subscription-set-mutation'
+import { useSetNotificationStateMutation } from '@/mutations/use-set-notification-state-mutation'
+import { useSubscriptionSetMutation } from '@/mutations/use-subscription-set-mutation'
 
 interface NotificationProps {
   data: GetNotificationsQuery['notifications']
@@ -85,7 +85,7 @@ export const Notifications = ({
   }
 
   function setAllToRead() {
-    if (auth.current === null) return
+    if (auth === null) return
 
     const unreadIds = data?.nodes.flatMap((node) =>
       node.unread ? [node.id] : []

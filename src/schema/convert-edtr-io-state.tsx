@@ -1,18 +1,21 @@
-import { NewElement, NewNode, NewText } from '@edtr-io/plugin-text'
+import { CustomElement, CustomText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
-import { EdtrState, UnsupportedEdtrState } from './edtr-io-types'
+import { EdtrState, UnknownEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
+import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
   FrontendContentNode,
   FrontendMathNode,
+  FrontendNodeType,
   FrontendSerloTrNode,
   FrontendTextNode,
   Sign,
-} from '@/data-types'
-import { BoxType } from '@/edtr-io/plugins/box/renderer'
+} from '@/frontend-node-types'
+
+type CustomNode = CustomElement | CustomText
 
 function isEdtrState(node: ConvertData): node is EdtrState {
   return (node as EdtrState).plugin !== undefined
@@ -20,16 +23,16 @@ function isEdtrState(node: ConvertData): node is EdtrState {
 
 export type ConvertData =
   | EdtrState
-  | UnsupportedEdtrState
+  | UnknownEdtrState
   | FrontendContentNode
-  | NewNode
+  | CustomNode
 
 export type ConvertNode = ConvertData | ConvertData[] | undefined
 
-export function isTextPluginState(node: ConvertData): node is NewNode {
+export function isTextPluginState(node: ConvertData): node is CustomNode {
   return (
-    (node as NewElement).type !== undefined ||
-    (node as NewText).text !== undefined
+    (node as CustomElement).type !== undefined ||
+    (node as CustomText).text !== undefined
   )
 }
 
@@ -58,7 +61,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     )
     return [
       {
-        type: 'article',
+        type: FrontendNodeType.Article,
         introduction: convertPlugin({
           ...introduction,
           plugin: 'multimedia',
@@ -79,7 +82,9 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     return convert(node.state as unknown as EdtrState)
   }
   if (node.plugin === 'text') {
-    return [{ type: 'slate-container', children: convert(node.state) }]
+    return [
+      { type: FrontendNodeType.SlateContainer, children: convert(node.state) },
+    ]
   }
   if (node.plugin === 'image') {
     // remove images without source
@@ -88,7 +93,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const { caption, maxWidth, link, src } = node.state
 
     const convertedCaption = caption ? convert(caption as EdtrState) : undefined
-    const captionTexts = convertedCaption?.[0].children?.[0].children
+
+    const captionTexts = convertedCaption?.[0]?.children?.[0]?.children
 
     // if alt is not set construct plain string from caption
     const alt = node.state.alt
@@ -105,7 +111,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
 
     return [
       {
-        type: 'img',
+        type: FrontendNodeType.Img,
         src: src as string,
         alt: alt,
         maxWidth: maxWidth,
@@ -115,12 +121,12 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
   if (node.plugin === 'important') {
-    return [{ type: 'important', children: convert(node.state) }]
+    return [{ type: FrontendNodeType.Important, children: convert(node.state) }]
   }
   if (node.plugin === 'blockquote') {
     return [
       {
-        type: 'blockquote',
+        type: FrontendNodeType.Blockquote,
         children: convert(node.state as EdtrState),
       },
     ]
@@ -132,14 +138,14 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       | FrontendMathNode
       | undefined
     const title = convertedTitle
-      ? ((convertedTitle.type === 'math'
-          ? [{ ...convertedTitle, type: 'inline-math' }]
+      ? ((convertedTitle.type === FrontendNodeType.Math
+          ? [{ ...convertedTitle, type: FrontendNodeType.InlineMath }]
           : convertedTitle.children) as unknown as FrontendContentNode[])
-      : ([{ type: 'text', text: '' }] as FrontendTextNode[])
+      : ([{ type: FrontendNodeType.Text, text: '' }] as FrontendTextNode[])
 
     return [
       {
-        type: 'box',
+        type: FrontendNodeType.Box,
         boxType: node.state.type as BoxType,
         anchorId: node.state.anchorId,
         title,
@@ -150,13 +156,13 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'spoiler') {
     return [
       {
-        type: 'spoiler-container',
+        type: FrontendNodeType.SpoilerContainer,
         children: [
           {
-            type: 'spoiler-title',
+            type: FrontendNodeType.SpoilerTitle,
             children: [
               {
-                type: 'text',
+                type: FrontendNodeType.Text,
                 text:
                   node.state.title ||
                   ' ' /* if title is falsy, use space instead to avoid empty text node*/,
@@ -164,7 +170,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
             ],
           },
           {
-            type: 'spoiler-body',
+            type: FrontendNodeType.SpoilerBody,
             children: convert(node.state.content as EdtrState),
           },
         ],
@@ -175,7 +181,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const width = node.state.width ?? 50
     return [
       {
-        type: 'multimedia',
+        type: FrontendNodeType.Multimedia,
         mediaWidth: width,
         float: 'right',
         media: convert(node.state.multimedia as EdtrState),
@@ -186,11 +192,11 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'layout') {
     return [
       {
-        type: 'row',
+        type: FrontendNodeType.Row,
         children: node.state.map((child) => {
           const children = convert(child.child)
           return {
-            type: 'col',
+            type: FrontendNodeType.Col,
             size: child.width,
             children,
           }
@@ -201,16 +207,16 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'injection') {
     return [
       {
-        type: 'injection',
+        type: FrontendNodeType.Injection,
         href: node.state,
       },
     ]
   }
   if (node.plugin === 'highlight') {
-    if (Object.keys(node.state).length == 0) return [] // ignore empty highlight plugin
+    if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
     return [
       {
-        type: 'code',
+        type: FrontendNodeType.Code,
         code: node.state.code,
         language: node.state.language,
         showLineNumbers: node.state.showLineNumbers,
@@ -221,17 +227,17 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     const html = converter.makeHtml(node.state)
     // compat: the markdown converter could return all types of content, only use table nodes.
     const children = convertLegacyState(html).children.filter(
-      (child) => child.type == 'table'
+      (child) => child.type === 'table'
     )
     return children
   }
   if (node.plugin === 'serloTable') {
     const children = node.state.rows.map((row) => {
       return {
-        type: 'serlo-tr',
+        type: FrontendNodeType.SerloTr,
         children: row.columns.map((cell) => {
           return {
-            type: 'serlo-td',
+            type: FrontendNodeType.SerloTd,
             children: convert(cell.content as EdtrState),
           }
         }),
@@ -240,7 +246,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
 
     return [
       {
-        type: 'serlo-table',
+        type: FrontendNodeType.SerloTable,
         tableType: node.state.tableType,
         children,
       },
@@ -252,7 +258,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     }
     return [
       {
-        type: 'video',
+        type: FrontendNodeType.Video,
         src: node.state.src,
       },
     ]
@@ -260,7 +266,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
   if (node.plugin === 'anchor') {
     return [
       {
-        type: 'anchor',
+        type: FrontendNodeType.Anchor,
         id: node.state,
       },
     ]
@@ -272,7 +278,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     if (match) {
       id = match[1]
     }
-    return [{ type: 'geogebra', id }]
+    return [{ type: FrontendNodeType.Geogebra, id }]
   }
   if (node.plugin === 'equations') {
     const { firstExplanation, transformationTarget } = node.state
@@ -290,7 +296,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     })
     return [
       {
-        type: 'equations',
+        type: FrontendNodeType.Equations,
         steps,
         firstExplanation: convert(firstExplanation),
         transformationTarget,
@@ -298,20 +304,25 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     ]
   }
 
-  if (node.plugin === 'pageTeam') {
-    return [{ type: 'pageTeam', data: node.state.data }]
-  }
-
   if (node.plugin === 'pageLayout') {
     if (node.state.widthPercent === 0) return []
     return [
       {
-        type: 'pageLayout',
+        type: FrontendNodeType.PageLayout,
         column1: convert(node.state.column1 as EdtrState),
         column2: convert(node.state.column2 as EdtrState),
         widthPercent: node.state.widthPercent,
       },
     ]
   }
+
+  if (node.plugin === 'pageTeam') {
+    return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
+  }
+
+  if (node.plugin === 'pagePartners') {
+    return [{ type: FrontendNodeType.PagePartners }]
+  }
+
   return []
 }

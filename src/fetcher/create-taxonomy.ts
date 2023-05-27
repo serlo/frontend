@@ -3,11 +3,14 @@ import { createExercise, createExerciseGroup } from './create-exercises'
 import { MainUuidQuery, TaxonomyTermType } from './graphql-types/operations'
 import {
   TaxonomyData,
-  FrontendExerciseNode,
-  FrontendExerciseGroupNode,
   TaxonomyLink,
   TaxonomySubTerm,
+  UuidType,
 } from '@/data-types'
+import {
+  FrontendExerciseNode,
+  FrontendExerciseGroupNode,
+} from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 type TaxonomyTerm = Extract<
@@ -33,12 +36,12 @@ export function buildTaxonomyData(uuid: TaxonomyTerm): TaxonomyData {
     taxonomyType: uuid.type,
     trashed: uuid.trashed,
 
-    articles: collectType(children, 'Article'),
+    articles: collectType(children, UuidType.Article),
     exercises: collectExerciseFolders(children),
-    videos: collectType(children, 'Video'),
-    applets: collectType(children, 'Applet'),
-    courses: collectType(children, 'Course'),
-    events: collectType(children, 'Event'),
+    videos: collectType(children, UuidType.Video),
+    applets: collectType(children, UuidType.Applet),
+    courses: collectType(children, UuidType.Course),
+    events: collectType(children, UuidType.Event),
 
     exercisesContent: collectExercises(children),
     subterms: collectNestedTaxonomyTerms(children), // nested taxonomy terms
@@ -57,12 +60,12 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
   let index = 0
   const result: (FrontendExerciseNode | FrontendExerciseGroupNode)[] = []
   children.forEach((child) => {
-    if (child.__typename === 'Exercise' && child.currentRevision) {
+    if (child.__typename === UuidType.Exercise && child.currentRevision) {
       result.push(
         createExercise({ ...child, revisions: { totalCount: 0 } }, index++)
       )
     }
-    if (child.__typename === 'ExerciseGroup' && child.currentRevision) {
+    if (child.__typename === UuidType.ExerciseGroup && child.currentRevision) {
       if (children.length === 1) result.push(createExerciseGroup(child))
       else result.push(createExerciseGroup(child, index++))
     }
@@ -72,7 +75,12 @@ function collectExercises(children: TaxonomyTermChildrenLevel1[]) {
 
 function collectType(
   children: (TaxonomyTermChildrenLevel1 | TaxonomyTermChildrenLevel2)[],
-  typename: 'Applet' | 'Article' | 'Video' | 'Course' | 'Event'
+  typename:
+    | UuidType.Applet
+    | UuidType.Article
+    | UuidType.Video
+    | UuidType.Course
+    | UuidType.Event
 ) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
@@ -93,7 +101,6 @@ function collectType(
 }
 
 function getAlias(child: { alias?: string | null; id: number }) {
-  // TODO: do we still need this?
   if (!child.alias || hasSpecialUrlChars(child.alias)) return `/${child.id}`
   else return child.alias
 }
@@ -104,7 +111,7 @@ function collectExerciseFolders(
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
     if (
-      child.__typename === 'TaxonomyTerm' &&
+      child.__typename === UuidType.TaxonomyTerm &&
       child.type === TaxonomyTermType.ExerciseFolder
     )
       result.push({
@@ -122,7 +129,7 @@ function collectNestedTaxonomyTerms(
   const result: TaxonomySubTerm[] = []
   children.forEach((child) => {
     if (
-      child.__typename === 'TaxonomyTerm' &&
+      child.__typename === UuidType.TaxonomyTerm &&
       child.type !== TaxonomyTermType.ExerciseFolder
     ) {
       const subChildren = child.children.nodes.filter(isActive_for_subchildren)
@@ -133,12 +140,12 @@ function collectNestedTaxonomyTerms(
         description: child.description
           ? convertState(child.description)
           : undefined,
-        articles: collectType(subChildren, 'Article'),
+        articles: collectType(subChildren, UuidType.Article),
         exercises: collectExerciseFolders(subChildren),
-        videos: collectType(subChildren, 'Video'),
-        applets: collectType(subChildren, 'Applet'),
-        courses: collectType(subChildren, 'Course'),
-        events: collectType(subChildren, 'Event'),
+        videos: collectType(subChildren, UuidType.Video),
+        applets: collectType(subChildren, UuidType.Applet),
+        courses: collectType(subChildren, UuidType.Course),
+        events: collectType(subChildren, UuidType.Event),
         folders: collectSubfolders(subChildren),
         type: child.type,
       })
@@ -151,7 +158,7 @@ function collectSubfolders(children: TaxonomyTermChildrenLevel2[]) {
   const result: TaxonomyLink[] = []
   children.forEach((child) => {
     if (
-      child.__typename === 'TaxonomyTerm' &&
+      child.__typename === UuidType.TaxonomyTerm &&
       child.type !== TaxonomyTermType.ExerciseFolder
     )
       result.push({ title: child.name, url: getAlias(child), id: child.id })

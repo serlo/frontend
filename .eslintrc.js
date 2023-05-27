@@ -24,6 +24,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-console': 'warn',
     'no-warning-comments': 'warn',
+    eqeqeq: ['error', 'always'],
 
     // @typescript-eslint/eslint-plugin
     '@typescript-eslint/ban-ts-comment': 'warn',
@@ -50,6 +51,7 @@ module.exports = {
     '@typescript-eslint/no-useless-constructor': 'error',
     '@typescript-eslint/prefer-ts-expect-error': 'error',
     '@typescript-eslint/restrict-template-expressions': 'error',
+    '@typescript-eslint/no-misused-promises': 'off',
 
     // eslint-plugin-import
     'import/export': 'error',
@@ -71,12 +73,13 @@ module.exports = {
       'error',
       {
         allow: [
+          '@ory/integrations/ui',
           'graphiql/esm/components/GraphiQL',
           'graphql-request/dist/types',
           'msw/*',
           'next/*',
           'public/_assets/**/*',
-          '@fortawesome/**',
+          'redux-saga/effects',
         ],
       },
     ],
@@ -126,6 +129,14 @@ module.exports = {
 
     // eslint-plugin-next
     '@next/next/no-img-element': 'off',
+
+    // styledjsx exceptions
+    'react/no-unknown-property': [
+      2,
+      {
+        ignore: ['jsx', 'global'],
+      },
+    ],
   },
   settings: {
     'import/internal-regex': '^@/',
@@ -153,5 +164,10 @@ module.exports = {
       },
     },
   ],
-  ignorePatterns: ['tailwind.config.js', 'postcss.config.js', 'next.config.js'],
+  ignorePatterns: [
+    'tailwind.config.js',
+    'postcss.config.js',
+    'next.config.js',
+    'jest.config.js',
+  ],
 }

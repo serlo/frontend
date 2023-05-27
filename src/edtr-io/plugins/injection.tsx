@@ -1,10 +1,13 @@
 import { OverlayInput } from '@edtr-io/core'
-import { EditorInlineSettings, EditorInput, styled } from '@edtr-io/editor-ui'
-// eslint-disable-next-line import/no-internal-modules
-import { PreviewOverlay } from '@edtr-io/editor-ui/internal'
+import {
+  EditorInlineSettings,
+  EditorInput,
+  styled,
+  PreviewOverlay,
+} from '@edtr-io/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@edtr-io/plugin'
 import { Icon, faNewspaper } from '@edtr-io/ui'
-import * as React from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Injection } from '@/components/content/injection'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -37,10 +40,10 @@ const PlaceholderWrapper = styled.div({
 })
 
 function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
-  const [cache, setCache] = React.useState(props.state.value)
-  const [preview, setPreview] = React.useState(false)
+  const [cache, setCache] = useState(props.state.value)
+  const [preview, setPreview] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setCache(props.state.value)
     }, 2000)
@@ -51,10 +54,14 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const injectionsStrings = loggedInData.strings.editor.injection
 
   if (!props.editable) {
     return <InjectionRenderer src={props.state.value} />
+  }
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    props.state.set(e.target.value.replace(/[^0-9.]/g, ''))
   }
 
   return (
@@ -79,12 +86,12 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       {props.focused && !preview ? (
         <EditorInlineSettings>
           <EditorInput
-            label={editorStrings.injection.serloId}
-            placeholder="123456"
+            label={injectionsStrings.serloId}
+            placeholder={injectionsStrings.placeholder}
             value={props.state.value}
-            onChange={(e) => {
-              props.state.set(e.target.value)
-            }}
+            onChange={handleOnChange}
+            inputMode="numeric"
+            pattern="\d+"
             width="30%"
             inputWidth="100%"
             ref={props.autofocusRef}
@@ -94,12 +101,12 @@ function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
       {props.renderIntoSettings(
         <>
           <OverlayInput
-            label={editorStrings.injection.serloId}
-            placeholder="123456"
+            label={injectionsStrings.serloId}
+            placeholder={injectionsStrings.placeholder}
+            inputMode="numeric"
+            pattern="\d+"
             value={props.state.value}
-            onChange={(e) => {
-              props.state.set(e.target.value)
-            }}
+            onChange={handleOnChange}
           />
         </>
       )}

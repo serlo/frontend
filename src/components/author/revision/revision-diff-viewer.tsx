@@ -3,41 +3,37 @@ import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { RevisionData } from '@/data-types'
 
-type DiffViewerTypes =
-  | 'content'
-  | 'title'
-  | 'metaTitle'
-  | 'metaDescription'
-  | 'url'
+export enum DiffViewerMode {
+  content = 'content',
+  title = 'title',
+  metaTitle = 'metaTitle',
+  metaDescription = 'metaDescription',
+  url = 'url',
+}
 
 export interface RevisionDiffViewerProps {
   data: RevisionData
-  type: DiffViewerTypes
+  mode: DiffViewerMode
 }
 
-export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
+export function RevisionDiffViewer({ data, mode }: RevisionDiffViewerProps) {
   const { strings } = useInstanceData()
   return (
     <>
       <style jsx>{`
-        .wrapper-split {
-          :global(td) {
-            max-width: 45vw;
-            overflow: scroll;
-          }
-          :global(pre) {
-            font-size: 0.9rem;
-          }
+        .wrapper-split :global(td) {
+          max-width: 45vw;
+          overflow: scroll;
+        }
+        .wrapper-split :global(pre) {
+          font-size: 0.9rem;
         }
 
-        .wrapper-single {
-          :global(pre) {
-            @apply font-serlo;
-            font-size: 1.125rem !important;
-          }
+        .wrapper-single :global(pre) {
+          font-size: 1.125rem !important;
         }
       `}</style>
-      {type == 'content' ? (
+      {mode === DiffViewerMode.content ? (
         <div className="wrapper-split">
           <ReactDiffViewer
             leftTitle={strings.revisions.currentVersion}
@@ -50,10 +46,10 @@ export function RevisionDiffViewer({ data, type }: RevisionDiffViewerProps) {
           />{' '}
         </div>
       ) : (
-        <div className="wrapper-single">
+        <div className="wrapper-single [&_pre]:font-serlo">
           <ReactDiffViewer
-            oldValue={data.currentRevision[type]}
-            newValue={data.thisRevision[type]}
+            oldValue={data.currentRevision[mode]}
+            newValue={data.thisRevision[mode]}
             splitView={false}
             hideLineNumbers
             showDiffOnly={false}

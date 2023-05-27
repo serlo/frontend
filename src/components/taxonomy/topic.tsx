@@ -1,30 +1,30 @@
-import { faFile } from '@fortawesome/free-solid-svg-icons/faFile'
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
-import { TaxonomyTermType } from '@serlo/api'
+import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
-import { useState, Fragment } from 'react'
+import { Fragment } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
+import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
-import { ShareModalProps } from '@/components/user-tools/share-modal'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
-import { TaxonomyData } from '@/data-types'
+import { TaxonomyData, TopicCategoryType, UuidType } from '@/data-types'
+import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface TopicProps {
   data: TaxonomyData
 }
 
-const ShareModal = dynamic<ShareModalProps>(() =>
-  import('@/components/user-tools/share-modal').then((mod) => mod.ShareModal)
+const DonationsBanner = dynamic<DonationsBannerProps>(() =>
+  import(
+    '@/components/content/donations-banner-experiment/donations-banner'
+  ).then((mod) => mod.DonationsBanner)
 )
 
 export function Topic({ data }: TopicProps) {
-  const [modalOpen, setModalOpen] = useState(false)
   const { strings } = useInstanceData()
 
   const isExerciseFolder = data.taxonomyType === TaxonomyTermType.ExerciseFolder
@@ -51,20 +51,28 @@ export function Topic({ data }: TopicProps) {
         {isTopic && <TopicCategories data={data} full />}
 
         {isExerciseFolder && data.events && (
-          <TopicCategories data={data} categories={['events']} full />
+          <TopicCategories
+            data={data}
+            categories={[TopicCategoryType.events]}
+            full
+          />
         )}
       </div>
+      {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
-      {defaultLicense && (
-        <LicenseNotice data={defaultLicense} path={['license']} />
-      )}
+      {/* Temporary donations banner trial */}
+      {isExerciseFolder ? (
+        <DonationsBanner
+          id={data.id}
+          entityData={{
+            ...data,
+            typename: UuidType.TaxonomyTerm,
+            isUnrevised: false,
+          }}
+        />
+      ) : null}
 
       {renderUserTools()}
-      <ShareModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        showPdf={!!data.exercisesContent}
-      />
     </>
   )
 
@@ -85,7 +93,7 @@ export function Topic({ data }: TopicProps) {
             {' '}
             <FaIcon
               icon={faFile}
-              className="text-[1.43rem] align-baseline text-brand-lighter"
+              className="text-[1.43rem] align-baseline text-brand-400"
             />{' '}
           </span>
         )}
@@ -125,8 +133,7 @@ export function Topic({ data }: TopicProps) {
   function renderUserTools(setting?: { aboveContent?: boolean }) {
     return (
       <UserTools
-        onShare={() => setModalOpen(true)}
-        data={{ type: 'TaxonomyTerm', ...data }}
+        data={{ type: UuidType.TaxonomyTerm, ...data }}
         id={data.id}
         aboveContent={setting?.aboveContent}
       />

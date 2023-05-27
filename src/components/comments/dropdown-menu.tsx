@@ -1,6 +1,9 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons/faPaperclip'
-import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import {
+  faCheck,
+  faPaperclip,
+  faTrash,
+  faPencil,
+} from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
 import clsx from 'clsx'
 
@@ -8,12 +11,12 @@ import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
   useThreadArchivedMutation,
-} from '@/helper/mutations/thread'
-import { showToastNotice } from '@/helper/show-toast-notice'
+} from '@/mutations/thread'
 
 interface DropdownMenuProps {
   isParent?: boolean
@@ -23,6 +26,7 @@ interface DropdownMenuProps {
   highlight: (id: number) => void
   onAnyClick: () => void
   threadId?: string
+  startEditing?: () => void
 }
 
 export function DropdownMenu({
@@ -33,6 +37,7 @@ export function DropdownMenu({
   highlight,
   onAnyClick,
   threadId,
+  startEditing,
 }: DropdownMenuProps) {
   const { lang, strings } = useInstanceData()
 
@@ -47,13 +52,18 @@ export function DropdownMenu({
     : canDo(Thread.setCommentState)
   const canArchive = isParent && canDo(Thread.setThreadArchived)
 
+  // we assume that the user who can create a comment can also edit it
+  const canEdit = isParent
+    ? canDo(Thread.createThread)
+    : canDo(Thread.createComment)
+
   const entityId = useEntityId()
 
   return (
     <div
       className={clsx(
         'text-right bg-brand-50 py-3 pr-4 pl-2.5',
-        'shadow max-w-65 rounded-lg'
+        'shadow max-w-65 rounded-lg -mt-4'
       )}
     >
       {buildButton(
@@ -62,6 +72,14 @@ export function DropdownMenu({
           <FaIcon icon={faPaperclip} /> {strings.comments.copyLink}
         </>
       )}
+      {canEdit &&
+        startEditing &&
+        buildButton(
+          startEditing,
+          <>
+            <FaIcon icon={faPencil} /> {strings.comments.edit}
+          </>
+        )}
       {canArchive &&
         buildButton(
           onArchiveThread,
@@ -82,7 +100,7 @@ export function DropdownMenu({
               : strings.comments.deleteComment}
           </>
         )}
-      <span className={clsx('block text-sm mt-3.5 text-truegray-500')}>
+      <span className={clsx('block text-sm mt-3.5 text-gray-500')}>
         {strings.comments.postedOn} {date.toLocaleString(lang)}
       </span>
     </div>

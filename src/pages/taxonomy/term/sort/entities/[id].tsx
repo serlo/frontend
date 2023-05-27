@@ -1,5 +1,4 @@
 import { faGripLines, faTools } from '@fortawesome/free-solid-svg-icons'
-import { Instance } from '@serlo/api'
 import { arrayMoveImmutable } from 'array-move'
 import clsx from 'clsx'
 import { GetStaticPaths, GetStaticProps } from 'next'
@@ -21,24 +20,31 @@ import {
   TaxonomyLink,
   TaxonomyPage,
   TaxonomyData,
-  TopicCategoryTypes,
+  TopicCategoryType,
+  TopicCategoryCustomType,
+  TaxonomySubTerm,
 } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
-import { hasOwnPropertyTs } from '@/helper/has-own-property-ts'
+import {
+  FrontendExerciseGroupNode,
+  FrontendExerciseNode,
+} from '@/frontend-node-types'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { useTaxonomyTermSortMutation } from '@/helper/mutations/taxonomyTerm'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useTaxonomyTermSortMutation } from '@/mutations/taxonomyTerm'
 
 export const allCategories = [
-  'articles',
-  'courses',
-  'videos',
-  'applets',
-  'exercises',
-  'events',
-  'subterms', //TaxonomySubTerm[]
-  'exercisesContent', //(FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  TopicCategoryType.applets,
+  TopicCategoryType.articles,
+  TopicCategoryType.courses,
+  TopicCategoryType.events,
+  TopicCategoryType.exercises,
+  TopicCategoryType.videos,
+  TopicCategoryCustomType.exercisesContent,
+  TopicCategoryCustomType.subterms,
+  // we exclude folders because they are nested and don't appear on top level
 ] as const
 
 export default renderedPageNoHooks<{ pageData: TaxonomyPage }>((props) => {
@@ -68,7 +74,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       return [
         ...idArray,
         ...taxonomyData[category].map((entity) => {
-          if (hasOwnPropertyTs(entity, 'id')) {
+          if (Object.hasOwn(entity, 'id')) {
             return entity.id
           }
 
@@ -118,33 +124,36 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
     return [...allCategories].map((category) => {
       if (!(category in taxonomyData)) return null
       const links = taxonomyData[category]
-      if (!links || !links.length || typeof links == 'boolean') return null
+      if (!links || !links.length || typeof links === 'boolean') return null
 
-      if (
-        hasOwnPropertyTs(links[0], 'type') &&
-        (links[0].type == 'exercise' || links[0].type == 'exercise-group')
-      ) {
-        return renderCategory(
-          category,
-          (links as unknown as TaxonomyData['exercisesContent']).map(
-            (exNode) => {
-              const url = exNode.href ?? `/${exNode.context.id}`
-              const pos =
-                exNode.positionOnPage !== undefined
-                  ? exNode.positionOnPage + 1
-                  : ''
-              const title = `(${pos}) ${getPreviewStringFromExercise(
-                exNode,
-                strings
-              )}`
-              return { title, url, id: exNode.context.id }
-            }
-          )
-        )
-      } else {
-        return renderCategory(category, links as TaxonomyLink[])
-      }
+      return renderCategory(category, exToTaxonomyLinks(links))
     })
+  }
+
+  function exToTaxonomyLinks(
+    links:
+      | TaxonomyLink[]
+      | TaxonomySubTerm[]
+      | (FrontendExerciseNode | FrontendExerciseGroupNode)[]
+  ): TaxonomyLink[] {
+    if (
+      Object.hasOwn(links[0], 'type') &&
+      (links[0].type === 'exercise-group' || links[0].type === 'exercise')
+    ) {
+      return (links as unknown as TaxonomyData['exercisesContent']).map(
+        (exNode) => {
+          const url = exNode.href ?? `/${exNode.context.id}`
+          const pos =
+            exNode.positionOnPage !== undefined ? exNode.positionOnPage + 1 : ''
+          const title = `(${pos}) ${getPreviewStringFromExercise(
+            exNode,
+            strings
+          )}`
+          return { title, url, id: exNode.context.id }
+        }
+      )
+    }
+    return links as unknown as TaxonomyLink[]
   }
 
   function renderCategory(
@@ -156,20 +165,19 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
       links.filter((link) => !link.unrevised).length === 0
     )
       return null
+
     return (
       <DragDropContext
         key={category}
         onDragEnd={(result) => {
           const { source, destination } = result
           if (!destination) return
-          const category = source.droppableId as Exclude<
-            TopicCategoryTypes,
-            'folders'
-          >
+          const category = source.droppableId as typeof allCategories[number]
+
           setTaxonomyData({
             ...taxonomyData,
             [category]: arrayMoveImmutable(
-              taxonomyData[category],
+              exToTaxonomyLinks(taxonomyData[category]),
               source.index,
               destination.index
             ),
@@ -192,7 +200,7 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
-                <h4 className="text-truegray-900 text-lg mb-4 font-bold">
+                <h4 className="text-gray-900 text-lg mb-4 font-bold">
                   {strings.categories[categoryAdapted]}{' '}
                   <FaIcon icon={categoryIconMapping[categoryAdapted]} />
                 </h4>

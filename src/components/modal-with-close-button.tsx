@@ -1,6 +1,6 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import BaseModal from 'react-modal'
 
 import { FaIcon } from './fa-icon'
@@ -46,11 +46,11 @@ export function ModalWithCloseButton({
         title={strings.share.close}
         className={clsx(
           'absolute top-3.5 right-3.5 bg-transparent border-none cursor-pointer',
-          'inline-block text-truegray-800 hover:bg-brand hover:text-white leading-tight',
+          'inline-block text-almost-black hover:bg-brand hover:text-white leading-tight',
           'w-9 h-9 rounded-full text-center '
         )}
       >
-        <FaIcon icon={faTimes} className="h-5" />
+        <FaIcon icon={faXmark} className="h-5" />
       </button>
     </BaseModal>
   )

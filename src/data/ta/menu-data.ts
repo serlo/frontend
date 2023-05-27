@@ -1,5 +1,5 @@
 import { serloDomain } from '../../helper/urls/serlo-domain'
-import { InstanceData, LandingSubjectsData } from '@/data-types'
+import { FooterIcon, InstanceData, LandingSubjectsData } from '@/data-types'
 
 export const landingSubjectsData: LandingSubjectsData = {
   subjects: [],
@@ -12,7 +12,7 @@ export const headerData: InstanceData['headerData'] = [
     title: 'பாடங்கள்',
     icon: 'subject',
     children: [
-      { url: '/140522', title: 'இலக்கணம்' },
+      { url: '/140522/இலக்கணம்', title: 'இலக்கணம்' },
       { url: '/140524', title: 'வரலாறு' },
       { url: '/148667', title: 'அகராதி' },
     ],
@@ -65,7 +65,7 @@ export const footerData: InstanceData['footerData'] = {
         {
           title: 'GitHub',
           url: 'https://github.com/serlo',
-          icon: 'github',
+          icon: FooterIcon.github,
         },
       ],
     },
@@ -97,6 +97,7 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
   {
     // grammar
     rootId: 140527,
+    landingUrl: '/140522/இலக்கணம்',
     entries: [
       { title: 'இலக்கணம்', id: 140522 },
       { title: 'பாடங்கள்', id: 140527 },

@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Script from 'next/script'
 
 import { Entity } from '@/components/content/entity'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -48,6 +49,10 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       entityId={entityId}
       authorization={pageData.authorization}
     >
+      <Script
+        src="/_assets/iframeResizer.contentWindow.min.js"
+        strategy="lazyOnload"
+      />
       {pageData.metaData && (
         <HeadTags
           data={pageData.metaData}
@@ -62,6 +67,9 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       </div>
       <style jsx global>
         {`
+          body {
+            padding-block: 1rem;
+          }
           .serlo-user-tools {
             display: none;
           }

@@ -7,7 +7,6 @@ import {
   string,
 } from '@edtr-io/plugin'
 import { styled } from '@edtr-io/ui'
-import * as React from 'react'
 import { useState } from 'react'
 
 import { SemanticSection } from '../helpers/semantic-section'
@@ -53,7 +52,7 @@ export const OpenInNewTab = styled.span({
 })
 
 export const buttonClass =
-  'serlo-button text-amber-300 hover:bg-amber-300 hover:text-black w-8'
+  'serlo-button text-editor-primary hover:bg-editor-primary hover:text-almost-black w-8'
 
 function ArticleEditor(props: ArticleProps) {
   const { editable, state } = props

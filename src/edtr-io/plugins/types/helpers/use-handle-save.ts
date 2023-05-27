@@ -1,16 +1,16 @@
-import { useScopedStore } from '@edtr-io/core'
-import { serializeRootDocument } from '@edtr-io/store'
-import * as R from 'ramda'
+import { store, selectSerializedRootDocument } from '@edtr-io/store'
+import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
-import { CsrfContext } from '@/edtr-io/csrf-context'
-import { storeState, SaveContext } from '@/edtr-io/serlo-editor'
-import { SupportedTypesSerializedState } from '@/helper/mutations/use-set-entity-mutation/types'
+import { storeStateToLocalStorage } from '@/edtr-io/components/local-storage-notice'
+import { SaveContext } from '@/edtr-io/serlo-editor'
+import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 
-export function useHandleSave(visible: boolean, subscriptions?: boolean) {
-  const store = useScopedStore()
-  const getCsrfToken = useContext(CsrfContext)
-  const { onSave, needsReview, showSkipCheckout } = useContext(SaveContext)
+export function useHandleSave(
+  visible: boolean,
+  showSubscriptionOptions?: boolean
+) {
+  const { onSave, entityNeedsReview } = useContext(SaveContext)
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -22,60 +22,48 @@ export function useHandleSave(visible: boolean, subscriptions?: boolean) {
     }
   }, [visible])
 
-  const serializedRoot = serializeRootDocument()(store.getState())
+  const serializedRoot = selectSerializedRootDocument(store.getState())
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const serialized = R.has('state', serializedRoot)
-    ? serializedRoot.state
-    : null
+  const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 
+  // Currently still needed
   if (
     serialized !== null &&
     serializedRoot?.plugin === 'type-text-exercise-group' &&
-    R.has('cohesive', serialized)
+    has('cohesive', serialized)
   ) {
-    // legacy server can only handle string attributes
+    // backend can only handle string attributes
     serialized.cohesive = String(serialized.cohesive)
   }
 
   const handleSave = (
     notificationSubscription?: boolean,
     emailSubscription?: boolean,
-    autoCheckout?: boolean
+    manualSkipReview?: boolean
   ) => {
     setPending(true)
 
-    const subscriptionsControls = subscriptions
-      ? {
-          subscription: {
-            subscribe: notificationSubscription ? 1 : 0,
-            mailman: emailSubscription ? 1 : 0,
-          },
-        }
-      : {}
-
-    const checkoutControls =
-      !needsReview || (showSkipCheckout && autoCheckout)
-        ? {
-            checkout: true,
-          }
-        : {}
-
     onSave({
-      ...(serialized as SupportedTypesSerializedState),
-      csrf: getCsrfToken(),
       controls: {
-        ...subscriptionsControls,
-        ...checkoutControls,
+        ...(showSubscriptionOptions
+          ? { notificationSubscription, emailSubscription }
+          : {}),
+        noReview: manualSkipReview || !entityNeedsReview,
       },
+      ...(serialized as SupportedTypesSerializedState),
     })
       .then(() => {
-        storeState(undefined)
-        setPending(false)
-        setHasError(false)
+        setTimeout(() => {
+          storeStateToLocalStorage(undefined)
+          setPending(false)
+          setHasError(false)
+        }, 200)
       })
       .catch(() => {
-        setPending(false)
-        setHasError(true)
+        setTimeout(() => {
+          setPending(false)
+          setHasError(true)
+        }, 200)
       })
   }
 

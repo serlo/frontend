@@ -1,24 +1,22 @@
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
+import { loginUrl } from '../auth/utils'
 import { useAuthentication } from '@/auth/use-authentication'
 
 //fallback for legacy routes /user/me and /user/public
 
 export const ProfileRedirectMe: NextPage = () => {
   const auth = useAuthentication()
+  const router = useRouter()
 
   useEffect(() => {
-    if (auth.current) {
-      // hack until we have a mutation
-      const isChanged = document.referrer.endsWith('/user/settings')
-      const hash = isChanged ? '#profile-refresh' : window.location.hash
-      const url = `/user/${auth.current.id}/${auth.current.username}${hash}`
-      window.location.replace(url)
-    } else {
-      window.location.replace('/api/auth/login')
-    }
-  }, [auth])
+    const url = auth
+      ? `/user/${auth.id}/${auth.username}${window.location.hash}`
+      : loginUrl
+    void router.replace(url)
+  }, [auth, router])
 
   return null
 }

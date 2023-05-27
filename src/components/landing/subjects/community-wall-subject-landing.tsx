@@ -48,7 +48,7 @@ export function CommunityWallSubjectLanding({
           >
             Lust, das Fach {title} mitzugestalten?
           </h3>
-          <p className="jsx-1406289065 text-xl leading-cozy text-truegray-700 max-w-xl mx-auto">
+          <p className="jsx-1406289065 text-xl leading-cozy text-almost-black max-w-xl mx-auto">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
             Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von{' '}
@@ -58,7 +58,7 @@ export function CommunityWallSubjectLanding({
           <div className="group text-center">
             <Link
               className={clsx(
-                'serlo-new-landing-button inline-block group-hover:bg-brand-light hover:no-underline',
+                'serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline',
                 'mt-6 py-2 px-4 text-lg'
               )}
               href={contributeLink}

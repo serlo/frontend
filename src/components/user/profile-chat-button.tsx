@@ -1,5 +1,5 @@
 import { faSpinner } from '@edtr-io/ui'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons/faPaperPlane'
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -8,10 +8,9 @@ import { FaIcon } from '../fa-icon'
 import { useAuthentication } from '@/auth/use-authentication'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { shouldUseNewAuth } from '@/helper/feature-auth'
-import { useCreateThreadMutation } from '@/helper/mutations/thread'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { useCreateThreadMutation } from '@/mutations/thread'
 
 interface ProfileChatButtonProps {
   userId: number
@@ -31,7 +30,7 @@ export function ProfileChatButton({
   const { strings } = useInstanceData()
   const createThread = useCreateThreadMutation()
   const auth = useAuthentication()
-  const [mounted, setMounted] = useState(!shouldUseNewAuth())
+  const [mounted, setMounted] = useState(false)
   const [showInviteModal, setShowInviteModal] = useState(false)
   const [pending, setPending] = useState(false)
   const [message, setMessage] = useState('')
@@ -41,7 +40,7 @@ export function ProfileChatButton({
   }, [])
 
   if (!mounted) return null
-  if (auth.current === null) return null
+  if (auth === null) return null
   const isRegistered = !!chatUrl
 
   const text = isOwnProfile
@@ -113,7 +112,7 @@ export function ProfileChatButton({
         <div
           className={clsx(
             'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-            'bg-brandgreen-lighter focus-within:bg-brandgreen-light',
+            'bg-brandgreen-50 focus-within:bg-brandgreen-100',
             'transition-colors duration-200 ease-in py-1'
           )}
         >

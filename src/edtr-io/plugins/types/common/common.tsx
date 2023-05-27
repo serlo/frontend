@@ -1,4 +1,4 @@
-import { useScopedSelector, PluginToolbarButton } from '@edtr-io/core'
+import { PluginToolbarButton } from '@edtr-io/core'
 import {
   StateType,
   StateTypesSerializedType,
@@ -12,11 +12,13 @@ import {
   number,
   object,
   string,
+  optional,
 } from '@edtr-io/plugin'
-import { getDocument } from '@edtr-io/store'
+import { selectDocument, useAppSelector } from '@edtr-io/store'
 import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
-import * as R from 'ramda'
-import * as React from 'react'
+import { mapObjIndexed } from 'ramda'
+
+import { colors } from '@/helper/colors'
 
 export const licenseState = object({
   id: number(),
@@ -31,7 +33,7 @@ export const uuid = {
 }
 
 export const license = {
-  license: licenseState,
+  license: optional(licenseState),
 }
 
 export const entity = {
@@ -73,7 +75,7 @@ export function entityType<
         ...initialisedObject,
         replaceOwnState(newValue) {
           onChange((previousState, helpers) => {
-            return R.mapObjIndexed((_value, key) => {
+            return mapObjIndexed((_value, key) => {
               if (key in ownTypes) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return ownTypes[key].deserialize(newValue[key], helpers)
@@ -218,7 +220,9 @@ export function OptionalChild(props: {
   onRemove: () => void
 }) {
   const expectedStateType = object(entity)
-  const document = useScopedSelector(getDocument(props.state.id)) as {
+  const document = useAppSelector((state) =>
+    selectDocument(state, props.state.id)
+  ) as {
     state: StateTypeValueType<typeof expectedStateType>
   }
   const children = props.state.render({
@@ -253,6 +257,6 @@ export const HeaderInput = styled.input({
   borderBottom: '2px solid transparent',
   '&:focus': {
     outline: 'none',
-    borderColor: '#007ec1',
+    borderColor: colors.brand,
   },
 })

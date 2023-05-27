@@ -1,4 +1,4 @@
-import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons/faArrowCircleRight'
+import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
@@ -8,7 +8,8 @@ import ParticipateSVG from '@/assets-webkit/img/footer-participate.svg'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { useInstanceData } from '@/contexts/instance-context'
 import { InstanceLandingData } from '@/data-types'
-import { theme } from '@/theme'
+import { breakpoints } from '@/helper/breakpoints'
+import { colors } from '@/helper/colors'
 
 export interface LandingInternationalProps {
   data: InstanceLandingData
@@ -21,103 +22,6 @@ export function LandingInternational({ data }: LandingInternationalProps) {
 
   return (
     <>
-      <style jsx>{`
-        .section {
-          margin-top: 60px;
-          margin-bottom: 60px;
-          @apply px-side lg:px-side-lg;
-
-          @screen sm {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-          }
-
-          @screen lg {
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-          }
-        }
-        .col {
-          margin-top: 40px;
-
-          @screen sm {
-            margin-top: 0;
-            margin-right: 30px;
-            flex: 1;
-
-            & > p {
-              min-height: 80px;
-            }
-
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-
-          @screen lg {
-            margin-right: 50px;
-          }
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-
-          :global(.a) {
-            /* ? */
-            margin-top: auto;
-          }
-
-          margin-bottom: 60px;
-        }
-        .image-section {
-          background-size: contain;
-          background-repeat: no-repeat;
-          padding-top: 43.75%;
-
-          background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
-
-          @screen sm {
-            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
-          }
-
-          @screen md {
-            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
-          }
-        }
-        h2 {
-          font-size: 1.66rem;
-          @apply text-brand;
-          border: 0;
-          @screen sm {
-            width: 100%;
-          }
-        }
-        .principles-section {
-          @apply bg-brand px-side lg:px-side-lg;
-          text-align: center;
-          padding-top: 70px;
-          padding-bottom: 70px;
-
-          & > :global(svg) {
-            height: 450px;
-            width: 100%;
-            font-family: inherit;
-          }
-        }
-        .icon-style {
-          & > :global(path),
-          & :global(.st0) {
-            fill: ${theme.colors.brandGreen};
-          }
-          width: 100px;
-          margin-right: 30px;
-          @screen lg {
-            margin-right: 50px;
-            width: 120px;
-          }
-        }
-      `}</style>
       <HeadTags data={{ title: strings.header.slogan }} />
       <section className="section">
         <p className="serlo-p ml-0">{landingStrings.vision}</p>
@@ -129,19 +33,19 @@ export function LandingInternational({ data }: LandingInternationalProps) {
         <LandingSubjectsNew data={subjectsData} />
       </section>
 
-      <section className="principles-section">
+      <section className="principles-section bg-brand px-side lg:px-side-lg">
         <PrinciplesGraphic strings={landingStrings} />
       </section>
 
       <section className="section">
-        <h2>{landingStrings.wikiTitle}</h2>
+        <h2 className="text-brand">{landingStrings.wikiTitle}</h2>
         <p className="serlo-p ml-0">{landingStrings.wikiText}</p>
       </section>
 
       <section className="image-section" />
 
       <section className="section">
-        <h2>{landingStrings.movementTitle}</h2>
+        <h2 className="text-brand">{landingStrings.movementTitle}</h2>
         <div className="icon-style">
           <ParticipateSVG />
         </div>
@@ -158,6 +62,117 @@ export function LandingInternational({ data }: LandingInternationalProps) {
           </Link>
         </div>
       </section>
+      <style jsx>{`
+        .section {
+          margin-top: 60px;
+          margin-bottom: 60px;
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        @media (min-width: ${breakpoints.sm}) {
+          .section {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+          }
+        }
+
+        @media (min-width: ${breakpoints.lg}) {
+          .section {
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 40px;
+            padding-right: 40px;
+          }
+        }
+        .col {
+          margin-top: 40px;
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          .col {
+            margin-top: 0;
+            margin-right: 30px;
+            flex: 1;
+          }
+
+          .col > p {
+            min-height: 80px;
+          }
+
+          .col:last-child {
+            margin-right: 0;
+          }
+        }
+        @media (min-width: ${breakpoints.lg}) {
+          .col {
+            margin-right: 50px;
+          }
+        }
+        .col {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .col :global(.a) {
+          /* ? */
+          margin-top: auto;
+        }
+        .col {
+          margin-bottom: 60px;
+        }
+        .image-section {
+          background-size: contain;
+          background-repeat: no-repeat;
+          padding-top: 43.75%;
+
+          background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_sm.570e34cd.jpg');
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          .image-section {
+            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_md.333b0782.jpg');
+          }
+        }
+        @media (min-width: ${breakpoints.md}) {
+          .image-section {
+            background-image: url('https://packages.serlo.org/serlo-org-client@13.0.4/home_img_launch_lg.b46ea2e2.jpg');
+          }
+        }
+        h2 {
+          font-size: 1.66rem;
+          border: 0;
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          h2 {
+            width: 100%;
+          }
+        }
+        .principles-section {
+          text-align: center;
+          padding-top: 70px;
+          padding-bottom: 70px;
+        }
+        .principles-section > :global(svg) {
+          height: 450px;
+          width: 100%;
+          font-family: inherit;
+        }
+        .icon-style > :global(path),
+        .icon-style :global(.st0) {
+          fill: ${colors.brandGreen};
+        }
+        .icon-style {
+          width: 100px;
+          margin-right: 30px;
+        }
+        @media (min-width: ${breakpoints.lg}) {
+          .icon-style {
+            margin-right: 50px;
+            width: 120px;
+          }
+        }
+      `}</style>
     </>
   )
 }

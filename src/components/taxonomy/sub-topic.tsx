@@ -15,9 +15,7 @@ export function SubTopic({ data, subid, id, hideTitle }: SubTopicProps) {
     <>
       {hideTitle ? null : (
         <h2 className="my-3 serlo-h2 border-0 special-hyphens-auto">
-          <Link href={data.url} path={[subid, 'title']}>
-            {data.title}
-          </Link>
+          <Link href={data.url}>{data.title}</Link>
         </h2>
       )}
 
