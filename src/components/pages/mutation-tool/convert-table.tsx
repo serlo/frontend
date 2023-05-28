@@ -56,6 +56,15 @@ function convertHTMLtoState(html: string): EdtrPluginSerloTable | undefined {
   // remove empty headers
   const finalRows = hasEmptyHeaderRow ? convertedRows.slice(1) : convertedRows
 
+  if (
+    !finalRows.every(
+      (row) => row.columns.length === finalRows[0].columns.length
+    )
+  ) {
+    console.error('Wrong amount of cells, skipping this table!')
+    return undefined
+  }
+
   return {
     plugin: 'serloTable',
     state: {
