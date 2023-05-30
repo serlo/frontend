@@ -70,13 +70,13 @@ export const MetadataApiPresentation = () => {
         </section>
         <section className="bg-orangeBow bg-100% px-2 mt-0 !pt-16 mb-20">
           <div className="mt-2 pb-16 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
-            <div className="flex-1 mt-5">
+            <div className="flex-1 mt-5 mx-4">
               <b className="text-brand font-handwritten text-4xl">20,000+</b>
               <br />
               Educational resources have been created with the{' '}
               <Link href="https://serlo.org/editor">Serlo Editor</Link>
             </div>
-            <div className="flex-1 mt-5">
+            <div className="flex-1 mt-5 mx-4">
               <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
               <br />
               Users per month are already learning with the materials
@@ -158,6 +158,8 @@ function CallToAction({ alignment = 'left' }: CallToActionProps) {
     alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
   return (
     <a
+      target="_blank"
+      rel="noreferrer"
       className={`serlo-new-landing-button serlo-button-with-wings mb-12 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors mt-12 max-w-xs mx-auto ${alignmentClasses}`}
       href="https://github.com/serlo/documentation/wiki/Metadata-API"
     >
