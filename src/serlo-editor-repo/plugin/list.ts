@@ -114,11 +114,10 @@ export function list<D extends StateType>(
           }
           onChange(wrapUpdater(initial), {
             executor: executor
-              ? (resolve, reject, next) => {
+              ? (resolve, reject) => {
                   executor(
                     (innerUpdater) => resolve(wrapUpdater(innerUpdater)),
-                    (innerUpdater) => reject(wrapUpdater(innerUpdater)),
-                    (innerUpdater) => next(wrapUpdater(innerUpdater))
+                    (innerUpdater) => reject(wrapUpdater(innerUpdater))
                   )
                 }
               : undefined,

@@ -1,12 +1,12 @@
 import * as R from 'ramda'
 
-import { useScopedStore } from '../../core'
 import {
+  store,
   findParent,
-  getDocument,
-  getFocusPath,
-  getFocusTree,
-  Node,
+  selectDocument,
+  selectAncestorPluginIds,
+  selectFocusTree,
+  FocusTreeNode,
 } from '../../store'
 
 export function useCanDrop(
@@ -14,8 +14,6 @@ export function useCanDrop(
   draggingAbove: boolean,
   allowedPlugins: string[]
 ) {
-  const store = useScopedStore()
-
   return function (dragId?: string) {
     return (
       dragId &&
@@ -26,17 +24,17 @@ export function useCanDrop(
   }
 
   function isAllowedPlugin(dragId: string) {
-    const doc = getDocument(dragId)(store.getState())
+    const doc = selectDocument(store.getState(), dragId)
     return doc && allowedPlugins.includes(doc.plugin)
   }
 
   function wouldDropInOwnChildren(dragId: string) {
-    const focusPath = getFocusPath(id)(store.getState()) || []
+    const focusPath = selectAncestorPluginIds(store.getState(), id) || []
     return focusPath.includes(dragId)
   }
 
   function wouldDropAtInitialPosition(dragId: string) {
-    const focusTree = getFocusTree()(store.getState())
+    const focusTree = selectFocusTree(store.getState())
     if (!focusTree) return true
     const parent = findParent(focusTree, dragId)
 
@@ -51,7 +49,7 @@ export function useCanDrop(
   }
 
   function getChildPosition(
-    parent: Node | null,
+    parent: FocusTreeNode | null,
     childId: string
   ): number | null {
     if (!parent) return null

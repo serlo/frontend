@@ -6,69 +6,43 @@ import {
   delay,
   put,
   race,
-  select,
   take,
   takeEvery,
-  // eslint-disable-next-line import/no-internal-modules
 } from 'redux-saga/effects'
 
-import { applyActions, ReversibleAction } from '../actions'
-import { scopeSelector } from '../helpers'
-import { InternalSelectorReturnType, SelectorReturnType } from '../storetypes'
 import {
-  undo,
-  redo,
-  pureUndo,
-  pureRedo,
-  commit,
-  pureCommit,
-  reset,
-  pureReset,
-  UndoAction,
-  RedoAction,
-  ResetAction,
-  temporaryCommit,
-  TemporaryCommitAction,
-  CommitAction,
-} from './actions'
-import { getPendingChanges, getRedoStack, getUndoStack } from './reducer'
+  runCommitActionToHistorySaga,
+  pureCommitActionToHistory,
+  runCommitTemporaryActionToHistorySaga,
+} from '.'
+import type { ReversibleAction } from '..'
 
 export function* historySaga() {
   yield all([
     call(commitSaga),
-    takeEvery(temporaryCommit.type, temporaryCommitSaga),
-    takeEvery(undo.type, undoSaga),
-    takeEvery(redo.type, redoSaga),
-    takeEvery(reset.type, resetSaga),
+    takeEvery(runCommitTemporaryActionToHistorySaga, temporaryCommitSaga),
   ])
 }
 
-function* temporaryCommitSaga(action: TemporaryCommitAction) {
-  const actions = action.payload.initial
-  yield all(actions.map((action) => put(action.action)))
-  yield put(
-    pureCommit({
-      combine: false,
-      actions,
-    })(action.scope)
-  )
+function* temporaryCommitSaga(
+  action: ReturnType<typeof runCommitTemporaryActionToHistorySaga>
+) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const chan: Channel<ChannelAction> = yield call(channel)
 
-  function createPutToChannel(type: 'resolve' | 'reject' | 'next') {
+  function createPutToChannel(type: 'resolve' | 'reject') {
     return function (finalActions: ReversibleAction[]) {
       chan.put({
         [type]: finalActions,
-        scope: action.scope,
-        tempActions: actions,
+        tempActions: action.payload.initial,
       })
     }
   }
+
   if (action.payload.executor) {
     action.payload.executor(
       createPutToChannel('resolve'),
-      createPutToChannel('reject'),
-      createPutToChannel('next')
+      createPutToChannel('reject')
     )
     yield call(resolveSaga, chan)
   }
@@ -76,9 +50,7 @@ function* temporaryCommitSaga(action: TemporaryCommitAction) {
 
 interface ChannelAction {
   resolve?: ReversibleAction[]
-  next?: ReversibleAction[]
   reject?: ReversibleAction[]
-  scope: string
   tempActions: ReversibleAction[]
 }
 
@@ -86,35 +58,15 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
   while (true) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const payload: ChannelAction = yield take(chan)
-    const finalActions = payload.resolve || payload.next || payload.reject || []
-    const tempActions = payload.tempActions
+    const actions = payload.resolve || payload.reject || []
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const stack: InternalSelectorReturnType<typeof getUndoStack> = yield select(
-      scopeSelector(getUndoStack, payload.scope)
-    )
+    yield put(pureCommitActionToHistory({ combine: false, actions }))
 
-    const replays = R.takeWhile((replay) => replay !== tempActions, stack)
-    // revert all actions until the temporary actions
-    yield all(
-      replays.map((replay) => {
-        return all(replay.map((a) => put(a.reverse)))
-      })
-    )
-    // then revert the temporary action
-    yield all(tempActions.map((a) => put(a.reverse)))
+    // Saga will silently fail if a frozen action is passed to `put`.
+    // Therefore, we first clone the action.
+    // More info: https://github.com/redux-saga/redux-saga/issues/1254
+    yield all(actions.map((a) => put(R.clone(a.action))))
 
-    // apply final actions and all reverted actions
-    yield all(finalActions.map((a) => put(a.action)))
-
-    yield all(
-      replays.map((replay) => {
-        return all(replay.map((a) => put(a.action)))
-      })
-    )
-
-    // replace in history
-    replaceInArray(tempActions, finalActions)
     if (payload.resolve || payload.reject) {
       break
     }
@@ -122,85 +74,44 @@ function* resolveSaga(chan: Channel<ChannelAction>) {
   chan.close()
 }
 
-function replaceInArray<T>(arr: T[], arr2: T[]) {
-  arr.splice(0, arr.length, ...arr2)
-}
-
 function* commitSaga() {
   while (true) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const action: CommitAction = yield take(commit.type)
-    yield call(executeCommit, action.payload, false, action.scope)
+    const action: ReturnType<typeof runCommitActionToHistorySaga> = yield take(
+      runCommitActionToHistorySaga.type
+    )
+    yield call(executeCommit, action.payload, false)
 
     while (true) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const { action, timeout }: { action: CommitAction; timeout: boolean } =
-        yield race({
-          action: take(commit.type),
-          timeout: delay(1000),
-        })
+      const {
+        action,
+        timeout,
+      }: {
+        action: ReturnType<typeof runCommitActionToHistorySaga>
+        timeout: boolean
+      } = yield race({
+        action: take(runCommitActionToHistorySaga.type),
+        timeout: delay(1000),
+      })
 
       if (timeout) {
         break
       }
 
       if (action) {
-        yield call(executeCommit, action.payload, true, action.scope)
+        yield call(executeCommit, action.payload, true)
       }
     }
   }
 }
 
-function* executeCommit(
-  actions: ReversibleAction[],
-  combine: boolean,
-  scope: string
-) {
+function* executeCommit(actions: ReversibleAction[], combine: boolean) {
   yield all(actions.map((action) => put(action.action)))
   yield put(
-    pureCommit({
+    pureCommitActionToHistory({
       combine,
       actions,
-    })(scope)
+    })
   )
-}
-
-function* undoSaga(action: UndoAction) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const undoStack: InternalSelectorReturnType<typeof getUndoStack> =
-    yield select(scopeSelector(getUndoStack, action.scope))
-  const toUndo = R.head(undoStack)
-  if (!toUndo) return
-
-  const actions = R.reverse(toUndo).map(
-    (reversibleAction) => reversibleAction.reverse
-  )
-  yield put(applyActions(actions)(action.scope))
-  yield put(pureUndo()(action.scope))
-}
-
-function* redoSaga(action: RedoAction) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const redoStack: InternalSelectorReturnType<typeof getRedoStack> =
-    yield select(scopeSelector(getRedoStack, action.scope))
-  const replay = R.head(redoStack)
-  if (!replay) return
-  const actions = replay.map((reversibleAction) => reversibleAction.action)
-  yield put(applyActions(actions)(action.scope))
-  yield put(pureRedo()(action.scope))
-}
-
-function* resetSaga(action: ResetAction) {
-  while (true) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const pendingChanges: SelectorReturnType<typeof getPendingChanges> =
-      yield select(scopeSelector(getPendingChanges, action.scope))
-    if (pendingChanges === 0) break
-    else if (pendingChanges < 0) {
-      yield call(redoSaga, redo()(action.scope))
-    } else {
-      yield call(undoSaga, undo()(action.scope))
-    }
-  }
-  yield put(pureReset()(action.scope))
 }
