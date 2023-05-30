@@ -5,29 +5,67 @@ import { parseDOM } from 'htmlparser2'
 import { TableType } from '@/edtr-io/plugins/serlo-table/renderer'
 import { LegacyNode } from '@/schema/convert-legacy-state'
 import {
+  EdtrPluginImage,
   EdtrPluginSerloTable,
   EdtrPluginTable,
+  EdtrPluginText,
   SlateBlockElement,
   SlateTextElement,
 } from '@/schema/edtr-io-types'
 
 export function convertTable(
   legacyState: EdtrPluginTable
-): EdtrPluginSerloTable | undefined {
+): ReturnType<typeof convertHTMLtoState> {
+  // console.log(legacyState.state)
   const html = converter.makeHtml(legacyState.state)
-  // console.log(html)
   return convertHTMLtoState(html)
 }
 
-function convertHTMLtoState(html: string): EdtrPluginSerloTable | undefined {
+function convertHTMLtoState(
+  html: string
+): EdtrPluginSerloTable | EdtrPluginText | undefined {
   // eslint-disable-next-line import/no-deprecated
   const dom = parseDOM(html) as unknown as LegacyNode[]
   // console.log(dom)
 
   const table = dom[0].children.filter((child) => child.type === 'tag')[0]
-  if (!table || table.name !== 'table') {
-    console.error('Unexpected state, skipping this table!')
-    return undefined
+  if (!table) {
+    console.log('Invalid table, replacing with text plugin!')
+    return { plugin: 'text' } as EdtrPluginText
+  }
+  if (table.name !== 'table') {
+    if (
+      (table.name === 'span' && table.attribs.class === 'math') ||
+      table.attribs.class === 'mathInline'
+    ) {
+      console.log('hacked math, replacing!')
+      const mathContent =
+        table.children[0]?.data
+          ?.replace(/%%/g, '')
+          .replace('$$', '')
+          .replace('$$', '') ?? ''
+      return {
+        plugin: 'text',
+        state: [
+          {
+            type: 'p',
+            children: [
+              {
+                type: 'math',
+                src: mathContent,
+                inline: true,
+                children: [{ text: mathContent }],
+              },
+            ],
+          },
+        ],
+      }
+    } else {
+      console.log('table misused for something else check!!')
+      console.log(table.name)
+      console.log(table.attribs)
+      return undefined
+    }
   }
 
   const tHeadAndTBody = table.children.filter((child) => child.type === 'tag')
@@ -54,16 +92,23 @@ function convertHTMLtoState(html: string): EdtrPluginSerloTable | undefined {
     (cell) => !Object.hasOwn(cell.content, 'state')
   )
   // remove empty headers
-  const finalRows = hasEmptyHeaderRow ? convertedRows.slice(1) : convertedRows
+  const trimmedRows = hasEmptyHeaderRow ? convertedRows.slice(1) : convertedRows
 
-  if (
-    !finalRows.every(
-      (row) => row.columns.length === finalRows[0].columns.length
-    )
-  ) {
-    console.error('Wrong amount of cells, skipping this table!')
-    return undefined
-  }
+  const colLength = trimmedRows.reduce(
+    (acc, { columns }) => Math.max(columns.length, acc),
+    0
+  )
+
+  const finalRows = trimmedRows.map(({ columns }) => {
+    if (columns.length === colLength) return { columns }
+
+    const oldLength = columns.length
+    columns.length = colLength
+
+    return {
+      columns: columns.fill({ content: { plugin: 'text' } }, oldLength),
+    }
+  })
 
   return {
     plugin: 'serloTable',
@@ -79,34 +124,81 @@ function convertHTMLtoState(html: string): EdtrPluginSerloTable | undefined {
 type Col = EdtrPluginSerloTable['state']['rows'][0]['columns'][0]
 
 function convertCellContent(cell: LegacyNode) {
-  if (cell.children.length === 0) return { plugin: 'text' }
-  if (cell.children.length > 1 || cell.children[0].name !== 'p') {
-    console.warn('unexpected state, cell will be empty')
+  const cellChildren = cell.children
+
+  if (cellChildren.length === 0) return { plugin: 'text' }
+
+  if (cellChildren.length > 1) {
+    console.log('unexpected: cell has more than one child, cell will be empty')
+    console.log(cell.children)
     return { plugin: 'text' }
   }
-  const contentNodes = cell.children[0].children
-  const converted = contentNodes.map(convertContentNode)
+
+  const onlyChild = cellChildren[0]
+
+  if (!['p', 'h4', 'ul', 'ol', 'pre'].includes(onlyChild.name)) {
+    console.log('unexpected state, cell will be empty')
+    console.log(onlyChild)
+    console.log(cell.children.length)
+    console.log(onlyChild.name)
+    return { plugin: 'text' }
+  }
+
+  const filteredChildren = onlyChild.children.filter((child) => {
+    const text = child.data?.replace(/\r?\n|\r$/, '').trim()
+    return child.type === 'text' &&
+      (text === '\\n' ||
+        text === '-' ||
+        text === '*' ||
+        text === '–' ||
+        text === '#' ||
+        text === '')
+      ? false
+      : true
+  })
+
+  if (filteredChildren.length === 0) return { plugin: 'text' }
+
+  if (filteredChildren.length === 1 && filteredChildren[0].name === 'li') {
+    const liConverted = filteredChildren[0].children.map(convertContentNode)
+    return { plugin: 'text', state: [{ type: 'p', children: liConverted }] }
+  }
+
+  const converted = filteredChildren.map(convertContentNode)
+
+  if (
+    converted.length === 1 &&
+    Object.hasOwn(converted[0], 'plugin') &&
+    converted[0].plugin === 'image'
+  ) {
+    return converted[0]
+  }
   return { plugin: 'text', state: [{ type: 'p', children: converted }] }
 }
 
 function convertContentNode(
   node: LegacyNode
-): SlateTextElement | SlateBlockElement | [] {
+): SlateTextElement | SlateBlockElement | [] | EdtrPluginImage {
   //handle code? 0: {text: "Test", code: true}
 
   if (node.type === 'text') return { text: node.data ?? '' }
 
   if (node.type === 'tag') {
-    // console.log(node.name)
     if (node.name === 'br') {
       return { text: ' ' }
     }
 
     if (node.name === 'strong') {
+      if (node.children[0].type !== 'text') {
+        return convertContentNode(node.children[0])
+      }
       return { text: node.children[0].data ?? '', strong: true }
     }
 
     if (node.name === 'em') {
+      if (node.children[0].type !== 'text') {
+        return convertContentNode(node.children[0])
+      }
       return { text: node.children[0].data ?? '', em: true }
     }
 
@@ -114,10 +206,17 @@ function convertContentNode(
       if (
         node.children[0].data?.includes('%') ||
         node.children[0].data?.includes('$$')
-      )
-        console.warn(
-          'content: table has link with formula that will not be converted! check manually'
+      ) {
+        console.log(
+          'content: link with formula that will not be converted! check manually'
         )
+      }
+      if (node.children[0].type !== 'text') {
+        console.log(
+          'content: link with unexpected content, content will be deleted!'
+        )
+        return { text: '' }
+      }
       return {
         type: 'a',
         href: node.attribs.href,
@@ -164,6 +263,35 @@ function convertContentNode(
         inline: true,
         children: [{ text: mathContent }], //???
       }
+    }
+
+    if (node.name === 'code') {
+      if (
+        !node.children ||
+        node.children.length !== 1 ||
+        node.children[0].type !== 'text' ||
+        !node.children[0].data
+      ) {
+        console.log('content: math has unexpected state, content will be empty')
+        return { text: '' }
+      }
+      const text = node.children[0].data.replace(/\r?\n|\r$/, '').trim()
+      return {
+        text: text,
+        code: true,
+      }
+    }
+
+    if (node.name === 'img') {
+      if (!node.attribs || !node.attribs.src) {
+        console.log('content: img has unexpected state, content will be empty')
+        return { text: '' }
+      }
+
+      return {
+        plugin: 'image',
+        state: { src: node.attribs.src, alt: node.attribs.alt },
+      } as EdtrPluginImage
     }
 
     console.warn('content: unsupported tag, content will be empty')

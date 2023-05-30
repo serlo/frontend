@@ -4,11 +4,13 @@ import { renderNested } from '@/schema/article-renderer'
 import { convert } from '@/schema/convert-edtr-io-state'
 import { EdtrPluginTable } from '@/schema/edtr-io-types'
 
+
 export const MutationPreview = ({
   tablesState,
 }: {
   tablesState: EdtrPluginTable[]
 }) => {
+
   const convertedTables = tablesState.map(convertTable)
   // console.log(tablesState)
   return (
