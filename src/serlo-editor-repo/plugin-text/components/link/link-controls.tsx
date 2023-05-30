@@ -5,7 +5,7 @@ import { ReactEditor } from 'slate-react'
 import { useTextConfig } from '../../hooks/use-text-config'
 import type { Link, TextEditorPluginConfig } from '../../types'
 import { getLinkElement, isLinkActive } from '../../utils/link'
-import { InlineOverlayBelowWhite } from '../inline-overlay-below-white'
+import { LinkOverlay } from '../link-overlay'
 import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
 import { LinkOverlayWithHref } from './link-overlay-with-href'
 import {
@@ -84,7 +84,7 @@ export function LinkControls({
   const shouldFocus = isEditMode && element.children[0].text.trim() !== ''
 
   return (
-    <InlineOverlayBelowWhite shouldUpdate={element}>
+    <LinkOverlay element={element}>
       {isEditMode ? (
         <LinkOverlayEditMode
           config={config}
@@ -103,6 +103,6 @@ export function LinkControls({
           quickbarData={quickbarData}
         />
       )}
-    </InlineOverlayBelowWhite>
+    </LinkOverlay>
   )
 }

@@ -32,12 +32,12 @@ export function LinkOverlayWithHref({
   const isCustomLink = !serloId && !value.includes('serlo.org/')
 
   return (
-    <div className="flex items-center px-side py-2">
+    <div className="flex items-center px-side py-2 content-between">
       <a
         href={value}
         target="_blank"
         className={clsx(
-          'serlo-link serlo-tooltip-trigger outline-none focus:underline font-bold whitespace-normal max-w-[27rem]',
+          'serlo-link serlo-tooltip-trigger outline-none focus:underline font-bold whitespace-normal max-w-[27rem] mr-auto',
           isCustomLink ? '!text-gray-800' : 'text-brand'
         )}
         rel="noreferrer"
