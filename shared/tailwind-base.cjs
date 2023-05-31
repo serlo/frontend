@@ -196,34 +196,32 @@ module.exports = {
       })
 
       // add classes of serlo-components to autocomplete
-      // @@@ undo comment out
-      // addComponents(extractCSSClasses())
+      addComponents(extractCSSClasses())
     }),
   ],
 }
 
-// @@@ undo comment out
-// function extractCSSClasses() {
-//   try {
-//     const css = require('fs').readFileSync(
-//       require('path').join(
-//         __dirname,
-//         '/../src/assets-webkit/styles/serlo-tailwind.css'
-//       ),
-//       'utf-8'
-//     )
+function extractCSSClasses() {
+  try {
+    const css = require('fs').readFileSync(
+      require('path').join(
+        __dirname,
+        '/../src/assets-webkit/styles/serlo-tailwind.css'
+      ),
+      'utf-8'
+    )
 
-//     const regex = /\.serlo\-[^ \:\{\n,]+/gm
-//     let m = ''
-//     const components = {}
+    const regex = /\.serlo\-[^ \:\{\n,]+/gm
+    let m = ''
+    const components = {}
 
-//     while ((m = regex.exec(css)) !== null) {
-//       // The result can be accessed through the `m`-variable.
-//       components[m[0]] = {}
-//     }
+    while ((m = regex.exec(css)) !== null) {
+      // The result can be accessed through the `m`-variable.
+      components[m[0]] = {}
+    }
 
-//     return components
-//   } catch (error) {
-//     // don't run on client, no problem
-//   }
-// }
+    return components
+  } catch (error) {
+    // don't run on client, no problem
+  }
+}
