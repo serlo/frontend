@@ -10,7 +10,17 @@ export interface TeamDataEntry {
   photo: string
 }
 
-export const teamDataKulla = {
+export const teamDataSimon: TeamDataEntry = {
+  firstName: 'Simon',
+  lastName: 'Köhl',
+  position: 'Partnerships',
+  extraLinkUrl: 'mailto:simon@serlo.org',
+  extraLinkText: 'simon@serlo.org',
+  photo:
+    'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
+}
+
+export const teamDataKulla: TeamDataEntry = {
   firstName: 'Stephan',
   lastName: 'Kulla',
   position: 'Software',
@@ -39,15 +49,7 @@ export const teamData: TeamDataEntry[] = [
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
   },
-  {
-    firstName: 'Simon',
-    lastName: 'Köhl',
-    position: 'Partnerships',
-    extraLinkUrl: 'mailto:simon@serlo.org',
-    extraLinkText: 'simon@serlo.org',
-    photo:
-      'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
-  },
+  teamDataSimon,
   {
     firstName: 'Vitomir',
     lastName: 'Budimir',

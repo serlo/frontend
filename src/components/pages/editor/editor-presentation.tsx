@@ -4,7 +4,7 @@ import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
-import { EditorTeam, teamData } from './editor-team'
+import { EditorTeam, teamDataSimon } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
@@ -17,14 +17,6 @@ export const h2Class =
 const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
 
 export function EditorPresentation() {
-  const mainContactPerson = teamData.find(
-    ({ firstName }) => firstName === 'Simon'
-  )
-
-  if (!mainContactPerson) {
-    throw new Error('Contact person could not be found.')
-  }
-
   return (
     <>
       <HeadTags
@@ -165,7 +157,7 @@ export function EditorPresentation() {
                 requests.
               </p>
               <div className="text-center mt-8">
-                <EditorContact contact={mainContactPerson} />
+                <EditorContact contact={teamDataSimon} />
               </div>
             </div>
           </div>
