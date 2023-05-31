@@ -1,6 +1,5 @@
-import { useScopedStore } from '@edtr-io/core'
 import { MathRenderer } from '@edtr-io/math'
-import { isEmpty } from '@edtr-io/store'
+import { store, selectIsDocumentEmpty } from '@edtr-io/store'
 import { styled } from '@edtr-io/ui'
 import { Fragment } from 'react'
 
@@ -43,7 +42,6 @@ export enum TransformationTarget {
 }
 
 export function EquationsRenderer({ state }: EquationsProps) {
-  const store = useScopedStore()
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
   )
@@ -87,7 +85,10 @@ export function EquationsRenderer({ state }: EquationsProps) {
                     ) : null}
                   </TransformTd>
                 </tr>
-                {isEmpty(step.explanation.id)(store.getState()) ? null : (
+                {selectIsDocumentEmpty(
+                  store.getState(),
+                  step.explanation.id
+                ) ? null : (
                   <ExplanationTr>
                     <td />
                     {renderDownArrow()}
@@ -105,7 +106,8 @@ export function EquationsRenderer({ state }: EquationsProps) {
   )
 
   function renderFirstExplanation() {
-    if (isEmpty(state.firstExplanation.id)(store.getState())) return
+    if (selectIsDocumentEmpty(store.getState(), state.firstExplanation.id))
+      return
 
     return (
       <>

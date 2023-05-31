@@ -79,6 +79,7 @@ module.exports = {
           'msw/*',
           'next/*',
           'public/_assets/**/*',
+          'redux-saga/effects',
         ],
       },
     ],

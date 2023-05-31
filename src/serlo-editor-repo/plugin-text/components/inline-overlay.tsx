@@ -55,7 +55,6 @@ export function InlineOverlay({
   initialPosition: InlineOverlayPosition
   hidden?: boolean
 }) {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const editor = useSlate()
   const wrapper = useRef<HTMLDivElement>(null)
   const triangle = useRef<HTMLDivElement>(null)
@@ -64,7 +63,6 @@ export function InlineOverlay({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useLayoutEffect(() => {
     if (!wrapper.current || !triangle.current) return
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { selection } = editor
 
     if (!selection) return

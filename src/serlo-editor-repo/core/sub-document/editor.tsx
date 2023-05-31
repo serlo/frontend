@@ -13,25 +13,27 @@ import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 import { SubDocumentProps } from '.'
 import { StateUpdater } from '../../internal__plugin-state'
 import {
-  change,
+  runChangeDocumentSaga,
   focus,
   focusNext,
   focusPrevious,
-  getDocument,
-  mayRemoveChild,
-  getParent,
-  getPlugin,
-  insertChildAfter,
-  isEmpty,
-  isFocused,
+  selectDocument,
+  selectMayManipulateSiblings,
+  selectParent,
+  selectPlugin,
+  insertPluginChildAfter,
+  selectIsDocumentEmpty,
+  selectIsFocused,
   redo,
-  removeChild,
+  removePluginChild,
   undo,
-  ChangeAction,
+  useAppSelector,
+  selectFocusTree,
+  useAppDispatch,
+  store,
 } from '../../store'
 import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
-import { useScopedSelector, useScopedStore } from '../store'
 
 const StyledDocument = styled.div({
   outline: 'none',
@@ -52,12 +54,18 @@ type HotKeysHandlers = {
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSettings, setHasSettings] = useState(false)
   const [hasToolbar, setHasToolbar] = useState(false)
-  const document = useScopedSelector(getDocument(id))
-  const focused = useScopedSelector(isFocused(id))
-  const plugin = useScopedSelector(
-    (state) => document && getPlugin(document.plugin)(state)
+  const dispatch = useAppDispatch()
+  const document = useAppSelector((state) => selectDocument(state, id))
+  const isDocumentEmpty = useAppSelector((state) =>
+    selectIsDocumentEmpty(state, id)
   )
-  const store = useScopedStore()
+  const mayManipulateSiblings = useAppSelector((state) =>
+    selectMayManipulateSiblings(state, id)
+  )
+  const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const plugin = useAppSelector(
+    (state) => document && selectPlugin(state, document.plugin)
+  )
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
@@ -98,20 +106,20 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return {
       FOCUS_PREVIOUS: (e) => {
         handleKeyDown(e, () => {
-          store.dispatch(focusPrevious())
+          dispatch(focusPrevious(selectFocusTree(store.getState())))
         })
       },
       FOCUS_NEXT: (e) => {
         handleKeyDown(e, () => {
-          store.dispatch(focusNext())
+          dispatch(focusNext(selectFocusTree(store.getState())))
         })
       },
       INSERT_DEFAULT_PLUGIN: (e) => {
         handleKeyDown(e, () => {
-          const parent = getParent(id)(store.getState())
+          const parent = selectParent(store.getState(), id)
           if (!parent) return
-          store.dispatch(
-            insertChildAfter({
+          dispatch(
+            insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
             })
@@ -119,29 +127,29 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         })
       },
       DELETE_EMPTY: (e) => {
-        if (isEmpty(id)(store.getState())) {
+        if (isDocumentEmpty) {
           handleKeyDown(e, () => {
             if (!e) return
-            if (mayRemoveChild(id)(store.getState())) {
-              const parent = getParent(id)(store.getState())
+            if (mayManipulateSiblings) {
+              const parent = selectParent(store.getState(), id)
               if (!parent) return
 
               if (e.key === 'Backspace') {
-                store.dispatch(focusPrevious())
+                dispatch(focusPrevious(selectFocusTree(store.getState())))
               } else if (e.key === 'Delete') {
-                store.dispatch(focusNext())
+                dispatch(focusNext(selectFocusTree(store.getState())))
               }
-              store.dispatch(removeChild({ parent: parent.id, child: id }))
+              dispatch(removePluginChild({ parent: parent.id, child: id }))
             }
           })
         }
       },
       // TODO: workaround for https://github.com/edtr-io/edtr-io/issues/272
       UNDO: () => {
-        store.dispatch(undo())
+        void dispatch(undo())
       },
       REDO: () => {
-        store.dispatch(redo())
+        void dispatch(redo())
       },
     }
 
@@ -157,7 +165,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       e && e.preventDefault()
       next()
     }
-  }, [id, store, plugin])
+  }, [id, plugin, dispatch, isDocumentEmpty, mayManipulateSiblings])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -165,10 +173,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       const target = (e.target as HTMLDivElement).closest('[data-document]')
 
       if (!focused && target === container.current) {
-        store.dispatch(focus(id))
+        dispatch(focus(id))
       }
     },
-    [store, focused, id]
+    [focused, id, dispatch]
   )
 
   const renderIntoSettings = useCallback(
@@ -203,7 +211,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     if (!document) return null
     if (!plugin) {
       // eslint-disable-next-line no-console
-      console.log('Plugin does not exist')
+      console.warn('Plugin does not exist')
       return null
     }
 
@@ -216,12 +224,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const onChange = (
       initial: StateUpdater<unknown>,
       additional: {
-        executor?: ChangeAction['payload']['state']['executor']
-        reverse?: ChangeAction['payload']['reverse']
+        executor?: ReturnType<
+          typeof runChangeDocumentSaga
+        >['payload']['state']['executor']
+        reverse?: ReturnType<typeof runChangeDocumentSaga>['payload']['reverse']
       } = {}
     ) => {
-      store.dispatch(
-        change({
+      dispatch(
+        runChangeDocumentSaga({
           id,
           state: {
             initial,
@@ -281,7 +291,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     renderIntoToolbar,
     id,
     hotKeysHandlers,
-    store,
+    dispatch,
   ])
 }
 

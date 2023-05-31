@@ -1,18 +1,19 @@
-import { useScopedDispatch, useScopedSelector } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import {
   redo,
   undo,
-  hasRedoActions,
-  hasUndoActions,
-  hasPendingChanges,
+  selectHasRedoActions,
+  selectHasUndoActions,
+  selectHasPendingChanges,
+  useAppDispatch,
+  useAppSelector,
 } from '@edtr-io/store'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
+import { ClientOnlyPortal } from './client-only-portal'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
@@ -30,10 +31,10 @@ export function ToolbarMain({
   changes,
   license,
 }: ToolbarMainProps) {
-  const dispatch = useScopedDispatch()
-  const undoable = useScopedSelector(hasUndoActions())
-  const redoable = useScopedSelector(hasRedoActions())
-  const isChanged = useScopedSelector(hasPendingChanges())
+  const dispatch = useAppDispatch()
+  const undoable = useAppSelector(selectHasUndoActions)
+  const redoable = useAppSelector(selectHasRedoActions)
+  const isChanged = useAppSelector(selectHasPendingChanges)
   const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   useLeaveConfirm(isChanged)
@@ -43,7 +44,7 @@ export function ToolbarMain({
 
   return (
     <>
-      {createPortal(
+      <ClientOnlyPortal selector=".controls-portal">
         <nav
           className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
         >
@@ -52,9 +53,8 @@ export function ToolbarMain({
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
-        </nav>,
-        document.getElementsByClassName('controls-portal')[0]
-      )}
+        </nav>
+      </ClientOnlyPortal>
       <SaveModal
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
@@ -78,7 +78,7 @@ export function ToolbarMain({
           disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
         )}
         onClick={() => {
-          dispatch(action())
+          void dispatch(action())
         }}
         disabled={disabled}
         title={title}
