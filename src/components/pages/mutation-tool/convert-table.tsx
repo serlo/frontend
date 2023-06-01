@@ -145,21 +145,17 @@ function convertCellContent(cell: LegacyNode) {
   }
 
   const filteredChildren = onlyChild.children.filter((child) => {
-    const text = child.data?.replace(/\r?\n|\r$/, '').trim()
+    const text = child.data?.replace(/\r?\n|\r$/, '')
     return child.type === 'text' &&
-      (text === '\\n' ||
-        text === '-' ||
-        text === '*' ||
-        text === '–' ||
-        text === '#' ||
-        text === '')
+      (text === '\\n' || text === '*' || text === '#' || text === '')
       ? false
       : true
   })
 
   if (filteredChildren.length === 0) return { plugin: 'text' }
 
-  if (filteredChildren.length === 1 && filteredChildren[0].name === 'li') {
+  const liElement = filteredChildren.find((child) => child.name === 'li')
+  if (liElement) {
     const liConverted = filteredChildren[0].children.map(convertContentNode)
     return { plugin: 'text', state: [{ type: 'p', children: liConverted }] }
   }
@@ -184,6 +180,7 @@ function convertContentNode(
   if (node.type === 'text') return { text: node.data ?? '' }
 
   if (node.type === 'tag') {
+    console.log(node)
     if (node.name === 'br') {
       return { text: ' ' }
     }
@@ -233,7 +230,7 @@ function convertContentNode(
         console.log(
           'content: mathInline has unexpected state, content will be empty'
         )
-        return { text: '' }
+        return { text: ' ' }
       }
 
       const mathContent =
