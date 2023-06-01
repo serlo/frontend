@@ -3,6 +3,7 @@ import { useRef, useEffect } from 'react'
 
 import { Link } from '../content/link'
 import { SecondaryMenuData } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 export interface SecondaryMenuProps {
   data: SecondaryMenuData['entries']
@@ -23,19 +24,17 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
     <>
       <nav className="overflow-x-scroll md:hidden">
         <div
-          className={clsx(
-            'absolute right-0 z-10 h-16 w-14',
-            'bg-gradient-to-l from-white to-white/0',
-            'pointer-events-none'
-          )}
+          className={tw`
+            pointer-events-none absolute right-0 z-10 h-16 w-14 
+            bg-gradient-to-l from-white to-white/0
+          `}
         />
         <ul className="my-3.5 whitespace-nowrap px-4 pt-3" ref={containerRef}>
           {data.map((entry) => {
             return (
               <li
                 className={clsx(
-                  'mr-4 inline-block py-[3px] text-[0.9rem] font-bold',
-                  'border-b-2',
+                  'mr-4 inline-block border-b-2 py-[3px] text-[0.9rem] font-bold',
                   entry.active ? 'border-brand' : 'border-brand-200'
                 )}
                 key={entry.url}
@@ -50,10 +49,10 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
         </ul>
       </nav>
       <nav
-        className={clsx(
-          'absolute left-side hidden md:block',
-          'z-10 mt-8 w-[170px] xl:left-0 xl:ml-side-lg xl:w-[200px]'
-        )}
+        className={tw`
+          absolute left-side z-10 mt-8
+          hidden w-[170px] md:block xl:left-0 xl:ml-side-lg xl:w-[200px]
+        `}
       >
         <ul>
           {data.map((entry) => {
@@ -66,8 +65,10 @@ export function SecondaryMenu({ data }: SecondaryMenuProps) {
                 >
                   <span
                     className={clsx(
-                      'serlo-button rounded-xl py-[3px] tracking-slightly-tighter',
-                      'group-hover:bg-brand group-hover:text-white',
+                      tw`
+                        serlo-button rounded-xl py-[3px] tracking-slightly-tighter
+                        group-hover:bg-brand group-hover:text-white
+                      `,
                       entry.active
                         ? 'bg-brand-200 text-black'
                         : 'serlo-button-blue-transparent'

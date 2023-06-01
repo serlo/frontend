@@ -10,6 +10,7 @@ import {
 import clsx from 'clsx'
 
 import { FaIcon } from '@/components/fa-icon'
+import { tw } from '@/helper/tw'
 
 const menuIconMapping = {
   subject: faGraduationCap,
@@ -36,8 +37,10 @@ export function Icon({ elementOrIcon }: IconProps) {
     <span
       aria-hidden
       className={clsx(
-        'mr-2.5 flex h-10 w-10 items-center justify-center rounded-full',
-        'bg-brand-200 text-brand-500',
+        tw`
+          mr-2.5 flex h-10 w-10 items-center justify-center rounded-full
+          bg-brand-200 text-brand-500
+        `,
         isIcon
           ? 'md:hidden'
           : 'md:mr-0 md:inline-block md:h-auto md:w-auto md:bg-transparent'

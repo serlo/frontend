@@ -8,6 +8,7 @@ import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { TaxonomySubTerm } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
+import { tw } from '@/helper/tw'
 
 interface SubjectLandingTopicOverviewProps {
   subterms: TaxonomySubTerm[]
@@ -103,9 +104,12 @@ export function SubjectLandingTopicOverview({
             <button
               key={term.title}
               className={clsx(
-                'text-left font-bold text-brand',
-                'm-2 flex min-h-[4rem] w-auto p-2 text-left',
-                'rounded-xl shadow-menu transition-colors hover:bg-brand/5',
+                tw`
+                  m-2 flex min-h-[4rem]
+                  w-auto rounded-xl p-2 text-left text-left font-bold
+                  text-brand shadow-menu transition-colors hover:bg-brand/5
+                `,
+
                 isActive ? 'bg-brand/10 text-black hover:bg-brand/10' : '',
                 src ? '' : 'pl-16'
               )}

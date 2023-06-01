@@ -11,6 +11,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -41,9 +42,11 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'pt-3 text-almost-black',
-        hideQuickbar ? '' : 'bg-brand-100',
-        'bg-[url("/_assets/img/header-curve.svg")] bg-[length:100vw_3rem] bg-bottom bg-no-repeat pb-9'
+        tw`
+          bg-[url("/_assets/img/header-curve.svg")] bg-[length:100vw_3rem]
+          bg-bottom bg-no-repeat pt-3 pb-9 text-almost-black
+        `,
+        hideQuickbar ? '' : 'bg-brand-100'
       )}
     >
       <SkipMenu />
@@ -52,9 +55,11 @@ export function Header() {
           <Logo foldOnMobile />
           <div
             className={clsx(
-              'mt-[1.7rem] min-h-[50px] md:mt-8 md:block',
-              'order-last md:order-none lg:order-last ',
-              'w-full md:w-auto',
+              tw`
+                order-last mt-[1.7rem] min-h-[50px] w-full
+                md:order-none md:mt-8 md:block
+                md:w-auto lg:order-last
+              `,
               mobileMenuOpen ? '' : 'hidden'
             )}
           >
@@ -76,12 +81,12 @@ export function Header() {
     if (hideQuickbar) return null
     return (
       <Quickbar
-        className={clsx(
-          'mx-auto mt-7 text-left font-normal',
-          'mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:max-w-sm mobileExt:flex-grow mobileExt:px-2',
-          'md:mt-0 md:max-w-xs',
-          'lg:mt-6 lg:max-w-sm'
-        )}
+        className={tw`
+          mx-auto mt-7 text-left font-normal
+          mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:max-w-sm mobileExt:flex-grow mobileExt:px-2
+          md:mt-0 md:max-w-xs
+          lg:mt-6 lg:max-w-sm
+        `}
         placeholder={strings.header.search}
       />
     )

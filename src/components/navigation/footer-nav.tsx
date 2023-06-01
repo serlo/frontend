@@ -1,11 +1,11 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faHouseLaptop, faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { FooterIcon, FooterNavigation } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 const iconMapping: Record<FooterIcon, IconDefinition> = {
   newsletter: faEnvelope,
@@ -34,19 +34,20 @@ export function FooterNav({ data }: FooterNavProps) {
                 {category.children.map((link, childindex) => (
                   <li
                     key={index + childindex}
-                    className={clsx(
-                      "inline-block after:text-gray-600 after:content-['•']",
-                      'after:mr-1.5 after:ml-1 last-of-type:after:content-none',
-                      'sm:block sm:after:content-none'
-                    )}
+                    className={tw`
+                      inline-block after:mr-1.5 after:ml-1
+                      after:text-gray-600 after:content-['•'] last-of-type:after:content-none
+                      sm:block sm:after:content-none
+                    `}
                   >
                     <Link
                       href={link.url}
                       noExternalIcon
-                      className={clsx(
-                        'text-gray-600 hover:text-black hover:no-underline',
-                        'inline-block border-transparent py-2 leading-tight hover:border-black sm:border-b-2 sm:py-0'
-                      )}
+                      className={tw`
+                        inline-block border-transparent py-2
+                        leading-tight text-gray-600 hover:border-black hover:text-black hover:no-underline 
+                        sm:border-b-2 sm:py-0
+                      `}
                     >
                       {link.icon && <FaIcon icon={iconMapping[link.icon]} />}{' '}
                       {link.title}

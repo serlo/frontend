@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
 import { CommunityWallPerson } from '@/data/de/community-people'
+import { tw } from '@/helper/tw'
 
 interface CommunityWallPersonsProps {
   persons: CommunityWallPerson[]
@@ -27,20 +28,22 @@ export function CommunityWallPersons({
         <Fragment key={name}>
           <figure
             className={clsx(
-              'group mx-1 mt-12 text-center',
-              'z-30 w-1/3v sm:w-1/4v md:absolute md:w-1/8v',
-              'max-w-[13rem]',
+              tw`
+                group z-30 mx-1 mt-12
+                w-1/3v max-w-[13rem] text-center
+                sm:w-1/4v md:absolute md:w-1/8v
+              `,
               hideMobile && 'hidden md:block'
             )}
             style={{ left, top }}
           >
             <div className="relative z-0 w-full">
               <div
-                className={clsx(
-                  'absolute -left-12 -right-12 bg-wiggle pb-6/5',
-                  'bg-contain bg-no-repeat opacity-0 group-hover:opacity-100',
-                  'transition-all duration-200 ease-linear group-hover:rotate-1'
-                )}
+                className={tw`
+                  absolute -left-12 -right-12 bg-wiggle bg-contain
+                  bg-no-repeat pb-6/5 opacity-0 transition-all
+                  duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
+                `}
               ></div>
             </div>
             <Link
@@ -57,8 +60,7 @@ export function CommunityWallPersons({
               </p>
               <span
                 className={clsx(
-                  'px-2 py-1 text-base font-bold text-white',
-                  'rounded-2xl',
+                  'rounded-2xl px-2 py-1 text-base font-bold text-white',
                   role.includes('Autor')
                     ? 'bg-yellow'
                     : role.includes('Team')

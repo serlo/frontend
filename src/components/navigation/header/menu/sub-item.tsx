@@ -1,22 +1,22 @@
 import { Link, Item } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
 import { HeaderLinkData } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 export interface SubItemProps {
   item: HeaderLinkData
   parent: HeaderLinkData
 }
 
-const itemClasses = /* className={ */ clsx(
-  'w-full font-bold',
-  'text-brand block border-b border-brand-400',
-  'group-hover:text-white group-hover:bg-brand md:py-0.25',
-  'hover:no-underline p-4 hover:bg-brand-300',
-  'md:w-auto md:serlo-button-blue-transparent md:font-normal md:text-base md:rounded-[12px] md:special-hyphens-auto',
-  'md:leading-5'
-)
+const itemClasses = tw`
+  block w-full
+  border-b border-brand-400 p-4 font-bold
+  text-brand hover:bg-brand-300 hover:no-underline
+  group-hover:bg-brand group-hover:text-white md:serlo-button-blue-transparent
+  md:w-auto md:rounded-[12px] md:py-0.25 md:text-base md:font-normal md:leading-5
+  md:special-hyphens-auto
+`
 
 export function SubItem({ item }: SubItemProps) {
   const isAbsolute = item.url.indexOf('//') > -1

@@ -2,7 +2,6 @@ import {
   faChevronUp,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import DonateIcon from '@/assets-webkit/img/footer-donate.svg'
@@ -10,6 +9,7 @@ import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
+import { tw } from '@/helper/tw'
 
 export function Footer() {
   const { footerData } = useInstanceData()
@@ -27,11 +27,11 @@ function About() {
     <div className="flex flex-col md:flex-row">
       <div className="relative min-h-[54px] w-full bg-brand">
         <div
-          className={clsx(
-            'absolute right-4 top-2 text-white hover:bg-brand-500',
-            'flex h-10 w-10 items-center justify-center rounded-full',
-            'cursor-pointer transition-colors'
-          )}
+          className={tw`
+            absolute right-4 top-2 flex h-10
+            w-10 cursor-pointer items-center justify-center rounded-full text-white
+            transition-colors hover:bg-brand-500
+          `}
           onClick={() => window.scrollTo(0, 0)}
           title={strings.footer.toTop}
         >

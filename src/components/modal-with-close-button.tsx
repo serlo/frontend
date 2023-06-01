@@ -45,7 +45,7 @@ export function ModalWithCloseButton({
       <button
         onClick={onCloseClick}
         title={strings.share.close}
-        className={`
+        className={tw`
           absolute top-3.5 right-3.5 inline-block h-9 w-9
           cursor-pointer rounded-full border-none bg-transparent text-center
           leading-tight text-almost-black hover:bg-brand hover:text-white

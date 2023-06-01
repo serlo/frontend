@@ -14,6 +14,7 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { tw } from '@/helper/tw'
 
 const maxOnMobile = 4
 
@@ -34,11 +35,11 @@ export function SubjectLandingFeatured({
 
   return (
     <div
-      className={clsx(
-        'flex items-stretch justify-around',
-        'flex-wrap px-side pb-6',
-        'mx-auto w-full sm:max-w-3xl lg:max-w-max '
-      )}
+      className={tw`
+        mx-auto flex w-full
+        flex-wrap items-stretch justify-around
+        px-side pb-6 sm:max-w-3xl lg:max-w-max
+      `}
     >
       {content.map(renderFeaturedBox)}
     </div>
@@ -49,11 +50,14 @@ export function SubjectLandingFeatured({
       <Link
         key={data.title}
         className={clsx(
-          'box-border text-brand hover:no-underline',
-          'p-2.5 leading-cozy',
-          'rounded hover:text-almost-black hover:shadow-menu',
-          'group mx-2 mb-4 w-36 text-left transition-all mobile:w-52 lg:w-44 xl:w-48',
-          'relative',
+          tw`
+            group relative mx-2
+            mb-4 box-border
+            w-36 rounded p-2.5
+            text-left leading-cozy text-brand transition-all 
+            hover:text-almost-black hover:no-underline hover:shadow-menu
+            mobile:w-52 lg:w-44 xl:w-48
+          `,
           index >= maxOnMobile ? 'hidden mobile:block' : ''
         )}
         href={data.url}
@@ -61,22 +65,22 @@ export function SubjectLandingFeatured({
         <div className="mb-2.5 mr-5 rounded-lg bg-brand-100 transition-all group-hover:bg-white">
           {data.img ? (
             <img
-              className={clsx(
-                'object-contain object-center',
-                'opacity-80 mix-blend-multiply transition-all',
-                'group-hover:opacity-100',
-                'aspect-square rounded-lg'
-              )}
+              className={tw`
+                aspect-square rounded-lg
+                object-contain object-center opacity-80
+                mix-blend-multiply
+                transition-all group-hover:opacity-100
+              `}
               alt={data.title}
               src={data.img}
             />
           ) : (
             <div
-              className={clsx(
-                'aspect-square opacity-80 transition-all group-hover:opacity-100',
-                'flex items-center justify-center align-middle text-4xl',
-                'text-brand-300'
-              )}
+              className={tw`
+                flex aspect-square items-center justify-center
+                align-middle text-4xl text-brand-300 opacity-80 transition-all
+                group-hover:opacity-100
+              `}
             >
               {renderTypeIcon(data.type)}
             </div>

@@ -6,6 +6,7 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 
 interface QuickbarDataEntry {
   title: string
@@ -165,8 +166,10 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       <div
         ref={overlayWrapper}
         className={clsx(
-          'absolute left-side right-side mt-2 ml-2 max-w-2xl',
-          'z-20 rounded-xl border bg-white px-5 pb-2 shadow',
+          tw`
+            absolute left-side right-side z-20 mt-2 ml-2
+            max-w-2xl rounded-xl border bg-white px-5 pb-2 shadow
+          `,
           open ? '' : 'hidden'
         )}
       >

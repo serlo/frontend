@@ -8,6 +8,7 @@ import { Fragment } from 'react'
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
 import { BreadcrumbsData, BreadcrumbEntry } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 export interface BreadcrumbsProps {
   data?: BreadcrumbsData
@@ -23,7 +24,7 @@ export function Breadcrumbs({
   noIcon,
 }: BreadcrumbsProps) {
   return (
-    <nav className={clsx('mx-side mt-5 sm:mb-11 sm:ml-2.5')}>
+    <nav className="mx-side mt-5 sm:mb-11 sm:ml-2.5">
       {data &&
         data.map((bcEntry, i) => {
           return (
@@ -34,10 +35,10 @@ export function Breadcrumbs({
   )
 
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
-    const withRightArrow = /* className={ */ clsx(
-      'serlo-button font-normal mb-1 py-0.5',
-      'after:special-content-gt after:absolute after:ml-3 mr-5 after:text-gray-300'
-    ) /*}*/
+    const withRightArrow = tw`
+      serlo-button mb-1 mr-5 py-0.5 font-normal
+      after:absolute after:ml-3 after:text-gray-300 after:special-content-gt 
+    `
 
     if (bcEntry.ellipsis) {
       return (
@@ -68,10 +69,10 @@ export function Breadcrumbs({
         return (
           <>
             <Link
-              className={clsx(
-                'serlo-button bg-brand-200 py-0.5 hover:bg-brand-400',
-                'hover:text-white sm:bg-brand-100 sm:hover:bg-brand'
-              )}
+              className={tw`
+                serlo-button bg-brand-200 py-0.5 hover:bg-brand-400
+                hover:text-white sm:bg-brand-100 sm:hover:bg-brand
+              `}
               href={bcEntry.url ?? undefined}
             >
               <span className="pt-0.25 pr-1 sm:hidden">{renderIcon()}</span>

@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { CommunityWallPersons } from '../rework/community-wall/community-wall-persons'
@@ -10,6 +9,7 @@ import {
 } from '@/data/de/community-people'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { tw } from '@/helper/tw'
 
 const positions = [
   ['8%', '-8%'],
@@ -40,11 +40,11 @@ export function CommunityWallSubjectLanding({
       <div className="relative z-10 mt-32 justify-center">
         <div className="z-20 w-full text-center md:absolute">
           <h3
-            className={clsx(
-              'text-center text-3xl font-extrabold',
-              'leading-cozy tracking-tight',
-              'relative z-10 mx-auto mt-20 mb-8 max-w-xl'
-            )}
+            className={tw`
+                relative z-10 mx-auto
+                mt-20 mb-8
+                max-w-xl text-center text-3xl font-extrabold leading-cozy tracking-tight
+              `}
           >
             Lust, das Fach {title} mitzugestalten?
           </h3>
@@ -57,10 +57,10 @@ export function CommunityWallSubjectLanding({
           </p>
           <div className="group text-center">
             <Link
-              className={clsx(
-                'serlo-new-landing-button inline-block hover:no-underline group-hover:bg-brand-500',
-                'mt-6 py-2 px-4 text-lg'
-              )}
+              className={tw`
+                serlo-new-landing-button mt-6 inline-block py-2
+                px-4 text-lg hover:no-underline group-hover:bg-brand-500
+              `}
               href={contributeLink}
             >
               Mitmachen
@@ -68,12 +68,12 @@ export function CommunityWallSubjectLanding({
             <div className="relative">
               <div className="absolute inset-0 flex justify-center">
                 <div
-                  className={clsx(
-                    'pointer-events-none h-5 w-48 select-none',
-                    'opacity-0 group-hover:rotate-1 group-hover:opacity-100',
-                    'transition-all duration-200 ease-linear',
-                    'bg-underlined bg-contain bg-top bg-no-repeat'
-                  )}
+                  className={tw`
+                    pointer-events-none h-5 w-48 select-none
+                    bg-underlined bg-contain bg-top
+                    bg-no-repeat opacity-0 transition-all
+                    duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
+                  `}
                 />
               </div>
             </div>
@@ -81,10 +81,10 @@ export function CommunityWallSubjectLanding({
         </div>
 
         <div
-          className={clsx(
-            'flex flex-wrap justify-evenly lg:mx-auto lg:max-w-[85rem]',
-            'md:relative md:block md:h-630 md:pb-12'
-          )}
+          className={tw`
+            flex flex-wrap justify-evenly md:relative md:block
+            md:h-630 md:pb-12 lg:mx-auto lg:max-w-[85rem]
+          `}
         >
           <CommunityWallPersons
             persons={persons}
