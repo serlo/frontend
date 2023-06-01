@@ -66,7 +66,7 @@ export function BoxRenderer(props: BoxProps) {
       <figcaption className="pt-1 flex text-lg">
         {isBlank ? null : (
           <div>
-            <span className={colorClass + ' mr-1'}>
+            <span className={colorClass + (props.editable ? ' mr-1' : ' pr-3')}>
               {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
               {strings.content.boxTypes[typedValue]}
             </span>
