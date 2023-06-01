@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { CommunityWallPersons } from '../rework/community-wall/community-wall-persons'
@@ -10,6 +9,7 @@ import {
 } from '@/data/de/community-people'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { shuffleArray } from '@/helper/shuffle-array'
+import { tw } from '@/helper/tw'
 
 const positions = [
   ['8%', '-8%'],
@@ -37,18 +37,18 @@ export function CommunityWallSubjectLanding({
 
   return (
     <>
-      <div className="z-10 justify-center relative mt-32">
-        <div className="md:absolute text-center w-full z-20">
+      <div className="relative z-10 mt-32 justify-center">
+        <div className="z-20 w-full text-center md:absolute">
           <h3
-            className={clsx(
-              'text-center text-3xl font-extrabold',
-              'leading-cozy tracking-tight',
-              'max-w-xl mt-20 mx-auto relative z-10 mb-8'
-            )}
+            className={tw`
+                relative z-10 mx-auto
+                mt-20 mb-8
+                max-w-xl text-center text-3xl font-extrabold leading-cozy tracking-tight
+              `}
           >
             Lust, das Fach {title} mitzugestalten?
           </h3>
-          <p className="jsx-1406289065 text-xl leading-cozy text-almost-black max-w-xl mx-auto">
+          <p className="jsx-1406289065 mx-auto max-w-xl text-xl leading-cozy text-almost-black">
             Alle Inhalte auf serlo.org werden von einer ehrenamtlichen Community
             aus Lehrkräften, Studierenden, Schüler*innen und anderen
             Bildungsbegeisterten gestaltet. Erweitere mit uns das Angebot von{' '}
@@ -57,23 +57,23 @@ export function CommunityWallSubjectLanding({
           </p>
           <div className="group text-center">
             <Link
-              className={clsx(
-                'serlo-new-landing-button inline-block group-hover:bg-brand-500 hover:no-underline',
-                'mt-6 py-2 px-4 text-lg'
-              )}
+              className={tw`
+                serlo-new-landing-button mt-6 inline-block py-2
+                px-4 text-lg hover:no-underline group-hover:bg-brand-500
+              `}
               href={contributeLink}
             >
               Mitmachen
             </Link>
             <div className="relative">
-              <div className="absolute flex justify-center inset-0">
+              <div className="absolute inset-0 flex justify-center">
                 <div
-                  className={clsx(
-                    'pointer-events-none select-none h-5 w-48',
-                    'group-hover:opacity-100 opacity-0 group-hover:rotate-1',
-                    'transition-all ease-linear duration-200',
-                    'bg-underlined bg-contain bg-no-repeat bg-top'
-                  )}
+                  className={tw`
+                    pointer-events-none h-5 w-48 select-none
+                    bg-underlined bg-contain bg-top
+                    bg-no-repeat opacity-0 transition-all
+                    duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
+                  `}
                 />
               </div>
             </div>
@@ -81,10 +81,10 @@ export function CommunityWallSubjectLanding({
         </div>
 
         <div
-          className={clsx(
-            'flex flex-wrap justify-evenly lg:max-w-[85rem] lg:mx-auto',
-            'md:block md:pb-12 md:h-630 md:relative'
-          )}
+          className={tw`
+            flex flex-wrap justify-evenly md:relative md:block
+            md:h-630 md:pb-12 lg:mx-auto lg:max-w-[85rem]
+          `}
         >
           <CommunityWallPersons
             persons={persons}

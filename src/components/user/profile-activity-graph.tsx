@@ -47,7 +47,7 @@ export function ProfileActivityGraph({
 
   return (
     <figure
-      className="mx-side w-36 text-center text-brand relative"
+      className="relative mx-side w-36 text-center text-brand"
       title={
         isLegendary
           ? activityGraph.legendary
@@ -57,7 +57,7 @@ export function ProfileActivityGraph({
             )
       }
     >
-      <h3 className="text-xl font-bold mt-5 mb-2">{title}</h3>
+      <h3 className="mt-5 mb-2 text-xl font-bold">{title}</h3>
       {isLegendary ? renderLegendary() : renderGraphInProgress()}
     </figure>
   )
@@ -65,8 +65,8 @@ export function ProfileActivityGraph({
   function renderLegendary() {
     return (
       <>
-        <FaIcon icon={faGrinStars} className="text-brandgreen-100 h-32 w-32" />
-        <p className="font-bold text-xl text-brandgreen">{value}</p>
+        <FaIcon icon={faGrinStars} className="h-32 w-32 text-brandgreen-100" />
+        <p className="text-xl font-bold text-brandgreen">{value}</p>
       </>
     )
   }
@@ -77,7 +77,7 @@ export function ProfileActivityGraph({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 100 100"
-          className="w-36 h-36"
+          className="h-36 w-36"
         >
           <circle
             r={progressRadius}
@@ -111,7 +111,7 @@ export function ProfileActivityGraph({
             style={{ fill: colors.brandGreen }}
           />
           <text
-            className="font-bold text-white fill-current"
+            className="fill-current font-bold text-white"
             textAnchor="middle"
             x={fullRadius}
             y="54"

@@ -6,13 +6,13 @@ import {
   removePluginChild,
   useAppDispatch,
 } from '@edtr-io/store'
-import clsx from 'clsx'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
 
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 
 const StateDecoder = t.strict({
   plugin: t.literal('rows'),
@@ -99,7 +99,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   function renderDataImport() {
     return (
       <div className="bg-editor-primary-50 p-4">
-        <b className="serlo-h4 block ml-0 mb-4">Experimental Import</b>
+        <b className="serlo-h4 ml-0 mb-4 block">Experimental Import</b>
         <p className="mb-4">
           <a
             href="https://gist.github.com/elbotho/f3e39b0cdaf0cfc8e59e585e2650fb04"
@@ -111,10 +111,11 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
         </p>
         <textarea
           ref={textareaRef}
-          className={clsx(
-            'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-editor-primary-100 border-2 border-editor-primary-100 focus-within:outline-none focus-within:border-editor-primary'
-          )}
+          className={tw`
+            mt-1 mb-7 flex w-full items-center rounded-2xl
+            border-2 border-editor-primary-100 bg-editor-primary-100
+            p-2 focus-within:border-editor-primary focus-within:outline-none
+          `}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}
         />

@@ -114,7 +114,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             return (
               <>
                 <ul
-                  className="first:mt-0 mb-6 mt-0 mobile:mt-2"
+                  className="mb-6 mt-0 first:mt-0 mobile:mt-2"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
@@ -176,7 +176,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
             <li
               ref={provided.innerRef}
               {...provided.draggableProps}
-              className="block mb-3 leading-cozy"
+              className="mb-3 block leading-cozy"
             >
               <button
                 className="serlo-button-blue-transparent"
@@ -209,7 +209,7 @@ function Content({ pageData }: { pageData: SingleEntityPage }) {
 
   function renderUpdateButton() {
     return (
-      <button className="mt-12 serlo-button-blue" onClick={onSave}>
+      <button className="serlo-button-blue mt-12" onClick={onSave}>
         {loggedInStrings.saveButtonText}
       </button>
     )

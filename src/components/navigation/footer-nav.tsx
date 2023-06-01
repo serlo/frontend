@@ -1,11 +1,11 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
 import { faHouseLaptop, faEnvelope } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { FooterIcon, FooterNavigation } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 const iconMapping: Record<FooterIcon, IconDefinition> = {
   newsletter: faEnvelope,
@@ -25,28 +25,29 @@ export function FooterNav({ data }: FooterNavProps) {
           {data.map((category, index) => (
             <div
               key={index}
-              className="px-side mt-4 pt-0.25 w-full sm:w-1/2 md:w-1/3"
+              className="mt-4 w-full px-side pt-0.25 sm:w-1/2 md:w-1/3"
             >
-              <h3 className="font-bold mt-4 mb-2 text-almost-black">
+              <h3 className="mt-4 mb-2 font-bold text-almost-black">
                 {category.title}
               </h3>
               <ul className="list-none">
                 {category.children.map((link, childindex) => (
                   <li
                     key={index + childindex}
-                    className={clsx(
-                      "inline-block after:content-['•'] after:text-gray-600",
-                      'after:mr-1.5 after:ml-1 last-of-type:after:content-none',
-                      'sm:block sm:after:content-none'
-                    )}
+                    className={tw`
+                      inline-block after:mr-1.5 after:ml-1
+                      after:text-gray-600 after:content-['•'] last-of-type:after:content-none
+                      sm:block sm:after:content-none
+                    `}
                   >
                     <Link
                       href={link.url}
                       noExternalIcon
-                      className={clsx(
-                        'text-gray-600 hover:text-black hover:no-underline',
-                        'inline-block py-2 sm:py-0 leading-tight sm:border-b-2 hover:border-black border-transparent'
-                      )}
+                      className={tw`
+                        inline-block border-transparent py-2
+                        leading-tight text-gray-600 hover:border-black hover:text-black hover:no-underline 
+                        sm:border-b-2 sm:py-0
+                      `}
                     >
                       {link.icon && <FaIcon icon={iconMapping[link.icon]} />}{' '}
                       {link.title}

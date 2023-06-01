@@ -28,6 +28,7 @@ import { KeyboardEvent } from 'react'
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [
@@ -115,7 +116,7 @@ function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => {
           return (
-            <div className="pr-2 min-h-[2rem]" key={cell.content.id}>
+            <div className="min-h-[2rem] pr-2" key={cell.content.id}>
               {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
                 cell.content.render()}
             </div>
@@ -199,7 +200,7 @@ function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2 pb-6 min-h-[3.5rem]"
+              className="hackdiv min-h-[3.5rem] pr-2 pb-6"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
@@ -250,7 +251,7 @@ function SerloTableEditor(props: SerloTableProps) {
         onClick={() => {
           cell.content.replace(isImage ? 'text' : 'image')
         }}
-        className="serlo-button-light m-2 py-0.5 text-sm block absolute"
+        className="serlo-button-light absolute m-2 block py-0.5 text-sm"
         title={
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
@@ -273,7 +274,7 @@ function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <>
-        <nav className={clsx('absolute -ml-10 -mt-2 flex flex-col')}>
+        <nav className="absolute -ml-10 -mt-2 flex flex-col">
           {showRowButtons ? (
             <>
               {renderInlineAddButton(true)}
@@ -281,7 +282,7 @@ function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className={clsx('absolute -mt-12')}>
+        <nav className="absolute -mt-12">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -341,7 +342,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function getButtonStyle() {
-    return clsx('serlo-button-blue-transparent text-brand-400')
+    return tw`serlo-button-blue-transparent text-brand-400`
   }
 
   function insertRow(beforeIndex?: number) {

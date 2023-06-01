@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
@@ -7,6 +6,7 @@ import { GoogleSeachWrapper } from '../navigation/google-search-wrapper'
 import { MaxWidthDiv } from '../navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { tw } from '@/helper/tw'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function Search() {
@@ -32,10 +32,10 @@ export function Search() {
   function renderSearch() {
     return (
       <div
-        className={clsx(
-          'mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter',
-          '[&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter'
-        )}
+        className={tw`
+          mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter
+          [&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter
+        `}
       >
         <MaxWidthDiv>
           <GoogleSeachWrapper />
@@ -97,7 +97,7 @@ export function Search() {
     const explanation = replacePlaceholders(strings.search.privacy, {
       privacypolicy: (
         <a
-          className="text-brand serlo-link font-bold"
+          className="serlo-link font-bold text-brand"
           href="/privacy"
           target="_blank"
         >
@@ -106,10 +106,10 @@ export function Search() {
       ),
     })
     return (
-      <div className="text-brand rounded-xl border-2 mx-side px-side py-3">
+      <div className="mx-side rounded-xl border-2 px-side py-3 text-brand">
         {explanation}
         <button
-          className="serlo-button serlo-make-interactive-primary mt-2 mb-1 block py-0.5"
+          className="serlo-make-interactive-primary serlo-button mt-2 mb-1 block py-0.5"
           onClick={() => {
             giveConsent(ExternalProvider.GoogleSearch)
             window.location.reload()

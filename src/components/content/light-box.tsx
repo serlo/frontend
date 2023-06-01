@@ -21,7 +21,7 @@ export function LightBox({ open, onClose, label, src, alt }: LightBoxProps) {
   return (
     <>
       <Modal
-        className={clsx(ModalClsx, 'text-center top-1/2 pb-7')}
+        className={clsx(ModalClsx, 'top-1/2 pb-7 text-center')}
         isOpen={open}
         onRequestClose={onClose}
       >
@@ -29,7 +29,7 @@ export function LightBox({ open, onClose, label, src, alt }: LightBoxProps) {
           onClick={onClose}
           src={src}
           alt={alt ?? pictureString}
-          className="my-0 mx-auto max-w-[100%] h-auto max-h-[86vh] cursor-[zoom-out]"
+          className="my-0 mx-auto h-auto max-h-[86vh] max-w-[100%] cursor-[zoom-out]"
         />
         <div className="pointer-events-auto">{label}</div>
       </Modal>

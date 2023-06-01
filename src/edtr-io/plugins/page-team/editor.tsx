@@ -49,7 +49,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
   function renderDataImport() {
     return (
       <div className="bg-editor-primary-50 p-4">
-        <b className="serlo-h4 block ml-0 mb-4">Supply data to plugin</b>
+        <b className="serlo-h4 ml-0 mb-4 block">Supply data to plugin</b>
         <p className="mb-4">
           Make your changes in{' '}
           <a

@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { PageLayoutPluginProps } from '.'
 import { PageLayoutRenderer } from './renderer'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
 const firstColumsSizes = [50, 66, 33]
 
@@ -44,10 +45,10 @@ export const PageLayoutEditor: React.FunctionComponent<
   function renderInlineSettings() {
     return (
       <>
-        <b className="serlo-h4 block mt-6 ml-0 mb-4">
+        <b className="serlo-h4 mt-6 ml-0 mb-4 block">
           {editorStrings.pageLayoutColums.chooseRatio}:
         </b>
-        <ul className="pb-8 unstyled-list flex">
+        <ul className="unstyled-list flex pb-8">
           {firstColumsSizes.map(renderLi)}
         </ul>
       </>
@@ -67,8 +68,10 @@ export const PageLayoutEditor: React.FunctionComponent<
             widthPercent.set(percent)
           }}
           className={clsx(
-            'bg-editor-primary-100 rounded-lg flex flex-row w-24 h-24 opacity-75 mr-2 p-1',
-            'hover:bg-editor-primary-200 focus:bg-editor-primary-200 group',
+            tw`
+              group mr-2 flex h-24 w-24 flex-row rounded-lg bg-editor-primary-100 p-1
+              opacity-75 hover:bg-editor-primary-200 focus:bg-editor-primary-200
+            `,
             active && 'bg-brand'
           )}
         >

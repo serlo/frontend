@@ -11,6 +11,7 @@ import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
 import { scrollIfNeeded } from '@/helper/scroll'
+import { tw } from '@/helper/tw'
 import { useEditCommentMutation } from '@/mutations/thread'
 
 interface CommentProps {
@@ -92,11 +93,10 @@ export function Comment({
         'transition-colors duration-700 ease-out',
         isParent
           ? 'rounded-2xl'
-          : clsx(
-              'border-l-6 border-brand-200',
-              'pt-1 pb-0.5 pl-1 mt-8 mb-5 ml-4',
-              'rounded-r-2xl'
-            )
+          : tw`
+            mt-8 mb-5 ml-4 rounded-r-2xl border-l-6 border-brand-200 
+            pt-1 pb-0.5 pl-1
+          `
       )}
     >
       <MetaBar
@@ -134,7 +134,7 @@ export function Comment({
           />
           <button
             onClick={() => setIsEditing(false)}
-            className="block ml-auto mr-6 -mt-6 serlo-button-blue-transparent text-base"
+            className="serlo-button-blue-transparent ml-auto mr-6 -mt-6 block text-base"
           >
             {strings.comments.cancelEdit}
           </button>

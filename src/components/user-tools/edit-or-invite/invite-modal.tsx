@@ -36,7 +36,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
         {replacePlaceholders(modalStrings.text, { break: <br /> })}
       </p>
       <p className="serlo-p">{renderButtons()}</p>
-      <p className="serlo-p border-t-[1px] pt-8 mt-24 mb-0 text-base">
+      <p className="serlo-p mt-24 mb-0 border-t-[1px] pt-8 text-base">
         {replacePlaceholders(modalStrings.psText, {
           link: (
             <a onClick={onClose}>
@@ -74,7 +74,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
             onClose()
           }}
         >
-          <Link className="ml-4 serlo-button-green" href={registrationUrl}>
+          <Link className="serlo-button-green ml-4" href={registrationUrl}>
             {modalStrings.registerButton}
           </Link>
         </a>

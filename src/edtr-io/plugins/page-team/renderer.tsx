@@ -30,7 +30,7 @@ export const PageTeamRenderer = ({
   return (
     <div
       className={clsx(
-        'mobile:grid mobile:gap-2 mobile:grid-cols-2 sm:grid-cols-3 my-14',
+        'my-14 mobile:grid mobile:grid-cols-2 mobile:gap-2 sm:grid-cols-3',
         extraCols && 'md:grid-cols-4 lg:grid-cols-5'
       )}
     >
@@ -53,7 +53,7 @@ export const PageTeamRenderer = ({
       <div key={firstName + lastName} className="mb-10 text-center">
         <div
           className={clsx(
-            'mb-5 mx-auto relative aspect-square',
+            'relative mx-auto mb-5 aspect-square',
             compact ? 'max-w-[8rem]' : 'max-w-[11rem]'
           )}
         >

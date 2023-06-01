@@ -94,7 +94,7 @@ const BotHunt = () => {
           </>
         </Guard>
       ) : (
-        <p className="pt-36 text-center w-full">
+        <p className="w-full pt-36 text-center">
           sorry, <br />
           authorized personnel only.
         </p>
@@ -133,7 +133,7 @@ const BotHunt = () => {
               style={{ width: 200 }}
             />
             <div className="flex-grow">
-              <h2 className="text-xl mb-3 font-bold">
+              <h2 className="mb-3 text-xl font-bold">
                 <a href={profileUrl}>{username}</a>
               </h2>
               <div className="flex w-full justify-between">
@@ -161,7 +161,7 @@ const BotHunt = () => {
                   <>
                     {motivation ? <>&quot;{motivation}&quot;</> : null}
                     <div
-                      className="max-h-40 pb-4 overflow-y-auto w-[50rem]"
+                      className="max-h-40 w-[50rem] overflow-y-auto pb-4"
                       style={{ zoom: '0.8' }}
                     >
                       {renderDescription(description)}
@@ -169,7 +169,7 @@ const BotHunt = () => {
                   </>
                   <br />
                 </div>
-                <div className="ml-6 text-right buttons">
+                <div className="buttons ml-6 text-right">
                   <a href={profileUrl}>Full Profile</a>
                   <br />
                   <br />
@@ -206,7 +206,7 @@ const BotHunt = () => {
 
   function renderManualMode() {
     return (
-      <p className="serlo-p border-b-2 text-right pb-4">
+      <p className="serlo-p border-b-2 pb-4 text-right">
         <b>Manual mode</b> (immediate):{' '}
         <input ref={manualInputRef} type="number" placeholder="bot id" />{' '}
         {renderRemoveLink()}
@@ -293,7 +293,7 @@ const BotHunt = () => {
 
   function renderLoadMore() {
     return (
-      <div className="text-center text-xl mb-12">
+      <div className="mb-12 text-center text-xl">
         <a
           onClick={loadMore}
           className="cursor-pointer underline hover:no-underline"

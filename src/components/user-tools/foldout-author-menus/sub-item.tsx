@@ -1,6 +1,7 @@
 import { Item, Link } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
+
+import { tw } from '@/helper/tw'
 
 export interface SubItemProps {
   title: string
@@ -8,10 +9,10 @@ export interface SubItemProps {
   href?: string
 }
 
-const itemClasses = /* className={ */ clsx(
-  'serlo-button-blue-transparent font-normal text-base rounded-[12px] special-hyphens-auto',
-  'group-hover:text-white group-hover:bg-brand text-left leading-tight py-1'
-)
+const itemClasses = tw`
+  serlo-button-blue-transparent rounded-[12px] py-1 text-left text-base
+  font-normal leading-tight special-hyphens-auto group-hover:bg-brand group-hover:text-white
+`
 
 export function SubItem({ title, href, onClick }: SubItemProps) {
   const isAbsolute = href && href.indexOf('//') > -1
@@ -29,7 +30,7 @@ export function SubItem({ title, href, onClick }: SubItemProps) {
             }
           : undefined
       }
-      className="block md:py-[3px] group"
+      className="group block md:py-[3px]"
     >
       {text}
     </Link>

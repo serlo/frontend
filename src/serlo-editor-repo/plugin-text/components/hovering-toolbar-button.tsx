@@ -20,9 +20,9 @@ export function HoveringToolbarButton({
     <button
       className={clsx(
         active
-          ? 'text-almost-black shadow-menu bg-editor-primary-200 hover:text-black'
+          ? 'bg-editor-primary-200 text-almost-black shadow-menu hover:text-black'
           : '#b6b6b6 hover:text-editor-primary',
-        'cursor-pointer outline-none h-6 b-0 rounded m-[5px] p-0 w-6',
+        'b-0 m-[5px] h-6 w-6 cursor-pointer rounded p-0 outline-none',
         'serlo-tooltip-trigger'
       )}
       onMouseDown={onMouseDown}

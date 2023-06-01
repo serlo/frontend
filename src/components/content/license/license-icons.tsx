@@ -34,7 +34,7 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
   }
 
   return (
-    <span className="relative inline-block w-10 h-8">
+    <span className="relative inline-block h-8 w-10">
       {renderIcon({ icon: faCreativeCommons, className: 'absolute' })}
       {renderIcon({
         icon: faSlash,
@@ -47,7 +47,7 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
     return (
       <FaIcon
         className={clsx(
-          'text-brand-400 mb-0.25 mobile:text-[2rem] mobile:mt-0.25 mobile:mr-1',
+          'mb-0.25 text-brand-400 mobile:mt-0.25 mobile:mr-1 mobile:text-[2rem]',
           props.className
         )}
         icon={props.icon}

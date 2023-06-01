@@ -1,5 +1,4 @@
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
 
 import { AuthorToolsData } from '../foldout-author-menus/author-tools'
@@ -7,6 +6,7 @@ import { UserToolsItem } from '../user-tools-item'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidRevType } from '@/data-types'
+import { tw } from '@/helper/tw'
 import {
   RevisionMutationMode,
   useRevisionDecideMutation,
@@ -118,11 +118,11 @@ export function CheckoutRejectButtons({
             setReason(event.target.value)
           }}
           onKeyDown={onKeyDown}
-          className={clsx(
-            'bold w-full border-0 box-border outline-none',
-            'rounded-xl my-5 pr-14 pl-4 py-2 min-h-[80px]',
-            'bg-brand-50 focus-visible:bg-brand-200'
-          )}
+          className={tw`
+            bold my-5 box-border min-h-[80px] w-full
+            rounded-xl border-0 bg-brand-50 py-2 pr-14 pl-4
+            outline-none focus-visible:bg-brand-200
+          `}
         />
       </>
     )

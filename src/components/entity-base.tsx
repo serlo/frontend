@@ -107,21 +107,21 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   return (
     <>
       {survey && (
-        <div className="fixed inset-0 bg-black/30 z-[1000] flex justify-center items-center">
-          <div className="w-[500px] bg-white z-[1200] rounded-xl relative mx-side text-center">
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
+          <div className="relative z-[1200] mx-side w-[500px] rounded-xl bg-white text-center">
             <button
-              className="-right-3 -top-3 w-12 h-12 rounded-full absolute serlo-button-blue flex justify-center items-center"
+              className="serlo-button-blue absolute -right-3 -top-3 flex h-12 w-12 items-center justify-center rounded-full"
               onClick={() => {
                 handleModalInput('exit')
               }}
             >
               <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
             </button>
-            <p className="text-almost-black mx-side mt-4 italic">
+            <p className="mx-side mt-4 italic text-almost-black">
               Wir stellen regelmäßig Fragen auf der Plattform, um unser
               Lernangebot für dich weiter zu verbessern.
             </p>
-            <p className="serlo-p font-bold text-2xl mt-6">
+            <p className="serlo-p mt-6 text-2xl font-bold">
               Bekommst du zu Hause Hilfe, wenn du beim Lernen nicht
               weiterkommst?
             </p>
