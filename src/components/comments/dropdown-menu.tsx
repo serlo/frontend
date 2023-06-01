@@ -60,7 +60,7 @@ export function DropdownMenu({
 
   return (
     <div
-      className={`
+      className={tw`
         -mt-4 max-w-65 rounded-lg bg-brand-50
         py-3 pr-4 pl-2.5 text-right shadow  
       `}

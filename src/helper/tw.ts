@@ -1,4 +1,6 @@
 // use this tagged template literal to enable formatting outside of className
+// and to remove whitespace in multi-line mode
+
 // auto-complete works in vs code with this config:
 /*
 
