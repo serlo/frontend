@@ -11,7 +11,6 @@ import { useCanDo } from '@/auth/use-can-do'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { tw } from '@/helper/tw'
 import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
@@ -151,9 +150,7 @@ export function DropdownMenu({
   function buildButton(onClick: () => void, children: JSX.Element) {
     return (
       <button
-        className={tw`
-          serlo-button-blue-transparent mb-1 text-base font-normal leading-browser
-        `}
+        className="serlo-button-blue-transparent mb-1 text-base font-normal leading-browser"
         onClick={onClick}
       >
         {children}
