@@ -116,13 +116,13 @@ export function ProfileExperimental() {
       >
         <div
           className={clsx(
-            'w-12 h-6 flex bg-gray-300 rounded-full p-1 duration-300 ease-in-out',
+            'flex h-6 w-12 rounded-full bg-gray-300 p-1 duration-300 ease-in-out',
             isActive && 'bg-green-400'
           )}
         >
           <div
             className={clsx(
-              'bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out',
+              'h-4 w-4 transform rounded-full bg-white shadow-md duration-300 ease-in-out',
               isActive && 'translate-x-6'
             )}
           ></div>

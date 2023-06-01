@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
 
@@ -107,7 +106,7 @@ export function GoogleSeachWrapper() {
   return (
     <>
       <div
-        className={clsx('mb-24')}
+        className="mb-24"
         id="searchform"
         ref={searchFormRef}
         tabIndex={searchActive ? -1 : 0}

@@ -25,7 +25,7 @@ export function SubjectIcon({
       case 'mathe':
         return (
           <>
-            <MathSVG className="serlo-subject-icon superspecial-math" />
+            <MathSVG className="superspecial-math serlo-subject-icon" />
             <style jsx global>{`
               .serlo-subject-icon-wrapper .superspecial-math {
                 transition-duration: 0.6s;
@@ -42,7 +42,7 @@ export function SubjectIcon({
       case 'abc':
         return (
           <>
-            <AbcSVG className="serlo-subject-icon superspecial-abc" />
+            <AbcSVG className="superspecial-abc serlo-subject-icon" />
             <style jsx global>{`
               .serlo-subject-icon-wrapper .superspecial-abc:hover,
               .serlo-subject-icon-wrapper .superspecial-abc:focus,
@@ -56,7 +56,7 @@ export function SubjectIcon({
       case 'nachhaltigkeit':
         return (
           <>
-            <SustainabilitySVG className="serlo-subject-icon superspecial-sus" />
+            <SustainabilitySVG className="superspecial-sus serlo-subject-icon" />
             <style jsx global>{`
               .superspecial-sus path.water {
                 transform: scale(0) translateY(-30px);
@@ -80,7 +80,7 @@ export function SubjectIcon({
       case 'biologie':
         return (
           <>
-            <BiologySVG className="serlo-subject-icon superspecial-bio" />
+            <BiologySVG className="superspecial-bio serlo-subject-icon" />
             <style jsx global>{`
               @keyframes jump {
                 16% {
@@ -111,7 +111,7 @@ export function SubjectIcon({
       case 'informatik':
         return (
           <>
-            <InformaticsSVG className="serlo-subject-icon superspecial-informatics" />
+            <InformaticsSVG className="superspecial-informatics serlo-subject-icon" />
             <style jsx global>{`
               .superspecial-informatics {
                 transition: fill ease-in 0.5s;
@@ -163,7 +163,7 @@ export function SubjectIcon({
       case 'new':
         return (
           <>
-            <NewSVG className="serlo-subject-icon superspecial-new" />
+            <NewSVG className="superspecial-new serlo-subject-icon" />
             <style jsx global>{`
               .serlo-subject-icon-wrapper .superspecial-new {
                 transform-origin: 50% 60%;
@@ -179,7 +179,7 @@ export function SubjectIcon({
       case 'geography':
         return (
           <>
-            <GeographySVG className="serlo-subject-icon superspecial-geo" />
+            <GeographySVG className="superspecial-geo serlo-subject-icon" />
             <style jsx global>{`
               .superspecial-geo .world {
                 transform: translateX(-43%);
@@ -197,7 +197,7 @@ export function SubjectIcon({
       case 'chemie':
         return (
           <>
-            <ChemistrySVG className="serlo-subject-icon superspecial-chem" />
+            <ChemistrySVG className="superspecial-chem serlo-subject-icon" />
             <style jsx global>
               {`
                 .superspecial-chem .pipette path,
@@ -269,7 +269,7 @@ export function SubjectIcon({
           </>
         )
       default:
-        return <BlankSVG className="serlo-subject-icon superspecial-blank" />
+        return <BlankSVG className="superspecial-blank serlo-subject-icon" />
     }
   }
 }

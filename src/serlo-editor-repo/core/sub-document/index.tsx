@@ -53,14 +53,14 @@ export class ErrorBoundary extends Component<{
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 my-12 rounded-2xl font-bold bg-orange-200">
+        <div className="my-12 rounded-2xl bg-orange-200 p-4 font-bold">
           Leider ist ein Fehler aufgetreten.
           <button
             onClick={() => {
               this.props.undo()
               this.setState({ hasError: false })
             }}
-            className="serlo-button-blue block mt-3"
+            className="serlo-button-blue mt-3 block"
           >
             Letzte Änderung rückgänging machen
           </button>

@@ -6,7 +6,6 @@ import {
   Trigger,
   Content,
 } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 
 import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
@@ -15,6 +14,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
+import { tw } from '@/helper/tw'
 
 export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
   const loggedInData = useLoggedInData()
@@ -40,16 +40,16 @@ export function AuthorToolsExercises({ data }: MoreAuthorToolsProps) {
       <List>
         <Item>
           <Trigger
-            className={clsx(
-              'hidden sm:inline-block serlo-button text-center text-brandgreen',
-              'hover:bg-brandgreen hover:text-white text-base leading-8',
-              'w-8 h-8 ml-1 p-0'
-            )}
+            className={tw`
+              serlo-button ml-1 hidden h-8 w-8
+              p-0 text-center text-base leading-8
+              text-brandgreen hover:bg-brandgreen hover:text-white sm:inline-block
+            `}
           >
             <FaIcon icon={faTools} />
           </Trigger>
           <Content>
-            <List className="absolute w-56 z-50 pt-2 right-0 top-0">
+            <List className="absolute right-0 top-0 z-50 w-56 pt-2">
               <div className="serlo-sub-list-hover">
                 <li className="ml-2 font-bold">{type}</li>
                 <AuthorTools

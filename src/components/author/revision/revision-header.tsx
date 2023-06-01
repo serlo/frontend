@@ -44,9 +44,9 @@ export function RevisionHeader({
       <MaxWidthDiv noMarginBottom>
         <Link
           href={repositoryAlias}
-          className="mt-6 mx-side serlo-button-light"
+          className="serlo-button-light mx-side mt-6"
         >
-          <FaIcon icon={faArrowCircleLeft} className="text-base mr-0.5" />{' '}
+          <FaIcon icon={faArrowCircleLeft} className="mr-0.5 text-base" />{' '}
           {strings.revisions.toContent}
         </Link>
         <RevisionNotice
@@ -92,7 +92,7 @@ export function RevisionHeader({
       <span title={getTranslatedType(strings, data.typename)}>
         {' '}
         <FaIcon
-          className="text-brand-400 text-2.5xl"
+          className="text-2.5xl text-brand-400"
           icon={getIconByTypename(data.typename)}
         />{' '}
       </span>

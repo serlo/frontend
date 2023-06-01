@@ -10,6 +10,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 import { useCreateThreadMutation } from '@/mutations/thread'
 
 interface ProfileChatButtonProps {
@@ -62,7 +63,7 @@ export function ProfileChatButton({
         onClick={onClickAction}
         className={clsx(
           className,
-          'serlo-button-green block text-center mt-[5px] w-44 self-start'
+          'serlo-button-green mt-[5px] block w-44 self-start text-center'
         )}
         style={{ gridArea: 'chatButton' }}
       >
@@ -110,11 +111,11 @@ export function ProfileChatButton({
           {replacePlaceholders(part2, { username })}
         </p>
         <div
-          className={clsx(
-            'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-            'bg-brandgreen-50 focus-within:bg-brandgreen-100',
-            'transition-colors duration-200 ease-in py-1'
-          )}
+          className={tw`
+            mx-side mt-4 mb-7 flex items-center rounded-2xl
+            bg-brandgreen-50 py-1
+            transition-colors duration-200 ease-in focus-within:bg-brandgreen-100
+          `}
         >
           <TextareaAutosize
             value={message}
@@ -126,7 +127,7 @@ export function ProfileChatButton({
             minRows={2}
             className={clsx(
               'serlo-input-font-reset w-full text-lg',
-              'text-black border-0 bg-transparent outline-none resize-none',
+              'resize-none border-0 bg-transparent text-black outline-none',
               'pr-14 pl-4',
               'placeholder-brandgreen'
             )}

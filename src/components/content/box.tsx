@@ -12,6 +12,7 @@ import clsx from 'clsx'
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { FrontendBoxNode } from '@/frontend-node-types'
+import { tw } from '@/helper/tw'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export const boxTypeStyle = {
@@ -66,8 +67,10 @@ export function Box({
     <figure
       id={anchorId}
       className={clsx(
-        'serlo-box overflow-auto',
-        'mx-side border-3 pt-[2px] pb-side mb-6 rounded-xl relative',
+        tw`
+          serlo-box relative mx-side mb-6 overflow-auto
+          rounded-xl border-3 pt-[2px] pb-side
+        `,
         borderColorClass
       )}
     >

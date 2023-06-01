@@ -93,7 +93,7 @@ export function Topic({ data }: TopicProps) {
             {' '}
             <FaIcon
               icon={faFile}
-              className="text-[1.43rem] align-baseline text-brand-400"
+              className="align-baseline text-[1.43rem] text-brand-400"
             />{' '}
           </span>
         )}
