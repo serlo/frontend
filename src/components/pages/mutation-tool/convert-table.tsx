@@ -180,7 +180,6 @@ function convertContentNode(
   if (node.type === 'text') return { text: node.data ?? '' }
 
   if (node.type === 'tag') {
-    console.log(node)
     if (node.name === 'br') {
       return { text: ' ' }
     }
