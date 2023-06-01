@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
@@ -15,6 +13,7 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { getServerSideStrings } from '@/helper/feature-i18n'
+import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface SubjectLandingContentProps {
@@ -44,19 +43,19 @@ export function SubjectLandingContent({
       <Header />
       <main id="content" className="text-almost-black">
         <section
-          className={clsx(
-            'mx-auto mt-16 max-w-3xl',
-            'sm:flex md:mt-14',
-            'text-center sm:text-left'
-          )}
+          className={tw`
+            mx-auto mt-16 max-w-3xl
+            text-center sm:flex
+            sm:text-left md:mt-14
+          `}
         >
           <div>
             <h1
-              className={clsx(
-                'text-4xl font-extrabold sm:text-6xl',
-                'tracking-tight',
-                'mt-3 mb-10'
-              )}
+              className={tw`
+                mt-3 mb-10 text-4xl
+                font-extrabold
+                tracking-tight sm:text-6xl
+              `}
             >
               <span className="underlined inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
                 {data.title}
@@ -81,20 +80,19 @@ export function SubjectLandingContent({
           />
         </section>
 
-        <section className={clsx('text-center', 'themen')}>
+        <section className="themen text-center">
           <p className="mt-4 mb-12 text-3xl font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
           <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
         </section>
 
-        <section className={clsx('text-center', 'mt-20 mb-8')}>
+        <section className="mt-20 mb-8 text-center">
           <h2
-            className={clsx(
-              'text-3xl font-extrabold',
-              'tracking-tight',
-              'mx-auto mt-3 max-w-2xl pb-10'
-            )}
+            className={tw`
+              mx-auto mt-3 max-w-2xl
+              pb-10 text-3xl font-extrabold tracking-tight
+            `}
           >
             <span className="pb-2">Beliebte Inhalte</span>
           </h2>

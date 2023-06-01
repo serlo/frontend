@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { tw } from '@/helper/tw'
 
 export const partners = [
   {
@@ -42,11 +42,10 @@ export const partners = [
 export function EditorPartnerList() {
   return (
     <div
-      className={clsx(
-        'mt-auto flex flex-wrap justify-evenly pb-7',
-        'sm:justify-center',
-        'text-gray-800'
-      )}
+      className={tw`
+        mt-auto flex flex-wrap justify-evenly pb-7
+        text-gray-800 sm:justify-center
+      `}
     >
       {partners.map(renderPartner)}
     </div>

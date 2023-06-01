@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { HeadTags } from '../head-tags'
 import { CommunityWall } from '../landing/rework/community-wall/community-wall'
 import { FooterNew } from '../landing/rework/footer-new'
@@ -12,6 +10,7 @@ import { Link } from '@/components/content/link'
 import { LandingSubjectsNew } from '@/components/landing/rework/landing-subjects-new'
 import { InstanceLandingData } from '@/data-types'
 import { breakpoints } from '@/helper/breakpoints'
+import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 export interface LandingDEProps {
@@ -37,11 +36,10 @@ export function LandingDE({ data }: LandingDEProps) {
             <WelcomeMessage />
           </p>
           <h1
-            className={clsx(
-              'text-center text-5xl font-extrabold',
-              'tracking-tight',
-              'mx-auto mt-3 mb-6 max-w-2xl'
-            )}
+            className={tw`
+              mx-auto mt-3 mb-6 max-w-2xl
+              text-center text-5xl font-extrabold tracking-tight
+            `}
           >
             Was möchtest du <span className="underlined pb-2">lernen ?</span>
           </h1>
@@ -61,11 +59,11 @@ export function LandingDE({ data }: LandingDEProps) {
         </section>
 
         <section
-          className={clsx(
-            'text-center text-4xl',
-            'mt-7 font-bold tracking-tight',
-            'about'
-          )}
+          className={tw`
+            about mt-7
+            text-center text-4xl font-bold
+            tracking-tight
+          `}
         >
           <p className="mx-auto mb-8 max-w-2xl px-2">
             Unsere Lernplattform wird von einem gemeinnützigen Verein
@@ -100,11 +98,11 @@ export function LandingDE({ data }: LandingDEProps) {
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
             style={{ hyphens: 'auto' }}
-            className={clsx(
-              'text-center text-4xl font-bold',
-              'leading-cozy tracking-tight',
-              'mx-auto mt-7 max-w-2xl'
-            )}
+            className={tw`
+              mx-auto mt-7 max-w-2xl
+              text-center text-4xl
+              font-bold leading-cozy tracking-tight
+            `}
           >
             Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
             digitale Transformation unserer Schulen ein.
@@ -113,23 +111,23 @@ export function LandingDE({ data }: LandingDEProps) {
 
         <section className="bg-blueWave bg-100% pt-4 text-center">
           <h3
-            className={clsx(
-              'text-center text-4xl font-bold',
-              'leading-cozy tracking-tight',
-              'relative z-10 mx-auto mt-32 mb-16 max-w-2xl'
-            )}
+            className={tw`
+              relative z-10 mx-auto
+              mt-32 mb-16
+              max-w-2xl text-center text-4xl font-bold leading-cozy tracking-tight
+            `}
           >
             Partner und Förderer
           </h3>
           <PartnerList />
           <Link
-            className={clsx(
-              'mx-auto mt-12 hidden md:inline-block',
-              'rounded-lg text-xl font-bold text-almost-black ',
-              'border-2 border-solid border-almost-black px-8 py-4 tracking-tight',
-              'hover:border-brand-500 hover:text-brand-500 hover:no-underline',
-              'landing-button-with-wings landing-button-with-wink'
-            )}
+            className={tw`
+              landing-button-with-wings landing-button-with-wink mx-auto mt-12
+              hidden rounded-lg border-2 border-solid 
+              border-almost-black px-8 py-4 text-xl font-bold tracking-tight
+              text-almost-black hover:border-brand-500 hover:text-brand-500
+              hover:no-underline md:inline-block
+            `}
             href="/partner"
           >
             Alle Partner ansehen

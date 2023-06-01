@@ -10,6 +10,7 @@ import { Video } from '@/components/content/video'
 import { HeadTags } from '@/components/head-tags'
 import { Logo } from '@/components/navigation/header/logo'
 import { breakpoints } from '@/helper/breakpoints'
+import { tw } from '@/helper/tw'
 
 export const h2Class =
   'text-center text-4xl leading-cozy tracking-tight font-extrabold'
@@ -30,20 +31,20 @@ export function EditorPresentation() {
       </header>
 
       <div
-        className={clsx(
-          'md:relative md:left-[calc(-50vw+50%)]',
-          'md:ml-0 md:text-left',
-          '-mt-12 sm:text-center',
-          'text-gray-700'
-        )}
+        className={tw`
+          -mt-12 text-gray-700
+          sm:text-center md:relative
+          md:left-[calc(-50vw+50%)] md:ml-0
+          md:text-left
+        `}
       >
-        <section className={clsx('mt-32 px-4 text-center font-bold')}>
+        <section className="mt-32 px-4 text-center font-bold">
           <h1
-            className={clsx(
-              'text-5xl font-extrabold',
-              'leading-tight tracking-tight',
-              'mx-auto mt-3'
-            )}
+            className={tw`
+              mx-auto mt-3
+              text-5xl font-extrabold
+              leading-tight tracking-tight
+            `}
           >
             <span className="underlined !pr-0 pb-2">Serlo Editor</span>
             <sup className="relative -top-6 ml-2 inline-block text-base text-brand">
@@ -52,9 +53,7 @@ export function EditorPresentation() {
           </h1>
         </section>
 
-        <section
-          className={clsx('mx-auto mt-16 mb-16 max-w-5xl px-4 text-left')}
-        >
+        <section className="mx-auto mt-16 mb-16 max-w-5xl px-4 text-left">
           <div className="sm:flex sm:justify-between">
             <div className="pr-2 text-xl leading-cozy sm:flex sm:max-w-[31rem] sm:flex-1 sm:flex-col">
               <h2 className={clsx(h3Class, 'tracking-tight')}>
@@ -87,23 +86,19 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section
-          className={clsx('mt-12 mb-20 bg-orangeBow bg-100% px-4 !pt-20 pb-20')}
-        >
+        <section className="mt-12 mb-20 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
           <div className="mx-auto max-w-7xl">
             <EditorFeatures />
           </div>
         </section>
 
-        <section className={clsx('-mb-6 px-4')}>
+        <section className="-mb-6 px-4">
           <div className="mx-auto mb-28 max-w-7xl">
             <EducationPlugins />
           </div>
         </section>
 
-        <section
-          className={clsx('mt-0 mb-20 bg-orangeBow bg-100% px-2 !pt-16')}
-        >
+        <section className="mt-0 mb-20 bg-orangeBow bg-100% px-2 !pt-16">
           <div className="mx-auto mt-2 max-w-4xl px-4 pb-16 text-center text-xl sm:flex">
             <div className="mt-5 flex-1">
               <b className="font-handwritten text-4xl text-brand">20,000+</b>
@@ -161,9 +156,10 @@ export function EditorPresentation() {
         </section>
 
         <section
-          className={clsx(
-            'bg-size mt-8 bg-brand-100 bg-topWaveFromWhite bg-contain bg-top bg-no-repeat px-2 pt-20 sm:bg-[length:100%_3vw] md:pt-28'
-          )}
+          className={tw`
+            bg-size mt-8 bg-brand-100 bg-topWaveFromWhite bg-contain bg-top
+            bg-no-repeat px-2 pt-20 sm:bg-[length:100%_3vw] md:pt-28
+          `}
         >
           <h2 className={clsx(h2Class, 'mb-8')}>About us</h2>
           <div className="mx-side max-w-4xl text-left sm:mx-auto">
@@ -315,7 +311,11 @@ export function EditorPresentation() {
       <a
         href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
         className={clsx(
-          'landing-button-with-wings serlo-new-landing-button !mb-8 inline-block rounded-full transition-colors before:!mt-[-1.1rem] after:!mt-[-1.1rem]',
+          tw`
+            landing-button-with-wings serlo-new-landing-button
+            !mb-8 inline-block rounded-full transition-colors
+            before:!mt-[-1.1rem] after:!mt-[-1.1rem]
+          `,
           final ? '' : 'bg-brand-200 text-brand hover:text-white'
         )}
       >

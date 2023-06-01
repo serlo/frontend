@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 
 import { PageTitle } from '../content/page-title'
@@ -8,6 +7,7 @@ import { MaxWidthDiv } from '../navigation/max-width-div'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 export function Search() {
@@ -33,10 +33,10 @@ export function Search() {
   function renderSearch() {
     return (
       <div
-        className={clsx(
-          'mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter',
-          '[&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter'
-        )}
+        className={tw`
+          mx-side [&_.gsc-control-cse]:!font-serlo [&_.gsc-control-cse]:tracking-slightestly-tighter
+          [&_.gsc-table-result]:!font-serlo [&_.gsc-table-result]:tracking-slightestly-tighter
+        `}
       >
         <MaxWidthDiv>
           <GoogleSeachWrapper />

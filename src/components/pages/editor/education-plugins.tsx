@@ -31,6 +31,7 @@ import {
 import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
+import { tw } from '@/helper/tw'
 
 const categories = ['educational', 'basic'] as const
 
@@ -302,8 +303,10 @@ export function EducationPlugins() {
         <button
           onClick={() => setSelectedTitle(title)}
           className={clsx(
-            'm-1 whitespace-nowrap rounded-md px-2 py-1',
-            'shadow-menu hover:bg-brand-50',
+            tw`
+              m-1 whitespace-nowrap rounded-md px-2 py-1
+              shadow-menu hover:bg-brand-50
+            `,
             selectedTitle === title ? 'bg-brand-100' : ''
           )}
         >

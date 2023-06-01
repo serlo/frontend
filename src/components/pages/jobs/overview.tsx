@@ -7,6 +7,7 @@ import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
+import { tw } from '@/helper/tw'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
@@ -106,10 +107,9 @@ const specials = [
   },
 ]
 
-const h2Class =
-  'text-center text-4xl leading-cozy tracking-tight font-extrabold'
-const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
-const italicClass = 'text-brand italic font-handwritten text-3xl'
+const h2Class = tw`text-center text-4xl font-extrabold leading-cozy tracking-tight`
+const h3Class = tw`text-[1.3rem] font-extrabold text-gray-700`
+const italicClass = tw`font-handwritten text-3xl italic text-brand`
 
 // type CategorizedJobsProps = Record<string, PersonioPosition[]>
 export interface JobsOverviewProps {
@@ -124,21 +124,21 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
 
       <div
-        className={clsx(
-          'md:relative md:left-[calc(-50vw+50%)]',
-          'w-[100vw] md:ml-0 md:max-w-[100vw] md:text-left',
-          '-mt-12 text-center',
-          'text-gray-700'
-        )}
+        className={tw`
+          -mt-12 w-[100vw]
+          text-center text-gray-700 md:relative md:left-[calc(-50vw+50%)]
+          md:ml-0 md:max-w-[100vw]
+          md:text-left
+        `}
       >
         <div className="mt-16 md:mt-[11vh]">
           <UserTools aboveContent />
         </div>
         <section
-          className={clsx(
-            'sm:flex sm:flex-row-reverse',
-            'font-bold sm:text-left'
-          )}
+          className={tw`
+            font-bold sm:flex
+            sm:flex-row-reverse sm:text-left
+          `}
         >
           <div className="mt-12 w-full px-2 sm:mt-32 sm:ml-10">
             <p
@@ -150,11 +150,10 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               Hey du
             </p>
             <h1
-              className={clsx(
-                'text-5xl font-extrabold',
-                'leading-tight tracking-tight',
-                'mx-auto mt-3 mb-6 max-w-md sm:ml-0'
-              )}
+              className={tw`
+                mx-auto mt-3 mb-6 max-w-md
+                text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
+              `}
             >
               Digitale Bildung braucht{' '}
               <span className="underlined !pr-0">dich&thinsp;!</span>
@@ -172,7 +171,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </aside>
         </section>
 
-        <section className={clsx('mt-3 px-2 text-center')}>
+        <section className="mt-3 px-2 text-center">
           <h3
             style={{ hyphens: 'auto' }}
             className={clsx(h2Class, 'mt-12 inline-block pb-3')}
@@ -200,24 +199,24 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('mt-24 bg-orangeBow bg-100% !pt-12')}>
+        <section className="mt-24 bg-orangeBow bg-100% !pt-12">
           <h3
-            className={clsx(
-              'text-center text-4xl font-bold text-almost-black',
-              'leading-cozy tracking-tight',
-              'mx-auto'
-            )}
+            className={tw`
+              mx-auto text-center text-4xl font-bold
+              leading-cozy tracking-tight
+              text-almost-black
+            `}
           >
             <p className={clsx(h2Class, 'mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
           </h3>
           <div
-            className={clsx(
-              'relative mb-12 pb-16 text-left text-[1.3rem]',
-              'pt-4 md:pb-16 lg:mb-16',
-              'mx-auto grid max-w-2xl grid-cols-2 md:max-w-4xl md:grid-cols-3'
-            )}
+            className={tw`
+              relative mx-auto mb-12 grid max-w-2xl
+              grid-cols-2 pb-16 pt-4
+              text-left text-[1.3rem] md:max-w-4xl md:grid-cols-3 md:pb-16 lg:mb-16
+            `}
           >
             {specials.map(({ src, title, content }) => {
               return (
@@ -253,7 +252,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('mt-24 bg-blueWave bg-100% !pt-16 pb-16')}>
+        <section className="mt-24 bg-blueWave bg-100% !pt-16 pb-16">
           <div className="mx-auto max-w-4xl text-center text-3xl leading-cozy">
             <img
               src="/_assets/img/landing/birds.svg"
@@ -379,11 +378,11 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                 ) : null} */}
               <li key={id}>
                 <NextLink
-                  className={clsx(
-                    'mb-5 block px-5 py-4',
-                    'rounded-xl shadow-menu transition-colors hover:bg-brand/5',
-                    'text-lg'
-                  )}
+                  className={tw`
+                    mb-5 block rounded-xl px-5
+                    py-4 text-lg shadow-menu transition-colors
+                    hover:bg-brand/5
+                  `}
                   href={`/jobs/${id}`}
                 >
                   <span className="font-bold text-brand">{name}</span>
@@ -402,19 +401,19 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
     return (
       <figure
         key={name}
-        className={clsx(
-          'group mt-12 text-center',
-          'sm:w-1/3v',
-          'mx-auto max-w-[20rem]'
-        )}
+        className={tw`
+          group mx-auto mt-12
+          max-w-[20rem]
+          text-center sm:w-1/3v
+        `}
       >
         <div className="relative w-full">
           <div
-            className={clsx(
-              'absolute left-5 top-5 right-12 bg-wiggle pb-6/5',
-              'bg-contain bg-no-repeat opacity-0 group-hover:opacity-100',
-              'transition-all duration-200 ease-linear group-hover:rotate-1'
-            )}
+            className={tw`
+              absolute left-5 top-5 right-12 bg-wiggle bg-contain
+              bg-no-repeat pb-6/5 opacity-0 transition-all
+              duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
+            `}
           ></div>
         </div>
         <img
@@ -424,10 +423,10 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         />
         <p className="mt-2 text-base font-bold">@{name}</p>
         <span
-          className={clsx(
-            'px-2 py-1 font-handwritten text-xl font-bold text-brand',
-            'rounded-2xl'
-          )}
+          className={tw`
+            rounded-2xl px-2 py-1 font-handwritten
+            text-xl font-bold text-brand
+          `}
         >
           {role}
         </span>

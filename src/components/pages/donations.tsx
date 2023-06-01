@@ -1,5 +1,4 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
-import clsx from 'clsx'
 
 import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'
 import { FaIcon } from '../fa-icon'
@@ -7,6 +6,7 @@ import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Logo } from '@/components/navigation/header/logo'
+import { tw } from '@/helper/tw'
 import { ExternalProvider } from '@/helper/use-consent'
 
 export function Donations() {
@@ -32,25 +32,24 @@ export function Donations() {
         <Logo />
       </header>
       <div
-        className={clsx(
-          'md:ml-0 md:max-w-[100vw] md:text-left',
-          '-mt-12 text-center',
-          'text-gray-700'
-        )}
+        className={tw`
+          -mt-12 text-center text-gray-700
+          md:ml-0 md:max-w-[100vw]
+          md:text-left
+        `}
       >
         <section
-          className={clsx(
-            'mt-20 flex flex-col-reverse sm:flex-row-reverse lg:mt-10',
-            'font-bold sm:mx-side sm:text-left'
-          )}
+          className={tw`
+            mt-20 flex flex-col-reverse font-bold sm:mx-side
+            sm:flex-row-reverse sm:text-left lg:mt-10
+          `}
         >
           <div className="mt-2 w-full px-2 sm:mt-20 sm:ml-10">
             <h1
-              className={clsx(
-                'text-5xl font-extrabold',
-                'leading-tight tracking-tight',
-                'mx-auto mt-3 mb-6 max-w-md sm:ml-0'
-              )}
+              className={tw`
+                mx-auto mt-3 mb-6 max-w-md
+                text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
+              `}
             >
               Deine Spende macht einen{' '}
               <span className="underlined !pr-0 pb-2">Unterschied</span>.
@@ -60,20 +59,19 @@ export function Donations() {
             <img
               src="/_assets/img/donations-image.jpg"
               alt="Kind beim Lernen mit Serlo"
-              className={clsx(
-                'aspect-square rounded-full object-cover object-center',
-                'block max-w-[20rem] p-side mobile:mx-auto',
-                'sm:mx-0 sm:ml-auto sm:h-[23rem] sm:w-[23rem] sm:max-w-none'
-              )}
+              className={tw`
+                block aspect-square max-w-[20rem] rounded-full
+                object-cover object-center p-side mobile:mx-auto
+                sm:mx-0 sm:ml-auto sm:h-[23rem] sm:w-[23rem] sm:max-w-none
+              `}
             />
           </aside>
         </section>
         <div
-          className={clsx(
-            'mt-12',
-            'sm:mx-side-lg md:flex md:justify-evenly',
-            'lg:mx-auto lg:max-w-5xl'
-          )}
+          className={tw`
+            mt-12 sm:mx-side-lg md:flex md:justify-evenly
+            lg:mx-auto lg:max-w-5xl
+          `}
         >
           <div className="mx-auto max-w-2xl">
             <section>
@@ -102,10 +100,10 @@ export function Donations() {
           </div>
 
           <section
-            className={clsx(
-              'pt-6 md:max-w-xs md:pt-0',
-              'mx-auto max-w-md px-side text-left'
-            )}
+            className={tw`
+              mx-auto max-w-md px-side
+              pt-6 text-left md:max-w-xs md:pt-0
+            `}
           >
             <h3 className="-mt-0.5 mb-5 text-xl font-bold">
               Dein Ansprechpartner
@@ -170,9 +168,9 @@ export function Donations() {
 
       <footer>
         <div
-          className={clsx(
-            '-mb-20 -mt-28 bg-brand-100 p-7 px-side pt-28 text-center text-white'
-          )}
+          className={tw`
+            -mb-20 -mt-28 bg-brand-100 p-7 px-side pt-28 text-center text-white
+          `}
         >
           <h3 className="mx-auto mb-8 text-lg font-bold text-almost-black">
             Partner und Förderer

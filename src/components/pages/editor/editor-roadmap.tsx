@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { tw } from '@/helper/tw'
 
 const roadmapData = [
   {
@@ -41,7 +41,7 @@ export function EditorRoadmap() {
       {roadmapData.map(({ title, steps }, colIndex) => {
         return (
           <div key={title} className="mt-8 flex-1 px-3">
-            <h3 className={clsx('mb-4 font-handwritten text-3xl text-brand')}>
+            <h3 className="mb-4 font-handwritten text-3xl text-brand">
               {title}
             </h3>
             <ul className="">
@@ -49,12 +49,12 @@ export function EditorRoadmap() {
                 return (
                   <li
                     key={title}
-                    className={clsx(
-                      'mx-auto mb-3 block w-fit px-2 py-1 leading-6',
-                      'sm:mx-0 sm:w-auto',
-                      'rounded-xl shadow-menu transition-colors',
-                      'text-base'
-                    )}
+                    className={tw`
+                      mx-auto mb-3 block w-fit rounded-xl px-2 py-1
+                      text-base leading-6
+                      shadow-menu transition-colors sm:mx-0
+                      sm:w-auto
+                    `}
                   >
                     {title}
                   </li>
