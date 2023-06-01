@@ -7,6 +7,7 @@ import { LicenseIcons } from './license-icons'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 interface LicenseNoticeProps {
   data: LicenseData
@@ -37,7 +38,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   function renderFullNotice() {
     return (
       <div
-        className={`
+        className={tw`
           my-10 border-t-2 border-brand-200 px-side
           py-2.5 text-sm text-almost-black mobile:flex
         `}
