@@ -83,13 +83,10 @@ export function CommentForm({
         onKeyDown={onKeyDown}
         placeholder={placeholder}
         minRows={1}
-        className={clsx(
-          tw`
+        className={tw`
             serlo-input-font-reset w-full resize-none border-0 bg-transparent
-            text-lg text-black placeholder-brandgreen focus:!outline-none
-          `,
-          reply ? 'pr-14 pl-4' : 'pr-14 pl-4'
-        )}
+            pr-14 pl-4 text-lg text-black placeholder-brandgreen focus:!outline-none
+          `}
       />
       {renderButton()}
     </div>
