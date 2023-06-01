@@ -31,7 +31,7 @@ export const MetadataApiPresentation = () => {
             <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col pr-2">
               <h2 className="text-gray-700 text-[1.3rem] font-extrabold tracking-tight">
                 <br />
-                Integrate our Digital Learning Resources into your apps
+                Spice up your learning apps with our Digital Learning Resources
               </h2>
               <p className="mt-4">
                 Our new Metadata API makes it easy to integrate thousands of
