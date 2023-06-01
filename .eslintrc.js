@@ -166,6 +166,7 @@ module.exports = {
   ],
   ignorePatterns: [
     'tailwind.config.js',
+    'shared/tailwind-base.cjs',
     'postcss.config.js',
     'next.config.js',
     'jest.config.js',
