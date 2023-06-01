@@ -32,12 +32,12 @@ export function LinkOverlayWithHref({
   const isCustomLink = !serloId && !value.includes('serlo.org/')
 
   return (
-    <div className="flex items-center px-side py-2 content-between">
+    <div className="flex content-between items-center px-side py-2">
       <a
         href={value}
         target="_blank"
         className={clsx(
-          'serlo-link serlo-tooltip-trigger outline-none focus:underline font-bold whitespace-normal max-w-[27rem] mr-auto',
+          'serlo-link serlo-tooltip-trigger mr-auto max-w-[27rem] whitespace-normal font-bold outline-none focus:underline',
           isCustomLink ? '!text-gray-800' : 'text-brand'
         )}
         rel="noreferrer"
@@ -54,14 +54,14 @@ export function LinkOverlayWithHref({
       </a>
       <button
         onClick={() => setIsEditMode(true)}
-        className="serlo-button-editor-secondary serlo-tooltip-trigger w-10 h-10 ml-4"
+        className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
       >
         <FaIcon icon={faPencilAlt} />
         <EditorTooltip text={config.i18n.link.edit} className="!-ml-2 !pb-2" />
       </button>
       <button
         onClick={removeLink}
-        className="serlo-button-editor-secondary serlo-tooltip-trigger w-10 h-10 ml-2"
+        className="serlo-button-editor-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
       >
         <FaIcon icon={faTrashAlt} />
         <span className="sr-only">{config.i18n.link.remove}</span>

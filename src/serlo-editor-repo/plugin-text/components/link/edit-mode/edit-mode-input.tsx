@@ -37,7 +37,7 @@ export function EditModeInput({
     <>
       <input
         type="text"
-        className="mx-side w-[25rem] border-3 border-editor-primary-50 bg-editor-primary-100 rounded-xl mt-2 pl-3 pr-12 h-12 align-end hover:border-editor-primary-100 focus:border-editor-primary-200 outline-none"
+        className="align-end mx-side mt-2 h-12 w-[25rem] rounded-xl border-3 border-editor-primary-50 bg-editor-primary-100 pl-3 pr-12 outline-none hover:border-editor-primary-100 focus:border-editor-primary-200"
         value={query}
         onChange={(value) => setQuery(value.target.value)}
         placeholder={placeholder}
@@ -46,7 +46,7 @@ export function EditModeInput({
       />
       {query ? (
         <div
-          className="absolute top-4 right-6 flex items-center justify-center w-8 h-8 serlo-button-editor-secondary cursor-pointer text-gray-700"
+          className="serlo-button-editor-secondary absolute top-4 right-6 flex h-8 w-8 cursor-pointer items-center justify-center text-gray-700"
           onClick={() => {
             setQuery('')
             setTimeout(() => {

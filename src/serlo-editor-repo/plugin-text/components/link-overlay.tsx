@@ -46,7 +46,7 @@ export function LinkOverlay({
   return (
     <div ref={wrapper} className="absolute z-[95] whitespace-nowrap">
       <div
-        className="bg-white shadow-menu rounded w-[460px]"
+        className="w-[460px] rounded bg-white shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
         {children}

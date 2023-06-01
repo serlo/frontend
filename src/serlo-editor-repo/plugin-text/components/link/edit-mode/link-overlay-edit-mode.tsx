@@ -100,7 +100,7 @@ export function LinkOverlayEditMode({
         />
       </div>
       {query ? (
-        <div className="mt-4 group">
+        <div className="group mt-4">
           {isLoading ? <LoadingSpinner /> : null}
           {results.map(({ entry }, index) => (
             <EditModeResultEntry
@@ -113,7 +113,7 @@ export function LinkOverlayEditMode({
             />
           ))}
           <div
-            className={clsx('text-lg mt-2 text-gray-800', {
+            className={clsx('mt-2 text-lg text-gray-800', {
               'bg-brand-50': selectedIndex === results.length,
             })}
           >
