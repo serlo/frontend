@@ -66,7 +66,7 @@ export function Settings() {
   const isForm = flow && flow.state === 'show_form'
 
   return (
-    <div className="max-w-[30rem] mx-auto">
+    <div className="mx-auto max-w-[30rem]">
       <PageTitle
         headTitle
         title={`${strings.auth.settings.title} ✨`}

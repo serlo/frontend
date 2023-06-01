@@ -8,7 +8,7 @@ export function Upload(props: UploadProps) {
     <>
       <button
         onClick={selectFile}
-        className="serlo-button-editor-secondary text-base h-10 self-end"
+        className="serlo-button-editor-secondary h-10 self-end text-base"
       >
         {props.config.i18n.label}
       </button>

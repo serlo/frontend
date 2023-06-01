@@ -69,7 +69,7 @@ export function PrintMode() {
   if (scrolledToBottom) return null
 
   return (
-    <div className="hidden print:block print:border-2 print:border-black print:text-lg print:pb-2 print:mt-2">
+    <div className="hidden print:mt-2 print:block print:border-2 print:border-black print:pb-2 print:text-lg">
       {strings.print.warning}
     </div>
   )

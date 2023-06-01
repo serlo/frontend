@@ -114,7 +114,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   return (
     <>
-      <div className="mb-16 max-w-[30rem] pb-6 mx-auto">
+      <div className="mx-auto mb-16 max-w-[30rem] pb-6">
         <PageTitle
           headTitle
           title={`${

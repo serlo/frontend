@@ -1,6 +1,5 @@
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { Instance, Props } from 'tippy.js'
 
@@ -8,6 +7,7 @@ import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
 import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
+import { tw } from '@/helper/tw'
 
 export interface MetaBarProps {
   user: { username: string; id: number }
@@ -43,11 +43,11 @@ export function MetaBar({
       <UserLink
         user={user}
         withIcon
-        className={clsx(
-          'serlo-button text-brand text-lg font-bold',
-          '-ml-1 pl-1 flex items-center hover:no-underline',
-          'hover:text-brand hover:bg-brand-200'
-        )}
+        className={tw`
+          serlo-button -ml-1 flex items-center
+          pl-1 text-lg font-bold text-brand 
+          hover:bg-brand-200 hover:text-brand hover:no-underline
+        `}
       />
       {isEditing ? null : (
         <Tippy
@@ -73,11 +73,11 @@ export function MetaBar({
           }
         >
           <div className="cursor-pointer">
-            <span className={clsx('text-brand-500 text-base')}>
+            <span className="text-base text-brand-500">
               <TimeAgo datetime={date} />
             </span>
             <button
-              className="serlo-button text-brand bg-brand-50 w-7 h-7 ml-1 pr-2 "
+              className="serlo-button ml-1 h-7 w-7 bg-brand-50 pr-2 text-brand "
               aria-label="Tool Menu"
             >
               <FaIcon icon={faEllipsisVertical} />

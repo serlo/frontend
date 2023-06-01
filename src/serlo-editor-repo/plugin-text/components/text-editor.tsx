@@ -452,6 +452,7 @@ export function TextEditor(props: TextEditorProps) {
         )}
 
         <Editable
+          readOnly={!editable}
           placeholder={config.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}

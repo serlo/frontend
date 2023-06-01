@@ -5,13 +5,13 @@ import {
   faPencil,
 } from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 import {
   useSetCommentStateMutation,
   useSetThreadStateMutation,
@@ -61,10 +61,10 @@ export function DropdownMenu({
 
   return (
     <div
-      className={clsx(
-        'text-right bg-brand-50 py-3 pr-4 pl-2.5',
-        'shadow max-w-65 rounded-lg -mt-4'
-      )}
+      className={tw`
+        -mt-4 max-w-65 rounded-lg bg-brand-50
+        py-3 pr-4 pl-2.5 text-right shadow  
+      `}
     >
       {buildButton(
         onLinkToComment,
@@ -100,7 +100,7 @@ export function DropdownMenu({
               : strings.comments.deleteComment}
           </>
         )}
-      <span className={clsx('block text-sm mt-3.5 text-gray-500')}>
+      <span className="mt-3.5 block text-sm text-gray-500">
         {strings.comments.postedOn} {date.toLocaleString(lang)}
       </span>
     </div>
@@ -151,10 +151,7 @@ export function DropdownMenu({
   function buildButton(onClick: () => void, children: JSX.Element) {
     return (
       <button
-        className={clsx(
-          'serlo-button-blue-transparent',
-          'mb-1 text-base font-normal leading-browser'
-        )}
+        className="serlo-button-blue-transparent mb-1 text-base font-normal leading-browser"
         onClick={onClick}
       >
         {children}

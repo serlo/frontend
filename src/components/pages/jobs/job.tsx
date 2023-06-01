@@ -41,11 +41,11 @@ export function Job({ position }: { position: PersonioPosition }) {
           {jobDescriptions?.jobDescription?.map(({ name, value }) => {
             return (
               <section key={name}>
-                <h2 className="serlo-h2 text-gray-700 font-extrabold border-0 mb-2">
+                <h2 className="serlo-h2 mb-2 border-0 font-extrabold text-gray-700">
                   {name}
                 </h2>
                 <div
-                  className="serlo-editor-hacks sane-text-defaults mx-side text-lg"
+                  className="sane-text-defaults serlo-editor-hacks mx-side text-lg"
                   dangerouslySetInnerHTML={{ __html: value }}
                 />
               </section>
@@ -67,7 +67,7 @@ export function Job({ position }: { position: PersonioPosition }) {
     if (isVolunteer) return null
     return (
       <a
-        className="serlo-button-green text-xl px-5"
+        className="serlo-button-green px-5 text-xl"
         href={`https://serlo.jobs.personio.de/job/${id}?display=de#apply`}
         target="_blank"
         rel="noreferrer"

@@ -44,11 +44,11 @@ const commonData = [
 
 export function BasicPlugins() {
   return (
-    <div className="text-center mt-8">
-      <h3 className="mb-4 font-handwritten text-brand text-3xl">
+    <div className="mt-8 text-center">
+      <h3 className="mb-4 font-handwritten text-3xl text-brand">
         … and the basics
       </h3>
-      <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 text-left">
+      <ul className="grid grid-cols-2 text-left sm:grid-cols-3 lg:grid-cols-6">
         {commonData.map(renderCommonCard)}
       </ul>
     </div>
@@ -60,7 +60,7 @@ export function BasicPlugins() {
     icon,
   }: typeof commonData[0]) {
     return (
-      <li key={title} className="p-3 m-2 rounded-md shadow-menu">
+      <li key={title} className="m-2 rounded-md p-3 shadow-menu">
         <FaIcon icon={icon} className="" /> <b className=" text-xl ">{title}</b>
         <br />
         {description}{' '}

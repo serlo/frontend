@@ -45,7 +45,7 @@ export function Recovery() {
   }
   if (!flow) return null
   return (
-    <div className="max-w-[30rem] mx-auto">
+    <div className="mx-auto max-w-[30rem]">
       <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
       <p className="serlo-p mb-10 -mt-4 special-hyphens-initial">
         {replacePlaceholders(strings.auth.recoveryInstructions, {

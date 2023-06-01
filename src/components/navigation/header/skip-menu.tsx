@@ -1,7 +1,6 @@
-import clsx from 'clsx'
-
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { tw } from '@/helper/tw'
 
 export function SkipMenu() {
   const { strings } = useInstanceData()
@@ -9,10 +8,10 @@ export function SkipMenu() {
 
   return (
     <div
-      className={clsx(
-        'sr-only focus-within:not-sr-only focus-within:absolute',
-        'left-side top-side bg-yellow rounded-md focus-within:p-side'
-      )}
+      className={tw`
+        sr-only left-side top-side rounded-md bg-yellow
+        focus-within:not-sr-only focus-within:absolute focus-within:p-side
+      `}
     >
       {replacePlaceholders(skipStrings.sentence, {
         content: (

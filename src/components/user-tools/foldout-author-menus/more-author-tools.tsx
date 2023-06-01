@@ -55,7 +55,7 @@ export function MoreAuthorTools({
       </Trigger>
 
       <Content>
-        <List className="absolute w-56 z-50 pt-2 right-0 lg:mr-44 lg:bottom-0">
+        <List className="absolute right-0 z-50 w-56 pt-2 lg:bottom-0 lg:mr-44">
           <div className="serlo-sub-list-hover">
             <AuthorTools
               entityId={data.id}

@@ -78,7 +78,7 @@ export function Verification() {
   }
 
   return (
-    <div className="max-w-[30rem] mx-auto">
+    <div className="mx-auto max-w-[30rem]">
       <PageTitle headTitle title={`${verifyStrings.title} ✅`} extraBold />
 
       {auth ? (
