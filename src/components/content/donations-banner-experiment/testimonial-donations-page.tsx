@@ -1,4 +1,5 @@
 import { Lazy } from '../lazy'
+import { tw } from '@/helper/tw'
 
 const banner = {
   id: 'banner-testimonial-Maria_F',
@@ -25,7 +26,7 @@ export function TestimonialDonationsPage() {
   return (
     <Lazy>
       <aside
-        className={`
+        className={tw`
           relative z-10 my-16 mt-20 mt-24 
           overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
           bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 

@@ -6,6 +6,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 
 // Round 2
 // 3% unter einer Lösung
@@ -84,7 +85,7 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        className={`
+        className={tw`
             bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat
             px-side pb-5 text-center text-lg
             sm:mx-0 sm:flex sm:justify-between sm:px-0 sm:text-left

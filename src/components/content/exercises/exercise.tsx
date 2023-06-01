@@ -16,6 +16,7 @@ import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-autho
 import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseInlineType } from '@/data-types'
 import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
+import { tw } from '@/helper/tw'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -153,7 +154,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <button
         className={clsx(
-          `
+          tw`
             serlo-button-blue-transparent ml-side
             mr-auto mb-4 pr-2 text-base
           `,

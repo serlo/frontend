@@ -11,6 +11,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { isMac } from '@/helper/client-detection'
+import { tw } from '@/helper/tw'
 
 interface CommentFormProps {
   onSend: (
@@ -62,7 +63,7 @@ export function CommentForm({
     <div
       className={clsx(
         !isEditing && 'bg-brandgreen-50',
-        `
+        tw`
           mx-side mt-4 mb-7 flex items-center rounded-2xl
           border-2 border-brandgreen-50 py-1 transition-colors duration-200
           ease-in focus-within:border-brandgreen-muted
@@ -83,7 +84,7 @@ export function CommentForm({
         placeholder={placeholder}
         minRows={1}
         className={clsx(
-          `
+          tw`
             serlo-input-font-reset w-full resize-none border-0 bg-transparent
             text-lg text-black placeholder-brandgreen focus:!outline-none
           `,

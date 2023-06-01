@@ -1,13 +1,14 @@
 import { Separator } from './separator'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
+import { tw } from '@/helper/tw'
 
 export function FooterNavNew() {
   const { headerData, footerData } = useInstanceData()
 
   return (
     <nav
-      className={`
+      className={tw`
         flex-wrap justify-center text-center mobile:flex
         mobile:text-left md:justify-between
       `}
@@ -47,7 +48,7 @@ export function FooterNavNew() {
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link
-              className={`
+              className={tw`
                 mb-2 inline-block w-auto border-b-2 border-transparent
                 text-almost-black hover:border-brand hover:text-brand hover:no-underline
               `}

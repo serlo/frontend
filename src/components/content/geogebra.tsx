@@ -1,4 +1,5 @@
 import { PrivacyWrapper } from './privacy-wrapper'
+import { tw } from '@/helper/tw'
 import { ExternalProvider } from '@/helper/use-consent'
 
 export interface GeogebraProps {
@@ -18,7 +19,7 @@ export function Geogebra({ id }: GeogebraProps) {
       >
         <div className="block h-0 overflow-hidden p-0">
           <iframe
-            className={`
+            className={tw`
               absolute top-0 left-0 z-10 h-full
               w-full border-none bg-black bg-opacity-30
             `}

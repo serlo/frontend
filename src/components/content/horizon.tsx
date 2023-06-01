@@ -1,7 +1,6 @@
-import clsx from 'clsx'
-
 import { Link } from './link'
 import { HorizonData } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 export interface HorizonProps {
   data: HorizonData
@@ -11,7 +10,7 @@ export function Horizon({ data }: HorizonProps) {
   return (
     <aside
       id="horizon"
-      className={`
+      className={tw`
         -ml-2.5 px-side pt-8 pb-6
         sm:flex sm:items-stretch sm:justify-between
       `}
@@ -19,13 +18,12 @@ export function Horizon({ data }: HorizonProps) {
       {data.map((horizonEntry, index) => {
         return (
           <button
-            className={clsx(
-              'box-border',
-              'py-4 px-2.5',
-              'rounded hover:shadow-menu',
-              'mb-8 hidden w-full sm:mb-0 sm:block sm:w-1/3',
-              'max-w-screen-mobile first:block sm:mr-6'
-            )}
+            className={tw`
+              mb-8 box-border hidden
+              w-full max-w-screen-mobile
+              rounded py-4 px-2.5 first:block hover:shadow-menu
+              sm:mb-0 sm:mr-6 sm:block sm:w-1/3
+            `}
             tabIndex={-1}
             key={index}
           >

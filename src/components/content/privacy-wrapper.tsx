@@ -6,6 +6,7 @@ import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
@@ -71,7 +72,7 @@ export function PrivacyWrapper({
       className={clsx(
         className,
         !isTwingle && 'mx-side',
-        `
+        tw`
           group relative mb-block block
           cursor-pointer bg-cover bg-center
         `

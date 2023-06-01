@@ -20,6 +20,7 @@ import { FrontendContentNode } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { tw } from '@/helper/tw'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -78,7 +79,7 @@ export function Entity({ data }: EntityProps) {
     if (!data.courseData) return null
     return (
       <span
-        className={`
+        className={tw`
           mr-1.5 -mt-1.5 inline-block h-7 w-7
           justify-center rounded-full bg-brand-200 text-center align-middle
           text-xl font-bold text-brand

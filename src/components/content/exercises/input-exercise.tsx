@@ -7,6 +7,7 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
+import { tw } from '@/helper/tw'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
@@ -56,7 +57,7 @@ export function InputExercise({
   return (
     <div className="mx-side mb-7">
       <input
-        className={`
+        className={tw`
             serlo-input-font-reset mb-5
             rounded-3xl border-3 border-brand-400 py-2
             px-3 font-bold text-brand placeholder-brand focus:border-brand focus:bg-white

@@ -10,6 +10,7 @@ import { EntityData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 
 // Round 2
 // 10% Artikel & Aufgabensammlung
@@ -250,7 +251,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        className={`
+        className={tw`
             relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
             bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
             py-6 px-side text-center
