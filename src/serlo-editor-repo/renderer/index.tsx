@@ -1,3 +1,5 @@
+// Used in https://github.com/serlo/serlo-editor-for-edusharing
+
 import { useEffect } from 'react'
 import { Provider } from 'react-redux'
 
