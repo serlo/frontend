@@ -6,16 +6,9 @@
 
 */
 
-export function tw(template: TemplateStringsArray, ...templateElements: any[]) {
+export function tw(template: TemplateStringsArray) {
   return template
-    .reduce((sum, n, index) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const templateElement = templateElements[index]
-      if (typeof templateElement === 'string') {
-        return `${sum}${n}${templateElement}`
-      }
-      return `${sum}${n}`
-    }, '')
+    .join(' ')
     .trim()
     .replace(/\s{2,}/g, ' ')
 }
