@@ -28,6 +28,7 @@ import { KeyboardEvent } from 'react'
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [
@@ -256,7 +257,7 @@ function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <>
-        <nav className={clsx('absolute -ml-10 -mt-2 flex flex-col')}>
+        <nav className="absolute -ml-10 -mt-2 flex flex-col">
           {showRowButtons ? (
             <>
               {renderInlineAddButton(true)}
@@ -264,7 +265,7 @@ function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className={clsx('absolute -mt-12')}>
+        <nav className="absolute -mt-12">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -324,7 +325,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function getButtonStyle() {
-    return clsx('serlo-button-blue-transparent text-brand-400')
+    return tw`serlo-button-blue-transparent text-brand-400`
   }
 
   function insertRow(beforeIndex?: number) {

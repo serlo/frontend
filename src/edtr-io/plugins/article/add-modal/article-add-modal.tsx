@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { ArticleProps } from '..'
@@ -87,7 +86,6 @@ export function ArticleAddModal({
     <ModalWithCloseButton
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
-      className={clsx()}
     >
       <h3 className="serlo-h3 mt-5 mb-4">{articleStrings.addModal.title}</h3>
       <div className="mx-side">

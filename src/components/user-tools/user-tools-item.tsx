@@ -1,8 +1,8 @@
 import { Item, Link } from '@radix-ui/react-navigation-menu'
-import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 
 import { FaIcon, FaIconProps } from '../fa-icon'
+import { tw } from '@/helper/tw'
 
 export interface UserToolsItemProps {
   title: string
@@ -12,15 +12,9 @@ export interface UserToolsItemProps {
   aboveContent?: boolean
 }
 
-const aboveClasses = clsx(
-  'serlo-button-green',
-  'text-sm m-0.5 ml-1 leading-browser'
-)
+const aboveClasses = tw`serlo-button-green m-0.5 ml-1 text-sm leading-browser`
 
-const belowClasses = clsx(
-  'serlo-button-green-transparent',
-  'py-1 m-1 text-base leading-browser'
-)
+const belowClasses = tw`serlo-button-green-transparent m-1 py-1 text-base leading-browser`
 
 export function UserToolsItem({
   title,

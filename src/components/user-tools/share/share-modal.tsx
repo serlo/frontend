@@ -9,7 +9,6 @@ import {
   faDownload,
   faEnvelope,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import QRCode from 'qrcode.react'
 import { MouseEvent, useRef, useContext } from 'react'
 
@@ -20,6 +19,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { colors } from '@/helper/colors'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 
 export interface ShareModalProps {
   isOpen: boolean
@@ -155,11 +155,11 @@ export function ShareModal({
     return (
       <>
         <input /*ShareInput*/
-          className={clsx(
-            'w-[250px] rounded-2xl border-none py-1 px-2.5',
-            'ml-3 mb-2 mr-0 bg-brandgreen-50',
-            'focus:shadow-input focus:outline-none'
-          )}
+          className={tw`
+            ml-3 mb-2 mr-0 w-[250px] rounded-2xl
+            border-none bg-brandgreen-50 py-1 px-2.5
+            focus:shadow-input focus:outline-none
+          `}
           ref={shareInputRef}
           onFocus={(e) => e.target.select()}
           defaultValue={shareUrl}
@@ -198,8 +198,8 @@ export function ShareModal({
   }
 }
 
-const shareButton = /* className={ */ clsx(
-  'serlo-button-green-transparent',
-  'mx-side block mt-1.5 text-base py-0.5',
-  'sm:ml-3 sm:mr-0 sm:inline sm:mt-0'
-) /* } */
+const shareButton = tw`
+  serlo-button-green-transparent
+  mx-side mt-1.5 block py-0.5 text-base
+  sm:ml-3 sm:mr-0 sm:mt-0 sm:inline
+`

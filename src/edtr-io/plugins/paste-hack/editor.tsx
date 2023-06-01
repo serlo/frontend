@@ -6,13 +6,13 @@ import {
   removePluginChild,
   useAppDispatch,
 } from '@edtr-io/store'
-import clsx from 'clsx'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
 
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 
 const StateDecoder = t.strict({
   plugin: t.literal('rows'),
@@ -111,10 +111,11 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
         </p>
         <textarea
           ref={textareaRef}
-          className={clsx(
-            'mt-1 mb-7 flex w-full items-center rounded-2xl p-2',
-            'border-2 border-editor-primary-100 bg-editor-primary-100 focus-within:border-editor-primary focus-within:outline-none'
-          )}
+          className={tw`
+            mt-1 mb-7 flex w-full items-center rounded-2xl
+            border-2 border-editor-primary-100 bg-editor-primary-100
+            p-2 focus-within:border-editor-primary focus-within:outline-none
+          `}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}
         />

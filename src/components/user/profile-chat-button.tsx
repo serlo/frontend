@@ -10,6 +10,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 import { useCreateThreadMutation } from '@/mutations/thread'
 
 interface ProfileChatButtonProps {
@@ -110,11 +111,11 @@ export function ProfileChatButton({
           {replacePlaceholders(part2, { username })}
         </p>
         <div
-          className={clsx(
-            'mx-side mt-4 mb-7 flex items-center rounded-2xl',
-            'bg-brandgreen-50 focus-within:bg-brandgreen-100',
-            'py-1 transition-colors duration-200 ease-in'
-          )}
+          className={tw`
+            mx-side mt-4 mb-7 flex items-center rounded-2xl
+            bg-brandgreen-50 py-1
+            transition-colors duration-200 ease-in focus-within:bg-brandgreen-100
+          `}
         >
           <TextareaAutosize
             value={message}

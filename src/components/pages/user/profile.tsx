@@ -1,5 +1,4 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 
@@ -126,10 +125,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {isOwnProfile && !isNewlyRegisteredUser && (
           <Link
             href="/user/settings#image"
-            className={clsx(
-              'serlo-button-green',
-              'absolute right-1 bottom-1 block h-8 w-8'
-            )}
+            className="serlo-button-green absolute right-1 bottom-1 block h-8 w-8"
           >
             <FaIcon icon={faPencilAlt} />
           </Link>

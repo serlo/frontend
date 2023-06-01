@@ -1,6 +1,7 @@
 import { StateTypeReturnType, string } from '@edtr-io/plugin'
-import clsx from 'clsx'
 import { PropsWithChildren } from 'react'
+
+import { tw } from '@/helper/tw'
 
 export function Settings(props: PropsWithChildren<{}>) {
   return <>{props.children}</>
@@ -22,10 +23,11 @@ Settings.Textarea = function SettingsTextarea({
           const { value } = e.target as HTMLTextAreaElement
           state.set(value)
         }}
-        className={clsx(
-          'mt-1 mb-7 flex w-full items-center rounded-2xl p-2',
-          'border-2 border-editor-primary-100 bg-editor-primary-100 focus-within:border-editor-primary focus-within:outline-none'
-        )}
+        className={tw`
+          mt-1 mb-7 flex w-full items-center rounded-2xl border-2
+          border-editor-primary-100 bg-editor-primary-100 p-2
+          focus-within:border-editor-primary focus-within:outline-none
+        `}
       />
     </label>
   )

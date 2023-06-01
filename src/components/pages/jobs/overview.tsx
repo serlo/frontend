@@ -162,11 +162,11 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           <aside className="w-full">
             <img
               src="/_assets/img/jobs/jobs-header.jpg"
-              className={clsx(
-                'mx-side aspect-square rounded-full object-cover object-left',
-                'mx-auto w-[90vw] max-w-[28rem]',
-                'sm:mx-0 sm:ml-auto sm:h-[28rem] sm:w-[28rem]'
-              )}
+              className={tw`
+                mx-side mx-auto aspect-square w-[90vw] max-w-[28rem]
+                rounded-full object-cover object-left
+                sm:mx-0 sm:ml-auto sm:h-[28rem] sm:w-[28rem]
+              `}
             />
           </aside>
         </section>
