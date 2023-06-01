@@ -153,8 +153,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <button
         className={clsx(
-          'serlo-button-blue-transparent text-base',
-          'ml-side mr-auto mb-4 pr-2',
+          `
+            serlo-button-blue-transparent ml-side
+            mr-auto mb-4 pr-2 text-base
+          `,
           solutionVisible && 'bg-brand text-white'
         )}
         onClick={() => {

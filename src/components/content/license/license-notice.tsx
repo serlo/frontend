@@ -1,6 +1,5 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 
 import { Link } from '../link'
@@ -38,10 +37,10 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   function renderFullNotice() {
     return (
       <div
-        className={clsx(
-          'border-t-2 border-brand-200 text-sm text-almost-black',
-          'my-10 px-side py-2.5 mobile:flex'
-        )}
+        className={`
+          my-10 border-t-2 border-brand-200 px-side
+          py-2.5 text-sm text-almost-black mobile:flex
+        `}
       >
         <LicenseIcons title={title} isDefault={isDefault} />
         <br />

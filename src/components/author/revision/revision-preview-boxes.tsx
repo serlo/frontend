@@ -124,8 +124,7 @@ export function RevisionPreviewBoxes({
               data.typename === UuidRevType.GroupedExercise) &&
               '!py-2',
             withPadding && 'p-side',
-            'rounded-2xl border border-brand-400 py-7 text-lg',
-            'fixH1'
+            'fixH1 rounded-2xl border border-brand-400 py-7 text-lg'
           )}
         >
           {notDiff ? (

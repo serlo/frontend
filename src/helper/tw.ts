@@ -1,5 +1,5 @@
 // use this tagged template literal to enable formatting outside of className
-// works in vs code with this config:
+// auto-complete works in vs code with this config:
 /*
 
 "tailwindCSS.experimental.classRegex": ["tw`([^`]*)"]

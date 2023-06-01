@@ -3,7 +3,6 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -79,11 +78,11 @@ export function Entity({ data }: EntityProps) {
     if (!data.courseData) return null
     return (
       <span
-        className={clsx(
-          'bg-brand-200 text-center text-xl font-bold text-brand',
-          'inline-block h-7 w-7 justify-center align-middle',
-          'mr-1.5 -mt-1.5 rounded-full'
-        )}
+        className={`
+          mr-1.5 -mt-1.5 inline-block h-7 w-7
+          justify-center rounded-full bg-brand-200 text-center align-middle
+          text-xl font-bold text-brand
+        `}
       >
         {data.courseData.index + 1}
       </span>

@@ -65,8 +65,7 @@ export function RevisionModeSwitcher({
       <button
         onClick={() => setDisplayMode(mode)}
         className={clsx(
-          'serlo-button-blue-transparent',
-          'ml-1',
+          'serlo-button-blue-transparent ml-1',
           displayMode === mode && 'bg-brand text-white'
         )}
       >

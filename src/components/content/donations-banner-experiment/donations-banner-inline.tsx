@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
@@ -85,12 +84,12 @@ export function DonationsBannerInline({ id, place }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        className={clsx(
-          'px-side pb-5 text-center text-lg',
-          'bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat',
-          'sm:mx-0 sm:flex sm:justify-between sm:px-0 sm:text-left',
-          'lg:my-4 lg:py-4 lg:text-xl'
-        )}
+        className={`
+            bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat
+            px-side pb-5 text-center text-lg
+            sm:mx-0 sm:flex sm:justify-between sm:px-0 sm:text-left
+            lg:my-4 lg:py-4 lg:text-xl
+          `}
       >
         <img
           onLoad={() => {

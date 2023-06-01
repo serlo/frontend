@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { Separator } from './separator'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -9,10 +7,10 @@ export function FooterNavNew() {
 
   return (
     <nav
-      className={clsx(
-        'flex-wrap text-center mobile:flex mobile:text-left',
-        'justify-center md:justify-between'
-      )}
+      className={`
+        flex-wrap justify-center text-center mobile:flex
+        mobile:text-left md:justify-between
+      `}
     >
       <div className="text-center md:mr-5 md:text-left">
         <h1 className="-mt-2 mb-10 font-handwritten text-4xl">
@@ -49,10 +47,10 @@ export function FooterNavNew() {
         {items.map(({ url, title }) => (
           <li key={url}>
             <Link
-              className={clsx(
-                'mb-2 w-auto border-b-2 border-transparent text-almost-black',
-                'inline-block hover:border-brand hover:text-brand hover:no-underline'
-              )}
+              className={`
+                mb-2 inline-block w-auto border-b-2 border-transparent
+                text-almost-black hover:border-brand hover:text-brand hover:no-underline
+              `}
               href={url}
               noExternalIcon
             >

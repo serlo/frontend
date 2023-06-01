@@ -71,8 +71,10 @@ export function PrivacyWrapper({
       className={clsx(
         className,
         !isTwingle && 'mx-side',
-        'relative mb-block block cursor-pointer',
-        'group bg-cover bg-center'
+        `
+          group relative mb-block block
+          cursor-pointer bg-cover bg-center
+        `
       )}
     >
       {renderPlaceholder()}

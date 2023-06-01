@@ -118,7 +118,7 @@ export function Node({
             disabled={attributes.disabled || disabled}
           >
             {isLoading ? (
-              <FaIcon icon={faSpinner} className={clsx('animate-spin-slow')} />
+              <FaIcon icon={faSpinner} className="animate-spin-slow" />
             ) : (
               (label as string)
             )}

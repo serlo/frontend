@@ -11,10 +11,10 @@ export function Horizon({ data }: HorizonProps) {
   return (
     <aside
       id="horizon"
-      className={clsx(
-        'sm:flex sm:items-stretch sm:justify-between',
-        '-ml-2.5 px-side pt-8 pb-6'
-      )}
+      className={`
+        -ml-2.5 px-side pt-8 pb-6
+        sm:flex sm:items-stretch sm:justify-between
+      `}
     >
       {data.map((horizonEntry, index) => {
         return (

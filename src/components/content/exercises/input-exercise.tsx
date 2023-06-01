@@ -56,13 +56,13 @@ export function InputExercise({
   return (
     <div className="mx-side mb-7">
       <input
-        className={clsx(
-          'serlo-input-font-reset print:hidden',
-          'rounded-3xl py-2 px-3 font-bold',
-          'mb-5 border-3 border-brand-400 text-brand focus:border-brand active:border-brand',
-          'focus:bg-white focus:text-brand focus:placeholder-opacity-0 focus:opacity-100 focus:outline-none',
-          'placeholder-brand'
-        )}
+        className={`
+            serlo-input-font-reset mb-5
+            rounded-3xl border-3 border-brand-400 py-2
+            px-3 font-bold text-brand placeholder-brand focus:border-brand focus:bg-white
+            focus:text-brand focus:placeholder-opacity-0 focus:opacity-100 focus:outline-none
+            active:border-brand print:hidden
+          `}
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -80,8 +80,7 @@ export function InputExercise({
         <>
           <a
             className={clsx(
-              'serlo-button-blue',
-              'mt-4',
+              'serlo-button-blue mt-4',
               value === '' && 'pointer-events-none opacity-0'
             )}
             onClick={evaluate}

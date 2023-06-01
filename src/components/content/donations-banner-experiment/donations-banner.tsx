@@ -250,13 +250,13 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
     <Lazy slim>
       <aside
         ref={bannerRef}
-        className={clsx(
-          'relative w-[100vw] overflow-x-hidden py-6 px-side text-center text-xl',
-          'bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat',
-          'sm:-mx-2 sm:flex sm:justify-between sm:px-0 sm:text-left',
-          'sm:max-w-[100vw] lg:my-16 lg:py-10 lg:text-2xl',
-          'bg-[url("/_assets/img/landing/about-container.svg")]'
-        )}
+        className={`
+            relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
+            bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
+            py-6 px-side text-center
+            text-xl sm:-mx-2 sm:flex sm:max-w-[100vw] sm:justify-between
+            sm:px-0 sm:text-left lg:my-16 lg:py-10 lg:text-2xl
+          `}
       >
         {renderHideButton()}
         <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">

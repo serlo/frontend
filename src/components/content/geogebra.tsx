@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { PrivacyWrapper } from './privacy-wrapper'
 import { ExternalProvider } from '@/helper/use-consent'
 
@@ -20,10 +18,10 @@ export function Geogebra({ id }: GeogebraProps) {
       >
         <div className="block h-0 overflow-hidden p-0">
           <iframe
-            className={clsx(
-              'absolute top-0 left-0 z-10 w-full',
-              'h-full border-none bg-black bg-opacity-30'
-            )}
+            className={`
+              absolute top-0 left-0 z-10 h-full
+              w-full border-none bg-black bg-opacity-30
+            `}
             title={appletId}
             scrolling="no"
             src={url}

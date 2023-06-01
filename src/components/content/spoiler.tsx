@@ -16,9 +16,11 @@ export function Spoiler({ body, title }: SpoilerProps) {
       <button
         onClick={() => setOpen(!open)}
         className={clsx(
-          'serlo-input-font-reset text-left text-lg leading-normal',
-          'rounded-xl border-none bg-brand-100 text-almost-black',
-          'z-10 m-0 py-2.5 px-side transition-colors',
+          `
+            serlo-input-font-reset z-10 m-0 rounded-xl
+            border-none bg-brand-100 py-2.5 px-side
+            text-left text-lg leading-normal text-almost-black transition-colors
+          `,
           open && 'rounded-bl-none bg-brand text-white'
         )}
       >

@@ -1,6 +1,5 @@
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { Instance, Props } from 'tippy.js'
 
@@ -43,11 +42,11 @@ export function MetaBar({
       <UserLink
         user={user}
         withIcon
-        className={clsx(
-          'serlo-button text-lg font-bold text-brand',
-          '-ml-1 flex items-center pl-1 hover:no-underline',
-          'hover:bg-brand-200 hover:text-brand'
-        )}
+        className={`
+          serlo-button -ml-1 flex items-center
+          pl-1 text-lg font-bold text-brand 
+          hover:bg-brand-200 hover:text-brand hover:no-underline
+        `}
       />
       {isEditing ? null : (
         <Tippy
@@ -73,7 +72,7 @@ export function MetaBar({
           }
         >
           <div className="cursor-pointer">
-            <span className={clsx('text-base text-brand-500')}>
+            <span className="text-base text-brand-500">
               <TimeAgo datetime={date} />
             </span>
             <button

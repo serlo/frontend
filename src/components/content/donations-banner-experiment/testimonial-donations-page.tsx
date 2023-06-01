@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { Lazy } from '../lazy'
 
 const banner = {
@@ -27,21 +25,18 @@ export function TestimonialDonationsPage() {
   return (
     <Lazy>
       <aside
-        className={clsx(
-          'relative z-10 mt-20',
-          'overflow-x-hidden pb-12 pt-6 text-center text-2xl',
-          'bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat',
-          'sm:flex sm:justify-between sm:px-0 sm:text-left',
-          'my-16 mt-24 pb-14',
-          'bg-[url("/_assets/img/landing/about-container.svg")]'
-        )}
+        className={`
+          relative z-10 my-16 mt-20 mt-24 
+          overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
+          bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
+          pb-12 pt-6 pb-14 text-center text-2xl
+          sm:flex sm:justify-between sm:px-0 sm:text-left
+        `}
       >
         <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
           <img
             src={banner.imageSrc}
-            className={clsx(
-              'mx-auto max-w-[12rem] rounded-full sm:mt-2 sm:p-3'
-            )}
+            className="mx-auto max-w-[12rem] rounded-full sm:mt-2 sm:p-3"
           />
           <p className="mt-1 text-base font-bold text-gray-700">
             @{banner.username}

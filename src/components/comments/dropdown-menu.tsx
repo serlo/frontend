@@ -5,7 +5,6 @@ import {
   faPencil,
 } from '@fortawesome/free-solid-svg-icons'
 import { Thread } from '@serlo/authorization'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import { useCanDo } from '@/auth/use-can-do'
@@ -151,10 +150,9 @@ export function DropdownMenu({
   function buildButton(onClick: () => void, children: JSX.Element) {
     return (
       <button
-        className={clsx(
-          'serlo-button-blue-transparent',
-          'mb-1 text-base font-normal leading-browser'
-        )}
+        className={`
+          serlo-button-blue-transparent mb-1 text-base font-normal leading-browser
+        `}
         onClick={onClick}
       >
         {children}

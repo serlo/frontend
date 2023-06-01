@@ -92,11 +92,10 @@ export function Comment({
         'transition-colors duration-700 ease-out',
         isParent
           ? 'rounded-2xl'
-          : clsx(
-              'border-l-6 border-brand-200',
-              'mt-8 mb-5 ml-4 pt-1 pb-0.5 pl-1',
-              'rounded-r-2xl'
-            )
+          : `
+            mt-8 mb-5 ml-4 rounded-r-2xl border-l-6 border-brand-200 
+            pt-1 pb-0.5 pl-1
+          `
       )}
     >
       <MetaBar

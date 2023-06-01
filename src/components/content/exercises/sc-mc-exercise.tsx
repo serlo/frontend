@@ -106,8 +106,7 @@ export function ScMcExercise({
 
         <button
           className={clsx(
-            'serlo-button-blue',
-            'mt-4',
+            'serlo-button-blue mt-4',
             selected === undefined &&
               'pointer-events-none bg-transparent text-gray-400 opacity-100'
           )}

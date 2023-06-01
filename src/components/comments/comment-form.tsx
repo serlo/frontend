@@ -61,10 +61,12 @@ export function CommentForm({
   return (
     <div
       className={clsx(
-        'mx-side mt-4 mb-7 flex items-center rounded-2xl',
         !isEditing && 'bg-brandgreen-50',
-        'border-2 border-brandgreen-50 focus-within:border-brandgreen-muted',
-        'py-1 transition-colors duration-200 ease-in'
+        `
+          mx-side mt-4 mb-7 flex items-center rounded-2xl
+          border-2 border-brandgreen-50 py-1 transition-colors duration-200
+          ease-in focus-within:border-brandgreen-muted
+        `
       )}
     >
       <label htmlFor={formId} className="sr-only">
@@ -81,10 +83,11 @@ export function CommentForm({
         placeholder={placeholder}
         minRows={1}
         className={clsx(
-          'serlo-input-font-reset w-full text-lg',
-          'resize-none border-0 bg-transparent text-black focus:!outline-none',
-          reply ? 'pr-14 pl-4' : 'pr-14 pl-4',
-          'placeholder-brandgreen'
+          `
+            serlo-input-font-reset w-full resize-none border-0 bg-transparent
+            text-lg text-black placeholder-brandgreen focus:!outline-none
+          `,
+          reply ? 'pr-14 pl-4' : 'pr-14 pl-4'
         )}
       />
       {renderButton()}
