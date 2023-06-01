@@ -9,27 +9,27 @@ export const MetadataApiPresentation = () => {
     <>
       <div
         className={clsx(
-          'md:left-[calc(-50vw+50%)] md:relative',
-          'md:text-left md:ml-0',
+          'md:relative md:left-[calc(-50vw+50%)]',
+          'md:ml-0 md:text-left',
           '-mt-12 sm:text-center',
           'text-gray-700'
         )}
       >
-        <section className="font-bold text-center mt-32 px-4">
+        <section className="mt-32 px-4 text-center font-bold">
           <h1
             className={clsx(
               'text-5xl font-extrabold',
-              'tracking-tight leading-tight',
-              'mt-3 mx-auto'
+              'leading-tight tracking-tight',
+              'mx-auto mt-3'
             )}
           >
             <span className="serlo-underlined !pr-0 pb-2">Metadata API</span>
           </h1>
         </section>
-        <section className="text-left mt-16 mb-16 px-4 mx-auto max-w-5xl">
+        <section className="mx-auto mt-16 mb-16 max-w-5xl px-4 text-left">
           <div className="sm:flex sm:justify-between sm:space-x-4">
-            <div className="sm:flex-1 text-xl leading-cozy sm:max-w-[31rem] sm:flex sm:flex-col pr-2">
-              <h2 className="text-gray-700 text-[1.3rem] font-extrabold tracking-tight">
+            <div className="pr-2 text-xl leading-cozy sm:flex sm:max-w-[31rem] sm:flex-1 sm:flex-col">
+              <h2 className="text-[1.3rem] font-extrabold tracking-tight text-gray-700">
                 <br />
                 Spice up your learning apps with our Digital Learning Resources
               </h2>
@@ -44,7 +44,7 @@ export const MetadataApiPresentation = () => {
               </p>
               <CallToAction />
             </div>
-            <div className="sm:flex-1 mt-8 -mx-side sm:max-w-[32rem] rounded-lg overflow-hidden px-4">
+            <div className="-mx-side mt-8 overflow-hidden rounded-lg px-4 sm:max-w-[32rem] sm:flex-1">
               <img
                 src="/_assets/img/metadata/metadata.png"
                 alt="A bird flying over a stack of documents"
@@ -52,30 +52,30 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-        <section className="bg-orangeBow bg-100% px-2 mt-0 pt-16 pb-16 mb-20">
-          <div className="mt-2 sm:flex text-center text-xl max-w-4xl mx-auto px-4">
-            <div className="flex-1 mx-4 pt-4 pb-4">
-              <b className="text-brand font-handwritten text-4xl">20,000+</b>
+        <section className="mt-0 mb-20 bg-orangeBow bg-100% px-2 pt-16 pb-16">
+          <div className="mx-auto mt-2 max-w-4xl px-4 text-center text-xl sm:flex">
+            <div className="mx-4 flex-1 pt-4 pb-4">
+              <b className="font-handwritten text-4xl text-brand">20,000+</b>
               <br />
               Educational resources have been created with the{' '}
               <Link href="https://serlo.org/editor">Serlo Editor</Link>
             </div>
-            <div className="flex-1 mx-4 pt-4 pb-4">
-              <b className="text-brand font-handwritten text-4xl">1 Mio+</b>
+            <div className="mx-4 flex-1 pt-4 pb-4">
+              <b className="font-handwritten text-4xl text-brand">1 Mio+</b>
               <br />
               Users per month are already learning with the materials
             </div>
           </div>
         </section>
         <section className="mt-24 pb-16">
-          <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto"></div>
+          <div className="mx-auto max-w-4xl text-center text-3xl leading-cozy"></div>
 
-          <div className="mt-12 text-3xl leading-cozy max-w-4xl text-center mx-auto">
-            <h2 className="text-center text-4xl leading-cozy tracking-tight font-extrabold mb-4">
+          <div className="mx-auto mt-12 max-w-4xl text-center text-3xl leading-cozy">
+            <h2 className="mb-4 text-center text-4xl font-extrabold leading-cozy tracking-tight">
               Develop with the Serlo Metadata API
             </h2>
-            <div className="text-left mx-side">
-              <p className="mt-4 text-xl leading-cozy flex-1">
+            <div className="mx-side text-left">
+              <p className="mt-4 flex-1 text-xl leading-cozy">
                 Join our growing community by linking to our content through the
                 Serlo Metadata API from your apps/website and change the future
                 of education with us!
@@ -113,7 +113,7 @@ export const MetadataApiPresentation = () => {
         </section>
 
         <section className="mt-8 mb-32">
-          <p className="text-xl leading-cozy flex-1 text-center">
+          <p className="flex-1 text-center text-xl leading-cozy">
             <b className="tracking-tight">
               Are you interested in using our Metadata API?
             </b>
@@ -124,7 +124,7 @@ export const MetadataApiPresentation = () => {
               Wiki
             </Link>
           </p>
-          <div className="text-center mt-8 mb-14">
+          <div className="mt-8 mb-14 text-center">
             <EditorContact contact={teamDataKulla} />
           </div>
         </section>
@@ -142,7 +142,7 @@ function CallToAction({ alignment = 'left' }: CallToActionProps) {
     alignment === 'center' ? 'sm:ml-auto sm:mr-auto' : 'sm:ml-0 sm:mr-0'
   return (
     <a
-      className={`serlo-new-landing-button serlo-button-with-wings mb-12 before:!mt-[-1.1rem] after:!mt-[-1.1rem] transition-colors mt-12 max-w-xs mx-auto ${alignmentClasses}`}
+      className={`serlo-new-landing-button serlo-button-with-wings mx-auto mb-12 mt-12 max-w-xs transition-colors before:!mt-[-1.1rem] after:!mt-[-1.1rem] ${alignmentClasses}`}
       href="https://github.com/serlo/documentation/wiki/Metadata-API"
     >
       Discover developer docs!

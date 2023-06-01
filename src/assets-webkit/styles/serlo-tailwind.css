@@ -469,9 +469,9 @@
   .serlo-button-with-wings {
     &:after,
     &:before {
-      @apply content-['_'] absolute mt-[-0.6rem] -ml-20 w-16 h-16 pointer-events-none;
-      @apply opacity-0 transition-opacity ease-in duration-200;
-      @apply bg-no-repeat bg-[url('/_assets/img/landing/wing-left.svg')];
+      @apply pointer-events-none absolute mt-[-0.6rem] -ml-20 h-16 w-16 content-['_'];
+      @apply opacity-0 transition-opacity duration-200 ease-in;
+      @apply bg-[url('/_assets/img/landing/wing-left.svg')] bg-no-repeat;
     }
     &:after {
       @apply ml-4 -scale-x-100;
@@ -489,7 +489,7 @@
 
     &:before,
     &:after {
-      @apply -mt-8 bg-[length:65%] bg-[url('/_assets/img/landing/wink-left.svg')];
+      @apply -mt-8 bg-[url('/_assets/img/landing/wink-left.svg')] bg-[length:65%];
     }
   }
 
@@ -498,7 +498,7 @@
 
     &:before,
     &:after {
-      @apply mt-[-1rem] bg-[length:75%] w-10 h-10 opacity-100 -ml-2;
+      @apply mt-[-1rem] -ml-2 h-10 w-10 bg-[length:75%] opacity-100;
     }
 
     &:before {
@@ -507,7 +507,7 @@
   }
 
   .serlo-underlined {
-    @apply whitespace-nowrap pr-4 bg-underlined-simple bg-no-repeat bg-bottom;
+    @apply whitespace-nowrap bg-underlined-simple bg-bottom bg-no-repeat pr-4;
   }
 }
 

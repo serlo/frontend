@@ -140,7 +140,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             sm:flex-row-reverse sm:text-left
           `}
         >
-          <div className="w-full px-2 mt-12 sm:mt-32 sm:ml-10">
+          <div className="mt-12 w-full px-2 sm:mt-32 sm:ml-10">
             <p className={clsx(italicClass, 'serlo-add-eyebrows mr-6')}>
               Hey du
             </p>
@@ -258,7 +258,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
               digitale Transformation unserer Schulen ein.
             </p>
             <Link
-              className="serlo-new-landing-button inline serlo-button-with-wings"
+              className="serlo-new-landing-button serlo-button-with-wings inline"
               href="/serlo"
             >
               Mehr über Serlo

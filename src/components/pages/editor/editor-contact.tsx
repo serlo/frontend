@@ -7,13 +7,13 @@ export function EditorContact({ contact }: { contact: TeamDataEntry }) {
     contact
 
   return (
-    <div className="text-left flex text-base justify-center">
+    <div className="flex justify-center text-left text-base">
       <img
-        className="rounded-full max-w-[6rem] mr-4"
+        className="mr-4 max-w-[6rem] rounded-full"
         alt={`${firstName} ${lastName}`}
         src={photo}
       />
-      <div className="h-min self-center -mt-2">
+      <div className="-mt-2 h-min self-center">
         <b>
           {firstName} {lastName}
         </b>
