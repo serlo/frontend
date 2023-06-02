@@ -37,7 +37,7 @@ export function Message({
       {replacePlaceholders(translatedMessage ?? text, {
         verificationLinkText: (
           <Link
-            className="text-brand serlo-link font-bold"
+            className="serlo-link font-bold text-brand"
             href={verificationUrl}
           >
             {strings.auth.verificationLinkText}

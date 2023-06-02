@@ -1,5 +1,5 @@
-import { useScopedStore } from '@edtr-io/core'
-import { isEmptyRows } from '@edtr-io/plugin-rows'
+import { selectIsEmptyRows } from '@edtr-io/plugin-rows'
+import { store } from '@edtr-io/store'
 import clsx from 'clsx'
 import { useState } from 'react'
 
@@ -26,7 +26,6 @@ export function BoxRenderer(props: BoxProps) {
     ? style.colorClass
     : defaultStyle.colorClass
   const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
-  const store = useScopedStore()
   const [contentIsEmpty, setContentIsEmpty] = useState(true)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -34,7 +33,8 @@ export function BoxRenderer(props: BoxProps) {
   const editorStrings = loggedInData.strings.editor
 
   const checkContentEmpty = () => {
-    const isEmptyNow = isEmptyRows(content.get())(store.getState()) ?? true
+    const isEmptyNow =
+      selectIsEmptyRows(store.getState(), content.get()) ?? true
     if (isEmptyNow !== contentIsEmpty) setContentIsEmpty(isEmptyNow)
   }
 
@@ -43,7 +43,7 @@ export function BoxRenderer(props: BoxProps) {
       <figure
         id={anchorId.value}
         className={clsx(
-          'border-3 p-4 pt-2 rounded-xl relative',
+          'relative rounded-xl border-3 p-4 pt-2',
           borderColorClass
         )}
       >
@@ -63,16 +63,16 @@ export function BoxRenderer(props: BoxProps) {
 
   function renderHeader() {
     return (
-      <figcaption className="pt-1 flex text-lg">
+      <figcaption className="flex pt-1 text-lg">
         {isBlank ? null : (
           <div>
-            <span className={colorClass + ' mr-1'}>
+            <span className={colorClass + (props.editable ? ' mr-1' : ' pr-3')}>
               {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
               {strings.content.boxTypes[typedValue]}
             </span>
           </div>
         )}
-        <div className="block -ml-1 max-h-6 min-w-[15rem] font-bold">
+        <div className="-ml-1 block max-h-6 min-w-[15rem] font-bold">
           {title.render({
             config: { placeholder: editorStrings.box.titlePlaceholder },
           })}
@@ -93,7 +93,7 @@ export function BoxRenderer(props: BoxProps) {
     return (
       <>
         <b className="block pb-4">{editorStrings.box.type}</b>
-        <ul className="pb-8 unstyled-list">{renderSettingsLis()}</ul>
+        <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
       </>
     )
   }
@@ -101,7 +101,7 @@ export function BoxRenderer(props: BoxProps) {
   function renderSettings() {
     return props.renderIntoSettings(
       <>
-        <b className="serlo-h4 block mt-6 ml-0 mb-4">
+        <b className="serlo-h4 mt-6 ml-0 mb-4 block">
           {editorStrings.box.type}:
         </b>
         <ul className="pb-8">{renderSettingsLis()}</ul>
@@ -147,7 +147,7 @@ export function BoxRenderer(props: BoxProps) {
 
   function renderWarning() {
     return contentIsEmpty ? (
-      <div className="text-right mt-1">
+      <div className="mt-1 text-right">
         <span className="bg-editor-primary-100 p-0.5 text-sm">
           ⚠️ {editorStrings.box.emptyContentWarning}
         </span>

@@ -10,7 +10,7 @@ export function FooterNew() {
   return (
     <footer
       id="footer"
-      className="px-side lg:px-36 pb-10 font-bold text-almost-black bg-brand-100"
+      className="bg-brand-100 px-side pb-10 font-bold text-almost-black lg:px-36"
     >
       <Separator />
       <FooterNavNew />
@@ -35,7 +35,7 @@ export function FooterNew() {
             return (
               <Fragment key={title}>
                 <Link
-                  className="text-almost-black mobile:whitespace-nowrap pr-4"
+                  className="pr-4 text-almost-black mobile:whitespace-nowrap"
                   href={url}
                   noExternalIcon
                 >

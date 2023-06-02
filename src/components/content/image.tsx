@@ -33,7 +33,7 @@ export function Image({ element, extraInfo, renderNested }: ImageProps) {
     >
       <div style={maxWidth ? { maxWidth: maxWidth } : {}} className="mx-auto">
         {href ? (
-          <Link className="w-full block" href={href} noExternalIcon>
+          <Link className="block w-full" href={href} noExternalIcon>
             {renderImage()}
           </Link>
         ) : (
@@ -60,7 +60,7 @@ export function Image({ element, extraInfo, renderNested }: ImageProps) {
   function renderCaption() {
     if (!caption || !hasVisibleContent(caption)) return null
     return (
-      <figcaption className="italic mt-3">
+      <figcaption className="mt-3 italic">
         {renderNested(caption, 'caption')}
       </figcaption>
     )

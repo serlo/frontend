@@ -39,7 +39,7 @@ export function AuthItems() {
         link={updatedSubData}
         elementAsIcon={
           <img
-            className="rounded-full w-6 h-6 inline"
+            className="inline h-6 w-6 rounded-full"
             src={getAvatarUrl(username)}
             title={`${updatedSubData.title} ${username}`}
           />

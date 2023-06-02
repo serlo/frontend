@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
 import { all, call } from 'redux-saga/effects'
 
 import { documentsSaga } from './documents/saga'

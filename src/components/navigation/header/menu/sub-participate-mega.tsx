@@ -15,7 +15,7 @@ export function SubParticipateMega({
   parent,
 }: SubParticipateMegaProps) {
   return (
-    <div className="bg-white md:serlo-sub-list border-brand-300 border-b-[1.2rem] md:border-b-0 md:!flex md:gap-4 md:justify-between">
+    <div className="border-b-[1.2rem] border-brand-300 bg-white md:serlo-sub-list md:!flex md:justify-between md:gap-4 md:border-b-0">
       {subItems.map((item, index) => {
         return (
           <div key={item.title}>
@@ -49,10 +49,10 @@ export function SubParticipateMega({
       <>
         <img
           src="/_assets/img/community-menu-bird.svg"
-          className="hidden md:block w-[8.1rem] px-side"
+          className="hidden w-[8.1rem] px-side md:block"
         />
         <NextLink legacyBehavior href="/community" passHref>
-          <Link className="ml-4 my-3 serlo-button-green text-base rounded-4xl w-max py-[0.1rem]">
+          <Link className="serlo-button-green my-3 ml-4 w-max rounded-4xl py-[0.1rem] text-base">
             <span>Hier geht&apos;s los!</span>
           </Link>
         </NextLink>

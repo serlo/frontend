@@ -1,8 +1,8 @@
 import { Component, useCallback, useContext } from 'react'
 
 import { PluginProps } from '../../internal__plugin-state'
-import { undo } from '../../store'
-import { ScopeContext, ErrorContext, useScopedDispatch } from '../store'
+import { undo, useAppDispatch } from '../../store'
+import { EditableContext, ErrorContext } from '../contexts'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
 
@@ -12,10 +12,10 @@ import { SubDocumentRenderer } from './renderer'
  * @param props - The {@link SubDocumentProps}
  */
 export const SubDocument = (props: SubDocumentProps) => {
-  const { editable } = useContext(ScopeContext)
-  const dispatch = useScopedDispatch()
+  const editable = useContext(EditableContext)
+  const dispatch = useAppDispatch()
   const undoMemo = useCallback(() => {
-    dispatch(undo())
+    void dispatch(undo())
   }, [dispatch])
 
   const Component = editable ? SubDocumentEditor : SubDocumentRenderer
@@ -47,20 +47,20 @@ export class ErrorBoundary extends Component<{
       this.context(error, errorInfo)
     }
     // eslint-disable-next-line no-console
-    console.log(error, errorInfo)
+    console.error(error, errorInfo)
   }
 
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 my-12 rounded-2xl font-bold bg-orange-200">
+        <div className="my-12 rounded-2xl bg-orange-200 p-4 font-bold">
           Leider ist ein Fehler aufgetreten.
           <button
             onClick={() => {
               this.props.undo()
               this.setState({ hasError: false })
             }}
-            className="serlo-button-blue block mt-3"
+            className="serlo-button-blue mt-3 block"
           >
             Letzte Änderung rückgänging machen
           </button>

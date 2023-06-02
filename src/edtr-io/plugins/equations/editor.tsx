@@ -1,19 +1,17 @@
-import {
-  HotKeys,
-  useScopedSelector,
-  useScopedStore,
-  PreferenceContext,
-  setDefaultPreference,
-} from '@edtr-io/core'
+import { HotKeys, PreferenceContext, setDefaultPreference } from '@edtr-io/core'
 import { AddButton } from '@edtr-io/editor-ui'
 import { MathEditor } from '@edtr-io/math'
 import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
 import {
+  store,
   focus,
   focusNext,
   focusPrevious,
-  getFocused,
-  isEmpty,
+  selectFocused,
+  selectIsDocumentEmpty,
+  useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
 } from '@edtr-io/store'
 import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
@@ -64,8 +62,9 @@ const DragButton = styled.span({
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
-  const store = useScopedStore()
-  const focusedElement = useScopedSelector(getFocused())
+  const dispatch = useAppDispatch()
+  const focusTree = useAppSelector(selectFocusTree)
+  const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
     includes(
@@ -81,16 +80,16 @@ export function EquationsEditor(props: EquationsProps) {
   const gridFocus = useGridFocus({
     rows: state.steps.length,
     columns: 4,
-    focusNext: () => store.dispatch(focusNext()),
-    focusPrevious: () => store.dispatch(focusPrevious()),
+    focusNext: () => dispatch(focusNext(focusTree)),
+    focusPrevious: () => dispatch(focusPrevious(focusTree)),
     transformationTarget,
     onFocusChanged: (state) => {
       if (state === 'firstExplanation') {
-        store.dispatch(focus(props.state.firstExplanation.id))
+        dispatch(focus(props.state.firstExplanation.id))
       } else if (state.column === StepSegment.Explanation) {
-        store.dispatch(focus(props.state.steps[state.row].explanation.id))
+        dispatch(focus(props.state.steps[state.row].explanation.id))
       } else {
-        store.dispatch(focus(props.id))
+        dispatch(focus(props.id))
       }
     },
   })
@@ -101,7 +100,7 @@ export function EquationsEditor(props: EquationsProps) {
         row: 0,
         column: firstColumn(transformationTarget),
       })
-      store.dispatch(focus(props.id))
+      dispatch(focus(props.id))
     }
     //prevents loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -244,7 +243,10 @@ export function EquationsEditor(props: EquationsProps) {
                           {transformationTarget ===
                             TransformationTarget.Equation && <td />}
                           <td />
-                          {!isEmpty(step.explanation.id)(store.getState()) ? (
+                          {!selectIsDocumentEmpty(
+                            store.getState(),
+                            step.explanation.id
+                          ) ? (
                             renderDownArrow()
                           ) : (
                             <td />
@@ -294,7 +296,7 @@ export function EquationsEditor(props: EquationsProps) {
         <tr style={{ height: '30px' }}>
           <td />
           <td />
-          {!isEmpty(state.firstExplanation.id)(store.getState())
+          {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)
             ? renderDownArrow()
             : null}
         </tr>

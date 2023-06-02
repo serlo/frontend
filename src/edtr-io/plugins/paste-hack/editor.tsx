@@ -1,17 +1,18 @@
-import { useScopedStore } from '@edtr-io/core'
 import {
-  getParent,
-  insertChildBefore,
-  serializeDocument,
-  removeChild,
+  store,
+  selectParent,
+  insertPluginChildBefore,
+  selectSerializedDocument,
+  removePluginChild,
+  useAppDispatch,
 } from '@edtr-io/store'
-import clsx from 'clsx'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
 
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { tw } from '@/helper/tw'
 
 const StateDecoder = t.strict({
   plugin: t.literal('rows'),
@@ -42,7 +43,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
-  const store = useScopedStore()
+  const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   function throwError(error?: unknown) {
@@ -64,11 +65,12 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       const content = decoded.right
 
-      const parentPlugin = getParent(props.id)(store.getState())
+      const parentPlugin = selectParent(store.getState(), props.id)
 
       if (
         parentPlugin === null ||
-        serializeDocument(parentPlugin.id)(store.getState())?.plugin !== 'rows'
+        selectSerializedDocument(store.getState(), parentPlugin.id)?.plugin !==
+          'rows'
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'
         showToastNotice(msg)
@@ -78,15 +80,15 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       }
 
       for (const document of content.state) {
-        store.dispatch(
-          insertChildBefore({
+        dispatch(
+          insertPluginChildBefore({
             parent: parentPlugin.id,
             sibling: props.id,
             document,
           })
         )
       }
-      store.dispatch(removeChild({ parent: parentPlugin.id, child: props.id }))
+      dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
     } catch (error) {
       throwError(error)
     }
@@ -97,7 +99,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   function renderDataImport() {
     return (
       <div className="bg-editor-primary-50 p-4">
-        <b className="serlo-h4 block ml-0 mb-4">Experimental Import</b>
+        <b className="serlo-h4 ml-0 mb-4 block">Experimental Import</b>
         <p className="mb-4">
           <a
             href="https://gist.github.com/elbotho/f3e39b0cdaf0cfc8e59e585e2650fb04"
@@ -109,10 +111,11 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
         </p>
         <textarea
           ref={textareaRef}
-          className={clsx(
-            'mt-1 mb-7 flex items-center rounded-2xl w-full p-2',
-            'bg-editor-primary-100 border-2 border-editor-primary-100 focus-within:outline-none focus-within:border-editor-primary'
-          )}
+          className={tw`
+            mt-1 mb-7 flex w-full items-center rounded-2xl
+            border-2 border-editor-primary-100 bg-editor-primary-100
+            p-2 focus-within:border-editor-primary focus-within:outline-none
+          `}
           // make sure editor does not create new plugin on enter etc
           onKeyDown={(e) => e.stopPropagation()}
         />

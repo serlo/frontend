@@ -221,7 +221,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             {renderAboItem(subscribeNotificationsAndMail, true, true)}
           </>
         )}
-        <li className="border-b-[1px] border-brand-200 mb-2 pb-2"></li>
+        <li className="mb-2 border-b-[1px] border-brand-200 pb-2"></li>
       </>
     )
 

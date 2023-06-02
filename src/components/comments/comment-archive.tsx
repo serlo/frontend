@@ -39,7 +39,7 @@ export function CommentArchive({
           })}{' '}
           <span
             className={
-              showArchived ? 'inline-block rotate-180 translate-y-0.5' : ''
+              showArchived ? 'inline-block translate-y-0.5 rotate-180' : ''
             }
           >
             ▾

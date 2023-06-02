@@ -6,6 +6,7 @@ import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
@@ -71,8 +72,10 @@ export function PrivacyWrapper({
       className={clsx(
         className,
         !isTwingle && 'mx-side',
-        'mb-block relative block cursor-pointer',
-        'bg-cover bg-center group'
+        tw`
+          group relative mb-block block
+          cursor-pointer bg-cover bg-center
+        `
       )}
     >
       {renderPlaceholder()}
@@ -95,10 +98,10 @@ export function PrivacyWrapper({
 
     return (
       <div className="text-center">
-        <div className="relative pb-[56.2%] bg-brand-100">
+        <div className="relative bg-brand-100 pb-[56.2%]">
           <img
             className={clsx(
-              'absolute left-0 object-cover w-full h-full',
+              'absolute left-0 h-full w-full object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
             src={previewImageUrl}
@@ -106,7 +109,7 @@ export function PrivacyWrapper({
           />
         </div>
         {!consentGiven && (
-          <div className="relative z-10 py-2 text-left px-side bg-brand-100 text-brand-700 cursor-default">
+          <div className="relative z-10 cursor-default bg-brand-100 py-2 px-side text-left text-brand-700">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (
@@ -118,7 +121,7 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute inset-0 flex justify-around items-center -top-28 mobile:-top-12 sm:-top-24"
+          className="absolute inset-0 -top-28 flex items-center justify-around mobile:-top-12 sm:-top-24"
           onClick={confirmLoad}
         >
           <button

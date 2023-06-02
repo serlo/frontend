@@ -80,8 +80,7 @@ export type StateUpdater<T> = (
  */
 export type StateExecutor<T> = (
   resolve: (value: T) => void,
-  reject: (value: T) => void,
-  next: (value: T) => void
+  reject: (value: T) => void
 ) => void
 
 /**

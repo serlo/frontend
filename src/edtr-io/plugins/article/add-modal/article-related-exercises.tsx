@@ -53,7 +53,7 @@ export function ArticleRelatedExercises({
   return (
     <div className="mt-5 border-t-2 pt-6">
       <a
-        className="font-bold text-brand ml-2"
+        className="ml-2 font-bold text-brand"
         target="_blank"
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
@@ -79,7 +79,7 @@ export function ArticleRelatedExercises({
     if (!currentRevision || trashed) return null
 
     return (
-      <div key={id} className="border-t-2 border-black py-5 my-5">
+      <div key={id} className="my-5 border-t-2 border-black py-5">
         <Injection
           href={`/${id}`}
           renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
