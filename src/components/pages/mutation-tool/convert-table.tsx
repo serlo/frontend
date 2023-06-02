@@ -120,7 +120,7 @@ function convertHTMLtoState(
   }
 }
 
-type Col = EdtrPluginSerloTable['state']['rows'][0]['columns'][0]
+type Col = EdtrPluginSerloTable['state']['rows'][number]['columns'][number]
 
 function convertCellContent(cell: LegacyNode) {
   const cellChildren = cell.children
@@ -164,7 +164,7 @@ function convertCellContent(cell: LegacyNode) {
   const convertedImg = converted.find(
     (obj) => Object.hasOwn(obj, 'plugin') && obj.plugin === 'image'
   )
-  if (convertedImg) return convertedImg
+  if (convertedImg) return convertedImg as EdtrPluginImage
 
   return { plugin: 'text', state: [{ type: 'p', children: converted }] }
 }
