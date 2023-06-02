@@ -162,13 +162,11 @@ function convertCellContent(cell: LegacyNode) {
 
   const converted = filteredChildren.map(convertContentNode)
 
-  if (
-    converted.length === 1 &&
-    Object.hasOwn(converted[0], 'plugin') &&
-    converted[0].plugin === 'image'
-  ) {
-    return converted[0]
-  }
+  const convertedImg = converted.find(
+    (obj) => Object.hasOwn(obj, 'plugin') && obj.plugin === 'image'
+  )
+  if (convertedImg) return convertedImg
+
   return { plugin: 'text', state: [{ type: 'p', children: converted }] }
 }
 
@@ -283,7 +281,6 @@ function convertContentNode(
         console.log('content: img has unexpected state, content will be empty')
         return { text: '' }
       }
-
       return {
         plugin: 'image',
         state: { src: node.attribs.src, alt: node.attribs.alt },
