@@ -8,6 +8,8 @@ import { RowSeparator } from './row-separator'
 
 const ReadOnlyRow = styled.div({
   marginBottom: '25px',
+  marginTop: '25px',
+  paddingLeft: '14px',
 })
 
 export function RowsEditor(props: RowsProps) {
