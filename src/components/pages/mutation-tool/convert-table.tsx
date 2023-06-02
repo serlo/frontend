@@ -26,9 +26,8 @@ function convertHTMLtoState(
 ): EdtrPluginSerloTable | EdtrPluginText | undefined {
   // eslint-disable-next-line import/no-deprecated
   const dom = parseDOM(html) as unknown as LegacyNode[]
-  // console.log(dom)
 
-  const table = dom[0].children.filter((child) => child.type === 'tag')[0]
+  const table = dom[0]?.children.filter((child) => child.type === 'tag')[0]
   if (!table) {
     console.log('Invalid table, replacing with text plugin!')
     return { plugin: 'text' } as EdtrPluginText
