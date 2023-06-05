@@ -4,8 +4,8 @@ interface ExerciseSubmissionData {
   path: string
   entityId: number
   revisionId: number
-  type: 'sc' | 'mc' | 'input' | 'h5p'
-  result: 'correct' | 'wrong'
+  type: 'sc' | 'mc' | 'input' | 'h5p' | 'text'
+  result: 'correct' | 'wrong' | 'open'
 }
 
 const sesionStorageKey = 'frontend_exercise_submission_session_id'
