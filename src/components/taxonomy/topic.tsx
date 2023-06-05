@@ -1,6 +1,6 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 import { Link } from '../content/link'
 import { FaIcon } from '../fa-icon'
@@ -127,6 +127,11 @@ export function Topic({ data }: TopicProps) {
                     Gesamtübersicht
                   </Link>
                 </span>
+                <br />
+                <br />
+                <span className="ml-3">
+                  <RangePicker id={data.id.toString()} />
+                </span>
               </>
             )}
           </div>
@@ -202,4 +207,31 @@ export function Topic({ data }: TopicProps) {
     //no part of collection has default license so don't show default notice.
     return undefined
   }
+}
+
+function RangePicker(props: { id: string }) {
+  const [start, setStart] = useState(new Date().toLocaleDateString('en-CA'))
+  const [end, setEnd] = useState(new Date().toLocaleDateString('en-CA'))
+
+  return (
+    <div>
+      <strong>Zeitraum auswählen:</strong>
+      <br />
+      Start (inkl.):{' '}
+      <input
+        type="date"
+        value={start}
+        onChange={(e) => setStart(e.target.value)}
+      />
+      <br />
+      Ende (inkl.):{' '}
+      <input type="date" value={end} onChange={(e) => setEnd(e.target.value)} />
+      <br />
+      <Link
+        href={`/___exercise_dashboard/details/${start}to${end}/${props.id}`}
+      >
+        Anzeigen
+      </Link>
+    </div>
+  )
 }

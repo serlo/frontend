@@ -95,8 +95,22 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
 
   const sessions = new Set()
 
+  let start: Date | null = null
+  let end: Date | null = null
+
+  if (date.includes('to')) {
+    const parts = date.split('to')
+    start = new Date(parts[0])
+    end = new Date(parts[1])
+  }
+
   const data = relevantData.reduce((result, obj) => {
-    if (date !== 'all') {
+    if (start && end) {
+      const ts = new Date(obj.timestamp).getTime()
+      if (ts < start.getTime() || ts > end.getTime() + 24 * 60 * 60 * 1000) {
+        return result
+      }
+    } else if (date !== 'all') {
       const mydate = obj.timestamp
         .toLocaleDateString('de-DE', {
           timeZone: 'Europe/Berlin',
