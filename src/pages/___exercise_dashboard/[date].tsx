@@ -400,7 +400,7 @@ const Page: NextPage<Data> = ({
         <div className="mt-8">
           Wähle Zeitraum:
           <select
-            className="p-2 ml-2"
+            className="ml-2 p-2"
             defaultValue={
               otherDays.filter((entry) => entry.label === dateDisplay)[0].url
             }
@@ -458,18 +458,18 @@ const Page: NextPage<Data> = ({
       <div className="mt-16">
         {data.pages.map((page, i) => (
           <div
-            className="bg-brand-50 rounded-xl p-4 mb-16 relative"
+            className="relative mb-16 rounded-xl bg-brand-50 p-4"
             key={page.path}
           >
-            <div className="absolute -right-2 -top-2 w-14 h-14 bg-brand rounded-full flex justify-center items-center">
-              <span className="text-white font-bold text-xl">{i + 1}</span>
+            <div className="absolute -right-2 -top-2 flex h-14 w-14 items-center justify-center rounded-full bg-brand">
+              <span className="text-xl font-bold text-white">{i + 1}</span>
             </div>
-            <div className="text-lg mb-4 mr-12">
+            <div className="mb-4 mr-12 text-lg">
               <a
                 href={`https://de.serlo.org${page.path}`}
                 target="_blank"
                 rel="noreferrer"
-                className="hover:underline font-bold"
+                className="font-bold hover:underline"
               >
                 {page.path}
               </a>{' '}
@@ -483,7 +483,7 @@ const Page: NextPage<Data> = ({
                 })()}`}
                 className="text-black"
               >
-                <span className="px-2 py-1 rounded-full bg-fuchsia-300 ml-3">
+                <span className="ml-3 rounded-full bg-fuchsia-300 px-2 py-1">
                   Details
                 </span>
               </Link>
