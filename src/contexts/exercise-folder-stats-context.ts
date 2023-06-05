@@ -2,7 +2,12 @@ import { createContext, useContext } from 'react'
 
 export interface ExerciseFolderStatsData {
   data: {
-    [key: string]: { correct: number; wrong: number; afterTrying: number }
+    [key: string]: {
+      correct: number
+      wrong: number
+      afterTrying: number
+      solutionOpen: number
+    }
   }
   fullCount: number
   date: string

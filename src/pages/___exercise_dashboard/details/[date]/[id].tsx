@@ -128,6 +128,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     const entry = (result[key] = result[key] ?? {
       correct: new Set(),
       wrong: new Set(),
+      open: new Set(),
     })
     if (obj.result === 'correct') {
       entry.correct.add(obj.sessionId)
@@ -135,10 +136,13 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     if (obj.result === 'wrong') {
       entry.wrong.add(obj.sessionId)
     }
+    if (obj.result === 'open') {
+      entry.open.add(obj.sessionId)
+    }
     sessions.add(obj.sessionId)
     revisions.push(obj.revisionId)
     return result
-  }, {} as { [key: string]: { correct: Set<string>; wrong: Set<string> } })
+  }, {} as { [key: string]: { correct: Set<string>; wrong: Set<string>; open: Set<string> } })
 
   const output: ExerciseFolderStatsData['data'] = {}
 
@@ -150,6 +154,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
       correct: data[key].correct.size - intersection.size,
       wrong: data[key].wrong.size - intersection.size,
       afterTrying: intersection.size,
+      solutionOpen: data[key].open.size,
     }
   }
 

@@ -154,6 +154,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       return null
     if (isPrintMode && !printModeSolutionVisible) return null
 
+    const entry = exerciseData?.data[node.context.id]
+
+    const count = entry?.solutionOpen || null
+
     return (
       <button
         className={clsx(
@@ -172,7 +176,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           strings.content.exercises[
             solutionVisible ? 'hideSolution' : 'showSolution'
           ]
-        }
+        }{' '}
+        {count && <>(x{count})</>}
       </button>
     )
   }
@@ -269,9 +274,9 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     if (!entry) return null
 
     return (
-      <div className="p-2 ml-2 border border-fuchsia-400 rounded-xl my-4">
+      <div className="my-4 ml-2 rounded-xl border border-fuchsia-400 p-2">
         {!exerciseData.revisions.includes(node.context.revisionId) && (
-          <div className="bg-red-300 px-3 py-1 mt-2 rounded mb-4">
+          <div className="mt-2 mb-4 rounded bg-red-300 px-3 py-1">
             Warnung: Daten beziehen sich auf eine andere Revision als angezeigt.
           </div>
         )}
@@ -279,7 +284,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst nach
           Versuchen / {entry.wrong} mal nicht gelöst
         </div>
-        <div className="mt-2 h-2 w-full bg-gray-300 flex">
+        <div className="mt-2 flex h-2 w-full bg-gray-300">
           <div
             className="bg-green-500"
             style={{
