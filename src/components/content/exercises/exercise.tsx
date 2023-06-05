@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
@@ -16,6 +17,7 @@ import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-autho
 import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseInlineType } from '@/data-types'
 import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
+import { exerciseSubmission } from '@/helper/exercise-submission'
 import { tw } from '@/helper/tw'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
@@ -58,6 +60,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
   useEffect(() => {
     setLoaded(true)
   }, [])
+
+  const { asPath } = useRouter()
 
   const isRevisionView =
     path && typeof path[0] === 'string' && path[0].startsWith('revision')
@@ -162,6 +166,15 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         )}
         onClick={() => {
           setSolutionVisible(!solutionVisible)
+          if (!solutionVisible) {
+            exerciseSubmission({
+              path: asPath,
+              entityId: node.context.id,
+              revisionId: node.context.revisionId,
+              type: 'text',
+              result: 'open',
+            })
+          }
         }}
       >
         <span className="w-3.5">{solutionVisible ? '▾' : '▸'}&nbsp;</span>
