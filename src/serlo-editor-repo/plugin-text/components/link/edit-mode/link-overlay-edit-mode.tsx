@@ -5,6 +5,7 @@ import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
+import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useTextConfig } from '@/serlo-editor-repo/plugin-text/hooks/use-text-config'
 import { TextEditorPluginConfig } from '@/serlo-editor-repo/plugin-text/types'
@@ -30,6 +31,7 @@ export function LinkOverlayEditMode({
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
   const { serloLinkSearch } = useTextConfig(config)
+  const { lang } = useInstanceData()
 
   useEffect(() => {
     setQuery(value)
@@ -48,13 +50,14 @@ export function LinkOverlayEditMode({
 
     const href =
       activeIndex < results.length ? `/${results[activeIndex].entry.id}` : query
+    const cleanUrl = getCleanUrl(href, lang)
 
     if (
-      href.startsWith('/') ||
-      href.startsWith('http://') ||
-      href.startsWith('https://')
+      cleanUrl.startsWith('/') ||
+      cleanUrl.startsWith('http://') ||
+      cleanUrl.startsWith('https://')
     ) {
-      setHref(href)
+      setHref(cleanUrl)
     } else {
       showToastNotice(config.i18n.link.invalidLinkWarning, 'warning', 5000)
     }
@@ -126,9 +129,32 @@ export function LinkOverlayEditMode({
               isCustomLink
             />
           </div>
+          {serloLinkSearch && ( // de.serlo.org only for now
+            <p className="mx-side mt-5 whitespace-normal border-t-2 border-gray-100 pt-3 text-sm text-gray-600">
+              Manche Inhalte lassen sich über die Suche nicht finden. <br />
+              In dem Fall{' '}
+              <a href="/search" target="_blank" rel="noreferrer">
+                suche den Inhalt
+              </a>{' '}
+              und füge die URL hier ein.
+            </p>
+          )}
         </div>
       ) : null}
       <br />
     </>
   )
+}
+
+export function getCleanUrl(inputUrl: string, instance: string) {
+  const testId = parseInt(inputUrl.match(/[1-9]?[0-9]+/)?.[0] ?? 'NaN')
+
+  if (!isNaN(testId) && inputUrl.includes('serlo.org/')) return `/${testId}`
+
+  const cleanedUrl = inputUrl
+    .replace('https://serlo.org/', '')
+    .replace(`https://${instance}.serlo.org/`, '')
+    .replace(/^serlo\.org\//, '')
+
+  return inputUrl !== cleanedUrl ? `/${cleanedUrl}` : inputUrl
 }

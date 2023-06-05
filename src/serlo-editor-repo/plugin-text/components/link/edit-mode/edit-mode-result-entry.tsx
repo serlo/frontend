@@ -31,12 +31,12 @@ export function EditModeResultEntry({
       }}
     >
       {isCustomLink ? (
-        <span className="block h-12 w-12 bg-editor-primary-50 pt-3 text-center text-gray-800">
+        <span className="mr-3 block h-12 w-12 bg-editor-primary-50 pt-3 text-center text-gray-800">
           <FaIcon icon={faExternalLink} />
         </span>
       ) : null}
 
-      <p className="ml-3 whitespace-normal text-lg leading-cozy">
+      <p className="whitespace-normal text-lg leading-cozy">
         <span className="text-gray-700">{pathHeader}</span>
         <span
           className={clsx(

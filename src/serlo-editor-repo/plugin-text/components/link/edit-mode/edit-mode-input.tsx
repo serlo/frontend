@@ -1,7 +1,9 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useRef, KeyboardEvent } from 'react'
+import { useEffect, useRef, KeyboardEvent, ClipboardEvent } from 'react'
 
+import { getCleanUrl } from './link-overlay-edit-mode'
 import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function EditModeInput({
   query,
@@ -19,6 +21,7 @@ export function EditModeInput({
   placeholder: string
 }) {
   const inputRef = useRef<HTMLInputElement>(null)
+  const { lang } = useInstanceData()
 
   useEffect(() => {
     if (!shouldFocus) return
@@ -33,6 +36,15 @@ export function EditModeInput({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
+  function onPaste(e: ClipboardEvent<HTMLInputElement>) {
+    // cleanup pasted links.
+    setTimeout(() => {
+      const inputUrl = (e.target as HTMLInputElement).value
+      const cleanUrl = getCleanUrl(inputUrl, lang)
+      if (cleanUrl !== inputUrl) setQuery(cleanUrl)
+    })
+  }
+
   return (
     <>
       <input
@@ -43,6 +55,8 @@ export function EditModeInput({
         placeholder={placeholder}
         ref={inputRef}
         onKeyDown={onKeyDown}
+        onPaste={onPaste}
+        spellCheck={false}
       />
       {query ? (
         <div
