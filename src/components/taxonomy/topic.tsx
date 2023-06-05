@@ -61,9 +61,7 @@ export function Topic({ data }: TopicProps) {
           />
         )}
       </div>
-      {defaultLicense && (
-        <LicenseNotice data={defaultLicense} path={['license']} />
-      )}
+      {defaultLicense && <LicenseNotice data={defaultLicense} />}
 
       {/* Temporary donations banner trial */}
       {isExerciseFolder && !exerciseStats ? (
@@ -94,7 +92,7 @@ export function Topic({ data }: TopicProps) {
       <>
         {exerciseStats && (
           <div className="mt-3">
-            <span className="px-2 py-1 rounded-full bg-fuchsia-300 ml-3 font-bold">
+            <span className="ml-3 rounded-full bg-fuchsia-300 px-2 py-1 font-bold">
               Auswertung
             </span>
             <br />
@@ -140,7 +138,7 @@ export function Topic({ data }: TopicProps) {
               {' '}
               <FaIcon
                 icon={faFile}
-                className="text-[1.43rem] align-baseline text-brand-400"
+                className="align-baseline text-[1.43rem] text-brand-400"
               />{' '}
             </span>
           )}

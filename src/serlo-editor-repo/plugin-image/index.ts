@@ -24,7 +24,6 @@ import { ImageEditor } from './editor'
 
 /**
  * @param config - {@link ImageConfig | Plugin configuration}
- * @public
  */
 export function createImagePlugin(
   config: ImageConfig
@@ -46,10 +45,8 @@ export function createImagePlugin(
         child({
           plugin: 'text',
           config: {
-            controls: ['code', 'katex', 'links', 'math', 'richText'],
+            formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
             noLinebreaks: true,
-            disableMarkdownShortcuts: true,
-            blockquote: '',
           },
         })
       ),
@@ -95,12 +92,10 @@ export function createImagePlugin(
   }
 }
 
-/** @public */
 export interface ImageConfig extends Omit<ImagePluginConfig, 'i18n'> {
   i18n?: DeepPartial<ImagePluginConfig['i18n']>
 }
 
-/** @public */
 export type ImagePluginState = ObjectStateType<{
   src: UploadStateType<string>
   link: OptionalStateType<
@@ -114,7 +109,6 @@ export type ImagePluginState = ObjectStateType<{
   caption: OptionalStateType<ChildStateType>
 }>
 
-/** @public */
 export interface ImagePluginConfig {
   upload: UploadHandler<string>
   validate: UploadValidator
@@ -154,5 +148,4 @@ export interface ImagePluginConfig {
   }
 }
 
-/** @public */
 export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>

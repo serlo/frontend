@@ -12,7 +12,6 @@ import * as InternalPluginToolbar from '../internal__plugin-toolbar'
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#PluginToolbarButtonProps | PluginToolbarButtonProps}
  *
- * @beta
  */
 export type PluginToolbarButtonProps =
   InternalPluginToolbar.PluginToolbarButtonProps
@@ -20,7 +19,6 @@ export type PluginToolbarButtonProps =
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#PluginToolbarOverlayButtonProps | PluginToolbarOverlayButtonProps}
  *
- * @beta
  */
 export type PluginToolbarOverlayButtonProps =
   InternalPluginToolbar.PluginToolbarOverlayButtonProps
@@ -28,41 +26,35 @@ export type PluginToolbarOverlayButtonProps =
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#OverlayButtonProps | OverlayButtonProps}
  *
- * @beta
  */
 export type OverlayButtonProps = InternalPluginToolbar.OverlayButtonProps
 
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#OverlayCheckboxProps | OverlayCheckboxProps}
  *
- * @beta
  */
 export type OverlayCheckboxProps = InternalPluginToolbar.OverlayCheckboxProps
 
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#OverlayInputProps | OverlayInputProps}
  *
- * @beta
  */
 export type OverlayInputProps = InternalPluginToolbar.OverlayInputProps
 
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#OverlaySelectProps | OverlaySelectProps}
  *
- * @beta
  */
 export type OverlaySelectProps = InternalPluginToolbar.OverlaySelectProps
 
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#OverlayTextareaProps | OverlayTextareaProps}
  *
- * @beta
  */
 export type OverlayTextareaProps = InternalPluginToolbar.OverlayTextareaProps
 
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#PluginToolbar | PluginToolbar}
  *
- * @beta
  */
 export type PluginToolbar = InternalPluginToolbar.PluginToolbar

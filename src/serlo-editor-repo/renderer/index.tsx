@@ -1,97 +1,33 @@
-import * as React from 'react'
-import { createStore } from 'redux'
+// Used in https://github.com/serlo/serlo-editor-for-edusharing
 
-import { Provider, ScopeContext, SubDocument } from '../core'
-import { invariant } from '../internal__dev-expression'
-import { EditorPlugin, StoreDeserializeHelpers } from '../plugin'
-import { Action, ScopedState, State } from '../store'
-import { CustomTheme, RootThemeProvider } from '../ui'
+import { useEffect } from 'react'
+import { Provider } from 'react-redux'
 
-/**
- * @param props - The props
- * @public
- */
-export function Renderer<K extends string = string>(props: RendererProps<K>) {
-  const { theme = {}, ...rest } = props
-  const store = React.useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return createStore<any, Action, unknown, unknown>(
-      (state: State | undefined) => {
-        if (!state) {
-          return {
-            main: {
-              plugins: rest.plugins,
-              documents: getDocuments(),
-              focus: null,
-              root: 'root',
-              history: {
-                undoStack: [],
-                redoStack: [],
-                pendingChanges: 0,
-              },
-            },
-          }
-        }
-        return state
-      }
-    )
+import { EditableContext, SubDocument } from '@/serlo-editor-repo/core'
+import { EditorPlugin } from '@/serlo-editor-repo/plugin'
+import { runInitRootSaga, store } from '@/serlo-editor-repo/store'
 
-    function getDocuments(): ScopedState['documents'] {
-      const documents: ScopedState['documents'] = {}
-      const pendingDocs: {
-        id: string
-        plugin: K
-        state?: unknown
-      }[] = [
-        {
-          id: 'root',
-          ...(rest.state || {}),
-        },
-      ]
-      const helpers: StoreDeserializeHelpers = {
-        createDocument(doc: typeof pendingDocs[0]) {
-          pendingDocs.push(doc)
-        },
-      }
-
-      for (let doc; (doc = pendingDocs.pop()); ) {
-        const plugin = rest.plugins[doc.plugin]
-        if (!plugin) {
-          invariant(false, `Invalid plugin '${doc.plugin}'`)
-          continue
-        }
-        let state: unknown
-        if (doc.state === undefined) {
-          state = plugin.state.createInitialState(helpers)
-        } else {
-          state = plugin.state.deserialize(doc.state, helpers)
-        }
-        documents[doc.id] = {
-          plugin: doc.plugin,
-          state,
-        }
-      }
-      return documents
-    }
-  }, [rest.state, rest.plugins])
+export function Renderer<K extends string = string>({
+  plugins,
+  documentState,
+}: RendererProps<K>) {
+  useEffect(() => {
+    store.dispatch(runInitRootSaga({ initialState: documentState, plugins }))
+  }, [plugins, documentState])
 
   return (
     <Provider store={store}>
-      <RootThemeProvider theme={theme}>
-        <ScopeContext.Provider value={{ scope: 'main' }}>
-          <SubDocument id="root" />
-        </ScopeContext.Provider>
-      </RootThemeProvider>
+      <EditableContext.Provider value={false}>
+        <SubDocument id="root" />
+      </EditableContext.Provider>
     </Provider>
   )
 }
 
-/** @public */
 export interface RendererProps<K extends string = string> {
   plugins: Record<K, EditorPlugin>
-  state: {
+  documentState: {
     plugin: K
     state?: unknown
   }
-  theme?: CustomTheme
 }

@@ -13,14 +13,10 @@ const __styled = _styled as any
 /**
  * Re-export of {@link https://styled-components.com/docs/api#primary | `styled` in `styled-components` }
  *
- * @public
  */
 export const styled =
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   (__styled.default?.svg ? __styled.default : _styled) as StyledInterface
 
 export * from './deep-partial'
-export * from './editor-theme'
 export * from './icon'
-export * from './renderer-theme'
-export * from './theme'

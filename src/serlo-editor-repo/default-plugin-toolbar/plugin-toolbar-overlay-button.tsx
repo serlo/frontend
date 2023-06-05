@@ -1,6 +1,7 @@
-import * as React from 'react'
+import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
+import { EditorTooltip } from '../editor-ui/editor-tooltip'
 import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
@@ -15,7 +16,7 @@ export function createPluginToolbarOverlayButton(
     label,
     ...modalProps
   }: PluginToolbarOverlayButtonProps) {
-    const [open, setOpen] = React.useState(false)
+    const [open, setOpen] = useState(false)
     return (
       <>
         <WrappedModal
@@ -26,13 +27,13 @@ export function createPluginToolbarOverlayButton(
           }}
         />
         <Button
-          className={className}
+          className={`${className ?? ''} serlo-tooltip-trigger`}
           onClick={() => {
             setOpen(true)
           }}
-          title={label}
         >
-          <StyledIconContainer>{icon}</StyledIconContainer>
+          <EditorTooltip text={label} className="-ml-4 !pb-2" />
+          <StyledIconContainer aria-hidden="true">{icon}</StyledIconContainer>
         </Button>
       </>
     )
@@ -45,7 +46,7 @@ function WrappedModal({
   ...props
 }: Pick<PluginToolbarOverlayButtonProps, 'contentRef' | 'renderContent'> &
   Omit<Modal.Props, 'contentRef'> & { onRequestClose(): void }) {
-  const appended = React.useRef(false)
+  const appended = useRef(false)
   const children = (
     <div
       ref={(ref) => {
@@ -83,6 +84,7 @@ function WrappedModal({
           right: 'auto',
           bottom: 'auto',
           margin: '0 auto',
+          transform: 'none',
         },
       }}
     >

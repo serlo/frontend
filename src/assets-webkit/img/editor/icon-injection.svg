@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61 40" fill="none">
+  <path fill="#FFF5E9" d="M.084 0h60v40h-60z" />
+  <path
+    fill="#000"
+    fillOpacity=".08"
+    d="M10.084 3.712h42.928V6.35H10.084z"
+  />
+  <path fill="#FFDEB2" d="M10.084 9.35h43v21.3h-43z" />
+  <path
+    fill="#57534F"
+    d="M28.584 14.5c-.55 0-.995.495-.995 1.1l-.005 8.8c0 .605.445 1.1.995 1.1h6.005c.55 0 1-.495 1-1.1v-6.6l-3-3.3h-4Zm3.5 3.85v-3.025l2.75 3.025h-2.75Z"
+  />
+  <path
+    fill="#000"
+    fillOpacity=".08"
+    d="M10.084 33.65h42.928v2.638H10.084z"
+  />
+</svg>

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState, useMemo, useRef } from 'react'
 
 import { DocumentEditorProps } from '../document-editor'
 import {
@@ -14,12 +14,6 @@ import {
 interface ToolbarProps {
   isFocused: boolean
   isHovered: boolean
-}
-
-interface ContainerProps {
-  noHeight?: boolean
-  isFocused?: boolean
-  isHovered?: boolean
 }
 
 const ToolbarContent = styled.div<ToolbarProps>(({ isFocused, isHovered }) => ({
@@ -59,14 +53,10 @@ const ToolbarContainer = styled.div<ToolbarProps>(
   })
 )
 
-const Container = styled.div<ContainerProps>(
-  ({ noHeight, isFocused, isHovered }: ContainerProps) => ({
-    ...(!noHeight
-      ? {
-          minHeight: '10px',
-          marginBottom: '25px',
-        }
-      : {}),
+const Container = styled.div<Partial<ToolbarProps>>(
+  ({ isFocused, isHovered }) => ({
+    minHeight: '10px',
+    marginBottom: '25px',
     position: 'relative',
     borderLeft: '2px solid transparent',
     paddingLeft: '5px',
@@ -107,13 +97,6 @@ const BorderlessOverlayButton = styled.button({
   minWidth: '0 !important',
 })
 
-/**
- * Creates the default {@link @edtr-io/document-editor#DocumentEditorProps | document editor}
- *
- * @param config - Configuration
- * @returns The default {@link @edtr-io/document-editor#DocumentEditorProps | document editor}
- * @beta
- */
 export function createDefaultDocumentEditor(
   config: DefaultDocumentEditorConfig = {}
 ): React.ComponentType<DocumentEditorProps> {
@@ -128,7 +111,7 @@ export function createDefaultDocumentEditor(
     hasToolbar,
     PluginToolbar,
   }: DocumentEditorProps) {
-    const [hasHover, setHasHover] = React.useState(false)
+    const [hasHover, setHasHover] = useState(false)
     const { OverlayButton, PluginToolbarOverlayButton } = PluginToolbar
 
     const i18n = merge<DefaultDocumentEditorI18n>({
@@ -144,7 +127,7 @@ export function createDefaultDocumentEditor(
     const { modalTitle, modalCloseLabel } = i18n.settings
 
     const shouldShowSettings = showSettings()
-    const renderSettingsContent = React.useMemo<typeof renderSettings>(() => {
+    const renderSettingsContent = useMemo<typeof renderSettings>(() => {
       return shouldShowSettings
         ? (children, { close }) => (
             <>
@@ -174,7 +157,7 @@ export function createDefaultDocumentEditor(
     const isFocused = focused && (showSettings() || showToolbar())
     const isHovered = hasHover && (showSettings() || showToolbar())
 
-    const isAppended = React.useRef(false)
+    const isAppended = useRef(false)
     const toolbar = (
       <>
         {showSettings() ? (
@@ -237,12 +220,10 @@ export function createDefaultDocumentEditor(
   }
 }
 
-/** @beta */
 export interface DefaultDocumentEditorConfig {
   i18n?: DeepPartial<DefaultDocumentEditorI18n>
 }
 
-/** @beta */
 export interface DefaultDocumentEditorI18n {
   settings: {
     buttonLabel: string

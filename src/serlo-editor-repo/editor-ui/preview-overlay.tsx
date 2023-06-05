@@ -1,6 +1,6 @@
-import * as React from 'react'
+import { useState, useCallback, useEffect } from 'react'
 
-import { ScopeContext, useScope } from '../core'
+import { EditableContext } from '../core'
 import { styled } from '../ui'
 
 const NoClickArea = styled.div<{ active: boolean }>((props) => {
@@ -42,16 +42,11 @@ const ActivateButton = styled.button({
   margin: 'auto',
 })
 
-/**
- * @param props - Props
- * @internal
- */
 export function PreviewOverlay(props: PreviewOverlayProps) {
-  const [active, setActiveState] = React.useState(false)
-  const scope = useScope()
+  const [active, setActiveState] = useState(false)
   const { onChange } = props
 
-  const setActive = React.useCallback(
+  const setActive = useCallback(
     (active: boolean) => {
       if (typeof onChange === 'function') {
         onChange(active)
@@ -60,7 +55,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
     },
     [onChange]
   )
-  React.useEffect(() => {
+  useEffect(() => {
     if (!props.focused && active) {
       setActive(false)
     }
@@ -82,14 +77,9 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
         ) : null}
       </Overlay>
       {!props.editable ? (
-        <ScopeContext.Provider
-          value={{
-            scope,
-            editable: false,
-          }}
-        >
+        <EditableContext.Provider value={false}>
           {props.children}
-        </ScopeContext.Provider>
+        </EditableContext.Provider>
       ) : (
         props.children
       )}
@@ -108,7 +98,6 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   )
 }
 
-/** @internal */
 export interface PreviewOverlayProps {
   children: React.ReactNode
   focused: boolean

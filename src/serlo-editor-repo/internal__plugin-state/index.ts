@@ -5,7 +5,6 @@ import * as InternalDocumentEditor from '../internal__document-editor'
  * Describes the states of a [[Plugin]]. Please note that a state type will be recreated in every render.
  *
  * @example the built-in [[boolean]], [[number]], [[string]], [[scalar]] and [[serializedScalar]], [[list]], [[object]], and [[child]] state types
- * @public
  */
 export interface StateType<S = any, T = any, R = any> {
   /**
@@ -66,7 +65,6 @@ export interface StateType<S = any, T = any, R = any> {
  * @param previousState - current state at the time the change is applied
  * @param helpers - helpers (e.g. to insert an document in the store)
  * @returns new state
- * @public
  */
 export type StateUpdater<T> = (
   previousState: T,
@@ -79,18 +77,15 @@ export type StateUpdater<T> = (
  * @param resolve - Callback to set the state after the asynchronous process has been completed successfully. Should only be called at most once.
  * @param reject - Callback to set the state after the asynchronous process has been completed unsuccessfully. Should only be called at most once.
  * @param next - Callback to update the state while it is still pending
- * @public
  */
 export type StateExecutor<T> = (
   resolve: (value: T) => void,
-  reject: (value: T) => void,
-  next: (value: T) => void
+  reject: (value: T) => void
 ) => void
 
 /**
  * Describes a child document
  *
- * @public
  */
 export interface FocusableChild {
   /**
@@ -102,7 +97,6 @@ export interface FocusableChild {
 /**
  * Maps a [[StateType]] to the type of its serialized state
  *
- * @public
  */
 export type StateTypeSerializedType<D extends StateType> = D extends StateType<
   infer S
@@ -110,7 +104,6 @@ export type StateTypeSerializedType<D extends StateType> = D extends StateType<
   ? S
   : never
 
-/** @public */
 export type StateTypesSerializedType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeSerializedType<Ds[K]>
 }
@@ -118,7 +111,6 @@ export type StateTypesSerializedType<Ds extends Record<string, StateType>> = {
 /**
  * Maps a [[StateType]] to the type of its deserialized state
  *
- * @public
  */
 export type StateTypeValueType<D extends StateType> = D extends StateType<
   any,
@@ -127,7 +119,6 @@ export type StateTypeValueType<D extends StateType> = D extends StateType<
   ? T
   : never
 
-/** @public */
 export type StateTypesValueType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeValueType<Ds[K]>
 }
@@ -135,7 +126,6 @@ export type StateTypesValueType<Ds extends Record<string, StateType>> = {
 /**
  * Maps a [[StateType]] to the type of its public API for usage in plugin components
  *
- * @public
  */
 export type StateTypeReturnType<D extends StateType> = D extends StateType<
   any,
@@ -145,7 +135,6 @@ export type StateTypeReturnType<D extends StateType> = D extends StateType<
   ? R
   : never
 
-/** @public */
 export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
   [K in keyof Ds]: StateTypeReturnType<Ds[K]>
 }
@@ -154,7 +143,6 @@ export type StateTypesReturnType<Ds extends Record<string, StateType>> = {
 /**
  * Helpers to be used by a [[StateType]] when working with a serialized state
  *
- * @public
  */
 export interface StoreDeserializeHelpers<
   K extends string = string,
@@ -171,7 +159,6 @@ export interface StoreDeserializeHelpers<
 /**
  * Helpers to be used by a [[StateType]] when working with a deserialized state
  *
- * @public
  */
 export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
   /**
@@ -183,7 +170,6 @@ export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
   getDocument(id: string): { plugin: K; state?: S } | null
 }
 
-/** @public */
 export interface PluginProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   config?: {}

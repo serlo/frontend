@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Fr"],
+  lang: "fr",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -255,7 +254,10 @@ export const instanceData = {
       wipLabelNote: "Travail en cours. Ne pas encore réviser.",
       newAuthorText: "nouvel auteur",
       newAuthorNote: "C'est l'une des premières modifications de cet auteur. Peut-être, donne-lui la priorité.",
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: "😬 Les sites Web font parfois des erreurs…",
@@ -314,6 +316,7 @@ export const instanceData = {
       welcome: "👋 Bienvenue %username%!",
       bye: "👋 À bientôt !",
       alreadyLoggedIn: '👋 Welcome back',
+      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
       revisionSaved: "La révision est enregistrée et sera bientôt révisée 👍",
       revisionAccepted: "La révision a été acceptée avec succès ✅",
       revisionRejected: "La révision a été rejetée avec succès ❎",
@@ -373,8 +376,9 @@ export const instanceData = {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
         code1010002: 'Sign in with NBP Account',
-        code1010013: 'Continue',
+        code1010013: 'Continue with SSO',
         code1040001: 'Register',
+        code1040002: 'Register with NBP Account',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
@@ -385,6 +389,8 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         code4000007: 'An account with the same email or username exists already.',
@@ -452,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Fr"],
+  lang: "fr",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Notre vision est de permettre un apprentissage personnalisé et de fournir des ressources éducatives de haute qualité dans le monde entier - complètement gratuit. Serlo est une organisation de base inspirée par Wikipédia. Nous fournissons déjà des milliers d'articles, de vidéos et d'exercices résolus à cinq millions d'étudiants allemands chaque année.\nIl est maintenant temps de passer à l'international.",
@@ -498,7 +504,7 @@ export const loggedInData = {
       title: "Changer le mot de passe"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "Réglages"
     }, {
       url: '/auth/logout',
       title: "Se déconnecter"
@@ -532,8 +538,6 @@ export const loggedInData = {
       edit: "Modifier",
       editTax: 'Edit Title & Text',
       unrevisedEdit: "Afficher les révisions non révisées",
-      moveToGrouped: "Déplacer le contenu vers un autre exercice de texte groupé",
-      moveToTextExercise: "Déplacer le contenu vers un autre exercice de texte",
       sortEntities: "Trier le contenu",
       newEntity: "Nouveau contenu",
       editProfile: "Modifier profil",
@@ -653,6 +657,10 @@ export const loggedInData = {
         enableNotifs: "Activer les notifications par serlo.org",
         enableNotifsMail: "Activer les notifications par e-mail",
         switchRevision: "Changer à une autre révision",
+        importOther: 'Import content from other entity',
+        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate it\'s content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).',
+        importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+        importOtherButton: 'Import content',
         current: "Actuel",
         author: "Auteur",
         createdAt: "Créé le",
@@ -759,12 +767,16 @@ export const loggedInData = {
         italic: "Italique (%ctrlOrCmd% + I)",
         noItemsFound: "Aucun élément trouvé"
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: "URL de la vidéo",
         description: 'Description',
         title: "Titre",
         url: 'URL',
-        seoTitle: "Titre pour les moteurs de recherche"
+        seoTitle: "Titre pour les moteurs de recherche",
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: "Cette partie du document n'a pas pu être convertie."
@@ -1023,7 +1035,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },

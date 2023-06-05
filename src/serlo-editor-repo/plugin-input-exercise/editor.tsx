@@ -1,15 +1,15 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
-import { OverlayInput, useScopedSelector } from '../core'
+import { OverlayInput } from '../core'
 import {
   AddButton,
   InteractiveAnswer,
   PreviewOverlay,
   styled,
 } from '../editor-ui'
-import { getFocused } from '../store'
+import { selectFocused, useAppSelector } from '../store'
 import { useInputExerciseConfig } from './config'
 import { InputExerciseRenderer } from './renderer'
 
@@ -26,14 +26,14 @@ const TypeMenu = styled.div({
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused, config } = props
   const { i18n } = useInputExerciseConfig(config)
-  const focusedElement = useScopedSelector(getFocused())
+  const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
     R.includes(
       focusedElement,
       props.state.answers.map((answer) => answer.feedback.id)
     )
-  const [previewActive, setPreviewActive] = React.useState(false)
+  const [previewActive, setPreviewActive] = useState(false)
 
   if (!editable) return <InputExerciseRenderer {...props} />
 

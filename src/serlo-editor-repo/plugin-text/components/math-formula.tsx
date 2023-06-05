@@ -14,7 +14,11 @@ const KaTeXSpan = styled.span<{ element: MathElement }>(({ element }) => {
   }
 })
 
-export function MathFormula({ element }: { element: MathElement }) {
+const MathFormula = React.memo(function MathFormula({
+  element,
+}: {
+  element: MathElement
+}) {
   const html = KaTeX.renderToString(
     `${element.inline ? '' : '\\displaystyle '}${element.src}`,
     {
@@ -26,4 +30,6 @@ export function MathFormula({ element }: { element: MathElement }) {
   return (
     <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} element={element} />
   )
-}
+})
+
+export { MathFormula }

@@ -14,6 +14,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
+import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
 
 interface ArticleRelatedContentProps {
   data: ArticleProps['state']['relatedContent']
@@ -140,18 +141,18 @@ export function ArticleRelatedContent({
     return (
       <>
         <button
-          title={articleStrings.removeLabel}
-          className={buttonClass}
+          className={`${buttonClass} serlo-tooltip-trigger`}
           onClick={() => data[category].remove(index)}
         >
-          <Icon icon={faTrashAlt} />
+          <EditorTooltip text={articleStrings.removeLabel} />
+          <Icon icon={faTrashAlt} aria-hidden="true" />
         </button>
         <button
-          title={articleStrings.dragLabel}
           {...dragHandleProps}
-          className={buttonClass}
+          className={`${buttonClass} serlo-tooltip-trigger`}
         >
-          <Icon icon={faGripVertical} />
+          <EditorTooltip text={articleStrings.dragLabel} />
+          <Icon icon={faGripVertical} aria-hidden="true" />
         </button>
       </>
     )

@@ -1,16 +1,12 @@
-import * as React from 'react'
-
 import {
   StateType,
   StateTypeReturnType,
   StateTypeSerializedType,
 } from '../internal__plugin-state'
-import { Theme } from '../ui'
 
 /**
  * An Edtr.io plugin
  *
- * @public
  */
 export interface EditorPlugin<
   S extends StateType = StateType,
@@ -25,7 +21,7 @@ export interface EditorPlugin<
   /**
    * Plugin configuration
    */
-  config: Config | ((theme: Theme) => Config)
+  config: Config | (() => Config)
 
   /**
    * [[StateType]] of the plugin
@@ -94,7 +90,6 @@ export interface EditorPlugin<
 /**
  * Props for the component of an [[EditorPlugin]]
  *
- * @public
  */
 export interface EditorPluginProps<
   S extends StateType = StateType,

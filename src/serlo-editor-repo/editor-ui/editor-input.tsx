@@ -1,56 +1,43 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 
-import { styled, useEditorUiTheme } from '../ui'
-
-function useEditorInputTheme() {
-  return useEditorUiTheme('input', (theme) => {
-    return {
-      color: theme.backgroundColor,
-      backgroundColor: 'transparent',
-      highlightColor: theme.primary.background,
-    }
-  })
-}
+import { styled } from '../ui'
+import { colors } from '@/helper/colors'
 
 const Label = styled.label<{ width: string | undefined }>(({ width }) => {
-  const theme = useEditorInputTheme()
   return {
     width,
-    color: theme.color,
+    color: colors.almostBlack,
   }
 })
 
 const Input = styled.input<{ textWidth: string | undefined }>(
   ({ textWidth }) => {
-    const theme = useEditorInputTheme()
     return {
-      backgroundColor: theme.backgroundColor,
-      border: 'none',
+      backgroundColor: colors.editorPrimary100,
       width: textWidth,
-      borderBottom: `2px solid ${theme.color}`,
-      color: theme.color,
-      paddingLeft: '10px',
+      borderRadius: '0.8rem',
+      border: `2px solid ${colors.editorPrimary100}`,
+      color: colors.almostBlack,
+      padding: '3px 10px',
       '&:focus': {
         outline: 'none',
-        borderBottom: `2px solid ${theme.highlightColor}`,
+        border: `2px solid ${colors.editorPrimary}`,
       },
     }
   }
 )
 
-/** @public */
-export const EditorInput = React.forwardRef<HTMLInputElement, EditorInputProps>(
+export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
   function EditorInput({ label, ...props }, ref) {
     return (
       <Label width={props.width}>
-        {label ? `${label}:` : ''}
+        {label ?? ''}
         <Input textWidth={props.inputWidth} {...props} ref={ref} />
       </Label>
     )
   }
 )
 
-/** @public */
 export interface EditorInputProps
   extends React.DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,

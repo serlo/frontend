@@ -37,7 +37,7 @@ export function ArticleRelatedTaxonomy({
       typeof window !== undefined &&
       window.location.pathname.startsWith('/entity/create')
     return (
-      <p className="mt-4 pt-4 border-t-2 text-gray-400 italic">
+      <p className="mt-4 border-t-2 pt-4 italic text-gray-400">
         {isNew
           ? 'Sorry, folder preview is currently not supported for new articles.'
           : 'Sorry, something went wrong.'}
@@ -50,7 +50,7 @@ export function ArticleRelatedTaxonomy({
     <div className="mt-5 border-t-2 pt-6">
       {articleStrings.addModal.addFromFolderTitle}
       <a
-        className="font-bold text-brand ml-2"
+        className="ml-2 font-bold text-brand"
         target="_blank"
         href={`/${term.id}`}
         rel="noreferrer"
@@ -70,8 +70,8 @@ export function ArticleRelatedTaxonomy({
     const isTax = typename === UuidType.TaxonomyTerm
 
     return (
-      <div className="py-2 max-w-[30%] mr-4" key={typename}>
-        <b className="block mb-2">
+      <div className="mr-4 max-w-[30%] py-2" key={typename}>
+        <b className="mb-2 block">
           <Icon icon={getIconByTypename(typename)} />{' '}
           {isTax
             ? strings.entities.exerciseFolder
@@ -100,7 +100,7 @@ export function ArticleRelatedTaxonomy({
       <li key={item.id} className="group flex justify-between">
         <a
           href={`/${item.id}`}
-          className="text-brand mt-1 mb-2 leading-tight"
+          className="mt-1 mb-2 leading-tight text-brand"
           target="_blank"
           rel="noreferrer"
         >
@@ -108,7 +108,7 @@ export function ArticleRelatedTaxonomy({
         </a>{' '}
         {isTax ? (
           <button
-            className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center serlo-button bg-amber-100 hover:bg-amber-300 text-base leading-browser"
+            className="serlo-button-editor-secondary invisible ml-2 max-h-8 self-center whitespace-nowrap text-base leading-browser group-focus-within:visible group-hover:visible"
             onClick={() => {
               showExerciseFolderPreview(item.id)
             }}
@@ -119,7 +119,7 @@ export function ArticleRelatedTaxonomy({
         ) : null}
         <SerloAddButton
           text=""
-          className="invisible group-hover:visible group-focus-within:visible whitespace-nowrap ml-2 max-h-8 self-center"
+          className="invisible ml-2 max-h-8 self-center whitespace-nowrap group-focus-within:visible group-hover:visible"
           onClick={() => {
             addEntry(item.id, item.__typename, title)
           }}

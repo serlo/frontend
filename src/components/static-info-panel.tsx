@@ -9,7 +9,7 @@ const colorClasses = {
   info: 'bg-brand-100',
   success: 'bg-brandgreen-50',
   failure: 'bg-red-100',
-  gray: 'bg-truegray-100',
+  gray: 'bg-gray-100',
 }
 
 interface StaticInfoPanelProps {
@@ -34,7 +34,7 @@ export function StaticInfoPanel({
           <meta name="robots" content="noindex" />
         </Head>
       ) : null}
-      <div className={clsx('p-4 my-12 rounded-2xl font-bold', colorClass)}>
+      <div className={clsx('my-12 rounded-2xl p-4 font-bold', colorClass)}>
         {icon ? (
           <>
             <FaIcon icon={icon} />{' '}

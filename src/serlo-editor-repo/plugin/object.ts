@@ -14,7 +14,6 @@ import {
 /**
  * @param types - The {@link @edtr-io/internal__plugin-state#StateType | state types} of the properties of the object
  * @param getFocusableChildren - Allows to override the default order of focusable children
- * @public
  */
 export function object<Ds extends Record<string, StateType>>(
   types: Ds,
@@ -73,11 +72,10 @@ export function object<Ds extends Record<string, StateType>>(
           }
           onChange(wrapUpdater(initial), {
             executor: executor
-              ? (resolve, reject, next) => {
+              ? (resolve, reject) => {
                   executor(
                     (innerUpdater) => resolve(wrapUpdater(innerUpdater)),
-                    (innerUpdater) => reject(wrapUpdater(innerUpdater)),
-                    (innerUpdater) => next(wrapUpdater(innerUpdater))
+                    (innerUpdater) => reject(wrapUpdater(innerUpdater))
                   )
                 }
               : undefined,
@@ -113,7 +111,6 @@ export function object<Ds extends Record<string, StateType>>(
   }
 }
 
-/** @public */
 export type ObjectStateType<Ds extends Record<string, StateType>> = StateType<
   StateTypesSerializedType<Ds>,
   StateTypesValueType<Ds>,

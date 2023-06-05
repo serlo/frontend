@@ -1,8 +1,7 @@
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import { useState, useRef, useEffect } from 'react'
 
-import { isLegacyLink } from '../content/link'
+import { cfWorkerLinks } from '../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { submitEvent } from '@/helper/submit-event'
@@ -88,7 +87,7 @@ export function GoogleSeachWrapper() {
           typeof absoluteHref !== 'undefined' &&
           absoluteHref.startsWith(langDomain) &&
           relativeHref !== undefined &&
-          !isLegacyLink(relativeHref)
+          !cfWorkerLinks.includes(relativeHref)
 
         if (isFrontendResultsLink) {
           submitEvent('search-result-click')
@@ -107,7 +106,7 @@ export function GoogleSeachWrapper() {
   return (
     <>
       <div
-        className={clsx('mb-24')}
+        className="mb-24"
         id="searchform"
         ref={searchFormRef}
         tabIndex={searchActive ? -1 : 0}

@@ -1,30 +1,39 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import {
+  useState,
+  useRef,
+  useContext,
+  useEffect,
+  useMemo,
+  useCallback,
+} from 'react'
 import { createPortal } from 'react-dom'
 import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 
 import { SubDocumentProps } from '.'
 import { StateUpdater } from '../../internal__plugin-state'
 import {
-  change,
+  runChangeDocumentSaga,
   focus,
   focusNext,
   focusPrevious,
-  getDocument,
-  mayRemoveChild,
-  getParent,
-  getPlugin,
-  insertChildAfter,
-  isEmpty,
-  isFocused,
+  selectDocument,
+  selectMayManipulateSiblings,
+  selectParent,
+  selectPlugin,
+  insertPluginChildAfter,
+  selectIsDocumentEmpty,
+  selectIsFocused,
   redo,
-  removeChild,
+  removePluginChild,
   undo,
-  ChangeAction,
+  useAppSelector,
+  selectFocusTree,
+  useAppDispatch,
+  store,
 } from '../../store'
-import { styled, useTheme } from '../../ui'
+import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
-import { useScopedSelector, useScopedStore } from '../store'
 
 const StyledDocument = styled.div({
   outline: 'none',
@@ -43,29 +52,33 @@ type HotKeysHandlers = {
 }
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSettings, setHasSettings] = React.useState(false)
-  const [hasToolbar, setHasToolbar] = React.useState(false)
-  const document = useScopedSelector(getDocument(id))
-  const focused = useScopedSelector(isFocused(id))
-  const plugin = useScopedSelector(
-    (state) => document && getPlugin(document.plugin)(state)
+  const [hasSettings, setHasSettings] = useState(false)
+  const [hasToolbar, setHasToolbar] = useState(false)
+  const dispatch = useAppDispatch()
+  const document = useAppSelector((state) => selectDocument(state, id))
+  const isDocumentEmpty = useAppSelector((state) =>
+    selectIsDocumentEmpty(state, id)
   )
-  const store = useScopedStore()
-
-  const container = React.useRef<HTMLDivElement>(null)
-  const settingsRef = React.useRef<HTMLDivElement>(
-    window.document.createElement('div')
+  const mayManipulateSiblings = useAppSelector((state) =>
+    selectMayManipulateSiblings(state, id)
   )
-  const toolbarRef = React.useRef<HTMLDivElement>(
-    window.document.createElement('div')
-  )
-  const DocumentEditor = React.useContext(DocumentEditorContext)
-  const PluginToolbar = React.useContext(PluginToolbarContext)
-  const autofocusRef = React.useRef<HTMLInputElement & HTMLTextAreaElement>(
-    null
+  const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const plugin = useAppSelector(
+    (state) => document && selectPlugin(state, document.plugin)
   )
 
-  React.useEffect(() => {
+  const container = useRef<HTMLDivElement>(null)
+  const settingsRef = useRef<HTMLDivElement>(
+    window.document.createElement('div')
+  )
+  const toolbarRef = useRef<HTMLDivElement>(
+    window.document.createElement('div')
+  )
+  const DocumentEditor = useContext(DocumentEditorContext)
+  const PluginToolbar = useContext(PluginToolbarContext)
+  const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
+
+  useEffect(() => {
     if (focused) {
       setTimeout(() => {
         if (autofocusRef.current) {
@@ -75,7 +88,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     }
   }, [focused])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       focused &&
       container.current &&
@@ -89,24 +102,24 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focused, plugin])
 
-  const hotKeysHandlers = React.useMemo((): HotKeysHandlers => {
+  const hotKeysHandlers = useMemo((): HotKeysHandlers => {
     return {
       FOCUS_PREVIOUS: (e) => {
         handleKeyDown(e, () => {
-          store.dispatch(focusPrevious())
+          dispatch(focusPrevious(selectFocusTree(store.getState())))
         })
       },
       FOCUS_NEXT: (e) => {
         handleKeyDown(e, () => {
-          store.dispatch(focusNext())
+          dispatch(focusNext(selectFocusTree(store.getState())))
         })
       },
       INSERT_DEFAULT_PLUGIN: (e) => {
         handleKeyDown(e, () => {
-          const parent = getParent(id)(store.getState())
+          const parent = selectParent(store.getState(), id)
           if (!parent) return
-          store.dispatch(
-            insertChildAfter({
+          dispatch(
+            insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
             })
@@ -114,29 +127,29 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         })
       },
       DELETE_EMPTY: (e) => {
-        if (isEmpty(id)(store.getState())) {
+        if (isDocumentEmpty) {
           handleKeyDown(e, () => {
             if (!e) return
-            if (mayRemoveChild(id)(store.getState())) {
-              const parent = getParent(id)(store.getState())
+            if (mayManipulateSiblings) {
+              const parent = selectParent(store.getState(), id)
               if (!parent) return
 
               if (e.key === 'Backspace') {
-                store.dispatch(focusPrevious())
+                dispatch(focusPrevious(selectFocusTree(store.getState())))
               } else if (e.key === 'Delete') {
-                store.dispatch(focusNext())
+                dispatch(focusNext(selectFocusTree(store.getState())))
               }
-              store.dispatch(removeChild({ parent: parent.id, child: id }))
+              dispatch(removePluginChild({ parent: parent.id, child: id }))
             }
           })
         }
       },
       // TODO: workaround for https://github.com/edtr-io/edtr-io/issues/272
       UNDO: () => {
-        store.dispatch(undo())
+        void dispatch(undo())
       },
       REDO: () => {
-        store.dispatch(redo())
+        void dispatch(redo())
       },
     }
 
@@ -152,21 +165,21 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       e && e.preventDefault()
       next()
     }
-  }, [id, store, plugin])
+  }, [id, plugin, dispatch, isDocumentEmpty, mayManipulateSiblings])
 
-  const handleFocus = React.useCallback(
+  const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
 
       if (!focused && target === container.current) {
-        store.dispatch(focus(id))
+        dispatch(focus(id))
       }
     },
-    [store, focused, id]
+    [focused, id, dispatch]
   )
 
-  const renderIntoSettings = React.useCallback(
+  const renderIntoSettings = useCallback(
     (children: React.ReactNode) => {
       return (
         <RenderIntoSettings
@@ -180,7 +193,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [settingsRef]
   )
 
-  const renderIntoToolbar = React.useCallback(
+  const renderIntoToolbar = useCallback(
     (children: React.ReactNode) => {
       return (
         <RenderIntoToolbar
@@ -194,31 +207,31 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [toolbarRef]
   )
 
-  const theme = useTheme()
-
-  return React.useMemo(() => {
+  return useMemo(() => {
     if (!document) return null
     if (!plugin) {
       // eslint-disable-next-line no-console
-      console.log('Plugin does not exist')
+      console.warn('Plugin does not exist')
       return null
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const defaultConfig =
-      typeof plugin.config === 'function' ? plugin.config(theme) : plugin.config
+      typeof plugin.config === 'function' ? plugin.config() : plugin.config
     const overrideConfig = (pluginProps && pluginProps.config) || {}
     const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
     const onChange = (
       initial: StateUpdater<unknown>,
       additional: {
-        executor?: ChangeAction['payload']['state']['executor']
-        reverse?: ChangeAction['payload']['reverse']
+        executor?: ReturnType<
+          typeof runChangeDocumentSaga
+        >['payload']['state']['executor']
+        reverse?: ReturnType<typeof runChangeDocumentSaga>['payload']['reverse']
       } = {}
     ) => {
-      store.dispatch(
-        change({
+      dispatch(
+        runChangeDocumentSaga({
           id,
           state: {
             initial,
@@ -268,7 +281,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     DocumentEditor,
     document,
     plugin,
-    theme,
     pluginProps,
     handleFocus,
     hasSettings,
@@ -279,7 +291,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     renderIntoToolbar,
     id,
     hotKeysHandlers,
-    store,
+    dispatch,
   ])
 }
 
@@ -292,7 +304,7 @@ function RenderIntoSettings({
   setHasSettings: (value: boolean) => void
   settingsRef: React.MutableRefObject<HTMLDivElement>
 }) {
-  React.useEffect(() => {
+  useEffect(() => {
     setHasSettings(true)
   })
   if (!settingsRef.current) return null
@@ -308,7 +320,7 @@ function RenderIntoToolbar({
   setHasToolbar: (value: boolean) => void
   toolbarRef: React.MutableRefObject<HTMLDivElement>
 }) {
-  React.useEffect(() => {
+  useEffect(() => {
     setHasToolbar(true)
   })
   if (!toolbarRef.current) return null

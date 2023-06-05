@@ -1,16 +1,24 @@
-import * as React from 'react'
+import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
-import { PluginToolbarButton, useScopedSelector } from '../core'
+import { PluginToolbarButton } from '../core'
 import {
-  hasFocusedDescendant,
-  isEmpty,
-  isFocused,
-  serializeDocument,
+  selectDocument,
+  selectHasFocusedDescendant,
+  selectIsDocumentEmpty,
+  selectIsFocused,
+  selectSerializedDocument,
+  store,
+  useAppSelector,
 } from '../store'
 import { styled, faRandom, Icon, faTrashAlt } from '../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
+
+interface MultimediaDocument {
+  plugin: string
+  state?: unknown
+}
 
 const STEPS = 4
 const BREAKPOINT = 650
@@ -67,42 +75,44 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
     props.state.illustrating.set(e.target.value === 'illustrating')
   }
-  const textFocused = useScopedSelector(
-    hasFocusedDescendant(props.state.explanation.id)
+  const textFocused = useAppSelector((state) =>
+    selectHasFocusedDescendant(state, props.state.explanation.id)
   )
 
-  const multimediaFocused = useScopedSelector(
-    isFocused(props.state.multimedia.id)
+  const multimediaFocused = useAppSelector((state) =>
+    selectIsFocused(state, props.state.multimedia.id)
   )
 
   const hasFocus = props.focused || multimediaFocused || textFocused
-  const withoutMultimedia = useScopedSelector(
-    isEmpty(props.state.multimedia.id)
+  const withoutMultimedia = useAppSelector((state) =>
+    selectIsDocumentEmpty(state, props.state.multimedia.id)
   )
 
-  const multimedia: {
-    plugin: string
-    state?: unknown
-  } | null = useScopedSelector(serializeDocument(props.state.multimedia.id))
-  const [replacedMultimediaCache, setReplacedMultimediaCache] = React.useState<
+  const multimediaDocument: MultimediaDocument | null = useAppSelector(
+    (state) => selectDocument(state, props.state.multimedia.id)
+  )
+  const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
     Record<string, unknown>
   >({})
   function handleMultimediaChange(selected: string) {
     setReplacedMultimediaCache((current) => {
-      if (!multimedia) return current
+      const multimediaSerializedDocument: MultimediaDocument | null =
+        selectSerializedDocument(store.getState(), props.state.multimedia.id)
+      if (!multimediaSerializedDocument) return current
 
       return {
         ...current,
-        [multimedia.plugin]: multimedia.state,
+        [multimediaSerializedDocument.plugin]:
+          multimediaSerializedDocument.state,
       }
     })
     props.state.multimedia.replace(selected, replacedMultimediaCache[selected])
   }
-  const [showOptions, setShowOptions] = React.useState(false)
+  const [showOptions, setShowOptions] = useState(false)
 
   const pluginSelection = (
     <select
-      value={multimedia ? multimedia.plugin : ''}
+      value={multimediaDocument ? multimediaDocument.plugin : ''}
       onChange={(e) => handleMultimediaChange(e.target.value)}
     >
       {props.config.plugins.map((plugin) => {
@@ -149,7 +159,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     </>
   )
 
-  const [rowWidth, setRowWidth] = React.useState(0)
+  const [rowWidth, setRowWidth] = useState(0)
 
   const multimediaRendered = props.state.multimedia.render({
     renderToolbar(children) {
@@ -175,7 +185,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               label={config.i18n.reset}
               onClick={() => {
                 props.state.multimedia.replace(
-                  multimedia?.plugin ?? props.config.plugins[0].name
+                  multimediaDocument?.plugin ?? props.config.plugins[0].name
                 )
               }}
             />
@@ -183,7 +193,9 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               <InlineOptions>
                 {props.config.plugins
                   .filter(
-                    (plugin) => !multimedia || plugin.name !== multimedia.plugin
+                    (plugin) =>
+                      !multimediaDocument ||
+                      plugin.name !== multimediaDocument.plugin
                   )
                   .map((plugin, i) => {
                     return (

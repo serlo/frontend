@@ -1,4 +1,3 @@
-import * as React from 'react'
 import * as MQ from 'react-mathquill'
 
 import { MathEditorProps } from './editor-props'
@@ -94,6 +93,12 @@ export function VisualEditor(props: VisualEditorProps) {
       latex={props.state}
       onChange={(ref) => {
         props.onChange(ref.latex())
+      }}
+      onCopy={(event: React.ClipboardEvent) => {
+        event.stopPropagation()
+      }}
+      onCut={(event: React.ClipboardEvent) => {
+        event.stopPropagation()
       }}
       // @ts-expect-error https://github.com/serlo/serlo-editor-issues-and-documentation/issues/67
       config={mathQuillConfig}

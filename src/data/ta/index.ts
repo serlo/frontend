@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Ta"],
+  lang: "ta",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -255,7 +254,10 @@ export const instanceData = {
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
       newAuthorText: "புதிய எழுத்தாளர்",
       newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -314,6 +316,7 @@ export const instanceData = {
       welcome: '👋 Welcome %username%!',
       bye: "👋 விரைவில் சந்திப்போம்!",
       alreadyLoggedIn: "👋 மீண்டும் வருக",
+      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -373,8 +376,9 @@ export const instanceData = {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
         code1010002: 'Sign in with NBP Account',
-        code1010013: 'Continue',
+        code1010013: 'Continue with SSO',
         code1040001: 'Register',
+        code1040002: 'Register with NBP Account',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
@@ -385,6 +389,8 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         code4000007: 'An account with the same email or username exists already.',
@@ -452,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Ta"],
+  lang: "ta",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.",
@@ -498,7 +504,7 @@ export const loggedInData = {
       title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "அமைப்புகள்"
     }, {
       url: '/auth/logout',
       title: "வெளியேறு"
@@ -532,8 +538,6 @@ export const loggedInData = {
       edit: "திருத்தம்",
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      moveToGrouped: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
@@ -653,6 +657,10 @@ export const loggedInData = {
         enableNotifs: 'Enable serlo.org notifications',
         enableNotifsMail: 'Enable notifications via e-mail',
         switchRevision: 'Switch to another revision',
+        importOther: 'Import content from other entity',
+        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate it\'s content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).',
+        importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+        importOtherButton: 'Import content',
         current: 'Current',
         author: 'Author',
         createdAt: 'when?',
@@ -759,12 +767,16 @@ export const loggedInData = {
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found'
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: 'Video URL',
         description: "விவரிப்பு:",
         title: "தலைப்பு",
         url: 'URL',
-        seoTitle: 'Title for search engines'
+        seoTitle: 'Title for search engines',
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: 'This part of the document could not be converted.'
@@ -1023,7 +1035,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },

@@ -1,28 +1,37 @@
-import { styled } from '../../ui'
+import clsx from 'clsx'
+import { MouseEventHandler } from 'react'
 
-export const HoveringToolbarButton = styled.button<{
+import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
+
+export function HoveringToolbarButton({
+  active,
+  children,
+  tooltipText,
+  onMouseDown,
+}: {
   active?: boolean
-}>(({ active, theme }) => ({
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  backgroundColor: active
-    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      theme.active.backgroundColor
-    : // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      theme.backgroundColor,
-  cursor: 'pointer',
-  boxShadow: active ? 'inset 0 1px 3px 0 rgba(0,0,0,0.50)' : undefined,
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  color: active ? theme.active.color : theme.color,
-  outline: 'none',
-  height: '25px',
-  border: 'none',
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-  borderRadius: theme.borderRadius,
-  margin: '5px',
-  padding: '0px',
-  width: '25px',
-  '&:hover': {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: theme.hoverColor,
-  },
-}))
+  children: React.ReactNode
+  tooltipText?: string
+  onMouseDown: MouseEventHandler
+}) {
+  const textParts = tooltipText?.split('(')
+
+  return (
+    <button
+      className={clsx(
+        active
+          ? 'bg-editor-primary-200 text-almost-black shadow-menu hover:text-black'
+          : '#b6b6b6 hover:text-editor-primary',
+        'b-0 m-[5px] h-6 w-6 cursor-pointer rounded p-0 outline-none',
+        'serlo-tooltip-trigger'
+      )}
+      onMouseDown={onMouseDown}
+    >
+      <EditorTooltip
+        text={textParts?.[0]}
+        hotkeys={textParts?.[1]?.slice(0, -1)}
+      />
+      {children}
+    </button>
+  )
+}

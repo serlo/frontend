@@ -1,12 +1,12 @@
-import * as React from 'react'
-
 import { VideoProps } from '.'
 import { Icon, styled, faFilm } from '../ui'
+import { colors } from '@/helper/colors'
 
 const VideoPlaceholderWrapper = styled.div({
   position: 'relative',
   width: '100%',
   textAlign: 'center',
+  color: colors.editorPrimary,
 })
 
 enum VideoType {
@@ -57,7 +57,9 @@ export function VideoRenderer(props: VideoRendererProps) {
     return (
       <VideoPlaceholderWrapper>
         <Icon icon={faFilm} size="5x" />
-        <p>{props.state.src.value ? 'Fehlerhafte URL' : null}</p>
+        <p className="text-almost-black">
+          {props.state.src.value ? 'Fehlerhafte URL' : null}
+        </p>
       </VideoPlaceholderWrapper>
     )
   }

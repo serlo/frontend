@@ -1,28 +1,25 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { SubDocumentProps } from '.'
-import { getDocument, getPlugin } from '../../store'
-import { useTheme } from '../../ui'
-import { useScopedSelector } from '../store'
+import { selectDocument, selectPlugin, useAppSelector } from '../../store'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
-  const document = useScopedSelector(getDocument(id))
-  const plugin = useScopedSelector(
-    (state) => document && getPlugin(document.plugin)(state)
+  const document = useAppSelector((state) => selectDocument(state, id))
+  const plugin = useAppSelector(
+    (state) => document && selectPlugin(state, document.plugin)
   )
-  const focusRef = React.useRef<HTMLInputElement & HTMLTextAreaElement>(null)
-  const theme = useTheme()
+  const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
   if (!document) return null
   if (!plugin) {
     // eslint-disable-next-line no-console
-    console.log('Plugin does not exist')
+    console.warn('Plugin does not exist')
     return null
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const defaultConfig =
-    typeof plugin.config === 'function' ? plugin.config(theme) : plugin.config
+    typeof plugin.config === 'function' ? plugin.config() : plugin.config
   const overrideConfig = (pluginProps && pluginProps.config) || {}
   const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 

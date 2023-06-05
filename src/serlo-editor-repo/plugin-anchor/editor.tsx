@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { AnchorProps } from '.'
 import { EditorInput } from '../editor-ui'
 import { Icon, faLink, styled } from '../ui'

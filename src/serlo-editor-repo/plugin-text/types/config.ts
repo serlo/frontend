@@ -4,25 +4,19 @@ import { SerializedScalarStateType } from '../../plugin'
 import { DeepPartial } from '../../ui'
 import { Heading } from './text-editor'
 
-/** @public */
 export type TextEditorState = SerializedScalarStateType<
   Descendant[],
   { value: Descendant[]; selection: Range | null }
 >
 
-/** @public */
 export interface TextEditorConfig {
   placeholder?: TextEditorPluginConfig['placeholder']
-  controls?: TextEditorControl[]
+  formattingOptions?: TextEditorFormattingOption[]
   i18n?: DeepPartial<TextEditorPluginConfig['i18n']>
-  theme?: DeepPartial<TextEditorPluginConfig['theme']>
-  blockquote?: string
   noLinebreaks?: boolean
-  disableMarkdownShortcuts?: boolean
 }
 
-/** @public */
-export enum TextEditorControl {
+export enum TextEditorFormattingOption {
   code = 'code',
   colors = 'colors',
   headings = 'headings',
@@ -35,9 +29,6 @@ export enum TextEditorControl {
 }
 
 interface I18n {
-  blockquote: {
-    toggleTitle: string
-  }
   code: {
     toggleTitle: string
   }
@@ -86,52 +77,9 @@ interface I18n {
   }
 }
 
-export interface ColorsTheme {
-  colors: string[]
-  defaultColor: string
-}
-
-interface Theme {
-  backgroundColor: string
-  color: string
-  hoverColor: string
-  borderColor: string
-  borderRadius: string
-  active: {
-    backgroundColor: string
-    color: string
-  }
-  dropDown: {
-    backgroundColor: string
-  }
-  suggestions: {
-    background: {
-      default: string
-      highlight: string
-    }
-    text: {
-      default: string
-      highlight: string
-    }
-  }
-  overlay: {
-    backgroundColor: string
-    boxShadow: string
-    color: string
-  }
-  controls: {
-    colors: ColorsTheme
-    headings: Heading['level'][]
-  }
-}
-
-/** @public */
 export interface TextEditorPluginConfig {
   placeholder: string
-  controls: TextEditorControl[]
+  formattingOptions: TextEditorFormattingOption[]
   i18n: I18n
-  theme: Theme
-  blockquote?: string
   noLinebreaks?: boolean
-  disableMarkdownShortcuts: boolean
 }

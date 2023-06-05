@@ -19,7 +19,7 @@ import { InputExerciseType } from './input-exercise-type'
 
 /**
  * @param config - {@link InputExerciseConfig | Plugin configuration}
-  @public */
+ */
 export function createInputExercisePlugin(
   config: InputExerciseConfig
 ): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
@@ -46,14 +46,11 @@ export function createInputExercisePlugin(
   }
 }
 
-/** @public */
 export interface InputExerciseConfig {
   feedback: ChildStateTypeConfig
   i18n?: DeepPartial<InputExercisePluginConfig['i18n']>
-  theme?: Partial<InputExercisePluginConfig['theme']>
 }
 
-/** @public */
 export type InputExercisePluginState = ObjectStateType<{
   type: StringStateType
   unit: StringStateType
@@ -65,7 +62,6 @@ export type InputExercisePluginState = ObjectStateType<{
     }>
   >
 }>
-/** @public */
 export interface InputExercisePluginConfig {
   i18n: {
     types: Record<InputExerciseType, string>
@@ -85,11 +81,9 @@ export interface InputExercisePluginConfig {
       wrong: string
     }
   }
-  theme: { borderColor: string; borderStyle: string }
 }
 export { InputExerciseType }
 
-/** @public */
 export type InputExerciseProps = EditorPluginProps<
   InputExercisePluginState,
   InputExerciseConfig

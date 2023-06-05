@@ -5,13 +5,11 @@ import {
   InputExercisePluginConfig,
   InputExerciseType,
 } from '.'
-import { useTheme } from '../ui'
 
 export function useInputExerciseConfig(
   config: InputExerciseConfig
 ): InputExercisePluginConfig {
-  const { i18n = {}, theme = {} } = config
-  const defaultTheme = useTheme()
+  const { i18n = {} } = config
 
   return {
     i18n: R.mergeDeepRight(
@@ -35,10 +33,5 @@ export function useInputExerciseConfig(
       },
       i18n
     ),
-    theme: {
-      borderColor: defaultTheme.renderer.primary.background,
-      borderStyle: '3px solid',
-      ...theme,
-    },
   }
 }

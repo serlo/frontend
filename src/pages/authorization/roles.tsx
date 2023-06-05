@@ -69,7 +69,7 @@ function Content() {
         <input
           ref={usernameInput}
           placeholder="Username"
-          className="serlo-input-font-reset serlo-button-light focus:bg-brand-300 focus:text-brand hover:bg-brand-100 focus:outline-none mr-5"
+          className="serlo-button-light serlo-input-font-reset mr-5 hover:bg-brand-100 focus:bg-brand-300 focus:text-brand focus:outline-none"
         />
         <button
           className="serlo-button-blue"
@@ -131,7 +131,7 @@ function Content() {
       return (
         <li
           key={username}
-          className="flex justify-between my-3 p-3 -ml-3 hover:bg-brand-50 rounded-md"
+          className="my-3 -ml-3 flex justify-between rounded-md p-3 hover:bg-brand-50"
         >
           <Link href={alias}>{username}</Link>
           <span className="ml-3">

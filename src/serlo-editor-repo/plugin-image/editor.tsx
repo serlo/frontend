@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect } from 'react'
 
 import { ImageProps } from '.'
 import {
@@ -6,25 +6,22 @@ import {
   OverlayCheckbox,
   OverlayInput,
   OverlayTextarea,
-  useScopedStore,
 } from '../core'
 import { EditorButton, EditorInput, EditorInlineSettings } from '../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../plugin'
-import { isEmpty, hasFocusedChild } from '../store'
-import { EditorThemeProps, Icon, faImages, faRedoAlt, styled } from '../ui'
+import { store, selectIsDocumentEmpty, selectHasFocusedChild } from '../store'
+import { Icon, faImages, faRedoAlt, styled } from '../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
+import { colors, legacyEditorTheme } from '@/helper/colors'
 
-const ImgPlaceholderWrapper = styled.div<EditorThemeProps>((props) => {
-  return {
-    position: 'relative',
-    width: '100%',
-    textAlign: 'center',
-    opacity: '0.4',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: props.theme.editor.primary.background,
-  }
+const ImgPlaceholderWrapper = styled.div({
+  position: 'relative',
+  width: '100%',
+  textAlign: 'center',
+  opacity: '0.4',
+  color: colors.editorPrimary,
 })
 
 const InputRow = styled.span({
@@ -38,41 +35,42 @@ const OverlayButtonWrapper = styled.div({
   textAlign: 'right',
 })
 
-const Failed = styled.div<EditorThemeProps>((props) => {
-  return {
-    fontWeight: 'bold',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    color: props.theme.editor.danger.background,
-  }
+const Failed = styled.div({
+  fontWeight: 'bold',
+  color: legacyEditorTheme.danger.background,
 })
 
 const Caption = styled.div({
   marginTop: '1rem',
   textAlign: 'center',
   fontStyle: 'italic',
-  'span[contenteditable]': { width: 'auto !important' },
 })
 
 export function ImageEditor(props: ImageProps) {
   const { editable, focused, state } = props
   const config = useImageConfig(props.config)
-  const scopedStore = useScopedStore()
   usePendingFileUploader(state.src, config.upload)
   const { i18n } = config
 
   const captionIsEmpty =
-    !state.caption.defined || isEmpty(state.caption.id)(scopedStore.getState())
-  const hasFocus = focused || hasFocusedChild(props.id)(scopedStore.getState())
+    !state.caption.defined ||
+    selectIsDocumentEmpty(store.getState(), state.caption.id)
+  const hasFocus = focused || selectHasFocusedChild(store.getState(), props.id)
 
-  if (!editable)
+  useEffect(() => {
+    if (editable && !state.caption.defined) {
+      state.caption.create({ plugin: 'text' })
+    }
+  }, [editable, state.caption])
+
+  if (!editable) {
     return (
       <>
         {renderImage()}
         {captionIsEmpty ? null : renderCaption()}
       </>
     )
-
-  if (!state.caption.defined) state.caption.create({ plugin: 'text' })
+  }
 
   return (
     <>
@@ -167,17 +165,15 @@ function PrimaryControls(props: ImageProps) {
       case 'link': {
         const { link } = props.state
         return (
-          <>
-            <EditorInput
-              label={i18n.link.href.label}
-              placeholder={i18n.link.href.placeholder}
-              value={link.defined ? link.href.value : ''}
-              onChange={handleChange(props)('href')}
-              width="90%"
-              inputWidth="70%"
-              ref={props.autofocusRef}
-            />
-          </>
+          <EditorInput
+            label={i18n.link.href.label}
+            placeholder={i18n.link.href.placeholder}
+            value={link.defined ? link.href.value : ''}
+            onChange={handleChange(props)('href')}
+            width="90%"
+            inputWidth="70%"
+            ref={props.autofocusRef}
+          />
         )
       }
       default:

@@ -2,7 +2,6 @@ import {
   faChevronUp,
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 
 import { FaIcon } from '../fa-icon'
 import DonateIcon from '@/assets-webkit/img/footer-donate.svg'
@@ -10,6 +9,7 @@ import ParticipateIcon from '@/assets-webkit/img/footer-participate.svg'
 import { Link } from '@/components/content/link'
 import { FooterNav } from '@/components/navigation/footer-nav'
 import { useInstanceData } from '@/contexts/instance-context'
+import { tw } from '@/helper/tw'
 
 export function Footer() {
   const { footerData } = useInstanceData()
@@ -25,54 +25,51 @@ function About() {
   const { footerData, strings } = useInstanceData()
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="bg-brand w-full min-h-[54px] relative">
+      <div className="relative min-h-[54px] w-full bg-brand">
         <div
-          className={clsx(
-            'absolute right-4 top-2 text-white hover:bg-brand-500',
-            'w-10 h-10 items-center justify-center rounded-full flex',
-            'cursor-pointer transition-colors'
-          )}
+          className={tw`
+            absolute right-4 top-2 flex h-10
+            w-10 cursor-pointer items-center justify-center rounded-full text-white
+            transition-colors hover:bg-brand-500
+          `}
           onClick={() => window.scrollTo(0, 0)}
           title={strings.footer.toTop}
         >
           <FaIcon icon={faChevronUp} className="h-5" />
         </div>
       </div>
-      <div className="text-lg shrink">
-        <div className="bg-brand-500 text-white pt-8 pb-4 px-side md:px-side-lg">
-          <div className="font-bold my-1">{strings.footer.summaryHeading}</div>
+      <div className="shrink text-lg">
+        <div className="bg-brand-500 px-side pt-8 pb-4 text-white md:px-side-lg">
+          <div className="my-1 font-bold">{strings.footer.summaryHeading}</div>
           <div className="mt-4 leading-browser">
             {strings.footer.summaryText}
           </div>
           <div>
             <Link
               href={footerData.aboutHref}
-              path={['footer_about']}
-              className="serlo-button-blue-transparent py-0.5 text-white my-4"
+              className="serlo-button-blue-transparent my-4 py-0.5 text-white"
             >
               <FaIcon icon={faChevronCircleRight} className="h-4" />{' '}
               {strings.footer.learnMore}
             </Link>
           </div>
         </div>
-        <div className="bg-brandgreen flex justify-around py-4">
+        <div className="flex justify-around bg-brandgreen py-4">
           <Link
             href={footerData.participationHref}
-            path={['footer_participation']}
-            className="flex flex-col items-center hover:no-underline group"
+            className="group flex flex-col items-center hover:no-underline"
           >
             <ParticipateIcon className="w-14" />
-            <div className="serlo-button py-0.5 mt-2 text-white hover:bg-brand group-hover:bg-brand">
+            <div className="serlo-button mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.participate}
             </div>
           </Link>
           <Link
             href={footerData.donationHref}
-            path={['footer_donation']}
-            className="flex flex-col items-center hover:no-underline group"
+            className="group flex flex-col items-center hover:no-underline"
           >
             <DonateIcon className="w-14" />
-            <div className="serlo-button py-0.5 mt-2 text-white hover:bg-brand group-hover:bg-brand">
+            <div className="serlo-button mt-2 py-0.5 text-white hover:bg-brand group-hover:bg-brand">
               {strings.footer.donate}
             </div>
           </Link>

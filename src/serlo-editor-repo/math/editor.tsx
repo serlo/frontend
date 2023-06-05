@@ -1,8 +1,8 @@
-import * as React from 'react'
+import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
-import { EditorTextarea, HoverOverlay, styled } from '../editor-ui'
-import { faQuestionCircle, Icon, merge, useEditorTheme } from '../ui'
+import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
+import { faQuestionCircle, Icon, merge } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { MathEditorConfig } from './editor-config'
@@ -46,9 +46,9 @@ const mathEditorTextareaStyle = {
 }
 
 const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
-  const [latex, setLatex] = React.useState(props.defaultValue)
+  const [latex, setLatex] = useState(props.defaultValue)
   const { onChange } = props
-  const parentOnChange = React.useCallback(
+  const parentOnChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value
       setLatex(value)
@@ -58,15 +58,15 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
   )
 
   // Autofocus textarea
-  const textareaRef = React.createRef<HTMLTextAreaElement>()
-  React.useEffect(() => {
+  const textareaRef = createRef<HTMLTextAreaElement>()
+  useEffect(() => {
     const textarea = textareaRef.current
     if (textarea)
       // Timeout is needed because hovering overlay is positioned only after render of this
       setTimeout(() => {
         textarea.focus()
       })
-    // componentDidMount behaviour
+    // Only run on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -75,6 +75,9 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
       style={mathEditorTextareaStyle}
       onChange={parentOnChange}
       onCopy={(event: React.ClipboardEvent) => {
+        event.stopPropagation()
+      }}
+      onCut={(event: React.ClipboardEvent) => {
         event.stopPropagation()
       }}
       onMoveOutRight={props.onMoveOutRight}
@@ -96,18 +99,16 @@ const KeySpan = styled.span({
 
 /**
  * @param props - The {@link @edtr-io/math#MathEditorProps | math editor props}
- * @public
  */
 export function MathEditor(props: MathEditorProps) {
-  const anchorRef = React.createRef<HTMLDivElement>()
-  const [helpOpen, setHelpOpen] = React.useState(false)
-  const [hasError, setHasError] = React.useState(false)
+  const anchorRef = createRef<HTMLDivElement>()
+  const [helpOpen, setHelpOpen] = useState(false)
+  const [hasError, setHasError] = useState(false)
 
   const { visual, readOnly, state, disableBlock } = props
 
   const useVisualEditor = visual && !hasError
 
-  const editorTheme = useEditorTheme()
   const config = merge<MathEditorConfig>({
     fallback: {
       i18n: {
@@ -153,18 +154,6 @@ export function MathEditor(props: MathEditorProps) {
               </p>
             </>
           )
-        },
-      },
-      theme: {
-        backgroundColor: 'transparent',
-        color: editorTheme.editor.color,
-        hoverColor: editorTheme.editor.primary.background,
-        active: {
-          backgroundColor: '#b6b6b6',
-          color: editorTheme.editor.backgroundColor,
-        },
-        dropDown: {
-          backgroundColor: editorTheme.editor.backgroundColor,
         },
       },
     },
@@ -243,24 +232,23 @@ export function MathEditor(props: MathEditorProps) {
           <MathRenderer {...props} ref={anchorRef} />
         )}
         {helpOpen ? null : (
-          <HoverOverlay position="above" anchor={anchorRef}>
+          <HoverOverlayOld position="above" anchor={anchorRef}>
             <div
               onClick={(e) => {
                 e.stopPropagation()
               }}
             >
               <Dropdown
-                config={config}
                 value={useVisualEditor ? 'visual' : 'latex'}
                 onChange={(e) => {
                   if (hasError) setHasError(false)
                   props.onEditorChange(e.target.value === 'visual')
                 }}
               >
-                <Option config={config} active={useVisualEditor} value="visual">
+                <Option active={useVisualEditor} value="visual">
                   {config.i18n.editors.visual}
                 </Option>
-                <Option config={config} active={!useVisualEditor} value="latex">
+                <Option active={!useVisualEditor} value="latex">
                   {config.i18n.editors.latex}
                 </Option>
               </Dropdown>
@@ -276,12 +264,7 @@ export function MathEditor(props: MathEditorProps) {
                 />
               )}
               {useVisualEditor && (
-                <Button
-                  config={config}
-                  onMouseDown={() => {
-                    setHelpOpen(true)
-                  }}
-                >
+                <Button onMouseDown={() => setHelpOpen(true)}>
                   <Icon icon={faQuestionCircle} />
                 </Button>
               )}
@@ -296,7 +279,7 @@ export function MathEditor(props: MathEditorProps) {
                 <MathEditorTextArea {...props} defaultValue={state} />
               )}
             </div>
-          </HoverOverlay>
+          </HoverOverlayOld>
         )}
       </>
     )

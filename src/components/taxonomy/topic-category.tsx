@@ -21,12 +21,7 @@ export interface TopicCategoryProps {
   id?: number
 }
 
-export function TopicCategory({
-  links,
-  full,
-  category,
-  id,
-}: TopicCategoryProps) {
+export function TopicCategory({ links, full, category }: TopicCategoryProps) {
   const [mounted, setMounted] = useState(false)
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
@@ -49,7 +44,7 @@ export function TopicCategory({
       key={category}
       className={clsx('mt-5 first:mt-0', full && 'mb-6 mt-0 mobile:mt-2')}
     >
-      <h4 className="text-truegray-900 text-lg mb-4 font-bold">
+      <h4 className="mb-4 text-lg font-bold text-gray-900">
         {strings.categories[category]}{' '}
         <FaIcon icon={categoryIconMapping[category]} />
       </h4>
@@ -58,19 +53,18 @@ export function TopicCategory({
     </ul>
   )
 
-  function renderLink(link: TaxonomyLink, i: number) {
+  function renderLink(link: TaxonomyLink) {
     if (link.unrevised && !mounted) return null
     if (link.unrevised && mounted && !auth) return null
 
     return (
-      <li className="block mb-3 leading-cozy" key={link.url + '_' + link.title}>
+      <li className="mb-3 block leading-cozy" key={link.url + '_' + link.title}>
         <Link
           className={clsx(
             link.unrevised ? 'opacity-60' : undefined,
             'text-[1.2rem]'
           )}
           href={link.url}
-          path={full ? [category, i] : [id!, category, i]}
         >
           {link.title}
           {link.unrevised && (

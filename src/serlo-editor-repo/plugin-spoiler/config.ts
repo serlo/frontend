@@ -3,7 +3,7 @@ import * as R from 'ramda'
 import { SpoilerConfig, SpoilerPluginConfig } from '.'
 
 export function useSpoilerConfig(config: SpoilerConfig): SpoilerPluginConfig {
-  const { i18n = {}, theme = {} } = config
+  const { i18n = {} } = config
 
   return {
     i18n: R.mergeDeepRight(
@@ -14,9 +14,5 @@ export function useSpoilerConfig(config: SpoilerConfig): SpoilerPluginConfig {
       },
       i18n
     ),
-    theme: {
-      color: '#f5f5f5',
-      ...theme,
-    },
   }
 }

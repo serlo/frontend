@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["De"],
+  lang: "de",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -255,7 +254,10 @@ export const instanceData = {
       wipLabelNote: "Diese Bearbeitung ist noch in Arbeit. Bitte noch nicht reviewen.",
       newAuthorText: "neuer Autor",
       newAuthorNote: "Diese Autor*in hat noch nicht viele Bearbeitungen gemacht und freut sich bestimmt über ein schnelles Review.",
-      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden."
+      noUnrevisedRevisions: "Aktuell gibt es keine Bearbeitungen von dir, die sich noch im Review befinden.",
+      importedContentText: "importiert",
+      importedContentNote: "Diese Bearbeitung enthält importierte Inhalte",
+      importedContentIdentifier: "Inhalt importiert von"
     },
     errors: {
       title: "😬 Auch Webseiten machen mal Fehler…",
@@ -314,6 +316,7 @@ export const instanceData = {
       welcome: "👋 Willkommen %username%!",
       bye: "👋 Bis bald!",
       alreadyLoggedIn: "👋 Willkommen zurück",
+      warningLoggedOut: "⚠️ Du wurdest abgemeldet. Bitte melde dich wieder an und benutze dann \"Änderungen laden\" um deine aktuellen Änderungen wiederherzustellen.",
       revisionSaved: "Die Bearbeitung wurde gespeichert und wird bald überprüft 👍",
       revisionAccepted: "Die Bearbeitung wurde akzeptiert ✅",
       revisionRejected: "Die Bearbeitung wurde nicht akzeptiert ❎",
@@ -372,9 +375,10 @@ export const instanceData = {
       messages: {
         code1010003: "Zur Sicherheit überprüfen wir hier noch mal, ob das dein Account ist.",
         code1010001: "Anmelden",
-        code1010002: 'Sign in with NBP Account',
-        code1010013: "Weiter",
+        code1010002: "Mit NBP Account anmelden",
+        code1010013: "Weiter mit SSO",
         code1040001: "Account anlegen",
+        code1040002: "Mit NBP Account registrieren",
         code1040003: "Weiter",
         code1050001: "Deine Änderungen wurden gespeichert! 🎉",
         code1060001: "Du hast deinen Account wiederhergestellt. Bitte ändere dein Passwort in den nächsten Minuten.",
@@ -385,6 +389,8 @@ export const instanceData = {
         code1080002: "Du hast deine E-Mail-Adresse erfolgreich bestätigt.",
         code4000001: '%reason%',
         code4000002: "%field% bitte noch angeben.",
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006: "Der Benutzername, die E-Mail-Adresse oder das Passwort stimmen so nicht. Bitte überprüfe deine Eingabe.",
         code4000007: "Ein Account mit der selben E-Mailadresse oder dem selben Benutzernamen existiert schon.",
@@ -452,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["De"],
+  lang: "de",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Wir ermöglichen Schüler*innen und Studierenden selbständig und im eigenen Tempo zu lernen – unabhängig von den finanziellen Möglichkeiten ihrer Eltern, denn serlo.org ist und bleibt komplett kostenlos.\n\nUnsere Vision ist es, hochwertige Bildung weltweit frei verfügbar zu machen.",
@@ -532,8 +538,6 @@ export const loggedInData = {
       edit: "Überarbeiten",
       editTax: "Titel & Beschreibung bearbeiten",
       unrevisedEdit: "Zeige neue Bearbeitungen",
-      moveToGrouped: "Inhalt zu anderer Gruppe verschieben",
-      moveToTextExercise: "Inhalt zu anderer Textaufgabe verschieben",
       sortEntities: "Inhalte sortieren",
       newEntity: "Neuer Inhalt",
       editProfile: "Profil bearbeiten",
@@ -653,6 +657,10 @@ export const loggedInData = {
         enableNotifs: "Benachrichtigungen auf serlo.org erhalten",
         enableNotifsMail: "Benachrichtigungen per E-mail erhalten",
         switchRevision: "Andere Version auswählen",
+        importOther: "Aus einem anderen Inhalt importieren",
+        importOtherExplanation: "Du kannst den Content eines anderen Inhalts hier importieren. Füge dazu einfach hier die URL oder ID eines anderen Inhalts auf serlo.org ein. (Nur gleiche Inhaltstypen sind erlaubt – also Artikel können nur in Artikeln importiert werden). Diese Funktion ist NICHT dazu gedacht exakte Kopien anzulegen. Aufgabengruppen und Kurse werden nicht unterstützt (aber Aufgaben und Kursseiten klappen)",
+        importOtherWarning: "Vorsicht: Diese Funktion überschreibt alle bestehenden Inhalte in diesem Editor.",
+        importOtherButton: "Inhalte Importieren",
         current: "Aktuell",
         author: "Verfasser",
         createdAt: "Zeitstempel",
@@ -759,12 +767,16 @@ export const loggedInData = {
         italic: "Kursiv (%ctrlOrCmd% + I)",
         noItemsFound: "keine Einträge gefunden"
       },
+      image: {
+        noImagePasteInLists: "Einfügen von Bildern ist innerhalb von Listen nicht möglich."
+      },
       video: {
         videoUrl: 'Video URL',
         description: "Beschreibung",
         title: "Titel",
         url: 'URL',
-        seoTitle: "Titel für Suchmaschinen"
+        seoTitle: "Titel für Suchmaschinen",
+        noVideoPasteInLists: "Einfügen von Videos ist innerhalb von Listen nicht möglich."
       },
       error: {
         convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
@@ -1022,7 +1034,7 @@ Dein Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>wunderbar dich auf serlo.org zu haben 🎉</p>
 <p>Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Dein Community-Support 💚</p>`
     },
     invalid: {

@@ -1,5 +1,4 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
@@ -17,6 +16,7 @@ import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { useAddPageRevision } from '@/mutations/use-add-page-revision-mutation'
 import {
   OnSaveData,
@@ -50,7 +50,14 @@ export function AddRevision({
       setUserReady(isProduction ? auth !== null : true)
     }
     void confirmAuth()
-  }, [auth])
+
+    // special case for add-revision route
+    if (userReady !== undefined && !auth) {
+      showToastNotice(strings.notices.warningLoggedOut, 'warning', 18000)
+    }
+    // do not rerun on userReady change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [auth, strings])
 
   if (!setEntityMutation) return null
 
@@ -114,11 +121,7 @@ export function AddRevision({
       </Head>
       {renderBacklink()}
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
-      <div
-        className={clsx(
-          'max-w-[816px] mx-auto mb-24 edtr-io serlo-editor-hacks'
-        )}
-      >
+      <div className="edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
         <SerloEditor
           entityNeedsReview={entityNeedsReview}
           onSave={onSave}

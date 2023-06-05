@@ -4,16 +4,15 @@ import { Link } from './link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { FrontendImgNode } from '@/frontend-node-types'
 import { hasVisibleContent } from '@/helper/has-visible-content'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 interface ImageProps {
   element: FrontendImgNode
-  path: NodePath
   extraInfo?: JSX.Element
   renderNested: RenderNestedFunction
 }
 
-export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
+export function Image({ element, extraInfo, renderNested }: ImageProps) {
   const router = useRouter()
   const { strings } = useInstanceData()
   const { alt, href, maxWidth, src, caption } = element
@@ -34,7 +33,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
     >
       <div style={maxWidth ? { maxWidth: maxWidth } : {}} className="mx-auto">
         {href ? (
-          <Link className="w-full block" href={href} path={path} noExternalIcon>
+          <Link className="block w-full" href={href} noExternalIcon>
             {renderImage()}
           </Link>
         ) : (
@@ -61,7 +60,7 @@ export function Image({ element, path, extraInfo, renderNested }: ImageProps) {
   function renderCaption() {
     if (!caption || !hasVisibleContent(caption)) return null
     return (
-      <figcaption className="italic mt-3">
+      <figcaption className="mt-3 italic">
         {renderNested(caption, 'caption')}
       </figcaption>
     )

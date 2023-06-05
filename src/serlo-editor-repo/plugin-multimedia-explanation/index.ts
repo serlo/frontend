@@ -16,7 +16,6 @@ import { MultimediaExplanationEditor } from './editor'
 
 /**
  * @param config - {@link MultimediaExplanationConfig | Plugin configuration}
- * @public
  */
 export function createMultimediaExplanationPlugin(
   config: MultimediaExplanationConfig
@@ -35,7 +34,6 @@ export function createMultimediaExplanationPlugin(
   }
 }
 
-/** @public */
 export interface MultimediaExplanationConfig
   extends Omit<MultimediaExplanationPluginConfig, 'features' | 'i18n'> {
   explanation: ChildStateTypeConfig
@@ -45,7 +43,6 @@ export interface MultimediaExplanationConfig
   }
 }
 
-/** @public */
 export type MultimediaExplanationPluginState = ObjectStateType<{
   explanation: ChildStateType
   multimedia: ChildStateType
@@ -53,7 +50,6 @@ export type MultimediaExplanationPluginState = ObjectStateType<{
   width: NumberStateType
 }>
 
-/** @public */
 export interface MultimediaExplanationPluginConfig {
   plugins: {
     name: string
@@ -75,7 +71,6 @@ export interface MultimediaExplanationPluginConfig {
   }
 }
 
-/** @public */
 export type MultimediaExplanationProps = EditorPluginProps<
   MultimediaExplanationPluginState,
   MultimediaExplanationConfig

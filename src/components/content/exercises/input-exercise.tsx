@@ -7,11 +7,11 @@ import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { tw } from '@/helper/tw'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
-  path?: NodePath
   renderNested: RenderNestedFunction
   isRevisionView?: boolean
   context: {
@@ -57,13 +57,13 @@ export function InputExercise({
   return (
     <div className="mx-side mb-7">
       <input
-        className={clsx(
-          'print:hidden serlo-input-font-reset',
-          'rounded-3xl py-2 px-3 font-bold',
-          'border-3 border-brand-400 mb-5 text-white focus:border-brand active:border-brand',
-          'focus:outline-none focus:bg-white focus:text-brand focus:opacity-100 focus:placeholder-opacity-0',
-          'placeholder-brand'
-        )}
+        className={tw`
+            serlo-input-font-reset mb-5
+            rounded-3xl border-3 border-brand-400 py-2
+            px-3 font-bold text-brand placeholder-brand focus:border-brand focus:bg-white
+            focus:text-brand focus:placeholder-opacity-0 focus:opacity-100 focus:outline-none
+            active:border-brand print:hidden
+          `}
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -81,9 +81,8 @@ export function InputExercise({
         <>
           <a
             className={clsx(
-              'serlo-button-blue',
-              'mt-4',
-              value === '' && 'opacity-0 pointer-events-none'
+              'serlo-button-blue mt-4',
+              value === '' && 'pointer-events-none opacity-0'
             )}
             onClick={evaluate}
           >
@@ -159,9 +158,9 @@ export function InputExercise({
     return data.answers.map((answer) => (
       <div
         key={answer.value}
-        className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info"
+        className="serlo-revision-extra-info mb-4 rounded-xl bg-editor-primary-100 py-2"
       >
-        <span className="font-bold text-sm mx-side">
+        <span className="mx-side text-sm font-bold">
           {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:
         </span>
         {answer.value}

@@ -26,7 +26,7 @@ export function PageTitle({
         className={clsx(
           'serlo-h1 mt-20 special-hyphens-initial',
           extraBold &&
-            'font-extrabold tracking-tight text-4xl text-truegray-700'
+            'text-4xl font-extrabold tracking-tight text-almost-black'
         )}
       >
         {title} {icon}

@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch'
 import lodash from 'lodash'
-import * as React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import { GeogebraProps } from '.'
 import { styled } from '../ui'
@@ -93,10 +93,10 @@ export function GeogebraRenderer({
 }
 
 function useCachedApiResponse(id?: string): ApiResponse {
-  const [data, setApiResponse] = React.useState<ApiResponse>(Error.NotExisting)
-  const cache = React.useRef<{ [src: string]: ApiResponse }>({})
+  const [data, setApiResponse] = useState<ApiResponse>(Error.NotExisting)
+  const cache = useRef<{ [src: string]: ApiResponse }>({})
 
-  const debouncedRequestAppletData = React.useRef<(src?: string) => void>(
+  const debouncedRequestAppletData = useRef<(src?: string) => void>(
     lodash.debounce((src?: string) => {
       if (!src) return
 
@@ -151,7 +151,7 @@ function useCachedApiResponse(id?: string): ApiResponse {
     }, 500)
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     debouncedRequestAppletData.current(id)
   }, [debouncedRequestAppletData, id])
 

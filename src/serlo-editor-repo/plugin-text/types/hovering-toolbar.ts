@@ -1,11 +1,11 @@
 import { Editor as SlateEditor } from 'slate'
 
-import type { TextEditorControl } from '.'
+import type { TextEditorFormattingOption } from '.'
 
 export type ControlButton = ActionControlButton | NestedControlButton
 
 export interface ActionControlButton {
-  name: TextEditorControl
+  name: TextEditorFormattingOption
   title: string
   isActive(editor: SlateEditor): boolean
   onClick(editor: SlateEditor): void

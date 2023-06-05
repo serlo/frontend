@@ -54,7 +54,7 @@ function Content({ id, licenses }: UpdateLicenseProps) {
           {licenses.map(renderOption)}
         </select>
         <button
-          className="ml-4 serlo-button-blue"
+          className="serlo-button-blue ml-4"
           onClick={() => void updateLicense({ entityId: id, licenseId })}
         >
           Update

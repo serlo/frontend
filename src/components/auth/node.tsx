@@ -46,7 +46,7 @@ export function Node({
       return (
         <span
           key={`${uiText.id}`}
-          className="text-red-500 italic -mt-2 mb-2 block ml-3 special-hyphens-initial"
+          className="-mt-2 mb-2 ml-3 block italic text-red-500 special-hyphens-initial"
         >
           <Message uiText={uiText} fieldName={fieldName} />
         </span>
@@ -64,25 +64,52 @@ export function Node({
           />
         )
 
-      case 'checkbox':
-      case 'button':
+      case 'checkbox': {
         triggerSentry({
           message: `kratos: tried to render input node which is not supported atm: ${attributes.type}`,
         })
         return null
-
-      case 'submit':
-        // eslint-disable-next-line no-case-declarations
+      }
+      // provider - NBP button
+      case 'button': {
         const label = node.meta.label?.id
           ? getKratosMessageString(
               node.meta.label.id,
               strings.auth.messages,
-              strings.auth.messages.code1010013
+              node.meta.label?.text ?? strings.auth.messages.code1010002
             )
           : undefined
         return (
+          <div className="mt-10">
+            <hr />
+            <button
+              className="serlo-button-blue mt-10 block w-full py-2 text-xl"
+              name={attributes.name}
+              onClick={(e) => {
+                void onSubmit(e, (attributes as { value: string }).value)
+              }}
+              value={(attributes.value as string) || ''}
+              disabled={attributes.disabled || disabled}
+            >
+              {label}
+            </button>
+          </div>
+        )
+      }
+
+      case 'submit': {
+        // eslint-disable-next-line no-case-declarations
+        const label =
+          node.meta.label?.id &&
+          getKratosMessageString(
+            node.meta.label.id,
+            strings.auth.messages,
+            strings.auth.messages.code1010013
+          )
+
+        return (
           <button
-            className="text-xl serlo-button-green block w-full py-2 mt-10"
+            className="serlo-button-green mt-10 block w-full py-2 text-xl"
             name={attributes.name}
             onClick={(e) => {
               void onSubmit(e, (attributes as { value: string }).value)
@@ -91,12 +118,13 @@ export function Node({
             disabled={attributes.disabled || disabled}
           >
             {isLoading ? (
-              <FaIcon icon={faSpinner} className={clsx('animate-spin-slow')} />
+              <FaIcon icon={faSpinner} className="animate-spin-slow" />
             ) : (
               (label as string)
             )}
           </button>
         )
+      }
 
       default:
         if (attributes.disabled || !attributes.required) return null
@@ -104,9 +132,9 @@ export function Node({
         return (
           <div>
             <label
-              className={clsx('block my-6', attributes.required && 'font-bold')}
+              className={clsx('my-6 block', attributes.required && 'font-bold')}
             >
-              <span className="flex justify-between content-end">
+              <span className="flex content-end justify-between">
                 {fieldName}
               </span>
               {renderInput(attributes)}
@@ -141,7 +169,7 @@ export function Node({
     if (attributes.name === 'traits.interest') {
       const optionClass = 'text-brand font-serlo bg-white p-1'
       return (
-        <div className="after:content-['▾'] after:absolute after:-ml-9 after:mt-2.5 after:text-brand after:text-2xl border-solid after:pointer-events-none">
+        <div className="border-solid after:pointer-events-none after:absolute after:-ml-9 after:mt-2.5 after:text-2xl after:text-brand after:content-['▾']">
           <select
             {...{
               ...basicFields,
@@ -188,14 +216,14 @@ export function Node({
 
   function renderShowHide() {
     return (
-      <div className="text-right mb-20">
+      <div className="mb-20 text-right">
         <button
           type="button" // keep this, otherwise enter does not submit form any more
           onClick={(e) => {
             e.preventDefault()
             setShowPassword(!showPassword)
           }}
-          className="serlo-button-blue-transparent text-base py-0 mr-1.5 relative block -mt-24 ml-auto"
+          className="serlo-button-blue-transparent relative mr-1.5 -mt-24 ml-auto block py-0 text-base"
         >
           <FaIcon icon={showPassword ? faEyeSlash : faEye} />{' '}
           {showPassword ? 'hide' : 'show'}
@@ -208,7 +236,7 @@ export function Node({
     if (flowType !== FlowType.registration && flowType !== FlowType.settings)
       return null
     return (
-      <p className="-mt-6 text-truegray-500 ml-3 mb-4">
+      <p className="-mt-6 ml-3 mb-4 text-gray-500">
         {strings.auth.register.passwordRequirements}
       </p>
     )

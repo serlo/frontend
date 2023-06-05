@@ -1,17 +1,24 @@
-import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
+import {
+  Descendant,
+  Element,
+  Node,
+  Editor as SlateEditor,
+  Transforms,
+  Location,
+} from 'slate'
 
 import { StateTypeValueType } from '../../plugin'
 import type { TextEditorState } from '../types'
 import { isSelectionAtEnd } from './selection'
 import {
-  ScopedStore,
   focusNext,
   focusPrevious,
-  getDocument,
-  getParent,
-  mayInsertChild,
-  mayRemoveChild,
-  removeChild,
+  selectDocument,
+  selectParent,
+  selectMayManipulateSiblings,
+  removePluginChild,
+  RootStore,
+  selectFocusTree,
 } from '@/serlo-editor-repo/store'
 
 interface DocumentState {
@@ -54,25 +61,28 @@ export function sliceNodesAfterSelection(editor: SlateEditor) {
 export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
-  store: ScopedStore,
+  store: RootStore,
   id: string
 ) {
-  const mayRemove = mayRemoveChild(id)(store.getState())
-  const parent = getParent(id)(store.getState())
-  if (!mayRemove || !parent) return
+  const mayManipulateSiblings = selectMayManipulateSiblings(
+    store.getState(),
+    id
+  )
+  const parent = selectParent(store.getState(), id)
+  if (!mayManipulateSiblings || !parent) return
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
   if (Node.string(editor) === '') {
+    const focusTree = selectFocusTree(store.getState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
-    store.dispatch(focusAction())
-    store.dispatch(removeChild({ parent: parent.id, child: id }))
+    store.dispatch(focusAction(focusTree))
+    store.dispatch(removePluginChild({ parent: parent.id, child: id }))
     return
   }
 
-  const mayInsert = mayInsertChild(id)(store.getState())
-  const currentDocument = getDocument(id)(store.getState())
-  if (!mayInsert || !currentDocument) return
+  const currentDocument = selectDocument(store.getState(), id)
+  if (!currentDocument) return
 
   const allChildrenOfParent = parent.children || []
   const indexWithinParent = allChildrenOfParent.findIndex(
@@ -86,7 +96,10 @@ export function mergePlugins(
 
     // Exit if unable to get value of previous sibling
     const previousSibling = allChildrenOfParent[indexWithinParent - 1]
-    const previousDocument = getDocument(previousSibling.id)(store.getState())
+    const previousDocument = selectDocument(
+      store.getState(),
+      previousSibling.id
+    )
     if (!previousDocument) return
 
     // If previous and current plugin are both text plugins
@@ -105,7 +118,7 @@ export function mergePlugins(
       setTimeout(() => {
         // Remove the merged plugin
         store.dispatch(
-          removeChild({ parent: parent.id, child: previousSibling.id })
+          removePluginChild({ parent: parent.id, child: previousSibling.id })
         )
         // Set selection where it was before the merge
         Transforms.select(editor, {
@@ -124,7 +137,7 @@ export function mergePlugins(
 
     // Exit if unable to get value of next sibling
     const nextSibling = allChildrenOfParent[indexWithinParent + 1]
-    const nextDocument = getDocument(nextSibling.id)(store.getState())
+    const nextDocument = selectDocument(store.getState(), nextSibling.id)
     if (!nextDocument) return
 
     // If next and current plugin are both text plugins
@@ -141,7 +154,7 @@ export function mergePlugins(
       setTimeout(() => {
         // Remove the merged plugin
         store.dispatch(
-          removeChild({ parent: parent.id, child: nextSibling.id })
+          removePluginChild({ parent: parent.id, child: nextSibling.id })
         )
       })
 
@@ -149,4 +162,22 @@ export function mergePlugins(
       return newValue
     }
   }
+}
+
+export function existsInAncestors(
+  predicate: (element: Element) => boolean,
+  { location }: { location: Location },
+  editor: SlateEditor
+) {
+  const matchingNodes = Array.from(
+    SlateEditor.nodes(editor, {
+      at: location,
+      match: (node) =>
+        !SlateEditor.isEditor(node) &&
+        Element.isElement(node) &&
+        predicate(node),
+    })
+  )
+
+  return matchingNodes.length !== 0
 }

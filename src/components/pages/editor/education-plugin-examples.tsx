@@ -1316,7 +1316,7 @@ const cookieSize = 5`}
 
 export const spoilerExample = (
   <>
-    <div className="mb-block slate-container">
+    <div className="slate-container mb-block">
       <h4 className="serlo-h4">
         <MathSpan formula="23+19= 23 +(17+2)=(23+17)+2=40+2=42" />
       </h4>
@@ -1324,9 +1324,9 @@ export const spoilerExample = (
     <Spoiler
       title="There are also other ways to split the summands:"
       body={
-        <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:slide-in-from-top-8 motion-safe:fade-in">
-          <div className="mb-block slate-container">
-            <p className="serlo-p mb-0 slate-p min-h-[1.33em]">
+        <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-8">
+          <div className="slate-container mb-block">
+            <p className="slate-p serlo-p mb-0 min-h-[1.33em]">
               <MathSpan formula="23+19=(21+2)+19=(21+19)+2=40+2=42" />
             </p>
           </div>

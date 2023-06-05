@@ -11,25 +11,18 @@ import { LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 
 export function createBoxState(
-  editorStrings: LoggedInData['strings']['editor']
+  editorStrings: LoggedInData['strings']['editor'],
+  allowPluginsWithin: string[]
 ) {
-  const plugins = getPluginRegistry('box', editorStrings, [
-    'text',
-    'image',
-    'equations',
-    'multimedia',
-    'serloTable',
-    'highlight',
-  ])
+  const plugins = getPluginRegistry('box', editorStrings, allowPluginsWithin)
 
   return object({
     type: string(''),
     title: child({
       plugin: 'text',
       config: {
-        controls: ['code', 'katex', 'math'],
+        formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
-        disableMarkdownShortcuts: true,
       },
     }),
     anchorId: string(''),
@@ -45,12 +38,23 @@ export function createBoxState(
 export type BoxPluginState = ReturnType<typeof createBoxState>
 export type BoxProps = EditorPluginProps<BoxPluginState>
 
-export function createBoxPlugin(
+export function createBoxPlugin({
+  editorStrings,
+  allowPluginsWithin = [
+    'text',
+    'image',
+    'equations',
+    'multimedia',
+    'serloTable',
+    'highlight',
+  ],
+}: {
   editorStrings: LoggedInData['strings']['editor']
-): EditorPlugin<BoxPluginState> {
+  allowPluginsWithin?: string[] // Used in https://github.com/serlo/serlo-editor-for-edusharing
+}): EditorPlugin<BoxPluginState> {
   return {
     Component: BoxRenderer,
     config: {},
-    state: createBoxState(editorStrings),
+    state: createBoxState(editorStrings, allowPluginsWithin),
   }
 }

@@ -145,10 +145,10 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             />
           </EditorInlineSettings>
         </div>
-        {error && <p className="text-red-500 mt-2 mx-side">{error}</p>}
+        {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
         <p>
           <button
-            className="mt-2 serlo-button bg-brandgreen-300 disabled:bg-gray-300 disabled:cursor-default"
+            className="serlo-button mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
             disabled={state.value === '' || error !== '' || mode === 'loading'}
             onClick={() => {
               setMode('loading')
@@ -158,7 +158,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
           </button>
         </p>
-        <p className="mt-4 text-gray-500 text-sm">
+        <p className="mt-4 text-sm text-gray-500">
           <small>
             Hinweis: Um existierende Inhalte zu nutzen, lade diese herunter,
             lade sie in deinen Account hoch und stelle sie dort bereit.
@@ -176,7 +176,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
           onClick={() => {
             setMode('edit')
           }}
-          className="ml-4 serlo-button bg-brand-300"
+          className="serlo-button ml-4 bg-brand-300"
         >
           Ändern
         </button>

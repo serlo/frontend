@@ -1,16 +1,12 @@
 import A from 'algebra.js'
-import * as React from 'react'
+import { useState, createRef } from 'react'
 
-import {
-  InputExercisePluginConfig,
-  InputExerciseProps,
-  InputExerciseType,
-} from '.'
-import { useScopedStore } from '../core'
+import { InputExerciseProps, InputExerciseType } from '.'
 import { styled } from '../editor-ui'
 import { Feedback, SubmitButton } from '../renderer-ui'
-import { isEmpty } from '../store'
+import { store, selectIsDocumentEmpty } from '../store'
 import { useInputExerciseConfig } from './config'
+import { legacyEditorTheme } from '@/helper/colors'
 
 enum ExerciseState {
   Default = 1,
@@ -24,31 +20,24 @@ const InputContainer = styled.div({
   flexDirection: 'row',
 })
 
-const InputExerciseField = styled.input<{ config: InputExercisePluginConfig }>(
-  ({ config }) => {
-    const { theme } = config
-    return {
-      border: 'none',
-      borderBottom: `${theme.borderStyle} ${theme.borderColor}`,
-
-      textAlign: 'center',
-      outline: 'none',
-      marginBottom: '10px',
-    }
-  }
-)
+const InputExerciseField = styled.input({
+  border: 'none',
+  borderBottom: `3px solid ${legacyEditorTheme.primary.background}`,
+  textAlign: 'center',
+  outline: 'none',
+  marginBottom: '10px',
+})
 
 export function InputExerciseRenderer(props: InputExerciseProps) {
   const { state } = props
   const config = useInputExerciseConfig(props.config)
   const { i18n } = config
-  const store = useScopedStore()
-  const [feedbackIndex, setFeedbackIndex] = React.useState<number>(-1)
-  const [feedbackVisible, setFeedbackVisible] = React.useState<boolean>()
-  const [exerciseState, setExerciseState] = React.useState<ExerciseState>(
+  const [feedbackIndex, setFeedbackIndex] = useState<number>(-1)
+  const [feedbackVisible, setFeedbackVisible] = useState<boolean>()
+  const [exerciseState, setExerciseState] = useState<ExerciseState>(
     ExerciseState.Default
   )
-  const input = React.createRef<HTMLInputElement>()
+  const input = createRef<HTMLInputElement>()
   const handleWrongAnswer = () => {
     setTimeout(() => {
       setExerciseState(ExerciseState.Default)
@@ -102,7 +91,6 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
       <form onSubmit={checkAnswer}>
         <InputContainer>
           <InputExerciseField
-            config={config}
             onKeyDown={(k: React.KeyboardEvent<HTMLInputElement>) => {
               const { key } = k as unknown as KeyboardEvent
               if ((key === 'Enter' || key === 'Backspace') && props.editable) {
@@ -128,8 +116,9 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
               boxFree
               isTrueAnswer={state.answers[feedbackIndex].isCorrect.value}
             >
-              {isEmpty(state.answers[feedbackIndex].feedback.id)(
-                store.getState()
+              {selectIsDocumentEmpty(
+                store.getState(),
+                state.answers[feedbackIndex].feedback.id
               )
                 ? state.answers[feedbackIndex].isCorrect.value
                   ? i18n.fallbackFeedback.correct

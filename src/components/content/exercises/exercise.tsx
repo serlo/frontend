@@ -17,6 +17,7 @@ import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context
 import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseInlineType } from '@/data-types'
 import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
+import { tw } from '@/helper/tw'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface ExerciseProps {
@@ -71,7 +72,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     )
 
   return (
-    <div className="serlo-exercise-wrapper pt-2 mb-10">
+    <div className="serlo-exercise-wrapper mb-10 pt-2">
       {renderExerciseContent()}
     </div>
   )
@@ -122,7 +123,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     return (
       <div className="serlo-solution-box">
-        {authorTools && <div className="text-right -mt-2">{authorTools}</div>}
+        {authorTools && <div className="-mt-2 text-right">{authorTools}</div>}
         {renderNested(
           [
             {
@@ -156,8 +157,10 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <button
         className={clsx(
-          'serlo-button-blue-transparent text-base',
-          'ml-side mr-auto mb-4 pr-2',
+          tw`
+            serlo-button-blue-transparent ml-side
+            mr-auto mb-4 pr-2 text-base
+          `,
           solutionVisible && 'bg-brand text-white'
         )}
         onClick={() => {
@@ -199,7 +202,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
               node.positionInGroup ? node.positionInGroup : path?.join('') ?? ''
             }-`}
             renderNested={renderNested}
-            path={path}
             isRevisionView={isRevisionView}
             context={{
               entityId: node.context.id,
@@ -212,7 +214,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         return (
           <InputExercise
             data={state.interactive.state}
-            path={path}
             renderNested={renderNested}
             isRevisionView={isRevisionView}
             context={{
@@ -257,9 +258,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   function renderLicense() {
     if (!node.task.license) return null
-    return (
-      <LicenseNotice minimal data={node.task.license} type="task" path={path} />
-    )
+    return <LicenseNotice minimal data={node.task.license} type="task" />
   }
 
   function renderExerciseStats() {

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { forwardRef } from 'react'
 import TextareaAutosize, {
   TextareaAutosizeProps,
 } from 'react-textarea-autosize'
@@ -10,15 +10,13 @@ const StyledIgnoreKeys = styled(IgnoreKeys)({
   width: '100%',
 })
 
-/** @public */
 export interface EditorTextareaProps
   extends Omit<TextareaAutosizeProps, 'as' | 'ref'> {
   onMoveOutRight?(): void
   onMoveOutLeft?(): void
 }
 
-/** @public */
-export const EditorTextarea = React.forwardRef<
+export const EditorTextarea = forwardRef<
   HTMLTextAreaElement,
   EditorTextareaProps
 >(function EditorTextarea({ onMoveOutLeft, onMoveOutRight, ...props }, ref) {

@@ -1,7 +1,6 @@
 import { DeepPartial } from '../ui'
 import { MathEditorConfig } from './editor-config'
 
-/** @public */
 export interface MathEditorProps {
   autofocus?: boolean
   state: string

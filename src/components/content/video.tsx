@@ -6,15 +6,13 @@ import { PrivacyWrapper } from './privacy-wrapper'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
 import { ExternalProvider } from '@/helper/use-consent'
-import { NodePath } from '@/schema/article-renderer'
 
 export interface VideoProps {
   src: string
-  path?: NodePath
   license?: LicenseData
 }
 
-export function Video({ src, path, license }: VideoProps) {
+export function Video({ src, license }: VideoProps) {
   const { lang } = useInstanceData()
 
   const vimeo = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(src)
@@ -81,7 +79,7 @@ export function Video({ src, path, license }: VideoProps) {
         </PrivacyWrapper>
         {license && !license.isDefault && (
           <p className="serlo-p">
-            <LicenseNotice minimal data={license} type="video" path={path} />
+            <LicenseNotice minimal data={license} type="video" />
           </p>
         )}
         <p className="serlo-p hidden print:block">[{src}]</p>

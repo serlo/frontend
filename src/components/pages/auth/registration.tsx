@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
 import { useEffect, useState } from 'react'
 
+import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import { verificationUrl, VALIDATION_ERROR_TYPE } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
@@ -32,9 +33,15 @@ export function Registration() {
 
   const reorderAndSetFlow = (origFlow?: RegistrationFlow) => {
     if (!origFlow) return
-    const { nodes: n } = origFlow.ui
-    origFlow.ui.nodes = [n[0], n[1], n[3], n[2], ...n.slice(4)]
-    setFlow(origFlow)
+
+    const reorderedNodes = origFlow.ui.nodes
+      .map(changeButtonTypeOfSSOProvider)
+      .sort(sortKratosUiNodes)
+    const newFlow = {
+      ...origFlow,
+      ui: { ...origFlow.ui, nodes: reorderedNodes },
+    }
+    setFlow(newFlow)
   }
 
   useEffect(() => {
@@ -119,7 +126,7 @@ export function Registration() {
           <span className="font-normal">
             {strings.auth.verificationProblem}:<br />
             <Link
-              className="text-brand serlo-link font-bold"
+              className="serlo-link font-bold text-brand"
               href={verificationUrl}
             >
               {strings.auth.verificationLinkText}
@@ -131,7 +138,7 @@ export function Registration() {
       {flow ? (
         <div
           className={clsx(
-            'pb-8 flex mx-auto',
+            'mx-auto flex pb-8',
             isSuccessfullySubmitted && 'opacity-40'
           )}
         >
@@ -151,11 +158,11 @@ export function Registration() {
                     })
                   }
             }
-            contentBeforeSubmit={renderAgreement()}
+            contentAfterLastTrait={renderAgreement()}
           />
           <img
             src="/_assets/img/community-menu-bird.svg"
-            className="hidden mobile:block w-[33vw] md:w-64 px-side -mt-44"
+            className="-mt-44 hidden w-[33vw] px-side mobile:block md:w-64"
           />
         </div>
       ) : (
@@ -182,7 +189,7 @@ export function Registration() {
       {
         privacypolicy: (
           <a
-            className="text-brand serlo-link font-bold"
+            className="serlo-link font-bold text-brand"
             href="/privacy"
             target="_blank"
           >
@@ -191,7 +198,7 @@ export function Registration() {
         ),
         terms: (
           <a
-            className="text-brand serlo-link font-bold"
+            className="serlo-link font-bold text-brand"
             href="/21654"
             target="_blank"
           >
@@ -202,13 +209,13 @@ export function Registration() {
     )
 
     return (
-      <div className="mt-12 serlo-p mx-0 text-base">
+      <div className="serlo-p mx-0 mt-12 text-base">
         <label className="flex">
           <input
             // min-width should fix ios problem with rendering the checkbox
             // super tiny, see
             // https://stackoverflow.com/questions/64227252/my-checkbox-inputs-stays-ridiculously-small-on-ios-13-7
-            className="h-4 w-4 min-w-[14px] mr-2 accent-brand scale-125"
+            className="mr-2 h-4 w-4 min-w-[14px] scale-125 accent-brand"
             type="checkbox"
             checked={isConsentCheckboxChecked}
             onChange={() => {
@@ -223,7 +230,7 @@ export function Registration() {
           <span className="leading-5">{text}</span>
         </label>
         {hasValidationErrorMissingConsent && (
-          <span className="inline-block text-red-500 mt-2">
+          <span className="mt-2 inline-block text-red-500">
             <i>{strings.auth.consentNeededBeforeProceeding}</i>
           </span>
         )}

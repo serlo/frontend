@@ -1,5 +1,4 @@
 import * as R from 'ramda'
-import * as React from 'react'
 
 import {
   child,
@@ -11,11 +10,10 @@ import {
   ListStateType,
 } from '../plugin'
 import { DeepPartial } from '../ui'
-import { RowsEditor } from './editor'
+import { RowsEditor } from './components/rows-editor'
 
 /**
  * @param config - {@link RowsConfig | Plugin configuration}
- * @public
  */
 export function createRowsPlugin(
   config: RowsConfig
@@ -50,24 +48,22 @@ export function createRowsPlugin(
   }
 }
 
-/** @public */
 export interface RowsConfig extends Omit<RowsPluginConfig, 'i18n' | 'theme'> {
   content: ChildStateTypeConfig
   i18n?: DeepPartial<RowsPluginConfig['i18n']>
-  theme?: DeepPartial<RowsPluginConfig['theme']>
 }
 
-/** @public */
 export type RowsPluginState = ListStateType<ChildStateType>
 
-/** @public */
+export interface RegistryPlugin {
+  name: string
+  title?: string
+  icon?: React.ComponentType
+  description?: string
+}
+
 export interface RowsPluginConfig {
-  plugins: {
-    name: string
-    title?: string
-    icon?: React.ComponentType
-    description?: string
-  }[]
+  plugins: RegistryPlugin[]
   i18n: {
     menu: {
       searchPlaceholder: string
@@ -82,33 +78,8 @@ export interface RowsPluginConfig {
     }
     addLabel: string
   }
-  theme: {
-    backgroundColor: string
-    color: string
-    highlightColor: string
-    lightBackgroundColor: string
-
-    menu: {
-      highlightColor: string
-      primary: {
-        backgroundColor: string
-        color: string
-      }
-      secondary: {
-        backgroundColor: string
-        color: string
-      }
-      dropzone: {
-        highlightColor: string
-        backgroundColor: string
-        color: string
-        highlightBackgroundColor: string
-      }
-    }
-  }
 }
 
-/** @public */
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>
 
 export * from './registry-context'

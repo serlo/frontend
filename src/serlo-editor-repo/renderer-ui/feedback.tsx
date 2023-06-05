@@ -1,6 +1,5 @@
-import * as React from 'react'
-
 import { styled } from '../ui'
+import { colors } from '@/helper/colors'
 
 const ContainerWithBox = styled.div<ContainerProps>({
   backgroundColor: '#fcf8e3',
@@ -12,7 +11,7 @@ const ContainerWithBox = styled.div<ContainerProps>({
 const ContainerWithoutBox = styled.div<ContainerProps>(
   ({ correct, showOnLeft }) => {
     return {
-      color: correct ? '#95bc1a' : '#f7b07c',
+      color: correct ? colors.brandGreen : '#f7b07c',
       fontWeight: 'bold',
       textAlign: showOnLeft ? 'left' : 'right',
     }
@@ -24,10 +23,6 @@ interface ContainerProps {
   showOnLeft?: boolean
 }
 
-/**
- * @param props - The props
- * @internal
- */
 export function Feedback(props: FeedbackProps) {
   const { boxFree, children, isTrueAnswer, showOnLeft } = props
   const Container = boxFree ? ContainerWithoutBox : ContainerWithBox
@@ -39,7 +34,6 @@ export function Feedback(props: FeedbackProps) {
   )
 }
 
-/** @internal */
 export interface FeedbackProps {
   children?: React.ReactNode
   boxFree?: boolean

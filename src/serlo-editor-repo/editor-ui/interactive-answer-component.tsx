@@ -1,24 +1,19 @@
-import * as React from 'react'
-
 import { styled, Icon, faTimes, faPlus } from '../ui'
+import { colors } from '@/helper/colors'
 
 const AddButtonComponent = styled.button({
-  margin: '5px 2% 5px 2%',
+  margin: '5px',
   width: '96%',
   borderRadius: '10px',
-  backgroundColor: 'white',
+  backgroundColor: colors.editorPrimary100,
   textAlign: 'left',
-  color: 'lightgrey',
+  color: colors.almostBlack,
   minHeight: '50px',
-  border: '2px solid lightgrey',
+  padding: '5px',
   outline: 'none',
-  '&:hover': { border: '3px solid #007ec1', color: '#007ec1' },
+  '&:hover': { backgroundColor: colors.editorPrimary200 },
 })
 
-/**
- * @param props - Props
- * @internal
- */
 export function AddButton(props: AddButtonProps) {
   return (
     <AddButtonComponent title={props.title} onMouseDown={props.onClick}>
@@ -26,7 +21,6 @@ export function AddButton(props: AddButtonProps) {
     </AddButtonComponent>
   )
 }
-/** @internal */
 export interface AddButtonProps {
   onClick: () => void
   children: string
@@ -54,8 +48,8 @@ const RemoveButton = styled.button({
   float: 'right',
   transform: 'translate(50%, -40%)',
   '&:hover': {
-    border: '3px solid #007ec1',
-    color: '#007ec1',
+    border: `3px solid ${colors.brand}`,
+    color: colors.brand,
   },
 })
 
@@ -78,13 +72,13 @@ const FramedContainer = styled.div<{ focused: boolean }>(({ focused }) => {
     },
   }
   const focusedBorders = {
-    border: '3px solid #007ec1',
+    border: `3px solid ${colors.brand}`,
     [`${RemoveButton}`]: {
-      border: '3px solid #007ec1',
-      color: '#007ec1',
+      border: `3px solid ${colors.brand}`,
+      color: colors.brand,
     },
     [`${FeedbackField}`]: {
-      borderTop: '2px solid #007ec1',
+      borderTop: `2px solid ${colors.brand}`,
     },
   }
 
@@ -105,15 +99,15 @@ const Container = styled.div<{ isRadio: boolean; checked: boolean }>(
       cursor: 'pointer',
       border: checked
         ? isRadio
-          ? '5px solid #007ec1'
-          : '2px solid #007ec1'
+          ? `5px solid ${colors.brand}`
+          : `2px solid ${colors.brand}`
         : '2px solid lightgray',
       borderRadius: isRadio ? '50%' : '15%',
       width: '20px',
       height: '20px',
       display: 'inline-block',
       verticalAlign: 'middle',
-      backgroundColor: checked && !isRadio ? '#007ec1' : 'white',
+      backgroundColor: checked && !isRadio ? colors.brand : 'white',
     }
   }
 )
@@ -136,32 +130,28 @@ const Tick = styled.div<{ checked: boolean }>(({ checked }) => {
   }
 })
 
-/** @internal */
-export class CheckElement extends React.Component<CheckElementProps> {
-  public render() {
-    const { isRadio, isActive, handleChange } = this.props
-    return (
-      <Container
-        isRadio={isRadio}
-        checked={isActive}
-        onClick={(e) => {
-          handleChange(e)
-        }}
-      >
-        {isRadio ? null : <Tick checked={isActive} />}
-      </Container>
-    )
-  }
+export function CheckElement({
+  isRadio,
+  isActive,
+  handleChange,
+}: CheckElementProps) {
+  return (
+    <Container
+      isRadio={isRadio}
+      checked={isActive}
+      onClick={(e) => {
+        handleChange(e)
+      }}
+    >
+      {isRadio ? null : <Tick checked={isActive} />}
+    </Container>
+  )
 }
 
 const BlockLabel = styled.label({
   display: 'block',
 })
 
-/**
- * @param props - Props
- * @internal
- */
 export function InteractiveAnswer(props: InteractiveAnswerProps) {
   return (
     <AnswerContainer>
@@ -197,7 +187,6 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
   )
 }
 
-/** @internal */
 export interface InteractiveAnswerProps {
   isRadio?: boolean
   isActive?: boolean
@@ -214,7 +203,6 @@ export interface InteractiveAnswerProps {
   }
 }
 
-/** @internal */
 export interface CheckElementProps {
   isRadio: boolean
   isActive: boolean
