@@ -19,11 +19,18 @@ export default async function handler(
       typeof path === 'string' &&
       typeof event === 'string' &&
       typeof isProduction === 'boolean' &&
-      ['yes', 'no', 'rarely', 'exit', 'noStudent', 'show'].includes(event)
+      [
+        'show-popup',
+        'click-popup',
+        'exit-popup',
+        'show-button',
+        'click-button',
+        'exit-button',
+      ].includes(event)
     ) {
       if (path.length < 1024) {
         // ready to go
-        await prisma.testSurvey.create({
+        await prisma.mitmachWoche.create({
           data: { path, event, isProduction },
         })
         res.send('ok')
