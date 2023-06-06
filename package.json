@@ -51,7 +51,7 @@
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.12",
     "clsx": "^1.2.1",
-    "fast-xml-parser": "^4.0.11",
+    "fast-xml-parser": "^4.2.4",
     "fp-ts": "^2.13.1",
     "graphiql": "^2.0.9",
     "graphql": "^16.6.0",
