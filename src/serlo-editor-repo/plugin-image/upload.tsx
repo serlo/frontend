@@ -1,14 +1,14 @@
-import * as React from 'react'
+import { useRef } from 'react'
 
 import { ImagePluginConfig } from '.'
 
 export function Upload(props: UploadProps) {
-  const input = React.useRef<HTMLInputElement>(null)
+  const input = useRef<HTMLInputElement>(null)
   return (
     <>
       <button
         onClick={selectFile}
-        className="serlo-button-editor-secondary text-base h-10 self-end"
+        className="serlo-button-editor-secondary h-10 self-end text-base"
       >
         {props.config.i18n.label}
       </button>

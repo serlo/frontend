@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Es"],
+  lang: "es",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -459,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Es"],
+  lang: "es",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "Nuestra visión es hacer posible el aprendizaje personalizado y proporcionar recursos educativos de alta calidad en todo el mundo, de forma totalmente gratuita. Serlo.org es una organización de base inspirada en Wikipedia. Ya proporcionamos miles de artículos, vídeos y ejercicios resueltos a cinco millones de estudiantes alemanes cada año. Ahora ha llegado el momento de internacionalizarnos.",
@@ -768,12 +767,16 @@ export const loggedInData = {
         italic: "Itálica (%ctrlOrCmd% + I)",
         noItemsFound: "Elementos no encontrados"
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: "URL del vídeo",
         description: "Descripción",
         title: "Título",
         url: 'URL',
-        seoTitle: "Título para motores de búsqueda"
+        seoTitle: "Título para motores de búsqueda",
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: "Esta parte del documento no pudo ser convertida."

@@ -1,8 +1,5 @@
-import * as React from 'react'
-
 import { RowsProps } from '..'
-import { useScopedSelector } from '../../core'
-import { getPluginTypesOnPathToRoot } from '../../store'
+import { selectAncestorPluginTypes, useAppSelector } from '../../store'
 import { styled } from '../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
@@ -11,12 +8,14 @@ import { RowSeparator } from './row-separator'
 
 const ReadOnlyRow = styled.div({
   marginBottom: '25px',
+  marginTop: '25px',
+  paddingLeft: '14px',
 })
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
-  const pluginTypesOfAncestors = useScopedSelector(
-    getPluginTypesOnPathToRoot(props.id)
+  const pluginTypesOfAncestors = useAppSelector((state) =>
+    selectAncestorPluginTypes(state, props.id)
   )
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {

@@ -1,15 +1,19 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
-import { useScopedSelector, useScopedStore } from '../core'
 import {
   AddButton,
   InteractiveAnswer,
   PreviewOverlay,
   styled,
 } from '../editor-ui'
-import { getFocused, isEmpty as isEmptySelector } from '../store'
+import {
+  store,
+  selectFocused,
+  selectIsDocumentEmpty,
+  useAppSelector,
+} from '../store'
 import { useScMcExerciseConfig } from './config'
 import { ScMcExerciseRenderer } from './renderer'
 
@@ -19,8 +23,7 @@ const TypeMenu = styled.div({
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const config = useScMcExerciseConfig(props.config)
-  const store = useScopedStore()
-  const focusedElement = useScopedSelector(getFocused())
+  const focusedElement = useAppSelector(selectFocused)
 
   const { editable, focused, state } = props
   const children = R.flatten(
@@ -60,7 +63,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   }
 
   const nestedFocus = focused || R.includes(focusedElement, children)
-  const [previewActive, setPreviewActive] = React.useState(false)
+  const [previewActive, setPreviewActive] = useState(false)
 
   if (!editable) {
     return <ScMcExerciseRenderer {...props} isEmpty={isEmpty} />
@@ -119,6 +122,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   )
 
   function isEmpty(id: string) {
-    return isEmptySelector(id)(store.getState())
+    return selectIsDocumentEmpty(store.getState(), id)
   }
 }

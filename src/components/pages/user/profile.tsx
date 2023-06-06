@@ -1,5 +1,4 @@
 import { faInfoCircle, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 
@@ -79,7 +78,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             <ProfileBadges userData={userData} date={date} />
           </div>
           <div
-            className="serlo-p text-1.5xl w-full mt-5 sm:mt-0"
+            className="serlo-p mt-5 w-full text-1.5xl sm:mt-0"
             style={{ gridArea: 'motivation' }}
           >
             {motivation && <>&quot;{motivation}&quot;</>}
@@ -92,7 +91,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             username={username}
             isOwnProfile={isOwnProfile}
             chatUrl={chatUrl}
-            className="mx-auto sm:mx-0 mb-8"
+            className="mx-auto mb-8 sm:mx-0"
           />
         </header>
         <style jsx>{`
@@ -115,21 +114,18 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   function renderProfileImage() {
     return (
       <figure
-        className="w-44 h-44 mx-auto sm:mx-0"
+        className="mx-auto h-44 w-44 sm:mx-0"
         style={{ contain: 'content' }}
       >
         <img
           src={imageUrl}
           alt={`Profile image of ${username}`}
-          className="block rounded-full w-full h-full"
+          className="block h-full w-full rounded-full"
         />
         {isOwnProfile && !isNewlyRegisteredUser && (
           <Link
             href="/user/settings#image"
-            className={clsx(
-              'serlo-button-green',
-              'block absolute right-1 bottom-1 w-8 h-8'
-            )}
+            className="serlo-button-green absolute right-1 bottom-1 block h-8 w-8"
           >
             <FaIcon icon={faPencilAlt} />
           </Link>
@@ -178,7 +174,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderRoles() {
     return (
-      <aside className="mt-20 text-gray-500 text-sm mx-side">
+      <aside className="mx-side mt-20 text-sm text-gray-500">
         <ProfileRoles roles={userData.roles} />
         {/* Temporarily hidden:
         {lastLoginDate && (
@@ -207,7 +203,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
   function renderEditMotivationLink() {
     if (lang !== Instance.De) return null
     return (
-      <p className="serlo-p text-sm text-right ml-auto mt-3">
+      <p className="serlo-p ml-auto mt-3 text-right text-sm">
         <Link
           href="/user/settings#motivation"
           className="serlo-link cursor-pointer"

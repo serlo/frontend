@@ -23,12 +23,12 @@ export function CourseNavigation({
   return (
     <nav
       id="course-overview"
-      className="mt-6 bg-brand-50 sm:bg-white pt-1 pb-5 sm:pb-11 border-b-2 border-brand-200 "
+      className="mt-6 border-b-2 border-brand-200 bg-brand-50 pt-1 pb-5 sm:bg-white sm:pb-11 "
     >
-      <p className="serlo-p mb-0 mt-4 font-bold text-[1rem]">
+      <p className="serlo-p mb-0 mt-4 text-[1rem] font-bold">
         <FaIcon icon={faGraduationCap} /> Kurs
       </p>
-      <h1 className="mt-0 mb-4 mx-side font-bold text-2xl">{data.title}</h1>
+      <h1 className="mx-side mt-0 mb-4 text-2xl font-bold">{data.title}</h1>
       {data.pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}
@@ -38,7 +38,7 @@ export function CourseNavigation({
           <span
             className={clsx(
               'inline-block',
-              open && 'rotate-180 translate-y-0.5'
+              open && 'translate-y-0.5 rotate-180'
             )}
           >
             ▾

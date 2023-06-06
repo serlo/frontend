@@ -1,11 +1,10 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { StateType } from './internal-plugin-state'
 import { asyncScalar } from './scalar'
 
 /**
  * @param defaultState - The default state
- * @public
  */
 export function upload<T>(defaultState: T): UploadStateType<T> {
   const state = asyncScalar<T, TempFile>(defaultState, isTempFile)
@@ -23,21 +22,9 @@ export function upload<T>(defaultState: T): UploadStateType<T> {
         isPending: isTempFile(s.value) && !!s.value.pending,
         upload(file: File, handler: UploadHandler<T>): Promise<T> {
           const uploaded = handler(file)
-          s.set(defaultState, (resolve, reject, next) => {
-            const read = readFile(file)
-            let uploadFinished = false
-
-            void read.then((loaded: LoadedFile) => {
-              if (!uploadFinished) {
-                next(() => {
-                  return { uploadHandled: true, loaded }
-                })
-              }
-            })
-
+          s.set(defaultState, (resolve, reject) => {
             uploaded
               .then((uploaded) => {
-                uploadFinished = true
                 return uploaded
               })
               .then((uploaded) => {
@@ -59,14 +46,12 @@ export function upload<T>(defaultState: T): UploadStateType<T> {
   }
 }
 
-/** @public */
 export type UploadStateType<T> = StateType<
   FileState<T>,
   FileState<T>,
   UploadStateReturnType<T>
 >
 
-/** @public */
 export interface UploadStateReturnType<T> {
   get(): FileState<T>
   value: FileState<T>
@@ -77,24 +62,9 @@ export interface UploadStateReturnType<T> {
   ): void
 }
 
-function readFile(file: File): Promise<LoadedFile> {
-  return new Promise((resolve) => {
-    const reader = new FileReader()
-
-    reader.onload = function (e: ProgressEvent) {
-      if (!e.target) return
-      const { result } = e.target as unknown as { result: string }
-      resolve({ file, dataUrl: result })
-    }
-
-    reader.readAsDataURL(file)
-  })
-}
-
 /**
  * @param file - The {@link UploadStateReturnType | upload state type}
  * @param uploadHandler - The {@link UploadHandler | upload handler}
- * @public
  */
 export function usePendingFileUploader<T>(
   file: UploadStateReturnType<T>,
@@ -105,14 +75,13 @@ export function usePendingFileUploader<T>(
 /**
  * @param files - The {@link UploadStateReturnType | upload state type}
  * @param uploadHandler - The {@link UploadHandler | upload handler}
- * @public
  */
 export function usePendingFilesUploader<T>(
   files: UploadStateReturnType<T>[],
   uploadHandler: UploadHandler<T>
 ) {
-  const [uploading, setUploading] = React.useState(0)
-  React.useEffect(() => {
+  const [uploading, setUploading] = useState(0)
+  useEffect(() => {
     // everything uploaded already
     if (uploading >= files.length) return
     const fileState = files[uploading]
@@ -135,34 +104,28 @@ export function usePendingFilesUploader<T>(
     }
   }, [files, uploadHandler, uploading])
 }
-/** @public */
 export type UploadHandler<T> = (file: File) => Promise<T>
 
-/** @public */
 export type UploadValidator<E = unknown> = (
   file: File
 ) => { valid: true } | { valid: false; errors: E }
 
-/** @public */
 export interface TempFile {
   uploadHandled?: boolean
   pending?: File
   failed?: File
   loaded?: LoadedFile
 }
-/** @public */
 export type FileState<T> = T | TempFile
 
 /**
  * @param state - The current {@link FileState | state}
- * @public
  */
 export function isTempFile<T>(state: FileState<T>): state is TempFile {
   const file = state as TempFile
   return !!(file.pending || file.failed || file.loaded)
 }
 
-/** @public */
 export interface LoadedFile {
   file: File
   dataUrl: string

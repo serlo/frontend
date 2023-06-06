@@ -1,11 +1,10 @@
 import A from 'algebra.js'
-import * as React from 'react'
+import { useState, createRef } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
-import { useScopedStore } from '../core'
 import { styled } from '../editor-ui'
 import { Feedback, SubmitButton } from '../renderer-ui'
-import { isEmpty } from '../store'
+import { store, selectIsDocumentEmpty } from '../store'
 import { useInputExerciseConfig } from './config'
 import { legacyEditorTheme } from '@/helper/colors'
 
@@ -33,13 +32,12 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
   const { state } = props
   const config = useInputExerciseConfig(props.config)
   const { i18n } = config
-  const store = useScopedStore()
-  const [feedbackIndex, setFeedbackIndex] = React.useState<number>(-1)
-  const [feedbackVisible, setFeedbackVisible] = React.useState<boolean>()
-  const [exerciseState, setExerciseState] = React.useState<ExerciseState>(
+  const [feedbackIndex, setFeedbackIndex] = useState<number>(-1)
+  const [feedbackVisible, setFeedbackVisible] = useState<boolean>()
+  const [exerciseState, setExerciseState] = useState<ExerciseState>(
     ExerciseState.Default
   )
-  const input = React.createRef<HTMLInputElement>()
+  const input = createRef<HTMLInputElement>()
   const handleWrongAnswer = () => {
     setTimeout(() => {
       setExerciseState(ExerciseState.Default)
@@ -118,8 +116,9 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
               boxFree
               isTrueAnswer={state.answers[feedbackIndex].isCorrect.value}
             >
-              {isEmpty(state.answers[feedbackIndex].feedback.id)(
-                store.getState()
+              {selectIsDocumentEmpty(
+                store.getState(),
+                state.answers[feedbackIndex].feedback.id
               )
                 ? state.answers[feedbackIndex].isCorrect.value
                   ? i18n.fallbackFeedback.correct

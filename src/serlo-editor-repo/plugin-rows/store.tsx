@@ -1,16 +1,20 @@
-import { createSelector, getDocument, isEmpty } from '../store'
+import { createSelector } from '@reduxjs/toolkit'
 
-/** @public */
-export const isEmptyRows = createSelector((state, id: string) => {
-  const rowsDocument = getDocument(id)(state)
+import { State, selectDocument, selectIsDocumentEmpty } from '../store'
 
-  return (
-    rowsDocument &&
-    Array.isArray(rowsDocument.state) &&
-    rowsDocument.state.every((entry) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      const value = entry?.value
-      return typeof value === 'string' && isEmpty(value)(state)
-    })
-  )
-})
+export const selectIsEmptyRows = createSelector(
+  [(state: State) => state, (_state, id: string) => id],
+  (state, id: string) => {
+    const rowsDocument = selectDocument(state, id)
+
+    return (
+      rowsDocument &&
+      Array.isArray(rowsDocument.state) &&
+      rowsDocument.state.every((entry) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        const value = entry?.value
+        return typeof value === 'string' && selectIsDocumentEmpty(state, value)
+      })
+    )
+  }
+)

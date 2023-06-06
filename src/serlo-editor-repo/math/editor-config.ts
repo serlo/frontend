@@ -1,6 +1,3 @@
-import * as React from 'react'
-
-/** @public */
 export interface MathEditorConfig {
   i18n: {
     placeholder: string

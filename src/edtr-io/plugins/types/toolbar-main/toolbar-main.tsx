@@ -1,19 +1,19 @@
-import { useScopedDispatch, useScopedSelector } from '@edtr-io/core'
 import { StateTypeReturnType } from '@edtr-io/plugin'
 import {
   redo,
   undo,
-  hasRedoActions,
-  hasUndoActions,
-  hasPendingChanges,
+  selectHasRedoActions,
+  selectHasUndoActions,
+  selectHasPendingChanges,
+  useAppDispatch,
+  useAppSelector,
 } from '@edtr-io/store'
 import { faRedo, faShare, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
-import { createPortal } from 'react-dom'
 
 import { entity } from '../common/common'
-import { useHandleSave } from '../helpers/use-handle-save'
+import { ClientOnlyPortal } from './client-only-portal'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
@@ -30,12 +30,11 @@ export function ToolbarMain({
   changes,
   license,
 }: ToolbarMainProps) {
-  const dispatch = useScopedDispatch()
-  const undoable = useScopedSelector(hasUndoActions())
-  const redoable = useScopedSelector(hasRedoActions())
-  const isChanged = useScopedSelector(hasPendingChanges())
-  const { link } = useHandleSave(true, true)
-  const [saveModalOpen, setSaveModalOpen] = useState(!!link)
+  const dispatch = useAppDispatch()
+  const undoable = useAppSelector(selectHasUndoActions)
+  const redoable = useAppSelector(selectHasRedoActions)
+  const isChanged = useAppSelector(selectHasPendingChanges)
+  const [saveModalOpen, setSaveModalOpen] = useState(false)
 
   useLeaveConfirm(isChanged)
 
@@ -44,18 +43,15 @@ export function ToolbarMain({
 
   return (
     <>
-      {createPortal(
-        <nav
-          className={clsx('w-full flex justify-between', 'h-12 pt-4 pl-5 pr-3')}
-        >
+      <ClientOnlyPortal selector=".controls-portal">
+        <nav className="flex h-12 w-full justify-between pt-4 pl-5 pr-3">
           <div>
             {renderHistoryButton('Undo', faUndo, undo, !undoable)}
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}
           </div>
           <div>{renderSaveButton()}</div>
-        </nav>,
-        document.getElementsByClassName('controls-portal')[0]
-      )}
+        </nav>
+      </ClientOnlyPortal>
       <SaveModal
         open={saveModalOpen}
         setOpen={setSaveModalOpen}
@@ -76,10 +72,10 @@ export function ToolbarMain({
       <button
         className={clsx(
           'serlo-button',
-          disabled ? 'text-gray-300 cursor-default' : 'serlo-button-light'
+          disabled ? 'cursor-default text-gray-300' : 'serlo-button-light'
         )}
         onClick={() => {
-          dispatch(action())
+          void dispatch(action())
         }}
         disabled={disabled}
         title={title}
@@ -92,7 +88,7 @@ export function ToolbarMain({
   function renderSaveButton() {
     return (
       <button
-        className={clsx('serlo-button-green ml-2')}
+        className="serlo-button-green ml-2"
         onClick={() => {
           setSaveModalOpen(true)
         }}

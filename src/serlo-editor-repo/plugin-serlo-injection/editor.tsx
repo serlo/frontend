@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect, useState } from 'react'
 
 import { SerloInjectionProps } from '.'
 import { OverlayInput } from '../core'
@@ -26,10 +26,10 @@ const PlaceholderWrapper = styled.div({
 
 export const SerloInjectionEditor = (props: SerloInjectionProps) => {
   const config = useSerloInjectionConfig(props.config)
-  const [cache, setCache] = React.useState(props.state.value)
-  const [preview, setPreview] = React.useState(false)
+  const [cache, setCache] = useState(props.state.value)
+  const [preview, setPreview] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const timeout = setTimeout(() => {
       setCache(props.state.value)
     }, 2000)

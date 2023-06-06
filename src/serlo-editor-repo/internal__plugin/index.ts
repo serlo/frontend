@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import {
   StateType,
   StateTypeReturnType,
@@ -9,7 +7,6 @@ import {
 /**
  * An Edtr.io plugin
  *
- * @public
  */
 export interface EditorPlugin<
   S extends StateType = StateType,
@@ -93,7 +90,6 @@ export interface EditorPlugin<
 /**
  * Props for the component of an [[EditorPlugin]]
  *
- * @public
  */
 export interface EditorPluginProps<
   S extends StateType = StateType,

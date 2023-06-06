@@ -89,7 +89,7 @@ function Content({ id, terms }: UpdateTaxonomyLinksProps) {
     if (!term.path || removedTaxIds.includes(term.id)) return null
 
     return (
-      <div className="py-3 border-b-2 flex" key={term.alias}>
+      <div className="flex border-b-2 py-3" key={term.alias}>
         <button
           onClick={() => onDelete(term.id)}
           className="serlo-button-blue-transparent mr-2 text-brand-400"
@@ -104,7 +104,7 @@ function Content({ id, terms }: UpdateTaxonomyLinksProps) {
             </Fragment>
           ))}
           <a
-            className="text-brand font-bold"
+            className="font-bold text-brand"
             href={term.alias}
             target="_blank"
             rel="noreferrer"

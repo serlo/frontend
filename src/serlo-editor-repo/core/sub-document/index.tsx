@@ -1,8 +1,8 @@
-import * as React from 'react'
+import { Component, useCallback, useContext } from 'react'
 
 import { PluginProps } from '../../internal__plugin-state'
-import { undo } from '../../store'
-import { ScopeContext, ErrorContext, useScopedDispatch } from '../store'
+import { undo, useAppDispatch } from '../../store'
+import { EditableContext, ErrorContext } from '../contexts'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
 
@@ -10,13 +10,12 @@ import { SubDocumentRenderer } from './renderer'
  * Renders a document inside another document
  *
  * @param props - The {@link SubDocumentProps}
- * @public
  */
 export const SubDocument = (props: SubDocumentProps) => {
-  const { editable } = React.useContext(ScopeContext)
-  const dispatch = useScopedDispatch()
-  const undoMemo = React.useCallback(() => {
-    dispatch(undo())
+  const editable = useContext(EditableContext)
+  const dispatch = useAppDispatch()
+  const undoMemo = useCallback(() => {
+    void dispatch(undo())
   }, [dispatch])
 
   const Component = editable ? SubDocumentEditor : SubDocumentRenderer
@@ -26,8 +25,8 @@ export const SubDocument = (props: SubDocumentProps) => {
     </ErrorBoundary>
   )
 }
-
-export class ErrorBoundary extends React.Component<{
+// this uses ErrorBoundary functionality that is only available in class components since react 17
+export class ErrorBoundary extends Component<{
   undo: () => void
   children: React.ReactNode
 }> {
@@ -48,20 +47,20 @@ export class ErrorBoundary extends React.Component<{
       this.context(error, errorInfo)
     }
     // eslint-disable-next-line no-console
-    console.log(error, errorInfo)
+    console.error(error, errorInfo)
   }
 
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 my-12 rounded-2xl font-bold bg-orange-200">
+        <div className="my-12 rounded-2xl bg-orange-200 p-4 font-bold">
           Leider ist ein Fehler aufgetreten.
           <button
             onClick={() => {
               this.props.undo()
               this.setState({ hasError: false })
             }}
-            className="serlo-button-blue block mt-3"
+            className="serlo-button-blue mt-3 block"
           >
             Letzte Änderung rückgänging machen
           </button>
@@ -73,7 +72,6 @@ export class ErrorBoundary extends React.Component<{
   }
 }
 
-/** @public */
 export interface SubDocumentProps {
   id: string
   pluginProps?: PluginProps

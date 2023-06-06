@@ -31,7 +31,7 @@ import { pagePartnersPlugin } from './plugins/page-partners'
 import { pageTeamPlugin } from './plugins/page-team'
 import { pasteHackPlugin } from './plugins/paste-hack'
 import { separatorPlugin } from './plugins/separator'
-import { serloTablePlugin } from './plugins/serlo-table'
+import { createSerloTablePlugin } from './plugins/serlo-table'
 import { solutionPlugin } from './plugins/solution'
 import { tablePlugin } from './plugins/table'
 import { appletTypePlugin } from './plugins/types/applet'
@@ -211,7 +211,7 @@ export function createPlugins({
         plugin: 'text',
       },
     }),
-    box: createBoxPlugin(editorStrings),
+    box: createBoxPlugin({ editorStrings }),
     error: errorPlugin,
     deprecated: deprecatedPlugin,
     equations: equationsPlugin,
@@ -359,7 +359,7 @@ export function createPlugins({
       },
     }),
     separator: separatorPlugin,
-    serloTable: serloTablePlugin,
+    serloTable: createSerloTablePlugin(),
     solution: solutionPlugin,
     spoiler: createSpoilerPlugin({
       content: { plugin: 'rows' },

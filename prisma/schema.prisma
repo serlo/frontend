@@ -29,3 +29,19 @@ model PrivateLinkPrototype {
   title     String   @db.VarChar(128)
   timestamp DateTime @default(now())
 }
+
+model TestSurvey {
+  id           Int      @id @default(autoincrement())
+  path         String   @db.VarChar(1024)
+  isProduction Boolean
+  event        String   @db.VarChar(24)
+  timestamp    DateTime @default(now())
+}
+
+model MitmachWoche {
+  id           Int      @id @default(autoincrement())
+  path         String   @db.VarChar(1024)
+  isProduction Boolean
+  event        String   @db.VarChar(24)
+  timestamp    DateTime @default(now())
+}

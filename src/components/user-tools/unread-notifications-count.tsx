@@ -3,6 +3,7 @@ import { gql } from 'graphql-request'
 
 import { FaIcon, FaIconProps } from '../fa-icon'
 import { useGraphqlSwrWithAuth } from '@/api/use-graphql-swr'
+import { tw } from '@/helper/tw'
 
 export interface UnreadNotificationsCountProps {
   icon?: FaIconProps['icon']
@@ -38,7 +39,7 @@ export function UnreadNotificationsCount({
   return (
     <span
       className={clsx(
-        'relative inline-block w-5 h-[1em]',
+        'relative inline-block h-[1em] w-5',
         count > 0 && 'text-brand',
         'notification-count-span'
       )}
@@ -46,15 +47,15 @@ export function UnreadNotificationsCount({
       {icon && (
         <FaIcon
           icon={icon}
-          className="absolute inset-0 w-5 h-6 group-hover:text-white group-active:text-white"
+          className="absolute inset-0 h-6 w-5 group-hover:text-white group-active:text-white"
         />
       )}
       <span
-        className={clsx(
-          'block text-sm absolute mt-0.25 text-white',
-          'z-50 text-center w-5',
-          'group-hover:text-brand group-active:text-brand transition-all'
-        )}
+        className={tw`
+          absolute z-50 mt-0.25 block w-5
+          text-center text-sm text-white
+          transition-all group-hover:text-brand group-active:text-brand
+        `}
       >
         {displayCount}
       </span>

@@ -1,16 +1,16 @@
 import * as R from 'ramda'
-import * as React from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { OverlayButton, PluginToolbarButton, useScopedStore } from '../../core'
+import { OverlayButton, PluginToolbarButton } from '../../core'
 import { StateTypeReturnType } from '../../plugin'
 import {
   DocumentState,
-  getPlugins,
-  SelectorReturnType,
-  serializeDocument,
+  selectPlugins,
+  selectSerializedDocument,
+  store,
 } from '../../store'
 import {
   edtrDragHandle,
@@ -77,24 +77,22 @@ export function RowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: SelectorReturnType<typeof getPlugins>
+  plugins: ReturnType<typeof selectPlugins>
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
-  const container = React.useRef<HTMLDivElement>(null)
-  const [draggingAbove, setDraggingAbove] = React.useState(true)
-  const allowedPlugins = React.useMemo(() => {
+  const container = useRef<HTMLDivElement>(null)
+  const [draggingAbove, setDraggingAbove] = useState(true)
+  const allowedPlugins = useMemo(() => {
     return config.plugins.map((plugin) => plugin.name)
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
-  const store = useScopedStore()
 
   const [collectedDragProps, drag, dragPreview] = useDrag({
     type: 'row',
     item: () => {
-      const serialized = serializeDocument(row.id)(store.getState())
       return {
         id: row.id,
-        serialized,
+        serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
           rows.set((list) => {
             const i = R.findIndex((id) => id === row.id, list)
@@ -226,7 +224,10 @@ export function RowRenderer({
               <Left>
                 <BorderlessOverlayButton
                   onClick={() => {
-                    const document = serializeDocument(row.id)(store.getState())
+                    const document = selectSerializedDocument(
+                      store.getState(),
+                      row.id
+                    )
                     if (!document) return
                     rows.insert(index, document)
                     close()
@@ -275,9 +276,8 @@ export function RowRenderer({
     config.i18n.settings.removeLabel,
     config.i18n.settings.closeLabel,
     config.i18n.toolbar.dragLabel,
-    row.id,
-    store,
     rows,
+    row.id,
     index,
     drag,
   ])

@@ -10,7 +10,6 @@ import {
 /**
  * @param type - The {@link @edtr-io/internal__plugin-state#StateType | state type} for defined values
  * @param initiallyDefined - Whether the value should be defined initially
- * @public
  */
 export function optional<D extends StateType>(
   type: D,
@@ -66,16 +65,13 @@ export function optional<D extends StateType>(
         return onChange(wrapStateUpdater(initial), {
           executor:
             typeof executor === 'function'
-              ? (resolve, reject, next) => {
+              ? (resolve, reject) => {
                   executor(
                     (value) => {
                       resolve(wrapStateUpdater(value))
                     },
                     (value) => {
                       reject(wrapStateUpdater(value))
-                    },
-                    (value) => {
-                      next(wrapStateUpdater(value))
                     }
                   )
                 }
@@ -140,7 +136,6 @@ export function optional<D extends StateType>(
   }
 }
 
-/** @public */
 export type OptionalStateType<D extends StateType> = StateType<
   StateTypeSerializedType<D> | undefined,
   Optional<StateTypeValueType<D>>,
@@ -148,7 +143,6 @@ export type OptionalStateType<D extends StateType> = StateType<
   | (StateTypeReturnType<D> & { defined: true; remove(): void })
 >
 
-/** @public */
 export type Optional<T> =
   | {
       defined: true

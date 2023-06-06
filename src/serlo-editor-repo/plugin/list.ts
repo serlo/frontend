@@ -15,7 +15,6 @@ import {
 /**
  * @param type - The {@link @edtr-io/internal__plugin-state#StateType | state type} of the list items
  * @param initialCount - The initial number of list items
- * @public
  */
 export function list<D extends StateType>(
   type: D,
@@ -115,11 +114,10 @@ export function list<D extends StateType>(
           }
           onChange(wrapUpdater(initial), {
             executor: executor
-              ? (resolve, reject, next) => {
+              ? (resolve, reject) => {
                   executor(
                     (innerUpdater) => resolve(wrapUpdater(innerUpdater)),
-                    (innerUpdater) => reject(wrapUpdater(innerUpdater)),
-                    (innerUpdater) => next(wrapUpdater(innerUpdater))
+                    (innerUpdater) => reject(wrapUpdater(innerUpdater))
                   )
                 }
               : undefined,
@@ -162,7 +160,6 @@ export function list<D extends StateType>(
   }
 }
 
-/** @public */
 export type ListStateType<D extends StateType> = StateType<
   StateTypeSerializedType<D>[],
   {

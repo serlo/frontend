@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 
 import { styled, faSortDown, faSortUp, Icon } from '../ui'
 
@@ -50,13 +50,9 @@ const ToggleIcon = styled(Icon)<{ collapsed: boolean }>(({ collapsed }) => {
   }
 })
 
-/**
- * @param props - The props
- * @public
- */
 export function ExpandableBox(props: ExpandableBoxProps) {
   const { children, editable, alwaysVisible, renderTitle } = props
-  const [collapsed, setCollapsed] = React.useState(!editable)
+  const [collapsed, setCollapsed] = useState(!editable)
 
   return (
     <Container collapsed={collapsed}>
@@ -80,7 +76,6 @@ export function ExpandableBox(props: ExpandableBoxProps) {
     </Container>
   )
 }
-/** @public */
 export interface ExpandableBoxProps {
   children?: React.ReactNode
   editable?: boolean

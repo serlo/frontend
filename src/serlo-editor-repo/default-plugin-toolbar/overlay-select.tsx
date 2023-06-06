@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { OverlaySelectProps } from '../plugin-toolbar'
 import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'

@@ -1,5 +1,4 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import { generate } from 'shortid'
@@ -160,11 +159,7 @@ export function AddRevision({
         </div>
       </div>
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
-      <div
-        className={clsx(
-          'edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]'
-        )}
-      >
+      <div className="edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
         <SerloEditor
           entityNeedsReview={entityNeedsReview}
           // @ts-expect-error Pin it to article

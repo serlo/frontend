@@ -1,8 +1,7 @@
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data'
 
 export const instanceData = {
-  lang: Instance['En'],
+  lang: 'en',
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -499,7 +498,7 @@ export const instanceData = {
   },
 }
 export const instanceLandingData = {
-  lang: Instance['En'],
+  lang: 'en',
   subjectsData: landingSubjectsData,
   strings: {
     vision:
@@ -833,12 +832,16 @@ export const loggedInData = {
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found',
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
+      },
       video: {
         videoUrl: 'Video URL',
         description: 'Description',
         title: 'Title',
         url: 'URL',
         seoTitle: 'Title for search engines',
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.',
       },
       error: {
         convertionError: 'This part of the document could not be converted.',

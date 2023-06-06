@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect } from 'react'
 
 import { ImageProps } from '.'
 import {
@@ -6,11 +6,10 @@ import {
   OverlayCheckbox,
   OverlayInput,
   OverlayTextarea,
-  useScopedStore,
 } from '../core'
 import { EditorButton, EditorInput, EditorInlineSettings } from '../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../plugin'
-import { isEmpty, hasFocusedChild } from '../store'
+import { store, selectIsDocumentEmpty, selectHasFocusedChild } from '../store'
 import { Icon, faImages, faRedoAlt, styled } from '../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
@@ -50,15 +49,15 @@ const Caption = styled.div({
 export function ImageEditor(props: ImageProps) {
   const { editable, focused, state } = props
   const config = useImageConfig(props.config)
-  const scopedStore = useScopedStore()
   usePendingFileUploader(state.src, config.upload)
   const { i18n } = config
 
   const captionIsEmpty =
-    !state.caption.defined || isEmpty(state.caption.id)(scopedStore.getState())
-  const hasFocus = focused || hasFocusedChild(props.id)(scopedStore.getState())
+    !state.caption.defined ||
+    selectIsDocumentEmpty(store.getState(), state.caption.id)
+  const hasFocus = focused || selectHasFocusedChild(store.getState(), props.id)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (editable && !state.caption.defined) {
       state.caption.create({ plugin: 'text' })
     }

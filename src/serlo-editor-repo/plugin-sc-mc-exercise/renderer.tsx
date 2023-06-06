@@ -1,5 +1,3 @@
-import * as React from 'react'
-
 import { ScMcExerciseProps } from '.'
 import { useScMcExerciseConfig } from './config'
 import { ScMcRendererInteractive } from './renderer-interactive'

@@ -32,7 +32,7 @@ export function RevisionHistory({
   }
 
   return (
-    <table className="mx-side border-collapse w-full relative">
+    <table className="relative mx-side w-full border-collapse">
       <thead>
         <tr>
           {renderTh(changes)}
@@ -123,7 +123,7 @@ export function RevisionHistory({
 
   function renderTh(text: string) {
     return (
-      <th className="serlo-th top-0 bg-white border-x-transparent border-t-transparent">
+      <th className="serlo-th top-0 border-x-transparent border-t-transparent bg-white">
         {text}
       </th>
     )
@@ -132,7 +132,7 @@ export function RevisionHistory({
   function getStatus(trashed?: boolean, isCurrent?: boolean) {
     return (
       <span
-        className="rounded-full inline-block w-4 h-4"
+        className="inline-block h-4 w-4 rounded-full"
         style={{
           backgroundColor: trashed
             ? '#c56c6c'

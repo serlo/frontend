@@ -116,7 +116,7 @@ export function SaveModal({
           <div>
             <div className="mb-2">Dein Link:</div>
             <input
-              className="p-2 rounded bg-yellow-300 w-full"
+              className="w-full rounded bg-yellow-300 p-2"
               defaultValue={link}
               readOnly
             />
@@ -150,7 +150,7 @@ export function SaveModal({
 
   function renderModalButtons() {
     return (
-      <div className="mt-4 text-right mx-side">
+      <div className="mx-side mt-4 text-right">
         <button
           className="serlo-button-transparent"
           onClick={() => setOpen(false)}

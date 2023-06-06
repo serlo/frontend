@@ -1,21 +1,37 @@
-import { styled } from '../../ui'
-import { colors } from '@/helper/colors'
+import clsx from 'clsx'
+import { MouseEventHandler } from 'react'
 
-export const HoveringToolbarButton = styled.button<{
+import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
+
+export function HoveringToolbarButton({
+  active,
+  children,
+  tooltipText,
+  onMouseDown,
+}: {
   active?: boolean
-}>(({ active }) => ({
-  color: active ? colors.almostBlack : '#b6b6b6',
-  backgroundColor: active ? colors.editorPrimary200 : 'transparent',
-  cursor: 'pointer',
-  boxShadow: active ? 'inset 0 1px 3px 0 rgba(0,0,0,0.50)' : undefined,
-  outline: 'none',
-  height: '25px',
-  border: 'none',
-  borderRadius: '4px',
-  margin: '5px',
-  padding: '0px',
-  width: '25px',
-  '&:hover': {
-    color: active ? 'black' : colors.editorPrimary,
-  },
-}))
+  children: React.ReactNode
+  tooltipText?: string
+  onMouseDown: MouseEventHandler
+}) {
+  const textParts = tooltipText?.split('(')
+
+  return (
+    <button
+      className={clsx(
+        active
+          ? 'bg-editor-primary-200 text-almost-black shadow-menu hover:text-black'
+          : '#b6b6b6 hover:text-editor-primary',
+        'b-0 m-[5px] h-6 w-6 cursor-pointer rounded p-0 outline-none',
+        'serlo-tooltip-trigger'
+      )}
+      onMouseDown={onMouseDown}
+    >
+      <EditorTooltip
+        text={textParts?.[0]}
+        hotkeys={textParts?.[1]?.slice(0, -1)}
+      />
+      {children}
+    </button>
+  )
+}

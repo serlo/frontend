@@ -1,5 +1,4 @@
 import * as R from 'ramda'
-import * as React from 'react'
 
 import {
   child,
@@ -15,7 +14,6 @@ import { RowsEditor } from './components/rows-editor'
 
 /**
  * @param config - {@link RowsConfig | Plugin configuration}
- * @public
  */
 export function createRowsPlugin(
   config: RowsConfig
@@ -50,13 +48,11 @@ export function createRowsPlugin(
   }
 }
 
-/** @public */
 export interface RowsConfig extends Omit<RowsPluginConfig, 'i18n' | 'theme'> {
   content: ChildStateTypeConfig
   i18n?: DeepPartial<RowsPluginConfig['i18n']>
 }
 
-/** @public */
 export type RowsPluginState = ListStateType<ChildStateType>
 
 export interface RegistryPlugin {
@@ -66,7 +62,6 @@ export interface RegistryPlugin {
   description?: string
 }
 
-/** @public */
 export interface RowsPluginConfig {
   plugins: RegistryPlugin[]
   i18n: {
@@ -85,7 +80,6 @@ export interface RowsPluginConfig {
   }
 }
 
-/** @public */
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>
 
 export * from './registry-context'

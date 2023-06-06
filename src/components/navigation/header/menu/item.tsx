@@ -13,17 +13,17 @@ import { SubContent } from './sub-content'
 import { FaIcon } from '@/components/fa-icon'
 import { HeaderLinkData } from '@/data-types'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 
-export const styledLinkCls = /* className={ */ clsx(
-  'navtrigger flex align-middle items-center',
-  'w-full text-[1.33rem] font-bold',
-  'text-brand block border-b border-brand-400 p-4',
-  'md:serlo-menu-entry-special',
-  'md:block md:serlo-button-blue-transparent md:text-[0.9rem] md:leading-tight md:transition md:text-brand-700',
-  'md:my-0 md:mt-[2px] md:py-0.5 md:px-[7px]',
-  'md:text-center',
-  'hover:no-underline hover:bg-brand-300'
-)
+export const styledLinkCls = tw`
+  navtrigger block flex w-full
+  items-center border-b border-brand-400
+  p-4 align-middle text-[1.33rem] font-bold text-brand
+  hover:bg-brand-300 hover:no-underline
+  md:serlo-button-blue-transparent md:my-0 md:mt-[2px] md:block md:serlo-menu-entry-special
+  md:py-0.5 md:px-[7px] md:text-center md:text-[0.9rem]
+  md:leading-tight md:text-brand-700 md:transition
+`
 
 export const preventHover: PointerEventHandler = (event) => {
   if (window.innerWidth < 1024) event.preventDefault()
@@ -48,8 +48,7 @@ export function Item({ link, elementAsIcon, className }: ItemProps) {
   return (
     <RadixItem
       className={clsx(
-        'ease-linear duration-700',
-        'block md:inline-block md:mx-[3px]',
+        'block duration-700 ease-linear md:mx-[3px] md:inline-block',
         className
       )}
       key={link.title}

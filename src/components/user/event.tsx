@@ -335,7 +335,7 @@ export function Event({
   function renderButtons() {
     if (!setToRead) return null
     return (
-      <div className="absolute flex right-5 top-11" /*ButtonWrapper*/>
+      <div className="absolute right-5 top-11 flex" /*ButtonWrapper*/>
         {renderMuteButton()}
         {unread && renderReadButton()}
       </div>
@@ -371,7 +371,7 @@ export function Event({
         content={renderTooltip(loggedInStrings?.hide)}
       >
         <button
-          className="serlo-button-blue-transparent text-base mr-3"
+          className="serlo-button-blue-transparent mr-3 text-base"
           onClick={() => {
             void mute(event.objectId)
             if (unread) void setToRead(eventId)
@@ -386,7 +386,7 @@ export function Event({
   function renderTooltip(text?: string) {
     return (
       <span
-        className="text-sm leading-tight block bg-almost-black text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
+        className="block max-w-[200px] rounded-md bg-almost-black py-2 px-2.5 text-sm leading-tight text-white" /*Tooltip*/
       >
         {text}
       </span>

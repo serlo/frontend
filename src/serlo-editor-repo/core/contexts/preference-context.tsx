@@ -1,8 +1,8 @@
-import * as React from 'react'
-
 // Scaffolding implementation of a preference context
 // Useful for settings across one editor instance
 // Basically a key-value store, no persistent yet
+
+import { createContext, ReactNode, useState } from 'react'
 
 /** @beta */
 export interface Preference {
@@ -11,7 +11,7 @@ export interface Preference {
 }
 
 /** @beta */
-export const PreferenceContext = React.createContext<Preference>({
+export const PreferenceContext = createContext<Preference>({
   getKey: () => {},
   setKey: () => {},
 })
@@ -23,7 +23,6 @@ const store: { [key: string]: unknown } = {}
  *
  * @param key - The preference
  * @param val - The value
- * @beta
  */
 export function setDefaultPreference(key: string, val: unknown) {
   store[key] = val
@@ -32,9 +31,9 @@ export function setDefaultPreference(key: string, val: unknown) {
 export function PreferenceContextProvider({
   children,
 }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
-  const [state, setState] = React.useState(1)
+  const [state, setState] = useState(1)
 
   function setKey(key: string, val: unknown) {
     store[key] = val

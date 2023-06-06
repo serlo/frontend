@@ -1,6 +1,5 @@
 import { faCreativeCommons } from '@fortawesome/free-brands-svg-icons'
 import { faSlash } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { useRouter } from 'next/router'
 
 import { Link } from '../link'
@@ -8,6 +7,7 @@ import { LicenseIcons } from './license-icons'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { LicenseData } from '@/data-types'
+import { tw } from '@/helper/tw'
 
 interface LicenseNoticeProps {
   data: LicenseData
@@ -38,10 +38,10 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
   function renderFullNotice() {
     return (
       <div
-        className={clsx(
-          'border-t-2 border-brand-200 text-almost-black text-sm',
-          'px-side py-2.5 my-10 mobile:flex'
-        )}
+        className={tw`
+          my-10 border-t-2 border-brand-200 px-side
+          py-2.5 text-sm text-almost-black mobile:flex
+        `}
       >
         <LicenseIcons title={title} isDefault={isDefault} />
         <br />
@@ -95,7 +95,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
     return (
       <>
         <Link
-          className="serlo-button-blue-transparent font-normal text-base hover:no-underline h-[max-content]"
+          className="serlo-button-blue-transparent h-[max-content] text-base font-normal hover:no-underline"
           title={minTitle}
           href={licenseHref}
           noExternalIcon
@@ -105,14 +105,14 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
           ) : (
             <>
               <span
-                className="relative inline-block text-xl mr-0.5 w-6 h-5"
+                className="relative mr-0.5 inline-block h-5 w-6 text-xl"
                 style={{ verticalAlign: 'sub' }}
               >
                 <FaIcon icon={faCreativeCommons} className="absolute" />
                 {!isCreativeCommons && (
                   <FaIcon
                     icon={faSlash}
-                    className="-scale-x-[0.6] absolute -left-[3px] scale-y-[0.6]"
+                    className="absolute -left-[3px] -scale-x-[0.6] scale-y-[0.6]"
                   />
                 )}
               </span>

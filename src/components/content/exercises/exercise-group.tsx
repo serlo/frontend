@@ -39,16 +39,16 @@ export function ExerciseGroup({
 
   return (
     <div className="pt-1">
-      <div className="pt-2 mb-3">
+      <div className="mb-3 pt-2">
         {positionOnPage !== undefined && (
           <ExerciseNumbering
             index={positionOnPage}
             href={href ? href : `/${id}`}
           />
         )}
-        <div className="flex mb-0.5">
+        <div className="mb-0.5 flex">
           {/* explicitly set flex element width to 100% to pass it down to children */}
-          <div className="grow w-full">{groupIntro}</div>
+          <div className="w-full grow">{groupIntro}</div>
           <div>{license}</div>
           {loaded && auth && (
             <AuthorToolsExercises
@@ -62,7 +62,7 @@ export function ExerciseGroup({
         </div>
       </div>
       <ol
-        className="pb-3.5 bg-white mb-2.5 ml-2 sm:pl-12"
+        className="mb-2.5 ml-2 bg-white pb-3.5 sm:pl-12"
         style={{ counterReset: 'exercises' }}
       >
         {children}

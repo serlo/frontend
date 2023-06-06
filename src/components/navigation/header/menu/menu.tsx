@@ -25,7 +25,7 @@ export function Menu() {
     <Root>
       <List
         className={clsx(
-          'md:text-right block m-0 p-0 relative sm:min-w-[27rem]',
+          'relative m-0 block p-0 sm:min-w-[27rem] md:text-right',
           showAuth ? '' : 'md:mt-0.5 md:mr-3.5'
         )}
       >

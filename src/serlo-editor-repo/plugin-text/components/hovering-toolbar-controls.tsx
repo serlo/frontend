@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import React from 'react'
+import { useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
 import type { NestedControlButton, ControlButton } from '../types'
@@ -16,9 +16,11 @@ function isNestedControlButton(
   return R.has('children', control)
 }
 
-export function HoveringToolbarControls(props: HoveringToolbarControlsProps) {
-  const { controls, editor } = props
-  const [subMenu, setSubMenu] = React.useState<number>()
+export function HoveringToolbarControls({
+  controls,
+  editor,
+}: HoveringToolbarControlsProps) {
+  const [subMenu, setSubMenu] = useState<number>()
 
   if (typeof subMenu !== 'number') {
     return (
@@ -26,7 +28,7 @@ export function HoveringToolbarControls(props: HoveringToolbarControlsProps) {
         {controls.map((control, index) => (
           <HoveringToolbarButton
             active={control.isActive(editor)}
-            title={control.title}
+            tooltipText={control.title}
             onMouseDown={(event) => {
               event.preventDefault()
               isNestedControlButton(control)
@@ -65,7 +67,7 @@ export function HoveringToolbarControls(props: HoveringToolbarControlsProps) {
       {subMenuControls.map((control, index) => (
         <HoveringToolbarButton
           active={control.isActive(editor)}
-          title={control.title}
+          tooltipText={control.title}
           onMouseDown={(event) => {
             event.preventDefault()
             control.onClick(editor)

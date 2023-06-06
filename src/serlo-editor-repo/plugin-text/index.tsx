@@ -23,7 +23,6 @@ import { isEmptyObject } from './utils/object'
 /**
  * @param config - {@link TextEditorConfig | Plugin configuration}
  * @returns The text plugin
- * @public
  */
 const createTextPlugin = (
   config: TextEditorConfig
@@ -35,6 +34,10 @@ const createTextPlugin = (
       return value
     },
     deserialize(value) {
+      if (value.length === 0) {
+        return emptyDocumentFactory()
+      }
+
       // If the first child of the Element is an empty object,
       // replace it with an empty document.
       // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
