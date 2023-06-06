@@ -90,6 +90,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                       sameSite: 'Lax',
                     })
                   }
+                  submitEvent('show-button')
                   setButton(true)
                 }
                 if (isProduction) {
