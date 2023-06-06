@@ -126,12 +126,12 @@ export function AddRevision({
         )}${id ? ` (${id})` : ''}`}</title>
       </Head>
       {renderBacklink()}
-      <div className="bg-brand-50 rounded flex justify-start">
+      <div className="flex justify-start rounded bg-brand-50">
         <img
           src="/_assets/img/community-menu-bird.svg"
           className="w-[8.1rem] py-6 pl-4"
         />
-        <div className="[&>p]:serlo-p py-3">
+        <div className="py-3 [&>p]:serlo-p">
           <p className="pt-6">
             Wir laden dich diese Woche ein, unseren Editor auszuprobieren
             <br />
