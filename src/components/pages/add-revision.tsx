@@ -127,10 +127,42 @@ export function AddRevision({
         )}${id ? ` (${id})` : ''}`}</title>
       </Head>
       {renderBacklink()}
+      <div className="bg-brand-50 rounded flex justify-start">
+        <img
+          src="/_assets/img/community-menu-bird.svg"
+          className="w-[8.1rem] py-6 pl-4"
+        />
+        <div className="[&>p]:serlo-p py-3">
+          <p className="pt-6">
+            Wir laden dich diese Woche ein, unseren Editor auszuprobieren
+            <br />
+            Hier kannst du Inhalte nach deinem Bedarf verändern, kürzen oder
+            ergänzen.
+          </p>
+          <p>
+            Dir steht dann die Möglichkeit zur Verfügung, deine Änderungen über
+            einen <strong>privaten Link</strong> zu speichern und anderen
+            Personen, wie z.B deiner Klasse, weiterzugeben.
+          </p>
+          <p>
+            Interesse geweckt? Die Inhalte auf Serlo werden von einer
+            ehrenamtlichen Autor*innen-Community gepflegt:{' '}
+            <a
+              className="serlo-link"
+              target="_blank"
+              href="https://de.serlo.org/community"
+              rel="noreferrer"
+            >
+              Finde mehr heraus
+            </a>
+            .
+          </p>
+        </div>
+      </div>
       <div className="controls-portal sticky top-0 z-[94] bg-white" />
       <div
         className={clsx(
-          'max-w-[816px] mx-auto mb-24 edtr-io serlo-editor-hacks'
+          'edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]'
         )}
       >
         <SerloEditor
