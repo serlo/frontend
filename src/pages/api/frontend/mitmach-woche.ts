@@ -20,12 +20,18 @@ export default async function handler(
       typeof event === 'string' &&
       typeof isProduction === 'boolean' &&
       [
-        'show-popup',
-        'click-popup',
-        'exit-popup',
-        'show-button',
-        'click-button',
-        'exit-button',
+        'show-popup-a',
+        'click-popup-a',
+        'exit-popup-a',
+        'show-button-a',
+        'click-button-a',
+        'exit-button-a',
+        'show-popup-b',
+        'click-popup-b',
+        'exit-popup-b',
+        'show-button-b',
+        'click-button-b',
+        'exit-button-b',
       ].includes(event)
     ) {
       if (path.length < 1024) {

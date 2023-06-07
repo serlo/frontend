@@ -48,6 +48,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const [popup, setPopup] = useState(false)
   const [button, setButton] = useState(false)
   const [popupClicked, setPopupClicked] = useState(false)
+  const [group, setGroup] = useState('')
 
   const { asPath } = useRouter()
   const { lang } = useInstanceData()
@@ -56,6 +57,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const endDate = new Date('2023-06-19T00:00:00+02:00')
 
   useEffect(() => {
+    decideAB()
     triggerButton()
     const timer = setTimeout(() => {
       triggerPopup()
@@ -82,7 +84,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               onClick={() => {
                 setPopup(false)
                 if (!popupClicked) {
-                  submitEvent('exit-popup')
+                  submitEvent('exit-popup-' + group)
                 } else {
                   if (isProduction) {
                     Cookies.set('serlo-mitmach-woche-show-button', '1', {
@@ -103,16 +105,33 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
             >
               <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
             </button>
-            <p className="mx-side mt-6 text-3xl italic">
-              Serlo ist zum Mitmachen!
-            </p>
-            <p className="serlo-p mt-6 text-left text-lg">
-              Wir möchten dich diese Woche einladen, den Editor auszuprobieren
-              und Artikel selbst anzupassen.
-              <br />
-              Deine Änderungen kannst du für dich speichern und gleich im
-              Unterricht einsetzen.
-            </p>
+            {group === 'a' && (
+              <>
+                <p className="mx-side mt-6 text-3xl italic">
+                  Serlo ist zum Mitmachen!
+                </p>
+                <p className="serlo-p mt-6 text-left text-lg">
+                  Wir möchten dich diese Woche einladen, den Editor
+                  auszuprobieren und Artikel selbst anzupassen.
+                  <br />
+                  Deine Änderungen kannst du für dich speichern und gleich im
+                  Unterricht einsetzen.
+                </p>
+              </>
+            )}
+            {group === 'b' && (
+              <>
+                <p className="mx-side mt-6 text-3xl font-bold">
+                  Artikel für Lerngruppen anpassen und teilen
+                </p>
+                <p className="serlo-p mt-6 text-left text-lg">
+                  Probiere unseren Editor zur Inhaltserstellung aus,
+                  <br />
+                  speichere deine Anpassungen für deine Lerngruppe und setze sie
+                  gleich im Unterricht ein.
+                </p>
+              </>
+            )}
             <p className="mb-8">
               <a
                 className="serlo-button-green"
@@ -120,7 +139,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                 href={`https://frontend-git-poc-remix-serlo.vercel.app/entity/repository/add-revision/${entityId}`}
                 rel="noreferrer"
                 onClick={() => {
-                  submitEvent('click-popup')
+                  submitEvent('click-popup-' + group)
                   setPopupClicked(true)
                 }}
               >
@@ -139,11 +158,12 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
               href={`https://frontend-git-poc-remix-serlo.vercel.app/entity/repository/add-revision/${entityId}`}
               rel="noreferrer"
               onClick={() => {
-                submitEvent('click-button')
+                submitEvent('click-button-' + group)
               }}
             >
               <FaIcon icon={faPencil} className="mr-2" />
-              Öffne den Editor zum Ausprobieren
+              {group === 'a' && <>Öffne den Editor zum Ausprobieren</>}
+              {group === 'b' && <>Artikel für Lerngruppe anpassen und teilen</>}
             </a>
             <button
               title="Banner verstecken"
@@ -151,7 +171,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                 const result = confirm('Nicht mehr anzeigen?')
                 if (result) {
                   setButton(false)
-                  submitEvent('exit-button')
+                  submitEvent('exit-button-' + group)
                 }
               }}
               className="serlo-button-blue-transparent ml-5 h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
@@ -260,17 +280,44 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     }
 
     setPopup(true)
-    submitEvent('show-popup')
+    submitEvent('show-popup-' + Cookies.get('serlo-mitmach-woche-group')!)
   }
 
   function triggerButton() {
+    // in staging, popup is always shown
+    if (!isProduction) {
+      return
+    }
+
+    // only for article
+    if (
+      page.kind !== 'single-entity' ||
+      page.entityData.typename !== UuidType.Article
+    ) {
+      return
+    }
+
     // only show button if requested
     if (!Cookies.get('serlo-mitmach-woche-show-button')) {
       return
     }
 
     setButton(true)
-    submitEvent('show-button')
+    submitEvent('show-button-' + Cookies.get('serlo-mitmach-woche-group')!)
+  }
+
+  function decideAB() {
+    if (!Cookies.get('serlo-mitmach-woche-group')) {
+      Cookies.set(
+        'serlo-mitmach-woche-group',
+        Math.random() < 0.5 ? 'a' : 'b',
+        {
+          expires: isProduction ? 8 : undefined,
+          sameSite: 'Lax',
+        }
+      )
+    }
+    setGroup(Cookies.get('serlo-mitmach-woche-group') || 'a')
   }
 
   function submitEvent(event: string) {
