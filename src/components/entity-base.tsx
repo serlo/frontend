@@ -307,7 +307,8 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   }
 
   function decideAB() {
-    if (!Cookies.get('serlo-mitmach-woche-group')) {
+    // always shuffle in preview
+    if (!Cookies.get('serlo-mitmach-woche-group') || !isProduction) {
       Cookies.set(
         'serlo-mitmach-woche-group',
         Math.random() < 0.5 ? 'a' : 'b',
