@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next'
+import Head from 'next/head'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { prisma } from '@/helper/prisma'
@@ -11,6 +12,9 @@ interface PrivateLinkProps {
 export default renderedPageNoHooks<PrivateLinkProps>(({ entries }) => {
   return (
     <FrontendClientBase entityId={-1} authorization={{}}>
+      <Head>
+        <title>Übersicht aller privaten Links</title>
+      </Head>
       <h1 className="serlo-h1 mt-12" itemProp="name">
         Übersicht aller privater Links
       </h1>
@@ -26,7 +30,15 @@ export default renderedPageNoHooks<PrivateLinkProps>(({ entries }) => {
             >
               {entry.title}
             </a>{' '}
-            (von {entry.id}) <small>{entry.date}</small>
+            (von {entry.id}) <small>{entry.date}</small>{' '}
+            <a
+              href={`/private-link/compare/${entry.key}/${entry.id}`}
+              className="serlo-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              vergleichen
+            </a>
           </div>
         ))}
       </div>
