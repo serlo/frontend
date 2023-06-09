@@ -53,7 +53,24 @@ const createTextPlugin = (
     return false
   },
   isEmpty: (state) => {
-    return state.value.value.map(Node.string).join('') === ''
+    return (
+      state.value.value
+        .map((node) => {
+          const childNodes = [...Node.elements(node)]
+
+          // check for math elements with content
+          if (
+            childNodes.find(
+              ([node]) => node.type === 'math' && node.src && node.src.length
+            )
+          ) {
+            return false
+          }
+
+          return Node.string(node)
+        })
+        .join('') === ''
+    )
   },
 })
 
