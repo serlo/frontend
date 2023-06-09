@@ -52,7 +52,9 @@ export function child<K extends string, S = unknown>(
       if (document === null) {
         throw new Error('There exists no document with the given id')
       }
-      return document
+      // making sure existing plugins store `id` in state as well
+      if (Object.hasOwn(document, 'id')) return document
+      return { ...document, id }
     },
     getFocusableChildren(id) {
       return [{ id }]
