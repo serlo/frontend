@@ -1,8 +1,14 @@
+import {
+  faNewspaper as articleIcon,
+  faChalkboardUser as courseIcon,
+  faFilePen as exerciseIcon,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
 import { EditorContact } from '../editor/editor-contact'
 import { teamDataKulla } from '../editor/editor-team'
 import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 
 export const MetadataApiPresentation = () => {
   return (
@@ -108,10 +114,40 @@ export const MetadataApiPresentation = () => {
                 </li>
               </ul>
             </div>
-            <CallToAction alignment="center" />
           </div>
         </section>
-
+        <section className="mt-0 mb-20 bg-orangeBow bg-100% px-2 pt-16 pb-16">
+          <div className="mx-auto mt-2 max-w-4xl px-4 text-center text-xl sm:flex">
+            <div className="mx-4 flex-1 pt-4 pb-4">
+              <FaIcon
+                icon={articleIcon}
+                className="mx-auto mr-2 text-4xl text-brand"
+              />
+              <b className="font-handwritten text-4xl text-brand">3,000+</b>
+              <br />
+              Articles
+            </div>
+            <div className="mx-4 flex-1 pt-4 pb-4">
+              <FaIcon
+                icon={courseIcon}
+                className="mx-auto mr-2 text-4xl text-brand"
+              />
+              <b className="font-handwritten text-4xl text-brand">600+</b>
+              <br />
+              Courses
+            </div>
+            <div className="mx-4 flex-1 pt-4 pb-4">
+              <FaIcon
+                icon={exerciseIcon}
+                className="mx-auto mr-2 text-4xl text-brand"
+              />
+              <b className="font-handwritten text-4xl text-brand">4000+</b>
+              <br />
+              Exercises
+            </div>
+          </div>
+        </section>
+        <CallToAction alignment="center" />
         <section className="mt-8 mb-32">
           <p className="flex-1 text-center text-xl leading-cozy">
             <b className="tracking-tight">
