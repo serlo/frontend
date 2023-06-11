@@ -1,7 +1,6 @@
 import { selectIsEmptyRows } from '@edtr-io/plugin-rows'
-import { store } from '@edtr-io/store'
+import { useAppSelector } from '@edtr-io/store'
 import clsx from 'clsx'
-import { useState } from 'react'
 
 import { BoxProps } from '.'
 import { boxTypeStyle, defaultStyle } from '@/components/content/box'
@@ -26,17 +25,14 @@ export function BoxRenderer(props: BoxProps) {
     ? style.colorClass
     : defaultStyle.colorClass
   const icon = Object.hasOwn(style, 'icon') ? style.icon : undefined
-  const [contentIsEmpty, setContentIsEmpty] = useState(true)
+  const contentId = content.get()
+  const contentIsEmpty = useAppSelector((state) =>
+    selectIsEmptyRows(state, contentId)
+  )
   const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
-
-  const checkContentEmpty = () => {
-    const isEmptyNow =
-      selectIsEmptyRows(store.getState(), content.get()) ?? true
-    if (isEmptyNow !== contentIsEmpty) setContentIsEmpty(isEmptyNow)
-  }
 
   return (
     <>
@@ -66,7 +62,7 @@ export function BoxRenderer(props: BoxProps) {
       <figcaption className="flex pt-1 text-lg">
         {isBlank ? null : (
           <div>
-            <span className={colorClass + ' mr-1'}>
+            <span className={colorClass + (props.editable ? ' mr-1' : ' pr-3')}>
               {icon ? <FaIcon className="mr-1" icon={icon} /> : null}
               {strings.content.boxTypes[typedValue]}
             </span>
@@ -82,11 +78,7 @@ export function BoxRenderer(props: BoxProps) {
   }
 
   function renderContent() {
-    return (
-      <div className="-ml-3" onKeyUp={checkContentEmpty}>
-        {content.render()}
-      </div>
-    )
+    return <div className="-ml-3">{content.render()}</div>
   }
 
   function renderInlineSettings() {
@@ -146,7 +138,7 @@ export function BoxRenderer(props: BoxProps) {
   }
 
   function renderWarning() {
-    return contentIsEmpty ? (
+    return contentIsEmpty && props.editable ? (
       <div className="mt-1 text-right">
         <span className="bg-editor-primary-100 p-0.5 text-sm">
           ⚠️ {editorStrings.box.emptyContentWarning}
