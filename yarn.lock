@@ -2824,31 +2824,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:4.13.0":
-  version: 4.13.0
-  resolution: "@prisma/client@npm:4.13.0"
+"@prisma/client@npm:^4.14.0":
+  version: 4.15.0
+  resolution: "@prisma/client@npm:4.15.0"
   dependencies:
-    "@prisma/engines-version": 4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a
+    "@prisma/engines-version": 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 74e2ede6308d6f70dc6244c34d13cf5f6c8da4f1a1ffe42a26192675ecac02733cb5482518d2a37fa057f160873fe8d42f5e3a08fc45d52b1eb386522bdbec0b
+  checksum: 875eb31e702e16a50188f4762d9689a930aeb4f18a158a0a5270feefc80dc9a30935890df65d98fc9c6655d5f4f65d9943997bb86a51dd904577e7d19c6a2a7c
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a":
-  version: 4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a
-  resolution: "@prisma/engines-version@npm:4.13.0-50.1e7af066ee9cb95cf3a403c78d9aab3e6b04f37a"
-  checksum: cc583fe956b65fd4548082917f14ccf1c3c54d6b26623583f5e63298a8b4b5a492ba90597123af1fc272115621cb7340e2d708d5b5e252f59139b35f0df00abe
+"@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944":
+  version: 4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944
+  resolution: "@prisma/engines-version@npm:4.15.0-28.8fbc245156db7124f997f4cecdd8d1219e360944"
+  checksum: 6da6f076746aac2db043a9f15790f51c6d0e86139e1ebd83e6e046e799c0dbfa0d2df14cd7c70cc9583ce85b4bfc02e48fe1461077b79ed31ba83ad9440bb90f
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:4.14.0":
-  version: 4.14.0
-  resolution: "@prisma/engines@npm:4.14.0"
-  checksum: aef3c892923419c83475be37baabeb636c652fde1c00ad5a743784f834dcb1b872e6d16a891b69307d883823936dae11e1fcb5d177d8586af771dda5d7935f30
+"@prisma/engines@npm:4.15.0":
+  version: 4.15.0
+  resolution: "@prisma/engines@npm:4.15.0"
+  checksum: 61b53fe5ad7b0927de9aa4f51027e281788258d3fb5e389c3ae940829fdc5428a7108ce0cae5b329ddac0ee3206b0b9f8e8adae401c456f77d912c96368cfa5f
   languageName: node
   linkType: hard
 
@@ -3439,7 +3439,7 @@ __metadata:
     "@ory/client": ^1.1.21
     "@ory/integrations": ^1.1.0
     "@prezly/slate-lists": ^0.79.5
-    "@prisma/client": 4.13.0
+    "@prisma/client": ^4.14.0
     "@radix-ui/react-navigation-menu": ^1.1.1
     "@reduxjs/toolkit": ^1.9.5
     "@serlo/authorization": ^0.47.0
@@ -3484,7 +3484,7 @@ __metadata:
     eslint-plugin-import: ^2.26.0
     eslint-plugin-react: ^7.31.10
     eslint-plugin-react-hooks: ^4.6.0
-    fast-xml-parser: ^4.0.11
+    fast-xml-parser: ^4.2.4
     fp-ts: ^2.13.1
     graphiql: ^2.0.9
     graphql: ^16.6.0
@@ -3508,7 +3508,7 @@ __metadata:
     prettier: ^2.7.1
     prettier-plugin-packagejson: ^2.3.0
     prettier-plugin-tailwindcss: ^0.3.0
-    prisma: ^4.14.0
+    prisma: ^4.15.0
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
     ramda: ^0.28.0
@@ -7258,14 +7258,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.0.11":
-  version: 4.0.11
-  resolution: "fast-xml-parser@npm:4.0.11"
+"fast-xml-parser@npm:^4.2.4":
+  version: 4.2.4
+  resolution: "fast-xml-parser@npm:4.2.4"
   dependencies:
     strnum: ^1.0.5
   bin:
     fxparser: src/cli/cli.js
-  checksum: d8a08e4d5597e0fc00a86735195872eeb03008913e298830941516f3766e16ee555e2d431acc92e1dda887938edc445252ec5b59494aab60a8389888bd13719c
+  checksum: d3b4d0c0152c09f98def792769fca6bb3fa1d597f9745d9564451c239089bd86bdf573c9263b4944860028cb7edb81752d64399c1aff8b87c9225ecef96905f7
   languageName: node
   linkType: hard
 
@@ -11555,15 +11555,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:^4.14.0":
-  version: 4.14.0
-  resolution: "prisma@npm:4.14.0"
+"prisma@npm:^4.15.0":
+  version: 4.15.0
+  resolution: "prisma@npm:4.15.0"
   dependencies:
-    "@prisma/engines": 4.14.0
+    "@prisma/engines": 4.15.0
   bin:
     prisma: build/index.js
     prisma2: build/index.js
-  checksum: 4ce9429506620ac979edd6ad809c2bc7af8d96dcd812fe8f936c2cc62c0408046b30bc51ee354eebbf058e36ee72cfbbe222b23f0ab6a085baa8fab791c2d4cb
+  checksum: a42b940396f5f101d44effad9bfccca4b062ae80a369dc44961cbc074326239340f05c5af49981b1cddb08d9155c4bcc93c4d69ed2ae4a634e1742159204cb89
   languageName: node
   linkType: hard
 
