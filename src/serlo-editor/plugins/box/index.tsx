@@ -1,4 +1,4 @@
-import { BoxRenderer } from './renderer'
+import { BoxEditor } from './editor'
 import type { LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/serlo-editor-integration/get-plugin-registry'
 import {
@@ -52,7 +52,7 @@ export function createBoxPlugin({
   allowPluginsWithin?: string[] // Used in https://github.com/serlo/serlo-editor-for-edusharing
 }): EditorPlugin<BoxPluginState> {
   return {
-    Component: BoxRenderer,
+    Component: BoxEditor,
     config: {},
     state: createBoxState(editorStrings, allowPluginsWithin),
   }
