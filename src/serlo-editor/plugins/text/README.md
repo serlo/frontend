@@ -9,7 +9,7 @@
   - [Technical decisions](#technical-decisions)
     - [Configuration](#configuration)
     - [Text formatting options](#text-formatting-options)
-    - [Suggestions (`serlo-editor`/`edtr-io` plugins)](#suggestions-serlo-editoredtr-io-plugins)
+    - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
     - [Saving state to `Redux` store](#saving-state-to-redux-store)
       - [`LinkControls` workaround](#linkcontrols-workaround)
 
@@ -41,7 +41,7 @@ The `config` object received from the `useTextConfig` hook is then used as the s
 
 ### Text formatting options
 
-Currently used Slate version only allows Slate plugins to modify the `editor` object. To allow for the same functionality of plugins from the earlier version of `serlo-editor`/`edtr-io`, a hook approach was used ([as recommended by the creator of Slate](https://github.com/ianstormtaylor/slate/issues/3222#issuecomment-573331151)).
+Currently used Slate version only allows Slate plugins to modify the `editor` object. To allow for the same functionality of plugins from the earlier version of `serlo-editor`, a hook approach was used ([as recommended by the creator of Slate](https://github.com/ianstormtaylor/slate/issues/3222#issuecomment-573331151)).
 
 The `useFormattingOptions` hook receives the `config` object and exposes these properties:
 
@@ -52,9 +52,9 @@ The `useFormattingOptions` hook receives the `config` object and exposes these p
 
 This approach allows to simply pass an array of desired formatting options (as `formattingOptions` property of the `config` argument) when creating a Text plugin instance, thus making the formatting options easily configurable for the user of Text plugin.
 
-### Suggestions (`serlo-editor`/`edtr-io` plugins)
+### Suggestions (`serlo-editor` plugins)
 
-In order to easily transform a Text plugin into another `serlo-editor`/`edtr-io` plugin, the user can simply type `/` into an empty Text plugin, and they will be presented with a list of suggestions. A hook approach was used to make the suggestions easily configurable.
+In order to easily transform a Text plugin into another `serlo-editor` plugin, the user can simply type `/` into an empty Text plugin, and they will be presented with a list of suggestions. A hook approach was used to make the suggestions easily configurable.
 
 The `useSuggestions` hook receives:
 
