@@ -4,13 +4,9 @@ import remarkGfmPlugin from 'remark-gfm'
 import { TableConfig, TablePluginConfig } from '.'
 
 export function useTableConfig(config: TableConfig): TablePluginConfig {
-  const { i18n = {}, MarkdownRenderer = DefaultMarkdownRenderer } = config
+  const { MarkdownRenderer = DefaultMarkdownRenderer } = config
 
   return {
-    i18n: {
-      placeholder: 'Enter the table using Markdown syntax',
-      ...i18n,
-    },
     MarkdownRenderer,
   }
 }

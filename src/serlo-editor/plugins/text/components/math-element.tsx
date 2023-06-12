@@ -7,18 +7,13 @@ import {
   useSelected,
 } from 'slate-react'
 
-import type {
-  MathElement as MathElementType,
-  Paragraph,
-  TextEditorPluginConfig,
-} from '../types'
+import type { MathElement as MathElementType, Paragraph } from '../types'
 import { isElementWithinList } from '../utils/list'
 import { MathFormula } from './math-formula'
 import { PreferenceContext } from '@/serlo-editor/core'
 import { MathEditor } from '@/serlo-editor/math'
 
 export interface MathElementProps {
-  config: TextEditorPluginConfig
   element: MathElementType
   attributes: RenderElementProps['attributes']
   focused: boolean
@@ -28,7 +23,6 @@ export interface MathElementProps {
 const visualEditorPreferenceKey = 'text:math:visual-editor'
 
 export function MathElement({
-  config,
   element,
   attributes,
   focused,
@@ -182,7 +176,6 @@ export function MathElement({
         readOnly={false}
         visual={isVisualMode}
         disableBlock={isInsideListElement}
-        config={{ i18n: config.i18n.math }}
         onInlineChange={handleInlineChange}
         onChange={(src) => updateElement({ src })}
         onMoveOutRight={transformOutOfElement}

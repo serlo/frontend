@@ -1,6 +1,6 @@
 import * as MQ from 'react-mathquill'
 
-import { MathEditorProps } from './editor-props'
+import { MathEditorProps } from './editor'
 
 if (typeof window !== 'undefined') {
   MQ.addStyles()

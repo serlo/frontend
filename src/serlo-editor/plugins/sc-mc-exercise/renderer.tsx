@@ -1,17 +1,18 @@
 import { ScMcExerciseProps } from '.'
-import { useScMcExerciseConfig } from './config'
 import { ScMcRendererInteractive } from './renderer-interactive'
+import { useInstanceData } from '@/contexts/instance-context'
 
 export function ScMcExerciseRenderer(props: ScMcRendererProps) {
-  const config = useScMcExerciseConfig(props.config)
+  const { strings } = useInstanceData()
 
   return (
     <ScMcRendererInteractive
+      i18nWrong={strings.content.exercises.wrong}
+      i18nCorrect={strings.content.exercises.correct}
       {...props}
-      config={config}
       getFeedback={({ mistakes, missingSolutions }) => {
         if (mistakes > 0 && mistakes === missingSolutions) {
-          return config.i18n.globalFeedback.missingCorrectAnswers
+          return strings.content.exercises.missedSome
         }
 
         return undefined

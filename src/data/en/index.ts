@@ -662,6 +662,7 @@ export const loggedInData = {
           restoreInitialButton: 'Delete changes',
           confirmRestore: 'Are you sure you want to delete all your changes?'
         },
+        settings: 'Settings',
         extendedSettings: 'Extended Settings',
         close: 'Close',
         notSupportedYet:
@@ -726,7 +727,6 @@ export const loggedInData = {
         current: 'Current',
         author: 'Author',
         createdAt: 'when?',
-        settings: 'Settings',
         equationsTitle: 'Terms and equations',
         equationsDesc:
           'Write term manipulations and solve multiline equations.',
@@ -756,6 +756,11 @@ export const loggedInData = {
         number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
         mathematicalExpressionSolution:
           "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')",
+        types: {
+          mathExpression: 'Mathematical expression',
+          text: 'Text',
+          number: 'Number'
+        }
       },
       multimedia: {
         image: 'Image',
@@ -815,23 +820,30 @@ export const loggedInData = {
         lists: 'Lists',
         mathFormula: 'Math formula (%ctrlOrCmd% + M)',
         code: 'Code (%ctrlOrCmd% + ⇧ + `)',
-        displayAsBlock: 'Display as block',
-        formula: '[formula]',
-        visual: 'visual',
-        laTeX: 'LaTeX',
-        onlyLaTeX: 'Only LaTeX editor available',
-        shortcuts: 'Shortcuts',
-        fraction: 'Fraction',
-        superscript: 'Superscript',
-        or: 'or',
-        subscript: 'Subscript',
-        root: 'Root',
-        mathSymbols: 'Math symbols',
-        eG: 'e.g.',
-        functions: 'Functions',
         bold: 'Bold (%ctrlOrCmd% + B)',
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found',
+        colorNames: {
+          blue: 'Blue',
+          green: 'Green',
+          orange: 'Orange',
+        },
+        math: {
+          formula: '[formula]',
+          visual: 'visual',
+          latex: 'LaTeX',
+          onlyLatex: 'Only LaTeX editor available',
+          shortcuts: 'Shortcuts',
+          fraction: 'Fraction',
+          superscript: 'Superscript',
+          or: 'or',
+          subscript: 'Subscript',
+          root: 'Root',
+          mathSymbols: 'Math symbols',
+          eG: 'e.g.',
+          functions: 'Functions',
+          displayAsBlock: 'Display as block',
+        },
       },
       image: {
         noImagePasteInLists: 'Pasting images inside of lists is not allowed.',

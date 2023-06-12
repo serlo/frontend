@@ -2,30 +2,22 @@ import * as R from 'ramda'
 import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
-import {
-  AddButton,
-  InteractiveAnswer,
-  PreviewOverlay,
-  styled,
-} from '../../editor-ui'
+import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
   store,
   selectFocused,
   selectIsDocumentEmpty,
   useAppSelector,
 } from '../../store'
-import { useScMcExerciseConfig } from './config'
 import { ScMcExerciseRenderer } from './renderer'
-
-const TypeMenu = styled.div({
-  marginBottom: '0.5em',
-})
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const config = useScMcExerciseConfig(props.config)
   const focusedElement = useAppSelector(selectFocused)
 
   const { editable, focused, state } = props
+  const editorStrings = useLoggedInData()!.strings.editor
+
   const children = R.flatten(
     props.state.answers.map((answer) => {
       return [answer.content.id, answer.feedback.id]
@@ -80,18 +72,22 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       </PreviewOverlay>
       {editable && nestedFocus && !previewActive && (
         <>
-          <TypeMenu>
+          <div className="mb-2">
             <label>
-              {config.i18n.isSingleChoice.label}:{' '}
+              {editorStrings.scMcExercise.chooseType}:{' '}
               <select
                 value={state.isSingleChoice.value ? 'sc' : 'mc'}
                 onChange={handleSCMCChange}
               >
-                <option value="mc">{config.i18n.types.multipleChoice}</option>
-                <option value="sc">{config.i18n.types.singleChoice}</option>
+                <option value="mc">
+                  {editorStrings.scMcExercise.multipleChoice}
+                </option>
+                <option value="sc">
+                  {editorStrings.scMcExercise.singleChoice}
+                </option>
               </select>
             </label>
-          </TypeMenu>
+          </div>
           {state.answers.map((answer, index) => {
             return (
               <InteractiveAnswer
@@ -113,7 +109,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
             )
           })}
           <AddButton onClick={addButton}>
-            {config.i18n.answer.addLabel}
+            {editorStrings.scMcExercise.addAnswer}
           </AddButton>
         </>
       )}

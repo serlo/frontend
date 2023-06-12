@@ -485,7 +485,6 @@ function InlineMath(props: InlineMathProps) {
     <MathEditor
       readOnly={!focused}
       state={`${prefix}${state.value}${suffix}`}
-      config={{ i18n: { placeholder: props.placeholder } }}
       inline
       disableBlock
       visual={preferences.getKey(preferenceKey) === true}

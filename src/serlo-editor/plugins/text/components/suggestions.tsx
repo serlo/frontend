@@ -1,10 +1,9 @@
-import type { TextEditorPluginConfig } from '../types'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { colors } from '@/helper/colors'
 import type { RegistryPlugin } from '@/serlo-editor/plugins/rows'
 import { styled } from '@/serlo-editor/ui'
 
 interface SuggestionsProps {
-  config: TextEditorPluginConfig
   options: RegistryPlugin[]
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
@@ -51,17 +50,16 @@ const SuggestionDescription = styled.p({
 })
 
 export const Suggestions = ({
-  config,
   options,
   suggestionsRef,
   selected,
   onMouseDown,
   onMouseMove,
 }: SuggestionsProps) => {
-  const { i18n } = config
+  const editorStrings = useLoggedInData()!.strings.editor
 
   if (options.length === 0) {
-    return <div>{i18n.suggestions.noResultsMessage}</div>
+    return <div>{editorStrings.text.noItemsFound}</div>
   }
 
   return (

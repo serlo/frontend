@@ -10,8 +10,8 @@ import {
   styled,
 } from '../../editor-ui'
 import { selectFocused, useAppSelector } from '../../store'
-import { useInputExerciseConfig } from './config'
 import { InputExerciseRenderer } from './renderer'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const AnswerTextfield = styled.input({
   border: 'none',
@@ -24,8 +24,9 @@ const TypeMenu = styled.div({
 })
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, focused, config } = props
-  const { i18n } = useInputExerciseConfig(config)
+  const { editable, state, focused } = props
+  const editorStrings = useLoggedInData()!.strings.editor
+
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
@@ -46,14 +47,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
         <>
           <TypeMenu>
             <label>
-              {i18n.type.label}:{' '}
+              {editorStrings.inputExercise.chooseType}:{' '}
               <select
                 value={state.type.value}
                 onChange={(event) => state.type.set(event.target.value)}
               >
                 {Object.values(InputExerciseType).map((exerciseType) => (
                   <option key={exerciseType} value={exerciseType}>
-                    {i18n.types[exerciseType]}
+                    {getType(exerciseType)}
                   </option>
                 ))}
               </select>
@@ -66,7 +67,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 answer={
                   <AnswerTextfield
                     value={answer.value.value}
-                    placeholder={i18n.answer.value.placeholder}
+                    placeholder={editorStrings.inputExercise.enterTheValue}
                     type="text"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       answer.value.set(e.target.value)
@@ -85,17 +86,27 @@ export function InputExerciseEditor(props: InputExerciseProps) {
             )
           })}
           <AddButton onClick={() => state.answers.insert()}>
-            {i18n.answer.addLabel}
+            {editorStrings.inputExercise.addAnswer}
           </AddButton>
         </>
       )}
       {props.renderIntoSettings(
         <OverlayInput
-          label={i18n.unit.label}
+          label={editorStrings.inputExercise.unit}
           value={state.unit.value}
           onChange={(e) => state.unit.set(e.target.value)}
         />
       )}
     </>
   )
+
+  function getType(type: InputExerciseType) {
+    return editorStrings.inputExercise.types[
+      type === InputExerciseType.InputNumberExactMatchChallenge
+        ? 'mathExpression'
+        : InputExerciseType.InputNumberExactMatchChallenge
+        ? 'number'
+        : 'text'
+    ]
+  }
 }

@@ -11,7 +11,6 @@ import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
@@ -55,7 +54,6 @@ export function SerloEditor({
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
   const [useStored, setUseStored] = useState(false)
-  const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -70,18 +68,9 @@ export function SerloEditor({
     registry: getPluginRegistry(type, editorStrings),
     type,
     editorStrings,
-    strings,
   })
 
-  const DocumentEditor = createDefaultDocumentEditor({
-    i18n: {
-      settings: {
-        buttonLabel: editorStrings.edtrIo.settings,
-        modalTitle: editorStrings.edtrIo.extendedSettings,
-        modalCloseLabel: editorStrings.edtrIo.close,
-      },
-    },
-  })
+  const DocumentEditor = createDefaultDocumentEditor()
 
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method

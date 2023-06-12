@@ -1,7 +1,7 @@
 import KaTeX from 'katex'
 import React, { forwardRef } from 'react'
 
-import { MathEditorProps } from './editor-props'
+import { MathEditorProps } from './editor'
 
 export type MathRendererProps = Pick<
   MathEditorProps,

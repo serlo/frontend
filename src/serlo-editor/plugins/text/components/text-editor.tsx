@@ -410,7 +410,6 @@ export function TextEditor(props: TextEditorProps) {
       if (element.type === 'math') {
         return (
           <MathElement
-            config={config}
             element={element}
             attributes={attributes}
             focused={focused}
@@ -422,7 +421,7 @@ export function TextEditor(props: TextEditorProps) {
 
       return <div {...attributes}>{children}</div>
     },
-    [config, focused]
+    [focused]
   )
 
   return (
@@ -463,7 +462,7 @@ export function TextEditor(props: TextEditorProps) {
 
       {showSuggestions && (
         <HoverOverlay position="below">
-          <Suggestions config={config} {...suggestionsProps} />
+          <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
     </HotKeys>

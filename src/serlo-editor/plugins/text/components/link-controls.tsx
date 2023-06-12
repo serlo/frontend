@@ -6,6 +6,7 @@ import type { Link, TextEditorPluginConfig } from '../types'
 import { getLinkElement, isLinkActive } from '../utils/link'
 import { InlineOverlay, InlineOverlayPosition } from './inline-overlay'
 import { LinkControlsInput } from './link-controls-input'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { faExternalLinkAlt, faTrashAlt, Icon, styled } from '@/serlo-editor/ui'
 
@@ -42,6 +43,7 @@ export function LinkControls({
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
   const input = useRef<HTMLInputElement>(null)
+  const editorStrings = useLoggedInData()!.strings.editor
 
   const { selection } = editor
 
@@ -85,7 +87,7 @@ export function LinkControls({
         <LinkControlsInput
           ref={input}
           value={value}
-          placeholder={config.i18n.link.placeholder}
+          placeholder={editorStrings.text.enterUrl}
           onChange={(event) => {
             setValue(event.target.value)
             const path = ReactEditor.findPath(editor, element)

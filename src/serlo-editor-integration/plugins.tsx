@@ -1,9 +1,6 @@
-import type { ComponentType, ReactNode } from 'react'
-
 import { getPluginRegistry } from './get-plugin-registry'
-import { SerializedDocument } from './types/serialized-document'
-import { InstanceData, LoggedInData } from '@/data-types'
-import { isMac } from '@/helper/client-detection'
+import type { SerializedDocument } from './types/serialized-document'
+import { LoggedInData } from '@/data-types'
 import type { EditorPlugin } from '@/serlo-editor/plugin'
 import { createBlockquotePlugin } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import { createImportantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
@@ -21,10 +18,7 @@ import { H5pPlugin } from '@/serlo-editor/plugins/h5p/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
 import { createImagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
 import { injectionPlugin } from '@/serlo-editor/plugins/injection'
-import {
-  createInputExercisePlugin,
-  InputExerciseType,
-} from '@/serlo-editor/plugins/input-exercise'
+import { createInputExercisePlugin } from '@/serlo-editor/plugins/input-exercise'
 import { createMultimediaExplanationPlugin } from '@/serlo-editor/plugins/multimedia-explanation'
 import { createPageLayoutPlugin } from '@/serlo-editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@/serlo-editor/plugins/page-partners'
@@ -70,110 +64,14 @@ type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
 
 export function createPlugins({
   editorStrings,
-  strings,
   registry,
   type,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  strings: InstanceData['strings']
   registry: RowsConfig['plugins']
   type: string
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
-  const replaceKeyStrings = (input: string) => {
-    return input.replace('%ctrlOrCmd%', isMac ? '⌘' : strings.keys.ctrl)
-  }
-
-  const textPluginI18n = {
-    blockquote: {
-      toggleTitle: replaceKeyStrings(editorStrings.text.quote),
-    },
-    colors: {
-      setColorTitle: replaceKeyStrings(editorStrings.text.setColor),
-      resetColorTitle: editorStrings.text.resetColor,
-      openMenuTitle: editorStrings.text.colors,
-      closeMenuTitle: editorStrings.text.closeSubMenu,
-    },
-    headings: {
-      setHeadingTitle(level: number) {
-        return `${replaceKeyStrings(editorStrings.text.heading)} ${level}`
-      },
-      openMenuTitle: editorStrings.text.headings,
-      closeMenuTitle: editorStrings.text.closeSubMenu,
-    },
-    link: {
-      toggleTitle: replaceKeyStrings(editorStrings.text.link),
-      placeholder: editorStrings.text.enterUrl,
-      openInNewTabTitle: editorStrings.text.openInNewTab,
-    },
-    list: {
-      toggleOrderedList: replaceKeyStrings(editorStrings.text.orderedList),
-      toggleUnorderedList: replaceKeyStrings(editorStrings.text.unorderedList),
-      openMenuTitle: editorStrings.text.lists,
-      closeMenuTitle: editorStrings.text.closeSubMenu,
-    },
-    math: {
-      toggleTitle: replaceKeyStrings(editorStrings.text.mathFormula),
-      displayBlockLabel: editorStrings.text.displayAsBlock,
-      placeholder: editorStrings.text.formula,
-      editors: {
-        visual: editorStrings.text.visual,
-        latex: editorStrings.text.laTeX,
-        noVisualEditorAvailableMessage: editorStrings.text.onlyLaTeX,
-      },
-      helpText(KeySpan: ComponentType<{ children: ReactNode }>) {
-        return (
-          <>
-            {editorStrings.text.shortcuts}:
-            <br />
-            <br />
-            <p>
-              {editorStrings.text.fraction}: <KeySpan>/</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.superscript}: <KeySpan>↑</KeySpan>{' '}
-              {editorStrings.text.or} <KeySpan>^</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.subscript}: <KeySpan>↓</KeySpan>{' '}
-              {editorStrings.text.or} <KeySpan>_</KeySpan>
-            </p>
-            <p>
-              π, α, β, γ: <KeySpan>pi</KeySpan>, <KeySpan>alpha</KeySpan>,{' '}
-              <KeySpan>beta</KeySpan>,<KeySpan>gamma</KeySpan>
-            </p>
-            <p>
-              ≤, ≥: <KeySpan>{'<='}</KeySpan>, <KeySpan>{'>='}</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.root}: <KeySpan>\sqrt</KeySpan>,{' '}
-              <KeySpan>\nthroot</KeySpan>
-            </p>
-            <p>
-              {editorStrings.text.mathSymbols}: <KeySpan>{'\\<NAME>'}</KeySpan>,{' '}
-              {editorStrings.text.eG} <KeySpan>\neq</KeySpan> (≠),{' '}
-              <KeySpan>\pm</KeySpan> (±), ...
-            </p>
-            <p>
-              {editorStrings.text.functions}: <KeySpan>sin</KeySpan>,{' '}
-              <KeySpan>cos</KeySpan>, <KeySpan>ln</KeySpan>, ...
-            </p>
-          </>
-        )
-      },
-    },
-    richText: {
-      toggleStrongTitle: editorStrings.text.bold,
-      toggleEmphasizeTitle: editorStrings.text.italic,
-    },
-    suggestions: {
-      noResultsMessage: editorStrings.text.noItemsFound,
-    },
-    code: {
-      toggleTitle: replaceKeyStrings(editorStrings.text.code),
-    },
-  }
-
   return {
     anchor: createAnchorPlugin(),
     article: articlePlugin,
@@ -210,33 +108,6 @@ export function createPlugins({
     inputExercise: createInputExercisePlugin({
       feedback: {
         plugin: 'text',
-      },
-      i18n: {
-        types: {
-          [InputExerciseType.InputStringNormalizedMatchChallenge]:
-            editorStrings.inputExercise.text,
-          [InputExerciseType.InputNumberExactMatchChallenge]:
-            editorStrings.inputExercise.number,
-          [InputExerciseType.InputExpressionEqualMatchChallenge]:
-            editorStrings.inputExercise.mathematicalExpressionSolution,
-        },
-        type: {
-          label: editorStrings.inputExercise.chooseType,
-        },
-        unit: {
-          label: editorStrings.inputExercise.unit,
-        },
-        answer: {
-          addLabel: editorStrings.inputExercise.addAnswer,
-          value: {
-            placeholder: editorStrings.inputExercise.enterTheValue,
-          },
-        },
-        inputPlaceholder: editorStrings.inputExercise.yourSolution,
-        fallbackFeedback: {
-          correct: strings.content.exercises.correct,
-          wrong: strings.content.exercises.wrong,
-        },
       },
     }),
     layout: layoutPlugin,
@@ -280,26 +151,6 @@ export function createPlugins({
     scMcExercise: createScMcExercisePlugin({
       content: { plugin: 'text' },
       feedback: { plugin: 'text' },
-      i18n: {
-        types: {
-          singleChoice: editorStrings.scMcExercise.singleChoice,
-          multipleChoice: editorStrings.scMcExercise.multipleChoice,
-        },
-        isSingleChoice: {
-          label: editorStrings.scMcExercise.chooseType,
-        },
-        answer: {
-          addLabel: editorStrings.scMcExercise.addAnswer,
-          fallbackFeedback: {
-            wrong: strings.content.exercises.wrong,
-          },
-        },
-        globalFeedback: {
-          missingCorrectAnswers: strings.content.exercises.missedSome,
-          correct: strings.content.exercises.correct,
-          wrong: strings.content.exercises.wrong,
-        },
-      },
     }),
     separator: separatorPlugin,
     serloTable: createSerloTablePlugin(),
@@ -308,9 +159,7 @@ export function createPlugins({
       content: { plugin: 'rows' },
     }),
     table: tablePlugin,
-    text: createTextPlugin({
-      i18n: textPluginI18n,
-    }),
+    text: createTextPlugin({}),
     video: createVideoPlugin(),
 
     // Internal plugins for our content types

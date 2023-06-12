@@ -1,11 +1,7 @@
 import * as R from 'ramda'
 import { Component } from 'react'
 
-import {
-  ScMcExerciseProps,
-  ScMcExercisePluginState,
-  ScMcExercisePluginConfig,
-} from '.'
+import { ScMcExerciseProps, ScMcExercisePluginState } from '.'
 import { StateTypeReturnType } from '../../plugin'
 import { styled } from '../../renderer-ui'
 import { FetchDimensions } from './fetch-dimensions'
@@ -18,8 +14,7 @@ enum Phase {
 }
 
 export class ScMcAnswersRenderer extends Component<
-  Omit<ScMcExerciseProps, 'config'> & {
-    config: ScMcExercisePluginConfig
+  ScMcExerciseProps & {
     showAnswer: (
       answer: StateTypeReturnType<ScMcExercisePluginState>['answers'][0],
       index: number,

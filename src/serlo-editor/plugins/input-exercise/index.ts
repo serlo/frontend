@@ -13,13 +13,9 @@ import {
   string,
   StringStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { InputExerciseEditor } from './editor'
 import { InputExerciseType } from './input-exercise-type'
 
-/**
- * @param config - {@link InputExerciseConfig | Plugin configuration}
- */
 export function createInputExercisePlugin(
   config: InputExerciseConfig
 ): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
@@ -48,7 +44,6 @@ export function createInputExercisePlugin(
 
 export interface InputExerciseConfig {
   feedback: ChildStateTypeConfig
-  i18n?: DeepPartial<InputExercisePluginConfig['i18n']>
 }
 
 export type InputExercisePluginState = ObjectStateType<{
@@ -62,26 +57,7 @@ export type InputExercisePluginState = ObjectStateType<{
     }>
   >
 }>
-export interface InputExercisePluginConfig {
-  i18n: {
-    types: Record<InputExerciseType, string>
-    type: { label: string }
-    unit: { label: string }
-    answer: {
-      label: string
-      addLabel: string
-      value: {
-        placeholder: string
-      }
-    }
-    feedback: { label: string }
-    inputPlaceholder: string
-    fallbackFeedback: {
-      correct: string
-      wrong: string
-    }
-  }
-}
+
 export { InputExerciseType }
 
 export type InputExerciseProps = EditorPluginProps<

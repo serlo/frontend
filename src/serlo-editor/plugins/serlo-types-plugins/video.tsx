@@ -63,16 +63,6 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
               src: props.state.content,
               alt: props.state.title,
             }}
-            config={{
-              i18n: {
-                src: {
-                  label: editorStrings.video.url,
-                },
-                alt: {
-                  label: editorStrings.video.seoTitle,
-                },
-              },
-            }}
           />
         </section>
         <section>{description.render()}</section>
