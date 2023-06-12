@@ -9,12 +9,9 @@ import {
   string,
   StringStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { SpoilerEditor } from './editor'
 
-/**
- * @param config - {@link SpoilerConfig | Plugin configuration}
- */ export function createSpoilerPlugin(
+export function createSpoilerPlugin(
   config: SpoilerConfig
 ): EditorPlugin<SpoilerPluginState, SpoilerConfig> {
   const { content } = config
@@ -31,20 +28,11 @@ import { SpoilerEditor } from './editor'
 
 export interface SpoilerConfig {
   content: ChildStateTypeConfig
-  i18n?: DeepPartial<SpoilerPluginConfig['i18n']>
 }
 
 export type SpoilerPluginState = ObjectStateType<{
   title: StringStateType
   content: ChildStateType
 }>
-
-export interface SpoilerPluginConfig {
-  i18n: {
-    title: {
-      placeholder: string
-    }
-  }
-}
 
 export type SpoilerProps = EditorPluginProps<SpoilerPluginState, SpoilerConfig>
