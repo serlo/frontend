@@ -6,9 +6,8 @@ import {
 } from '../../plugin'
 import { AnchorEditor } from './editor'
 
-/**
- * @param config - {@link AnchorConfig | Plugin configuration}
- */
+// will probably be replaced. refactoring not necessary
+
 export function createAnchorPlugin(
   config: AnchorConfig = {}
 ): EditorPlugin<AnchorPluginState, AnchorConfig> {

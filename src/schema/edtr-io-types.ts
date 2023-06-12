@@ -1,5 +1,6 @@
 import { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
+import { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
 import { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
@@ -12,7 +13,6 @@ import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
 import { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import { SerloTablePluginState } from '@/serlo-editor/plugins/serlo-table'
 import { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
-import { TablePluginState } from '@/serlo-editor/plugins/table'
 import {
   CustomElement,
   CustomText,

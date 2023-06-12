@@ -1,5 +1,5 @@
 import { TableProps } from '.'
-import { Icon, faTable, styled } from '../../ui'
+import { Icon, faTable, styled } from '../../../ui'
 import { useTableConfig } from './config'
 
 const TableContainer = styled.div({

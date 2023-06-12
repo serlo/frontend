@@ -1,34 +1,33 @@
-import { converter } from '@serlo/markdown'
-
-import { renderArticle } from '@/schema/article-renderer'
-import { convertLegacyState } from '@/schema/convert-legacy-state'
-import { EditorPlugin } from '@/serlo-editor/plugin'
 import {
-  createTablePlugin,
-  TableConfig,
-  TablePluginState,
-  TableProps,
-} from '@/serlo-editor/plugins/table'
+  EditorPlugin,
+  EditorPluginProps,
+  string,
+  StringStateType,
+} from '../../../plugin'
+import { TableEditor } from './editor'
 
-const edtrTablePlugin = createTablePlugin({
-  MarkdownRenderer,
-})
-
-function MarkdownRenderer(props: { markdown: string }) {
-  const html = converter.makeHtml(props.markdown)
-  const node = convertLegacyState(html)
-  return <>{renderArticle(node.children)}</>
+export function createTablePlugin(
+  config: TableConfig = {}
+): EditorPlugin<TablePluginState, TableConfig> {
+  return {
+    Component: TableEditor,
+    config,
+    state: string(),
+  }
 }
 
-export const tablePlugin: EditorPlugin<TablePluginState, TableConfig> = {
-  ...edtrTablePlugin,
-  Component: TableEditor,
+export interface TableConfig {
+  i18n?: Partial<TablePluginConfig['i18n']>
+  MarkdownRenderer?: TablePluginConfig['MarkdownRenderer']
 }
 
-function TableEditor(props: TableProps) {
-  return (
-    <div>
-      <edtrTablePlugin.Component {...props} />
-    </div>
-  )
+export type TablePluginState = StringStateType
+
+export interface TablePluginConfig {
+  i18n: {
+    placeholder: string
+  }
+  MarkdownRenderer: React.ComponentType<{ markdown: string }>
 }
+
+export type TableProps = EditorPluginProps<TablePluginState, TableConfig>
