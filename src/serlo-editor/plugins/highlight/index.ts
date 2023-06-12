@@ -1,5 +1,3 @@
-import { mergeDeepRight } from 'ramda'
-
 import { HighlightEditor } from './editor'
 import { HighlightRenderer, HighlightRendererProps } from './renderer'
 import {
@@ -12,37 +10,15 @@ import {
   string,
   StringStateType,
 } from '@/serlo-editor/plugin'
-import { DeepPartial } from '@/serlo-editor/ui'
 
-// TODO: check if we actually need different implementations for edusharing and serlo frontend
-
-/**
- * @param config - {@link HighlightConfig | Plugin configuration}
- */
 export function createHighlightPlugin(
   config: HighlightConfig = {}
 ): EditorPlugin<HighlightPluginState, HighlightPluginConfig> {
-  const { i18n = {}, Renderer = HighlightRenderer } = config
+  const { Renderer = HighlightRenderer } = config
 
   return {
     Component: HighlightEditor,
     config: {
-      i18n: mergeDeepRight(
-        {
-          code: {
-            label: 'Click here and enter your source code…',
-            placeholder: 'Enter your source code here',
-          },
-          language: {
-            label: 'Language',
-            placeholder: 'Enter language',
-          },
-          showLineNumbers: {
-            label: 'Show line numbers',
-          },
-        },
-        i18n
-      ),
       Renderer,
     },
     state: object({
@@ -55,7 +31,6 @@ export function createHighlightPlugin(
 
 export interface HighlightConfig {
   Renderer?: HighlightPluginConfig['Renderer']
-  i18n?: DeepPartial<HighlightPluginConfig['i18n']>
 }
 
 export type HighlightPluginState = ObjectStateType<{
@@ -66,19 +41,6 @@ export type HighlightPluginState = ObjectStateType<{
 
 export interface HighlightPluginConfig {
   Renderer: React.ComponentType<HighlightRendererProps>
-  i18n: {
-    code: {
-      label: string
-      placeholder: string
-    }
-    language: {
-      label: string
-      placeholder: string
-    }
-    showLineNumbers: {
-      label: string
-    }
-  }
 }
 
 export type HighlightProps = EditorPluginProps<
