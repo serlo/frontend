@@ -1,25 +1,25 @@
 import { StateTypeSerializedType } from '@edtr-io/plugin'
-import { AnchorPluginState } from '@edtr-io/plugin-anchor'
-import { BlockquotePluginState } from '@edtr-io/plugin-blockquote'
-import { GeogebraPluginState } from '@edtr-io/plugin-geogebra'
-import { HighlightPluginState } from '@edtr-io/plugin-highlight'
-import { ImagePluginState } from '@edtr-io/plugin-image'
-import { MultimediaExplanationPluginState } from '@edtr-io/plugin-multimedia-explanation'
-import { RowsPluginState } from '@edtr-io/plugin-rows'
-import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection'
-import { SpoilerPluginState } from '@edtr-io/plugin-spoiler'
-import { TablePluginState } from '@edtr-io/plugin-table'
-import {
-  CustomElement,
-  CustomText,
-  TextEditorState,
-} from '@edtr-io/plugin-text'
-import { VideoPluginState } from '@edtr-io/plugin-video'
 
 import { BoxPluginState } from '@/edtr-io/plugins/box'
 import { PageLayoutPluginState } from '@/edtr-io/plugins/page-layout'
 import { PageTeamPluginState } from '@/edtr-io/plugins/page-team'
 import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
+import { AnchorPluginState } from '@/serlo-editor-repo/plugins/anchor'
+import { BlockquotePluginState } from '@/serlo-editor-repo/plugins/blockquote'
+import { GeogebraPluginState } from '@/serlo-editor-repo/plugins/geogebra'
+import { HighlightPluginState } from '@/serlo-editor-repo/plugins/highlight'
+import { ImagePluginState } from '@/serlo-editor-repo/plugins/image'
+import { SerloInjectionPluginState } from '@/serlo-editor-repo/plugins/injection'
+import { MultimediaExplanationPluginState } from '@/serlo-editor-repo/plugins/multimedia-explanation'
+import { RowsPluginState } from '@/serlo-editor-repo/plugins/rows'
+import { SpoilerPluginState } from '@/serlo-editor-repo/plugins/spoiler'
+import { TablePluginState } from '@/serlo-editor-repo/plugins/table'
+import {
+  CustomElement,
+  CustomText,
+  TextEditorState,
+} from '@/serlo-editor-repo/plugins/text'
+import { VideoPluginState } from '@/serlo-editor-repo/plugins/video'
 
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText

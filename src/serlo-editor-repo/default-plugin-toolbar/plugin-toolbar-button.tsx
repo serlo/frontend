@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
 import { EditorTooltip } from '../editor-ui/editor-tooltip'
-import { PluginToolbarButtonProps } from '../plugin-toolbar'
+import { PluginToolbarButtonProps } from '../plugin/plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
 import { StyledIconContainer } from './icon-container'

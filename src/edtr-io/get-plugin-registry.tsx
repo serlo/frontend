@@ -1,4 +1,3 @@
-import { RowsConfig } from '@edtr-io/plugin-rows'
 import { createIcon } from '@edtr-io/ui'
 import {
   faGrip,
@@ -20,6 +19,7 @@ import IconText from '@/assets-webkit/img/editor/icon-text.svg'
 import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
+import { RowsConfig } from '@/serlo-editor-repo/plugins/rows'
 
 export function getPluginRegistry(
   type: string,

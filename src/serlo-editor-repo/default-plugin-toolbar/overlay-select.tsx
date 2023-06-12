@@ -1,4 +1,4 @@
-import { OverlaySelectProps } from '../plugin-toolbar'
+import { OverlaySelectProps } from '../plugin/plugin-toolbar'
 import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 

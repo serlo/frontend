@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { OverlayInputProps } from '../plugin-toolbar'
+import { OverlayInputProps } from '../plugin/plugin-toolbar'
 import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 

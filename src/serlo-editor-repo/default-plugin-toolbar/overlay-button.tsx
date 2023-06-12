@@ -1,4 +1,4 @@
-import { OverlayButtonProps } from '../plugin-toolbar'
+import { OverlayButtonProps } from '../plugin/plugin-toolbar'
 import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 

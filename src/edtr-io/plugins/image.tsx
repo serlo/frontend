@@ -1,5 +1,4 @@
 import { LoadedFile, UploadValidator } from '@edtr-io/plugin'
-import { createImagePlugin as createCoreImagePlugin } from '@edtr-io/plugin-image'
 import { gql } from 'graphql-request'
 import fetch from 'unfetch'
 
@@ -7,6 +6,7 @@ import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
+import { createImagePlugin as createCoreImagePlugin } from '@/serlo-editor-repo/plugins/image'
 
 const maxFileSize = 2 * 1024 * 1024
 const allowedExtensions = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp']

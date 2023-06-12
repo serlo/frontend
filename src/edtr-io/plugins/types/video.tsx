@@ -1,11 +1,11 @@
 import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-import { createVideoPlugin } from '@edtr-io/plugin-video'
 
 import { entity, editorContent, HeaderInput, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { createVideoPlugin } from '@/serlo-editor-repo/plugins/video'
 
 export const videoTypeState = entityType(
   {

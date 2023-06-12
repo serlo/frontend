@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
 import { EditorTooltip } from '../editor-ui/editor-tooltip'
-import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
+import { PluginToolbarOverlayButtonProps } from '../plugin/plugin-toolbar'
 import { Button } from './button'
 import { DefaultPluginToolbarConfig } from './config'
 import { StyledIconContainer } from './icon-container'

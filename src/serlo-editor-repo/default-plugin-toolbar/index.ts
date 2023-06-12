@@ -1,4 +1,4 @@
-import { PluginToolbar } from '../plugin-toolbar'
+import { PluginToolbar } from '../plugin/plugin-toolbar'
 import { DefaultPluginToolbarConfig } from './config'
 import { createOverlayButton } from './overlay-button'
 import { createOverlayCheckbox } from './overlay-checkbox'

@@ -1,14 +1,14 @@
 import { EditorPlugin } from '@edtr-io/plugin'
+import { converter } from '@serlo/markdown'
+
+import { renderArticle } from '@/schema/article-renderer'
+import { convertLegacyState } from '@/schema/convert-legacy-state'
 import {
   createTablePlugin,
   TableConfig,
   TablePluginState,
   TableProps,
-} from '@edtr-io/plugin-table'
-import { converter } from '@serlo/markdown'
-
-import { renderArticle } from '@/schema/article-renderer'
-import { convertLegacyState } from '@/schema/convert-legacy-state'
+} from '@/serlo-editor-repo/plugins/table'
 
 const edtrTablePlugin = createTablePlugin({
   MarkdownRenderer,

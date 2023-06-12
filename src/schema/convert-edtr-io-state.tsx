@@ -1,4 +1,3 @@
-import { CustomElement, CustomText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
@@ -14,6 +13,7 @@ import {
   FrontendTextNode,
   Sign,
 } from '@/frontend-node-types'
+import { CustomElement, CustomText } from '@/serlo-editor-repo/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 

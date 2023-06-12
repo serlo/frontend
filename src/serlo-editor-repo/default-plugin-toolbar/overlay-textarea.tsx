@@ -1,4 +1,4 @@
-import { OverlayTextareaProps } from '../plugin-toolbar'
+import { OverlayTextareaProps } from '../plugin/plugin-toolbar'
 import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 
