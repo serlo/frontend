@@ -14,7 +14,7 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
-import { Icon, styled } from '@/serlo-editor/ui'
+import { Icon } from '@/serlo-editor/ui'
 
 const solutionState = object({
   prerequisite: optional(
@@ -37,8 +37,6 @@ export const solutionPlugin: EditorPlugin<SolutionPluginState> = {
   state: solutionState,
   config: {},
 }
-
-const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
 
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
@@ -115,9 +113,12 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   }
                   rel="noopener noreferrer"
                 >
-                  <OpenInNewTab title={editorStrings.solution.openArticleTab}>
+                  <span
+                    title={editorStrings.solution.openArticleTab}
+                    className="ml-2.5"
+                  >
                     <Icon icon={faUpRightFromSquare} />
-                  </OpenInNewTab>
+                  </span>
                 </a>
               </InlineSettings>
             ) : null}

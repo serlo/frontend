@@ -4,9 +4,9 @@ import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome'
+import clsx from 'clsx'
 import * as R from 'ramda'
 import { ComponentType } from 'react'
-import styled from 'styled-components'
 
 export function Icon(props: FontAwesomeIconProps) {
   const allowedProps = R.pick(
@@ -93,12 +93,6 @@ export function createIcon(i: IconDefinition): ComponentType {
   }
 }
 
-const EdtrSVG = styled.svg({
-  display: 'inline-block',
-  verticalAlign: 'middle',
-  overflow: 'hidden',
-})
-
 export interface EdtrIconProps {
   icon: string
   className?: string
@@ -106,9 +100,14 @@ export interface EdtrIconProps {
 
 export function EdtrIcon({ icon, className }: EdtrIconProps) {
   return (
-    <EdtrSVG width="24" height="24" viewBox="0 0 24 24" className={className}>
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      className={clsx('block overflow-hidden align-middle', className)}
+    >
       <path fill="currentcolor" d={icon} />
-    </EdtrSVG>
+    </svg>
   )
 }
 

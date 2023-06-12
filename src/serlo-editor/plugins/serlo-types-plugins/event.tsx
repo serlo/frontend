@@ -1,4 +1,9 @@
-import { editorContent, entity, HeaderInput, entityType } from './common/common'
+import {
+  editorContent,
+  entity,
+  entityType,
+  headerInputClasses,
+} from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
@@ -54,7 +59,8 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         )}
         <h1>
           {props.editable ? (
-            <HeaderInput
+            <input
+              className={headerInputClasses}
               placeholder={editorStrings.event.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

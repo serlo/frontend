@@ -141,7 +141,7 @@ export function InnerDocument<K extends string = string>({
       keyMap={hotKeysKeyMap}
       handlers={hotKeysHandlers}
     >
-      <div style={{ position: 'relative' }}>
+      <div className="relative">
         <ErrorContext.Provider value={onError}>
           <DocumentEditorContext.Provider value={DocumentEditor}>
             <PluginToolbarContext.Provider value={PluginToolbar}>

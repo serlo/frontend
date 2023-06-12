@@ -255,7 +255,7 @@ export function EquationsEditor(props: EquationsProps) {
                           ) : (
                             <td />
                           )}
-                          <td colSpan={2} style={{ minWidth: '10rem' }}>
+                          <td colSpan={2} className="min-w-[10rem]">
                             {step.explanation.render({
                               config: {
                                 placeholder:
@@ -297,7 +297,7 @@ export function EquationsEditor(props: EquationsProps) {
             })}
           </td>
         </FirstExplanationTr>
-        <tr style={{ height: '30px' }}>
+        <tr className="h-8">
           <td />
           <td />
           {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)

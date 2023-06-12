@@ -1,6 +1,6 @@
 import { mapObjIndexed } from 'ramda'
 
-import { colors } from '@/helper/colors'
+import { tw } from '@/helper/tw'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import {
   StateType,
@@ -18,7 +18,7 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { selectDocument, useAppSelector } from '@/serlo-editor/store'
-import { faTrashAlt, Icon, styled } from '@/serlo-editor/ui'
+import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 
 export const licenseState = object({
   id: number(),
@@ -251,12 +251,4 @@ export function OptionalChild(props: {
   )
 }
 
-export const HeaderInput = styled.input({
-  border: 'none',
-  width: '100%',
-  borderBottom: '2px solid transparent',
-  '&:focus': {
-    outline: 'none',
-    borderColor: colors.brand,
-  },
-})
+export const headerInputClasses = tw`w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`

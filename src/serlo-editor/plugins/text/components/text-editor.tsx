@@ -388,7 +388,7 @@ export function TextEditor(props: TextEditorProps) {
       }
       if (element.type === 'a') {
         return (
-          <a href={element.href} style={{ cursor: 'pointer' }} {...attributes}>
+          <a href={element.href} className="cursor-pointer" {...attributes}>
             {children}
           </a>
         )

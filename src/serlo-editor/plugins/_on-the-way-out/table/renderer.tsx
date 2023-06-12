@@ -20,8 +20,6 @@ const TableContainer = styled.div({
   },
 })
 
-const StyledIcon = styled(Icon)({ marginRight: '5px' })
-
 export function TableRenderer(props: TableProps) {
   const { editable, state } = props
   const config = useTableConfig(props.config)
@@ -29,7 +27,7 @@ export function TableRenderer(props: TableProps) {
   return (
     <TableContainer>
       {editable && state.value.trim() === '' ? (
-        <StyledIcon icon={faTable} />
+        <Icon icon={faTable} className="mr-[5px]" />
       ) : null}
       <config.MarkdownRenderer markdown={state.value} />
     </TableContainer>

@@ -2,9 +2,9 @@ import {
   editorContent,
   entity,
   serializedChild,
-  HeaderInput,
   OptionalChild,
   entityType,
+  headerInputClasses,
 } from './common/common'
 import { RevisionHistoryLoader } from './helpers/content-loaders/revision-history-loader'
 import { Settings } from './helpers/settings'
@@ -61,7 +61,8 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       )}
       <h1>
         {props.editable ? (
-          <HeaderInput
+          <input
+            className={headerInputClasses}
             placeholder={editorStrings.course.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

@@ -11,11 +11,6 @@ interface SuggestionsProps {
   onMouseMove: (index: number) => void
 }
 
-const SuggestionsWrapper = styled.div({
-  maxHeight: '387px',
-  maxWidth: '620px',
-})
-
 const SuggestionIconWrapper = styled.div({
   border: '1px solid transparent',
   flex: '0 0 95px',
@@ -39,16 +34,6 @@ const Suggestion = styled.div({
   },
 })
 
-const SuggestionTitle = styled.h5({
-  fontSize: '16px',
-  fontWeight: 'bold',
-})
-
-const SuggestionDescription = styled.p({
-  fontSize: '16px',
-  whiteSpace: 'pre-wrap',
-})
-
 export const Suggestions = ({
   options,
   suggestionsRef,
@@ -63,7 +48,7 @@ export const Suggestions = ({
   }
 
   return (
-    <SuggestionsWrapper ref={suggestionsRef}>
+    <div ref={suggestionsRef} className="max-h-[387px] max-w-[620px]">
       {options.map(({ name, title, description, icon: Icon }, index) => (
         <Suggestion
           key={index}
@@ -82,11 +67,11 @@ export const Suggestions = ({
             </SuggestionIconWrapper>
           )}
           <div>
-            <SuggestionTitle>{title ?? name}</SuggestionTitle>
-            <SuggestionDescription>{description}</SuggestionDescription>
+            <h5 className="text-base font-bold">{title ?? name}</h5>
+            <p className="whitespace-pre-wrap text-base">{description}</p>
           </div>
         </Suggestion>
       ))}
-    </SuggestionsWrapper>
+    </div>
   )
 }

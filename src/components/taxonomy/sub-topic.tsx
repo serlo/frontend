@@ -20,7 +20,7 @@ export function SubTopic({ data, subid, id, hideTitle }: SubTopicProps) {
       )}
 
       <div className="mb-5 flex flex-col border-b border-gray-300 pb-6 text-left last:border-b-0 sm:flex-row">
-        <div style={{ flex: '1 1 40%' }}>
+        <div className="flex-[1_1_40%]">
           {' '}
           <div className="mt-6 sm:mb-5">
             {data.description &&

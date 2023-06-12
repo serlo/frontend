@@ -68,13 +68,12 @@ export function PrivacyWrapper({
 
   return (
     <div
-      style={{ contain: 'content' }}
       className={clsx(
         className,
         !isTwingle && 'mx-side',
         tw`
-          group relative mb-block block
-          cursor-pointer bg-cover bg-center
+          group relative mb-block block cursor-pointer
+          bg-cover bg-center [contain:content]
         `
       )}
     >

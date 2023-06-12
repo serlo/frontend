@@ -116,7 +116,7 @@ export function EquationsRenderer({ state }: EquationsProps) {
             {state.firstExplanation.render()}
           </td>
         </FirstExplanationTr>
-        <tr style={{ height: '30px' }}>
+        <tr className="h-8">
           <td />
           {renderDownArrow()}
         </tr>

@@ -24,21 +24,6 @@ interface MultimediaDocument {
 const STEPS = 4
 const BREAKPOINT = 650
 
-const StyledResizable = styled(Resizable)({
-  padding: '5px',
-  position: 'relative',
-})
-
-const Clear = styled.div({
-  clear: 'both',
-})
-
-const Container = styled.div<{ hasFocus: boolean }>((props) => {
-  return {
-    border: props.hasFocus ? '2px solid #ccc' : '',
-  }
-})
-
 const InlineOptionsWrapper = styled.div({
   position: 'absolute',
   top: '-30px',
@@ -133,10 +118,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       <hr />
       {config.features.importance ? (
         <>
-          <div style={{ flex: 1 }}>
+          <div className="flex-[1]">
             <strong>{editorStrings.multimedia.isIllustrating}</strong>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="flex-[1]">
             <select
               value={
                 props.state.illustrating.value ? 'illustrating' : 'explaining'
@@ -169,7 +154,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       return (
         <>
           <div
-            style={{ position: 'relative' }}
+            className="relative"
             onMouseLeave={() => {
               setShowOptions(false)
             }}
@@ -236,15 +221,16 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
 
   return (
     <>
-      <Container
-        hasFocus={hasFocus}
+      <div
+        className={hasFocus ? 'border-2 border-gray-300' : undefined}
         ref={(el) => {
           if (!el) return
           setRowWidth(el.offsetWidth)
         }}
       >
         {props.state.illustrating.value ? (
-          <StyledResizable
+          <Resizable
+            className="relative p-[5px]"
             enabled={
               props.editable && hasFocus && props.state.illustrating.value
             }
@@ -258,13 +244,13 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
             floating="right"
           >
             {multimediaRendered}
-          </StyledResizable>
+          </Resizable>
         ) : (
           multimediaRendered
         )}
         {props.state.explanation.render()}
-        <Clear />
-      </Container>
+        <div className="clear-both" />
+      </div>
       {props.editable ? props.renderIntoSettings(multimediaSettings) : null}
     </>
   )

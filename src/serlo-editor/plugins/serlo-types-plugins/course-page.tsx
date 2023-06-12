@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 
-import { entity, editorContent, HeaderInput, entityType } from './common/common'
+import {
+  entity,
+  editorContent,
+  entityType,
+  headerInputClasses,
+} from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -58,7 +63,8 @@ function CoursePageTypeEditor(
       )}
       <h1>
         {props.editable ? (
-          <HeaderInput
+          <input
+            className={headerInputClasses}
             placeholder={editorStrings.coursePage.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

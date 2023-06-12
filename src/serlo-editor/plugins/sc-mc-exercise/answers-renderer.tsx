@@ -79,7 +79,7 @@ export class ScMcAnswersRenderer extends Component<
         }}
         render={(createRef) => {
           return (
-            <div style={{ visibility: 'hidden' }} ref={createRef(0)}>
+            <div className="invisible" ref={createRef(0)}>
               {this.renderOption(option, createRef)}
             </div>
           )

@@ -128,7 +128,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
           return (
             <>
               <div
-                style={{ position: 'relative' }}
+                className="relative"
                 onMouseLeave={() => {
                   setShowOptions(false)
                 }}

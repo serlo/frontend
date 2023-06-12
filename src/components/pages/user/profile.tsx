@@ -6,7 +6,6 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
-// import { TimeAgo } from '@/components/time-ago'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
@@ -31,14 +30,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     id,
     username,
     description,
-    // lastLogin,
     imageUrl,
     chatUrl,
     date,
     motivation,
     activityByType,
   } = userData
-  // const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
@@ -77,10 +74,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
             <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
             <ProfileBadges userData={userData} date={date} />
           </div>
-          <div
-            className="serlo-p mt-5 w-full text-1.5xl sm:mt-0"
-            style={{ gridArea: 'motivation' }}
-          >
+          <div className="serlo-p mt-5 w-full text-1.5xl [grid-area:motivation] sm:mt-0">
             {motivation && <>&quot;{motivation}&quot;</>}
             {isOwnProfile &&
               !isNewlyRegisteredUser &&
@@ -113,10 +107,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderProfileImage() {
     return (
-      <figure
-        className="mx-auto h-44 w-44 sm:mx-0"
-        style={{ contain: 'content' }}
-      >
+      <figure className="mx-auto h-44 w-44 [contain:content] sm:mx-0">
         <img
           src={imageUrl}
           alt={`Profile image of ${username}`}

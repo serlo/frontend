@@ -1,6 +1,11 @@
 import { ChangeEvent } from 'react'
 
-import { editorContent, entity, HeaderInput, entityType } from './common/common'
+import {
+  editorContent,
+  entity,
+  entityType,
+  headerInputClasses,
+} from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
@@ -57,7 +62,8 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         )}
         <h1>
           {props.editable ? (
-            <HeaderInput
+            <input
+              className={headerInputClasses}
               placeholder={articleStrings.title}
               value={title.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {

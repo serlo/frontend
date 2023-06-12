@@ -2,8 +2,8 @@ import {
   entity,
   editorContent,
   serializedChild,
-  HeaderInput,
   entityType,
+  headerInputClasses,
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
@@ -61,7 +61,8 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         )}
         <h1>
           {props.editable ? (
-            <HeaderInput
+            <input
+              className={headerInputClasses}
               placeholder={editorStrings.applet.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

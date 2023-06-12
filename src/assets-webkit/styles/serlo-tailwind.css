@@ -41,14 +41,14 @@
     @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
   }
   .serlo-p {
-    @apply mx-side mt-0 mb-block text-lg leading-cozy special-hyphens-auto;
+    @apply special-hyphens-auto mx-side mt-0 mb-block text-lg leading-cozy;
   }
   .serlo-h1 {
     @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
   }
   .serlo-h2 {
     @apply mx-side mt-0 mb-6 pb-1 pt-6;
-    @apply text-2.5xl font-bold special-hyphens-auto;
+    @apply special-hyphens-auto text-2.5xl font-bold;
     @apply border-b border-gray-300 text-gray-900;
   }
   .serlo-h3 {
@@ -61,7 +61,7 @@
     @apply mx-side mt-0 mb-5;
   }
   .serlo-table {
-    @apply mx-side border-collapse whitespace-nowrap break-normal special-hyphens-auto mobile:whitespace-normal;
+    @apply special-hyphens-auto mx-side border-collapse whitespace-nowrap break-normal mobile:whitespace-normal;
   }
   .serlo-th {
     @apply border-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
@@ -267,11 +267,11 @@
 
   .serlo-editor-hacks {
     h1 {
-      @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold special-hyphens-auto;
+      @apply special-hyphens-auto mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
     }
     h2 {
       @apply mt-0 mb-6 pb-1 pt-6;
-      @apply text-2.5xl font-bold special-hyphens-auto;
+      @apply special-hyphens-auto text-2.5xl font-bold;
       @apply border-b border-gray-300 text-gray-900;
     }
 
@@ -285,7 +285,7 @@
     @apply text-lg leading-cozy;
 
     a[data-key] {
-      @apply break-words text-brand no-underline special-hyphens-auto hover:underline;
+      @apply special-hyphens-auto break-words text-brand no-underline hover:underline;
     }
 
     code {
@@ -338,7 +338,7 @@
 
     .page-header h1 input {
       @apply w-full;
-      @apply mb-9 mt-6 p-0 text-3.5xl font-bold special-hyphens-auto;
+      @apply special-hyphens-auto mb-9 mt-6 p-0 text-3.5xl font-bold;
     }
 
     button > div > svg {

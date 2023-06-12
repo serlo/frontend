@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+
 import { RowsProps } from '..'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
@@ -56,11 +58,10 @@ export function RowsEditor(props: RowsProps) {
   return (
     <RegistryContext.Provider value={config.plugins}>
       <div
-        style={{
-          position: 'relative',
-          marginTop: '25px',
-          marginBottom: visuallyEmphasizeLastAddButton ? '75px' : undefined,
-        }}
+        className={clsx(
+          'relative mt-[25px]',
+          visuallyEmphasizeLastAddButton ? 'mb-[75px]' : undefined
+        )}
       >
         <RowSeparator
           config={config}

@@ -3,10 +3,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { colors, legacyEditorTheme } from '@/helper/colors'
 import { styled, EdtrIcon, edtrPlus } from '@/serlo-editor/ui'
 
-const AddIcon = styled(EdtrIcon)({
-  width: '26px',
-})
-
 interface AddButtonProps {
   focused: boolean
   visible: 'always' | 'on-focus'
@@ -58,7 +54,7 @@ export function AddRowButton(props: AddRowButtonProps) {
       title={editorStrings.rows.addAnElement}
       onMouseDown={onClick}
     >
-      <AddIcon icon={edtrPlus} />
+      <EdtrIcon icon={edtrPlus} className="w-[26px]" />
       {visuallyEmphasized ? (
         <span className="text-almost-black">
           {editorStrings.rows.addAnElement}

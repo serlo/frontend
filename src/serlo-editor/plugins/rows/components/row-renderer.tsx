@@ -40,22 +40,10 @@ const DragToolbarButton = styled(PluginToolbarButton)({
   },
 })
 
-const ButtonContainer = styled.div({
-  display: 'flex',
-})
-
-const Left = styled.div({
-  flex: 1,
-})
-
 const BorderlessOverlayButton = styled(OverlayButton)({
   border: 'none !important',
   padding: '0 !important',
   minWidth: '0 !important',
-})
-
-const GrayOut = styled.div({
-  opacity: 0.3,
 })
 
 const Inserted = styled.hr({
@@ -223,8 +211,8 @@ export function RowRenderer({
           <>
             {children}
             <hr />
-            <ButtonContainer>
-              <Left>
+            <div className="flex">
+              <div className="flex-[1]">
                 <BorderlessOverlayButton
                   onClick={() => {
                     const document = selectSerializedDocument(
@@ -248,7 +236,7 @@ export function RowRenderer({
                 >
                   <Icon icon={faTrashAlt} /> {editorStrings.rows.remove}
                 </BorderlessOverlayButton>
-              </Left>
+              </div>
               <div>
                 <BorderlessOverlayButton
                   onClick={() => {
@@ -257,7 +245,7 @@ export function RowRenderer({
                   label={editorStrings.rows.close}
                 />
               </div>
-            </ButtonContainer>
+            </div>
           </>
         )
       },
@@ -289,11 +277,11 @@ export function RowRenderer({
     <>
       {draggingAbove ? dropPreview : null}
       <div ref={container}>
-        {collectedDragProps.isDragging ? (
-          <GrayOut>{row.render(pluginProps)}</GrayOut>
-        ) : (
-          <div>{row.render(pluginProps)}</div>
-        )}
+        <div
+          className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
+        >
+          {row.render(pluginProps)}
+        </div>
       </div>
       {!draggingAbove ? dropPreview : null}
     </>

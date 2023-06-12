@@ -2,17 +2,6 @@ import KaTeX from 'katex'
 import React from 'react'
 
 import type { MathElement } from '../types'
-import { styled } from '@/serlo-editor/ui'
-
-const KaTeXSpan = styled.span<{ element: MathElement }>(({ element }) => {
-  if (!element.inline) {
-    return {
-      display: 'block',
-      margin: '1em 0',
-      textAlign: 'center',
-    }
-  }
-})
 
 const MathFormula = React.memo(function MathFormula({
   element,
@@ -28,7 +17,10 @@ const MathFormula = React.memo(function MathFormula({
   )
 
   return (
-    <KaTeXSpan dangerouslySetInnerHTML={{ __html: html }} element={element} />
+    <span
+      dangerouslySetInnerHTML={{ __html: html }}
+      className={element.inline ? 'my-4 mx-0 block text-center' : undefined}
+    />
   )
 })
 

@@ -18,7 +18,7 @@ export function Upload(props: UploadProps) {
         type="file"
         multiple
         accept="image/*"
-        style={{ display: 'none' }}
+        className="hidden"
         ref={input}
         onChange={(event) => {
           if (event.target.files && event.target.files.length) {

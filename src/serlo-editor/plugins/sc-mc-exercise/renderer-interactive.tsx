@@ -76,7 +76,7 @@ export class ScMcRendererInteractive extends Component<
           exerciseState={this.state.exerciseState}
           onClick={this.submitAnswer}
         />
-        <div style={{ clear: 'both' }} />
+        <div className="clear-both" />
       </>
     )
   }

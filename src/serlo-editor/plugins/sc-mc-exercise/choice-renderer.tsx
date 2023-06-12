@@ -21,7 +21,7 @@ export function ScMcExerciseChoiceRenderer({
   selected,
 }: ScMcExerciseProps & ChoiceRendererProps) {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <CheckboxContainer>
         <CheckElement
           isRadio={state.isSingleChoice.value}

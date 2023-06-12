@@ -127,7 +127,7 @@ export function Equations({
 
   function renderDownArrow() {
     return (
-      <td className="text-center text-4xl" style={{ fontFamily: 'serif' }}>
+      <td className="text-center font-[serif] text-4xl">
         <div className="-mt-3">&darr;</div>
       </td>
     )
