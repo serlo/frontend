@@ -1,6 +1,6 @@
 import { RowsPluginConfig } from '..'
-import { styled } from '../../../ui'
 import { AddRowButton } from './add-row-button'
+import { styled } from '@/serlo-editor-repo/ui'
 
 interface SeparatorProps {
   isFirst?: boolean

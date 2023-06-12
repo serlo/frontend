@@ -7,8 +7,6 @@ import {
   useSelected,
 } from 'slate-react'
 
-import { PreferenceContext } from '../../../core'
-import { MathEditor } from '../../../math'
 import type {
   MathElement as MathElementType,
   Paragraph,
@@ -16,6 +14,8 @@ import type {
 } from '../types'
 import { isElementWithinList } from '../utils/list'
 import { MathFormula } from './math-formula'
+import { PreferenceContext } from '@/serlo-editor-repo/core'
+import { MathEditor } from '@/serlo-editor-repo/math'
 
 export interface MathElementProps {
   config: TextEditorPluginConfig

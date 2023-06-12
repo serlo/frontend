@@ -1,10 +1,10 @@
-import type { RenderNestedFunction } from '../../../schema/article-renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   FrontendContentNode,
   FrontendNodeType,
   FrontendSolutionNode,
 } from '@/frontend-node-types'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface SolutionProps {
   node: FrontendSolutionNode['solution']

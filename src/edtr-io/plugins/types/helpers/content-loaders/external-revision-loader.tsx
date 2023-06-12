@@ -5,7 +5,6 @@ import request from 'graphql-request'
 import NProgress from 'nprogress'
 import { useState } from 'react'
 
-import { SerloAddButton } from '../../../helpers/serlo-editor-button'
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -25,6 +24,7 @@ import { dataQuery } from '@/fetcher/query'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { SerloAddButton } from '@/helpers/serlo-editor-button'
 
 export function ExternalRevisionLoader<T>({
   entityType,

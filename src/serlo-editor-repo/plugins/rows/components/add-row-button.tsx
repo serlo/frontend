@@ -1,6 +1,6 @@
 import { RowsPluginConfig } from '..'
-import { styled, EdtrIcon, edtrPlus } from '../../../ui'
 import { colors, legacyEditorTheme } from '@/helper/colors'
+import { styled, EdtrIcon, edtrPlus } from '@/serlo-editor-repo/ui'
 
 const AddIcon = styled(EdtrIcon)({
   width: '26px',

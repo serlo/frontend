@@ -17,9 +17,6 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HotKeys } from '../../../core'
-import { HoverOverlay } from '../../../editor-ui'
-import { EditorPluginProps } from '../../../plugin'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { textColors, useTextConfig } from '../hooks/use-text-config'
@@ -37,6 +34,9 @@ import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
+import { HotKeys } from '@/serlo-editor-repo/core'
+import { HoverOverlay } from '@/serlo-editor-repo/editor-ui'
+import { EditorPluginProps } from '@/serlo-editor-repo/plugin'
 import {
   focusNext,
   focusPrevious,

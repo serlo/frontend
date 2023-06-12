@@ -4,14 +4,16 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { OverlayButton, PluginToolbarButton } from '../../../core'
-import { StateTypeReturnType } from '../../../plugin'
+import { useCanDrop } from './use-can-drop'
+import { legacyEditorTheme } from '@/helper/colors'
+import { OverlayButton, PluginToolbarButton } from '@/serlo-editor-repo/core'
+import { StateTypeReturnType } from '@/serlo-editor-repo/plugin'
 import {
   DocumentState,
   selectPlugins,
   selectSerializedDocument,
   store,
-} from '../../../store'
+} from '@/serlo-editor-repo/store'
 import {
   edtrDragHandle,
   EdtrIcon,
@@ -19,9 +21,7 @@ import {
   faTrashAlt,
   Icon,
   styled,
-} from '../../../ui'
-import { useCanDrop } from './use-can-drop'
-import { legacyEditorTheme } from '@/helper/colors'
+} from '@/serlo-editor-repo/ui'
 
 interface RowDragObject {
   id: string

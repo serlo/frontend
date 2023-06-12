@@ -1,8 +1,11 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Editor as SlateEditor, Node } from 'slate'
 
-import { runReplaceDocumentSaga, useAppDispatch } from '../../../store'
 import { RegistryContext, Registry } from '../../rows'
+import {
+  runReplaceDocumentSaga,
+  useAppDispatch,
+} from '@/serlo-editor-repo/store'
 
 interface useSuggestionsArgs {
   editor: SlateEditor

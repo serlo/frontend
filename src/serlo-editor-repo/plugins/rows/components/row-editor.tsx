@@ -1,11 +1,15 @@
 import { useRef } from 'react'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { StateTypeReturnType } from '../../../plugin'
-import { selectPlugins, selectIsFocused, useAppSelector } from '../../../store'
-import { styled } from '../../../ui'
 import { RowRenderer } from './row-renderer'
 import { RowSeparator } from './row-separator'
+import { StateTypeReturnType } from '@/serlo-editor-repo/plugin'
+import {
+  selectPlugins,
+  selectIsFocused,
+  useAppSelector,
+} from '@/serlo-editor-repo/store'
+import { styled } from '@/serlo-editor-repo/ui'
 
 const DropContainer = styled.div({
   position: 'relative',

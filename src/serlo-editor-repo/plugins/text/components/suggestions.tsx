@@ -1,7 +1,7 @@
-import { styled } from '../../../ui'
 import type { TextEditorPluginConfig } from '../types'
 import { colors } from '@/helper/colors'
 import type { RegistryPlugin } from '@/serlo-editor-repo/plugins/rows'
+import { styled } from '@/serlo-editor-repo/ui'
 
 interface SuggestionsProps {
   config: TextEditorPluginConfig

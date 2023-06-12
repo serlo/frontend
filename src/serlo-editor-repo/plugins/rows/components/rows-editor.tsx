@@ -1,10 +1,13 @@
 import { RowsProps } from '..'
-import { selectAncestorPluginTypes, useAppSelector } from '../../../store'
-import { styled } from '../../../ui'
 import { useRowsConfig } from '../config'
 import { RegistryContext } from '../registry-context'
 import { RowEditor } from './row-editor'
 import { RowSeparator } from './row-separator'
+import {
+  selectAncestorPluginTypes,
+  useAppSelector,
+} from '@/serlo-editor-repo/store'
+import { styled } from '@/serlo-editor-repo/ui'
 
 const ReadOnlyRow = styled.div({
   marginBottom: '25px',

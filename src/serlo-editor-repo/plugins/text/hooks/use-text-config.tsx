@@ -1,4 +1,3 @@
-import { merge } from '../../../ui'
 import {
   TextEditorFormattingOption,
   Heading,
@@ -6,6 +5,7 @@ import {
   TextEditorPluginConfig,
 } from '../types'
 import { articleColors } from '@/helper/colors'
+import { merge } from '@/serlo-editor-repo/ui'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,

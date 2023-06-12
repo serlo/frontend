@@ -1,4 +1,4 @@
-import { edtrColorText, EdtrIcon, styled } from '../../../ui'
+import { edtrColorText, EdtrIcon, styled } from '@/serlo-editor-repo/ui'
 
 interface HoveringToolbarColorTextIconProps {
   color: string

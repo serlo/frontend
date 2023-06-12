@@ -1,8 +1,8 @@
 import { Descendant, Range } from 'slate'
 
-import { SerializedScalarStateType } from '../../../plugin'
-import { DeepPartial } from '../../../ui'
 import { Heading } from './text-editor'
+import { SerializedScalarStateType } from '@/serlo-editor-repo/plugin'
+import { DeepPartial } from '@/serlo-editor-repo/ui'
 
 export type TextEditorState = SerializedScalarStateType<
   Descendant[],

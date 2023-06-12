@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 
-import { styled } from '../../../ui'
 import { legacyEditorTheme } from '@/helper/colors'
+import { styled } from '@/serlo-editor-repo/ui'
 
 interface InputProps
   extends React.DetailedHTMLProps<

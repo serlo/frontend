@@ -7,7 +7,7 @@ import {
   selectAncestorPluginIds,
   selectFocusTree,
   FocusTreeNode,
-} from '../../../store'
+} from '@/serlo-editor-repo/store'
 
 export function useCanDrop(
   id: string,

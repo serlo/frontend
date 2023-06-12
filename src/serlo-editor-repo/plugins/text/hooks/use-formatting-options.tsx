@@ -3,19 +3,6 @@ import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
 
-import {
-  edtrBold,
-  edtrClose,
-  edtrFormula,
-  EdtrIcon,
-  edtrItalic,
-  edtrLink,
-  edtrListBullets,
-  edtrListNumbered,
-  edtrText,
-  faCode,
-  Icon,
-} from '../../../ui'
 import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-icon'
 import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
 import { withLinks, withLists, withMath } from '../plugins'
@@ -52,6 +39,19 @@ import {
   toggleItalicMark,
 } from '../utils/rich-text'
 import { textColors } from './use-text-config'
+import {
+  edtrBold,
+  edtrClose,
+  edtrFormula,
+  EdtrIcon,
+  edtrItalic,
+  edtrLink,
+  edtrListBullets,
+  edtrListNumbered,
+  edtrText,
+  faCode,
+  Icon,
+} from '@/serlo-editor-repo/ui'
 
 type SetIsLinkNewlyCreated = (value: boolean) => void
 

@@ -2,12 +2,17 @@ import { useEffect, useRef, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
 
-import { faExternalLinkAlt, faTrashAlt, Icon, styled } from '../../../ui'
 import type { Link, TextEditorPluginConfig } from '../types'
 import { getLinkElement, isLinkActive } from '../utils/link'
 import { InlineOverlay, InlineOverlayPosition } from './inline-overlay'
 import { LinkControlsInput } from './link-controls-input'
 import { legacyEditorTheme } from '@/helper/colors'
+import {
+  faExternalLinkAlt,
+  faTrashAlt,
+  Icon,
+  styled,
+} from '@/serlo-editor-repo/ui'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',

@@ -1,8 +1,8 @@
 import KaTeX from 'katex'
 import React from 'react'
 
-import { styled } from '../../../ui'
 import type { MathElement } from '../types'
+import { styled } from '@/serlo-editor-repo/ui'
 
 const KaTeXSpan = styled.span<{ element: MathElement }>(({ element }) => {
   if (!element.inline) {
