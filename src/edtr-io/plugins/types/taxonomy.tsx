@@ -1,14 +1,13 @@
+import { editorContent, HeaderInput, uuid } from './common/common'
+import { ToolbarMain } from './toolbar-main/toolbar-main'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
   object,
   string,
   number,
-} from '@edtr-io/plugin'
-
-import { editorContent, HeaderInput, uuid } from './common/common'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+} from '@/serlo-editor-repo/plugin'
 
 export const taxonomyTypeState = object({
   ...uuid,

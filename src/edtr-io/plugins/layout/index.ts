@@ -1,6 +1,11 @@
-import { EditorPlugin, child, list, number, object } from '@edtr-io/plugin'
-
 import { LayoutRenderer } from './editor'
+import {
+  EditorPlugin,
+  child,
+  list,
+  number,
+  object,
+} from '@/serlo-editor-repo/plugin'
 
 export const layoutState = list(
   object({ child: child({ plugin: 'text' }), width: number() })

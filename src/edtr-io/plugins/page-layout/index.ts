@@ -1,14 +1,13 @@
+import { PageLayoutEditor } from './editor'
+import { LoggedInData } from '@/data-types'
+import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import {
   EditorPlugin,
   number,
   object,
   EditorPluginProps,
   child,
-} from '@edtr-io/plugin'
-
-import { PageLayoutEditor } from './editor'
-import { LoggedInData } from '@/data-types'
-import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
+} from '@/serlo-editor-repo/plugin'
 
 export function createPageLayoutState(
   editorStrings: LoggedInData['strings']['editor']

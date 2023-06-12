@@ -1,19 +1,3 @@
-import { HotKeys, PreferenceContext, setDefaultPreference } from '@edtr-io/core'
-import { AddButton } from '@edtr-io/editor-ui'
-import { MathEditor } from '@edtr-io/math'
-import { StateTypeReturnType, StringStateType } from '@edtr-io/plugin'
-import {
-  store,
-  focus,
-  focusNext,
-  focusPrevious,
-  selectFocused,
-  selectIsDocumentEmpty,
-  useAppSelector,
-  useAppDispatch,
-  selectFocusTree,
-} from '@edtr-io/store'
-import { edtrDragHandle, EdtrIcon, Icon, styled } from '@edtr-io/ui'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
@@ -36,6 +20,29 @@ import {
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import {
+  HotKeys,
+  PreferenceContext,
+  setDefaultPreference,
+} from '@/serlo-editor-repo/core'
+import { AddButton } from '@/serlo-editor-repo/editor-ui'
+import { MathEditor } from '@/serlo-editor-repo/math'
+import {
+  StateTypeReturnType,
+  StringStateType,
+} from '@/serlo-editor-repo/plugin'
+import {
+  store,
+  focus,
+  focusNext,
+  focusPrevious,
+  selectFocused,
+  selectIsDocumentEmpty,
+  useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
+} from '@/serlo-editor-repo/store'
+import { edtrDragHandle, EdtrIcon, Icon, styled } from '@/serlo-editor-repo/ui'
 
 enum StepSegment {
   Left = 0,

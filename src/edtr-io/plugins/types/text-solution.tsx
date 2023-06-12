@@ -1,5 +1,3 @@
-import { EditorPlugin, EditorPluginProps } from '@edtr-io/plugin'
-import { ExpandableBox } from '@edtr-io/renderer-ui'
 import { useCallback } from 'react'
 
 import { editorContent, entity, entityType } from './common/common'
@@ -7,6 +5,8 @@ import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { EditorPlugin, EditorPluginProps } from '@/serlo-editor-repo/plugin'
+import { ExpandableBox } from '@/serlo-editor-repo/renderer-ui'
 
 export const textSolutionTypeState = entityType(
   {

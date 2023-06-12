@@ -1,4 +1,3 @@
-import { useAppSelector } from '@edtr-io/store'
 import clsx from 'clsx'
 
 import { BoxProps } from '.'
@@ -7,6 +6,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { selectIsEmptyRows } from '@/serlo-editor-repo/plugins/rows'
+import { useAppSelector } from '@/serlo-editor-repo/store'
 
 const types = Object.keys(boxTypeStyle)
 export type BoxType = keyof typeof boxTypeStyle

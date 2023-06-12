@@ -1,3 +1,5 @@
+import { EquationsEditor } from './editor'
+import { Sign } from './sign'
 import {
   child,
   list,
@@ -5,10 +7,7 @@ import {
   EditorPlugin,
   EditorPluginProps,
   string,
-} from '@edtr-io/plugin'
-
-import { EquationsEditor } from './editor'
-import { Sign } from './sign'
+} from '@/serlo-editor-repo/plugin'
 
 export const stepProps = object({
   left: string(''),

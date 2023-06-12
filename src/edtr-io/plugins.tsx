@@ -1,4 +1,3 @@
-import { EditorPlugin } from '@edtr-io/plugin'
 import type { ComponentType, ReactNode } from 'react'
 
 import { articlePlugin } from './plugins/article'
@@ -37,6 +36,7 @@ import { SerializedDocument } from './serialized-document'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { isMac } from '@/helper/client-detection'
+import type { EditorPlugin } from '@/serlo-editor-repo/plugin'
 import { createAnchorPlugin } from '@/serlo-editor-repo/plugins/anchor'
 import { createBlockquotePlugin } from '@/serlo-editor-repo/plugins/blockquote'
 import { createGeogebraPlugin } from '@/serlo-editor-repo/plugins/geogebra'

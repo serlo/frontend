@@ -1,8 +1,8 @@
-import { EditorPlugin } from '@edtr-io/plugin'
 import { converter } from '@serlo/markdown'
 
 import { renderArticle } from '@/schema/article-renderer'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
+import { EditorPlugin } from '@/serlo-editor-repo/plugin'
 import {
   createTablePlugin,
   TableConfig,

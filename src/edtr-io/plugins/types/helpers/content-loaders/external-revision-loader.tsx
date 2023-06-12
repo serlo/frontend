@@ -1,5 +1,3 @@
-import { PluginToolbarButton } from '@edtr-io/core'
-import { Icon } from '@edtr-io/ui'
 import { faFileImport } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
@@ -16,6 +14,7 @@ import {
   editorResponseToState,
   isError,
 } from '@/edtr-io/editor-response-to-state'
+import { SerloAddButton } from '@/edtr-io/plugins/helpers/serlo-editor-button'
 import {
   MainUuidQuery,
   MainUuidQueryVariables,
@@ -24,7 +23,8 @@ import { dataQuery } from '@/fetcher/query'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { SerloAddButton } from '@/helpers/serlo-editor-button'
+import { PluginToolbarButton } from '@/serlo-editor-repo/core'
+import { Icon } from '@/serlo-editor-repo/ui'
 
 export function ExternalRevisionLoader<T>({
   entityType,

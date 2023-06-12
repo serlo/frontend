@@ -1,19 +1,19 @@
-import { PluginToolbarButton } from '@edtr-io/core'
-import { styled, AddButton } from '@edtr-io/editor-ui'
+import { PropsWithChildren, useState } from 'react'
+
+import { SemanticSection } from './helpers/semantic-section'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
+import { PluginToolbarButton } from '@/serlo-editor-repo/core'
+import { styled, AddButton } from '@/serlo-editor-repo/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
   child,
   object,
   optional,
-} from '@edtr-io/plugin'
-import { store, selectDocument } from '@edtr-io/store'
-import { Icon, faRandom, faTrashAlt } from '@edtr-io/ui'
-import { PropsWithChildren, useState } from 'react'
-
-import { SemanticSection } from './helpers/semantic-section'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
+} from '@/serlo-editor-repo/plugin'
+import { store, selectDocument } from '@/serlo-editor-repo/store'
+import { Icon, faRandom, faTrashAlt } from '@/serlo-editor-repo/ui'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),

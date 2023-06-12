@@ -1,12 +1,11 @@
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
   object,
   scalar,
   string,
-} from '@edtr-io/plugin'
-
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+} from '@/serlo-editor-repo/plugin'
 
 export const errorState = object({
   plugin: string(),

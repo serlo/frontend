@@ -1,4 +1,7 @@
-import { PluginToolbarButton } from '@edtr-io/core'
+import { mapObjIndexed } from 'ramda'
+
+import { colors } from '@/helper/colors'
+import { PluginToolbarButton } from '@/serlo-editor-repo/core'
 import {
   StateType,
   StateTypesSerializedType,
@@ -13,12 +16,9 @@ import {
   object,
   string,
   optional,
-} from '@edtr-io/plugin'
-import { selectDocument, useAppSelector } from '@edtr-io/store'
-import { faTrashAlt, Icon, styled } from '@edtr-io/ui'
-import { mapObjIndexed } from 'ramda'
-
-import { colors } from '@/helper/colors'
+} from '@/serlo-editor-repo/plugin'
+import { selectDocument, useAppSelector } from '@/serlo-editor-repo/store'
+import { faTrashAlt, Icon, styled } from '@/serlo-editor-repo/ui'
 
 export const licenseState = object({
   id: number(),

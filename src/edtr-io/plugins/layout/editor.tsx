@@ -1,16 +1,18 @@
-import { EditorPluginProps, StateTypeReturnType } from '@edtr-io/plugin'
-import { styled } from '@edtr-io/renderer-ui'
+import { layoutState } from '.'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { RowsPlugin } from '@/edtr-io/legacy-editor-to-editor-types'
+import {
+  EditorPluginProps,
+  StateTypeReturnType,
+} from '@/serlo-editor-repo/plugin'
+import { styled } from '@/serlo-editor-repo/renderer-ui'
 import {
   store,
   DocumentState,
   runReplaceDocumentSaga,
   selectSerializedDocument,
   useAppDispatch,
-} from '@edtr-io/store'
-
-import { layoutState } from '.'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RowsPlugin } from '@/edtr-io/legacy-editor-to-editor-types'
+} from '@/serlo-editor-repo/store'
 
 const LayoutContainer = styled.div({
   display: 'flex',

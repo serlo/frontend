@@ -1,13 +1,3 @@
-import {
-  EditorPlugin,
-  EditorPluginProps,
-  child,
-  object,
-  string,
-  optional,
-} from '@edtr-io/plugin'
-import { selectIsDocumentEmpty, useAppSelector } from '@edtr-io/store'
-import { Icon, styled } from '@edtr-io/ui'
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
 import { InlineInput } from './helpers/inline-input'
@@ -15,6 +5,19 @@ import { InlineSettings } from './helpers/inline-settings'
 import { InlineSettingsInput } from './helpers/inline-settings-input'
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import {
+  EditorPlugin,
+  EditorPluginProps,
+  child,
+  object,
+  string,
+  optional,
+} from '@/serlo-editor-repo/plugin'
+import {
+  selectIsDocumentEmpty,
+  useAppSelector,
+} from '@/serlo-editor-repo/store'
+import { Icon, styled } from '@/serlo-editor-repo/ui'
 
 const solutionState = object({
   prerequisite: optional(

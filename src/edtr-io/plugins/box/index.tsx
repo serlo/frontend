@@ -1,14 +1,13 @@
+import { BoxRenderer } from './renderer'
+import { LoggedInData } from '@/data-types'
+import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import {
   child,
   EditorPlugin,
   EditorPluginProps,
   object,
   string,
-} from '@edtr-io/plugin'
-
-import { BoxRenderer } from './renderer'
-import { LoggedInData } from '@/data-types'
-import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
+} from '@/serlo-editor-repo/plugin'
 
 export function createBoxState(
   editorStrings: LoggedInData['strings']['editor'],

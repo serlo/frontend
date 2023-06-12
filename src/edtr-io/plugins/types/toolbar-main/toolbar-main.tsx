@@ -1,13 +1,3 @@
-import { StateTypeReturnType } from '@edtr-io/plugin'
-import {
-  redo,
-  undo,
-  selectHasRedoActions,
-  selectHasUndoActions,
-  selectHasPendingChanges,
-  useAppDispatch,
-  useAppSelector,
-} from '@edtr-io/store'
 import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
@@ -19,6 +9,16 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
+import { StateTypeReturnType } from '@/serlo-editor-repo/plugin'
+import {
+  redo,
+  undo,
+  selectHasRedoActions,
+  selectHasUndoActions,
+  selectHasPendingChanges,
+  useAppDispatch,
+  useAppSelector,
+} from '@/serlo-editor-repo/store'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>

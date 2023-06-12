@@ -21,7 +21,7 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // TODO: https://github.com/serlo/backlog/issues/127
+      // https://github.com/serlo/backlog/issues/127
       serializableCheck: false,
     }).concat([sagaMiddleware]),
 })

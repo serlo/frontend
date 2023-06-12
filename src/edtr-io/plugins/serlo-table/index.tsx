@@ -1,3 +1,11 @@
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
+import { KeyboardEvent } from 'react'
+
+import { SerloTableRenderer, TableType } from './renderer'
+import { FaIcon } from '@/components/fa-icon'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import {
   child,
   ChildStateType,
@@ -7,7 +15,7 @@ import {
   object,
   StateTypesReturnType,
   string,
-} from '@edtr-io/plugin'
+} from '@/serlo-editor-repo/plugin'
 import {
   store,
   selectFocused,
@@ -19,16 +27,8 @@ import {
   useAppSelector,
   useAppDispatch,
   selectFocusTree,
-} from '@edtr-io/store'
-import { Icon, faImages, faParagraph } from '@edtr-io/ui'
-import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
-import { KeyboardEvent } from 'react'
-
-import { SerloTableRenderer, TableType } from './renderer'
-import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
+} from '@/serlo-editor-repo/store'
+import { Icon, faImages, faParagraph } from '@/serlo-editor-repo/ui'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [

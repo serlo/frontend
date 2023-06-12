@@ -1,8 +1,8 @@
-import { Icon } from '@edtr-io/ui'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useState } from 'react'
 
+import { FaIcon } from '../fa-icon'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -117,7 +117,8 @@ export function UuidUrlInput({
           target="_blank"
           rel="noreferrer"
         >
-          <Icon icon={getIconByTypename(uuid.__typename as UuidType)} /> {title}
+          <FaIcon icon={getIconByTypename(uuid.__typename as UuidType)} />{' '}
+          {title}
         </a>
         {renderButtons(
           uuid.__typename as UuidWithRevType,

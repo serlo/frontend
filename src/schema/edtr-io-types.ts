@@ -1,9 +1,8 @@
-import { StateTypeSerializedType } from '@edtr-io/plugin'
-
 import { BoxPluginState } from '@/edtr-io/plugins/box'
 import { PageLayoutPluginState } from '@/edtr-io/plugins/page-layout'
 import { PageTeamPluginState } from '@/edtr-io/plugins/page-team'
 import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
+import { StateTypeSerializedType } from '@/serlo-editor-repo/plugin'
 import { AnchorPluginState } from '@/serlo-editor-repo/plugins/anchor'
 import { BlockquotePluginState } from '@/serlo-editor-repo/plugins/blockquote'
 import { GeogebraPluginState } from '@/serlo-editor-repo/plugins/geogebra'

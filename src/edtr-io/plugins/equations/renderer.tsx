@@ -1,10 +1,10 @@
-import { MathRenderer } from '@edtr-io/math'
-import { store, selectIsDocumentEmpty } from '@edtr-io/store'
-import { styled } from '@edtr-io/ui'
 import { Fragment } from 'react'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
+import { MathRenderer } from '@/serlo-editor-repo/math'
+import { store, selectIsDocumentEmpty } from '@/serlo-editor-repo/store'
+import { styled } from '@/serlo-editor-repo/ui'
 
 export const TableWrapper = styled.div({
   padding: '10px 0',

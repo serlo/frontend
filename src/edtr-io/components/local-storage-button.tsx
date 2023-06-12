@@ -1,8 +1,8 @@
-import { store, selectSerializedRootDocument } from '@edtr-io/store'
 import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { store, selectSerializedRootDocument } from '@/serlo-editor-repo/store'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)

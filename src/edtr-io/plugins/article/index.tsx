@@ -1,12 +1,3 @@
-import {
-  child,
-  EditorPlugin,
-  EditorPluginProps,
-  list,
-  object,
-  string,
-} from '@edtr-io/plugin'
-import { styled } from '@edtr-io/ui'
 import { useState } from 'react'
 
 import { SemanticSection } from '../helpers/semantic-section'
@@ -17,6 +8,15 @@ import { ArticleRelatedContent } from './article-related-content'
 import { ArticleSources } from './article-sources'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import {
+  child,
+  EditorPlugin,
+  EditorPluginProps,
+  list,
+  object,
+  string,
+} from '@/serlo-editor-repo/plugin'
+import { styled } from '@/serlo-editor-repo/ui'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 

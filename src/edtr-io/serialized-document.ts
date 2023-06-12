@@ -1,5 +1,3 @@
-import { StateTypeSerializedType } from '@edtr-io/plugin'
-
 import { ArticlePluginState } from './plugins/article'
 import { DeprecatedPluginState } from './plugins/deprecated'
 import { EquationsPluginState } from './plugins/equations'
@@ -10,6 +8,7 @@ import { InjectionPluginState } from './plugins/injection'
 import { LayoutPluginState } from './plugins/layout'
 import { SeparatorPluginState } from './plugins/separator'
 import { SolutionPluginState } from './plugins/solution'
+import type { StateTypeSerializedType } from '@/serlo-editor-repo/plugin'
 import { AnchorPluginState } from '@/serlo-editor-repo/plugins/anchor'
 import { BlockquotePluginState } from '@/serlo-editor-repo/plugins/blockquote'
 import { GeogebraPluginState } from '@/serlo-editor-repo/plugins/geogebra'

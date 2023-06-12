@@ -1,5 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
-import { faTrashAlt, Icon } from '@edtr-io/ui'
 import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import { flatten, values } from 'ramda'
 import {
@@ -15,6 +13,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
+import { faTrashAlt, Icon } from '@/serlo-editor-repo/ui'
 
 interface ArticleRelatedContentProps {
   data: ArticleProps['state']['relatedContent']

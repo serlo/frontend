@@ -1,4 +1,3 @@
-import { Icon } from '@edtr-io/ui'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../helpers/serlo-editor-button'
@@ -14,6 +13,7 @@ import {
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
+import { Icon } from '@/serlo-editor-repo/ui'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number

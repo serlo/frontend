@@ -1,11 +1,14 @@
-import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
-
 import { editorContent, entity, HeaderInput, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import {
+  EditorPlugin,
+  EditorPluginProps,
+  string,
+} from '@/serlo-editor-repo/plugin'
 
 export const eventTypeState = entityType(
   {

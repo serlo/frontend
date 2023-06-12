@@ -1,5 +1,3 @@
-import { PluginToolbarButton } from '@edtr-io/core'
-import { Icon } from '@edtr-io/ui'
 import { faHistory } from '@fortawesome/free-solid-svg-icons'
 import request from 'graphql-request'
 import NProgress from 'nprogress'
@@ -24,6 +22,8 @@ import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
+import { PluginToolbarButton } from '@/serlo-editor-repo/core'
+import { Icon } from '@/serlo-editor-repo/ui'
 
 export function RevisionHistoryLoader<T>({
   id,

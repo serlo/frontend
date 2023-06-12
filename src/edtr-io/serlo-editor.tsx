@@ -1,7 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
-import { Editor, EditorProps } from '@edtr-io/core'
-// eslint-disable-next-line import/no-internal-modules
-import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor'
 import { Entity, UuidType } from '@serlo/authorization'
 import { createContext, ReactNode, useState } from 'react'
 
@@ -18,6 +14,8 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
+import { Editor, EditorProps } from '@/serlo-editor-repo/core'
+import { createDefaultDocumentEditor } from '@/serlo-editor-repo/default-document-editor'
 
 export interface SerloEditorProps {
   children?: ReactNode

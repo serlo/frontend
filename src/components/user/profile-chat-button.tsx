@@ -1,5 +1,4 @@
-import { faSpinner } from '@edtr-io/ui'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'

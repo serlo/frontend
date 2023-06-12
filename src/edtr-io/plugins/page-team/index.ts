@@ -1,12 +1,11 @@
+import { PageTeamEditor } from './editor'
 import {
   EditorPlugin,
   object,
   EditorPluginProps,
   string,
   list,
-} from '@edtr-io/plugin'
-
-import { PageTeamEditor } from './editor'
+} from '@/serlo-editor-repo/plugin'
 
 export const PageTeamState = object({
   data: list(

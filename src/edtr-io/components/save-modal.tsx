@@ -1,4 +1,3 @@
-import { StateTypeReturnType } from '@edtr-io/plugin'
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
@@ -16,6 +15,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
+import { StateTypeReturnType } from '@/serlo-editor-repo/plugin'
 
 export interface SaveModalProps {
   open: boolean

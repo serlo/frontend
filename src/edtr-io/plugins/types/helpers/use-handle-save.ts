@@ -1,10 +1,10 @@
-import { store, selectSerializedRootDocument } from '@edtr-io/store'
 import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from '@/edtr-io/components/local-storage-notice'
 import { SaveContext } from '@/edtr-io/serlo-editor'
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
+import { store, selectSerializedRootDocument } from '@/serlo-editor-repo/store'
 
 export function useHandleSave(
   visible: boolean,

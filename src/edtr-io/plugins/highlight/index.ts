@@ -1,3 +1,7 @@
+import { mergeDeepRight } from 'ramda'
+
+import { HighlightEditor } from './editor'
+import { HighlightRenderer, HighlightRendererProps } from './renderer'
 import {
   boolean,
   BooleanStateType,
@@ -7,12 +11,8 @@ import {
   ObjectStateType,
   string,
   StringStateType,
-} from '@edtr-io/plugin'
-import { DeepPartial } from '@edtr-io/ui'
-import { mergeDeepRight } from 'ramda'
-
-import { HighlightEditor } from './editor'
-import { HighlightRenderer, HighlightRendererProps } from './renderer'
+} from '@/serlo-editor-repo/plugin'
+import { DeepPartial } from '@/serlo-editor-repo/ui'
 
 /**
  * @param config - {@link HighlightConfig | Plugin configuration}

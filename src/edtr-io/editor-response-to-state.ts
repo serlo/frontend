@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
-import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
-
 import {
   isEdtr,
   Edtr,
@@ -26,6 +23,7 @@ import { videoTypeState } from './plugins/types/video'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { StateType, StateTypeSerializedType } from '@/serlo-editor-repo/plugin'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 

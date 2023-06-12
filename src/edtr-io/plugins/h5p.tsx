@@ -1,13 +1,16 @@
-import { EditorInput, EditorInlineSettings } from '@edtr-io/editor-ui'
+import { useEffect, useState } from 'react'
+
+import { H5p, parseH5pUrl } from '@/components/content/h5p'
+import {
+  EditorInput,
+  EditorInlineSettings,
+} from '@/serlo-editor-repo/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
   string,
   StringStateType,
-} from '@edtr-io/plugin'
-import { useEffect, useState } from 'react'
-
-import { H5p, parseH5pUrl } from '@/components/content/h5p'
+} from '@/serlo-editor-repo/plugin'
 
 export type H5pPluginState = StringStateType
 export type H5pProps = EditorPluginProps<H5pPluginState>

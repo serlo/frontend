@@ -1,7 +1,3 @@
-// eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui'
-import { boolean, EditorPlugin, EditorPluginProps, list } from '@edtr-io/plugin'
-
 import { SemanticSection } from '../helpers/semantic-section'
 import {
   editorContent,
@@ -14,6 +10,13 @@ import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { AddButton } from '@/serlo-editor-repo/editor-ui'
+import {
+  boolean,
+  EditorPlugin,
+  EditorPluginProps,
+  list,
+} from '@/serlo-editor-repo/plugin'
 
 export const textExerciseGroupTypeState = entityType(
   {

@@ -1,9 +1,9 @@
-import { EditorProps } from '@edtr-io/core'
 import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
 
 import { LooseEdtrData } from '../serlo-editor'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { EditorProps } from '@/serlo-editor-repo/core'
 
 export interface LocalStorageNoticeProps {
   useStored: boolean

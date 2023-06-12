@@ -1,11 +1,3 @@
-import {
-  store,
-  selectParent,
-  insertPluginChildBefore,
-  selectSerializedDocument,
-  removePluginChild,
-  useAppDispatch,
-} from '@edtr-io/store'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
 import { useRef } from 'react'
@@ -13,6 +5,14 @@ import { useRef } from 'react'
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
+import {
+  store,
+  selectParent,
+  insertPluginChildBefore,
+  selectSerializedDocument,
+  removePluginChild,
+  useAppDispatch,
+} from '@/serlo-editor-repo/store'
 
 const StateDecoder = t.strict({
   plugin: t.literal('rows'),
