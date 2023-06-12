@@ -3,12 +3,17 @@ import {
   EditorPluginProps,
   string,
   StringStateType,
-} from '../../plugin'
+} from '../../../plugin'
 import { SerloInjectionEditor } from './editor'
 
 /**
  * @param config - {@link SerloInjectionConfig | Plugin configuration}
  */
+
+// this plugin is currently only used in the edusharing integration
+// https://github.com/serlo/serlo-editor-for-edusharing
+// TODO: move to edusharing integration
+
 export function createSerloInjectionPlugin(
   config: SerloInjectionConfig = {}
 ): EditorPlugin<SerloInjectionPluginState, SerloInjectionConfig> {

@@ -14,6 +14,8 @@ import {
 } from '@/serlo-editor/plugin'
 import { DeepPartial } from '@/serlo-editor/ui'
 
+// TODO: check if we actually need different implementations for edusharing and serlo frontend
+
 /**
  * @param config - {@link HighlightConfig | Plugin configuration}
  */

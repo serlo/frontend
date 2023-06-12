@@ -1,6 +1,6 @@
 import IframeResizer from 'iframe-resizer-react'
 
-import { styled } from '../../ui'
+import { styled } from '../../../ui'
 
 const Iframe = styled(IframeResizer)({
   width: '1px',

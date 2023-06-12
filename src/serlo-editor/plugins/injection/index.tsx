@@ -13,6 +13,8 @@ import {
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
 import { Icon, faNewspaper } from '@/serlo-editor/ui'
 
+// this plugin is activly used in the serlo frontend
+
 /* global */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 declare const Common: {

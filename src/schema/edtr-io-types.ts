@@ -1,11 +1,11 @@
 import { StateTypeSerializedType } from '@/serlo-editor/plugin'
+import { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
-import { BlockquotePluginState } from '@/serlo-editor/plugins/blockquote'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
 import { ImagePluginState } from '@/serlo-editor/plugins/image'
-import { SerloInjectionPluginState } from '@/serlo-editor/plugins/injection'
+import { InjectionPluginState } from '@/serlo-editor/plugins/injection'
 import { MultimediaExplanationPluginState } from '@/serlo-editor/plugins/multimedia-explanation'
 import { PageLayoutPluginState } from '@/serlo-editor/plugins/page-layout'
 import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
@@ -93,7 +93,7 @@ export interface EdtrPluginHighlight {
 
 export interface EdtrPluginSerloInjection {
   plugin: 'injection'
-  state: StateTypeSerializedType<SerloInjectionPluginState>
+  state: StateTypeSerializedType<InjectionPluginState>
 }
 
 interface LayoutChild {

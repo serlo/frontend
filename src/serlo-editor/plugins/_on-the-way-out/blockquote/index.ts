@@ -4,7 +4,7 @@ import {
   ChildStateTypeConfig,
   EditorPlugin,
   EditorPluginProps,
-} from '../../plugin'
+} from '../../../plugin'
 import { BlockquoteRenderer } from './renderer'
 
 /**
