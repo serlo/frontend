@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 
+import { EditorContact } from './editor-contact'
 import { EditorFeatures } from './editor-features'
 import { EditorPartnerList, partners } from './editor-partner-list'
 import { EditorRoadmap } from './editor-roadmap'
-import { EditorTeam, teamData } from './editor-team'
+import { EditorTeam, teamDataSimon } from './editor-team'
 import { EducationPlugins } from './education-plugins'
 import { Link } from '@/components/content/link'
 import { Video } from '@/components/content/video'
@@ -46,7 +47,7 @@ export function EditorPresentation() {
               leading-tight tracking-tight
             `}
           >
-            <span className="underlined !pr-0 pb-2">Serlo Editor</span>
+            <span className="serlo-underlined !pr-0 pb-2">Serlo Editor</span>
             <sup className="relative -top-6 ml-2 inline-block text-base text-brand">
               beta
             </sup>
@@ -150,7 +151,9 @@ export function EditorPresentation() {
                 Please contact us with your integration requirements or feature
                 requests.
               </p>
-              <div className="mt-8 text-center">{renderContact()}</div>
+              <div className="mt-8 text-center">
+                <EditorContact contact={teamDataSimon} />
+              </div>
             </div>
           </div>
         </section>
@@ -220,15 +223,6 @@ export function EditorPresentation() {
         :global(main > h1.serlo-h1) {
           display: none;
         }
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
@@ -244,55 +238,6 @@ export function EditorPresentation() {
             background-position: 20% 19%;
             background-size: 82%, 100vw 100%;
           }
-        }
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-        :global(.landing-button-with-wings):after,
-        :global(.landing-button-with-wings):before {
-          content: ' ';
-          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-          position: absolute;
-          margin-top: -0.6rem;
-          width: 4rem;
-          height: 4rem;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity ease-in 0.2s;
-        }
-        :global(.landing-button-with-wings):after {
-          margin-left: 1rem;
-          transform: scaleX(-1);
-        }
-        :global(.landing-button-with-wings):before {
-          margin-left: -5rem;
-        }
-        :global(.landing-button-with-wings):hover:after,
-        :global(.landing-button-with-wings):hover:before {
-          opacity: 1;
-        }
-        :global(.landing-button-with-wink):after,
-        :global(.landing-button-with-wink):before {
-          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-          margin-top: -2rem !important;
-          background-size: 65% !important;
-        }
-        .p-with-wink:after,
-        .p-with-wink:before {
-          margin-top: -1rem !important;
-          background-size: 75%;
-          width: 2.5rem;
-          height: 2.5rem;
-          opacity: 1;
-        }
-        .p-with-wink:after {
-          margin-left: -0.5rem;
-        }
-        .p-with-wink:before {
-          margin-left: -1.5rem;
         }
         :global(body) {
           max-width: 100vw;
@@ -312,7 +257,7 @@ export function EditorPresentation() {
         href="https://forms.gle/A6qZrkHoW4Q5K3Mb6"
         className={clsx(
           tw`
-            landing-button-with-wings serlo-new-landing-button
+            serlo-new-landing-button serlo-button-with-wings
             !mb-8 inline-block rounded-full transition-colors
             before:!mt-[-1.1rem] after:!mt-[-1.1rem]
           `,
@@ -321,38 +266,6 @@ export function EditorPresentation() {
       >
         Stay updated!
       </a>
-    )
-  }
-
-  function renderContact() {
-    const {
-      firstName,
-      lastName,
-      position,
-      photo,
-      extraLinkUrl,
-      extraLinkText,
-    } = teamData.find((person) => person.firstName === 'Simon')!
-
-    return (
-      <div className="flex justify-center text-left text-base">
-        <img
-          className="mr-4 max-w-[6rem] rounded-full"
-          alt={`${firstName} ${lastName}`}
-          src={photo}
-        />
-        <div className="-mt-2 h-min self-center">
-          <b>
-            {firstName} {lastName}
-          </b>
-          <br />
-          {position}
-          <br />
-          <Link href={extraLinkUrl} className="mt-1 inline-block">
-            {extraLinkText}
-          </Link>
-        </div>
-      </div>
     )
   }
 

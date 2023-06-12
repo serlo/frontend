@@ -465,6 +465,50 @@
       @apply not-sr-only absolute pb-[0.7rem] opacity-95;
     }
   }
+
+  .serlo-button-with-wings {
+    &:after,
+    &:before {
+      @apply pointer-events-none absolute mt-[-0.6rem] -ml-20 h-16 w-16 content-['_'];
+      @apply opacity-0 transition-opacity duration-200 ease-in;
+      @apply bg-[url('/_assets/img/landing/wing-left.svg')] bg-no-repeat;
+    }
+    &:after {
+      @apply ml-4 -scale-x-100;
+    }
+    &:hover {
+      &:after,
+      &:before {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  .serlo-button-with-eyebrows {
+    @apply serlo-button-with-wings;
+
+    &:before,
+    &:after {
+      @apply -mt-8 bg-[url('/_assets/img/landing/wink-left.svg')] bg-[length:65%];
+    }
+  }
+
+  .serlo-add-eyebrows {
+    @apply serlo-button-with-eyebrows;
+
+    &:before,
+    &:after {
+      @apply mt-[-1rem] -ml-2 h-10 w-10 bg-[length:75%] opacity-100;
+    }
+
+    &:before {
+      @apply -ml-6;
+    }
+  }
+
+  .serlo-underlined {
+    @apply whitespace-nowrap bg-underlined-simple bg-bottom bg-no-repeat pr-4;
+  }
 }
 
 /* print and pdf styles */

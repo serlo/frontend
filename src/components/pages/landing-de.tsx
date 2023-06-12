@@ -32,7 +32,7 @@ export function LandingDE({ data }: LandingDEProps) {
       <Header />
       <main id="content" className="text-almost-black">
         <section className="mx-auto mt-20 max-w-3xl px-2 text-center font-bold md:mt-[11vh]">
-          <p className="landing-button-with-wings landing-button-with-wink p-with-wink font-handwritten text-3xl text-brand">
+          <p className="serlo-add-eyebrows font-handwritten text-3xl text-brand">
             <WelcomeMessage />
           </p>
           <h1
@@ -41,7 +41,8 @@ export function LandingDE({ data }: LandingDEProps) {
               text-center text-5xl font-extrabold tracking-tight
             `}
           >
-            Was möchtest du <span className="underlined pb-2">lernen ?</span>
+            Was möchtest du{' '}
+            <span className="serlo-underlined pb-2">lernen ?</span>
           </h1>
           <div className="mx-auto mt-10 mb-8 max-w-2xl text-left font-normal">
             <Quickbar />
@@ -74,7 +75,7 @@ export function LandingDE({ data }: LandingDEProps) {
             </b>
             .{' '}
             <span
-              className="underlined font-handwritten text-brand"
+              className="serlo-underlined font-handwritten text-brand"
               style={{ fontSize: '1.2em' }}
             >
               Für immer!
@@ -85,7 +86,7 @@ export function LandingDE({ data }: LandingDEProps) {
             Serlo.
           </p>
           <Link
-            className="landing-button-with-wings serlo-new-landing-button inline"
+            className="serlo-new-landing-button serlo-button-with-wings inline"
             href="/serlo"
           >
             Mehr über uns
@@ -122,11 +123,11 @@ export function LandingDE({ data }: LandingDEProps) {
           <PartnerList />
           <Link
             className={tw`
-              landing-button-with-wings landing-button-with-wink mx-auto mt-12
-              hidden rounded-lg border-2 border-solid 
-              border-almost-black px-8 py-4 text-xl font-bold tracking-tight
-              text-almost-black hover:border-brand-500 hover:text-brand-500
-              hover:no-underline md:inline-block
+              serlo-button-with-eyebrows mx-auto mt-12 hidden
+              rounded-lg border-2 border-solid border-almost-black
+              px-8 py-4 text-xl font-bold tracking-tight text-almost-black
+              hover:border-brand-500 hover:text-brand-500 hover:no-underline
+              md:inline-block
             `}
             href="/partner"
           >
@@ -136,21 +137,10 @@ export function LandingDE({ data }: LandingDEProps) {
       </main>
       <FooterNew />
       <style jsx>{`
-        // special donation button on landing
+        /* special donation button on landing */
         :global(.navtrigger[href='/spenden']) {
           display: none;
         }
-
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
-
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
@@ -169,64 +159,6 @@ export function LandingDE({ data }: LandingDEProps) {
             background-position: 20% 19%;
             background-size: 82%, 100vw 100%;
           }
-        }
-
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-
-        :global(.landing-button-with-wings):after,
-        :global(.landing-button-with-wings):before {
-          content: ' ';
-          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-          position: absolute;
-          margin-top: -0.6rem;
-          width: 4rem;
-          height: 4rem;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity ease-in 0.2s;
-        }
-
-        :global(.landing-button-with-wings):after {
-          margin-left: 1rem;
-          transform: scaleX(-1);
-        }
-
-        :global(.landing-button-with-wings):before {
-          margin-left: -5rem;
-        }
-
-        :global(.landing-button-with-wings):hover:after,
-        :global(.landing-button-with-wings):hover:before {
-          opacity: 1;
-        }
-
-        :global(.landing-button-with-wink):after,
-        :global(.landing-button-with-wink):before {
-          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-          margin-top: -2rem !important;
-          background-size: 65% !important;
-        }
-
-        .p-with-wink:after,
-        .p-with-wink:before {
-          margin-top: -1rem !important;
-          background-size: 75%;
-          width: 2.5rem;
-          height: 2.5rem;
-          opacity: 1;
-        }
-
-        .p-with-wink:after {
-          margin-left: -0.5rem;
-        }
-
-        .p-with-wink:before {
-          margin-left: -1.5rem;
         }
       `}</style>
     </>
