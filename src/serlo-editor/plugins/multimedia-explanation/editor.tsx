@@ -14,6 +14,7 @@ import {
 import { styled, faRandom, Icon, faTrashAlt } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 interface MultimediaDocument {
   plugin: string
@@ -70,6 +71,8 @@ const Option = styled.div({
   },
 })
 export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
+  const editorStrings = useLoggedInData()!.strings.editor
+
   const config = useMultimediaExplanationConfig(props.config)
 
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -131,7 +134,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       {config.features.importance ? (
         <>
           <div style={{ flex: 1 }}>
-            <strong>{config.i18n.illustrating.label}</strong>
+            <strong>{editorStrings.multimedia.isIllustrating}</strong>
           </div>
           <div style={{ flex: 1 }}>
             <select
@@ -141,10 +144,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               onChange={handleIllustratingChange}
             >
               <option value="illustrating">
-                {config.i18n.illustrating.values.illustrating}
+                {editorStrings.multimedia.isIllustrating}
               </option>
               <option value="explaining">
-                {config.i18n.illustrating.values.explaining}
+                {editorStrings.multimedia.isEssential}
               </option>
             </select>
           </div>
@@ -152,7 +155,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       ) : null}
       {props.config.plugins.length > 1 ? (
         <div>
-          <strong>{config.i18n.changeMultimediaType}</strong>
+          <strong>{editorStrings.multimedia.changeType}</strong>
           {pluginSelection}
         </div>
       ) : null}
@@ -174,7 +177,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
             {props.config.plugins.length > 1 ? (
               <PluginToolbarButton
                 icon={<Icon icon={faRandom} />}
-                label={config.i18n.changeMultimediaType}
+                label={editorStrings.multimedia.changeType}
                 onClick={() => {
                   setShowOptions(true)
                 }}
@@ -182,7 +185,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
             ) : null}
             <PluginToolbarButton
               icon={<Icon icon={faTrashAlt} />}
-              label={config.i18n.reset}
+              label={editorStrings.multimedia.reset}
               onClick={() => {
                 props.state.multimedia.replace(
                   multimediaDocument?.plugin ?? props.config.plugins[0].name

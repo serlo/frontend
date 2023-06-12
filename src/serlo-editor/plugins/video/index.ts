@@ -6,17 +6,12 @@ import {
   string,
   StringStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { VideoEditor } from './editor'
 
-/**
- * @param config - {@link VideoConfig | Plugin configuration}
- */ export function createVideoPlugin(
-  config: VideoConfig = {}
-): EditorPlugin<VideoPluginState, VideoConfig> {
+export function createVideoPlugin(): EditorPlugin<VideoPluginState> {
   return {
     Component: VideoEditor,
-    config,
+    config: {},
     state: object({ src: string(), alt: string() }),
     onText(value) {
       const regex =
@@ -28,24 +23,9 @@ import { VideoEditor } from './editor'
   }
 }
 
-export interface VideoConfig {
-  i18n?: DeepPartial<VideoPluginConfig['i18n']>
-}
-
 export type VideoPluginState = ObjectStateType<{
   src: StringStateType
   alt: StringStateType
 }>
 
-export interface VideoPluginConfig {
-  i18n: {
-    src: {
-      label: string
-    }
-    alt: {
-      label: string
-    }
-  }
-}
-
-export type VideoProps = EditorPluginProps<VideoPluginState, VideoConfig>
+export type VideoProps = EditorPluginProps<VideoPluginState>

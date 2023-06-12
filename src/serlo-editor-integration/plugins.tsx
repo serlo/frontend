@@ -175,12 +175,7 @@ export function createPlugins({
   }
 
   return {
-    anchor: createAnchorPlugin({
-      i18n: {
-        label: editorStrings.anchor.identifier,
-        placeholder: editorStrings.anchor.anchorId,
-      },
-    }),
+    anchor: createAnchorPlugin(),
     article: articlePlugin,
     articleIntroduction: createMultimediaExplanationPlugin({
       explanation: {
@@ -195,16 +190,6 @@ export function createPlugins({
           title: editorStrings.multimedia.image,
         },
       ],
-      i18n: {
-        changeMultimediaType: editorStrings.multimedia.changeType,
-        illustrating: {
-          label: editorStrings.multimedia.howImportant,
-          values: {
-            illustrating: editorStrings.multimedia.isIllustrating,
-            explaining: editorStrings.multimedia.isEssential,
-          },
-        },
-      },
     }),
     blockquote: createBlockquotePlugin({
       content: {
@@ -216,26 +201,8 @@ export function createPlugins({
     deprecated: deprecatedPlugin,
     equations: equationsPlugin,
     exercise: exercisePlugin,
-    geogebra: createGeogebraPlugin({
-      i18n: {
-        label: editorStrings.geogebra.urlOrId,
-      },
-    }),
-    highlight: createHighlightPlugin({
-      i18n: {
-        code: {
-          label: editorStrings.highlight.clickAndEnter,
-          placeholder: editorStrings.highlight.enterHere,
-        },
-        language: {
-          label: editorStrings.highlight.language,
-          placeholder: editorStrings.highlight.enterLanguage,
-        },
-        showLineNumbers: {
-          label: editorStrings.highlight.showLineNumbers,
-        },
-      },
-    }),
+    geogebra: createGeogebraPlugin(),
+    highlight: createHighlightPlugin(),
     h5p: H5pPlugin,
     image: createImagePlugin(),
     important: createImportantPlugin(),
@@ -305,34 +272,10 @@ export function createPlugins({
           title: editorStrings.multimedia.geogebraTitle,
         },
       ],
-      i18n: {
-        changeMultimediaType: editorStrings.multimedia.changeType,
-        illustrating: {
-          label: editorStrings.multimedia.howImportant,
-          values: {
-            illustrating: editorStrings.multimedia.isIllustrating,
-            explaining: editorStrings.multimedia.isEssential,
-          },
-        },
-      },
     }),
     rows: createRowsPlugin({
       content: { plugin: 'text' },
       plugins: registry,
-      i18n: {
-        menu: {
-          searchPlaceholder: editorStrings.rows.searchForTools,
-        },
-        settings: {
-          duplicateLabel: editorStrings.rows.duplicate,
-          removeLabel: editorStrings.rows.remove,
-          closeLabel: editorStrings.rows.close,
-        },
-        toolbar: {
-          dragLabel: editorStrings.rows.dragElement,
-        },
-        addLabel: editorStrings.rows.addAnElement,
-      },
     }),
     scMcExercise: createScMcExercisePlugin({
       content: { plugin: 'text' },
@@ -363,26 +306,12 @@ export function createPlugins({
     solution: solutionPlugin,
     spoiler: createSpoilerPlugin({
       content: { plugin: 'rows' },
-      i18n: {
-        title: {
-          placeholder: editorStrings.spoiler.enterATitle,
-        },
-      },
     }),
     table: tablePlugin,
     text: createTextPlugin({
       i18n: textPluginI18n,
     }),
-    video: createVideoPlugin({
-      i18n: {
-        src: {
-          label: editorStrings.video.videoUrl,
-        },
-        alt: {
-          label: editorStrings.video.description,
-        },
-      },
-    }),
+    video: createVideoPlugin(),
 
     // Internal plugins for our content types
     [SerloEntityPluginType.Applet]: appletTypePlugin,

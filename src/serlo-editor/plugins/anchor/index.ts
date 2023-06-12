@@ -8,27 +8,13 @@ import { AnchorEditor } from './editor'
 
 // will probably be replaced. refactoring not necessary
 
-export function createAnchorPlugin(
-  config: AnchorConfig = {}
-): EditorPlugin<AnchorPluginState, AnchorConfig> {
+export function createAnchorPlugin(): EditorPlugin<AnchorPluginState> {
   return {
     Component: AnchorEditor,
-    config,
+    config: {},
     state: string(),
   }
 }
 
-export interface AnchorConfig {
-  i18n?: Partial<AnchorPluginConfig['i18n']>
-}
-
 export type AnchorPluginState = StringStateType
-
-export interface AnchorPluginConfig {
-  i18n: {
-    label: string
-    placeholder: string
-  }
-}
-
-export type AnchorProps = EditorPluginProps<AnchorPluginState, AnchorConfig>
+export type AnchorProps = EditorPluginProps<AnchorPluginState>

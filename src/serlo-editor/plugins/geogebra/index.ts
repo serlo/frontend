@@ -6,16 +6,11 @@ import {
 } from '../../plugin'
 import { GeogebraEditor } from './editor'
 
-/**
- * @param config - {@link GeogebraConfig | Plugin configuration}
- */
-export function createGeogebraPlugin(
-  config: GeogebraConfig = {}
-): EditorPlugin<GeogebraPluginState, GeogebraConfig> {
+export function createGeogebraPlugin(): EditorPlugin<GeogebraPluginState> {
   return {
     Component: GeogebraEditor,
-    config,
     state: string(),
+    config: {},
     onText(value) {
       if (/geogebra\.org\/m\/(.+)/.test(value)) {
         return { state: value }
@@ -24,20 +19,6 @@ export function createGeogebraPlugin(
   }
 }
 
-export interface GeogebraConfig {
-  i18n?: Partial<GeogebraPluginConfig['i18n']>
-}
-
 export type GeogebraPluginState = StringStateType
 
-export interface GeogebraPluginConfig {
-  i18n: {
-    label: string
-    placeholder: string
-  }
-}
-
-export type GeogebraProps = EditorPluginProps<
-  GeogebraPluginState,
-  GeogebraConfig
->
+export type GeogebraProps = EditorPluginProps<GeogebraPluginState>

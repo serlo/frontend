@@ -1,4 +1,5 @@
 import { RowsPluginConfig } from '..'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { colors, legacyEditorTheme } from '@/helper/colors'
 import { styled, EdtrIcon, edtrPlus } from '@/serlo-editor/ui'
 
@@ -46,18 +47,22 @@ interface AddRowButtonProps {
 
 export function AddRowButton(props: AddRowButtonProps) {
   const { config, focused, onClick, visuallyEmphasized = false } = props
+  const editorStrings = useLoggedInData()!.strings.editor
+
   return (
     <AddButton
       className="add-trigger"
       config={config}
       focused={focused}
       visible={visuallyEmphasized ? 'always' : 'on-focus'}
-      title={config.i18n.addLabel}
+      title={editorStrings.rows.addAnElement}
       onMouseDown={onClick}
     >
       <AddIcon icon={edtrPlus} />
       {visuallyEmphasized ? (
-        <span className="text-almost-black">{config.i18n.addLabel}</span>
+        <span className="text-almost-black">
+          {editorStrings.rows.addAnElement}
+        </span>
       ) : null}
     </AddButton>
   )

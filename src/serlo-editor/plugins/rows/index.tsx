@@ -9,12 +9,8 @@ import {
   list,
   ListStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { RowsEditor } from './components/rows-editor'
 
-/**
- * @param config - {@link RowsConfig | Plugin configuration}
- */
 export function createRowsPlugin(
   config: RowsConfig
 ): EditorPlugin<RowsPluginState, RowsConfig> {
@@ -48,9 +44,8 @@ export function createRowsPlugin(
   }
 }
 
-export interface RowsConfig extends Omit<RowsPluginConfig, 'i18n' | 'theme'> {
+export interface RowsConfig extends Omit<RowsPluginConfig, 'theme'> {
   content: ChildStateTypeConfig
-  i18n?: DeepPartial<RowsPluginConfig['i18n']>
 }
 
 export type RowsPluginState = ListStateType<ChildStateType>
@@ -64,20 +59,6 @@ export interface RegistryPlugin {
 
 export interface RowsPluginConfig {
   plugins: RegistryPlugin[]
-  i18n: {
-    menu: {
-      searchPlaceholder: string
-    }
-    settings: {
-      duplicateLabel: string
-      removeLabel: string
-      closeLabel: string
-    }
-    toolbar: {
-      dragLabel: string
-    }
-    addLabel: string
-  }
 }
 
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>

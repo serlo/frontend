@@ -5,6 +5,7 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
@@ -80,6 +81,8 @@ export function RowRenderer({
   plugins: ReturnType<typeof selectPlugins>
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
+  const editorStrings = useLoggedInData()!.strings.editor
+
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
   const allowedPlugins = useMemo(() => {
@@ -232,18 +235,18 @@ export function RowRenderer({
                     rows.insert(index, document)
                     close()
                   }}
-                  label={config.i18n.settings.duplicateLabel}
+                  label={editorStrings.rows.duplicate}
                 >
-                  <Icon icon={faCopy} /> {config.i18n.settings.duplicateLabel}
+                  <Icon icon={faCopy} /> {editorStrings.rows.duplicate}
                 </BorderlessOverlayButton>
                 <BorderlessOverlayButton
                   onClick={() => {
                     rows.remove(index)
                     close()
                   }}
-                  label={config.i18n.settings.removeLabel}
+                  label={editorStrings.rows.remove}
                 >
-                  <Icon icon={faTrashAlt} /> {config.i18n.settings.removeLabel}
+                  <Icon icon={faTrashAlt} /> {editorStrings.rows.remove}
                 </BorderlessOverlayButton>
               </Left>
               <div>
@@ -251,7 +254,7 @@ export function RowRenderer({
                   onClick={() => {
                     close()
                   }}
-                  label={config.i18n.settings.closeLabel}
+                  label={editorStrings.rows.close}
                 />
               </div>
             </ButtonContainer>
@@ -264,23 +267,14 @@ export function RowRenderer({
             <DragToolbarButton
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
-              label={config.i18n.toolbar.dragLabel}
+              label={editorStrings.rows.dragElement}
             />
             {children}
           </>
         )
       },
     }
-  }, [
-    config.i18n.settings.duplicateLabel,
-    config.i18n.settings.removeLabel,
-    config.i18n.settings.closeLabel,
-    config.i18n.toolbar.dragLabel,
-    rows,
-    row.id,
-    index,
-    drag,
-  ])
+  }, [editorStrings, rows, row.id, index, drag])
 
   setTimeout(() => {
     dragPreview(drop(dropContainer))

@@ -1,11 +1,12 @@
 import { GeogebraProps } from '.'
 import { EditorInput, EditorInlineSettings } from '../../editor-ui'
-import { useGeogebraConfig } from './config'
 import { GeogebraRenderer } from './renderer'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function GeogebraEditor(props: GeogebraProps) {
   const { focused, editable, state } = props
-  const config = useGeogebraConfig(props.config)
+
+  const editorStrings = useLoggedInData()!.strings.editor
 
   if (!editable) return <GeogebraRenderer {...props} />
 
@@ -15,8 +16,8 @@ export function GeogebraEditor(props: GeogebraProps) {
       {focused ? (
         <EditorInlineSettings>
           <EditorInput
-            label={config.i18n.label}
-            placeholder={config.i18n.placeholder}
+            label={editorStrings.geogebra.urlOrId}
+            placeholder="12345"
             value={state.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               state.set(e.target.value)

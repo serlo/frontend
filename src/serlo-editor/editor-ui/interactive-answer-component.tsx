@@ -1,4 +1,5 @@
 import { styled, Icon, faTimes, faPlus } from '../ui'
+import { useInstanceData } from '@/contexts/instance-context'
 import { colors } from '@/helper/colors'
 
 const AddButtonComponent = styled.button({
@@ -153,6 +154,8 @@ const BlockLabel = styled.label({
 })
 
 export function InteractiveAnswer(props: InteractiveAnswerProps) {
+  const { strings } = useInstanceData()
+
   return (
     <AnswerContainer>
       <CheckboxContainer>
@@ -171,7 +174,7 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
       >
         <AnswerField>
           <>
-            <BlockLabel>{props.i18n.answer.label}:</BlockLabel>
+            <BlockLabel>{strings.content.exercises.answer}:</BlockLabel>
             {props.answer}
           </>
         </AnswerField>
@@ -179,7 +182,7 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
           <Icon icon={faTimes} />
         </RemoveButton>
         <FeedbackField>
-          <BlockLabel>{props.i18n.feedback.label}:</BlockLabel>
+          <BlockLabel>{strings.content.exercises.feedback}:</BlockLabel>
           {props.feedback}
         </FeedbackField>
       </FramedContainer>
@@ -197,10 +200,6 @@ export interface InteractiveAnswerProps {
   feedback: React.ReactNode
   focusedElement?: string
   remove: () => void
-  i18n: {
-    answer: { label: string }
-    feedback: { label: string }
-  }
 }
 
 export interface CheckElementProps {

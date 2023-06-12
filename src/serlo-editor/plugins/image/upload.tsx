@@ -1,8 +1,10 @@
 import { useRef } from 'react'
 
 import { ImagePluginConfig } from '.'
+import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function Upload(props: UploadProps) {
+  const editorStrings = useLoggedInData()!.strings.editor
   const input = useRef<HTMLInputElement>(null)
   return (
     <>
@@ -10,7 +12,7 @@ export function Upload(props: UploadProps) {
         onClick={selectFile}
         className="serlo-button-editor-secondary h-10 self-end text-base"
       >
-        {props.config.i18n.label}
+        {editorStrings.image.upload}
       </button>
       <input
         type="file"

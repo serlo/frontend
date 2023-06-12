@@ -11,7 +11,6 @@ import {
   object,
   ObjectStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { MultimediaExplanationEditor } from './editor'
 
 /**
@@ -35,9 +34,8 @@ export function createMultimediaExplanationPlugin(
 }
 
 export interface MultimediaExplanationConfig
-  extends Omit<MultimediaExplanationPluginConfig, 'features' | 'i18n'> {
+  extends Omit<MultimediaExplanationPluginConfig, 'features'> {
   explanation: ChildStateTypeConfig
-  i18n?: DeepPartial<MultimediaExplanationPluginConfig['i18n']>
   features?: {
     importance?: boolean
   }
@@ -55,17 +53,6 @@ export interface MultimediaExplanationPluginConfig {
     name: string
     title: string
   }[]
-  i18n: {
-    changeMultimediaType: string
-    reset: string
-    illustrating: {
-      label: string
-      values: {
-        illustrating: string
-        explaining: string
-      }
-    }
-  }
   features: {
     importance: boolean
   }
