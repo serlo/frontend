@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { SemanticSection } from '../helpers/semantic-section'
-import { SerloAddButton } from '../helpers/serlo-editor-button'
+import { SemanticSection } from '../../plugin/helpers/semantic-section'
+import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './article-exercises'
 import { ArticleRelatedContent } from './article-related-content'

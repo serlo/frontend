@@ -1,3 +1,20 @@
+import { appletTypeState } from '../serlo-editor/plugins/serlo-types-plugins/applet'
+import { articleTypeState } from '../serlo-editor/plugins/serlo-types-plugins/article'
+import {
+  Entity,
+  License,
+  Uuid,
+} from '../serlo-editor/plugins/serlo-types-plugins/common/common'
+import { courseTypeState } from '../serlo-editor/plugins/serlo-types-plugins/course'
+import { coursePageTypeState } from '../serlo-editor/plugins/serlo-types-plugins/course-page'
+import { eventTypeState } from '../serlo-editor/plugins/serlo-types-plugins/event'
+import { pageTypeState } from '../serlo-editor/plugins/serlo-types-plugins/page'
+import { taxonomyTypeState } from '../serlo-editor/plugins/serlo-types-plugins/taxonomy'
+import { textExerciseTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-exercise'
+import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-exercise-group'
+import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-solution'
+import { userTypeState } from '../serlo-editor/plugins/serlo-types-plugins/user'
+import { videoTypeState } from '../serlo-editor/plugins/serlo-types-plugins/video'
 import {
   isEdtr,
   Edtr,
@@ -7,19 +24,6 @@ import {
   Splish,
 } from './legacy-editor-to-editor-types'
 import { SerloEntityPluginType } from './plugins'
-import { appletTypeState } from './plugins/types/applet'
-import { articleTypeState } from './plugins/types/article'
-import { Entity, License, Uuid } from './plugins/types/common/common'
-import { courseTypeState } from './plugins/types/course'
-import { coursePageTypeState } from './plugins/types/course-page'
-import { eventTypeState } from './plugins/types/event'
-import { pageTypeState } from './plugins/types/page'
-import { taxonomyTypeState } from './plugins/types/taxonomy'
-import { textExerciseTypeState } from './plugins/types/text-exercise'
-import { textExerciseGroupTypeState } from './plugins/types/text-exercise-group'
-import { textSolutionTypeState } from './plugins/types/text-solution'
-import { userTypeState } from './plugins/types/user'
-import { videoTypeState } from './plugins/types/video'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'

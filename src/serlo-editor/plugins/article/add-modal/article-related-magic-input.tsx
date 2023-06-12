@@ -1,4 +1,4 @@
-import { SerloAddButton } from '../../helpers/serlo-editor-button'
+import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

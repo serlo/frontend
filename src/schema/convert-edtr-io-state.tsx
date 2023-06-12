@@ -4,7 +4,6 @@ import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
 import { EdtrState, UnknownEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
-import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
   FrontendContentNode,
   FrontendMathNode,
@@ -13,6 +12,7 @@ import {
   FrontendTextNode,
   Sign,
 } from '@/frontend-node-types'
+import { BoxType } from '@/serlo-editor/plugins/box/renderer'
 import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText

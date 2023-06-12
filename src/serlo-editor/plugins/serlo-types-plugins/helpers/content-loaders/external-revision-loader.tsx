@@ -14,7 +14,6 @@ import {
   editorResponseToState,
   isError,
 } from '@/edtr-io/editor-response-to-state'
-import { SerloAddButton } from '@/edtr-io/plugins/helpers/serlo-editor-button'
 import {
   MainUuidQuery,
   MainUuidQueryVariables,
@@ -24,6 +23,7 @@ import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { PluginToolbarButton } from '@/serlo-editor/core'
+import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
 import { Icon } from '@/serlo-editor/ui'
 
 export function ExternalRevisionLoader<T>({

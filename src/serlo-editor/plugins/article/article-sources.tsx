@@ -5,10 +5,10 @@ import {
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps, buttonClass, OpenInNewTab } from '.'
-import { InlineInput } from '../helpers/inline-input'
-import { InlineSettings } from '../helpers/inline-settings'
-import { InlineSettingsInput } from '../helpers/inline-settings-input'
-import { SerloAddButton } from '../helpers/serlo-editor-button'
+import { InlineInput } from '../../plugin/helpers/inline-input'
+import { InlineSettings } from '../../plugin/helpers/inline-settings'
+import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
+import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 

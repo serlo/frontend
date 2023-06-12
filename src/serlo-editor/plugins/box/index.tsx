@@ -1,5 +1,5 @@
 import { BoxRenderer } from './renderer'
-import { LoggedInData } from '@/data-types'
+import type { LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import {
   child,

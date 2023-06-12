@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from 'react'
 
-import { SemanticSection } from './helpers/semantic-section'
+import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { PluginToolbarButton } from '@/serlo-editor/core'

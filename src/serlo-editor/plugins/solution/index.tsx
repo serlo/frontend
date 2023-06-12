@@ -1,9 +1,9 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
-import { InlineInput } from './helpers/inline-input'
-import { InlineSettings } from './helpers/inline-settings'
-import { InlineSettingsInput } from './helpers/inline-settings-input'
-import { SemanticSection } from './helpers/semantic-section'
+import { InlineInput } from '../../plugin/helpers/inline-input'
+import { InlineSettings } from '../../plugin/helpers/inline-settings'
+import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
+import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,

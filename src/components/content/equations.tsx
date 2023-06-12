@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import { ReactNode, Fragment } from 'react'
 
-import { renderSignToString } from '@/edtr-io/plugins/equations/sign'
 import {
   FrontendContentNode,
   FrontendNodeType,
   Sign,
 } from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
+import { renderSignToString } from '@/serlo-editor/plugins/equations/sign'
 
 export interface StepProps {
   left: string

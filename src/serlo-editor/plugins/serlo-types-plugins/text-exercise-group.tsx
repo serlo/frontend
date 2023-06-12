@@ -1,4 +1,4 @@
-import { SemanticSection } from '../helpers/semantic-section'
+import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import {
   editorContent,
   entity,

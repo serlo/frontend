@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
 
-import { SerloAddButton } from '../../helpers/serlo-editor-button'
+import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
