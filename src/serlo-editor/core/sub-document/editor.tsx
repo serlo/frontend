@@ -144,7 +144,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           })
         }
       },
-      // TODO: workaround for https://github.com/edtr-io/edtr-io/issues/272
+      // needs workaround for https://github.com/edtr-io/edtr-io/issues/272
       UNDO: () => {
         void dispatch(undo())
       },

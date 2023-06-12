@@ -12,6 +12,7 @@ import { SerloInjectionEditor } from './editor'
 
 // this plugin is currently only used in the edusharing integration
 // https://github.com/serlo/serlo-editor-for-edusharing
+
 // TODO: move to edusharing integration
 
 export function createSerloInjectionPlugin(
