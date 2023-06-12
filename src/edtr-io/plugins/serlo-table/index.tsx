@@ -15,7 +15,7 @@ import {
   object,
   StateTypesReturnType,
   string,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 import {
   store,
   selectFocused,
@@ -27,8 +27,8 @@ import {
   useAppSelector,
   useAppDispatch,
   selectFocusTree,
-} from '@/serlo-editor-repo/store'
-import { Icon, faImages, faParagraph } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/store'
+import { Icon, faImages, faParagraph } from '@/serlo-editor/ui'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [

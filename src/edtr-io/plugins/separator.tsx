@@ -1,8 +1,4 @@
-import {
-  EditorPlugin,
-  EditorPluginProps,
-  scalar,
-} from '@/serlo-editor-repo/plugin'
+import { EditorPlugin, EditorPluginProps, scalar } from '@/serlo-editor/plugin'
 
 const separatorState = scalar(undefined)
 

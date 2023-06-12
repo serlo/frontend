@@ -9,7 +9,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SaveModal } from '@/edtr-io/components/save-modal'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
-import { StateTypeReturnType } from '@/serlo-editor-repo/plugin'
+import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   redo,
   undo,
@@ -18,7 +18,7 @@ import {
   selectHasPendingChanges,
   useAppDispatch,
   useAppSelector,
-} from '@/serlo-editor-repo/store'
+} from '@/serlo-editor/store'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>

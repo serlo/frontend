@@ -3,7 +3,7 @@ import { debounce } from 'ts-debounce'
 
 import { LooseEdtrData } from '../serlo-editor'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { EditorProps } from '@/serlo-editor-repo/core'
+import { EditorProps } from '@/serlo-editor/core'
 
 export interface LocalStorageNoticeProps {
   useStored: boolean

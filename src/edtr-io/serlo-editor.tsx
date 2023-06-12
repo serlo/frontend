@@ -14,8 +14,8 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
-import { Editor, EditorProps } from '@/serlo-editor-repo/core'
-import { createDefaultDocumentEditor } from '@/serlo-editor-repo/default-document-editor'
+import { Editor, EditorProps } from '@/serlo-editor/core'
+import { createDefaultDocumentEditor } from '@/serlo-editor/default-document-editor'
 
 export interface SerloEditorProps {
   children?: ReactNode

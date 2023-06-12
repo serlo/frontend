@@ -3,17 +3,17 @@ import { PropsWithChildren, useState } from 'react'
 import { SemanticSection } from './helpers/semantic-section'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
-import { PluginToolbarButton } from '@/serlo-editor-repo/core'
-import { styled, AddButton } from '@/serlo-editor-repo/editor-ui'
+import { PluginToolbarButton } from '@/serlo-editor/core'
+import { styled, AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
   child,
   object,
   optional,
-} from '@/serlo-editor-repo/plugin'
-import { store, selectDocument } from '@/serlo-editor-repo/store'
-import { Icon, faRandom, faTrashAlt } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/plugin'
+import { store, selectDocument } from '@/serlo-editor/store'
+import { Icon, faRandom, faTrashAlt } from '@/serlo-editor/ui'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),

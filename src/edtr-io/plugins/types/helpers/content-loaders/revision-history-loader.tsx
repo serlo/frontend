@@ -22,8 +22,8 @@ import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
-import { PluginToolbarButton } from '@/serlo-editor-repo/core'
-import { Icon } from '@/serlo-editor-repo/ui'
+import { PluginToolbarButton } from '@/serlo-editor/core'
+import { Icon } from '@/serlo-editor/ui'
 
 export function RevisionHistoryLoader<T>({
   id,

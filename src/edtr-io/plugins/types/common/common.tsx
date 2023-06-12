@@ -1,7 +1,7 @@
 import { mapObjIndexed } from 'ramda'
 
 import { colors } from '@/helper/colors'
-import { PluginToolbarButton } from '@/serlo-editor-repo/core'
+import { PluginToolbarButton } from '@/serlo-editor/core'
 import {
   StateType,
   StateTypesSerializedType,
@@ -16,9 +16,9 @@ import {
   object,
   string,
   optional,
-} from '@/serlo-editor-repo/plugin'
-import { selectDocument, useAppSelector } from '@/serlo-editor-repo/store'
-import { faTrashAlt, Icon, styled } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/plugin'
+import { selectDocument, useAppSelector } from '@/serlo-editor/store'
+import { faTrashAlt, Icon, styled } from '@/serlo-editor/ui'
 
 export const licenseState = object({
   id: number(),

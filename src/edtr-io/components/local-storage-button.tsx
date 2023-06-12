@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { store, selectSerializedRootDocument } from '@/serlo-editor-repo/store'
+import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)

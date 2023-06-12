@@ -15,7 +15,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
-import { StateTypeReturnType } from '@/serlo-editor-repo/plugin'
+import { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface SaveModalProps {
   open: boolean

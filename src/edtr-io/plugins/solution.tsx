@@ -12,12 +12,9 @@ import {
   object,
   string,
   optional,
-} from '@/serlo-editor-repo/plugin'
-import {
-  selectIsDocumentEmpty,
-  useAppSelector,
-} from '@/serlo-editor-repo/store'
-import { Icon, styled } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/plugin'
+import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
+import { Icon, styled } from '@/serlo-editor/ui'
 
 const solutionState = object({
   prerequisite: optional(

@@ -23,8 +23,8 @@ import { dataQuery } from '@/fetcher/query'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { PluginToolbarButton } from '@/serlo-editor-repo/core'
-import { Icon } from '@/serlo-editor-repo/ui'
+import { PluginToolbarButton } from '@/serlo-editor/core'
+import { Icon } from '@/serlo-editor/ui'
 
 export function ExternalRevisionLoader<T>({
   entityType,

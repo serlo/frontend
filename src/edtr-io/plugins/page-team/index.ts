@@ -5,7 +5,7 @@ import {
   EditorPluginProps,
   string,
   list,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export const PageTeamState = object({
   data: list(

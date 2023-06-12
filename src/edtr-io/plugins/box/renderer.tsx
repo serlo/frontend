@@ -5,8 +5,8 @@ import { boxTypeStyle, defaultStyle } from '@/components/content/box'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { selectIsEmptyRows } from '@/serlo-editor-repo/plugins/rows'
-import { useAppSelector } from '@/serlo-editor-repo/store'
+import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
+import { useAppSelector } from '@/serlo-editor/store'
 
 const types = Object.keys(boxTypeStyle)
 export type BoxType = keyof typeof boxTypeStyle

@@ -24,13 +24,10 @@ import {
   HotKeys,
   PreferenceContext,
   setDefaultPreference,
-} from '@/serlo-editor-repo/core'
-import { AddButton } from '@/serlo-editor-repo/editor-ui'
-import { MathEditor } from '@/serlo-editor-repo/math'
-import {
-  StateTypeReturnType,
-  StringStateType,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/core'
+import { AddButton } from '@/serlo-editor/editor-ui'
+import { MathEditor } from '@/serlo-editor/math'
+import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {
   store,
   focus,
@@ -41,8 +38,8 @@ import {
   useAppSelector,
   useAppDispatch,
   selectFocusTree,
-} from '@/serlo-editor-repo/store'
-import { edtrDragHandle, EdtrIcon, Icon, styled } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/store'
+import { edtrDragHandle, EdtrIcon, Icon, styled } from '@/serlo-editor/ui'
 
 enum StepSegment {
   Left = 0,

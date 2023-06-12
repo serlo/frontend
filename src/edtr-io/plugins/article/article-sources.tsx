@@ -10,7 +10,7 @@ import { InlineSettings } from '../helpers/inline-settings'
 import { InlineSettingsInput } from '../helpers/inline-settings-input'
 import { SerloAddButton } from '../helpers/serlo-editor-button'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt, Icon } from '@/serlo-editor-repo/ui'
+import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']

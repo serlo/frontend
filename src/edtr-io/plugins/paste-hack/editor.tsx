@@ -12,7 +12,7 @@ import {
   selectSerializedDocument,
   removePluginChild,
   useAppDispatch,
-} from '@/serlo-editor-repo/store'
+} from '@/serlo-editor/store'
 
 const StateDecoder = t.strict({
   plugin: t.literal('rows'),

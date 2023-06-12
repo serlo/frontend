@@ -36,20 +36,20 @@ import { SerializedDocument } from './serialized-document'
 import { InstanceData, LoggedInData } from '@/data-types'
 import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
 import { isMac } from '@/helper/client-detection'
-import type { EditorPlugin } from '@/serlo-editor-repo/plugin'
-import { createAnchorPlugin } from '@/serlo-editor-repo/plugins/anchor'
-import { createBlockquotePlugin } from '@/serlo-editor-repo/plugins/blockquote'
-import { createGeogebraPlugin } from '@/serlo-editor-repo/plugins/geogebra'
+import type { EditorPlugin } from '@/serlo-editor/plugin'
+import { createAnchorPlugin } from '@/serlo-editor/plugins/anchor'
+import { createBlockquotePlugin } from '@/serlo-editor/plugins/blockquote'
+import { createGeogebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import {
   createInputExercisePlugin,
   InputExerciseType,
-} from '@/serlo-editor-repo/plugins/input-exercise'
-import { createMultimediaExplanationPlugin } from '@/serlo-editor-repo/plugins/multimedia-explanation'
-import { createRowsPlugin, RowsConfig } from '@/serlo-editor-repo/plugins/rows'
-import { createScMcExercisePlugin } from '@/serlo-editor-repo/plugins/sc-mc-exercise'
-import { createSpoilerPlugin } from '@/serlo-editor-repo/plugins/spoiler'
-import { createTextPlugin } from '@/serlo-editor-repo/plugins/text'
-import { createVideoPlugin } from '@/serlo-editor-repo/plugins/video'
+} from '@/serlo-editor/plugins/input-exercise'
+import { createMultimediaExplanationPlugin } from '@/serlo-editor/plugins/multimedia-explanation'
+import { createRowsPlugin, RowsConfig } from '@/serlo-editor/plugins/rows'
+import { createScMcExercisePlugin } from '@/serlo-editor/plugins/sc-mc-exercise'
+import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
+import { createTextPlugin } from '@/serlo-editor/plugins/text'
+import { createVideoPlugin } from '@/serlo-editor/plugins/video'
 
 export enum SerloEntityPluginType {
   Applet = 'type-applet',

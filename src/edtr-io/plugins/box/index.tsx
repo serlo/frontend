@@ -7,7 +7,7 @@ import {
   EditorPluginProps,
   object,
   string,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export function createBoxState(
   editorStrings: LoggedInData['strings']['editor'],

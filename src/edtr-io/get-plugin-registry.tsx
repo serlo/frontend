@@ -18,8 +18,8 @@ import IconText from '@/assets-webkit/img/editor/icon-text.svg'
 import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
-import { RowsConfig } from '@/serlo-editor-repo/plugins/rows'
-import { createIcon } from '@/serlo-editor-repo/ui'
+import { RowsConfig } from '@/serlo-editor/plugins/rows'
+import { createIcon } from '@/serlo-editor/ui'
 
 export function getPluginRegistry(
   type: string,

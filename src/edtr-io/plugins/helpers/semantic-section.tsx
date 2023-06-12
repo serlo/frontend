@@ -1,4 +1,4 @@
-import { styled } from '@/serlo-editor-repo/ui'
+import { styled } from '@/serlo-editor/ui'
 
 const Container = styled.div({
   boxShadow: '0 1px 3px 0 rgba(0,0,0,0.2)',

@@ -10,13 +10,13 @@ import { RevisionHistoryLoader } from './helpers/content-loaders/revision-histor
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { AddButton } from '@/serlo-editor-repo/editor-ui'
+import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
   list,
   string,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export const courseTypeState = entityType(
   {

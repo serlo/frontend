@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-import { styled } from '@/serlo-editor-repo/ui'
+import { styled } from '@/serlo-editor/ui'
 
 const InlineInputInner = styled.input({
   backgroundColor: 'transparent',

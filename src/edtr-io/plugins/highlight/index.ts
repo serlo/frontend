@@ -11,8 +11,8 @@ import {
   ObjectStateType,
   string,
   StringStateType,
-} from '@/serlo-editor-repo/plugin'
-import { DeepPartial } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/plugin'
+import { DeepPartial } from '@/serlo-editor/ui'
 
 /**
  * @param config - {@link HighlightConfig | Plugin configuration}

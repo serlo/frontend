@@ -1,9 +1,5 @@
-import {
-  child,
-  EditorPlugin,
-  EditorPluginProps,
-} from '@/serlo-editor-repo/plugin'
-import { styled } from '@/serlo-editor-repo/renderer-ui'
+import { child, EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
+import { styled } from '@/serlo-editor/renderer-ui'
 
 export const importantState = child({ plugin: 'text' })
 export type ImportantPluginState = typeof importantState

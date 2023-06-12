@@ -4,7 +4,7 @@ import { useEntityId } from '@/contexts/entity-id-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
-import { faSearch, Icon } from '@/serlo-editor-repo/ui'
+import { faSearch, Icon } from '@/serlo-editor/ui'
 
 interface ArticleRelatedMagicInputProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void

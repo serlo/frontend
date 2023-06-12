@@ -3,19 +3,15 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import { Injection } from '@/components/content/injection'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
-import { OverlayInput } from '@/serlo-editor-repo/core'
+import { OverlayInput } from '@/serlo-editor/core'
 import {
   EditorInlineSettings,
   EditorInput,
   styled,
   PreviewOverlay,
-} from '@/serlo-editor-repo/editor-ui'
-import {
-  EditorPluginProps,
-  string,
-  EditorPlugin,
-} from '@/serlo-editor-repo/plugin'
-import { Icon, faNewspaper } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/editor-ui'
+import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
+import { Icon, faNewspaper } from '@/serlo-editor/ui'
 
 /* global */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -7,7 +7,7 @@ import {
   object,
   string,
   number,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export const taxonomyTypeState = object({
   ...uuid,

@@ -13,7 +13,7 @@ import {
   FrontendTextNode,
   Sign,
 } from '@/frontend-node-types'
-import { CustomElement, CustomText } from '@/serlo-editor-repo/plugins/text'
+import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 

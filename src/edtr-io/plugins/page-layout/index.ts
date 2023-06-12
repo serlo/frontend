@@ -7,7 +7,7 @@ import {
   object,
   EditorPluginProps,
   child,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export function createPageLayoutState(
   editorStrings: LoggedInData['strings']['editor']

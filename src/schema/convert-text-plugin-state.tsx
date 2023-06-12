@@ -6,10 +6,7 @@ import {
   FrontendTextColor,
   FrontendTextNode,
 } from '@/frontend-node-types'
-import type {
-  CustomElement,
-  CustomText,
-} from '@/serlo-editor-repo/plugins/text'
+import type { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 

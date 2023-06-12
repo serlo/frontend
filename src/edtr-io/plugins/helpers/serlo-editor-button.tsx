@@ -1,4 +1,4 @@
-import { faPlus, Icon } from '@/serlo-editor-repo/ui'
+import { faPlus, Icon } from '@/serlo-editor/ui'
 
 interface SerloAddButtonProps {
   onClick: () => void

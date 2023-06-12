@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt, Icon } from '@/serlo-editor-repo/ui'
+import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']

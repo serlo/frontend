@@ -23,7 +23,7 @@ import { videoTypeState } from './plugins/types/video'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
-import { StateType, StateTypeSerializedType } from '@/serlo-editor-repo/plugin'
+import { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
 
 const empty: RowsPlugin = { plugin: 'rows', state: [] }
 

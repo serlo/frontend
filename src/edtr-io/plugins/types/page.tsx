@@ -6,7 +6,7 @@ import {
   EditorPluginProps,
   object,
   string,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export const pageTypeState = object({
   ...uuid,

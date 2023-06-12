@@ -3,12 +3,8 @@ import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import {
-  EditorPlugin,
-  EditorPluginProps,
-  string,
-} from '@/serlo-editor-repo/plugin'
-import { createVideoPlugin } from '@/serlo-editor-repo/plugins/video'
+import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import { createVideoPlugin } from '@/serlo-editor/plugins/video'
 
 export const videoTypeState = entityType(
   {

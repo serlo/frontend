@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 
 import { tw } from '@/helper/tw'
-import { StateTypeReturnType, string } from '@/serlo-editor-repo/plugin'
+import { StateTypeReturnType, string } from '@/serlo-editor/plugin'
 
 export function Settings(props: PropsWithChildren<{}>) {
   return <>{props.children}</>

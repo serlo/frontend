@@ -6,11 +6,7 @@ import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import {
-  EditorPlugin,
-  EditorPluginProps,
-  string,
-} from '@/serlo-editor-repo/plugin'
+import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
 
 export const articleTypeState = entityType(
   {

@@ -5,7 +5,7 @@ import {
   list,
   number,
   object,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export const layoutState = list(
   object({ child: child({ plugin: 'text' }), width: number() })

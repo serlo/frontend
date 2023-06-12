@@ -2,13 +2,13 @@ import { converter } from '@serlo/markdown'
 
 import { renderArticle } from '@/schema/article-renderer'
 import { convertLegacyState } from '@/schema/convert-legacy-state'
-import { EditorPlugin } from '@/serlo-editor-repo/plugin'
+import { EditorPlugin } from '@/serlo-editor/plugin'
 import {
   createTablePlugin,
   TableConfig,
   TablePluginState,
   TableProps,
-} from '@/serlo-editor-repo/plugins/table'
+} from '@/serlo-editor/plugins/table'
 
 const edtrTablePlugin = createTablePlugin({
   MarkdownRenderer,

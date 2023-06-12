@@ -7,7 +7,7 @@ import {
   EditorPlugin,
   EditorPluginProps,
   string,
-} from '@/serlo-editor-repo/plugin'
+} from '@/serlo-editor/plugin'
 
 export const stepProps = object({
   left: string(''),

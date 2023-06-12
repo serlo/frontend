@@ -15,8 +15,8 @@ import {
   list,
   object,
   string,
-} from '@/serlo-editor-repo/plugin'
-import { styled } from '@/serlo-editor-repo/ui'
+} from '@/serlo-editor/plugin'
+import { styled } from '@/serlo-editor/ui'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 

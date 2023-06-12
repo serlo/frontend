@@ -10,7 +10,7 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { faSearch, Icon } from '@/serlo-editor-repo/ui'
+import { faSearch, Icon } from '@/serlo-editor/ui'
 
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void

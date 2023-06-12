@@ -12,8 +12,8 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
-import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
-import { faTrashAlt, Icon } from '@/serlo-editor-repo/ui'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 
 interface ArticleRelatedContentProps {
   data: ArticleProps['state']['relatedContent']

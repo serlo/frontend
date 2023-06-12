@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { createEditor, Descendant } from 'slate'
 import { Editable, Slate, withReact } from 'slate-react'
 
-import { CustomElement, CustomText } from '@/serlo-editor-repo/plugins/text'
+import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 const serialize = (value: Descendant[]): string => {
   return ((value[0] as CustomElement).children[0] as CustomText).text
