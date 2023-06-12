@@ -1,6 +1,6 @@
 import { PageLayoutEditor } from './editor'
 import { LoggedInData } from '@/data-types'
-import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
+import { getPluginRegistry } from '@/serlo-editor-integration/get-plugin-registry'
 import {
   EditorPlugin,
   number,

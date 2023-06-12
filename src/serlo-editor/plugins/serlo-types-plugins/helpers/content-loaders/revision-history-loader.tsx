@@ -9,11 +9,6 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
-  editorResponseToState,
-  isError,
-} from '@/edtr-io/editor-response-to-state'
-import { revisionResponseToResponse } from '@/edtr-io/revision-response-to-response'
-import {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
@@ -22,6 +17,11 @@ import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
+import {
+  editorResponseToState,
+  isError,
+} from '@/serlo-editor-integration/editor-response-to-state'
+import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import { Icon } from '@/serlo-editor/ui'
 

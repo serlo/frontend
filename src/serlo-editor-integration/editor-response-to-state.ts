@@ -15,6 +15,7 @@ import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-types-
 import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-solution'
 import { userTypeState } from '../serlo-editor/plugins/serlo-types-plugins/user'
 import { videoTypeState } from '../serlo-editor/plugins/serlo-types-plugins/video'
+import { SerloEntityPluginType } from './plugins'
 import {
   isEdtr,
   Edtr,
@@ -22,8 +23,7 @@ import {
   RowsPlugin,
   OtherPlugin,
   Splish,
-} from './legacy-editor-to-editor-types'
-import { SerloEntityPluginType } from './plugins'
+} from './types/legacy-editor-to-editor-types'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'

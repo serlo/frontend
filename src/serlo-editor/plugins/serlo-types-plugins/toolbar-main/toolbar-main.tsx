@@ -6,9 +6,9 @@ import { entity } from '../common/common'
 import { ClientOnlyPortal } from './client-only-portal'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { SaveModal } from '@/edtr-io/components/save-modal'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
+import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   redo,

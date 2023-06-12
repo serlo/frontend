@@ -1,6 +1,6 @@
 import { layoutState } from '.'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { RowsPlugin } from '@/edtr-io/legacy-editor-to-editor-types'
+import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
 import { styled } from '@/serlo-editor/renderer-ui'
 import {

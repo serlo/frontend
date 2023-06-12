@@ -10,11 +10,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import {
-  DeserializeError,
-  editorResponseToState,
-  isError,
-} from '@/edtr-io/editor-response-to-state'
-import {
   MainUuidQuery,
   MainUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
@@ -22,6 +17,11 @@ import { dataQuery } from '@/fetcher/query'
 import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import {
+  DeserializeError,
+  editorResponseToState,
+  isError,
+} from '@/serlo-editor-integration/editor-response-to-state'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
 import { Icon } from '@/serlo-editor/ui'

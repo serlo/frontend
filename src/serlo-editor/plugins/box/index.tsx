@@ -1,6 +1,6 @@
 import { BoxRenderer } from './renderer'
 import type { LoggedInData } from '@/data-types'
-import { getPluginRegistry } from '@/edtr-io/get-plugin-registry'
+import { getPluginRegistry } from '@/serlo-editor-integration/get-plugin-registry'
 import {
   child,
   EditorPlugin,
