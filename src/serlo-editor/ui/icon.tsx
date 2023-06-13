@@ -104,7 +104,7 @@ export function EdtrIcon({ icon, className }: EdtrIconProps) {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      className={clsx('block overflow-hidden align-middle', className)}
+      className={clsx('inline-block overflow-hidden align-middle', className)}
     >
       <path fill="currentcolor" d={icon} />
     </svg>
