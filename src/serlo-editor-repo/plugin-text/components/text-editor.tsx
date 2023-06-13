@@ -60,6 +60,7 @@ export type TextEditorProps = EditorPluginProps<
 export function TextEditor(props: TextEditorProps) {
   const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
   const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
+  const [lastEnter, setLastEnter] = useState<number>(0)
 
   const dispatch = useAppDispatch()
 
@@ -199,36 +200,41 @@ export function TextEditor(props: TextEditorProps) {
           }
         }
 
-        // Create a new Slate instance on "enter" key
+        // Create a new Slate instance on double "enter" key
         const isListActive = isSelectionWithinList(editor)
+
         if (isHotkey('enter', event) && !isListActive) {
-          const document = selectDocument(store.getState(), id)
-          if (!document) return
+          if (event.timeStamp - lastEnter <= 250) {
+            const document = selectDocument(store.getState(), id)
+            if (!document) return
 
-          const mayManipulateSiblings = selectMayManipulateSiblings(
-            store.getState(),
-            id
-          )
-          if (!mayManipulateSiblings) return
-
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-
-          event.preventDefault()
-
-          const slicedNodes = sliceNodesAfterSelection(editor)
-          setTimeout(() => {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes || emptyDocumentFactory().value,
-                },
-              })
+            const mayManipulateSiblings = selectMayManipulateSiblings(
+              store.getState(),
+              id
             )
-          })
+            if (!mayManipulateSiblings) return
+
+            const parent = selectParent(store.getState(), id)
+            if (!parent) return
+
+            event.preventDefault()
+
+            const slicedNodes = sliceNodesAfterSelection(editor)
+            setTimeout(() => {
+              dispatch(
+                insertPluginChildAfter({
+                  parent: parent.id,
+                  sibling: id,
+                  document: {
+                    plugin: document.plugin,
+                    state: slicedNodes || emptyDocumentFactory().value,
+                  },
+                })
+              )
+            })
+          }
+
+          setLastEnter(event.timeStamp)
         }
 
         // Merge with previous Slate instance on "backspace" key,

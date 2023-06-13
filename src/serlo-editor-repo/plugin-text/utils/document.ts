@@ -36,9 +36,6 @@ export function sliceNodesAfterSelection(editor: SlateEditor) {
 
   let slicedNodes = null
 
-  // Create a new line at selection
-  SlateEditor.insertBreak(editor)
-
   const selectionPoint = editor.selection.anchor.path[0]
   const childrenCount = editor.children.length
 
