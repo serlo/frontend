@@ -7,7 +7,6 @@ import { OverlayInput } from '@/serlo-editor/core'
 import {
   EditorInlineSettings,
   EditorInput,
-  styled,
   PreviewOverlay,
 } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
@@ -29,83 +28,78 @@ export const injectionPlugin: EditorPlugin<InjectionPluginState> = {
   config: {},
 }
 
-export function InjectionRenderer(props: { src: string }) {
-  return <Injection href={props.src} renderNested={renderArticle} />
-}
-
-const PlaceholderWrapper = styled.div({
-  position: 'relative',
-  width: '100%',
-  textAlign: 'center',
-})
-
-function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
-  const [cache, setCache] = useState(props.state.value)
-  const [preview, setPreview] = useState(false)
+function InjectionEditor({
+  focused,
+  state,
+  editable,
+  autofocusRef,
+  renderIntoSettings,
+}: EditorPluginProps<InjectionPluginState>) {
+  const [cache, setCache] = useState(state.value)
+  const [isPreview, setIsPreview] = useState(false)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setCache(props.state.value)
+      setCache(state.value)
     }, 2000)
     return () => {
       clearTimeout(timeout)
     }
-  }, [props.focused, props.state.value])
+  }, [focused, state.value])
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const injectionsStrings = loggedInData.strings.editor.injection
+  const injectionsStrings = useLoggedInData()!.strings.editor.injection
 
-  if (!props.editable) {
-    return <InjectionRenderer src={props.state.value} />
+  if (!editable) {
+    return <Injection href={state.value} renderNested={renderArticle} />
   }
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.state.set(e.target.value.replace(/[^0-9.]/g, ''))
+    state.set(e.target.value.replace(/[^0-9.]/g, ''))
   }
 
   return (
     <>
       {cache ? (
         <PreviewOverlay
-          focused={props.focused || false}
+          focused={focused || false}
           onChange={(nextActive) => {
-            setPreview(nextActive)
+            setIsPreview(nextActive)
             if (nextActive) {
-              setCache(props.state.value)
+              setCache(state.value)
             }
           }}
         >
-          <InjectionRenderer src={cache} />
+          <Injection href={cache} renderNested={renderArticle} />
         </PreviewOverlay>
       ) : (
-        <PlaceholderWrapper>
+        <div className="relative w-full text-center text-gray-600">
           <Icon icon={faNewspaper} size="5x" />
-        </PlaceholderWrapper>
+        </div>
       )}
-      {props.focused && !preview ? (
+
+      {focused && !isPreview ? (
         <EditorInlineSettings>
           <EditorInput
             label={injectionsStrings.serloId}
             placeholder={injectionsStrings.placeholder}
-            value={props.state.value}
+            value={state.value}
             onChange={handleOnChange}
             inputMode="numeric"
             pattern="\d+"
             width="30%"
             inputWidth="100%"
-            ref={props.autofocusRef}
+            ref={autofocusRef}
           />
         </EditorInlineSettings>
       ) : null}
-      {props.renderIntoSettings(
+      {renderIntoSettings(
         <>
           <OverlayInput
             label={injectionsStrings.serloId}
             placeholder={injectionsStrings.placeholder}
             inputMode="numeric"
             pattern="\d+"
-            value={props.state.value}
+            value={state.value}
             onChange={handleOnChange}
           />
         </>
