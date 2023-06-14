@@ -48,6 +48,7 @@ function InlineOptions({ children }: { children: React.ReactNode }) {
     </InlineOptionsWrapper>
   )
 }
+
 const Option = styled.div({
   padding: '5px 10px',
   cursor: 'pointer',
@@ -57,8 +58,9 @@ const Option = styled.div({
     color: 'rgb(70, 155, 255)',
   },
 })
+
 export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
-  const editorStrings = useLoggedInData()!.strings.editor
+  const multimediaStrings = useLoggedInData()!.strings.editor.multimedia
 
   const config = useMultimediaExplanationConfig(props.config)
 
@@ -100,6 +102,12 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
   }
   const [showOptions, setShowOptions] = useState(false)
 
+  function getPluginTitle(name: string) {
+    return Object.hasOwn(multimediaStrings, name)
+      ? multimediaStrings[name as keyof typeof multimediaStrings]
+      : name
+  }
+
   const pluginSelection = (
     <select
       value={multimediaDocument ? multimediaDocument.plugin : ''}
@@ -107,8 +115,8 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     >
       {props.config.plugins.map((plugin) => {
         return (
-          <option key={plugin.name} value={plugin.name}>
-            {plugin.title}
+          <option key={plugin} value={plugin}>
+            {getPluginTitle(plugin)}
           </option>
         )
       })}
@@ -121,7 +129,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       {config.features.importance ? (
         <>
           <div className="flex-[1]">
-            <strong>{editorStrings.multimedia.isIllustrating}</strong>
+            <strong>{multimediaStrings.isIllustrating}</strong>
           </div>
           <div className="flex-[1]">
             <select
@@ -131,10 +139,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               onChange={handleIllustratingChange}
             >
               <option value="illustrating">
-                {editorStrings.multimedia.isIllustrating}
+                {multimediaStrings.isIllustrating}
               </option>
               <option value="explaining">
-                {editorStrings.multimedia.isEssential}
+                {multimediaStrings.isEssential}
               </option>
             </select>
           </div>
@@ -142,7 +150,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       ) : null}
       {props.config.plugins.length > 1 ? (
         <div>
-          <strong>{editorStrings.multimedia.changeType}</strong>
+          <strong>{multimediaStrings.changeType}</strong>
           {pluginSelection}
         </div>
       ) : null}
@@ -164,7 +172,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
             {props.config.plugins.length > 1 ? (
               <PluginToolbarButton
                 icon={<FaIcon icon={faRandom} />}
-                label={editorStrings.multimedia.changeType}
+                label={multimediaStrings.changeType}
                 onClick={() => {
                   setShowOptions(true)
                 }}
@@ -172,10 +180,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
             ) : null}
             <PluginToolbarButton
               icon={<FaIcon icon={faTrashAlt} />}
-              label={editorStrings.multimedia.reset}
+              label={multimediaStrings.reset}
               onClick={() => {
                 props.state.multimedia.replace(
-                  multimediaDocument?.plugin ?? props.config.plugins[0].name
+                  multimediaDocument?.plugin ?? props.config.plugins[0]
                 )
               }}
             />
@@ -185,18 +193,18 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
                   .filter(
                     (plugin) =>
                       !multimediaDocument ||
-                      plugin.name !== multimediaDocument.plugin
+                      plugin !== multimediaDocument.plugin
                   )
                   .map((plugin, i) => {
                     return (
                       <Option
                         key={i}
                         onClick={() => {
-                          handleMultimediaChange(plugin.name)
+                          handleMultimediaChange(plugin)
                           setShowOptions(false)
                         }}
                       >
-                        {plugin.title}
+                        {getPluginTitle(plugin)}
                       </Option>
                     )
                   })}

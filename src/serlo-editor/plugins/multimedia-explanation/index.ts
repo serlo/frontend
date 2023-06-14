@@ -13,8 +13,25 @@ import {
 } from '../../plugin'
 import { MultimediaExplanationEditor } from './editor'
 
+const defaultConfig: MultimediaExplanationConfig = {
+  explanation: {
+    plugin: 'rows',
+    config: {
+      plugins: [
+        'text',
+        'highlight',
+        'anchor',
+        'equations',
+        'image',
+        'serloTable',
+      ],
+    },
+  },
+  plugins: ['image', 'video', 'geogebra'],
+}
+
 export function createMultimediaExplanationPlugin(
-  config: MultimediaExplanationConfig
+  config = defaultConfig
 ): EditorPlugin<MultimediaExplanationPluginState, MultimediaExplanationConfig> {
   const { plugins, explanation } = config
 
@@ -23,7 +40,7 @@ export function createMultimediaExplanationPlugin(
     config,
     state: object({
       explanation: child(explanation),
-      multimedia: child({ plugin: plugins[0].name }),
+      multimedia: child({ plugin: plugins[0] }),
       illustrating: boolean(true),
       width: number(50), // percent
     }),
@@ -46,10 +63,7 @@ export type MultimediaExplanationPluginState = ObjectStateType<{
 }>
 
 export interface MultimediaExplanationPluginConfig {
-  plugins: {
-    name: string
-    title: string
-  }[]
+  plugins: string[]
   features: {
     importance: boolean
   }

@@ -24,7 +24,6 @@ import { pagePartnersPlugin } from '@/serlo-editor/plugins/page-partners'
 import { pageTeamPlugin } from '@/serlo-editor/plugins/page-team'
 import { pasteHackPlugin } from '@/serlo-editor/plugins/paste-hack'
 import { createRowsPlugin } from '@/serlo-editor/plugins/rows'
-import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 import { createScMcExercisePlugin } from '@/serlo-editor/plugins/sc-mc-exercise'
 import { separatorPlugin } from '@/serlo-editor/plugins/separator'
 import { createSerloTablePlugin } from '@/serlo-editor/plugins/serlo-table'
@@ -78,7 +77,7 @@ export function createPlugins({
           placeholder: editorStrings.article.writeShortIntro,
         },
       },
-      plugins: [{ name: 'image', title: editorStrings.multimedia.image }],
+      plugins: ['image'],
     }),
     blockquote: createBlockquotePlugin(),
     box: createBoxPlugin(),
@@ -98,35 +97,7 @@ export function createPlugins({
     pageTeam: pageTeamPlugin,
     pagePartners: pagePartnersPlugin,
     pasteHack: pasteHackPlugin,
-    multimedia: createMultimediaExplanationPlugin({
-      explanation: {
-        plugin: 'rows',
-        config: {
-          plugins: getPluginRegistry('root', editorStrings, [
-            'text',
-            'highlight',
-            'anchor',
-            'equations',
-            'image',
-            'serloTable',
-          ]),
-        },
-      },
-      plugins: [
-        {
-          name: 'image',
-          title: editorStrings.multimedia.image,
-        },
-        {
-          name: 'video',
-          title: editorStrings.multimedia.video,
-        },
-        {
-          name: 'geogebra',
-          title: editorStrings.multimedia.geogebraTitle,
-        },
-      ],
-    }),
+    multimedia: createMultimediaExplanationPlugin(),
     rows: createRowsPlugin(),
     scMcExercise: createScMcExercisePlugin(),
     separator: separatorPlugin,
