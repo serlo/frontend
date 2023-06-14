@@ -1,4 +1,9 @@
-import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCirclePlus,
+  faImages,
+  faParagraph,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
@@ -28,7 +33,6 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
-import { faImages, faParagraph } from '@/serlo-editor/ui'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [

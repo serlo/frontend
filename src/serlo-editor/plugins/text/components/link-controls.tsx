@@ -1,3 +1,7 @@
+import {
+  faExternalLinkAlt,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 import { Editor as SlateEditor, Range, Transforms } from 'slate'
 import { ReactEditor } from 'slate-react'
@@ -9,7 +13,7 @@ import { LinkControlsInput } from './link-controls-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
-import { faExternalLinkAlt, faTrashAlt, styled } from '@/serlo-editor/ui'
+import { styled } from '@/serlo-editor/ui'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',

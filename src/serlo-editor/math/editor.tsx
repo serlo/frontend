@@ -1,8 +1,8 @@
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
 import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
-import { faQuestionCircle } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { InlineCheckbox } from './inline-checkbox'

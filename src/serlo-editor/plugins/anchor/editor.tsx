@@ -1,6 +1,7 @@
+import { faLink } from '@fortawesome/free-solid-svg-icons'
+
 import { AnchorProps } from '.'
 import { EditorInput } from '../../editor-ui'
-import { faLink } from '../../ui'
 import { AnchorRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'

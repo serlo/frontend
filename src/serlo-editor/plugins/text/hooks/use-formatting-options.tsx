@@ -1,3 +1,4 @@
+import { faCode } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
@@ -54,7 +55,6 @@ import {
   edtrListBullets,
   edtrListNumbered,
   edtrText,
-  faCode,
 } from '@/serlo-editor/ui'
 
 type SetIsLinkNewlyCreated = (value: boolean) => void

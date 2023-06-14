@@ -1,4 +1,4 @@
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripVertical, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { flatten, values } from 'ramda'
 import {
   DragDropContext,
@@ -14,7 +14,6 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
-import { faTrashAlt } from '@/serlo-editor/ui'
 
 interface ArticleRelatedContentProps {
   data: ArticleProps['state']['relatedContent']

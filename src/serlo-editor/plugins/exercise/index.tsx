@@ -1,3 +1,4 @@
+import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { PropsWithChildren, useState } from 'react'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
@@ -14,7 +15,6 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { store, selectDocument } from '@/serlo-editor/store'
-import { faRandom, faTrashAlt } from '@/serlo-editor/ui'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),

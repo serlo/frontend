@@ -1,11 +1,10 @@
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripVertical, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt } from '@/serlo-editor/ui'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']

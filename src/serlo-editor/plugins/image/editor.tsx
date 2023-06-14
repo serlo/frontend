@@ -1,3 +1,4 @@
+import { faImages, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
 
 import { ImageProps } from '.'
@@ -18,7 +19,7 @@ import {
   selectIsDocumentEmpty,
   selectHasFocusedChild,
 } from '../../store'
-import { faImages, faRedoAlt, styled } from '../../ui'
+import { styled } from '../../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'

@@ -1,7 +1,8 @@
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { useState, useMemo, useRef } from 'react'
 
 import { DocumentEditorProps } from '../document-editor'
-import { edtrClose, EdtrIcon, faCog, styled } from '../ui'
+import { edtrClose, EdtrIcon, styled } from '../ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 

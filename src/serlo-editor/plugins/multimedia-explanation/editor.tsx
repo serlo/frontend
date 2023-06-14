@@ -1,3 +1,4 @@
+import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
@@ -11,7 +12,7 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { styled, faRandom, faTrashAlt } from '../../ui'
+import { styled } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'

@@ -1,5 +1,6 @@
 import {
   faGripVertical,
+  faTrashAlt,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -11,7 +12,6 @@ import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt } from '@/serlo-editor/ui'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']

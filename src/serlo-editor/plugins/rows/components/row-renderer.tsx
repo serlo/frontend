@@ -1,3 +1,4 @@
+import { faCopy, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
@@ -16,13 +17,7 @@ import {
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
-import {
-  edtrDragHandle,
-  EdtrIcon,
-  faCopy,
-  faTrashAlt,
-  styled,
-} from '@/serlo-editor/ui'
+import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 interface RowDragObject {
   id: string
