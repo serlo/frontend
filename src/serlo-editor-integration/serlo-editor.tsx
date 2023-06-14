@@ -6,7 +6,6 @@ import {
   getStateFromLocalStorage,
   LocalStorageNotice,
 } from './components/local-storage-notice'
-import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
@@ -49,7 +48,6 @@ export function SerloEditor({
   onError,
   initialState,
   children,
-  type,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
@@ -65,8 +63,6 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   const plugins = createPlugins({
-    registry: getPluginRegistry(type, editorStrings),
-    type,
     editorStrings,
   })
 

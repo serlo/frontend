@@ -68,8 +68,9 @@ export function RowRenderer({
 
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
+
   const allowedPlugins = useMemo(() => {
-    return config.plugins.map((plugin) => plugin.name)
+    return config.allowedPlugins ? config.allowedPlugins : []
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 

@@ -1,30 +1,30 @@
-import { getPluginRegistry } from './get-plugin-registry'
 import type { SerializedDocument } from './types/serialized-document'
 import { LoggedInData } from '@/data-types'
 import type { EditorPlugin } from '@/serlo-editor/plugin'
 import { createBlockquotePlugin } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
-import { createImportantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
+import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { tablePlugin } from '@/serlo-editor/plugins/_on-the-way-out/table/table-with-markdown'
-import { createAnchorPlugin } from '@/serlo-editor/plugins/anchor'
+import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
 import { deprecatedPlugin } from '@/serlo-editor/plugins/deprecated'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
 import { errorPlugin } from '@/serlo-editor/plugins/error'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
-import { createGeogebraPlugin } from '@/serlo-editor/plugins/geogebra'
+import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
-import { createImagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
+import { imagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
 import { injectionPlugin } from '@/serlo-editor/plugins/injection'
 import { createInputExercisePlugin } from '@/serlo-editor/plugins/input-exercise'
 import { createMultimediaExplanationPlugin } from '@/serlo-editor/plugins/multimedia-explanation'
-import { createPageLayoutPlugin } from '@/serlo-editor/plugins/page-layout'
+import { pageLayoutPlugin } from '@/serlo-editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@/serlo-editor/plugins/page-partners'
 import { pageTeamPlugin } from '@/serlo-editor/plugins/page-team'
 import { pasteHackPlugin } from '@/serlo-editor/plugins/paste-hack'
-import { createRowsPlugin, RowsConfig } from '@/serlo-editor/plugins/rows'
+import { createRowsPlugin } from '@/serlo-editor/plugins/rows'
+import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 import { createScMcExercisePlugin } from '@/serlo-editor/plugins/sc-mc-exercise'
 import { separatorPlugin } from '@/serlo-editor/plugins/separator'
 import { createSerloTablePlugin } from '@/serlo-editor/plugins/serlo-table'
@@ -43,7 +43,7 @@ import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/vide
 import { solutionPlugin } from '@/serlo-editor/plugins/solution'
 import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
 import { createTextPlugin } from '@/serlo-editor/plugins/text'
-import { createVideoPlugin } from '@/serlo-editor/plugins/video'
+import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export enum SerloEntityPluginType {
   Applet = 'type-applet',
@@ -64,16 +64,12 @@ type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
 
 export function createPlugins({
   editorStrings,
-  registry,
-  type,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-  registry: RowsConfig['plugins']
-  type: string
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
   return {
-    anchor: createAnchorPlugin(),
+    anchor: anchorPlugin,
     article: articlePlugin,
     articleIntroduction: createMultimediaExplanationPlugin({
       explanation: {
@@ -82,36 +78,23 @@ export function createPlugins({
           placeholder: editorStrings.article.writeShortIntro,
         },
       },
-      plugins: [
-        {
-          name: 'image',
-          title: editorStrings.multimedia.image,
-        },
-      ],
+      plugins: [{ name: 'image', title: editorStrings.multimedia.image }],
     }),
-    blockquote: createBlockquotePlugin({
-      content: {
-        plugin: 'text',
-      },
-    }),
-    box: createBoxPlugin({ editorStrings }),
+    blockquote: createBlockquotePlugin(),
+    box: createBoxPlugin(),
     error: errorPlugin,
     deprecated: deprecatedPlugin,
     equations: equationsPlugin,
     exercise: exercisePlugin,
-    geogebra: createGeogebraPlugin(),
+    geogebra: geoGebraPlugin,
     highlight: createHighlightPlugin(),
     h5p: H5pPlugin,
-    image: createImagePlugin(),
-    important: createImportantPlugin(),
+    image: imagePlugin,
+    important: importantPlugin,
     injection: injectionPlugin,
-    inputExercise: createInputExercisePlugin({
-      feedback: {
-        plugin: 'text',
-      },
-    }),
+    inputExercise: createInputExercisePlugin(),
     layout: layoutPlugin,
-    pageLayout: createPageLayoutPlugin(editorStrings),
+    pageLayout: pageLayoutPlugin,
     pageTeam: pageTeamPlugin,
     pagePartners: pagePartnersPlugin,
     pasteHack: pasteHackPlugin,
@@ -119,7 +102,7 @@ export function createPlugins({
       explanation: {
         plugin: 'rows',
         config: {
-          plugins: getPluginRegistry(type, editorStrings, [
+          plugins: getPluginRegistry('root', editorStrings, [
             'text',
             'highlight',
             'anchor',
@@ -144,23 +127,15 @@ export function createPlugins({
         },
       ],
     }),
-    rows: createRowsPlugin({
-      content: { plugin: 'text' },
-      plugins: registry,
-    }),
-    scMcExercise: createScMcExercisePlugin({
-      content: { plugin: 'text' },
-      feedback: { plugin: 'text' },
-    }),
+    rows: createRowsPlugin(),
+    scMcExercise: createScMcExercisePlugin(),
     separator: separatorPlugin,
     serloTable: createSerloTablePlugin(),
     solution: solutionPlugin,
-    spoiler: createSpoilerPlugin({
-      content: { plugin: 'rows' },
-    }),
+    spoiler: createSpoilerPlugin(),
     table: tablePlugin,
-    text: createTextPlugin({}),
-    video: createVideoPlugin(),
+    text: createTextPlugin(),
+    video: videoPlugin,
 
     // Internal plugins for our content types
     [SerloEntityPluginType.Applet]: appletTypePlugin,

@@ -1,24 +1,18 @@
-import {
-  EditorPlugin,
-  EditorPluginProps,
-  string,
-  StringStateType,
-} from '../../plugin'
+import { EditorPlugin, EditorPluginProps, string } from '../../plugin'
 import { GeogebraEditor } from './editor'
 
-export function createGeogebraPlugin(): EditorPlugin<GeogebraPluginState> {
-  return {
-    Component: GeogebraEditor,
-    state: string(),
-    config: {},
-    onText(value) {
-      if (/geogebra\.org\/m\/(.+)/.test(value)) {
-        return { state: value }
-      }
-    },
-  }
-}
+const geogebraState = string()
 
-export type GeogebraPluginState = StringStateType
-
+export type GeogebraPluginState = typeof geogebraState
 export type GeogebraProps = EditorPluginProps<GeogebraPluginState>
+
+export const geoGebraPlugin: EditorPlugin<GeogebraPluginState> = {
+  Component: GeogebraEditor,
+  state: string(),
+  config: {},
+  onText(value) {
+    if (/geogebra\.org\/m\/(.+)/.test(value)) {
+      return { state: value }
+    }
+  },
+}

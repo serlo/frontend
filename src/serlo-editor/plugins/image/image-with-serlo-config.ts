@@ -41,13 +41,27 @@ export interface FileError {
   message: string
 }
 
-export function createImagePlugin() {
-  return createCoreImagePlugin({
-    upload: createUploadImageHandler(),
-    validate: validateFile,
-    secondInput: 'description',
-  })
+export const validateFile: UploadValidator<FileError[]> = (file) => {
+  let uploadErrors: FileErrorCode[] = []
+
+  if (!file) {
+    uploadErrors = [...uploadErrors, FileErrorCode.NO_FILE_SELECTED]
+  } else if (!matchesAllowedExtensions(file.name)) {
+    uploadErrors = [...uploadErrors, FileErrorCode.BAD_EXTENSION]
+  } else if (file.size > maxFileSize) {
+    uploadErrors = [...uploadErrors, FileErrorCode.FILE_TOO_BIG]
+  } else {
+    return { valid: true }
+  }
+
+  return { valid: false, errors: handleErrors(uploadErrors) }
 }
+
+export const imagePlugin = createCoreImagePlugin({
+  upload: createUploadImageHandler(),
+  validate: validateFile,
+  secondInput: 'description',
+})
 
 export function createUploadImageHandler() {
   const readFile = createReadFile()
@@ -111,22 +125,6 @@ export function createReadFile() {
         })
     })
   }
-}
-
-export const validateFile: UploadValidator<FileError[]> = (file) => {
-  let uploadErrors: FileErrorCode[] = []
-
-  if (!file) {
-    uploadErrors = [...uploadErrors, FileErrorCode.NO_FILE_SELECTED]
-  } else if (!matchesAllowedExtensions(file.name)) {
-    uploadErrors = [...uploadErrors, FileErrorCode.BAD_EXTENSION]
-  } else if (file.size > maxFileSize) {
-    uploadErrors = [...uploadErrors, FileErrorCode.FILE_TOO_BIG]
-  } else {
-    return { valid: true }
-  }
-
-  return { valid: false, errors: handleErrors(uploadErrors) }
 }
 
 function matchesAllowedExtensions(fileName: string) {

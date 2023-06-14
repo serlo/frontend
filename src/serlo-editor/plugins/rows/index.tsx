@@ -11,8 +11,13 @@ import {
 } from '../../plugin'
 import { RowsEditor } from './components/rows-editor'
 
+const defaultConfig: RowsConfig = {
+  content: { plugin: 'text' },
+  parentType: 'root',
+}
+
 export function createRowsPlugin(
-  config: RowsConfig
+  config = defaultConfig
 ): EditorPlugin<RowsPluginState, RowsConfig> {
   const { content } = config
 
@@ -58,7 +63,8 @@ export interface RegistryPlugin {
 }
 
 export interface RowsPluginConfig {
-  plugins: RegistryPlugin[]
+  allowedPlugins?: string[]
+  parentType: string
 }
 
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>

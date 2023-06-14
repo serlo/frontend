@@ -18,8 +18,13 @@ export type ScMcExerciseProps = EditorPluginProps<
   ScMcExerciseConfig
 >
 
+const defaultConfig: ScMcExerciseConfig = {
+  content: { plugin: 'text' },
+  feedback: { plugin: 'text' },
+}
+
 export function createScMcExercisePlugin(
-  config: ScMcExerciseConfig
+  config = defaultConfig
 ): EditorPlugin<ScMcExercisePluginState, ScMcExerciseConfig> {
   const { content, feedback } = config
 

@@ -1,62 +1,39 @@
 import {
   boolean,
-  BooleanStateType,
   child,
-  ChildStateType,
   ChildStateTypeConfig,
   EditorPlugin,
   EditorPluginProps,
   list,
-  ListStateType,
   object,
-  ObjectStateType,
   string,
-  StringStateType,
 } from '../../plugin'
 import { InputExerciseEditor } from './editor'
 import { InputExerciseType } from './input-exercise-type'
 
-export function createInputExercisePlugin(
-  config: InputExerciseConfig
-): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
-  const { feedback } = config
+function createInputExerciseState(
+  feedback: ChildStateTypeConfig<string, unknown>
+) {
+  const answerObject = object({
+    value: string(''),
+    isCorrect: boolean(),
+    feedback: child(feedback),
+  })
 
-  return {
-    Component: InputExerciseEditor,
-    config,
-    state: createState(),
-  }
-
-  function createState(): InputExercisePluginState {
-    const answerObject = object({
-      value: string(''),
-      isCorrect: boolean(),
-      feedback: child(feedback),
-    })
-
-    return object({
-      type: string('input-string-normalized-match-challenge'),
-      unit: string(''),
-      answers: list(answerObject),
-    })
-  }
+  return object({
+    type: string('input-string-normalized-match-challenge'),
+    unit: string(''),
+    answers: list(answerObject),
+  })
 }
+
+export type InputExercisePluginState = ReturnType<
+  typeof createInputExerciseState
+>
 
 export interface InputExerciseConfig {
-  feedback: ChildStateTypeConfig
+  feedback?: ChildStateTypeConfig
 }
-
-export type InputExercisePluginState = ObjectStateType<{
-  type: StringStateType
-  unit: StringStateType
-  answers: ListStateType<
-    ObjectStateType<{
-      value: StringStateType
-      isCorrect: BooleanStateType
-      feedback: ChildStateType
-    }>
-  >
-}>
 
 export { InputExerciseType }
 
@@ -64,3 +41,20 @@ export type InputExerciseProps = EditorPluginProps<
   InputExercisePluginState,
   InputExerciseConfig
 >
+
+const defaultConfig: InputExerciseConfig = {
+  feedback: {
+    plugin: 'text',
+  },
+}
+
+export function createInputExercisePlugin(
+  config = defaultConfig
+): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
+  const { feedback } = config
+  return {
+    Component: InputExerciseEditor,
+    config: { feedback },
+    state: createInputExerciseState(feedback!),
+  }
+}

@@ -19,13 +19,13 @@ import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { FaIcon } from '@/components/fa-icon'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
-import { RowsConfig } from '@/serlo-editor/plugins/rows'
+import { RegistryPlugin } from '@/serlo-editor/plugins/rows'
 
 export function getPluginRegistry(
   type: string,
   editorStrings: LoggedInData['strings']['editor'],
   include?: string[]
-): RowsConfig['plugins'] {
+): RegistryPlugin[] {
   const isExercise = [
     'grouped-text-exercise',
     'text-exercise',

@@ -1,60 +1,50 @@
 import { PageLayoutEditor } from './editor'
-import { LoggedInData } from '@/data-types'
-import { getPluginRegistry } from '@/serlo-editor-integration/get-plugin-registry'
 import {
   EditorPlugin,
   number,
   object,
-  EditorPluginProps,
   child,
+  EditorPluginProps,
 } from '@/serlo-editor/plugin'
 
-export function createPageLayoutState(
-  editorStrings: LoggedInData['strings']['editor']
-) {
-  const plugins = getPluginRegistry('box', editorStrings, [
-    'text',
-    'blockquote',
-    'box',
-    'geogebra',
-    'highlight',
-    'anchor',
-    'equations',
-    'image',
-    'important',
-    'injection',
-    'multimedia',
-    'spoiler',
-    'serloTable',
-    'video',
-  ])
+const allowedPlugins = [
+  'text',
+  'blockquote',
+  'box',
+  'geogebra',
+  'highlight',
+  'anchor',
+  'equations',
+  'image',
+  'important',
+  'injection',
+  'multimedia',
+  'spoiler',
+  'serloTable',
+  'video',
+]
 
-  return object({
-    widthPercent: number(), // first column defines second
-    column1: child({
-      plugin: 'rows',
-      config: {
-        plugins,
-      },
-    }),
-    column2: child({
-      plugin: 'rows',
-      config: {
-        plugins,
-      },
-    }),
-  })
-}
+export const pageLayoutState = object({
+  widthPercent: number(), // first column defines second
+  column1: child({
+    plugin: 'rows',
+    config: {
+      allowedPlugins,
+    },
+  }),
+  column2: child({
+    plugin: 'rows',
+    config: {
+      allowedPlugins,
+    },
+  }),
+})
 
-export type PageLayoutPluginState = ReturnType<typeof createPageLayoutState>
+export type PageLayoutPluginState = typeof pageLayoutState
 export type PageLayoutPluginProps = EditorPluginProps<PageLayoutPluginState>
 
-export function createPageLayoutPlugin(
-  editorStrings: LoggedInData['strings']['editor']
-): EditorPlugin<PageLayoutPluginState> {
-  return {
-    Component: PageLayoutEditor,
-    config: {},
-    state: createPageLayoutState(editorStrings),
-  }
+export const pageLayoutPlugin: EditorPlugin<PageLayoutPluginState> = {
+  Component: PageLayoutEditor,
+  config: {},
+  state: pageLayoutState,
 }

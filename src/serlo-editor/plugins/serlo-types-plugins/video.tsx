@@ -9,7 +9,7 @@ import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
-import { createVideoPlugin } from '@/serlo-editor/plugins/video'
+import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export const videoTypeState = entityType(
   {
@@ -20,8 +20,6 @@ export const videoTypeState = entityType(
   },
   {}
 )
-
-const videoPlugin = createVideoPlugin()
 
 export const videoTypePlugin: EditorPlugin<typeof videoTypeState> = {
   Component: VideoTypeEditor,

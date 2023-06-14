@@ -20,12 +20,10 @@ import type {
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
 
-/**
- * @param config - {@link TextEditorConfig | Plugin configuration}
- * @returns The text plugin
- */
+const defaultConfig: TextEditorConfig = {}
+
 const createTextPlugin = (
-  config: TextEditorConfig
+  config = defaultConfig
 ): EditorPlugin<TextEditorState, TextEditorConfig> => ({
   Component: TextEditor,
   config,

@@ -1,9 +1,10 @@
 import { RowsConfig, RowsPluginConfig } from '.'
 
 export function useRowsConfig(config: RowsConfig): RowsPluginConfig {
-  const { plugins } = config
+  const { allowedPlugins, parentType } = config
 
   return {
-    plugins,
+    allowedPlugins,
+    parentType,
   }
 }

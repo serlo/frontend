@@ -13,9 +13,6 @@ import {
 } from '../../plugin'
 import { MultimediaExplanationEditor } from './editor'
 
-/**
- * @param config - {@link MultimediaExplanationConfig | Plugin configuration}
- */
 export function createMultimediaExplanationPlugin(
   config: MultimediaExplanationConfig
 ): EditorPlugin<MultimediaExplanationPluginState, MultimediaExplanationConfig> {

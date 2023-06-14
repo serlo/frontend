@@ -11,8 +11,12 @@ import {
 } from '../../plugin'
 import { SpoilerEditor } from './editor'
 
+const defaultConfig: SpoilerConfig = {
+  content: { plugin: 'rows' },
+}
+
 export function createSpoilerPlugin(
-  config: SpoilerConfig
+  config = defaultConfig
 ): EditorPlugin<SpoilerPluginState, SpoilerConfig> {
   const { content } = config
 
@@ -21,13 +25,13 @@ export function createSpoilerPlugin(
     config,
     state: object({
       title: string(''),
-      content: child(content),
+      content: child(content!),
     }),
   }
 }
 
 export interface SpoilerConfig {
-  content: ChildStateTypeConfig
+  content?: ChildStateTypeConfig
 }
 
 export type SpoilerPluginState = ObjectStateType<{

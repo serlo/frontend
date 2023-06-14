@@ -7,11 +7,14 @@ import {
 } from '../../../plugin'
 import { BlockquoteRenderer } from './renderer'
 
-/**
- * @param config - {@link BlockquoteConfig | Plugin configuration}
- */
+const defaultConfig: BlockquoteConfig = {
+  content: {
+    plugin: 'text',
+  },
+}
+
 export function createBlockquotePlugin(
-  config: BlockquoteConfig
+  config = defaultConfig
 ): EditorPlugin<BlockquotePluginState> {
   return {
     Component: BlockquoteRenderer,
