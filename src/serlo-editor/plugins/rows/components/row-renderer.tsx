@@ -5,6 +5,7 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
@@ -20,7 +21,6 @@ import {
   EdtrIcon,
   faCopy,
   faTrashAlt,
-  Icon,
   styled,
 } from '@/serlo-editor/ui'
 
@@ -225,7 +225,7 @@ export function RowRenderer({
                   }}
                   label={editorStrings.rows.duplicate}
                 >
-                  <Icon icon={faCopy} /> {editorStrings.rows.duplicate}
+                  <FaIcon icon={faCopy} /> {editorStrings.rows.duplicate}
                 </BorderlessOverlayButton>
                 <BorderlessOverlayButton
                   onClick={() => {
@@ -234,7 +234,7 @@ export function RowRenderer({
                   }}
                   label={editorStrings.rows.remove}
                 >
-                  <Icon icon={faTrashAlt} /> {editorStrings.rows.remove}
+                  <FaIcon icon={faTrashAlt} /> {editorStrings.rows.remove}
                 </BorderlessOverlayButton>
               </div>
               <div>

@@ -1,4 +1,6 @@
-import { faPlus, Icon } from '@/serlo-editor/ui'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
+import { FaIcon } from '@/components/fa-icon'
 
 interface SerloAddButtonProps {
   onClick: () => void
@@ -20,7 +22,7 @@ export function SerloAddButton({
       }`}
       onClick={onClick}
     >
-      {noIcon ? null : <Icon icon={faPlus} />} {text}
+      {noIcon ? null : <FaIcon icon={faPlus} />} {text}
     </button>
   )
 }

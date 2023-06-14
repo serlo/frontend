@@ -2,12 +2,13 @@ import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
 import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
-import { faQuestionCircle, Icon } from '../ui'
+import { faQuestionCircle } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
@@ -261,7 +262,7 @@ export function MathEditor(props: MathEditorProps) {
               )}
               {useVisualEditor && (
                 <Button onMouseDown={() => setHelpOpen(true)}>
-                  <Icon icon={faQuestionCircle} />
+                  <FaIcon icon={faQuestionCircle} />
                 </Button>
               )}
               {hasError && (

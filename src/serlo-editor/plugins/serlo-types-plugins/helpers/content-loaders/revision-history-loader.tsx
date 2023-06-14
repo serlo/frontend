@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -23,7 +24,6 @@ import {
 } from '@/serlo-editor-integration/editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
 import { PluginToolbarButton } from '@/serlo-editor/core'
-import { Icon } from '@/serlo-editor/ui'
 
 export function RevisionHistoryLoader<T>({
   id,
@@ -63,7 +63,7 @@ export function RevisionHistoryLoader<T>({
         }}
       >
         <PluginToolbarButton
-          icon={<Icon icon={faHistory} size="lg" />}
+          icon={<FaIcon icon={faHistory} className="text-xl" />}
           label={editorStrings.edtrIo.switchRevision}
           className="pr-0.5 pt-1"
         />

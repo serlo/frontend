@@ -6,9 +6,10 @@ import type { Link, TextEditorPluginConfig } from '../types'
 import { getLinkElement, isLinkActive } from '../utils/link'
 import { InlineOverlay, InlineOverlayPosition } from './inline-overlay'
 import { LinkControlsInput } from './link-controls-input'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
-import { faExternalLinkAlt, faTrashAlt, Icon, styled } from '@/serlo-editor/ui'
+import { faExternalLinkAlt, faTrashAlt, styled } from '@/serlo-editor/ui'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',
@@ -105,7 +106,7 @@ export function LinkControls({
         href={value}
         rel="noopener noreferrer"
       >
-        <Icon icon={faExternalLinkAlt} />
+        <FaIcon icon={faExternalLinkAlt} />
       </ChangeButton>
       <ChangeButton
         onClick={() => {
@@ -114,7 +115,7 @@ export function LinkControls({
           Transforms.unwrapNodes(editor, { at: path })
         }}
       >
-        <Icon icon={faTrashAlt} />
+        <FaIcon icon={faTrashAlt} />
       </ChangeButton>
     </InlineOverlay>
   )

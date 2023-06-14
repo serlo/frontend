@@ -1,6 +1,8 @@
+import clsx from 'clsx'
 import { useState } from 'react'
 
-import { styled, faSortDown, faSortUp, Icon } from '../ui'
+import { styled, faSortDown, faSortUp } from '../ui'
+import { FaIcon } from '@/components/fa-icon'
 
 const Container = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   return {
@@ -42,14 +44,6 @@ const Content = styled.div<{ collapsed: boolean }>(({ collapsed }) => {
   }
 })
 
-const ToggleIcon = styled(Icon)<{ collapsed: boolean }>(({ collapsed }) => {
-  return {
-    marginRight: '10px',
-    marginBottom: collapsed ? '3px' : '-3px',
-    color: toggleColor,
-  }
-})
-
 export function ExpandableBox(props: ExpandableBoxProps) {
   const { children, editable, alwaysVisible, renderTitle } = props
   const [collapsed, setCollapsed] = useState(!editable)
@@ -65,8 +59,11 @@ export function ExpandableBox(props: ExpandableBoxProps) {
         }}
       >
         <>
-          <ToggleIcon
-            collapsed={collapsed}
+          <FaIcon
+            className={clsx(
+              `mr-2.5 text-gray-800`,
+              collapsed ? 'mb-[3px]' : '-mb-[3px]'
+            )}
             icon={collapsed ? faSortDown : faSortUp}
           />
           <a>{renderTitle(collapsed)}</a>

@@ -4,6 +4,7 @@ import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
@@ -14,7 +15,6 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
-import { Icon } from '@/serlo-editor/ui'
 
 const solutionState = object({
   prerequisite: optional(
@@ -117,7 +117,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                     title={editorStrings.solution.openArticleTab}
                     className="ml-2.5"
                   >
-                    <Icon icon={faUpRightFromSquare} />
+                    <FaIcon icon={faUpRightFromSquare} />
                   </span>
                 </a>
               </InlineSettings>

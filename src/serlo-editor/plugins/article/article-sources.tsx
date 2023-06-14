@@ -9,8 +9,9 @@ import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
+import { faTrashAlt } from '@/serlo-editor/ui'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
@@ -107,7 +108,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                           className="inline-block p-1"
                         >
                           <OpenInNewTab title={articleStrings.openInTab}>
-                            <Icon icon={faUpRightFromSquare} />
+                            <FaIcon icon={faUpRightFromSquare} />
                           </OpenInNewTab>
                         </a>
                       </InlineSettings>
@@ -129,14 +130,14 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                     className={buttonClass}
                     onClick={() => sources.remove(index)}
                   >
-                    <Icon icon={faTrashAlt} />
+                    <FaIcon icon={faTrashAlt} />
                   </button>
                   <button
                     title={articleStrings.dragLabel}
                     {...provided.dragHandleProps}
                     className={buttonClass}
                   >
-                    <Icon icon={faGripVertical} />
+                    <FaIcon icon={faGripVertical} />
                   </button>
                 </div>
               </li>

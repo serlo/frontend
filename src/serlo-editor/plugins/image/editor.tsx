@@ -18,20 +18,13 @@ import {
   selectIsDocumentEmpty,
   selectHasFocusedChild,
 } from '../../store'
-import { Icon, faImages, faRedoAlt, styled } from '../../ui'
+import { faImages, faRedoAlt, styled } from '../../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { colors, legacyEditorTheme } from '@/helper/colors'
-
-const ImgPlaceholderWrapper = styled.div({
-  position: 'relative',
-  width: '100%',
-  textAlign: 'center',
-  opacity: '0.4',
-  color: colors.editorPrimary,
-})
+import { legacyEditorTheme } from '@/helper/colors'
 
 const InputRow = styled.span({
   display: 'flex',
@@ -101,12 +94,15 @@ export function ImageEditor(props: ImageProps) {
   function renderImage() {
     return state.src.value === '' ||
       (isTempFile(state.src.value) && !state.src.value.loaded) ? (
-      <ImgPlaceholderWrapper>
-        <Icon icon={faImages} size="5x" />
+      <div className="relative w-full py-12 text-center">
+        <FaIcon
+          icon={faImages}
+          className="text-[5rem] text-editor-primary-200"
+        />
         {isTempFile(state.src.value) && state.src.value.failed ? (
           <Failed>{editorStrings.image.failedUpload}</Failed>
         ) : null}
-      </ImgPlaceholderWrapper>
+      </div>
     ) : (
       <ImageRenderer {...props} disableMouseEvents={editable} />
     )
@@ -155,7 +151,7 @@ function PrimaryControls(props: ImageProps) {
               }
             }}
           >
-            <Icon icon={faRedoAlt} />
+            <FaIcon icon={faRedoAlt} />
           </EditorButton>
         ) : null}
         <Upload
@@ -225,7 +221,7 @@ function SettingsControls(props: ImageProps) {
             }}
             label={editorStrings.image.retry}
           >
-            <Icon icon={faRedoAlt} />
+            <FaIcon icon={faRedoAlt} />
           </OverlayButton>
         ) : null}
         <Upload

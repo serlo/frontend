@@ -11,9 +11,10 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { styled, faRandom, Icon, faTrashAlt } from '../../ui'
+import { styled, faRandom, faTrashAlt } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 interface MultimediaDocument {
@@ -161,7 +162,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
           >
             {props.config.plugins.length > 1 ? (
               <PluginToolbarButton
-                icon={<Icon icon={faRandom} />}
+                icon={<FaIcon icon={faRandom} />}
                 label={editorStrings.multimedia.changeType}
                 onClick={() => {
                   setShowOptions(true)
@@ -169,7 +170,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               />
             ) : null}
             <PluginToolbarButton
-              icon={<Icon icon={faTrashAlt} />}
+              icon={<FaIcon icon={faTrashAlt} />}
               label={editorStrings.multimedia.reset}
               onClick={() => {
                 props.state.multimedia.replace(

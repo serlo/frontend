@@ -1,6 +1,7 @@
 import { PropsWithChildren, useState } from 'react'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { PluginToolbarButton } from '@/serlo-editor/core'
@@ -13,7 +14,7 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { store, selectDocument } from '@/serlo-editor/store'
-import { Icon, faRandom, faTrashAlt } from '@/serlo-editor/ui'
+import { faRandom, faTrashAlt } from '@/serlo-editor/ui'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),
@@ -134,14 +135,14 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
                 }}
               >
                 <PluginToolbarButton
-                  icon={<Icon icon={faRandom} />}
+                  icon={<FaIcon icon={faRandom} />}
                   label={editorStrings.exercise.changeInteractive}
                   onClick={() => {
                     setShowOptions(true)
                   }}
                 />
                 <PluginToolbarButton
-                  icon={<Icon icon={faTrashAlt} />}
+                  icon={<FaIcon icon={faTrashAlt} />}
                   label={editorStrings.exercise.removeInteractive}
                   onClick={() => {
                     interactive.remove()

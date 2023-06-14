@@ -1,38 +1,5 @@
 /* eslint-disable import/no-internal-modules */
-import {
-  FontAwesomeIcon,
-  FontAwesomeIconProps,
-} from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
-import * as R from 'ramda'
-
-export function Icon(props: FontAwesomeIconProps) {
-  const allowedProps = R.pick(
-    [
-      'icon',
-      'mask',
-      'className',
-      'color',
-      'spin',
-      'pulse',
-      'border',
-      'fixedWidth',
-      'inverse',
-      'listItem',
-      'flip',
-      'size',
-      'pull',
-      'rotation',
-      'transform',
-      'symbol',
-      'style',
-      'tabIndex',
-      'title',
-    ],
-    props
-  )
-  return <FontAwesomeIcon {...allowedProps} />
-}
 
 export { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload'
 export { faFileArchive } from '@fortawesome/free-solid-svg-icons/faFileArchive'

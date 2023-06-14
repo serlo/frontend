@@ -13,12 +13,6 @@ import {
 } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
 
-/* global */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare const Common: {
-  trigger: (type: string, context?: HTMLDivElement | null) => void
-}
-
 export const injectionState = string()
 
 export type InjectionPluginState = typeof injectionState
@@ -75,7 +69,7 @@ function InjectionEditor({
       ) : (
         <FaIcon
           icon={faNewspaper}
-          className="relative w-full text-center text-[5rem] text-gray-400 "
+          className="relative w-full text-center text-[5rem] text-gray-400"
         />
       )}
 

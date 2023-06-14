@@ -3,8 +3,9 @@ import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
+import { faTrashAlt } from '@/serlo-editor/ui'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
@@ -94,7 +95,7 @@ export function ArticleExercises({
                           {...provided.dragHandleProps}
                           className={buttonClass}
                         >
-                          <Icon icon={faGripVertical} />
+                          <FaIcon icon={faGripVertical} />
                         </button>
                         <button
                           title={articleStrings.removeLabel}
@@ -103,7 +104,7 @@ export function ArticleExercises({
                             exercises.remove(index)
                           }}
                         >
-                          <Icon icon={faTrashAlt} />
+                          <FaIcon icon={faTrashAlt} />
                         </button>
                       </>
                     )

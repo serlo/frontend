@@ -39,6 +39,7 @@ import {
   toggleItalicMark,
 } from '../utils/rich-text'
 import { textColors } from './use-text-config'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
@@ -54,7 +55,6 @@ import {
   edtrListNumbered,
   edtrText,
   faCode,
-  Icon,
 } from '@/serlo-editor/ui'
 
 type SetIsLinkNewlyCreated = (value: boolean) => void
@@ -338,7 +338,7 @@ function createToolbarControls(
       title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
-      renderIcon: () => <Icon icon={faCode} />,
+      renderIcon: () => <FaIcon icon={faCode} />,
     },
   ].map((option) => {
     return {

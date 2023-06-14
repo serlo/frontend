@@ -1,13 +1,6 @@
 import { VideoProps } from '.'
-import { Icon, styled, faFilm } from '../../ui'
-import { colors } from '@/helper/colors'
-
-const VideoPlaceholderWrapper = styled.div({
-  position: 'relative',
-  width: '100%',
-  textAlign: 'center',
-  color: colors.editorPrimary,
-})
+import { styled, faFilm } from '../../ui'
+import { FaIcon } from '@/components/fa-icon'
 
 enum VideoType {
   YouTube = 'youtube',
@@ -55,12 +48,12 @@ export function VideoRenderer(props: VideoRendererProps) {
   const data = getMatchingData(props.state.src.value)
   if (!data) {
     return (
-      <VideoPlaceholderWrapper>
-        <Icon icon={faFilm} size="5x" />
+      <div className="relative w-full text-center">
+        <FaIcon icon={faFilm} className="text-[5rem] text-editor-primary-200" />
         <p className="text-almost-black">
           {props.state.src.value ? 'Fehlerhafte URL' : null}
         </p>
-      </VideoPlaceholderWrapper>
+      </div>
     )
   }
 

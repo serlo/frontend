@@ -1,6 +1,7 @@
 import { TableProps } from '.'
-import { Icon, faTable, styled } from '../../../ui'
+import { faTable, styled } from '../../../ui'
 import { useTableConfig } from './config'
+import { FaIcon } from '@/components/fa-icon'
 
 const TableContainer = styled.div({
   overflowX: 'auto',
@@ -27,7 +28,7 @@ export function TableRenderer(props: TableProps) {
   return (
     <TableContainer>
       {editable && state.value.trim() === '' ? (
-        <Icon icon={faTable} className="mr-[5px]" />
+        <FaIcon icon={faTable} className="mr-[5px]" />
       ) : null}
       <config.MarkdownRenderer markdown={state.value} />
     </TableContainer>

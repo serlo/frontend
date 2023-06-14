@@ -19,6 +19,7 @@ import {
   TransformTd,
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import {
   HotKeys,
@@ -39,7 +40,7 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
-import { edtrDragHandle, EdtrIcon, Icon, styled } from '@/serlo-editor/ui'
+import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 enum StepSegment {
   Left = 0,
@@ -221,7 +222,7 @@ export function EquationsEditor(props: EquationsProps) {
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
-                                    <Icon icon={faXmark} />
+                                    <FaIcon icon={faXmark} />
                                   </RemoveButton>
                                 </td>
                               </tr>

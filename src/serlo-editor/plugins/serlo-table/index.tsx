@@ -28,7 +28,7 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
-import { Icon, faImages, faParagraph } from '@/serlo-editor/ui'
+import { faImages, faParagraph } from '@/serlo-editor/ui'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [
@@ -306,7 +306,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
         >
-          <Icon icon={faCirclePlus} />
+          <FaIcon icon={faCirclePlus} />
         </button>
       )
     }
@@ -335,7 +335,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
         >
-          <Icon icon={faTrashCan} />
+          <FaIcon icon={faTrashCan} />
         </button>
       )
     }

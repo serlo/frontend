@@ -1,7 +1,8 @@
 import { useState, useMemo, useRef } from 'react'
 
 import { DocumentEditorProps } from '../document-editor'
-import { edtrClose, EdtrIcon, faCog, Icon, styled } from '../ui'
+import { edtrClose, EdtrIcon, faCog, styled } from '../ui'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 interface ToolbarProps {
@@ -139,7 +140,7 @@ export function createDefaultDocumentEditor(): React.ComponentType<DocumentEdito
         {showSettings() ? (
           <PluginToolbarOverlayButton
             label={editorStrings.edtrIo.settings}
-            icon={<Icon icon={faCog} size="lg" />}
+            icon={<FaIcon icon={faCog} className="text-xl" />}
             renderContent={renderSettingsContent}
             contentRef={settingsRef}
           />

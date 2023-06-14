@@ -1,5 +1,7 @@
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { mapObjIndexed } from 'ramda'
 
+import { FaIcon } from '@/components/fa-icon'
 import { tw } from '@/helper/tw'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import {
@@ -18,7 +20,6 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { selectDocument, useAppSelector } from '@/serlo-editor/store'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 
 export const licenseState = object({
   id: number(),
@@ -232,7 +233,7 @@ export function OptionalChild(props: {
       return (
         <>
           <PluginToolbarButton
-            icon={<Icon icon={faTrashAlt} />}
+            icon={<FaIcon icon={faTrashAlt} />}
             label={props.removeLabel}
             onClick={() => {
               props.onRemove()

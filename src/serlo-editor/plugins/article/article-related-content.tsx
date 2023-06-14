@@ -8,12 +8,13 @@ import {
 } from 'react-beautiful-dnd'
 
 import { ArticleProps, buttonClass } from '.'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
+import { faTrashAlt } from '@/serlo-editor/ui'
 
 interface ArticleRelatedContentProps {
   data: ArticleProps['state']['relatedContent']
@@ -93,7 +94,7 @@ export function ArticleRelatedContent({
     function renderHeader() {
       return (
         <div className="mb-1">
-          <Icon icon={categoryIconMapping[category]} />{' '}
+          <FaIcon icon={categoryIconMapping[category]} />{' '}
           {getTranslatedType(strings, category)}
         </div>
       )
@@ -144,14 +145,14 @@ export function ArticleRelatedContent({
           onClick={() => data[category].remove(index)}
         >
           <EditorTooltip text={articleStrings.removeLabel} />
-          <Icon icon={faTrashAlt} aria-hidden="true" />
+          <FaIcon icon={faTrashAlt} aria-hidden="true" />
         </button>
         <button
           {...dragHandleProps}
           className={`${buttonClass} serlo-tooltip-trigger`}
         >
           <EditorTooltip text={articleStrings.dragLabel} />
-          <Icon icon={faGripVertical} aria-hidden="true" />
+          <FaIcon icon={faGripVertical} aria-hidden="true" />
         </button>
       </>
     )

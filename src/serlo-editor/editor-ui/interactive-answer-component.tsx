@@ -1,4 +1,5 @@
-import { styled, Icon, faTimes, faPlus } from '../ui'
+import { styled, faTimes, faPlus } from '../ui'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { colors } from '@/helper/colors'
 
@@ -18,7 +19,7 @@ const AddButtonComponent = styled.button({
 export function AddButton(props: AddButtonProps) {
   return (
     <AddButtonComponent title={props.title} onMouseDown={props.onClick}>
-      <Icon icon={faPlus} /> {props.children}
+      <FaIcon icon={faPlus} /> {props.children}
     </AddButtonComponent>
   )
 }
@@ -179,7 +180,7 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
           </>
         </AnswerField>
         <RemoveButton onClick={props.remove}>
-          <Icon icon={faTimes} />
+          <FaIcon icon={faTimes} />
         </RemoveButton>
         <FeedbackField>
           <BlockLabel>{strings.content.exercises.feedback}:</BlockLabel>
