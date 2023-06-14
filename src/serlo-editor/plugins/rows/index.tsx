@@ -53,7 +53,7 @@ export type RowsPluginState = ListStateType<ChildStateType>
 export interface RegistryPlugin {
   name: string
   title?: string
-  icon?: React.ComponentType
+  icon?: JSX.Element
   description?: string
 }
 

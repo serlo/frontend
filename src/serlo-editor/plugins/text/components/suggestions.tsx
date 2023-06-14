@@ -61,11 +61,7 @@ export const Suggestions = ({
             onMouseMove(index)
           }}
         >
-          {Icon && (
-            <SuggestionIconWrapper>
-              <Icon />
-            </SuggestionIconWrapper>
-          )}
+          {Icon && <SuggestionIconWrapper>{Icon}</SuggestionIconWrapper>}
           <div>
             <h5 className="text-base font-bold">{title ?? name}</h5>
             <p className="whitespace-pre-wrap text-base">{description}</p>

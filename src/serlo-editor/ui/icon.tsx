@@ -1,12 +1,10 @@
 /* eslint-disable import/no-internal-modules */
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
 } from '@fortawesome/react-fontawesome'
 import clsx from 'clsx'
 import * as R from 'ramda'
-import { ComponentType } from 'react'
 
 export function Icon(props: FontAwesomeIconProps) {
   const allowedProps = R.pick(
@@ -86,12 +84,6 @@ export { faRedoAlt } from '@fortawesome/free-solid-svg-icons/faRedoAlt'
 export { faRandom } from '@fortawesome/free-solid-svg-icons/faRandom'
 export { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt'
 export { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
-
-export function createIcon(i: IconDefinition): ComponentType {
-  return function I() {
-    return <Icon icon={i} size="4x" />
-  }
-}
 
 export interface EdtrIconProps {
   icon: string
