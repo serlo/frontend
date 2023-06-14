@@ -87,40 +87,35 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     }
   }
 
-  const relevantData = await prisma.exerciseSubmission.findMany({
-    where: { AND: { entityId: { in: ids } } },
-  })
-
-  relevantData.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
-
-  const sessions = new Set()
-
   let start: Date | null = null
   let end: Date | null = null
 
   if (date.includes('to')) {
     const parts = date.split('to')
     start = new Date(parts[0])
-    end = new Date(parts[1])
+    end = new Date(new Date(parts[1]).getTime() + 24 * 60 * 60 * 1000)
+  } else if (date !== 'all') {
+    start = new Date(date.split('-').reverse().join('-'))
+    end = new Date(start.getTime() + 24 * 60 * 60 * 1000)
   }
+
+  const relevantData = await prisma.exerciseSubmission.findMany({
+    where: {
+      AND: {
+        entityId: { in: ids },
+        ...(start && end ? { timestamp: { gt: start, lt: end } } : {}),
+      },
+    },
+  })
+
+  relevantData.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+
+  const sessions = new Set()
 
   const data = relevantData.reduce((result, obj) => {
     if (start && end) {
       const ts = new Date(obj.timestamp).getTime()
-      if (ts < start.getTime() || ts > end.getTime() + 24 * 60 * 60 * 1000) {
-        return result
-      }
-    } else if (date !== 'all') {
-      const mydate = obj.timestamp
-        .toLocaleDateString('de-DE', {
-          timeZone: 'Europe/Berlin',
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })
-        .replace(/\./g, '-')
-
-      if (mydate !== date) {
+      if (ts < start.getTime() || ts > end.getTime()) {
         return result
       }
     }
