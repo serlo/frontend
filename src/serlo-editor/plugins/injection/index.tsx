@@ -1,6 +1,8 @@
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Injection } from '@/components/content/injection'
+import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
 import { OverlayInput } from '@/serlo-editor/core'
@@ -10,7 +12,6 @@ import {
   PreviewOverlay,
 } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
-import { Icon, faNewspaper } from '@/serlo-editor/ui'
 
 /* global */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,9 +73,10 @@ function InjectionEditor({
           <Injection href={cache} renderNested={renderArticle} />
         </PreviewOverlay>
       ) : (
-        <div className="relative w-full text-center text-gray-600">
-          <Icon icon={faNewspaper} size="5x" />
-        </div>
+        <FaIcon
+          icon={faNewspaper}
+          className="relative w-full text-center text-[5rem] text-gray-400 "
+        />
       )}
 
       {focused && !isPreview ? (
