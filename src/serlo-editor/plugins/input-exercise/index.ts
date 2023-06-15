@@ -42,19 +42,16 @@ export type InputExerciseProps = EditorPluginProps<
   InputExerciseConfig
 >
 
-const defaultConfig: InputExerciseConfig = {
-  feedback: {
-    plugin: 'text',
-  },
+const defaultFeedback = {
+  plugin: 'text',
 }
 
-export function createInputExercisePlugin(
-  config = defaultConfig
-): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
-  const { feedback } = config
+export function createInputExercisePlugin({
+  feedback = defaultFeedback,
+}): EditorPlugin<InputExercisePluginState, InputExerciseConfig> {
   return {
     Component: InputExerciseEditor,
     config: { feedback },
-    state: createInputExerciseState(feedback!),
+    state: createInputExerciseState(feedback),
   }
 }

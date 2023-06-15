@@ -33,23 +33,21 @@ export interface BoxConfig {
   allowedPlugins?: string[]
 }
 
-const defaultConfig: BoxConfig = {
-  allowedPlugins: [
-    'text',
-    'image',
-    'equations',
-    'multimedia',
-    'serloTable',
-    'highlight',
-  ],
-}
+const defaultAllowedPlugins = [
+  'text',
+  'image',
+  'equations',
+  'multimedia',
+  'serloTable',
+  'highlight',
+]
 
 export function createBoxPlugin({
-  allowedPlugins,
-} = defaultConfig): EditorPlugin<BoxPluginState> {
+  allowedPlugins = defaultAllowedPlugins,
+}): EditorPlugin<BoxPluginState> {
   return {
     Component: BoxEditor,
-    state: createBoxState(allowedPlugins!),
+    state: createBoxState(allowedPlugins),
     config: {},
   }
 }
