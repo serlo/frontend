@@ -49,7 +49,10 @@ export function SubjectLandingTopicOverview({
   return (
     <div>
       {renderMenu()}
-      <div className="image-hack pt-3 md:ml-16 md:pt-6" ref={topicContainer}>
+      <div
+        className="pt-3 md:ml-16 md:pt-6 [&_img]:mix-blend-multiply"
+        ref={topicContainer}
+      >
         <MaxWidthDiv>
           {selectedIndex > -1 ? (
             <SubTopic
@@ -72,20 +75,13 @@ export function SubjectLandingTopicOverview({
           margin-left: -12rem;
         }
       `}</style>
-      <style jsx global>
-        {`
-          .image-hack img {
-            mix-blend-mode: multiply;
-          }
-        `}
-      </style>
     </div>
   )
 
   function renderMenu() {
     return (
       <div
-        className="image-hack grid justify-center"
+        className="grid justify-center [&_img]:mix-blend-multiply"
         style={{
           gridTemplateColumns: 'repeat(auto-fit, minmax(12rem, 20rem))',
         }}
