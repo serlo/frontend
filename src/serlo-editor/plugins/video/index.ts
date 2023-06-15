@@ -7,6 +7,7 @@ import {
   StringStateType,
 } from '../../plugin'
 import { VideoEditor } from './editor'
+import { parseVideoUrl } from './renderer'
 
 export type VideoPluginState = ObjectStateType<{
   src: StringStateType
@@ -20,10 +21,8 @@ export const videoPlugin: EditorPlugin<VideoPluginState> = {
   config: {},
   state: object({ src: string(), alt: string() }),
   onText(value) {
-    const regex =
-      /^(https?:\/\/)?(.*?(youtube\.com\/watch\?(.*&)?v=.+|youtu\.be\/.+|vimeo\.com\/.+|upload\.wikimedia\.org\/.+(\.webm|\.ogg)?|br\.de\/.+))/
-    if (regex.test(value)) {
-      return { state: { src: value, alt: '' } }
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [src, type] = parseVideoUrl(value)
+    if (type) return { state: { src: value, alt: '' } }
   },
 }

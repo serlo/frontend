@@ -1,145 +1,81 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
-import { VideoProps } from '.'
-import { styled } from '../../ui'
 import { FaIcon } from '@/components/fa-icon'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { tw } from '@/helper/tw'
 
-enum VideoType {
-  YouTube = 'youtube',
-  Vimeo = 'vimeo',
-  Wikimedia = 'wikimedia',
-  BR = 'br',
+export enum VideoType {
+  YouTube = 'YouTube',
+  WikimediaCommons = 'WikimediaCommons',
+  Vimeo = 'Vimeo',
 }
 
-const VideoWrapper = styled.div<{ disableCursorEvents: boolean }>(
-  ({ disableCursorEvents }) => ({
-    position: 'relative',
-    padding: '0',
-    /* Player ratio: 100 / (1280 / 720) */
-    paddingTop: '56.25%',
-    display: 'block',
-    height: '0',
-    overflow: 'hidden',
-    pointerEvents: disableCursorEvents ? 'none' : 'auto',
-  })
-)
-
-const Video = styled.video({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  border: 'none',
-})
-
-const VideoIframe = styled.iframe({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  border: 'none',
-})
-
-export type VideoRendererProps = VideoProps & {
-  disableCursorEvents?: boolean
+interface VideoRendererProps {
+  src: string
+  type?: VideoType
 }
 
-export function VideoRenderer(props: VideoRendererProps) {
-  const data = getMatchingData(props.state.src.value)
-  if (!data) {
+export function VideoRenderer({ src, type }: VideoRendererProps) {
+  if (!type) {
     return (
-      <div className="relative w-full text-center">
-        <FaIcon icon={faFilm} className="text-[5rem] text-editor-primary-200" />
-        <p className="text-almost-black">
-          {props.state.src.value ? 'Fehlerhafte URL' : null}
+      <div className="text-center print:hidden">
+        <FaIcon icon={faFilm} className="h-16" />
+        {/* TODO: i18n */}
+        <p className="serlo-p text-almost-black">
+          {src ? `Loading video failed: ${src}` : ''}
         </p>
       </div>
     )
   }
 
-  if (data.type === VideoType.Wikimedia) {
-    return (
-      <VideoWrapper disableCursorEvents={!!props.disableCursorEvents}>
-        <Video controls src={data.embed} title={props.state.alt.value} />
-      </VideoWrapper>
-    )
-  }
-
   return (
-    <VideoWrapper disableCursorEvents={!!props.disableCursorEvents}>
-      <VideoIframe
-        allowFullScreen
-        src={data.embed}
-        title={props.state.alt.value}
-      />
-    </VideoWrapper>
+    <div>
+      <div className="m-0 p-0">
+        {type === VideoType.WikimediaCommons ? (
+          <video controls src={src} className={videoClassName} />
+        ) : (
+          <iframe
+            src={src}
+            frameBorder="0"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            className={videoClassName}
+          />
+        )}
+      </div>
+    </div>
   )
 }
 
-function getMatchingData(url: string) {
-  return (
-    checkMatch(url, VideoType.YouTube) ||
-    checkMatch(url, VideoType.Vimeo) ||
-    checkMatch(url, VideoType.Wikimedia) ||
-    checkMatch(url, VideoType.BR)
-  )
-}
+const videoClassName = tw`absolute top-0 left-0 z-20 h-full w-full border-none bg-black/30`
 
-function checkMatch(
-  url: string,
-  type: VideoType
-):
-  | {
-      embed: string
-      type: VideoType
-    }
-  | undefined {
-  switch (type) {
-    case VideoType.YouTube: {
-      const match =
-        /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)(.+)/.exec(
-          url
-        )
-      if (match) {
-        return {
-          embed: `https://www.youtube-nocookie.com/embed/${match[4]}?html5=1`,
-          type: VideoType.YouTube,
-        }
-      }
-      break
-    }
-    case VideoType.Vimeo: {
-      const match = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/.exec(url)
-      if (match) {
-        return {
-          embed: `https://player.vimeo.com/video/${match[3]}`,
-          type: VideoType.Vimeo,
-        }
-      }
-      break
-    }
-    case VideoType.Wikimedia: {
-      const match = /^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/.exec(url)
-      if (match) {
-        return {
-          embed: url,
-          type: VideoType.Wikimedia,
-        }
-      }
-      break
-    }
-    case VideoType.BR: {
-      const match = /^(https?:\/\/)?(.*?br\.de\/)(.+)/.exec(url)
-      if (match) {
-        return {
-          embed: `https://www.br.de/mediathek/embed/${match[3]}`,
-          type: VideoType.BR,
-        }
-      }
-      break
-    }
+export function parseVideoUrl(
+  checkSrc: string,
+  lang?: Instance
+): [string, VideoType | undefined] {
+  const videoRegex = /^(https?:\/\/)?(.*?vimeo\.com\/)(.+)/
+  const vimeo = videoRegex.exec(checkSrc)
+  if (vimeo)
+    return [
+      `https://player.vimeo.com/video/${vimeo[3]}?autoplay=1`,
+      VideoType.Vimeo,
+    ]
+
+  const wikimediaRegex = /^(https?:\/\/)?(.*?upload\.wikimedia\.org\/)(.+)/
+  const wikimedia = wikimediaRegex.exec(checkSrc)
+  if (wikimedia) return [checkSrc, VideoType.WikimediaCommons]
+
+  const youtubeRegex =
+    /^(https?:\/\/)?(.*?youtube\.com\/watch\?(.*&)?v=|.*?youtu\.be\/)([a-zA-Z0-9_-]{11})/
+  const youtube = youtubeRegex.exec(checkSrc)
+  if (youtube) {
+    const path = youtube[4]
+    const videoId = encodeURIComponent(path.split('&', 1)[0])
+    const useSubtitles = path.indexOf('cc_load_policy=1') > 0
+    const iframeSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&html5=1${
+      useSubtitles ? `&cc_lang_pref=${lang ?? 'de'}&cc_load_policy=1` : ''
+    }`
+    return [iframeSrc, VideoType.YouTube]
   }
-  return undefined
+  return [checkSrc, undefined]
 }

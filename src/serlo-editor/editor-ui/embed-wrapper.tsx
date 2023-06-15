@@ -2,6 +2,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
+import { VideoType } from '../plugins/video/renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
@@ -12,11 +13,11 @@ import { serloDomain } from '@/helper/urls/serlo-domain'
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
 // also borrowed some code
 
-interface PrivacyWrapperProps {
+interface EmbedWrapperProps {
   children: JSX.Element
   className?: string
   type: 'video' | 'applet'
-  provider: 'GeoGebra'
+  provider: 'GeoGebra' | VideoType
   embedUrl?: string
 }
 
@@ -25,7 +26,7 @@ export function EmbedWrapper({
   className,
   type,
   embedUrl,
-}: PrivacyWrapperProps) {
+}: EmbedWrapperProps) {
   const [showIframe, setShowIframe] = useState(false)
 
   useEffect(() => {
