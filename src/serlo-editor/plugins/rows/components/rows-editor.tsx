@@ -6,14 +6,6 @@ import { useRowsConfig } from '../config'
 import { RowEditor } from './row-editor'
 import { RowSeparator } from './row-separator'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
-import { styled } from '@/serlo-editor/ui'
-
-// TODO:
-const ReadOnlyRow = styled.div({
-  marginBottom: '25px',
-  marginTop: '25px',
-  paddingLeft: '14px',
-})
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
@@ -32,13 +24,11 @@ export function RowsEditor(props: RowsProps) {
   }
 
   if (!props.editable) {
-    return (
-      <>
-        {props.state.map((row) => {
-          return <ReadOnlyRow key={row.id}>{row.render()}</ReadOnlyRow>
-        })}
-      </>
-    )
+    return props.state.map((row) => (
+      <div key={row.id} className="my-[25px] pl-[14px]">
+        {row.render()}
+      </div>
+    ))
   }
 
   // Prevent add button being visually emphasized when this RowsEditor is contained within certain plugin types.
