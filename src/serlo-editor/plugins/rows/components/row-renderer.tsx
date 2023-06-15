@@ -10,10 +10,10 @@ import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
+import { EditorPlugins } from '@/serlo-editor/core/editor'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   DocumentState,
-  selectPlugins,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
@@ -61,7 +61,7 @@ export function RowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: ReturnType<typeof selectPlugins>
+  plugins: EditorPlugins
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
   const editorStrings = useLoggedInData()!.strings.editor

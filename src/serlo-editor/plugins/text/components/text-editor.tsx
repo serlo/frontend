@@ -35,6 +35,7 @@ import { Suggestions } from './suggestions'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -42,14 +43,12 @@ import {
   focusPrevious,
   selectDocument,
   selectParent,
-  selectPlugins,
   insertPluginChildAfter,
   selectMayManipulateSiblings,
   runReplaceDocumentSaga,
   useAppDispatch,
   selectFocusTree,
   store,
-  useAppSelector,
 } from '@/serlo-editor/store'
 
 export type TextEditorProps = EditorPluginProps<
@@ -65,7 +64,7 @@ export function TextEditor(props: TextEditorProps) {
 
   const loggedInData = useLoggedInData()
   const { state, id, editable, focused } = props
-  const plugins = useAppSelector(selectPlugins)
+  const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
 

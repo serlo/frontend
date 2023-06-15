@@ -20,7 +20,6 @@ import {
   selectDocument,
   selectMayManipulateSiblings,
   selectParent,
-  selectPlugin,
   insertPluginChildAfter,
   selectIsDocumentEmpty,
   selectIsFocused,
@@ -34,6 +33,7 @@ import {
 } from '../../store'
 import { styled } from '../../ui'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
+import { usePlugin } from '../contexts/plugins-context'
 
 const StyledDocument = styled.div({
   outline: 'none',
@@ -63,9 +63,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     selectMayManipulateSiblings(state, id)
   )
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const plugin = useAppSelector(
-    (state) => document && selectPlugin(state, document.plugin)
-  )
+  const plugin = usePlugin(document?.plugin)
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(

@@ -31,6 +31,7 @@ import {
   PluginRegistryContext,
   Registry,
 } from './contexts/plugin-registry-context'
+import { PluginsContext } from './contexts/plugins-context'
 import { SubDocument } from './sub-document'
 
 configure({
@@ -122,17 +123,19 @@ export function InnerDocument({
     >
       <div className="relative">
         <ErrorContext.Provider value={onError}>
-          <DocumentEditorContext.Provider value={DocumentEditor}>
-            <PluginRegistryContext.Provider value={pluginRegistry}>
-              <PluginToolbarContext.Provider value={PluginToolbar}>
-                <PreferenceContextProvider>
-                  <EditableContext.Provider value={editableContextValue}>
-                    {renderChildren(id)}
-                  </EditableContext.Provider>
-                </PreferenceContextProvider>
-              </PluginToolbarContext.Provider>
-            </PluginRegistryContext.Provider>
-          </DocumentEditorContext.Provider>
+          <PluginsContext.Provider value={plugins}>
+            <DocumentEditorContext.Provider value={DocumentEditor}>
+              <PluginRegistryContext.Provider value={pluginRegistry}>
+                <PluginToolbarContext.Provider value={PluginToolbar}>
+                  <PreferenceContextProvider>
+                    <EditableContext.Provider value={editableContextValue}>
+                      {renderChildren(id)}
+                    </EditableContext.Provider>
+                  </PreferenceContextProvider>
+                </PluginToolbarContext.Provider>
+              </PluginRegistryContext.Provider>
+            </DocumentEditorContext.Provider>
+          </PluginsContext.Provider>
         </ErrorContext.Provider>
       </div>
     </GlobalHotKeys>
