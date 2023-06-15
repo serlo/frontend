@@ -24,11 +24,15 @@ export function RowsEditor(props: RowsProps) {
   }
 
   if (!props.editable) {
-    return props.state.map((row) => (
-      <div key={row.id} className="my-[25px] pl-[14px]">
-        {row.render()}
-      </div>
-    ))
+    return (
+      <>
+        {props.state.map((row) => (
+          <div key={row.id} className="my-[25px] pl-[14px]">
+            {row.render()}
+          </div>
+        ))}
+      </>
+    )
   }
 
   // Prevent add button being visually emphasized when this RowsEditor is contained within certain plugin types.
