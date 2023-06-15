@@ -42,8 +42,6 @@ configure({
 const DefaultDocumentEditor = createDefaultDocumentEditor()
 const DefaultPluginToolbar = createDefaultPluginToolbar()
 
-let mountedProvider = false
-
 /**
  * Renders a single editor for an Edtr.io document
  */
@@ -60,30 +58,6 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
     if (props.omitDragDropContext) return children
     return <DndProvider backend={HTML5Backend}>{children}</DndProvider>
   }
-}
-
-/**
- * Hydrates the required contexts
- */
-export function EditorProvider(props: EditorProviderProps) {
-  const { omitDragDropContext, children }: EditorProviderProps = props
-  useEffect(() => {
-    if (mountedProvider) {
-      // eslint-disable-next-line no-console
-      console.error('You may only render one <EditorProvider />.')
-    }
-    mountedProvider = true
-    return () => {
-      mountedProvider = false
-    }
-  }, [])
-  const child = <Provider store={store}>{children}</Provider>
-  if (omitDragDropContext) return child
-  return <DndProvider backend={HTML5Backend}>{child}</DndProvider>
-}
-export interface EditorProviderProps {
-  omitDragDropContext?: boolean
-  children: ReactNode
 }
 
 const hotKeysKeyMap = {
