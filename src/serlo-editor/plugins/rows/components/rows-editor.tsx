@@ -1,12 +1,10 @@
 import clsx from 'clsx'
 
 import { RowsProps } from '..'
+import { AllowedChildPlugins } from '../allowed-child-plugins-context'
 import { useRowsConfig } from '../config'
-import { RegistryContext } from '../registry-context'
 import { RowEditor } from './row-editor'
 import { RowSeparator } from './row-separator'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 import { styled } from '@/serlo-editor/ui'
 
@@ -22,7 +20,6 @@ export function RowsEditor(props: RowsProps) {
   const pluginTypesOfAncestors = useAppSelector((state) =>
     selectAncestorPluginTypes(state, props.id)
   )
-  const editorStrings = useLoggedInData()!.strings.editor
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {
     const textPluginWithSuggestions = {
@@ -59,14 +56,8 @@ export function RowsEditor(props: RowsProps) {
 
   const isDocumentEmpty = props.state.length === 0
 
-  const plugins = getPluginRegistry(
-    config.parentType,
-    editorStrings,
-    config.allowedPlugins
-  )
-
   return (
-    <RegistryContext.Provider value={plugins}>
+    <AllowedChildPlugins.Provider value={config.allowedPlugins}>
       <div
         className={clsx(
           'relative mt-[25px]',
@@ -106,6 +97,6 @@ export function RowsEditor(props: RowsProps) {
           )
         })}
       </div>
-    </RegistryContext.Provider>
+    </AllowedChildPlugins.Provider>
   )
 }

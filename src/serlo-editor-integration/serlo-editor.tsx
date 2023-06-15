@@ -14,6 +14,7 @@ import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
 import { createDefaultDocumentEditor } from '@/serlo-editor/default-document-editor'
+import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 
 export interface SerloEditorProps {
   children?: ReactNode
@@ -79,6 +80,7 @@ export function SerloEditor({
         DocumentEditor={DocumentEditor}
         onError={onError}
         plugins={plugins}
+        pluginRegistry={getPluginRegistry('root', editorStrings)}
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
         onChange={({ changed, getDocument }) => {

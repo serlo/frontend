@@ -17,7 +17,7 @@ const defaultConfig: MultimediaExplanationConfig = {
   explanation: {
     plugin: 'rows',
     config: {
-      plugins: [
+      allowedPlugins: [
         'text',
         'highlight',
         'anchor',

@@ -27,6 +27,10 @@ import {
   PreferenceContextProvider,
   PluginToolbarContext,
 } from './contexts'
+import {
+  PluginRegistryContext,
+  Registry,
+} from './contexts/plugin-registry-context'
 import { SubDocument } from './sub-document'
 
 configure({
@@ -93,6 +97,7 @@ export function InnerDocument<K extends string = string>({
   editable,
   onChange,
   onError,
+  pluginRegistry,
   DocumentEditor = DefaultDocumentEditor,
   PluginToolbar = DefaultPluginToolbar,
   ...props
@@ -144,13 +149,15 @@ export function InnerDocument<K extends string = string>({
       <div className="relative">
         <ErrorContext.Provider value={onError}>
           <DocumentEditorContext.Provider value={DocumentEditor}>
-            <PluginToolbarContext.Provider value={PluginToolbar}>
-              <PreferenceContextProvider>
-                <EditableContext.Provider value={editableContextValue}>
-                  {renderChildren(id)}
-                </EditableContext.Provider>
-              </PreferenceContextProvider>
-            </PluginToolbarContext.Provider>
+            <PluginRegistryContext.Provider value={pluginRegistry}>
+              <PluginToolbarContext.Provider value={PluginToolbar}>
+                <PreferenceContextProvider>
+                  <EditableContext.Provider value={editableContextValue}>
+                    {renderChildren(id)}
+                  </EditableContext.Provider>
+                </PreferenceContextProvider>
+              </PluginToolbarContext.Provider>
+            </PluginRegistryContext.Provider>
           </DocumentEditorContext.Provider>
         </ErrorContext.Provider>
       </div>
@@ -177,6 +184,7 @@ export interface EditorProps<K extends string = string> {
   omitDragDropContext?: boolean
   children?: ReactNode | ((document: ReactNode) => ReactNode)
   plugins: Record<K, EditorPlugin>
+  pluginRegistry: Registry
   initialState: {
     plugin: string
     state?: unknown

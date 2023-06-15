@@ -23,8 +23,7 @@ import { RegistryPlugin } from '@/serlo-editor/plugins/rows'
 
 export function getPluginRegistry(
   type: string,
-  editorStrings: LoggedInData['strings']['editor'],
-  include?: string[]
+  editorStrings: LoggedInData['strings']['editor']
 ): RegistryPlugin[] {
   const isExercise = [
     'grouped-text-exercise',
@@ -33,7 +32,7 @@ export function getPluginRegistry(
   ].includes(type)
   const isPage = type === UuidType.Page
 
-  const registry = [
+  return [
     {
       name: 'text',
       title: editorStrings.edtrIo.text,
@@ -164,10 +163,4 @@ export function getPluginRegistry(
         ]
       : []),
   ]
-
-  const filteredRegistry = include
-    ? registry.filter((plugin) => include.includes(plugin.name))
-    : registry
-
-  return filteredRegistry
 }
