@@ -2,8 +2,8 @@ export { HotKeys, IgnoreKeys, GlobalHotKeys } from 'react-hotkeys'
 
 export { SubDocument } from './sub-document'
 export type { SubDocumentProps } from './sub-document'
-export { Editor, EditorProvider } from './editor'
-export type { EditorProps, EditorProviderProps } from './editor'
+export { Editor } from './editor'
+export type { EditorProps } from './editor'
 export {
   DocumentEditorContext,
   EditableContext,
