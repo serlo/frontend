@@ -70,7 +70,7 @@ export function RowRenderer({
   const [draggingAbove, setDraggingAbove] = useState(true)
 
   const allowedPlugins = useMemo(() => {
-    return config.allowedPlugins ? config.allowedPlugins : []
+    return config.allowedPlugins ? config.allowedPlugins : undefined
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
