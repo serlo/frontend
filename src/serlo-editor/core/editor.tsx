@@ -45,7 +45,7 @@ const DefaultPluginToolbar = createDefaultPluginToolbar()
 /**
  * Renders a single editor for an Edtr.io document
  */
-export function Editor<K extends string = string>(props: EditorProps<K>) {
+export function Editor(props: EditorProps) {
   return <Provider store={store}>{renderChildren()}</Provider>
 
   function renderChildren() {
@@ -65,7 +65,7 @@ const hotKeysKeyMap = {
   REDO: ['ctrl+y', 'command+y', 'ctrl+shift+z', 'command+shift+z'],
 }
 
-export function InnerDocument<K extends string = string>({
+export function InnerDocument({
   children,
   plugins,
   editable,
@@ -75,10 +75,10 @@ export function InnerDocument<K extends string = string>({
   DocumentEditor = DefaultDocumentEditor,
   PluginToolbar = DefaultPluginToolbar,
   ...props
-}: Omit<EditorProps<K>, 'initialState'> &
+}: Omit<EditorProps, 'initialState'> &
   (
     | { mirror: true; initialState?: unknown }
-    | { mirror?: false; initialState: EditorProps<K>['initialState'] }
+    | { mirror?: false; initialState: EditorProps['initialState'] }
   )) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
@@ -154,10 +154,12 @@ export function InnerDocument<K extends string = string>({
   }
 }
 
-export interface EditorProps<K extends string = string> {
+export type EditorPlugins = Record<string, EditorPlugin>
+
+export interface EditorProps {
   omitDragDropContext?: boolean
   children?: ReactNode | ((document: ReactNode) => ReactNode)
-  plugins: Record<K, EditorPlugin>
+  plugins: EditorPlugins
   pluginRegistry: Registry
   initialState: {
     plugin: string
