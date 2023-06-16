@@ -27,6 +27,11 @@ import {
   PreferenceContextProvider,
   PluginToolbarContext,
 } from './contexts'
+import {
+  PluginRegistryContext,
+  Registry,
+} from './contexts/plugin-registry-context'
+import { PluginsContext } from './contexts/plugins-context'
 import { SubDocument } from './sub-document'
 
 configure({
@@ -38,12 +43,10 @@ configure({
 const DefaultDocumentEditor = createDefaultDocumentEditor()
 const DefaultPluginToolbar = createDefaultPluginToolbar()
 
-let mountedProvider = false
-
 /**
  * Renders a single editor for an Edtr.io document
  */
-export function Editor<K extends string = string>(props: EditorProps<K>) {
+export function Editor(props: EditorProps) {
   return <Provider store={store}>{renderChildren()}</Provider>
 
   function renderChildren() {
@@ -58,48 +61,25 @@ export function Editor<K extends string = string>(props: EditorProps<K>) {
   }
 }
 
-/**
- * Hydrates the required contexts
- */
-export function EditorProvider(props: EditorProviderProps) {
-  const { omitDragDropContext, children }: EditorProviderProps = props
-  useEffect(() => {
-    if (mountedProvider) {
-      // eslint-disable-next-line no-console
-      console.error('You may only render one <EditorProvider />.')
-    }
-    mountedProvider = true
-    return () => {
-      mountedProvider = false
-    }
-  }, [])
-  const child = <Provider store={store}>{children}</Provider>
-  if (omitDragDropContext) return child
-  return <DndProvider backend={HTML5Backend}>{child}</DndProvider>
-}
-export interface EditorProviderProps {
-  omitDragDropContext?: boolean
-  children: ReactNode
-}
-
 const hotKeysKeyMap = {
   UNDO: ['ctrl+z', 'command+z'],
   REDO: ['ctrl+y', 'command+y', 'ctrl+shift+z', 'command+shift+z'],
 }
 
-export function InnerDocument<K extends string = string>({
+export function InnerDocument({
   children,
   plugins,
   editable,
   onChange,
   onError,
+  pluginRegistry,
   DocumentEditor = DefaultDocumentEditor,
   PluginToolbar = DefaultPluginToolbar,
   ...props
-}: Omit<EditorProps<K>, 'initialState'> &
+}: Omit<EditorProps, 'initialState'> &
   (
     | { mirror: true; initialState?: unknown }
-    | { mirror?: false; initialState: EditorProps<K>['initialState'] }
+    | { mirror?: false; initialState: EditorProps['initialState'] }
   )) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
@@ -141,17 +121,21 @@ export function InnerDocument<K extends string = string>({
       keyMap={hotKeysKeyMap}
       handlers={hotKeysHandlers}
     >
-      <div style={{ position: 'relative' }}>
+      <div className="relative">
         <ErrorContext.Provider value={onError}>
-          <DocumentEditorContext.Provider value={DocumentEditor}>
-            <PluginToolbarContext.Provider value={PluginToolbar}>
-              <PreferenceContextProvider>
-                <EditableContext.Provider value={editableContextValue}>
-                  {renderChildren(id)}
-                </EditableContext.Provider>
-              </PreferenceContextProvider>
-            </PluginToolbarContext.Provider>
-          </DocumentEditorContext.Provider>
+          <PluginsContext.Provider value={plugins}>
+            <DocumentEditorContext.Provider value={DocumentEditor}>
+              <PluginRegistryContext.Provider value={pluginRegistry}>
+                <PluginToolbarContext.Provider value={PluginToolbar}>
+                  <PreferenceContextProvider>
+                    <EditableContext.Provider value={editableContextValue}>
+                      {renderChildren(id)}
+                    </EditableContext.Provider>
+                  </PreferenceContextProvider>
+                </PluginToolbarContext.Provider>
+              </PluginRegistryContext.Provider>
+            </DocumentEditorContext.Provider>
+          </PluginsContext.Provider>
         </ErrorContext.Provider>
       </div>
     </GlobalHotKeys>
@@ -173,10 +157,13 @@ export function InnerDocument<K extends string = string>({
   }
 }
 
-export interface EditorProps<K extends string = string> {
+export type EditorPlugins = Record<string, EditorPlugin>
+
+export interface EditorProps {
   omitDragDropContext?: boolean
   children?: ReactNode | ((document: ReactNode) => ReactNode)
-  plugins: Record<K, EditorPlugin>
+  plugins: EditorPlugins
+  pluginRegistry: Registry
   initialState: {
     plugin: string
     state?: unknown

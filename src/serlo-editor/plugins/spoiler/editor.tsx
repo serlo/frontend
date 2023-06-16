@@ -2,11 +2,11 @@ import { useCallback } from 'react'
 
 import { SpoilerProps } from '.'
 import { ExpandableBox } from '../../renderer-ui'
-import { useSpoilerConfig } from './config'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function SpoilerEditor(props: SpoilerProps) {
   const { state, editable, autofocusRef } = props
-  const config = useSpoilerConfig(props.config)
+  const editorStrings = useEditorStrings()
 
   const renderTitle = useCallback(
     (_collapsed: boolean) => {
@@ -14,7 +14,7 @@ export function SpoilerEditor(props: SpoilerProps) {
         <input
           onChange={(e) => state.title.set(e.target.value)}
           value={state.title.value}
-          placeholder={config.i18n.title.placeholder}
+          placeholder={editorStrings.spoiler.enterATitle}
           ref={autofocusRef}
           className="bg-transparent p-1 focus:outline-editor-primary"
         />
@@ -22,7 +22,7 @@ export function SpoilerEditor(props: SpoilerProps) {
         <>{state.title.value}</>
       )
     },
-    [config.i18n.title.placeholder, autofocusRef, editable, state.title]
+    [autofocusRef, editable, state.title, editorStrings]
   )
 
   return (

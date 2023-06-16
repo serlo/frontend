@@ -1,7 +1,11 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Editor as SlateEditor, Node } from 'slate'
 
-import { RegistryContext, Registry } from '../../rows'
+import { AllowedChildPlugins } from '../../rows'
+import {
+  PluginRegistryContext,
+  Registry,
+} from '@/serlo-editor/core/contexts/plugin-registry-context'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
 
 interface useSuggestionsArgs {
@@ -24,7 +28,14 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const { editor, id, editable, focused } = args
 
   const text = Node.string(editor)
-  const plugins = useContext(RegistryContext)
+
+  const allPlugins = useContext(PluginRegistryContext)
+  const allowed = useContext(AllowedChildPlugins)
+
+  const plugins = allowed
+    ? allPlugins.filter((plugin) => allowed.includes(plugin.name))
+    : allPlugins
+
   const filteredOptions = filterPlugins(plugins, text)
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0

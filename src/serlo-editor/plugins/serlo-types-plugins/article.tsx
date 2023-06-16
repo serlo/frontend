@@ -1,10 +1,15 @@
 import { ChangeEvent } from 'react'
 
-import { editorContent, entity, HeaderInput, entityType } from './common/common'
+import {
+  editorContent,
+  entity,
+  entityType,
+  headerInputClasses,
+} from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
 
@@ -28,9 +33,7 @@ export const articleTypePlugin: EditorPlugin<typeof articleTypeState> = {
 function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
   const { title, content, meta_title, meta_description } = props.state
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   return (
     <>
@@ -57,7 +60,8 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
         )}
         <h1>
           {props.editable ? (
-            <HeaderInput
+            <input
+              className={headerInputClasses}
               placeholder={articleStrings.title}
               value={title.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {

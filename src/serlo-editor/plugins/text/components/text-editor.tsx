@@ -32,9 +32,10 @@ import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -42,14 +43,12 @@ import {
   focusPrevious,
   selectDocument,
   selectParent,
-  selectPlugins,
   insertPluginChildAfter,
   selectMayManipulateSiblings,
   runReplaceDocumentSaga,
   useAppDispatch,
   selectFocusTree,
   store,
-  useAppSelector,
 } from '@/serlo-editor/store'
 
 export type TextEditorProps = EditorPluginProps<
@@ -63,9 +62,10 @@ export function TextEditor(props: TextEditorProps) {
 
   const dispatch = useAppDispatch()
 
-  const loggedInData = useLoggedInData()
+  const editorStrings = useEditorStrings()
+
   const { state, id, editable, focused } = props
-  const plugins = useAppSelector(selectPlugins)
+  const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
 
@@ -310,9 +310,7 @@ export function TextEditor(props: TextEditorProps) {
         const imagePluginState = plugins.image?.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            if (!loggedInData) return
-            const { noImagePasteInLists } = loggedInData.strings.editor.image
-            showToastNotice(noImagePasteInLists, 'warning')
+            showToastNotice(editorStrings.image.noImagePasteInLists, 'warning')
             return
           }
 
@@ -329,9 +327,7 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            if (!loggedInData) return
-            const { noVideoPasteInLists } = loggedInData.strings.editor.video
-            showToastNotice(noVideoPasteInLists, 'warning')
+            showToastNotice(editorStrings.video.noVideoPasteInLists, 'warning')
             return
           }
 
@@ -375,7 +371,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, loggedInData, plugins.image, plugins.video]
+    [dispatch, editor, id, editorStrings, plugins.image, plugins.video]
   )
 
   const handleRenderElement = useCallback(
@@ -388,7 +384,7 @@ export function TextEditor(props: TextEditorProps) {
       }
       if (element.type === 'a') {
         return (
-          <a href={element.href} style={{ cursor: 'pointer' }} {...attributes}>
+          <a href={element.href} className="cursor-pointer" {...attributes}>
             {children}
           </a>
         )
@@ -410,7 +406,6 @@ export function TextEditor(props: TextEditorProps) {
       if (element.type === 'math') {
         return (
           <MathElement
-            config={config}
             element={element}
             attributes={attributes}
             focused={focused}
@@ -422,7 +417,7 @@ export function TextEditor(props: TextEditorProps) {
 
       return <div {...attributes}>{children}</div>
     },
-    [config, focused]
+    [focused]
   )
 
   return (
@@ -463,7 +458,7 @@ export function TextEditor(props: TextEditorProps) {
 
       {showSuggestions && (
         <HoverOverlay position="below">
-          <Suggestions config={config} {...suggestionsProps} />
+          <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
     </HotKeys>

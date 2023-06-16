@@ -6,16 +6,15 @@ import {
   getStateFromLocalStorage,
   LocalStorageNotice,
 } from './components/local-storage-notice'
-import { getPluginRegistry } from './get-plugin-registry'
 import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
 import { createDefaultDocumentEditor } from '@/serlo-editor/default-document-editor'
+import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 
 export interface SerloEditorProps {
   children?: ReactNode
@@ -50,12 +49,10 @@ export function SerloEditor({
   onError,
   initialState,
   children,
-  type,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
   const [useStored, setUseStored] = useState(false)
-  const { strings } = useInstanceData()
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -67,21 +64,10 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   const plugins = createPlugins({
-    registry: getPluginRegistry(type, editorStrings),
-    type,
     editorStrings,
-    strings,
   })
 
-  const DocumentEditor = createDefaultDocumentEditor({
-    i18n: {
-      settings: {
-        buttonLabel: editorStrings.edtrIo.settings,
-        modalTitle: editorStrings.edtrIo.extendedSettings,
-        modalCloseLabel: editorStrings.edtrIo.close,
-      },
-    },
-  })
+  const DocumentEditor = createDefaultDocumentEditor()
 
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -94,6 +80,7 @@ export function SerloEditor({
         DocumentEditor={DocumentEditor}
         onError={onError}
         plugins={plugins}
+        pluginRegistry={getPluginRegistry('root', editorStrings)}
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
         onChange={({ changed, getDocument }) => {

@@ -2,13 +2,13 @@ import {
   entity,
   editorContent,
   serializedChild,
-  HeaderInput,
   entityType,
+  headerInputClasses,
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
 
@@ -32,9 +32,7 @@ export const appletTypePlugin: EditorPlugin<typeof appletTypeState> = {
 
 function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
   const { title, url, content, meta_title, meta_description } = props.state
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <div>
@@ -61,7 +59,8 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         )}
         <h1>
           {props.editable ? (
-            <HeaderInput
+            <input
+              className={headerInputClasses}
               placeholder={editorStrings.applet.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

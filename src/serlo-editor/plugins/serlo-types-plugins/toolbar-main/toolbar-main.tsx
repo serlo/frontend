@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { entity } from '../common/common'
 import { ClientOnlyPortal } from './client-only-portal'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
 import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
@@ -39,8 +39,7 @@ export function ToolbarMain({
 
   useLeaveConfirm(isChanged)
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
+  const editorStrings = useEditorStrings()
 
   return (
     <>
@@ -92,14 +91,11 @@ export function ToolbarMain({
         className="serlo-button-green ml-2"
         onClick={() => {
           if (isChanged) setSaveModalOpen(true)
-          else
-            showToastNotice(
-              '👀 ' + loggedInData!.strings.editor.noChangesWarning
-            )
+          else showToastNotice('👀 ' + editorStrings.noChangesWarning)
         }}
         title="Save"
       >
-        <FaIcon icon={faSave} /> {loggedInData!.strings.editor.edtrIo.save}
+        <FaIcon icon={faSave} /> {editorStrings.edtrIo.save}
       </button>
     )
   }

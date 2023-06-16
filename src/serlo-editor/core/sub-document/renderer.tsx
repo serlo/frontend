@@ -2,13 +2,12 @@ import * as R from 'ramda'
 import { useRef } from 'react'
 
 import { SubDocumentProps } from '.'
-import { selectDocument, selectPlugin, useAppSelector } from '../../store'
+import { selectDocument, useAppSelector } from '../../store'
+import { usePlugin } from '../contexts/plugins-context'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
-  const plugin = useAppSelector(
-    (state) => document && selectPlugin(state, document.plugin)
-  )
+  const plugin = usePlugin(document?.plugin)
   const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
   if (!document) return null
   if (!plugin) {

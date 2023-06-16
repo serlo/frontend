@@ -1,10 +1,10 @@
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripVertical, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
@@ -17,9 +17,7 @@ export function ArticleExercises({
   exerciseFolder,
   editable,
 }: ArticleExercisesProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   const folderHeader = <p>{articleStrings.moreInFolder}:</p>
 
@@ -94,7 +92,7 @@ export function ArticleExercises({
                           {...provided.dragHandleProps}
                           className={buttonClass}
                         >
-                          <Icon icon={faGripVertical} />
+                          <FaIcon icon={faGripVertical} />
                         </button>
                         <button
                           title={articleStrings.removeLabel}
@@ -103,7 +101,7 @@ export function ArticleExercises({
                             exercises.remove(index)
                           }}
                         >
-                          <Icon icon={faTrashAlt} />
+                          <FaIcon icon={faTrashAlt} />
                         </button>
                       </>
                     )

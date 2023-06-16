@@ -2,7 +2,7 @@ import clsx from 'clsx'
 
 import { PageLayoutPluginProps } from '.'
 import { PageLayoutRenderer } from './renderer'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
 const firstColumsSizes = [50, 66, 33]
@@ -10,9 +10,7 @@ const firstColumsSizes = [50, 66, 33]
 export const PageLayoutEditor: React.FunctionComponent<
   PageLayoutPluginProps
 > = (props) => {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
   const { column1, column2, widthPercent } = props.state
   const percent = widthPercent.value
 

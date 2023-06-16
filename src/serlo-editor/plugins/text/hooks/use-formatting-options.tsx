@@ -1,3 +1,4 @@
+import { faCode } from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
@@ -39,6 +40,11 @@ import {
   toggleItalicMark,
 } from '../utils/rich-text'
 import { textColors } from './use-text-config'
+import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { LoggedInData } from '@/data-types'
+import { isMac } from '@/helper/client-detection'
 import {
   edtrBold,
   edtrClose,
@@ -49,8 +55,6 @@ import {
   edtrListBullets,
   edtrListNumbered,
   edtrText,
-  faCode,
-  Icon,
 } from '@/serlo-editor/ui'
 
 type SetIsLinkNewlyCreated = (value: boolean) => void
@@ -124,6 +128,8 @@ export const useFormattingOptions = (
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
 ) => {
   const { formattingOptions } = config
+  const editorStrings = useEditorStrings()
+  const { strings } = useInstanceData()
 
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
@@ -140,8 +146,14 @@ export const useFormattingOptions = (
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-    () => createToolbarControls(config, setIsLinkNewlyCreated),
-    [config, setIsLinkNewlyCreated]
+    () =>
+      createToolbarControls(
+        config,
+        editorStrings.text,
+        strings.keys.ctrl,
+        setIsLinkNewlyCreated
+      ),
+    [config, editorStrings.text, setIsLinkNewlyCreated, strings.keys.ctrl]
   )
 
   const handleHotkeys = useCallback(
@@ -217,14 +229,16 @@ export const useFormattingOptions = (
 }
 
 function createToolbarControls(
-  { i18n, formattingOptions }: TextEditorPluginConfig,
+  { formattingOptions }: TextEditorPluginConfig,
+  textStrings: LoggedInData['strings']['editor']['text'],
+  ctrlKey: string,
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
 ): ControlButton[] {
   const allFormattingOptions = [
     // Bold
     {
       name: TextEditorFormattingOption.richText,
-      title: i18n.richText.toggleStrongTitle,
+      title: textStrings.bold,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
       renderIcon: () => <EdtrIcon icon={edtrBold} />,
@@ -232,7 +246,7 @@ function createToolbarControls(
     // Italic
     {
       name: TextEditorFormattingOption.richText,
-      title: i18n.richText.toggleEmphasizeTitle,
+      title: textStrings.italic,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
       renderIcon: () => <EdtrIcon icon={edtrItalic} />,
@@ -240,7 +254,7 @@ function createToolbarControls(
     // Link
     {
       name: TextEditorFormattingOption.links,
-      title: i18n.link.toggleTitle,
+      title: textStrings.link,
       isActive: isLinkActive,
       onClick: toggleLinkAndFlag(setIsLinkNewlyCreated),
       renderIcon: () => <EdtrIcon icon={edtrLink} />,
@@ -248,24 +262,24 @@ function createToolbarControls(
     // Headings
     {
       name: TextEditorFormattingOption.headings,
-      title: i18n.headings.openMenuTitle,
-      closeMenuTitle: i18n.headings.closeMenuTitle,
+      title: textStrings.headings,
+      closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
       renderIcon: () => <EdtrIcon icon={edtrText} />,
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: ([1, 2, 3] as const).map((heading) => ({
+      children: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
-        title: i18n.headings.setHeadingTitle(heading),
-        isActive: isHeadingActive(heading),
-        onClick: toggleHeading(heading),
-        renderIcon: () => <span>H{heading}</span>,
+        title: `${textStrings.heading} ${level}`,
+        isActive: isHeadingActive(level),
+        onClick: toggleHeading(level),
+        renderIcon: () => <span>H{level}</span>,
       })),
     },
     // Colors
     {
       name: TextEditorFormattingOption.colors,
-      title: i18n.colors.openMenuTitle,
-      closeMenuTitle: i18n.colors.closeMenuTitle,
+      title: textStrings.colors,
+      closeMenuTitle: textStrings.closeSubMenu,
       isActive: () => false,
       renderIcon: (editor: SlateEditor) => {
         const colorIndex = getColorIndex(editor)
@@ -276,14 +290,18 @@ function createToolbarControls(
       children: [
         {
           name: TextEditorFormattingOption.colors,
-          title: i18n.colors.resetColorTitle,
+          title: textStrings.resetColor,
           isActive: (editor: SlateEditor) => !isAnyColorActive(editor),
           onClick: resetColor,
           renderIcon: () => <HoveringToolbarColorIcon color="black" />,
         },
         ...textColors.map((color, colorIndex) => ({
           name: TextEditorFormattingOption.colors,
-          title: i18n.colors.colorNames[colorIndex],
+          title: Object.hasOwn(textStrings.colorNames, color.name)
+            ? textStrings.colorNames[
+                color.name as keyof typeof textStrings.colorNames
+              ]
+            : color.name,
           isActive: isColorActive(colorIndex),
           onClick: toggleColor(colorIndex),
           renderIcon: () => <HoveringToolbarColorIcon color={color.value} />,
@@ -293,7 +311,7 @@ function createToolbarControls(
     // Ordered list
     {
       name: TextEditorFormattingOption.lists,
-      title: i18n.list.toggleOrderedList,
+      title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
       renderIcon: () => <EdtrIcon icon={edtrListNumbered} />,
@@ -301,7 +319,7 @@ function createToolbarControls(
     // Unordered list
     {
       name: TextEditorFormattingOption.lists,
-      title: i18n.list.toggleUnorderedList,
+      title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
       renderIcon: () => <EdtrIcon icon={edtrListBullets} />,
@@ -309,7 +327,7 @@ function createToolbarControls(
     // Math
     {
       name: TextEditorFormattingOption.math,
-      title: i18n.math.toggleTitle,
+      title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
       renderIcon: () => <EdtrIcon icon={edtrFormula} />,
@@ -317,12 +335,17 @@ function createToolbarControls(
     // Code
     {
       name: TextEditorFormattingOption.code,
-      title: i18n.code.toggleTitle,
+      title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
-      renderIcon: () => <Icon icon={faCode} />,
+      renderIcon: () => <FaIcon icon={faCode} />,
     },
-  ]
+  ].map((option) => {
+    return {
+      ...option,
+      title: option.title.replace('%ctrlOrCmd%', isMac ? '⌘' : ctrlKey),
+    }
+  })
 
   return allFormattingOptions.filter((option) =>
     formattingOptions.includes(TextEditorFormattingOption[option.name])

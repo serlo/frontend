@@ -1,3 +1,4 @@
+import { faImages, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
 
 import { ImageProps } from '.'
@@ -18,19 +19,13 @@ import {
   selectIsDocumentEmpty,
   selectHasFocusedChild,
 } from '../../store'
-import { Icon, faImages, faRedoAlt, styled } from '../../ui'
+import { styled } from '../../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
-import { colors, legacyEditorTheme } from '@/helper/colors'
-
-const ImgPlaceholderWrapper = styled.div({
-  position: 'relative',
-  width: '100%',
-  textAlign: 'center',
-  opacity: '0.4',
-  color: colors.editorPrimary,
-})
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { legacyEditorTheme } from '@/helper/colors'
 
 const InputRow = styled.span({
   display: 'flex',
@@ -58,7 +53,7 @@ export function ImageEditor(props: ImageProps) {
   const { editable, focused, state } = props
   const config = useImageConfig(props.config)
   usePendingFileUploader(state.src, config.upload)
-  const { i18n } = config
+  const editorStrings = useEditorStrings()
 
   const captionIsEmpty =
     !state.caption.defined ||
@@ -100,12 +95,15 @@ export function ImageEditor(props: ImageProps) {
   function renderImage() {
     return state.src.value === '' ||
       (isTempFile(state.src.value) && !state.src.value.loaded) ? (
-      <ImgPlaceholderWrapper>
-        <Icon icon={faImages} size="5x" />
+      <div className="relative w-full py-12 text-center">
+        <FaIcon
+          icon={faImages}
+          className="text-[5rem] text-editor-primary-200"
+        />
         {isTempFile(state.src.value) && state.src.value.failed ? (
-          <Failed>{config.i18n.failedUploadMessage}</Failed>
+          <Failed>{editorStrings.image.failedUpload}</Failed>
         ) : null}
-      </ImgPlaceholderWrapper>
+      </div>
     ) : (
       <ImageRenderer {...props} disableMouseEvents={editable} />
     )
@@ -116,7 +114,7 @@ export function ImageEditor(props: ImageProps) {
     return (
       <Caption>
         {state.caption.render({
-          config: { placeholder: i18n.caption.placeholder },
+          config: { placeholder: editorStrings.image.captionPlaceholder },
         })}
       </Caption>
     )
@@ -125,19 +123,19 @@ export function ImageEditor(props: ImageProps) {
 
 function PrimaryControls(props: ImageProps) {
   const config = useImageConfig(props.config)
-  const { i18n } = config
+  const editorStrings = useEditorStrings()
   const { src } = props.state
   return (
     <>
       <InputRow>
         <EditorInput
-          label={i18n.src.label}
+          label={editorStrings.image.imageUrl}
           placeholder={
             !isTempFile(src.value)
-              ? i18n.src.placeholder.empty
+              ? editorStrings.image.placeholderEmpty
               : !src.value.failed
-              ? i18n.src.placeholder.uploading
-              : i18n.src.placeholder.failed
+              ? editorStrings.image.placeholderUploading
+              : editorStrings.image.placeholderFailed
           }
           value={!isTempFile(src.value) ? src.value : ''}
           disabled={isTempFile(src.value) && !src.value.failed}
@@ -154,7 +152,7 @@ function PrimaryControls(props: ImageProps) {
               }
             }}
           >
-            <Icon icon={faRedoAlt} />
+            <FaIcon icon={faRedoAlt} />
           </EditorButton>
         ) : null}
         <Upload
@@ -174,8 +172,8 @@ function PrimaryControls(props: ImageProps) {
         const { link } = props.state
         return (
           <EditorInput
-            label={i18n.link.href.label}
-            placeholder={i18n.link.href.placeholder}
+            label={editorStrings.image.href}
+            placeholder={editorStrings.image.hrefPlaceholder}
             value={link.defined ? link.href.value : ''}
             onChange={handleChange(props)('href')}
             width="90%"
@@ -193,18 +191,19 @@ function PrimaryControls(props: ImageProps) {
 function SettingsControls(props: ImageProps) {
   const { state } = props
   const config = useImageConfig(props.config)
-  const { i18n } = config
+
+  const editorStrings = useEditorStrings()
 
   return (
     <>
       <OverlayInput
-        label={i18n.src.label}
+        label={editorStrings.image.imageUrl}
         placeholder={
           !isTempFile(state.src.value)
-            ? i18n.src.placeholder.empty
+            ? editorStrings.image.placeholderEmpty
             : !state.src.value.failed
-            ? i18n.src.placeholder.uploading
-            : i18n.src.placeholder.failed
+            ? editorStrings.image.placeholderUploading
+            : editorStrings.image.placeholderFailed
         }
         value={!isTempFile(state.src.value) ? state.src.value : ''}
         disabled={isTempFile(state.src.value) && !state.src.value.failed}
@@ -221,9 +220,9 @@ function SettingsControls(props: ImageProps) {
                 )
               }
             }}
-            label={i18n.src.retryLabel}
+            label={editorStrings.image.retry}
           >
-            <Icon icon={faRedoAlt} />
+            <FaIcon icon={faRedoAlt} />
           </OverlayButton>
         ) : null}
         <Upload
@@ -235,15 +234,15 @@ function SettingsControls(props: ImageProps) {
         />
       </OverlayButtonWrapper>
       <OverlayTextarea
-        label={i18n.alt.label}
-        placeholder={i18n.alt.placeholder}
+        label={editorStrings.image.alt}
+        placeholder={editorStrings.image.altPlaceholder}
         value={state.alt.defined ? state.alt.value : ''}
         onChange={handleChange(props)('description')}
       />
 
       <OverlayInput
-        label={i18n.link.href.label}
-        placeholder={i18n.link.href.placeholder}
+        label={editorStrings.image.href}
+        placeholder={editorStrings.image.hrefPlaceholder}
         type="text"
         value={state.link.defined ? state.link.href.value : ''}
         onChange={handleChange(props)('href')}
@@ -251,15 +250,15 @@ function SettingsControls(props: ImageProps) {
       {state.link.defined && state.link.href.value ? (
         <>
           <OverlayCheckbox
-            label={i18n.link.openInNewTab.label}
+            label={editorStrings.image.openInNewTab}
             checked={state.link.defined ? state.link.openInNewTab.value : false}
             onChange={handleTargetChange(props)}
           />
         </>
       ) : null}
       <OverlayInput
-        label={i18n.maxWidth.label}
-        placeholder={i18n.maxWidth.placeholder}
+        label={editorStrings.image.maxWidth}
+        placeholder={editorStrings.image.maxWidthPlaceholder}
         type="number"
         value={state.maxWidth.defined ? state.maxWidth.value : ''}
         onChange={(event) => {

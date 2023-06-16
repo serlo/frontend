@@ -56,15 +56,7 @@ export function GeogebraRenderer({
 
   if (data === Error.NotExisting) {
     return (
-      <div
-        style={{
-          width: '100%',
-          textAlign: 'center',
-          border: '2px lightgrey solid',
-          borderRadius: '4px',
-          padding: '10px',
-        }}
-      >
+      <div className="w-full rounded-[4px] border-2 border-gray-300 p-3 text-center">
         <img
           src="https://cdn.geogebra.org/static/img/GeoGebra-logo.png"
           alt="GeoGebra"

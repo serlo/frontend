@@ -11,14 +11,27 @@ import {
   object,
   ObjectStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { MultimediaExplanationEditor } from './editor'
 
-/**
- * @param config - {@link MultimediaExplanationConfig | Plugin configuration}
- */
+const defaultConfig: MultimediaExplanationConfig = {
+  explanation: {
+    plugin: 'rows',
+    config: {
+      allowedPlugins: [
+        'text',
+        'highlight',
+        'anchor',
+        'equations',
+        'image',
+        'serloTable',
+      ],
+    },
+  },
+  plugins: ['image', 'video', 'geogebra'],
+}
+
 export function createMultimediaExplanationPlugin(
-  config: MultimediaExplanationConfig
+  config = defaultConfig
 ): EditorPlugin<MultimediaExplanationPluginState, MultimediaExplanationConfig> {
   const { plugins, explanation } = config
 
@@ -27,7 +40,7 @@ export function createMultimediaExplanationPlugin(
     config,
     state: object({
       explanation: child(explanation),
-      multimedia: child({ plugin: plugins[0].name }),
+      multimedia: child({ plugin: plugins[0] }),
       illustrating: boolean(true),
       width: number(50), // percent
     }),
@@ -35,9 +48,8 @@ export function createMultimediaExplanationPlugin(
 }
 
 export interface MultimediaExplanationConfig
-  extends Omit<MultimediaExplanationPluginConfig, 'features' | 'i18n'> {
+  extends Omit<MultimediaExplanationPluginConfig, 'features'> {
   explanation: ChildStateTypeConfig
-  i18n?: DeepPartial<MultimediaExplanationPluginConfig['i18n']>
   features?: {
     importance?: boolean
   }
@@ -51,21 +63,7 @@ export type MultimediaExplanationPluginState = ObjectStateType<{
 }>
 
 export interface MultimediaExplanationPluginConfig {
-  plugins: {
-    name: string
-    title: string
-  }[]
-  i18n: {
-    changeMultimediaType: string
-    reset: string
-    illustrating: {
-      label: string
-      values: {
-        illustrating: string
-        explaining: string
-      }
-    }
-  }
+  plugins: string[]
   features: {
     importance: boolean
   }

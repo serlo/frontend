@@ -1,4 +1,4 @@
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
+import { faGripVertical, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { flatten, values } from 'ramda'
 import {
   DragDropContext,
@@ -8,12 +8,12 @@ import {
 } from 'react-beautiful-dnd'
 
 import { ArticleProps, buttonClass } from '.'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
 
 interface ArticleRelatedContentProps {
   data: ArticleProps['state']['relatedContent']
@@ -26,10 +26,8 @@ export function ArticleRelatedContent({
   data,
   editable,
 }: ArticleRelatedContentProps) {
-  const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   const allItems = flatten(values(data))
   if (!editable && allItems.length === 0) return null
@@ -93,7 +91,7 @@ export function ArticleRelatedContent({
     function renderHeader() {
       return (
         <div className="mb-1">
-          <Icon icon={categoryIconMapping[category]} />{' '}
+          <FaIcon icon={categoryIconMapping[category]} />{' '}
           {getTranslatedType(strings, category)}
         </div>
       )
@@ -144,14 +142,14 @@ export function ArticleRelatedContent({
           onClick={() => data[category].remove(index)}
         >
           <EditorTooltip text={articleStrings.removeLabel} />
-          <Icon icon={faTrashAlt} aria-hidden="true" />
+          <FaIcon icon={faTrashAlt} aria-hidden="true" />
         </button>
         <button
           {...dragHandleProps}
           className={`${buttonClass} serlo-tooltip-trigger`}
         >
           <EditorTooltip text={articleStrings.dragLabel} />
-          <Icon icon={faGripVertical} aria-hidden="true" />
+          <FaIcon icon={faGripVertical} aria-hidden="true" />
         </button>
       </>
     )

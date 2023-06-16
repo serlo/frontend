@@ -1,8 +1,11 @@
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+
+import { FaIcon } from '@/components/fa-icon'
 import {
   HoverOverlayOld,
   HoverPosition,
 } from '@/serlo-editor/editor-ui/hover-overlay-old'
-import { faTrashAlt, Icon, styled } from '@/serlo-editor/ui'
+import { styled } from '@/serlo-editor/ui'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',
@@ -32,7 +35,7 @@ export function InlineSettings({
       <InlinePreview>{props.children}</InlinePreview>
       {props.onDelete ? (
         <ChangeButton onClick={props.onDelete}>
-          <Icon icon={faTrashAlt} />
+          <FaIcon icon={faTrashAlt} />
         </ChangeButton>
       ) : null}
     </HoverOverlayOld>

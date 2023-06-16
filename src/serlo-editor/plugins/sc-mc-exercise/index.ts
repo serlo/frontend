@@ -11,14 +11,20 @@ import {
   object,
   ObjectStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { ScMcExerciseEditor } from './editor'
 
-/**
- * @param config - {@link ScMcExerciseConfig | Plugin configuration}
- */
+export type ScMcExerciseProps = EditorPluginProps<
+  ScMcExercisePluginState,
+  ScMcExerciseConfig
+>
+
+const defaultConfig: ScMcExerciseConfig = {
+  content: { plugin: 'text' },
+  feedback: { plugin: 'text' },
+}
+
 export function createScMcExercisePlugin(
-  config: ScMcExerciseConfig
+  config = defaultConfig
 ): EditorPlugin<ScMcExercisePluginState, ScMcExerciseConfig> {
   const { content, feedback } = config
 
@@ -42,11 +48,9 @@ export function createScMcExercisePlugin(
   }
 }
 
-export interface ScMcExerciseConfig
-  extends Omit<ScMcExercisePluginConfig, 'i18n'> {
+export interface ScMcExerciseConfig {
   content: ChildStateTypeConfig
   feedback: ChildStateTypeConfig
-  i18n?: DeepPartial<ScMcExercisePluginConfig['i18n']>
 }
 
 export type ScMcExercisePluginState = ObjectStateType<{
@@ -59,26 +63,3 @@ export type ScMcExercisePluginState = ObjectStateType<{
     }>
   >
 }>
-
-export interface ScMcExercisePluginConfig {
-  i18n: {
-    types: { singleChoice: string; multipleChoice: string }
-    answer: {
-      label: string
-      addLabel: string
-      fallbackFeedback: { wrong: string }
-    }
-    feedback: { label: string }
-    globalFeedback: {
-      correct: string
-      missingCorrectAnswers: string
-      wrong: string
-    }
-    isSingleChoice: { label: string }
-  }
-}
-
-export type ScMcExerciseProps = EditorPluginProps<
-  ScMcExercisePluginState,
-  ScMcExerciseConfig
->

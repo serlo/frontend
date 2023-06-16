@@ -1,6 +1,6 @@
-import { editorContent, HeaderInput, uuid } from './common/common'
+import { editorContent, headerInputClasses, uuid } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -30,9 +30,7 @@ function TaxonomyTypeEditor(
   props: EditorPluginProps<typeof taxonomyTypeState>
 ) {
   const { term, description } = props.state
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <article>
@@ -40,7 +38,8 @@ function TaxonomyTypeEditor(
         <div className="page-header">
           <h1>
             {props.editable ? (
-              <HeaderInput
+              <input
+                className={headerInputClasses}
                 placeholder={editorStrings.taxonomy.title}
                 value={term.name.value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

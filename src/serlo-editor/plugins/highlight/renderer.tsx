@@ -12,6 +12,7 @@ import sql from 'react-syntax-highlighter/dist/cjs/languages/prism/sql'
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
 
 import { HighlightPluginConfig } from '.'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 SyntaxHighlighter.registerLanguage('java', java)
 SyntaxHighlighter.registerLanguage('javascript', javascript)
@@ -23,24 +24,30 @@ SyntaxHighlighter.registerLanguage('c', c)
 SyntaxHighlighter.registerLanguage('bash', bash)
 SyntaxHighlighter.registerLanguage('sql', sql)
 
-export function HighlightRenderer(props: HighlightRendererProps) {
-  return (
-    <SyntaxHighlighter
-      language={props.language}
-      showLineNumbers={props.showLineNumbers}
-      style={style as unknown}
-      customStyle={{
-        overflow: 'auto',
-      }}
-    >
-      {props.code || props.config.i18n.code.label}
-    </SyntaxHighlighter>
-  )
-}
-
 export interface HighlightRendererProps {
   config: HighlightPluginConfig
   code: string
   language: string
   showLineNumbers: boolean
+}
+
+export function HighlightRenderer({
+  language,
+  showLineNumbers,
+  code,
+}: HighlightRendererProps) {
+  const editorStrings = useEditorStrings()
+
+  return (
+    <SyntaxHighlighter
+      language={language}
+      showLineNumbers={showLineNumbers}
+      style={style as unknown}
+      customStyle={{
+        overflow: 'auto',
+      }}
+    >
+      {code || editorStrings.highlight.language}
+    </SyntaxHighlighter>
+  )
 }

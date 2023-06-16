@@ -18,5 +18,4 @@ export const styled =
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   (__styled.default?.svg ? __styled.default : _styled) as StyledInterface
 
-export * from './deep-partial'
 export * from './icon'

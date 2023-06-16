@@ -1,15 +1,10 @@
+import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { useState, useMemo, useRef } from 'react'
 
 import { DocumentEditorProps } from '../document-editor'
-import {
-  DeepPartial,
-  edtrClose,
-  EdtrIcon,
-  faCog,
-  Icon,
-  merge,
-  styled,
-} from '../ui'
+import { edtrClose, EdtrIcon, styled } from '../ui'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ToolbarProps {
   isFocused: boolean
@@ -97,9 +92,7 @@ const BorderlessOverlayButton = styled.button({
   minWidth: '0 !important',
 })
 
-export function createDefaultDocumentEditor(
-  config: DefaultDocumentEditorConfig = {}
-): React.ComponentType<DocumentEditorProps> {
+export function createDefaultDocumentEditor(): React.ComponentType<DocumentEditorProps> {
   return function DocumentEditor({
     focused,
     children,
@@ -114,17 +107,7 @@ export function createDefaultDocumentEditor(
     const [hasHover, setHasHover] = useState(false)
     const { OverlayButton, PluginToolbarOverlayButton } = PluginToolbar
 
-    const i18n = merge<DefaultDocumentEditorI18n>({
-      fallback: {
-        settings: {
-          buttonLabel: 'Settings',
-          modalTitle: 'Extended Settings',
-          modalCloseLabel: 'Close',
-        },
-      },
-      values: config.i18n || {},
-    })
-    const { modalTitle, modalCloseLabel } = i18n.settings
+    const editorStrings = useEditorStrings()
 
     const shouldShowSettings = showSettings()
     const renderSettingsContent = useMemo<typeof renderSettings>(() => {
@@ -132,13 +115,13 @@ export function createDefaultDocumentEditor(
         ? (children, { close }) => (
             <>
               <Header>
-                <H4>{modalTitle}</H4>
+                <H4>{editorStrings.edtrIo.extendedSettings}</H4>
                 <BorderlessOverlayButton
                   as={OverlayButton}
                   onClick={() => {
                     close()
                   }}
-                  label={modalCloseLabel}
+                  label={editorStrings.edtrIo.close}
                 >
                   <EdtrIcon icon={edtrClose} />
                 </BorderlessOverlayButton>
@@ -147,13 +130,8 @@ export function createDefaultDocumentEditor(
             </>
           )
         : undefined
-    }, [
-      OverlayButton,
-      renderSettings,
-      shouldShowSettings,
-      modalTitle,
-      modalCloseLabel,
-    ])
+    }, [OverlayButton, renderSettings, shouldShowSettings, editorStrings])
+
     const isFocused = focused && (showSettings() || showToolbar())
     const isHovered = hasHover && (showSettings() || showToolbar())
 
@@ -162,8 +140,8 @@ export function createDefaultDocumentEditor(
       <>
         {showSettings() ? (
           <PluginToolbarOverlayButton
-            label={i18n.settings.buttonLabel}
-            icon={<Icon icon={faCog} size="lg" />}
+            label={editorStrings.edtrIo.settings}
+            icon={<FaIcon icon={faCog} className="text-xl" />}
             renderContent={renderSettingsContent}
             contentRef={settingsRef}
           />
@@ -217,17 +195,5 @@ export function createDefaultDocumentEditor(
     function showToolbar(): boolean {
       return hasToolbar || renderToolbar !== undefined
     }
-  }
-}
-
-export interface DefaultDocumentEditorConfig {
-  i18n?: DeepPartial<DefaultDocumentEditorI18n>
-}
-
-export interface DefaultDocumentEditorI18n {
-  settings: {
-    buttonLabel: string
-    modalTitle: string
-    modalCloseLabel: string
   }
 }

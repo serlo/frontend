@@ -1,7 +1,6 @@
 import { TableProps } from '.'
 import { EditorTextarea } from '../../../editor-ui'
 import { styled } from '../../../ui'
-import { useTableConfig } from './config'
 import { TableRenderer } from './renderer'
 
 const Form = styled.form({
@@ -10,7 +9,6 @@ const Form = styled.form({
 
 export function TableEditor(props: TableProps) {
   const { focused, state } = props
-  const config = useTableConfig(props.config)
 
   return (
     <div>
@@ -19,7 +17,7 @@ export function TableEditor(props: TableProps) {
           <div>
             <EditorTextarea
               value={state.value}
-              placeholder={config.i18n.placeholder}
+              placeholder="Enter the table using Markdown syntax"
               name="markdown"
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                 state.set(e.target.value)

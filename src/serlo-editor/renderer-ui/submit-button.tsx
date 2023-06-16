@@ -1,4 +1,7 @@
-import { styled, Icon, faSmile, faCheckCircle } from '../ui'
+import { faSmile, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+
+import { styled } from '../ui'
+import { FaIcon } from '@/components/fa-icon'
 import { legacyEditorTheme } from '@/helper/colors'
 
 export enum ExerciseState {
@@ -50,12 +53,12 @@ export function SubmitButton({
     <SubmitButtonComponent exerciseState={exerciseState} onClick={onClick}>
       {exerciseState === ExerciseState.SolvedRight ? (
         <span>
-          <Icon icon={faSmile} />
+          <FaIcon icon={faSmile} />
           Stimmt!
         </span>
       ) : (
         <span>
-          <Icon icon={faCheckCircle} />
+          <FaIcon icon={faCheckCircle} />
           Stimmt’s?
         </span>
       )}

@@ -104,10 +104,7 @@ export function LicenseNotice({ data, minimal, type }: LicenseNoticeProps) {
             <FaIcon icon={faCreativeCommons} />
           ) : (
             <>
-              <span
-                className="relative mr-0.5 inline-block h-5 w-6 text-xl"
-                style={{ verticalAlign: 'sub' }}
-              >
+              <span className="relative mr-0.5 inline-block h-5 w-6 align-sub text-xl">
                 <FaIcon icon={faCreativeCommons} className="absolute" />
                 {!isCreativeCommons && (
                   <FaIcon

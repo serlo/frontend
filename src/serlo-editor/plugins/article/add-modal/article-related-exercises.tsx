@@ -3,8 +3,9 @@ import { gql } from 'graphql-request'
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { Injection } from '@/components/content/injection'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import {
   TaxonomyTermType,
@@ -13,7 +14,6 @@ import {
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { renderNested } from '@/schema/article-renderer'
-import { Icon } from '@/serlo-editor/ui'
 
 interface ArticleRelatedExercisesProps {
   exerciseFolderId: number
@@ -32,9 +32,7 @@ export function ArticleRelatedExercises({
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   const errorReturn = <p>Sorry, something went wrong.</p>
 
@@ -58,7 +56,7 @@ export function ArticleRelatedExercises({
         href={`/${exerciseFolderId}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
+        <FaIcon icon={getIconByTypename(TaxonomyTermType.ExerciseFolder)} />
         {strings.entities.exerciseFolder} {exerciseFolderId}
       </a>{' '}
       Preview:

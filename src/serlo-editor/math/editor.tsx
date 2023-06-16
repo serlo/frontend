@@ -1,15 +1,15 @@
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
 import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
-import { faQuestionCircle, Icon, merge } from '../ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
-import { MathEditorConfig } from './editor-config'
-import { MathEditorProps } from './editor-props'
 import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
   return {
@@ -29,6 +29,13 @@ const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
   }
 })
 
+const mathEditorTextareaStyle = {
+  color: 'black',
+  margin: 2,
+  width: '80vw',
+  maxWidth: 600,
+}
+
 interface MathEditorTextAreaProps
   extends Pick<
     MathEditorProps,
@@ -36,13 +43,6 @@ interface MathEditorTextAreaProps
   > {
   defaultValue: string
   onChange: (value: string) => void
-}
-
-const mathEditorTextareaStyle = {
-  color: 'black',
-  margin: 2,
-  width: '80vw',
-  maxWidth: 600,
 }
 
 const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
@@ -97,68 +97,33 @@ const KeySpan = styled.span({
   minWidth: 20,
 })
 
-/**
- * @param props - The {@link @edtr-io/math#MathEditorProps | math editor props}
- */
+export interface MathEditorProps {
+  autofocus?: boolean
+  state: string
+  inline?: boolean
+  readOnly?: boolean
+  visual?: boolean
+  disableBlock?: boolean
+  additionalContainerProps?: Record<string, unknown>
+  onEditorChange(visual: boolean): void
+  onInlineChange?(inline: boolean): void
+  onChange(state: string): void
+  onMoveOutRight?(): void
+  onMoveOutLeft?(): void
+  onDeleteOutRight?(): void
+  onDeleteOutLeft?(): void
+}
+
 export function MathEditor(props: MathEditorProps) {
   const anchorRef = createRef<HTMLDivElement>()
   const [helpOpen, setHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
 
+  const mathStrings = useEditorStrings().text.math
+
   const { visual, readOnly, state, disableBlock } = props
 
   const useVisualEditor = visual && !hasError
-
-  const config = merge<MathEditorConfig>({
-    fallback: {
-      i18n: {
-        placeholder: '[formula]',
-        displayBlockLabel: 'Display as block',
-        editors: {
-          visual: 'visual',
-          latex: 'LaTeX',
-          noVisualEditorAvailableMessage: 'Only LaTeX editor available',
-        },
-        helpText(KeySpan: React.ComponentType<{ children: React.ReactNode }>) {
-          return (
-            <>
-              Shortcuts:
-              <br />
-              <br />
-              <p>
-                Fraction: <KeySpan>/</KeySpan>
-              </p>
-              <p>
-                Superscript: <KeySpan>↑</KeySpan> or <KeySpan>^</KeySpan>
-              </p>
-              <p>
-                Subscript: <KeySpan>↓</KeySpan> oder <KeySpan>_</KeySpan>
-              </p>
-              <p>
-                π, α, β, γ: <KeySpan>pi</KeySpan>, <KeySpan>alpha</KeySpan>,{' '}
-                <KeySpan>beta</KeySpan>,<KeySpan>gamma</KeySpan>
-              </p>
-              <p>
-                ≤, ≥: <KeySpan>{'<='}</KeySpan>, <KeySpan>{'>='}</KeySpan>
-              </p>
-              <p>
-                Root: <KeySpan>\sqrt</KeySpan>, <KeySpan>\nthroot</KeySpan>
-              </p>
-              <p>
-                Math symbols: <KeySpan>{'\\<NAME>'}</KeySpan>, e.g.{' '}
-                <KeySpan>\neq</KeySpan> (≠), <KeySpan>\pm</KeySpan> (±), ...
-              </p>
-              <p>
-                Functions: <KeySpan>sin</KeySpan>, <KeySpan>cos</KeySpan>,{' '}
-                <KeySpan>ln</KeySpan>, ...
-              </p>
-            </>
-          )
-        },
-      },
-    },
-    values: props.config,
-  })
 
   return (
     <>
@@ -190,7 +155,42 @@ export function MathEditor(props: MathEditorProps) {
           },
         }}
       >
-        {config.i18n.helpText(KeySpan)}
+        <>
+          {mathStrings.shortcuts}:
+          <br />
+          <br />
+          <p>
+            {mathStrings.fraction}: <KeySpan>/</KeySpan>
+          </p>
+          <p>
+            {mathStrings.superscript}: <KeySpan>↑</KeySpan> {mathStrings.or}{' '}
+            <KeySpan>^</KeySpan>
+          </p>
+          <p>
+            {mathStrings.subscript}: <KeySpan>↓</KeySpan> {mathStrings.or}{' '}
+            <KeySpan>_</KeySpan>
+          </p>
+          <p>
+            π, α, β, γ: <KeySpan>pi</KeySpan>, <KeySpan>alpha</KeySpan>,{' '}
+            <KeySpan>beta</KeySpan>,<KeySpan>gamma</KeySpan>
+          </p>
+          <p>
+            ≤, ≥: <KeySpan>{'<='}</KeySpan>, <KeySpan>{'>='}</KeySpan>
+          </p>
+          <p>
+            {mathStrings.root}: <KeySpan>\sqrt</KeySpan>,{' '}
+            <KeySpan>\nthroot</KeySpan>
+          </p>
+          <p>
+            {mathStrings.mathSymbols}: <KeySpan>{'\\<NAME>'}</KeySpan>,{' '}
+            {mathStrings.eG} <KeySpan>\neq</KeySpan> (≠), <KeySpan>\pm</KeySpan>{' '}
+            (±), ...
+          </p>
+          <p>
+            {mathStrings.functions}: <KeySpan>sin</KeySpan>,{' '}
+            <KeySpan>cos</KeySpan>, <KeySpan>ln</KeySpan>, ...
+          </p>
+        </>
       </Modal>
       {renderChildren()}
     </>
@@ -201,11 +201,8 @@ export function MathEditor(props: MathEditorProps) {
       return state ? (
         <MathRenderer {...props} />
       ) : (
-        <span
-          style={{ backgroundColor: 'lightgrey' }}
-          {...props.additionalContainerProps}
-        >
-          {config.i18n.placeholder}
+        <span className="bg-gray-300" {...props.additionalContainerProps}>
+          {mathStrings.formula}
         </span>
       )
     }
@@ -246,15 +243,15 @@ export function MathEditor(props: MathEditorProps) {
                 }}
               >
                 <Option active={useVisualEditor} value="visual">
-                  {config.i18n.editors.visual}
+                  {mathStrings.visual}
                 </Option>
                 <Option active={!useVisualEditor} value="latex">
-                  {config.i18n.editors.latex}
+                  {mathStrings.latex}
                 </Option>
               </Dropdown>
               {!disableBlock && (
                 <InlineCheckbox
-                  label={config.i18n.displayBlockLabel}
+                  label={mathStrings.displayAsBlock}
                   checked={!props.inline}
                   onChange={(checked) => {
                     if (typeof props.onInlineChange === 'function') {
@@ -265,12 +262,12 @@ export function MathEditor(props: MathEditorProps) {
               )}
               {useVisualEditor && (
                 <Button onMouseDown={() => setHelpOpen(true)}>
-                  <Icon icon={faQuestionCircle} />
+                  <FaIcon icon={faQuestionCircle} />
                 </Button>
               )}
               {hasError && (
                 <>
-                  {config.i18n.editors.noVisualEditorAvailableMessage}
+                  {mathStrings.onlyLatex}
                   &nbsp;&nbsp;
                 </>
               )}

@@ -7,7 +7,7 @@ import { ArticleExercises } from './article-exercises'
 import { ArticleRelatedContent } from './article-related-content'
 import { ArticleSources } from './article-sources'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   child,
   EditorPlugin,
@@ -67,9 +67,7 @@ function ArticleEditor(props: ArticleProps) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const modalStrings = loggedInData.strings.editor.article.addModal
+  const modalStrings = useEditorStrings().article.addModal
 
   return (
     <>

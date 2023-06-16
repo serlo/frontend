@@ -1,12 +1,28 @@
 import * as R from 'ramda'
 import { Component, Fragment } from 'react'
 
-import { ScMcExercisePluginConfig, ScMcExercisePluginState } from '.'
+import { ScMcExercisePluginState } from '.'
 import { StateTypeReturnType } from '../../plugin'
-import { Feedback, styled, SubmitButton } from '../../renderer-ui'
+import { Feedback, SubmitButton } from '../../renderer-ui'
 import { ScMcAnswersRenderer } from './answers-renderer'
 import { ScMcExerciseChoiceRenderer } from './choice-renderer'
 import { ScMcRendererProps } from './renderer'
+
+export type ScMcRendererInteractiveProps = ScMcRendererProps & {
+  i18nWrong: string
+  i18nCorrect: string
+  getFeedback?: (params: {
+    mistakes: number
+    missingSolutions: number
+  }) => string | undefined
+  nextButtonStateAfterSubmit: (params: {
+    button: Button
+    answer: StateTypeReturnType<ScMcExercisePluginState>['answers'][0]
+    mistakes: number
+    missingSolutions: number
+  }) => Button
+  showFeedback?: boolean
+}
 
 enum ExerciseState {
   Default = 1,
@@ -60,7 +76,7 @@ export class ScMcRendererInteractive extends Component<
           exerciseState={this.state.exerciseState}
           onClick={this.submitAnswer}
         />
-        <div style={{ clear: 'both' }} />
+        <div className="clear-both" />
       </>
     )
   }
@@ -105,9 +121,7 @@ export class ScMcRendererInteractive extends Component<
     }
     return (
       <Feedback boxFree showOnLeft isTrueAnswer={answer.isCorrect.value}>
-        {answer.isCorrect.value
-          ? ''
-          : this.props.config.i18n.answer.fallbackFeedback.wrong}
+        {answer.isCorrect.value ? '' : this.props.i18nWrong}
       </Feedback>
     )
   }
@@ -206,29 +220,8 @@ export class ScMcRendererInteractive extends Component<
       return feedback
     }
 
-    if (mistakes === 0) {
-      return this.props.config.i18n.globalFeedback.correct
-    } else {
-      return this.props.config.i18n.globalFeedback.wrong
-    }
+    return mistakes === 0 ? this.props.i18nCorrect : this.props.i18nWrong
   }
-
-  private SubmitButton = styled.button({ float: 'right', margin: '10px 0px' })
-}
-
-export type ScMcRendererInteractiveProps = Omit<ScMcRendererProps, 'config'> & {
-  config: ScMcExercisePluginConfig
-  getFeedback?: (params: {
-    mistakes: number
-    missingSolutions: number
-  }) => string | undefined
-  nextButtonStateAfterSubmit: (params: {
-    button: Button
-    answer: StateTypeReturnType<ScMcExercisePluginState>['answers'][0]
-    mistakes: number
-    missingSolutions: number
-  }) => Button
-  showFeedback?: boolean
 }
 
 export interface ScMcRendererState {

@@ -9,14 +9,15 @@ import {
   list,
   ListStateType,
 } from '../../plugin'
-import { DeepPartial } from '../../ui'
 import { RowsEditor } from './components/rows-editor'
 
-/**
- * @param config - {@link RowsConfig | Plugin configuration}
- */
+const defaultConfig: RowsConfig = {
+  content: { plugin: 'text' },
+  parentType: 'root',
+}
+
 export function createRowsPlugin(
-  config: RowsConfig
+  config = defaultConfig
 ): EditorPlugin<RowsPluginState, RowsConfig> {
   const { content } = config
 
@@ -48,9 +49,8 @@ export function createRowsPlugin(
   }
 }
 
-export interface RowsConfig extends Omit<RowsPluginConfig, 'i18n' | 'theme'> {
+export interface RowsConfig extends Omit<RowsPluginConfig, 'theme'> {
   content: ChildStateTypeConfig
-  i18n?: DeepPartial<RowsPluginConfig['i18n']>
 }
 
 export type RowsPluginState = ListStateType<ChildStateType>
@@ -58,29 +58,16 @@ export type RowsPluginState = ListStateType<ChildStateType>
 export interface RegistryPlugin {
   name: string
   title?: string
-  icon?: React.ComponentType
+  icon?: JSX.Element
   description?: string
 }
 
 export interface RowsPluginConfig {
-  plugins: RegistryPlugin[]
-  i18n: {
-    menu: {
-      searchPlaceholder: string
-    }
-    settings: {
-      duplicateLabel: string
-      removeLabel: string
-      closeLabel: string
-    }
-    toolbar: {
-      dragLabel: string
-    }
-    addLabel: string
-  }
+  allowedPlugins?: string[]
+  parentType: string
 }
 
 export type RowsProps = EditorPluginProps<RowsPluginState, RowsConfig>
 
-export * from './registry-context'
+export * from './allowed-child-plugins-context'
 export * from './store'

@@ -1,6 +1,4 @@
-import { BoxRenderer } from './renderer'
-import type { LoggedInData } from '@/data-types'
-import { getPluginRegistry } from '@/serlo-editor-integration/get-plugin-registry'
+import { BoxEditor } from './editor'
 import {
   child,
   EditorPlugin,
@@ -9,12 +7,7 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 
-export function createBoxState(
-  editorStrings: LoggedInData['strings']['editor'],
-  allowPluginsWithin: string[]
-) {
-  const plugins = getPluginRegistry('box', editorStrings, allowPluginsWithin)
-
+export function createBoxState(allowedPlugins: string[]) {
   return object({
     type: string(''),
     title: child({
@@ -28,7 +21,7 @@ export function createBoxState(
     content: child({
       plugin: 'rows',
       config: {
-        plugins,
+        allowedPlugins,
       },
     }),
   })
@@ -36,24 +29,25 @@ export function createBoxState(
 
 export type BoxPluginState = ReturnType<typeof createBoxState>
 export type BoxProps = EditorPluginProps<BoxPluginState>
+export interface BoxConfig {
+  allowedPlugins?: string[]
+}
+
+const defaultAllowedPlugins = [
+  'text',
+  'image',
+  'equations',
+  'multimedia',
+  'serloTable',
+  'highlight',
+]
 
 export function createBoxPlugin({
-  editorStrings,
-  allowPluginsWithin = [
-    'text',
-    'image',
-    'equations',
-    'multimedia',
-    'serloTable',
-    'highlight',
-  ],
-}: {
-  editorStrings: LoggedInData['strings']['editor']
-  allowPluginsWithin?: string[] // Used in https://github.com/serlo/serlo-editor-for-edusharing
+  allowedPlugins = defaultAllowedPlugins,
 }): EditorPlugin<BoxPluginState> {
   return {
-    Component: BoxRenderer,
+    Component: BoxEditor,
+    state: createBoxState(allowedPlugins),
     config: {},
-    state: createBoxState(editorStrings, allowPluginsWithin),
   }
 }

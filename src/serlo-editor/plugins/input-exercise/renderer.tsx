@@ -5,7 +5,8 @@ import { InputExerciseProps, InputExerciseType } from '.'
 import { styled } from '../../editor-ui'
 import { Feedback, SubmitButton } from '../../renderer-ui'
 import { store, selectIsDocumentEmpty } from '../../store'
-import { useInputExerciseConfig } from './config'
+import { useInstanceData } from '@/contexts/instance-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 
 enum ExerciseState {
@@ -30,13 +31,14 @@ const InputExerciseField = styled.input({
 
 export function InputExerciseRenderer(props: InputExerciseProps) {
   const { state } = props
-  const config = useInputExerciseConfig(props.config)
-  const { i18n } = config
   const [feedbackIndex, setFeedbackIndex] = useState<number>(-1)
   const [feedbackVisible, setFeedbackVisible] = useState<boolean>()
   const [exerciseState, setExerciseState] = useState<ExerciseState>(
     ExerciseState.Default
   )
+  const editorStrings = useEditorStrings()
+  const { strings } = useInstanceData()
+
   const input = createRef<HTMLInputElement>()
   const handleWrongAnswer = () => {
     setTimeout(() => {
@@ -99,16 +101,12 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
             }}
             data-type={state.type.value}
             type="text"
-            placeholder={i18n.inputPlaceholder}
+            placeholder={editorStrings.inputExercise.yourSolution}
             ref={input}
           />
           {state.unit.value}
         </InputContainer>
-        <div
-          style={{
-            clear: 'both',
-          }}
-        />
+        <div className="clear-both" />
 
         {feedbackVisible ? (
           feedbackIndex > -1 ? (
@@ -121,17 +119,17 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
                 state.answers[feedbackIndex].feedback.id
               )
                 ? state.answers[feedbackIndex].isCorrect.value
-                  ? i18n.fallbackFeedback.correct
-                  : i18n.fallbackFeedback.wrong
+                  ? strings.content.exercises.correct
+                  : strings.content.exercises.wrong
                 : state.answers[feedbackIndex].feedback.render()}
             </Feedback>
           ) : (
-            <Feedback boxFree>{i18n.fallbackFeedback.wrong}</Feedback>
+            <Feedback boxFree>{strings.content.exercises.wrong}</Feedback>
           )
         ) : null}
         <div>
           <SubmitButton exerciseState={exerciseState} />
-          <div style={{ clear: 'both' }} />
+          <div className="clear-both" />
         </div>
       </form>
     </div>

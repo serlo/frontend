@@ -12,7 +12,7 @@ import {
 export function useCanDrop(
   id: string,
   draggingAbove: boolean,
-  allowedPlugins: string[]
+  allowedPlugins: string[] | undefined
 ) {
   return function (dragId?: string) {
     return (
@@ -24,6 +24,7 @@ export function useCanDrop(
   }
 
   function isAllowedPlugin(dragId: string) {
+    if (!allowedPlugins) return true
     const doc = selectDocument(store.getState(), dragId)
     return doc && allowedPlugins.includes(doc.plugin)
   }

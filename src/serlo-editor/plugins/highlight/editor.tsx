@@ -1,15 +1,19 @@
 import { useState } from 'react'
 
 import { HighlightProps } from '.'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const languages = ['text', 'c', 'javascript', 'jsx', 'markup', 'java', 'python']
 
 export function HighlightEditor(props: HighlightProps) {
   const { config, state, focused, editable } = props
-  const { i18n, Renderer } = config
+  const { Renderer } = config
 
   const edit = focused && editable
   const [throttledEdit, setEditThrottled] = useState(edit)
+
+  const editorStrings = useEditorStrings()
+
   if (edit !== throttledEdit) {
     if (!edit) {
       setTimeout(() => {
@@ -25,7 +29,7 @@ export function HighlightEditor(props: HighlightProps) {
       <textarea
         value={state.code.value}
         name="text"
-        placeholder={i18n.code.placeholder}
+        placeholder={editorStrings.highlight.enterHere}
         spellCheck={false}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           state.code.set(e.target.value)
@@ -67,7 +71,7 @@ export function HighlightEditor(props: HighlightProps) {
           </select>
         </label>
         <label className="cursor-pointer">
-          {i18n.showLineNumbers.label}:{' '}
+          {editorStrings.highlight.showLineNumbers}:{' '}
           <input
             type="checkbox"
             onChange={() => {

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { editorContent, entity, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
 import { ExpandableBox } from '@/serlo-editor/renderer-ui'
@@ -32,11 +32,10 @@ export const textSolutionTypePlugin: EditorPlugin<
 }
 
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
-  const loggedInData = useLoggedInData()
+  const editorStrings = useEditorStrings()
+
   const renderTitle = useCallback(
     (collapsed: boolean) => {
-      if (!loggedInData) return
-      const editorStrings = loggedInData.strings.editor
       return (
         <>
           {collapsed
@@ -45,7 +44,7 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
         </>
       )
     },
-    [loggedInData]
+    [editorStrings]
   )
 
   return (

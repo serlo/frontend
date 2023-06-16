@@ -1,6 +1,11 @@
-import { editorContent, HeaderInput, license, uuid } from './common/common'
+import {
+  editorContent,
+  headerInputClasses,
+  license,
+  uuid,
+} from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -23,9 +28,7 @@ export const pageTypePlugin: EditorPlugin<typeof pageTypeState> = {
 
 function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
   const { title, content } = props.state
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <article>
@@ -33,7 +36,8 @@ function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
         <div className="page-header">
           <h1>
             {props.editable ? (
-              <HeaderInput
+              <input
+                className={headerInputClasses}
                 placeholder={editorStrings.page.title}
                 value={title.value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

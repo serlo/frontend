@@ -1,103 +1,4 @@
-/* eslint-disable import/no-internal-modules */
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import {
-  FontAwesomeIcon,
-  FontAwesomeIconProps,
-} from '@fortawesome/react-fontawesome'
-import * as R from 'ramda'
-import { ComponentType } from 'react'
-import styled from 'styled-components'
-
-export function Icon(props: FontAwesomeIconProps) {
-  const allowedProps = R.pick(
-    [
-      'icon',
-      'mask',
-      'className',
-      'color',
-      'spin',
-      'pulse',
-      'border',
-      'fixedWidth',
-      'inverse',
-      'listItem',
-      'flip',
-      'size',
-      'pull',
-      'rotation',
-      'transform',
-      'symbol',
-      'style',
-      'tabIndex',
-      'title',
-    ],
-    props
-  )
-  return <FontAwesomeIcon {...allowedProps} />
-}
-
-export { faFileDownload } from '@fortawesome/free-solid-svg-icons/faFileDownload'
-export { faFileArchive } from '@fortawesome/free-solid-svg-icons/faFileArchive'
-export { faFileAudio } from '@fortawesome/free-solid-svg-icons/faFileAudio'
-export { faCheckCircle } from '@fortawesome/free-solid-svg-icons/faCheckCircle'
-export { faFileExcel } from '@fortawesome/free-solid-svg-icons/faFileExcel'
-export { faFileImage } from '@fortawesome/free-solid-svg-icons/faFileImage'
-export { faFilePdf } from '@fortawesome/free-solid-svg-icons/faFilePdf'
-export { faSmile } from '@fortawesome/free-solid-svg-icons/faSmile'
-export { faFileWord } from '@fortawesome/free-solid-svg-icons/faFileWord'
-export { faFileVideo } from '@fortawesome/free-solid-svg-icons/faFileVideo'
-export { faFilePowerpoint } from '@fortawesome/free-solid-svg-icons/faFilePowerpoint'
-
-export { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck'
-export { faCut } from '@fortawesome/free-solid-svg-icons/faCut'
-export { faCog } from '@fortawesome/free-solid-svg-icons/faCog'
-export { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy'
-export { faFileAlt } from '@fortawesome/free-solid-svg-icons/faFileAlt'
-export { faImages } from '@fortawesome/free-solid-svg-icons/faImages'
-export { faLink } from '@fortawesome/free-solid-svg-icons/faLink'
-export { faMinus } from '@fortawesome/free-solid-svg-icons/faMinus'
-export { faPaste } from '@fortawesome/free-solid-svg-icons/faPaste'
-export { faPencilAlt } from '@fortawesome/free-solid-svg-icons/faPencilAlt'
-export { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus'
-export { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
-export { faTable } from '@fortawesome/free-solid-svg-icons/faTable'
-export { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes'
-export { faTrashAlt } from '@fortawesome/free-solid-svg-icons/faTrashAlt'
-export { faFilm } from '@fortawesome/free-solid-svg-icons/faFilm'
-export { faCaretSquareUp } from '@fortawesome/free-solid-svg-icons/faCaretSquareUp'
-export { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons/faCaretSquareDown'
-export { faSortUp } from '@fortawesome/free-solid-svg-icons/faSortUp'
-export { faSortDown } from '@fortawesome/free-solid-svg-icons/faSortDown'
-export { faToolbox } from '@fortawesome/free-solid-svg-icons/faToolbox'
-export { faEllipsisH } from '@fortawesome/free-solid-svg-icons/faEllipsisH'
-export { faSearch } from '@fortawesome/free-solid-svg-icons/faSearch'
-export { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons/faCloudUploadAlt'
-export { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
-export { faQuoteRight } from '@fortawesome/free-solid-svg-icons/faQuoteRight'
-export { faEquals } from '@fortawesome/free-solid-svg-icons/faEquals'
-export { faCubes } from '@fortawesome/free-solid-svg-icons/faCubes'
-export { faCode } from '@fortawesome/free-solid-svg-icons/faCode'
-export { faLightbulb } from '@fortawesome/free-solid-svg-icons/faLightbulb'
-export { faKeyboard } from '@fortawesome/free-solid-svg-icons/faKeyboard'
-export { faDotCircle } from '@fortawesome/free-solid-svg-icons/faDotCircle'
-export { faCheckSquare } from '@fortawesome/free-solid-svg-icons/faCheckSquare'
-export { faParagraph } from '@fortawesome/free-solid-svg-icons/faParagraph'
-export { faRedoAlt } from '@fortawesome/free-solid-svg-icons/faRedoAlt'
-export { faRandom } from '@fortawesome/free-solid-svg-icons/faRandom'
-export { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons/faExternalLinkAlt'
-export { faNewspaper } from '@fortawesome/free-solid-svg-icons/faNewspaper'
-
-export function createIcon(i: IconDefinition): ComponentType {
-  return function I() {
-    return <Icon icon={i} size="4x" />
-  }
-}
-
-const EdtrSVG = styled.svg({
-  display: 'inline-block',
-  verticalAlign: 'middle',
-  overflow: 'hidden',
-})
+import clsx from 'clsx'
 
 export interface EdtrIconProps {
   icon: string
@@ -106,9 +7,14 @@ export interface EdtrIconProps {
 
 export function EdtrIcon({ icon, className }: EdtrIconProps) {
   return (
-    <EdtrSVG width="24" height="24" viewBox="0 0 24 24" className={className}>
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      className={clsx('inline-block overflow-hidden align-middle', className)}
+    >
       <path fill="currentcolor" d={icon} />
-    </EdtrSVG>
+    </svg>
   )
 }
 

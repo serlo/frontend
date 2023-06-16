@@ -8,9 +8,6 @@ import {
   PluginProps,
 } from './internal-plugin-state'
 
-/**
- * @param params - The params
- */
 export function child<K extends string, S = unknown>(
   params: ChildStateTypeConfig
 ): ChildStateType<K, S> {

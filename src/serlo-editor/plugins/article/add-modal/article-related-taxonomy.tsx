@@ -1,16 +1,17 @@
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
+import { FaIcon } from '@/components/fa-icon'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
-import { faSearch, Icon } from '@/serlo-editor/ui'
 
 interface ArticleRelatedTaxonomyProps {
   addEntry: (id: number, typename: UuidWithRevType, title?: string) => void
@@ -27,9 +28,7 @@ export function ArticleRelatedTaxonomy({
   const { data, error } = useFetchParentTaxonomy(entityId)
 
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
   if (!dataAndTerm) {
@@ -55,7 +54,7 @@ export function ArticleRelatedTaxonomy({
         href={`/${term.id}`}
         rel="noreferrer"
       >
-        <Icon icon={getIconByTypename(UuidType.TaxonomyTerm)} /> {term.name}
+        <FaIcon icon={getIconByTypename(UuidType.TaxonomyTerm)} /> {term.name}
       </a>
       <div className="mt-4 flex flex-wrap">
         {Object.entries(categorisedData).map(([typename, categoryData]) => {
@@ -72,7 +71,7 @@ export function ArticleRelatedTaxonomy({
     return (
       <div className="mr-4 max-w-[30%] py-2" key={typename}>
         <b className="mb-2 block">
-          <Icon icon={getIconByTypename(typename)} />{' '}
+          <FaIcon icon={getIconByTypename(typename)} />{' '}
           {isTax
             ? strings.entities.exerciseFolder
             : strings.categories[getCategoryByTypename(typename)]}
@@ -114,7 +113,7 @@ export function ArticleRelatedTaxonomy({
             }}
             title="Preview"
           >
-            <Icon icon={faSearch} />
+            <FaIcon icon={faSearch} />
           </button>
         ) : null}
         <SerloAddButton

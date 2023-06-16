@@ -19,7 +19,8 @@ import {
   TransformTd,
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   HotKeys,
   PreferenceContext,
@@ -39,7 +40,7 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
-import { edtrDragHandle, EdtrIcon, Icon, styled } from '@/serlo-editor/ui'
+import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 enum StepSegment {
   Left = 0,
@@ -110,9 +111,7 @@ export function EquationsEditor(props: EquationsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (!nestedFocus) return <EquationsRenderer {...props} />
 
@@ -221,7 +220,7 @@ export function EquationsEditor(props: EquationsProps) {
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
-                                    <Icon icon={faXmark} />
+                                    <FaIcon icon={faXmark} />
                                   </RemoveButton>
                                 </td>
                               </tr>
@@ -255,7 +254,7 @@ export function EquationsEditor(props: EquationsProps) {
                           ) : (
                             <td />
                           )}
-                          <td colSpan={2} style={{ minWidth: '10rem' }}>
+                          <td colSpan={2} className="min-w-[10rem]">
                             {step.explanation.render({
                               config: {
                                 placeholder:
@@ -297,7 +296,7 @@ export function EquationsEditor(props: EquationsProps) {
             })}
           </td>
         </FirstExplanationTr>
-        <tr style={{ height: '30px' }}>
+        <tr className="h-8">
           <td />
           <td />
           {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)
@@ -360,9 +359,7 @@ interface StepEditorProps {
 }
 
 function StepEditor(props: StepEditorProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
   const { gridFocus, row, state, transformationTarget } = props
 
   return (
@@ -485,7 +482,6 @@ function InlineMath(props: InlineMathProps) {
     <MathEditor
       readOnly={!focused}
       state={`${prefix}${state.value}${suffix}`}
-      config={{ i18n: { placeholder: props.placeholder } }}
       inline
       disableBlock
       visual={preferences.getKey(preferenceKey) === true}

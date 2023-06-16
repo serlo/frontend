@@ -1,5 +1,6 @@
 import {
   faGripVertical,
+  faTrashAlt,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -9,8 +10,8 @@ import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { faTrashAlt, Icon } from '@/serlo-editor/ui'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
@@ -18,9 +19,7 @@ interface ArticleSourcesProps {
 }
 
 export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   if (!editable) {
     if (sources.length === 0) return null
@@ -107,7 +106,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                           className="inline-block p-1"
                         >
                           <OpenInNewTab title={articleStrings.openInTab}>
-                            <Icon icon={faUpRightFromSquare} />
+                            <FaIcon icon={faUpRightFromSquare} />
                           </OpenInNewTab>
                         </a>
                       </InlineSettings>
@@ -129,14 +128,14 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                     className={buttonClass}
                     onClick={() => sources.remove(index)}
                   >
-                    <Icon icon={faTrashAlt} />
+                    <FaIcon icon={faTrashAlt} />
                   </button>
                   <button
                     title={articleStrings.dragLabel}
                     {...provided.dragHandleProps}
                     className={buttonClass}
                   >
-                    <Icon icon={faGripVertical} />
+                    <FaIcon icon={faGripVertical} />
                   </button>
                 </div>
               </li>

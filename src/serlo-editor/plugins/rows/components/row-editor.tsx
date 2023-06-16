@@ -3,20 +3,9 @@ import { useRef } from 'react'
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { RowRenderer } from './row-renderer'
 import { RowSeparator } from './row-separator'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
-import {
-  selectPlugins,
-  selectIsFocused,
-  useAppSelector,
-} from '@/serlo-editor/store'
-import { styled } from '@/serlo-editor/ui'
-
-const DropContainer = styled.div({
-  position: 'relative',
-  // increase dropZone
-  marginLeft: '-50px',
-  paddingLeft: '50px',
-})
+import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 interface RowEditorProps {
   config: RowsPluginConfig
@@ -38,11 +27,12 @@ export function RowEditor({
   isLast = false,
 }: RowEditorProps) {
   const focused = useAppSelector((state) => selectIsFocused(state, row.id))
-  const plugins = useAppSelector((state) => selectPlugins(state))
+  const plugins = usePlugins()
   const dropContainer = useRef<HTMLDivElement>(null)
 
   return (
-    <DropContainer key={row.id} ref={dropContainer}>
+    // bigger drop zone with padding hack
+    <div key={row.id} ref={dropContainer} className="relative -ml-12 pl-12">
       <RowRenderer
         config={config}
         row={row}
@@ -61,6 +51,6 @@ export function RowEditor({
         isLast={isLast}
         visuallyEmphasizeAddButton={visuallyEmphasizeAddButton}
       />
-    </DropContainer>
+    </div>
   )
 }

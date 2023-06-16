@@ -1,23 +1,24 @@
+import { faLink } from '@fortawesome/free-solid-svg-icons'
+
 import { AnchorProps } from '.'
 import { EditorInput } from '../../editor-ui'
-import { Icon, faLink, styled } from '../../ui'
-import { useAnchorConfig } from './config'
 import { AnchorRenderer } from './renderer'
-
-const StyledIcon = styled(Icon)({ marginRight: '5px' })
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const AnchorEditor = (props: AnchorProps) => {
-  const { editable, focused, state, config } = props
-  const { i18n } = useAnchorConfig(config)
+  const { editable, focused, state } = props
+
+  const editorStrings = useEditorStrings()
 
   return (
     <>
-      {editable ? <StyledIcon icon={faLink} /> : null}
+      {editable ? <FaIcon icon={faLink} className="mr-[5px]" /> : null}
       <AnchorRenderer {...props} />
       {focused ? (
         <EditorInput
-          label={i18n.label}
-          placeholder={i18n.placeholder}
+          label={editorStrings.anchor.identifier}
+          placeholder={editorStrings.anchor.anchorId}
           value={state.value}
           onChange={(e) => {
             state.set(e.target.value)

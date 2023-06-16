@@ -1,10 +1,15 @@
-import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCirclePlus,
+  faImages,
+  faParagraph,
+  faTrashCan,
+} from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import {
   child,
@@ -28,7 +33,6 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
-import { Icon, faImages, faParagraph } from '@/serlo-editor/ui'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [
@@ -91,9 +95,7 @@ function SerloTableEditor(props: SerloTableProps) {
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const tableStrings = loggedInData.strings.editor.serloTable
+  const tableStrings = useEditorStrings().serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =
@@ -306,7 +308,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
         >
-          <Icon icon={faCirclePlus} />
+          <FaIcon icon={faCirclePlus} />
         </button>
       )
     }
@@ -335,7 +337,7 @@ function SerloTableEditor(props: SerloTableProps) {
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
         >
-          <Icon icon={faTrashCan} />
+          <FaIcon icon={faTrashCan} />
         </button>
       )
     }

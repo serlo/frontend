@@ -1,12 +1,13 @@
 import { VideoProps } from '.'
 import { OverlayInput } from '../../core'
 import { EditorInput, EditorInlineSettings } from '../../editor-ui'
-import { useVideoConfig } from './config'
 import { VideoRenderer } from './renderer'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const VideoEditor = (props: VideoProps) => {
   const { editable, focused, state } = props
-  const config = useVideoConfig(props.config)
+
+  const editorStrings = useEditorStrings()
 
   if (!editable) return <VideoRenderer {...props} />
 
@@ -16,14 +17,14 @@ export const VideoEditor = (props: VideoProps) => {
       {props.renderIntoSettings(
         <>
           <OverlayInput
-            label={config.i18n.src.label}
+            label={editorStrings.video.videoUrl}
             value={state.src.value}
             onChange={(e) => {
               state.src.set(e.target.value)
             }}
           />
           <OverlayInput
-            label={config.i18n.alt.label}
+            label={editorStrings.video.description}
             value={state.alt.value}
             onChange={(e) => {
               state.alt.set(e.target.value)
@@ -34,7 +35,7 @@ export const VideoEditor = (props: VideoProps) => {
       {focused ? (
         <EditorInlineSettings>
           <EditorInput
-            label={config.i18n.src.label}
+            label={editorStrings.video.videoUrl}
             value={state.src.value}
             onChange={(e) => {
               state.src.set(e.target.value)

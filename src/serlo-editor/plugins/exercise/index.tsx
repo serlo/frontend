@@ -1,7 +1,9 @@
+import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { PropsWithChildren, useState } from 'react'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import { styled, AddButton } from '@/serlo-editor/editor-ui'
@@ -13,7 +15,6 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { store, selectDocument } from '@/serlo-editor/store'
-import { Icon, faRandom, faTrashAlt } from '@/serlo-editor/ui'
 
 const exerciseState = object({
   content: child({ plugin: 'rows' }),
@@ -109,9 +110,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
   const [showOptions, setShowOptions] = useState(false)
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
   return (
     <>
       <SemanticSection editable={editable}>{content.render()}</SemanticSection>
@@ -128,20 +127,20 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
           return (
             <>
               <div
-                style={{ position: 'relative' }}
+                className="relative"
                 onMouseLeave={() => {
                   setShowOptions(false)
                 }}
               >
                 <PluginToolbarButton
-                  icon={<Icon icon={faRandom} />}
+                  icon={<FaIcon icon={faRandom} />}
                   label={editorStrings.exercise.changeInteractive}
                   onClick={() => {
                     setShowOptions(true)
                   }}
                 />
                 <PluginToolbarButton
-                  icon={<Icon icon={faTrashAlt} />}
+                  icon={<FaIcon icon={faTrashAlt} />}
                   label={editorStrings.exercise.removeInteractive}
                   onClick={() => {
                     interactive.remove()

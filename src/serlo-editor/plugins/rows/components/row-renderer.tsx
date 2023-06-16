@@ -1,3 +1,4 @@
+import { faCopy, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
@@ -5,23 +6,18 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
+import { EditorPlugins } from '@/serlo-editor/core/editor'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   DocumentState,
-  selectPlugins,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
-import {
-  edtrDragHandle,
-  EdtrIcon,
-  faCopy,
-  faTrashAlt,
-  Icon,
-  styled,
-} from '@/serlo-editor/ui'
+import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 interface RowDragObject {
   id: string
@@ -39,22 +35,10 @@ const DragToolbarButton = styled(PluginToolbarButton)({
   },
 })
 
-const ButtonContainer = styled.div({
-  display: 'flex',
-})
-
-const Left = styled.div({
-  flex: 1,
-})
-
 const BorderlessOverlayButton = styled(OverlayButton)({
   border: 'none !important',
   padding: '0 !important',
   minWidth: '0 !important',
-})
-
-const GrayOut = styled.div({
-  opacity: 0.3,
 })
 
 const Inserted = styled.hr({
@@ -77,13 +61,16 @@ export function RowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: ReturnType<typeof selectPlugins>
+  plugins: EditorPlugins
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
+  const editorStrings = useEditorStrings()
+
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
+
   const allowedPlugins = useMemo(() => {
-    return config.plugins.map((plugin) => plugin.name)
+    return config.allowedPlugins ? config.allowedPlugins : undefined
   }, [config])
   const canDrop = useCanDrop(row.id, draggingAbove, allowedPlugins)
 
@@ -220,8 +207,8 @@ export function RowRenderer({
           <>
             {children}
             <hr />
-            <ButtonContainer>
-              <Left>
+            <div className="flex">
+              <div className="flex-[1]">
                 <BorderlessOverlayButton
                   onClick={() => {
                     const document = selectSerializedDocument(
@@ -232,29 +219,29 @@ export function RowRenderer({
                     rows.insert(index, document)
                     close()
                   }}
-                  label={config.i18n.settings.duplicateLabel}
+                  label={editorStrings.rows.duplicate}
                 >
-                  <Icon icon={faCopy} /> {config.i18n.settings.duplicateLabel}
+                  <FaIcon icon={faCopy} /> {editorStrings.rows.duplicate}
                 </BorderlessOverlayButton>
                 <BorderlessOverlayButton
                   onClick={() => {
                     rows.remove(index)
                     close()
                   }}
-                  label={config.i18n.settings.removeLabel}
+                  label={editorStrings.rows.remove}
                 >
-                  <Icon icon={faTrashAlt} /> {config.i18n.settings.removeLabel}
+                  <FaIcon icon={faTrashAlt} /> {editorStrings.rows.remove}
                 </BorderlessOverlayButton>
-              </Left>
+              </div>
               <div>
                 <BorderlessOverlayButton
                   onClick={() => {
                     close()
                   }}
-                  label={config.i18n.settings.closeLabel}
+                  label={editorStrings.rows.close}
                 />
               </div>
-            </ButtonContainer>
+            </div>
           </>
         )
       },
@@ -264,23 +251,14 @@ export function RowRenderer({
             <DragToolbarButton
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
-              label={config.i18n.toolbar.dragLabel}
+              label={editorStrings.rows.dragElement}
             />
             {children}
           </>
         )
       },
     }
-  }, [
-    config.i18n.settings.duplicateLabel,
-    config.i18n.settings.removeLabel,
-    config.i18n.settings.closeLabel,
-    config.i18n.toolbar.dragLabel,
-    rows,
-    row.id,
-    index,
-    drag,
-  ])
+  }, [editorStrings, rows, row.id, index, drag])
 
   setTimeout(() => {
     dragPreview(drop(dropContainer))
@@ -295,11 +273,11 @@ export function RowRenderer({
     <>
       {draggingAbove ? dropPreview : null}
       <div ref={container}>
-        {collectedDragProps.isDragging ? (
-          <GrayOut>{row.render(pluginProps)}</GrayOut>
-        ) : (
-          <div>{row.render(pluginProps)}</div>
-        )}
+        <div
+          className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
+        >
+          {row.render(pluginProps)}
+        </div>
       </div>
       {!draggingAbove ? dropPreview : null}
     </>

@@ -4,7 +4,8 @@ import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -14,7 +15,6 @@ import {
   optional,
 } from '@/serlo-editor/plugin'
 import { selectIsDocumentEmpty, useAppSelector } from '@/serlo-editor/store'
-import { Icon, styled } from '@/serlo-editor/ui'
 
 const solutionState = object({
   prerequisite: optional(
@@ -38,17 +38,13 @@ export const solutionPlugin: EditorPlugin<SolutionPluginState> = {
   config: {},
 }
 
-const OpenInNewTab = styled.span({ margin: '0 0 0 10px' })
-
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
   const hasStrategy = !useAppSelector((state) =>
     selectIsDocumentEmpty(state, strategy.id)
   )
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <>
@@ -115,9 +111,12 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   }
                   rel="noopener noreferrer"
                 >
-                  <OpenInNewTab title={editorStrings.solution.openArticleTab}>
-                    <Icon icon={faUpRightFromSquare} />
-                  </OpenInNewTab>
+                  <span
+                    title={editorStrings.solution.openArticleTab}
+                    className="ml-2.5"
+                  >
+                    <FaIcon icon={faUpRightFromSquare} />
+                  </span>
                 </a>
               </InlineSettings>
             ) : null}

@@ -1,25 +1,17 @@
+import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Injection } from '@/components/content/injection'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
 import { OverlayInput } from '@/serlo-editor/core'
 import {
   EditorInlineSettings,
   EditorInput,
-  styled,
   PreviewOverlay,
 } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
-import { Icon, faNewspaper } from '@/serlo-editor/ui'
-
-// this plugin is activly used in the serlo frontend
-
-/* global */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare const Common: {
-  trigger: (type: string, context?: HTMLDivElement | null) => void
-}
 
 export const injectionState = string()
 
@@ -31,83 +23,79 @@ export const injectionPlugin: EditorPlugin<InjectionPluginState> = {
   config: {},
 }
 
-export function InjectionRenderer(props: { src: string }) {
-  return <Injection href={props.src} renderNested={renderArticle} />
-}
-
-const PlaceholderWrapper = styled.div({
-  position: 'relative',
-  width: '100%',
-  textAlign: 'center',
-})
-
-function InjectionEditor(props: EditorPluginProps<typeof injectionState>) {
-  const [cache, setCache] = useState(props.state.value)
-  const [preview, setPreview] = useState(false)
+function InjectionEditor({
+  focused,
+  state,
+  editable,
+  autofocusRef,
+  renderIntoSettings,
+}: EditorPluginProps<InjectionPluginState>) {
+  const [cache, setCache] = useState(state.value)
+  const [isPreview, setIsPreview] = useState(false)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setCache(props.state.value)
+      setCache(state.value)
     }, 2000)
     return () => {
       clearTimeout(timeout)
     }
-  }, [props.focused, props.state.value])
+  }, [focused, state.value])
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const injectionsStrings = loggedInData.strings.editor.injection
+  const injectionsStrings = useEditorStrings().injection
 
-  if (!props.editable) {
-    return <InjectionRenderer src={props.state.value} />
+  if (!editable) {
+    return <Injection href={state.value} renderNested={renderArticle} />
   }
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    props.state.set(e.target.value.replace(/[^0-9.]/g, ''))
+    state.set(e.target.value.replace(/[^0-9.]/g, ''))
   }
 
   return (
     <>
       {cache ? (
         <PreviewOverlay
-          focused={props.focused || false}
+          focused={focused || false}
           onChange={(nextActive) => {
-            setPreview(nextActive)
+            setIsPreview(nextActive)
             if (nextActive) {
-              setCache(props.state.value)
+              setCache(state.value)
             }
           }}
         >
-          <InjectionRenderer src={cache} />
+          <Injection href={cache} renderNested={renderArticle} />
         </PreviewOverlay>
       ) : (
-        <PlaceholderWrapper>
-          <Icon icon={faNewspaper} size="5x" />
-        </PlaceholderWrapper>
+        <FaIcon
+          icon={faNewspaper}
+          className="relative w-full text-center text-[5rem] text-gray-400"
+        />
       )}
-      {props.focused && !preview ? (
+
+      {focused && !isPreview ? (
         <EditorInlineSettings>
           <EditorInput
             label={injectionsStrings.serloId}
             placeholder={injectionsStrings.placeholder}
-            value={props.state.value}
+            value={state.value}
             onChange={handleOnChange}
             inputMode="numeric"
             pattern="\d+"
             width="30%"
             inputWidth="100%"
-            ref={props.autofocusRef}
+            ref={autofocusRef}
           />
         </EditorInlineSettings>
       ) : null}
-      {props.renderIntoSettings(
+      {renderIntoSettings(
         <>
           <OverlayInput
             label={injectionsStrings.serloId}
             placeholder={injectionsStrings.placeholder}
             inputMode="numeric"
             pattern="\d+"
-            value={props.state.value}
+            value={state.value}
             onChange={handleOnChange}
           />
         </>

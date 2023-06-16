@@ -1,6 +1,9 @@
+import { faTable } from '@fortawesome/free-solid-svg-icons'
+
 import { TableProps } from '.'
-import { Icon, faTable, styled } from '../../../ui'
+import { styled } from '../../../ui'
 import { useTableConfig } from './config'
+import { FaIcon } from '@/components/fa-icon'
 
 const TableContainer = styled.div({
   overflowX: 'auto',
@@ -20,8 +23,6 @@ const TableContainer = styled.div({
   },
 })
 
-const StyledIcon = styled(Icon)({ marginRight: '5px' })
-
 export function TableRenderer(props: TableProps) {
   const { editable, state } = props
   const config = useTableConfig(props.config)
@@ -29,7 +30,7 @@ export function TableRenderer(props: TableProps) {
   return (
     <TableContainer>
       {editable && state.value.trim() === '' ? (
-        <StyledIcon icon={faTable} />
+        <FaIcon icon={faTable} className="mr-[5px]" />
       ) : null}
       <config.MarkdownRenderer markdown={state.value} />
     </TableContainer>

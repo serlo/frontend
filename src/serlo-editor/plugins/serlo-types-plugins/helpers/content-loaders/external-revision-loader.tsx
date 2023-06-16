@@ -5,9 +5,10 @@ import { useState } from 'react'
 
 import { endpoint } from '@/api/endpoint'
 import { UuidUrlInput } from '@/components/author/uuid-url-input'
+import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import {
   MainUuidQuery,
@@ -24,7 +25,6 @@ import {
 } from '@/serlo-editor-integration/editor-response-to-state'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
-import { Icon } from '@/serlo-editor/ui'
 
 export function ExternalRevisionLoader<T>({
   entityType,
@@ -35,10 +35,8 @@ export function ExternalRevisionLoader<T>({
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 
-  const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (isProduction) return null
 
@@ -51,7 +49,7 @@ export function ExternalRevisionLoader<T>({
     <div>
       <span onClick={() => setShowRevisions(true)}>
         <PluginToolbarButton
-          icon={<Icon icon={faFileImport} size="lg" />}
+          icon={<FaIcon icon={faFileImport} className="text-xl" />}
           label={editorStrings.edtrIo.importOther}
           className="p-0.5 pt-2"
         />

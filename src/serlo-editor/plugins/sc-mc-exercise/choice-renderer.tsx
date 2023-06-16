@@ -1,10 +1,9 @@
-import { ScMcExercisePluginConfig, ScMcExerciseProps } from '.'
+import { ScMcExerciseProps } from '.'
 import { CheckElement } from '../../editor-ui'
 import { styled } from '../../ui'
 import { colors } from '@/helper/colors'
 
 export interface ChoiceRendererProps {
-  config: ScMcExercisePluginConfig
   children: React.ReactNode
   index: number
   onClick?: (event: React.MouseEvent<Element>) => void
@@ -20,9 +19,9 @@ export function ScMcExerciseChoiceRenderer({
   onClick,
   showFeedback,
   selected,
-}: Omit<ScMcExerciseProps, 'config'> & ChoiceRendererProps) {
+}: ScMcExerciseProps & ChoiceRendererProps) {
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <CheckboxContainer>
         <CheckElement
           isRadio={state.isSingleChoice.value}

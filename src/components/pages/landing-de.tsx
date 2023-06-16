@@ -74,10 +74,7 @@ export function LandingDE({ data }: LandingDEProps) {
               <span className="whitespace-nowrap">frei lizenziert</span>
             </b>
             .{' '}
-            <span
-              className="serlo-underlined font-handwritten text-brand"
-              style={{ fontSize: '1.2em' }}
-            >
+            <span className="serlo-underlined font-handwritten text-[1.2em] text-brand">
               Für immer!
             </span>
           </p>
@@ -98,11 +95,10 @@ export function LandingDE({ data }: LandingDEProps) {
         <section className="mx-side mt-20 mb-20">
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
-            style={{ hyphens: 'auto' }}
             className={tw`
               mx-auto mt-7 max-w-2xl
-              text-center text-4xl
-              font-bold leading-cozy tracking-tight
+              text-center text-4xl font-bold
+              leading-cozy tracking-tight special-hyphens-auto
             `}
           >
             Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die

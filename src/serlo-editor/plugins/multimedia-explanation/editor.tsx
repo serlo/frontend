@@ -1,3 +1,4 @@
+import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
@@ -11,9 +12,11 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { styled, faRandom, Icon, faTrashAlt } from '../../ui'
+import { styled } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface MultimediaDocument {
   plugin: string
@@ -22,21 +25,6 @@ interface MultimediaDocument {
 
 const STEPS = 4
 const BREAKPOINT = 650
-
-const StyledResizable = styled(Resizable)({
-  padding: '5px',
-  position: 'relative',
-})
-
-const Clear = styled.div({
-  clear: 'both',
-})
-
-const Container = styled.div<{ hasFocus: boolean }>((props) => {
-  return {
-    border: props.hasFocus ? '2px solid #ccc' : '',
-  }
-})
 
 const InlineOptionsWrapper = styled.div({
   position: 'absolute',
@@ -60,6 +48,7 @@ function InlineOptions({ children }: { children: React.ReactNode }) {
     </InlineOptionsWrapper>
   )
 }
+
 const Option = styled.div({
   padding: '5px 10px',
   cursor: 'pointer',
@@ -69,7 +58,10 @@ const Option = styled.div({
     color: 'rgb(70, 155, 255)',
   },
 })
+
 export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
+  const multimediaStrings = useEditorStrings().multimedia
+
   const config = useMultimediaExplanationConfig(props.config)
 
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -110,6 +102,12 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
   }
   const [showOptions, setShowOptions] = useState(false)
 
+  function getPluginTitle(name: string) {
+    return Object.hasOwn(multimediaStrings, name)
+      ? multimediaStrings[name as keyof typeof multimediaStrings]
+      : name
+  }
+
   const pluginSelection = (
     <select
       value={multimediaDocument ? multimediaDocument.plugin : ''}
@@ -117,8 +115,8 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
     >
       {props.config.plugins.map((plugin) => {
         return (
-          <option key={plugin.name} value={plugin.name}>
-            {plugin.title}
+          <option key={plugin} value={plugin}>
+            {getPluginTitle(plugin)}
           </option>
         )
       })}
@@ -130,10 +128,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       <hr />
       {config.features.importance ? (
         <>
-          <div style={{ flex: 1 }}>
-            <strong>{config.i18n.illustrating.label}</strong>
+          <div className="flex-[1]">
+            <strong>{multimediaStrings.isIllustrating}</strong>
           </div>
-          <div style={{ flex: 1 }}>
+          <div className="flex-[1]">
             <select
               value={
                 props.state.illustrating.value ? 'illustrating' : 'explaining'
@@ -141,10 +139,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
               onChange={handleIllustratingChange}
             >
               <option value="illustrating">
-                {config.i18n.illustrating.values.illustrating}
+                {multimediaStrings.isIllustrating}
               </option>
               <option value="explaining">
-                {config.i18n.illustrating.values.explaining}
+                {multimediaStrings.isEssential}
               </option>
             </select>
           </div>
@@ -152,7 +150,7 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       ) : null}
       {props.config.plugins.length > 1 ? (
         <div>
-          <strong>{config.i18n.changeMultimediaType}</strong>
+          <strong>{multimediaStrings.changeType}</strong>
           {pluginSelection}
         </div>
       ) : null}
@@ -166,26 +164,26 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       return (
         <>
           <div
-            style={{ position: 'relative' }}
+            className="relative"
             onMouseLeave={() => {
               setShowOptions(false)
             }}
           >
             {props.config.plugins.length > 1 ? (
               <PluginToolbarButton
-                icon={<Icon icon={faRandom} />}
-                label={config.i18n.changeMultimediaType}
+                icon={<FaIcon icon={faRandom} />}
+                label={multimediaStrings.changeType}
                 onClick={() => {
                   setShowOptions(true)
                 }}
               />
             ) : null}
             <PluginToolbarButton
-              icon={<Icon icon={faTrashAlt} />}
-              label={config.i18n.reset}
+              icon={<FaIcon icon={faTrashAlt} />}
+              label={multimediaStrings.reset}
               onClick={() => {
                 props.state.multimedia.replace(
-                  multimediaDocument?.plugin ?? props.config.plugins[0].name
+                  multimediaDocument?.plugin ?? props.config.plugins[0]
                 )
               }}
             />
@@ -195,18 +193,18 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
                   .filter(
                     (plugin) =>
                       !multimediaDocument ||
-                      plugin.name !== multimediaDocument.plugin
+                      plugin !== multimediaDocument.plugin
                   )
                   .map((plugin, i) => {
                     return (
                       <Option
                         key={i}
                         onClick={() => {
-                          handleMultimediaChange(plugin.name)
+                          handleMultimediaChange(plugin)
                           setShowOptions(false)
                         }}
                       >
-                        {plugin.title}
+                        {getPluginTitle(plugin)}
                       </Option>
                     )
                   })}
@@ -233,15 +231,16 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
 
   return (
     <>
-      <Container
-        hasFocus={hasFocus}
+      <div
+        className={hasFocus ? 'border-2 border-gray-300' : undefined}
         ref={(el) => {
           if (!el) return
           setRowWidth(el.offsetWidth)
         }}
       >
         {props.state.illustrating.value ? (
-          <StyledResizable
+          <Resizable
+            className="relative p-[5px]"
             enabled={
               props.editable && hasFocus && props.state.illustrating.value
             }
@@ -255,13 +254,13 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
             floating="right"
           >
             {multimediaRendered}
-          </StyledResizable>
+          </Resizable>
         ) : (
           multimediaRendered
         )}
         {props.state.explanation.render()}
-        <Clear />
-      </Container>
+        <div className="clear-both" />
+      </div>
       {props.editable ? props.renderIntoSettings(multimediaSettings) : null}
     </>
   )

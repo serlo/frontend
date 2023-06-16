@@ -4,11 +4,6 @@ import TextareaAutosize, {
 } from 'react-textarea-autosize'
 
 import { IgnoreKeys } from '../core'
-import { styled } from '../ui'
-
-const StyledIgnoreKeys = styled(IgnoreKeys)({
-  width: '100%',
-})
 
 export interface EditorTextareaProps
   extends Omit<TextareaAutosizeProps, 'as' | 'ref'> {
@@ -21,7 +16,7 @@ export const EditorTextarea = forwardRef<
   EditorTextareaProps
 >(function EditorTextarea({ onMoveOutLeft, onMoveOutRight, ...props }, ref) {
   return (
-    <StyledIgnoreKeys except={['up', 'down']}>
+    <IgnoreKeys except={['up', 'down']} className="w-full">
       <TextareaAutosize
         {...props}
         style={{
@@ -75,6 +70,6 @@ export const EditorTextarea = forwardRef<
           }
         }}
       />
-    </StyledIgnoreKeys>
+    </IgnoreKeys>
   )
 })

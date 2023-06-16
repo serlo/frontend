@@ -2,14 +2,14 @@ import {
   editorContent,
   entity,
   serializedChild,
-  HeaderInput,
   OptionalChild,
   entityType,
+  headerInputClasses,
 } from './common/common'
 import { RevisionHistoryLoader } from './helpers/content-loaders/revision-history-loader'
 import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
@@ -38,9 +38,7 @@ export const courseTypePlugin: EditorPlugin<typeof courseTypeState> = {
 
 function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
   const { title, meta_description, 'course-page': children } = props.state
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <article>
@@ -61,7 +59,8 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       )}
       <h1>
         {props.editable ? (
-          <HeaderInput
+          <input
+            className={headerInputClasses}
             placeholder={editorStrings.course.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

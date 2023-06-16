@@ -1,16 +1,11 @@
+import clsx from 'clsx'
+
 import { RowsProps } from '..'
+import { AllowedChildPlugins } from '../allowed-child-plugins-context'
 import { useRowsConfig } from '../config'
-import { RegistryContext } from '../registry-context'
 import { RowEditor } from './row-editor'
 import { RowSeparator } from './row-separator'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
-import { styled } from '@/serlo-editor/ui'
-
-const ReadOnlyRow = styled.div({
-  marginBottom: '25px',
-  marginTop: '25px',
-  paddingLeft: '14px',
-})
 
 export function RowsEditor(props: RowsProps) {
   const config = useRowsConfig(props.config)
@@ -31,9 +26,11 @@ export function RowsEditor(props: RowsProps) {
   if (!props.editable) {
     return (
       <>
-        {props.state.map((row) => {
-          return <ReadOnlyRow key={row.id}>{row.render()}</ReadOnlyRow>
-        })}
+        {props.state.map((row) => (
+          <div key={row.id} className="my-[25px] pl-[14px]">
+            {row.render()}
+          </div>
+        ))}
       </>
     )
   }
@@ -54,13 +51,12 @@ export function RowsEditor(props: RowsProps) {
   const isDocumentEmpty = props.state.length === 0
 
   return (
-    <RegistryContext.Provider value={config.plugins}>
+    <AllowedChildPlugins.Provider value={config.allowedPlugins}>
       <div
-        style={{
-          position: 'relative',
-          marginTop: '25px',
-          marginBottom: visuallyEmphasizeLastAddButton ? '75px' : undefined,
-        }}
+        className={clsx(
+          'relative mt-[25px]',
+          visuallyEmphasizeLastAddButton ? 'mb-[75px]' : undefined
+        )}
       >
         <RowSeparator
           config={config}
@@ -95,6 +91,6 @@ export function RowsEditor(props: RowsProps) {
           )
         })}
       </div>
-    </RegistryContext.Provider>
+    </AllowedChildPlugins.Provider>
   )
 }
