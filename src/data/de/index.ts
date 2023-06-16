@@ -743,12 +743,12 @@ export const loggedInData = {
         headings: "Überschriften",
         link: 'Link (%ctrlOrCmd% + K)',
         linkOverlay: {
-          placeholder: 'https://… or /1234',
-          inputLabel: 'Paste or type a link',
-          edit: 'Edit Link',
-          remove: 'Remove Link',
-          customLink: 'Custom Link',
-          invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+          placeholder: "Suchbegriff oder \"/1234\"",
+          inputLabel: "Suche einen Inhalt oder füge einen Link ein",
+          edit: "Link bearbeiten",
+          remove: "Link entfernen",
+          customLink: "Eigener Link",
+          invalidLinkWarning: "Bitte gib einen gültigen Link ein, der anfängt mit \"https(s)://…\""
         },
         openInNewTab: "Öffne den Link in einem neuen Tab",
         orderedList: "Nummerierte Liste",
