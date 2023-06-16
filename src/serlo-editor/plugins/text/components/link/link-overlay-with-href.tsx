@@ -9,10 +9,10 @@ import clsx from 'clsx'
 import { TextEditorPluginConfig } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 import { QuickbarData } from '@/components/navigation/quickbar'
-import { EditorTooltip } from '@/serlo-editor-repo/editor-ui/editor-tooltip'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 export function LinkOverlayWithHref({
-  config,
   value,
   removeLink,
   setIsEditMode,
@@ -30,6 +30,7 @@ export function LinkOverlayWithHref({
       : undefined
   const entry = quickbarData?.find((entry) => entry.id === serloId)
   const isCustomLink = !serloId && !value.includes('serlo.org/')
+  const textStrings = useEditorStrings().text
 
   return (
     <div className="flex content-between items-center px-side py-2">
@@ -48,7 +49,7 @@ export function LinkOverlayWithHref({
         />
         {entry ? `${entry.title} (${value})` : value}
         <EditorTooltip
-          text={config.i18n.link.openInNewTabTitle}
+          text={textStrings.openInNewTab}
           className="!-ml-1 !pb-2"
         />
       </a>
@@ -57,16 +58,19 @@ export function LinkOverlayWithHref({
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
       >
         <FaIcon icon={faPencilAlt} />
-        <EditorTooltip text={config.i18n.link.edit} className="!-ml-2 !pb-2" />
+        <EditorTooltip
+          text={textStrings.linkOverlay.edit}
+          className="!-ml-2 !pb-2"
+        />
       </button>
       <button
         onClick={removeLink}
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
       >
         <FaIcon icon={faTrashAlt} />
-        <span className="sr-only">{config.i18n.link.remove}</span>
+        <span className="sr-only">{textStrings.linkOverlay.remove}</span>
         <EditorTooltip
-          text={config.i18n.link.remove}
+          text={textStrings.linkOverlay.remove}
           className="!-ml-2 !pb-2"
         />
       </button>

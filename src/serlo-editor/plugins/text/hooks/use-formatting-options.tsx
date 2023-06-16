@@ -117,8 +117,8 @@ const registeredMarkdownShortcuts = [
 
 export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   const { formattingOptions } = config
-  const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
+  const textStrings = useEditorStrings().text
 
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
@@ -135,19 +135,8 @@ export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-<<<<<<< HEAD:src/serlo-editor/plugins/text/hooks/use-formatting-options.tsx
-    () =>
-      createToolbarControls(
-        config,
-        editorStrings.text,
-        strings.keys.ctrl,
-        setIsLinkNewlyCreated
-      ),
-    [config, editorStrings.text, setIsLinkNewlyCreated, strings.keys.ctrl]
-=======
-    () => createToolbarControls(config),
-    [config]
->>>>>>> staging:src/serlo-editor-repo/plugin-text/hooks/use-formatting-options.tsx
+    () => createToolbarControls(config, textStrings, strings.keys.ctrl),
+    [config, strings, textStrings]
   )
 
   const handleHotkeys = useCallback(
@@ -220,19 +209,11 @@ export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   }
 }
 
-<<<<<<< HEAD:src/serlo-editor/plugins/text/hooks/use-formatting-options.tsx
 function createToolbarControls(
   { formattingOptions }: TextEditorPluginConfig,
   textStrings: LoggedInData['strings']['editor']['text'],
-  ctrlKey: string,
-  setIsLinkNewlyCreated: SetIsLinkNewlyCreated
+  ctrlKey: string
 ): ControlButton[] {
-=======
-function createToolbarControls({
-  i18n,
-  formattingOptions,
-}: TextEditorPluginConfig): ControlButton[] {
->>>>>>> staging:src/serlo-editor-repo/plugin-text/hooks/use-formatting-options.tsx
   const allFormattingOptions = [
     // Bold
     {

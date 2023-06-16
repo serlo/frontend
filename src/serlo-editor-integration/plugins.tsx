@@ -1,5 +1,6 @@
 import type { SerializedDocument } from './types/serialized-document'
 import { LoggedInData } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
 import type { EditorPlugin } from '@/serlo-editor/plugin'
 import { createBlockquotePlugin } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
@@ -63,8 +64,10 @@ type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
 
 export function createPlugins({
   editorStrings,
+  instance,
 }: {
   editorStrings: LoggedInData['strings']['editor']
+  instance: Instance
 }): Record<string, EditorPlugin<any, any>> &
   Record<PluginType, EditorPlugin<any, any>> {
   return {
@@ -105,7 +108,7 @@ export function createPlugins({
     solution: solutionPlugin,
     spoiler: createSpoilerPlugin({}),
     table: tablePlugin,
-    text: createTextPlugin(),
+    text: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
     video: videoPlugin,
 
     // Internal plugins for our content types

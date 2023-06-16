@@ -10,6 +10,7 @@ import { createPlugins } from './plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
+import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
@@ -54,6 +55,8 @@ export function SerloEditor({
   const userCanSkipReview = canDo(Entity.checkoutRevision)
   const [useStored, setUseStored] = useState(false)
 
+  const { lang } = useInstanceData()
+
   const loggedInData = useLoggedInData()
   if (!loggedInData)
     return (
@@ -64,7 +67,7 @@ export function SerloEditor({
 
   const editorStrings = loggedInData.strings.editor
 
-  const plugins = createPlugins({ editorStrings })
+  const plugins = createPlugins({ editorStrings, instance: lang })
 
   const DocumentEditor = createDefaultDocumentEditor()
 

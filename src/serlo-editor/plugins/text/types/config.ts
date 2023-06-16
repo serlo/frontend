@@ -11,6 +11,13 @@ export interface TextEditorConfig {
   placeholder?: TextEditorPluginConfig['placeholder']
   formattingOptions?: TextEditorFormattingOption[]
   noLinebreaks?: boolean
+  serloLinkSearch: boolean
+}
+export interface TextEditorPluginConfig {
+  placeholder: string
+  formattingOptions: TextEditorFormattingOption[]
+  noLinebreaks?: boolean
+  serloLinkSearch: boolean
 }
 
 export enum TextEditorFormattingOption {
@@ -23,10 +30,4 @@ export enum TextEditorFormattingOption {
   math = 'math',
   paragraphs = 'paragraphs',
   richText = 'richText',
-}
-
-export interface TextEditorPluginConfig {
-  placeholder: string
-  formattingOptions: TextEditorFormattingOption[]
-  noLinebreaks?: boolean
 }

@@ -6,9 +6,10 @@ import { EditModeResultEntry } from './edit-mode-result-entry'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useTextConfig } from '@/serlo-editor-repo/plugin-text/hooks/use-text-config'
-import { TextEditorPluginConfig } from '@/serlo-editor-repo/plugin-text/types'
+import { useTextConfig } from '@/serlo-editor/plugins/text/hooks/use-text-config'
+import { TextEditorPluginConfig } from '@/serlo-editor/plugins/text/types'
 
 // based on Quickbar, duplicates some code
 
@@ -32,6 +33,7 @@ export function LinkOverlayEditMode({
 
   const { serloLinkSearch } = useTextConfig(config)
   const { lang } = useInstanceData()
+  const overlayStrings = useEditorStrings().text.linkOverlay
 
   useEffect(() => {
     setQuery(value)
@@ -59,7 +61,7 @@ export function LinkOverlayEditMode({
     ) {
       setHref(cleanUrl)
     } else {
-      showToastNotice(config.i18n.link.invalidLinkWarning, 'warning', 5000)
+      showToastNotice(overlayStrings.invalidLinkWarning, 'warning', 5000)
     }
   }
 
@@ -89,9 +91,7 @@ export function LinkOverlayEditMode({
 
   return (
     <>
-      <label className="block px-side pt-4">
-        {config.i18n.link.inputLabel}
-      </label>
+      <label className="block px-side pt-4">{overlayStrings.inputLabel}</label>
       <div className="relative w-[27rem]">
         <EditModeInput
           query={query}
@@ -99,7 +99,7 @@ export function LinkOverlayEditMode({
           setQuery={setQuery}
           shouldFocus={shouldFocus}
           value={value}
-          placeholder={config.i18n.link.placeholder}
+          placeholder={overlayStrings.placeholder}
         />
       </div>
       {query ? (
@@ -124,7 +124,7 @@ export function LinkOverlayEditMode({
               selectedIndex={selectedIndex}
               chooseEntry={chooseEntry}
               title={query}
-              pathHeader={config.i18n.link.customLink}
+              pathHeader={overlayStrings.customLink}
               index={results.length}
               isCustomLink
             />

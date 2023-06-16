@@ -20,10 +20,8 @@ import type {
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
 
-const defaultConfig: TextEditorConfig = {}
-
 const createTextPlugin = (
-  config = defaultConfig
+  config: TextEditorConfig
 ): EditorPlugin<TextEditorState, TextEditorConfig> => ({
   Component: TextEditor,
   config,
