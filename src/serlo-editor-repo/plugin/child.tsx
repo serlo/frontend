@@ -1,5 +1,5 @@
-import * as R from 'ramda'
-import { generate } from 'shortid'
+import { mergeDeepRight } from 'ramda'
+import { v4 } from 'uuid'
 
 import { SubDocument } from '../core'
 import {
@@ -25,7 +25,7 @@ export function child<K extends string, S = unknown>(
         render: function Child(props: PluginProps = {}) {
           const pluginProps = {
             ...props,
-            config: R.mergeDeepRight(config || {}, props.config || {}),
+            config: mergeDeepRight(config || {}, props.config || {}),
           }
           return <SubDocument key={id} pluginProps={pluginProps} id={id} />
         },
@@ -38,12 +38,12 @@ export function child<K extends string, S = unknown>(
       }
     },
     createInitialState({ createDocument }) {
-      const id = generate()
+      const id = v4()
       createDocument({ id, plugin, state: initialState })
       return id
     },
     deserialize(serialized, { createDocument }) {
-      const id = generate()
+      const id = v4()
       createDocument({ id, ...serialized })
       return id
     },
