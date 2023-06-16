@@ -4,33 +4,30 @@ const roadmapData = [
   {
     title: 'Latest Releases',
     steps: [
-      'Table plugin',
-      'Math equations plugin',
-      'Highlighting box plugin',
-      'Improved plugin selection menu',
+      'Redesigned plugin selection, custom icons',
       'Helpful tooltips that open directly on hover',
-      'Integrate H5P elements in Serlo Editor content',
-      'Custom search to link to other Serlo entities',
+      'Integrate H5P exercises in Serlo Editor content',
+      'Feature to easily find and link Serlo content',
+      'Simple Autosave',
     ],
   },
   {
     title: 'Next up',
     steps: [
-      'Duplicate existing entities',
       'Redesigned plugin toolbar',
-      'Migrations from old to new versions of the Serlo Editor data format',
       'Accessibility improvements for pictures',
-      'Easily link to sections of any Serlo entity through URL',
+      'Import existing Serlo content',
+      'Directly link to sections in Serlo content',
     ],
   },
   {
     title: 'Soon',
     steps: [
-      'Differentiate between new paragraph and new lines',
-      'Add plugins within paragraphs',
-      'Improved focus management',
+      'Improve Image plugin, easier uploads',
       'Better keyboard navigation',
+      'Improved focus management',
       'Impact dashboard – supporting authors with usage data',
+      'Differentiate between new paragraph and new lines',
     ],
   },
   {
