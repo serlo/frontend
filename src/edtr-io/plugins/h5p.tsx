@@ -68,7 +68,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
 
         if (!h5pLibraryWhitelist.includes(mainLib)) {
           setError(
-            'Unerlaubter Inhaltstyp - nutze bitte nur die vier genannten Inhaltstypen'
+            'Unerlaubter Inhaltstyp - nutze bitte nur die oben genannten Inhaltstypen'
           )
           setMode('edit')
         } else {
