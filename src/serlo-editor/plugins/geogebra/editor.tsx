@@ -1,12 +1,12 @@
 import { GeogebraProps } from '.'
 import { EditorInput, EditorInlineSettings } from '../../editor-ui'
 import { GeogebraRenderer } from './renderer'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function GeogebraEditor(props: GeogebraProps) {
   const { focused, editable, state } = props
 
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (!editable) return <GeogebraRenderer {...props} />
 

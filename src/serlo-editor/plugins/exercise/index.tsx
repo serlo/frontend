@@ -3,7 +3,7 @@ import { PropsWithChildren, useState } from 'react'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { PluginToolbarButton } from '@/serlo-editor/core'
 import { styled, AddButton } from '@/serlo-editor/editor-ui'
@@ -110,9 +110,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
   const [showOptions, setShowOptions] = useState(false)
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
   return (
     <>
       <SemanticSection editable={editable}>{content.render()}</SemanticSection>

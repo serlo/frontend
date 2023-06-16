@@ -1,4 +1,4 @@
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors } from '@/helper/colors'
 import type { RegistryPlugin } from '@/serlo-editor/plugins/rows'
 import { styled } from '@/serlo-editor/ui'
@@ -41,7 +41,7 @@ export const Suggestions = ({
   onMouseDown,
   onMouseMove,
 }: SuggestionsProps) => {
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (options.length === 0) {
     return <div>{editorStrings.text.noItemsFound}</div>

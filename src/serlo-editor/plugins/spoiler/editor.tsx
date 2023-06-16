@@ -2,17 +2,14 @@ import { useCallback } from 'react'
 
 import { SpoilerProps } from '.'
 import { ExpandableBox } from '../../renderer-ui'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function SpoilerEditor(props: SpoilerProps) {
   const { state, editable, autofocusRef } = props
-  const loggedInData = useLoggedInData()
+  const editorStrings = useEditorStrings()
 
   const renderTitle = useCallback(
     (_collapsed: boolean) => {
-      if (!loggedInData) return null
-      const editorStrings = loggedInData.strings.editor
-
       return editable ? (
         <input
           onChange={(e) => state.title.set(e.target.value)}
@@ -25,7 +22,7 @@ export function SpoilerEditor(props: SpoilerProps) {
         <>{state.title.value}</>
       )
     },
-    [autofocusRef, editable, state.title, loggedInData]
+    [autofocusRef, editable, state.title, editorStrings]
   )
 
   return (

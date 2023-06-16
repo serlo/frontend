@@ -24,7 +24,7 @@ import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 
 const InputRow = styled.span({
@@ -53,7 +53,7 @@ export function ImageEditor(props: ImageProps) {
   const { editable, focused, state } = props
   const config = useImageConfig(props.config)
   usePendingFileUploader(state.src, config.upload)
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const captionIsEmpty =
     !state.caption.defined ||
@@ -123,7 +123,7 @@ export function ImageEditor(props: ImageProps) {
 
 function PrimaryControls(props: ImageProps) {
   const config = useImageConfig(props.config)
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
   const { src } = props.state
   return (
     <>
@@ -192,7 +192,7 @@ function SettingsControls(props: ImageProps) {
   const { state } = props
   const config = useImageConfig(props.config)
 
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <>

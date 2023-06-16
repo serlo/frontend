@@ -16,7 +16,7 @@ import { styled } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface MultimediaDocument {
   plugin: string
@@ -60,7 +60,7 @@ const Option = styled.div({
 })
 
 export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
-  const multimediaStrings = useLoggedInData()!.strings.editor.multimedia
+  const multimediaStrings = useEditorStrings().multimedia
 
   const config = useMultimediaExplanationConfig(props.config)
 

@@ -12,7 +12,7 @@ import sql from 'react-syntax-highlighter/dist/cjs/languages/prism/sql'
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
 
 import { HighlightPluginConfig } from '.'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 SyntaxHighlighter.registerLanguage('java', java)
 SyntaxHighlighter.registerLanguage('javascript', javascript)
@@ -36,9 +36,7 @@ export function HighlightRenderer({
   showLineNumbers,
   code,
 }: HighlightRendererProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <SyntaxHighlighter

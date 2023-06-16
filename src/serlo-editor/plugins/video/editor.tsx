@@ -2,12 +2,12 @@ import { VideoProps } from '.'
 import { OverlayInput } from '../../core'
 import { EditorInput, EditorInlineSettings } from '../../editor-ui'
 import { VideoRenderer } from './renderer'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const VideoEditor = (props: VideoProps) => {
   const { editable, focused, state } = props
 
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (!editable) return <VideoRenderer {...props} />
 

@@ -5,7 +5,7 @@ import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -44,9 +44,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
     selectIsDocumentEmpty(state, strategy.id)
   )
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <>

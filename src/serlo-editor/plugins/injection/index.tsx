@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 
 import { Injection } from '@/components/content/injection'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
 import { OverlayInput } from '@/serlo-editor/core'
 import {
@@ -42,7 +42,7 @@ function InjectionEditor({
     }
   }, [focused, state.value])
 
-  const injectionsStrings = useLoggedInData()!.strings.editor.injection
+  const injectionsStrings = useEditorStrings().injection
 
   if (!editable) {
     return <Injection href={state.value} renderNested={renderArticle} />

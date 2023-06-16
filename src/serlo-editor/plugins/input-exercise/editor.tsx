@@ -11,7 +11,7 @@ import {
 } from '../../editor-ui'
 import { selectFocused, useAppSelector } from '../../store'
 import { InputExerciseRenderer } from './renderer'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const AnswerTextfield = styled.input({
   border: 'none',
@@ -25,7 +25,7 @@ const TypeMenu = styled.div({
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused } = props
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =

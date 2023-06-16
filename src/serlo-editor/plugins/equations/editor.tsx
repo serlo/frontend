@@ -20,7 +20,7 @@ import {
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   HotKeys,
   PreferenceContext,
@@ -111,9 +111,7 @@ export function EquationsEditor(props: EquationsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (!nestedFocus) return <EquationsRenderer {...props} />
 
@@ -361,9 +359,7 @@ interface StepEditorProps {
 }
 
 function StepEditor(props: StepEditorProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
   const { gridFocus, row, state, transformationTarget } = props
 
   return (

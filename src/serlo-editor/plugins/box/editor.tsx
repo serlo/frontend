@@ -10,7 +10,7 @@ import {
 } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
 import { useAppSelector } from '@/serlo-editor/store'
 
@@ -28,9 +28,7 @@ export function BoxEditor(props: BoxProps) {
     selectIsEmptyRows(state, contentId)
   )
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (hasNoType) {
     return (

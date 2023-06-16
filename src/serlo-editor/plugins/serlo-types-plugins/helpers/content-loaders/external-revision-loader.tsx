@@ -8,7 +8,7 @@ import { UuidUrlInput } from '@/components/author/uuid-url-input'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import {
   MainUuidQuery,
@@ -35,10 +35,8 @@ export function ExternalRevisionLoader<T>({
 }) {
   const [showRevisions, setShowRevisions] = useState(false)
 
-  const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (isProduction) return null
 

@@ -7,7 +7,7 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
 import { EditorPlugins } from '@/serlo-editor/core/editor'
@@ -64,7 +64,7 @@ export function RowRenderer({
   plugins: EditorPlugins
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)

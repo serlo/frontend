@@ -10,7 +10,7 @@ import {
 import { ArticleProps, buttonClass } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
@@ -26,10 +26,8 @@ export function ArticleRelatedContent({
   data,
   editable,
 }: ArticleRelatedContentProps) {
-  const loggedInData = useLoggedInData()
   const { strings } = useInstanceData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   const allItems = flatten(values(data))
   if (!editable && allItems.length === 0) return null

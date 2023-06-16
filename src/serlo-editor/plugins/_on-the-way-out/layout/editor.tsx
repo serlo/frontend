@@ -1,5 +1,5 @@
 import { layoutState } from '.'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
 import { styled } from '@/serlo-editor/renderer-ui'
@@ -52,9 +52,8 @@ export const LayoutRenderer: React.FunctionComponent<
   }
 > = (props) => {
   const dispatch = useAppDispatch()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+
+  const editorStrings = useEditorStrings()
 
   return (
     <>

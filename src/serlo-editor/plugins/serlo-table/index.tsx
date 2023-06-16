@@ -9,7 +9,7 @@ import { KeyboardEvent } from 'react'
 
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import {
   child,
@@ -95,9 +95,7 @@ function SerloTableEditor(props: SerloTableProps) {
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const tableStrings = loggedInData.strings.editor.serloTable
+  const tableStrings = useEditorStrings().serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =

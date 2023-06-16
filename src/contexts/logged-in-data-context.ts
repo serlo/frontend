@@ -10,3 +10,11 @@ export function useLoggedInData() {
   const data = useContext(LoggedInDataContext)
   return data
 }
+
+export function useEditorStrings() {
+  const data = useContext(LoggedInDataContext)
+  if (!data) {
+    throw new Error('Attempt to use editorStrings outside of provider/editor!')
+  }
+  return data.strings.editor
+}
