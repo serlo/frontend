@@ -3,22 +3,34 @@ import { tw } from '@/helper/tw'
 const roadmapData = [
   {
     title: 'Latest Releases',
-    steps: ['Table plugin', 'Math equations plugin', 'Highlighting box plugin'],
+    steps: [
+      'Table plugin',
+      'Math equations plugin',
+      'Highlighting box plugin',
+      'Improved plugin selection menu',
+      'Helpful tooltips that open directly on hover',
+      'Integrate H5P elements in Serlo Editor content',
+      'Custom search to link to other Serlo entities',
+    ],
   },
   {
     title: 'Next up',
     steps: [
-      'Better rich text editing UX (Update Slate to 0.82) ',
-      'Improved plugin selection menu',
-      'Helpful tooltips that open directly on hover',
+      'Duplicate existing entities',
+      'Redesigned plugin toolbar',
+      'Migrations from old to new versions of the Serlo Editor data format',
+      'Accessibility improvements for pictures',
+      'Easily link to sections of any Serlo entity through URL',
     ],
   },
   {
     title: 'Soon',
     steps: [
-      'Integrate H5P elements in Serlo Editor content (new plugin)',
-      'Migration algorithm from old to new versions of the Serlo Editor data format',
-      'New data format for easy exchange  between different LMS',
+      'Differentiate between new paragraph and new lines',
+      'Add plugins within paragraphs',
+      'Improved focus management',
+      'Better keyboard navigation',
+      'Impact dashboard – supporting authors with usage data',
     ],
   },
   {
@@ -26,11 +38,9 @@ const roadmapData = [
     steps: [
       'Fill-in-the-gap exercise (new plugin)',
       'Drag & Drop exercise (new plugin)',
-      'Improved focus management',
       'Better support for LMS integrations',
       'Copy & Paste content across plugins',
       'Automated OER license management',
-      'Impact dashboard – supporting authors with usage data',
     ],
   },
 ]
