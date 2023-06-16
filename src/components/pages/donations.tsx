@@ -1,5 +1,4 @@
 import { faPaypal } from '@fortawesome/free-brands-svg-icons'
-import clsx from 'clsx'
 
 import { TestimonialDonationsPage } from '../content/donations-banner-experiment/testimonial-donations-page'
 import { FaIcon } from '../fa-icon'
@@ -7,6 +6,7 @@ import { HeadTags } from '../head-tags'
 import { PartnerList } from '../landing/rework/partner-list'
 import { PrivacyWrapper } from '@/components/content/privacy-wrapper'
 import { Logo } from '@/components/navigation/header/logo'
+import { tw } from '@/helper/tw'
 import { ExternalProvider } from '@/helper/use-consent'
 
 export function Donations() {
@@ -28,56 +28,54 @@ export function Donations() {
   return (
     <>
       <HeadTags data={{ title: 'Spenden für freie Bildung – Serlo.org' }} />
-      <header className="px-side lg:px-side-lg pt-6 text-center sm:text-left">
+      <header className="px-side pt-6 text-center sm:text-left lg:px-side-lg">
         <Logo />
       </header>
       <div
-        className={clsx(
-          'md:text-left md:max-w-[100vw] md:ml-0',
-          '-mt-12 text-center',
-          'text-gray-700'
-        )}
+        className={tw`
+          -mt-12 text-center text-gray-700
+          md:ml-0 md:max-w-[100vw]
+          md:text-left
+        `}
       >
         <section
-          className={clsx(
-            'mt-20 lg:mt-10 flex flex-col-reverse sm:flex-row-reverse',
-            'sm:text-left font-bold sm:mx-side'
-          )}
+          className={tw`
+            mt-20 flex flex-col-reverse font-bold sm:mx-side
+            sm:flex-row-reverse sm:text-left lg:mt-10
+          `}
         >
-          <div className="w-full px-2 mt-2 sm:mt-20 sm:ml-10">
+          <div className="mt-2 w-full px-2 sm:mt-20 sm:ml-10">
             <h1
-              className={clsx(
-                'text-5xl font-extrabold',
-                'tracking-tight leading-tight',
-                'max-w-md mt-3 mb-6 mx-auto sm:ml-0'
-              )}
+              className={tw`
+                mx-auto mt-3 mb-6 max-w-md
+                text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
+              `}
             >
               Deine Spende macht einen{' '}
-              <span className="!pr-0 pb-2 underlined">Unterschied</span>.
+              <span className="serlo-underlined !pr-0 pb-2">Unterschied</span>.
             </h1>
           </div>
           <aside className="sm:w-full">
             <img
               src="/_assets/img/donations-image.jpg"
               alt="Kind beim Lernen mit Serlo"
-              className={clsx(
-                'rounded-full object-cover object-center aspect-square',
-                'block max-w-[20rem] p-side mobile:mx-auto',
-                'sm:max-w-none sm:w-[23rem] sm:h-[23rem] sm:mx-0 sm:ml-auto'
-              )}
+              className={tw`
+                block aspect-square max-w-[20rem] rounded-full
+                object-cover object-center p-side mobile:mx-auto
+                sm:mx-0 sm:ml-auto sm:h-[23rem] sm:w-[23rem] sm:max-w-none
+              `}
             />
           </aside>
         </section>
         <div
-          className={clsx(
-            'mt-12',
-            'sm:mx-side-lg md:flex md:justify-evenly',
-            'lg:max-w-5xl lg:mx-auto'
-          )}
+          className={tw`
+            mt-12 sm:mx-side-lg md:flex md:justify-evenly
+            lg:mx-auto lg:max-w-5xl
+          `}
         >
-          <div className="max-w-2xl mx-auto">
+          <div className="mx-auto max-w-2xl">
             <section>
-              <p className="serlo-p special-hyphens-initial text-left">
+              <p className="serlo-p text-left special-hyphens-initial">
                 Fast eine halbe Million Kinder in der Sekundarstufe sind von
                 Armut betroffen und haben erhebliche Probleme in der Schule.{' '}
                 <b>Mit deiner Spende</b> leistest du einen wichtigen Beitrag,
@@ -86,7 +84,7 @@ export function Donations() {
                 <b>Spende jetzt einmalig oder regelmäßig!</b>
               </p>
             </section>
-            <section id="formular" className="mt-12 mx-side">
+            <section id="formular" className="mx-side mt-12">
               <PrivacyWrapper
                 type="twingle"
                 provider={ExternalProvider.Twingle}
@@ -102,18 +100,18 @@ export function Donations() {
           </div>
 
           <section
-            className={clsx(
-              'md:max-w-xs pt-6 md:pt-0',
-              'max-w-md mx-auto text-left px-side'
-            )}
+            className={tw`
+              mx-auto max-w-md px-side
+              pt-6 text-left md:max-w-xs md:pt-0
+            `}
           >
-            <h3 className="font-bold -mt-0.5 mb-5 text-xl">
+            <h3 className="-mt-0.5 mb-5 text-xl font-bold">
               Dein Ansprechpartner
             </h3>
-            <div className="mobile:flex mx-auto md:block md:mx-auto md:w-auto">
+            <div className="mx-auto mobile:flex md:mx-auto md:block md:w-auto">
               <p className="mobile:min-w-[10rem]">
                 <img
-                  className="rounded-full w-40 h-40 object-cover mb-7 mt-3 mx-auto -ml-1.5"
+                  className="mx-auto mb-7 mt-3 -ml-1.5 h-40 w-40 rounded-full object-cover"
                   src="/_assets/img/donations-contact.jpg"
                   alt="Ansprechpartner Wolfgang Schmid"
                 />
@@ -134,7 +132,7 @@ export function Donations() {
                 </p>
               </div>
             </div>
-            <p className="mt-4 md:mt-12 text-left lg:ml-0">
+            <p className="mt-4 text-left md:mt-12 lg:ml-0">
               <b>Transparenz</b>
               <br />
               Als gemeinnütziger Verein legen wir großen Wert auf Transparenz:
@@ -170,16 +168,16 @@ export function Donations() {
 
       <footer>
         <div
-          className={clsx(
-            'bg-brand-100 text-white p-7 px-side -mb-20 text-center pt-28 -mt-28'
-          )}
+          className={tw`
+            -mb-20 -mt-28 bg-brand-100 p-7 px-side pt-28 text-center text-white
+          `}
         >
-          <h3 className="text-truegray-700 font-bold mx-auto text-lg mb-8">
+          <h3 className="mx-auto mb-8 text-lg font-bold text-almost-black">
             Partner und Förderer
           </h3>
           <PartnerList />
         </div>
-        <div className="bg-white py-8 text-center text-md text-brand mb-[3.5rem] ">
+        <div className="text-md mb-[3.5rem] bg-white py-8 text-center text-brand ">
           <a className="hover:underline" href="/datenschutz" target="_blank">
             Datenschutz
           </a>
@@ -190,32 +188,14 @@ export function Donations() {
         </div>
       </footer>
       {renderFloatingBanner()}
-      <style jsx>{`
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
-
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-      `}</style>
     </>
   )
 
   function renderFloatingBanner() {
     return (
-      <aside className="fixed z-20 bottom-0 left-0 right-0 bg-brand text-center">
-        <p className="p-2.5 text-white leading-9">
-          <span className="hidden mobile:inline pl-4 mobile:ml-0">
+      <aside className="fixed bottom-0 left-0 right-0 z-20 bg-brand text-center">
+        <p className="p-2.5 leading-9 text-white">
+          <span className="hidden pl-4 mobile:ml-0 mobile:inline">
             <b className="hidden md:inline">Spendenkonto:</b>
             <span className="md:ml-4">
               <b>IBAN</b> DE98 4306 0967 8204 5906 00

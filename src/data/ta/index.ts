@@ -1,7 +1,6 @@
-import { Instance } from '@/fetcher/graphql-types/operations';
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data';
 export const instanceData = {
-  lang: Instance["Ta"],
+  lang: "ta",
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -12,7 +11,7 @@ export const instanceData = {
       login: "உள்நுழை",
       skipLinks: {
         sentence: 'Skip to %content% or %footer%',
-        content: 'content',
+        content: "உட்பொருள்",
         footer: 'footer'
       }
     },
@@ -33,7 +32,7 @@ export const instanceData = {
       courses: "வகுப்புப்புகள்",
       videos: "காணொளிகள்",
       applets: 'Applets',
-      folders: 'Folders',
+      folders: "கோப்புறைகள்",
       exercises: "பயிற்சிகள்",
       events: "நிகழ்வுகள்",
       unrevised: 'Unrevised',
@@ -45,10 +44,10 @@ export const instanceData = {
       article: "கட்டுரை",
       course: "வகுப்பு",
       coursePage: "வகுப்பு-பக்கம்",
-      event: 'Event',
-      exercise: 'Exercise',
-      exerciseGroup: "பயிற்சிப் பதிவுகள்",
-      topic: 'Folder',
+      event: "நிகழ்வு",
+      exercise: "பயிற்சிகள்",
+      exerciseGroup: "பயிற்சி கோப்புறை",
+      topic: "கோப்புறை",
       groupedExercise: 'Grouped Exercise',
       page: "பக்கம்",
       solution: "தீர்வு",
@@ -60,10 +59,10 @@ export const instanceData = {
       revision: "மீட்டல்",
       thread: 'Thread',
       threads: 'Threads',
-      subject: 'Subject',
+      subject: "பாடம்",
       userProfile: 'User Profile',
-      privacyPolicy: 'Privacy Policy',
-      content: 'Content'
+      privacyPolicy: "தனியுரிமைக் கொள்கை",
+      content: "உட்பொருள்"
     },
     pageTitles: {
       notifications: 'Your Notifications',
@@ -81,7 +80,7 @@ export const instanceData = {
     },
     roles: {
       donor: 'Donor',
-      author: 'Author',
+      author: "எழுத்தாளர்",
       reviewer: 'Reviewer'
     },
     share: {
@@ -94,18 +93,18 @@ export const instanceData = {
       pdfNoSolutions: 'PDF without solutions'
     },
     editOrAdd: {
-      button: 'Edit',
-      addNewEntities: 'Add new content',
+      button: "திருத்தம்",
+      addNewEntities: "புதிய உள்ளடக்கம் சேர்க்கவும்",
       addNewExercises: 'Add new exercises',
       editExercises: 'Edit exercises',
       unrevised: 'Show unrevised revisions',
       inviteModal: {
         title: 'Create with us!',
         text: 'Hello! %break% Great that you want to contribute to this content 👍 %break% Everybody can edit, but you need an account to do so.',
-        loginButton: 'Login now',
+        loginButton: "இப்போது உள்நுழைக",
         registerButton: 'Register new account',
         psText: 'You can find out in what ways you can contribute %link%.',
-        psLinkText: 'here'
+        psLinkText: "இங்கே"
       }
     },
     license: {
@@ -127,9 +126,9 @@ export const instanceData = {
       trashedNotice: "இந்த உள்ளடக்கம் குப்பையாக குறிக்கப்பட்டுள்ளது.",
       unrevisedNotice: 'This content has no accepted revision yet. Please use the %link% to preview.',
       emptyNotice: 'There is no content here. Please edit or delete.',
-      picture: 'Picture',
+      picture: "படம்",
       previewImage: 'Preview Image',
-      imageAltFallback: 'Image',
+      imageAltFallback: "படம்",
       exercisesTitle: 'Exercises',
       moreExercises: 'You can find more exercises in the following folder:',
       relatedContentTitle: 'Still want more?',
@@ -137,28 +136,28 @@ export const instanceData = {
       sourcesTitle: 'Sources',
       exercises: {
         prerequisite: 'For this task you need the following basic knowledge:',
-        task: 'Task',
-        correct: 'Correct',
+        task: "பணி",
+        correct: "சரி",
         missedSome: 'Almost! You missed at least one correct answer.',
-        wrong: 'Wrong',
-        feedback: 'Feedback',
-        answer: 'Answer',
-        check: 'Check',
-        yourAnswer: 'Your answer…',
+        wrong: "பிழை",
+        feedback: "கருத்து",
+        answer: "பதில்",
+        check: "சரிபார்க்கவும்",
+        yourAnswer: "உங்கள் பதில்:",
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
         strategy: 'Solution Strategy',
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "விடையைக் காட்டு",
+        hideSolution: "விடையை மறைக்கவும்"
       },
       boxTypes: {
         blank: 'Blank',
         example: 'Example',
         quote: 'Quote',
         approach: 'Approach',
-        remember: 'Remember',
-        attention: 'Attention',
-        note: 'Note',
+        remember: "நினைவில் கொள்க:",
+        attention: "கவனத்தில் கொள்க!",
+        note: "குறிப்பு",
         definition: 'Definition',
         theorem: 'Theorem',
         proof: 'Proof'
@@ -179,14 +178,14 @@ export const instanceData = {
       twingle: 'Load Donation Form'
     },
     comments: {
-      question: 'Do you have a question?',
+      question: "உங்களுக்கு கேள்வி உள்ளதா?",
       commentsOne: "கருத்து",
       commentsMany: "கருத்துகள்",
       submit: "இணைக்க",
       archiveThread: 'Archive thread',
       restoreThread: 'Restore thread',
       deleteThread: 'Delete thread',
-      deleteComment: 'Delete comment',
+      deleteComment: "கருத்தை நீக்கவும்",
       postedOn: 'Posted on',
       placeholder: 'Your question or suggestion…',
       placeholderReply: "உங்கள் பதில்:",
@@ -198,9 +197,9 @@ export const instanceData = {
       showArchived: 'Show archived %threads%',
       copyLink: 'Copy comment link',
       commentsOverviewExplanation: 'Here you can see all comments that were written to content on %instance%.serlo.org. %break% Answer questions or find content you could improve. %break% The link above the comment brings you to the relevant entity.',
-      edit: 'Edit comment',
+      edit: "திருத்து",
       cancelEdit: 'Cancel',
-      saveEdit: 'Save'
+      saveEdit: "சேமி"
     },
     revisions: {
       toOverview: 'Back to overview',
@@ -227,17 +226,17 @@ export const instanceData = {
     },
     revisionHistory: {
       changes: 'Changes',
-      author: 'Author',
-      date: 'Date',
-      edit: 'Edit',
+      author: "எழுத்தாளர்",
+      date: "தேதி",
+      edit: "திருத்தம்",
       editLabel: 'Create a new revision starting from this specific revision',
-      view: 'Show',
+      view: "காட்டு",
       viewLabel: 'Show this revision',
       status: 'Status'
     },
     unrevisedRevisions: {
       help1: 'All edits by our Authors show up here. %reviewersLink% will check the quality and approve the changes.',
-      reviewers: 'Reviewers',
+      reviewers: "விமர்சகர்கள்",
       reviewersUrl: 'https://de.serlo.org/community/202923/rollen-der-serlo-community',
       help2: 'Everybody can preview the edits and continue editing. Inside the preview reviewers can accept the edit and also give feedback.',
       help3: 'You want to be a reviewer? Get in contact with: %contactLink%.',
@@ -246,16 +245,19 @@ export const instanceData = {
       help4: 'How to review? See our %guidelineLink%.',
       guideline: 'Guideline for Reviewing',
       guidelineUrl: 'https://docs.google.com/document/d/1p03xx2KJrFw8Mui4-xllvSTHcEPi8G1bdC8rGXcH6f8/',
-      subjectLinks: 'To Subjects',
+      subjectLinks: "படங்கள்",
       showMoreEntities: 'Show all in %subject%',
       showMoreRevisions: 'Show %number% more…',
-      newLabelText: 'new',
+      newLabelText: "புதிய",
       newLabelNote: 'This is a new entity',
       wipLabelText: 'wip',
       wipLabelNote: 'Marked as work in progress. Do not review yet.',
-      newAuthorText: 'new author',
+      newAuthorText: "புதிய எழுத்தாளர்",
       newAuthorNote: 'This is one of the first edits of this author, maybe prioritise this.',
-      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉'
+      noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -312,8 +314,9 @@ export const instanceData = {
     },
     notices: {
       welcome: '👋 Welcome %username%!',
-      bye: '👋 See you soon!',
-      alreadyLoggedIn: '👋 Welcome back',
+      bye: "👋 விரைவில் சந்திப்போம்!",
+      alreadyLoggedIn: "👋 மீண்டும் வருக",
+      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -325,7 +328,7 @@ export const instanceData = {
       unknownProblem: 'Sorry, there was a problem loading the content, please try again later.'
     },
     auth: {
-      pleaseLogInLink: 'Please log in',
+      pleaseLogInLink: "நீங்கள் உள்நுழைய வேண்டும்!",
       pleaseLogInText: 'to use this feature.',
       register: {
         registerTitle: 'Register your Serlo Account',
@@ -340,15 +343,15 @@ export const instanceData = {
         alreadyDone: 'You are logged in, so you have already verified your email😊.'
       },
       settings: {
-        title: 'Change your password',
+        title: "உங்கள் கடவுச்சொல்லை மாற்ற",
         instruction: 'Insert your new password.'
       },
       loggingOut: 'Logging you out …',
       login: {
         confirmAction: 'Confirm Action',
         signIn: 'Sign in to your Account',
-        logOut: 'Log out',
-        newHere: 'Are you new here?',
+        logOut: "வெளியேறு",
+        newHere: "நீங்கள் இங்கு புதியவரா?",
         registerNewAccount: 'Register new account',
         forgotPassword: 'Did you %forgotLinkText%?',
         forgotLinkText: 'forget your password',
@@ -373,8 +376,9 @@ export const instanceData = {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
         code1010002: 'Sign in with NBP Account',
-        code1010013: 'Continue',
+        code1010013: 'Continue with SSO',
         code1040001: 'Register',
+        code1040002: 'Register with NBP Account',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001: 'You successfully recovered your account. Please change your password in the next minutes.',
@@ -385,6 +389,8 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006: 'The username, email address or password was incorrect. Please check for spelling mistakes.',
         code4000007: 'An account with the same email or username exists already.',
@@ -400,7 +406,8 @@ export const instanceData = {
       passwordTooLong: 'Sorry, this password is too long. Please choose one that has a maximum of 72 characters.',
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
       emailInvalid: 'Sorry, this is not a valid email address. Check for typos.',
-      registrationAgreement: 'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      registrationCheckboxAgreement: 'I agree to the %privacypolicy% and %terms%. I may receive email notifications from Serlo and can opt out at any time.',
+      consentNeededBeforeProceeding: 'We need your consent before proceeding.',
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
@@ -451,7 +458,7 @@ export const instanceData = {
   }
 };
 export const instanceLandingData = {
-  lang: Instance["Ta"],
+  lang: "ta",
   subjectsData: landingSubjectsData,
   strings: {
     vision: "நாம் சமமான கல்வி வாய்ப்புகளை நோக்கி இணைந்து பணிபுரியும் ஒரு குழு. இந்த இணையத்தளத்தில் எண்ணற்ற விவரக் கட்டுரைகள், பயிற்சிகள் மற்றும் ஒலிப் பேழைகள் அனைத்துப் பாடங்களுக்கும் வழங்கப்பட்டுவருகின்றன. இவை அனைத்தும் இலவசமாக உலகம் முழுவதும் உள்ள மாணவர்களுக்காக உருவாக்கப்பட்டுவருகின்றன. இனி வரும் காலங்களில், தமிழ்மொழியிலும் இவ்வாறான இலவசப் பாடத்திட்டங்களை உருவாக்க நீங்களும் எம்முடன் இணைந்து பணியாற்றலாம்.",
@@ -497,7 +504,7 @@ export const loggedInData = {
       title: "கடவுச்சொல்லை மாற்று"
     }, {
       url: '/user/settings',
-      title: 'Settings'
+      title: "அமைப்புகள்"
     }, {
       url: '/auth/logout',
       title: "வெளியேறு"
@@ -531,8 +538,6 @@ export const loggedInData = {
       edit: "திருத்தம்",
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      moveToGrouped: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
@@ -547,26 +552,26 @@ export const loggedInData = {
       showRead: 'Read'
     },
     subscriptions: {
-      mail: 'E-mails',
+      mail: "மின்னஞ்சல்",
       subscription: 'Subscription',
       noMails: 'deactivate',
-      getMails: 'activate',
+      getMails: "செயல்படுத்துங்கள்",
       noNotifications: 'cancel',
       loadedSentence: 'Loaded %loadedCount% of %totalCount% entries.',
-      loadMoreLink: 'Load more!'
+      loadMoreLink: "மேலும் ஏற்று"
     },
     revisions: {
       checkout: {
-        action: 'Accept',
-        title: 'Accept Revision',
+        action: "ஏற்கிறேன்",
+        title: "திருத்தம் ஏற்கப்பட்டுள்ளது",
         explanation: 'Please give the author some feedback.'
       },
       reject: {
-        action: 'Reject',
+        action: "மறுக்கிறேன்",
         title: 'Reject Revision',
         explanation: 'Please tell the author why you will not accept the submission.'
       },
-      confirm: 'Confirm',
+      confirm: "உறுதிப்படுத்தவும்",
       unrevisedTaxNote: 'New content, not accepted yet'
     },
     mutations: {
@@ -601,7 +606,7 @@ export const loggedInData = {
           confirmRestore: 'Are you sure you want to delete all your changes?'
         },
         extendedSettings: 'Extended Settings',
-        close: 'Close',
+        close: "மூடுக",
         notSupportedYet: "This content type isn't supported by the new editor, yet.",
         editInOld: 'You can edit the content in the old editor',
         conversionError: 'An error occurred during the conversion.',
@@ -618,7 +623,7 @@ export const loggedInData = {
         highlightDesc: 'Highlight the syntax of source code.',
         anchor: 'Anchor',
         anchorDesc: 'Insert an anchor.',
-        image: 'Image',
+        image: "படம்",
         imageDesc: 'Upload images.',
         importantTitle: 'Important Statement',
         importantDesc: 'A box to highlight important statements.',
@@ -652,13 +657,17 @@ export const loggedInData = {
         enableNotifs: 'Enable serlo.org notifications',
         enableNotifsMail: 'Enable notifications via e-mail',
         switchRevision: 'Switch to another revision',
+        importOther: 'Import content from other entity',
+        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate it\'s content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).',
+        importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+        importOtherButton: 'Import content',
         current: 'Current',
         author: 'Author',
         createdAt: 'when?',
         settings: 'Settings',
         equationsTitle: 'Terms and equations',
         equationsDesc: 'Write term manipulations and solve multiline equations.',
-        ready: 'Ready to save?'
+        ready: "சேமிக்கத் தயாரா?"
       },
       anchor: {
         identifier: 'Identifier',
@@ -670,7 +679,7 @@ export const loggedInData = {
       highlight: {
         clickAndEnter: 'Click here and enter your source code…',
         enterHere: 'Enter your source code here',
-        language: 'Language',
+        language: "மொழி",
         enterLanguage: 'Enter language',
         showLineNumbers: 'Show line numbers'
       },
@@ -685,8 +694,8 @@ export const loggedInData = {
         mathematicalExpressionSolution: "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')"
       },
       multimedia: {
-        image: 'Image',
-        video: 'Video',
+        image: "படம்",
+        video: "காணொளி",
         geogebraTitle: 'GeoGebra Applet',
         changeType: 'Change the multimedia type',
         howImportant: 'How important is the multimedia content?',
@@ -748,22 +757,26 @@ export const loggedInData = {
         shortcuts: 'Shortcuts',
         fraction: 'Fraction',
         superscript: 'Superscript',
-        or: 'or',
+        or: "அல்லது",
         subscript: 'Subscript',
         root: 'Root',
         mathSymbols: 'Math symbols',
         eG: 'e.g.',
-        functions: 'Functions',
+        functions: "செயல்பாடுகள்",
         bold: 'Bold (%ctrlOrCmd% + B)',
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found'
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
+      },
       video: {
         videoUrl: 'Video URL',
-        description: 'Description',
-        title: 'Title',
+        description: "விவரிப்பு:",
+        title: "தலைப்பு",
         url: 'URL',
-        seoTitle: 'Title for search engines'
+        seoTitle: 'Title for search engines',
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
       },
       error: {
         convertionError: 'This part of the document could not be converted.'
@@ -805,23 +818,23 @@ export const loggedInData = {
         idArticle: 'ID of an article, e.g. 1855',
         openArticleTab: 'Open the article in a new tab:',
         linkTitle: 'Title of the link',
-        showSolution: 'Show solution',
-        hideSolution: 'Hide solution'
+        showSolution: "விடையைக் காட்டு",
+        hideSolution: "விடையை மறைக்கவும்"
       },
       applet: {
         seoTitle: 'Title for search engines',
         seoDesc: 'Description for search engines',
-        title: 'Title'
+        title: "தலைப்பு"
       },
       article: {
         seoTitle: 'Title for search engines',
         seoDesc: 'Description for search engines',
-        title: 'Title',
-        writeShortIntro: 'Write a short introduction',
+        title: "தலைப்பு",
+        writeShortIntro: "ஒரு சிறிய அறிமுகத்தை எழுதுங்கள்",
         stillWantMore: 'Still want more?',
         moreOnTopic: 'You can find more content on this topic here',
         addSource: 'Add source',
-        removeLabel: 'Remove',
+        removeLabel: "நீக்கு",
         dragLabel: 'Drag to change order',
         openInTab: 'Open in new tab',
         sources: 'Sources',
@@ -833,12 +846,12 @@ export const loggedInData = {
           introText2: 'You can either paste an Serlo ID, an URL or choose content from the parent folder below.',
           buttonEx: 'Add exercises',
           buttonExFolder: 'Select exercise folder',
-          buttonContent: 'Add content',
-          buttonAddType: 'Add %type%',
+          buttonContent: "உள்ளடக்கம் சேர்க்கவும்",
+          buttonAddType: "இணைக்குக %type%",
           title: 'Add related Content or Exercises',
           invalidInput: 'Invalid id or url',
           fetchError: 'Something went wrong, please try later',
-          loading: 'Loading…',
+          loading: "ஏற்றுகிறது...",
           notFound: 'Could not find that content',
           unsupportedType: 'Sorry, type [%type%] is not supported here',
           unsupportedId: 'Sorry, this ID is not supported here',
@@ -848,14 +861,14 @@ export const loggedInData = {
         }
       },
       coursePage: {
-        explanation: 'Explanation',
-        video: 'Video',
-        question: 'Question',
-        title: 'Title'
+        explanation: "விளக்கம்",
+        video: "காணொளி",
+        question: "கேள்வி",
+        title: "தலைப்பு"
       },
       course: {
         seoDesc: 'Description for search engines',
-        title: 'Title',
+        title: "தலைப்பு",
         removeCoursePage: 'Remove course page',
         addCoursePage: 'Add course page'
       },
@@ -1022,7 +1035,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `
     },

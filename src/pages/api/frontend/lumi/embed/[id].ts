@@ -26,8 +26,27 @@ export default async function handler(
       '"setFinished": "/api/v1/h5p/finishedData"',
       '"setFinished": "/api/frontend/lumi/proxy/finishedData"'
     )
+    .replace(
+      '   </script>',
+      `
+    H5P.externalDispatcher.on('xAPI', function(event){
+      if (event.getVerb() == 'answered') {
+        if (event.getScore() === event.getMaxScore() && event.getMaxScore() > 0) {
+          window.parent.document.body.dispatchEvent(new CustomEvent('h5pExerciseCorrect', {detail: '${
+            req.query.id as string
+          }'}))
+        } else {
+          window.parent.document.body.dispatchEvent(new CustomEvent('h5pExerciseWrong', {detail: '${
+            req.query.id as string
+          }'}))
+        }
+      }
+    })
+    </script>`
+    )
 
   //console.log(prepared)
+  res.setHeader('Content-Type', lumiRes.headers.get('Content-Type') ?? '')
 
   res.send(prepared)
 }

@@ -31,7 +31,6 @@ export enum Tool {
   History = 'history',
   Log = 'log',
   MoveItems = 'moveItems',
-  MoveToExercise = 'moveToExercise',
   NewEntitySubmenu = 'newEntitySubmenu',
   Separator = 'separator',
   SortCoursePages = 'sortCoursePages',
@@ -158,13 +157,6 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
       url: `/taxonomy/term/move/batch/${data.id}`,
       canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
     },
-    moveToExercise: {
-      url: `/entity/link/move/link/${data.id}/${data.parentId!}`,
-      title: data.grouped
-        ? loggedInStrings.authorMenu.moveToGrouped
-        : loggedInStrings.authorMenu.moveToTextExercise,
-      canDo: canDo(TaxonomyTerm.change) && canDo(TaxonomyTerm.removeChild),
-    },
     directLink: {
       title: loggedInStrings.authorMenu.directLink,
       url: `/${data.id}`,
@@ -229,7 +221,7 @@ export function AuthorTools({ tools, entityId, data }: AuthorToolsProps) {
             {renderAboItem(subscribeNotificationsAndMail, true, true)}
           </>
         )}
-        <li className="border-b-[1px] border-brand-200 mb-2 pb-2"></li>
+        <li className="mb-2 border-b-[1px] border-brand-200 pb-2"></li>
       </>
     )
 

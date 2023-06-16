@@ -1,12 +1,12 @@
 import { EditorPlugin, EditorPluginProps } from '@edtr-io/plugin'
 import { ExpandableBox } from '@edtr-io/renderer-ui'
-import { ThemeProvider } from '@edtr-io/ui'
 import { useCallback } from 'react'
 
 import { editorContent, entity, entityType } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const textSolutionTypeState = entityType(
   {
@@ -31,15 +31,6 @@ export const textSolutionTypePlugin: EditorPlugin<
   },
 }
 
-const solutionTheme = {
-  rendererUi: {
-    expandableBox: {
-      toggleBackgroundColor: '#d9edf7',
-      containerBorderColor: '#d9edf7',
-    },
-  },
-}
-
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   const loggedInData = useLoggedInData()
   const renderTitle = useCallback(
@@ -60,23 +51,22 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   return (
     <>
       {props.renderIntoToolbar(
-        <RevisionHistoryLoader
+        <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Solution}
         />
       )}
-      <ThemeProvider theme={solutionTheme}>
-        <ExpandableBox
-          renderTitle={renderTitle}
-          editable={
-            /* Title is not editable. Also rendering collapsed */
-            false
-          }
-        >
-          {props.state.content.render()}
-        </ExpandableBox>
-      </ThemeProvider>
+      <ExpandableBox
+        renderTitle={renderTitle}
+        editable={
+          /* Title is not editable. Also rendering collapsed */
+          false
+        }
+      >
+        {props.state.content.render()}
+      </ExpandableBox>
       {props.config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...props.state} />
       )}

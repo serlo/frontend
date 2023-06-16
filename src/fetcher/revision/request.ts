@@ -64,7 +64,7 @@ export async function requestRevision(
             license: uuid.repository.license,
             currentRevision: {
               content: uuid.content,
-              /*id: uuid.id,*/
+              id: uuid.id,
               date: uuid.date,
             },
             revisions: { totalCount: 0 },

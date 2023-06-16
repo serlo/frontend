@@ -1,7 +1,5 @@
-import { PluginToolbarButton, useScopedStore } from '@edtr-io/core'
-import { styled } from '@edtr-io/editor-ui'
-// eslint-disable-next-line import/no-internal-modules
-import { AddButton } from '@edtr-io/editor-ui/internal'
+import { PluginToolbarButton } from '@edtr-io/core'
+import { styled, AddButton } from '@edtr-io/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -9,7 +7,7 @@ import {
   object,
   optional,
 } from '@edtr-io/plugin'
-import { getDocument } from '@edtr-io/store'
+import { store, selectDocument } from '@edtr-io/store'
 import { Icon, faRandom, faTrashAlt } from '@edtr-io/ui'
 import { PropsWithChildren, useState } from 'react'
 
@@ -108,7 +106,6 @@ const Option = styled.div({
 })
 
 function ExerciseEditor({ editable, state }: ExerciseProps) {
-  const store = useScopedStore()
   const { content, interactive } = state
   const [showOptions, setShowOptions] = useState(false)
 
@@ -212,7 +209,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
 
   function getCurrentInteractivePlugin() {
     if (!interactive.defined) return null
-    const doc = getDocument(interactive.id)(store.getState())
+    const doc = selectDocument(store.getState(), interactive.id)
     return doc && doc.plugin
   }
 }

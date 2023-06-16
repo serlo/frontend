@@ -59,7 +59,7 @@ export function Event({
         )}
       >
         <TimeAgo
-          className="text-sm text-truegray-500"
+          className="text-sm text-gray-500"
           datetime={eventDate}
           dateAsTitle
         />
@@ -98,6 +98,7 @@ export function Event({
       case 'CreateCommentNotificationEvent':
         return parseString(strings.events.createComment, {
           thread: renderThread(event.thread),
+          // links to comments need to go through cf worker
           comment: (
             <Link href={`/${event.comment.id}`} forceNoCSR>
               {strings.entities.comment}&nbsp;<sup>{event.comment.id}</sup>
@@ -228,7 +229,7 @@ export function Event({
       event.__typename === 'RejectRevisionNotificationEvent' ||
       event.__typename === 'CheckoutRevisionNotificationEvent'
     ) {
-      return <div className="text-truegray-500">{event.reason}</div>
+      return <div className="text-gray-500">{event.reason}</div>
     }
     if (event.__typename === 'CreateThreadNotificationEvent') {
       return renderCommentContent(event.thread.thread.nodes[0].content)
@@ -248,7 +249,7 @@ export function Event({
     const withMath = replaceWithJSX([shortened], /%%(.+?)%%/g, (str, i) => (
       <MathSpan key={`math-${i}`} formula={str} />
     ))
-    return <div className="text-truegray-500">{withMath}</div>
+    return <div className="text-gray-500">{withMath}</div>
   }
 
   function renderObject({
@@ -323,6 +324,7 @@ export function Event({
 
   function renderThread(thread: EventThread) {
     const id = thread.thread.nodes[0]?.id
+    // links to comments need to go through cf worker
     return (
       <Link href={`/${id}`} forceNoCSR>
         {strings.entities.thread}&nbsp;<sup>{id}</sup>
@@ -333,7 +335,7 @@ export function Event({
   function renderButtons() {
     if (!setToRead) return null
     return (
-      <div className="absolute flex right-5 top-11" /*ButtonWrapper*/>
+      <div className="absolute right-5 top-11 flex" /*ButtonWrapper*/>
         {renderMuteButton()}
         {unread && renderReadButton()}
       </div>
@@ -369,7 +371,7 @@ export function Event({
         content={renderTooltip(loggedInStrings?.hide)}
       >
         <button
-          className="serlo-button-blue-transparent text-base mr-3"
+          className="serlo-button-blue-transparent mr-3 text-base"
           onClick={() => {
             void mute(event.objectId)
             if (unread) void setToRead(eventId)
@@ -384,7 +386,7 @@ export function Event({
   function renderTooltip(text?: string) {
     return (
       <span
-        className="text-sm leading-tight block bg-truegray-800 text-white rounded-md py-2 px-2.5 max-w-[200px]" /*Tooltip*/
+        className="block max-w-[200px] rounded-md bg-almost-black py-2 px-2.5 text-sm leading-tight text-white" /*Tooltip*/
       >
         {text}
       </span>

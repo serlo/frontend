@@ -1,8 +1,7 @@
-import { Instance } from '@/fetcher/graphql-types/operations'
 import { headerData, footerData, landingSubjectsData, secondaryMenus } from './menu-data'
 
 export const instanceData = {
-  lang: Instance['En'],
+  lang: 'en',
   headerData: headerData,
   footerData: footerData,
   secondaryMenus: secondaryMenus,
@@ -270,6 +269,9 @@ export const instanceData = {
       newAuthorNote:
         'This is one of the first edits of this author, maybe prioritise this.',
       noUnrevisedRevisions: 'No unrevised revisions, all done! 🎉',
+      importedContentText: 'imported',
+      importedContentNote: 'This revision includes imported content',
+      importedContentIdentifier: 'Content imported from'
     },
     errors: {
       title: '😬 Websites make mistakes sometimes…',
@@ -333,6 +335,7 @@ export const instanceData = {
       welcome: '👋 Welcome %username%!',
       bye: '👋 See you soon!',
       alreadyLoggedIn: '👋 Welcome back',
+      warningLoggedOut: '⚠️ You were logged out. Please login again and then use "Load stored edits" to restore your current changes.',
       revisionSaved: 'Revision is saved and will be reviewed soon 👍',
       revisionAccepted: 'Revision was successfully accepted ✅',
       revisionRejected: 'Revision was successfully rejected ❎',
@@ -395,8 +398,9 @@ export const instanceData = {
         code1010003: 'Please confirm this action by verifying that it is you.',
         code1010001: 'Sign in',
         code1010002: 'Sign in with NBP Account',
-        code1010013: 'Continue',
+        code1010013: 'Continue with SSO',
         code1040001: 'Register',
+        code1040002: 'Register with NBP Account',
         code1040003: 'Continue',
         code1050001: 'Your changes have been saved! 🎉',
         code1060001:
@@ -410,6 +414,8 @@ export const instanceData = {
         code1080002: 'You have successfully verified your email address.',
         code4000001: '%reason%',
         code4000002: '%field% is missing.',
+        // Should map to usernameInvalid
+        code4000004: '%reason%',
         code4000005: '%reason%',
         code4000006:
           'The username, email address or password was incorrect. Please check for spelling mistakes.',
@@ -435,8 +441,9 @@ export const instanceData = {
       passwordTooSimilar: 'Sorry, this password is too similar to your email or username.',
       emailInvalid:
         'Sorry, this is not a valid email address. Check for typos.',
-      registrationAgreement:
-        'By clicking %signup%, you agree to our %privacypolicy% and %terms%. You may receive email notifications from us and can opt out at any time.',
+      registrationCheckboxAgreement:
+      'I agree to the %privacypolicy% and %terms%. I may receive email notifications from Serlo and can opt out at any time.',
+      consentNeededBeforeProceeding: 'We need your consent before proceeding.',
       terms: 'Terms',
       signUp: 'Register',
       verificationProblem: 'In case you did not get it',
@@ -491,7 +498,7 @@ export const instanceData = {
   },
 }
 export const instanceLandingData = {
-  lang: Instance['En'],
+  lang: 'en',
   subjectsData: landingSubjectsData,
   strings: {
     vision:
@@ -585,8 +592,6 @@ export const loggedInData = {
       edit: 'Edit',
       editTax: 'Edit Title & Text',
       unrevisedEdit: 'Show unrevised revisions',
-      moveToGrouped: 'Move content to other grouped-text-exercise',
-      moveToTextExercise: 'Move content to other text-exercise',
       sortEntities: 'Sort content',
       newEntity: 'New Entity',
       editProfile: 'Edit profile',
@@ -714,6 +719,10 @@ export const loggedInData = {
         enableNotifs: 'Enable serlo.org notifications',
         enableNotifsMail: 'Enable notifications via e-mail',
         switchRevision: 'Switch to another revision',
+        importOther: 'Import content from other entity',
+        importOtherExplanation: 'Just paste the url or id of another serlo.org entity of the same type here to duplicate it\'s content here. Do NOT use this to make exact copies or move content. Exercise Groups and Courses are not supported (but Exercises and Course Pages).',
+        importOtherWarning: 'Warning: This overwrites everything that is already present in this editor!',
+        importOtherButton: 'Import content',
         current: 'Current',
         author: 'Author',
         createdAt: 'when?',
@@ -823,12 +832,16 @@ export const loggedInData = {
         italic: 'Italic (%ctrlOrCmd% + I)',
         noItemsFound: 'No items found',
       },
+      image: {
+        noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
+      },
       video: {
         videoUrl: 'Video URL',
         description: 'Description',
         title: 'Title',
         url: 'URL',
         seoTitle: 'Title for search engines',
+        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.',
       },
       error: {
         convertionError: 'This part of the document could not be converted.',
@@ -1100,7 +1113,7 @@ Your Community-Support 💚`,
       body: `<p>Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>We are excited to have you at serlo.org 🎉</p>
 <p>Please verify your account by clicking the following link:<br/>
-<a style="color: #007EC1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
+<a style="color: #007ec1 !important;" href="{{ .VerificationURL }}">{{ .VerificationURL }}</a>
 </p><p>Your Community-Support 💚</p>
       `,
     },

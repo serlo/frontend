@@ -1,5 +1,7 @@
 import clsx from 'clsx'
 
+import { tw } from '@/helper/tw'
+
 const partners = [
   {
     name: 'Bundesministerium für Bildung und Forschung',
@@ -47,9 +49,8 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
   return (
     <div
       className={clsx(
-        'mt-auto pb-7 flex flex-wrap  mx-side max-w-5xl sm:mx-auto',
-        inContent ? 'justify-start' : 'justify-evenly sm:justify-center',
-        'text-gray-800'
+        'mx-side mt-auto flex max-w-5xl  flex-wrap pb-7 text-gray-800 sm:mx-auto',
+        inContent ? 'justify-start' : 'justify-evenly sm:justify-center'
       )}
     >
       {partners.map(renderPartner)}
@@ -69,9 +70,11 @@ export function PartnerList({ inContent }: { inContent?: boolean }) {
       <img
         key={name}
         className={clsx(
-          'max-h-[4.5rem] sm:max-h-[5.3rem] md:max-h-24 max-w-[20rem] px-8 sm:px-8',
-          inContent ? 'mb-8 sm:pl-4' : 'mb-16',
-          'opacity-80'
+          tw`
+            max-h-[4.5rem] max-w-[20rem] px-8 opacity-80
+            sm:max-h-[5.3rem] sm:px-8 md:max-h-24
+          `,
+          inContent ? 'mb-8 sm:pl-4' : 'mb-16'
         )}
         style={{
           paddingTop: `${padding}px`,

@@ -3,7 +3,6 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
-import clsx from 'clsx'
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
@@ -21,6 +20,7 @@ import { FrontendContentNode } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { tw } from '@/helper/tw'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
 
@@ -60,9 +60,7 @@ export function Entity({ data }: EntityProps) {
       {renderCourseFooter()}
       <HSpace amount={20} />
       {renderUserTools()}
-      {data.licenseData && (
-        <LicenseNotice data={data.licenseData} path={['license']} />
-      )}
+      {data.licenseData && <LicenseNotice data={data.licenseData} />}
     </>
   )
 
@@ -81,11 +79,11 @@ export function Entity({ data }: EntityProps) {
     if (!data.courseData) return null
     return (
       <span
-        className={clsx(
-          'text-xl text-center font-bold text-brand bg-brand-200',
-          'inline-block justify-center align-middle h-7 w-7',
-          'rounded-full mr-1.5 -mt-1.5'
-        )}
+        className={tw`
+          mr-1.5 -mt-1.5 inline-block h-7 w-7
+          justify-center rounded-full bg-brand-200 text-center align-middle
+          text-xl font-bold text-brand
+        `}
       >
         {data.courseData.index + 1}
       </span>
@@ -103,7 +101,7 @@ export function Entity({ data }: EntityProps) {
         {' '}
         <FaIcon
           icon={getIconByTypename(data.typename)}
-          className="text-brand-400 text-2.5xl"
+          className="text-2.5xl text-brand-400"
         />{' '}
       </span>
     )

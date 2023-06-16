@@ -1,4 +1,3 @@
-import { useScopedSelector, useScopedStore } from '@edtr-io/core'
 import {
   child,
   ChildStateType,
@@ -10,12 +9,16 @@ import {
   string,
 } from '@edtr-io/plugin'
 import {
-  getFocused,
-  isEmpty,
+  store,
+  selectFocused,
+  selectIsDocumentEmpty,
   focus,
-  getDocument,
+  selectDocument,
   focusNext,
   focusPrevious,
+  useAppSelector,
+  useAppDispatch,
+  selectFocusTree,
 } from '@edtr-io/store'
 import { Icon, faImages, faParagraph } from '@edtr-io/ui'
 import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
@@ -25,32 +28,18 @@ import { KeyboardEvent } from 'react'
 import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
-const headerTextPlugins = {
-  code: true,
-  colors: false,
-  headings: false,
-  katex: true,
-  links: true,
-  lists: false,
-  math: true,
-  paragraphs: false,
-  richText: false,
-  suggestions: false,
-}
-
-const cellTextPlugins = {
-  code: true,
-  colors: true,
-  headings: false,
-  katex: true,
-  links: true,
-  lists: true,
-  math: true,
-  paragraphs: false,
-  richText: true,
-  suggestions: false,
-}
+const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
+const cellTextFormattingOptions = [
+  'code',
+  'colors',
+  'katex',
+  'links',
+  'lists',
+  'math',
+  'richText',
+]
 
 const tableState = object({
   rows: list(
@@ -70,21 +59,36 @@ const tableState = object({
 })
 
 export type SerloTablePluginState = typeof tableState
-export type SerloTableProps = EditorPluginProps<SerloTablePluginState>
+export type SerloTableProps = EditorPluginProps<
+  SerloTablePluginState,
+  SerloTableConfig
+>
 
-export const serloTablePlugin: EditorPlugin<SerloTablePluginState> = {
-  Component: SerloTableEditor,
-  config: {},
-  state: tableState,
+export interface SerloTableConfig {
+  allowImageInTableCells: boolean // Used in https://github.com/serlo/serlo-editor-for-edusharing
+}
+
+const defaultConfig: SerloTableConfig = {
+  allowImageInTableCells: true,
+}
+
+export function createSerloTablePlugin(
+  config = defaultConfig
+): EditorPlugin<SerloTablePluginState, SerloTableConfig> {
+  return {
+    Component: SerloTableEditor,
+    config: config,
+    state: tableState,
+  }
 }
 
 const newCell = { content: { plugin: 'text' } }
 
 function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
-  const store = useScopedStore()
 
-  const focusedElement = useScopedSelector(getFocused())
+  const dispatch = useAppDispatch()
+  const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
   const loggedInData = useLoggedInData()
@@ -112,8 +116,8 @@ function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => {
           return (
-            <div className="pr-2 min-h-[2rem]" key={cell.content.id}>
-              {!isEmpty(cell.content.id)(store.getState()) &&
+            <div className="min-h-[2rem] pr-2" key={cell.content.id}>
+              {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
                 cell.content.render()}
             </div>
           )
@@ -150,8 +154,9 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
-    store.dispatch(focusNext())
-    store.dispatch(focusPrevious())
+    const focusTree = selectFocusTree(store.getState())
+    dispatch(focusNext(focusTree))
+    dispatch(focusPrevious(focusTree))
   }
 
   function renderActiveCellsIntoObject() {
@@ -164,8 +169,11 @@ function SerloTableEditor(props: SerloTableProps) {
           const isLast =
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => store.dispatch(focus(cell.content.id))
-          const isClear = isEmpty(cell.content.id)(store.getState())
+          const dispatchFocus = () => dispatch(focus(cell.content.id))
+          const isClear = selectIsDocumentEmpty(
+            store.getState(),
+            cell.content.id
+          )
 
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
@@ -192,16 +200,20 @@ function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv pr-2 pb-6 min-h-[3.5rem]"
+              className="hackdiv min-h-[3.5rem] pr-2 pb-6"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
                 config: {
                   placeholder: '',
-                  plugins: isHead ? headerTextPlugins : cellTextPlugins,
+                  formattingOptions: isHead
+                    ? headerTextFormattingOptions
+                    : cellTextFormattingOptions,
                 },
               })}
-              {renderSwitchButton(cell, isHead, isClear)}
+              {props.config.allowImageInTableCells
+                ? renderSwitchButton(cell, isHead, isClear)
+                : null}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
                 .serlo-td,
@@ -229,7 +241,7 @@ function SerloTableEditor(props: SerloTableProps) {
   ) {
     const isFocused = cell.content.id === focusedElement
     const isImage =
-      getDocument(cell.content.id)(store.getState())?.plugin === 'image'
+      selectDocument(store.getState(), cell.content.id)?.plugin === 'image'
 
     if (isHead || !isFocused || !isClear) return null
 
@@ -239,7 +251,7 @@ function SerloTableEditor(props: SerloTableProps) {
         onClick={() => {
           cell.content.replace(isImage ? 'text' : 'image')
         }}
-        className="serlo-button-light m-2 py-0.5 text-sm block absolute"
+        className="serlo-button-light absolute m-2 block py-0.5 text-sm"
         title={
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
@@ -262,7 +274,7 @@ function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <>
-        <nav className={clsx('absolute -ml-10 -mt-2 flex flex-col')}>
+        <nav className="absolute -ml-10 -mt-2 flex flex-col">
           {showRowButtons ? (
             <>
               {renderInlineAddButton(true)}
@@ -270,7 +282,7 @@ function SerloTableEditor(props: SerloTableProps) {
             </>
           ) : null}
         </nav>
-        <nav className={clsx('absolute -mt-12')}>
+        <nav className="absolute -mt-12">
           {showColButtons ? (
             <>
               {renderInlineAddButton(false)}
@@ -330,7 +342,7 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 
   function getButtonStyle() {
-    return clsx('serlo-button-blue-transparent text-brand-400')
+    return tw`serlo-button-blue-transparent text-brand-400`
   }
 
   function insertRow(beforeIndex?: number) {
@@ -349,14 +361,14 @@ function SerloTableEditor(props: SerloTableProps) {
 
   function isEmptyRow(rowIndex: number) {
     return rows[rowIndex].columns.every((cell) =>
-      isEmpty(cell.content.id)(store.getState())
+      selectIsDocumentEmpty(store.getState(), cell.content.id)
     )
   }
 
   function isEmptyCol(colIndex: number) {
     return rows.every((row) => {
       const cell = row.columns[colIndex]
-      return isEmpty(cell.content.id)(store.getState())
+      return selectIsDocumentEmpty(store.getState(), cell.content.id)
     })
   }
 

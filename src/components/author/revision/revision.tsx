@@ -49,14 +49,14 @@ export function Revision({ data }: RevisionProps) {
       {renderHeader()}
 
       {displayMode === DisplayModes.SideBySide && (
-        <div className="flex mt-12">
-          <div className="flex-1 px-side pb-6 bg-brand-50">
+        <div className="mt-12 flex">
+          <div className="flex-1 bg-brand-50 px-side pb-6">
             <h2 className="serlo-h2 mt-12 mb-4">
               {strings.revisions.currentVersion}
             </h2>
             {renderPreviewBoxes(data.currentRevision)}
           </div>
-          <div className="flex-1 ml-4 mr-side">
+          <div className="ml-4 mr-side flex-1">
             <h2 className="serlo-h2 mt-12 mb-4">
               {strings.revisions.thisVersion}
             </h2>
@@ -158,7 +158,7 @@ export function Revision({ data }: RevisionProps) {
         <div className="serlo-content-with-spacing-fixes">
           <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
           {char && (
-            <span className="mx-side px-1 mb-10 inline-block bg-yellow-200">
+            <span className="mx-side mb-10 inline-block bg-editor-primary-100 px-1">
               {replacePlaceholders(strings.revisions.positionForGrouped, {
                 exercise_or_solution:
                   data.typename === UuidRevType.GroupedExercise

@@ -79,6 +79,7 @@ module.exports = {
           'msw/*',
           'next/*',
           'public/_assets/**/*',
+          'redux-saga/effects',
         ],
       },
     ],
@@ -165,8 +166,11 @@ module.exports = {
   ],
   ignorePatterns: [
     'tailwind.config.js',
+    'shared/tailwind-base.cjs',
     'postcss.config.js',
     'next.config.js',
     'jest.config.js',
+    'prettier.config.js',
   ],
+  root: true,
 }

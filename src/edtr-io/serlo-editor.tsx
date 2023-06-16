@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-internal-modules
-import { Editor, EditorProps } from '@edtr-io/core/beta'
+import { Editor, EditorProps } from '@edtr-io/core'
 // eslint-disable-next-line import/no-internal-modules
-import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor/beta'
+import { createDefaultDocumentEditor } from '@edtr-io/default-document-editor'
 import { Entity, UuidType } from '@serlo/authorization'
 import { createContext, ReactNode, useState } from 'react'
 
@@ -105,20 +105,6 @@ export function SerloEditor({
       >
         {children}
       </Editor>
-      <style jsx global>{`
-        /* fixes bug in chromium based browsers v105+ */
-        /* https://github.com/ianstormtaylor/slate/issues/5110#issuecomment-1234951122 */
-        div[data-slate-editor] {
-          -webkit-user-modify: read-write !important;
-        }
-        /*
-         * Fix for misplacement of slate placeholders
-         * TODO: Investigate whether we still need this fix after slate upgrade
-         */
-        span[data-slate-leaf='true'] > span > span[contenteditable='false'] {
-          vertical-align: initial !important;
-        }
-      `}</style>
     </SaveContext.Provider>
   )
 }

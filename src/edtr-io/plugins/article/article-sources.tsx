@@ -105,7 +105,7 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                           target="_blank"
                           href={source.href.value}
                           rel="noopener noreferrer"
-                          className="p-1 inline-block"
+                          className="inline-block p-1"
                         >
                           <OpenInNewTab title={articleStrings.openInTab}>
                             <Icon icon={faUpRightFromSquare} />

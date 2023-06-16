@@ -1,15 +1,14 @@
 // eslint-disable-next-line import/no-internal-modules
 import { StateType, StateTypeSerializedType } from '@edtr-io/plugin'
+
 import {
-  convert,
   isEdtr,
   Edtr,
   Legacy,
   RowsPlugin,
   OtherPlugin,
   Splish,
-} from '@serlo/legacy-editor-to-editor'
-
+} from './legacy-editor-to-editor-types'
 import { SerloEntityPluginType } from './plugins'
 import { appletTypeState } from './plugins/types/applet'
 import { articleTypeState } from './plugins/types/article'
@@ -382,6 +381,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             __typename: UuidRevType.Exercise,
             content: exercise.currentRevision?.content ?? '',
             date: '',
+            id: -1,
           },
         }).initialState.state
       })
@@ -622,11 +622,32 @@ function toEdtr(content: EditorState): Edtr {
     return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
   if (isEdtr(content)) return content
 
-  // fixes https://github.com/serlo/frontend/issues/1563
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const sanitized = JSON.parse(JSON.stringify(content).replace(/```/g, ''))
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  return convert(sanitized)
+  return {
+    plugin: 'rows',
+    state: [
+      {
+        plugin: 'text',
+        state: [
+          {
+            type: 'p',
+            children: [
+              {
+                text: 'Diese Revision liegt in einem alten Format vor und ist nicht konvertiert.',
+              },
+            ],
+          },
+          {
+            type: 'p',
+            children: [
+              {
+                text: 'Dieser Inhalt wird nicht mehr unterstützt.',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  }
 }
 
 function serializeEditorState(content: Legacy): SerializedLegacyEditorState

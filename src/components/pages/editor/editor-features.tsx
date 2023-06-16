@@ -30,7 +30,7 @@ const features = [
     description: 'We all make mistakes sometimes, no worries ;)',
   },
   {
-    title: 'Stuctured Content',
+    title: 'Structured Content',
     icon: faAlignLeft,
     description: 'Guide authors with custom content templates',
   },
@@ -38,11 +38,11 @@ const features = [
 
 export function EditorFeatures() {
   return (
-    <div className="sm:flex text-center sm:text-left text-lg">
+    <div className="text-center text-lg sm:flex sm:text-left">
       {features.map(({ icon, title, description }) => {
         return (
-          <div key={title} className="flex-1 mx-2 mt-4">
-            <FaIcon icon={icon} className="text-brand text-4xl mx-auto mb-2" />
+          <div key={title} className="mx-2 mt-4 flex-1">
+            <FaIcon icon={icon} className="mx-auto mb-2 text-4xl text-brand" />
             <div>
               <b className="text-lg">{title}</b>
               <br />

@@ -4,6 +4,7 @@ import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import { AuthSessionCookie } from './cookie/auth-session-cookie'
 import type { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
+import { isProduction } from '@/helper/is-production'
 
 export type AuthenticationPayload = {
   username: string
@@ -29,24 +30,50 @@ export function AuthProvider({
     getAuthPayloadFromLocalCookie()
   )
 
-  function refreshAuth(session: Session | null) {
-    setAuthenticationPayload(getAuthPayloadFromSession(session))
+  function refreshAuth(
+    session?: Session | null,
+    cookiePayload?: AuthenticationPayload
+  ) {
+    const newPayload =
+      session !== undefined ? getAuthPayloadFromSession(session) : cookiePayload
+
+    if (newPayload === undefined) return
+
+    // careful: when changed this updates most of the components and can reset state in e.g. the editor!
+    // use functional update to get the current value of the payload
+    // returning same value will skip set state
+    setAuthenticationPayload((authenticationPayload) =>
+      authenticationPayload?.id !== newPayload?.id
+        ? newPayload
+        : authenticationPayload
+    )
   }
+
+  // check if kratos session still exists (single logout)
+  useEffect(() => {
+    if (authenticationPayload && !isProduction)
+      void (async () => {
+        await (
+          await import('./cookie/fetch-and-persist-auth-session')
+        ).fetchAndPersistAuthSession(refreshAuth)
+      })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     const refreshWhenVisible = () => {
       if (!document.visibilityState) return
-      const cookiePayload = getAuthPayloadFromLocalCookie()
 
-      // use functional update to get the current value of the payload
-      // returning same value will skip set state
-      setAuthenticationPayload((authenticationPayload) => {
-        if (cookiePayload?.id !== authenticationPayload?.id) {
-          return cookiePayload
-        } else {
-          return authenticationPayload
-        }
-      })
+      refreshAuth(undefined, getAuthPayloadFromLocalCookie())
+
+      // check if kratos session still exists (single logout)
+      if (authenticationPayload && !isProduction) {
+        void (async () => {
+          await (
+            await import('./cookie/fetch-and-persist-auth-session')
+          ).fetchAndPersistAuthSession(refreshAuth)
+        })()
+      }
     }
     document.addEventListener('visibilitychange', refreshWhenVisible) //on tab focus change
     window.addEventListener('online', () => refreshWhenVisible) //on reconnect
@@ -55,6 +82,7 @@ export function AuthProvider({
       document.removeEventListener('visibilitychange', refreshWhenVisible)
       window.removeEventListener('online', () => refreshWhenVisible)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const authorizationPayload = useAuthorizationPayload(

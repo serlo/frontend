@@ -11,6 +11,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { Quickbar } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { submitEvent } from '@/helper/submit-event'
+import { tw } from '@/helper/tw'
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -41,26 +42,30 @@ export function Header() {
   return (
     <header
       className={clsx(
-        'text-truegray-700 pt-3',
-        hideQuickbar ? '' : 'bg-brand-100',
-        'pb-9 bg-[url("/_assets/img/header-curve.svg")] bg-no-repeat bg-bottom bg-[length:100vw_3rem]'
+        tw`
+          bg-[url("/_assets/img/header-curve.svg")] bg-[length:100vw_3rem]
+          bg-bottom bg-no-repeat pt-3 pb-9 text-almost-black
+        `,
+        hideQuickbar ? '' : 'bg-brand-100'
       )}
     >
       <SkipMenu />
-      <div className="pt-3 pb-6 px-side lg:px-side-lg">
-        <div className="mobile:flex mobile:justify-between flex-wrap lg:flex-nowrap">
+      <div className="px-side pt-3 pb-6 lg:px-side-lg">
+        <div className="flex-wrap mobileExt:flex mobileExt:justify-between lg:flex-nowrap">
           <Logo foldOnMobile />
           <div
             className={clsx(
-              'min-h-[50px] md:block mt-[1.7rem] md:mt-7',
-              'order-last md:order-none lg:order-last ',
-              'w-full md:w-auto',
+              tw`
+                order-last mt-[1.7rem] min-h-[50px] w-full
+                md:order-none md:mt-8 md:block
+                md:w-auto lg:order-last
+              `,
               mobileMenuOpen ? '' : 'hidden'
             )}
           >
             <Menu />
           </div>
-          <div className="hidden md:block lg:hidden basis-full h-0" />
+          <div className="hidden h-0 basis-full md:block lg:hidden" />
           {renderQuickbar()}
           <MobileMenuButton
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -76,12 +81,12 @@ export function Header() {
     if (hideQuickbar) return null
     return (
       <Quickbar
-        className={clsx(
-          'mt-7 mx-auto text-left font-normal',
-          'mobile:max-w-sm mobile:ml-4 mobile:mr-0 mobile:mt-5 mobile:px-2 mobile:flex-grow',
-          'md:mt-0 md:max-w-xs',
-          'lg:mt-6 lg:max-w-sm'
-        )}
+        className={tw`
+          mx-auto mt-7 text-left font-normal
+          mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:max-w-sm mobileExt:flex-grow mobileExt:px-2
+          md:mt-0 md:max-w-xs
+          lg:mt-6 lg:max-w-sm
+        `}
         placeholder={strings.header.search}
       />
     )
@@ -90,7 +95,7 @@ export function Header() {
   function renderSpecialDonationButton() {
     return (
       <button
-        className="serlo-button-green absolute text-[0.9rem] right-4 md:right-6 lg:right-12 top-28 md:top-[1.15rem] py-0.75"
+        className="py-0.75 serlo-button-green absolute right-4 top-32 text-[0.9rem] md:right-6 md:top-[1.15rem] lg:right-12"
         onClick={() => {
           submitEvent('spenden-header-menu-click-landing')
           void router.push('/spenden')

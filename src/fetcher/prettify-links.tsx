@@ -70,7 +70,7 @@ export async function prettifyLinks(pageData: RequestPageData) {
             const id =
               typeof prereq.id === 'string' ? parseInt(prereq.id) : prereq.id
             prereq.href = `/${prereq.id ?? ''}` //fallback
-            if (id && Number.isInteger(id)) {
+            if (id && Number.isInteger(id) && id < Math.pow(2, 31)) {
               ids.push(id)
               callbacks.push({
                 id,

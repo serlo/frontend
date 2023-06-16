@@ -77,7 +77,7 @@ function Content({ pages }: PagesProps) {
       return (
         <li
           key={id}
-          className="flex justify-between my-3 p-3 -ml-3 hover:bg-brand-50 rounded-md"
+          className="my-3 -ml-3 flex justify-between rounded-md p-3 hover:bg-brand-50"
         >
           <Link href={alias}>
             {currentRevision ? currentRevision.title : 'no accepted revision'}

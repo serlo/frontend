@@ -11,7 +11,7 @@ export function Logo({ foldOnMobile }: LogoProps) {
   const { strings } = useInstanceData()
 
   return (
-    <Link href="/" path={['logo']} className="w-min sm:w-auto">
+    <Link href="/" className="w-min sm:w-auto">
       <img
         className="inline"
         alt="Serlo"
@@ -21,10 +21,10 @@ export function Logo({ foldOnMobile }: LogoProps) {
       />
       <span
         className={clsx(
-          'font-handwritten text-xl align-text-top text-truegray-700',
-          'inline-block mt-4 ml-2',
-          foldOnMobile &&
-            'ml-9 mt-2 block mobile:inline-block mobile:ml-9 mobile:whitespace-nowrap sm:mt-4 sm:ml-2'
+          'align-text-top font-handwritten text-xl text-almost-black',
+          foldOnMobile
+            ? 'ml-9 mt-2 block mobileExt:ml-9 mobileExt:inline-block mobileExt:whitespace-nowrap sm:mt-4 sm:ml-2'
+            : 'absolute mt-4 ml-2 inline-block'
         )}
       >
         {strings.header.slogan}

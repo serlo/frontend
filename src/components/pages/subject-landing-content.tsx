@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { HeadTags } from '../head-tags'
 import { FooterNew } from '../landing/rework/footer-new'
 import { SubjectIcon } from '../landing/rework/subject-icon'
@@ -15,6 +13,7 @@ import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { breakpoints } from '@/helper/breakpoints'
 import { getServerSideStrings } from '@/helper/feature-i18n'
+import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 
 interface SubjectLandingContentProps {
@@ -42,27 +41,27 @@ export function SubjectLandingContent({
         }}
       />
       <Header />
-      <main id="content" className="text-truegray-700">
+      <main id="content" className="text-almost-black">
         <section
-          className={clsx(
-            'max-w-3xl mx-auto mt-16',
-            'md:mt-14 sm:flex',
-            'text-center sm:text-left'
-          )}
+          className={tw`
+            mx-auto mt-16 max-w-3xl
+            text-center sm:flex
+            sm:text-left md:mt-14
+          `}
         >
           <div>
             <h1
-              className={clsx(
-                'text-4xl sm:text-6xl font-extrabold',
-                'tracking-tight',
-                'mt-3 mb-10'
-              )}
+              className={tw`
+                mt-3 mb-10 text-4xl
+                font-extrabold
+                tracking-tight sm:text-6xl
+              `}
             >
-              <span className="w-min pb-3 underlined inline-block max-w-[27rem] !whitespace-normal">
+              <span className="serlo-underlined inline-block w-min max-w-[27rem] !whitespace-normal pb-3">
                 {data.title}
               </span>
             </h1>
-            <p className="text-2xl leading-cozy text-truegray-700">
+            <p className="text-2xl leading-cozy text-almost-black">
               {data.subline1}
               <br /> {data.subline2}
             </p>
@@ -70,31 +69,30 @@ export function SubjectLandingContent({
           {renderIcon()}
         </section>
 
-        <section className="max-w-3xl mx-auto mt-10 text-center sm:text-left sm:mt-16">
-          <h2 className="text-truegray-700 font-bold text-lg mb-2">
+        <section className="mx-auto mt-10 max-w-3xl text-center sm:mt-16 sm:text-left">
+          <h2 className="mb-2 text-lg font-bold text-almost-black">
             Durchsuche den Bereich {data.title}
           </h2>
 
           <Quickbar
             subject={data.title}
-            className="max-w-sm sm:px-0 sm:-ml-1 md:max-w-2xl md:pr-4"
+            className="max-w-sm sm:-ml-1 sm:px-0 md:max-w-2xl md:pr-4"
           />
         </section>
 
-        <section className={clsx('text-center', 'themen')}>
-          <p className="text-3xl mt-4 mb-12 font-extrabold tracking-tight">
+        <section className="themen text-center">
+          <p className="mt-4 mb-12 text-3xl font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
           <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
         </section>
 
-        <section className={clsx('text-center', 'mt-20 mb-8')}>
+        <section className="mt-20 mb-8 text-center">
           <h2
-            className={clsx(
-              'text-3xl font-extrabold',
-              'tracking-tight',
-              'max-w-2xl mt-3 pb-10 mx-auto'
-            )}
+            className={tw`
+              mx-auto mt-3 max-w-2xl
+              pb-10 text-3xl font-extrabold tracking-tight
+            `}
           >
             <span className="pb-2">Beliebte Inhalte</span>
           </h2>
@@ -102,21 +100,12 @@ export function SubjectLandingContent({
           <SubjectLandingFeatured subject={subject} />
         </section>
 
-        <section className="text-center bg-blueWave bg-100% pt-4">
+        <section className="bg-blueWave bg-100% pt-4 text-center">
           <CommunityWallSubjectLanding subject={subject} />
         </section>
       </main>
       <FooterNew />
       <style jsx>{`
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
         .themen,
         .community {
           padding-top: 3rem;
@@ -135,55 +124,6 @@ export function SubjectLandingContent({
             background-position: 20% 19%;
             background-size: 100vw 100%;
           }
-        }
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-        :global(.landing-button-with-wings):after,
-        :global(.landing-button-with-wings):before {
-          content: ' ';
-          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-          position: absolute;
-          margin-top: -0.6rem;
-          width: 4rem;
-          height: 4rem;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity ease-in 0.2s;
-        }
-        :global(.landing-button-with-wings):after {
-          margin-left: 1rem;
-          transform: scaleX(-1);
-        }
-        :global(.landing-button-with-wings):before {
-          margin-left: -5rem;
-        }
-        :global(.landing-button-with-wings):hover:after,
-        :global(.landing-button-with-wings):hover:before {
-          opacity: 1;
-        }
-        :global(.landing-button-with-wink):after,
-        :global(.landing-button-with-wink):before {
-          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-          margin-top: -2rem !important;
-          background-size: 65% !important;
-        }
-        .p-with-wink:after,
-        .p-with-wink:before {
-          margin-top: -1rem !important;
-          background-size: 75%;
-          width: 2.5rem;
-          height: 2.5rem;
-          opacity: 1;
-        }
-        .p-with-wink:after {
-          margin-left: -0.5rem;
-        }
-        .p-with-wink:before {
-          margin-left: -1.5rem;
         }
       `}</style>
     </>

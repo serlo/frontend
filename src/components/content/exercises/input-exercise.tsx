@@ -1,17 +1,23 @@
 import type A from 'algebra.js'
 import clsx from 'clsx'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import { Feedback } from './feedback'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/frontend-node-types'
-import { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { exerciseSubmission } from '@/helper/exercise-submission'
+import { tw } from '@/helper/tw'
+import { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InputExerciseProps {
   data: EdtrPluginInputExercise['state']
-  path?: NodePath
   renderNested: RenderNestedFunction
   isRevisionView?: boolean
+  context: {
+    entityId: number
+    revisionId: number
+  }
 }
 
 interface FeedbackData {
@@ -23,11 +29,14 @@ export function InputExercise({
   data,
   renderNested,
   isRevisionView,
+  context,
 }: InputExerciseProps) {
   const [feedback, setFeedback] = useState<FeedbackData | null>(null)
   const [value, setValue] = useState('')
   const [A, setA] = useState<typeof import('algebra.js') | null>(null)
   const exStrings = useInstanceData().strings.content.exercises
+
+  const { asPath } = useRouter()
 
   useEffect(() => {
     void import('algebra.js').then((value) => setA(value))
@@ -35,19 +44,26 @@ export function InputExercise({
 
   function evaluate() {
     const feedbackData = checkAnswer()
+    exerciseSubmission({
+      path: asPath,
+      entityId: context.entityId,
+      revisionId: context.revisionId,
+      result: feedbackData.correct ? 'correct' : 'wrong',
+      type: 'input',
+    })
     setFeedback(feedbackData)
   }
 
   return (
     <div className="mx-side mb-7">
       <input
-        className={clsx(
-          'print:hidden serlo-input-font-reset',
-          'rounded-3xl py-2 px-3 active:font-bold focus:font-bold ',
-          'border-3 border-brand bg-brand mb-5 text-white',
-          'focus:outline-none focus:bg-white focus:text-brand focus:opacity-100 focus:placeholder-opacity-0',
-          'placeholder-white'
-        )}
+        className={tw`
+            serlo-input-font-reset mb-5
+            rounded-3xl border-3 border-brand-400 py-2
+            px-3 font-bold text-brand placeholder-brand focus:border-brand focus:bg-white
+            focus:text-brand focus:placeholder-opacity-0 focus:opacity-100 focus:outline-none
+            active:border-brand print:hidden
+          `}
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -65,9 +81,8 @@ export function InputExercise({
         <>
           <a
             className={clsx(
-              'serlo-button-blue',
-              'mt-4',
-              value === '' && 'opacity-0 pointer-events-none'
+              'serlo-button-blue mt-4',
+              value === '' && 'pointer-events-none opacity-0'
             )}
             onClick={evaluate}
           >
@@ -143,9 +158,9 @@ export function InputExercise({
     return data.answers.map((answer) => (
       <div
         key={answer.value}
-        className="bg-yellow-200 rounded-xl py-2 mb-4 serlo-revision-extra-info"
+        className="serlo-revision-extra-info mb-4 rounded-xl bg-editor-primary-100 py-2"
       >
-        <span className="font-bold text-sm mx-side">
+        <span className="mx-side text-sm font-bold">
           {exStrings.answer} {answer.isCorrect && `[${exStrings.correct}]`}:
         </span>
         {answer.value}

@@ -13,7 +13,7 @@ In our [staging](https://de.serlo-staging.dev/) and [production](https://serlo.o
 
 ### Local installation
 
-You can run the frontend on your local system. Install [Node.js v16](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install) then run the following commands:
+You can run the frontend on your local system. Install [Node.js v18](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install) then run the following commands:
 
 ```sh
 git clone --filter=blob:none https://github.com/serlo/frontend.git
@@ -22,7 +22,9 @@ yarn
 yarn dev
 ```
 
-The developement server is now live on [localhost:3000](http://localhost:3000).
+The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
+
+Choose language using `http://localhost:3000/{es|de|hi|ta|en|fr}/`
 
 ### Libraries
 
@@ -97,6 +99,12 @@ yarn codegen
 Generates exact types for some GraphQL queries and mutations. Add yours in `codegen.yml`.
 
 All files are named with kebab-case. You should use `@/` to import files from `src/` instead of relative paths.
+
+## Issues and backlog
+
+Technical issues are opened for bugs and feature that we decided to work on. For improvements and backlogs that will take more resources, we have the Feature-Entwicklungsprozess with its Trello-Board. The backlog is tracked there.
+
+This method should avoid stale issues and make it possible to keep an "zero inbox".
 
 ## More information
 

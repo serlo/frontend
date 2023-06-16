@@ -165,7 +165,7 @@ export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
     return (
       <code
         key={key}
-        className="bg-brand-100 text-brand p-1 rounded-sm text-base"
+        className="rounded-sm bg-brand-100 p-1 text-base text-brand"
       >
         {children}
       </code>
@@ -207,7 +207,7 @@ function renderElement({
       path && typeof path[0] === 'string' && path[0].startsWith('profile')
     return (
       <>
-        <Link href={element.href} path={path} unreviewed={isOnProfile}>
+        <Link href={element.href} unreviewed={isOnProfile}>
           {children}
         </Link>
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
@@ -219,7 +219,6 @@ function renderElement({
     return (
       <Article
         {...element}
-        showThankYou={!isRevisionView}
         renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
       />
     )
@@ -255,7 +254,7 @@ function renderElement({
     return <p className="serlo-p">{children}</p>
   }
   if (element.type === FrontendNodeType.SlateP) {
-    return <p className="serlo-p mb-0 slate-p min-h-[1.33em]">{children}</p>
+    return <p className="slate-p serlo-p mb-0 min-h-[1.33em]">{children}</p>
   }
   if (element.type === FrontendNodeType.SlateContainer) {
     // formulas can overflow the slate container.
@@ -265,7 +264,7 @@ function renderElement({
     // we can't use overflow-y-visible and overflow-x-auto at the same time, visible defaults to auto
     // to hide the scrollbars, hidden is necessary
     return (
-      <div className="mb-block slate-container max-w-full overflow-x-auto overflow-y-hidden">
+      <div className="slate-container mb-block max-w-full overflow-x-auto overflow-y-hidden">
         {children}
       </div>
     )
@@ -291,7 +290,6 @@ function renderElement({
     return (
       <Image
         element={element}
-        path={path}
         extraInfo={
           isRevisionView ? (
             <ExtraRevisionViewInfo element={element} />
@@ -303,11 +301,11 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.SpoilerContainer) {
     if (!Array.isArray(children)) return null
-    return <Spoiler title={children[0]} body={children[1]} path={path} />
+    return <Spoiler title={children[0]} body={children[1]} />
   }
   if (element.type === FrontendNodeType.SpoilerBody) {
     return (
-      <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:slide-in-from-top-8 motion-safe:fade-in">
+      <div className="serlo-spoiler-body motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-8">
         {children}
       </div>
     )
@@ -385,7 +383,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Geogebra) {
     return (
       <Lazy noPrint>
-        <Geogebra id={element.id} path={path} />
+        <Geogebra id={element.id} />
       </Lazy>
     )
   }
@@ -450,7 +448,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
-        <Video src={element.src} path={path} license={element.license} />
+        <Video src={element.src} license={element.license} />
       </Lazy>
     )
   }

@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useState, useEffect } from 'react'
 
-import { Link } from '../content/link'
 import { PageTitle } from '../content/page-title'
 import { HSpace } from '@/components/content/h-space'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -103,16 +102,12 @@ export function ErrorPage({ code, message }: ErrorPageProps) {
   }
 
   function renderHomeLink() {
-    //no csr here
+    // don't use csr here to make sure we refresh everything after crashing
     return (
-      <Link
-        href="/"
-        forceNoCSR
-        unstyled
-        className="serlo-button-blue mr-4 mt-4"
-      >
+      // eslint-disable-next-line @next/next/no-html-link-for-pages
+      <a href="/" className="serlo-button-blue mr-4 mt-4">
         {errStrings.backToHome}
-      </Link>
+      </a>
     )
   }
 

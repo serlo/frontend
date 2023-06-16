@@ -21,7 +21,8 @@ interface UuidUrlInputProps {
     typename: UuidWithRevType,
     id: number,
     title: string,
-    taxType?: TaxonomyTermType
+    taxType?: TaxonomyTermType,
+    coursePageId?: number
   ) => JSX.Element
   unsupportedIds?: number[]
   inlineFeedback?: boolean
@@ -43,9 +44,9 @@ export function UuidUrlInput({
   const modalStrings = loggedInData.strings.editor.article.addModal
 
   return (
-    <div className="my-4 pt-5 border-t-2">
+    <div className="my-4 border-t-2 pt-5">
       <input
-        className="serlo-input-font-reset outline-none rounded-xl bg-amber-200 p-2 focus:bg-amber-300 w-72"
+        className="serlo-input-font-reset w-72 rounded-xl bg-editor-primary-200 p-2 font-bold placeholder-almost-black outline-none placeholder:font-normal focus:bg-editor-primary"
         placeholder={modalStrings.placeholder}
         onChange={(event) => {
           if (event.target.value.length === 0) {
@@ -61,7 +62,7 @@ export function UuidUrlInput({
       <div
         className={clsx(
           'text-base italic',
-          inlineFeedback ? 'inline-block ml-3' : 'mt-5'
+          inlineFeedback ? 'ml-3 inline-block' : 'mt-5'
         )}
       >
         {renderFeedback()}
@@ -88,6 +89,8 @@ export function UuidUrlInput({
 
     const id =
       uuid.__typename === UuidType.CoursePage ? uuid.course?.id : uuid.id
+    const coursePageId =
+      uuid.__typename === UuidType.CoursePage ? uuid.id : undefined
 
     if (!supportedEntityTypes.includes(uuid.__typename as UuidWithRevType))
       return modalStrings.unsupportedType.replace('%type%', uuid.__typename)
@@ -109,7 +112,7 @@ export function UuidUrlInput({
     return (
       <>
         <a
-          className="mr-3 not-italic font-bold text-brand"
+          className="mr-3 font-bold not-italic text-brand"
           href={`/${id}`}
           target="_blank"
           rel="noreferrer"
@@ -120,7 +123,8 @@ export function UuidUrlInput({
           uuid.__typename as UuidWithRevType,
           id,
           title ?? getTranslatedType(strings, uuid.__typename),
-          Object.hasOwn(uuid, 'type') ? uuid.type : undefined
+          Object.hasOwn(uuid, 'type') ? uuid.type : undefined,
+          coursePageId
         )}
       </>
     )

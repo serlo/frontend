@@ -282,6 +282,7 @@ export const sharedExerciseFragments = gql`
     trashed
     date
     currentRevision {
+      id
       content
       date
     }

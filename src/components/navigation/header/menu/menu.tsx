@@ -1,4 +1,5 @@
 import { Root, List } from '@radix-ui/react-navigation-menu'
+import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 
@@ -18,13 +19,20 @@ export function Menu() {
 
   useEffect(() => setMounted(true), [])
 
+  const showAuth = auth && mounted
+
   return (
     <Root>
-      <List className="md:text-right block m-0 p-0 relative sm:min-w-[27rem]">
+      <List
+        className={clsx(
+          'relative m-0 block p-0 sm:min-w-[27rem] md:text-right',
+          showAuth ? '' : 'md:mt-0.5 md:mr-3.5'
+        )}
+      >
         {headerData.map((link) => (
           <Item key={link.title} link={link} />
         ))}
-        {auth && mounted ? <AuthItems /> : <NoAuthItem hidden={!mounted} />}
+        {showAuth ? <AuthItems /> : <NoAuthItem hidden={!mounted} />}
       </List>
     </Root>
   )

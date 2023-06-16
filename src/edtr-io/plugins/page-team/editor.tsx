@@ -48,8 +48,8 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
 
   function renderDataImport() {
     return (
-      <div className="bg-amber-50 p-4">
-        <b className="serlo-h4 block ml-0 mb-4">Supply data to plugin</b>
+      <div className="bg-editor-primary-50 p-4">
+        <b className="serlo-h4 ml-0 mb-4 block">Supply data to plugin</b>
         <p className="mb-4">
           Make your changes in{' '}
           <a
@@ -62,7 +62,7 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
           first and afterwards use this button.
         </p>
         <button
-          className="serlo-button bg-amber-200 hover:bg-amber-300 focus:bg-amber-300 mb-12 text-base"
+          className="serlo-button-editor-primary mb-12 text-base"
           onClick={async () => {
             try {
               const response = await fetch(

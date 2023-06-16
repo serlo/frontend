@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { partition } from 'ramda'
 
 import { Link } from '../content/link'
@@ -49,7 +48,7 @@ export function ProfileRoles({ roles }: ProfileRolesProps) {
 
   function Role({ text, role }: { text: string; role: string }) {
     const label = (
-      <span className={clsx('serlo-button-light text-sm ml-1')}>{text}</span>
+      <span className="serlo-button-light ml-1 text-sm">{text}</span>
     )
 
     return (

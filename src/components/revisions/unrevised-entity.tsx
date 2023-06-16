@@ -68,7 +68,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
 
   function renderTable() {
     return (
-      <table className="mt-1 border-collapse w-full relative">
+      <table className="relative mt-1 w-full border-collapse">
         <tbody>
           {nodes.map((revision) => (
             <Fragment key={revision.id}>{renderRevision(revision)}</Fragment>
@@ -82,14 +82,15 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     if (!revision) return null
     const viewUrl = `/entity/repository/compare/${entity.id}/${revision.id}`
     const isProbablyWIP = checkWIP(revision.changes)
+    const isProbablyImported = checkImported(revision.changes)
 
     return (
       <tr className={isProbablyWIP ? 'opacity-50' : undefined}>
-        <Td className="pl-0 w-1/2 pt-2.5">
-          <Link href={viewUrl} className="hover:no-underline text-black">
+        <Td className="w-1/2 pl-0 pt-2.5">
+          <Link href={viewUrl} className="text-black hover:no-underline">
             {revision.changes || '–'}
           </Link>
-          {renderLabels(isProbablyWIP)}
+          {renderLabels(isProbablyWIP, isProbablyImported)}
         </Td>
         {isOwn ? null : (
           <Td>
@@ -102,7 +103,7 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
         </Td>
         <Td centered className="w-1/6 text-right">
           <Link
-            className="serlo-button-light my-0 ml-auto text-base group transition-none hover:bg-brand-100 hover:text-brand"
+            className="group serlo-button-light my-0 ml-auto text-base transition-none hover:bg-brand-100 hover:text-brand"
             href={viewUrl}
           >
             <span className="hidden group-hover:inline">
@@ -115,14 +116,22 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
     )
   }
 
-  function renderLabels(isProbablyWIP: boolean) {
-    const { newLabelNote, newLabelText, wipLabelNote, wipLabelText } =
-      strings.unrevisedRevisions
+  function renderLabels(isProbablyWIP: boolean, isProbablyImported: boolean) {
+    const {
+      newLabelNote,
+      newLabelText,
+      wipLabelNote,
+      wipLabelText,
+      importedContentNote,
+      importedContentText,
+    } = strings.unrevisedRevisions
     return (
       <>
         {' '}
         {isProbablyNew && renderLabel(newLabelText, newLabelNote)}{' '}
         {isProbablyWIP && renderLabel(wipLabelText, wipLabelNote)}
+        {isProbablyImported &&
+          renderLabel(importedContentText, importedContentNote)}
       </>
     )
   }
@@ -155,6 +164,12 @@ export function UnrevisedEntity({ entity, isOwn }: UnrevisedEntityProps) {
       'im aufbau',
     ]
     return wipStrings.some((testStr) => changes.toLowerCase().includes(testStr))
+  }
+
+  function checkImported(changes: string) {
+    return changes.includes(
+      strings.unrevisedRevisions.importedContentIdentifier
+    )
   }
 }
 

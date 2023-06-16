@@ -45,8 +45,8 @@ export function CommentAreaAllThreads() {
           Filtern nach
           <span
             className={clsx(
-              "after:content-['▾'] after:absolute after:-ml-7 after:mt-1.5 after:text-black after:text-2xl",
-              'border-solid after:pointer-events-none inline-block'
+              "after:absolute after:-ml-7 after:mt-1.5 after:text-2xl after:text-black after:content-['▾']",
+              'inline-block border-solid after:pointer-events-none'
             )}
           >
             <select
@@ -54,7 +54,7 @@ export function CommentAreaAllThreads() {
               onChange={(e) => {
                 setFilter(e.target.value)
               }}
-              className="p-3 ml-3 pr-9 rounded-lg bg-brand-400 [&>option]:bg-white [&>option:selected]:bg-brand-100 cursor-pointer appearance-none"
+              className="ml-3 cursor-pointer appearance-none rounded-lg bg-brand-400 p-3 pr-9 [&>option]:bg-white [&>option:selected]:bg-brand-100"
             >
               <option value="">Alle Fächer</option>
               <option value="czU=">Mathematik</option>
@@ -76,7 +76,7 @@ export function CommentAreaAllThreads() {
             </StaticInfoPanel>
           ) : null}
           {renderThreads()}
-          <div className="border-t-2 border-truegray-300 mx-side mt-24 h-24">
+          <div className="border-truegray-300 mx-side mt-24 h-24 border-t-2">
             {loading ? (
               <LoadingSpinner noText />
             ) : (
@@ -110,7 +110,7 @@ export function CommentAreaAllThreads() {
       return (
         <EntityIdProvider key={thread.id} value={thread.object.id}>
           <div className="mb-16">
-            <div className="border-b-2 mt-16 mb-5 mx-side">
+            <div className="mx-side mt-16 mb-5 border-b-2">
               <b>
                 <FaIcon icon={getIconByTypename(__typename as UuidType)} />{' '}
                 {getTranslatedType(strings, __typename)}

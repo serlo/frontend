@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
@@ -6,6 +7,7 @@ import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
+import { tw } from '@/helper/tw'
 // eslint-disable-next-line import/extensions
 import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
@@ -105,10 +107,9 @@ const specials = [
   },
 ]
 
-const h2Class =
-  'text-center text-4xl leading-cozy tracking-tight font-extrabold'
-const h3Class = 'text-gray-700 text-[1.3rem] font-extrabold'
-const italicClass = 'text-brand italic font-handwritten text-3xl'
+const h2Class = tw`text-center text-4xl font-extrabold leading-cozy tracking-tight`
+const h3Class = tw`text-[1.3rem] font-extrabold text-gray-700`
+const italicClass = tw`font-handwritten text-3xl italic text-brand`
 
 // type CategorizedJobsProps = Record<string, PersonioPosition[]>
 export interface JobsOverviewProps {
@@ -123,68 +124,62 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       <HeadTags data={{ title: 'Jobs bei Serlo' }} />
 
       <div
-        className={clsx(
-          'md:left-[calc(-50vw+50%)] md:relative',
-          'md:text-left md:max-w-[100vw] w-[100vw] md:ml-0',
-          '-mt-12 text-center',
-          'text-gray-700'
-        )}
+        className={tw`
+          -mt-12 w-[100vw]
+          text-center text-gray-700 md:relative md:left-[calc(-50vw+50%)]
+          md:ml-0 md:max-w-[100vw]
+          md:text-left
+        `}
       >
         <div className="mt-16 md:mt-[11vh]">
           <UserTools aboveContent />
         </div>
         <section
-          className={clsx(
-            'sm:flex sm:flex-row-reverse',
-            'sm:text-left font-bold'
-          )}
+          className={tw`
+            font-bold sm:flex
+            sm:flex-row-reverse sm:text-left
+          `}
         >
-          <div className="w-full px-2 mt-12 sm:mt-32 sm:ml-10">
-            <p
-              className={clsx(
-                italicClass,
-                'landing-button-with-wings landing-button-with-wink p-with-wink mr-6'
-              )}
-            >
+          <div className="mt-12 w-full px-2 sm:mt-32 sm:ml-10">
+            <p className={clsx(italicClass, 'serlo-add-eyebrows mr-6')}>
               Hey du
             </p>
             <h1
-              className={clsx(
-                'text-5xl font-extrabold',
-                'tracking-tight leading-tight',
-                'max-w-md mt-3 mb-6 mx-auto sm:ml-0'
-              )}
+              className={tw`
+                mx-auto mt-3 mb-6 max-w-md
+                text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
+              `}
             >
               Digitale Bildung braucht{' '}
-              <span className="underlined !pr-0">dich&thinsp;!</span>
+              <span className="serlo-underlined !pr-0">dich&thinsp;!</span>
             </h1>
           </div>
           <aside className="w-full">
             <img
               src="/_assets/img/jobs/jobs-header.jpg"
-              className={clsx(
-                'rounded-full object-cover object-left mx-side aspect-square',
-                'w-[90vw] max-w-[28rem] mx-auto',
-                'sm:w-[28rem] sm:h-[28rem] sm:mx-0 sm:ml-auto'
-              )}
+              className={tw`
+                mx-side mx-auto aspect-square w-[90vw] max-w-[28rem]
+                rounded-full object-cover object-left
+                sm:mx-0 sm:ml-auto sm:h-[28rem] sm:w-[28rem]
+              `}
             />
           </aside>
         </section>
 
-        <section className={clsx('text-center mt-3 px-2')}>
+        <section className="mt-3 px-2 text-center">
           <h3
             style={{ hyphens: 'auto' }}
-            className={clsx(h2Class, 'inline-block mt-12 pb-3')}
+            className={clsx(h2Class, 'mt-12 inline-block pb-3')}
             id="stellen"
           >
             Unsere offenen Stellen
           </h3>
-          <div className="sm:flex pt-8 justify-center text-left px-side mt-5">
-            <div className="max-w-xl w-full mx-auto sm:mr-4">
+          <div className="mt-5 justify-center px-side pt-8 text-left sm:flex">
+            <div className="mx-auto w-full max-w-xl sm:mr-4">
               <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamtlich</h3>
               {renderPositions(jobs)}
             </div>
-            <div className="max-w-xl w-full mx-auto sm:ml-4">
+            <div className="mx-auto w-full max-w-xl sm:ml-4">
               <div>
                 <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-16 sm:mt-0')}>
                   Ehrenamtlich
@@ -199,37 +194,37 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('bg-orangeBow bg-100% mt-24 !pt-12')}>
+        <section className="mt-24 bg-orangeBow bg-100% !pt-12">
           <h3
-            className={clsx(
-              'text-center text-4xl text-truegray-700 font-bold',
-              'leading-cozy tracking-tight',
-              'mx-auto'
-            )}
+            className={tw`
+              mx-auto text-center text-4xl font-bold
+              leading-cozy tracking-tight
+              text-almost-black
+            `}
           >
             <p className={clsx(h2Class, 'mt-8 px-1')}>
               Das erwartet dich bei uns
             </p>
           </h3>
           <div
-            className={clsx(
-              'relative text-[1.3rem] text-left pb-16 mb-12',
-              'pt-4 lg:mb-16 md:pb-16',
-              'grid grid-cols-2 md:grid-cols-3 max-w-2xl md:max-w-4xl mx-auto'
-            )}
+            className={tw`
+              relative mx-auto mb-12 grid max-w-2xl
+              grid-cols-2 pb-16 pt-4
+              text-left text-[1.3rem] md:max-w-4xl md:grid-cols-3 md:pb-16 lg:mb-16
+            `}
           >
             {specials.map(({ src, title, content }) => {
               return (
                 <div
                   key={title}
-                  className="w-full -mb-5 sm:mb-4 mobile:text-center px-2 tracking-slightly-tighter"
+                  className="-mb-5 w-full px-2 tracking-slightly-tighter mobile:text-center sm:mb-4"
                 >
                   <img src={src} className="max-h-32 mobile:mx-auto" />
                   <h4
-                    className="text-truegray-700 font-extrabold leading-cozy"
+                    className="font-extrabold leading-cozy text-almost-black"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
-                  <p className="serlo-p text-lg font-normal max-w-65 mx-auto mt-2 leading-snug special-hyphens-initial">
+                  <p className="serlo-p mx-auto mt-2 max-w-65 text-lg font-normal leading-snug special-hyphens-initial">
                     {content}
                   </p>
                 </div>
@@ -239,9 +234,9 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         </section>
 
         <section className={clsx('mt-18 -mb-8')}>
-          <div className="max-w-4xl text-center mx-auto">
+          <div className="mx-auto max-w-4xl text-center">
             <p className={clsx(h2Class, 'mt-8')}>Noch Fragen?</p>
-            <p className="text-[1.3rem] mt-3">
+            <p className="mt-3 text-[1.3rem]">
               Dann schreib uns an{' '}
               <a className="text-brand underline" href="mailto:jobs@serlo.org">
                 jobs@serlo.org
@@ -252,18 +247,18 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
           </div>
         </section>
 
-        <section className={clsx('bg-blueWave bg-100% mt-24 !pt-16 pb-16')}>
-          <div className="text-3xl leading-cozy max-w-4xl text-center mx-auto">
+        <section className="mt-24 bg-blueWave bg-100% !pt-16 pb-16">
+          <div className="mx-auto max-w-4xl text-center text-3xl leading-cozy">
             <img
               src="/_assets/img/landing/birds.svg"
               className="mx-auto my-5"
             />
-            <p className="mb-8 max-w-2xl px-2 mx-auto font-bold">
+            <p className="mx-auto mb-8 max-w-2xl px-2 font-bold">
               Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die
               digitale Transformation unserer Schulen ein.
             </p>
             <Link
-              className="serlo-new-landing-button inline landing-button-with-wings"
+              className="serlo-new-landing-button serlo-button-with-wings inline"
               href="/serlo"
             >
               Mehr über Serlo
@@ -281,15 +276,6 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         :global(main > h1.serlo-h1) {
           display: none;
         }
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
         .about {
           padding-top: 7rem;
           padding-bottom: 5rem;
@@ -305,55 +291,6 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             background-position: 20% 19%;
             background-size: 82%, 100vw 100%;
           }
-        }
-        .underlined {
-          padding-right: 1rem;
-          white-space: nowrap;
-          background: url('/_assets/img/landing/simple-underline.svg') no-repeat
-            bottom;
-        }
-        :global(.landing-button-with-wings):after,
-        :global(.landing-button-with-wings):before {
-          content: ' ';
-          background: url('/_assets/img/landing/wing-left.svg') no-repeat;
-          position: absolute;
-          margin-top: -0.6rem;
-          width: 4rem;
-          height: 4rem;
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity ease-in 0.2s;
-        }
-        :global(.landing-button-with-wings):after {
-          margin-left: 1rem;
-          transform: scaleX(-1);
-        }
-        :global(.landing-button-with-wings):before {
-          margin-left: -5rem;
-        }
-        :global(.landing-button-with-wings):hover:after,
-        :global(.landing-button-with-wings):hover:before {
-          opacity: 1;
-        }
-        :global(.landing-button-with-wink):after,
-        :global(.landing-button-with-wink):before {
-          background: url('/_assets/img/landing/wink-left.svg') no-repeat !important;
-          margin-top: -2rem !important;
-          background-size: 65% !important;
-        }
-        .p-with-wink:after,
-        .p-with-wink:before {
-          margin-top: -1rem !important;
-          background-size: 75%;
-          width: 2.5rem;
-          height: 2.5rem;
-          opacity: 1;
-        }
-        .p-with-wink:after {
-          margin-left: -0.5rem;
-        }
-        .p-with-wink:before {
-          margin-left: -1.5rem;
         }
       `}</style>
     </>
@@ -377,19 +314,18 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                   </h4>
                 ) : null} */}
               <li key={id}>
-                <Link
-                  unstyled
-                  className={clsx(
-                    'block px-5 py-4 mb-5',
-                    'rounded-xl hover:bg-brand/5 transition-colors shadow-menu',
-                    'text-lg'
-                  )}
+                <NextLink
+                  className={tw`
+                    mb-5 block rounded-xl px-5
+                    py-4 text-lg shadow-menu transition-colors
+                    hover:bg-brand/5
+                  `}
                   href={`/jobs/${id}`}
                 >
-                  <span className="text-brand font-bold">{name}</span>
+                  <span className="font-bold text-brand">{name}</span>
                   <br />
                   {renderSubline(position)}
-                </Link>
+                </NextLink>
               </li>
             </Fragment>
           )
@@ -402,32 +338,32 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
     return (
       <figure
         key={name}
-        className={clsx(
-          'mt-12 text-center group',
-          'sm:w-1/3v',
-          'max-w-[20rem] mx-auto'
-        )}
+        className={tw`
+          group mx-auto mt-12
+          max-w-[20rem]
+          text-center sm:w-1/3v
+        `}
       >
         <div className="relative w-full">
           <div
-            className={clsx(
-              'bg-wiggle absolute left-5 top-5 right-12 pb-6/5',
-              'bg-no-repeat bg-contain opacity-0 group-hover:opacity-100',
-              'transition-all ease-linear duration-200 group-hover:rotate-1'
-            )}
+            className={tw`
+              absolute left-5 top-5 right-12 bg-wiggle bg-contain
+              bg-no-repeat pb-6/5 opacity-0 transition-all
+              duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
+            `}
           ></div>
         </div>
         <img
           src={imgSrc}
           alt={`Avatar von ${name}`}
-          className="relative z-10 rounded-full w-full aspect-square object-cover p-12 -mb-12"
+          className="relative z-10 -mb-12 aspect-square w-full rounded-full object-cover p-12"
         />
-        <p className="text-base mt-2 font-bold">@{name}</p>
+        <p className="mt-2 text-base font-bold">@{name}</p>
         <span
-          className={clsx(
-            'text-brand font-handwritten text-xl font-bold px-2 py-1',
-            'rounded-2xl'
-          )}
+          className={tw`
+            rounded-2xl px-2 py-1 font-handwritten
+            text-xl font-bold text-brand
+          `}
         >
           {role}
         </span>

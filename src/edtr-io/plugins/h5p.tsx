@@ -17,6 +17,11 @@ const h5pLibraryWhitelist = [
   'H5P.Blanks',
   'H5P.DragText',
   'H5P.ImageHotspotQuestion',
+  'H5P.MultiMediaChoice',
+  'H5P.ImageMultipleHotspotQuestion',
+  'H5P.MemoryGame',
+  'H5P.Flashcards',
+  'H5P.MarkTheWords',
 ]
 
 export const H5pPlugin: EditorPlugin<H5pPluginState> = {
@@ -113,12 +118,19 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             </li>
             <li>
               Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines der
-              vier Inhaltstypen:
+              folgenden Inhaltstypen:
               <ul>
                 <li>Fill in the Blanks</li>
                 <li>Drag the Words</li>
                 <li>Find the Hotspot</li>
                 <li>Drag and Drop</li>
+                <li>Bildauswahl (Image Choice)</li>
+                <li>
+                  Hotspots in Bild suchen (mehrere) (Find Multiple Hotspots)
+                </li>
+                <li>Memory</li>
+                <li>Flashcards</li>
+                <li>Mark The Words</li>
               </ul>
             </li>
             <li>
@@ -145,10 +157,10 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             />
           </EditorInlineSettings>
         </div>
-        {error && <p className="text-red-500 mt-2 mx-side">{error}</p>}
+        {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
         <p>
           <button
-            className="mt-2 serlo-button bg-brandgreen-300 disabled:bg-gray-300 disabled:cursor-default"
+            className="serlo-button mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
             disabled={state.value === '' || error !== '' || mode === 'loading'}
             onClick={() => {
               setMode('loading')
@@ -158,7 +170,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
           </button>
         </p>
-        <p className="mt-4 text-gray-500 text-sm">
+        <p className="mt-4 text-sm text-gray-500">
           <small>
             Hinweis: Um existierende Inhalte zu nutzen, lade diese herunter,
             lade sie in deinen Account hoch und stelle sie dort bereit.
@@ -176,7 +188,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
           onClick={() => {
             setMode('edit')
           }}
-          className="ml-4 serlo-button bg-brand-300"
+          className="serlo-button ml-4 bg-brand-300"
         >
           Ändern
         </button>
@@ -191,7 +203,7 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
           </a>
         )}
       </p>
-      <H5p url={state.value} />
+      <H5p url={state.value} context={{ entityId: -1, revisionId: -1 }} />
     </>
   )
 }

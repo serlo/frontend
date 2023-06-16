@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model ExerciseSubmission {
+  id         Int      @id @default(autoincrement())
+  path       String   @db.VarChar(1024)
+  entityId   Int
+  revisionId Int
+  type       String   @db.VarChar(8)
+  result     String   @db.VarChar(8)
+  timestamp  DateTime @default(now())
+  sessionId  String   @db.VarChar(64)
+
+  @@index([entityId])
+  @@index([timestamp])
+}
+
+model PrivateLinkPrototype {
+  key       String   @unique @db.VarChar(64)
+  id        Int
+  content   String   @db.Text
+  title     String   @db.VarChar(128)
+  timestamp DateTime @default(now())
+}
+
+model TestSurvey {
+  id           Int      @id @default(autoincrement())
+  path         String   @db.VarChar(1024)
+  isProduction Boolean
+  event        String   @db.VarChar(24)
+  timestamp    DateTime @default(now())
+}
+
+model MitmachWoche {
+  id           Int      @id @default(autoincrement())
+  path         String   @db.VarChar(1024)
+  isProduction Boolean
+  event        String   @db.VarChar(24)
+  timestamp    DateTime @default(now())
+}

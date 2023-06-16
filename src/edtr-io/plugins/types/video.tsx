@@ -2,9 +2,10 @@ import { EditorPlugin, EditorPluginProps, string } from '@edtr-io/plugin'
 import { createVideoPlugin } from '@edtr-io/plugin-video'
 
 import { entity, editorContent, HeaderInput, entityType } from './common/common'
-import { RevisionHistoryLoader } from './helpers/revision-history-loader'
+import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 
 export const videoTypeState = entityType(
   {
@@ -33,10 +34,11 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
   return (
     <section>
       {props.renderIntoToolbar(
-        <RevisionHistoryLoader
+        <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Video}
         />
       )}
       <div className="page-header">

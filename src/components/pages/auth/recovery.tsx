@@ -1,7 +1,4 @@
-import {
-  SelfServiceRecoveryFlow,
-  SubmitSelfServiceRecoveryFlowBody,
-} from '@ory/client'
+import { RecoveryFlow, UpdateRecoveryFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -13,7 +10,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function Recovery() {
-  const [flow, setFlow] = useState<SelfServiceRecoveryFlow>()
+  const [flow, setFlow] = useState<RecoveryFlow>()
   const { strings } = useInstanceData()
   const router = useRouter()
   const checkInstance = useCheckInstance()
@@ -25,27 +22,30 @@ export function Recovery() {
 
     if (flowId) {
       kratos
-        .getSelfServiceRecoveryFlow(String(flowId))
+        .getRecoveryFlow({ id: String(flowId) })
         .then(({ data }) => setFlow(data))
         .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
       return
     }
 
     kratos
-      .initializeSelfServiceRecoveryFlowForBrowsers()
+      .createBrowserRecoveryFlow()
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.recovery, setFlow, strings))
   }, [flowId, router, router.isReady, returnTo, flow, strings, checkInstance])
 
-  async function onSubmit(values: SubmitSelfServiceRecoveryFlowBody) {
+  async function onSubmit(values: UpdateRecoveryFlowBody) {
     return kratos
-      .submitSelfServiceRecoveryFlow(String(flow?.id), values)
+      .updateRecoveryFlow({
+        flow: String(flow?.id),
+        updateRecoveryFlowBody: values,
+      })
       .then(({ data }) => setFlow(data))
       .catch(handleFlowError(router, FlowType.recovery, setFlow, strings, true))
   }
   if (!flow) return null
   return (
-    <div className="max-w-[30rem] mx-auto">
+    <div className="mx-auto max-w-[30rem]">
       <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
       <p className="serlo-p mb-10 -mt-4 special-hyphens-initial">
         {replacePlaceholders(strings.auth.recoveryInstructions, {
@@ -53,17 +53,6 @@ export function Recovery() {
         })}
       </p>
       <Flow onSubmit={onSubmit} flowType={FlowType.recovery} flow={flow} />
-      <style jsx>{`
-        @font-face {
-          font-family: 'Karmilla';
-          font-style: bolder;
-          font-weight: 800;
-          src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-              format('woff2'),
-            url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-          font-display: swap;
-        }
-      `}</style>
     </div>
   )
 }

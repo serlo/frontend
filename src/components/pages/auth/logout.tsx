@@ -31,10 +31,17 @@ export function Logout({ oauth }: { oauth?: boolean }) {
   useEffect(() => {
     checkInstance({ redirect: false })
 
-    const redirection = filterUnwantedRedirection({
-      desiredPath: sessionStorage.getItem('previousPathname'),
-      unwantedPaths: [settingsUrl, loginUrl, registrationUrl],
-    })
+    const cookieSession = AuthSessionCookie.parse()
+    const isSSO = cookieSession?.authentication_methods
+      ? cookieSession.authentication_methods[0].method === 'oidc'
+      : false
+
+    const redirection = isSSO
+      ? 'https://aai-dev.nbpdev.de/realms/nbp-aai/protocol/openid-connect/logout'
+      : filterUnwantedRedirection({
+          desiredPath: sessionStorage.getItem('previousPathname'),
+          unwantedPaths: [settingsUrl, loginUrl, registrationUrl],
+        })
 
     const redirectOnError = () => {
       window.location.href = redirection
@@ -42,13 +49,13 @@ export function Logout({ oauth }: { oauth?: boolean }) {
     }
 
     // if they are problems we could add an additional check here
-    if (!auth || !AuthSessionCookie.get()) return
+    if (!auth || !cookieSession) return
 
     kratos
-      .createSelfServiceLogoutFlowUrlForBrowsers()
+      .createBrowserLogoutFlow()
       .then(({ data }) => {
         kratos
-          .submitSelfServiceLogoutFlow(data.logout_token)
+          .updateLogoutFlow({ token: data.logout_token })
           .then(() => {
             void fetchAndPersistAuthSession(refreshAuth, null)
 

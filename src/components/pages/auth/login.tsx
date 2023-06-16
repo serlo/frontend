@@ -1,10 +1,8 @@
-import type {
-  SelfServiceLoginFlow,
-  SubmitSelfServiceLoginFlowBody,
-} from '@ory/client'
+import type { LoginFlow, UpdateLoginFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import {
   filterUnwantedRedirection,
   loginUrl,
@@ -30,7 +28,7 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { showToastNotice } from '@/helper/show-toast-notice'
 
 export function Login({ oauth }: { oauth?: boolean }) {
-  const [flow, setFlow] = useState<SelfServiceLoginFlow>()
+  const [flow, setFlow] = useState<LoginFlow>()
   const router = useRouter()
   const checkInstance = useCheckInstance()
   const auth = useAuthentication()
@@ -60,15 +58,6 @@ export function Login({ oauth }: { oauth?: boolean }) {
       return
     }
 
-    // Currenty not in use
-    if (flowId) {
-      kratos
-        .getSelfServiceLoginFlow(String(flowId))
-        .then(({ data }) => setFlow(data))
-        .catch(handleFlowError(router, FlowType.login, setFlow, strings))
-      return
-    }
-
     // Make sure we only init the flow once
     if (initStarted) {
       return
@@ -78,17 +67,28 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
     void (async () => {
       try {
-        const response = await kratos.initializeSelfServiceLoginFlowForBrowsers(
-          Boolean(refresh),
-          aal ? String(aal) : undefined,
-          returnTo ? String(returnTo) : undefined
-        )
-        setFlow(response.data)
+        const response = await kratos.createBrowserLoginFlow({
+          refresh: Boolean(refresh),
+          aal: aal ? String(aal) : undefined,
+          returnTo: returnTo ? String(returnTo) : undefined,
+        })
+
+        const data = {
+          ...response.data,
+          ui: {
+            ...response.data.ui,
+            nodes: response.data.ui.nodes
+              .map(changeButtonTypeOfSSOProvider)
+              .sort(sortKratosUiNodes),
+          },
+        }
+
+        setFlow(data)
       } catch (e) {
-        const error = e as AxiosError // is
+        const error = e as AxiosError
         const data = error.response?.data as { error: { id: string } }
 
-        if (oauth && data.error?.id === 'session_already_available') {
+        if (oauth && data?.error?.id === 'session_already_available') {
           void oauthHandler('login', String(loginChallenge))
         }
         await handleFlowError(router, FlowType.login, setFlow, strings)(error)
@@ -114,7 +114,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
   return (
     <>
-      <div className="mb-16 max-w-[30rem] pb-6 mx-auto">
+      <div className="mx-auto mb-16 max-w-[30rem] pb-6">
         <PageTitle
           headTitle
           title={`${
@@ -144,22 +144,11 @@ export function Login({ oauth }: { oauth?: boolean }) {
             ),
           })}
         </div>
-        <style jsx>{`
-          @font-face {
-            font-family: 'Karmilla';
-            font-style: bolder;
-            font-weight: 800;
-            src: url('/_assets/fonts/karmilla/karmilla-bolder.woff2')
-                format('woff2'),
-              url('/_assets/fonts/karmilla/karmilla-bold.woff') format('woff');
-            font-display: swap;
-          }
-        `}</style>
       </div>
     </>
   )
 
-  async function onLogin(values: SubmitSelfServiceLoginFlowBody) {
+  async function onLogin(values: UpdateLoginFlowBody) {
     if (!flow?.id) return
 
     const redirection = filterUnwantedRedirection({
@@ -169,7 +158,7 @@ export function Login({ oauth }: { oauth?: boolean }) {
 
     try {
       await kratos
-        .submitSelfServiceLoginFlow(flow.id, values)
+        .updateLoginFlow({ flow: flow.id, updateLoginFlowBody: values })
         .then(({ data }) => {
           void fetchAndPersistAuthSession(refreshAuth, data.session)
           if (oauth) return oauthHandler('login', String(loginChallenge))
@@ -188,11 +177,11 @@ export function Login({ oauth }: { oauth?: boolean }) {
           FlowType.login,
           setFlow,
           strings
-        )(e as AxiosError)
+        )(e as AxiosError<LoginFlow>)
       } catch (e: unknown) {
         const err = e as AxiosError
         if (err.response?.status === 400) {
-          setFlow(err.response?.data as SelfServiceLoginFlow)
+          setFlow(err.response?.data as LoginFlow)
           return
         }
         throw err
