@@ -1,4 +1,5 @@
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { triggerSentry } from '@/helper/trigger-sentry'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -20,6 +21,8 @@ export const DeprecatedRenderer: React.FunctionComponent<
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
+
+  triggerSentry({ message: 'editor: using "deprecatedPlugin"' })
 
   return (
     <div className="panel panel-danger">
