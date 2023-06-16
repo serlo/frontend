@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { v4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
 import {
   StateExecutor,
@@ -154,7 +154,7 @@ export function list<D extends StateType>(
 
   function wrap(value: T): WrappedValue {
     return {
-      id: v4(),
+      id: uuidv4(),
       value,
     }
   }
