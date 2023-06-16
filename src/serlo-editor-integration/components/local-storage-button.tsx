@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react'
 
 import { storeStateToLocalStorage } from './local-storage-notice'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
 
 export function LocalStorageButton({ open }: { open: boolean }) {
   const [savedToLocalstorage, setSavedToLocalstorage] = useState(false)
 
+  const edtrIoStrings = useEditorStrings().edtrIo
   useEffect(() => {
     //reset when modal opens
     if (open) setSavedToLocalstorage(false)
   }, [open])
-
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
 
   return (
     <button
@@ -26,8 +23,8 @@ export function LocalStorageButton({ open }: { open: boolean }) {
       }}
     >
       {savedToLocalstorage
-        ? editorStrings.edtrIo.revisionSaved
-        : editorStrings.edtrIo.saveRevision}
+        ? edtrIoStrings.revisionSaved
+        : edtrIoStrings.saveRevision}
     </button>
   )
 }

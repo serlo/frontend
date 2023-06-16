@@ -76,7 +76,7 @@ export function SaveModal({
 
   const loggedInData = useLoggedInData()
   if (!loggedInData) return null
-  const { edtrIo } = loggedInData.strings.editor
+  const edtrIoStrings = loggedInData.strings.editor.edtrIo
 
   return (
     <ModalWithCloseButton
@@ -84,14 +84,14 @@ export function SaveModal({
       onCloseClick={() => {
         setOpen(false)
       }}
-      title={edtrIo.save}
+      title={edtrIoStrings.save}
     >
       <div className="mx-side">
         {renderChanges()}
         {renderLicense()}
         {renderSubscription()}
         {renderCheckout()}
-        {isOnlyText ? edtrIo.ready : null}
+        {isOnlyText ? edtrIoStrings.ready : null}
         <hr className="mt-8 mb-8" />
         {renderAlert()}
         {renderModalButtons()}
@@ -118,7 +118,7 @@ export function SaveModal({
           className="serlo-button-transparent"
           onClick={() => setOpen(false)}
         >
-          {edtrIo.cancel}
+          {edtrIoStrings.cancel}
         </button>
         <button
           onClick={() => {
@@ -141,10 +141,10 @@ export function SaveModal({
           title={getSaveHint()}
         >
           {pending
-            ? edtrIo.saving
+            ? edtrIoStrings.saving
             : (showSkipCheckout && skipReview) || !showSkipCheckout
-            ? edtrIo.save
-            : edtrIo.saveWithReview}
+            ? edtrIoStrings.save
+            : edtrIoStrings.saveWithReview}
         </button>
       </div>
     )
@@ -153,11 +153,11 @@ export function SaveModal({
   function getSaveHint() {
     if (maySave) return undefined
     if (licenseAccepted && !changesFilled) {
-      return edtrIo.missingChanges
+      return edtrIoStrings.missingChanges
     } else if (!licenseAccepted && changesFilled) {
-      return edtrIo.missingLicenseTerms
+      return edtrIoStrings.missingLicenseTerms
     } else {
-      return edtrIo.missingChangesAndLicenseTerms
+      return edtrIoStrings.missingChangesAndLicenseTerms
     }
   }
 
@@ -165,9 +165,9 @@ export function SaveModal({
     if (!hasError) return null
     return (
       <StaticInfoPanel type="warning" icon={faExclamationCircle}>
-        {edtrIo.errorSaving}
+        {edtrIoStrings.errorSaving}
         <br />
-        {edtrIo.saveLocallyAndRefresh}
+        {edtrIoStrings.saveLocallyAndRefresh}
         <LocalStorageButton open={open} />
       </StaticInfoPanel>
     )
@@ -182,7 +182,8 @@ export function SaveModal({
           highlightMissingFields && !changesFilled && 'bg-red-100'
         )}
       >
-        {edtrIo.changes} <span className="font-bold text-red-500">*</span>
+        {edtrIoStrings.changes}{' '}
+        <span className="font-bold text-red-500">*</span>
         <textarea
           value={changesText}
           onChange={(e) => {
@@ -207,7 +208,7 @@ export function SaveModal({
           checked={skipReview}
           onChange={({ target }) => setSkipReview(target.checked)}
         />{' '}
-        {edtrIo.skipReview}
+        {edtrIoStrings.skipReview}
       </label>
     )
   }
@@ -259,7 +260,7 @@ export function SaveModal({
               setNotificationSubscription(checked)
             }}
           />{' '}
-          {edtrIo.enableNotifs}
+          {edtrIoStrings.enableNotifs}
         </label>
         <label className="block pb-2">
           <input
@@ -270,7 +271,7 @@ export function SaveModal({
               setEmailSubscription(checked)
             }}
           />{' '}
-          {edtrIo.enableNotifsMail}
+          {edtrIoStrings.enableNotifsMail}
         </label>
       </>
     )
