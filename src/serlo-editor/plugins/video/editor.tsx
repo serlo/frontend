@@ -3,7 +3,7 @@ import { OverlayInput } from '../../core'
 import { EditorInput, EditorInlineSettings } from '../../editor-ui'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 
@@ -14,7 +14,7 @@ export const VideoEditor = ({
   autofocusRef,
   renderIntoSettings,
 }: VideoProps) => {
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const [iframeSrc, type] = parseVideoUrl(state.src.value)
   const couldBeValid = type !== undefined

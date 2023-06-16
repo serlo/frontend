@@ -6,7 +6,7 @@ import {
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
@@ -29,9 +29,7 @@ export const videoTypePlugin: EditorPlugin<typeof videoTypeState> = {
 
 function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
   const { title, description } = props.state
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <section>

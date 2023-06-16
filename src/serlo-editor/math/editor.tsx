@@ -9,7 +9,7 @@ import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
   return {
@@ -119,7 +119,7 @@ export function MathEditor(props: MathEditorProps) {
   const [helpOpen, setHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
 
-  const mathStrings = useLoggedInData()!.strings.editor.text.math
+  const mathStrings = useEditorStrings().text.math
 
   const { visual, readOnly, state, disableBlock } = props
 

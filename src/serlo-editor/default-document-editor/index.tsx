@@ -4,7 +4,7 @@ import { useState, useMemo, useRef } from 'react'
 import { DocumentEditorProps } from '../document-editor'
 import { edtrClose, EdtrIcon, styled } from '../ui'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ToolbarProps {
   isFocused: boolean
@@ -107,7 +107,7 @@ export function createDefaultDocumentEditor(): React.ComponentType<DocumentEdito
     const [hasHover, setHasHover] = useState(false)
     const { OverlayButton, PluginToolbarOverlayButton } = PluginToolbar
 
-    const editorStrings = useLoggedInData()!.strings.editor
+    const editorStrings = useEditorStrings()
 
     const shouldShowSettings = showSettings()
     const renderSettingsContent = useMemo<typeof renderSettings>(() => {

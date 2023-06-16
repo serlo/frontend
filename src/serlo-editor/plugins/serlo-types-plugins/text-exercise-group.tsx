@@ -8,7 +8,7 @@ import {
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import {
@@ -46,9 +46,7 @@ function TextExerciseGroupTypeEditor(
   const { cohesive, content, 'grouped-text-exercise': children } = props.state
   const isCohesive = cohesive.value ?? false
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   const contentRendered = content.render({
     renderSettings(children) {

@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 
 import { ImagePluginConfig } from '.'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function Upload(props: UploadProps) {
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
   const input = useRef<HTMLInputElement>(null)
   return (
     <>

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { FaIcon } from '../fa-icon'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import {
   TaxonomyTermType,
@@ -39,9 +39,7 @@ export function UuidUrlInput({
   const { data, error } = useSimpleUuidFetch(maybeUuid)
 
   const { strings } = useInstanceData()
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const modalStrings = loggedInData.strings.editor.article.addModal
+  const modalStrings = useEditorStrings().article.addModal
 
   return (
     <div className="my-4 border-t-2 pt-5">

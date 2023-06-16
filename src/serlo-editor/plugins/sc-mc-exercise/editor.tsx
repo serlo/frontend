@@ -10,13 +10,13 @@ import {
   useAppSelector,
 } from '../../store'
 import { ScMcExerciseRenderer } from './renderer'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const focusedElement = useAppSelector(selectFocused)
 
   const { editable, focused, state } = props
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const children = R.flatten(
     props.state.answers.map((answer) => {

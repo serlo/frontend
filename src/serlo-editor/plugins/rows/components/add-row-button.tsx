@@ -1,5 +1,5 @@
 import { RowsPluginConfig } from '..'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors, legacyEditorTheme } from '@/helper/colors'
 import { styled, EdtrIcon, edtrPlus } from '@/serlo-editor/ui'
 
@@ -43,7 +43,7 @@ interface AddRowButtonProps {
 
 export function AddRowButton(props: AddRowButtonProps) {
   const { config, focused, onClick, visuallyEmphasized = false } = props
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <AddButton

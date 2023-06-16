@@ -4,7 +4,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { ArticleProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
@@ -17,9 +17,7 @@ export function ArticleExercises({
   exerciseFolder,
   editable,
 }: ArticleExercisesProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   const folderHeader = <p>{articleStrings.moreInFolder}:</p>
 

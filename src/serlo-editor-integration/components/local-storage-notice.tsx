@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { debounce } from 'ts-debounce'
 
 import { LooseEdtrData } from '../serlo-editor'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorProps } from '@/serlo-editor/core'
 
 export interface LocalStorageNoticeProps {
@@ -14,9 +14,7 @@ export function LocalStorageNotice({
   useStored,
   setUseStored,
 }: LocalStorageNoticeProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const storageStrings = loggedInData.strings.editor.edtrIo.localStorage
+  const storageStrings = useEditorStrings().edtrIo.localStorage
 
   const stored = getStateFromLocalStorage()
 

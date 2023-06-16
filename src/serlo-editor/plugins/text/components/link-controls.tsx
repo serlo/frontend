@@ -11,7 +11,7 @@ import { getLinkElement, isLinkActive } from '../utils/link'
 import { InlineOverlay, InlineOverlayPosition } from './inline-overlay'
 import { LinkControlsInput } from './link-controls-input'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { styled } from '@/serlo-editor/ui'
 
@@ -48,7 +48,7 @@ export function LinkControls({
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
   const input = useRef<HTMLInputElement>(null)
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const { selection } = editor
 

@@ -1,4 +1,4 @@
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -17,9 +17,7 @@ export type ErrorPluginState = typeof errorState
 export const ErrorRenderer: React.FunctionComponent<
   EditorPluginProps<ErrorPluginState>
 > = (props) => {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <div className="panel panel-danger">

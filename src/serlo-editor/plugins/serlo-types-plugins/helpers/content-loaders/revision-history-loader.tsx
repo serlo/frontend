@@ -8,7 +8,7 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
@@ -38,9 +38,7 @@ export function RevisionHistoryLoader<T>({
 
   const revisionsResponse = useRevisionsFetch(id)
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (!revisionsResponse) return null
 

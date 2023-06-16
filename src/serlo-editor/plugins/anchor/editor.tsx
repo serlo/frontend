@@ -4,12 +4,12 @@ import { AnchorProps } from '.'
 import { EditorInput } from '../../editor-ui'
 import { AnchorRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export const AnchorEditor = (props: AnchorProps) => {
   const { editable, focused, state } = props
 
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   return (
     <>

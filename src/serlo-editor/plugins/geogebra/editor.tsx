@@ -2,14 +2,14 @@ import { GeogebraProps } from '.'
 import { EditorInput, EditorInlineSettings } from '../../editor-ui'
 import { GeogebraRenderer, parseId } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 
 export function GeogebraEditor(props: GeogebraProps) {
   const { focused, editable, state } = props
 
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
 
   const { cleanId, url } = parseId(state.value)
   const couldBeValidId = cleanId.length === 8

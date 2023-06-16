@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { HighlightProps } from '.'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 const languages = ['text', 'c', 'javascript', 'jsx', 'markup', 'java', 'python']
 
@@ -12,9 +12,7 @@ export function HighlightEditor(props: HighlightProps) {
   const edit = focused && editable
   const [throttledEdit, setEditThrottled] = useState(edit)
 
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
+  const editorStrings = useEditorStrings()
 
   if (edit !== throttledEdit) {
     if (!edit) {

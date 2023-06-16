@@ -11,7 +11,7 @@ import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { FaIcon } from '@/components/fa-icon'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
@@ -19,9 +19,7 @@ interface ArticleSourcesProps {
 }
 
 export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const articleStrings = loggedInData.strings.editor.article
+  const articleStrings = useEditorStrings().article
 
   if (!editable) {
     if (sources.length === 0) return null

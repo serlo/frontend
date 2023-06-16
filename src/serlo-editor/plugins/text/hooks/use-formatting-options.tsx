@@ -42,7 +42,7 @@ import {
 import { textColors } from './use-text-config'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import {
@@ -128,7 +128,7 @@ export const useFormattingOptions = (
   setIsLinkNewlyCreated: SetIsLinkNewlyCreated
 ) => {
   const { formattingOptions } = config
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
   const createTextEditor = useCallback(

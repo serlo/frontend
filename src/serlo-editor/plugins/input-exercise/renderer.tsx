@@ -6,7 +6,7 @@ import { styled } from '../../editor-ui'
 import { Feedback, SubmitButton } from '../../renderer-ui'
 import { store, selectIsDocumentEmpty } from '../../store'
 import { useInstanceData } from '@/contexts/instance-context'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 
 enum ExerciseState {
@@ -36,7 +36,7 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
   const [exerciseState, setExerciseState] = useState<ExerciseState>(
     ExerciseState.Default
   )
-  const editorStrings = useLoggedInData()!.strings.editor
+  const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
   const input = createRef<HTMLInputElement>()
