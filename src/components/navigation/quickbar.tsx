@@ -5,10 +5,9 @@ import { useState, useRef, useEffect, KeyboardEvent } from 'react'
 
 import { FaIcon } from '../fa-icon'
 import { isMac } from '@/helper/client-detection'
-import { submitEvent } from '@/helper/submit-event'
 import { tw } from '@/helper/tw'
 
-interface QuickbarDataEntry {
+export interface QuickbarDataEntry {
   title: string
   id: string
   path: string[]
@@ -19,7 +18,7 @@ interface QuickbarDataEntry {
   root: string
 }
 
-type QuickbarData = QuickbarDataEntry[]
+export type QuickbarData = QuickbarDataEntry[]
 
 interface QuickbarProps {
   subject?: string
@@ -39,7 +38,12 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   const overlayWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (query && !data) fetchData()
+    if (query && !data) {
+      fetchQuickbarData(subject)
+        .then((fetchedData) => fetchedData && setData(fetchedData))
+        // eslint-disable-next-line no-console
+        .catch(console.error)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query, data, subject])
 
@@ -64,9 +68,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 
   setOverlayPosition()
 
-  let results: { entry: QuickbarDataEntry; score: number }[] = []
-
-  void findResults()
+  const results = data ? findResults(data, query) : []
 
   const close = () =>
     setTimeout(() => {
@@ -74,7 +76,6 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
     }, 200)
 
   const goToSearch = () => {
-    submitEvent('quickbar-to-search')
     // not using router since the hacky search component does not refresh easily
     window.location.href = `/search?q=${encodeURIComponent(query)}`
   }
@@ -86,7 +87,6 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       | React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     event.preventDefault()
-    submitEvent('quickbar-direct-hit')
     const url = `/${id}`
 
     if ((isMac && event.metaKey) || (!isMac && event.ctrlKey)) {
@@ -215,78 +215,84 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
       </div>
     )
   }
+}
 
-  function fetchData() {
-    void fetch('https://de.serlo.org/api/stats/quickbar.json')
-      .then((res) => res.json())
-      .then((data: QuickbarData) => {
-        data.forEach((entry) => {
-          entry.pathLower = entry.path.map((x) => x.toLowerCase())
-          entry.titleLower = entry.title.toLowerCase()
-        })
+export async function fetchQuickbarData(subject?: string) {
+  const req = await fetch('https://de.serlo.org/api/stats/quickbar.json')
+  const data = (await req.json()) as QuickbarData
 
-        const subjectLower = subject?.toLowerCase() ?? ''
+  data.forEach((entry) => {
+    entry.pathLower = entry.path.map((x) => x.toLowerCase())
+    entry.titleLower = entry.title.toLowerCase()
+  })
 
-        const filteredData = subject
-          ? data.filter((entry) =>
-              entry.root?.toLowerCase().startsWith(subjectLower)
-            )
-          : data
-        submitEvent('quickbar-activated')
-        setData(filteredData)
-      })
-  }
-  function findResults() {
-    if (!data || !query) return
+  const subjectLower = subject?.toLowerCase() ?? ''
 
-    const keywords = query.toLowerCase().split(' ')
+  const filteredData = subject
+    ? data.filter((entry) => entry.root?.toLowerCase().startsWith(subjectLower))
+    : data
 
-    for (const entry of data) {
-      let score = 0
-      const preparedQuery = query.toLowerCase().trim()
-      if (entry.titleLower.includes(preparedQuery)) {
-        score += 100
-        if (entry.titleLower.startsWith(preparedQuery)) {
-          score += 10
-        } else if (entry.titleLower.includes(' ' + preparedQuery)) {
-          score += 8
-        }
-      } else {
-        let noHit = 0
-        let kwCount = 0
-        for (const keyword of keywords) {
-          if (keyword) {
-            kwCount++
-            if (entry.titleLower.includes(keyword)) {
-              score += 10
-              continue
-            }
-            let hitContinue = false
-            for (const p of entry.pathLower) {
-              if (p.includes(keyword)) {
-                score += 2
-                hitContinue = true
-                break
-              }
-            }
-            if (hitContinue) continue
-            noHit++
+  return filteredData
+}
+
+export function findResults(data: QuickbarData, query: string) {
+  let results: { entry: QuickbarDataEntry; score: number }[] = []
+
+  const keywords = query.toLowerCase().split(' ')
+
+  for (const entry of data) {
+    let score = 0
+    const preparedQuery = (query.charAt(0) === '/' ? query.slice(1) : query)
+      .toLowerCase()
+      .trim()
+    if (
+      entry.titleLower.includes(preparedQuery) ||
+      preparedQuery === entry.id
+    ) {
+      score += 100
+      if (entry.titleLower.startsWith(preparedQuery)) {
+        score += 10
+      } else if (entry.titleLower.includes(' ' + preparedQuery)) {
+        score += 8
+      } else if (preparedQuery.includes(entry.id)) {
+        score += 8
+      }
+    } else {
+      let noHit = 0
+      let kwCount = 0
+      for (const keyword of keywords) {
+        if (keyword) {
+          kwCount++
+          if (entry.titleLower.includes(keyword)) {
+            score += 10
+            continue
           }
-        }
-        if (kwCount > 0) {
-          if (noHit >= kwCount / 2) {
-            score = 0
-          } else {
-            score *= 1 - noHit / kwCount
+          let hitContinue = false
+          for (const p of entry.pathLower) {
+            if (p.includes(keyword)) {
+              score += 2
+              hitContinue = true
+              break
+            }
           }
+          if (hitContinue) continue
+          noHit++
         }
       }
-      if (score > 0) {
-        score += Math.log10(entry.count)
-        results.push({ entry, score })
-        results.sort((a, b) => b.score - a.score)
-        results = results.slice(0, 7)
+      if (kwCount > 0) {
+        if (noHit >= kwCount / 2) {
+          score = 0
+        } else {
+          score *= 1 - noHit / kwCount
+        }
       }
     }
+    if (score > 0) {
+      score += Math.log10(entry.count)
+      results.push({ entry, score })
+      results.sort((a, b) => b.score - a.score)
+      results = results.slice(0, 7)
+    }
   }
+  return results
 }

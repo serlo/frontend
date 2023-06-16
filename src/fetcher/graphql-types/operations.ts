@@ -3358,6 +3358,7 @@ export type GetAllThreadsQueryVariables = Exact<{
   first: Scalars['Int'];
   after?: InputMaybe<Scalars['String']>;
   instance?: InputMaybe<Instance>;
+  subjectId?: InputMaybe<Scalars['String']>;
 }>;
 
 

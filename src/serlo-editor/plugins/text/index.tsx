@@ -51,7 +51,25 @@ const createTextPlugin = (
     return false
   },
   isEmpty: (state) => {
-    return state.value.value.map(Node.string).join('') === ''
+    // since Node.string does not seem to work for our void math nodes this quickfix
+    // checks for them explicitly
+    // for a possibly prettier solution check https://github.com/serlo/frontend/pull/2476#pullrequestreview-1475064574
+    return (
+      state.value.value
+        .map((node) => {
+          const childNodes = [...Node.elements(node)]
+          if (
+            childNodes.find(
+              ([node]) => node.type === 'math' && node.src && node.src.length
+            )
+          ) {
+            return false
+          }
+
+          return Node.string(node)
+        })
+        .join('') === ''
+    )
   },
 })
 

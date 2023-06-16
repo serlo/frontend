@@ -17,6 +17,11 @@ const h5pLibraryWhitelist = [
   'H5P.Blanks',
   'H5P.DragText',
   'H5P.ImageHotspotQuestion',
+  'H5P.MultiMediaChoice',
+  'H5P.ImageMultipleHotspotQuestion',
+  'H5P.MemoryGame',
+  'H5P.Flashcards',
+  'H5P.MarkTheWords',
 ]
 
 export const H5pPlugin: EditorPlugin<H5pPluginState> = {
@@ -113,12 +118,19 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             </li>
             <li>
               Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines der
-              vier Inhaltstypen:
+              folgenden Inhaltstypen:
               <ul>
                 <li>Fill in the Blanks</li>
                 <li>Drag the Words</li>
                 <li>Find the Hotspot</li>
                 <li>Drag and Drop</li>
+                <li>Bildauswahl (Image Choice)</li>
+                <li>
+                  Hotspots in Bild suchen (mehrere) (Find Multiple Hotspots)
+                </li>
+                <li>Memory</li>
+                <li>Flashcards</li>
+                <li>Mark The Words</li>
               </ul>
             </li>
             <li>
