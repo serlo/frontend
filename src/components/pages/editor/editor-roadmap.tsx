@@ -15,7 +15,7 @@ const roadmapData = [
     title: 'Next up',
     steps: [
       'Redesigned plugin toolbar',
-      'Accessibility improvements for pictures',
+      'Accessibility improvements for pictures using AI',
       'Import existing Serlo content',
       'Directly link to sections in Serlo content',
     ],
