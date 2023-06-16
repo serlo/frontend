@@ -286,6 +286,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
     if (!entry) return null
 
+    if (!node.task.edtrState?.interactive) return null
+
     return (
       <div className="my-4 ml-2 rounded-xl border border-fuchsia-400 p-2">
         {!exerciseData.revisions.includes(node.context.revisionId) && (
