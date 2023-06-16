@@ -32,7 +32,7 @@ import {
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
-import { LinkControls } from './link-controls'
+import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
@@ -58,8 +58,7 @@ export type TextEditorProps = EditorPluginProps<
 >
 
 export function TextEditor(props: TextEditorProps) {
-  const [hasSelectionChanged, setHasSelectionChanged] = useState(0)
-  const [isLinkNewlyCreated, setIsLinkNewlyCreated] = useState(false)
+  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
 
   const dispatch = useAppDispatch()
 
@@ -69,10 +68,7 @@ export function TextEditor(props: TextEditorProps) {
 
   const config = useTextConfig(props.config)
 
-  const textFormattingOptions = useFormattingOptions(
-    config,
-    setIsLinkNewlyCreated
-  )
+  const textFormattingOptions = useFormattingOptions(config)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),
@@ -161,7 +157,7 @@ export function TextEditor(props: TextEditorProps) {
           ({ value }) => ({ value, selection: previousSelection.current })
         )
       }
-      setHasSelectionChanged((selection) => selection + 1)
+      setIsSelectionChanged((selection) => selection + 1)
       previousSelection.current = editor.selection
     },
     [editor.operations, editor.selection, state]
@@ -189,12 +185,37 @@ export function TextEditor(props: TextEditorProps) {
             if (Object.hasOwn(parent, 'type') && parent.type === 'a') {
               if (
                 Object.hasOwn(node, 'text') &&
-                node.text.length - 1 === offset
+                node.text.length - 1 <= offset
               ) {
                 Transforms.move(editor)
                 Transforms.move(editor, { unit: 'offset' })
                 event.preventDefault()
               }
+            }
+          }
+        }
+
+        // Special handler for links. Handle linebreaks while editing a link text
+        if (event.key === 'Enter') {
+          const { path, offset } = selection.focus
+          const node = Node.get(editor, path)
+          const parent = Node.parent(editor, path)
+
+          if (node && parent) {
+            if (
+              Object.hasOwn(parent, 'type') &&
+              parent.type === 'a' &&
+              Object.hasOwn(node, 'text')
+            ) {
+              // cursor is on left of link (but still on link): normal line break
+              if (offset === 0) return
+
+              // cursor is right of link(but still on link): line break without continuing link
+              // normal text in new line
+              event.preventDefault()
+              if (node.text.length === offset) Transforms.move(editor)
+              // cursor is somewhere inside link: no line break, no action
+              else return false
             }
           }
         }
@@ -275,6 +296,9 @@ export function TextEditor(props: TextEditorProps) {
       suggestions.handleHotkeys(event)
       textFormattingOptions.handleHotkeys(event, editor)
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
+
+      // stop list plugin from bluring slate on esc
+      if (event.key === 'Escape') return false
       textFormattingOptions.handleListsShortcuts(event, editor)
     },
     [
@@ -432,25 +456,6 @@ export function TextEditor(props: TextEditorProps) {
         value={state.value.value}
         onChange={handleEditorChange}
       >
-        {editable && focused && (
-          <HoveringToolbar
-            editor={editor}
-            config={config}
-            controls={toolbarControls}
-            focused={focused}
-          />
-        )}
-
-        {editable && focused && (
-          <LinkControls
-            hasSelectionChanged={hasSelectionChanged}
-            editor={editor}
-            config={config}
-            isLinkNewlyCreated={isLinkNewlyCreated}
-            setIsLinkNewlyCreated={setIsLinkNewlyCreated}
-          />
-        )}
-
         <Editable
           readOnly={!editable}
           placeholder={config.placeholder}
@@ -459,6 +464,21 @@ export function TextEditor(props: TextEditorProps) {
           renderElement={handleRenderElement}
           renderLeaf={renderLeaf}
         />
+        {editable && focused && (
+          <>
+            <LinkControls
+              isSelectionChanged={isSelectionChanged}
+              editor={editor}
+              config={config}
+            />
+            <HoveringToolbar
+              editor={editor}
+              config={config}
+              controls={toolbarControls}
+              focused={focused}
+            />
+          </>
+        )}
       </Slate>
 
       {showSuggestions && (
