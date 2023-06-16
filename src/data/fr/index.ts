@@ -742,7 +742,14 @@ export const loggedInData = {
         heading: "Titre",
         headings: "Titres",
         link: "Lien (%ctrlOrCmd% + K)",
-        enterUrl: "Saisir l'URL",
+        linkOverlay: {
+          placeholder: 'https://… or /1234',
+          inputLabel: 'Paste or type a link',
+          edit: 'Edit Link',
+          remove: 'Remove Link',
+          customLink: 'Custom Link',
+          invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+        },
         openInNewTab: "Ouvrir dans un nouvel onglet",
         orderedList: "Liste ordonnée",
         unorderedList: "Liste non ordonnée",
