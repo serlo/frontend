@@ -17,6 +17,7 @@ const h5pLibraryWhitelist = [
   'H5P.Blanks',
   'H5P.DragText',
   'H5P.ImageHotspotQuestion',
+  'H5P.ImagePair',
   'H5P.MultiMediaChoice',
   'H5P.ImageMultipleHotspotQuestion',
   'H5P.MemoryGame',
