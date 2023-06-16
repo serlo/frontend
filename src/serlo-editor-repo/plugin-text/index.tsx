@@ -1,4 +1,4 @@
-import { Editor as SlateEditor, Node } from 'slate'
+import { Node } from 'slate'
 
 import { EditorPlugin, serializedScalar } from '../plugin'
 import { TextEditorProps, TextEditor } from './components/text-editor'
