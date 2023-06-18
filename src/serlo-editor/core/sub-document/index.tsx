@@ -26,7 +26,7 @@ export const SubDocument = (props: SubDocumentProps) => {
   )
 }
 // this uses ErrorBoundary functionality that is only available in class components since react 17
-export class ErrorBoundary extends Component<{
+class ErrorBoundary extends Component<{
   undo: () => void
   children: React.ReactNode
 }> {

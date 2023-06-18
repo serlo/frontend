@@ -31,7 +31,7 @@ export const H5pPlugin: EditorPlugin<H5pPluginState> = {
 }
 
 // Note: This plugin will not be translated for now, as i18n work is deprioritized
-export function H5pEditor({ state, autofocusRef }: H5pProps) {
+function H5pEditor({ state, autofocusRef }: H5pProps) {
   const hasState = !!state.value
 
   const [mode, setMode] = useState<'edit' | 'loading' | 'preview'>(

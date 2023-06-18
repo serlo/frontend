@@ -452,10 +452,10 @@ function SerloTableEditor(props: SerloTableProps) {
   }
 }
 
-export function getTableType(text: string): TableType {
+function getTableType(text: string): TableType {
   return isTableType(text) ? text : TableType.OnlyColumnHeader
 }
 
-export function isTableType(text: string): text is TableType {
+function isTableType(text: string): text is TableType {
   return Object.values<string>(TableType).includes(text)
 }

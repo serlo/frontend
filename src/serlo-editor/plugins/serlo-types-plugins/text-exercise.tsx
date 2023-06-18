@@ -33,7 +33,7 @@ export const textExerciseTypePlugin: EditorPlugin<
   },
 }
 
-export function TextExerciseTypeEditor(
+function TextExerciseTypeEditor(
   props: EditorPluginProps<
     typeof textExerciseTypeState,
     { skipControls: boolean }
