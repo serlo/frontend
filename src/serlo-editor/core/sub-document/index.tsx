@@ -1,7 +1,7 @@
 import { Component, useCallback, useContext } from 'react'
 
-import { PluginProps } from '../../internal__plugin-state'
 import { undo, useAppDispatch } from '../../store'
+import { PluginProps } from '../../types/internal__plugin-state'
 import { EditableContext, ErrorContext } from '../contexts'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'

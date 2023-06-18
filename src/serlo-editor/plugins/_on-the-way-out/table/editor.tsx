@@ -1,7 +1,7 @@
 import { TableProps } from '.'
 import { EditorTextarea } from '../../../editor-ui'
-import { styled } from '../../../ui'
 import { TableRenderer } from './renderer'
+import { styled } from '@/serlo-editor/editor-ui'
 
 const Form = styled.form({
   marginTop: '10px',

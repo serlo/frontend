@@ -2,7 +2,7 @@ import * as R from 'ramda'
 import { channel, Channel } from 'redux-saga'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
-import { EditorPlugin } from '../../internal__plugin'
+import { EditorPlugin } from '../../types/internal__plugin'
 import { runChangeDocumentSaga, selectDocument } from '../documents'
 import { selectFocusTree } from '../focus'
 import { selectPlugin } from '../plugins'

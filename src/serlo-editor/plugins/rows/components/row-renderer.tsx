@@ -11,13 +11,13 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
 import { EditorPlugins } from '@/serlo-editor/core/editor'
+import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   DocumentState,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
-import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 interface RowDragObject {
   id: string

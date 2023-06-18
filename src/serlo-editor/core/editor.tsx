@@ -6,7 +6,6 @@ import { Provider } from 'react-redux'
 
 import { createDefaultDocumentEditor } from '../default-document-editor'
 import { createDefaultPluginToolbar } from '../default-plugin-toolbar'
-import { EditorPlugin } from '../internal__plugin'
 import {
   runInitRootSaga,
   undo,
@@ -20,6 +19,7 @@ import {
   useAppSelector,
   DocumentState,
 } from '../store'
+import { EditorPlugin } from '../types/internal__plugin'
 import {
   DocumentEditorContext,
   EditableContext,

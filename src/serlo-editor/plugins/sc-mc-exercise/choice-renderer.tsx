@@ -1,6 +1,5 @@
 import { ScMcExerciseProps } from '.'
-import { CheckElement } from '../../editor-ui'
-import { styled } from '../../ui'
+import { styled, CheckElement } from '../../editor-ui'
 import { colors } from '@/helper/colors'
 
 export interface ChoiceRendererProps {

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 
-import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
+import * as InternalPluginToolbar from '../../types/internal__plugin-toolbar'
 import { PluginToolbarContext } from '../contexts'
 
 /**

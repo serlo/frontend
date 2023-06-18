@@ -1,4 +1,4 @@
-import { styled } from '../ui'
+import { styled } from '../editor-ui'
 import { colors } from '@/helper/colors'
 
 const ContainerWithBox = styled.div<ContainerProps>({

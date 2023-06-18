@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
+import * as InternalPluginToolbar from '../../types/internal__plugin-toolbar'
 
 export const PluginToolbarContext = createContext<PluginToolbar>(
   undefined as unknown as PluginToolbar

@@ -1,5 +1,5 @@
+import { styled } from '../editor-ui'
 import { OverlayTextareaProps } from '../plugin/plugin-toolbar'
-import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 
 const OverlayTextareaLabel = styled.label({

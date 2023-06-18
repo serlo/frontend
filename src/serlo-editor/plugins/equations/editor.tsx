@@ -26,7 +26,12 @@ import {
   PreferenceContext,
   setDefaultPreference,
 } from '@/serlo-editor/core'
-import { AddButton } from '@/serlo-editor/editor-ui'
+import {
+  AddButton,
+  edtrDragHandle,
+  EdtrIcon,
+  styled,
+} from '@/serlo-editor/editor-ui'
 import { MathEditor } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {
@@ -40,7 +45,6 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
-import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 enum StepSegment {
   Left = 0,

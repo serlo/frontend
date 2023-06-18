@@ -1,5 +1,5 @@
+import { styled } from '../editor-ui'
 import { OverlayCheckboxProps } from '../plugin/plugin-toolbar'
-import { styled } from '../ui'
 import { DefaultPluginToolbarConfig } from './config'
 
 const OverlayCheckboxLabel = styled.label({

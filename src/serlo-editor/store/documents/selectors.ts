@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 import * as R from 'ramda'
 
-import { StoreSerializeHelpers } from '../../internal__plugin-state'
+import { StoreSerializeHelpers } from '../../types/internal__plugin-state'
 import { createDeepEqualSelector } from '../helpers'
 import { selectPlugin } from '../plugins'
 import { State } from '../types'

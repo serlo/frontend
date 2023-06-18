@@ -55,7 +55,7 @@ import {
   edtrListBullets,
   edtrListNumbered,
   edtrText,
-} from '@/serlo-editor/ui'
+} from '@/serlo-editor/editor-ui'
 
 const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,

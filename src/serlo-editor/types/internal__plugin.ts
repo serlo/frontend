@@ -2,12 +2,9 @@ import {
   StateType,
   StateTypeReturnType,
   StateTypeSerializedType,
-} from '../internal__plugin-state'
+} from './internal__plugin-state'
 
-/**
- * A Serlo Editor plugin
- *
- */
+// A Serlo Editor plugin
 export interface EditorPlugin<
   S extends StateType = StateType,
   Config extends {} = {}

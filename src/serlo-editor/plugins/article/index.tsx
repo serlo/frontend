@@ -8,6 +8,7 @@ import { ArticleRelatedContent } from './article-related-content'
 import { ArticleSources } from './article-sources'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { styled } from '@/serlo-editor/editor-ui'
 import {
   child,
   EditorPlugin,
@@ -16,7 +17,6 @@ import {
   object,
   string,
 } from '@/serlo-editor/plugin'
-import { styled } from '@/serlo-editor/ui'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 

@@ -1,7 +1,7 @@
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors } from '@/helper/colors'
+import { styled } from '@/serlo-editor/editor-ui'
 import type { RegistryPlugin } from '@/serlo-editor/plugins/rows'
-import { styled } from '@/serlo-editor/ui'
 
 interface SuggestionsProps {
   options: RegistryPlugin[]

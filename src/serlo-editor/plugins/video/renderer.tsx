@@ -1,7 +1,7 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 import { VideoProps } from '.'
-import { styled } from '../../ui'
+import { styled } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 
 enum VideoType {

@@ -12,6 +12,7 @@ import {
   EditorButton,
   EditorInput,
   EditorInlineSettings,
+  styled,
 } from '../../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
@@ -19,7 +20,6 @@ import {
   selectIsDocumentEmpty,
   selectHasFocusedChild,
 } from '../../store'
-import { styled } from '../../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'

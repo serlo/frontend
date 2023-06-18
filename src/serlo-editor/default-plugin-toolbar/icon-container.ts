@@ -1,4 +1,4 @@
-import { styled } from '../ui'
+import { styled } from '../editor-ui'
 import { colors } from '@/helper/colors'
 
 export const StyledIconContainer = styled.div({

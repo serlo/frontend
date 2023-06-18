@@ -1,4 +1,4 @@
-import * as InternalPlugin from '../internal__plugin'
+import * as InternalPlugin from '../types/internal__plugin'
 import { StateType } from './internal-plugin-state'
 
 export type EditorPlugin<

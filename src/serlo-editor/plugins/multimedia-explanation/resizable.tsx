@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Resizable as ReactResizeable } from 'react-resizable'
 
-import { styled } from '../../ui'
+import { styled } from '../../editor-ui'
 
 const StyledResizable = styled(ReactResizeable)<{
   floating?: 'left' | 'right'

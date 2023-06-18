@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
 
-import { EditorPlugin } from '../../internal__plugin'
+import { EditorPlugin } from '../../types/internal__plugin'
 
 export const runInitRootSaga = createAction<{
   initialState: {

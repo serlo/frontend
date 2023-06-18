@@ -5,7 +5,7 @@
  * to provide a custom plugin toolbar. See `default-plugin-toolbar`
  * for the default plugin toolbar used by Serlo Editor
  */
-import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
+import * as InternalPluginToolbar from '../../types/internal__plugin-toolbar'
 
 /**
  * Type alias for {@link @edtr-io/internal__plugin-toolbar#PluginToolbarButtonProps | PluginToolbarButtonProps}

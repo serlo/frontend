@@ -1,4 +1,4 @@
-import * as InternalDocumentEditor from '../internal__document-editor'
+import * as InternalDocumentEditor from './internal__document-editor'
 
 /**
  * Describes the states of a [[Plugin]]. Please note that a state type will be recreated in every render.

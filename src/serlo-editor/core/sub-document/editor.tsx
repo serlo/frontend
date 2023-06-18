@@ -11,7 +11,7 @@ import { createPortal } from 'react-dom'
 import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 
 import { SubDocumentProps } from '.'
-import { StateUpdater } from '../../internal__plugin-state'
+import { styled } from '../../editor-ui'
 import {
   runChangeDocumentSaga,
   focus,
@@ -31,7 +31,7 @@ import {
   useAppDispatch,
   store,
 } from '../../store'
-import { styled } from '../../ui'
+import { StateUpdater } from '../../types/internal__plugin-state'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
 import { usePlugin } from '../contexts/plugins-context'
 

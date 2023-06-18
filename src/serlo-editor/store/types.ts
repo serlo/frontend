@@ -1,6 +1,6 @@
 import { Action } from '@reduxjs/toolkit'
 
-import { EditorPlugin } from '../internal__plugin'
+import { EditorPlugin } from '../types/internal__plugin'
 
 export interface State {
   plugins: Record<string, EditorPlugin>

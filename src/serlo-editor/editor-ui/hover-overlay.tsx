@@ -1,6 +1,6 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 
-import { styled } from '../ui'
+import { styled } from '../editor-ui'
 import { colors } from '@/helper/colors'
 
 const HoverOverlayWrapper = styled.div({

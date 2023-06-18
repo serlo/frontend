@@ -3,7 +3,7 @@ import lodash from 'lodash'
 import React, { useState, useRef, useEffect } from 'react'
 
 import { GeogebraProps } from '.'
-import { styled } from '../../ui'
+import { styled } from '../../editor-ui'
 
 interface ApiData {
   width: number

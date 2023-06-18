@@ -3,7 +3,7 @@ import { useSlate } from 'slate-react'
 
 import type { TextEditorConfig } from '../types'
 import { legacyEditorTheme } from '@/helper/colors'
-import { styled } from '@/serlo-editor/ui'
+import { styled } from '@/serlo-editor/editor-ui'
 
 export enum InlineOverlayPosition {
   above = 'above',

@@ -2,9 +2,9 @@ import { Fragment } from 'react'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
+import { styled } from '@/serlo-editor/editor-ui'
 import { MathRenderer } from '@/serlo-editor/math'
 import { store, selectIsDocumentEmpty } from '@/serlo-editor/store'
-import { styled } from '@/serlo-editor/ui'
 
 export const TableWrapper = styled.div({
   padding: '10px 0',

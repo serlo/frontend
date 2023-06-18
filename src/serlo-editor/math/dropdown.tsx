@@ -1,4 +1,4 @@
-import { styled } from '../ui'
+import { styled } from '../editor-ui'
 import { legacyEditorTheme } from '@/helper/colors'
 
 export const Dropdown = styled.select({

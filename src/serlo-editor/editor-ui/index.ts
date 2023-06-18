@@ -1,4 +1,6 @@
-export { styled } from '../ui'
+import _styled from 'styled-components'
+
+export const styled = _styled
 
 export * from './editor-bottom-toolbar'
 export * from './editor-button'
@@ -10,3 +12,4 @@ export * from './hover-overlay'
 export * from './hover-overlay-old'
 export * from './interactive-answer-component'
 export * from './preview-overlay'
+export * from './icon'

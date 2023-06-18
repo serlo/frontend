@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { MultimediaExplanationProps } from '.'
 import { PluginToolbarButton } from '../../core'
+import { styled } from '../../editor-ui'
 import {
   selectDocument,
   selectHasFocusedDescendant,
@@ -12,7 +13,6 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { styled } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'

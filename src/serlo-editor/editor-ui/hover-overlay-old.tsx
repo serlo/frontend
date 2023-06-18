@@ -1,6 +1,6 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 
-import { styled } from '../ui'
+import { styled } from '../editor-ui'
 
 const OverlayTriangle = styled.div<{ positionAbove?: boolean }>(
   ({ positionAbove = false }) => {
