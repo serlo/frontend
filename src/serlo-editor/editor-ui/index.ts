@@ -4,7 +4,6 @@ export const styled = _styled
 
 export * from './editor-bottom-toolbar'
 export * from './editor-button'
-export * from './editor-checkbox'
 export * from './editor-input'
 export * from './editor-inline-settings'
 export * from './editor-textarea'
