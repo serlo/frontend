@@ -1,5 +1,5 @@
 /**
- * Defines the Interface for the Edtr.io plugin toolbar (INTERNAL)
+ * Defines the Interface for the Serlo Editor plugin toolbar (INTERNAL)
  *
  * @remarks
  * This is an internal package. You should use the re-exports defined in

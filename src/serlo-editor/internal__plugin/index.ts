@@ -5,12 +5,11 @@ import {
 } from '../internal__plugin-state'
 
 /**
- * An Edtr.io plugin
+ * A Serlo Editor plugin
  *
  */
 export interface EditorPlugin<
   S extends StateType = StateType,
-  // eslint-disable-next-line @typescript-eslint/ban-types
   Config extends {} = {}
 > {
   /**
@@ -45,7 +44,7 @@ export interface EditorPlugin<
   onFiles?(files: File[]): void | { state?: StateTypeSerializedType<S> }
 
   /**
-   * May be provided to prevent the default Edtr.io keyboard shortcuts
+   * May be provided to prevent the default Serlo Editor keyboard shortcuts
    *
    * @param e - the [KeyboardEvent](https://developer.mozilla.org/docs/Web/API/KeyboardEvent)
    * @returns `false` if the keyboard shortcut should be prevented

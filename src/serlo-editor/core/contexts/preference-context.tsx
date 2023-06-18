@@ -4,13 +4,11 @@
 
 import { createContext, ReactNode, useState } from 'react'
 
-/** @beta */
 export interface Preference {
   getKey: (key: string) => unknown
   setKey: (key: string, val: unknown) => void
 }
 
-/** @beta */
 export const PreferenceContext = createContext<Preference>({
   getKey: () => {},
   setKey: () => {},

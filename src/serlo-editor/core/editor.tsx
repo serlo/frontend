@@ -44,7 +44,7 @@ const DefaultDocumentEditor = createDefaultDocumentEditor()
 const DefaultPluginToolbar = createDefaultPluginToolbar()
 
 /**
- * Renders a single editor for an Edtr.io document
+ * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
   return <Provider store={store}>{renderChildren()}</Provider>

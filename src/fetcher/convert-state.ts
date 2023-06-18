@@ -11,7 +11,7 @@ export function convertState(raw: string | undefined): FrontendContentNode[] {
     const legacyHTML = render(raw)
     return convertLegacyState(legacyHTML).children
   } else if (raw?.startsWith('{')) {
-    // Edtr.io state
+    // Serlo Editor state
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return convert(JSON.parse(raw))
   } else {

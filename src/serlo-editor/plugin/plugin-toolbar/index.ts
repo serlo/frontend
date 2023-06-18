@@ -1,11 +1,9 @@
 /**
- * Defines the Interface for the Edtr.io plugin toolbar
+ * Defines the Interface for the Serlo Editor plugin toolbar
  *
- * @remarks
- * The `@edtr-io/plugin-toolbar` defines the {@link PluginToolbar | PluginToolbar} interface that needs to be implemented
- * to provide a custom plugin toolbar. See {@link @edtr-io/default-plugin-toolbar# | `@edtr-io/default-plugin-toolbar`}
- * for the default plugin toolbar used by Edtr.io
- * @packageDocumentation
+ * The `plugin-toolbar` defines the interface that needs to be implemented
+ * to provide a custom plugin toolbar. See `default-plugin-toolbar`
+ * for the default plugin toolbar used by Serlo Editor
  */
 import * as InternalPluginToolbar from '../../internal__plugin-toolbar'
 
