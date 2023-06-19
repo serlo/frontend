@@ -4,7 +4,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { configure, GlobalHotKeys } from 'react-hotkeys'
 import { Provider } from 'react-redux'
 
-import { createDefaultDocumentEditor } from '../default-document-editor'
 import {
   runInitRootSaga,
   undo,
@@ -20,7 +19,6 @@ import {
 } from '../store'
 import { EditorPlugin } from '../types/internal__plugin'
 import {
-  DocumentEditorContext,
   EditableContext,
   ErrorContext,
   PreferenceContextProvider,
@@ -37,8 +35,6 @@ configure({
     return false
   },
 })
-
-const DefaultDocumentEditor = createDefaultDocumentEditor()
 
 /**
  * Renders a single editor for an Serlo Editor document
@@ -70,7 +66,6 @@ export function InnerDocument({
   onChange,
   onError,
   pluginRegistry,
-  DocumentEditor = DefaultDocumentEditor,
   ...props
 }: Omit<EditorProps, 'initialState'> &
   (
@@ -120,15 +115,13 @@ export function InnerDocument({
       <div className="relative">
         <ErrorContext.Provider value={onError}>
           <PluginsContext.Provider value={plugins}>
-            <DocumentEditorContext.Provider value={DocumentEditor}>
-              <PluginRegistryContext.Provider value={pluginRegistry}>
-                <PreferenceContextProvider>
-                  <EditableContext.Provider value={editableContextValue}>
-                    {renderChildren(id)}
-                  </EditableContext.Provider>
-                </PreferenceContextProvider>
-              </PluginRegistryContext.Provider>
-            </DocumentEditorContext.Provider>
+            <PluginRegistryContext.Provider value={pluginRegistry}>
+              <PreferenceContextProvider>
+                <EditableContext.Provider value={editableContextValue}>
+                  {renderChildren(id)}
+                </EditableContext.Provider>
+              </PreferenceContextProvider>
+            </PluginRegistryContext.Provider>
           </PluginsContext.Provider>
         </ErrorContext.Provider>
       </div>
@@ -168,5 +161,4 @@ export interface EditorProps {
   }) => void
   editable?: boolean
   onError?: ContextType<typeof ErrorContext>
-  DocumentEditor?: ContextType<typeof DocumentEditorContext>
 }

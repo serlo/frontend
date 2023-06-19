@@ -14,7 +14,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
-import { createDefaultDocumentEditor } from '@/serlo-editor/default-document-editor'
 import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 
 export interface SerloEditorProps {
@@ -69,8 +68,6 @@ export function SerloEditor({
 
   const plugins = createPlugins({ editorStrings, instance: lang })
 
-  const DocumentEditor = createDefaultDocumentEditor()
-
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
@@ -79,7 +76,6 @@ export function SerloEditor({
       <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
-        DocumentEditor={DocumentEditor}
         onError={onError}
         plugins={plugins}
         pluginRegistry={getPluginRegistry('root', editorStrings)}

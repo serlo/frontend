@@ -1,4 +1,4 @@
-import * as InternalDocumentEditor from './internal__document-editor'
+import { DocumentEditorProps } from '../editor-ui/document-editor'
 
 /**
  * Describes the states of a [[Plugin]]. Please note that a state type will be recreated in every render.
@@ -172,6 +172,6 @@ export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
 export interface PluginProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   config?: {}
-  renderSettings?: InternalDocumentEditor.DocumentEditorProps['renderSettings']
-  renderToolbar?: InternalDocumentEditor.DocumentEditorProps['renderToolbar']
+  renderSettings?: DocumentEditorProps['renderSettings']
+  renderToolbar?: DocumentEditorProps['renderToolbar']
 }

@@ -1,12 +1,5 @@
 import * as R from 'ramda'
-import {
-  useState,
-  useRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react'
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 
@@ -31,8 +24,8 @@ import {
   store,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
-import { DocumentEditorContext } from '../contexts'
 import { usePlugin } from '../contexts/plugins-context'
+import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
 
 const hotKeysKeyMap = {
   FOCUS_PREVIOUS: 'up',
@@ -67,7 +60,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const toolbarRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
   )
-  const DocumentEditor = useContext(DocumentEditorContext)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -270,7 +262,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       </HotKeys>
     )
   }, [
-    DocumentEditor,
     document,
     plugin,
     pluginProps,
