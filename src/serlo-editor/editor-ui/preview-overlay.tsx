@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { EditableContext } from '../core'
 
-
 const NoClickArea = styled.div<{ active: boolean }>((props) => {
   return {
     pointerEvents: props.active ? 'unset' : 'none',
