@@ -3,7 +3,6 @@ import { Component } from 'react'
 
 import { ScMcExerciseProps, ScMcExercisePluginState } from '.'
 import { StateTypeReturnType } from '../../plugin'
-import { styled } from '../../renderer-ui'
 import { FetchDimensions } from './fetch-dimensions'
 import { calculateLayoutOptions } from './helpers'
 
@@ -96,10 +95,11 @@ export class ScMcAnswersRenderer extends Component<
     const rows = R.splitEvery(columns, this.props.state.answers)
     return rows.map((answers, rowIndex) => {
       return (
-        <this.Row key={rowIndex}>
+        <div className="flex" key={rowIndex}>
           {answers.map((answer, columnIndex) => {
             return (
-              <this.Column
+              <div
+                className="mx-4 flex-shrink flex-grow basis-0"
                 key={columnIndex}
                 ref={createRef(rowIndex * answers.length + columnIndex + 1)}
               >
@@ -108,10 +108,10 @@ export class ScMcAnswersRenderer extends Component<
                   rowIndex * answers.length + columnIndex,
                   answers.length > 1
                 )}
-              </this.Column>
+              </div>
             )
           })}
-        </this.Row>
+        </div>
       )
     })
   }
@@ -135,15 +135,6 @@ export class ScMcAnswersRenderer extends Component<
   public componentWillUnmount() {
     window.removeEventListener('resize', this.onResize)
   }
-
-  private Row = styled.div({ display: 'flex' })
-  // TODO: internal renderer sets margin to 15px -> see Row Class
-  private Column = styled.div({
-    flexGrow: 1,
-    flexBasis: 0,
-    flexShrink: 1,
-    margin: '0 15px',
-  })
 }
 
 interface ScMcAnswersRendererState {

@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useSlate } from 'slate-react'
+import styled from 'styled-components'
 
 import type { TextEditorConfig } from '../types'
 import { legacyEditorTheme } from '@/helper/colors'
-import { styled } from '@/serlo-editor/editor-ui'
 
 export enum InlineOverlayPosition {
   above = 'above',

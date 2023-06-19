@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
+import styled from 'styled-components'
 
-import { styled } from '../editor-ui'
 import { colors } from '@/helper/colors'
 
 const Label = styled.label<{ width: string | undefined }>(({ width }) => {

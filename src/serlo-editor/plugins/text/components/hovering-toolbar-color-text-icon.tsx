@@ -1,4 +1,6 @@
-import { edtrColorText, EdtrIcon, styled } from '@/serlo-editor/editor-ui'
+import styled from 'styled-components'
+
+import { edtrColorText, EdtrIcon } from '@/serlo-editor/editor-ui'
 
 interface HoveringToolbarColorTextIconProps {
   color: string

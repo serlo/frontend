@@ -1,7 +1,7 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
 import { FaIcon } from '@/components/fa-icon'
-import { styled } from '@/serlo-editor/editor-ui'
 import {
   HoverOverlayOld,
   HoverPosition,

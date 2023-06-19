@@ -1,4 +1,4 @@
-import { styled } from '../editor-ui'
+import styled from 'styled-components'
 
 export const Button = styled.button({
   background: 'none',

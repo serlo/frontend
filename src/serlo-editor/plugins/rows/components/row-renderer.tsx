@@ -3,6 +3,7 @@ import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
+import styled from 'styled-components'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
@@ -11,7 +12,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
 import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
 import { EditorPlugins } from '@/serlo-editor/core/editor'
-import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/editor-ui'
+import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   DocumentState,

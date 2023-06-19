@@ -1,9 +1,9 @@
 import fetch from 'isomorphic-unfetch'
 import lodash from 'lodash'
 import React, { useState, useRef, useEffect } from 'react'
+import styled from 'styled-components'
 
 import { GeogebraProps } from '.'
-import { styled } from '../../editor-ui'
 
 interface ApiData {
   width: number

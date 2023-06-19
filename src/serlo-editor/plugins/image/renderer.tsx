@@ -1,5 +1,6 @@
+import styled from 'styled-components'
+
 import { ImageProps } from '.'
-import { styled } from '../../editor-ui'
 import { isTempFile } from '../../plugin'
 
 export type ImageRendererProps = ImageProps & {

@@ -1,8 +1,9 @@
+import styled from 'styled-components'
+
 import { layoutState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
-import { styled } from '@/serlo-editor/renderer-ui'
 import {
   store,
   DocumentState,

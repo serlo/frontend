@@ -1,12 +1,13 @@
 import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { PropsWithChildren, useState } from 'react'
+import styled from 'styled-components'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { PluginToolbarButton } from '@/serlo-editor/core'
-import { styled, AddButton } from '@/serlo-editor/editor-ui'
+import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,

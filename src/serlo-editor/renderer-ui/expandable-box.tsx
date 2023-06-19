@@ -1,8 +1,8 @@
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
+import styled from 'styled-components'
 
-import { styled } from '../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 
 const Container = styled.div<{ collapsed: boolean }>(({ collapsed }) => {

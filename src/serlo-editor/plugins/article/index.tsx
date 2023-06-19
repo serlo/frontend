@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import styled from 'styled-components'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
@@ -8,7 +9,6 @@ import { ArticleRelatedContent } from './article-related-content'
 import { ArticleSources } from './article-sources'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { styled } from '@/serlo-editor/editor-ui'
 import {
   child,
   EditorPlugin,

@@ -11,7 +11,6 @@ import { createPortal } from 'react-dom'
 import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 
 import { SubDocumentProps } from '.'
-import { styled } from '../../editor-ui'
 import {
   runChangeDocumentSaga,
   focus,
@@ -34,10 +33,6 @@ import {
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
 import { usePlugin } from '../contexts/plugins-context'
-
-const StyledDocument = styled.div({
-  outline: 'none',
-})
 
 const hotKeysKeyMap = {
   FOCUS_PREVIOUS: 'up',
@@ -244,7 +239,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     return (
       <HotKeys keyMap={hotKeysKeyMap} handlers={hotKeysHandlers} allowChanges>
-        <StyledDocument
+        <div
+          className="outline-none"
           onMouseDown={handleFocus}
           ref={container}
           data-document
@@ -272,7 +268,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               autofocusRef={autofocusRef}
             />
           </DocumentEditor>
-        </StyledDocument>
+        </div>
       </HotKeys>
     )
   }, [

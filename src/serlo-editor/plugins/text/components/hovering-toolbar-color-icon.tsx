@@ -1,4 +1,4 @@
-import { styled } from '@/serlo-editor/editor-ui'
+import styled from 'styled-components'
 
 export const HoveringToolbarColorIcon = styled.div<{ color: string }>(
   ({ color }) => ({

@@ -1,7 +1,8 @@
 import { useState, useCallback, useEffect } from 'react'
+import styled from 'styled-components'
 
 import { EditableContext } from '../core'
-import { styled } from '../editor-ui'
+
 
 const NoClickArea = styled.div<{ active: boolean }>((props) => {
   return {

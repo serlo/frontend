@@ -1,7 +1,9 @@
+import styled from 'styled-components'
+
 import { RowsPluginConfig } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors, legacyEditorTheme } from '@/helper/colors'
-import { styled, EdtrIcon, edtrPlus } from '@/serlo-editor/editor-ui'
+import { EdtrIcon, edtrPlus } from '@/serlo-editor/editor-ui'
 
 interface AddButtonProps {
   focused: boolean

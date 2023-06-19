@@ -1,4 +1,5 @@
-import { styled } from '../editor-ui'
+import styled from 'styled-components'
+
 import { OverlayButtonProps } from '../plugin/plugin-toolbar'
 import { DefaultPluginToolbarConfig } from './config'
 

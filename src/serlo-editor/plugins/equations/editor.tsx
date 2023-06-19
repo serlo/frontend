@@ -2,6 +2,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
+import styled from 'styled-components'
 
 import { EquationsProps, stepProps } from '.'
 import {
@@ -26,12 +27,7 @@ import {
   PreferenceContext,
   setDefaultPreference,
 } from '@/serlo-editor/core'
-import {
-  AddButton,
-  edtrDragHandle,
-  EdtrIcon,
-  styled,
-} from '@/serlo-editor/editor-ui'
+import { AddButton, edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { MathEditor } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {

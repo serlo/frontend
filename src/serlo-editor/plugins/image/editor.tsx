@@ -1,5 +1,6 @@
 import { faImages, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
+import styled from 'styled-components'
 
 import { ImageProps } from '.'
 import {
@@ -8,7 +9,7 @@ import {
   OverlayInput,
   OverlayTextarea,
 } from '../../core'
-import { EditorButton, EditorInput, styled } from '../../editor-ui'
+import { EditorButton, EditorInput } from '../../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
   store,

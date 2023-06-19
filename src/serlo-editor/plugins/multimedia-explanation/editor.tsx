@@ -1,9 +1,9 @@
 import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import styled from 'styled-components'
 
 import { MultimediaExplanationProps } from '.'
 import { PluginToolbarButton } from '../../core'
-import { styled } from '../../editor-ui'
 import {
   selectDocument,
   selectHasFocusedDescendant,

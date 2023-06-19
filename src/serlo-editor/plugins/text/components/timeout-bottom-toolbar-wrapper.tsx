@@ -1,4 +1,6 @@
-import { EditorBottomToolbar, styled } from '@/serlo-editor/editor-ui'
+import styled from 'styled-components'
+
+import { EditorBottomToolbar } from '@/serlo-editor/editor-ui'
 
 export const TimeoutBottomToolbarWrapper = styled(EditorBottomToolbar)<{
   visible: boolean
