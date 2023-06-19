@@ -1,5 +1,3 @@
-import { PluginToolbar } from './internal__plugin-toolbar'
-
 /**
  * Allows to override the default rendering behavior of the document editor
  *
@@ -53,6 +51,4 @@ export interface DocumentEditorProps {
    * `true` if the document is focused
    */
   focused: boolean
-
-  PluginToolbar: PluginToolbar
 }

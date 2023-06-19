@@ -1,8 +1,15 @@
 import { forwardRef } from 'react'
 import styled from 'styled-components'
 
-import { OverlayInputProps } from '../plugin-toolbar'
 import { colors } from '@/helper/colors'
+
+export interface OverlayInputProps
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
+  label: string
+}
 
 export const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
   function OverlayInput({ label, ...props }, ref) {

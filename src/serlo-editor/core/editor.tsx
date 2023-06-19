@@ -5,7 +5,6 @@ import { configure, GlobalHotKeys } from 'react-hotkeys'
 import { Provider } from 'react-redux'
 
 import { createDefaultDocumentEditor } from '../default-document-editor'
-import { createDefaultPluginToolbar } from '../plugin/default-plugin-toolbar'
 import {
   runInitRootSaga,
   undo,
@@ -25,7 +24,6 @@ import {
   EditableContext,
   ErrorContext,
   PreferenceContextProvider,
-  PluginToolbarContext,
 } from './contexts'
 import {
   PluginRegistryContext,
@@ -41,7 +39,6 @@ configure({
 })
 
 const DefaultDocumentEditor = createDefaultDocumentEditor()
-const DefaultPluginToolbar = createDefaultPluginToolbar()
 
 /**
  * Renders a single editor for an Serlo Editor document
@@ -74,7 +71,6 @@ export function InnerDocument({
   onError,
   pluginRegistry,
   DocumentEditor = DefaultDocumentEditor,
-  PluginToolbar = DefaultPluginToolbar,
   ...props
 }: Omit<EditorProps, 'initialState'> &
   (
@@ -126,13 +122,11 @@ export function InnerDocument({
           <PluginsContext.Provider value={plugins}>
             <DocumentEditorContext.Provider value={DocumentEditor}>
               <PluginRegistryContext.Provider value={pluginRegistry}>
-                <PluginToolbarContext.Provider value={PluginToolbar}>
-                  <PreferenceContextProvider>
-                    <EditableContext.Provider value={editableContextValue}>
-                      {renderChildren(id)}
-                    </EditableContext.Provider>
-                  </PreferenceContextProvider>
-                </PluginToolbarContext.Provider>
+                <PreferenceContextProvider>
+                  <EditableContext.Provider value={editableContextValue}>
+                    {renderChildren(id)}
+                  </EditableContext.Provider>
+                </PreferenceContextProvider>
               </PluginRegistryContext.Provider>
             </DocumentEditorContext.Provider>
           </PluginsContext.Provider>
@@ -175,5 +169,4 @@ export interface EditorProps {
   editable?: boolean
   onError?: ContextType<typeof ErrorContext>
   DocumentEditor?: ContextType<typeof DocumentEditorContext>
-  PluginToolbar?: ContextType<typeof PluginToolbarContext>
 }

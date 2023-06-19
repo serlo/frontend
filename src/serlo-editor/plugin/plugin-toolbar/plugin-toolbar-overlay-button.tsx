@@ -2,8 +2,18 @@ import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
 import { EditorTooltip } from '../../editor-ui/editor-tooltip'
-import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
 import { StyledIconContainer } from './icon-container'
+
+export interface PluginToolbarOverlayButtonProps {
+  className?: string
+  renderContent?(
+    children: React.ReactNode,
+    additional: { close(): void }
+  ): React.ReactNode
+  contentRef: React.RefObject<HTMLDivElement>
+  icon: React.ReactNode
+  label: string
+}
 
 export function PluginToolbarOverlayButton({
   className,

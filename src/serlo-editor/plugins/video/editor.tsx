@@ -1,8 +1,8 @@
 import { VideoProps } from '.'
-import { OverlayInput } from '../../core'
 import { EditorInput } from '../../editor-ui'
 import { VideoRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export const VideoEditor = (props: VideoProps) => {
   const { editable, focused, state } = props

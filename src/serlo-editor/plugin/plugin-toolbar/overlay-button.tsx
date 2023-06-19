@@ -1,7 +1,13 @@
 import styled from 'styled-components'
 
-import { OverlayButtonProps } from '../plugin-toolbar'
 import { colors } from '@/helper/colors'
+
+export interface OverlayButtonProps {
+  className?: string
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+  children?: React.ReactNode
+  label: string
+}
 
 export function OverlayButton({
   children,

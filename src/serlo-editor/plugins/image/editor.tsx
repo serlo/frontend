@@ -3,12 +3,6 @@ import { useEffect } from 'react'
 import styled from 'styled-components'
 
 import { ImageProps } from '.'
-import {
-  OverlayButton,
-  OverlayCheckbox,
-  OverlayInput,
-  OverlayTextarea,
-} from '../../core'
 import { EditorButton, EditorInput } from '../../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
@@ -22,6 +16,12 @@ import { Upload } from './upload'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
+import {
+  OverlayCheckbox,
+  OverlayButton,
+  OverlayInput,
+  OverlayTextarea,
+} from '@/serlo-editor/plugin/plugin-toolbar'
 
 const InputRow = styled.span({
   display: 'flex',

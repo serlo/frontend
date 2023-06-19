@@ -31,7 +31,7 @@ import {
   store,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
-import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
+import { DocumentEditorContext } from '../contexts'
 import { usePlugin } from '../contexts/plugins-context'
 
 const hotKeysKeyMap = {
@@ -68,7 +68,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     window.document.createElement('div')
   )
   const DocumentEditor = useContext(DocumentEditorContext)
-  const PluginToolbar = useContext(PluginToolbarContext)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -254,7 +253,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             renderToolbar={pluginProps && pluginProps.renderToolbar}
             settingsRef={settingsRef}
             toolbarRef={toolbarRef}
-            PluginToolbar={PluginToolbar}
           >
             <plugin.Component
               renderIntoSettings={renderIntoSettings}
@@ -280,7 +278,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     hasSettings,
     hasToolbar,
     focused,
-    PluginToolbar,
     renderIntoSettings,
     renderIntoToolbar,
     id,

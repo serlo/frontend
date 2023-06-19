@@ -1,7 +1,14 @@
 import styled from 'styled-components'
 
-import { OverlayTextareaProps } from '../plugin-toolbar'
 import { colors } from '@/helper/colors'
+
+export interface OverlayTextareaProps
+  extends React.DetailedHTMLProps<
+    React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+    HTMLTextAreaElement
+  > {
+  label: string
+}
 
 export function OverlayTextarea({ label, ...props }: OverlayTextareaProps) {
   return (

@@ -23,8 +23,8 @@ import {
   editorResponseToState,
   isError,
 } from '@/serlo-editor-integration/editor-response-to-state'
-import { PluginToolbarButton } from '@/serlo-editor/core'
 import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function ExternalRevisionLoader<T>({
   entityType,

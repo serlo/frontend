@@ -10,10 +10,13 @@ import { useCanDrop } from './use-can-drop'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
-import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
 import { EditorPlugins } from '@/serlo-editor/core/editor'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
+import {
+  OverlayButton,
+  PluginToolbarButton,
+} from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,

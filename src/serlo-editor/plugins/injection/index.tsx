@@ -5,9 +5,9 @@ import { Injection } from '@/components/content/injection'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
-import { OverlayInput } from '@/serlo-editor/core'
 import { EditorInput, PreviewOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
+import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export const injectionState = string()
 
@@ -85,16 +85,14 @@ function InjectionEditor({
         </div>
       ) : null}
       {renderIntoSettings(
-        <>
-          <OverlayInput
-            label={injectionsStrings.serloId}
-            placeholder={injectionsStrings.placeholder}
-            inputMode="numeric"
-            pattern="\d+"
-            value={state.value}
-            onChange={handleOnChange}
-          />
-        </>
+        <OverlayInput
+          label={injectionsStrings.serloId}
+          placeholder={injectionsStrings.placeholder}
+          inputMode="numeric"
+          pattern="\d+"
+          value={state.value}
+          onChange={handleOnChange}
+        />
       )}
     </>
   )

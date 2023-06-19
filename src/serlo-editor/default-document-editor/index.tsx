@@ -3,6 +3,10 @@ import { useState, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 
 import { edtrClose, EdtrIcon } from '../editor-ui'
+import {
+  OverlayButton,
+  PluginToolbarOverlayButton,
+} from '../plugin/plugin-toolbar'
 import { DocumentEditorProps } from '../types/document-editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -103,10 +107,8 @@ export function createDefaultDocumentEditor(): React.ComponentType<DocumentEdito
     toolbarRef,
     hasSettings,
     hasToolbar,
-    PluginToolbar,
   }: DocumentEditorProps) {
     const [hasHover, setHasHover] = useState(false)
-    const { OverlayButton, PluginToolbarOverlayButton } = PluginToolbar
 
     const editorStrings = useEditorStrings()
 
@@ -131,7 +133,7 @@ export function createDefaultDocumentEditor(): React.ComponentType<DocumentEdito
             </>
           )
         : undefined
-    }, [OverlayButton, renderSettings, shouldShowSettings, editorStrings])
+    }, [renderSettings, shouldShowSettings, editorStrings])
 
     const isFocused = focused && (showSettings() || showToolbar())
     const isHovered = hasHover && (showSettings() || showToolbar())

@@ -6,7 +6,6 @@ import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
-import { PluginToolbarButton } from '@/serlo-editor/core'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
@@ -15,6 +14,7 @@ import {
   object,
   optional,
 } from '@/serlo-editor/plugin'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import { store, selectDocument } from '@/serlo-editor/store'
 
 const exerciseState = object({

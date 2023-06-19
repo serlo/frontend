@@ -3,7 +3,6 @@ import { useState } from 'react'
 import styled from 'styled-components'
 
 import { MultimediaExplanationProps } from '.'
-import { PluginToolbarButton } from '../../core'
 import {
   selectDocument,
   selectHasFocusedDescendant,
@@ -17,6 +16,7 @@ import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 
 interface MultimediaDocument {
   plugin: string

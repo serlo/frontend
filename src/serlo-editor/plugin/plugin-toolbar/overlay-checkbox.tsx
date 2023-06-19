@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-import { OverlayCheckboxProps } from '../plugin-toolbar'
+export interface OverlayCheckboxProps {
+  checked?: boolean
+  onChange?: (checked: boolean) => void
+  label: string
+}
 
 export function OverlayCheckbox({
   checked,

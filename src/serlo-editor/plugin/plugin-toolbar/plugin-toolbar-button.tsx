@@ -1,8 +1,15 @@
 import { forwardRef } from 'react'
 
 import { EditorTooltip } from '../../editor-ui/editor-tooltip'
-import { PluginToolbarButtonProps } from '../plugin-toolbar'
 import { StyledIconContainer } from './icon-container'
+
+export interface PluginToolbarButtonProps {
+  className?: string
+  icon: React.ReactNode
+  label: string
+  ref: React.Ref<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
+}
 
 export const PluginToolbarButton = forwardRef<
   HTMLButtonElement,

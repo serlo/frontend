@@ -1,6 +1,14 @@
 import styled from 'styled-components'
 
-import { OverlaySelectProps } from '../plugin-toolbar'
+export interface OverlaySelectProps
+  extends React.DetailedHTMLProps<
+    React.SelectHTMLAttributes<HTMLSelectElement>,
+    HTMLSelectElement
+  > {
+  label: string
+  options: string[]
+  width?: string
+}
 
 export function OverlaySelect({
   label,

@@ -9,8 +9,6 @@ export {
   EditableContext,
   ErrorContext,
   PreferenceContext,
-  PluginToolbarContext,
   setDefaultPreference,
 } from './contexts'
 export type { Preference } from './contexts'
-export * from './plugin-toolbar'
