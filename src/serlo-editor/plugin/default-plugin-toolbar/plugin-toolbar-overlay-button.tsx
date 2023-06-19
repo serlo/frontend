@@ -1,43 +1,37 @@
 import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
-import { EditorTooltip } from '../editor-ui/editor-tooltip'
-import { PluginToolbarOverlayButtonProps } from '../plugin/plugin-toolbar'
-import { Button } from './button'
-import { DefaultPluginToolbarConfig } from './config'
+import { EditorTooltip } from '../../editor-ui/editor-tooltip'
+import { PluginToolbarOverlayButtonProps } from '../plugin-toolbar'
 import { StyledIconContainer } from './icon-container'
 
-export function createPluginToolbarOverlayButton(
-  _config: DefaultPluginToolbarConfig
-) {
-  return function PluginToolbarOverlayButton({
-    className,
-    icon,
-    label,
-    ...modalProps
-  }: PluginToolbarOverlayButtonProps) {
-    const [open, setOpen] = useState(false)
-    return (
-      <>
-        <WrappedModal
-          {...modalProps}
-          isOpen={open}
-          onRequestClose={() => {
-            setOpen(false)
-          }}
-        />
-        <Button
-          className={`${className ?? ''} serlo-tooltip-trigger`}
-          onClick={() => {
-            setOpen(true)
-          }}
-        >
-          <EditorTooltip text={label} className="-ml-4 !pb-2" />
-          <StyledIconContainer aria-hidden="true">{icon}</StyledIconContainer>
-        </Button>
-      </>
-    )
-  }
+export function PluginToolbarOverlayButton({
+  className,
+  icon,
+  label,
+  ...modalProps
+}: PluginToolbarOverlayButtonProps) {
+  const [open, setOpen] = useState(false)
+  return (
+    <>
+      <WrappedModal
+        {...modalProps}
+        isOpen={open}
+        onRequestClose={() => {
+          setOpen(false)
+        }}
+      />
+      <button
+        className={`border-0 bg-none ${className ?? ''} serlo-tooltip-trigger`}
+        onClick={() => {
+          setOpen(true)
+        }}
+      >
+        <EditorTooltip text={label} className="-ml-4 !pb-2" />
+        <StyledIconContainer aria-hidden="true">{icon}</StyledIconContainer>
+      </button>
+    </>
+  )
 }
 
 function WrappedModal({

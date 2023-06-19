@@ -5,7 +5,7 @@ import { configure, GlobalHotKeys } from 'react-hotkeys'
 import { Provider } from 'react-redux'
 
 import { createDefaultDocumentEditor } from '../default-document-editor'
-import { createDefaultPluginToolbar } from '../default-plugin-toolbar'
+import { createDefaultPluginToolbar } from '../plugin/default-plugin-toolbar'
 import {
   runInitRootSaga,
   undo,

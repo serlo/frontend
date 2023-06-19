@@ -1,7 +1,30 @@
 import styled from 'styled-components'
 
-import { OverlayCheckboxProps } from '../plugin/plugin-toolbar'
-import { DefaultPluginToolbarConfig } from './config'
+import { OverlayCheckboxProps } from '../plugin-toolbar'
+
+export function OverlayCheckbox({
+  checked,
+  onChange,
+  label,
+}: OverlayCheckboxProps) {
+  return (
+    <OverlayCheckboxLabel>
+      <OverlayCheckboxLabelInner>{label}</OverlayCheckboxLabelInner>
+      <OverlayCheckboxInner>
+        <OverlayCheckboxToggleContainer
+          onClick={() => {
+            if (onChange) {
+              onChange(!checked)
+            }
+          }}
+          value={checked}
+        >
+          <OverlayCheckboxToggle value={checked} />
+        </OverlayCheckboxToggleContainer>
+      </OverlayCheckboxInner>
+    </OverlayCheckboxLabel>
+  )
+}
 
 const OverlayCheckboxLabel = styled.label({
   color: 'rgba(51,51,51,0.95)',
@@ -50,29 +73,3 @@ const OverlayCheckboxInner = styled.div({
   width: '75%',
   textAlign: 'left',
 })
-
-export function createOverlayCheckbox(_config: DefaultPluginToolbarConfig) {
-  return function OverlayCheckbox({
-    checked,
-    onChange,
-    label,
-  }: OverlayCheckboxProps) {
-    return (
-      <OverlayCheckboxLabel>
-        <OverlayCheckboxLabelInner>{label}</OverlayCheckboxLabelInner>
-        <OverlayCheckboxInner>
-          <OverlayCheckboxToggleContainer
-            onClick={() => {
-              if (onChange) {
-                onChange(!checked)
-              }
-            }}
-            value={checked}
-          >
-            <OverlayCheckboxToggle value={checked} />
-          </OverlayCheckboxToggleContainer>
-        </OverlayCheckboxInner>
-      </OverlayCheckboxLabel>
-    )
-  }
-}
