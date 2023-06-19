@@ -6,11 +6,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
 import { OverlayInput } from '@/serlo-editor/core'
-import {
-  EditorInlineSettings,
-  EditorInput,
-  PreviewOverlay,
-} from '@/serlo-editor/editor-ui'
+import { EditorInput, PreviewOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
 
 export const injectionState = string()
@@ -74,7 +70,7 @@ function InjectionEditor({
       )}
 
       {focused && !isPreview ? (
-        <EditorInlineSettings>
+        <div className="mt-4">
           <EditorInput
             label={injectionsStrings.serloId}
             placeholder={injectionsStrings.placeholder}
@@ -86,7 +82,7 @@ function InjectionEditor({
             inputWidth="100%"
             ref={autofocusRef}
           />
-        </EditorInlineSettings>
+        </div>
       ) : null}
       {renderIntoSettings(
         <>

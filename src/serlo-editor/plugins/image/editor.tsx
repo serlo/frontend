@@ -8,12 +8,7 @@ import {
   OverlayInput,
   OverlayTextarea,
 } from '../../core'
-import {
-  EditorButton,
-  EditorInput,
-  EditorInlineSettings,
-  styled,
-} from '../../editor-ui'
+import { EditorButton, EditorInput, styled } from '../../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
   store,
@@ -80,9 +75,9 @@ export function ImageEditor(props: ImageProps) {
       {renderImage()}
       {hasFocus ? (
         <>
-          <EditorInlineSettings>
+          <div className="mt-4">
             <PrimaryControls {...props} config={config} />
-          </EditorInlineSettings>
+          </div>
           {props.renderIntoSettings(
             <SettingsControls {...props} config={config} />
           )}

@@ -1,6 +1,6 @@
 import { VideoProps } from '.'
 import { OverlayInput } from '../../core'
-import { EditorInput, EditorInlineSettings } from '../../editor-ui'
+import { EditorInput } from '../../editor-ui'
 import { VideoRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -33,7 +33,7 @@ export const VideoEditor = (props: VideoProps) => {
         </>
       )}
       {focused ? (
-        <EditorInlineSettings>
+        <div className="mt-4">
           <EditorInput
             label={editorStrings.video.videoUrl}
             value={state.src.value}
@@ -44,7 +44,7 @@ export const VideoEditor = (props: VideoProps) => {
             inputWidth="100%"
             ref={props.autofocusRef}
           />
-        </EditorInlineSettings>
+        </div>
       ) : null}
     </>
   )

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { H5p, parseH5pUrl } from '@/components/content/h5p'
-import { EditorInput, EditorInlineSettings } from '@/serlo-editor/editor-ui'
+import { EditorInput } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -141,7 +141,7 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
           </ul>
         </div>
         <div>
-          <EditorInlineSettings>
+          <div className="mt-4">
             <EditorInput
               label="URL zu Lumi-Bereitstellung"
               placeholder="https://app.lumi.education/run/J3j0eR"
@@ -155,7 +155,7 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
               width="100%"
               ref={autofocusRef}
             />
-          </EditorInlineSettings>
+          </div>
         </div>
         {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
         <p>

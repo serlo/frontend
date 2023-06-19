@@ -1,5 +1,5 @@
 import { GeogebraProps } from '.'
-import { EditorInput, EditorInlineSettings } from '../../editor-ui'
+import { EditorInput } from '../../editor-ui'
 import { GeogebraRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -14,7 +14,7 @@ export function GeogebraEditor(props: GeogebraProps) {
     <>
       <GeogebraRenderer {...props} disableCursorEvents={editable} />
       {focused ? (
-        <EditorInlineSettings>
+        <div className="mt-4">
           <EditorInput
             label={editorStrings.geogebra.urlOrId}
             placeholder="12345"
@@ -26,7 +26,7 @@ export function GeogebraEditor(props: GeogebraProps) {
             width="100%"
             ref={props.autofocusRef}
           />
-        </EditorInlineSettings>
+        </div>
       ) : null}
     </>
   )
