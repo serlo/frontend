@@ -54,6 +54,7 @@ export function LinkOverlayEditMode({
 
     if (
       cleanUrl.startsWith('/') ||
+      cleanUrl.startsWith('#') ||
       cleanUrl.startsWith('http://') ||
       cleanUrl.startsWith('https://')
     ) {
