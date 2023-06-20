@@ -87,6 +87,13 @@ export default class MyDocument extends Document {
           />
           <link
             rel="preload"
+            href="/_assets/fonts/karmilla/karmilla-bolder.woff2"
+            as="font"
+            type="font/woff2"
+            crossOrigin=""
+          />
+          <link
+            rel="preload"
             href="/_assets/fonts/caveat/caveat-bold.woff2"
             as="font"
             type="font/woff2"

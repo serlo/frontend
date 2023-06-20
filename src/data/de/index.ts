@@ -742,7 +742,14 @@ export const loggedInData = {
         heading: "Überschrift",
         headings: "Überschriften",
         link: 'Link (%ctrlOrCmd% + K)',
-        enterUrl: "Hier Link einfügen",
+        linkOverlay: {
+          placeholder: "Suchbegriff oder \"/1234\"",
+          inputLabel: "Suche einen Inhalt oder füge einen Link ein",
+          edit: "Link bearbeiten",
+          remove: "Link entfernen",
+          customLink: "Eigener Link",
+          invalidLinkWarning: "Bitte gib einen gültigen Link ein, der anfängt mit \"https(s)://…\""
+        },
         openInNewTab: "Öffne den Link in einem neuen Tab",
         orderedList: "Nummerierte Liste",
         unorderedList: "Aufzählung",

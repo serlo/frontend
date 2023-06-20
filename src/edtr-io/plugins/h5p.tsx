@@ -12,12 +12,23 @@ import { H5p, parseH5pUrl } from '@/components/content/h5p'
 export type H5pPluginState = StringStateType
 export type H5pProps = EditorPluginProps<H5pPluginState>
 
-const h5pLibraryWhitelist = [
-  'H5P.DragQuestion',
-  'H5P.Blanks',
-  'H5P.DragText',
-  'H5P.ImageHotspotQuestion',
-]
+/**
+ * A mapping between the H5P exercise key (they call it library) and the
+ * friendly value of how it should be displayed in the editor.
+ */
+const availableH5pExercises: Record<string, string> = {
+  'H5P.DragQuestion': 'Drag and Drop',
+  'H5P.Blanks': 'Fill in the Blanks',
+  'H5P.DragText': 'Drag the Words',
+  'H5P.ImageHotspotQuestion': 'Find the Hotspot',
+  'H5P.ImagePair': 'Image pairing',
+  'H5P.MultiMediaChoice': 'Bildauswahl (Image Choice)',
+  'H5P.ImageMultipleHotspotQuestion':
+    'Hotspots in Bild suchen (mehrere) (Find Multiple Hotspots)',
+  'H5P.MemoryGame': 'Memory',
+  'H5P.Flashcards': 'Flashcards',
+  'H5P.MarkTheWords': 'Mark The Words',
+}
 
 export const H5pPlugin: EditorPlugin<H5pPluginState> = {
   Component: H5pEditor,
@@ -61,9 +72,9 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
           json.integration.contents
         )[0].library.split(' ')[0]
 
-        if (!h5pLibraryWhitelist.includes(mainLib)) {
+        if (!Object.keys(availableH5pExercises).includes(mainLib)) {
           setError(
-            'Unerlaubter Inhaltstyp - nutze bitte nur die vier genannten Inhaltstypen'
+            'Unerlaubter Inhaltstyp - nutze bitte nur die oben genannten Inhaltstypen'
           )
           setMode('edit')
         } else {
@@ -113,12 +124,11 @@ export function H5pEditor({ state, autofocusRef }: H5pProps) {
             </li>
             <li>
               Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines der
-              vier Inhaltstypen:
+              folgenden Inhaltstypen:
               <ul>
-                <li>Fill in the Blanks</li>
-                <li>Drag the Words</li>
-                <li>Find the Hotspot</li>
-                <li>Drag and Drop</li>
+                {Object.values(availableH5pExercises).map((exercise) => (
+                  <li key={exercise}>{exercise}</li>
+                ))}
               </ul>
             </li>
             <li>
