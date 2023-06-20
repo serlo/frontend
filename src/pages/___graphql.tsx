@@ -7,7 +7,6 @@ import Head from 'next/head'
 // eslint-disable-next-line import/no-internal-modules, import/no-unassigned-import
 import 'graphiql/graphiql.css'
 
-import { endpoint } from '@/api/endpoint'
 import { AuthProvider } from '@/auth/auth-provider'
 
 const GraphiQL = dynamic<GraphiQLProps>(() => import('graphiql'), {
@@ -31,14 +30,14 @@ function GraphiQLWithCustomFetcher() {
     return data
 
     async function executeQuery() {
-      const response = await fetch(endpoint, {
+      const response = await fetch('/api/frontend/localhost-graphql-fetch', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(params),
-        credentials: 'include',
+        credentials: 'same-origin',
       })
       return (await response.json()) as ExecutionResult
     }
