@@ -6,7 +6,6 @@ export { Editor } from './editor'
 export type { EditorProps } from './editor'
 export {
   EditableContext,
-  ErrorContext,
   PreferenceContext,
   setDefaultPreference,
 } from './contexts'

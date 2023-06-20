@@ -1,4 +1,4 @@
-import { useMemo, useEffect, ReactNode, ContextType } from 'react'
+import { useMemo, useEffect, ReactNode } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { configure, GlobalHotKeys } from 'react-hotkeys'
@@ -17,11 +17,7 @@ import {
   useAppSelector,
   DocumentState,
 } from '../store'
-import {
-  EditableContext,
-  ErrorContext,
-  PreferenceContextProvider,
-} from './contexts'
+import { EditableContext, PreferenceContextProvider } from './contexts'
 import {
   PluginsContext,
   PluginsContextPlugins,
@@ -58,7 +54,6 @@ export function InnerDocument({
   plugins,
   editable = true,
   onChange,
-  onError,
   ...props
 }: EditorProps) {
   const id = useAppSelector(selectRoot)
@@ -107,15 +102,13 @@ export function InnerDocument({
       handlers={hotKeysHandlers}
     >
       <div className="relative">
-        <ErrorContext.Provider value={onError}>
-          <PluginsContext.Provider value={plugins}>
-            <PreferenceContextProvider>
-              <EditableContext.Provider value={editableContextValue}>
-                {renderChildren(id)}
-              </EditableContext.Provider>
-            </PreferenceContextProvider>
-          </PluginsContext.Provider>
-        </ErrorContext.Provider>
+        <PluginsContext.Provider value={plugins}>
+          <PreferenceContextProvider>
+            <EditableContext.Provider value={editableContextValue}>
+              {renderChildren(id)}
+            </EditableContext.Provider>
+          </PreferenceContextProvider>
+        </PluginsContext.Provider>
       </div>
     </GlobalHotKeys>
   )
@@ -151,5 +144,4 @@ export interface EditorProps {
     getDocument: () => DocumentState | null
   }) => void
   editable?: boolean
-  onError?: ContextType<typeof ErrorContext>
 }

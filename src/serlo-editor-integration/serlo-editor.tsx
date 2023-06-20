@@ -19,8 +19,7 @@ export interface SerloEditorProps {
   children?: ReactNode
   entityNeedsReview: boolean
   onSave: (data: SetEntityMutationData) => Promise<void>
-  onError?: (error: Error, context: Record<string, string>) => void
-  initialState: EditorProps['initialState'] // expects "deserialized" state now
+  initialState: EditorProps['initialState']
   type: UuidType
 }
 
@@ -45,7 +44,6 @@ export const SaveContext = createContext<{
 export function SerloEditor({
   onSave,
   entityNeedsReview,
-  onError,
   initialState,
   children,
   type,
@@ -79,7 +77,6 @@ export function SerloEditor({
       <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
-        onError={onError}
         plugins={plugins}
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable

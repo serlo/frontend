@@ -2,7 +2,7 @@ import { Component, useCallback, useContext } from 'react'
 
 import { undo, useAppDispatch } from '../../store'
 import { PluginProps } from '../../types/internal__plugin-state'
-import { EditableContext, ErrorContext } from '../contexts'
+import { EditableContext } from '../contexts'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
 
@@ -30,8 +30,6 @@ class ErrorBoundary extends Component<{
   undo: () => void
   children: React.ReactNode
 }> {
-  static contextType = ErrorContext
-
   public state = { hasError: false }
 
   static getDerivedStateFromError() {
