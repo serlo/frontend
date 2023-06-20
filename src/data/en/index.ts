@@ -173,6 +173,7 @@ export const instanceData = {
         theorem: 'Theorem',
         proof: 'Proof',
       },
+      loadingVideoFailed: 'Something went wrong',
     },
     consent: {
       title: 'Consent for external Content',
@@ -189,6 +190,7 @@ export const instanceData = {
       video: 'Play Video from %provider%',
       applet: 'Load Applet from %provider%',
       twingle: 'Load Donation Form',
+      general: 'Activate',
     },
     comments: {
       question: 'Do you have a question?',
