@@ -67,7 +67,7 @@ function ArticleEditor(props: ArticleProps) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const { strings } = useInstanceData()
-  const modalStrings = useEditorStrings().article.addModal
+  const modalStrings = useEditorStrings().templatePlugins.article.addModal
 
   return (
     <>

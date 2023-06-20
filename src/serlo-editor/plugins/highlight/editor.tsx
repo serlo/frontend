@@ -29,7 +29,7 @@ export function HighlightEditor(props: HighlightProps) {
       <textarea
         value={state.code.value}
         name="text"
-        placeholder={editorStrings.highlight.enterHere}
+        placeholder={editorStrings.plugins.highlight.enterHere}
         spellCheck={false}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
           state.code.set(e.target.value)
@@ -71,7 +71,7 @@ export function HighlightEditor(props: HighlightProps) {
           </select>
         </label>
         <label className="cursor-pointer">
-          {editorStrings.highlight.showLineNumbers}:{' '}
+          {editorStrings.plugins.highlight.showLineNumbers}:{' '}
           <input
             type="checkbox"
             onChange={() => {

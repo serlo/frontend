@@ -46,7 +46,7 @@ function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
           {props.editable ? (
             <input
               className={headerInputClasses}
-              placeholder={editorStrings.video.title}
+              placeholder={editorStrings.plugins.video.titlePlaceholder}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)

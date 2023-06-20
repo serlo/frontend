@@ -17,18 +17,17 @@ import {
   useAppSelector,
   DocumentState,
 } from '../store'
-import { EditorPlugin } from '../types/internal__plugin'
 import {
   EditableContext,
   ErrorContext,
   PreferenceContextProvider,
 } from './contexts'
 import {
-  PluginRegistryContext,
-  Registry,
-} from './contexts/plugin-registry-context'
-import { PluginsContext } from './contexts/plugins-context'
+  PluginsContext,
+  PluginsContextPlugins,
+} from './contexts/plugins-context'
 import { SubDocument } from './sub-document'
+import { LoggedInData } from '@/data-types'
 
 configure({
   ignoreEventsCondition() {
@@ -40,18 +39,13 @@ configure({
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
-  return <Provider store={store}>{renderChildren()}</Provider>
-
-  function renderChildren() {
-    const children = (
-      <InnerDocument
-        {...props}
-        editable={props.editable === undefined ? true : props.editable}
-      />
-    )
-    if (props.omitDragDropContext) return children
-    return <DndProvider backend={HTML5Backend}>{children}</DndProvider>
-  }
+  return (
+    <Provider store={store}>
+      <DndProvider backend={HTML5Backend}>
+        <InnerDocument {...props} />
+      </DndProvider>
+    </Provider>
+  )
 }
 
 const hotKeysKeyMap = {
@@ -62,16 +56,11 @@ const hotKeysKeyMap = {
 export function InnerDocument({
   children,
   plugins,
-  editable,
+  editable = true,
   onChange,
   onError,
-  pluginRegistry,
   ...props
-}: Omit<EditorProps, 'initialState'> &
-  (
-    | { mirror: true; initialState?: unknown }
-    | { mirror?: false; initialState: EditorProps['initialState'] }
-  )) {
+}: EditorProps) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
 
@@ -90,12 +79,17 @@ export function InnerDocument({
     })
   }, [onChange])
 
+  const strippedPlugins = plugins
+
   useEffect(() => {
-    if (!props.mirror) {
-      dispatch(runInitRootSaga({ initialState: props.initialState, plugins }))
-    }
-  }, [props.initialState, plugins, props.mirror, dispatch])
-  const editableContextValue = useMemo(() => editable ?? true, [editable])
+    dispatch(
+      runInitRootSaga({
+        initialState: props.initialState,
+        plugins: strippedPlugins,
+      })
+    )
+  }, [props.initialState, strippedPlugins, dispatch])
+  const editableContextValue = useMemo(() => editable, [editable])
   const hotKeysHandlers = useMemo(
     () => ({
       UNDO: () => dispatch(undo()),
@@ -115,13 +109,11 @@ export function InnerDocument({
       <div className="relative">
         <ErrorContext.Provider value={onError}>
           <PluginsContext.Provider value={plugins}>
-            <PluginRegistryContext.Provider value={pluginRegistry}>
-              <PreferenceContextProvider>
-                <EditableContext.Provider value={editableContextValue}>
-                  {renderChildren(id)}
-                </EditableContext.Provider>
-              </PreferenceContextProvider>
-            </PluginRegistryContext.Provider>
+            <PreferenceContextProvider>
+              <EditableContext.Provider value={editableContextValue}>
+                {renderChildren(id)}
+              </EditableContext.Provider>
+            </PreferenceContextProvider>
           </PluginsContext.Provider>
         </ErrorContext.Provider>
       </div>
@@ -144,13 +136,12 @@ export function InnerDocument({
   }
 }
 
-export type EditorPlugins = Record<string, EditorPlugin>
+export type EditorPluginType =
+  keyof LoggedInData['strings']['editor']['plugins']
 
 export interface EditorProps {
-  omitDragDropContext?: boolean
   children?: ReactNode | ((document: ReactNode) => ReactNode)
-  plugins: EditorPlugins
-  pluginRegistry: Registry
+  plugins: PluginsContextPlugins
   initialState: {
     plugin: string
     state?: unknown

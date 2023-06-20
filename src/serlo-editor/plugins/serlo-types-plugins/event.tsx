@@ -46,11 +46,11 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.event.seoTitle}
+              label={editorStrings.templatePlugins.event.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.event.seoDesc}
+              label={editorStrings.templatePlugins.event.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -59,7 +59,7 @@ function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
           {props.editable ? (
             <input
               className={headerInputClasses}
-              placeholder={editorStrings.event.title}
+              placeholder={editorStrings.templatePlugins.event.title}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)

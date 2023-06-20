@@ -26,6 +26,7 @@ import {
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin } from '../contexts/plugins-context'
 import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
+import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
 const hotKeysKeyMap = {
   FOCUS_PREVIOUS: 'up',
@@ -51,7 +52,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     selectMayManipulateSiblings(state, id)
   )
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const plugin = usePlugin(document?.plugin)
+  const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(

@@ -38,7 +38,7 @@ export const courseTypePlugin: EditorPlugin<typeof courseTypeState> = {
 
 function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
   const { title, meta_description, 'course-page': children } = props.state
-  const editorStrings = useEditorStrings()
+  const courseStrings = useEditorStrings().templatePlugins.course
 
   return (
     <article>
@@ -52,7 +52,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       {props.renderIntoSettings(
         <Settings>
           <Settings.Textarea
-            label={editorStrings.course.seoDesc}
+            label={courseStrings.seoDesc}
             state={meta_description}
           />
         </Settings>
@@ -61,7 +61,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
         {props.editable ? (
           <input
             className={headerInputClasses}
-            placeholder={editorStrings.course.title}
+            placeholder={courseStrings.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               title.set(e.target.value)
@@ -76,7 +76,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
           <OptionalChild
             state={child}
             key={child.id}
-            removeLabel={editorStrings.course.removeCoursePage}
+            removeLabel={courseStrings.removeCoursePage}
             onRemove={() => {
               children.remove(index)
             }}
@@ -85,7 +85,7 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
       })}
       <hr />
       <AddButton onClick={() => children.insert()}>
-        {editorStrings.course.addCoursePage}
+        {courseStrings.addCoursePage}
       </AddButton>
       <ToolbarMain showSubscriptionOptions {...props.state} />
     </article>

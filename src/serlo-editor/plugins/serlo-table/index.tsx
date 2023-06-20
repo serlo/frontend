@@ -95,7 +95,7 @@ function SerloTableEditor(props: SerloTableProps) {
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
-  const tableStrings = useEditorStrings().serloTable
+  const tableStrings = useEditorStrings().plugins.serloTable
 
   const tableType = getTableType(props.state.tableType.value)
   const showRowHeader =

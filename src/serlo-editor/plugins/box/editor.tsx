@@ -53,7 +53,9 @@ export function BoxEditor(props: BoxProps) {
         title={
           <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
             {title.render({
-              config: { placeholder: editorStrings.box.titlePlaceholder },
+              config: {
+                placeholder: editorStrings.plugins.box.titlePlaceholder,
+              },
             })}
           </div>
         }
@@ -69,7 +71,7 @@ export function BoxEditor(props: BoxProps) {
   function renderInlineSettings() {
     return (
       <>
-        <b className="block pb-4">{editorStrings.box.type}</b>
+        <b className="block pb-4">{editorStrings.plugins.box.type}</b>
         <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
       </>
     )
@@ -79,13 +81,13 @@ export function BoxEditor(props: BoxProps) {
     return props.renderIntoSettings(
       <>
         <b className="serlo-h4 mt-6 ml-0 mb-4 block">
-          {editorStrings.box.type}:
+          {editorStrings.plugins.box.type}:
         </b>
         <ul className="pb-8">{renderSettingsLis()}</ul>
 
         {anchorId.value === '' ? null : (
           <p className="mb-4">
-            <b>{editorStrings.box.anchorId}: </b>#{anchorId.value}
+            <b>{editorStrings.plugins.box.anchorId}: </b>#{anchorId.value}
           </p>
         )}
       </>
@@ -126,7 +128,7 @@ export function BoxEditor(props: BoxProps) {
     return contentIsEmpty && props.editable ? (
       <div className="mt-1 text-right">
         <span className="bg-editor-primary-100 p-0.5 text-sm">
-          ⚠️ {editorStrings.box.emptyContentWarning}
+          ⚠️ {editorStrings.plugins.box.emptyContentWarning}
         </span>
       </div>
     ) : null

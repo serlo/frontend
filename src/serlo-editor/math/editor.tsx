@@ -120,7 +120,7 @@ export function MathEditor(props: MathEditorProps) {
   const [helpOpen, setHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
 
-  const mathStrings = useEditorStrings().text.math
+  const mathStrings = useEditorStrings().plugins.text.math
 
   const { visual, readOnly, state, disableBlock } = props
 

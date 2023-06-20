@@ -44,7 +44,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
     selectIsDocumentEmpty(state, strategy.id)
   )
 
-  const editorStrings = useEditorStrings()
+  const solutionStrings = useEditorStrings().templatePlugins.solution
 
   return (
     <>
@@ -53,7 +53,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
         <SemanticSection editable={editable}>
           {strategy.render({
             config: {
-              placeholder: editorStrings.solution.optionalExplanation,
+              placeholder: solutionStrings.optionalExplanation,
             },
           })}
         </SemanticSection>
@@ -73,7 +73,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       if (editable) {
         return (
           <div>
-            {editorStrings.solution.fundamentalsNote}{' '}
+            {solutionStrings.fundamentalsNote}{' '}
             {focused ? (
               <InlineSettings
                 onDelete={() => {
@@ -89,7 +89,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                       ? `/${prerequisite.id.value}`
                       : ''
                   }
-                  placeholder={editorStrings.solution.idArticle}
+                  placeholder={solutionStrings.idArticle}
                   onChange={(event) => {
                     const newValue = event.target.value.replace(/[^0-9]/g, '')
                     if (prerequisite.defined) {
@@ -112,7 +112,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                   rel="noopener noreferrer"
                 >
                   <span
-                    title={editorStrings.solution.openArticleTab}
+                    title={solutionStrings.openArticleTab}
                     className="ml-2.5"
                   >
                     <FaIcon icon={faUpRightFromSquare} />
@@ -130,7 +130,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
                     prerequisite.create({ id: '', title: value })
                   }
                 }}
-                placeholder={editorStrings.solution.linkTitle}
+                placeholder={solutionStrings.linkTitle}
               />
             </a>
           </div>
@@ -144,7 +144,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
       ) {
         return (
           <p>
-            {editorStrings.solution.fundamentalsNote}{' '}
+            {solutionStrings.fundamentalsNote}{' '}
             <a href={`/${prerequisite.id.value}`}>{prerequisite.title.value}</a>
           </p>
         )

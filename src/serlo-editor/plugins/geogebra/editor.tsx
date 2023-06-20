@@ -16,7 +16,7 @@ export function GeogebraEditor(props: GeogebraProps) {
       {focused ? (
         <div className="mt-4">
           <EditorInput
-            label={editorStrings.geogebra.urlOrId}
+            label={editorStrings.plugins.geogebra.urlOrId}
             placeholder="12345"
             value={state.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

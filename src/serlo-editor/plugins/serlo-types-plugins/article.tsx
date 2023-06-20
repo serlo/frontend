@@ -33,7 +33,7 @@ export const articleTypePlugin: EditorPlugin<typeof articleTypeState> = {
 function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
   const { title, content, meta_title, meta_description } = props.state
 
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   return (
     <>

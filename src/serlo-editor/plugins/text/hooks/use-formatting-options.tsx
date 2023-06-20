@@ -118,7 +118,7 @@ const registeredMarkdownShortcuts = [
 export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   const { formattingOptions } = config
   const { strings } = useInstanceData()
-  const textStrings = useEditorStrings().text
+  const textStrings = useEditorStrings().plugins.text
 
   const createTextEditor = useCallback(
     (baseEditor: SlateEditor) =>
@@ -211,7 +211,7 @@ export const useFormattingOptions = (config: TextEditorPluginConfig) => {
 
 function createToolbarControls(
   { formattingOptions }: TextEditorPluginConfig,
-  textStrings: LoggedInData['strings']['editor']['text'],
+  textStrings: LoggedInData['strings']['editor']['plugins']['text'],
   ctrlKey: string
 ): ControlButton[] {
   const allFormattingOptions = [

@@ -158,7 +158,7 @@ export function EquationsEditor(props: EquationsProps) {
       {props.renderIntoSettings(
         <div>
           <label htmlFor="transformationTarget">
-            {editorStrings.equations.mode}:
+            {editorStrings.plugins.equations.mode}:
           </label>{' '}
           <select
             id="transformationTarget"
@@ -166,10 +166,10 @@ export function EquationsEditor(props: EquationsProps) {
             onChange={(e) => state.transformationTarget.set(e.target.value)}
           >
             <option value={TransformationTarget.Equation}>
-              {editorStrings.equations.transformationOfEquations}
+              {editorStrings.plugins.equations.transformationOfEquations}
             </option>
             <option value={TransformationTarget.Term}>
-              {editorStrings.equations.transformationOfTerms}
+              {editorStrings.plugins.equations.transformationOfTerms}
             </option>
           </select>
         </div>
@@ -261,8 +261,10 @@ export function EquationsEditor(props: EquationsProps) {
                                   row === 0 &&
                                   transformationTarget ===
                                     TransformationTarget.Term
-                                    ? editorStrings.equations.combineLikeTerms
-                                    : editorStrings.equations.explanation,
+                                    ? editorStrings.plugins.equations
+                                        .combineLikeTerms
+                                    : editorStrings.plugins.equations
+                                        .explanation,
                               },
                             })}
                           </td>
@@ -291,7 +293,7 @@ export function EquationsEditor(props: EquationsProps) {
           <td colSpan={3}>
             {state.firstExplanation.render({
               config: {
-                placeholder: editorStrings.equations.firstExplanation,
+                placeholder: editorStrings.plugins.equations.firstExplanation,
               },
             })}
           </td>
@@ -335,7 +337,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <AddButton onClick={() => insertNewEquationWithFocus(state.steps.length)}>
-        {editorStrings.equations.addNew}
+        {editorStrings.plugins.equations.addNew}
       </AddButton>
     )
   }
@@ -371,7 +373,9 @@ function StepEditor(props: StepEditorProps) {
           <InlineMath
             focused={gridFocus.isFocused({ row, column: StepSegment.Left })}
             placeholder={
-              row === 0 ? '3x+1' : `[${editorStrings.equations.leftHandSide}]`
+              row === 0
+                ? '3x+1'
+                : `[${editorStrings.plugins.equations.leftHandSide}]`
             }
             state={state.left}
             onChange={(src) => state.left.set(src)}
@@ -417,8 +421,8 @@ function StepEditor(props: StepEditorProps) {
             row === 0
               ? '4x+3x'
               : transformationTarget === TransformationTarget.Term
-              ? `[${editorStrings.equations.term}]`
-              : `[${editorStrings.equations.rightHandSide}]`
+              ? `[${editorStrings.plugins.equations.term}]`
+              : `[${editorStrings.plugins.equations.rightHandSide}]`
           }
           state={state.right}
           onChange={(src) => state.right.set(src)}
@@ -440,8 +444,8 @@ function StepEditor(props: StepEditorProps) {
             })}
             placeholder={
               row === 0
-                ? editorStrings.equations.transformationExample
-                : `[${editorStrings.equations.transformation}]`
+                ? editorStrings.plugins.equations.transformationExample
+                : `[${editorStrings.plugins.equations.transformation}]`
             }
             state={state.transform}
             onChange={(src) => state.transform.set(src)}

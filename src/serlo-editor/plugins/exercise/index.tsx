@@ -4,8 +4,10 @@ import styled from 'styled-components'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
+import {
+  EditorStrings,
+  useEditorStrings,
+} from '@/contexts/logged-in-data-context'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
@@ -41,34 +43,34 @@ const ButtonContainer = styled.div({
 
 const interactivePlugins: {
   name: 'scMcExercise' | 'inputExercise' | 'h5p'
-  addLabel: (editorStrings: LoggedInData['strings']['editor']) => string
-  title: (editorStrings: LoggedInData['strings']['editor']) => string
+  addLabel: (exStrings: EditorStrings['templatePlugins']['exercise']) => string
+  title: (exStrings: EditorStrings['templatePlugins']['exercise']) => string
 }[] = [
   {
     name: 'scMcExercise',
-    addLabel(editorStrings) {
-      return editorStrings.exercise.addChoiceExercise
+    addLabel(exStrings) {
+      return exStrings.addChoiceExercise
     },
-    title(editorStrings) {
-      return editorStrings.exercise.choiceExercise
+    title(exStrings) {
+      return exStrings.choiceExercise
     },
   },
   {
     name: 'inputExercise',
-    addLabel(editorStrings) {
-      return editorStrings.exercise.addInputExercise
+    addLabel(exStrings) {
+      return exStrings.addInputExercise
     },
-    title(editorStrings) {
-      return editorStrings.exercise.inputExercise
+    title(exStrings) {
+      return exStrings.inputExercise
     },
   },
   {
     name: 'h5p',
-    addLabel(editorStrings) {
-      return editorStrings.exercise.addH5pExercise
+    addLabel(exStrings) {
+      return exStrings.addH5pExercise
     },
-    title(editorStrings) {
-      return editorStrings.exercise.h5pExercise
+    title(exStrings) {
+      return exStrings.h5pExercise
     },
   },
 ]
@@ -111,7 +113,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
   const { content, interactive } = state
   const [showOptions, setShowOptions] = useState(false)
 
-  const editorStrings = useEditorStrings()
+  const exStrings = useEditorStrings().templatePlugins.exercise
   return (
     <>
       <SemanticSection editable={editable}>{content.render()}</SemanticSection>
@@ -135,14 +137,14 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
               >
                 <PluginToolbarButton
                   icon={<FaIcon icon={faRandom} />}
-                  label={editorStrings.exercise.changeInteractive}
+                  label={exStrings.changeInteractive}
                   onClick={() => {
                     setShowOptions(true)
                   }}
                 />
                 <PluginToolbarButton
                   icon={<FaIcon icon={faTrashAlt} />}
-                  label={editorStrings.exercise.removeInteractive}
+                  label={exStrings.removeInteractive}
                   onClick={() => {
                     interactive.remove()
                   }}
@@ -164,7 +166,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
                               setShowOptions(false)
                             }}
                           >
-                            {plugin.title(editorStrings)}
+                            {plugin.title(exStrings)}
                           </Option>
                         )
                       })}
@@ -182,7 +184,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
       return (
         <>
           <p>
-            <em>{editorStrings.exercise.addOptionalInteractiveEx}</em>
+            <em>{exStrings.addOptionalInteractiveEx}</em>
           </p>
           <ButtonContainer>
             {interactivePlugins.map((plugin) => {
@@ -195,7 +197,7 @@ function ExerciseEditor({ editable, state }: ExerciseProps) {
                     })
                   }}
                 >
-                  {plugin.addLabel(editorStrings)}
+                  {plugin.addLabel(exStrings)}
                 </AddButton>
               )
             })}

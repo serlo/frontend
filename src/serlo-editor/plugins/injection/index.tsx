@@ -38,7 +38,7 @@ function InjectionEditor({
     }
   }, [focused, state.value])
 
-  const injectionsStrings = useEditorStrings().injection
+  const injectionsStrings = useEditorStrings().plugins.injection
 
   if (!editable) {
     return <Injection href={state.value} renderNested={renderArticle} />

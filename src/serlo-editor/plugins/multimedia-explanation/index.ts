@@ -34,7 +34,6 @@ export function createMultimediaExplanationPlugin(
   config = defaultConfig
 ): EditorPlugin<MultimediaExplanationPluginState, MultimediaExplanationConfig> {
   const { plugins, explanation } = config
-
   return {
     Component: MultimediaExplanationEditor,
     config,

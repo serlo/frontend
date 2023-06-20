@@ -53,13 +53,13 @@ export function AddRowButton(props: AddRowButtonProps) {
       config={config}
       focused={focused}
       visible={visuallyEmphasized ? 'always' : 'on-focus'}
-      title={editorStrings.rows.addAnElement}
+      title={editorStrings.plugins.rows.addAnElement}
       onMouseDown={onClick}
     >
       <EdtrIcon icon={edtrPlus} className="w-[26px]" />
       {visuallyEmphasized ? (
         <span className="text-almost-black">
-          {editorStrings.rows.addAnElement}
+          {editorStrings.plugins.rows.addAnElement}
         </span>
       ) : null}
     </AddButton>

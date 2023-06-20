@@ -17,7 +17,7 @@ export function ArticleExercises({
   exerciseFolder,
   editable,
 }: ArticleExercisesProps) {
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   const folderHeader = <p>{articleStrings.moreInFolder}:</p>
 

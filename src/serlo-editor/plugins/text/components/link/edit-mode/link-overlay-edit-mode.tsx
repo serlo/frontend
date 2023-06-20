@@ -33,7 +33,7 @@ export function LinkOverlayEditMode({
 
   const { serloLinkSearch } = useTextConfig(config)
   const { lang } = useInstanceData()
-  const overlayStrings = useEditorStrings().text.linkOverlay
+  const overlayStrings = useEditorStrings().plugins.text.linkOverlay
 
   useEffect(() => {
     setQuery(value)

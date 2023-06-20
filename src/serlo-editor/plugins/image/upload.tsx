@@ -12,7 +12,7 @@ export function Upload(props: UploadProps) {
         onClick={selectFile}
         className="serlo-button-editor-secondary h-10 self-end text-base"
       >
-        {editorStrings.image.upload}
+        {editorStrings.plugins.image.upload}
       </button>
       <input
         type="file"

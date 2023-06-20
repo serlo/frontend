@@ -47,7 +47,7 @@ export function HighlightRenderer({
         overflow: 'auto',
       }}
     >
-      {code || editorStrings.highlight.language}
+      {code || editorStrings.plugins.highlight.language}
     </SyntaxHighlighter>
   )
 }

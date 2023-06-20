@@ -15,7 +15,7 @@ import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-types-
 import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-solution'
 import { userTypeState } from '../serlo-editor/plugins/serlo-types-plugins/user'
 import { videoTypeState } from '../serlo-editor/plugins/serlo-types-plugins/video'
-import { SerloEntityPluginType } from './plugins'
+import { TemplatePluginType } from './plugins'
 import {
   isEdtr,
   Edtr,
@@ -114,7 +114,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'applet' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Applet,
+        plugin: TemplatePluginType.Applet,
         state: {
           ...entityFields,
           revision,
@@ -136,7 +136,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'article' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Article,
+        plugin: TemplatePluginType.Article,
         state: {
           ...entityFields,
           revision,
@@ -189,7 +189,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'course' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Course,
+        plugin: TemplatePluginType.Course,
         state: {
           ...entityFields,
           revision,
@@ -228,7 +228,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'course-page' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.CoursePage,
+        plugin: TemplatePluginType.CoursePage,
         state: {
           id: uuid.id,
           license: license!, // there could be cases where this is not correct
@@ -253,7 +253,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'event' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Event,
+        plugin: TemplatePluginType.Event,
         state: {
           ...entityFields,
           revision,
@@ -274,7 +274,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'page' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Page,
+        plugin: TemplatePluginType.Page,
         state: {
           ...entityFields,
           title,
@@ -291,7 +291,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'taxonomy' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Taxonomy,
+        plugin: TemplatePluginType.Taxonomy,
         state: {
           id: uuid.id,
           parent: uuid.parent?.id ?? 0,
@@ -317,7 +317,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
     return {
       initialState: {
-        plugin: SerloEntityPluginType.TextExercise,
+        plugin: TemplatePluginType.TextExercise,
         state: {
           id: uuid.id,
           license: license!,
@@ -390,7 +390,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 
     return {
       initialState: {
-        plugin: SerloEntityPluginType.TextExerciseGroup,
+        plugin: TemplatePluginType.TextExerciseGroup,
         state: {
           ...entityFields,
           changes: '',
@@ -412,7 +412,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     const solutionContent = uuid.currentRevision?.content ?? ''
     return {
       initialState: {
-        plugin: SerloEntityPluginType.TextSolution,
+        plugin: TemplatePluginType.TextSolution,
         state: {
           id: uuid.id,
           license: license!,
@@ -454,7 +454,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     stack.push({ id: uuid.id, type: 'video' })
     return {
       initialState: {
-        plugin: SerloEntityPluginType.Video,
+        plugin: TemplatePluginType.Video,
         state: {
           ...entityFields,
           changes: '',
@@ -474,7 +474,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
 export function convertUserByDescription(description?: string | null) {
   return {
     initialState: {
-      plugin: SerloEntityPluginType.User,
+      plugin: TemplatePluginType.User,
       state: {
         description: serializeEditorState(
           toEdtr(convertEditorState(description ?? ''))

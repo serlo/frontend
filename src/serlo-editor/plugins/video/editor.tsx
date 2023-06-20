@@ -17,14 +17,14 @@ export const VideoEditor = (props: VideoProps) => {
       {props.renderIntoSettings(
         <>
           <OverlayInput
-            label={editorStrings.video.videoUrl}
+            label={editorStrings.plugins.video.videoUrl}
             value={state.src.value}
             onChange={(e) => {
               state.src.set(e.target.value)
             }}
           />
           <OverlayInput
-            label={editorStrings.video.description}
+            label={editorStrings.plugins.video.description}
             value={state.alt.value}
             onChange={(e) => {
               state.alt.set(e.target.value)
@@ -35,7 +35,7 @@ export const VideoEditor = (props: VideoProps) => {
       {focused ? (
         <div className="mt-4">
           <EditorInput
-            label={editorStrings.video.videoUrl}
+            label={editorStrings.plugins.video.videoUrl}
             value={state.src.value}
             onChange={(e) => {
               state.src.set(e.target.value)

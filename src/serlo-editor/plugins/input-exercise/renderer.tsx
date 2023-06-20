@@ -101,7 +101,9 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
             }}
             data-type={state.type.value}
             type="text"
-            placeholder={editorStrings.inputExercise.yourSolution}
+            placeholder={
+              editorStrings.templatePlugins.inputExercise.yourSolution
+            }
             ref={input}
           />
           {state.unit.value}

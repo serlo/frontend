@@ -25,7 +25,7 @@ const DeprecatedRenderer: React.FunctionComponent<
   return (
     <div className="panel panel-danger">
       <div className="panel-heading">
-        {editorStrings.deprecated.unsupported}
+        {editorStrings.plugins.deprecated.unsupported}
       </div>
       <div className="panel-body">
         <pre>

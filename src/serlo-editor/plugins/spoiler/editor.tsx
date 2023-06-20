@@ -14,7 +14,7 @@ export function SpoilerEditor(props: SpoilerProps) {
         <input
           onChange={(e) => state.title.set(e.target.value)}
           value={state.title.value}
-          placeholder={editorStrings.spoiler.enterATitle}
+          placeholder={editorStrings.plugins.spoiler.enterATitle}
           ref={autofocusRef}
           className="bg-transparent p-1 focus:outline-editor-primary"
         />

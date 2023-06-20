@@ -35,7 +35,10 @@ import { Suggestions } from './suggestions'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
-import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import {
+  getPluginByType,
+  usePlugins,
+} from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -331,10 +334,16 @@ export function TextEditor(props: TextEditorProps) {
       // Handle pasted images
       const files = Array.from(event.clipboardData.files)
       if (files?.length > 0) {
-        const imagePluginState = plugins.image?.onFiles?.(files)
+        const imagePluginState = getPluginByType(
+          plugins,
+          'image'
+        )?.plugin.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(editorStrings.image.noImagePasteInLists, 'warning')
+            showToastNotice(
+              editorStrings.plugins.image.noImagePasteInLists,
+              'warning'
+            )
             return
           }
 
@@ -346,12 +355,18 @@ export function TextEditor(props: TextEditorProps) {
       // Handle pasted video URLs
       const text = event.clipboardData.getData('text')
       if (text) {
-        const videoPluginState = plugins.video?.onText?.(text)
+        const videoPluginState = getPluginByType(
+          plugins,
+          'video'
+        )?.plugin.onText?.(text)
         if (videoPluginState !== undefined) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(editorStrings.video.noVideoPasteInLists, 'warning')
+            showToastNotice(
+              editorStrings.plugins.video.noVideoPasteInLists,
+              'warning'
+            )
             return
           }
 
@@ -395,7 +410,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, editorStrings, plugins.image, plugins.video]
+    [dispatch, editor, id, editorStrings, plugins]
   )
 
   const handleRenderElement = useCallback(

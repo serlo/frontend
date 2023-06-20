@@ -27,7 +27,7 @@ export function ArticleRelatedContent({
   editable,
 }: ArticleRelatedContentProps) {
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   const allItems = flatten(values(data))
   if (!editable && allItems.length === 0) return null

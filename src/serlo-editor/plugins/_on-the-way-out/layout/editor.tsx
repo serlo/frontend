@@ -60,14 +60,14 @@ export const LayoutRenderer: React.FunctionComponent<
     <>
       {props.editable ? (
         <ConvertInfo>
-          {editorStrings.layout.toDragConvert}
+          {editorStrings.plugins.layout.toDragConvert}
           <ButtonContainer>
             <ConvertButton onClick={convertToRow}>
-              {editorStrings.layout.oneColumnLayout}
+              {editorStrings.plugins.layout.oneColumnLayout}
             </ConvertButton>
             {canConvertToMultimediaExplanation() ? (
               <ConvertButton onClick={convertToMultimediaExplanation}>
-                {editorStrings.layout.multimediaTitle}
+                {editorStrings.plugins.layout.multimediaTitle}
               </ConvertButton>
             ) : null}
           </ButtonContainer>

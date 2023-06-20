@@ -1,11 +1,11 @@
 import { createAction } from '@reduxjs/toolkit'
 
-import { EditorPlugin } from '../../types/internal__plugin'
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 
 export const runInitRootSaga = createAction<{
   initialState: {
     plugin: string
     state?: unknown
   }
-  plugins: Record<string, EditorPlugin>
+  plugins: PluginsContextPlugins
 }>('root/runInitRootSaga')

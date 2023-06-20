@@ -30,7 +30,7 @@ export function LinkOverlayWithHref({
       : undefined
   const entry = quickbarData?.find((entry) => entry.id === serloId)
   const isCustomLink = !serloId && !value.includes('serlo.org/')
-  const textStrings = useEditorStrings().text
+  const textStrings = useEditorStrings().plugins.text
 
   return (
     <div className="flex content-between items-center px-side py-2">

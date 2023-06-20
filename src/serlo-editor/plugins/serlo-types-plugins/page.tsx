@@ -38,7 +38,7 @@ function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
             {props.editable ? (
               <input
                 className={headerInputClasses}
-                placeholder={editorStrings.page.title}
+                placeholder={editorStrings.templatePlugins.page.title}
                 value={title.value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   title.set(e.target.value)

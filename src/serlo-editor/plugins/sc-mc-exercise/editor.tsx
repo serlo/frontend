@@ -74,16 +74,16 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
         <>
           <div className="mb-2">
             <label>
-              {editorStrings.scMcExercise.chooseType}:{' '}
+              {editorStrings.templatePlugins.scMcExercise.chooseType}:{' '}
               <select
                 value={state.isSingleChoice.value ? 'sc' : 'mc'}
                 onChange={handleSCMCChange}
               >
                 <option value="mc">
-                  {editorStrings.scMcExercise.multipleChoice}
+                  {editorStrings.templatePlugins.scMcExercise.multipleChoice}
                 </option>
                 <option value="sc">
-                  {editorStrings.scMcExercise.singleChoice}
+                  {editorStrings.templatePlugins.scMcExercise.singleChoice}
                 </option>
               </select>
             </label>
@@ -109,7 +109,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
             )
           })}
           <AddButton onClick={addButton}>
-            {editorStrings.scMcExercise.addAnswer}
+            {editorStrings.templatePlugins.scMcExercise.addAnswer}
           </AddButton>
         </>
       )}

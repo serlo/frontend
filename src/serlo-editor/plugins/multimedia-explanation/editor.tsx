@@ -60,8 +60,7 @@ const Option = styled.div({
 })
 
 export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
-  const multimediaStrings = useEditorStrings().multimedia
-
+  const multimediaStrings = useEditorStrings().plugins.multimedia
   const config = useMultimediaExplanationConfig(props.config)
 
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -113,10 +112,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       value={multimediaDocument ? multimediaDocument.plugin : ''}
       onChange={(e) => handleMultimediaChange(e.target.value)}
     >
-      {props.config.plugins.map((plugin) => {
+      {props.config.plugins.map((type) => {
         return (
-          <option key={plugin} value={plugin}>
-            {getPluginTitle(plugin)}
+          <option key={type} value={type}>
+            {getPluginTitle(type)}
           </option>
         )
       })}

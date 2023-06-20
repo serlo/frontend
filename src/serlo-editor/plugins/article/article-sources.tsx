@@ -19,7 +19,7 @@ interface ArticleSourcesProps {
 }
 
 export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   if (!editable) {
     if (sources.length === 0) return null

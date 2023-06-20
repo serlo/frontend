@@ -14,7 +14,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
-import { getPluginRegistry } from '@/serlo-editor/plugins/rows/get-plugin-registry'
 
 export interface SerloEditorProps {
   children?: ReactNode
@@ -49,6 +48,7 @@ export function SerloEditor({
   onError,
   initialState,
   children,
+  type,
 }: SerloEditorProps) {
   const canDo = useCanDo()
   const userCanSkipReview = canDo(Entity.checkoutRevision)
@@ -66,8 +66,11 @@ export function SerloEditor({
 
   const editorStrings = loggedInData.strings.editor
 
-  const plugins = createPlugins({ editorStrings, instance: lang })
-
+  const plugins = createPlugins({
+    editorStrings,
+    instance: lang,
+    parentType: type,
+  })
   return (
     // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
@@ -78,7 +81,6 @@ export function SerloEditor({
       <Editor
         onError={onError}
         plugins={plugins}
-        pluginRegistry={getPluginRegistry('root', editorStrings)}
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
         onChange={({ changed, getDocument }) => {
