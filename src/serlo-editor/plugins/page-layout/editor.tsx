@@ -44,7 +44,7 @@ export const PageLayoutEditor: React.FunctionComponent<
     return (
       <>
         <b className="serlo-h4 mt-6 ml-0 mb-4 block">
-          {editorStrings.pageLayoutColums.chooseRatio}:
+          {editorStrings.plugins.pageLayout.chooseRatio}:
         </b>
         <ul className="unstyled-list flex pb-8">
           {firstColumsSizes.map(renderLi)}

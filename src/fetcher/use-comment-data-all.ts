@@ -8,9 +8,19 @@ import { useGraphqlSwrPaginationWithAuth } from '@/api/use-graphql-swr'
 import { useInstanceData } from '@/contexts/instance-context'
 
 const query = gql`
-  query getAllThreads($first: Int!, $after: String, $instance: Instance) {
+  query getAllThreads(
+    $first: Int!
+    $after: String
+    $instance: Instance
+    $subjectId: String
+  ) {
     thread {
-      allThreads(instance: $instance, first: $first, after: $after) {
+      allThreads(
+        instance: $instance
+        first: $first
+        after: $after
+        subjectId: $subjectId
+      ) {
         pageInfo {
           hasNextPage
           endCursor
@@ -50,12 +60,16 @@ const query = gql`
 export type GetAllThreadsNode =
   GetAllThreadsQuery['thread']['allThreads']['nodes'][number]
 
-export function useCommentDataAll() {
+export function useCommentDataAll(subjectId?: string) {
   const { lang } = useInstanceData()
 
   const resp = useGraphqlSwrPaginationWithAuth<GetAllThreadsNode>({
     query: query,
-    variables: { first: 10, instance: lang } as GetAllThreadsQueryVariables,
+    variables: {
+      first: 10,
+      instance: lang,
+      subjectId,
+    } as GetAllThreadsQueryVariables,
     config: {
       refreshInterval: 1 * 60 * 1000, //1min
     },

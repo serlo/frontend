@@ -10,6 +10,7 @@ import {
   ListStateType,
 } from '../../plugin'
 import { RowsEditor } from './components/rows-editor'
+import { EditorPluginType } from '@/serlo-editor/core/editor'
 
 const defaultConfig: RowsConfig = {
   content: { plugin: 'text' },
@@ -55,15 +56,8 @@ export interface RowsConfig extends Omit<RowsPluginConfig, 'theme'> {
 
 export type RowsPluginState = ListStateType<ChildStateType>
 
-export interface RegistryPlugin {
-  name: string
-  title?: string
-  icon?: JSX.Element
-  description?: string
-}
-
 export interface RowsPluginConfig {
-  allowedPlugins?: string[]
+  allowedPlugins?: EditorPluginType[]
   parentType: string
 }
 

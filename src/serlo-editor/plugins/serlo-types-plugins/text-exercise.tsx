@@ -33,7 +33,7 @@ export const textExerciseTypePlugin: EditorPlugin<
   },
 }
 
-export function TextExerciseTypeEditor(
+function TextExerciseTypeEditor(
   props: EditorPluginProps<
     typeof textExerciseTypeState,
     { skipControls: boolean }
@@ -56,7 +56,9 @@ export function TextExerciseTypeEditor(
       {textSolution.id ? (
         <OptionalChild
           state={textSolution}
-          removeLabel={editorStrings.textExercise.removeSolution}
+          removeLabel={
+            editorStrings.templatePlugins.textExercise.removeSolution
+          }
           onRemove={() => {
             textSolution.remove()
           }}
@@ -67,7 +69,7 @@ export function TextExerciseTypeEditor(
             textSolution.create()
           }}
         >
-          {editorStrings.textExercise.createSolution}
+          {editorStrings.templatePlugins.textExercise.createSolution}
         </AddButton>
       )}
       {props.config.skipControls ? null : (

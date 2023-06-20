@@ -5,13 +5,9 @@ import { Injection } from '@/components/content/injection'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
-import { OverlayInput } from '@/serlo-editor/core'
-import {
-  EditorInlineSettings,
-  EditorInput,
-  PreviewOverlay,
-} from '@/serlo-editor/editor-ui'
+import { EditorInput, PreviewOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps, string, EditorPlugin } from '@/serlo-editor/plugin'
+import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export const injectionState = string()
 
@@ -42,7 +38,7 @@ function InjectionEditor({
     }
   }, [focused, state.value])
 
-  const injectionsStrings = useEditorStrings().injection
+  const injectionsStrings = useEditorStrings().plugins.injection
 
   if (!editable) {
     return <Injection href={state.value} renderNested={renderArticle} />
@@ -74,7 +70,7 @@ function InjectionEditor({
       )}
 
       {focused && !isPreview ? (
-        <EditorInlineSettings>
+        <div className="mt-4">
           <EditorInput
             label={injectionsStrings.serloId}
             placeholder={injectionsStrings.placeholder}
@@ -86,19 +82,17 @@ function InjectionEditor({
             inputWidth="100%"
             ref={autofocusRef}
           />
-        </EditorInlineSettings>
+        </div>
       ) : null}
       {renderIntoSettings(
-        <>
-          <OverlayInput
-            label={injectionsStrings.serloId}
-            placeholder={injectionsStrings.placeholder}
-            inputMode="numeric"
-            pattern="\d+"
-            value={state.value}
-            onChange={handleOnChange}
-          />
-        </>
+        <OverlayInput
+          label={injectionsStrings.serloId}
+          placeholder={injectionsStrings.placeholder}
+          inputMode="numeric"
+          pattern="\d+"
+          value={state.value}
+          onChange={handleOnChange}
+        />
       )}
     </>
   )

@@ -1,3 +1,7 @@
 import { createContext } from 'react'
 
-export const AllowedChildPlugins = createContext<string[] | undefined>([])
+import { EditorPluginType } from '@/serlo-editor/core/editor'
+
+export const AllowedChildPlugins = createContext<
+  EditorPluginType[] | undefined
+>([])

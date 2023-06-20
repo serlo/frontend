@@ -1,4 +1,5 @@
-import { styled } from '../ui'
+import styled from 'styled-components'
+
 import { legacyEditorTheme } from '@/helper/colors'
 
 export const EditorButton = styled.button(() => {

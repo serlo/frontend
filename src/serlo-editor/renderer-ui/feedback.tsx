@@ -1,4 +1,5 @@
-import { styled } from '../ui'
+import styled from 'styled-components'
+
 import { colors } from '@/helper/colors'
 
 const ContainerWithBox = styled.div<ContainerProps>({

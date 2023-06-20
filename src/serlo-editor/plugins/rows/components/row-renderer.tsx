@@ -3,21 +3,25 @@ import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
+import styled from 'styled-components'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
-import { OverlayButton, PluginToolbarButton } from '@/serlo-editor/core'
-import { EditorPlugins } from '@/serlo-editor/core/editor'
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
+import {
+  OverlayButton,
+  PluginToolbarButton,
+} from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
   store,
 } from '@/serlo-editor/store'
-import { edtrDragHandle, EdtrIcon, styled } from '@/serlo-editor/ui'
 
 interface RowDragObject {
   id: string
@@ -61,7 +65,7 @@ export function RowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: EditorPlugins
+  plugins: PluginsContextPlugins
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
   const editorStrings = useEditorStrings()
@@ -156,33 +160,33 @@ export function RowRenderer({
       switch (type) {
         case NativeTypes.FILE: {
           const files: File[] = monitor.getItem<{ files: File[] }>().files
-          for (const key in plugins) {
+          plugins.find(({ type, plugin }) => {
             // eslint-disable-next-line @typescript-eslint/unbound-method
-            const { onFiles } = plugins[key]
+            const { onFiles } = plugin
             if (typeof onFiles === 'function') {
               const result = onFiles(files)
               if (result !== undefined) {
-                handleResult(key, result)
-                return
+                handleResult(type, result)
+                return true
               }
             }
-          }
+          })
           break
         }
         case NativeTypes.URL: {
           const urls: string[] = monitor.getItem<{ urls: string[] }>().urls
           const text = urls[0]
-          for (const key in plugins) {
+          plugins.find(({ type, plugin }) => {
             // eslint-disable-next-line @typescript-eslint/unbound-method
-            const { onText } = plugins[key]
+            const { onText } = plugin
             if (typeof onText === 'function') {
               const result = onText(text)
               if (result !== undefined) {
-                handleResult(key, result)
-                return
+                handleResult(type, result)
+                return true
               }
             }
-          }
+          })
           break
         }
       }
@@ -219,18 +223,20 @@ export function RowRenderer({
                     rows.insert(index, document)
                     close()
                   }}
-                  label={editorStrings.rows.duplicate}
+                  label={editorStrings.plugins.rows.duplicate}
                 >
-                  <FaIcon icon={faCopy} /> {editorStrings.rows.duplicate}
+                  <FaIcon icon={faCopy} />{' '}
+                  {editorStrings.plugins.rows.duplicate}
                 </BorderlessOverlayButton>
                 <BorderlessOverlayButton
                   onClick={() => {
                     rows.remove(index)
                     close()
                   }}
-                  label={editorStrings.rows.remove}
+                  label={editorStrings.plugins.rows.remove}
                 >
-                  <FaIcon icon={faTrashAlt} /> {editorStrings.rows.remove}
+                  <FaIcon icon={faTrashAlt} />{' '}
+                  {editorStrings.plugins.rows.remove}
                 </BorderlessOverlayButton>
               </div>
               <div>
@@ -238,7 +244,7 @@ export function RowRenderer({
                   onClick={() => {
                     close()
                   }}
-                  label={editorStrings.rows.close}
+                  label={editorStrings.plugins.rows.close}
                 />
               </div>
             </div>
@@ -251,7 +257,7 @@ export function RowRenderer({
             <DragToolbarButton
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
-              label={editorStrings.rows.dragElement}
+              label={editorStrings.plugins.rows.dragElement}
             />
             {children}
           </>

@@ -23,7 +23,7 @@ import {
   isError,
 } from '@/serlo-editor-integration/editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
-import { PluginToolbarButton } from '@/serlo-editor/core'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function RevisionHistoryLoader<T>({
   id,

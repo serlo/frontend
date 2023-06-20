@@ -1,11 +1,11 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
 import { FaIcon } from '@/components/fa-icon'
 import {
   HoverOverlayOld,
   HoverPosition,
 } from '@/serlo-editor/editor-ui/hover-overlay-old'
-import { styled } from '@/serlo-editor/ui'
 
 const InlinePreview = styled.span({
   padding: '0px 8px',

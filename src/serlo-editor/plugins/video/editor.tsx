@@ -1,11 +1,11 @@
 import { VideoProps } from '.'
-import { OverlayInput } from '../../core'
-import { EditorInput, EditorInlineSettings } from '../../editor-ui'
+import { EditorInput } from '../../editor-ui'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
+import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export const VideoEditor = ({
   editable,
@@ -14,7 +14,7 @@ export const VideoEditor = ({
   autofocusRef,
   renderIntoSettings,
 }: VideoProps) => {
-  const editorStrings = useEditorStrings()
+  const videoStrings = useEditorStrings().plugins.video
 
   const [iframeSrc, type] = parseVideoUrl(state.src.value)
   const couldBeValid = type !== undefined
@@ -41,7 +41,7 @@ export const VideoEditor = ({
       )}
       {renderIntoSettings(
         <OverlayInput
-          label={editorStrings.video.description}
+          label={videoStrings.description}
           value={state.alt.value}
           onChange={(e) => {
             state.alt.set(e.target.value)
@@ -53,9 +53,9 @@ export const VideoEditor = ({
 
   function renderInput() {
     return (
-      <EditorInlineSettings className="mb-3">
+      <div className="mt-4 mb-3">
         <EditorInput
-          label={`${editorStrings.video.videoUrl}: `}
+          label={`${videoStrings.videoUrl}: `}
           value={state.src.value}
           onChange={(e) => {
             state.src.set(e.target.value)
@@ -66,7 +66,7 @@ export const VideoEditor = ({
           ref={autofocusRef}
           className="ml-1"
         />
-      </EditorInlineSettings>
+      </div>
     )
   }
 }

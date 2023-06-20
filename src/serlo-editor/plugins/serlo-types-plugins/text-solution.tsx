@@ -39,8 +39,8 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
       return (
         <>
           {collapsed
-            ? editorStrings.solution.showSolution
-            : editorStrings.solution.hideSolution}
+            ? editorStrings.templatePlugins.solution.showSolution
+            : editorStrings.templatePlugins.solution.hideSolution}
         </>
       )
     },

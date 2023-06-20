@@ -1,4 +1,4 @@
-import { styled } from '../ui'
+import styled from 'styled-components'
 
 const CheckboxInlineLabel = styled.label({
   color: '#ffffff',

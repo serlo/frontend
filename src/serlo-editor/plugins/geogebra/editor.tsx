@@ -1,5 +1,5 @@
 import { GeogebraProps } from '.'
-import { EditorInput, EditorInlineSettings } from '../../editor-ui'
+import { EditorInput } from '../../editor-ui'
 import { GeogebraRenderer, parseId } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -39,9 +39,9 @@ export function GeogebraEditor(props: GeogebraProps) {
 
   function renderInput() {
     return (
-      <EditorInlineSettings className="mb-3">
+      <div className="mt-4 mb-3">
         <EditorInput
-          label={`${editorStrings.geogebra.urlOrId}: `}
+          label={`${editorStrings.plugins.geogebra.urlOrId}: `}
           placeholder="z.B. N5ktHvtW"
           value={state.value}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +52,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           ref={props.autofocusRef}
           className="ml-1"
         />
-      </EditorInlineSettings>
+      </div>
     )
   }
 }

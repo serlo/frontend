@@ -1,6 +1,6 @@
 import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
-import { styled } from '../ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { colors } from '@/helper/colors'

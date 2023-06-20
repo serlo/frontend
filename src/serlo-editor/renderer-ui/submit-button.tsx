@@ -1,6 +1,6 @@
 import { faSmile, faCheckCircle } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
-import { styled } from '../ui'
 import { FaIcon } from '@/components/fa-icon'
 import { legacyEditorTheme } from '@/helper/colors'
 

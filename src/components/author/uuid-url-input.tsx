@@ -39,7 +39,7 @@ export function UuidUrlInput({
   const { data, error } = useSimpleUuidFetch(maybeUuid)
 
   const { strings } = useInstanceData()
-  const modalStrings = useEditorStrings().article.addModal
+  const modalStrings = useEditorStrings().templatePlugins.article.addModal
 
   return (
     <div className="my-4 border-t-2 pt-5">

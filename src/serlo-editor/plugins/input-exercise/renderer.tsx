@@ -1,8 +1,8 @@
 import A from 'algebra.js'
 import { useState, createRef } from 'react'
+import styled from 'styled-components'
 
 import { InputExerciseProps, InputExerciseType } from '.'
-import { styled } from '../../editor-ui'
 import { Feedback, SubmitButton } from '../../renderer-ui'
 import { store, selectIsDocumentEmpty } from '../../store'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -101,7 +101,9 @@ export function InputExerciseRenderer(props: InputExerciseProps) {
             }}
             data-type={state.type.value}
             type="text"
-            placeholder={editorStrings.inputExercise.yourSolution}
+            placeholder={
+              editorStrings.templatePlugins.inputExercise.yourSolution
+            }
             ref={input}
           />
           {state.unit.value}

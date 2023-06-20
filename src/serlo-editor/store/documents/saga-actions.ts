@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
 
-import { StateExecutor, StateUpdater } from '../../internal__plugin-state'
+import { StateExecutor, StateUpdater } from '../../types/internal__plugin-state'
 
 export const runChangeDocumentSaga = createAction<{
   id: string

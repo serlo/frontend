@@ -32,7 +32,7 @@ export function ArticleRelatedExercises({
 }: ArticleRelatedExercisesProps) {
   const { data, error } = useFetchExerciseFolder(exerciseFolderId)
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   const errorReturn = <p>Sorry, something went wrong.</p>
 

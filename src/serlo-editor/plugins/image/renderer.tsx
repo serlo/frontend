@@ -1,6 +1,7 @@
+import styled from 'styled-components'
+
 import { ImageProps } from '.'
 import { isTempFile } from '../../plugin'
-import { styled } from '../../ui'
 
 export type ImageRendererProps = ImageProps & {
   disableMouseEvents?: boolean

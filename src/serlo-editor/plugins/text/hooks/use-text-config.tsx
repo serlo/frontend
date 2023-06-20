@@ -28,8 +28,9 @@ export function useTextConfig(
   } = config
 
   return {
-    formattingOptions: config.formattingOptions || defaultFormattingOptions,
+    formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
     placeholder,
     noLinebreaks,
+    serloLinkSearch: config.serloLinkSearch ?? true,
   }
 }

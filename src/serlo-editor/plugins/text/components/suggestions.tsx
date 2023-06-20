@@ -1,13 +1,20 @@
+import styled from 'styled-components'
+
+import type { SuggestionOption } from '../hooks/use-suggestions'
+import IconFallback from '@/assets-webkit/img/editor/icon-fallback.svg'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors } from '@/helper/colors'
-import type { RegistryPlugin } from '@/serlo-editor/plugins/rows'
-import { styled } from '@/serlo-editor/ui'
+import {
+  getPluginByType,
+  usePlugins,
+} from '@/serlo-editor/core/contexts/plugins-context'
+import { EditorPluginType } from '@/serlo-editor/core/editor'
 
 interface SuggestionsProps {
-  options: RegistryPlugin[]
+  options: SuggestionOption[]
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
-  onMouseDown: (option: string) => void
+  onMouseDown: (pluginType: EditorPluginType) => void
   onMouseMove: (index: number) => void
 }
 
@@ -42,32 +49,38 @@ export const Suggestions = ({
   onMouseMove,
 }: SuggestionsProps) => {
   const editorStrings = useEditorStrings()
+  const plugins = usePlugins()
 
   if (options.length === 0) {
-    return <div>{editorStrings.text.noItemsFound}</div>
+    return <div>{editorStrings.plugins.text.noItemsFound}</div>
   }
 
   return (
     <div ref={suggestionsRef} className="max-h-[387px] max-w-[620px]">
-      {options.map(({ name, title, description, icon: Icon }, index) => (
-        <Suggestion
-          key={index}
-          data-active={index === selected}
-          onMouseDown={(event: React.MouseEvent) => {
-            event.preventDefault()
-            onMouseDown(name)
-          }}
-          onMouseMove={() => {
-            onMouseMove(index)
-          }}
-        >
-          {Icon && <SuggestionIconWrapper>{Icon}</SuggestionIconWrapper>}
-          <div>
-            <h5 className="text-base font-bold">{title ?? name}</h5>
-            <p className="whitespace-pre-wrap text-base">{description}</p>
-          </div>
-        </Suggestion>
-      ))}
+      {options.map(({ pluginType, title, description }, index) => {
+        const Icon = getPluginByType(plugins, pluginType)?.icon ?? (
+          <IconFallback />
+        )
+        return (
+          <Suggestion
+            key={index}
+            data-active={index === selected}
+            onMouseDown={(event: React.MouseEvent) => {
+              event.preventDefault()
+              onMouseDown(pluginType)
+            }}
+            onMouseMove={() => {
+              onMouseMove(index)
+            }}
+          >
+            <SuggestionIconWrapper>{Icon}</SuggestionIconWrapper>
+            <div>
+              <h5 className="text-base font-bold">{title}</h5>
+              <p className="whitespace-pre-wrap text-base">{description}</p>
+            </div>
+          </Suggestion>
+        )
+      })}
     </div>
   )
 }

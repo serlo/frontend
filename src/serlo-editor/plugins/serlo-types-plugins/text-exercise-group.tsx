@@ -46,7 +46,7 @@ function TextExerciseGroupTypeEditor(
   const { cohesive, content, 'grouped-text-exercise': children } = props.state
   const isCohesive = cohesive.value ?? false
 
-  const editorStrings = useEditorStrings()
+  const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const contentRendered = content.render({
     renderSettings(children) {
@@ -82,14 +82,14 @@ function TextExerciseGroupTypeEditor(
           <div className="col-sm-11 col-xs-12">
             <OptionalChild
               state={child}
-              removeLabel={editorStrings.textExerciseGroup.removeExercise}
+              removeLabel={exGroupStrings.removeExercise}
               onRemove={() => children.remove(index)}
             />
           </div>
         </section>
       ))}
       <AddButton onClick={() => children.insert()}>
-        {editorStrings.textExerciseGroup.addExercise}
+        {exGroupStrings.addExercise}
       </AddButton>
       <ToolbarMain showSubscriptionOptions {...props.state} />
     </article>
@@ -99,7 +99,7 @@ function TextExerciseGroupTypeEditor(
     return (
       <div>
         <label htmlFor="cohesiveSelect">
-          {editorStrings.textExerciseGroup.kindOfExerciseGroup}:
+          {exGroupStrings.kindOfExerciseGroup}:
         </label>{' '}
         <select
           id="cohesiveSelect"
@@ -107,12 +107,8 @@ function TextExerciseGroupTypeEditor(
           onChange={(e) => cohesive.set(e.target.value === 'cohesive')}
           className="border-2"
         >
-          <option value="non-cohesive">
-            {editorStrings.textExerciseGroup.notCohesive}
-          </option>
-          <option value="cohesive">
-            {editorStrings.textExerciseGroup.cohesive}
-          </option>
+          <option value="non-cohesive">{exGroupStrings.notCohesive}</option>
+          <option value="cohesive">{exGroupStrings.cohesive}</option>
         </select>
       </div>
     )

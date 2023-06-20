@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import styled from 'styled-components'
 
 import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
@@ -16,7 +17,6 @@ import {
   object,
   string,
 } from '@/serlo-editor/plugin'
-import { styled } from '@/serlo-editor/ui'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 
@@ -67,7 +67,7 @@ function ArticleEditor(props: ArticleProps) {
   const [modalOpen, setModalOpen] = useState(false)
 
   const { strings } = useInstanceData()
-  const modalStrings = useEditorStrings().article.addModal
+  const modalStrings = useEditorStrings().templatePlugins.article.addModal
 
   return (
     <>

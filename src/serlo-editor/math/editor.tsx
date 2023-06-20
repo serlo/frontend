@@ -1,8 +1,9 @@
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
+import styled from 'styled-components'
 
-import { EditorTextarea, HoverOverlayOld, styled } from '../editor-ui'
+import { EditorTextarea, HoverOverlayOld } from '../editor-ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { InlineCheckbox } from './inline-checkbox'
@@ -119,7 +120,7 @@ export function MathEditor(props: MathEditorProps) {
   const [helpOpen, setHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
 
-  const mathStrings = useEditorStrings().text.math
+  const mathStrings = useEditorStrings().plugins.text.math
 
   const { visual, readOnly, state, disableBlock } = props
 

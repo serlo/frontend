@@ -1,7 +1,7 @@
 import { faTable } from '@fortawesome/free-solid-svg-icons'
+import styled from 'styled-components'
 
 import { TableProps } from '.'
-import { styled } from '../../../ui'
 import { useTableConfig } from './config'
 import { FaIcon } from '@/components/fa-icon'
 

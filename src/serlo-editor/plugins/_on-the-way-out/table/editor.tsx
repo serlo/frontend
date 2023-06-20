@@ -1,6 +1,7 @@
+import styled from 'styled-components'
+
 import { TableProps } from '.'
 import { EditorTextarea } from '../../../editor-ui'
-import { styled } from '../../../ui'
 import { TableRenderer } from './renderer'
 
 const Form = styled.form({

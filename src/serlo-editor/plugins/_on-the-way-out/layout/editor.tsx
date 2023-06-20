@@ -1,8 +1,9 @@
+import styled from 'styled-components'
+
 import { layoutState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
-import { styled } from '@/serlo-editor/renderer-ui'
 import {
   store,
   DocumentState,
@@ -59,14 +60,14 @@ export const LayoutRenderer: React.FunctionComponent<
     <>
       {props.editable ? (
         <ConvertInfo>
-          {editorStrings.layout.toDragConvert}
+          {editorStrings.plugins.layout.toDragConvert}
           <ButtonContainer>
             <ConvertButton onClick={convertToRow}>
-              {editorStrings.layout.oneColumnLayout}
+              {editorStrings.plugins.layout.oneColumnLayout}
             </ConvertButton>
             {canConvertToMultimediaExplanation() ? (
               <ConvertButton onClick={convertToMultimediaExplanation}>
-                {editorStrings.layout.multimediaTitle}
+                {editorStrings.plugins.layout.multimediaTitle}
               </ConvertButton>
             ) : null}
           </ButtonContainer>

@@ -27,7 +27,7 @@ export function ArticleAddModal({
   )
 
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   const { exercises, exerciseFolder, relatedContent } = data
 

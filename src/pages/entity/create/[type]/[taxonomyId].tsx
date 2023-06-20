@@ -15,16 +15,16 @@ import {
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { SerloEntityPluginType } from '@/serlo-editor-integration/plugins'
+import { TemplatePluginType } from '@/serlo-editor-integration/plugins'
 
 enum AllowedPlugins {
-  Article = SerloEntityPluginType.Article,
-  Course = SerloEntityPluginType.Course,
-  Video = SerloEntityPluginType.Video,
-  Applet = SerloEntityPluginType.Applet,
-  Event = SerloEntityPluginType.Event,
-  Exercise = SerloEntityPluginType.TextExercise,
-  ExerciseGroup = SerloEntityPluginType.TextExerciseGroup,
+  Article = TemplatePluginType.Article,
+  Course = TemplatePluginType.Course,
+  Video = TemplatePluginType.Video,
+  Applet = TemplatePluginType.Applet,
+  Event = TemplatePluginType.Event,
+  Exercise = TemplatePluginType.TextExercise,
+  ExerciseGroup = TemplatePluginType.TextExerciseGroup,
 }
 
 interface EntityCreateProps {

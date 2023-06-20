@@ -1,8 +1,8 @@
 import { Component, useCallback, useContext } from 'react'
 
-import { PluginProps } from '../../internal__plugin-state'
 import { undo, useAppDispatch } from '../../store'
-import { EditableContext, ErrorContext } from '../contexts'
+import { PluginProps } from '../../types/internal__plugin-state'
+import { EditableContext } from '../contexts'
 import { SubDocumentEditor } from './editor'
 import { SubDocumentRenderer } from './renderer'
 
@@ -26,12 +26,10 @@ export const SubDocument = (props: SubDocumentProps) => {
   )
 }
 // this uses ErrorBoundary functionality that is only available in class components since react 17
-export class ErrorBoundary extends Component<{
+class ErrorBoundary extends Component<{
   undo: () => void
   children: React.ReactNode
 }> {
-  static contextType = ErrorContext
-
   public state = { hasError: false }
 
   static getDerivedStateFromError() {

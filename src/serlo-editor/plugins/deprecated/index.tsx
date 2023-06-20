@@ -15,7 +15,7 @@ export const deprecatedState = object({
 
 export type DeprecatedPluginState = typeof deprecatedState
 
-export const DeprecatedRenderer: React.FunctionComponent<
+const DeprecatedRenderer: React.FunctionComponent<
   EditorPluginProps<DeprecatedPluginState>
 > = (props) => {
   const editorStrings = useEditorStrings()
@@ -25,7 +25,7 @@ export const DeprecatedRenderer: React.FunctionComponent<
   return (
     <div className="panel panel-danger">
       <div className="panel-heading">
-        {editorStrings.deprecated.unsupported}
+        {editorStrings.plugins.deprecated.unsupported}
       </div>
       <div className="panel-body">
         <pre>

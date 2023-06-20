@@ -1,9 +1,9 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { useSlate } from 'slate-react'
+import styled from 'styled-components'
 
 import type { TextEditorConfig } from '../types'
 import { legacyEditorTheme } from '@/helper/colors'
-import { styled } from '@/serlo-editor/ui'
 
 export enum InlineOverlayPosition {
   above = 'above',
@@ -81,7 +81,13 @@ export function InlineOverlay({
     if (!rect || rect.height === 0) return
 
     if (!wrapper.current.offsetParent) return
-    const parentRect = wrapper.current.offsetParent.getBoundingClientRect()
+    const offsetParentRect =
+      wrapper.current.offsetParent.getBoundingClientRect()
+
+    const widthParentRect = wrapper.current
+      .closest('.default-document-editor-container')
+      ?.getBoundingClientRect()
+    if (!widthParentRect) return
 
     wrapper.current.style.opacity = '1'
     const aboveValue = rect.top - wrapper.current.offsetHeight - 6
@@ -93,22 +99,26 @@ export function InlineOverlay({
     wrapper.current.style.top = `${
       (position === InlineOverlayPosition.above
         ? aboveValue
-        : rect.bottom + 6) - parentRect.top
+        : rect.bottom + 6) - offsetParentRect.top
     }px`
-    wrapper.current.style.left = `${Math.min(
-      Math.max(
-        rect.left -
-          parentRect.left -
-          wrapper.current.offsetWidth / 2 +
-          rect.width / 2,
-        0
-      ),
-      parentRect.width - wrapper.current.offsetWidth - 5
-    )}px`
+
+    const wrapperWidth = wrapper.current.offsetWidth
+    const boundingLeft = rect.left - 2 // wrapper starts at selection's left
+
+    const boundingWrapperRight = boundingLeft + wrapperWidth
+    const overlap = boundingWrapperRight - widthParentRect.right
+    const fallbackBoundingLeft = boundingLeft - overlap // wrapper ends at editor's right
+
+    wrapper.current.style.left = `${
+      (overlap > 0 ? fallbackBoundingLeft : boundingLeft) -
+      offsetParentRect.left -
+      5
+    }px`
+
     triangle.current.style.left = `${
       rect.left -
       wrapper.current.offsetLeft -
-      parentRect.left -
+      offsetParentRect.left -
       triangle.current.offsetWidth / 2 +
       rect.width / 2
     }px`

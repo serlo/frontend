@@ -1,17 +1,13 @@
 import * as R from 'ramda'
 import { useState } from 'react'
+import styled from 'styled-components'
 
 import { InputExerciseProps, InputExerciseType } from '.'
-import { OverlayInput } from '../../core'
-import {
-  AddButton,
-  InteractiveAnswer,
-  PreviewOverlay,
-  styled,
-} from '../../editor-ui'
+import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import { selectFocused, useAppSelector } from '../../store'
 import { InputExerciseRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 const AnswerTextfield = styled.input({
   border: 'none',
@@ -25,7 +21,7 @@ const TypeMenu = styled.div({
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused } = props
-  const editorStrings = useEditorStrings()
+  const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
@@ -47,7 +43,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
         <>
           <TypeMenu>
             <label>
-              {editorStrings.inputExercise.chooseType}:{' '}
+              {inputExStrings.chooseType}:{' '}
               <select
                 value={state.type.value}
                 onChange={(event) => state.type.set(event.target.value)}
@@ -67,7 +63,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 answer={
                   <AnswerTextfield
                     value={answer.value.value}
-                    placeholder={editorStrings.inputExercise.enterTheValue}
+                    placeholder={inputExStrings.enterTheValue}
                     type="text"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       answer.value.set(e.target.value)
@@ -86,13 +82,13 @@ export function InputExerciseEditor(props: InputExerciseProps) {
             )
           })}
           <AddButton onClick={() => state.answers.insert()}>
-            {editorStrings.inputExercise.addAnswer}
+            {inputExStrings.addAnswer}
           </AddButton>
         </>
       )}
       {props.renderIntoSettings(
         <OverlayInput
-          label={editorStrings.inputExercise.unit}
+          label={inputExStrings.unit}
           value={state.unit.value}
           onChange={(e) => state.unit.set(e.target.value)}
         />
@@ -101,7 +97,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   )
 
   function getType(type: InputExerciseType) {
-    return editorStrings.inputExercise.types[
+    return inputExStrings.types[
       type === InputExerciseType.InputNumberExactMatchChallenge
         ? 'mathExpression'
         : InputExerciseType.InputNumberExactMatchChallenge

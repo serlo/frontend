@@ -1,17 +1,9 @@
 import * as R from 'ramda'
-import {
-  useState,
-  useRef,
-  useContext,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react'
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { HotKeys, IgnoreKeys } from 'react-hotkeys'
 
 import { SubDocumentProps } from '.'
-import { StateUpdater } from '../../internal__plugin-state'
 import {
   runChangeDocumentSaga,
   focus,
@@ -31,13 +23,10 @@ import {
   useAppDispatch,
   store,
 } from '../../store'
-import { styled } from '../../ui'
-import { DocumentEditorContext, PluginToolbarContext } from '../contexts'
+import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin } from '../contexts/plugins-context'
-
-const StyledDocument = styled.div({
-  outline: 'none',
-})
+import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
+import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
 const hotKeysKeyMap = {
   FOCUS_PREVIOUS: 'up',
@@ -63,7 +52,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     selectMayManipulateSiblings(state, id)
   )
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const plugin = usePlugin(document?.plugin)
+  const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
@@ -72,8 +61,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const toolbarRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
   )
-  const DocumentEditor = useContext(DocumentEditorContext)
-  const PluginToolbar = useContext(PluginToolbarContext)
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -244,7 +231,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     return (
       <HotKeys keyMap={hotKeysKeyMap} handlers={hotKeysHandlers} allowChanges>
-        <StyledDocument
+        <div
+          className="outline-none"
           onMouseDown={handleFocus}
           ref={container}
           data-document
@@ -258,7 +246,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             renderToolbar={pluginProps && pluginProps.renderToolbar}
             settingsRef={settingsRef}
             toolbarRef={toolbarRef}
-            PluginToolbar={PluginToolbar}
           >
             <plugin.Component
               renderIntoSettings={renderIntoSettings}
@@ -272,11 +259,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               autofocusRef={autofocusRef}
             />
           </DocumentEditor>
-        </StyledDocument>
+        </div>
       </HotKeys>
     )
   }, [
-    DocumentEditor,
     document,
     plugin,
     pluginProps,
@@ -284,7 +270,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     hasSettings,
     hasToolbar,
     focused,
-    PluginToolbar,
     renderIntoSettings,
     renderIntoToolbar,
     id,

@@ -63,7 +63,7 @@ function CoursePageTypeEditor(
         {props.editable ? (
           <input
             className={headerInputClasses}
-            placeholder={editorStrings.coursePage.title}
+            placeholder={editorStrings.templatePlugins.coursePage.title}
             value={title.value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               title.set(e.target.value)

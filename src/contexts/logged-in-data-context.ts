@@ -18,3 +18,5 @@ export function useEditorStrings() {
   }
   return data.strings.editor
 }
+
+export type EditorStrings = LoggedInData['strings']['editor']

@@ -1,8 +1,8 @@
 import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
+import styled from 'styled-components'
 
 import { MultimediaExplanationProps } from '.'
-import { PluginToolbarButton } from '../../core'
 import {
   selectDocument,
   selectHasFocusedDescendant,
@@ -12,11 +12,11 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { styled } from '../../ui'
 import { useMultimediaExplanationConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 
 interface MultimediaDocument {
   plugin: string
@@ -60,8 +60,7 @@ const Option = styled.div({
 })
 
 export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
-  const multimediaStrings = useEditorStrings().multimedia
-
+  const multimediaStrings = useEditorStrings().plugins.multimedia
   const config = useMultimediaExplanationConfig(props.config)
 
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -113,10 +112,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
       value={multimediaDocument ? multimediaDocument.plugin : ''}
       onChange={(e) => handleMultimediaChange(e.target.value)}
     >
-      {props.config.plugins.map((plugin) => {
+      {props.config.plugins.map((type) => {
         return (
-          <option key={plugin} value={plugin}>
-            {getPluginTitle(plugin)}
+          <option key={type} value={type}>
+            {getPluginTitle(type)}
           </option>
         )
       })}

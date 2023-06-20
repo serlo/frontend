@@ -1,7 +1,9 @@
+import styled from 'styled-components'
+
 import { RowsPluginConfig } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors, legacyEditorTheme } from '@/helper/colors'
-import { styled, EdtrIcon, edtrPlus } from '@/serlo-editor/ui'
+import { EdtrIcon, edtrPlus } from '@/serlo-editor/editor-ui'
 
 interface AddButtonProps {
   focused: boolean
@@ -51,13 +53,13 @@ export function AddRowButton(props: AddRowButtonProps) {
       config={config}
       focused={focused}
       visible={visuallyEmphasized ? 'always' : 'on-focus'}
-      title={editorStrings.rows.addAnElement}
+      title={editorStrings.plugins.rows.addAnElement}
       onMouseDown={onClick}
     >
       <EdtrIcon icon={edtrPlus} className="w-[26px]" />
       {visuallyEmphasized ? (
         <span className="text-almost-black">
-          {editorStrings.rows.addAnElement}
+          {editorStrings.plugins.rows.addAnElement}
         </span>
       ) : null}
     </AddButton>

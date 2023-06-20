@@ -1,6 +1,7 @@
 import { faFilm } from '@fortawesome/free-solid-svg-icons'
 
 import { FaIcon } from '@/components/fa-icon'
+import { useInstanceData } from '@/contexts/instance-context'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { tw } from '@/helper/tw'
 
@@ -16,13 +17,14 @@ interface VideoRendererProps {
 }
 
 export function VideoRenderer({ src, type }: VideoRendererProps) {
+  const { strings } = useInstanceData()
+
   if (!type) {
     return (
       <div className="text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
-        {/* TODO: i18n */}
         <p className="serlo-p text-almost-black">
-          {src ? `Loading video failed: ${src}` : ''}
+          {src ? `${strings.content.loadingVideoFailed}: ${src}` : ''}
         </p>
       </div>
     )

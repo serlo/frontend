@@ -17,8 +17,8 @@ export const AnchorEditor = (props: AnchorProps) => {
       <AnchorRenderer {...props} />
       {focused ? (
         <EditorInput
-          label={editorStrings.anchor.identifier}
-          placeholder={editorStrings.anchor.anchorId}
+          label={editorStrings.plugins.anchor.identifier}
+          placeholder={editorStrings.plugins.anchor.anchorId}
           value={state.value}
           onChange={(e) => {
             state.set(e.target.value)

@@ -14,7 +14,7 @@ import type { ReversibleAction } from '..'
 import {
   StateUpdater,
   StoreDeserializeHelpers,
-} from '../../internal__plugin-state'
+} from '../../types/internal__plugin-state'
 import {
   runCommitActionToHistorySaga,
   runCommitTemporaryActionToHistorySaga,

@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { EditorPlugin } from '../../internal__plugin'
+import { EditorPlugin } from '../../types/internal__plugin'
 import { State } from '../types'
 
 const selectSelf = (state: State) => state.plugins

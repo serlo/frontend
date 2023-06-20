@@ -28,7 +28,7 @@ export function ArticleRelatedTaxonomy({
   const { data, error } = useFetchParentTaxonomy(entityId)
 
   const { strings } = useInstanceData()
-  const articleStrings = useEditorStrings().article
+  const articleStrings = useEditorStrings().templatePlugins.article
 
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
   if (!dataAndTerm) {

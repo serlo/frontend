@@ -1,10 +1,20 @@
-import type { SerializedDocument } from './types/serialized-document'
-import { LoggedInData } from '@/data-types'
-import type { EditorPlugin } from '@/serlo-editor/plugin'
-import { createBlockquotePlugin } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
+import IconBox from '@/assets-webkit/img/editor/icon-box.svg'
+import IconEquation from '@/assets-webkit/img/editor/icon-equation.svg'
+import IconGeogebra from '@/assets-webkit/img/editor/icon-geogebra.svg'
+import IconHighlight from '@/assets-webkit/img/editor/icon-highlight.svg'
+import IconImage from '@/assets-webkit/img/editor/icon-image.svg'
+import IconInjection from '@/assets-webkit/img/editor/icon-injection.svg'
+import IconMultimedia from '@/assets-webkit/img/editor/icon-multimedia.svg'
+import IconSpoiler from '@/assets-webkit/img/editor/icon-spoiler.svg'
+import IconTable from '@/assets-webkit/img/editor/icon-table.svg'
+import IconText from '@/assets-webkit/img/editor/icon-text.svg'
+import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
+import { LoggedInData, UuidType } from '@/data-types'
+import { Instance } from '@/fetcher/graphql-types/operations'
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
-import { tablePlugin } from '@/serlo-editor/plugins/_on-the-way-out/table/table-with-markdown'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
@@ -44,7 +54,7 @@ import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
 import { createTextPlugin } from '@/serlo-editor/plugins/text'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
-export enum SerloEntityPluginType {
+export enum TemplatePluginType {
   Applet = 'type-applet',
   Article = 'type-article',
   Course = 'type-course',
@@ -59,67 +69,153 @@ export enum SerloEntityPluginType {
   User = 'type-user',
 }
 
-type PluginType = SerializedDocument['plugin'] | SerloEntityPluginType
+// type PluginType = SerializedDocument['plugin'] | TemplatePluginType
 
 export function createPlugins({
   editorStrings,
+  instance,
+  parentType,
 }: {
   editorStrings: LoggedInData['strings']['editor']
-}): Record<string, EditorPlugin<any, any>> &
-  Record<PluginType, EditorPlugin<any, any>> {
-  return {
-    anchor: anchorPlugin,
-    article: articlePlugin,
-    articleIntroduction: createMultimediaExplanationPlugin({
-      explanation: {
-        plugin: 'text',
-        config: {
-          placeholder: editorStrings.article.writeShortIntro,
+  instance: Instance
+  parentType?: string
+}): PluginsContextPlugins {
+  const isExercise =
+    !!parentType &&
+    ['grouped-text-exercise', 'text-exercise', 'text-exercise-group'].includes(
+      parentType
+    )
+  const isPage = parentType === UuidType.Page
+
+  return [
+    {
+      type: 'text',
+      plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
+      visible: true,
+      icon: <IconText />,
+    },
+    { type: 'image', plugin: imagePlugin, visible: true, icon: <IconImage /> },
+    {
+      type: 'multimedia',
+      plugin: createMultimediaExplanationPlugin(),
+      visible: true,
+      icon: <IconMultimedia />,
+    },
+    {
+      type: 'spoiler',
+      plugin: createSpoilerPlugin({}),
+      visible: true,
+      icon: <IconSpoiler />,
+    },
+    {
+      type: 'box',
+      plugin: createBoxPlugin({}),
+      visible: true,
+      icon: <IconBox />,
+    },
+    {
+      type: 'serloTable',
+      plugin: createSerloTablePlugin(),
+      visible: true,
+      icon: <IconTable />,
+    },
+    {
+      type: 'injection',
+      plugin: injectionPlugin,
+      visible: true,
+      icon: <IconInjection />,
+    },
+    {
+      type: 'equations',
+      plugin: equationsPlugin,
+      visible: true,
+      icon: <IconEquation />,
+    },
+    {
+      type: 'geogebra',
+      plugin: geoGebraPlugin,
+      visible: true,
+      icon: <IconGeogebra />,
+    },
+    {
+      type: 'highlight',
+      plugin: createHighlightPlugin(),
+      visible: true,
+      icon: <IconHighlight />,
+    },
+    { type: 'video', plugin: videoPlugin, visible: true, icon: <IconVideo /> },
+    {
+      type: 'anchor',
+      plugin: anchorPlugin,
+      visible: true,
+    },
+    {
+      type: 'pasteHack',
+      plugin: pasteHackPlugin,
+      visible: shouldUseFeature('edtrPasteHack'),
+    },
+    {
+      type: 'separator',
+      plugin: separatorPlugin,
+      visible: isExercise,
+    },
+    {
+      type: 'pageLayout',
+      plugin: pageLayoutPlugin,
+      visible: isPage,
+    },
+    {
+      type: 'pageTeam',
+      plugin: pageTeamPlugin,
+      visible: isPage,
+    },
+    {
+      type: 'pagePartners',
+      plugin: pagePartnersPlugin,
+      visible: isPage,
+    },
+
+    // never visible in suggestions
+    { type: 'article', plugin: articlePlugin },
+    {
+      type: 'articleIntroduction',
+      plugin: createMultimediaExplanationPlugin({
+        explanation: {
+          plugin: 'text',
+          config: {
+            placeholder: editorStrings.templatePlugins.article.writeShortIntro,
+          },
         },
-      },
-      plugins: ['image'],
-    }),
-    blockquote: createBlockquotePlugin(),
-    box: createBoxPlugin({}),
-    error: errorPlugin,
-    deprecated: deprecatedPlugin,
-    equations: equationsPlugin,
-    exercise: exercisePlugin,
-    geogebra: geoGebraPlugin,
-    highlight: createHighlightPlugin(),
-    h5p: H5pPlugin,
-    image: imagePlugin,
-    important: importantPlugin,
-    injection: injectionPlugin,
-    inputExercise: createInputExercisePlugin({}),
-    layout: layoutPlugin,
-    pageLayout: pageLayoutPlugin,
-    pageTeam: pageTeamPlugin,
-    pagePartners: pagePartnersPlugin,
-    pasteHack: pasteHackPlugin,
-    multimedia: createMultimediaExplanationPlugin(),
-    rows: createRowsPlugin(),
-    scMcExercise: createScMcExercisePlugin(),
-    separator: separatorPlugin,
-    serloTable: createSerloTablePlugin(),
-    solution: solutionPlugin,
-    spoiler: createSpoilerPlugin({}),
-    table: tablePlugin,
-    text: createTextPlugin(),
-    video: videoPlugin,
+        plugins: ['image'],
+      }),
+    },
+    { type: 'error', plugin: errorPlugin },
+    { type: 'deprecated', plugin: deprecatedPlugin },
+    { type: 'exercise', plugin: exercisePlugin },
+    { type: 'highlight', plugin: createHighlightPlugin() },
+    { type: 'h5p', plugin: H5pPlugin },
+    { type: 'important', plugin: importantPlugin },
+    { type: 'inputExercise', plugin: createInputExercisePlugin({}) },
+    { type: 'layout', plugin: layoutPlugin },
+    { type: 'rows', plugin: createRowsPlugin() },
+    { type: 'scMcExercise', plugin: createScMcExercisePlugin() },
+    { type: 'solution', plugin: solutionPlugin },
 
     // Internal plugins for our content types
-    [SerloEntityPluginType.Applet]: appletTypePlugin,
-    [SerloEntityPluginType.Article]: articleTypePlugin,
-    [SerloEntityPluginType.Course]: courseTypePlugin,
-    [SerloEntityPluginType.CoursePage]: coursePageTypePlugin,
-    [SerloEntityPluginType.Event]: eventTypePlugin,
-    [SerloEntityPluginType.Page]: pageTypePlugin,
-    [SerloEntityPluginType.Taxonomy]: taxonomyTypePlugin,
-    [SerloEntityPluginType.TextExercise]: textExerciseTypePlugin,
-    [SerloEntityPluginType.TextExerciseGroup]: textExerciseGroupTypePlugin,
-    [SerloEntityPluginType.TextSolution]: textSolutionTypePlugin,
-    [SerloEntityPluginType.User]: userTypePlugin,
-    [SerloEntityPluginType.Video]: videoTypePlugin,
-  }
+    { type: TemplatePluginType.Applet, plugin: appletTypePlugin },
+    { type: TemplatePluginType.Article, plugin: articleTypePlugin },
+    { type: TemplatePluginType.Course, plugin: courseTypePlugin },
+    { type: TemplatePluginType.CoursePage, plugin: coursePageTypePlugin },
+    { type: TemplatePluginType.Event, plugin: eventTypePlugin },
+    { type: TemplatePluginType.Page, plugin: pageTypePlugin },
+    { type: TemplatePluginType.Taxonomy, plugin: taxonomyTypePlugin },
+    { type: TemplatePluginType.TextExercise, plugin: textExerciseTypePlugin },
+    {
+      type: TemplatePluginType.TextExerciseGroup,
+      plugin: textExerciseGroupTypePlugin,
+    },
+    { type: TemplatePluginType.TextSolution, plugin: textSolutionTypePlugin },
+    { type: TemplatePluginType.User, plugin: userTypePlugin },
+    { type: TemplatePluginType.Video, plugin: videoTypePlugin },
+  ]
 }

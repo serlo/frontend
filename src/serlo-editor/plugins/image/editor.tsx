@@ -1,31 +1,27 @@
 import { faImages, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
+import styled from 'styled-components'
 
 import { ImageProps } from '.'
-import {
-  OverlayButton,
-  OverlayCheckbox,
-  OverlayInput,
-  OverlayTextarea,
-} from '../../core'
-import {
-  EditorButton,
-  EditorInput,
-  EditorInlineSettings,
-} from '../../editor-ui'
+import { EditorButton, EditorInput } from '../../editor-ui'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
   store,
   selectIsDocumentEmpty,
   selectHasFocusedChild,
 } from '../../store'
-import { styled } from '../../ui'
 import { useImageConfig } from './config'
 import { ImageRenderer } from './renderer'
 import { Upload } from './upload'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
+import {
+  OverlayCheckbox,
+  OverlayButton,
+  OverlayInput,
+  OverlayTextarea,
+} from '@/serlo-editor/plugin/plugin-toolbar'
 
 const InputRow = styled.span({
   display: 'flex',
@@ -80,9 +76,9 @@ export function ImageEditor(props: ImageProps) {
       {renderImage()}
       {hasFocus ? (
         <>
-          <EditorInlineSettings>
+          <div className="mt-4">
             <PrimaryControls {...props} config={config} />
-          </EditorInlineSettings>
+          </div>
           {props.renderIntoSettings(
             <SettingsControls {...props} config={config} />
           )}
@@ -101,7 +97,7 @@ export function ImageEditor(props: ImageProps) {
           className="text-[5rem] text-editor-primary-200"
         />
         {isTempFile(state.src.value) && state.src.value.failed ? (
-          <Failed>{editorStrings.image.failedUpload}</Failed>
+          <Failed>{editorStrings.plugins.image.failedUpload}</Failed>
         ) : null}
       </div>
     ) : (
@@ -114,7 +110,9 @@ export function ImageEditor(props: ImageProps) {
     return (
       <Caption>
         {state.caption.render({
-          config: { placeholder: editorStrings.image.captionPlaceholder },
+          config: {
+            placeholder: editorStrings.plugins.image.captionPlaceholder,
+          },
         })}
       </Caption>
     )
@@ -129,13 +127,13 @@ function PrimaryControls(props: ImageProps) {
     <>
       <InputRow>
         <EditorInput
-          label={editorStrings.image.imageUrl}
+          label={editorStrings.plugins.image.imageUrl}
           placeholder={
             !isTempFile(src.value)
-              ? editorStrings.image.placeholderEmpty
+              ? editorStrings.plugins.image.placeholderEmpty
               : !src.value.failed
-              ? editorStrings.image.placeholderUploading
-              : editorStrings.image.placeholderFailed
+              ? editorStrings.plugins.image.placeholderUploading
+              : editorStrings.plugins.image.placeholderFailed
           }
           value={!isTempFile(src.value) ? src.value : ''}
           disabled={isTempFile(src.value) && !src.value.failed}
@@ -172,8 +170,8 @@ function PrimaryControls(props: ImageProps) {
         const { link } = props.state
         return (
           <EditorInput
-            label={editorStrings.image.href}
-            placeholder={editorStrings.image.hrefPlaceholder}
+            label={editorStrings.plugins.image.href}
+            placeholder={editorStrings.plugins.image.hrefPlaceholder}
             value={link.defined ? link.href.value : ''}
             onChange={handleChange(props)('href')}
             width="90%"
@@ -197,13 +195,13 @@ function SettingsControls(props: ImageProps) {
   return (
     <>
       <OverlayInput
-        label={editorStrings.image.imageUrl}
+        label={editorStrings.plugins.image.imageUrl}
         placeholder={
           !isTempFile(state.src.value)
-            ? editorStrings.image.placeholderEmpty
+            ? editorStrings.plugins.image.placeholderEmpty
             : !state.src.value.failed
-            ? editorStrings.image.placeholderUploading
-            : editorStrings.image.placeholderFailed
+            ? editorStrings.plugins.image.placeholderUploading
+            : editorStrings.plugins.image.placeholderFailed
         }
         value={!isTempFile(state.src.value) ? state.src.value : ''}
         disabled={isTempFile(state.src.value) && !state.src.value.failed}
@@ -220,7 +218,7 @@ function SettingsControls(props: ImageProps) {
                 )
               }
             }}
-            label={editorStrings.image.retry}
+            label={editorStrings.plugins.image.retry}
           >
             <FaIcon icon={faRedoAlt} />
           </OverlayButton>
@@ -234,15 +232,15 @@ function SettingsControls(props: ImageProps) {
         />
       </OverlayButtonWrapper>
       <OverlayTextarea
-        label={editorStrings.image.alt}
-        placeholder={editorStrings.image.altPlaceholder}
+        label={editorStrings.plugins.image.alt}
+        placeholder={editorStrings.plugins.image.altPlaceholder}
         value={state.alt.defined ? state.alt.value : ''}
         onChange={handleChange(props)('description')}
       />
 
       <OverlayInput
-        label={editorStrings.image.href}
-        placeholder={editorStrings.image.hrefPlaceholder}
+        label={editorStrings.plugins.image.href}
+        placeholder={editorStrings.plugins.image.hrefPlaceholder}
         type="text"
         value={state.link.defined ? state.link.href.value : ''}
         onChange={handleChange(props)('href')}
@@ -250,15 +248,15 @@ function SettingsControls(props: ImageProps) {
       {state.link.defined && state.link.href.value ? (
         <>
           <OverlayCheckbox
-            label={editorStrings.image.openInNewTab}
+            label={editorStrings.plugins.image.openInNewTab}
             checked={state.link.defined ? state.link.openInNewTab.value : false}
             onChange={handleTargetChange(props)}
           />
         </>
       ) : null}
       <OverlayInput
-        label={editorStrings.image.maxWidth}
-        placeholder={editorStrings.image.maxWidthPlaceholder}
+        label={editorStrings.plugins.image.maxWidth}
+        placeholder={editorStrings.plugins.image.maxWidthPlaceholder}
         type="number"
         value={state.maxWidth.defined ? state.maxWidth.value : ''}
         onChange={(event) => {

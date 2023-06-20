@@ -48,11 +48,11 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
         {props.renderIntoSettings(
           <Settings>
             <Settings.Textarea
-              label={editorStrings.applet.seoTitle}
+              label={editorStrings.templatePlugins.applet.seoTitle}
               state={meta_title}
             />
             <Settings.Textarea
-              label={editorStrings.applet.seoDesc}
+              label={editorStrings.templatePlugins.applet.seoDesc}
               state={meta_description}
             />
           </Settings>
@@ -61,7 +61,7 @@ function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
           {props.editable ? (
             <input
               className={headerInputClasses}
-              placeholder={editorStrings.applet.title}
+              placeholder={editorStrings.templatePlugins.applet.placeholder}
               value={title.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 title.set(e.target.value)

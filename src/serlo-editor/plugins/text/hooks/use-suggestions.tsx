@@ -3,9 +3,11 @@ import { Editor as SlateEditor, Node } from 'slate'
 
 import { AllowedChildPlugins } from '../../rows'
 import {
-  PluginRegistryContext,
-  Registry,
-} from '@/serlo-editor/core/contexts/plugin-registry-context'
+  EditorStrings,
+  useEditorStrings,
+} from '@/contexts/logged-in-data-context'
+import { PluginsContext } from '@/serlo-editor/core/contexts/plugins-context'
+import { EditorPluginType } from '@/serlo-editor/core/editor'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
 
 interface useSuggestionsArgs {
@@ -13,6 +15,12 @@ interface useSuggestionsArgs {
   id: string
   editable: boolean
   focused: boolean
+}
+
+export interface SuggestionOption {
+  pluginType: EditorPluginType
+  title: string
+  description?: string
 }
 
 const hotKeysMap = {
@@ -26,17 +34,19 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const [selected, setSelected] = useState(0)
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
-
+  const pluginsStrings = useEditorStrings().plugins
   const text = Node.string(editor)
 
-  const allPlugins = useContext(PluginRegistryContext)
+  const allPlugins = useContext(PluginsContext)
+    .filter(({ visible }) => visible)
+    .map(({ type }) => type)
   const allowed = useContext(AllowedChildPlugins)
 
-  const plugins = allowed
-    ? allPlugins.filter((plugin) => allowed.includes(plugin.name))
-    : allPlugins
+  const allOptions = (allowed ?? allPlugins).map((type) =>
+    createOption(type as EditorPluginType, pluginsStrings)
+  )
 
-  const filteredOptions = filterPlugins(plugins, text)
+  const filteredOptions = filterPlugins(allOptions, text)
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
   const options = showSuggestions ? filteredOptions : []
@@ -99,12 +109,12 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       const option = closure.current.options[closure.current.selected]
       if (!option) return
       setTimeout(() => {
-        insertPlugin(option.name)
+        insertPlugin(option.pluginType)
       })
     }
   }
 
-  function insertPlugin(pluginName: string) {
+  function insertPlugin(pluginName: EditorPluginType) {
     // If the text plugin is selected from the suggestions list,
     // just clear the editor
     if (pluginName === 'text') {
@@ -139,15 +149,29 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   }
 }
 
-function filterPlugins(registry: Registry, text: string) {
+function createOption(
+  pluginType: EditorPluginType,
+  pluginsStrings: EditorStrings['plugins']
+): SuggestionOption {
+  const pluginStrings = pluginsStrings[pluginType]
+  const title = Object.hasOwn(pluginStrings, 'title')
+    ? pluginStrings.title
+    : pluginType
+  const description = Object.hasOwn(pluginStrings, 'description')
+    ? pluginStrings.description
+    : ''
+  return { pluginType, title, description }
+}
+
+function filterPlugins(plugins: SuggestionOption[], text: string) {
   const search = text.replace('/', '').toLowerCase()
 
-  if (!search.length) return registry
+  if (!search.length) return plugins
 
-  const startingWithSearchString = registry.filter(({ title }) => {
-    return title?.toLowerCase()?.startsWith(search)
+  const startingWithSearchString = plugins.filter(({ title }) => {
+    return title.toLowerCase()?.startsWith(search)
   })
-  const containingSearchString = registry.filter(({ title }) => {
+  const containingSearchString = plugins.filter(({ title }) => {
     const value = title?.toLowerCase()
     return value?.includes(search) && !value?.startsWith(search)
   })
