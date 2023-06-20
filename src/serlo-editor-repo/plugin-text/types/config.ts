@@ -14,6 +14,7 @@ export interface TextEditorConfig {
   formattingOptions?: TextEditorFormattingOption[]
   i18n?: DeepPartial<TextEditorPluginConfig['i18n']>
   noLinebreaks?: boolean
+  serloLinkSearch: boolean
 }
 
 export enum TextEditorFormattingOption {
@@ -47,7 +48,12 @@ interface I18n {
   link: {
     toggleTitle: string
     placeholder: string
+    inputLabel: string
+    edit: string
+    remove: string
+    customLink: string
     openInNewTabTitle: string
+    invalidLinkWarning: string
   }
   list: {
     toggleOrderedList: string
@@ -82,4 +88,5 @@ export interface TextEditorPluginConfig {
   formattingOptions: TextEditorFormattingOption[]
   i18n: I18n
   noLinebreaks?: boolean
+  serloLinkSearch: boolean
 }

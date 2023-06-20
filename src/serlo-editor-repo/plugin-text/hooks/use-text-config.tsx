@@ -31,7 +31,7 @@ export function useTextConfig(
   } = config
 
   return {
-    formattingOptions: config.formattingOptions || defaultFormattingOptions,
+    formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
     placeholder,
     i18n: merge({
       fallback: {
@@ -55,6 +55,12 @@ export function useTextConfig(
         link: {
           toggleTitle: 'Link (Strg + K)',
           placeholder: 'Enter URL',
+          inputLabel: 'Paste or type a link …',
+          customLink: 'Link',
+          edit: 'Edit Link',
+          remove: 'Remove Link',
+          invalidLinkWarning:
+            'Please provide a valid link that starts with http(s)://…',
           openInNewTabTitle: 'Open in new tab',
         },
         list: {
@@ -122,5 +128,6 @@ export function useTextConfig(
       values: i18n,
     }),
     noLinebreaks,
+    serloLinkSearch: config.serloLinkSearch ?? true,
   }
 }

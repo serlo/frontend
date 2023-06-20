@@ -3465,7 +3465,6 @@ __metadata:
     "@types/react-notify-toast": ^0.5.3
     "@types/react-resizable": ^3.0.0
     "@types/react-syntax-highlighter": ^13.5.2
-    "@types/shortid": ^0.0.29
     "@types/slate-react": ^0.50.1
     "@types/styled-components": ^5.1.26
     "@types/uuid": ^9.0.1
@@ -3533,7 +3532,6 @@ __metadata:
     redux-saga: ^1.0.0
     remark-gfm: ^1.0.0
     reselect: ^4.0.0
-    shortid: ^2.0.0
     slate: ^0.91.0
     slate-react: ^0.91.0
     styled-components: ^5.0.0
@@ -4227,13 +4225,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: c31bf04eb9620829dc3c91bced74ac934ad039d20d20893fb5acac0f08769cbd4eef3bf7502a0289c7be59c3e9cfa456147b4e88bff47dd1b9efb4995ba5d5a3
-  languageName: node
-  linkType: hard
-
-"@types/shortid@npm:^0.0.29":
-  version: 0.0.29
-  resolution: "@types/shortid@npm:0.0.29"
-  checksum: 06d940fabc5774ff2221da6ba3496cef97ae7c2f7f0fee4740144a68cf2b630b109db2f934133096daa58045e4e7aaffba687934166bb0b2b0d5c52679b10d08
   languageName: node
   linkType: hard
 
@@ -10553,13 +10544,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^2.1.0":
-  version: 2.1.11
-  resolution: "nanoid@npm:2.1.11"
-  checksum: 18cd14386816873849787eb4e65667021bfdeb019a8f14c74287c23594c67b7c0e8f42c7d69f6aedf05cd3d100f1ddc41184f9f9b6b17fbaea1c3ee3f0704eec
-  languageName: node
-  linkType: hard
-
 "nanoid@npm:^3.3.4":
   version: 3.3.4
   resolution: "nanoid@npm:3.3.4"
@@ -12690,15 +12674,6 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 1.7.4
   resolution: "shell-quote@npm:1.7.4"
   checksum: 2874ea9c1a7c3ebfc9ec5734a897e16533d0d06f2e4cddc22ba3d1cab5cdc07d0f825364c1b1e39abe61236f44d8e60e933c7ad7349ce44de4f5dddc7b4354e9
-  languageName: node
-  linkType: hard
-
-"shortid@npm:^2.0.0":
-  version: 2.2.16
-  resolution: "shortid@npm:2.2.16"
-  dependencies:
-    nanoid: ^2.1.0
-  checksum: 0790ce22fe20aacc226915160da178b5a6af7814d1796404684f6699b60f77e291d39ad3b6b2b4c6efcf5553e1deeee7e29a48b8f46955de1425e67ab934e309
   languageName: node
   linkType: hard
 
