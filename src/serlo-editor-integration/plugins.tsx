@@ -13,7 +13,6 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
-import { createBlockquotePlugin } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -190,7 +189,6 @@ export function createPlugins({
         plugins: ['image'],
       }),
     },
-    { type: 'articleIntroduction', plugin: createBlockquotePlugin() },
     { type: 'error', plugin: errorPlugin },
     { type: 'deprecated', plugin: deprecatedPlugin },
     { type: 'exercise', plugin: exercisePlugin },
