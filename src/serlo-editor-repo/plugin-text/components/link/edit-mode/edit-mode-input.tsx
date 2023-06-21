@@ -37,7 +37,7 @@ export function EditModeInput({
   }, [value])
 
   function onPaste(e: ClipboardEvent<HTMLInputElement>) {
-    // cleanup pasted links.
+    // cleanup pasted links
     setTimeout(() => {
       const inputUrl = (e.target as HTMLInputElement).value
       const cleanUrl = getCleanUrl(inputUrl, lang)
