@@ -219,10 +219,11 @@ export function RowRenderer({
         return (
           <>
             {children}
-            <hr />
+            <hr className="mb-4" />
             <ButtonContainer>
               <Left>
                 <BorderlessOverlayButton
+                  className="!mr-8"
                   onClick={() => {
                     const document = selectSerializedDocument(
                       store.getState(),

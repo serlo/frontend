@@ -85,6 +85,7 @@ const Container = styled.div<Partial<ToolbarProps>>(
 const Header = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
 })
 
 const H4 = styled.h4({
@@ -131,7 +132,7 @@ export function createDefaultDocumentEditor(
       return shouldShowSettings
         ? (children, { close }) => (
             <>
-              <Header>
+              <Header className="mb-4">
                 <H4>{modalTitle}</H4>
                 <BorderlessOverlayButton
                   as={OverlayButton}

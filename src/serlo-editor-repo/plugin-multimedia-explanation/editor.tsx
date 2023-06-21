@@ -127,10 +127,10 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
 
   const multimediaSettings = (
     <>
-      <hr />
+      <hr className="mb-4" />
       {config.features.importance ? (
         <>
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 1 }} className="mb-2">
             <strong>{config.i18n.illustrating.label}</strong>
           </div>
           <div style={{ flex: 1 }}>
@@ -151,8 +151,9 @@ export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
         </>
       ) : null}
       {props.config.plugins.length > 1 ? (
-        <div>
-          <strong>{config.i18n.changeMultimediaType}</strong>
+        // Only need some extra margin if the above markup is rendered too
+        <div className={config.features.importance ? 'mt-4 mb-4' : ''}>
+          <strong className="mr-4">{config.i18n.changeMultimediaType}</strong>
           {pluginSelection}
         </div>
       ) : null}
