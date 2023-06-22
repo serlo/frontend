@@ -676,7 +676,7 @@ export const loggedInData = {
         },
         box: {
           title: 'Container',
-          desciption:
+          description:
             'A container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
           titlePlaceholder: '(optional title)',
