@@ -22,7 +22,6 @@ import {
   MainUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
 import { dataQuery } from '@/fetcher/query'
-import { isProduction } from '@/helper/is-production'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 
@@ -39,8 +38,6 @@ export function ExternalRevisionLoader<T>({
   const { strings } = useInstanceData()
   if (!loggedInData) return null
   const editorStrings = loggedInData.strings.editor
-
-  if (isProduction) return null
 
   const exerciseTypes = [UuidType.Exercise, UuidType.GroupedExercise]
   const supportedEntityTypes = exerciseTypes.includes(entityType)
