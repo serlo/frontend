@@ -4,10 +4,6 @@ import type { SuggestionOption } from '../hooks/use-suggestions'
 import IconFallback from '@/assets-webkit/img/editor/icon-fallback.svg'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { colors } from '@/helper/colors'
-import {
-  getPluginByType,
-  usePlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
 
 interface SuggestionsProps {
   options: SuggestionOption[]
@@ -48,7 +44,6 @@ export const Suggestions = ({
   onMouseMove,
 }: SuggestionsProps) => {
   const editorStrings = useEditorStrings()
-  const plugins = usePlugins()
 
   if (options.length === 0) {
     return <div>{editorStrings.plugins.text.noItemsFound}</div>
@@ -56,10 +51,7 @@ export const Suggestions = ({
 
   return (
     <div ref={suggestionsRef} className="max-h-[387px] max-w-[620px]">
-      {options.map(({ pluginType, title, description }, index) => {
-        const Icon = getPluginByType(plugins, pluginType)?.icon ?? (
-          <IconFallback />
-        )
+      {options.map(({ pluginType, title, description, icon }, index) => {
         return (
           <Suggestion
             key={index}
@@ -72,7 +64,9 @@ export const Suggestions = ({
               onMouseMove(index)
             }}
           >
-            <SuggestionIconWrapper>{Icon}</SuggestionIconWrapper>
+            <SuggestionIconWrapper>
+              {icon ?? <IconFallback />}
+            </SuggestionIconWrapper>
             <div>
               <h5 className="text-base font-bold">{title}</h5>
               <p className="whitespace-pre-wrap text-base">{description}</p>

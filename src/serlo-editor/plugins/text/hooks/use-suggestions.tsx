@@ -6,7 +6,12 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
-import { PluginsContext } from '@/serlo-editor/core/contexts/plugins-context'
+import {
+  PluginsContext,
+  PluginsContextPlugins,
+  getPluginByType,
+  usePlugins,
+} from '@/serlo-editor/core/contexts/plugins-context'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
 
 interface useSuggestionsArgs {
@@ -20,6 +25,7 @@ export interface SuggestionOption {
   pluginType: string
   title: string
   description?: string
+  icon?: JSX.Element
 }
 
 const hotKeysMap = {
@@ -40,9 +46,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     .filter(({ visible }) => visible)
     .map(({ type }) => type)
   const allowed = useContext(AllowedChildPlugins)
+  const pluginsData = usePlugins()
 
   const allOptions = (allowed ?? allPlugins).map((type) =>
-    createOption(type, pluginsStrings)
+    createOption(type, pluginsStrings, pluginsData)
   )
 
   const filteredOptions = filterPlugins(allOptions, text)
@@ -150,8 +157,13 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
 function createOption(
   pluginType: string,
-  allPluginStrings: EditorStrings['plugins']
+  allPluginStrings: EditorStrings['plugins'],
+  allPluginsData: PluginsContextPlugins
 ): SuggestionOption {
+  const pluginData = getPluginByType(allPluginsData, pluginType)
+
+  if (!pluginData) return { pluginType, title: pluginType }
+
   const pluginStrings = Object.hasOwn(allPluginStrings, pluginType)
     ? allPluginStrings[pluginType as keyof typeof allPluginStrings]
     : undefined
@@ -159,12 +171,14 @@ function createOption(
   const title =
     pluginStrings && Object.hasOwn(pluginStrings, 'title')
       ? pluginStrings.title
-      : pluginType
+      : pluginData.plugin.defaultTitle ?? pluginType
   const description =
     pluginStrings && Object.hasOwn(pluginStrings, 'description')
       ? pluginStrings.description
-      : ''
-  return { pluginType, title, description }
+      : pluginData.plugin.defaultDescription
+  const { icon } = pluginData
+
+  return { pluginType, title, description, icon }
 }
 
 function filterPlugins(plugins: SuggestionOption[], text: string) {
