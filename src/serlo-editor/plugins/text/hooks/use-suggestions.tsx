@@ -125,6 +125,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     // just clear the editor
     if (pluginType === 'text') {
       editor.deleteBackward('line')
+      // in browsers other than chrome the cursor is sometimes in front of the `/` so to make sure:
+      editor.deleteForward('line')
       return
     }
 
