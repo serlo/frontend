@@ -1,5 +1,4 @@
-import { faSpinner } from '@edtr-io/ui'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { ChangeEvent, useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
@@ -63,9 +62,8 @@ export function ProfileChatButton({
         onClick={onClickAction}
         className={clsx(
           className,
-          'serlo-button-green mt-[5px] block w-44 self-start text-center'
+          'serlo-button-green mt-[5px] block w-44 self-start text-center [grid-area:chatButton]'
         )}
-        style={{ gridArea: 'chatButton' }}
       >
         <FaIcon icon={faPaperPlane} /> {text}
       </a>

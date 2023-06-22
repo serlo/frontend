@@ -61,10 +61,7 @@ export function ExerciseGroup({
           )}
         </div>
       </div>
-      <ol
-        className="mb-2.5 ml-2 bg-white pb-3.5 sm:pl-12"
-        style={{ counterReset: 'exercises' }}
-      >
+      <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
         {children}
       </ol>
     </div>

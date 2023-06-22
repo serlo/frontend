@@ -80,12 +80,7 @@ export function SubjectLandingTopicOverview({
 
   function renderMenu() {
     return (
-      <div
-        className="grid justify-center [&_img]:mix-blend-multiply"
-        style={{
-          gridTemplateColumns: 'repeat(auto-fit, minmax(12rem, 20rem))',
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(12rem,_20rem))] justify-center [&_img]:mix-blend-multiply">
         {[...subterms, ...extraTerms, allTopicsEntry].map((term, index) => {
           const isActive = index === selectedIndex
           const src =

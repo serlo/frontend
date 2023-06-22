@@ -12,7 +12,7 @@ export interface InjectionProps {
 }
 
 export function Injection({ href, renderNested }: InjectionProps) {
-  const [value, setValue] = useState<FrontendContentNode[] | undefined>(
+  const [content, setContent] = useState<FrontendContentNode[] | undefined>(
     undefined
   )
 
@@ -20,50 +20,56 @@ export function Injection({ href, renderNested }: InjectionProps) {
   const { strings, lang } = useInstanceData()
 
   useEffect(() => {
-    const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
-    const buildId =
-      (
-        JSON.parse(
-          document.getElementById('__NEXT_DATA__')?.textContent ?? '{}'
-        ) as { buildId: string }
-      ).buildId ?? ''
+    const errorMessage = [
+      {
+        type: FrontendNodeType.P,
+        children: [
+          {
+            type: FrontendNodeType.Text,
+            text: strings.errors.defaultMessage,
+          },
+        ],
+      },
+    ] as FrontendContentNode[]
 
-    void fetch(
-      `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
-    )
-      .then((res) => {
-        return res.json()
-      })
-      .then((json) => {
-        const pageData = (json as { pageProps: SlugProps }).pageProps.pageData
-        if (pageData.kind === 'single-entity') {
-          setId(pageData.entityData.id)
-          setValue(pageData.entityData.content)
-          return
-        } else {
-          setValue([
-            {
-              type: FrontendNodeType.P,
-              children: [
-                {
-                  type: FrontendNodeType.Text,
-                  text: strings.errors.defaultMessage,
-                },
-              ],
-            },
-          ])
-        }
-      })
+    const buildInfo = document.getElementById('__NEXT_DATA__')?.textContent
+    const buildId =
+      buildInfo && (JSON.parse(buildInfo) as { buildId: string }).buildId
+
+    if (!buildId) {
+      setContent(errorMessage)
+      return
+    }
+
+    const encodedHref = encodeURI(href.startsWith('/') ? href : `/${href}`)
+    const fetchUrl = `${window.location.protocol}//${window.location.host}/_next/data/${buildId}/${lang}${encodedHref}.json`
+    try {
+      void fetch(fetchUrl)
+        .then((res) => res.json())
+        .then((json) => {
+          const pageData = (json as { pageProps: SlugProps }).pageProps.pageData
+          if (pageData.kind === 'single-entity') {
+            setId(pageData.entityData.id)
+            setContent(pageData.entityData.content)
+          } else {
+            setContent(errorMessage)
+          }
+        })
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e)
+      setContent(errorMessage)
+    }
   }, [href, lang, strings])
 
-  if (value) {
-    //Show only video without description when injecting
-    const renderValue = value[0].type === 'video' ? [value[0]] : value
-    return (
-      <div className="mb-4 border-b-4 border-brand-300 text-gray-900">
-        {renderNested(renderValue, `injection${id ?? ''}`)}
-      </div>
-    )
-  }
-  return <LoadingSpinner />
+  if (!content) return <LoadingSpinner />
+
+  //Show only video without description when injecting
+  const unwrappedContent = content[0].type === 'video' ? [content[0]] : content
+
+  return (
+    <div className="mb-4 border-b-4 border-brand-300 text-gray-900">
+      {renderNested(unwrappedContent, `injection${id ?? ''}`)}
+    </div>
+  )
 }
