@@ -473,6 +473,7 @@ export function TextEditor(props: TextEditorProps) {
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
           renderLeaf={renderLeaf}
+          className="[&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <>
