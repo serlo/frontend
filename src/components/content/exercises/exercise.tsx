@@ -303,19 +303,23 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           <div
             className="bg-green-500"
             style={{
-              width: `${(entry.correct / exerciseData.fullCount) * 100}%`,
+              width: `${
+                (entry.correct / exerciseData.interactiveCount) * 100
+              }%`,
             }}
           ></div>
           <div
             className="bg-yellow-500"
             style={{
-              width: `${(entry.afterTrying / exerciseData.fullCount) * 100}%`,
+              width: `${
+                (entry.afterTrying / exerciseData.interactiveCount) * 100
+              }%`,
             }}
           ></div>
           <div
             className="bg-red-500"
             style={{
-              width: `${(entry.wrong / exerciseData.fullCount) * 100}%`,
+              width: `${(entry.wrong / exerciseData.interactiveCount) * 100}%`,
             }}
           ></div>
         </div>

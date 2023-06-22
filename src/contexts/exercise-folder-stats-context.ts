@@ -10,6 +10,7 @@ export interface ExerciseFolderStatsData {
     }
   }
   fullCount: number
+  interactiveCount: number
   date: string
   revisions: number[]
   times: string[]

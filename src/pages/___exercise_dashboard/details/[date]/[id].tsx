@@ -111,6 +111,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   relevantData.sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
 
   const sessions = new Set()
+  const interactiveSessions = new Set()
 
   const data = relevantData.reduce((result, obj) => {
     if (start && end) {
@@ -150,6 +151,9 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     }
     sessions.add(obj.sessionId)
     revisions.push(obj.revisionId)
+    if (obj.result !== 'open') {
+      interactiveSessions.add(obj.sessionId)
+    }
     return result
   }, {} as { [key: string]: { correct: Set<string>; wrong: Set<string>; open: Set<string> } })
 
@@ -173,6 +177,7 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
       exerciseStatsData: {
         data: output,
         fullCount: sessions.size,
+        interactiveCount: interactiveSessions.size,
         date,
         revisions,
         times,
