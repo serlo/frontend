@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import { layoutState } from '.'
+import { LayoutPluginState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
@@ -47,7 +47,7 @@ const ConvertButton = styled.button({
 })
 
 export const LayoutRenderer: React.FunctionComponent<
-  EditorPluginProps<typeof layoutState> & {
+  EditorPluginProps<LayoutPluginState> & {
     insert?: (options?: DocumentState) => void
     remove?: () => void
   }
@@ -186,4 +186,4 @@ export const LayoutRenderer: React.FunctionComponent<
   }
 }
 
-type Column = StateTypeReturnType<typeof layoutState>[0]
+type Column = StateTypeReturnType<LayoutPluginState>[number]
