@@ -7,7 +7,6 @@ import {
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
 import { PluginsContext } from '@/serlo-editor/core/contexts/plugins-context'
-import { EditorPluginType } from '@/serlo-editor/core/editor'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
 
 interface useSuggestionsArgs {
@@ -18,7 +17,7 @@ interface useSuggestionsArgs {
 }
 
 export interface SuggestionOption {
-  pluginType: EditorPluginType
+  pluginType: string
   title: string
   description?: string
 }
@@ -43,7 +42,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allowed = useContext(AllowedChildPlugins)
 
   const allOptions = (allowed ?? allPlugins).map((type) =>
-    createOption(type as EditorPluginType, pluginsStrings)
+    createOption(type, pluginsStrings)
   )
 
   const filteredOptions = filterPlugins(allOptions, text)
@@ -114,16 +113,16 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
   }
 
-  function insertPlugin(pluginName: EditorPluginType) {
+  function insertPlugin(pluginType: string) {
     // If the text plugin is selected from the suggestions list,
     // just clear the editor
-    if (pluginName === 'text') {
+    if (pluginType === 'text') {
       editor.deleteBackward('line')
       return
     }
 
     // Otherwise, replace the text plugin with the selected plugin
-    dispatch(runReplaceDocumentSaga({ id, plugin: pluginName }))
+    dispatch(runReplaceDocumentSaga({ id, plugin: pluginType }))
   }
 
   const hotKeysHandlers = {
@@ -150,16 +149,21 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 }
 
 function createOption(
-  pluginType: EditorPluginType,
-  pluginsStrings: EditorStrings['plugins']
+  pluginType: string,
+  allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
-  const pluginStrings = pluginsStrings[pluginType]
-  const title = Object.hasOwn(pluginStrings, 'title')
-    ? pluginStrings.title
-    : pluginType
-  const description = Object.hasOwn(pluginStrings, 'description')
-    ? pluginStrings.description
-    : ''
+  const pluginStrings = Object.hasOwn(allPluginStrings, pluginType)
+    ? allPluginStrings[pluginType as keyof typeof allPluginStrings]
+    : undefined
+
+  const title =
+    pluginStrings && Object.hasOwn(pluginStrings, 'title')
+      ? pluginStrings.title
+      : pluginType
+  const description =
+    pluginStrings && Object.hasOwn(pluginStrings, 'description')
+      ? pluginStrings.description
+      : ''
   return { pluginType, title, description }
 }
 

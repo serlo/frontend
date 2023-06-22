@@ -8,13 +8,12 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { EditorPluginType } from '@/serlo-editor/core/editor'
 
 interface SuggestionsProps {
   options: SuggestionOption[]
   suggestionsRef: React.MutableRefObject<HTMLDivElement | null>
   selected: number
-  onMouseDown: (pluginType: EditorPluginType) => void
+  onMouseDown: (pluginType: string) => void
   onMouseMove: (index: number) => void
 }
 

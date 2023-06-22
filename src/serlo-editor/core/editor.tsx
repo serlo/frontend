@@ -23,7 +23,6 @@ import {
   PluginsContextPlugins,
 } from './contexts/plugins-context'
 import { SubDocument } from './sub-document'
-import { LoggedInData } from '@/data-types'
 
 configure({
   ignoreEventsCondition() {
@@ -128,9 +127,6 @@ export function InnerDocument({
     )
   }
 }
-
-export type EditorPluginType =
-  keyof LoggedInData['strings']['editor']['plugins']
 
 export interface EditorProps {
   children?: ReactNode | ((document: ReactNode) => ReactNode)

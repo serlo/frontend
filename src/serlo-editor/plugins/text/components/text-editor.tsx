@@ -329,7 +329,7 @@ export function TextEditor(props: TextEditorProps) {
       )
       if (!mayManipulateSiblings) return
 
-      const parentPluginName = document.plugin
+      const parentPluginType = document.plugin
 
       // Handle pasted images
       const files = Array.from(event.clipboardData.files)
@@ -394,7 +394,7 @@ export function TextEditor(props: TextEditorProps) {
                 parent: parent.id,
                 sibling: id,
                 document: {
-                  plugin: parentPluginName,
+                  plugin: parentPluginType,
                   state: slicedNodes,
                 },
               })

@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react'
 
-import { EditorPluginType } from '../editor'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
 export const PluginsContext = createContext<PluginsContextPlugins>([])
@@ -19,7 +18,7 @@ export function getPluginByType(plugins: PluginsContextPlugins, type?: string) {
 }
 
 export interface PluginsContextPlugin {
-  type: EditorPluginType | string
+  type: string
   plugin: EditorPlugin | EditorPlugin<any, any>
   visible?: boolean // in plugin suggestions
   icon?: JSX.Element
