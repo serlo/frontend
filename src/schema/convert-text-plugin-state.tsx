@@ -1,5 +1,3 @@
-import type { CustomElement, CustomText } from '@edtr-io/plugin-text'
-
 import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
@@ -8,6 +6,7 @@ import {
   FrontendTextColor,
   FrontendTextNode,
 } from '@/frontend-node-types'
+import type { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 

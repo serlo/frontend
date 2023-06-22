@@ -3,22 +3,31 @@ import { tw } from '@/helper/tw'
 const roadmapData = [
   {
     title: 'Latest Releases',
-    steps: ['Table plugin', 'Math equations plugin', 'Highlighting box plugin'],
+    steps: [
+      'Redesigned plugin selection, custom icons',
+      'Helpful tooltips that open directly on hover',
+      'Integrate H5P exercises in Serlo Editor content',
+      'Feature to easily find and link Serlo content',
+      'Simple Autosave',
+    ],
   },
   {
     title: 'Next up',
     steps: [
-      'Better rich text editing UX (Update Slate to 0.82) ',
-      'Improved plugin selection menu',
-      'Helpful tooltips that open directly on hover',
+      'Redesigned plugin toolbar',
+      'Accessibility improvements for pictures using AI',
+      'Import existing Serlo content',
+      'Directly link to sections in Serlo content',
     ],
   },
   {
     title: 'Soon',
     steps: [
-      'Integrate H5P elements in Serlo Editor content (new plugin)',
-      'Migration algorithm from old to new versions of the Serlo Editor data format',
-      'New data format for easy exchange  between different LMS',
+      'Improve Image plugin, easier uploads',
+      'Better keyboard navigation',
+      'Improved focus management',
+      'Impact dashboard – supporting authors with usage data',
+      'Differentiate between new paragraph and new lines',
     ],
   },
   {
@@ -26,11 +35,9 @@ const roadmapData = [
     steps: [
       'Fill-in-the-gap exercise (new plugin)',
       'Drag & Drop exercise (new plugin)',
-      'Improved focus management',
       'Better support for LMS integrations',
       'Copy & Paste content across plugins',
       'Automated OER license management',
-      'Impact dashboard – supporting authors with usage data',
     ],
   },
 ]

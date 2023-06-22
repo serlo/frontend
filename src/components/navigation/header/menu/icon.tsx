@@ -47,10 +47,7 @@ export function Icon({ elementOrIcon }: IconProps) {
       )}
     >
       {isIcon ? (
-        <FaIcon
-          icon={menuIconMapping[elementOrIcon]}
-          style={{ fontSize: '23px' }}
-        />
+        <FaIcon icon={menuIconMapping[elementOrIcon]} className="text-[23px]" />
       ) : (
         elementOrIcon
       )}

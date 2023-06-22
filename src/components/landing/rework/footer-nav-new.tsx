@@ -19,7 +19,7 @@ export function FooterNavNew() {
           <br />
           Die freie Lernplattform
         </h1>
-        <div className="mx-auto md:mx-0" style={{ maxWidth: '190px' }}>
+        <div className="mx-auto max-w-[190px] md:mx-0">
           <Link
             className="serlo-new-landing-button max-w-xs md:mx-0"
             href="/mitmachen"

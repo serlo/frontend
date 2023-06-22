@@ -29,7 +29,7 @@ module.exports = withBundleAnalyzer({
     defaultLocale: 'de',
     localeDetection: false,
   },
-  // TODO: reactStrictMode with react18 breaks edtr.io atm
+  // TODO: reactStrictMode with react18 breaks edtr.io atm (inside react-hotkeys)
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
   /*experimental: {

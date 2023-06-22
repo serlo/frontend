@@ -1,10 +1,10 @@
 import { LicenseData } from './data-types'
-import { BoxType } from './edtr-io/plugins/box/renderer'
-import { Sign } from './edtr-io/plugins/equations/sign'
-import { PageTeamRendererProps } from './edtr-io/plugins/page-team/renderer'
-import { TableType } from './edtr-io/plugins/serlo-table/renderer'
+import { BoxType } from './serlo-editor/plugins/box/renderer'
+import { Sign } from './serlo-editor/plugins/equations/sign'
+import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
+import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
 
-export { Sign } from './edtr-io/plugins/equations/sign'
+export { Sign } from './serlo-editor/plugins/equations/sign'
 
 // The actual content of the page.
 
