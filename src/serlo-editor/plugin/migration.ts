@@ -4,6 +4,8 @@ import {
   StoreSerializeHelpers,
 } from './internal-plugin-state'
 
+// this file is currently unused
+
 /**
  * @param type - The initial {@link @edtr-io/internal__plugin-state#StateType | state type} to start the migration from
  */

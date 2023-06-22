@@ -4,7 +4,7 @@ import type { TextEditorFormattingOption } from '.'
 
 export type ControlButton = ActionControlButton | NestedControlButton
 
-export interface ActionControlButton {
+interface ActionControlButton {
   name: TextEditorFormattingOption
   title: string
   isActive(editor: SlateEditor): boolean

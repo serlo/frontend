@@ -25,7 +25,7 @@ export function AddButton(props: AddButtonProps) {
     </AddButtonComponent>
   )
 }
-export interface AddButtonProps {
+interface AddButtonProps {
   onClick: () => void
   children: string
   title?: string
@@ -193,7 +193,7 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
   )
 }
 
-export interface InteractiveAnswerProps {
+interface InteractiveAnswerProps {
   isRadio?: boolean
   isActive?: boolean
   handleChange: () => void
@@ -205,7 +205,7 @@ export interface InteractiveAnswerProps {
   remove: () => void
 }
 
-export interface CheckElementProps {
+interface CheckElementProps {
   isRadio: boolean
   isActive: boolean
   handleChange: (event: React.MouseEvent) => void

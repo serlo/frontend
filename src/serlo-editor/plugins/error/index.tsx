@@ -7,7 +7,7 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 
-export const errorState = object({
+const errorState = object({
   plugin: string(),
   state: scalar<unknown>({}),
 })

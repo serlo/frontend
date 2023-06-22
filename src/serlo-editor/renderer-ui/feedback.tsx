@@ -35,7 +35,7 @@ export function Feedback(props: FeedbackProps) {
   )
 }
 
-export interface FeedbackProps {
+interface FeedbackProps {
   children?: React.ReactNode
   boxFree?: boolean
   isTrueAnswer?: boolean

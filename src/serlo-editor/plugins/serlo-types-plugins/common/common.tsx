@@ -21,7 +21,7 @@ import {
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import { selectDocument, useAppSelector } from '@/serlo-editor/store'
 
-export const licenseState = object({
+const licenseState = object({
   id: number(),
   title: string(),
   shortTitle: string(),

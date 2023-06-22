@@ -41,7 +41,7 @@ export interface FileError {
   message: string
 }
 
-export const validateFile: UploadValidator<FileError[]> = (file) => {
+const validateFile: UploadValidator<FileError[]> = (file) => {
   let uploadErrors: FileErrorCode[] = []
 
   if (!file) {
@@ -63,7 +63,7 @@ export const imagePlugin = createCoreImagePlugin({
   secondInput: 'description',
 })
 
-export function createUploadImageHandler() {
+function createUploadImageHandler() {
   const readFile = createReadFile()
   return async function uploadImageHandler(file: File): Promise<string> {
     const validation = validateFile(file)

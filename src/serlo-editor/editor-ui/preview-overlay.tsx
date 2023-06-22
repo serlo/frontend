@@ -98,7 +98,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   )
 }
 
-export interface PreviewOverlayProps {
+interface PreviewOverlayProps {
   children: React.ReactNode
   focused: boolean
   editable?: boolean

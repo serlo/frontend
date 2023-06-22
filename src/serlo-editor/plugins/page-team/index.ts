@@ -7,7 +7,7 @@ import {
   list,
 } from '@/serlo-editor/plugin'
 
-export const PageTeamState = object({
+const pageTeamState = object({
   data: list(
     object({
       firstName: string(),
@@ -21,11 +21,11 @@ export const PageTeamState = object({
   ),
 })
 
-export type PageTeamPluginState = typeof PageTeamState
+export type PageTeamPluginState = typeof pageTeamState
 export type PageTeamPluginProps = EditorPluginProps<PageTeamPluginState>
 
 export const pageTeamPlugin: EditorPlugin<PageTeamPluginState> = {
   Component: PageTeamEditor,
-  state: PageTeamState,
+  state: pageTeamState,
   config: {},
 }

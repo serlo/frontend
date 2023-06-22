@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react'
 
 import { MathEditorProps } from './editor'
 
-export type MathRendererProps = Pick<
+type MathRendererProps = Pick<
   MathEditorProps,
   'state' | 'inline' | 'additionalContainerProps'
 >

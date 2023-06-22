@@ -8,7 +8,7 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 
-export const deprecatedState = object({
+const deprecatedState = object({
   plugin: string(),
   state: scalar<unknown>({}),
 })

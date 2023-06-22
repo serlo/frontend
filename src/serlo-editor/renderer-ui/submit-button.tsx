@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { FaIcon } from '@/components/fa-icon'
 import { legacyEditorTheme } from '@/helper/colors'
 
-export enum ExerciseState {
+enum ExerciseState {
   Default = 1,
   SolvedRight,
   SolvedWrong,

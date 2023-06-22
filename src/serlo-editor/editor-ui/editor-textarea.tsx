@@ -5,7 +5,7 @@ import TextareaAutosize, {
 
 import { IgnoreKeys } from '../core'
 
-export interface EditorTextareaProps
+interface EditorTextareaProps
   extends Omit<TextareaAutosizeProps, 'as' | 'ref'> {
   onMoveOutRight?(): void
   onMoveOutLeft?(): void

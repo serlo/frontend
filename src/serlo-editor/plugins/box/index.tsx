@@ -7,7 +7,7 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 
-export function createBoxState(allowedPlugins: string[]) {
+function createBoxState(allowedPlugins: string[]) {
   return object({
     type: string(''),
     title: child({

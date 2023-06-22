@@ -74,7 +74,7 @@ export function ExpandableBox(props: ExpandableBoxProps) {
     </Container>
   )
 }
-export interface ExpandableBoxProps {
+interface ExpandableBoxProps {
   children?: React.ReactNode
   editable?: boolean
   alwaysVisible?: boolean

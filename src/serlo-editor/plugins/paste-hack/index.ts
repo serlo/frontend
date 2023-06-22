@@ -1,9 +1,9 @@
 import { PasteHackEditor } from './editor'
 import { EditorPlugin, object, EditorPluginProps } from '@/serlo-editor/plugin'
 
-export const PasteHackState = object({})
+const pasteHackState = object({})
 
-export type PasteHackPluginState = typeof PasteHackState
+export type PasteHackPluginState = typeof pasteHackState
 export type PasteHackPluginProps = EditorPluginProps<PasteHackPluginState>
 
 // POC how we could easily let selected authors import raw editor stated
@@ -11,6 +11,6 @@ export type PasteHackPluginProps = EditorPluginProps<PasteHackPluginState>
 
 export const pasteHackPlugin: EditorPlugin<PasteHackPluginState> = {
   Component: PasteHackEditor,
-  state: PasteHackState,
+  state: pasteHackState,
   config: {},
 }

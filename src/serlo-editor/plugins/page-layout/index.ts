@@ -24,7 +24,7 @@ const allowedPlugins = [
   'video',
 ]
 
-export const pageLayoutState = object({
+const pageLayoutState = object({
   widthPercent: number(), // first column defines second
   column1: child({
     plugin: 'rows',
