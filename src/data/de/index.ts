@@ -162,7 +162,7 @@ export const instanceData = {
         theorem: "Satz",
         proof: "Beweis"
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: "Etwas ist schiefgelaufen"
     },
     consent: {
       title: "Einwilligungen für externe Inhalte",
@@ -177,7 +177,7 @@ export const instanceData = {
       video: "Video abspielen von %provider%",
       applet: "Applet laden von %provider%",
       twingle: "Spendenformular laden",
-      general: 'Activate'
+      general: "Aktivieren"
     },
     comments: {
       question: "Hast du eine Frage oder Feedback?",
@@ -615,11 +615,11 @@ export const loggedInData = {
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
         },
         deprecated: {
-          title: 'Deprecated',
+          title: "Nicht mehr Unterstützt",
           unsupported: "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
         },
         error: {
-          title: 'Error',
+          title: "Fehler",
           convertionError: "Dieser Teil des Dokuments konnte nicht automatisch konvertiert werden."
         },
         equations: {
@@ -657,22 +657,22 @@ export const loggedInData = {
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
-          upload: 'Upload…',
-          imageUrl: 'Image URL',
+          noImagePasteInLists: "Einfügen von Bildern ist innerhalb von Listen nicht möglich.",
+          upload: "Hochladen…",
+          imageUrl: "Bild-URL",
           placeholderEmpty: 'https://example.com/image.png',
-          placeholderUploading: 'Uploading…',
-          placeholderFailed: 'Upload failed…',
-          retry: 'Retry',
-          failedUpload: 'Upload failed',
-          captionPlaceholder: 'Optional caption',
+          placeholderUploading: "Wird hochgeladen …",
+          placeholderFailed: "Hochladen fehlgeschlagen",
+          retry: "Erneut versuchen",
+          failedUpload: "Hochladen fehlgeschlagen",
+          captionPlaceholder: "Optionale Bildunterschrift",
           href: 'Link',
-          hrefPlaceholder: 'Link the image',
+          hrefPlaceholder: "Bild verlinken",
           openInNewTab: "Öffne den Link in einem neuen Tab",
-          alt: 'Description (hidden)',
-          altPlaceholder: 'Describe what the image shows',
-          maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          alt: "Beschreibung (wird nicht angezeigt)",
+          altPlaceholder: "Was ist auf dem Bild zu sehen?",
+          maxWidth: "Maximale Breite",
+          maxWidthPlaceholder: "Gib die maximal Breite an"
         },
         injection: {
           title: "serlo.org Inhalt",
@@ -698,27 +698,27 @@ export const loggedInData = {
           howImportant: "Wie wichtig ist der Multimedia Inhalt?",
           isIllustrating: "Es ist nur eine Veranschaulichung",
           isEssential: "Es spielt eine zentrale Rolle",
-          reset: 'Reset the multimedia content'
+          reset: "Multimedia-Inhalt zurücksetzen"
         },
         pageLayout: {
-          title: 'Layout Column for Pages',
-          description: "The plugin the people want but don't get 🤫",
+          title: "Layout-Spalten für Seiten",
+          description: "Das Plugin, das alle wollen, aber nicht bekommen 🤫",
           chooseRatio: "Spaltenverhältnis auswählen"
         },
         pasteHack: {
-          title: 'Experimental State-Paste Plugin',
-          description: 'only on staging'
+          title: "(experiment) Editor State einfügen",
+          description: "nur in staging"
         },
         pageTeam: {
-          title: 'Team Overview',
-          description: 'Only for the teampages'
+          title: "Teamübersicht",
+          description: "Nur für Teamseiten"
         },
         pagePartners: {
-          title: 'Partner List',
-          description: 'Only for partner page (List of partner logos like on de.serlo.org/)'
+          title: "Partner Liste",
+          description: "Nur für die Partnerseite (Liste der Partnerlogos wie auf de.serlo.org)"
         },
         rows: {
-          title: 'Rows',
+          title: "Zeilen",
           searchForTools: "Suche hier nach Tools…",
           duplicate: "Duplizieren",
           remove: "Löschen",
@@ -763,12 +763,12 @@ export const loggedInData = {
           headings: "Überschriften",
           link: 'Link (%ctrlOrCmd% + K)',
           linkOverlay: {
-            placeholder: 'https://… or /1234',
-            inputLabel: 'Paste or type a link',
-            edit: 'Edit Link',
-            remove: 'Remove Link',
-            customLink: 'Custom Link',
-            invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+            placeholder: "Suchbegriff oder \"/1234\"",
+            inputLabel: "Suche einen Inhalt oder füge einen Link ein",
+            edit: "Link bearbeiten",
+            remove: "Link entfernen",
+            customLink: "Eigener Link",
+            invalidLinkWarning: "Bitte gib einen gültigen Link ein, der anfängt mit \"https(s)://…\""
           },
           openInNewTab: "Öffne den Link in einem neuen Tab",
           orderedList: "Nummerierte Liste",
@@ -780,8 +780,8 @@ export const loggedInData = {
           italic: "Kursiv (%ctrlOrCmd% + I)",
           noItemsFound: "keine Einträge gefunden",
           colorNames: {
-            blue: 'Blue',
-            green: 'Green',
+            blue: "Blau",
+            green: "Grün",
             orange: 'Orange'
           },
           math: {
@@ -809,7 +809,7 @@ export const loggedInData = {
           titlePlaceholder: "Titel",
           url: 'URL',
           seoTitle: "Titel für Suchmaschinen",
-          noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
+          noVideoPasteInLists: "Einfügen von Videos ist innerhalb von Listen nicht möglich."
         }
       },
       templatePlugins: {
@@ -890,9 +890,9 @@ export const loggedInData = {
           number: "Zahl (exakte Lösung, z.B. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
           mathematicalExpressionSolution: "Mathematischer Ausdruck (äquivalente Lösung, z.B. \"0,5\" = \"1/2\" = \"2/4\")",
           types: {
-            mathExpression: 'Mathematical expression',
+            mathExpression: "Mathematischer Ausdruck",
             text: 'Text',
-            number: 'Number'
+            number: "Zahl"
           }
         },
         page: {
