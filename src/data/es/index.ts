@@ -161,7 +161,8 @@ export const instanceData = {
         definition: "Definición",
         theorem: "Teorema",
         proof: "Prueba"
-      }
+      },
+      loadingVideoFailed: 'Something went wrong'
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -175,7 +176,8 @@ export const instanceData = {
       text: "Al hacer clic en la imagen o en el botón superior, aceptas que se cargará el contenido externo de %provider% . También los datos personales pueden ser transferidos a este servicio de acuerdo con nuestro %privacypolicy%.",
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
-      twingle: "Cargar formulario de donación"
+      twingle: "Cargar formulario de donación",
+      general: 'Activate'
     },
     comments: {
       question: "¿Tienes una pregunta?",
@@ -597,6 +599,332 @@ export const loggedInData = {
     editor: {
       confirmRouteChange: "¿Estás seguro de que quieres salir sin guardar?",
       noChangesWarning: "Nada cambió, por lo que no hay necesidad de guardar aún",
+      plugins: {
+        anchor: {
+          title: "Ancla",
+          description: "Insertar un ancla.",
+          identifier: "Identificador",
+          anchorId: "ID del ancla"
+        },
+        box: {
+          title: "Contenedor",
+          description: "Un contenedor para ejemplos, comillas, advertencias, teoremas, notas…",
+          type: "Tipo de contenedor",
+          titlePlaceholder: "(título opcional)",
+          anchorId: "ID de Ancla (marca de posición)",
+          emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
+        },
+        deprecated: {
+          title: 'Deprecated',
+          unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
+        },
+        error: {
+          title: 'Error',
+          convertionError: "Esta parte del documento no pudo ser convertida."
+        },
+        equations: {
+          title: "Términos y ecuaciones",
+          description: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
+          leftHandSide: "Lado izquierdo",
+          transformation: "transformación",
+          mode: "Modalidad",
+          transformationExample: "ej. -3x",
+          transformationOfEquations: "Transformación de ecuaciones",
+          transformationOfTerms: "Transformación de términos",
+          addNewRow: "Añadir nueva fila",
+          explanation: "Explicación",
+          term: "Término",
+          rightHandSide: "Lado derecho",
+          combineLikeTerms: "Combina términos similares",
+          setEqual: "Coloca los términos iguales entre sí.",
+          firstExplanation: "Primera explicación",
+          addNew: "Añadir nueva ecuación"
+        },
+        geogebra: {
+          title: "Aplicación GeoGebra",
+          description: "Insertar el Material de la aplicación GeoGebra a través de URL o ID.",
+          urlOrId: "URL o ID de GeoGebra"
+        },
+        highlight: {
+          title: "Código fuente",
+          description: "Resalta la sintaxis del código fuente.",
+          clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
+          enterHere: "Introduce tu código fuente aquí",
+          language: "Idioma",
+          enterLanguage: "Introducir idioma",
+          showLineNumbers: "Mostrar números de línea"
+        },
+        image: {
+          title: "Imágen",
+          description: "Subir imágenes.",
+          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
+          upload: 'Upload…',
+          imageUrl: 'Image URL',
+          placeholderEmpty: 'https://example.com/image.png',
+          placeholderUploading: 'Uploading…',
+          placeholderFailed: 'Upload failed…',
+          retry: 'Retry',
+          failedUpload: 'Upload failed',
+          captionPlaceholder: 'Optional caption',
+          href: "Enlace",
+          hrefPlaceholder: 'Link the image',
+          openInNewTab: "Abrir en una nueva pestaña",
+          alt: 'Description (hidden)',
+          altPlaceholder: 'Describe what the image shows',
+          maxWidth: 'Maximum width',
+          maxWidthPlaceholder: 'Enter the maximum width'
+        },
+        injection: {
+          title: "serlo.org Contenido",
+          description: "Insertar el contenido de serlo.org a través de su ID.",
+          illegalInjectionFound: "Entrada ilegal encontrada",
+          serloEntitySrc: "entidad de Serlo {{src}}",
+          serloId: 'Serlo ID:',
+          placeholder: "Serlo ID (p.ej. 1565)"
+        },
+        layout: {
+          title: 'Layout',
+          toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
+          oneColumnLayout: "Diseño con una columna",
+          multimediaTitle: "Contenido multimedia asociado con el texto"
+        },
+        multimedia: {
+          title: "Contenido multimedia asociado con el texto",
+          description: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
+          image: "Imágen",
+          video: "Vídeo",
+          geogebraTitle: "Aplicación GeoGebra",
+          changeType: "Cambiar el tipo multimedia",
+          howImportant: "¿Qué tan importante es el contenido multimedia?",
+          isIllustrating: "Está ilustrando",
+          isEssential: "Es esencial",
+          reset: 'Reset the multimedia content'
+        },
+        pageLayout: {
+          title: 'Layout Column for Pages',
+          description: "The plugin the people want but don't get 🤫",
+          chooseRatio: "Elige la proporción de la columna"
+        },
+        pasteHack: {
+          title: 'Experimental State-Paste Plugin',
+          description: 'only on staging'
+        },
+        pageTeam: {
+          title: 'Team Overview',
+          description: 'Only for the teampages'
+        },
+        pagePartners: {
+          title: 'Partner List',
+          description: 'Only for partner page (List of partner logos like on de.serlo.org/)'
+        },
+        rows: {
+          title: 'Rows',
+          searchForTools: "Buscar herramientas…",
+          duplicate: "Duplicar",
+          remove: "Eliminar",
+          close: "Cerrar",
+          dragElement: "Arrastra el elemento dentro del documento",
+          addAnElement: "Añadir un elemento"
+        },
+        separator: {
+          title: "Separador de Solución",
+          description: "Desglosa la solución en pasos individuales."
+        },
+        serloTable: {
+          title: "Tabla",
+          description: "Crear tablas bonitas",
+          mode: "Modalidad",
+          columnHeaders: "Sólo las etiquetas de las columnas",
+          rowHeaders: "Sólo las etiquetas de las filas",
+          columnAndRowHeaders: "Etiquetas de columna y fila",
+          convertToText: "Convertir a texto",
+          convertToImage: "Convertir a imagen",
+          row: "fila",
+          column: "columna",
+          addType: "Agregar %type%",
+          addTypeBefore: "Agregar %type% antes",
+          deleteType: "Eliminar %type%",
+          confirmDelete: "¿Estás seguro de que quieres eliminar este %type% y su contenido?"
+        },
+        spoiler: {
+          title: "Spoiler/desplegable",
+          description: "Una caja colapsable.",
+          enterATitle: "Introduzca un título"
+        },
+        text: {
+          title: "Texto",
+          description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
+          quote: "Cita",
+          setColor: "Elegir color",
+          resetColor: "Restablecer color",
+          colors: "Colores",
+          closeSubMenu: "Cerrar sub-menú",
+          heading: "Encabezado",
+          headings: "Encabezados",
+          link: "Vínculo (%ctrlOrCmd% + K)",
+          linkOverlay: {
+            placeholder: 'https://… or /1234',
+            inputLabel: 'Paste or type a link',
+            edit: 'Edit Link',
+            remove: 'Remove Link',
+            customLink: 'Custom Link',
+            invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+          },
+          openInNewTab: "Abrir en una nueva pestaña",
+          orderedList: "Lista ordenada",
+          unorderedList: "Lista sin ordenar",
+          lists: "Listas",
+          mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
+          code: "Código (%ctrlOrCmd% + + + `)",
+          bold: "Negrilla (%ctrlOrCmd% + B)",
+          italic: "Itálica (%ctrlOrCmd% + I)",
+          noItemsFound: "Elementos no encontrados",
+          colorNames: {
+            blue: 'Blue',
+            green: 'Green',
+            orange: 'Orange'
+          },
+          math: {
+            formula: "[fórmula]",
+            visual: 'visual',
+            latex: 'LaTeX',
+            onlyLatex: "Sólo está disponible el editor LaTeX ",
+            shortcuts: "Acceso directo",
+            fraction: "Fracción",
+            superscript: "Superíndice",
+            or: "ó",
+            subscript: "Subíndice",
+            root: "Raíz",
+            mathSymbols: "Símbolos matemáticos",
+            eG: "por ejemplo,",
+            functions: "Funciones",
+            displayAsBlock: "Mostrar en bloque"
+          }
+        },
+        video: {
+          title: "Vídeo",
+          decription: "Inserta vídeos de YouTube, Vimeo, Wikimedia Commons o BR.",
+          videoUrl: "URL del vídeo",
+          description: "Descripción",
+          titlePlaceholder: "Título",
+          url: 'URL',
+          seoTitle: "Título para motores de búsqueda",
+          noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
+        }
+      },
+      templatePlugins: {
+        applet: {
+          seoTitle: "Título para motores de búsqueda",
+          seoDesc: "Descripción para los motores de búsqueda",
+          placeholder: "Título"
+        },
+        article: {
+          seoTitle: "Título para motores de búsqueda",
+          seoDesc: "Descripción para los motores de búsqueda",
+          title: "Título",
+          writeShortIntro: "Escribe una breve introducción",
+          stillWantMore: "¿Todavía quieres más?",
+          moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
+          addSource: "Añadir fuente",
+          removeLabel: "Eliminar",
+          dragLabel: "Arrastra para cambiar el orden",
+          openInTab: "Abrir en una nueva pestaña",
+          sources: "Fuentes",
+          sourceText: "Fuente del texto",
+          sourceUrl: "URL opcional",
+          moreInFolder: "Puedes encontrar más ejercicios en la siguiente carpeta:",
+          addModal: {
+            introText: "Después de leer el artículo, ¿qué ayudaría a los alumnos a continuación? %break% Aquí puedes añadir algunos %exercises% o enlazar a una sola %exerciseFolder%. %break% O puedes sugerir %articles%, %courses% o %videos% para que continúen.",
+            introText2: "Puedes pegar un ID de Serlo, una URL o elegir el contenido de la carpeta principal de abajo.",
+            buttonEx: "Añadir ejercicios",
+            buttonExFolder: "Selecciona la carpeta de ejercicios",
+            buttonContent: "Añadir contenido",
+            buttonAddType: "Agregar %type%",
+            title: "Añadir contenido o ejercicios relacionados",
+            invalidInput: "Id o url inválidos",
+            fetchError: "Se produjo un error. Por favor, inténtalo más tarde.",
+            loading: "Cargando…",
+            notFound: "No se encontró ese contenido",
+            unsupportedType: "Lo sentimos, el tipo [%type%] no se puede usar aquí",
+            unsupportedId: "Disculpa, este ID no se puede usar aquí",
+            addFromFolderTitle: "De la carpeta",
+            placeholder: "Pegar Serlo ID o URL aquí",
+            exerciseFolderNote: "Solo uno puede ser seleccionado aquí"
+          }
+        },
+        course: {
+          seoDesc: "Descripción para los motores de búsqueda",
+          title: "Título",
+          removeCoursePage: "Eliminar página del curso",
+          addCoursePage: "Añadir página del curso"
+        },
+        coursePage: {
+          explanation: "Explicación",
+          video: "Vídeo",
+          question: "Pregunta",
+          title: "Título"
+        },
+        exercise: {
+          addChoiceExercise: "Añadir ejercicio de elección",
+          choiceExercise: "Ejercicio de opción múltiple",
+          addInputExercise: "Añada ejercicio de respuesta escrita",
+          inputExercise: "Ejercicio de respuesta escrita",
+          addH5pExercise: "Añadir ejercicio interactivo h5p",
+          h5pExercise: "Ejercicio h5p",
+          addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
+          changeInteractive: "Cambiar elemento interactivo",
+          removeInteractive: "Eliminar elemento interactivo"
+        },
+        event: {
+          seoTitle: "Título para motores de búsqueda",
+          seoDesc: "Descripción para los motores de búsqueda",
+          title: "Título"
+        },
+        inputExercise: {
+          text: "Texto",
+          chooseType: "Elige el tipo de ejercicio",
+          unit: "Unidad",
+          addAnswer: "Añadir respuesta",
+          enterTheValue: "Introduzca el valor",
+          yourSolution: "Tu solución",
+          number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
+          mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")",
+          types: {
+            mathExpression: 'Mathematical expression',
+            text: "Texto",
+            number: 'Number'
+          }
+        },
+        page: {
+          title: "Título"
+        },
+        scMcExercise: {
+          singleChoice: "Elección única",
+          multipleChoice: "Múltiple elección",
+          chooseType: "Elige el tipo de ejercicio",
+          addAnswer: "Añadir respuesta"
+        },
+        solution: {
+          optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
+          fundamentalsNote: "Para este ejercicio, necesitas tener los siguentes conocimientos:",
+          idArticle: "ID de un artículo, p. ej., 1855",
+          openArticleTab: "Abrir el artículo en una nueva pestaña:",
+          linkTitle: "Título del enlace",
+          showSolution: "Mostrar la solución",
+          hideSolution: "Ocultar la solución"
+        },
+        textExerciseGroup: {
+          removeExercise: "Eliminar ejercicio",
+          addExercise: "Añadir ejercicio",
+          kindOfExerciseGroup: "Tipo de grupo de ejercicios",
+          notCohesive: "no es cohesivo",
+          cohesive: "cohesivo"
+        },
+        textExercise: {
+          removeSolution: "Eliminar solución",
+          createSolution: "Crear solución"
+        }
+      },
       edtrIo: {
         localStorage: {
           found: "De esta edición tienes revisiones guardadas localmente. ¿Quieres cargarlas?",
@@ -605,42 +933,13 @@ export const loggedInData = {
           restoreInitialButton: "Eliminar cambios",
           confirmRestore: "¿Estás seguro de que quieres eliminar todos tus cambios?"
         },
+        settings: "Configuración",
         extendedSettings: "Ajustes extendidos",
         close: "Cerrar",
         notSupportedYet: "Este tipo de contenido aún no posible en el nuevo editor.",
         editInOld: "Edita el contenido en el antiguo editor.",
         conversionError: "Se produjo un error durante la conversión.",
         notConverted: "Esta entidad aún no ha sido convertida al nuevo editor.",
-        box: "Contenedor",
-        boxDesc: "Un contenedor para ejemplos, comillas, advertencias, teoremas, notas…",
-        text: "Texto",
-        textDesc: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
-        blockquoteTitle: "Cita",
-        quoteDescription: "Crear texto indentado para las citas.",
-        geogebraTitle: "Aplicación GeoGebra",
-        geogebraDesc: "Insertar el Material de la aplicación GeoGebra a través de URL o ID.",
-        highlightTitle: "Código fuente",
-        highlightDesc: "Resalta la sintaxis del código fuente.",
-        anchor: "Ancla",
-        anchorDesc: "Insertar un ancla.",
-        image: "Imágen",
-        imageDesc: "Subir imágenes.",
-        importantTitle: "Afirmación Importante",
-        importantDesc: "Un recuadro para resaltar afirmaciones importantes.",
-        injectionTitle: "serlo.org Contenido",
-        injectionDesc: "Insertar el contenido de serlo.org a través de su ID.",
-        multimediaTitle: "Contenido multimedia asociado con el texto",
-        multimediaDesc: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
-        spoiler: "Spoiler/desplegable",
-        spoilerDesc: "Una caja colapsable.",
-        serloTable: "Tabla",
-        serloTableDesc: "Crear tablas bonitas",
-        table: "Tabla",
-        tableDesc: "Crear tablas usando Markdown.",
-        video: "Vídeo",
-        videoDesc: "Inserta vídeos de YouTube, Vimeo, Wikimedia Commons o BR.",
-        solutionSeparator: "Separador de Solución",
-        solutionSeparatorDesc: "Desglosa la solución en pasos individuales.",
         save: "Guardar",
         saveWithReview: "Guardar y obtener una revisión",
         cancel: "Cancelar",
@@ -664,261 +963,10 @@ export const loggedInData = {
         current: "Actual",
         author: "Autor",
         createdAt: "¿Cuándo?",
-        settings: "Configuración",
-        equationsTitle: "Términos y ecuaciones",
-        equationsDesc: "Escribe manipulaciones de términos y resuelve ecuaciones múltiples.",
         ready: "¿Listo para guardar?"
-      },
-      anchor: {
-        identifier: "Identificador",
-        anchorId: "ID del ancla"
-      },
-      geogebra: {
-        urlOrId: "URL o ID de GeoGebra"
-      },
-      highlight: {
-        clickAndEnter: "Haz clic aquí e introduce tu código fuente…",
-        enterHere: "Introduce tu código fuente aquí",
-        language: "Idioma",
-        enterLanguage: "Introducir idioma",
-        showLineNumbers: "Mostrar números de línea"
-      },
-      inputExercise: {
-        text: "Texto",
-        chooseType: "Elige el tipo de ejercicio",
-        unit: "Unidad",
-        addAnswer: "Añadir respuesta",
-        enterTheValue: "Introduzca el valor",
-        yourSolution: "Tu solución",
-        number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
-        mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")"
-      },
-      multimedia: {
-        image: "Imágen",
-        video: "Vídeo",
-        geogebraTitle: "Aplicación GeoGebra",
-        changeType: "Cambiar el tipo multimedia",
-        howImportant: "¿Qué tan importante es el contenido multimedia?",
-        isIllustrating: "Está ilustrando",
-        isEssential: "Es esencial"
-      },
-      rows: {
-        searchForTools: "Buscar herramientas…",
-        duplicate: "Duplicar",
-        remove: "Eliminar",
-        close: "Cerrar",
-        dragElement: "Arrastra el elemento dentro del documento",
-        addAnElement: "Añadir un elemento"
-      },
-      scMcExercise: {
-        singleChoice: "Elección única",
-        multipleChoice: "Múltiple elección",
-        chooseType: "Elige el tipo de ejercicio",
-        addAnswer: "Añadir respuesta"
-      },
-      serloTable: {
-        mode: "Modalidad",
-        columnHeaders: "Sólo las etiquetas de las columnas",
-        rowHeaders: "Sólo las etiquetas de las filas",
-        columnAndRowHeaders: "Etiquetas de columna y fila",
-        convertToText: "Convertir a texto",
-        convertToImage: "Convertir a imagen",
-        row: "fila",
-        column: "columna",
-        addType: "Agregar %type%",
-        addTypeBefore: "Agregar %type% antes",
-        deleteType: "Eliminar %type%",
-        confirmDelete: "¿Estás seguro de que quieres eliminar este %type% y su contenido?"
-      },
-      spoiler: {
-        enterATitle: "Introduzca un título"
-      },
-      text: {
-        quote: "Cita",
-        setColor: "Elegir color",
-        resetColor: "Restablecer color",
-        colors: "Colores",
-        closeSubMenu: "Cerrar sub-menú",
-        heading: "Encabezado",
-        headings: "Encabezados",
-        link: "Vínculo (%ctrlOrCmd% + K)",
-        linkOverlay: {
-          placeholder: 'https://… or /1234',
-          inputLabel: 'Paste or type a link',
-          edit: 'Edit Link',
-          remove: 'Remove Link',
-          customLink: 'Custom Link',
-          invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
-        },
-        openInNewTab: "Abrir en una nueva pestaña",
-        orderedList: "Lista ordenada",
-        unorderedList: "Lista sin ordenar",
-        lists: "Listas",
-        mathFormula: "Fórmula matemática (%ctrlOrCmd% + M)",
-        code: "Código (%ctrlOrCmd% + + + `)",
-        displayAsBlock: "Mostrar en bloque",
-        formula: "[fórmula]",
-        visual: 'visual',
-        laTeX: 'LaTeX',
-        onlyLaTeX: "Sólo está disponible el editor LaTeX ",
-        shortcuts: "Acceso directo",
-        fraction: "Fracción",
-        superscript: "Superíndice",
-        or: "ó",
-        subscript: "Subíndice",
-        root: "Raíz",
-        mathSymbols: "Símbolos matemáticos",
-        eG: "por ejemplo,",
-        functions: "Funciones",
-        bold: "Negrilla (%ctrlOrCmd% + B)",
-        italic: "Itálica (%ctrlOrCmd% + I)",
-        noItemsFound: "Elementos no encontrados"
-      },
-      image: {
-        noImagePasteInLists: 'Pasting images inside of lists is not allowed.'
-      },
-      video: {
-        videoUrl: "URL del vídeo",
-        description: "Descripción",
-        title: "Título",
-        url: 'URL',
-        seoTitle: "Título para motores de búsqueda",
-        noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
-      },
-      error: {
-        convertionError: "Esta parte del documento no pudo ser convertida."
-      },
-      exercise: {
-        addChoiceExercise: "Añadir ejercicio de elección",
-        choiceExercise: "Ejercicio de opción múltiple",
-        addInputExercise: "Añada ejercicio de respuesta escrita",
-        inputExercise: "Ejercicio de respuesta escrita",
-        addH5pExercise: "Añadir ejercicio interactivo h5p",
-        h5pExercise: "Ejercicio h5p",
-        addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
-        changeInteractive: "Cambiar elemento interactivo",
-        removeInteractive: "Eliminar elemento interactivo"
-      },
-      injection: {
-        illegalInjectionFound: "Entrada ilegal encontrada",
-        serloEntitySrc: "entidad de Serlo {{src}}",
-        serloId: 'Serlo ID:',
-        placeholder: "Serlo ID (p.ej. 1565)"
-      },
-      box: {
-        type: "Tipo de contenedor",
-        titlePlaceholder: "(título opcional)",
-        anchorId: "ID de Ancla (marca de posición)",
-        emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
-      },
-      layout: {
-        toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
-        oneColumnLayout: "Diseño con una columna",
-        multimediaTitle: "Contenido multimedia asociado con el texto"
-      },
-      pageLayoutColums: {
-        chooseRatio: "Elige la proporción de la columna"
-      },
-      solution: {
-        optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
-        fundamentalsNote: "Para este ejercicio, necesitas tener los siguentes conocimientos:",
-        idArticle: "ID de un artículo, p. ej., 1855",
-        openArticleTab: "Abrir el artículo en una nueva pestaña:",
-        linkTitle: "Título del enlace",
-        showSolution: "Mostrar la solución",
-        hideSolution: "Ocultar la solución"
-      },
-      applet: {
-        seoTitle: "Título para motores de búsqueda",
-        seoDesc: "Descripción para los motores de búsqueda",
-        title: "Título"
-      },
-      article: {
-        seoTitle: "Título para motores de búsqueda",
-        seoDesc: "Descripción para los motores de búsqueda",
-        title: "Título",
-        writeShortIntro: "Escribe una breve introducción",
-        stillWantMore: "¿Todavía quieres más?",
-        moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
-        addSource: "Añadir fuente",
-        removeLabel: "Eliminar",
-        dragLabel: "Arrastra para cambiar el orden",
-        openInTab: "Abrir en una pestaña nueva",
-        sources: "Fuentes",
-        sourceText: "Fuente del texto",
-        sourceUrl: "URL opcional",
-        moreInFolder: "Puedes encontrar más ejercicios en la siguiente carpeta:",
-        addModal: {
-          introText: "Después de leer el artículo, ¿qué ayudaría a los alumnos a continuación? %break% Aquí puedes añadir algunos %exercises% o enlazar a una sola %exerciseFolder%. %break% O puedes sugerir %articles%, %courses% o %videos% para que continúen.",
-          introText2: "Puedes pegar un ID de Serlo, una URL o elegir el contenido de la carpeta principal de abajo.",
-          buttonEx: "Añadir ejercicios",
-          buttonExFolder: "Selecciona la carpeta de ejercicios",
-          buttonContent: "Añadir contenido",
-          buttonAddType: "Agregar %type%",
-          title: "Añadir contenido o ejercicios relacionados",
-          invalidInput: "Id o url inválidos",
-          fetchError: "Se produjo un error. Por favor, inténtalo más tarde.",
-          loading: "Cargando…",
-          notFound: "No se encontró ese contenido",
-          unsupportedType: "Lo sentimos, el tipo [%type%] no se puede usar aquí",
-          unsupportedId: "Disculpa, este ID no se puede usar aquí",
-          addFromFolderTitle: "De la carpeta",
-          placeholder: "Pegar Serlo ID o URL aquí",
-          exerciseFolderNote: "Solo uno puede ser seleccionado aquí"
-        }
-      },
-      coursePage: {
-        explanation: "Explicación",
-        video: "Vídeo",
-        question: "Pregunta",
-        title: "Título"
-      },
-      course: {
-        seoDesc: "Descripción para los motores de búsqueda",
-        title: "Título",
-        removeCoursePage: "Eliminar página del curso",
-        addCoursePage: "Añadir página del curso"
-      },
-      event: {
-        seoTitle: "Título para motores de búsqueda",
-        seoDesc: "Descripción para los motores de búsqueda",
-        title: "Título"
-      },
-      page: {
-        title: "Título"
       },
       taxonomy: {
         title: "Título"
-      },
-      textExerciseGroup: {
-        removeExercise: "Eliminar ejercicio",
-        addExercise: "Añadir ejercicio",
-        kindOfExerciseGroup: "Tipo de grupo de ejercicios",
-        notCohesive: "no es cohesivo",
-        cohesive: "cohesivo"
-      },
-      textExercise: {
-        removeSolution: "Eliminar solución",
-        createSolution: "Crear solución"
-      },
-      equations: {
-        leftHandSide: "Lado izquierdo",
-        transformation: "transformación",
-        mode: "Modalidad",
-        transformationExample: "ej. -3x",
-        transformationOfEquations: "Transformación de ecuaciones",
-        transformationOfTerms: "Transformación de términos",
-        addNewRow: "Añadir nueva fila",
-        explanation: "Explicación",
-        term: "Término",
-        rightHandSide: "Lado derecho",
-        combineLikeTerms: "Combina términos similares",
-        setEqual: "Coloca los términos iguales entre sí.",
-        firstExplanation: "Primera explicación",
-        addNew: "Añadir nueva ecuación"
-      },
-      deprecated: {
-        unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
       }
     },
     profileSettings: {
