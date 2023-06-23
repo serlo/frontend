@@ -105,7 +105,7 @@ export interface EdtrPluginLayout {
   state: LayoutChild[]
 }
 
-export interface EdtrPluginMultimediaExplanation {
+export interface EdtrPluginMultimedia {
   plugin: 'multimedia'
   state: StateTypeSerializedType<MultimediaPluginState>
 }
@@ -185,7 +185,7 @@ export type EdtrState =
   | EdtrPluginHighlight
   | EdtrPluginSerloInjection
   | EdtrPluginLayout
-  | EdtrPluginMultimediaExplanation
+  | EdtrPluginMultimedia
   | EdtrPluginSpoiler
   | EdtrPluginImportant
   | EdtrPluginBlockquote

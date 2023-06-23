@@ -205,7 +205,7 @@ describe('edtr io plugins', () => {
     ])
   })
 
-  describe('plugin: multimediaExplanation', () => {
+  describe('plugin: multimedia', () => {
     test('with width value: returns calulated sizes', () => {
       const result = convert({
         plugin: 'multimedia',
