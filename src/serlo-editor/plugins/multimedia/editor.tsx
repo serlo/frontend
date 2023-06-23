@@ -12,7 +12,6 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { useMultimediaConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -59,28 +58,34 @@ const Option = styled.div({
   },
 })
 
-export function MultimediaEditor(props: MultimediaProps) {
+export function MultimediaEditor({
+  state,
+  config,
+  editable,
+  focused,
+  renderIntoSettings,
+}: MultimediaProps) {
   const multimediaStrings = useEditorStrings().plugins.multimedia
-  const config = useMultimediaConfig(props.config)
 
-  function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    props.state.illustrating.set(e.target.value === 'illustrating')
-  }
+  const { allowedPlugins } = config
+
+  const { explanation, multimedia } = state
+
   const textFocused = useAppSelector((state) =>
-    selectHasFocusedDescendant(state, props.state.explanation.id)
+    selectHasFocusedDescendant(state, explanation.id)
   )
 
   const multimediaFocused = useAppSelector((state) =>
-    selectIsFocused(state, props.state.multimedia.id)
+    selectIsFocused(state, multimedia.id)
   )
 
-  const hasFocus = props.focused || multimediaFocused || textFocused
+  const hasFocus = focused || multimediaFocused || textFocused
   const withoutMultimedia = useAppSelector((state) =>
-    selectIsDocumentEmpty(state, props.state.multimedia.id)
+    selectIsDocumentEmpty(state, multimedia.id)
   )
 
   const multimediaDocument: MultimediaDocument | null = useAppSelector(
-    (state) => selectDocument(state, props.state.multimedia.id)
+    (state) => selectDocument(state, multimedia.id)
   )
   const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
     Record<string, unknown>
@@ -88,7 +93,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   function handleMultimediaChange(selected: string) {
     setReplacedMultimediaCache((current) => {
       const multimediaSerializedDocument: MultimediaDocument | null =
-        selectSerializedDocument(store.getState(), props.state.multimedia.id)
+        selectSerializedDocument(store.getState(), multimedia.id)
       if (!multimediaSerializedDocument) return current
 
       return {
@@ -97,7 +102,7 @@ export function MultimediaEditor(props: MultimediaProps) {
           multimediaSerializedDocument.state,
       }
     })
-    props.state.multimedia.replace(selected, replacedMultimediaCache[selected])
+    multimedia.replace(selected, replacedMultimediaCache[selected])
   }
   const [showOptions, setShowOptions] = useState(false)
 
@@ -112,7 +117,7 @@ export function MultimediaEditor(props: MultimediaProps) {
       value={multimediaDocument ? multimediaDocument.plugin : ''}
       onChange={(e) => handleMultimediaChange(e.target.value)}
     >
-      {props.config.plugins.map((type) => {
+      {allowedPlugins.map((type) => {
         return (
           <option key={type} value={type}>
             {getPluginTitle(type)}
@@ -125,29 +130,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   const multimediaSettings = (
     <>
       <hr />
-      {config.features.importance ? (
-        <>
-          <div className="flex-[1]">
-            <strong>{multimediaStrings.isIllustrating}</strong>
-          </div>
-          <div className="flex-[1]">
-            <select
-              value={
-                props.state.illustrating.value ? 'illustrating' : 'explaining'
-              }
-              onChange={handleIllustratingChange}
-            >
-              <option value="illustrating">
-                {multimediaStrings.isIllustrating}
-              </option>
-              <option value="explaining">
-                {multimediaStrings.isEssential}
-              </option>
-            </select>
-          </div>
-        </>
-      ) : null}
-      {props.config.plugins.length > 1 ? (
+      {allowedPlugins.length > 1 ? (
         <div>
           <strong>{multimediaStrings.changeType}</strong>
           {pluginSelection}
@@ -158,7 +141,7 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   const [rowWidth, setRowWidth] = useState(0)
 
-  const multimediaRendered = props.state.multimedia.render({
+  const multimediaRendered = multimedia.render({
     renderToolbar(children) {
       return (
         <>
@@ -168,7 +151,7 @@ export function MultimediaEditor(props: MultimediaProps) {
               setShowOptions(false)
             }}
           >
-            {props.config.plugins.length > 1 ? (
+            {allowedPlugins.length > 1 ? (
               <PluginToolbarButton
                 icon={<FaIcon icon={faRandom} />}
                 label={multimediaStrings.changeType}
@@ -181,14 +164,14 @@ export function MultimediaEditor(props: MultimediaProps) {
               icon={<FaIcon icon={faTrashAlt} />}
               label={multimediaStrings.reset}
               onClick={() => {
-                props.state.multimedia.replace(
-                  multimediaDocument?.plugin ?? props.config.plugins[0]
+                multimedia.replace(
+                  multimediaDocument?.plugin ?? allowedPlugins[0]
                 )
               }}
             />
             {showOptions ? (
               <InlineOptions>
-                {props.config.plugins
+                {allowedPlugins
                   .filter(
                     (plugin) =>
                       !multimediaDocument ||
@@ -224,8 +207,8 @@ export function MultimediaEditor(props: MultimediaProps) {
     },
   })
 
-  if (!props.editable && withoutMultimedia) {
-    return props.state.explanation.render()
+  if (!editable && withoutMultimedia) {
+    return explanation.render()
   }
 
   return (
@@ -237,30 +220,24 @@ export function MultimediaEditor(props: MultimediaProps) {
           setRowWidth(el.offsetWidth)
         }}
       >
-        {props.state.illustrating.value ? (
-          <Resizable
-            className="relative p-[5px]"
-            enabled={
-              props.editable && hasFocus && props.state.illustrating.value
-            }
-            responsiveBreakpoint={BREAKPOINT}
-            steps={STEPS}
-            onResizeEnd={(newWidth) => {
-              props.state.width.set(Math.round((newWidth * 100) / STEPS))
-            }}
-            rowWidth={rowWidth}
-            widthInSteps={(props.state.width.value * STEPS) / 100}
-            floating="right"
-          >
-            {multimediaRendered}
-          </Resizable>
-        ) : (
-          multimediaRendered
-        )}
-        {props.state.explanation.render()}
+        <Resizable
+          className="relative p-[5px]"
+          enabled={editable && hasFocus}
+          responsiveBreakpoint={BREAKPOINT}
+          steps={STEPS}
+          onResizeEnd={(newWidth) => {
+            state.width.set(Math.round((newWidth * 100) / STEPS))
+          }}
+          rowWidth={rowWidth}
+          widthInSteps={(state.width.value * STEPS) / 100}
+          floating="right"
+        >
+          {multimediaRendered}
+        </Resizable>
+        ){explanation.render()}
         <div className="clear-both" />
       </div>
-      {props.editable ? props.renderIntoSettings(multimediaSettings) : null}
+      {editable ? renderIntoSettings(multimediaSettings) : null}
     </>
   )
 }

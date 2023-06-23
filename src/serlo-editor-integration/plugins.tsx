@@ -186,7 +186,7 @@ export function createPlugins({
             placeholder: editorStrings.templatePlugins.article.writeShortIntro,
           },
         },
-        plugins: ['image'],
+        allowedPlugins: ['image'],
       }),
     },
     { type: 'error', plugin: errorPlugin },

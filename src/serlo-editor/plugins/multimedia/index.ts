@@ -10,6 +10,7 @@ import {
 import { MultimediaEditor } from './editor'
 
 const defaultConfig: MultimediaConfig = {
+  allowedPlugins: ['image', 'video', 'geogebra'],
   explanation: {
     plugin: 'rows',
     config: {
@@ -23,14 +24,13 @@ const defaultConfig: MultimediaConfig = {
       ],
     },
   },
-  plugins: ['image', 'video', 'geogebra'],
 }
 
 function createMultimediaState(config: MultimediaConfig) {
-  const { plugins, explanation } = config
+  const { allowedPlugins, explanation } = config
   return object({
     explanation: child(explanation),
-    multimedia: child({ plugin: plugins[0] }),
+    multimedia: child({ plugin: allowedPlugins[0] }),
     illustrating: boolean(true),
     width: number(50), // percent
   })
@@ -46,21 +46,11 @@ export function createMultimediaPlugin(
   }
 }
 
-export interface MultimediaConfig
-  extends Omit<MultimediaPluginConfig, 'features'> {
-  explanation: ChildStateTypeConfig
-  features?: {
-    importance?: boolean
-  }
-}
-
 export type MultimediaPluginState = ReturnType<typeof createMultimediaState>
 
-export interface MultimediaPluginConfig {
-  plugins: string[]
-  features: {
-    importance: boolean
-  }
+export interface MultimediaConfig {
+  allowedPlugins: string[]
+  explanation: ChildStateTypeConfig
 }
 
 export type MultimediaProps = EditorPluginProps<
