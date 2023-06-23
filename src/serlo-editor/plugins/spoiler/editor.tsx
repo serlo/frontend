@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 
 import { SpoilerProps } from '.'
-import { ExpandableBox } from '../../renderer-ui'
+import { SpoilerRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function SpoilerEditor(props: SpoilerProps) {
-  const { state, editable, autofocusRef } = props
+  const { state, editable, focused, autofocusRef } = props
   const editorStrings = useEditorStrings()
 
   const renderTitle = useCallback(
@@ -26,8 +26,10 @@ export function SpoilerEditor(props: SpoilerProps) {
   )
 
   return (
-    <ExpandableBox renderTitle={renderTitle} editable={editable} alwaysVisible>
-      {state.content.render()}
-    </ExpandableBox>
+    <SpoilerRenderer
+      title={renderTitle(true)}
+      content={state.content.render()}
+      openOverwrite={editable && focused}
+    />
   )
 }

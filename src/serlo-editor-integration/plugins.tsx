@@ -103,7 +103,7 @@ export function createPlugins({
     },
     {
       type: 'spoiler',
-      plugin: createSpoilerPlugin({}),
+      plugin: createSpoilerPlugin(),
       visible: true,
       icon: <IconSpoiler />,
     },
