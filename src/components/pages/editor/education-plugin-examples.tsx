@@ -336,7 +336,6 @@ export const textExExample = (
             {
               type: 'multimedia',
               mediaWidth: 50,
-              float: 'right',
               media: [
                 {
                   type: 'img',

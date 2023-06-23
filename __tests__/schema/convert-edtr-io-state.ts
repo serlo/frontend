@@ -233,7 +233,6 @@ describe('edtr io plugins', () => {
         {
           type: 'multimedia',
           mediaWidth: 20,
-          float: 'right',
           media: [{ type: 'img', src: 'test.jpg', alt: '' }],
           children: [{ type: 'slate-container', children: [] }],
         },
@@ -259,7 +258,6 @@ describe('edtr io plugins', () => {
         {
           type: 'multimedia',
           mediaWidth: 50,
-          float: 'right',
           media: [{ type: 'img', src: 'test.jpg', alt: '' }],
           children: [],
         },
