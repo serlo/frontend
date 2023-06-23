@@ -8,6 +8,9 @@ export interface SpoilerProps {
   title: ReactNode
 }
 
+// after db migration of legacy stuff:
+// replace FrontendSpoilerContainerNode FrontendSpoilerTitleNode FrontendSpoilerBodyNode with FrontendSpoilerNode
+
 export function Spoiler({ body, title }: SpoilerProps) {
   return (
     <SpoilerRenderer
