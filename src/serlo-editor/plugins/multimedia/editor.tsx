@@ -2,7 +2,7 @@ import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import styled from 'styled-components'
 
-import { MultimediaExplanationProps } from '.'
+import { MultimediaProps } from '.'
 import {
   selectDocument,
   selectHasFocusedDescendant,
@@ -12,7 +12,7 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { useMultimediaExplanationConfig } from './config'
+import { useMultimediaConfig } from './config'
 import { Resizable } from './resizable'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -59,9 +59,9 @@ const Option = styled.div({
   },
 })
 
-export function MultimediaExplanationEditor(props: MultimediaExplanationProps) {
+export function MultimediaEditor(props: MultimediaProps) {
   const multimediaStrings = useEditorStrings().plugins.multimedia
-  const config = useMultimediaExplanationConfig(props.config)
+  const config = useMultimediaConfig(props.config)
 
   function handleIllustratingChange(e: React.ChangeEvent<HTMLSelectElement>) {
     props.state.illustrating.set(e.target.value === 'illustrating')

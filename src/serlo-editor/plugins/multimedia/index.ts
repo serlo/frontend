@@ -11,9 +11,9 @@ import {
   object,
   ObjectStateType,
 } from '../../plugin'
-import { MultimediaExplanationEditor } from './editor'
+import { MultimediaEditor } from './editor'
 
-const defaultConfig: MultimediaExplanationConfig = {
+const defaultConfig: MultimediaConfig = {
   explanation: {
     plugin: 'rows',
     config: {
@@ -30,12 +30,12 @@ const defaultConfig: MultimediaExplanationConfig = {
   plugins: ['image', 'video', 'geogebra'],
 }
 
-export function createMultimediaExplanationPlugin(
+export function createMultimediaPlugin(
   config = defaultConfig
-): EditorPlugin<MultimediaExplanationPluginState, MultimediaExplanationConfig> {
+): EditorPlugin<MultimediaPluginState, MultimediaConfig> {
   const { plugins, explanation } = config
   return {
-    Component: MultimediaExplanationEditor,
+    Component: MultimediaEditor,
     config,
     state: object({
       explanation: child(explanation),
@@ -46,29 +46,29 @@ export function createMultimediaExplanationPlugin(
   }
 }
 
-export interface MultimediaExplanationConfig
-  extends Omit<MultimediaExplanationPluginConfig, 'features'> {
+export interface MultimediaConfig
+  extends Omit<MultimediaPluginConfig, 'features'> {
   explanation: ChildStateTypeConfig
   features?: {
     importance?: boolean
   }
 }
 
-export type MultimediaExplanationPluginState = ObjectStateType<{
+export type MultimediaPluginState = ObjectStateType<{
   explanation: ChildStateType
   multimedia: ChildStateType
   illustrating: BooleanStateType
   width: NumberStateType
 }>
 
-export interface MultimediaExplanationPluginConfig {
+export interface MultimediaPluginConfig {
   plugins: string[]
   features: {
     importance: boolean
   }
 }
 
-export type MultimediaExplanationProps = EditorPluginProps<
-  MultimediaExplanationPluginState,
-  MultimediaExplanationConfig
+export type MultimediaProps = EditorPluginProps<
+  MultimediaPluginState,
+  MultimediaConfig
 >

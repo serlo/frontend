@@ -1,13 +1,10 @@
 import * as R from 'ramda'
 
-import {
-  MultimediaExplanationConfig,
-  MultimediaExplanationPluginConfig,
-} from '.'
+import { MultimediaConfig, MultimediaPluginConfig } from '.'
 
-export function useMultimediaExplanationConfig(
-  config: MultimediaExplanationConfig
-): MultimediaExplanationPluginConfig {
+export function useMultimediaConfig(
+  config: MultimediaConfig
+): MultimediaPluginConfig {
   const {
     features = {
       importance: true,
