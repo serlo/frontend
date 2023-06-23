@@ -18,16 +18,20 @@ export function SpoilerRenderer({
   const isOpen = openOverwrite === undefined ? open : openOverwrite
 
   return (
-    <div className="mb-block flex flex-col mobile:mx-side">
+    <div
+      className={clsx(
+        'mb-block flex flex-col rounded-xl border-3 mobile:mx-side',
+        isOpen ? 'border-brand-200' : 'border-brand-100'
+      )}
+    >
       <button
         onClick={() => setOpen(!open)}
         className={clsx(
           tw`
-            serlo-input-font-reset z-10 m-0 rounded-xl
-            border-none bg-brand-100 py-2.5 px-side
+            serlo-input-font-reset z-10 m-0 border-none py-2.5 px-side
             text-left text-lg leading-normal text-almost-black transition-colors
           `,
-          isOpen && 'rounded-bl-none bg-brand text-white'
+          isOpen ? 'bg-brand-200' : 'bg-brand-100'
         )}
       >
         <span className="flex">
