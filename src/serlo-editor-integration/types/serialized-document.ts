@@ -16,7 +16,7 @@ import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import type { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
 import type { ImagePluginState } from '@/serlo-editor/plugins/image'
 import type { InputExercisePluginState } from '@/serlo-editor/plugins/input-exercise'
-import type { MultimediaExplanationPluginState } from '@/serlo-editor/plugins/multimedia'
+import type { MultimediaPluginState } from '@/serlo-editor/plugins/multimedia'
 import type { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@/serlo-editor/plugins/sc-mc-exercise'
 import type { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
@@ -82,7 +82,7 @@ export type SerializedDocument =
     }
   | {
       plugin: 'multimedia'
-      state: StateTypeSerializedType<MultimediaExplanationPluginState>
+      state: StateTypeSerializedType<MultimediaPluginState>
     }
   | {
       plugin: 'rows'

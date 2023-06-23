@@ -7,7 +7,7 @@ import { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
 import { ImagePluginState } from '@/serlo-editor/plugins/image'
 import { InjectionPluginState } from '@/serlo-editor/plugins/injection'
-import { MultimediaExplanationPluginState } from '@/serlo-editor/plugins/multimedia'
+import { MultimediaPluginState } from '@/serlo-editor/plugins/multimedia'
 import { PageLayoutPluginState } from '@/serlo-editor/plugins/page-layout'
 import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
 import { RowsPluginState } from '@/serlo-editor/plugins/rows'
@@ -58,7 +58,7 @@ export interface EdtrPluginArticle {
 
 export interface EdtrPluginArticleIntroduction {
   plugin: 'articleIntroduction'
-  state: StateTypeSerializedType<MultimediaExplanationPluginState>
+  state: StateTypeSerializedType<MultimediaPluginState>
 }
 
 export interface EdtrPluginGeogebra {
@@ -107,7 +107,7 @@ export interface EdtrPluginLayout {
 
 export interface EdtrPluginMultimediaExplanation {
   plugin: 'multimedia'
-  state: StateTypeSerializedType<MultimediaExplanationPluginState>
+  state: StateTypeSerializedType<MultimediaPluginState>
 }
 
 export interface EdtrPluginSpoiler {
