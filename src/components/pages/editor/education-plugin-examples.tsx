@@ -1297,7 +1297,7 @@ export const injectionExample = (
 )
 export const highlighExample = (
   <Code
-    content={`// global variable: read & write from everywhere
+    code={`// global variable: read & write from everywhere
 var cookieAmount = 100
 
 // local variable: read & write from everywhere only in current code block

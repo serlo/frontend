@@ -36,7 +36,7 @@ export function HighlightEditor(props: HighlightProps) {
         }}
         // make sure editor does not create new plugin on enter etc
         onKeyDown={(e) => e.stopPropagation()}
-        className="m-auto h-32 w-full resize-y border-none p-side font-mono shadow-menu"
+        className="m-auto h-32 w-full border-none p-side font-mono shadow-menu"
       >
         {state.code.value}
       </textarea>
@@ -44,7 +44,6 @@ export function HighlightEditor(props: HighlightProps) {
     </>
   ) : (
     <Renderer
-      config={config}
       language={state.language.value}
       showLineNumbers={state.showLineNumbers.value}
       code={state.code.value}
