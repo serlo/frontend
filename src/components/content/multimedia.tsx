@@ -2,11 +2,7 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { LightBoxProps } from './light-box'
-import type {
-  FrontendMultiMediaNode,
-  FrontendImgNode,
-  FrontendContentNode,
-} from '@/frontend-node-types'
+import type { FrontendMultiMediaNode } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { MultimediaRenderer } from '@/serlo-editor/plugins/multimedia/renderer'
 
@@ -21,12 +17,9 @@ export function Multimedia({
   renderNested,
 }: FrontendMultiMediaNode & { renderNested: RenderNestedFunction }) {
   const [open, setOpen] = useState(false)
-  function openLightBox() {
-    setOpen(true)
-  }
-
   const mediaChild = media[0]
-  const mediaChildIsImage = isImage(mediaChild)
+  const mediaChildIsImage = mediaChild.type === 'img'
+  const showLightbox = mediaChildIsImage && open
 
   return (
     <>
@@ -34,39 +27,17 @@ export function Multimedia({
         media={<>{renderNested(media, 'media')}</>}
         explanation={<>{renderNested(children, 'children')}</>}
         mediaWidth={mediaWidth}
-        onClick={mediaChildIsImage ? openLightBox : undefined}
+        onClick={mediaChildIsImage ? () => setOpen(true) : undefined}
         extraImageClass={mediaChildIsImage ? 'mobile:cursor-zoom-in' : ''}
       />
-      {renderLightbox()}
-    </>
-  )
-
-  function renderLightbox() {
-    if (!isImage(mediaChild) || !open) return null
-
-    // simplify after deploy, db-migration and api cache updates
-    const label =
-      Object.hasOwn(mediaChild, 'caption') && mediaChild.caption
-        ? renderNested(mediaChild.caption) ?? undefined
-        : undefined
-
-    return (
-      open && (
+      {showLightbox ? (
         <LightBox
-          open={open}
           onClose={() => setOpen(false)}
           alt={mediaChild.alt}
-          label={label}
+          label={renderNested(mediaChild.caption ?? [])}
           src={mediaChild.src}
         />
-      )
-    )
-  }
-}
-
-function isImage(
-  child: FrontendImgNode | FrontendContentNode
-): child is FrontendImgNode {
-  if (!child) return false
-  return (child as FrontendImgNode).type === 'img'
+      ) : null}
+    </>
+  )
 }
