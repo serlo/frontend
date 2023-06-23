@@ -5,7 +5,7 @@ import { SpoilerRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function SpoilerEditor(props: SpoilerProps) {
-  const { state, editable, focused, autofocusRef } = props
+  const { state, editable, autofocusRef } = props
   const editorStrings = useEditorStrings()
 
   const renderTitle = useCallback(
@@ -16,7 +16,7 @@ export function SpoilerEditor(props: SpoilerProps) {
           value={state.title.value}
           placeholder={editorStrings.plugins.spoiler.enterATitle}
           ref={autofocusRef}
-          className="bg-transparent p-1 focus:outline-editor-primary"
+          className="-my-1 bg-transparent p-1 focus:outline-editor-primary"
         />
       ) : (
         <>{state.title.value}</>
@@ -29,7 +29,7 @@ export function SpoilerEditor(props: SpoilerProps) {
     <SpoilerRenderer
       title={renderTitle(true)}
       content={state.content.render()}
-      openOverwrite={editable && focused}
+      openOverwrite={editable} // should include focused but that's unreliable atm.
     />
   )
 }
