@@ -1,243 +1,140 @@
-import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { MultimediaProps } from '.'
 import {
   selectDocument,
-  selectHasFocusedDescendant,
-  selectIsDocumentEmpty,
-  selectIsFocused,
   selectSerializedDocument,
   store,
   useAppSelector,
 } from '../../store'
-import { Resizable } from './resizable'
-import { FaIcon } from '@/components/fa-icon'
+import { MultimediaRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
+import { tw } from '@/helper/tw'
 
-interface MultimediaDocument {
-  plugin: string
-  state?: unknown
-}
-
-const STEPS = 4
-const BREAKPOINT = 650
-
-const InlineOptionsWrapper = styled.div({
-  position: 'absolute',
-  top: '-30px',
-  right: '0',
-  padding: '30px',
-  zIndex: 95,
-  whiteSpace: 'nowrap',
-})
-
-const InlineOptionsContentWrapper = styled.div({
-  boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
-  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-  borderRadius: '4px',
-})
-
-function InlineOptions({ children }: { children: React.ReactNode }) {
-  return (
-    <InlineOptionsWrapper>
-      <InlineOptionsContentWrapper>{children}</InlineOptionsContentWrapper>
-    </InlineOptionsWrapper>
-  )
-}
-
-const Option = styled.div({
-  padding: '5px 10px',
-  cursor: 'pointer',
-  width: '100%',
-  minWidth: '150px',
-  '&:hover': {
-    color: 'rgb(70, 155, 255)',
-  },
-})
+const mediaColumsSizes = [50, 25]
 
 export function MultimediaEditor({
   state,
   config,
   editable,
-  focused,
   renderIntoSettings,
 }: MultimediaProps) {
-  const multimediaStrings = useEditorStrings().plugins.multimedia
+  const pluginsStrings = useEditorStrings().plugins
+  const multimediaStrings = pluginsStrings.multimedia
 
   const { allowedPlugins } = config
+  const { explanation, multimedia, width } = state
 
-  const { explanation, multimedia } = state
+  const currentPluginType = useAppSelector((state) =>
+    selectDocument(state, multimedia.id)
+  )?.plugin
 
-  const textFocused = useAppSelector((state) =>
-    selectHasFocusedDescendant(state, explanation.id)
-  )
-
-  const multimediaFocused = useAppSelector((state) =>
-    selectIsFocused(state, multimedia.id)
-  )
-
-  const hasFocus = focused || multimediaFocused || textFocused
-  const withoutMultimedia = useAppSelector((state) =>
-    selectIsDocumentEmpty(state, multimedia.id)
-  )
-
-  const multimediaDocument: MultimediaDocument | null = useAppSelector(
-    (state) => selectDocument(state, multimedia.id)
-  )
-  const [replacedMultimediaCache, setReplacedMultimediaCache] = useState<
+  const [multimediaStateCache, setMultimediaStateCache] = useState<
     Record<string, unknown>
   >({})
-  function handleMultimediaChange(selected: string) {
-    setReplacedMultimediaCache((current) => {
-      const multimediaSerializedDocument: MultimediaDocument | null =
-        selectSerializedDocument(store.getState(), multimedia.id)
-      if (!multimediaSerializedDocument) return current
-
-      return {
-        ...current,
-        [multimediaSerializedDocument.plugin]:
-          multimediaSerializedDocument.state,
-      }
-    })
-    multimedia.replace(selected, replacedMultimediaCache[selected])
-  }
-  const [showOptions, setShowOptions] = useState(false)
-
-  function getPluginTitle(name: string) {
-    return Object.hasOwn(multimediaStrings, name)
-      ? multimediaStrings[name as keyof typeof multimediaStrings]
-      : name
-  }
-
-  const pluginSelection = (
-    <select
-      value={multimediaDocument ? multimediaDocument.plugin : ''}
-      onChange={(e) => handleMultimediaChange(e.target.value)}
-    >
-      {allowedPlugins.map((type) => {
-        return (
-          <option key={type} value={type}>
-            {getPluginTitle(type)}
-          </option>
-        )
-      })}
-    </select>
-  )
-
-  const multimediaSettings = (
-    <>
-      <hr />
-      {allowedPlugins.length > 1 ? (
-        <div>
-          <strong>{multimediaStrings.changeType}</strong>
-          {pluginSelection}
-        </div>
-      ) : null}
-    </>
-  )
-
-  const [rowWidth, setRowWidth] = useState(0)
-
-  const multimediaRendered = multimedia.render({
-    renderToolbar(children) {
-      return (
-        <>
-          <div
-            className="relative"
-            onMouseLeave={() => {
-              setShowOptions(false)
-            }}
-          >
-            {allowedPlugins.length > 1 ? (
-              <PluginToolbarButton
-                icon={<FaIcon icon={faRandom} />}
-                label={multimediaStrings.changeType}
-                onClick={() => {
-                  setShowOptions(true)
-                }}
-              />
-            ) : null}
-            <PluginToolbarButton
-              icon={<FaIcon icon={faTrashAlt} />}
-              label={multimediaStrings.reset}
-              onClick={() => {
-                multimedia.replace(
-                  multimediaDocument?.plugin ?? allowedPlugins[0]
-                )
-              }}
-            />
-            {showOptions ? (
-              <InlineOptions>
-                {allowedPlugins
-                  .filter(
-                    (plugin) =>
-                      !multimediaDocument ||
-                      plugin !== multimediaDocument.plugin
-                  )
-                  .map((plugin, i) => {
-                    return (
-                      <Option
-                        key={i}
-                        onClick={() => {
-                          handleMultimediaChange(plugin)
-                          setShowOptions(false)
-                        }}
-                      >
-                        {getPluginTitle(plugin)}
-                      </Option>
-                    )
-                  })}
-              </InlineOptions>
-            ) : null}
-          </div>
-          {children}
-        </>
-      )
-    },
-    renderSettings(children) {
-      return (
-        <>
-          {children}
-          {multimediaSettings}
-        </>
-      )
-    },
-  })
-
-  if (!editable && withoutMultimedia) {
-    return explanation.render()
-  }
 
   return (
     <>
-      <div
-        className={hasFocus ? 'border-2 border-gray-300' : undefined}
-        ref={(el) => {
-          if (!el) return
-          setRowWidth(el.offsetWidth)
-        }}
-      >
-        <Resizable
-          className="relative p-[5px]"
-          enabled={editable && hasFocus}
-          responsiveBreakpoint={BREAKPOINT}
-          steps={STEPS}
-          onResizeEnd={(newWidth) => {
-            state.width.set(Math.round((newWidth * 100) / STEPS))
-          }}
-          rowWidth={rowWidth}
-          widthInSteps={(state.width.value * STEPS) / 100}
-          floating="right"
-        >
-          {multimediaRendered}
-        </Resizable>
-        ){explanation.render()}
-        <div className="clear-both" />
+      <div className="rounded-md focus-within:shadow-menu">
+        <MultimediaRenderer
+          media={<>{multimedia.render()}</>}
+          explanation={<>{explanation.render()}</>}
+          mediaWidth={width.value}
+        />
       </div>
-      {editable ? renderIntoSettings(multimediaSettings) : null}
+      {editable ? renderIntoSettings(renderSettings()) : null}
     </>
   )
+
+  function renderSettings() {
+    return (
+      <>
+        <hr />
+        <div className="mt-8">
+          <b className="mt-6 ml-0 mb-4 block text-lg font-bold">
+            {multimediaStrings.chooseSize}
+          </b>
+          <ul className="flex pb-8">
+            {mediaColumsSizes.map(renderColumnSizeLi)}
+          </ul>
+        </div>
+        {allowedPlugins.length > 1 ? (
+          <div className="mt-3 mb-8">
+            <strong>{multimediaStrings.changeType}</strong>:{' '}
+            <select
+              value={currentPluginType ?? allowedPlugins[0]}
+              onChange={(e) => handlePluginTypeChange(e.target.value)}
+            >
+              {allowedPlugins.map((type) => (
+                <option key={type} value={type}>
+                  {getPluginTitle(type)}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
+      </>
+    )
+  }
+
+  function renderColumnSizeLi(percent: number) {
+    const active = percent === width.value
+    const childClassName =
+      'm-1 bg-editor-primary-200 group-hover:bg-editor-primary group-focus:bg-editor-primary rounded-sm h-20'
+
+    return (
+      <li key={percent}>
+        <button
+          onClick={(event) => {
+            event.preventDefault()
+            width.set(percent)
+          }}
+          className={clsx(
+            tw`
+              group mr-2 flex h-24 w-24 flex-row rounded-lg bg-editor-primary-100 p-1
+              opacity-75 hover:bg-editor-primary-200 focus:bg-editor-primary-200
+            `,
+            active && 'bg-editor-primary-300'
+          )}
+        >
+          <div
+            className={childClassName}
+            style={{ width: `${100 - percent}%` }}
+          >
+            &nbsp;
+          </div>
+          <div className={childClassName} style={{ width: `${percent}%` }}>
+            &nbsp;
+          </div>
+        </button>
+      </li>
+    )
+  }
+
+  function getPluginTitle(name: string) {
+    return Object.hasOwn(pluginsStrings, name)
+      ? pluginsStrings[name as keyof typeof pluginsStrings].title
+      : name
+  }
+
+  function handlePluginTypeChange(newPluginType: string) {
+    // store old multimedia state before replacing
+    setMultimediaStateCache((current) => {
+      const oldDocumentSerialized = selectSerializedDocument(
+        store.getState(),
+        multimedia.id
+      )
+      return oldDocumentSerialized
+        ? {
+            ...current,
+            [oldDocumentSerialized.plugin]:
+              oldDocumentSerialized.state as unknown,
+          }
+        : current
+    })
+
+    // replace with new type and undefined or stored state
+    multimedia.replace(newPluginType, multimediaStateCache[newPluginType])
+  }
 }

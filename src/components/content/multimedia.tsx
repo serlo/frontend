@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
@@ -9,6 +8,7 @@ import type {
   FrontendContentNode,
 } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
+import { MultimediaRenderer } from '@/serlo-editor/plugins/multimedia/renderer'
 
 const LightBox = dynamic<LightBoxProps>(() =>
   import('./light-box').then((mod) => mod.LightBox)
@@ -27,28 +27,18 @@ export function Multimedia({
 
   const mediaChild = media[0]
   const mediaChildIsImage = isImage(mediaChild)
-  const width = convertToClosestQuarter(mediaWidth) // we can do this becaues witdth is only 25%, 50%, 75% or 100%
 
   return (
-    <div className="flex flex-col-reverse mobile:block">
-      <div
+    <>
+      <MultimediaRenderer
+        media={<>{renderNested(media, 'media')}</>}
+        explanation={<>{renderNested(children, 'children')}</>}
+        mediaWidth={mediaWidth}
         onClick={mediaChildIsImage ? openLightBox : undefined}
-        className={clsx(
-          'relative z-10 mobile:float-right mobile:mt-1 mobile:-mb-1 mobile:ml-2',
-          mediaChildIsImage && 'mobile:cursor-zoom-in',
-          width === 25 && 'mobile:w-1/4',
-          width === 50 && 'mobile:w-1/2',
-          width === 75 && 'mobile:w-3/4',
-          width === 100 && 'mobile:w-full'
-        )}
-      >
-        {renderNested(media, 'media')}
-      </div>
-      {/* 1px margin fixes mistery bug in firefox */}
-      <div className="ml-[1px]">{renderNested(children, 'children')}</div>
+        extraImageClass={mediaChildIsImage ? 'mobile:cursor-zoom-in' : ''}
+      />
       {renderLightbox()}
-      <div className="clear-both" />
-    </div>
+    </>
   )
 
   function renderLightbox() {
@@ -79,8 +69,4 @@ function isImage(
 ): child is FrontendImgNode {
   if (!child) return false
   return (child as FrontendImgNode).type === 'img'
-}
-
-function convertToClosestQuarter(width: number) {
-  return Math.round(width / 25) * 25
 }
