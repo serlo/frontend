@@ -1,25 +1,24 @@
-import { StateTypeSerializedType } from '@edtr-io/plugin'
-import { AnchorPluginState } from '@edtr-io/plugin-anchor'
-import { BlockquotePluginState } from '@edtr-io/plugin-blockquote'
-import { GeogebraPluginState } from '@edtr-io/plugin-geogebra'
-import { HighlightPluginState } from '@edtr-io/plugin-highlight'
-import { ImagePluginState } from '@edtr-io/plugin-image'
-import { MultimediaExplanationPluginState } from '@edtr-io/plugin-multimedia-explanation'
-import { RowsPluginState } from '@edtr-io/plugin-rows'
-import { SerloInjectionPluginState } from '@edtr-io/plugin-serlo-injection'
-import { SpoilerPluginState } from '@edtr-io/plugin-spoiler'
-import { TablePluginState } from '@edtr-io/plugin-table'
+import { StateTypeSerializedType } from '@/serlo-editor/plugin'
+import { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
+import { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
+import { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
+import { BoxPluginState } from '@/serlo-editor/plugins/box'
+import { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
+import { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
+import { ImagePluginState } from '@/serlo-editor/plugins/image'
+import { InjectionPluginState } from '@/serlo-editor/plugins/injection'
+import { MultimediaExplanationPluginState } from '@/serlo-editor/plugins/multimedia-explanation'
+import { PageLayoutPluginState } from '@/serlo-editor/plugins/page-layout'
+import { PageTeamPluginState } from '@/serlo-editor/plugins/page-team'
+import { RowsPluginState } from '@/serlo-editor/plugins/rows'
+import { SerloTablePluginState } from '@/serlo-editor/plugins/serlo-table'
+import { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
 import {
   CustomElement,
   CustomText,
   TextEditorState,
-} from '@edtr-io/plugin-text'
-import { VideoPluginState } from '@edtr-io/plugin-video'
-
-import { BoxPluginState } from '@/edtr-io/plugins/box'
-import { PageLayoutPluginState } from '@/edtr-io/plugins/page-layout'
-import { PageTeamPluginState } from '@/edtr-io/plugins/page-team'
-import { SerloTablePluginState } from '@/edtr-io/plugins/serlo-table'
+} from '@/serlo-editor/plugins/text'
+import { VideoPluginState } from '@/serlo-editor/plugins/video'
 
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
@@ -94,7 +93,7 @@ export interface EdtrPluginHighlight {
 
 export interface EdtrPluginSerloInjection {
   plugin: 'injection'
-  state: StateTypeSerializedType<SerloInjectionPluginState>
+  state: StateTypeSerializedType<InjectionPluginState>
 }
 
 interface LayoutChild {

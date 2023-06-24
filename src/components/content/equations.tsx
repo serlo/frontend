@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import { ReactNode, Fragment } from 'react'
 
-import { renderSignToString } from '@/edtr-io/plugins/equations/sign'
 import {
   FrontendContentNode,
   FrontendNodeType,
   Sign,
 } from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
+import { renderSignToString } from '@/serlo-editor/plugins/equations/sign'
 
 export interface StepProps {
   left: string
@@ -127,7 +127,7 @@ export function Equations({
 
   function renderDownArrow() {
     return (
-      <td className="text-center text-4xl" style={{ fontFamily: 'serif' }}>
+      <td className="text-center font-[serif] text-4xl">
         <div className="-mt-3">&darr;</div>
       </td>
     )

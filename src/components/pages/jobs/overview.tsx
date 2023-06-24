@@ -168,8 +168,10 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-3 px-2 text-center">
           <h3
-            style={{ hyphens: 'auto' }}
-            className={clsx(h2Class, 'mt-12 inline-block pb-3')}
+            className={clsx(
+              h2Class,
+              'mt-12 inline-block pb-3 special-hyphens-auto'
+            )}
             id="stellen"
           >
             Unsere offenen Stellen

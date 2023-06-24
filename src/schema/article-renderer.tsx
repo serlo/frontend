@@ -22,9 +22,9 @@ import { Multimedia } from '@/components/content/multimedia'
 import { SerloTable } from '@/components/content/serlo-table'
 import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
-import { PageLayoutAdapter } from '@/edtr-io/plugins/page-layout/frontend'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
+import { PageLayoutAdapter } from '@/serlo-editor/plugins/page-layout/frontend'
 
 export type NodePath = (number | string)[]
 
@@ -49,7 +49,7 @@ const Code = dynamic<CodeProps>(() =>
 )
 
 const PageTeamAdapter = dynamic(() =>
-  import('@/edtr-io/plugins/page-team/frontend').then(
+  import('@/serlo-editor/plugins/page-team/frontend').then(
     (mod) => mod.PageTeamAdapter
   )
 )
