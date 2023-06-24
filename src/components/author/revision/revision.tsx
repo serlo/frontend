@@ -5,7 +5,6 @@ import {
   RevisionPreviewBoxes,
   RevisionPreviewBoxesProps,
 } from './revision-preview-boxes'
-import { Injection } from '@/components/content/injection'
 import { Link } from '@/components/content/link'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -15,6 +14,7 @@ import { removeHash } from '@/helper/remove-hash'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderNested } from '@/schema/article-renderer'
+import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 
 export interface RevisionProps {
   data: RevisionData
@@ -172,7 +172,7 @@ export function Revision({ data }: RevisionProps) {
               })}{' '}
             </span>
           )}
-          <Injection
+          <InjectionRenderer
             href={`/${parentId}`}
             renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
           />

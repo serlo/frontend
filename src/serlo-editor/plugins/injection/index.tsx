@@ -1,7 +1,7 @@
 import { faNewspaper } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { Injection } from '@/components/content/injection'
+import { InjectionRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
@@ -41,7 +41,7 @@ function InjectionEditor({
   const injectionsStrings = useEditorStrings().plugins.injection
 
   if (!editable) {
-    return <Injection href={state.value} renderNested={renderArticle} />
+    return <InjectionRenderer href={state.value} renderNested={renderArticle} />
   }
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +60,7 @@ function InjectionEditor({
             }
           }}
         >
-          <Injection href={cache} renderNested={renderArticle} />
+          <InjectionRenderer href={cache} renderNested={renderArticle} />
         </PreviewOverlay>
       ) : (
         <FaIcon

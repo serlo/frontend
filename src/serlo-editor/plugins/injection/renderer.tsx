@@ -1,17 +1,20 @@
 import { useState, useEffect } from 'react'
 
-import { LoadingSpinner } from '../loading/loading-spinner'
+import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SlugProps } from '@/data-types'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
-export interface InjectionProps {
+export interface InjectionRendererProps {
   href: string
   renderNested: RenderNestedFunction
 }
 
-export function Injection({ href, renderNested }: InjectionProps) {
+export function InjectionRenderer({
+  href,
+  renderNested,
+}: InjectionRendererProps) {
   const [content, setContent] = useState<FrontendContentNode[] | undefined>(
     undefined
   )
