@@ -6,7 +6,6 @@ import type { EquationsPluginState } from '../../serlo-editor/plugins/equations'
 import type { ErrorPluginState } from '../../serlo-editor/plugins/error'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
-import type { SeparatorPluginState } from '../../serlo-editor/plugins/separator'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
@@ -91,10 +90,6 @@ export type SerializedDocument =
   | {
       plugin: 'scMcExercise'
       state: StateTypeSerializedType<ScMcExercisePluginState>
-    }
-  | {
-      plugin: 'separator'
-      state: StateTypeSerializedType<SeparatorPluginState>
     }
   | {
       plugin: 'spoiler'
