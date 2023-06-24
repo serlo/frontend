@@ -5,8 +5,8 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 import styled from 'styled-components'
 
-import { RowsPluginConfig, RowsPluginState } from '..'
 import { useCanDrop } from './use-can-drop'
+import { RowsPluginConfig, RowsPluginState } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { legacyEditorTheme } from '@/helper/colors'
@@ -210,7 +210,7 @@ export function RowRenderer({
         return (
           <>
             {children}
-            <hr className='mb-4'/>
+            <hr className="mb-4" />
             <div className="flex">
               <div className="flex-[1]">
                 <BorderlessOverlayButton
