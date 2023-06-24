@@ -266,74 +266,40 @@
   }
 
   .serlo-editor-hacks {
+    @apply text-lg leading-cozy;
+
     h1 {
-      @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold special-hyphens-auto;
+      @apply serlo-h1 special-hyphens-auto;
     }
     h2 {
-      @apply mt-0 mb-6 pb-1 pt-6;
-      @apply text-2.5xl font-bold special-hyphens-auto;
-      @apply border-b border-gray-300 text-gray-900;
+      @apply serlo-h2 !mx-0;
+    }
+    h3 {
+      @apply serlo-h3 !mx-0 !mt-5;
     }
 
-    h3 {
-      @apply mt-5 mb-8 pt-3 text-1.5xl font-bold text-gray-900;
-    }
     div[contenteditable] h3 {
       @apply mt-0;
     }
 
-    @apply text-lg leading-cozy;
-
     a[data-key] {
-      @apply break-words text-brand no-underline special-hyphens-auto hover:underline;
+      @apply serlo-link special-hyphens-auto;
     }
 
     code {
       @apply rounded-sm bg-brand-100 p-1 text-base text-brand;
     }
 
-    /* 
-    good for some, bad for others
-    [data-slate-object='block'] {
-      @apply mb-block;
-    } */
-
     ul:not(.unstyled-list) {
-      @apply mx-side mb-block mt-4 list-none pl-5;
-
-      & > li:before {
-        @apply absolute bg-brand-400 special-content-space;
-        @apply -ml-5 mt-2.25 h-2.5 w-2.5 rounded-full;
-      }
-      & > li {
-        @apply mb-2;
-      }
-      & > li > ul,
-      & > li > ol {
-        @apply mt-2 !mb-4;
-      }
+      @apply serlo-ul;
     }
-    ol {
-      @apply mx-side mb-block mt-0 list-none pl-7;
-      @apply special-reset-list-counter;
 
-      & > li:before {
-        @apply absolute special-content-list-counter special-increment-list-counter;
-        @apply -ml-7 rounded-full text-center font-bold;
-        @apply mt-0.5 h-4 w-4 bg-brand-200 text-xs;
-        @apply pt-0.25 leading-tight text-brand;
-      }
-      & > li {
-        @apply mb-2;
-      }
-      & > li > ul,
-      & > li > ol {
-        @apply mt-2 !mb-4;
-      }
+    ol {
+      @apply serlo-ol;
     }
 
     blockquote {
-      @apply my-block mx-side border-l-6 border-brand-200 p-2.5;
+      @apply serlo-blockquote;
     }
 
     .page-header h1 input {
@@ -383,6 +349,7 @@
       @apply text-brand hover:underline;
     }
 
+    /* remove after refactoring exercise-group */
     .row {
       margin-right: -15px;
       margin-left: -15px;
@@ -418,6 +385,7 @@
         display: none !important;
       }
     }
+    /* ======== */
 
     /* spoiler title */
     div > a > label > input {
