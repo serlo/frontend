@@ -19,7 +19,6 @@ import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
-import { errorPlugin } from '@/serlo-editor/plugins/error'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p/h5p'
@@ -189,7 +188,6 @@ export function createPlugins({
         plugins: ['image'],
       }),
     },
-    { type: 'error', plugin: errorPlugin },
     { type: 'unsupported', plugin: unsupportedPlugin },
     { type: 'exercise', plugin: exercisePlugin },
     { type: 'highlight', plugin: createHighlightPlugin() },

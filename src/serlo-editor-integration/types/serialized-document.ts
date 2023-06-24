@@ -2,7 +2,6 @@ import type { ImportantPluginState } from '../../serlo-editor/plugins/_on-the-wa
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { EquationsPluginState } from '../../serlo-editor/plugins/equations'
-import type { ErrorPluginState } from '../../serlo-editor/plugins/error'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SeparatorPluginState } from '../../serlo-editor/plugins/separator'
@@ -39,10 +38,6 @@ export type SerializedDocument =
   | {
       plugin: 'unsupported'
       state: StateTypeSerializedType<UnsupportedPluginState>
-    }
-  | {
-      plugin: 'error'
-      state: StateTypeSerializedType<ErrorPluginState>
     }
   | {
       plugin: 'equations'
