@@ -466,10 +466,10 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.Code) {
     return (
-      <>
+      <div className="mx-side">
         <HighlightRenderer {...element} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
-      </>
+      </div>
     )
   }
   if (element.type === FrontendNodeType.PageLayout) {
