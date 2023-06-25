@@ -1,5 +1,3 @@
-import { ChangeEvent } from 'react'
-
 import {
   editorContent,
   entity,
@@ -24,13 +22,15 @@ export const articleTypeState = entityType(
   {}
 )
 
-export const articleTypePlugin: EditorPlugin<typeof articleTypeState> = {
+export const articleTypePlugin: EditorPlugin<ArticleTypePluginState> = {
   Component: ArticleTypeEditor,
   state: articleTypeState,
   config: {},
 }
 
-function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
+type ArticleTypePluginState = typeof articleTypeState
+
+function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
   const { title, content, meta_title, meta_description } = props.state
 
   const articleStrings = useEditorStrings().templatePlugins.article
@@ -64,9 +64,7 @@ function ArticleTypeEditor(props: EditorPluginProps<typeof articleTypeState>) {
               className={headerInputClasses}
               placeholder={articleStrings.title}
               value={title.value}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                title.set(e.target.value)
-              }}
+              onChange={(e) => title.set(e.target.value)}
             />
           ) : (
             <span itemProp="name">{title.value}</span>

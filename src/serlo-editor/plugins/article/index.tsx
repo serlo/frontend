@@ -1,7 +1,5 @@
 import { useState } from 'react'
-import styled from 'styled-components'
 
-import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './article-exercises'
@@ -46,16 +44,10 @@ export const articlePlugin: EditorPlugin<ArticlePluginState> = {
   state: articleState,
   config: {},
 }
-
-export const OpenInNewTab = styled.span({
-  margin: '0 0 0 10px',
-})
-
 export const buttonClass =
   'serlo-button text-editor-primary hover:bg-editor-primary hover:text-almost-black w-8'
 
-function ArticleEditor(props: ArticleProps) {
-  const { editable, state } = props
+function ArticleEditor({ editable, state }: ArticleProps) {
   const {
     introduction,
     content,
@@ -71,11 +63,9 @@ function ArticleEditor(props: ArticleProps) {
 
   return (
     <>
-      <SemanticSection editable={editable}>
-        {introduction.render()}
-      </SemanticSection>
-      <SemanticSection editable={editable}>{content.render()}</SemanticSection>
-      <SemanticSection editable={editable}>
+      <div className="mt-5">{introduction.render()}</div>
+      <div className="mt-5">{content.render()}</div>
+      <div className="mt-5">
         <h2>{strings.categories.exercises}</h2>
         {renderButton(modalStrings.buttonEx)}
         <ArticleExercises
@@ -84,14 +74,14 @@ function ArticleEditor(props: ArticleProps) {
           editable={editable}
         />
         {renderButton(modalStrings.buttonExFolder, true)}
-      </SemanticSection>
-      <SemanticSection editable={editable}>
-        <ArticleRelatedContent data={relatedContent} editable={editable} />
+      </div>
+      <div className="mt-5">
+        <ArticleRelatedContent editable={editable} data={relatedContent} />
         {renderButton(modalStrings.buttonContent)}
-      </SemanticSection>
-      <SemanticSection editable={editable}>
-        <ArticleSources sources={sources} editable={editable} />
-      </SemanticSection>
+      </div>
+      <div className="mt-5">
+        <ArticleSources editable={editable} sources={sources} />
+      </div>
       {editable && (
         <ArticleAddModal
           data={state}
