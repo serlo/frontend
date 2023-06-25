@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
-import { ArticleProps, buttonClass, OpenInNewTab } from '.'
+import { ArticleProps, buttonClass } from '.'
 import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
@@ -105,9 +105,12 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
                           rel="noopener noreferrer"
                           className="inline-block p-1"
                         >
-                          <OpenInNewTab title={articleStrings.openInTab}>
+                          <span
+                            className="ml-[10px]"
+                            title={articleStrings.openInTab}
+                          >
                             <FaIcon icon={faUpRightFromSquare} />
-                          </OpenInNewTab>
+                          </span>
                         </a>
                       </InlineSettings>
                     </span>
