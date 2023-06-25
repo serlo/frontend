@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 import { ArticleProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
@@ -53,19 +54,19 @@ export function ArticleExercises({
       <>
         {index === 0 ? null : (
           <button
-            title={articleStrings.moveUpLabel}
-            className={buttonClass}
+            className={`${buttonClass} serlo-tooltip-trigger`}
             onClick={() => exercises.move(index, index - 1)}
           >
+            <EditorTooltip text={articleStrings.moveUpLabel} />
             <FaIcon icon={faArrowCircleUp} />
           </button>
         )}
 
         <button
-          title={articleStrings.removeLabel}
-          className={buttonClass}
+          className={`${buttonClass} serlo-tooltip-trigger`}
           onClick={() => exercises.remove(index)}
         >
+          <EditorTooltip text={articleStrings.removeLabel} />
           <FaIcon icon={faTrashAlt} />
         </button>
       </>
