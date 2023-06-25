@@ -113,8 +113,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       {
         type: FrontendNodeType.Img,
         src: src as string,
-        alt: alt,
-        maxWidth: maxWidth,
+        alt,
+        maxWidth,
         href: link?.href,
         caption: convertedCaption,
       },

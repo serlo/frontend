@@ -1,11 +1,14 @@
 import { useRef } from 'react'
 
-import { ImagePluginConfig } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-export function Upload(props: UploadProps) {
+export interface UploadProps {
+  onFile: (file: File) => void
+}
+
+export function Upload({ onFile }: UploadProps) {
   const editorStrings = useEditorStrings()
-  const input = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
   return (
     <>
       <button
@@ -19,11 +22,9 @@ export function Upload(props: UploadProps) {
         multiple
         accept="image/*"
         className="hidden"
-        ref={input}
-        onChange={(event) => {
-          if (event.target.files && event.target.files.length) {
-            props.onFile(event.target.files[0])
-          }
+        ref={inputRef}
+        onChange={({ target }) => {
+          if (target.files && target.files.length) onFile(target.files[0])
         }}
       />
     </>
@@ -31,14 +32,6 @@ export function Upload(props: UploadProps) {
 
   function selectFile(e: React.MouseEvent) {
     e.preventDefault()
-    if (input.current) {
-      input.current.click()
-    }
+    if (inputRef.current) inputRef.current.click()
   }
-}
-
-export interface UploadProps {
-  config: ImagePluginConfig
-  inOverlay?: boolean
-  onFile: (file: File) => void
 }
