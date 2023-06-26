@@ -54,18 +54,15 @@ export function ArticleExercises({
       <>
         {index === 0 ? null : (
           <button
-            className={`${buttonClass} serlo-tooltip-trigger`}
             onClick={() => exercises.move(index, index - 1)}
+            className={buttonClass}
           >
             <EditorTooltip text={articleStrings.moveUpLabel} />
             <FaIcon icon={faArrowCircleUp} />
           </button>
         )}
 
-        <button
-          className={`${buttonClass} serlo-tooltip-trigger`}
-          onClick={() => exercises.remove(index)}
-        >
+        <button className={buttonClass} onClick={() => exercises.remove(index)}>
           <EditorTooltip text={articleStrings.removeLabel} />
           <FaIcon icon={faTrashAlt} />
         </button>
