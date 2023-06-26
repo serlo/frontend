@@ -1,6 +1,5 @@
 import * as R from 'ramda'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { InputExerciseProps, InputExerciseType } from '.'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
@@ -8,16 +7,6 @@ import { selectFocused, useAppSelector } from '../../store'
 import { InputExerciseRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
-
-const AnswerTextfield = styled.input({
-  border: 'none',
-  outline: 'none',
-  width: '100%',
-})
-
-const TypeMenu = styled.div({
-  marginBottom: '0.5em',
-})
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused } = props
@@ -32,16 +21,30 @@ export function InputExerciseEditor(props: InputExerciseProps) {
     )
   const [previewActive, setPreviewActive] = useState(false)
 
-  if (!editable) return <InputExerciseRenderer {...props} />
+  const rendered = (
+    <InputExerciseRenderer
+      type={state.type.value}
+      unit={state.unit.value}
+      answers={state.answers.map(({ isCorrect, value, feedback }) => {
+        return {
+          isCorrect: isCorrect.value,
+          value: value.value,
+          feedback: feedback.render(),
+        }
+      })}
+    />
+  )
+
+  if (!editable) return rendered
 
   return (
     <>
       <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
-        <InputExerciseRenderer {...props} />
+        {rendered}
       </PreviewOverlay>
       {nestedFocus && !previewActive && (
         <>
-          <TypeMenu>
+          <div className="mb-2">
             <label>
               {inputExStrings.chooseType}:{' '}
               <select
@@ -55,13 +58,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 ))}
               </select>
             </label>
-          </TypeMenu>
+          </div>
           {state.answers.map((answer, index: number) => {
             return (
               <InteractiveAnswer
                 key={answer.feedback.id}
                 answer={
-                  <AnswerTextfield
+                  <input
+                    className="width-full border-none outline-none"
                     value={answer.value.value}
                     placeholder={inputExStrings.enterTheValue}
                     type="text"
