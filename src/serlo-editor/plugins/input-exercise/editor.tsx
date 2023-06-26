@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import { useState } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
@@ -15,13 +14,11 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
-    R.includes(
-      focusedElement,
-      props.state.answers.map((answer) => answer.feedback.id)
-    )
+    !!props.state.answers.find(({ feedback }) => feedback.id === focusedElement)
+
   const [previewActive, setPreviewActive] = useState(false)
 
-  const rendered = (
+  const renderer = (
     <InputExerciseRenderer
       type={state.type.value}
       unit={state.unit.value}
@@ -35,12 +32,12 @@ export function InputExerciseEditor(props: InputExerciseProps) {
     />
   )
 
-  if (!editable) return rendered
+  if (!editable) return renderer
 
   return (
     <>
       <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
-        {rendered}
+        {renderer}
       </PreviewOverlay>
       {nestedFocus && !previewActive && (
         <>
@@ -94,7 +91,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
         <OverlayInput
           label={inputExStrings.unit}
           value={state.unit.value}
-          onChange={(e) => state.unit.set(e.target.value)}
+          onChange={({ target }) => state.unit.set(target.value)}
         />
       )}
     </>
