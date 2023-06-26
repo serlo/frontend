@@ -157,7 +157,6 @@ export const instanceData = {
         yourAnswer: 'Your answer…',
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
-        strategy: 'Solution Strategy',
         showSolution: 'Show solution',
         hideSolution: 'Hide solution',
       },
@@ -987,8 +986,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',
-          fundamentalsNote:
-            'For this exercise, you need the following fundamentals:',
           idArticle: 'ID of an article, e.g. 1855',
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',

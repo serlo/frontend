@@ -9,6 +9,7 @@ import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
+import { Solution } from './solution'
 import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
@@ -16,7 +17,7 @@ import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseInlineType } from '@/data-types'
-import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
+import { FrontendExerciseNode } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { tw } from '@/helper/tw'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
@@ -125,16 +126,8 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     return (
       <div className="serlo-solution-box">
         {authorTools && <div className="-mt-2 text-right">{authorTools}</div>}
-        {renderNested(
-          [
-            {
-              type: FrontendNodeType.Solution,
-              solution: node.solution,
-              context: { id: node.context.solutionId! },
-            },
-          ],
-          'tasksol'
-        )}
+        <Solution node={node.solution} renderNested={renderNested} />
+
         {license && <div className="px-side">{license}</div>}
         {node.context.solutionId && (
           <Lazy>
