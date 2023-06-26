@@ -75,16 +75,16 @@ export function ArticleRelatedContent({
       <>
         {index === 0 ? null : (
           <button
-            className={`${buttonClass} serlo-tooltip-trigger`}
             onClick={() => data[category].move(index, index - 1)}
+            className={buttonClass}
           >
             <EditorTooltip text={articleStrings.dragLabel} />
             <FaIcon icon={faCircleArrowUp} aria-hidden="true" />
           </button>
         )}
         <button
-          className={`${buttonClass} serlo-tooltip-trigger`}
           onClick={() => data[category].remove(index)}
+          className={buttonClass}
         >
           <EditorTooltip text={articleStrings.removeLabel} />
           <FaIcon icon={faTrashAlt} aria-hidden="true" />
