@@ -16,26 +16,15 @@ export function SolutionRenderer({
 
   return (
     <>
-      {renderPrerequisite()}
-      {renderStrategy()}
-      {steps}
-    </>
-  )
-
-  function renderPrerequisite() {
-    if (!prerequisite) return null
-    return (
-      <p className="serlo-p">
-        {strings.content.exercises.prerequisite} {prerequisite}
-      </p>
-    )
-  }
-
-  function renderStrategy() {
-    return (
+      {prerequisite ? (
+        <p className="serlo-p">
+          {strings.content.exercises.prerequisite} {prerequisite}
+        </p>
+      ) : null}
       <Renderer boxType="approach" anchorId="strategy">
         <>{strategy}</>
       </Renderer>
-    )
-  }
+      {steps}
+    </>
+  )
 }
