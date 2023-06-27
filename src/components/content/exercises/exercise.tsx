@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
 import { H5p } from '../h5p'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
@@ -37,12 +36,6 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
     '@/components/user-tools/foldout-author-menus/author-tools-exercises'
   ).then((mod) => mod.AuthorToolsExercises)
-)
-
-const DonationsBannerInline = dynamic<DonationsBannerProps>(() =>
-  import(
-    '@/components/content/donations-banner-experiment/donations-banner-inline'
-  ).then((mod) => mod.DonationsBannerInline)
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
@@ -139,8 +132,6 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         {node.context.solutionId && (
           <Lazy>
             <CommentAreaEntity entityId={node.context.solutionId} />
-            {/* Temporary donations banner trial */}
-            <DonationsBannerInline id={node.context.id} place="solution" />
           </Lazy>
         )}
       </div>
