@@ -1,5 +1,3 @@
-import * as R from 'ramda'
-
 import {
   child,
   ChildStateType,
@@ -11,7 +9,7 @@ import {
 } from '../../plugin'
 import { RowsEditor } from './components/rows-editor'
 
-const defaultConfig: RowsConfig = {
+const defaultConfig = {
   content: { plugin: 'text' },
   parentType: 'root',
 }
@@ -32,17 +30,13 @@ export function createRowsPlugin(
 
       function getIndexToInsert(): number | null {
         if (!previousSibling) return 0
-        const index = R.findIndex(
-          (sibling) => sibling.id === previousSibling,
-          state
-        )
-        if (index === -1) return null
-        return index + 1
+        const index = state.findIndex(({ id }) => id === previousSibling)
+        return index === -1 ? null : index + 1
       }
     },
 
-    removeChild(state, id) {
-      const index = R.findIndex((child) => child.id === id, state)
+    removeChild(state, childId) {
+      const index = state.findIndex(({ id }) => id === childId)
       if (index === -1) return
       state.remove(index)
     },
