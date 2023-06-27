@@ -22,7 +22,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           type="applet"
           provider="GeoGebra"
           embedUrl={url}
-          className={focused ? '' : 'pointer-events-none'}
+          className={editable && !focused ? 'pointer-events-none': ''}
         >
           <GeogebraRenderer url={url} />
         </EmbedWrapper>
