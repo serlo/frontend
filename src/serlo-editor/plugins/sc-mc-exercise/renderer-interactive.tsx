@@ -4,9 +4,9 @@ import { Component, Fragment } from 'react'
 import { ScMcExercisePluginState } from '.'
 import { StateTypeReturnType } from '../../plugin'
 import { Feedback, SubmitButton } from '../../renderer-ui'
-import { ScMcAnswersRenderer } from './answers-renderer'
-import { ScMcExerciseChoiceRenderer } from './choice-renderer'
-import { ScMcRendererProps } from './renderer'
+import { ScMcAnswersRenderer } from './renderer/answers-renderer'
+import { ScMcExerciseChoiceRenderer } from './renderer/choice-renderer'
+import { ScMcRendererProps } from './renderer/renderer'
 
 export type ScMcRendererInteractiveProps = ScMcRendererProps & {
   i18nWrong: string

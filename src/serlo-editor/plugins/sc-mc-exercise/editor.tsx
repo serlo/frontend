@@ -9,7 +9,7 @@ import {
   selectIsDocumentEmpty,
   useAppSelector,
 } from '../../store'
-import { ScMcExerciseRenderer } from './renderer'
+import { ScMcExerciseRenderer } from './renderer/renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
