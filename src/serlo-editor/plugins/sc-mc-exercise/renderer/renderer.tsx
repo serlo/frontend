@@ -20,8 +20,8 @@ export interface ScMcExerciseRendererProps {
   isSingleChoice: boolean
   idBase: string
   answers: ScMcExerciseRendererAnswer[]
-  onEvaluate: (correct: boolean, type: ExerciseSubmissionData['type']) => void
-  renderExtraAnswerContent: (
+  onEvaluate?: (correct: boolean, type: ExerciseSubmissionData['type']) => void
+  renderExtraAnswerContent?: (
     answer: ScMcExerciseRendererAnswer,
     hasFeedback: boolean
   ) => JSX.Element | null
@@ -45,7 +45,7 @@ export function ScMcExerciseRenderer({
   function renderSingleChoice() {
     return (
       <div className="mx-side mb-block">
-        <ul className="m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
+        <ul className="unstyled-list m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
@@ -92,7 +92,9 @@ export function ScMcExerciseRenderer({
                 {showFeedbackForAnswer ? (
                   <Feedback correct={isCorrect}>{feedback}</Feedback>
                 ) : null}
-                {renderExtraAnswerContent(answer, true)}
+                {renderExtraAnswerContent
+                  ? renderExtraAnswerContent(answer, true)
+                  : null}
               </Fragment>
             )
           })}
@@ -106,7 +108,7 @@ export function ScMcExerciseRenderer({
           )}
           onClick={() => {
             setShowFeedback(true)
-            onEvaluate(answers[selected ?? 0].isCorrect, 'sc')
+            if (onEvaluate) onEvaluate(answers[selected ?? 0].isCorrect, 'sc')
           }}
         >
           {selected !== undefined
@@ -133,7 +135,7 @@ export function ScMcExerciseRenderer({
 
     return (
       <div className="mx-side mb-block">
-        <ul className="m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
+        <ul className="unstyled-list m-0 flex list-none flex-col flex-wrap overflow-auto p-0">
           {answers.map((answer, i) => {
             const id = `${idBase}${i}`
 
@@ -168,7 +170,9 @@ export function ScMcExerciseRenderer({
                   </label>
                 </li>
                 {showFeedback && selectedArray[i] ? answer.feedback : null}
-                {renderExtraAnswerContent(answer, !!answer.feedback)}
+                {renderExtraAnswerContent
+                  ? renderExtraAnswerContent(answer, !!answer.feedback)
+                  : null}
               </Fragment>
             )
           })}
@@ -180,7 +184,7 @@ export function ScMcExerciseRenderer({
           className="serlo-button-blue mt-4"
           onClick={() => {
             setShowFeedback(true)
-            onEvaluate(allCorrect, 'mc')
+            if (onEvaluate) onEvaluate(allCorrect, 'mc')
           }}
         >
           {exStrings.check}
