@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { RowRenderer } from './row-renderer'
+import { RowRenderer } from '../renderer'
 import { RowSeparator } from './row-separator'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'

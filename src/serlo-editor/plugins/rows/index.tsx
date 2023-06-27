@@ -7,7 +7,7 @@ import {
   list,
   ListStateType,
 } from '../../plugin'
-import { RowsEditor } from './components/rows-editor'
+import { RowsEditor } from './editor'
 
 const defaultConfig = {
   content: { plugin: 'text' },

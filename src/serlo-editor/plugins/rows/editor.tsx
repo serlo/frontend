@@ -1,10 +1,10 @@
 import clsx from 'clsx'
 
-import { RowsProps } from '..'
-import { AllowedChildPlugins } from '../allowed-child-plugins-context'
-import { useRowsConfig } from '../config'
-import { RowEditor } from './row-editor'
-import { RowSeparator } from './row-separator'
+import { RowsProps } from '.'
+import { AllowedChildPlugins } from './allowed-child-plugins-context'
+import { RowEditor } from './components/row-editor'
+import { RowSeparator } from './components/row-separator'
+import { useRowsConfig } from './config'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 
 export function RowsEditor(props: RowsProps) {
