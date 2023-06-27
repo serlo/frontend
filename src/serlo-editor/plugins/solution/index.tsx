@@ -48,7 +48,9 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
 
   return (
     <>
-      {renderPrerequisite()}
+      <SemanticSection editable={editable}>
+        {renderPrerequisiteContent()}
+      </SemanticSection>
       {hasStrategy || editable ? (
         <SemanticSection editable={editable}>
           {strategy.render({
@@ -64,93 +66,78 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
     </>
   )
 
-  function renderPrerequisite() {
-    return (
-      <SemanticSection editable={editable}>{renderContent()}</SemanticSection>
-    )
-
-    function renderContent() {
-      if (editable) {
-        return (
-          <div>
-            {solutionStrings.fundamentalsNote}{' '}
-            {focused ? (
-              <InlineSettings
-                onDelete={() => {
+  function renderPrerequisiteContent() {
+    if (editable) {
+      return (
+        <div>
+          {solutionStrings.fundamentalsNote}{' '}
+          {focused ? (
+            <InlineSettings
+              onDelete={() => {
+                if (prerequisite.defined) {
+                  prerequisite.remove()
+                }
+              }}
+              position="below"
+            >
+              <InlineSettingsInput
+                value={
+                  prerequisite.defined && prerequisite.id.value !== ''
+                    ? `/${prerequisite.id.value}`
+                    : ''
+                }
+                placeholder={solutionStrings.idArticle}
+                onChange={(event) => {
+                  const newValue = event.target.value.replace(/[^0-9]/g, '')
                   if (prerequisite.defined) {
-                    prerequisite.remove()
-                  }
-                }}
-                position="below"
-              >
-                <InlineSettingsInput
-                  value={
-                    prerequisite.defined && prerequisite.id.value !== ''
-                      ? `/${prerequisite.id.value}`
-                      : ''
-                  }
-                  placeholder={solutionStrings.idArticle}
-                  onChange={(event) => {
-                    const newValue = event.target.value.replace(/[^0-9]/g, '')
-                    if (prerequisite.defined) {
-                      prerequisite.id.set(newValue)
-                    } else {
-                      prerequisite.create({
-                        id: newValue,
-                        title: '',
-                      })
-                    }
-                  }}
-                />
-                <a
-                  target="_blank"
-                  href={
-                    prerequisite.defined && prerequisite.id.value !== ''
-                      ? `/${prerequisite.id.value}`
-                      : ''
-                  }
-                  rel="noopener noreferrer"
-                >
-                  <span
-                    title={solutionStrings.openArticleTab}
-                    className="ml-2.5"
-                  >
-                    <FaIcon icon={faUpRightFromSquare} />
-                  </span>
-                </a>
-              </InlineSettings>
-            ) : null}
-            <a>
-              <InlineInput
-                value={prerequisite.defined ? prerequisite.title.value : ''}
-                onChange={(value) => {
-                  if (prerequisite.defined) {
-                    prerequisite.title.set(value)
+                    prerequisite.id.set(newValue)
                   } else {
-                    prerequisite.create({ id: '', title: value })
+                    prerequisite.create({
+                      id: newValue,
+                      title: '',
+                    })
                   }
                 }}
-                placeholder={solutionStrings.linkTitle}
               />
-            </a>
-          </div>
-        )
-      }
-
-      if (
-        prerequisite.defined &&
-        prerequisite.id.value &&
-        prerequisite.title.value
-      ) {
-        return (
-          <p>
-            {solutionStrings.fundamentalsNote}{' '}
-            <a href={`/${prerequisite.id.value}`}>{prerequisite.title.value}</a>
-          </p>
-        )
-      }
-
-      return null
+              <a
+                target="_blank"
+                href={
+                  prerequisite.defined && prerequisite.id.value !== ''
+                    ? `/${prerequisite.id.value}`
+                    : ''
+                }
+                rel="noopener noreferrer"
+              >
+                <span title={solutionStrings.openArticleTab} className="ml-2.5">
+                  <FaIcon icon={faUpRightFromSquare} />
+                </span>
+              </a>
+            </InlineSettings>
+          ) : null}
+          <a>
+            <InlineInput
+              value={prerequisite.defined ? prerequisite.title.value : ''}
+              onChange={(value) => {
+                if (prerequisite.defined) {
+                  prerequisite.title.set(value)
+                } else {
+                  prerequisite.create({ id: '', title: value })
+                }
+              }}
+              placeholder={solutionStrings.linkTitle}
+            />
+          </a>
+        </div>
+      )
     }
+
+    return prerequisite.defined &&
+      prerequisite.id.value &&
+      prerequisite.title.value ? (
+      <p>
+        {solutionStrings.fundamentalsNote}{' '}
+        <a href={`/${prerequisite.id.value}`}>{prerequisite.title.value}</a>
+      </p>
+    ) : null
   }
 }
