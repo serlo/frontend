@@ -67,34 +67,29 @@ export function SerloTableEditor(props: SerloTableProps) {
   function renderInactiveTable() {
     const rowsJSX = rows.map((row) => {
       return {
-        cells: row.columns.map((cell) => {
-          return (
-            <div className="min-h-[2rem] pr-2" key={cell.content.id}>
-              {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
-                cell.content.render()}
-            </div>
-          )
-        }),
+        cells: row.columns.map((cell) => (
+          <div className="min-h-[2rem] pr-2" key={cell.content.id}>
+            {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
+              cell.content.render()}
+          </div>
+        )),
       }
     })
-    return (
-      <div className="pt-3">
-        <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
-      </div>
-    )
+    return <SerloTableRenderer rows={rowsJSX} tableType={tableType} />
   }
 
   function renderActiveTable() {
     const rowsJSX = renderActiveCellsIntoObject()
 
     return (
-      <div className="flex pt-3">
+      <div className="flex">
         <div
           className="flex flex-col"
           onClick={(e) => {
-            //@ts-expect-error another hack to make focus ux ok
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-            e.target.querySelector('.hackdiv')?.focus()
+            // another hack to make focus ux at least ok
+            const target = e.target as HTMLDivElement
+            const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
+            hackDiv?.focus()
           }}
         >
           <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
