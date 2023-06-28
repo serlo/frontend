@@ -3,14 +3,11 @@ import {
   FrontendContentNode,
   FrontendLiNode,
   FrontendNodeType,
-  FrontendTextColor,
   FrontendTextNode,
 } from '@/frontend-node-types'
 import type { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
-
-const colors: FrontendTextColor[] = ['blue', 'green', 'orange']
 
 export function isSlateBlock(node: CustomNode): node is CustomElement {
   return (node as CustomElement).type !== undefined
@@ -146,16 +143,8 @@ export function convertSlateBlock(node: CustomElement): FrontendContentNode[] {
 export function convertTextNode(node: CustomText): FrontendContentNode[] {
   const text = node.text.replace(/\ufeff/g, '')
   if (text === '') return []
-  return [
-    {
-      type: FrontendNodeType.Text,
-      text,
-      em: node.em,
-      strong: node.strong,
-      color: colors[node.color as number],
-      code: node.code,
-    },
-  ]
+  const type = FrontendNodeType.Text
+  return [{ ...node, type, text }]
 }
 
 function handleSemistructedContentOfPForListItems(
