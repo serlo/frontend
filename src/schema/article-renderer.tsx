@@ -219,11 +219,9 @@ function renderElement({
       </>
     )
   }
-
   if (element.type === FrontendNodeType.Article) {
     return <Article {...element} renderNested={nestedRenderer} />
   }
-
   if (element.type === FrontendNodeType.InlineMath) {
     return <Math formula={element.formula} />
   }
