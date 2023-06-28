@@ -1,13 +1,15 @@
 import {
   child,
-  ChildStateType,
   ChildStateTypeConfig,
   EditorPlugin,
   EditorPluginProps,
   list,
-  ListStateType,
 } from '../../plugin'
 import { RowsEditor } from './editor'
+
+function createRowsState(content: ChildStateTypeConfig) {
+  return list(child(content), 1)
+}
 
 const defaultConfig = {
   content: { plugin: 'text' },
@@ -22,23 +24,18 @@ export function createRowsPlugin(
   return {
     Component: RowsEditor,
     config,
-    state: list(child(content), 1),
+    state: createRowsState(content),
     insertChild(state, { previousSibling, document }) {
-      const index = getIndexToInsert()
-      if (index === null) return
-      state.insert(index, document)
-
-      function getIndexToInsert(): number | null {
-        if (!previousSibling) return 0
-        const index = state.findIndex(({ id }) => id === previousSibling)
-        return index === -1 ? null : index + 1
+      if (!previousSibling) {
+        state.insert(0, document)
+        return
       }
+      const index = state.findIndex(({ id }) => id === previousSibling)
+      if (index !== -1) state.insert(index + 1, document)
     },
-
     removeChild(state, childId) {
       const index = state.findIndex(({ id }) => id === childId)
-      if (index === -1) return
-      state.remove(index)
+      if (index !== -1) state.remove(index)
     },
   }
 }
@@ -47,7 +44,7 @@ export interface RowsConfig extends Omit<RowsPluginConfig, 'theme'> {
   content: ChildStateTypeConfig
 }
 
-export type RowsPluginState = ListStateType<ChildStateType>
+export type RowsPluginState = ReturnType<typeof createRowsState>
 
 export interface RowsPluginConfig {
   allowedPlugins?: string[]

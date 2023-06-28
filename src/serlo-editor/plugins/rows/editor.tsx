@@ -4,13 +4,11 @@ import { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { RowEditor } from './components/row-editor'
 import { RowSeparator } from './components/row-separator'
-import { useRowsConfig } from './config'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 
-export function RowsEditor(props: RowsProps) {
-  const config = useRowsConfig(props.config)
+export function RowsEditor({ state, config, id, editable }: RowsProps) {
   const pluginTypesOfAncestors = useAppSelector((state) =>
-    selectAncestorPluginTypes(state, props.id)
+    selectAncestorPluginTypes(state, id)
   )
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {
@@ -19,14 +17,14 @@ export function RowsEditor(props: RowsProps) {
       state: [{ type: 'p', children: [{ text: '/' }] }],
     }
     setTimeout(() => {
-      props.state.insert(insertIndex, textPluginWithSuggestions)
+      state.insert(insertIndex, textPluginWithSuggestions)
     })
   }
 
-  if (!props.editable) {
+  if (!editable) {
     return (
       <>
-        {props.state.map((row) => (
+        {state.map((row) => (
           <div key={row.id} className="my-block pl-[14px]">
             {row.render()}
           </div>
@@ -48,7 +46,7 @@ export function RowsEditor(props: RowsProps) {
     }) &&
     pluginTypesOfAncestors[pluginTypesOfAncestors.length - 1] !== 'rows'
 
-  const isDocumentEmpty = props.state.length === 0
+  const isDocumentEmpty = state.length === 0
 
   return (
     <AllowedChildPlugins.Provider value={config.allowedPlugins}>
@@ -65,14 +63,14 @@ export function RowsEditor(props: RowsProps) {
           visuallyEmphasizeAddButton={
             visuallyEmphasizeLastAddButton && isDocumentEmpty
           }
-          focused={props.state.length === 0}
+          focused={state.length === 0}
           onClick={(event: React.MouseEvent) => {
             event.preventDefault()
             insertRowWithSuggestionsOpen(0)
           }}
         />
-        {props.state.map((row, index) => {
-          const isLastRowEditor = index === props.state.length - 1
+        {state.map((row, index) => {
+          const isLastRowEditor = index === state.length - 1
           return (
             <RowEditor
               config={config}
@@ -81,7 +79,7 @@ export function RowsEditor(props: RowsProps) {
                 insertRowWithSuggestionsOpen(index + 1)
               }}
               index={index}
-              rows={props.state}
+              rows={state}
               row={row}
               isLast={isLastRowEditor}
               visuallyEmphasizeAddButton={
