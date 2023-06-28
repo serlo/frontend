@@ -40,7 +40,7 @@ export function createRowsPlugin(
   }
 }
 
-export interface RowsConfig extends Omit<RowsPluginConfig, 'theme'> {
+export interface RowsConfig extends RowsPluginConfig {
   content: ChildStateTypeConfig
 }
 
