@@ -174,7 +174,7 @@ export function EditorRowRenderer({
             <div className="flex">
               <div className="flex-[1]">
                 <button
-                  className="serlo-button-editor-secondary mr-2 mt-4"
+                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
                   onClick={() => {
                     const document = selectSerializedDocument(
                       store.getState(),
@@ -189,7 +189,7 @@ export function EditorRowRenderer({
                   {editorStrings.plugins.rows.duplicate}
                 </button>
                 <button
-                  className="serlo-button-editor-secondary mr-2 mt-4"
+                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
                   onClick={() => {
                     rows.remove(index)
                     close()
