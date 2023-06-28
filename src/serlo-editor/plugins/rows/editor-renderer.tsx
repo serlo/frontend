@@ -53,7 +53,7 @@ const Inserted = styled.hr({
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
 
-export function RowRenderer({
+export function EditorRowRenderer({
   config,
   row,
   rows,

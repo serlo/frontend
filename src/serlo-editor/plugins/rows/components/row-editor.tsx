@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 
 import { RowsPluginConfig, RowsPluginState } from '..'
-import { RowRenderer } from '../renderer'
+import { EditorRowRenderer } from '../editor-renderer'
 import { RowSeparator } from './row-separator'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
@@ -33,7 +33,7 @@ export function RowEditor({
   return (
     // bigger drop zone with padding hack
     <div key={row.id} ref={dropContainer} className="relative -ml-12 pl-12">
-      <RowRenderer
+      <EditorRowRenderer
         config={config}
         row={row}
         rows={rows}

@@ -27,7 +27,7 @@ export function RowsEditor(props: RowsProps) {
     return (
       <>
         {props.state.map((row) => (
-          <div key={row.id} className="my-[25px] pl-[14px]">
+          <div key={row.id} className="my-block pl-[14px]">
             {row.render()}
           </div>
         ))}
