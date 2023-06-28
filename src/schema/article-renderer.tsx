@@ -25,6 +25,7 @@ import { Video } from '@/components/content/video'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
 import { PageLayoutAdapter } from '@/serlo-editor/plugins/page-layout/frontend'
+import { TextLeafRenderer } from '@/serlo-editor/plugins/text/components/text-leaf-renderer'
 
 export type NodePath = (number | string)[]
 
@@ -136,15 +137,16 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
       </Fragment>
     )
   }
-  //if (!currentNode) return null
-  if (currentNode.text === '') {
-    return null // avoid rendering empty spans
-  }
-  return renderLeaf({
-    leaf: currentNode,
-    key,
-    children: currentNode?.text,
-  })
+
+  if (currentNode.text === '') return null // avoid rendering empty spans
+
+  return (
+    <Fragment key={key}>
+      <TextLeafRenderer leaf={currentNode}>
+        {currentNode?.text}
+      </TextLeafRenderer>
+    </Fragment>
+  )
 }
 
 interface RenderLeafProps {
@@ -202,6 +204,9 @@ function renderElement({
   const isRevisionView =
     typeof path[0] === 'string' && path[0].startsWith('revision')
 
+  const nestedRenderer = (value: FrontendContentNode[], ...prefix: string[]) =>
+    renderNested(value, path, prefix)
+
   if (element.type === FrontendNodeType.A) {
     const isOnProfile =
       path && typeof path[0] === 'string' && path[0].startsWith('profile')
@@ -216,12 +221,7 @@ function renderElement({
   }
 
   if (element.type === FrontendNodeType.Article) {
-    return (
-      <Article
-        {...element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
+    return <Article {...element} renderNested={nestedRenderer} />
   }
 
   if (element.type === FrontendNodeType.InlineMath) {
@@ -295,7 +295,7 @@ function renderElement({
             <ExtraRevisionViewInfo element={element} />
           ) : undefined
         }
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+        renderNested={nestedRenderer}
       />
     )
   }
@@ -332,12 +332,7 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.SerloTable) {
-    return (
-      <SerloTable
-        {...element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
+    return <SerloTable {...element} renderNested={nestedRenderer} />
   }
   if (element.type === FrontendNodeType.Tr) {
     return <tr>{children}</tr>
@@ -349,12 +344,7 @@ function renderElement({
     return <td className="serlo-td">{children}</td>
   }
   if (element.type === FrontendNodeType.Multimedia) {
-    return (
-      <Multimedia
-        {...element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
+    return <Multimedia {...element} renderNested={nestedRenderer} />
   }
   if (element.type === FrontendNodeType.Row) {
     return <div className="flex flex-col mobile:flex-row">{children}</div>
@@ -373,12 +363,7 @@ function renderElement({
     return <blockquote className="serlo-blockquote">{children}</blockquote>
   }
   if (element.type === FrontendNodeType.Box) {
-    return (
-      <Box
-        {...element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
+    return <Box {...element} renderNested={nestedRenderer} />
   }
   if (element.type === FrontendNodeType.Geogebra) {
     return (
@@ -411,13 +396,7 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.Exercise) {
-    return (
-      <Exercise
-        node={element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-        path={path}
-      />
-    )
+    return <Exercise node={element} renderNested={nestedRenderer} path={path} />
   }
   if (element.type === FrontendNodeType.ExerciseGroup) {
     return (
@@ -438,12 +417,7 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.Solution) {
-    return (
-      <Solution
-        node={element.solution}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
+    return <Solution node={element.solution} renderNested={nestedRenderer} />
   }
   if (element.type === FrontendNodeType.Video) {
     return (
@@ -458,7 +432,7 @@ function renderElement({
         steps={element.steps}
         firstExplanation={element.firstExplanation}
         transformationTarget={element.transformationTarget}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
+        renderNested={nestedRenderer}
       />
     )
   }
@@ -475,12 +449,7 @@ function renderElement({
     )
   }
   if (element.type === FrontendNodeType.PageLayout) {
-    return (
-      <PageLayoutAdapter
-        {...element}
-        renderNested={(value, ...prefix) => renderNested(value, path, prefix)}
-      />
-    )
+    return <PageLayoutAdapter {...element} renderNested={nestedRenderer} />
   }
   if (element.type === FrontendNodeType.PageTeam)
     return <PageTeamAdapter {...element} />

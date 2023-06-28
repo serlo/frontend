@@ -12,14 +12,13 @@ import {
   Editable,
   ReactEditor,
   RenderElementProps,
-  RenderLeafProps,
   Slate,
   withReact,
 } from 'slate-react'
 
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
-import { textColors, useTextConfig } from '../hooks/use-text-config'
+import { useTextConfig } from '../hooks/use-text-config'
 import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
 import {
   emptyDocumentFactory,
@@ -32,6 +31,7 @@ import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
+import { TextLeafRenderer } from './text-leaf-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -472,7 +472,7 @@ export function TextEditor(props: TextEditorProps) {
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
-          renderLeaf={renderLeaf}
+          renderLeaf={(props) => <TextLeafRenderer {...props} />}
           className="[&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
@@ -499,29 +499,4 @@ export function TextEditor(props: TextEditorProps) {
       )}
     </HotKeys>
   )
-}
-
-function renderLeaf(props: RenderLeafProps) {
-  const colors = textColors.map((color) => color.value)
-  const { attributes, leaf } = props
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  let { children } = props
-
-  if (leaf.strong) {
-    children = <strong>{children}</strong>
-  }
-  if (typeof leaf.color === 'number' && Array.isArray(colors)) {
-    children = (
-      <span style={{ color: colors?.[leaf.color % colors.length] }}>
-        {children}
-      </span>
-    )
-  }
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
-  if (leaf.em) {
-    children = <em>{children}</em>
-  }
-  return <span {...attributes}>{children}</span>
 }
