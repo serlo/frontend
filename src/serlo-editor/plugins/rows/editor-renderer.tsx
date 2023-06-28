@@ -66,9 +66,7 @@ export function EditorRowRenderer({
       }
     },
     collect(monitor) {
-      return {
-        isDragging: !!monitor.isDragging(),
-      }
+      return { isDragging: !!monitor.isDragging() }
     },
   })
   const [collectedDropProps, drop] = useDrop<
@@ -80,23 +78,15 @@ export function EditorRowRenderer({
     collect(monitor): { isDragging: boolean; isFile?: boolean; id?: string } {
       const type = monitor.getItemType()
       const isDragging = monitor.canDrop() && monitor.isOver({ shallow: true })
-      if (isFileType(type)) {
-        return {
-          isDragging,
-          isFile: true,
-        }
-      }
+
+      if (isFileType(type)) return { isDragging, isFile: true }
 
       if (type === 'row') {
-        return {
-          isDragging,
-          id: monitor.getItem<RowDragObject>().id,
-        }
+        const { id } = monitor.getItem<RowDragObject>()
+        return { isDragging, id }
       }
 
-      return {
-        isDragging: false,
-      }
+      return { isDragging: false }
     },
     hover(_item: RowDragObject, monitor) {
       if (
@@ -117,12 +107,9 @@ export function EditorRowRenderer({
 
         const draggingAbove = isDraggingAbove(monitor)
         rows.set((list, deserializer) => {
-          const i = R.findIndex((id) => id === row.id, list)
-          return R.insert(
-            draggingAbove ? i : i + 1,
-            deserializer(item.serialized),
-            list
-          )
+          const index =
+            list.findIndex((id) => id === row.id) + (draggingAbove ? 0 : 1)
+          return R.insert(index, deserializer(item.serialized), list)
         })
         item.onDrop()
         return
