@@ -47,24 +47,4 @@ export function TextLeafRenderer(props: TextLeafRendererProps) {
       {children}
     </LeafTag>
   )
-
-  // if (leaf.strong) {
-  //   children = <strong>{children}</strong>
-  // }
-
-  // if (typeof leaf.color === 'number' && Array.isArray(colors)) {
-  //   children = (
-  //     <span style={{ color: colors?.[leaf.color % colors.length] }}>
-  //       {children}
-  //     </span>
-  //   )
-  // }
-
-  // if (leaf.code) {
-  //   children = <code>{children}</code>
-  // }
-  // if (leaf.em) {
-  //   children = <em>{children}</em>
-  // }
-  // return <span {...attributes}>{children}</span>
 }
