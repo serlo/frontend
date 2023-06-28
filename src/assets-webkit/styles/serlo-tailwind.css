@@ -288,16 +288,6 @@
       @apply break-words text-brand no-underline special-hyphens-auto hover:underline;
     }
 
-    code {
-      @apply rounded-sm bg-brand-100 p-1 text-base text-brand;
-    }
-
-    /* 
-    good for some, bad for others
-    [data-slate-object='block'] {
-      @apply mb-block;
-    } */
-
     ul:not(.unstyled-list) {
       @apply mx-side mb-block mt-4 list-none pl-5;
 
