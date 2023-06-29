@@ -614,9 +614,10 @@ export const loggedInData = {
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
         },
-        deprecated: {
-          title: "Nicht mehr Unterstützt",
-          unsupported: "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
+        unsupported: {
+          title: 'Unsupported',
+          notSupported: 'Sorry, this plugin is not supported:',
+          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         error: {
           title: "Fehler",
@@ -725,10 +726,6 @@ export const loggedInData = {
           close: "Schließen",
           dragElement: "Verschiebe das Element innerhalb des Dokuments",
           addAnElement: "Füge ein Element hinzu"
-        },
-        separator: {
-          title: "Lösungs-Trenner",
-          description: "Unterteile die Lösung in einzelne Lösungsschritte."
         },
         serloTable: {
           title: "Tabelle",
