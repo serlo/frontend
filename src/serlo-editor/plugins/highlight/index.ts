@@ -36,7 +36,7 @@ export function createHighlightPlugin(
 
   return {
     Component: HighlightEditor,
-    config: { Renderer },
     state: hightlightState,
+    config: { Renderer },
   }
 }
