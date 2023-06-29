@@ -146,7 +146,6 @@ export const instanceData = {
         yourAnswer: "आपका उत्तर",
         chooseOption: "किसी एक विकल्प पर क्लिक करें",
         printModeChooseOption: "किसी एक विकल्प पर क्लिक करें",
-        strategy: 'Solution Strategy',
         showSolution: 'Show solution',
         hideSolution: 'Hide solution'
       },
@@ -669,7 +668,6 @@ export const loggedInData = {
           captionPlaceholder: 'Optional caption',
           href: 'Link',
           hrefPlaceholder: 'Link the image',
-          openInNewTab: 'Open in new tab',
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
@@ -692,9 +690,7 @@ export const loggedInData = {
         multimedia: {
           title: 'Multimedia content associated with text',
           description: 'Create an illustrating or explaining multimedia content associated with text.',
-          image: 'Image',
-          video: "वीडियो",
-          geogebraTitle: 'GeoGebra Applet',
+          chooseSize: 'Choose size of multimedia element',
           changeType: 'Change the multimedia type',
           howImportant: 'How important is the multimedia content?',
           isIllustrating: 'It is illustrating',
@@ -862,12 +858,9 @@ export const loggedInData = {
           title: "शीर्षक"
         },
         exercise: {
-          addChoiceExercise: 'Add choice exercise',
-          choiceExercise: 'Choice exercise',
-          addInputExercise: 'Add input exercise',
+          scMcExercise: 'Choice exercise',
           inputExercise: 'Input exercise',
-          addH5pExercise: 'Add h5p exercise',
-          h5pExercise: 'H5p exercise',
+          h5p: 'H5p exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element'
@@ -903,7 +896,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',
-          fundamentalsNote: 'For this exercise, you need the following fundamentals:',
           idArticle: 'ID of an article, e.g. 1855',
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',

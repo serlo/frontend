@@ -18,7 +18,7 @@ export function Multimedia({
 }: FrontendMultiMediaNode & { renderNested: RenderNestedFunction }) {
   const [open, setOpen] = useState(false)
   const mediaChild = media[0]
-  const mediaChildIsImage = mediaChild.type === 'img'
+  const mediaChildIsImage = mediaChild?.type === 'img'
   const showLightbox = mediaChildIsImage && open
 
   return (
