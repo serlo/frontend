@@ -1,10 +1,10 @@
 import * as R from 'ramda'
 import { Component } from 'react'
 
-import { ScMcExerciseProps, ScMcExercisePluginState } from '.'
-import { StateTypeReturnType } from '../../plugin'
-import { FetchDimensions } from './fetch-dimensions'
-import { calculateLayoutOptions } from './helpers'
+import { ScMcExerciseProps, ScMcExercisePluginState } from '..'
+import { StateTypeReturnType } from '../../../plugin'
+import { FetchDimensions } from '../fetch-dimensions'
+import { calculateLayoutOptions } from '../helpers'
 
 enum Phase {
   noJS = 0,
