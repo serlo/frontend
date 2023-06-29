@@ -3,12 +3,12 @@
 import { Box } from '@/components/content/box'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
-import { Injection } from '@/components/content/injection'
 import { MathSpan } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Spoiler } from '@/components/content/spoiler'
 import { renderNested } from '@/schema/article-renderer'
 import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
+import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 
 export const boxExample = (
   <>
@@ -1281,7 +1281,7 @@ export const formulaExample = (
 export const injectionExample = (
   <>
     <h1 className="serlo-h1 mt-12">Haus der Vierecke</h1>
-    <Injection
+    <InjectionRenderer
       href="/71317"
       renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
     />

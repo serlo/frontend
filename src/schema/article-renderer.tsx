@@ -14,7 +14,6 @@ import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
 import { Image } from '@/components/content/image'
-import { Injection } from '@/components/content/injection'
 import { Lazy } from '@/components/content/lazy'
 import type { MathSpanProps } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
@@ -24,6 +23,7 @@ import { Video } from '@/components/content/video'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
 import type { HighlightRendererProps } from '@/serlo-editor/plugins/highlight/renderer'
+import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 import { PageLayoutAdapter } from '@/serlo-editor/plugins/page-layout/frontend'
 
 export type NodePath = (number | string)[]
@@ -401,7 +401,7 @@ function renderElement({
     return (
       <>
         {element.href ? (
-          <Injection
+          <InjectionRenderer
             href={element.href}
             renderNested={(value, ...prefix) =>
               renderNested(value, path, prefix)
