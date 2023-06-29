@@ -615,9 +615,9 @@ export const loggedInData = {
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
         },
         unsupported: {
-          title: 'Unsupported',
-          notSupported: 'Sorry, this plugin is not supported:',
-          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
+          title: "Nicht unterstützt",
+          notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
+          explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
         error: {
           title: "Fehler",
