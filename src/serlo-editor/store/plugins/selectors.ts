@@ -8,6 +8,6 @@ const selectSelf = (state: State) => state.plugins
 export const selectPlugin = createSelector(
   [selectSelf, (_state, type: string) => type],
   (plugins, type): EditorPlugin | null => {
-    return plugins[type] || null
+    return plugins[type] ?? plugins['unsupported'] ?? null
   }
 )
