@@ -146,7 +146,6 @@ export const instanceData = {
         yourAnswer: "Tu respuesta...",
         chooseOption: "Elige una de las opciones.",
         printModeChooseOption: "Elige una de las opciones.",
-        strategy: "Estrategia de solución",
         showSolution: "Mostrar solución",
         hideSolution: "Ocultar la solución"
       },
@@ -669,7 +668,6 @@ export const loggedInData = {
           captionPlaceholder: 'Optional caption',
           href: "Enlace",
           hrefPlaceholder: 'Link the image',
-          openInNewTab: "Abrir en una nueva pestaña",
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
@@ -692,9 +690,7 @@ export const loggedInData = {
         multimedia: {
           title: "Contenido multimedia asociado con el texto",
           description: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
-          image: "Imágen",
-          video: "Vídeo",
-          geogebraTitle: "Aplicación GeoGebra",
+          chooseSize: 'Choose size of multimedia element',
           changeType: "Cambiar el tipo multimedia",
           howImportant: "¿Qué tan importante es el contenido multimedia?",
           isIllustrating: "Está ilustrando",
@@ -862,12 +858,9 @@ export const loggedInData = {
           title: "Título"
         },
         exercise: {
-          addChoiceExercise: "Añadir ejercicio de elección",
-          choiceExercise: "Ejercicio de opción múltiple",
-          addInputExercise: "Añada ejercicio de respuesta escrita",
+          scMcExercise: "Ejercicio de opción múltiple",
           inputExercise: "Ejercicio de respuesta escrita",
-          addH5pExercise: "Añadir ejercicio interactivo h5p",
-          h5pExercise: "Ejercicio h5p",
+          h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo"
@@ -903,7 +896,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
-          fundamentalsNote: "Para este ejercicio, necesitas tener los siguentes conocimientos:",
           idArticle: "ID de un artículo, p. ej., 1855",
           openArticleTab: "Abrir el artículo en una nueva pestaña:",
           linkTitle: "Título del enlace",
