@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useInstanceData } from '@/contexts/instance-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 
-export interface H5pProps {
+export interface H5pRendererProps {
   url: string
   context: {
     entityId: number
@@ -18,7 +18,7 @@ export function parseH5pUrl(url: string) {
   return result ? result[1] : null
 }
 
-export function H5p({ url, context }: H5pProps) {
+export function H5pRenderer({ url, context }: H5pRendererProps) {
   const id = parseH5pUrl(url)
   const { strings } = useInstanceData()
   const { asPath } = useRouter()

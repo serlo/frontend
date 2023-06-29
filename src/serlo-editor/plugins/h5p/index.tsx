@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { H5p, parseH5pUrl } from '@/components/content/h5p'
+import { H5pRenderer, parseH5pUrl } from './renderer'
 import { EditorInput } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
@@ -201,7 +201,10 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
           </a>
         )}
       </p>
-      <H5p url={state.value} context={{ entityId: -1, revisionId: -1 }} />
+      <H5pRenderer
+        url={state.value}
+        context={{ entityId: -1, revisionId: -1 }}
+      />
     </>
   )
 }
