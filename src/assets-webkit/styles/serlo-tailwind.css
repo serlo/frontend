@@ -126,7 +126,7 @@
     @apply mx-side;
   }
   .serlo-spoiler-body {
-    @apply border-l-8 border-brand pt-6 pb-3.5;
+    @apply pt-6 pb-3.5;
   }
   .serlo-solution-box {
     @apply mx-side mb-block border-l-8 border-brand-200 py-2.5;
