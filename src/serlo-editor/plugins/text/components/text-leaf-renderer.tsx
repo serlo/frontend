@@ -61,6 +61,6 @@ export function TextLeafRenderer({
 
   // for slate
   function wrap(node: ReactNode) {
-    return attributes ? <span {...attributes}>{node}</span> : node
+    return attributes ? <span {...attributes}>{node}</span> : <>{node}</>
   }
 }
