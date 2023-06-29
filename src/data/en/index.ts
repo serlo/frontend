@@ -763,9 +763,7 @@ export const loggedInData = {
           title: 'Multimedia content associated with text',
           description:
             'Create an illustrating or explaining multimedia content associated with text.',
-          image: 'Image',
-          video: 'Video',
-          geogebraTitle: 'GeoGebra Applet',
+          chooseSize: 'Choose size of multimedia element',
           changeType: 'Change the multimedia type',
           howImportant: 'How important is the multimedia content?',
           isIllustrating: 'It is illustrating',

@@ -170,7 +170,6 @@ export interface FrontendLiNode {
 
 export interface FrontendMultiMediaNode {
   type: FrontendNodeType.Multimedia
-  float?: 'left' | 'right'
   mediaWidth: number
   media: FrontendContentNode[]
   children: FrontendContentNode[]
