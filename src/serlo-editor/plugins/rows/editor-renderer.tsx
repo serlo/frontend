@@ -3,20 +3,15 @@ import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
-import styled from 'styled-components'
 
-import { RowsPluginConfig, RowsPluginState } from '..'
-import { useCanDrop } from './use-can-drop'
+import { RowsPluginConfig, RowsPluginState } from '.'
+import { useCanDrop } from './components/use-can-drop'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { legacyEditorTheme } from '@/helper/colors'
 import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
-import {
-  OverlayButton,
-  PluginToolbarButton,
-} from '@/serlo-editor/plugin/plugin-toolbar'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
@@ -29,31 +24,9 @@ interface RowDragObject {
   onDrop(): void
 }
 
-const DragToolbarButton = styled(PluginToolbarButton)({
-  marginBottom: '5px',
-  marginTop: '-3px',
-  cursor: 'grab',
-  userSelect: 'none',
-  '&:active': {
-    cursor: 'grabbing',
-  },
-})
-
-const BorderlessOverlayButton = styled(OverlayButton)({
-  border: 'none !important',
-  padding: '0 !important',
-  minWidth: '0 !important',
-})
-
-const Inserted = styled.hr({
-  margin: 0,
-  padding: 0,
-  border: `1px solid ${legacyEditorTheme.primary.background}`,
-})
-
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
 
-export function RowRenderer({
+export function EditorRowRenderer({
   config,
   row,
   rows,
@@ -93,9 +66,7 @@ export function RowRenderer({
       }
     },
     collect(monitor) {
-      return {
-        isDragging: !!monitor.isDragging(),
-      }
+      return { isDragging: !!monitor.isDragging() }
     },
   })
   const [collectedDropProps, drop] = useDrop<
@@ -107,23 +78,15 @@ export function RowRenderer({
     collect(monitor): { isDragging: boolean; isFile?: boolean; id?: string } {
       const type = monitor.getItemType()
       const isDragging = monitor.canDrop() && monitor.isOver({ shallow: true })
-      if (isFileType(type)) {
-        return {
-          isDragging,
-          isFile: true,
-        }
-      }
+
+      if (isFileType(type)) return { isDragging, isFile: true }
 
       if (type === 'row') {
-        return {
-          isDragging,
-          id: monitor.getItem<RowDragObject>().id,
-        }
+        const { id } = monitor.getItem<RowDragObject>()
+        return { isDragging, id }
       }
 
-      return {
-        isDragging: false,
-      }
+      return { isDragging: false }
     },
     hover(_item: RowDragObject, monitor) {
       if (
@@ -144,12 +107,9 @@ export function RowRenderer({
 
         const draggingAbove = isDraggingAbove(monitor)
         rows.set((list, deserializer) => {
-          const i = R.findIndex((id) => id === row.id, list)
-          return R.insert(
-            draggingAbove ? i : i + 1,
-            deserializer(item.serialized),
-            list
-          )
+          const index =
+            list.findIndex((id) => id === row.id) + (draggingAbove ? 0 : 1)
+          return R.insert(index, deserializer(item.serialized), list)
         })
         item.onDrop()
         return
@@ -213,7 +173,8 @@ export function RowRenderer({
             <hr />
             <div className="flex">
               <div className="flex-[1]">
-                <BorderlessOverlayButton
+                <button
+                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
                   onClick={() => {
                     const document = selectSerializedDocument(
                       store.getState(),
@@ -223,29 +184,20 @@ export function RowRenderer({
                     rows.insert(index, document)
                     close()
                   }}
-                  label={editorStrings.plugins.rows.duplicate}
                 >
                   <FaIcon icon={faCopy} />{' '}
                   {editorStrings.plugins.rows.duplicate}
-                </BorderlessOverlayButton>
-                <BorderlessOverlayButton
+                </button>
+                <button
+                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
                   onClick={() => {
                     rows.remove(index)
                     close()
                   }}
-                  label={editorStrings.plugins.rows.remove}
                 >
                   <FaIcon icon={faTrashAlt} />{' '}
                   {editorStrings.plugins.rows.remove}
-                </BorderlessOverlayButton>
-              </div>
-              <div>
-                <BorderlessOverlayButton
-                  onClick={() => {
-                    close()
-                  }}
-                  label={editorStrings.plugins.rows.close}
-                />
+                </button>
               </div>
             </div>
           </>
@@ -254,10 +206,11 @@ export function RowRenderer({
       renderToolbar(children: React.ReactNode) {
         return (
           <>
-            <DragToolbarButton
+            <PluginToolbarButton
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
               label={editorStrings.plugins.rows.dragElement}
+              className="mb-1.5 -mt-[3px] cursor-grab select-none active:cursor-grabbing"
             />
             {children}
           </>
@@ -272,7 +225,7 @@ export function RowRenderer({
   const dropPreview =
     collectedDropProps.isDragging &&
     (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
-      <Inserted />
+      <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 
   return (
