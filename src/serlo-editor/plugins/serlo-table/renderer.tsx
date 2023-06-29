@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { Fragment } from 'react'
 
 export enum TableType {
@@ -52,19 +53,30 @@ export function SerloTableRenderer(props: SerloTableRendererProps) {
   }
 
   function renderCell(cell: JSX.Element, rowIndex: number, colIndex: number) {
-    const isColHead = showColumnHeader && rowIndex === 0
+    const firstRow = rowIndex === 0
+    const lastRow = rowIndex === rows.length - 1
+    const isColHead = showColumnHeader && firstRow
     const isRowHead = showRowHeader && colIndex === 0
     const isHead = isRowHead || isColHead
     const scope = isColHead ? 'col' : 'row'
 
+    const borderClass = clsx(
+      'first:border-l-3',
+      firstRow && 'border-t-3 first:rounded-tl-xl last:rounded-tr-xl',
+      lastRow && 'first:rounded-bl-xl last:rounded-br-xl'
+    )
+
     return (
       <Fragment key={colIndex}>
         {isHead ? (
-          <th scope={scope} className="serlo-th px-0 align-top">
+          <th
+            scope={scope}
+            className={clsx('serlo-th px-0 align-top', borderClass)}
+          >
             {cell}
           </th>
         ) : (
-          <td className="serlo-td px-0">{cell}</td>
+          <td className={clsx('serlo-td px-0', borderClass)}>{cell}</td>
         )}
       </Fragment>
     )

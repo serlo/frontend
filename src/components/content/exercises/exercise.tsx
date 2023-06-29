@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-import { H5p } from '../h5p'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -19,6 +18,7 @@ import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { tw } from '@/helper/tw'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { H5pRenderer } from '@/serlo-editor/plugins/h5p/renderer'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
@@ -226,7 +226,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
       }
       if (state.interactive.plugin === 'h5p') {
         return (
-          <H5p
+          <H5pRenderer
             url={state.interactive.state}
             context={{
               entityId: node.context.id,

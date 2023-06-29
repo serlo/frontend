@@ -1,20 +1,20 @@
-import { appletTypeState } from '../serlo-editor/plugins/serlo-types-plugins/applet'
-import { articleTypeState } from '../serlo-editor/plugins/serlo-types-plugins/article'
+import { appletTypeState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
+import { articleTypeState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
   Entity,
   License,
   Uuid,
-} from '../serlo-editor/plugins/serlo-types-plugins/common/common'
-import { courseTypeState } from '../serlo-editor/plugins/serlo-types-plugins/course'
-import { coursePageTypeState } from '../serlo-editor/plugins/serlo-types-plugins/course-page'
-import { eventTypeState } from '../serlo-editor/plugins/serlo-types-plugins/event'
-import { pageTypeState } from '../serlo-editor/plugins/serlo-types-plugins/page'
-import { taxonomyTypeState } from '../serlo-editor/plugins/serlo-types-plugins/taxonomy'
-import { textExerciseTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-exercise'
-import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-exercise-group'
-import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-types-plugins/text-solution'
-import { userTypeState } from '../serlo-editor/plugins/serlo-types-plugins/user'
-import { videoTypeState } from '../serlo-editor/plugins/serlo-types-plugins/video'
+} from '../serlo-editor/plugins/serlo-template-plugins/common/common'
+import { courseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course'
+import { coursePageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course-page'
+import { eventTypeState } from '../serlo-editor/plugins/serlo-template-plugins/event'
+import { pageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/page'
+import { taxonomyTypeState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'
+import { textExerciseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise'
+import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
+import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
+import { userTypeState } from '../serlo-editor/plugins/serlo-template-plugins/user'
+import { videoTypeState } from '../serlo-editor/plugins/serlo-template-plugins/video'
 import { TemplatePluginType } from './plugins'
 import {
   isEdtr,

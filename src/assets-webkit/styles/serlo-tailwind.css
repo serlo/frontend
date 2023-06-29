@@ -61,13 +61,13 @@
     @apply mx-side mt-0 mb-5;
   }
   .serlo-table {
-    @apply mx-side border-collapse whitespace-nowrap break-normal special-hyphens-auto mobile:whitespace-normal;
+    @apply mx-side border-separate border-spacing-0 whitespace-nowrap break-normal border-brand-200 special-hyphens-auto mobile:whitespace-normal;
   }
   .serlo-th {
-    @apply border-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
+    @apply border-r-3 border-b-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
   }
   .serlo-td {
-    @apply border-3 border-brand-200 p-1.5 align-top;
+    @apply border-r-3 border-b-3 border-brand-200 p-1.5 align-top;
     > p.serlo-p {
       @apply mx-0;
     }
@@ -126,7 +126,7 @@
     @apply mx-side;
   }
   .serlo-spoiler-body {
-    @apply border-l-8 border-brand pt-6 pb-3.5;
+    @apply pt-6 pb-3.5;
   }
   .serlo-solution-box {
     @apply mx-side mb-block border-l-8 border-brand-200 py-2.5;
@@ -266,74 +266,28 @@
   }
 
   .serlo-editor-hacks {
-    h1 {
-      @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold special-hyphens-auto;
+    @apply text-lg leading-cozy;
+
+    .serlo-h1 {
+      @apply special-hyphens-auto;
     }
-    h2 {
-      @apply mt-0 mb-6 pb-1 pt-6;
-      @apply text-2.5xl font-bold special-hyphens-auto;
-      @apply border-b border-gray-300 text-gray-900;
+    .serlo-h2 {
+      @apply !mx-0;
+    }
+    .serlo-h3 {
+      @apply !mx-0 !mt-5;
     }
 
-    h3 {
-      @apply mt-5 mb-8 pt-3 text-1.5xl font-bold text-gray-900;
-    }
-    div[contenteditable] h3 {
+    div[contenteditable] .serlo-h3 {
       @apply mt-0;
     }
 
-    @apply text-lg leading-cozy;
-
     a[data-key] {
-      @apply break-words text-brand no-underline special-hyphens-auto hover:underline;
+      @apply special-hyphens-auto;
     }
 
     code {
       @apply rounded-sm bg-brand-100 p-1 text-base text-brand;
-    }
-
-    /* 
-    good for some, bad for others
-    [data-slate-object='block'] {
-      @apply mb-block;
-    } */
-
-    ul:not(.unstyled-list) {
-      @apply mx-side mb-block mt-4 list-none pl-5;
-
-      & > li:before {
-        @apply absolute bg-brand-400 special-content-space;
-        @apply -ml-5 mt-2.25 h-2.5 w-2.5 rounded-full;
-      }
-      & > li {
-        @apply mb-2;
-      }
-      & > li > ul,
-      & > li > ol {
-        @apply mt-2 !mb-4;
-      }
-    }
-    ol {
-      @apply mx-side mb-block mt-0 list-none pl-7;
-      @apply special-reset-list-counter;
-
-      & > li:before {
-        @apply absolute special-content-list-counter special-increment-list-counter;
-        @apply -ml-7 rounded-full text-center font-bold;
-        @apply mt-0.5 h-4 w-4 bg-brand-200 text-xs;
-        @apply pt-0.25 leading-tight text-brand;
-      }
-      & > li {
-        @apply mb-2;
-      }
-      & > li > ul,
-      & > li > ol {
-        @apply mt-2 !mb-4;
-      }
-    }
-
-    blockquote {
-      @apply my-block mx-side border-l-6 border-brand-200 p-2.5;
     }
 
     .page-header h1 input {
@@ -343,30 +297,6 @@
 
     button > div > svg {
       @apply ml-1.5 mr-1.5 mb-1 mt-2;
-    }
-    .panel {
-      margin-bottom: 20px;
-      background-color: #fff;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    }
-    .panel-danger > .panel-heading {
-      color: #a94442;
-      background-color: #f2dede;
-      border-color: #ebccd1;
-    }
-    .panel-danger {
-      border-color: #ebccd1;
-    }
-    .panel-heading {
-      padding: 10px 15px;
-      border-bottom: 1px solid transparent;
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-    }
-    .panel-body {
-      padding: 15px;
     }
 
     .page-header {
@@ -379,10 +309,7 @@
       @apply border-2;
     }
 
-    a {
-      @apply text-brand hover:underline;
-    }
-
+    /* remove after refactoring exercise-group */
     .row {
       margin-right: -15px;
       margin-left: -15px;
@@ -418,6 +345,7 @@
         display: none !important;
       }
     }
+    /* ======== */
 
     /* spoiler title */
     div > a > label > input {

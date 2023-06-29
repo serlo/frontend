@@ -14,7 +14,10 @@ export function usePlugin(type?: string) {
 }
 
 export function getPluginByType(plugins: PluginsContextPlugins, type?: string) {
-  return plugins.find(({ type: pluginType }) => pluginType === type)
+  return (
+    plugins.find(({ type: pluginType }) => pluginType === type) ??
+    plugins.find(({ type: pluginType }) => pluginType === 'unsupported')
+  )
 }
 
 export interface PluginsContextPlugin {
