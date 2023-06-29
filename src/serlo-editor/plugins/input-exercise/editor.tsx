@@ -1,6 +1,4 @@
-import * as R from 'ramda'
 import { useState } from 'react'
-import styled from 'styled-components'
 
 import { InputExerciseProps, InputExerciseType } from '.'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
@@ -9,16 +7,6 @@ import { InputExerciseRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
-const AnswerTextfield = styled.input({
-  border: 'none',
-  outline: 'none',
-  width: '100%',
-})
-
-const TypeMenu = styled.div({
-  marginBottom: '0.5em',
-})
-
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
@@ -26,22 +14,34 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
-    R.includes(
-      focusedElement,
-      props.state.answers.map((answer) => answer.feedback.id)
-    )
+    !!props.state.answers.find(({ feedback }) => feedback.id === focusedElement)
+
   const [previewActive, setPreviewActive] = useState(false)
 
-  if (!editable) return <InputExerciseRenderer {...props} />
+  const renderer = (
+    <InputExerciseRenderer
+      type={state.type.value}
+      unit={state.unit.value}
+      answers={state.answers.map(({ isCorrect, value, feedback }) => {
+        return {
+          isCorrect: isCorrect.value,
+          value: value.value,
+          feedback: feedback.render(),
+        }
+      })}
+    />
+  )
+
+  if (!editable) return renderer
 
   return (
     <>
       <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
-        <InputExerciseRenderer {...props} />
+        {renderer}
       </PreviewOverlay>
       {nestedFocus && !previewActive && (
         <>
-          <TypeMenu>
+          <div className="mb-2">
             <label>
               {inputExStrings.chooseType}:{' '}
               <select
@@ -55,13 +55,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                 ))}
               </select>
             </label>
-          </TypeMenu>
+          </div>
           {state.answers.map((answer, index: number) => {
             return (
               <InteractiveAnswer
                 key={answer.feedback.id}
                 answer={
-                  <AnswerTextfield
+                  <input
+                    className="width-full border-none outline-none"
                     value={answer.value.value}
                     placeholder={inputExStrings.enterTheValue}
                     type="text"
@@ -90,7 +91,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
         <OverlayInput
           label={inputExStrings.unit}
           value={state.unit.value}
-          onChange={(e) => state.unit.set(e.target.value)}
+          onChange={({ target }) => state.unit.set(target.value)}
         />
       )}
     </>

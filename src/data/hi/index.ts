@@ -614,9 +614,10 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
         },
-        deprecated: {
-          title: 'Deprecated',
-          unsupported: 'This part of the document contains features that are no longer supported.'
+        unsupported: {
+          title: 'Unsupported',
+          notSupported: 'Sorry, this plugin is not supported:',
+          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         error: {
           title: 'Error',
@@ -725,10 +726,6 @@ export const loggedInData = {
           close: "बंद करें",
           dragElement: 'Drag the element within the document',
           addAnElement: 'Add an element'
-        },
-        separator: {
-          title: 'Solution Separator',
-          description: 'Divide the solution into individual steps.'
         },
         serloTable: {
           title: 'Table',

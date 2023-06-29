@@ -1,96 +1,63 @@
-import styled from 'styled-components'
+import { Link } from '@/components/content/link'
+import { useInstanceData } from '@/contexts/instance-context'
 
-import { ImageProps } from '.'
-import { isTempFile } from '../../plugin'
-
-export type ImageRendererProps = ImageProps & {
-  disableMouseEvents?: boolean
+interface ImageProps {
+  image: {
+    src: string
+    href?: string
+    alt?: string
+    maxWidth?: number
+  }
+  placeholder?: JSX.Element | null
+  caption: JSX.Element | null
+  forceNewTab?: boolean
 }
 
 export function ImageRenderer({
-  state,
-  disableMouseEvents,
-}: ImageRendererProps) {
-  const alt = state.alt.defined ? state.alt.value : ''
+  image,
+  caption,
+  placeholder,
+  forceNewTab,
+}: ImageProps) {
+  const altFallback = useInstanceData().strings.content.imageAltFallback
+  const { src, href, alt, maxWidth: maxWidthNumber } = image
+  const maxWidth = maxWidthNumber ? `${maxWidthNumber}px` : undefined
+
   return (
-    <div>
-      {state.link.defined && state.link.href.value && !disableMouseEvents ? (
-        <a
-          href={state.link.href.value}
-          {...(state.link.openInNewTab.value
-            ? {
-                target: '_blank',
-                rel: 'noreferrer noopener',
-              }
-            : {})}
-        >
-          {renderImage()}
-        </a>
-      ) : (
-        renderImage()
-      )}
-    </div>
+    <figure
+      className="serlo-image-centered"
+      itemScope
+      itemType="http://schema.org/ImageObject"
+    >
+      <div style={{ maxWidth }} className="mx-auto">
+        {wrapWithLink(
+          placeholder ?? (
+            <img
+              className="serlo-img"
+              src={src}
+              alt={alt ? alt : altFallback}
+              itemProp="contentUrl"
+              loading="lazy"
+            />
+          )
+        )}
+        <figcaption className="mt-3 italic">{caption}</figcaption>
+      </div>
+    </figure>
   )
 
-  function renderImage() {
+  function wrapWithLink(children: JSX.Element) {
+    if (!href) return children
+    if (forceNewTab)
+      return (
+        <a href={href} target="_blank" rel="noreferrer">
+          {children}
+        </a>
+      )
     return (
-      <ImgWrapper maxWidth={state.maxWidth.defined ? state.maxWidth.value : 0}>
-        {!isTempFile(state.src.value) ? (
-          <Img src={state.src.value} alt={alt} />
-        ) : state.src.value.loaded ? (
-          <Uploading>
-            <PendingOverlay>
-              <Pending />
-            </PendingOverlay>
-            <Img src={state.src.value.loaded.dataUrl} alt={alt} />
-          </Uploading>
-        ) : (
-          <Img />
-        )}
-      </ImgWrapper>
+      <Link className="block w-full" href={href} noExternalIcon>
+        {children}
+      </Link>
     )
   }
 }
-
-const ImgWrapper = styled.div<{ maxWidth: number }>((props) => {
-  return {
-    maxWidth: props.maxWidth > 0 ? `${props.maxWidth}px` : undefined,
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  }
-})
-
-const Img = styled.img({
-  maxWidth: '100%',
-  display: 'block',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-})
-
-const Uploading = styled.div({
-  position: 'relative',
-})
-const PendingOverlay = styled.div({
-  backgroundColor: 'rgba(255,255,255,0.5)',
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-})
-
-const Pending = styled.div({
-  border: '3px solid hsla(185, 100%, 62%, 0.2)',
-  borderTopColor: '#3cefff',
-  borderRadius: '50%',
-  width: '3em',
-  height: '3em',
-  animation: 'spin 1s linear infinite',
-  '@keyframes spin': {
-    to: {
-      transform: 'rotate(360deg)',
-    },
-  },
-})
