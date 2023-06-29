@@ -41,7 +41,7 @@ export function TextLeafRenderer({
     ? 'code'
     : 'span'
 
-  if (styleCount === 0 && LeafTag === 'span') return wrap(leafChildren)
+  if (styleCount === 0 && LeafTag === 'span') return <>{leafChildren}</>
 
   const outputExtraStyles = styleCount > 0 || LeafTag === 'span'
 
@@ -55,12 +55,7 @@ export function TextLeafRenderer({
           : undefined
       }
     >
-      {wrap(leafChildren)}
+      {leafChildren}
     </LeafTag>
   )
-
-  // for slate
-  function wrap(node: ReactNode) {
-    return attributes ? <span {...attributes}>{node}</span> : <>{node}</>
-  }
 }

@@ -486,7 +486,11 @@ export function TextEditor(props: TextEditorProps) {
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
-          renderLeaf={(props) => <TextLeafRenderer {...props} />}
+          renderLeaf={(props) => (
+            <span {...props.attributes}>
+              <TextLeafRenderer {...props} />
+            </span>
+          )}
           className="[&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
