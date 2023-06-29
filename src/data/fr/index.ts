@@ -614,9 +614,10 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
         },
-        deprecated: {
-          title: 'Deprecated',
-          unsupported: "Cette partie du document contient des fonctionnalités qui ne sont plus supportées."
+        unsupported: {
+          title: 'Unsupported',
+          notSupported: 'Sorry, this plugin is not supported:',
+          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         error: {
           title: 'Error',
@@ -725,10 +726,6 @@ export const loggedInData = {
           close: "Fermer",
           dragElement: "Faire glisser l'élément dans le document",
           addAnElement: "Ajouter un élément"
-        },
-        separator: {
-          title: "Séparateur de solution",
-          description: "Divisez la solution en différentes étapes."
         },
         serloTable: {
           title: "Tableau",

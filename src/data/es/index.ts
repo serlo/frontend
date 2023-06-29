@@ -614,9 +614,10 @@ export const loggedInData = {
           anchorId: "ID de Ancla (marca de posición)",
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
-        deprecated: {
-          title: 'Deprecated',
-          unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
+        unsupported: {
+          title: 'Unsupported',
+          notSupported: 'Sorry, this plugin is not supported:',
+          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         error: {
           title: 'Error',
@@ -725,10 +726,6 @@ export const loggedInData = {
           close: "Cerrar",
           dragElement: "Arrastra el elemento dentro del documento",
           addAnElement: "Añadir un elemento"
-        },
-        separator: {
-          title: "Separador de Solución",
-          description: "Desglosa la solución en pasos individuales."
         },
         serloTable: {
           title: "Tabla",
