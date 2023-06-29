@@ -1,13 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck imported data (would actually interesting to see why some of is data is actually not valid )
 import { Box } from '@/components/content/box'
-import { Code } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
 import { MathSpan } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Spoiler } from '@/components/content/spoiler'
 import { renderNested } from '@/schema/article-renderer'
+import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 
 export const boxExample = (
@@ -1296,8 +1296,9 @@ export const injectionExample = (
   </>
 )
 export const highlighExample = (
-  <Code
-    content={`// global variable: read & write from everywhere
+  <div className="mx-side">
+    <HighlightRenderer
+      code={`// global variable: read & write from everywhere
 var cookieAmount = 100
 
 // local variable: read & write from everywhere only in current code block
@@ -1309,9 +1310,10 @@ function feed(){
 // constant: local variable that can only be read after initialisation
 // this will always be 5
 const cookieSize = 5`}
-    language="javascript"
-    showLineNumbers
-  />
+      language="javascript"
+      showLineNumbers
+    />
+  </div>
 )
 
 export const spoilerExample = (

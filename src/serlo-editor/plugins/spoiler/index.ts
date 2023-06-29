@@ -1,40 +1,25 @@
 import {
   child,
-  ChildStateType,
-  ChildStateTypeConfig,
   EditorPlugin,
   EditorPluginProps,
   object,
-  ObjectStateType,
   string,
-  StringStateType,
 } from '../../plugin'
 import { SpoilerEditor } from './editor'
 
-const defaultContent = { plugin: 'rows' }
+const spoilerState = object({
+  title: string(''),
+  content: child({ plugin: 'rows' }),
+})
 
-export function createSpoilerPlugin(
-  config: SpoilerConfig
-): EditorPlugin<SpoilerPluginState, SpoilerConfig> {
-  const { content = defaultContent } = config
-
+export function createSpoilerPlugin(): EditorPlugin<SpoilerPluginState> {
   return {
     Component: SpoilerEditor,
-    config,
-    state: object({
-      title: string(''),
-      content: child(content),
-    }),
+    state: spoilerState,
+    config: {},
   }
 }
 
-export interface SpoilerConfig {
-  content?: ChildStateTypeConfig
-}
+export type SpoilerPluginState = typeof spoilerState
 
-export type SpoilerPluginState = ObjectStateType<{
-  title: StringStateType
-  content: ChildStateType
-}>
-
-export type SpoilerProps = EditorPluginProps<SpoilerPluginState, SpoilerConfig>
+export type SpoilerProps = EditorPluginProps<SpoilerPluginState>

@@ -9,7 +9,6 @@ import { Link } from '../components/content/link'
 import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { Article } from '@/components/content/article'
 import { Box } from '@/components/content/box'
-import type { CodeProps } from '@/components/content/code'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
 import { Solution } from '@/components/content/exercises/solution'
@@ -23,6 +22,7 @@ import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
+import type { HighlightRendererProps } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 import { PageLayoutAdapter } from '@/serlo-editor/plugins/page-layout/frontend'
 
@@ -44,8 +44,10 @@ const Math = dynamic<MathSpanProps>(() =>
   import('../components/content/math-span').then((mod) => mod.MathSpan)
 )
 
-const Code = dynamic<CodeProps>(() =>
-  import('../components/content/code').then((mod) => mod.Code)
+const HighlightRenderer = dynamic<HighlightRendererProps>(() =>
+  import('@/serlo-editor/plugins/highlight/renderer').then(
+    (mod) => mod.HighlightRenderer
+  )
 )
 
 const PageTeamAdapter = dynamic(() =>
@@ -464,14 +466,10 @@ function renderElement({
   }
   if (element.type === FrontendNodeType.Code) {
     return (
-      <>
-        <Code
-          content={element.code}
-          language={element.language}
-          showLineNumbers={element.showLineNumbers}
-        />
+      <div className="mx-side">
+        <HighlightRenderer {...element} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
-      </>
+      </div>
     )
   }
   if (element.type === FrontendNodeType.PageLayout) {
