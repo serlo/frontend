@@ -419,21 +419,37 @@ export function TextEditor(props: TextEditorProps) {
       const { element, attributes, children } = props
 
       if (element.type === 'h') {
-        return createElement(`h${element.level}`, attributes, <>{children}</>)
+        const classNames = ['serlo-h1', 'serlo-h2', 'serlo-h3']
+        return createElement(
+          `h${element.level}`,
+          { ...attributes, className: classNames[element.level] },
+          <>{children}</>
+        )
       }
       if (element.type === 'a') {
         return (
-          <a href={element.href} className="cursor-pointer" {...attributes}>
+          <a
+            href={element.href}
+            className="serlo-link cursor-pointer"
+            {...attributes}
+          >
             {children}
           </a>
         )
       }
-
       if (element.type === ListElementType.UNORDERED_LIST) {
-        return <ul {...attributes}>{children}</ul>
+        return (
+          <ul className="serlo-ul" {...attributes}>
+            {children}
+          </ul>
+        )
       }
       if (element.type === ListElementType.ORDERED_LIST) {
-        return <ol {...attributes}>{children}</ol>
+        return (
+          <ol className="serlo-ol" {...attributes}>
+            {children}
+          </ol>
+        )
       }
       if (element.type === ListElementType.LIST_ITEM) {
         return <li {...attributes}>{children}</li>
@@ -441,7 +457,6 @@ export function TextEditor(props: TextEditorProps) {
       if (element.type === ListElementType.LIST_ITEM_TEXT) {
         return <div {...attributes}>{children}</div>
       }
-
       if (element.type === 'math') {
         return (
           <MathElement
@@ -453,7 +468,6 @@ export function TextEditor(props: TextEditorProps) {
           </MathElement>
         )
       }
-
       return <div {...attributes}>{children}</div>
     },
     [focused]

@@ -11,9 +11,6 @@ import python from 'react-syntax-highlighter/dist/cjs/languages/prism/python'
 import sql from 'react-syntax-highlighter/dist/cjs/languages/prism/sql'
 import style from 'react-syntax-highlighter/dist/cjs/styles/prism/coy'
 
-import { HighlightPluginConfig } from '.'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-
 SyntaxHighlighter.registerLanguage('java', java)
 SyntaxHighlighter.registerLanguage('javascript', javascript)
 SyntaxHighlighter.registerLanguage('python', python)
@@ -25,29 +22,32 @@ SyntaxHighlighter.registerLanguage('bash', bash)
 SyntaxHighlighter.registerLanguage('sql', sql)
 
 export interface HighlightRendererProps {
-  config: HighlightPluginConfig
   code: string
   language: string
   showLineNumbers: boolean
+  optionalElement?: JSX.Element | null
 }
 
 export function HighlightRenderer({
   language,
   showLineNumbers,
   code,
+  optionalElement,
 }: HighlightRendererProps) {
-  const editorStrings = useEditorStrings()
-
+  // SyntaxHighlighter has own styles on pre, so wrap in div to use own classes
   return (
-    <SyntaxHighlighter
-      language={language}
-      showLineNumbers={showLineNumbers}
-      style={style as unknown}
-      customStyle={{
-        overflow: 'auto',
-      }}
-    >
-      {code || editorStrings.plugins.highlight.language}
-    </SyntaxHighlighter>
+    <div className="mb-block mt-1 overflow-auto rounded-xl border-3 border-brand-150 pt-[0.8rem]">
+      <SyntaxHighlighter
+        language={language.toLowerCase()}
+        showLineNumbers={showLineNumbers}
+        style={style as unknown}
+        customStyle={{
+          backgroundColor: 'transparent',
+        }}
+      >
+        {code}
+      </SyntaxHighlighter>
+      {optionalElement}
+    </div>
   )
 }
