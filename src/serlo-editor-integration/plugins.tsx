@@ -35,7 +35,6 @@ import { pageTeamPlugin } from '@/serlo-editor/plugins/page-team'
 import { pasteHackPlugin } from '@/serlo-editor/plugins/paste-hack'
 import { createRowsPlugin } from '@/serlo-editor/plugins/rows'
 import { createScMcExercisePlugin } from '@/serlo-editor/plugins/sc-mc-exercise'
-import { separatorPlugin } from '@/serlo-editor/plugins/separator'
 import { createSerloTablePlugin } from '@/serlo-editor/plugins/serlo-table'
 import { appletTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/applet'
 import { articleTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/article'
@@ -80,11 +79,6 @@ export function createPlugins({
   instance: Instance
   parentType?: string
 }): PluginsContextPlugins {
-  const isExercise =
-    !!parentType &&
-    ['grouped-text-exercise', 'text-exercise', 'text-exercise-group'].includes(
-      parentType
-    )
   const isPage = parentType === UuidType.Page
 
   return [
@@ -153,11 +147,6 @@ export function createPlugins({
       type: 'pasteHack',
       plugin: pasteHackPlugin,
       visible: shouldUseFeature('edtrPasteHack'),
-    },
-    {
-      type: 'separator',
-      plugin: separatorPlugin,
-      visible: isExercise,
     },
     {
       type: 'pageLayout',

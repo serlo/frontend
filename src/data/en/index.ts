@@ -800,14 +800,9 @@ export const loggedInData = {
           dragElement: 'Drag the element within the document',
           addAnElement: 'Add an element',
         },
-        separator: {
-          title: 'Solution Separator',
-          description: 'Divide the solution into individual steps.',
-        },
         serloTable: {
           title: 'Table',
           description: 'Create pretty tables',
-
           mode: 'Mode',
           columnHeaders: 'Only column headers',
           rowHeaders: 'Only row headers',
@@ -881,7 +876,6 @@ export const loggedInData = {
         video: {
           title: 'Video',
           decription: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
-
           videoUrl: 'Video URL',
           description: 'Description',
           titlePlaceholder: 'Title',
