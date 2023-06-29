@@ -146,7 +146,6 @@ export const instanceData = {
         yourAnswer: "Ta réponse...",
         chooseOption: "Sélectionne une des options :",
         printModeChooseOption: "Sélectionne une des options :",
-        strategy: "Stratégie de solution",
         showSolution: 'Show solution',
         hideSolution: 'Hide solution'
       },
@@ -669,7 +668,6 @@ export const loggedInData = {
           captionPlaceholder: 'Optional caption',
           href: 'Link',
           hrefPlaceholder: 'Link the image',
-          openInNewTab: "Ouvrir dans un nouvel onglet",
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
@@ -692,9 +690,7 @@ export const loggedInData = {
         multimedia: {
           title: "Contenu multimédia avec un texte",
           description: "Ajouter du contenu multimédia illustrant ou explicatif associé a un texte.",
-          image: 'Image',
-          video: "Vidéo",
-          geogebraTitle: "Applet GéoGebra",
+          chooseSize: 'Choose size of multimedia element',
           changeType: "Changer le type de multimédia",
           howImportant: "Quelle est l’importance du contenu multimédia ?",
           isIllustrating: "Ce n'est qu'une illustration",
@@ -862,12 +858,9 @@ export const loggedInData = {
           title: "Titre"
         },
         exercise: {
-          addChoiceExercise: "Ajouter un exercice de choix",
-          choiceExercise: "Exercice de choix",
-          addInputExercise: "Ajouter un exercice de saisie",
+          scMcExercise: "Exercice de choix",
           inputExercise: "Exercice de saisie",
-          addH5pExercise: 'Add h5p exercise',
-          h5pExercise: 'H5p exercise',
+          h5p: 'H5p exercise',
           addOptionalInteractiveEx: "Ajouter un exercice interactif optionnel :",
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element'
@@ -903,7 +896,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: "Explication de la stratégie de solution (facultatif)",
-          fundamentalsNote: "Pour cet exercice, vous avez besoin des fondamentaux suivants :",
           idArticle: "ID d'un article, par exemple 1855",
           openArticleTab: "Ouvrir l'article dans un nouvel onglet :",
           linkTitle: "Titre du lien",
