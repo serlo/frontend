@@ -439,7 +439,7 @@ describe('text types', () => {
     })
     test('with color', () => {
       const result = convert({ text: 'colored', color: 0 })
-      expect(result[0].color).toBe(0)
+      expect(result[0].color).toBe('blue')
     })
     test('strong', () => {
       const result = convert({ text: 'bold text', strong: true })
@@ -462,7 +462,7 @@ describe('text types', () => {
           text: 'wow text',
           em: true,
           strong: true,
-          color: 2,
+          color: 'orange',
         },
       ])
     })
