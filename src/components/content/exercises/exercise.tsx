@@ -126,6 +126,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           ],
           'tasksol'
         )}
+
         {license && <div className="px-side">{license}</div>}
         {node.context.solutionId && (
           <Lazy>
