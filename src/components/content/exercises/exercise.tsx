@@ -50,9 +50,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
+  useEffect(() => setLoaded(true), [])
 
   const { asPath } = useRouter()
 
