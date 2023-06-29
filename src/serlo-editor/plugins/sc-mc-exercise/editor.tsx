@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
@@ -9,8 +8,9 @@ import {
   selectIsDocumentEmpty,
   useAppSelector,
 } from '../../store'
-import { ScMcExerciseRenderer } from './renderer'
+import { ScMcExerciseRenderer } from './renderer/renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const focusedElement = useAppSelector(selectFocused)
@@ -18,18 +18,16 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const { editable, focused, state } = props
   const editorStrings = useEditorStrings()
 
-  const children = R.flatten(
-    props.state.answers.map((answer) => {
-      return [answer.content.id, answer.feedback.id]
-    })
-  )
+  const children = props.state.answers.flatMap((answer) => [
+    answer.content.id,
+    answer.feedback.id,
+  ])
+
   const handleCheckboxChange = (index: number) => () => {
-    const { state } = props
     state.answers[index].isCorrect.set((currentVal) => !currentVal)
   }
 
   const handleRadioButtonChange = (rightanswerIndex: number) => () => {
-    const { state } = props
     state.answers.forEach((answer, index) => {
       answer.isCorrect.set(index === rightanswerIndex)
     })
@@ -43,22 +41,36 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       state.answers.forEach((answer) => answer.isCorrect.set(false))
   }
 
-  const addButton = () => {
-    const { state } = props
+  const addButton = () => props.state.answers.insert()
+  const removeAnswer = (index: number) => () => state.answers.remove(index)
 
-    state.answers.insert()
-  }
-
-  const removeAnswer = (index: number) => () => {
-    const { state } = props
-    state.answers.remove(index)
-  }
-
-  const nestedFocus = focused || R.includes(focusedElement, children)
+  const nestedFocus =
+    focused || (focusedElement && children.includes(focusedElement))
   const [previewActive, setPreviewActive] = useState(false)
 
+  const renderer = (
+    <EditableContext.Provider value={false}>
+      {/* //margin-hack */}
+      <div className="[&_.ml-4.flex]:mb-block">
+        <ScMcExerciseRenderer
+          isSingleChoice={state.isSingleChoice.value}
+          idBase="sc-mc"
+          answers={state.answers
+            .slice(0)
+            .map(({ isCorrect, feedback, content }, index) => {
+              return {
+                isCorrect: isCorrect.value,
+                originalIndex: index, // let's see
+                feedback: isEmpty(feedback.id) ? null : feedback.render(),
+                content: isEmpty(content.id) ? null : content.render(),
+              }
+            })}
+        />
+      </div>
+    </EditableContext.Provider>
+  )
   if (!editable) {
-    return <ScMcExerciseRenderer {...props} isEmpty={isEmpty} />
+    return renderer
   }
 
   return (
@@ -68,7 +80,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
         onChange={setPreviewActive}
         editable={previewActive}
       >
-        <ScMcExerciseRenderer {...props} isEmpty={isEmpty} />
+        {renderer}
       </PreviewOverlay>
       {editable && nestedFocus && !previewActive && (
         <>

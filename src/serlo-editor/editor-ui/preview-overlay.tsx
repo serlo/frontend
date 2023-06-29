@@ -18,7 +18,7 @@ const Overlay = styled.div<{ active: boolean; blur: boolean }>((props) => {
     height: '100%',
     top: 0,
     backgroundColor: props.blur ? 'rgba(255,255,255,0.8)' : undefined,
-    zIndex: 10,
+    zIndex: 20,
   }
 })
 

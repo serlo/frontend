@@ -1,25 +1,16 @@
-import {
-  EditorPlugin,
-  EditorPluginProps,
-  object,
-  ObjectStateType,
-  string,
-  StringStateType,
-} from '../../plugin'
+import { EditorPlugin, EditorPluginProps, object, string } from '../../plugin'
 import { VideoEditor } from './editor'
 import { parseVideoUrl } from './renderer'
 
-export type VideoPluginState = ObjectStateType<{
-  src: StringStateType
-  alt: StringStateType
-}>
+const videoState = object({ src: string(), alt: string() })
 
 export type VideoProps = EditorPluginProps<VideoPluginState>
+export type VideoPluginState = typeof videoState
 
 export const videoPlugin: EditorPlugin<VideoPluginState> = {
   Component: VideoEditor,
   config: {},
-  state: object({ src: string(), alt: string() }),
+  state: videoState,
   onText(value) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [src, type] = parseVideoUrl(value)

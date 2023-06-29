@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
-import type { DonationsBannerProps } from '../donations-banner-experiment/donations-banner-inline'
 import { LicenseNotice } from '../license/license-notice'
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
@@ -39,12 +38,6 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   ).then((mod) => mod.AuthorToolsExercises)
 )
 
-const DonationsBannerInline = dynamic<DonationsBannerProps>(() =>
-  import(
-    '@/components/content/donations-banner-experiment/donations-banner-inline'
-  ).then((mod) => mod.DonationsBannerInline)
-)
-
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
   const { strings } = useInstanceData()
   const [solutionVisible, setSolutionVisible] = useState(
@@ -57,9 +50,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
 
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
-  useEffect(() => {
-    setLoaded(true)
-  }, [])
+  useEffect(() => setLoaded(true), [])
 
   const { asPath } = useRouter()
 
@@ -135,12 +126,11 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           ],
           'tasksol'
         )}
+
         {license && <div className="px-side">{license}</div>}
         {node.context.solutionId && (
           <Lazy>
             <CommentAreaEntity entityId={node.context.solutionId} />
-            {/* Temporary donations banner trial */}
-            <DonationsBannerInline id={node.context.id} place="solution" />
           </Lazy>
         )}
       </div>

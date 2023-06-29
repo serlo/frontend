@@ -26,7 +26,7 @@ import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
 import { imagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
 import { injectionPlugin } from '@/serlo-editor/plugins/injection'
 import { createInputExercisePlugin } from '@/serlo-editor/plugins/input-exercise'
-import { createMultimediaExplanationPlugin } from '@/serlo-editor/plugins/multimedia-explanation'
+import { createMultimediaPlugin } from '@/serlo-editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@/serlo-editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@/serlo-editor/plugins/page-partners'
 import { pageTeamPlugin } from '@/serlo-editor/plugins/page-team'
@@ -90,7 +90,7 @@ export function createPlugins({
     { type: 'image', plugin: imagePlugin, visible: true, icon: <IconImage /> },
     {
       type: 'multimedia',
-      plugin: createMultimediaExplanationPlugin(),
+      plugin: createMultimediaPlugin(),
       visible: true,
       icon: <IconMultimedia />,
     },
@@ -167,14 +167,14 @@ export function createPlugins({
     { type: 'article', plugin: articlePlugin },
     {
       type: 'articleIntroduction',
-      plugin: createMultimediaExplanationPlugin({
+      plugin: createMultimediaPlugin({
         explanation: {
           plugin: 'text',
           config: {
             placeholder: editorStrings.templatePlugins.article.writeShortIntro,
           },
         },
-        plugins: ['image'],
+        allowedPlugins: ['image'],
       }),
     },
     { type: 'unsupported', plugin: unsupportedPlugin },

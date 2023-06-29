@@ -286,6 +286,10 @@
       @apply special-hyphens-auto;
     }
 
+    code {
+      @apply rounded-sm bg-brand-100 p-1 text-base text-brand;
+    }
+
     .page-header h1 input {
       @apply w-full;
       @apply mb-9 mt-6 p-0 text-3.5xl font-bold special-hyphens-auto;
