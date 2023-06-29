@@ -739,7 +739,6 @@ export const loggedInData = {
           captionPlaceholder: 'Optional caption',
           href: 'Link',
           hrefPlaceholder: 'Link the image',
-          openInNewTab: 'Open in new tab',
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
