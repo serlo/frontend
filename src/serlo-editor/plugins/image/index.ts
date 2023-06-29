@@ -1,25 +1,33 @@
 import {
-  boolean,
-  BooleanStateType,
-  ChildStateType,
   EditorPlugin,
   EditorPluginProps,
   isTempFile,
   number,
-  NumberStateType,
   object,
-  ObjectStateType,
   optional,
-  OptionalStateType,
   string,
-  StringStateType,
   upload,
   UploadHandler,
-  UploadStateType,
   UploadValidator,
   child,
 } from '../../plugin'
 import { ImageEditor } from './editor'
+
+const imageState = object({
+  src: upload(''),
+  link: optional(object({ href: string('') })),
+  alt: optional(string('')),
+  maxWidth: optional(number(0)),
+  caption: optional(
+    child({
+      plugin: 'text',
+      config: {
+        formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
+        noLinebreaks: true,
+      },
+    })
+  ),
+})
 
 export function createImagePlugin(
   config: ImageConfig
@@ -27,26 +35,7 @@ export function createImagePlugin(
   return {
     Component: ImageEditor,
     config,
-    state: object({
-      src: upload(''),
-      link: optional(
-        object({
-          href: string(''),
-          openInNewTab: boolean(false),
-        })
-      ),
-      alt: optional(string('')),
-      maxWidth: optional(number(0)),
-      caption: optional(
-        child({
-          plugin: 'text',
-          config: {
-            formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
-            noLinebreaks: true,
-          },
-        })
-      ),
-    }),
+    state: imageState,
     onText(value) {
       if (/\.(jpe?g|png|bmp|gif|svg)$/.test(value.toLowerCase())) {
         return {
@@ -89,24 +78,10 @@ export function createImagePlugin(
 }
 
 export type ImageConfig = ImagePluginConfig
-
-export type ImagePluginState = ObjectStateType<{
-  src: UploadStateType<string>
-  link: OptionalStateType<
-    ObjectStateType<{
-      href: StringStateType
-      openInNewTab: BooleanStateType
-    }>
-  >
-  alt: OptionalStateType<StringStateType>
-  maxWidth: OptionalStateType<NumberStateType>
-  caption: OptionalStateType<ChildStateType>
-}>
+export type ImagePluginState = typeof imageState
+export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 
 export interface ImagePluginConfig {
   upload: UploadHandler<string>
   validate: UploadValidator
-  secondInput?: 'description' | 'link'
 }
-
-export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>

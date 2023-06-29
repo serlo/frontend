@@ -3,7 +3,7 @@ import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
-import { SemanticSection } from '../../plugin/helpers/semantic-section'
+import { SolutionRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {
@@ -47,30 +47,27 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const solutionStrings = useEditorStrings().templatePlugins.solution
 
   return (
-    <>
-      <SemanticSection editable={editable}>
-        {renderPrerequisiteContent()}
-      </SemanticSection>
-      {hasStrategy || editable ? (
-        <SemanticSection editable={editable}>
-          {strategy.render({
-            config: {
-              placeholder: solutionStrings.optionalExplanation,
-            },
-          })}
-        </SemanticSection>
-      ) : null}
-      <SemanticSection editable={editable}>
-        {state.steps.render()}
-      </SemanticSection>
-    </>
+    <SolutionRenderer
+      prerequisite={renderPrerequisiteContent()}
+      strategy={
+        hasStrategy || editable ? (
+          <div className="-mx-2 px-side">
+            {strategy.render({
+              config: {
+                placeholder: solutionStrings.optionalExplanation,
+              },
+            })}
+          </div>
+        ) : null
+      }
+      steps={<div className="ml-1">{state.steps.render()}</div>}
+    />
   )
 
   function renderPrerequisiteContent() {
     if (editable) {
       return (
         <div>
-          {solutionStrings.fundamentalsNote}{' '}
           {focused ? (
             <InlineSettings
               onDelete={() => {
@@ -134,10 +131,9 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
     return prerequisite.defined &&
       prerequisite.id.value &&
       prerequisite.title.value ? (
-      <p>
-        {solutionStrings.fundamentalsNote}{' '}
-        <a href={`/${prerequisite.id.value}`}>{prerequisite.title.value}</a>
-      </p>
+      <a className="serlo-link" href={`/${prerequisite.id.value}`}>
+        {prerequisite.title.value}
+      </a>
     ) : null
   }
 }

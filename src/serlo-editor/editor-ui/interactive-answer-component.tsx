@@ -5,6 +5,20 @@ import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { colors } from '@/helper/colors'
 
+interface AddButtonProps {
+  onClick: () => void
+  children: string
+  title?: string
+}
+
+export function AddButton({ title, onClick, children }: AddButtonProps) {
+  return (
+    <AddButtonComponent title={title} onMouseDown={onClick}>
+      <FaIcon icon={faPlus} /> {children}
+    </AddButtonComponent>
+  )
+}
+
 const AddButtonComponent = styled.button({
   margin: '5px',
   width: '96%',
@@ -17,19 +31,6 @@ const AddButtonComponent = styled.button({
   outline: 'none',
   '&:hover': { backgroundColor: colors.editorPrimary200 },
 })
-
-export function AddButton(props: AddButtonProps) {
-  return (
-    <AddButtonComponent title={props.title} onMouseDown={props.onClick}>
-      <FaIcon icon={faPlus} /> {props.children}
-    </AddButtonComponent>
-  )
-}
-interface AddButtonProps {
-  onClick: () => void
-  children: string
-  title?: string
-}
 
 const AnswerContainer = styled.div({
   marginBottom: '10px',
