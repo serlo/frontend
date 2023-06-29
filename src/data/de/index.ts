@@ -690,7 +690,7 @@ export const loggedInData = {
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
           description: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
-          chooseSize: 'Choose size of multimedia element',
+          chooseSize: "Größe des Multimedia-Inhalts",
           changeType: "Tausche das Multimedia Element aus",
           howImportant: "Wie wichtig ist der Multimedia Inhalt?",
           isIllustrating: "Es ist nur eine Veranschaulichung",
