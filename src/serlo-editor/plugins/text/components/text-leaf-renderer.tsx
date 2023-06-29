@@ -1,4 +1,5 @@
 import CSS from 'csstype'
+import { ReactNode } from 'react-markdown'
 import { RenderLeafProps } from 'slate-react'
 
 import { textColors } from '../hooks/use-text-config'
@@ -17,34 +18,49 @@ export interface TextLeafRendererProps {
   attributes?: { 'data-slate-leaf': true }
 }
 
-export function TextLeafRenderer(props: TextLeafRendererProps) {
+export function TextLeafRenderer({
+  attributes,
+  leaf,
+  children,
+}: TextLeafRendererProps) {
   const colors = textColors.map(({ value }) => value)
-  const { attributes, leaf } = props
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { children } = props
+  const leafChildren = children as ReactNode
 
   const styles: CSS.Properties = {}
 
-  if (leaf.code) {
-    return (
-      <code className="rounded-sm bg-brand-100 p-1 text-base text-brand">
-        {children}
-      </code>
-    )
-  }
-
-  if (leaf.color) styles.color = colors[leaf.color]
+  if (leaf.color !== undefined) styles.color = colors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
+  const styleCount = Object.keys(styles).length
 
-  if (Object.keys(styles).length === 0) return <>{children}</>
+  const LeafTag = leaf.strong
+    ? 'b'
+    : leaf.em
+    ? 'i'
+    : leaf.code
+    ? 'code'
+    : 'span'
 
-  const LeafTag = leaf.strong ? 'b' : leaf.em ? 'i' : 'span'
-  const outputStyles = !(Object.keys(styles).length === 1 && LeafTag !== 'span')
+  if (styleCount === 0 && LeafTag === 'span') return wrap(leafChildren)
+
+  const outputExtraStyles = styleCount > 0 || LeafTag === 'span'
 
   return (
-    <LeafTag style={outputStyles ? styles : {}} {...attributes}>
-      {children}
+    <LeafTag
+      style={outputExtraStyles ? styles : {}}
+      {...attributes}
+      className={
+        leaf.code
+          ? 'rounded-sm bg-brand-100 p-1 text-base text-brand'
+          : undefined
+      }
+    >
+      {wrap(leafChildren)}
     </LeafTag>
   )
+
+  // for slate
+  function wrap(node: ReactNode) {
+    return attributes ? <span {...attributes}>{node}</span> : node
+  }
 }
