@@ -1,12 +1,11 @@
 import type { ImportantPluginState } from '../../serlo-editor/plugins/_on-the-way-out/important/important'
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
-import type { DeprecatedPluginState } from '../../serlo-editor/plugins/deprecated'
 import type { EquationsPluginState } from '../../serlo-editor/plugins/equations'
-import type { ErrorPluginState } from '../../serlo-editor/plugins/error'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
+import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
@@ -36,12 +35,8 @@ export type SerializedDocument =
       state: StateTypeSerializedType<BlockquotePluginState>
     }
   | {
-      plugin: 'deprecated'
-      state: StateTypeSerializedType<DeprecatedPluginState>
-    }
-  | {
-      plugin: 'error'
-      state: StateTypeSerializedType<ErrorPluginState>
+      plugin: 'unsupported'
+      state: StateTypeSerializedType<UnsupportedPluginState>
     }
   | {
       plugin: 'equations'

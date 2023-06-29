@@ -344,30 +344,6 @@
     button > div > svg {
       @apply ml-1.5 mr-1.5 mb-1 mt-2;
     }
-    .panel {
-      margin-bottom: 20px;
-      background-color: #fff;
-      border: 1px solid transparent;
-      border-radius: 4px;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-    }
-    .panel-danger > .panel-heading {
-      color: #a94442;
-      background-color: #f2dede;
-      border-color: #ebccd1;
-    }
-    .panel-danger {
-      border-color: #ebccd1;
-    }
-    .panel-heading {
-      padding: 10px 15px;
-      border-bottom: 1px solid transparent;
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-    }
-    .panel-body {
-      padding: 15px;
-    }
 
     .page-header {
       padding-bottom: 9px;

@@ -18,9 +18,7 @@ import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
-import { deprecatedPlugin } from '@/serlo-editor/plugins/deprecated'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
-import { errorPlugin } from '@/serlo-editor/plugins/error'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p/h5p'
@@ -51,6 +49,7 @@ import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/v
 import { solutionPlugin } from '@/serlo-editor/plugins/solution'
 import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
 import { createTextPlugin } from '@/serlo-editor/plugins/text'
+import { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export enum TemplatePluginType {
@@ -178,8 +177,7 @@ export function createPlugins({
         plugins: ['image'],
       }),
     },
-    { type: 'error', plugin: errorPlugin },
-    { type: 'deprecated', plugin: deprecatedPlugin },
+    { type: 'unsupported', plugin: unsupportedPlugin },
     { type: 'exercise', plugin: exercisePlugin },
     { type: 'highlight', plugin: createHighlightPlugin() },
     { type: 'h5p', plugin: H5pPlugin },
