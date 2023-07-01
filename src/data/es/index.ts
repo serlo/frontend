@@ -161,7 +161,7 @@ export const instanceData = {
         theorem: "Teorema",
         proof: "Prueba"
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: "Algo ha fallado"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -176,7 +176,7 @@ export const instanceData = {
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación",
-      general: 'Activate'
+      general: "Activar"
     },
     comments: {
       question: "¿Tienes una pregunta?",
@@ -614,9 +614,9 @@ export const loggedInData = {
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
         unsupported: {
-          title: 'Unsupported',
-          notSupported: 'Sorry, this plugin is not supported:',
-          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
+          title: "Sin soporte",
+          notSupported: "Lo sentimos, este plugin no es compatible:",
+          explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
         error: {
           title: 'Error',
@@ -657,9 +657,9 @@ export const loggedInData = {
         image: {
           title: "Imágen",
           description: "Subir imágenes.",
-          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
-          upload: 'Upload…',
-          imageUrl: 'Image URL',
+          noImagePasteInLists: "No se permite pegar imágenes dentro de las listas.",
+          upload: "Subir…",
+          imageUrl: "URL de la imagen",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
           placeholderFailed: 'Upload failed…',
