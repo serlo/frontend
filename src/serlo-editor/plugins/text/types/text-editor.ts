@@ -67,7 +67,7 @@ export interface CustomText {
 
 declare module 'slate' {
   interface CustomTypes {
-    Editor: BaseEditor & ReactEditor & ListsEditor
+    Editor: BaseEditor & ReactEditor & typeof ListsEditor
     Element: CustomElement
     Text: CustomText
   }

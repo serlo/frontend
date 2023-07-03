@@ -300,9 +300,6 @@ export function TextEditor(props: TextEditorProps) {
       suggestions.handleHotkeys(event)
       textFormattingOptions.handleHotkeys(event, editor)
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
-
-      // stop list plugin from bluring slate on esc
-      if (event.key === 'Escape') return false
       textFormattingOptions.handleListsShortcuts(event, editor)
     },
     [
