@@ -60,13 +60,13 @@ export type TextEditorProps = EditorPluginProps<
 >
 
 export function TextEditor(props: TextEditorProps) {
-  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
+  const { state, id, editable, focused } = props
 
+  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
-  const editorStrings = useEditorStrings()
+  const pluginStrings = useEditorStrings().plugins
 
-  const { state, id, editable, focused } = props
   const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
@@ -340,10 +340,7 @@ export function TextEditor(props: TextEditorProps) {
         )?.plugin.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(
-              editorStrings.plugins.image.noImagePasteInLists,
-              'warning'
-            )
+            showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
             return
           }
 
@@ -363,10 +360,7 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(
-              editorStrings.plugins.video.noVideoPasteInLists,
-              'warning'
-            )
+            showToastNotice(pluginStrings.video.noVideoPasteInLists, 'warning')
             return
           }
 
@@ -410,7 +404,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, editorStrings, plugins]
+    [dispatch, editor, id, pluginStrings, plugins]
   )
 
   const handleRenderElement = useCallback(
@@ -482,7 +476,7 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder}
+          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
