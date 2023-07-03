@@ -2810,17 +2810,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prezly/slate-lists@npm:^0.79.5":
-  version: 0.79.5
-  resolution: "@prezly/slate-lists@npm:0.79.5"
+"@prezly/slate-lists@npm:^0.87.0":
+  version: 0.87.0
+  resolution: "@prezly/slate-lists@npm:0.87.0"
   dependencies:
     is-hotkey: ^0.2.0
     uuid: ^8.3.0
   peerDependencies:
-    react: ^16.9.0 || ^17.0.0 || ^18.0.0
-    slate: ^0.91.4
-    slate-react: ^0.91.7
-  checksum: 2ef3dde5111bd1119abcd4771553d38eaa1f78c519a1f5bea54c6d2fcef636ea30df59b9d4220b980a2a9c0ed05c267160a731fbbabdd73df08817769ade0153
+    react: ^16.14.0 || ^17.0.0 || ^18.0.0
+    slate: ^0.94.1
+    slate-react: ^0.97.0
+  checksum: b4b5ad793653b2a620bca933f6db4d40b3231fed33410bb14a5f38b3f102c75d9f395e1178682180e7e9c424e0eea85e874ec1a44cd7fea5eba1ed3f617ec90b
   languageName: node
   linkType: hard
 
@@ -3438,7 +3438,7 @@ __metadata:
     "@next/bundle-analyzer": ^12.3.1
     "@ory/client": ^1.1.21
     "@ory/integrations": ^1.1.0
-    "@prezly/slate-lists": ^0.79.5
+    "@prezly/slate-lists": ^0.87.0
     "@prisma/client": ^4.14.0
     "@radix-ui/react-navigation-menu": ^1.1.1
     "@reduxjs/toolkit": ^1.9.5

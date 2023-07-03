@@ -40,7 +40,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@ory/client": "^1.1.21",
     "@ory/integrations": "^1.1.0",
-    "@prezly/slate-lists": "^0.79.5",
+    "@prezly/slate-lists": "^0.87.0",
     "@prisma/client": "^4.14.0",
     "@radix-ui/react-navigation-menu": "^1.1.1",
     "@reduxjs/toolkit": "^1.9.5",
