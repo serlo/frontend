@@ -161,7 +161,7 @@ export const instanceData = {
         theorem: "Teorema",
         proof: "Prueba"
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: "Algo ha fallado"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -176,7 +176,7 @@ export const instanceData = {
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación",
-      general: 'Activate'
+      general: "Activar"
     },
     comments: {
       question: "¿Tienes una pregunta?",
@@ -614,9 +614,9 @@ export const loggedInData = {
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
         unsupported: {
-          title: 'Unsupported',
-          notSupported: 'Sorry, this plugin is not supported:',
-          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
+          title: "Sin soporte",
+          notSupported: "Lo sentimos, este plugin no es compatible:",
+          explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
         error: {
           title: 'Error',
@@ -657,21 +657,21 @@ export const loggedInData = {
         image: {
           title: "Imágen",
           description: "Subir imágenes.",
-          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
-          upload: 'Upload…',
-          imageUrl: 'Image URL',
+          noImagePasteInLists: "No se permite pegar imágenes dentro de las listas.",
+          upload: "Subir…",
+          imageUrl: "URL de la imagen",
           placeholderEmpty: 'https://example.com/image.png',
-          placeholderUploading: 'Uploading…',
-          placeholderFailed: 'Upload failed…',
-          retry: 'Retry',
-          failedUpload: 'Upload failed',
-          captionPlaceholder: 'Optional caption',
+          placeholderUploading: "Subiendo…",
+          placeholderFailed: "Carga fallida...",
+          retry: "Reintentar",
+          failedUpload: "Carga fallida",
+          captionPlaceholder: "Leyenda opcional",
           href: "Enlace",
-          hrefPlaceholder: 'Link the image',
-          alt: 'Description (hidden)',
-          altPlaceholder: 'Describe what the image shows',
-          maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          hrefPlaceholder: "Link de la imagen",
+          alt: "Descripción (no es visible)",
+          altPlaceholder: "Describe lo que muestra la imagen",
+          maxWidth: "Ancho máximo",
+          maxWidthPlaceholder: "Introduzca el ancho máximo"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -682,7 +682,7 @@ export const loggedInData = {
           placeholder: "Serlo ID (p.ej. 1565)"
         },
         layout: {
-          title: 'Layout',
+          title: "Diseño",
           toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
           oneColumnLayout: "Diseño con una columna",
           multimediaTitle: "Contenido multimedia asociado con el texto"
@@ -690,32 +690,32 @@ export const loggedInData = {
         multimedia: {
           title: "Contenido multimedia asociado con el texto",
           description: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
-          chooseSize: 'Choose size of multimedia element',
+          chooseSize: "Elegir el tamaño del elemento multimedia",
           changeType: "Cambiar el tipo multimedia",
           howImportant: "¿Qué tan importante es el contenido multimedia?",
           isIllustrating: "Está ilustrando",
           isEssential: "Es esencial",
-          reset: 'Reset the multimedia content'
+          reset: "Restablecer el contenido multimedia"
         },
         pageLayout: {
-          title: 'Layout Column for Pages',
-          description: "The plugin the people want but don't get 🤫",
+          title: "Diseño de Columna para Páginas",
+          description: "El plugin que la gente quiere pero no obtiene 🤫",
           chooseRatio: "Elige la proporción de la columna"
         },
         pasteHack: {
-          title: 'Experimental State-Paste Plugin',
-          description: 'only on staging'
+          title: "Plugin Estado-Pegar Experimental",
+          description: "solo en staging"
         },
         pageTeam: {
-          title: 'Team Overview',
-          description: 'Only for the teampages'
+          title: "Vista General del Equipo",
+          description: "Sólo para las páginas del equipo"
         },
         pagePartners: {
-          title: 'Partner List',
-          description: 'Only for partner page (List of partner logos like on de.serlo.org/)'
+          title: "Lista de socios",
+          description: "Sólo para la página de socio (Lista de logos de socios como en es.serlo.org/)"
         },
         rows: {
-          title: 'Rows',
+          title: "Filas",
           searchForTools: "Buscar herramientas…",
           duplicate: "Duplicar",
           remove: "Eliminar",
@@ -756,12 +756,12 @@ export const loggedInData = {
           headings: "Encabezados",
           link: "Vínculo (%ctrlOrCmd% + K)",
           linkOverlay: {
-            placeholder: 'https://… or /1234',
-            inputLabel: 'Paste or type a link',
-            edit: 'Edit Link',
-            remove: 'Remove Link',
-            customLink: 'Custom Link',
-            invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+            placeholder: "https://… o /1234",
+            inputLabel: "Pegar o escribir un enlace",
+            edit: "Modificar enlace",
+            remove: "Eliminar enlace",
+            customLink: "Enlance Personalizado",
+            invalidLinkWarning: "Por favor, proporciona un enlace válido que comience con http(s)://…"
           },
           openInNewTab: "Abrir en una nueva pestaña",
           orderedList: "Lista ordenada",
@@ -773,9 +773,9 @@ export const loggedInData = {
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
           colorNames: {
-            blue: 'Blue',
-            green: 'Green',
-            orange: 'Orange'
+            blue: "Azul",
+            green: "Verde",
+            orange: "Anaranjado"
           },
           math: {
             formula: "[fórmula]",
@@ -802,7 +802,7 @@ export const loggedInData = {
           titlePlaceholder: "Título",
           url: 'URL',
           seoTitle: "Título para motores de búsqueda",
-          noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
+          noVideoPasteInLists: "No se permite pegar vídeos dentro de las listas."
         }
       },
       templatePlugins: {
@@ -880,9 +880,9 @@ export const loggedInData = {
           number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
           mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")",
           types: {
-            mathExpression: 'Mathematical expression',
+            mathExpression: "Expresión matemática",
             text: "Texto",
-            number: 'Number'
+            number: "Número"
           }
         },
         page: {

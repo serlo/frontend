@@ -115,12 +115,13 @@ export function mergePlugins(
       // Set the merge value to current Slate instance
       editor.children = newValue
 
+      // Remove the merged plugin
+      store.dispatch(
+        removePluginChild({ parent: parent.id, child: previousSibling.id })
+      )
+
+      // Set selection to where it was before the merge
       setTimeout(() => {
-        // Remove the merged plugin
-        store.dispatch(
-          removePluginChild({ parent: parent.id, child: previousSibling.id })
-        )
-        // Set selection where it was before the merge
         Transforms.select(editor, {
           offset: 0,
           path: [previousDocumentChildrenCount, 0],
@@ -151,12 +152,10 @@ export function mergePlugins(
       // Set the merge value to current Slate instance
       editor.children = newValue
 
-      setTimeout(() => {
-        // Remove the merged plugin
-        store.dispatch(
-          removePluginChild({ parent: parent.id, child: nextSibling.id })
-        )
-      })
+      // Remove the merged plugin
+      store.dispatch(
+        removePluginChild({ parent: parent.id, child: nextSibling.id })
+      )
 
       // Return the merge value
       return newValue

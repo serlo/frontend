@@ -177,6 +177,8 @@ export function TextEditor(props: TextEditorProps) {
       // (only if selection is collapsed and suggestions are not shown)
       const { selection } = editor
       if (selection && Range.isCollapsed(selection) && !showSuggestions) {
+        const isListActive = isSelectionWithinList(editor)
+
         // Special handler for links. If you move right and end up at the right edge of a link,
         // this handler unselects the link, so you can write normal text behind it.
         if (isHotkey('right', event)) {
@@ -224,7 +226,6 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Create a new Slate instance on "enter" key
-        const isListActive = isSelectionWithinList(editor)
         if (isHotkey('enter', event) && !isListActive) {
           const document = selectDocument(store.getState(), id)
           if (!document) return
@@ -261,7 +262,7 @@ export function TextEditor(props: TextEditorProps) {
           isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
         const isDeleteAtEnd =
           isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
-        if (isBackspaceAtStart || isDeleteAtEnd) {
+        if ((isBackspaceAtStart || isDeleteAtEnd) && !isListActive) {
           event.preventDefault()
 
           // Get direction of merge
