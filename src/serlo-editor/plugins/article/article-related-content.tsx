@@ -1,6 +1,7 @@
 import { faCircleArrowUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ArticleProps, buttonClass } from '.'
+import { ArticleProps } from '.'
+import { buttonClass } from './editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'

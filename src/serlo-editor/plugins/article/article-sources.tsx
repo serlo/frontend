@@ -3,11 +3,12 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { ArticleProps, buttonClass } from '.'
+import { ArticleProps } from '.'
 import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
+import { buttonClass } from './editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
