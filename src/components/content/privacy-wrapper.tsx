@@ -36,6 +36,7 @@ export function PrivacyWrapper({
 }: PrivacyWrapperProps) {
   const [showIframe, setShowIframe] = useState(false)
   const isTwingle = provider === ExternalProvider.Twingle
+  const isGeoGebra = provider === ExternalProvider.GeoGebra
   const { checkConsent, giveConsent } = useConsent()
   const [consentGiven, setConsentGiven] = useState(false)
 
@@ -66,17 +67,28 @@ export function PrivacyWrapper({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const previewImageUrl = isTwingle
+    ? '/_assets/img/donations-form.png'
+    : `https://embed.${serloDomain}/thumbnail?url=${encodeURIComponent(
+        embedUrl || ''
+      )}`
+
   return (
     <div
       className={clsx(
         className,
         !isTwingle && 'mx-side',
-        tw`
-          group relative mb-block block cursor-pointer
-          bg-cover bg-center [contain:content]
-        `
+        'group relative mb-block block cursor-pointer [contain:content]'
       )}
     >
+      {isGeoGebra ? (
+        <img
+          className="w-full opacity-90"
+          src={previewImageUrl}
+          alt={`${strings.content.previewImage} ${provider}`}
+        />
+      ) : null}
+
       {renderPlaceholder()}
       {showIframe && children}
     </div>
@@ -89,15 +101,14 @@ export function PrivacyWrapper({
     })
     if (isTwingle && showIframe) return null
 
-    const previewImageUrl = isTwingle
-      ? '/_assets/img/donations-form.png'
-      : `https://embed.${serloDomain}/thumbnail?url=${encodeURIComponent(
-          embedUrl || ''
-        )}`
-
     return (
-      <div className="text-center">
-        <div className="relative bg-brand-100 pb-[56.2%]">
+      <>
+        <div
+          className={clsx(
+            'relative bg-brand-100',
+            isGeoGebra ? '' : 'pb-[56.2%]'
+          )}
+        >
           <img
             className={clsx(
               'absolute left-0 h-full w-full object-cover',
@@ -143,7 +154,7 @@ export function PrivacyWrapper({
             {buttonLabel}
           </button>
         </div>
-      </div>
+      </>
     )
   }
 }
