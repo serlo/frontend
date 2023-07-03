@@ -3,6 +3,7 @@ import { BoxType } from './serlo-editor/plugins/box/renderer'
 import { Sign } from './serlo-editor/plugins/equations/sign'
 import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
 import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
+import { CustomText } from './serlo-editor/plugins/text'
 
 export { Sign } from './serlo-editor/plugins/equations/sign'
 
@@ -56,17 +57,10 @@ export enum FrontendNodeType {
   PagePartners = 'pagePartners',
 }
 
-export interface FrontendTextNode {
+export type FrontendTextNode = CustomText & {
   type: FrontendNodeType.Text
-  text: string
-  color?: FrontendTextColor
-  em?: boolean
-  strong?: boolean
-  code?: boolean
   children?: undefined
 }
-
-export type FrontendTextColor = 'blue' | 'green' | 'orange'
 
 export interface FrontendANode {
   type: FrontendNodeType.A

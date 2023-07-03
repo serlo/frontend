@@ -12,14 +12,13 @@ import {
   Editable,
   ReactEditor,
   RenderElementProps,
-  RenderLeafProps,
   Slate,
   withReact,
 } from 'slate-react'
 
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
-import { textColors, useTextConfig } from '../hooks/use-text-config'
+import { useTextConfig } from '../hooks/use-text-config'
 import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
 import {
   emptyDocumentFactory,
@@ -32,6 +31,7 @@ import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
+import { TextLeafRenderer } from './text-leaf-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -60,13 +60,13 @@ export type TextEditorProps = EditorPluginProps<
 >
 
 export function TextEditor(props: TextEditorProps) {
-  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
+  const { state, id, editable, focused } = props
 
+  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
-  const editorStrings = useEditorStrings()
+  const pluginStrings = useEditorStrings().plugins
 
-  const { state, id, editable, focused } = props
   const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
@@ -341,10 +341,7 @@ export function TextEditor(props: TextEditorProps) {
         )?.plugin.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(
-              editorStrings.plugins.image.noImagePasteInLists,
-              'warning'
-            )
+            showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
             return
           }
 
@@ -364,10 +361,7 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(
-              editorStrings.plugins.video.noVideoPasteInLists,
-              'warning'
-            )
+            showToastNotice(pluginStrings.video.noVideoPasteInLists, 'warning')
             return
           }
 
@@ -411,7 +405,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, editorStrings, plugins]
+    [dispatch, editor, id, pluginStrings, plugins]
   )
 
   const handleRenderElement = useCallback(
@@ -483,11 +477,15 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder}
+          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
-          renderLeaf={renderLeaf}
+          renderLeaf={(props) => (
+            <span {...props.attributes}>
+              <TextLeafRenderer {...props} />
+            </span>
+          )}
           className="[&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
@@ -514,29 +512,4 @@ export function TextEditor(props: TextEditorProps) {
       )}
     </HotKeys>
   )
-}
-
-function renderLeaf(props: RenderLeafProps) {
-  const colors = textColors.map((color) => color.value)
-  const { attributes, leaf } = props
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  let { children } = props
-
-  if (leaf.strong) {
-    children = <strong>{children}</strong>
-  }
-  if (typeof leaf.color === 'number' && Array.isArray(colors)) {
-    children = (
-      <span style={{ color: colors?.[leaf.color % colors.length] }}>
-        {children}
-      </span>
-    )
-  }
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
-  if (leaf.em) {
-    children = <em>{children}</em>
-  }
-  return <span {...attributes}>{children}</span>
 }
