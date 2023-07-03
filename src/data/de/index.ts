@@ -747,6 +747,7 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
+          placeholder: 'Write something or add elements with ⊕.',
           quote: "Zitat",
           setColor: "Einfärben",
           resetColor: "Farbe zurücksetzen",
