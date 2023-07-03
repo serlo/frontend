@@ -8,45 +8,28 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
 interface ArticleExercisesProps {
   exercises: ArticleProps['state']['exercises']
-  exerciseFolder: ArticleProps['state']['exerciseFolder']
   editable: boolean
 }
 
 export function ArticleExercises({
   exercises,
-  exerciseFolder,
   editable,
 }: ArticleExercisesProps) {
   const articleStrings = useEditorStrings().templatePlugins.article
 
-  if (!editable && exercises.length === 0 && !exerciseFolder.id.value)
-    return null
+  if (!editable && exercises.length === 0) return null
 
   return (
     <>
-      <div className="mt-4 mb-1">
-        {renderExercises()}
-        {exerciseFolder.title.value ? (
-          <>
-            <p>{articleStrings.moreInFolder}:</p>
-            <a href={`/${exerciseFolder.id.value}`}>
-              {exerciseFolder.title.value ? exerciseFolder.title.value : '…'}
-            </a>
-          </>
-        ) : null}
-      </div>
+      {exercises.map((exercise, index) => (
+        <Fragment key={exercise.id}>
+          {exercise.render({
+            renderToolbar: editable ? () => renderToolbar(index) : undefined,
+          })}
+        </Fragment>
+      ))}
     </>
   )
-
-  function renderExercises() {
-    return exercises.map((exercise, index) => (
-      <Fragment key={exercise.id}>
-        {exercise.render({
-          renderToolbar: editable ? () => renderToolbar(index) : undefined,
-        })}
-      </Fragment>
-    ))
-  }
 
   function renderToolbar(index: number) {
     const buttonClass = 'serlo-button-editor-secondary mb-2 mr-2 w-8'

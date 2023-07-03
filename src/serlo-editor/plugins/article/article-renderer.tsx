@@ -10,6 +10,7 @@ export interface ArticleRendererProps {
     courses: JSX.Element | null
     videos: JSX.Element | null
   }
+  relatedContentExtra?: JSX.Element | null
   sources: JSX.Element | null
 }
 
@@ -19,25 +20,27 @@ export function ArticleRenderer({
   exercises,
   exercisesFolder,
   relatedContent,
+  relatedContentExtra,
   sources,
 }: ArticleRendererProps) {
   const { strings } = useInstanceData()
 
   return (
     <>
-      <div className="mt-5">{introduction}</div>
-      <div className="mt-5">{content}</div>
-
+      {introduction}
+      {content}
       {exercises || exercisesFolder ? (
         <>
           <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
 
           {exercises}
 
-          <p className="serlo-p">
-            {strings.content.moreExercises}:<br />
-            {exercisesFolder}
-          </p>
+          {exercisesFolder ? (
+            <p className="serlo-p">
+              {strings.content.moreExercises}:<br />
+              {exercisesFolder}
+            </p>
+          ) : null}
         </>
       ) : null}
 
@@ -50,14 +53,12 @@ export function ArticleRenderer({
           {sources}
         </>
       ) : null}
-
-      <div className="mt-5">{sources}</div>
     </>
   )
 
   function renderRelatedContent() {
     const { articles, courses, videos } = relatedContent
-    if (!articles && !courses && !videos) return null
+    if (!articles && !courses && !videos && !relatedContentExtra) return null
 
     return (
       <>
@@ -67,6 +68,7 @@ export function ArticleRenderer({
         {renderRelatedContentSubsection('articles')}
         {renderRelatedContentSubsection('courses')}
         {renderRelatedContentSubsection('videos')}
+        {relatedContentExtra}
       </>
     )
   }
@@ -75,6 +77,7 @@ export function ArticleRenderer({
     type: 'articles' | 'courses' | 'videos'
   ) {
     if (!relatedContent[type]) return null
+
     return (
       <>
         <h3 className="serlo-h3 mb-0">{strings.categories[type]}</h3>

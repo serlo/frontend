@@ -4,9 +4,9 @@ import { ArticleProps } from '.'
 import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './article-exercises'
-import { ArticleRelatedContent } from './article-related-content'
+import { ArticleRelatedContentSection } from './article-related-content-section'
+import { ArticleRenderer } from './article-renderer'
 import { ArticleSources } from './article-sources'
-import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ArticleEditor({ editable, state }: ArticleProps) {
@@ -20,30 +20,60 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
   } = state
   const [modalOpen, setModalOpen] = useState(false)
 
-  const { strings } = useInstanceData()
   const modalStrings = useEditorStrings().templatePlugins.article.addModal
 
   return (
     <>
-      <div className="mt-5">{introduction.render()}</div>
-      <div className="mt-5">{content.render()}</div>
-      <div className="mt-5">
-        <h2>{strings.categories.exercises}</h2>
-        {renderButton(modalStrings.buttonEx)}
-        <ArticleExercises
-          exercises={exercises}
-          exerciseFolder={exerciseFolder}
-          editable={editable}
-        />
-        {renderButton(modalStrings.buttonExFolder, true)}
-      </div>
-      <div className="mt-5">
-        <ArticleRelatedContent editable={editable} data={relatedContent} />
-        {renderButton(modalStrings.buttonContent)}
-      </div>
-      <div className="mt-5">
-        <ArticleSources editable={editable} sources={sources} />
-      </div>
+      <ArticleRenderer
+        introduction={introduction.render()}
+        content={content.render()}
+        exercises={
+          <>
+            <ArticleExercises exercises={exercises} editable={editable} />
+            {renderButton(modalStrings.buttonEx)}
+          </>
+        }
+        exercisesFolder={
+          <>
+            {editable || exerciseFolder.title.value ? (
+              <a
+                className="serlo-link font-bold"
+                href={`/${exerciseFolder.id.value}`}
+              >
+                {exerciseFolder.title.value}
+              </a>
+            ) : null}{' '}
+            <span className="-mt-3 -ml-1 inline-block">
+              {renderButton(modalStrings.buttonExFolder, true)}
+            </span>
+          </>
+        }
+        relatedContent={{
+          articles: relatedContent.articles.length ? (
+            <ArticleRelatedContentSection
+              data={relatedContent.articles}
+              editable={editable}
+            />
+          ) : null,
+          courses: relatedContent.courses.length ? (
+            <ArticleRelatedContentSection
+              data={relatedContent.courses}
+              editable={editable}
+            />
+          ) : null,
+          videos: relatedContent.videos.length ? (
+            <ArticleRelatedContentSection
+              data={relatedContent.videos}
+              editable={editable}
+            />
+          ) : null,
+        }}
+        relatedContentExtra={renderButton(modalStrings.buttonContent)}
+        sources={<ArticleSources editable={editable} sources={sources} />}
+      />
+
+      {/*  ?? {renderButton(modalStrings.buttonContent)} */}
+
       {editable && (
         <ArticleAddModal
           data={state}
@@ -60,7 +90,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
         text={text}
         noIcon={noIcon}
         onClick={() => setModalOpen(true)}
-        className="my-3"
+        className="mt-4 mb-8"
       />
     )
   }

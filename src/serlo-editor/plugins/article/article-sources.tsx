@@ -25,15 +25,16 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
 
   return (
     <>
-      <h2>{articleStrings.sources}</h2>
-      <ul>{sources.map(editable ? renderEditableSource : renderSource)}</ul>
       {editable ? (
         <SerloAddButton
           text={articleStrings.addSource}
           onClick={() => sources.insert(sources.length)}
-          className="mb-4"
+          className="mt-0 mb-2"
         />
       ) : null}
+      <ul className="serlo-ul mt-2 mb-4 text-lg">
+        {sources.map(editable ? renderEditableSource : renderSource)}
+      </ul>
     </>
   )
 
