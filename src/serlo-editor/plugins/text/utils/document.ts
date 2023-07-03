@@ -8,7 +8,6 @@ import {
 } from 'slate'
 
 import type { TextEditorState } from '../types'
-import { isSelectionWithinList } from './list'
 import { isSelectionAtEnd } from './selection'
 import { StateTypeValueType } from '@/serlo-editor/plugin'
 import {
@@ -65,8 +64,6 @@ export function mergePlugins(
   store: RootStore,
   id: string
 ) {
-  const isListSelected = isSelectionWithinList(editor)
-
   const mayManipulateSiblings = selectMayManipulateSiblings(
     store.getState(),
     id
@@ -123,16 +120,13 @@ export function mergePlugins(
         removePluginChild({ parent: parent.id, child: previousSibling.id })
       )
 
-      // Set selection where it was before the merge
-      // (this happens magically if a list was selected)
-      if (!isListSelected) {
-        setTimeout(() => {
-          Transforms.select(editor, {
-            offset: 0,
-            path: [previousDocumentChildrenCount, 0],
-          })
+      // Set selection to where it was before the merge
+      setTimeout(() => {
+        Transforms.select(editor, {
+          offset: 0,
+          path: [previousDocumentChildrenCount, 0],
         })
-      }
+      })
 
       // Return the merge value
       return newValue
