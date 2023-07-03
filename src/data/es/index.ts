@@ -747,6 +747,7 @@ export const loggedInData = {
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
+          placeholder: 'Write something or add elements with ⊕.',
           quote: "Cita",
           setColor: "Elegir color",
           resetColor: "Restablecer color",
