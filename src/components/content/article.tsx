@@ -1,7 +1,7 @@
 import { Link } from '@/components/content/link'
 import { ArticleNodeUuidLink, FrontendArticleNode } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
-import { ArticleRenderer } from '@/serlo-editor/plugins/article/article-renderer'
+import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
 
 export function Article({
   renderNested,

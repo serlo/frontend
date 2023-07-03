@@ -3,15 +3,15 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { ArticleProps } from '.'
-import { InlineInput } from '../../plugin/helpers/inline-input'
-import { InlineSettings } from '../../plugin/helpers/inline-settings'
-import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
-import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
-import { buttonClass } from './editor'
+import { ArticleProps } from '..'
+import { buttonClass } from '../editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { InlineInput } from '@/serlo-editor/plugin/helpers/inline-input'
+import { InlineSettings } from '@/serlo-editor/plugin/helpers/inline-settings'
+import { InlineSettingsInput } from '@/serlo-editor/plugin/helpers/inline-settings-input'
+import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
 
 interface ArticleSourcesProps {
   sources: ArticleProps['state']['sources']
