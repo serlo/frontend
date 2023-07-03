@@ -43,7 +43,7 @@ export function TextLeafRenderer({
 
   if (styleCount === 0 && LeafTag === 'span') return <>{leafChildren}</>
 
-  const outputExtraStyles = styleCount > 0 || LeafTag === 'span'
+  const outputExtraStyles = styleCount > 1 || LeafTag === 'span'
 
   return (
     <LeafTag
