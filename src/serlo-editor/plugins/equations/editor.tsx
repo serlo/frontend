@@ -1,34 +1,29 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+  faArrowCircleUp,
+  faPlusCircle,
+  faTrashAlt,
+} from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import styled from 'styled-components'
 
 import { EquationsProps, stepProps } from '.'
+import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import {
   EquationsRenderer,
-  FirstExplanationTr,
-  ExplanationTr,
-  LeftTd,
-  MathTd,
+  EquationsRendererStep,
   renderDownArrow,
-  SignTd,
-  Table,
-  TableWrapper,
-  toTransformationTarget,
-  TransformationTarget,
-  TransformTd,
 } from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import {
   HotKeys,
   PreferenceContext,
   setDefaultPreference,
 } from '@/serlo-editor/core'
-import { AddButton, edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
-import { MathEditor } from '@/serlo-editor/math'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { MathEditor, MathRenderer } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {
   store,
@@ -52,17 +47,6 @@ enum StepSegment {
 const preferenceKey = 'katex:usevisualmath'
 
 setDefaultPreference(preferenceKey, true)
-
-const RemoveButton = styled.button({
-  outline: 'none',
-  width: '35px',
-  border: 'none',
-  background: 'transparent',
-})
-const DragButton = styled.span({
-  cursor: 'grab',
-  paddingRight: '5px',
-})
 
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
@@ -111,9 +95,47 @@ export function EquationsEditor(props: EquationsProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nestedFocus])
 
-  const editorStrings = useEditorStrings()
+  const equationsStrings = useEditorStrings().plugins.equations
 
-  if (!nestedFocus) return <EquationsRenderer {...props} />
+  if (!nestedFocus)
+    return (
+      <EquationsRenderer
+        firstExplanation={
+          selectIsDocumentEmpty(
+            store.getState(),
+            state.firstExplanation.id
+          ) ? null : (
+            <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
+              {state.firstExplanation.render()}
+            </div>
+          )
+        }
+        steps={getStaticSteps()}
+        transformationTarget={transformationTarget}
+        formulaRenderer={(formula: string) => (
+          <MathRenderer inline state={formula} />
+        )}
+      />
+    )
+
+  function getStaticSteps(): EquationsRendererStep[] {
+    return state.steps.map(({ left, sign, right, transform, explanation }) => {
+      return {
+        left: left.value,
+        sign: sign.value as Sign,
+        right: right.value,
+        transform: transform.value,
+        explanation: selectIsDocumentEmpty(
+          store.getState(),
+          explanation.id
+        ) ? null : (
+          <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
+            {explanation.render()}
+          </div>
+        ),
+      }
+    })
+  }
 
   return (
     <HotKeys
@@ -157,129 +179,83 @@ export function EquationsEditor(props: EquationsProps) {
     >
       {props.renderIntoSettings(
         <div>
-          <label htmlFor="transformationTarget">
-            {editorStrings.plugins.equations.mode}:
-          </label>{' '}
+          <label htmlFor="transformationTarget">{equationsStrings.mode}:</label>{' '}
           <select
             id="transformationTarget"
             value={transformationTarget}
             onChange={(e) => state.transformationTarget.set(e.target.value)}
           >
             <option value={TransformationTarget.Equation}>
-              {editorStrings.plugins.equations.transformationOfEquations}
+              {equationsStrings.transformationOfEquations}
             </option>
             <option value={TransformationTarget.Term}>
-              {editorStrings.plugins.equations.transformationOfTerms}
+              {equationsStrings.transformationOfTerms}
             </option>
           </select>
         </div>
       )}
-      <TableWrapper>
-        <DragDropContext
-          onDragEnd={(result) => {
-            const { source, destination } = result
-            if (!destination) return
-            state.steps.move(source.index, destination.index)
-          }}
-        >
-          <Droppable droppableId="default">
-            {(provided) => {
+      <div className="py-2.5">
+        <table className="whitespace-nowrap">
+          {renderFirstExplanation()}
+          {state.steps.map((step, row) => {
+            return (
+              <tbody key={step.explanation.id}>
+                <tr>
+                  <StepEditor
+                    gridFocus={gridFocus}
+                    row={row}
+                    state={step}
+                    transformationTarget={transformationTarget}
+                  />
+                  <td>{renderButtons(row)}</td>
+                </tr>
+                {renderExplantionTr()}
+              </tbody>
+            )
+
+            function renderExplantionTr() {
+              if (row === state.steps.length - 1) return null
+
               return (
-                <Table ref={provided.innerRef} {...provided.droppableProps}>
-                  {renderFirstExplanation()}
-                  {state.steps.map((step, row) => {
-                    return (
-                      <Draggable
-                        key={step.explanation.id}
-                        draggableId={step.explanation.id}
-                        index={row}
-                      >
-                        {(provided) => {
-                          return (
-                            <tbody
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                            >
-                              <tr>
-                                <td>
-                                  <DragButton
-                                    {...provided.dragHandleProps}
-                                    tabIndex={-1}
-                                  >
-                                    <EdtrIcon icon={edtrDragHandle} />
-                                  </DragButton>
-                                </td>
-                                <StepEditor
-                                  gridFocus={gridFocus}
-                                  row={row}
-                                  state={step}
-                                  transformationTarget={transformationTarget}
-                                />
-                                <td>
-                                  <RemoveButton
-                                    tabIndex={-1}
-                                    onClick={() => state.steps.remove(row)}
-                                  >
-                                    <FaIcon icon={faXmark} />
-                                  </RemoveButton>
-                                </td>
-                              </tr>
-                              {renderExplantionTr()}
-                            </tbody>
-                          )
-                        }}
-                      </Draggable>
-                    )
-
-                    function renderExplantionTr() {
-                      if (row === state.steps.length - 1) return null
-
-                      return (
-                        <ExplanationTr
-                          onFocus={() =>
-                            gridFocus.setFocus({
-                              row,
-                              column: StepSegment.Explanation,
-                            })
-                          }
-                        >
-                          {transformationTarget ===
-                            TransformationTarget.Equation && <td />}
-                          <td />
-                          {!selectIsDocumentEmpty(
-                            store.getState(),
-                            step.explanation.id
-                          ) ? (
-                            renderDownArrow()
-                          ) : (
-                            <td />
-                          )}
-                          <td colSpan={2} className="min-w-[10rem]">
-                            {step.explanation.render({
-                              config: {
-                                placeholder:
-                                  row === 0 &&
-                                  transformationTarget ===
-                                    TransformationTarget.Term
-                                    ? editorStrings.plugins.equations
-                                        .combineLikeTerms
-                                    : editorStrings.plugins.equations
-                                        .explanation,
-                              },
-                            })}
-                          </td>
-                        </ExplanationTr>
-                      )
-                    }
-                  })}
-                  {provided.placeholder}
-                </Table>
+                <tr
+                  className="[&_div]:m-0"
+                  onFocus={() =>
+                    gridFocus.setFocus({
+                      row,
+                      column: StepSegment.Explanation,
+                    })
+                  }
+                >
+                  {transformationTarget === TransformationTarget.Equation && (
+                    <td />
+                  )}
+                  {!selectIsDocumentEmpty(
+                    store.getState(),
+                    step.explanation.id
+                  ) ? (
+                    renderDownArrow()
+                  ) : (
+                    <td />
+                  )}
+                  <td colSpan={2} className="min-w-[10rem]">
+                    {step.explanation.render({
+                      config: {
+                        placeholder:
+                          row === 0 &&
+                          transformationTarget === TransformationTarget.Term
+                            ? equationsStrings.combineLikeTerms
+                            : equationsStrings.explanation,
+                      },
+                    })}
+                  </td>
+                </tr>
               )
-            }}
-          </Droppable>
-        </DragDropContext>
+            }
+          })}
+        </table>
+
         {renderAddButton()}
-      </TableWrapper>
+      </div>
     </HotKeys>
   )
 
@@ -288,18 +264,16 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <tbody onFocus={() => gridFocus.setFocus('firstExplanation')}>
-        <FirstExplanationTr>
-          <td />
+        <tr className="text-center [&_div]:m-0">
           <td colSpan={3}>
             {state.firstExplanation.render({
               config: {
-                placeholder: editorStrings.plugins.equations.firstExplanation,
+                placeholder: equationsStrings.firstExplanation,
               },
             })}
           </td>
-        </FirstExplanationTr>
+        </tr>
         <tr className="h-8">
-          <td />
           <td />
           {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)
             ? renderDownArrow()
@@ -336,22 +310,38 @@ export function EquationsEditor(props: EquationsProps) {
     if (!nestedFocus) return
 
     return (
-      <AddButton onClick={() => insertNewEquationWithFocus(state.steps.length)}>
-        {editorStrings.plugins.equations.addNew}
-      </AddButton>
+      <button
+        className="serlo-button-editor-secondary mt-6 text-base"
+        onClick={() => insertNewEquationWithFocus(state.steps.length)}
+      >
+        <FaIcon icon={faPlusCircle} /> {equationsStrings.addNewRow}
+      </button>
+    )
+  }
+
+  function renderButtons(row: number) {
+    if (!nestedFocus) return
+    const buttonClass = tw`serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
+
+    return (
+      <div className="ml-6 text-right">
+        {row === 0 ? null : (
+          <button
+            onClick={() => state.steps.move(row, row - 1)}
+            className={buttonClass}
+          >
+            <EditorTooltip text={equationsStrings.moveUpLabel} />
+            <FaIcon icon={faArrowCircleUp} className="-ml-0.25 align-[-3px]" />
+          </button>
+        )}
+        <button className={buttonClass} onClick={() => state.steps.remove(row)}>
+          <EditorTooltip text={equationsStrings.removeRowLabel} />
+          <FaIcon icon={faTrashAlt} className="align-baseline text-[15px]" />
+        </button>
+      </div>
     )
   }
 }
-
-const DropDown = styled.select({
-  height: '30px',
-  width: '35px',
-  marginLeft: '15px',
-  marginRight: '10px',
-  backgroundColor: 'lightgrey',
-  border: '1px solid lightgrey',
-  borderRadius: '5px',
-})
 
 interface StepEditorProps {
   gridFocus: GridFocus
@@ -361,58 +351,50 @@ interface StepEditorProps {
 }
 
 function StepEditor(props: StepEditorProps) {
-  const editorStrings = useEditorStrings()
+  const equationsStrings = useEditorStrings().plugins.equations
   const { gridFocus, row, state, transformationTarget } = props
 
   return (
     <>
       {transformationTarget === TransformationTarget.Equation && (
-        <LeftTd
+        <td
+          className="text-right"
           onClick={() => gridFocus.setFocus({ row, column: StepSegment.Left })}
         >
           <InlineMath
             focused={gridFocus.isFocused({ row, column: StepSegment.Left })}
             placeholder={
-              row === 0
-                ? '3x+1'
-                : `[${editorStrings.plugins.equations.leftHandSide}]`
+              row === 0 ? '3x+1' : `[${equationsStrings.leftHandSide}]`
             }
             state={state.left}
             onChange={(src) => state.left.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
           />
-        </LeftTd>
+        </td>
       )}
-      <SignTd>
+      <td className="py-0 px-[3px] text-center align-baseline">
         {(transformationTarget === 'equation' || row !== 0) && (
-          <DropDown
+          <select
+            className="ml-4 mr-2.5 h-8 w-9 rounded-md border-[1px] border-gray-200 bg-gray-200"
             tabIndex={-1}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               state.sign.set(e.target.value)
             }}
             value={state.sign.value}
           >
-            {[
-              Sign.Equals,
-              Sign.GreaterThan,
-              Sign.LessThan,
-              Sign.GreaterThanOrEqual,
-              Sign.LessThanOrEqual,
-              Sign.NotEqualTo,
-              Sign.AlmostEqualTo,
-              Sign.Estimates,
-            ].map((sign) => {
+            {Object.values(Sign).map((sign) => {
               return (
                 <option key={sign} value={sign}>
                   {renderSignToString(sign)}
                 </option>
               )
             })}
-          </DropDown>
+          </select>
         )}
-      </SignTd>
-      <MathTd
+      </td>
+      <td
+        className="align-baseline"
         onClick={() => gridFocus.setFocus({ row, column: StepSegment.Right })}
       >
         <InlineMath
@@ -421,17 +403,18 @@ function StepEditor(props: StepEditorProps) {
             row === 0
               ? '4x+3x'
               : transformationTarget === TransformationTarget.Term
-              ? `[${editorStrings.plugins.equations.term}]`
-              : `[${editorStrings.plugins.equations.rightHandSide}]`
+              ? `[${equationsStrings.term}]`
+              : `[${equationsStrings.rightHandSide}]`
           }
           state={state.right}
           onChange={(src) => state.right.set(src)}
           onFocusNext={() => gridFocus.moveRight()}
           onFocusPrevious={() => gridFocus.moveLeft()}
         />
-      </MathTd>
+      </td>
       {transformationTarget === TransformationTarget.Equation && (
-        <TransformTd
+        <td
+          className="pl-[5px] align-baseline"
           onClick={() =>
             gridFocus.setFocus({ row, column: StepSegment.Transform })
           }
@@ -444,15 +427,15 @@ function StepEditor(props: StepEditorProps) {
             })}
             placeholder={
               row === 0
-                ? editorStrings.plugins.equations.transformationExample
-                : `[${editorStrings.plugins.equations.transformation}]`
+                ? equationsStrings.transformationExample
+                : `[${equationsStrings.transformation}]`
             }
             state={state.transform}
             onChange={(src) => state.transform.set(src)}
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
           />
-        </TransformTd>
+        </td>
       )}
     </>
   )
