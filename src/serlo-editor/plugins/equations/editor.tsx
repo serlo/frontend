@@ -18,7 +18,7 @@ import {
   toTransformationTarget,
   TransformationTarget,
   TransformTd,
-} from './renderer'
+} from './editor-renderer'
 import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
