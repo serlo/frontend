@@ -821,6 +821,7 @@ export const loggedInData = {
           moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
           addSource: "Añadir fuente",
           removeLabel: "Eliminar",
+          moveUpLabel: 'Move up',
           dragLabel: "Arrastra para cambiar el orden",
           openInTab: "Abrir en una nueva pestaña",
           sources: "Fuentes",
