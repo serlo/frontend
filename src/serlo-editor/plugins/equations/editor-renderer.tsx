@@ -1,40 +1,10 @@
+import clsx from 'clsx'
 import { Fragment } from 'react'
-import styled from 'styled-components'
 
 import { EquationsProps } from '.'
 import { renderSignToString, Sign } from './sign'
 import { MathRenderer } from '@/serlo-editor/math'
 import { store, selectIsDocumentEmpty } from '@/serlo-editor/store'
-
-export const TableWrapper = styled.div({
-  padding: '10px 0',
-})
-
-export const Table = styled.table({
-  whiteSpace: 'nowrap',
-})
-
-export const MathTd = styled.td({ verticalAlign: 'baseline' })
-
-export const LeftTd = styled(MathTd)({
-  textAlign: 'right',
-})
-
-export const SignTd = styled.td({
-  padding: '0 3px',
-  textAlign: 'center',
-  verticalAlign: 'baseline',
-})
-
-export const TransformTd = styled(MathTd)({
-  paddingLeft: '5px',
-})
-
-export const ExplanationTr = styled.tr({ div: { margin: 0 } })
-export const FirstExplanationTr = styled(ExplanationTr)({
-  textAlign: 'center',
-  div: { margin: 0 },
-})
 
 export enum TransformationTarget {
   Equation = 'equation',
@@ -49,20 +19,25 @@ export function EquationsRenderer({ state }: EquationsProps) {
   const tdPadding = 'px-1 pt-1 pb-3'
 
   return (
-    <TableWrapper>
-      <Table>
+    <div className="py-2.5">
+      <table className="whitespace-nowrap">
         <tbody>
           {renderFirstExplanation()}
           {state.steps.map((step, row) => {
             return (
               <Fragment key={row}>
                 <tr>
-                  <LeftTd className={tdPadding}>
+                  <td className={clsx(tdPadding, 'text-right')}>
                     {step.left.value ? (
                       <MathRenderer inline state={step.left.value} />
                     ) : null}
-                  </LeftTd>
-                  <SignTd className={tdPadding}>
+                  </td>
+                  <td
+                    className={clsx(
+                      tdPadding,
+                      'py-0 px-[3px] text-center align-baseline'
+                    )}
+                  >
                     {(row !== 0 ||
                       transformationTarget !== TransformationTarget.Term) && (
                       <MathRenderer
@@ -70,39 +45,39 @@ export function EquationsRenderer({ state }: EquationsProps) {
                         state={renderSignToString(step.sign.value as Sign)}
                       />
                     )}
-                  </SignTd>
-                  <MathTd className={tdPadding}>
+                  </td>
+                  <td className={clsx(tdPadding, 'align-baseline')}>
                     {step.right.value ? (
                       <MathRenderer inline state={step.right.value} />
                     ) : null}
-                  </MathTd>
-                  <TransformTd>
+                  </td>
+                  <td className="pl-[5px] align-baseline">
                     {step.transform.value ? (
                       <>
                         |
                         <MathRenderer inline state={step.transform.value} />
                       </>
                     ) : null}
-                  </TransformTd>
+                  </td>
                 </tr>
                 {selectIsDocumentEmpty(
                   store.getState(),
                   step.explanation.id
                 ) ? null : (
-                  <ExplanationTr>
+                  <tr className="[&_div]:m-0">
                     <td />
                     {renderDownArrow()}
                     <td colSpan={2} className={tdPadding}>
                       {step.explanation.render()}
                     </td>
-                  </ExplanationTr>
+                  </tr>
                 )}
               </Fragment>
             )
           })}
         </tbody>
-      </Table>
-    </TableWrapper>
+      </table>
+    </div>
   )
 
   function renderFirstExplanation() {
@@ -111,11 +86,11 @@ export function EquationsRenderer({ state }: EquationsProps) {
 
     return (
       <>
-        <FirstExplanationTr>
+        <tr className="text-center [&_div]:m-0">
           <td colSpan={3} className={tdPadding}>
             {state.firstExplanation.render()}
           </td>
-        </FirstExplanationTr>
+        </tr>
         <tr className="h-8">
           <td />
           {renderDownArrow()}

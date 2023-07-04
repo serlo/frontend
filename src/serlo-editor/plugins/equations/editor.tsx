@@ -2,22 +2,13 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
-import styled from 'styled-components'
 
 import { EquationsProps, stepProps } from '.'
 import {
   EquationsRenderer,
-  FirstExplanationTr,
-  ExplanationTr,
-  LeftTd,
-  MathTd,
   renderDownArrow,
-  SignTd,
-  Table,
-  TableWrapper,
   toTransformationTarget,
   TransformationTarget,
-  TransformTd,
 } from './editor-renderer'
 import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
@@ -52,17 +43,6 @@ enum StepSegment {
 const preferenceKey = 'katex:usevisualmath'
 
 setDefaultPreference(preferenceKey, true)
-
-const RemoveButton = styled.button({
-  outline: 'none',
-  width: '35px',
-  border: 'none',
-  background: 'transparent',
-})
-const DragButton = styled.span({
-  cursor: 'grab',
-  paddingRight: '5px',
-})
 
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
@@ -174,7 +154,7 @@ export function EquationsEditor(props: EquationsProps) {
           </select>
         </div>
       )}
-      <TableWrapper>
+      <div className="py-2.5">
         <DragDropContext
           onDragEnd={(result) => {
             const { source, destination } = result
@@ -185,7 +165,11 @@ export function EquationsEditor(props: EquationsProps) {
           <Droppable droppableId="default">
             {(provided) => {
               return (
-                <Table ref={provided.innerRef} {...provided.droppableProps}>
+                <table
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="whitespace-nowrap"
+                >
                   {renderFirstExplanation()}
                   {state.steps.map((step, row) => {
                     return (
@@ -202,12 +186,13 @@ export function EquationsEditor(props: EquationsProps) {
                             >
                               <tr>
                                 <td>
-                                  <DragButton
+                                  <span
+                                    className="cursor-grab pr-[5px]"
                                     {...provided.dragHandleProps}
                                     tabIndex={-1}
                                   >
                                     <EdtrIcon icon={edtrDragHandle} />
-                                  </DragButton>
+                                  </span>
                                 </td>
                                 <StepEditor
                                   gridFocus={gridFocus}
@@ -216,12 +201,13 @@ export function EquationsEditor(props: EquationsProps) {
                                   transformationTarget={transformationTarget}
                                 />
                                 <td>
-                                  <RemoveButton
+                                  <button
+                                    className="w-9 border-none bg-transparent outline-none"
                                     tabIndex={-1}
                                     onClick={() => state.steps.remove(row)}
                                   >
                                     <FaIcon icon={faXmark} />
-                                  </RemoveButton>
+                                  </button>
                                 </td>
                               </tr>
                               {renderExplantionTr()}
@@ -235,7 +221,8 @@ export function EquationsEditor(props: EquationsProps) {
                       if (row === state.steps.length - 1) return null
 
                       return (
-                        <ExplanationTr
+                        <tr
+                          className="[&_div]:m-0"
                           onFocus={() =>
                             gridFocus.setFocus({
                               row,
@@ -268,18 +255,18 @@ export function EquationsEditor(props: EquationsProps) {
                               },
                             })}
                           </td>
-                        </ExplanationTr>
+                        </tr>
                       )
                     }
                   })}
                   {provided.placeholder}
-                </Table>
+                </table>
               )
             }}
           </Droppable>
         </DragDropContext>
         {renderAddButton()}
-      </TableWrapper>
+      </div>
     </HotKeys>
   )
 
@@ -288,7 +275,7 @@ export function EquationsEditor(props: EquationsProps) {
 
     return (
       <tbody onFocus={() => gridFocus.setFocus('firstExplanation')}>
-        <FirstExplanationTr>
+        <tr className="text-center [&_div]:m-0">
           <td />
           <td colSpan={3}>
             {state.firstExplanation.render({
@@ -297,7 +284,7 @@ export function EquationsEditor(props: EquationsProps) {
               },
             })}
           </td>
-        </FirstExplanationTr>
+        </tr>
         <tr className="h-8">
           <td />
           <td />
@@ -343,16 +330,6 @@ export function EquationsEditor(props: EquationsProps) {
   }
 }
 
-const DropDown = styled.select({
-  height: '30px',
-  width: '35px',
-  marginLeft: '15px',
-  marginRight: '10px',
-  backgroundColor: 'lightgrey',
-  border: '1px solid lightgrey',
-  borderRadius: '5px',
-})
-
 interface StepEditorProps {
   gridFocus: GridFocus
   row: number
@@ -367,7 +344,8 @@ function StepEditor(props: StepEditorProps) {
   return (
     <>
       {transformationTarget === TransformationTarget.Equation && (
-        <LeftTd
+        <td
+          className="text-right"
           onClick={() => gridFocus.setFocus({ row, column: StepSegment.Left })}
         >
           <InlineMath
@@ -382,11 +360,12 @@ function StepEditor(props: StepEditorProps) {
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
           />
-        </LeftTd>
+        </td>
       )}
-      <SignTd>
+      <td className="py-0 px-[3px] text-center align-baseline">
         {(transformationTarget === 'equation' || row !== 0) && (
-          <DropDown
+          <select
+            className="ml-4 mr-2.5 h-8 w-9 rounded-md border-[1px] border-gray-200 bg-gray-200"
             tabIndex={-1}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
               state.sign.set(e.target.value)
@@ -409,10 +388,11 @@ function StepEditor(props: StepEditorProps) {
                 </option>
               )
             })}
-          </DropDown>
+          </select>
         )}
-      </SignTd>
-      <MathTd
+      </td>
+      <td
+        className="align-baseline"
         onClick={() => gridFocus.setFocus({ row, column: StepSegment.Right })}
       >
         <InlineMath
@@ -429,9 +409,10 @@ function StepEditor(props: StepEditorProps) {
           onFocusNext={() => gridFocus.moveRight()}
           onFocusPrevious={() => gridFocus.moveLeft()}
         />
-      </MathTd>
+      </td>
       {transformationTarget === TransformationTarget.Equation && (
-        <TransformTd
+        <td
+          className="pl-[5px] align-baseline"
           onClick={() =>
             gridFocus.setFocus({ row, column: StepSegment.Transform })
           }
@@ -452,7 +433,7 @@ function StepEditor(props: StepEditorProps) {
             onFocusNext={() => gridFocus.moveRight()}
             onFocusPrevious={() => gridFocus.moveLeft()}
           />
-        </TransformTd>
+        </td>
       )}
     </>
   )
