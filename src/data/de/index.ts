@@ -821,6 +821,7 @@ export const loggedInData = {
           moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
           addSource: "Quellenangabe hinzufügen",
           removeLabel: "Löschen",
+          moveUpLabel: 'Move up',
           dragLabel: "Ziehen, um die Reihenfolge zu ändern",
           openInTab: "Öffne den Link in einem neuen Tab",
           sources: "Quellen",
