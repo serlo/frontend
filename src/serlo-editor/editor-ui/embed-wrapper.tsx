@@ -26,8 +26,10 @@ export function EmbedWrapper({
   className,
   type,
   embedUrl,
+  provider,
 }: EmbedWrapperProps) {
   const [showIframe, setShowIframe] = useState(false)
+  const isGeoGebra = provider === 'GeoGebra'
 
   useEffect(() => {
     setShowIframe(false)
@@ -68,15 +70,25 @@ export function EmbedWrapper({
 
     return (
       <div className="text-center">
-        <div className="relative bg-editor-primary-100 pb-[56.2%]">
+        <div
+          className={clsx(
+            'relative bg-editor-primary-100',
+            isGeoGebra ? '' : 'pb-[56.2%]'
+          )}
+        >
           <img
-            className="absolute left-0 h-full w-full object-cover opacity-50"
+            className={clsx(
+              'w-full opacity-90',
+              isGeoGebra
+                ? 'h-auto max-h-[45rem] object-contain object-left'
+                : 'absolute left-0 h-full object-cover'
+            )}
             src={previewImageUrl}
             alt={`${strings.content.previewImage}`}
           />
         </div>
         <div
-          className="absolute inset-0 flex items-center justify-around"
+          className="wrapping-overlay absolute inset-0 flex items-center justify-around"
           onClick={confirmLoad}
         >
           <button

@@ -6,7 +6,6 @@ import { FaIcon } from '../fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
-import { tw } from '@/helper/tw'
 import { serloDomain } from '@/helper/urls/serlo-domain'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
@@ -81,14 +80,6 @@ export function PrivacyWrapper({
         'group relative mb-block block cursor-pointer [contain:content]'
       )}
     >
-      {isGeoGebra ? (
-        <img
-          className="w-full opacity-90"
-          src={previewImageUrl}
-          alt={`${strings.content.previewImage} ${provider}`}
-        />
-      ) : null}
-
       {renderPlaceholder()}
       {showIframe && children}
     </div>
@@ -111,7 +102,10 @@ export function PrivacyWrapper({
         >
           <img
             className={clsx(
-              'absolute left-0 h-full w-full object-cover',
+              'w-full',
+              isGeoGebra
+                ? 'h-auto max-h-[45rem] object-contain object-left'
+                : 'absolute left-0 h-full object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
             src={previewImageUrl}
@@ -132,7 +126,7 @@ export function PrivacyWrapper({
         )}
         <div
           className={clsx(
-            'absolute inset-0  flex items-center justify-around ',
+            'wrapping-overlay absolute inset-0 flex items-center justify-around',
             consentGiven ? '' : '-top-28 mobile:-top-12 sm:-top-24'
           )}
           onClick={confirmLoad}

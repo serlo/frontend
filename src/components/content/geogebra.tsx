@@ -19,7 +19,7 @@ export function Geogebra({ id }: GeogebraProps) {
         embedUrl={url}
         className="print:hidden"
       >
-        <GeogebraRenderer url={url} />
+        <GeogebraRenderer url={url} id={id} />
       </PrivacyWrapper>
       <p className="serlo-p hidden print:block">[{url}]</p>
     </>
