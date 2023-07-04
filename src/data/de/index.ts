@@ -638,8 +638,8 @@ export const loggedInData = {
           combineLikeTerms: "Fasse die Terme zusammen.",
           setEqual: "Setze die Terme gleich.",
           firstExplanation: "Erste Erklärung",
-          moveUpLabel: 'Move up',
-          removeRowLabel: 'Remove row'
+          moveUpLabel: "Zeile eins nach oben verschieben",
+          removeRowLabel: "Zeile entfernen"
         },
         geogebra: {
           title: 'GeoGebra Applet',
