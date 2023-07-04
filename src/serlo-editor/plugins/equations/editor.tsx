@@ -383,16 +383,7 @@ function StepEditor(props: StepEditorProps) {
             }}
             value={state.sign.value}
           >
-            {[
-              Sign.Equals,
-              Sign.GreaterThan,
-              Sign.LessThan,
-              Sign.GreaterThanOrEqual,
-              Sign.LessThanOrEqual,
-              Sign.NotEqualTo,
-              Sign.AlmostEqualTo,
-              Sign.Estimates,
-            ].map((sign) => {
+            {Object.values(Sign).map((sign) => {
               return (
                 <option key={sign} value={sign}>
                   {renderSignToString(sign)}
