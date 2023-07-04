@@ -709,7 +709,7 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          addNew: 'Add new equation',
+          addNew: 'Add new line',
         },
         geogebra: {
           title: 'GeoGebra Applet',
