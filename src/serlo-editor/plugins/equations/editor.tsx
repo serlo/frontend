@@ -1,12 +1,6 @@
-import {
-  faPlusCircle,
-  faTrash,
-  faTrashAlt,
-  faXmark,
-} from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
-import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { EquationsProps, stepProps } from '.'
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
@@ -23,7 +17,6 @@ import {
   PreferenceContext,
   setDefaultPreference,
 } from '@/serlo-editor/core'
-import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { MathEditor, MathRenderer } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {
@@ -198,112 +191,74 @@ export function EquationsEditor(props: EquationsProps) {
         </div>
       )}
       <div className="py-2.5">
-        <DragDropContext
-          onDragEnd={(result) => {
-            const { source, destination } = result
-            if (!destination) return
-            state.steps.move(source.index, destination.index)
-          }}
-        >
-          <Droppable droppableId="default">
-            {(provided) => {
+        <table className="whitespace-nowrap">
+          {renderFirstExplanation()}
+          {state.steps.map((step, row) => {
+            return (
+              <tbody key={step.explanation.id}>
+                <tr>
+                  <StepEditor
+                    gridFocus={gridFocus}
+                    row={row}
+                    state={step}
+                    transformationTarget={transformationTarget}
+                  />
+                  <td>{renderCloseButton(row)}</td>
+                </tr>
+                {renderExplantionTr()}
+              </tbody>
+            )
+
+            function renderExplantionTr() {
+              if (row === state.steps.length - 1) return null
+
               return (
-                <table
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="whitespace-nowrap"
+                <tr
+                  className="[&_div]:m-0"
+                  onFocus={() =>
+                    gridFocus.setFocus({
+                      row,
+                      column: StepSegment.Explanation,
+                    })
+                  }
                 >
-                  {renderFirstExplanation()}
-                  {state.steps.map((step, row) => {
-                    return (
-                      <Draggable
-                        key={step.explanation.id}
-                        draggableId={step.explanation.id}
-                        index={row}
-                      >
-                        {(provided) => {
-                          return (
-                            <tbody
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                            >
-                              <tr>
-                                <td>
-                                  <span
-                                    className="cursor-grab pr-[5px]"
-                                    {...provided.dragHandleProps}
-                                    tabIndex={-1}
-                                  >
-                                    <EdtrIcon icon={edtrDragHandle} />
-                                  </span>
-                                </td>
-                                <StepEditor
-                                  gridFocus={gridFocus}
-                                  row={row}
-                                  state={step}
-                                  transformationTarget={transformationTarget}
-                                />
-                                <td>{renderCloseButton(row)}</td>
-                              </tr>
-                              {renderExplantionTr()}
-                            </tbody>
-                          )
-                        }}
-                      </Draggable>
-                    )
-
-                    function renderExplantionTr() {
-                      if (row === state.steps.length - 1) return null
-
-                      return (
-                        <tr
-                          className="[&_div]:m-0"
-                          onFocus={() =>
-                            gridFocus.setFocus({
-                              row,
-                              column: StepSegment.Explanation,
-                            })
-                          }
-                        >
-                          {transformationTarget ===
-                            TransformationTarget.Equation && <td />}
-                          <td />
-                          {!selectIsDocumentEmpty(
-                            store.getState(),
-                            step.explanation.id
-                          ) ? (
-                            renderDownArrow()
-                          ) : (
-                            <td />
-                          )}
-                          <td colSpan={2} className="min-w-[10rem]">
-                            {step.explanation.render({
-                              config: {
-                                placeholder:
-                                  row === 0 &&
-                                  transformationTarget ===
-                                    TransformationTarget.Term
-                                    ? editorStrings.plugins.equations
-                                        .combineLikeTerms
-                                    : editorStrings.plugins.equations
-                                        .explanation,
-                              },
-                            })}
-                          </td>
-                        </tr>
-                      )
-                    }
-                  })}
-                  {provided.placeholder}
-                </table>
+                  {transformationTarget === TransformationTarget.Equation && (
+                    <td />
+                  )}
+                  <td />
+                  {!selectIsDocumentEmpty(
+                    store.getState(),
+                    step.explanation.id
+                  ) ? (
+                    renderDownArrow()
+                  ) : (
+                    <td />
+                  )}
+                  <td colSpan={2} className="min-w-[10rem]">
+                    {step.explanation.render({
+                      config: {
+                        placeholder:
+                          row === 0 &&
+                          transformationTarget === TransformationTarget.Term
+                            ? editorStrings.plugins.equations.combineLikeTerms
+                            : editorStrings.plugins.equations.explanation,
+                      },
+                    })}
+                  </td>
+                </tr>
               )
-            }}
-          </Droppable>
-        </DragDropContext>
+            }
+          })}
+        </table>
+
         {renderAddButton()}
       </div>
     </HotKeys>
   )
+
+  // const { source, destination } = result
+  // if (!destination) return
+  // state.steps.move(source.index, destination.index)
 
   function renderFirstExplanation() {
     if (transformationTarget === TransformationTarget.Term) return
