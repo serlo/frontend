@@ -20,6 +20,8 @@ import {
   runCommitTemporaryActionToHistorySaga,
 } from '../history'
 import { selectPlugin } from '../plugins'
+import { getPluginByType } from '@/serlo-editor/core/contexts/plugins-context'
+import { EditorPlugin, StateType } from '@/serlo-editor/plugin'
 
 export function* documentsSaga() {
   yield all([
@@ -131,19 +133,19 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
 function* replaceDocumentSaga(
   action: ReturnType<typeof runReplaceDocumentSaga>
 ) {
-  const { id } = action.payload
+  const { id, plugins, pluginType } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: ReturnType<typeof selectDocument> = yield select(
     selectDocument,
     id
   )
   if (!currentDocument) return
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const plugin: ReturnType<typeof selectPlugin> = yield select(
-    selectPlugin,
-    action.payload.plugin
-  )
-  if (!plugin) return
+  const contextPlugin = getPluginByType(plugins, pluginType)
+  if (!contextPlugin) return
+  const plugin: EditorPlugin<
+    StateType<any, any, any>,
+    {}
+  > = contextPlugin.plugin
   const pendingDocs: {
     id: string
     plugin: string
@@ -170,7 +172,7 @@ function* replaceDocumentSaga(
   const reversibleAction: ReversibleAction = {
     action: pureReplaceDocument({
       id,
-      plugin: action.payload.plugin,
+      plugin: pluginType,
       state: pluginState,
     }),
     reverse: pureReplaceDocument({

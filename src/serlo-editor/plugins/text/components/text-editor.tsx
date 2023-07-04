@@ -367,10 +367,14 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      function insertPlugin(plugin: string, { state }: { state?: unknown }) {
+      function insertPlugin(
+        pluginType: string,
+        { state }: { state?: unknown }
+      ) {
         const isEditorEmpty = Node.string(editor) === ''
+
         if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, plugin, state }))
+          dispatch(runReplaceDocumentSaga({ id, plugins, pluginType, state }))
           return
         }
 
@@ -396,7 +400,7 @@ export function TextEditor(props: TextEditorProps) {
             insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
-              document: { plugin, state },
+              document: { plugin: pluginType, state },
             })
           )
         })

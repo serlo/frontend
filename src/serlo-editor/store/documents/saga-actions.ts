@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
 
 import { StateExecutor, StateUpdater } from '../../types/internal__plugin-state'
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 
 export const runChangeDocumentSaga = createAction<{
   id: string
@@ -13,6 +14,7 @@ export const runChangeDocumentSaga = createAction<{
 
 export const runReplaceDocumentSaga = createAction<{
   id: string
-  plugin: string
+  plugins: PluginsContextPlugins
+  pluginType: string
   state?: unknown
 }>('documents/runReplaceDocumentSaga')
