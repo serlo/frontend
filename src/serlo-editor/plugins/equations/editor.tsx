@@ -1,4 +1,4 @@
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -18,7 +18,7 @@ import {
   PreferenceContext,
   setDefaultPreference,
 } from '@/serlo-editor/core'
-import { AddButton, edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
+import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { MathEditor, MathRenderer } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {
@@ -101,7 +101,9 @@ export function EquationsEditor(props: EquationsProps) {
             store.getState(),
             state.firstExplanation.id
           ) ? null : (
-            <p className="serlo-p mb-0">{state.firstExplanation.render()}</p>
+            <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
+              {state.firstExplanation.render()}
+            </div>
           )
         }
         steps={getStaticSteps()}
@@ -123,7 +125,9 @@ export function EquationsEditor(props: EquationsProps) {
           store.getState(),
           explanation.id
         ) ? null : (
-          <p className="serlo-p mb-0">{explanation.render()}</p>
+          <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
+            {explanation.render()}
+          </div>
         ),
       }
     })
@@ -357,9 +361,12 @@ export function EquationsEditor(props: EquationsProps) {
     if (!nestedFocus) return
 
     return (
-      <AddButton onClick={() => insertNewEquationWithFocus(state.steps.length)}>
-        {editorStrings.plugins.equations.addNew}
-      </AddButton>
+      <button
+        className="serlo-button-editor-secondary mt-6"
+        onClick={() => insertNewEquationWithFocus(state.steps.length)}
+      >
+        <FaIcon icon={faPlusCircle} /> {editorStrings.plugins.equations.addNew}
+      </button>
     )
   }
 }

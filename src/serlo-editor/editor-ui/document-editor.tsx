@@ -93,7 +93,9 @@ export function DocumentEditor({
   return (
     <Container
       className={
-        isFocused || isHovered ? 'default-document-editor-container' : ''
+        isFocused || isHovered
+          ? 'default-document-editor-container document-editor-container'
+          : 'document-editor-container'
       }
       isFocused={isFocused}
       isHovered={isHovered}
