@@ -1,122 +1,108 @@
-import { Fragment } from 'react'
-import styled from 'styled-components'
+import clsx from 'clsx'
+import { Fragment, ReactNode } from 'react'
 
-import { EquationsProps } from '.'
-import { renderSignToString, Sign } from './sign'
-import { MathRenderer } from '@/serlo-editor/math'
-import { store, selectIsDocumentEmpty } from '@/serlo-editor/store'
+import { Sign, renderSignToString } from './sign'
 
-export const TableWrapper = styled.div({
-  padding: '10px 0',
-})
-
-export const Table = styled.table({
-  whiteSpace: 'nowrap',
-})
-
-export const MathTd = styled.td({ verticalAlign: 'baseline' })
-
-export const LeftTd = styled(MathTd)({
-  textAlign: 'right',
-})
-
-export const SignTd = styled.td({
-  padding: '0 3px',
-  textAlign: 'center',
-  verticalAlign: 'baseline',
-})
-
-export const TransformTd = styled(MathTd)({
-  paddingLeft: '5px',
-})
-
-export const ExplanationTr = styled.tr({ div: { margin: 0 } })
-export const FirstExplanationTr = styled(ExplanationTr)({
-  textAlign: 'center',
-  div: { margin: 0 },
-})
-
-export enum TransformationTarget {
-  Equation = 'equation',
-  Term = 'term',
+export interface EquationsRendererStep {
+  left: string
+  sign: Sign
+  right: string
+  transform: string
+  explanation?: JSX.Element | null
 }
 
-export function EquationsRenderer({ state }: EquationsProps) {
-  const transformationTarget = toTransformationTarget(
-    state.transformationTarget.value
-  )
+export interface EquationsRendererProps {
+  steps: EquationsRendererStep[]
+  firstExplanation?: JSX.Element | null
+  transformationTarget: 'term' | 'equation'
+  formulaRenderer: (formula: string) => JSX.Element | null
+}
 
-  const tdPadding = 'px-1 pt-1 pb-3'
-
+export function EquationsRenderer({
+  steps,
+  firstExplanation,
+  formulaRenderer,
+  transformationTarget,
+}: EquationsRendererProps) {
   return (
-    <TableWrapper>
-      <Table>
-        <tbody>
+    <div className="mx-side mb-7 overflow-x-auto py-2.5">
+      <table>
+        <tbody className="whitespace-nowrap">
           {renderFirstExplanation()}
-          {state.steps.map((step, row) => {
-            return (
-              <Fragment key={row}>
-                <tr>
-                  <LeftTd className={tdPadding}>
-                    {step.left.value ? (
-                      <MathRenderer inline state={step.left.value} />
-                    ) : null}
-                  </LeftTd>
-                  <SignTd className={tdPadding}>
-                    {(row !== 0 ||
-                      transformationTarget !== TransformationTarget.Term) && (
-                      <MathRenderer
-                        inline
-                        state={renderSignToString(step.sign.value as Sign)}
-                      />
-                    )}
-                  </SignTd>
-                  <MathTd className={tdPadding}>
-                    {step.right.value ? (
-                      <MathRenderer inline state={step.right.value} />
-                    ) : null}
-                  </MathTd>
-                  <TransformTd>
-                    {step.transform.value ? (
-                      <>
-                        |
-                        <MathRenderer inline state={step.transform.value} />
-                      </>
-                    ) : null}
-                  </TransformTd>
-                </tr>
-                {selectIsDocumentEmpty(
-                  store.getState(),
-                  step.explanation.id
-                ) ? null : (
-                  <ExplanationTr>
-                    <td />
-                    {renderDownArrow()}
-                    <td colSpan={2} className={tdPadding}>
-                      {step.explanation.render()}
-                    </td>
-                  </ExplanationTr>
-                )}
-              </Fragment>
-            )
-          })}
+          {steps.map(renderStep)}
         </tbody>
-      </Table>
-    </TableWrapper>
+      </table>
+    </div>
   )
+
+  function renderStep(step: EquationsRendererStep, i: number) {
+    return (
+      <Fragment key={i}>
+        <tr>
+          {transformationTarget !== 'term' &&
+            renderTD(
+              step.left ? renderStepFormula('left') : null,
+              'text-right'
+            )}
+          {transformationTarget !== 'term' || i !== 0 ? (
+            renderTD(
+              formulaRenderer(renderSignToString(step.sign)),
+              'text-center'
+            )
+          ) : (
+            <td />
+          )}
+          {renderTD(
+            step.right ? renderStepFormula('right') : null,
+            'text-left'
+          )}
+          {renderTD(
+            step.transform ? (
+              <span className="border-l border-black pl-1">
+                {renderStepFormula('transform')}
+              </span>
+            ) : null
+          )}
+        </tr>
+        {step.explanation ? (
+          <tr className="text-brandgreen-darker whitespace-normal">
+            <td />
+            {renderDownArrow()}
+            <td colSpan={2} className="relative -left-side px-1 pt-1 pb-3">
+              {step.explanation}
+            </td>
+          </tr>
+        ) : null}
+      </Fragment>
+    )
+
+    function renderTD(
+      content: JSX.Element | ReactNode[] | null,
+      align?: 'text-left' | 'text-right' | 'text-center'
+    ) {
+      return (
+        <td className={clsx('px-1 pt-1 pb-3 align-baseline text-lg', align)}>
+          {content}
+        </td>
+      )
+    }
+
+    function renderStepFormula(key: 'transform' | 'left' | 'right') {
+      return formulaRenderer('\\displaystyle ' + step[key])
+    }
+  }
 
   function renderFirstExplanation() {
-    if (selectIsDocumentEmpty(store.getState(), state.firstExplanation.id))
-      return
+    if (transformationTarget === 'term' || !firstExplanation) return null
 
     return (
       <>
-        <FirstExplanationTr>
-          <td colSpan={3} className={tdPadding}>
-            {state.firstExplanation.render()}
+        <tr className="text-brandgreen-darker whitespace-normal text-center">
+          <td className="relative -left-side pb-4" colSpan={3}>
+            {firstExplanation}
           </td>
-        </FirstExplanationTr>
-        <tr className="h-8">
+        </tr>
+        <tr className="text-brandgreen-darker">
           <td />
           {renderDownArrow()}
         </tr>
@@ -126,58 +112,9 @@ export function EquationsRenderer({ state }: EquationsProps) {
 }
 
 export function renderDownArrow() {
-  const downArrow = `
-    <svg xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <marker
-          id="arrow"
-          markerWidth="10"
-          markerHeight="10"
-          orient="auto"
-          markerUnits="strokeWidth"
-          refX="10"
-          refY="5"
-          viewBox="0 0 20 10"
-        >
-          <path
-            d="M 0,0 l 10,5 l -10,5"
-            stroke="#000"
-            stroke-width="2"
-            fill="none"
-            vector-effect="non-scaling-size"
-          />
-        </marker>
-      </defs>
-
-      <line
-        x1="10"
-        y1="0%"
-        x2="10"
-        y2="99%"
-        stroke="#000"
-        stroke-width="2"
-        marker-end="url(#arrow)"
-        vector-effect="non-scaling-stroke"
-      />
-    </svg>`
-  const downArrowBase64 = Buffer.from(downArrow).toString('base64')
-
   return (
-    <td
-      style={{
-        backgroundImage: `url('data:image/svg+xml;base64,${downArrowBase64}')`,
-        backgroundSize: '20px calc(100% - 10px)',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center 5px',
-      }}
-    />
+    <td className="text-center font-[serif] text-4xl">
+      <div className="-mt-3">&darr;</div>
+    </td>
   )
-}
-
-export function toTransformationTarget(text: string): TransformationTarget {
-  return isTransformationTarget(text) ? text : TransformationTarget.Equation
-}
-
-function isTransformationTarget(text: string): text is TransformationTarget {
-  return Object.values<string>(TransformationTarget).includes(text)
 }
