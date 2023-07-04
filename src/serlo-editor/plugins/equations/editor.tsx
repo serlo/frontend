@@ -1,4 +1,9 @@
-import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPlusCircle,
+  faTrash,
+  faTrashAlt,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
@@ -238,15 +243,7 @@ export function EquationsEditor(props: EquationsProps) {
                                   state={step}
                                   transformationTarget={transformationTarget}
                                 />
-                                <td>
-                                  <button
-                                    className="w-9 border-none bg-transparent outline-none"
-                                    tabIndex={-1}
-                                    onClick={() => state.steps.remove(row)}
-                                  >
-                                    <FaIcon icon={faXmark} />
-                                  </button>
-                                </td>
+                                <td>{renderCloseButton(row)}</td>
                               </tr>
                               {renderExplantionTr()}
                             </tbody>
@@ -366,6 +363,17 @@ export function EquationsEditor(props: EquationsProps) {
         onClick={() => insertNewEquationWithFocus(state.steps.length)}
       >
         <FaIcon icon={faPlusCircle} /> {editorStrings.plugins.equations.addNew}
+      </button>
+    )
+  }
+  function renderCloseButton(row: number) {
+    if (!nestedFocus) return
+    return (
+      <button
+        className="serlo-button-editor-secondary h-7 w-7"
+        onClick={() => state.steps.remove(row)}
+      >
+        <FaIcon icon={faTrashAlt} className="align-baseline text-sm" />
       </button>
     )
   }
