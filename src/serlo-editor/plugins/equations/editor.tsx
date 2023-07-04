@@ -4,12 +4,12 @@ import { useContext, useEffect, useState } from 'react'
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { EquationsProps, stepProps } from '.'
+import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import {
   EquationsRenderer,
+  EquationsRendererStep,
   renderDownArrow,
-  toTransformationTarget,
-  TransformationTarget,
-} from './editor-renderer'
+} from './renderer'
 import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -19,7 +19,7 @@ import {
   setDefaultPreference,
 } from '@/serlo-editor/core'
 import { AddButton, edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
-import { MathEditor } from '@/serlo-editor/math'
+import { MathEditor, MathRenderer } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
 import {
   store,
@@ -93,7 +93,41 @@ export function EquationsEditor(props: EquationsProps) {
 
   const editorStrings = useEditorStrings()
 
-  if (!nestedFocus) return <EquationsRenderer {...props} />
+  if (!nestedFocus)
+    return (
+      <EquationsRenderer
+        firstExplanation={
+          selectIsDocumentEmpty(
+            store.getState(),
+            state.firstExplanation.id
+          ) ? null : (
+            <p className="serlo-p mb-0">{state.firstExplanation.render()}</p>
+          )
+        }
+        steps={getStaticSteps()}
+        transformationTarget={transformationTarget}
+        formulaRenderer={(formula: string) => (
+          <MathRenderer inline state={formula} />
+        )}
+      />
+    )
+
+  function getStaticSteps(): EquationsRendererStep[] {
+    return state.steps.map(({ left, sign, right, transform, explanation }) => {
+      return {
+        left: left.value,
+        sign: sign.value as Sign,
+        right: right.value,
+        transform: transform.value,
+        explanation: selectIsDocumentEmpty(
+          store.getState(),
+          explanation.id
+        ) ? null : (
+          <p className="serlo-p mb-0">{explanation.render()}</p>
+        ),
+      }
+    })
+  }
 
   return (
     <HotKeys
