@@ -271,12 +271,6 @@
     .serlo-h1 {
       @apply special-hyphens-auto;
     }
-    .serlo-h2 {
-      @apply !mx-0;
-    }
-    .serlo-h3 {
-      @apply !mx-0 !mt-5;
-    }
 
     div[contenteditable] .serlo-h3 {
       @apply mt-0;

@@ -897,6 +897,7 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: 'Remove',
+          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: 'Open in new tab',
           sources: 'Sources',

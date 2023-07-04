@@ -414,7 +414,7 @@ export function TextEditor(props: TextEditorProps) {
         const classNames = ['serlo-h1', 'serlo-h2', 'serlo-h3']
         return createElement(
           `h${element.level}`,
-          { ...attributes, className: classNames[element.level] },
+          { ...attributes, className: classNames[element.level - 1] },
           <>{children}</>
         )
       }
@@ -483,7 +483,7 @@ export function TextEditor(props: TextEditorProps) {
               <TextLeafRenderer {...props} />
             </span>
           )}
-          className="[&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <>
