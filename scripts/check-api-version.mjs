@@ -4,9 +4,7 @@ import { exit } from 'process'
 
 const query = gql`
   query getAPIVersion {
-    metadata {
-      version
-    }
+    version
   }
 `
 
