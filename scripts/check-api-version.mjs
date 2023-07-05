@@ -11,7 +11,7 @@ const query = gql`
 const checkApi = async (domain) => {
   try {
     const response = await request(`https://api.${domain}/graphql`, query)
-    const version = response.metadata.version
+    const { version } = response
     console.log(`api.${domain} running:\x1b[32m ${version}\x1b[0m`)
   } catch {
     console.error(
