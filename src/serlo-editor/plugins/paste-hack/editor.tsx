@@ -5,6 +5,7 @@ import { useRef } from 'react'
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import {
   store,
   selectParent,
@@ -46,6 +47,8 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
+  const plugins = usePlugins()
+
   function throwError(error?: unknown) {
     showToastNotice('⚠️ Sorry, something is wrong with the data.', 'warning')
     // eslint-disable-next-line no-console
@@ -85,10 +88,13 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
             parent: parentPlugin.id,
             sibling: props.id,
             document,
+            plugins,
           })
         )
       }
-      dispatch(removePluginChild({ parent: parentPlugin.id, child: props.id }))
+      dispatch(
+        removePluginChild({ parent: parentPlugin.id, child: props.id, plugins })
+      )
     } catch (error) {
       throwError(error)
     }

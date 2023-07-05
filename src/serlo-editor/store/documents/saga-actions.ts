@@ -5,6 +5,7 @@ import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-cont
 
 export const runChangeDocumentSaga = createAction<{
   id: string
+  plugins: PluginsContextPlugins
   state: {
     initial: StateUpdater<unknown>
     executor?: StateExecutor<StateUpdater<unknown>>

@@ -1,5 +1,7 @@
 import { createAction } from '@reduxjs/toolkit'
 
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
+
 export const insertPluginChildBefore = createAction<{
   parent: string
   sibling: string
@@ -7,6 +9,7 @@ export const insertPluginChildBefore = createAction<{
     plugin: string
     state?: unknown
   }
+  plugins: PluginsContextPlugins
 }>('plugin/insertPluginChildBefore')
 
 export const insertPluginChildAfter = createAction<{
@@ -16,9 +19,11 @@ export const insertPluginChildAfter = createAction<{
     plugin: string
     state?: unknown
   }
+  plugins: PluginsContextPlugins
 }>('plugin/insertPluginChildAfter')
 
 export const removePluginChild = createAction<{
   parent: string
   child: string
+  plugins: PluginsContextPlugins
 }>('plugin/removePluginChild')
