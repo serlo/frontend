@@ -218,7 +218,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
 }
 
 export async function fetchQuickbarData(subject?: string) {
-  const req = await fetch('https://de.serlo.org/api/stats/quickbar.json')
+  const req = await fetch('/api/frontend/quickbar-data')
   const data = (await req.json()) as QuickbarData
 
   data.forEach((entry) => {
