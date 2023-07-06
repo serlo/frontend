@@ -146,7 +146,6 @@ export const instanceData = {
         yourAnswer: "உங்கள் பதில்:",
         chooseOption: 'Click on one of the options.',
         printModeChooseOption: 'Check one of the options.',
-        strategy: 'Solution Strategy',
         showSolution: "விடையைக் காட்டு",
         hideSolution: "விடையை மறைக்கவும்"
       },
@@ -614,9 +613,10 @@ export const loggedInData = {
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
         },
-        deprecated: {
-          title: 'Deprecated',
-          unsupported: 'This part of the document contains features that are no longer supported.'
+        unsupported: {
+          title: 'Unsupported',
+          notSupported: 'Sorry, this plugin is not supported:',
+          explanation: 'It will not be displayed to users. You can either remove it or asks developers for support.'
         },
         error: {
           title: 'Error',
@@ -638,7 +638,8 @@ export const loggedInData = {
           combineLikeTerms: 'Combine like terms.',
           setEqual: 'Set the terms equal to each other.',
           firstExplanation: 'First explanation',
-          addNew: 'Add new equation'
+          moveUpLabel: 'Move up',
+          removeRowLabel: 'Remove row'
         },
         geogebra: {
           title: 'GeoGebra Applet',
@@ -668,7 +669,6 @@ export const loggedInData = {
           captionPlaceholder: 'Optional caption',
           href: 'Link',
           hrefPlaceholder: 'Link the image',
-          openInNewTab: 'Open in new tab',
           alt: 'Description (hidden)',
           altPlaceholder: 'Describe what the image shows',
           maxWidth: 'Maximum width',
@@ -691,9 +691,7 @@ export const loggedInData = {
         multimedia: {
           title: 'Multimedia content associated with text',
           description: 'Create an illustrating or explaining multimedia content associated with text.',
-          image: "படம்",
-          video: "காணொளி",
-          geogebraTitle: 'GeoGebra Applet',
+          chooseSize: 'Choose size of multimedia element',
           changeType: 'Change the multimedia type',
           howImportant: 'How important is the multimedia content?',
           isIllustrating: 'It is illustrating',
@@ -726,10 +724,6 @@ export const loggedInData = {
           dragElement: 'Drag the element within the document',
           addAnElement: 'Add an element'
         },
-        separator: {
-          title: 'Solution Separator',
-          description: 'Divide the solution into individual steps.'
-        },
         serloTable: {
           title: 'Table',
           description: 'Create pretty tables',
@@ -754,6 +748,7 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: 'Compose content using rich text and math formulas.',
+          placeholder: 'Write something or add elements with ⊕.',
           quote: 'Quote',
           setColor: 'Set color',
           resetColor: 'Reset color',
@@ -827,6 +822,7 @@ export const loggedInData = {
           moreOnTopic: 'You can find more content on this topic here',
           addSource: 'Add source',
           removeLabel: 'Remove',
+          moveUpLabel: 'Move up',
           dragLabel: 'Drag to change order',
           openInTab: 'Open in new tab',
           sources: 'Sources',
@@ -865,12 +861,9 @@ export const loggedInData = {
           title: "தலைப்பு"
         },
         exercise: {
-          addChoiceExercise: 'Add choice exercise',
-          choiceExercise: 'Choice exercise',
-          addInputExercise: 'Add input exercise',
+          scMcExercise: 'Choice exercise',
           inputExercise: 'Input exercise',
-          addH5pExercise: 'Add h5p exercise',
-          h5pExercise: 'H5p exercise',
+          h5p: 'H5p exercise',
           addOptionalInteractiveEx: 'Add an optional interactive exercise:',
           changeInteractive: 'Change interactive element',
           removeInteractive: 'Remove interactive element'
@@ -906,7 +899,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: 'Optionally explain the solution strategy here',
-          fundamentalsNote: 'For this exercise, you need the following fundamentals:',
           idArticle: 'ID of an article, e.g. 1855',
           openArticleTab: 'Open the article in a new tab:',
           linkTitle: 'Title of the link',

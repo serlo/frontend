@@ -1,17 +1,17 @@
-import * as R from 'ramda'
-
 import {
   child,
-  ChildStateType,
   ChildStateTypeConfig,
   EditorPlugin,
   EditorPluginProps,
   list,
-  ListStateType,
 } from '../../plugin'
-import { RowsEditor } from './components/rows-editor'
+import { RowsEditor } from './editor'
 
-const defaultConfig: RowsConfig = {
+function createRowsState(content: ChildStateTypeConfig) {
+  return list(child(content), 1)
+}
+
+const defaultConfig = {
   content: { plugin: 'text' },
   parentType: 'root',
 }
@@ -24,36 +24,27 @@ export function createRowsPlugin(
   return {
     Component: RowsEditor,
     config,
-    state: list(child(content), 1),
+    state: createRowsState(content),
     insertChild(state, { previousSibling, document }) {
-      const index = getIndexToInsert()
-      if (index === null) return
-      state.insert(index, document)
-
-      function getIndexToInsert(): number | null {
-        if (!previousSibling) return 0
-        const index = R.findIndex(
-          (sibling) => sibling.id === previousSibling,
-          state
-        )
-        if (index === -1) return null
-        return index + 1
+      if (!previousSibling) {
+        state.insert(0, document)
+        return
       }
+      const index = state.findIndex(({ id }) => id === previousSibling)
+      if (index !== -1) state.insert(index + 1, document)
     },
-
-    removeChild(state, id) {
-      const index = R.findIndex((child) => child.id === id, state)
-      if (index === -1) return
-      state.remove(index)
+    removeChild(state, childId) {
+      const index = state.findIndex(({ id }) => id === childId)
+      if (index !== -1) state.remove(index)
     },
   }
 }
 
-export interface RowsConfig extends Omit<RowsPluginConfig, 'theme'> {
+export interface RowsConfig extends RowsPluginConfig {
   content: ChildStateTypeConfig
 }
 
-export type RowsPluginState = ListStateType<ChildStateType>
+export type RowsPluginState = ReturnType<typeof createRowsState>
 
 export interface RowsPluginConfig {
   allowedPlugins?: string[]

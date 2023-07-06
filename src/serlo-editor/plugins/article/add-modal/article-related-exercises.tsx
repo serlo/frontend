@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
 import { SerloAddButton } from '../../../plugin/helpers/serlo-editor-button'
+import { InjectionRenderer } from '../../injection/renderer'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
-import { Injection } from '@/components/content/injection'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -78,7 +78,7 @@ export function ArticleRelatedExercises({
 
     return (
       <div key={id} className="my-5 border-t-2 border-black py-5">
-        <Injection
+        <InjectionRenderer
           href={`/${id}`}
           renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
         />

@@ -146,7 +146,6 @@ export const instanceData = {
         yourAnswer: "Deine Antwort…",
         chooseOption: "Klicke auf eine der Optionen",
         printModeChooseOption: "Kreuze eine der Optionen an",
-        strategy: "Lösungsstrategie",
         showSolution: "Lösung anzeigen",
         hideSolution: "Lösung ausblenden"
       },
@@ -614,9 +613,10 @@ export const loggedInData = {
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
         },
-        deprecated: {
-          title: "Nicht mehr Unterstützt",
-          unsupported: "Dieser Teil des Dokuments enthält Features, die nicht mehr unterstützt werden."
+        unsupported: {
+          title: "Nicht unterstützt",
+          notSupported: "Sorry, dieses Plugin wird nicht unterstützt:",
+          explanation: "Es wird Usern nicht angezeigt. Du kannst es entweder entfernen oder unsere Entwickler*innen um Unterstützung bitten."
         },
         error: {
           title: "Fehler",
@@ -638,7 +638,8 @@ export const loggedInData = {
           combineLikeTerms: "Fasse die Terme zusammen.",
           setEqual: "Setze die Terme gleich.",
           firstExplanation: "Erste Erklärung",
-          addNew: "Neue Gleichung hinzufügen"
+          moveUpLabel: "Zeile eins nach oben verschieben",
+          removeRowLabel: "Zeile entfernen"
         },
         geogebra: {
           title: 'GeoGebra Applet',
@@ -668,7 +669,6 @@ export const loggedInData = {
           captionPlaceholder: "Optionale Bildunterschrift",
           href: 'Link',
           hrefPlaceholder: "Bild verlinken",
-          openInNewTab: "Öffne den Link in einem neuen Tab",
           alt: "Beschreibung (wird nicht angezeigt)",
           altPlaceholder: "Was ist auf dem Bild zu sehen?",
           maxWidth: "Maximale Breite",
@@ -691,9 +691,7 @@ export const loggedInData = {
         multimedia: {
           title: "Erklärung mit Multimedia-Inhalt",
           description: "Erstelle einen veranschaulichenden oder erklärenden Multimedia-Inhalt mit zugehöriger Erklärung.",
-          image: "Bild",
-          video: 'Video',
-          geogebraTitle: 'GeoGebra Applet',
+          chooseSize: "Größe des Multimedia-Inhalts",
           changeType: "Tausche das Multimedia Element aus",
           howImportant: "Wie wichtig ist der Multimedia Inhalt?",
           isIllustrating: "Es ist nur eine Veranschaulichung",
@@ -726,10 +724,6 @@ export const loggedInData = {
           dragElement: "Verschiebe das Element innerhalb des Dokuments",
           addAnElement: "Füge ein Element hinzu"
         },
-        separator: {
-          title: "Lösungs-Trenner",
-          description: "Unterteile die Lösung in einzelne Lösungsschritte."
-        },
         serloTable: {
           title: "Tabelle",
           description: "Schöne Tabellen erstellen.",
@@ -754,6 +748,7 @@ export const loggedInData = {
         text: {
           title: 'Text',
           description: "Schreibe Text und Matheformeln, und formatiere sie.",
+          placeholder: "Schreib etwas oder füge mit ⊕ Elemente ein.",
           quote: "Zitat",
           setColor: "Einfärben",
           resetColor: "Farbe zurücksetzen",
@@ -827,6 +822,7 @@ export const loggedInData = {
           moreOnTopic: "Hier findest du noch weitere passende Inhalte zum Thema",
           addSource: "Quellenangabe hinzufügen",
           removeLabel: "Löschen",
+          moveUpLabel: "Eins nach oben verschieben",
           dragLabel: "Ziehen, um die Reihenfolge zu ändern",
           openInTab: "Öffne den Link in einem neuen Tab",
           sources: "Quellen",
@@ -865,12 +861,9 @@ export const loggedInData = {
           title: "Titel"
         },
         exercise: {
-          addChoiceExercise: "Auswahlaufgabe hinzufügen",
-          choiceExercise: "Auswahlaufgabe",
-          addInputExercise: "Eingabefeld hinzufügen",
+          scMcExercise: "Auswahlaufgabe",
           inputExercise: "Eingabefeld",
-          addH5pExercise: "H5P-Inhalt hinzufügen",
-          h5pExercise: "H5P-Inhalt",
+          h5p: "H5P-Inhalt",
           addOptionalInteractiveEx: "Füge optional ein interaktives Element hinzu:",
           changeInteractive: "Interaktives Element ändern",
           removeInteractive: "Interaktives Element entfernen"
@@ -906,7 +899,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: "Beschreibe hier optional die Lösungsstrategie",
-          fundamentalsNote: "Für diese Aufgabe benötigst du folgendes Grundwissen:",
           idArticle: "ID eines Artikels, z.B. 1855",
           openArticleTab: "Öffne den Artikel in einem neuen Tab",
           linkTitle: "Titel der Verlinkung",

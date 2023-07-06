@@ -65,8 +65,8 @@ export const LayoutRenderer: React.FunctionComponent<
             <ConvertButton onClick={convertToRow}>
               {editorStrings.plugins.layout.oneColumnLayout}
             </ConvertButton>
-            {canConvertToMultimediaExplanation() ? (
-              <ConvertButton onClick={convertToMultimediaExplanation}>
+            {canConvertToMultimedia() ? (
+              <ConvertButton onClick={convertToMultimedia}>
                 {editorStrings.plugins.layout.multimediaTitle}
               </ConvertButton>
             ) : null}
@@ -110,7 +110,7 @@ export const LayoutRenderer: React.FunctionComponent<
     )
   }
 
-  function canConvertToMultimediaExplanation() {
+  function canConvertToMultimedia() {
     const columns = props.state
     return (
       columns.length === 2 &&
@@ -118,22 +118,22 @@ export const LayoutRenderer: React.FunctionComponent<
     )
   }
 
-  function convertToMultimediaExplanation() {
-    if (!canConvertToMultimediaExplanation()) return
+  function convertToMultimedia() {
+    if (!canConvertToMultimedia()) return
     const columns = props.state
     if (isMultimediaColumn(columns[0])) {
-      replaceWithMultimediaExplanation({
+      replaceWithMultimedia({
         explanationColumn: columns[1],
         multimediaColumn: columns[0],
       })
     } else {
-      replaceWithMultimediaExplanation({
+      replaceWithMultimedia({
         explanationColumn: columns[0],
         multimediaColumn: columns[1],
       })
     }
 
-    function replaceWithMultimediaExplanation({
+    function replaceWithMultimedia({
       explanationColumn,
       multimediaColumn,
     }: {

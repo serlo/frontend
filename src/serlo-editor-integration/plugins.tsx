@@ -18,40 +18,38 @@ import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
 import { createBoxPlugin } from '@/serlo-editor/plugins/box'
-import { deprecatedPlugin } from '@/serlo-editor/plugins/deprecated'
 import { equationsPlugin } from '@/serlo-editor/plugins/equations'
-import { errorPlugin } from '@/serlo-editor/plugins/error'
 import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
-import { H5pPlugin } from '@/serlo-editor/plugins/h5p/h5p'
+import { H5pPlugin } from '@/serlo-editor/plugins/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
 import { imagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
 import { injectionPlugin } from '@/serlo-editor/plugins/injection'
 import { createInputExercisePlugin } from '@/serlo-editor/plugins/input-exercise'
-import { createMultimediaExplanationPlugin } from '@/serlo-editor/plugins/multimedia-explanation'
+import { createMultimediaPlugin } from '@/serlo-editor/plugins/multimedia'
 import { pageLayoutPlugin } from '@/serlo-editor/plugins/page-layout'
 import { pagePartnersPlugin } from '@/serlo-editor/plugins/page-partners'
 import { pageTeamPlugin } from '@/serlo-editor/plugins/page-team'
 import { pasteHackPlugin } from '@/serlo-editor/plugins/paste-hack'
 import { createRowsPlugin } from '@/serlo-editor/plugins/rows'
 import { createScMcExercisePlugin } from '@/serlo-editor/plugins/sc-mc-exercise'
-import { separatorPlugin } from '@/serlo-editor/plugins/separator'
 import { createSerloTablePlugin } from '@/serlo-editor/plugins/serlo-table'
-import { appletTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/applet'
-import { articleTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/article'
-import { courseTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/course'
-import { coursePageTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/course-page'
-import { eventTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/event'
-import { pageTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/page'
-import { taxonomyTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/taxonomy'
-import { textExerciseTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/text-exercise'
-import { textExerciseGroupTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/text-exercise-group'
-import { textSolutionTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/text-solution'
-import { userTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/user'
-import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-types-plugins/video'
+import { appletTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/applet'
+import { articleTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/article'
+import { courseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/course'
+import { coursePageTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/course-page'
+import { eventTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/event'
+import { pageTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/page'
+import { taxonomyTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/taxonomy'
+import { textExerciseTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise'
+import { textExerciseGroupTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-exercise-group'
+import { textSolutionTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/text-solution'
+import { userTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/user'
+import { videoTypePlugin } from '@/serlo-editor/plugins/serlo-template-plugins/video'
 import { solutionPlugin } from '@/serlo-editor/plugins/solution'
 import { createSpoilerPlugin } from '@/serlo-editor/plugins/spoiler'
 import { createTextPlugin } from '@/serlo-editor/plugins/text'
+import { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export enum TemplatePluginType {
@@ -80,11 +78,6 @@ export function createPlugins({
   instance: Instance
   parentType?: string
 }): PluginsContextPlugins {
-  const isExercise =
-    !!parentType &&
-    ['grouped-text-exercise', 'text-exercise', 'text-exercise-group'].includes(
-      parentType
-    )
   const isPage = parentType === UuidType.Page
 
   return [
@@ -97,13 +90,13 @@ export function createPlugins({
     { type: 'image', plugin: imagePlugin, visible: true, icon: <IconImage /> },
     {
       type: 'multimedia',
-      plugin: createMultimediaExplanationPlugin(),
+      plugin: createMultimediaPlugin(),
       visible: true,
       icon: <IconMultimedia />,
     },
     {
       type: 'spoiler',
-      plugin: createSpoilerPlugin({}),
+      plugin: createSpoilerPlugin(),
       visible: true,
       icon: <IconSpoiler />,
     },
@@ -155,11 +148,6 @@ export function createPlugins({
       visible: shouldUseFeature('edtrPasteHack'),
     },
     {
-      type: 'separator',
-      plugin: separatorPlugin,
-      visible: isExercise,
-    },
-    {
       type: 'pageLayout',
       plugin: pageLayoutPlugin,
       visible: isPage,
@@ -179,18 +167,17 @@ export function createPlugins({
     { type: 'article', plugin: articlePlugin },
     {
       type: 'articleIntroduction',
-      plugin: createMultimediaExplanationPlugin({
+      plugin: createMultimediaPlugin({
         explanation: {
           plugin: 'text',
           config: {
             placeholder: editorStrings.templatePlugins.article.writeShortIntro,
           },
         },
-        plugins: ['image'],
+        allowedPlugins: ['image'],
       }),
     },
-    { type: 'error', plugin: errorPlugin },
-    { type: 'deprecated', plugin: deprecatedPlugin },
+    { type: 'unsupported', plugin: unsupportedPlugin },
     { type: 'exercise', plugin: exercisePlugin },
     { type: 'highlight', plugin: createHighlightPlugin() },
     { type: 'h5p', plugin: H5pPlugin },

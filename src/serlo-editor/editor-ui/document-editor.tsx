@@ -93,7 +93,9 @@ export function DocumentEditor({
   return (
     <Container
       className={
-        isFocused || isHovered ? 'default-document-editor-container' : ''
+        isFocused || isHovered
+          ? 'default-document-editor-container document-editor-container'
+          : 'document-editor-container'
       }
       isFocused={isFocused}
       isHovered={isHovered}
@@ -153,7 +155,7 @@ const ToolbarContainer = styled.div<ToolbarProps>(
     transformOrigin: 'center top',
     transform: 'translateX(-100%)',
     pointerEvents: isFocused || isHovered ? 'all' : 'none',
-    zIndex: isHovered ? '1' : 'auto',
+    zIndex: isHovered ? '21' : 'auto',
     '&::before': {
       position: 'absolute',
       pointerEvents: 'none',

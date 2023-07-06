@@ -14,7 +14,7 @@ export interface TextEditorConfig {
   serloLinkSearch: boolean
 }
 export interface TextEditorPluginConfig {
-  placeholder: string
+  placeholder?: string
   formattingOptions: TextEditorFormattingOption[]
   noLinebreaks?: boolean
   serloLinkSearch: boolean

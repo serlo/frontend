@@ -22,10 +22,7 @@ export const textColors = Object.entries(articleColors).map(([key, value]) => {
 export function useTextConfig(
   config: TextEditorConfig
 ): TextEditorPluginConfig {
-  const {
-    placeholder = 'Write something or add elements with \u2295.',
-    noLinebreaks,
-  } = config
+  const { placeholder, noLinebreaks } = config
 
   return {
     formattingOptions: config.formattingOptions ?? defaultFormattingOptions,

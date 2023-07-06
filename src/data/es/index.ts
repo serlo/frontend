@@ -146,7 +146,6 @@ export const instanceData = {
         yourAnswer: "Tu respuesta...",
         chooseOption: "Elige una de las opciones.",
         printModeChooseOption: "Elige una de las opciones.",
-        strategy: "Estrategia de solución",
         showSolution: "Mostrar solución",
         hideSolution: "Ocultar la solución"
       },
@@ -162,7 +161,7 @@ export const instanceData = {
         theorem: "Teorema",
         proof: "Prueba"
       },
-      loadingVideoFailed: 'Something went wrong'
+      loadingVideoFailed: "Algo ha fallado"
     },
     consent: {
       title: "Consentimiento para contenido externo",
@@ -177,7 +176,7 @@ export const instanceData = {
       video: "Reproducir vídeo de %provider%",
       applet: "Cargar Applet de %provider%",
       twingle: "Cargar formulario de donación",
-      general: 'Activate'
+      general: "Activar"
     },
     comments: {
       question: "¿Tienes una pregunta?",
@@ -614,9 +613,10 @@ export const loggedInData = {
           anchorId: "ID de Ancla (marca de posición)",
           emptyContentWarning: "Los contenedores sin contenido no se visualizarán"
         },
-        deprecated: {
-          title: 'Deprecated',
-          unsupported: "Esta parte del documento contiene funciones que ya no son compatibles."
+        unsupported: {
+          title: "Sin soporte",
+          notSupported: "Lo sentimos, este plugin no es compatible:",
+          explanation: "No será visible a los usuarios. Puede eliminarlo o pedir ayuda a los desarrolladores."
         },
         error: {
           title: 'Error',
@@ -638,7 +638,8 @@ export const loggedInData = {
           combineLikeTerms: "Combina términos similares",
           setEqual: "Coloca los términos iguales entre sí.",
           firstExplanation: "Primera explicación",
-          addNew: "Añadir nueva ecuación"
+          moveUpLabel: 'Move up',
+          removeRowLabel: 'Remove row'
         },
         geogebra: {
           title: "Aplicación GeoGebra",
@@ -657,22 +658,21 @@ export const loggedInData = {
         image: {
           title: "Imágen",
           description: "Subir imágenes.",
-          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
-          upload: 'Upload…',
-          imageUrl: 'Image URL',
+          noImagePasteInLists: "No se permite pegar imágenes dentro de las listas.",
+          upload: "Subir…",
+          imageUrl: "URL de la imagen",
           placeholderEmpty: 'https://example.com/image.png',
-          placeholderUploading: 'Uploading…',
-          placeholderFailed: 'Upload failed…',
-          retry: 'Retry',
-          failedUpload: 'Upload failed',
-          captionPlaceholder: 'Optional caption',
+          placeholderUploading: "Subiendo…",
+          placeholderFailed: "Carga fallida...",
+          retry: "Reintentar",
+          failedUpload: "Carga fallida",
+          captionPlaceholder: "Leyenda opcional",
           href: "Enlace",
-          hrefPlaceholder: 'Link the image',
-          openInNewTab: "Abrir en una nueva pestaña",
-          alt: 'Description (hidden)',
-          altPlaceholder: 'Describe what the image shows',
-          maxWidth: 'Maximum width',
-          maxWidthPlaceholder: 'Enter the maximum width'
+          hrefPlaceholder: "Link de la imagen",
+          alt: "Descripción (no es visible)",
+          altPlaceholder: "Describe lo que muestra la imagen",
+          maxWidth: "Ancho máximo",
+          maxWidthPlaceholder: "Introduzca el ancho máximo"
         },
         injection: {
           title: "serlo.org Contenido",
@@ -683,7 +683,7 @@ export const loggedInData = {
           placeholder: "Serlo ID (p.ej. 1565)"
         },
         layout: {
-          title: 'Layout',
+          title: "Diseño",
           toDragConvert: "Para que el contenido sea arrastrable, conviértalo para el nuevo editor:",
           oneColumnLayout: "Diseño con una columna",
           multimediaTitle: "Contenido multimedia asociado con el texto"
@@ -691,44 +691,38 @@ export const loggedInData = {
         multimedia: {
           title: "Contenido multimedia asociado con el texto",
           description: "Crear una ilustración o explicación de contenido multimedia asociado con el texto.",
-          image: "Imágen",
-          video: "Vídeo",
-          geogebraTitle: "Aplicación GeoGebra",
+          chooseSize: "Elegir el tamaño del elemento multimedia",
           changeType: "Cambiar el tipo multimedia",
           howImportant: "¿Qué tan importante es el contenido multimedia?",
           isIllustrating: "Está ilustrando",
           isEssential: "Es esencial",
-          reset: 'Reset the multimedia content'
+          reset: "Restablecer el contenido multimedia"
         },
         pageLayout: {
-          title: 'Layout Column for Pages',
-          description: "The plugin the people want but don't get 🤫",
+          title: "Diseño de Columna para Páginas",
+          description: "El plugin que la gente quiere pero no obtiene 🤫",
           chooseRatio: "Elige la proporción de la columna"
         },
         pasteHack: {
-          title: 'Experimental State-Paste Plugin',
-          description: 'only on staging'
+          title: "Plugin Estado-Pegar Experimental",
+          description: "solo en staging"
         },
         pageTeam: {
-          title: 'Team Overview',
-          description: 'Only for the teampages'
+          title: "Vista General del Equipo",
+          description: "Sólo para las páginas del equipo"
         },
         pagePartners: {
-          title: 'Partner List',
-          description: 'Only for partner page (List of partner logos like on de.serlo.org/)'
+          title: "Lista de socios",
+          description: "Sólo para la página de socio (Lista de logos de socios como en es.serlo.org/)"
         },
         rows: {
-          title: 'Rows',
+          title: "Filas",
           searchForTools: "Buscar herramientas…",
           duplicate: "Duplicar",
           remove: "Eliminar",
           close: "Cerrar",
           dragElement: "Arrastra el elemento dentro del documento",
           addAnElement: "Añadir un elemento"
-        },
-        separator: {
-          title: "Separador de Solución",
-          description: "Desglosa la solución en pasos individuales."
         },
         serloTable: {
           title: "Tabla",
@@ -754,6 +748,7 @@ export const loggedInData = {
         text: {
           title: "Texto",
           description: "Redacta el contenido usando texto enriquecido y fórmulas matemáticas.",
+          placeholder: 'Write something or add elements with ⊕.',
           quote: "Cita",
           setColor: "Elegir color",
           resetColor: "Restablecer color",
@@ -763,12 +758,12 @@ export const loggedInData = {
           headings: "Encabezados",
           link: "Vínculo (%ctrlOrCmd% + K)",
           linkOverlay: {
-            placeholder: 'https://… or /1234',
-            inputLabel: 'Paste or type a link',
-            edit: 'Edit Link',
-            remove: 'Remove Link',
-            customLink: 'Custom Link',
-            invalidLinkWarning: 'Please provide a valid link that starts with http(s)://…'
+            placeholder: "https://… o /1234",
+            inputLabel: "Pegar o escribir un enlace",
+            edit: "Modificar enlace",
+            remove: "Eliminar enlace",
+            customLink: "Enlance Personalizado",
+            invalidLinkWarning: "Por favor, proporciona un enlace válido que comience con http(s)://…"
           },
           openInNewTab: "Abrir en una nueva pestaña",
           orderedList: "Lista ordenada",
@@ -780,9 +775,9 @@ export const loggedInData = {
           italic: "Itálica (%ctrlOrCmd% + I)",
           noItemsFound: "Elementos no encontrados",
           colorNames: {
-            blue: 'Blue',
-            green: 'Green',
-            orange: 'Orange'
+            blue: "Azul",
+            green: "Verde",
+            orange: "Anaranjado"
           },
           math: {
             formula: "[fórmula]",
@@ -809,7 +804,7 @@ export const loggedInData = {
           titlePlaceholder: "Título",
           url: 'URL',
           seoTitle: "Título para motores de búsqueda",
-          noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
+          noVideoPasteInLists: "No se permite pegar vídeos dentro de las listas."
         }
       },
       templatePlugins: {
@@ -827,6 +822,7 @@ export const loggedInData = {
           moreOnTopic: "Puedes encontrar más contenido sobre este tema aquí:",
           addSource: "Añadir fuente",
           removeLabel: "Eliminar",
+          moveUpLabel: 'Move up',
           dragLabel: "Arrastra para cambiar el orden",
           openInTab: "Abrir en una nueva pestaña",
           sources: "Fuentes",
@@ -865,12 +861,9 @@ export const loggedInData = {
           title: "Título"
         },
         exercise: {
-          addChoiceExercise: "Añadir ejercicio de elección",
-          choiceExercise: "Ejercicio de opción múltiple",
-          addInputExercise: "Añada ejercicio de respuesta escrita",
+          scMcExercise: "Ejercicio de opción múltiple",
           inputExercise: "Ejercicio de respuesta escrita",
-          addH5pExercise: "Añadir ejercicio interactivo h5p",
-          h5pExercise: "Ejercicio h5p",
+          h5p: "Ejercicio h5p",
           addOptionalInteractiveEx: "Añada un ejercicio opcional interactivo:",
           changeInteractive: "Cambiar elemento interactivo",
           removeInteractive: "Eliminar elemento interactivo"
@@ -890,9 +883,9 @@ export const loggedInData = {
           number: "Número (solución exacta, por ejemplo \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
           mathematicalExpressionSolution: "Expresión matemática (solución equivaletne, por ejemplo \"0,5\" = \"1/2\" = \"2/4\")",
           types: {
-            mathExpression: 'Mathematical expression',
+            mathExpression: "Expresión matemática",
             text: "Texto",
-            number: 'Number'
+            number: "Número"
           }
         },
         page: {
@@ -906,7 +899,6 @@ export const loggedInData = {
         },
         solution: {
           optionalExplanation: "Tienes la opción de explicar la estrategia de solución aquí",
-          fundamentalsNote: "Para este ejercicio, necesitas tener los siguentes conocimientos:",
           idArticle: "ID de un artículo, p. ej., 1855",
           openArticleTab: "Abrir el artículo en una nueva pestaña:",
           linkTitle: "Título del enlace",

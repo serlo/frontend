@@ -113,8 +113,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       {
         type: FrontendNodeType.Img,
         src: src as string,
-        alt: alt,
-        maxWidth: maxWidth,
+        alt,
+        maxWidth,
         href: link?.href,
         caption: convertedCaption,
       },
@@ -183,7 +183,6 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       {
         type: FrontendNodeType.Multimedia,
         mediaWidth: width,
-        float: 'right',
         media: convert(node.state.multimedia as EdtrState),
         children: convert(node.state.explanation as EdtrState),
       },

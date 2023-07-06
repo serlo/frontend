@@ -1,13 +1,11 @@
 import type { ImportantPluginState } from '../../serlo-editor/plugins/_on-the-way-out/important/important'
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
-import type { DeprecatedPluginState } from '../../serlo-editor/plugins/deprecated'
 import type { EquationsPluginState } from '../../serlo-editor/plugins/equations'
-import type { ErrorPluginState } from '../../serlo-editor/plugins/error'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
 import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
-import type { SeparatorPluginState } from '../../serlo-editor/plugins/separator'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
+import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
@@ -16,7 +14,7 @@ import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import type { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
 import type { ImagePluginState } from '@/serlo-editor/plugins/image'
 import type { InputExercisePluginState } from '@/serlo-editor/plugins/input-exercise'
-import type { MultimediaExplanationPluginState } from '@/serlo-editor/plugins/multimedia-explanation'
+import type { MultimediaPluginState } from '@/serlo-editor/plugins/multimedia'
 import type { RowsPluginState } from '@/serlo-editor/plugins/rows'
 import type { ScMcExercisePluginState } from '@/serlo-editor/plugins/sc-mc-exercise'
 import type { SpoilerPluginState } from '@/serlo-editor/plugins/spoiler'
@@ -37,12 +35,8 @@ export type SerializedDocument =
       state: StateTypeSerializedType<BlockquotePluginState>
     }
   | {
-      plugin: 'deprecated'
-      state: StateTypeSerializedType<DeprecatedPluginState>
-    }
-  | {
-      plugin: 'error'
-      state: StateTypeSerializedType<ErrorPluginState>
+      plugin: 'unsupported'
+      state: StateTypeSerializedType<UnsupportedPluginState>
     }
   | {
       plugin: 'equations'
@@ -82,7 +76,7 @@ export type SerializedDocument =
     }
   | {
       plugin: 'multimedia'
-      state: StateTypeSerializedType<MultimediaExplanationPluginState>
+      state: StateTypeSerializedType<MultimediaPluginState>
     }
   | {
       plugin: 'rows'
@@ -91,10 +85,6 @@ export type SerializedDocument =
   | {
       plugin: 'scMcExercise'
       state: StateTypeSerializedType<ScMcExercisePluginState>
-    }
-  | {
-      plugin: 'separator'
-      state: StateTypeSerializedType<SeparatorPluginState>
     }
   | {
       plugin: 'spoiler'

@@ -12,14 +12,13 @@ import {
   Editable,
   ReactEditor,
   RenderElementProps,
-  RenderLeafProps,
   Slate,
   withReact,
 } from 'slate-react'
 
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
-import { textColors, useTextConfig } from '../hooks/use-text-config'
+import { useTextConfig } from '../hooks/use-text-config'
 import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
 import {
   emptyDocumentFactory,
@@ -32,6 +31,7 @@ import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
+import { TextLeafRenderer } from './text-leaf-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -60,13 +60,13 @@ export type TextEditorProps = EditorPluginProps<
 >
 
 export function TextEditor(props: TextEditorProps) {
-  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
+  const { state, id, editable, focused } = props
 
+  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
-  const editorStrings = useEditorStrings()
+  const pluginStrings = useEditorStrings().plugins
 
-  const { state, id, editable, focused } = props
   const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
@@ -177,6 +177,8 @@ export function TextEditor(props: TextEditorProps) {
       // (only if selection is collapsed and suggestions are not shown)
       const { selection } = editor
       if (selection && Range.isCollapsed(selection) && !showSuggestions) {
+        const isListActive = isSelectionWithinList(editor)
+
         // Special handler for links. If you move right and end up at the right edge of a link,
         // this handler unselects the link, so you can write normal text behind it.
         if (isHotkey('right', event)) {
@@ -224,7 +226,6 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Create a new Slate instance on "enter" key
-        const isListActive = isSelectionWithinList(editor)
         if (isHotkey('enter', event) && !isListActive) {
           const document = selectDocument(store.getState(), id)
           if (!document) return
@@ -261,7 +262,7 @@ export function TextEditor(props: TextEditorProps) {
           isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
         const isDeleteAtEnd =
           isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
-        if (isBackspaceAtStart || isDeleteAtEnd) {
+        if ((isBackspaceAtStart || isDeleteAtEnd) && !isListActive) {
           event.preventDefault()
 
           // Get direction of merge
@@ -299,9 +300,6 @@ export function TextEditor(props: TextEditorProps) {
       suggestions.handleHotkeys(event)
       textFormattingOptions.handleHotkeys(event, editor)
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
-
-      // stop list plugin from bluring slate on esc
-      if (event.key === 'Escape') return false
       textFormattingOptions.handleListsShortcuts(event, editor)
     },
     [
@@ -340,10 +338,7 @@ export function TextEditor(props: TextEditorProps) {
         )?.plugin.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(
-              editorStrings.plugins.image.noImagePasteInLists,
-              'warning'
-            )
+            showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
             return
           }
 
@@ -363,10 +358,7 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(
-              editorStrings.plugins.video.noVideoPasteInLists,
-              'warning'
-            )
+            showToastNotice(pluginStrings.video.noVideoPasteInLists, 'warning')
             return
           }
 
@@ -410,7 +402,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, editorStrings, plugins]
+    [dispatch, editor, id, pluginStrings, plugins]
   )
 
   const handleRenderElement = useCallback(
@@ -419,21 +411,37 @@ export function TextEditor(props: TextEditorProps) {
       const { element, attributes, children } = props
 
       if (element.type === 'h') {
-        return createElement(`h${element.level}`, attributes, <>{children}</>)
+        const classNames = ['serlo-h1', 'serlo-h2', 'serlo-h3']
+        return createElement(
+          `h${element.level}`,
+          { ...attributes, className: classNames[element.level - 1] },
+          <>{children}</>
+        )
       }
       if (element.type === 'a') {
         return (
-          <a href={element.href} className="cursor-pointer" {...attributes}>
+          <a
+            href={element.href}
+            className="serlo-link cursor-pointer"
+            {...attributes}
+          >
             {children}
           </a>
         )
       }
-
       if (element.type === ListElementType.UNORDERED_LIST) {
-        return <ul {...attributes}>{children}</ul>
+        return (
+          <ul className="serlo-ul" {...attributes}>
+            {children}
+          </ul>
+        )
       }
       if (element.type === ListElementType.ORDERED_LIST) {
-        return <ol {...attributes}>{children}</ol>
+        return (
+          <ol className="serlo-ol" {...attributes}>
+            {children}
+          </ol>
+        )
       }
       if (element.type === ListElementType.LIST_ITEM) {
         return <li {...attributes}>{children}</li>
@@ -441,7 +449,6 @@ export function TextEditor(props: TextEditorProps) {
       if (element.type === ListElementType.LIST_ITEM_TEXT) {
         return <div {...attributes}>{children}</div>
       }
-
       if (element.type === 'math') {
         return (
           <MathElement
@@ -453,7 +460,6 @@ export function TextEditor(props: TextEditorProps) {
           </MathElement>
         )
       }
-
       return <div {...attributes}>{children}</div>
     },
     [focused]
@@ -468,12 +474,16 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder}
+          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
-          renderLeaf={renderLeaf}
-          className="[&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          renderLeaf={(props) => (
+            <span {...props.attributes}>
+              <TextLeafRenderer {...props} />
+            </span>
+          )}
+          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <>
@@ -499,29 +509,4 @@ export function TextEditor(props: TextEditorProps) {
       )}
     </HotKeys>
   )
-}
-
-function renderLeaf(props: RenderLeafProps) {
-  const colors = textColors.map((color) => color.value)
-  const { attributes, leaf } = props
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  let { children } = props
-
-  if (leaf.strong) {
-    children = <strong>{children}</strong>
-  }
-  if (typeof leaf.color === 'number' && Array.isArray(colors)) {
-    children = (
-      <span style={{ color: colors?.[leaf.color % colors.length] }}>
-        {children}
-      </span>
-    )
-  }
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
-  if (leaf.em) {
-    children = <em>{children}</em>
-  }
-  return <span {...attributes}>{children}</span>
 }
