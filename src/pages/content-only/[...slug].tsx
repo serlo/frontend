@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
-import Script from 'next/script'
 
 import { Entity } from '@/components/content/entity'
+import { LazyIframeResizer } from '@/components/content/lazy'
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { HeadTags } from '@/components/head-tags'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -13,7 +13,7 @@ import { prettifyLinks } from '@/fetcher/prettify-links'
 import { requestPage } from '@/fetcher/request-page'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 
-// Fontend to support Content-API
+// Frontend to support Content-API
 // https://github.com/serlo/serlo.org/wiki/Content-API
 
 export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
@@ -49,10 +49,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       entityId={entityId}
       authorization={pageData.authorization}
     >
-      <Script
-        src="iframe-resizer/js/iframeResizer.contentWindow.min.js"
-        strategy="lazyOnload"
-      />
+      <LazyIframeResizer />
       {pageData.metaData && (
         <HeadTags
           data={pageData.metaData}
