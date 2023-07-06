@@ -43,7 +43,7 @@ function TextExerciseTypeEditor(
   const editorStrings = useEditorStrings()
 
   return (
-    <article className="text-exercise">
+    <article className="text-exercise mt-12">
       {props.renderIntoToolbar(
         <ContentLoaders
           id={props.state.id.value}
