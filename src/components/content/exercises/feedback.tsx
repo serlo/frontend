@@ -30,11 +30,14 @@ export function Feedback({ children, correct, missedSome }: FeedbackProps) {
   return (
     <div className="ml-4 flex">
       <span
-        className={clsx('my-0', correct ? 'text-brandgreen' : 'text-[#cc1500]')}
+        className={clsx(
+          'my-0 mr-1',
+          correct ? 'text-brandgreen' : 'text-[#cc1500]'
+        )}
       >
         ⬤
       </span>{' '}
-      <div>{feedback}</div>
+      {feedback}
       {correct && ' 🎉'}
     </div>
   )

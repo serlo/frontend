@@ -12,14 +12,14 @@ import {
 } from './types'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { LoggedInData, UuidType } from '@/data-types'
+import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
+import { getHistoryUrl } from '@/helper/urls/get-history-url'
+import { successHash } from '@/helper/use-leave-confirm'
 import {
   CourseSerializedState,
   TextExerciseGroupSerializedState,
   TextExerciseSerializedState,
-} from '@/edtr-io/editor-response-to-state'
-import { SetGenericEntityInput } from '@/fetcher/graphql-types/operations'
-import { getHistoryUrl } from '@/helper/urls/get-history-url'
-import { successHash } from '@/helper/use-leave-confirm'
+} from '@/serlo-editor-integration/editor-response-to-state'
 
 const equalsWithEmptyStringIsNull = eqBy(
   mapObjIndexed((v) => (v === '' || v === undefined ? null : v))

@@ -179,8 +179,12 @@ const Td = ({
   className,
 }: PropsWithChildren<{ centered?: boolean; className?: string }>) => (
   <td
-    className={clsx(className, 'serlo-td', centered && 'text-center')}
-    style={{ borderLeftColor: 'transparent', borderRightColor: 'transparent' }}
+    className={clsx(
+      className,
+      'serlo-td',
+      centered && 'text-center',
+      'border-l-transparent border-r-transparent'
+    )}
   >
     {children}
   </td>

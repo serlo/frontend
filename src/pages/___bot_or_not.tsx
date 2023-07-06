@@ -129,8 +129,7 @@ const BotHunt = () => {
             <img
               src={imageUrl}
               alt={`Profile image of ${username}`}
-              className="block grayscale hover:grayscale-0"
-              style={{ width: 200 }}
+              className="block w-[200px] grayscale hover:grayscale-0"
             />
             <div className="flex-grow">
               <h2 className="mb-3 text-xl font-bold">
@@ -160,10 +159,7 @@ const BotHunt = () => {
                 <div>
                   <>
                     {motivation ? <>&quot;{motivation}&quot;</> : null}
-                    <div
-                      className="max-h-40 w-[50rem] overflow-y-auto pb-4"
-                      style={{ zoom: '0.8' }}
-                    >
+                    <div className="max-h-40 w-[50rem] overflow-y-auto pb-4 [zoom:0.8]">
                       {renderDescription(description)}
                     </div>
                   </>

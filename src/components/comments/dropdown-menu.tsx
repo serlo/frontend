@@ -90,7 +90,7 @@ export function DropdownMenu({
               : strings.comments.archiveThread}
           </>
         )}
-      {canDelete &&
+      {(canDelete || (startEditing && !isParent)) &&
         buildButton(
           onDelete,
           <>

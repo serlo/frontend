@@ -28,7 +28,7 @@ export function ConsentPage() {
       </p>
       <h2 className="serlo-h2">{strings.consent.revokeTitle}</h2>
       <p className="serlo-p">{strings.consent.revokeText}</p>
-      <table className="serlo-table">
+      <table className="serlo-table border-t-3 border-l-3 border-brand-200">
         <tbody>
           {consentedProviders.length > 0 ? renderTable() : renderEmpty()}
         </tbody>

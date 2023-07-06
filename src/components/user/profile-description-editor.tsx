@@ -1,6 +1,6 @@
-import { convertUserByDescription } from '@/edtr-io/editor-response-to-state'
-import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { useUserSetDescriptionMutation } from '@/mutations/use-user-set-description-mutation'
+import { convertUserByDescription } from '@/serlo-editor-integration/editor-response-to-state'
+import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export interface ProfileDescriptionEditorProps {
   rawDescription?: string | null
@@ -31,7 +31,7 @@ export function ProfileDescriptionEditor({
 
   return (
     <>
-      <div className="controls-portal sticky top-0 z-[94] bg-white" />
+      <div className="controls-portal sticky top-0 z-[100] bg-white" />
       <div className="edtr-io serlo-editor-hacks">
         <SerloEditor
           entityNeedsReview={false}
