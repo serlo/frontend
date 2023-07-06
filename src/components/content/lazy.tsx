@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import LazyLoad from 'react-lazyload'
@@ -12,16 +11,6 @@ export interface LazyProps {
   noPrint?: boolean
 }
 
-const LazyIframeResizer = dynamic(
-  () =>
-    import('./iframe-resizer').then((module) => ({
-      default: module.IFrameResizer,
-    })),
-  {
-    ssr: false,
-  }
-)
-
 export function Lazy(props: LazyProps) {
   const router = useRouter()
 
@@ -32,12 +21,7 @@ export function Lazy(props: LazyProps) {
 
   // disable lazy load if content-only and probably within iframe
   if (router.pathname.startsWith('/content-only/')) {
-    return (
-      <>
-        <LazyIframeResizer />
-        {props.children}
-      </>
-    )
+    return <>{props.children}</>
   }
 
   return (

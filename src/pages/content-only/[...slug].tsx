@@ -50,7 +50,7 @@ export default renderedPageNoHooks<SlugProps>(({ pageData }) => {
       authorization={pageData.authorization}
     >
       <Script
-        src="/_assets/iframeResizer.contentWindow.min.js"
+        src="iframe-resizer/js/iframeResizer.contentWindow.min.js"
         strategy="lazyOnload"
       />
       {pageData.metaData && (
