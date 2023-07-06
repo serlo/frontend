@@ -16,7 +16,6 @@ export function GeogebraEditor(props: GeogebraProps) {
 
   return (
     <>
-      {editable && focused ? renderInput() : null}
       {couldBeValidId ? (
         <EmbedWrapper
           type="applet"
@@ -27,19 +26,20 @@ export function GeogebraEditor(props: GeogebraProps) {
           <GeogebraRenderer url={url} />
         </EmbedWrapper>
       ) : (
-        <div className="rounded-lg bg-editor-primary-50 py-32 text-center">
+        <div className="mx-side rounded-lg bg-editor-primary-50 py-32 text-center">
           <FaIcon
             icon={entityIconMapping['applet']}
             className="text-7xl text-editor-primary-200"
           />
         </div>
       )}
+      {editable && focused ? renderInput() : null}
     </>
   )
 
   function renderInput() {
     return (
-      <div className="mt-4 mb-3">
+      <div className="mx-side mt-4 mb-3">
         <EditorInput
           label={`${editorStrings.plugins.geogebra.urlOrId}: `}
           placeholder="z.B. N5ktHvtW"
