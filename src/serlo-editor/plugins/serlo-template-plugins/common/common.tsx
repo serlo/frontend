@@ -252,4 +252,4 @@ export function OptionalChild(props: {
   )
 }
 
-export const headerInputClasses = tw`w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+export const headerInputClasses = tw`mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`

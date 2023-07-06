@@ -280,19 +280,8 @@
       @apply special-hyphens-auto;
     }
 
-    .page-header h1 input {
-      @apply w-full;
-      @apply mb-9 mt-6 p-0 text-3.5xl font-bold special-hyphens-auto;
-    }
-
     button > div > svg {
       @apply ml-1.5 mr-1.5 mb-1 mt-2;
-    }
-
-    .page-header {
-      padding-bottom: 9px;
-      margin: 40px 0 20px;
-      border-bottom: 1px solid #eee;
     }
 
     select {
