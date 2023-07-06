@@ -3448,6 +3448,7 @@ __metadata:
     "@tippyjs/react": ^4.2.6
     "@types/algebra.js": ^0.2.2
     "@types/escape-html": ^1.0.2
+    "@types/iframe-resizer": ^3.5.9
     "@types/jest": ^29.2.0
     "@types/js-cookie": ^3.0.2
     "@types/katex": ^0.14.0
@@ -3489,6 +3490,7 @@ __metadata:
     graphql: ^16.6.0
     graphql-request: ^5.0.0
     htmlparser2: ^8.0.1
+    iframe-resizer: ^4.3.6
     iframe-resizer-react: ^1.1.0
     io-ts: ^2.2.19
     is-hotkey: ^0.2.0
@@ -3918,6 +3920,13 @@ __metadata:
     "@types/react": "*"
     hoist-non-react-statics: ^3.3.0
   checksum: 2c0778570d9a01d05afabc781b32163f28409bb98f7245c38d5eaf082416fdb73034003f5825eb5e21313044e8d2d9e1f3fe2831e345d3d1b1d20bcd12270719
+  languageName: node
+  linkType: hard
+
+"@types/iframe-resizer@npm:^3.5.9":
+  version: 3.5.9
+  resolution: "@types/iframe-resizer@npm:3.5.9"
+  checksum: aa60f72832f72f788ea3029fe4cbfb572bb481b5a1bb9b50d13287cdef347d8e00e07916aa2c3765f7e39d4ec8701f64ddd9d27fe93ba7571a0b3bf06f1ecca4
   languageName: node
   linkType: hard
 
@@ -8153,6 +8162,13 @@ __metadata:
   version: 4.3.2
   resolution: "iframe-resizer@npm:4.3.2"
   checksum: 762d934f4fbe7e4b76c0f4574c2a47ef0e3fc6c82564f512ec41e62b62501052d271fb8ca5d268535509c0088132493c0ac78312af0fe3f11bf65cd964dd11a0
+  languageName: node
+  linkType: hard
+
+"iframe-resizer@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "iframe-resizer@npm:4.3.6"
+  checksum: 9ef4178bc1e15335d28adb65686b5b4d784d416558fe02a255b6c77876f2da7c08ef878569eb2bb50be84b33db52927e24134faea7d43b9b3081bb61d2adeef8
   languageName: node
   linkType: hard
 
