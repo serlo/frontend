@@ -60,7 +60,7 @@ function TextExerciseGroupTypeEditor(
   })
 
   return (
-    <article className="exercisegroup">
+    <article className="exercisegroup mt-12">
       {props.renderIntoToolbar(
         <ContentLoaders
           id={props.state.id.value}
