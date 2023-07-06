@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react'
-
-import { tw } from '@/helper/tw'
+import Script from 'next/script'
 
 export interface GeogebraRendererProps {
   id: string
@@ -8,55 +6,46 @@ export interface GeogebraRendererProps {
 }
 
 export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
-  const [dimensions, setDimensions] = useState<{
-    width: number
-    height: number
-  } | null>(null)
-
-  useEffect(() => {
-    // hack to size iframe according to geogebra thumnails aspect ratio
-    const placeholder = document.querySelector(
-      `main img[src$='${id}']`
-    ) as HTMLImageElement
-    if (!placeholder || !placeholder.offsetParent) return
-    const { naturalWidth, naturalHeight, offsetParent } = placeholder
-    const maxSize = (offsetParent as HTMLDivElement).offsetWidth
-    const aspect = naturalWidth / naturalHeight
-    const portraitMode = aspect < 1
-
-    const width = Math.round(portraitMode ? maxSize * aspect : maxSize)
-    const height = Math.round(portraitMode ? maxSize : maxSize / aspect)
-    setDimensions({ width, height })
-
-    // hack to hide overlay on some portrait mode applets
-    const wrapper =
-      offsetParent.parentElement?.querySelector('.wrapping-overlay')
-    if (wrapper) (wrapper as HTMLDivElement).style.display = 'none'
-  }, [id])
-
-  if (!dimensions) return null
-  const { width, height } = dimensions
-
-  // from https://wiki.geogebra.org/en/Reference:Material_Embedding_(Iframe)
-  const urlWithParams = `${url}/width/${width}/height/${height}/border/transparent/`
-
   return (
-    <div className="block h-full w-full overflow-hidden bg-brand-50 p-0">
-      {urlWithParams ? (
-        <iframe
-          style={{
-            width: `${width}px`,
-            height: `${height}px`,
-          }}
-          className={tw`
-            absolute top-0 left-0 z-10 h-auto border-none bg-black bg-opacity-30
-          `}
-          title={url}
-          scrolling="no"
-          src={urlWithParams}
-        />
-      ) : null}
-    </div>
+    <>
+      <Script
+        src="https://www.geogebra.org/apps/deployggb.js"
+        onReady={() => {
+          // https://wiki.geogebra.org/en/Reference:GeoGebra_App_Parameters
+          const params = {
+            appName: '…',
+            showToolBar: false,
+            showAlgebraInput: false,
+            showMenuBar: false,
+            material_id: id,
+            showResetIcon: true,
+            enableLabelDrags: false,
+            borderColor: null,
+            enableShiftDragZoom: false,
+            enableRightClick: false,
+            capturingThreshold: null,
+            showToolBarHelp: false,
+            errorDialogsActive: true,
+            useBrowserForJS: false,
+            enableFileFeatures: false,
+            scaleContainerClass: `geogebra-scaler-${id}`,
+          }
+
+          if (Object.hasOwn(global, 'GGBApplet')) {
+            //@ts-expect-error no types for Geogebra script
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+            const applet = new window.GGBApplet(params, true)
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            applet.inject(`ggb-element-${id}`)
+          }
+        }}
+      />
+      <div
+        className={`geogebra-scaler-${id} absolute top-0 block h-full w-full overflow-hidden bg-brand-50 p-0`}
+      >
+        {url ? <div id={`ggb-element-${id}`}></div> : null}
+      </div>
+    </>
   )
 }
 
