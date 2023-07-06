@@ -20,39 +20,37 @@ export const taxonomyTypeState = object({
   description: editorContent(),
 })
 
-export const taxonomyTypePlugin: EditorPlugin<typeof taxonomyTypeState> = {
+type TaxonomyTypePluginState = typeof taxonomyTypeState
+
+export const taxonomyTypePlugin: EditorPlugin<TaxonomyTypePluginState> = {
   Component: TaxonomyTypeEditor,
   state: taxonomyTypeState,
   config: {},
 }
 
-function TaxonomyTypeEditor(
-  props: EditorPluginProps<typeof taxonomyTypeState>
-) {
+function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
   const { term, description } = props.state
   const editorStrings = useEditorStrings()
 
   return (
     <article>
       <header>
-        <div className="page-header">
-          <h1>
-            {props.editable ? (
-              <input
-                className={headerInputClasses}
-                placeholder={editorStrings.taxonomy.title}
-                value={term.name.value}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  term.name.set(e.target.value)
-                }}
-              />
-            ) : (
-              <span itemProp="name">{term.name.value}</span>
-            )}
-          </h1>
-        </div>
+        <h1 className="serlo-h1">
+          {props.editable ? (
+            <input
+              className={headerInputClasses}
+              placeholder={editorStrings.taxonomy.title}
+              value={term.name.value}
+              onChange={(e) => term.name.set(e.target.value)}
+            />
+          ) : (
+            <span itemProp="name">{term.name.value}</span>
+          )}
+        </h1>
       </header>
+
       <section itemProp="articleBody">{description.render()}</section>
+
       <ToolbarMain />
     </article>
   )
