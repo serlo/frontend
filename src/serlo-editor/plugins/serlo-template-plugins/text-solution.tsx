@@ -15,6 +15,7 @@ export const textSolutionTypeState = entityType(
   },
   {}
 )
+
 export type TextSolutionTypeProps = EditorPluginProps<
   typeof textSolutionTypeState,
   { skipControls: boolean }
@@ -26,37 +27,21 @@ export const textSolutionTypePlugin: EditorPlugin<
 > = {
   Component: TextSolutionTypeEditor,
   state: textSolutionTypeState,
-  config: {
-    skipControls: false,
-  },
+  config: { skipControls: false },
 }
 
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
-  const editorStrings = useEditorStrings()
+  const solutionStrings = useEditorStrings().templatePlugins.solution
 
   const renderTitle = useCallback(
     (collapsed: boolean) => {
-      return (
-        <>
-          {collapsed
-            ? editorStrings.templatePlugins.solution.showSolution
-            : editorStrings.templatePlugins.solution.hideSolution}
-        </>
-      )
+      return <>{solutionStrings[collapsed ? 'showSolution' : 'hideSolution']}</>
     },
-    [editorStrings]
+    [solutionStrings]
   )
 
   return (
     <>
-      {props.renderIntoToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Solution}
-        />
-      )}
       <ExpandableBox
         renderTitle={renderTitle}
         editable={
@@ -68,6 +53,14 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
       </ExpandableBox>
       {props.config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...props.state} />
+      )}
+      {props.renderIntoToolbar(
+        <ContentLoaders
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Solution}
+        />
       )}
     </>
   )

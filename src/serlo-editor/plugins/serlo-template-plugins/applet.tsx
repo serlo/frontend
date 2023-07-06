@@ -46,7 +46,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
   const appletStrings = useEditorStrings().templatePlugins.applet
 
   return (
-    <div>
+    <>
       <h1 className="serlo-h1">
         {props.editable ? (
           <input
@@ -84,6 +84,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
           />
         </Settings>
       )}
-    </div>
+    </>
   )
 }

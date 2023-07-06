@@ -32,18 +32,26 @@ export const textExerciseGroupTypeState = entityType(
   }
 )
 
-export const textExerciseGroupTypePlugin: EditorPlugin<
-  typeof textExerciseGroupTypeState
-> = {
-  Component: TextExerciseGroupTypeEditor,
-  state: textExerciseGroupTypeState,
-  config: {},
-}
+type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
+
+export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePluginState> =
+  {
+    Component: TextExerciseGroupTypeEditor,
+    state: textExerciseGroupTypeState,
+    config: {},
+  }
 
 function TextExerciseGroupTypeEditor(
-  props: EditorPluginProps<typeof textExerciseGroupTypeState>
+  props: EditorPluginProps<TextExerciseGroupTypePluginState>
 ) {
-  const { cohesive, content, 'grouped-text-exercise': children } = props.state
+  const {
+    cohesive,
+    content,
+    'grouped-text-exercise': children,
+    id,
+    revision,
+    replaceOwnState,
+  } = props.state
   const isCohesive = cohesive.value ?? false
 
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
@@ -61,14 +69,6 @@ function TextExerciseGroupTypeEditor(
 
   return (
     <article className="exercisegroup mt-12">
-      {props.renderIntoToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.ExerciseGroup}
-        />
-      )}
       <section className="row">
         <SemanticSection editable={props.editable}>
           {contentRendered}
@@ -92,6 +92,14 @@ function TextExerciseGroupTypeEditor(
         {exGroupStrings.addExercise}
       </AddButton>
       <ToolbarMain showSubscriptionOptions {...props.state} />
+      {props.renderIntoToolbar(
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.ExerciseGroup}
+        />
+      )}
     </article>
   )
 

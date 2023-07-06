@@ -30,42 +30,27 @@ export const courseTypeState = entityType(
   }
 )
 
-export const courseTypePlugin: EditorPlugin<typeof courseTypeState> = {
+type CourseTypePluginState = typeof courseTypeState
+
+export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
   Component: CourseTypeEditor,
   state: courseTypeState,
   config: {},
 }
 
-function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
+function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
   const { title, meta_description, 'course-page': children } = props.state
   const courseStrings = useEditorStrings().templatePlugins.course
 
   return (
     <article>
-      {props.renderIntoToolbar(
-        <RevisionHistoryLoader
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-        />
-      )}
-      {props.renderIntoSettings(
-        <Settings>
-          <Settings.Textarea
-            label={courseStrings.seoDesc}
-            state={meta_description}
-          />
-        </Settings>
-      )}
-      <h1>
+      <h1 className="serlo-h1">
         {props.editable ? (
           <input
             className={headerInputClasses}
             placeholder={courseStrings.title}
             value={title.value}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              title.set(e.target.value)
-            }}
+            onChange={(e) => title.set(e.target.value)}
           />
         ) : (
           <span itemProp="name">{title.value}</span>
@@ -88,6 +73,21 @@ function CourseTypeEditor(props: EditorPluginProps<typeof courseTypeState>) {
         {courseStrings.addCoursePage}
       </AddButton>
       <ToolbarMain showSubscriptionOptions {...props.state} />
+      {props.renderIntoToolbar(
+        <RevisionHistoryLoader
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+        />
+      )}
+      {props.renderIntoSettings(
+        <Settings>
+          <Settings.Textarea
+            label={courseStrings.seoDesc}
+            state={meta_description}
+          />
+        </Settings>
+      )}
     </article>
   )
 }
