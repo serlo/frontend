@@ -61,7 +61,8 @@ export function MultimediaEditor({
         </div>
         {allowedPlugins.length > 1 ? (
           <div className="mt-3 mb-8">
-            <strong>{multimediaStrings.changeType}</strong>:{' '}
+            <strong>{multimediaStrings.changeType}</strong>
+            <span className="mr-4">:</span>
             <select
               value={currentPluginType ?? allowedPlugins[0]}
               onChange={(e) => handlePluginTypeChange(e.target.value)}

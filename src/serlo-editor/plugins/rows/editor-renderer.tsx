@@ -170,11 +170,11 @@ export function EditorRowRenderer({
         return (
           <>
             {children}
-            <hr />
+            <hr className="mb-4" />
             <div className="flex">
               <div className="flex-[1]">
                 <button
-                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
+                  className="serlo-button-editor-secondary mr-8 mt-4 text-sm"
                   onClick={() => {
                     const document = selectSerializedDocument(
                       store.getState(),
