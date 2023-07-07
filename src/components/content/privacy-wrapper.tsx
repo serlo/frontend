@@ -121,7 +121,10 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute inset-0 -top-28 flex items-center justify-around mobile:-top-12 sm:-top-24"
+          className={clsx(
+            'absolute inset-0 flex items-center justify-around',
+            consentGiven ? '' : '-top-28 mobile:-top-12 sm:-top-24'
+          )}
           onClick={confirmLoad}
         >
           <button
