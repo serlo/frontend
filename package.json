@@ -52,7 +52,7 @@
     "autoprefixer": "^10.4.14",
     "clsx": "^1.2.1",
     "fast-xml-parser": "^4.2.5",
-    "fp-ts": "^2.13.1",
+    "fp-ts": "^2.16.0",
     "graphiql": "^2.0.9",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
