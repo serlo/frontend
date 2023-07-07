@@ -11,8 +11,6 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
-import { PageSerializedState } from '@/edtr-io/editor-response-to-state'
-import { SerloEditor } from '@/edtr-io/serlo-editor'
 import { EditorPageData } from '@/fetcher/fetch-editor-data'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { isProduction } from '@/helper/is-production'
@@ -25,6 +23,8 @@ import {
 } from '@/mutations/use-set-entity-mutation/types'
 import { useSetEntityMutation } from '@/mutations/use-set-entity-mutation/use-set-entity-mutation'
 import { useTaxonomyCreateOrUpdateMutation } from '@/mutations/use-taxonomy-create-or-update-mutation'
+import { PageSerializedState } from '@/serlo-editor-integration/editor-response-to-state'
+import { SerloEditor } from '@/serlo-editor-integration/serlo-editor'
 
 export function AddRevision({
   initialState,
@@ -120,7 +120,7 @@ export function AddRevision({
         )}${id ? ` (${id})` : ''}`}</title>
       </Head>
       {renderBacklink()}
-      <div className="controls-portal sticky top-0 z-[94] bg-white" />
+      <div className="controls-portal sticky top-0 z-[100] bg-white" />
       <div className="edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
         <SerloEditor
           entityNeedsReview={entityNeedsReview}

@@ -53,7 +53,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
   const { asPath } = useRouter()
   const { lang } = useInstanceData()
 
-  const startDate = new Date('2023-06-12T00:00:00+02:00')
+  const startDate = new Date('2023-06-11T23:00:00+02:00')
   const endDate = new Date('2023-06-19T00:00:00+02:00')
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [asPath])
 
   const noComments =
     page.kind === 'single-entity' &&
@@ -172,6 +172,7 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
                 if (result) {
                   setButton(false)
                   submitEvent('exit-button-' + group)
+                  Cookies.remove('serlo-mitmach-woche-show-button')
                 }
               }}
               className="serlo-button-blue-transparent ml-5 h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"

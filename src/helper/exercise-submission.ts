@@ -1,6 +1,6 @@
-import { v4 } from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 
-interface ExerciseSubmissionData {
+export interface ExerciseSubmissionData {
   path: string
   entityId: number
   revisionId: number
@@ -13,7 +13,7 @@ const sesionStorageKey = 'frontend_exercise_submission_session_id'
 export function exerciseSubmission(data: ExerciseSubmissionData) {
   if (!sessionStorage.getItem(sesionStorageKey)) {
     // set new session id
-    sessionStorage.setItem(sesionStorageKey, v4())
+    sessionStorage.setItem(sesionStorageKey, uuidv4())
   }
   const sessionId = sessionStorage.getItem(sesionStorageKey)
 

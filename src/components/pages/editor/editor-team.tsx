@@ -1,7 +1,34 @@
-import {
-  PageTeamRenderer,
-  TeamDataEntry,
-} from '@/edtr-io/plugins/page-team/renderer'
+import { PageTeamRenderer } from '@/serlo-editor/plugins/page-team/renderer'
+
+export interface TeamDataEntry {
+  firstName: string
+  lastName: string
+  user?: string
+  position: string
+  extraLinkUrl: string
+  extraLinkText: string
+  photo: string
+}
+
+export const teamDataSimon: TeamDataEntry = {
+  firstName: 'Simon',
+  lastName: 'Köhl',
+  position: 'Partnerships',
+  extraLinkUrl: 'mailto:simon@serlo.org',
+  extraLinkText: 'simon@serlo.org',
+  photo:
+    'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
+}
+
+export const teamDataKulla: TeamDataEntry = {
+  firstName: 'Stephan',
+  lastName: 'Kulla',
+  position: 'Software',
+  extraLinkUrl: 'mailto:kulla@serlo.org',
+  extraLinkText: 'kulla@serlo.org',
+  photo:
+    'https://assets.serlo.org/5fc610675ef12_e33cf10d89b893ff3cc99cebf5e1a1686ade44ec.jpg',
+}
 
 export const teamData: TeamDataEntry[] = [
   {
@@ -22,15 +49,7 @@ export const teamData: TeamDataEntry[] = [
     photo:
       'https://assets.serlo.org/a0d3abe0-7491-11ed-a78a-a5b96e09d60e/image.jpg',
   },
-  {
-    firstName: 'Simon',
-    lastName: 'Köhl',
-    position: 'Partnerships',
-    extraLinkUrl: 'mailto:simon@serlo.org',
-    extraLinkText: 'simon@serlo.org',
-    photo:
-      'https://assets.serlo.org/5fc60eaacdf04_c185cbdb5b62400d973d553587caa6cf00ed294f.jpg',
-  },
+  teamDataSimon,
   {
     firstName: 'Vitomir',
     lastName: 'Budimir',
@@ -40,15 +59,8 @@ export const teamData: TeamDataEntry[] = [
     photo:
       'https://assets.serlo.org/36f5c060-ac80-11ed-9413-878d94834f2e/image.jpg',
   },
-  {
-    firstName: 'Stephan',
-    lastName: 'Kulla',
-    position: 'Software',
-    extraLinkUrl: '',
-    extraLinkText: '',
-    photo:
-      'https://assets.serlo.org/5fc610675ef12_e33cf10d89b893ff3cc99cebf5e1a1686ade44ec.jpg',
-  },
+  // For developers we do not want to show extra links on the editor page
+  { ...teamDataKulla, extraLinkText: '', extraLinkUrl: '' },
   {
     firstName: 'David',
     lastName: 'Li',

@@ -1,11 +1,9 @@
-import { CustomElement, CustomText } from '@edtr-io/plugin-text'
 import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
 import { EdtrState, UnknownEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
-import { BoxType } from '@/edtr-io/plugins/box/renderer'
 import {
   FrontendContentNode,
   FrontendMathNode,
@@ -14,6 +12,8 @@ import {
   FrontendTextNode,
   Sign,
 } from '@/frontend-node-types'
+import { BoxType } from '@/serlo-editor/plugins/box/renderer'
+import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 
@@ -113,8 +113,8 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       {
         type: FrontendNodeType.Img,
         src: src as string,
-        alt: alt,
-        maxWidth: maxWidth,
+        alt,
+        maxWidth,
         href: link?.href,
         caption: convertedCaption,
       },
@@ -183,7 +183,6 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       {
         type: FrontendNodeType.Multimedia,
         mediaWidth: width,
-        float: 'right',
         media: convert(node.state.multimedia as EdtrState),
         children: convert(node.state.explanation as EdtrState),
       },

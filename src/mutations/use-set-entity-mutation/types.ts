@@ -1,4 +1,14 @@
 import {
+  SetAppletInput,
+  SetGenericEntityInput,
+  SetArticleInput,
+  SetCourseInput,
+  SetCoursePageInput,
+  SetEventInput,
+  SetExerciseGroupInput,
+  SetVideoInput,
+} from '@/fetcher/graphql-types/operations'
+import {
   AppletSerializedState,
   ArticleSerializedState,
   CoursePageSerializedState,
@@ -10,17 +20,7 @@ import {
   TextExerciseSerializedState,
   TextSolutionSerializedState,
   VideoSerializedState,
-} from '@/edtr-io/editor-response-to-state'
-import {
-  SetAppletInput,
-  SetGenericEntityInput,
-  SetArticleInput,
-  SetCourseInput,
-  SetCoursePageInput,
-  SetEventInput,
-  SetExerciseGroupInput,
-  SetVideoInput,
-} from '@/fetcher/graphql-types/operations'
+} from '@/serlo-editor-integration/editor-response-to-state'
 
 export interface OnSaveData {
   controls: {

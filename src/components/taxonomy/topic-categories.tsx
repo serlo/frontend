@@ -25,7 +25,7 @@ export function TopicCategories({
   full,
 }: TopicCategoriesProps) {
   return (
-    <div className="mx-side mt-4 flex flex-col" style={{ flex: '1 1 55%' }}>
+    <div className="mx-side mt-4 flex flex-[1_1_55%] flex-col">
       {renderCategories()}
     </div>
   )

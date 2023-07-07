@@ -65,7 +65,7 @@ function Content() {
 
   function renderTable(nodes: TrashedEntitiesNode[]) {
     return (
-      <table className="serlo-table">
+      <table className="serlo-table border-t-3 border-l-3 border-brand-200">
         <thead>
           <tr>
             <th className="serlo-th">ID</th>

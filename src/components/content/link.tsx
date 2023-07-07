@@ -1,9 +1,10 @@
+import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { ForwardedRef, forwardRef, ReactNode } from 'react'
 
-import { ExternalLink } from './external-link'
+import { FaIcon } from '../fa-icon'
 
 export interface LinkProps {
   href?: string
@@ -118,7 +119,12 @@ function InternalLink({
         title={title}
       >
         {children}
-        {isExternal && !noExternalIcon && <ExternalLink />}
+        {isExternal && !noExternalIcon && (
+          <FaIcon
+            icon={faUpRightFromSquare}
+            className="ml-1 align-baseline text-xs"
+          />
+        )}
       </a>
     )
   }

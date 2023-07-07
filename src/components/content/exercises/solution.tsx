@@ -1,10 +1,7 @@
-import type { RenderNestedFunction } from '../../../schema/article-renderer'
-import { useInstanceData } from '@/contexts/instance-context'
-import {
-  FrontendContentNode,
-  FrontendNodeType,
-  FrontendSolutionNode,
-} from '@/frontend-node-types'
+import { Link } from '../link'
+import { FrontendSolutionNode } from '@/frontend-node-types'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
+import { SolutionRenderer } from '@/serlo-editor/plugins/solution/renderer'
 
 export interface SolutionProps {
   node: FrontendSolutionNode['solution']
@@ -12,60 +9,39 @@ export interface SolutionProps {
 }
 
 export function Solution({ node, renderNested }: SolutionProps) {
-  const { strings } = useInstanceData()
-  return <>{renderNested(getSolutionContent(), 'sol')}</>
+  const solutionContent = getSolutionContent()
+  if (!solutionContent) return null
+  const { prerequisite, strategy, steps } = solutionContent
 
-  function getSolutionContent(): FrontendContentNode[] {
-    if (node.legacy) {
-      return node.legacy
-    }
-    if (!node.edtrState) return []
+  return (
+    <SolutionRenderer
+      prerequisite={
+        prerequisite ? (
+          <Link href={prerequisite.href}>{prerequisite.title}</Link>
+        ) : null
+      }
+      strategy={<>{renderNested(strategy)}</>}
+      steps={<>{renderNested(steps)}</>}
+    />
+  )
+
+  // simplify after migration
+  function getSolutionContent() {
+    if (node.legacy)
+      return { steps: node.legacy, strategy: [], prerequisite: undefined }
+    if (!node.edtrState) return null
+
     const state = node.edtrState
-    const prereq: FrontendContentNode[] = []
-    if (state.prerequisite && state.prerequisite.id) {
-      prereq.push({
-        type: FrontendNodeType.P,
-        children: [
-          {
-            type: FrontendNodeType.Text,
-            text: `${strings.content.exercises.prerequisite} `,
-          },
-          {
-            type: FrontendNodeType.A,
+
+    const prerequisite =
+      state.prerequisite && state.prerequisite.id
+        ? {
             href:
               state.prerequisite.href ?? `/${state.prerequisite.id.toString()}`, // for revisions
-            children: [
-              { type: FrontendNodeType.Text, text: state.prerequisite.title },
-            ],
-          },
-        ],
-      })
-    }
+            title: state.prerequisite.title,
+          }
+        : undefined
 
-    // quickfix for solution strategy
-    const strategy: FrontendContentNode[] =
-      state.strategy.length > 0
-        ? [
-            {
-              type: FrontendNodeType.Important,
-              children: [
-                {
-                  type: FrontendNodeType.P,
-                  children: [
-                    {
-                      type: FrontendNodeType.Text,
-                      text: strings.content.exercises.strategy,
-                      strong: true,
-                    },
-                  ],
-                },
-                ...state.strategy,
-              ],
-            },
-          ]
-        : []
-
-    const steps = state.steps
-    return [...prereq, ...strategy, ...steps]
+    return { ...state, prerequisite }
   }
 }
