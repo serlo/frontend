@@ -1,6 +1,6 @@
 /**
- * This file is needed to communicate with the parent window that is rendering
- * Serlo content within an iframe. See the file lazy.tsx on how it can be
+ * This file and import is needed to communicate with the parent window that is rendering
+ * Serlo content within an iframe. See the file lazy-iframe-resizer.tsx on how it can be
  * dynamically & lazily imported only when needed.
  */
 
