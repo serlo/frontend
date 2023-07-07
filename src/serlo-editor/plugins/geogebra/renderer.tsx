@@ -45,8 +45,8 @@ export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
       <div
         className={
           `geogebra-scaler-${id} ` +
-          tw`absolute top-0 flex h-full w-full items-center
-          justify-center overflow-hidden bg-brand-50 p-0`
+          tw`absolute top-0 flex h-full w-full items-center justify-center
+          overflow-hidden rounded-xl bg-brand-50 p-0`
         }
       >
         {url ? <div id={`ggb-element-${id}`} className="mx-auto"></div> : null}

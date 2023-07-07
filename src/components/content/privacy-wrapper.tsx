@@ -97,10 +97,10 @@ export function PrivacyWrapper({
 
     return (
       <div className="text-center">
-        <div className="relative bg-brand-100 pb-[56.2%]">
+        <div className="relative rounded-xl bg-brand-100 pb-[56.2%]">
           <img
             className={clsx(
-              'absolute left-0 h-full w-full object-cover',
+              'absolute left-0 h-full w-full rounded-xl object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
             src={previewImageUrl}
