@@ -3481,7 +3481,7 @@ __metadata:
     "@types/algebra.js": ^0.2.2
     "@types/escape-html": ^1.0.2
     "@types/jest": ^29.2.0
-    "@types/js-cookie": ^3.0.2
+    "@types/js-cookie": ^3.0.3
     "@types/katex": ^0.14.0
     "@types/lodash": ^4.14.181
     "@types/node": ^18.0.0
@@ -3526,7 +3526,7 @@ __metadata:
     is-hotkey: ^0.2.0
     isomorphic-unfetch: ^3.1.0
     jest: ^27.5.1
-    js-cookie: ^3.0.1
+    js-cookie: ^3.0.5
     katex: ^0.15.3
     lodash: ^4.17.21
     msw: ^0.47.4
@@ -3995,10 +3995,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-cookie@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@types/js-cookie@npm:3.0.2"
-  checksum: 7ab964288dd26373e134ed0bcde4a7dbea7e6f5de1805e2d1e48eac847e89a0e7f5fdc9164c37931680ec97c6e6e5a73e3e4039e0d08527c2e21badd7bee62d1
+"@types/js-cookie@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@types/js-cookie@npm:3.0.3"
+  checksum: 927254ec37ce4fbe4d9d54f53a446b4351259799d9933db5808ddb7c430396aa2496bdd0a4e47e1b56048ffbec98645cbd4daa9e3ed9a6fff55e25eb640fcb15
   languageName: node
   linkType: hard
 
@@ -9801,10 +9801,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-cookie@npm:^3.0.1":
-  version: 3.0.1
-  resolution: "js-cookie@npm:3.0.1"
-  checksum: bb48de67e2a6bd1ae3dfd6b2d5a167c33dd0c5a37e909206161eb0358c98f17cb55acd55827a58e9eea3630d89444e7479f7938ef4420dda443218b8c434a4c3
+"js-cookie@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 2dbd2809c6180fbcf060c6957cb82dbb47edae0ead6bd71cbeedf448aa6b6923115003b995f7d3e3077bfe2cb76295ea6b584eb7196cca8ba0a09f389f64967a
   languageName: node
   linkType: hard
 
