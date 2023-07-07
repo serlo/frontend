@@ -43,6 +43,7 @@ export function PrivacyWrapper({
 
   const confirmLoad = () => {
     giveConsent(provider)
+    setConsentGiven(true)
     if (onLoad) onLoad()
     if (showIframe) return
     if (isTwingle && twingleCallback) twingleCallback()
