@@ -1,13 +1,10 @@
-import {
-  FrontendContentNode,
-  FrontendNodeType,
-  Sign,
-} from '@/frontend-node-types'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 import {
   EquationsRenderer,
   EquationsRendererStep,
 } from '@/serlo-editor/plugins/equations/renderer'
+import { Sign } from '@/serlo-editor/plugins/equations/sign'
 
 export interface StepProps {
   left: string

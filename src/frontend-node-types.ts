@@ -6,8 +6,6 @@ import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer
 import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
 import { CustomText } from './serlo-editor/plugins/text'
 
-export { Sign } from './serlo-editor/plugins/equations/sign'
-
 // The actual content of the page.
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
