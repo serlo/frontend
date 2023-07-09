@@ -134,16 +134,6 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: anchor', () => {
-    const result = convert({
-      plugin: EditorPluginType.Anchor,
-      state: 'AnchorTest',
-    })
-    expect(result).toEqual([
-      { type: FrontendNodeType.Anchor, id: 'AnchorTest' },
-    ])
-  })
-
   test('plugin: blockquote', () => {
     const result = convert({
       plugin: EditorPluginType.Blockquote,
@@ -177,7 +167,11 @@ describe('edtr io plugins', () => {
         state: 'jybewqhg',
       })
       expect(result).toEqual([
-        { type: FrontendNodeType.Geogebra, id: 'jybewqhg' },
+        {
+          plugin: EditorPluginType.Geogebra,
+          type: FrontendNodeType.Geogebra,
+          state: 'jybewqhg',
+        },
       ])
     })
 
@@ -187,39 +181,28 @@ describe('edtr io plugins', () => {
         state: 'https://www.geogebra.org/m/jybewqhg',
       })
       expect(result).toEqual([
-        { type: FrontendNodeType.Geogebra, id: 'jybewqhg' },
+        {
+          plugin: EditorPluginType.Geogebra,
+          type: FrontendNodeType.Geogebra,
+          state: 'jybewqhg',
+        },
       ])
     })
 
-    //TODO: return empty instead of faulty url? should probably be checked in edtr
+    //TODO: return empty instead of faulty url? should probably be checked in editor
     test('no geogebra url', () => {
       const result = convert({
         plugin: EditorPluginType.Geogebra,
         state: 'https://www.github.com',
       })
       expect(result).toEqual([
-        { type: FrontendNodeType.Geogebra, id: 'https://www.github.com' },
+        {
+          plugin: EditorPluginType.Geogebra,
+          type: FrontendNodeType.Geogebra,
+          state: 'https://www.github.com',
+        },
       ])
     })
-  })
-
-  test('plugin: highlight', () => {
-    const result = convert({
-      plugin: EditorPluginType.Highlight,
-      state: {
-        code: '\n<html>Code</html>',
-        language: 'html',
-        showLineNumbers: true,
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Code,
-        code: '\n<html>Code</html>',
-        language: 'html',
-        showLineNumbers: true,
-      },
-    ])
   })
 
   describe('plugin: multimedia', () => {
@@ -250,7 +233,16 @@ describe('edtr io plugins', () => {
         {
           type: FrontendNodeType.Multimedia,
           mediaWidth: 20,
-          media: [{ type: FrontendNodeType.Image, src: 'test.jpg', alt: '' }],
+          media: [
+            {
+              type: FrontendNodeType.Image,
+              src: 'test.jpg',
+              alt: '',
+              caption: undefined,
+              href: undefined,
+              maxWidth: undefined,
+            },
+          ],
           children: [{ type: FrontendNodeType.SlateContainer, children: [] }],
         },
       ])
@@ -314,16 +306,6 @@ describe('edtr io plugins', () => {
         alt: '',
         maxWidth: undefined,
       },
-    ])
-  })
-
-  test('plugin: serloInjection', () => {
-    const result = convert({
-      plugin: EditorPluginType.Injection,
-      state: '/145590',
-    })
-    expect(result).toEqual([
-      { type: FrontendNodeType.Injection, href: '/145590' },
     ])
   })
 
@@ -418,22 +400,6 @@ describe('edtr io plugins', () => {
             children: [],
           },
         ],
-      },
-    ])
-  })
-
-  test('plugin: video', () => {
-    const result = convert({
-      plugin: EditorPluginType.Video,
-      state: {
-        src: 'https://www.youtube.com/watch?v=IPOnn9EBX74',
-        alt: 'Beschreibung.',
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Video,
-        src: 'https://www.youtube.com/watch?v=IPOnn9EBX74',
       },
     ])
   })
