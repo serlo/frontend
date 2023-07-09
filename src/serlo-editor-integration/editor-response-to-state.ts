@@ -15,7 +15,7 @@ import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-templa
 import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
 import { userTypeState } from '../serlo-editor/plugins/serlo-template-plugins/user'
 import { videoTypeState } from '../serlo-editor/plugins/serlo-template-plugins/video'
-import { TemplatePluginType } from './plugins'
+import { EditorPluginType } from './types/editor-plugin-type'
 import {
   isEdtr,
   Edtr,
@@ -24,12 +24,13 @@ import {
   OtherPlugin,
   Splish,
 } from './types/legacy-editor-to-editor-types'
+import { TemplatePluginType } from './types/template-plugin-type'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
 
-const empty: RowsPlugin = { plugin: 'rows', state: [] }
+const empty: RowsPlugin = { plugin: EditorPluginType.Rows, state: [] }
 
 // converts query response to deserialized editor state
 export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
@@ -166,9 +167,9 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       }
 
       return serializeEditorState({
-        plugin: 'article',
+        plugin: EditorPluginType.Article,
         state: {
-          introduction: { plugin: 'articleIntroduction' },
+          introduction: { plugin: EditorPluginType.ArticleIntroduction },
           content: convertedContent,
           exercises: [],
           exerciseFolder: { id: '', title: '' },
@@ -350,10 +351,10 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       const convertedContent = toEdtr(convertdContent) // RowsPlugin
 
       return serializeEditorState({
-        plugin: 'exercise',
+        plugin: EditorPluginType.Exercise,
         state: {
           content: {
-            plugin: 'rows',
+            plugin: EditorPluginType.Rows,
             state: convertedContent.state,
           },
           interactive: undefined,
@@ -433,10 +434,10 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
       const convertedContent = toEdtr(convertdContent) // RowsPlugin
 
       return serializeEditorState({
-        plugin: 'solution',
+        plugin: EditorPluginType.Solution,
         state: {
           prerequisite: undefined,
-          strategy: { plugin: 'text' },
+          strategy: { plugin: EditorPluginType.Text },
           steps: convertedContent,
         },
       })
@@ -621,14 +622,17 @@ export type DeserializeError =
 
 function toEdtr(content: EditorState): Edtr {
   if (!content)
-    return { plugin: 'rows', state: [{ plugin: 'text', state: undefined }] }
+    return {
+      plugin: EditorPluginType.Rows,
+      state: [{ plugin: EditorPluginType.Text, state: undefined }],
+    }
   if (isEdtr(content)) return content
 
   return {
-    plugin: 'rows',
+    plugin: EditorPluginType.Rows,
     state: [
       {
-        plugin: 'text',
+        plugin: EditorPluginType.Text,
         state: [
           {
             type: 'p',

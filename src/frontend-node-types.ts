@@ -1,4 +1,5 @@
 import { LicenseData } from './data-types'
+import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
 import { BoxType } from './serlo-editor/plugins/box/renderer'
 import { Sign } from './serlo-editor/plugins/equations/sign'
 import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
@@ -10,51 +11,52 @@ export { Sign } from './serlo-editor/plugins/equations/sign'
 // The actual content of the page.
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
-// Will switch to edtr-io state one day.
+// Will switch to directly using editor state or renderer soonish.
 // Until then: Here are the types the frontend expects after converting
 
 export enum FrontendNodeType {
-  Text = 'text',
-  A = 'a',
-  Article = 'article',
-  InlineMath = 'inline-math',
-  P = 'p',
-  SlateP = 'slate-p',
-  SlateContainer = 'slate-container',
-  H = 'h',
-  Math = 'math',
-  Img = 'img',
+  Anchor = EditorPluginType.Anchor,
+  Article = EditorPluginType.Article,
+  Blockquote = EditorPluginType.Blockquote,
+  Box = EditorPluginType.Box,
+  Code = EditorPluginType.Highlight,
+  Equations = EditorPluginType.Equations,
+  Geogebra = EditorPluginType.Geogebra,
+  Image = EditorPluginType.Image,
+  Important = EditorPluginType.Important,
+  Injection = EditorPluginType.Injection,
+  Multimedia = EditorPluginType.Multimedia,
+  PageLayout = EditorPluginType.PageLayout,
+  PagePartners = EditorPluginType.PagePartners,
+  PageTeam = EditorPluginType.PageTeam,
+  Table = EditorPluginType.Table,
+  Td = 'td',
+  Th = 'th',
+  Tr = 'tr',
+  SerloTable = EditorPluginType.SerloTable,
+  SerloTd = 'serlo-td',
+  SerloTr = 'serlo-tr',
+  SpoilerBody = 'spoiler-body',
   SpoilerContainer = 'spoiler-container',
   SpoilerTitle = 'spoiler-title',
-  SpoilerBody = 'spoiler-body',
+  Row = 'row', // children of dep. layout plugin
+  Col = 'col', // children of dep. layout plugin
+  Video = EditorPluginType.Video,
+  Exercise = EditorPluginType.Exercise,
+  ExerciseGroup = 'exercise-group',
+  Solution = EditorPluginType.Solution,
+  Text = EditorPluginType.Text,
+
+  Math = 'math',
+  InlineMath = 'inline-math',
+  H = 'h',
+  A = 'a',
+  P = 'p',
   Ul = 'ul',
   Ol = 'ol',
   Li = 'li',
-  Multimedia = 'multimedia',
-  Row = 'row',
-  Col = 'col',
-  Important = 'important',
-  Blockquote = 'blockquote',
-  Box = 'box',
-  Anchor = 'anchor',
-  SerloTable = 'serlo-table',
-  SerloTr = 'serlo-tr',
-  SerloTd = 'serlo-td',
-  Table = 'table',
-  Tr = 'tr',
-  Th = 'th',
-  Td = 'td',
-  Geogebra = 'geogebra',
-  Injection = 'injection',
-  Exercise = 'exercise',
-  Solution = 'solution',
-  ExerciseGroup = 'exercise-group',
-  Video = 'video',
-  Code = 'code',
-  Equations = 'equations',
-  PageLayout = 'pageLayout',
-  PageTeam = 'pageTeam',
-  PagePartners = 'pagePartners',
+  SlateContainer = 'slate-container',
+  SlateP = 'slate-p',
 }
 
 export type FrontendTextNode = CustomText & {
@@ -128,8 +130,8 @@ export interface FrontendMathNode {
   alignCenter?: boolean
 }
 
-export interface FrontendImgNode {
-  type: FrontendNodeType.Img
+export interface FrontendImageNode {
+  type: FrontendNodeType.Image
   src: string
   href?: string
   alt: string
@@ -420,7 +422,7 @@ export interface EdtrPluginH5pExercise {
 export type FrontendVoidNode =
   | FrontendInlineMathNode
   | FrontendMathNode
-  | FrontendImgNode
+  | FrontendImageNode
   | FrontendAnchorNode
   | FrontendGeogebraNode
   | FrontendInjectionNode

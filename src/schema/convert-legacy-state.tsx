@@ -65,7 +65,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         }
         const colChildren: FrontendColNode[] = []
         children.forEach((child) => {
-          if (child.type === 'col') {
+          if (child.type === FrontendNodeType.Col) {
             colChildren.push(child)
           }
         })
@@ -138,7 +138,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (href.includes('assets.serlo.org')) {
           return [
             {
-              type: FrontendNodeType.Img,
+              type: FrontendNodeType.Image,
               src: href,
               alt: 'Bild',
             },
@@ -206,17 +206,19 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       return []
     }
     // compat: unwrap images from p
-    if (children.some((child) => child.type === 'img')) {
+    if (children.some((child) => child.type === FrontendNodeType.Image)) {
       return children
     }
     // compat: unwrap formulas from p
-    const maths = children.filter((child) => child.type === 'math')
+    const maths = children.filter(
+      (child) => child.type === FrontendNodeType.Math
+    )
     if (maths.length >= 1) {
       let current: FrontendContentNode[] = []
       const result: FrontendContentNode[] = []
 
       children.forEach((child) => {
-        if (child.type === 'math') {
+        if (child.type === FrontendNodeType.Math) {
           if (current.length > 0) {
             result.push({
               type: FrontendNodeType.P,
@@ -272,7 +274,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'img') {
     return [
       {
-        type: FrontendNodeType.Img,
+        type: FrontendNodeType.Image,
         src: node.attribs.src!,
         alt: node.attribs.alt!,
       },
@@ -289,7 +291,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       ) {
         return
       }
-      if (child.type === 'li') {
+      if (child.type === FrontendNodeType.Li) {
         liChildren.push(child)
       }
     })
@@ -318,7 +320,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'table') {
     const trChildren: FrontendTrNode[] = []
     convert(node.children).forEach((child) => {
-      if (child.type === 'tr') {
+      if (child.type === FrontendNodeType.Tr) {
         trChildren.push(child)
       }
     })
@@ -333,7 +335,10 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'tr') {
     const tdthChildren: (FrontendTdNode | FrontendThNode)[] = []
     convert(node.children).forEach((child) => {
-      if (child.type === 'td' || child.type === 'th') {
+      if (
+        child.type === FrontendNodeType.Td ||
+        child.type === FrontendNodeType.Th
+      ) {
         tdthChildren.push(child)
       }
     })
@@ -420,7 +425,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'a') {
     let children = convert(node.children)
     // compat: link images by tag
-    if (children.length === 1 && children[0].type === 'img') {
+    if (children.length === 1 && children[0].type === FrontendNodeType.Image) {
       children[0].href = node.attribs.href
       return children
     }
@@ -540,7 +545,7 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
   children.forEach((child) => {
     if (
       child.type === FrontendNodeType.Text ||
-      child.type === 'a' ||
+      child.type === FrontendNodeType.A ||
       child.type === FrontendNodeType.InlineMath
     ) {
       const last = result[result.length - 1]
@@ -561,7 +566,7 @@ function wrapSemistructuredTextInP(children: FrontendContentNode[]) {
 function unwrapSingleMathInline(children: FrontendContentNode[]) {
   return children.map((child) => {
     if (
-      child.type === 'p' &&
+      child.type === FrontendNodeType.P &&
       child.children?.length === 1 &&
       child.children[0].type === FrontendNodeType.InlineMath
     ) {

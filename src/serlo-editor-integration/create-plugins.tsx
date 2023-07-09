@@ -1,3 +1,5 @@
+import { EditorPluginType } from './types/editor-plugin-type'
+import { TemplatePluginType } from './types/template-plugin-type'
 import IconBox from '@/assets-webkit/img/editor/icon-box.svg'
 import IconEquation from '@/assets-webkit/img/editor/icon-equation.svg'
 import IconGeogebra from '@/assets-webkit/img/editor/icon-geogebra.svg'
@@ -52,23 +54,6 @@ import { createTextPlugin } from '@/serlo-editor/plugins/text'
 import { unsupportedPlugin } from '@/serlo-editor/plugins/unsupported'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
-export enum TemplatePluginType {
-  Applet = 'type-applet',
-  Article = 'type-article',
-  Course = 'type-course',
-  CoursePage = 'type-course-page',
-  Event = 'type-event',
-  Page = 'type-page',
-  Taxonomy = 'type-taxonomy',
-  TextExercise = 'type-text-exercise',
-  TextExerciseGroup = 'type-text-exercise-group',
-  TextSolution = 'type-text-solution',
-  Video = 'type-video',
-  User = 'type-user',
-}
-
-// type PluginType = SerializedDocument['plugin'] | TemplatePluginType
-
 export function createPlugins({
   editorStrings,
   instance,
@@ -82,91 +67,101 @@ export function createPlugins({
 
   return [
     {
-      type: 'text',
+      type: EditorPluginType.Text,
       plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
       visible: true,
       icon: <IconText />,
     },
-    { type: 'image', plugin: imagePlugin, visible: true, icon: <IconImage /> },
     {
-      type: 'multimedia',
+      type: EditorPluginType.Image,
+      plugin: imagePlugin,
+      visible: true,
+      icon: <IconImage />,
+    },
+    {
+      type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(),
       visible: true,
       icon: <IconMultimedia />,
     },
     {
-      type: 'spoiler',
+      type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(),
       visible: true,
       icon: <IconSpoiler />,
     },
     {
-      type: 'box',
+      type: EditorPluginType.Box,
       plugin: createBoxPlugin({}),
       visible: true,
       icon: <IconBox />,
     },
     {
-      type: 'serloTable',
+      type: EditorPluginType.SerloTable,
       plugin: createSerloTablePlugin(),
       visible: true,
       icon: <IconTable />,
     },
     {
-      type: 'injection',
+      type: EditorPluginType.Injection,
       plugin: injectionPlugin,
       visible: true,
       icon: <IconInjection />,
     },
     {
-      type: 'equations',
+      type: EditorPluginType.Equations,
       plugin: equationsPlugin,
       visible: true,
       icon: <IconEquation />,
     },
     {
-      type: 'geogebra',
+      type: EditorPluginType.Geogebra,
       plugin: geoGebraPlugin,
       visible: true,
       icon: <IconGeogebra />,
     },
     {
-      type: 'highlight',
+      type: EditorPluginType.Highlight,
       plugin: createHighlightPlugin(),
       visible: true,
       icon: <IconHighlight />,
     },
-    { type: 'video', plugin: videoPlugin, visible: true, icon: <IconVideo /> },
     {
-      type: 'anchor',
+      type: EditorPluginType.Video,
+      plugin: videoPlugin,
+      visible: true,
+      icon: <IconVideo />,
+    },
+    {
+      type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
       visible: true,
     },
     {
-      type: 'pasteHack',
+      type: EditorPluginType.PasteHack,
       plugin: pasteHackPlugin,
       visible: shouldUseFeature('edtrPasteHack'),
     },
     {
-      type: 'pageLayout',
+      type: EditorPluginType.PageLayout,
       plugin: pageLayoutPlugin,
       visible: isPage,
     },
     {
-      type: 'pageTeam',
+      type: EditorPluginType.PageTeam,
       plugin: pageTeamPlugin,
       visible: isPage,
     },
     {
-      type: 'pagePartners',
+      type: EditorPluginType.PagePartners,
       plugin: pagePartnersPlugin,
       visible: isPage,
     },
 
     // never visible in suggestions
-    { type: 'article', plugin: articlePlugin },
+    { type: EditorPluginType.Article, plugin: articlePlugin },
     {
-      type: 'articleIntroduction',
+      type: EditorPluginType.ArticleIntroduction,
       plugin: createMultimediaPlugin({
         explanation: {
           plugin: 'text',
@@ -177,16 +172,19 @@ export function createPlugins({
         allowedPlugins: ['image'],
       }),
     },
-    { type: 'unsupported', plugin: unsupportedPlugin },
-    { type: 'exercise', plugin: exercisePlugin },
-    { type: 'highlight', plugin: createHighlightPlugin() },
-    { type: 'h5p', plugin: H5pPlugin },
-    { type: 'important', plugin: importantPlugin },
-    { type: 'inputExercise', plugin: createInputExercisePlugin({}) },
-    { type: 'layout', plugin: layoutPlugin },
-    { type: 'rows', plugin: createRowsPlugin() },
-    { type: 'scMcExercise', plugin: createScMcExercisePlugin() },
-    { type: 'solution', plugin: solutionPlugin },
+    { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },
+    { type: EditorPluginType.Exercise, plugin: exercisePlugin },
+    { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
+    { type: EditorPluginType.H5p, plugin: H5pPlugin },
+    { type: EditorPluginType.Important, plugin: importantPlugin },
+    {
+      type: EditorPluginType.InputExercise,
+      plugin: createInputExercisePlugin({}),
+    },
+    { type: EditorPluginType.Layout, plugin: layoutPlugin },
+    { type: EditorPluginType.Rows, plugin: createRowsPlugin() },
+    { type: EditorPluginType.ScMcExercise, plugin: createScMcExercisePlugin() },
+    { type: EditorPluginType.Solution, plugin: solutionPlugin },
 
     // Internal plugins for our content types
     { type: TemplatePluginType.Applet, plugin: appletTypePlugin },

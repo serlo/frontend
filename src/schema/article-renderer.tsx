@@ -287,7 +287,7 @@ function renderElement({
       children
     )
   }
-  if (element.type === FrontendNodeType.Img) {
+  if (element.type === FrontendNodeType.Image) {
     return (
       <Image
         element={element}

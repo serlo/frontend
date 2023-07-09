@@ -6,6 +6,7 @@ export enum EditorPluginType {
   Box = 'box',
   Equations = 'equations',
   Geogebra = 'geogebra',
+  H5p = 'h5p',
   Highlight = 'highlight',
   Image = 'image',
   Important = 'important',
@@ -16,6 +17,7 @@ export enum EditorPluginType {
   PageLayout = 'pageLayout',
   PagePartners = 'pagePartners',
   PageTeam = 'pageTeam',
+  PasteHack = 'pasteHack',
 
   Rows = 'rows',
   SerloTable = 'serloTable',

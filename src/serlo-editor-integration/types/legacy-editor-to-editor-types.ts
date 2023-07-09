@@ -1,3 +1,5 @@
+import { EditorPluginType } from './editor-plugin-type'
+
 export enum Plugin {
   AlphabetSort = '@serlo-org/alphabet-sort',
   Anchor = '@serlo-org/anchor',
@@ -73,23 +75,23 @@ export interface LayoutPlugin {
 
 export interface OtherPlugin {
   plugin:
-    | 'anchor'
-    | 'article'
-    | 'blockquote'
+    | EditorPluginType.Anchor
+    | EditorPluginType.Article
+    | EditorPluginType.Blockquote
     | 'error'
-    | 'exercise'
-    | 'geogebra'
-    | 'highlight'
-    | 'image'
-    | 'important'
-    | 'injection'
-    | 'inputExercise'
-    | 'spoiler'
-    | 'scMcExercise'
-    | 'solution'
-    | 'table'
-    | 'text'
-    | 'video'
+    | EditorPluginType.Exercise
+    | EditorPluginType.Geogebra
+    | EditorPluginType.Highlight
+    | EditorPluginType.Image
+    | EditorPluginType.Important
+    | EditorPluginType.Injection
+    | EditorPluginType.InputExercise
+    | EditorPluginType.Spoiler
+    | EditorPluginType.ScMcExercise
+    | EditorPluginType.Solution
+    | EditorPluginType.Table
+    | EditorPluginType.Text
+    | EditorPluginType.Video
   state: unknown
 }
 

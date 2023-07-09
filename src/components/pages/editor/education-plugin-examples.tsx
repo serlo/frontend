@@ -6,6 +6,7 @@ import { Exercise } from '@/components/content/exercises/exercise'
 import { MathSpan } from '@/components/content/math-span'
 import { Multimedia } from '@/components/content/multimedia'
 import { Spoiler } from '@/components/content/spoiler'
+import { FrontendNodeType } from '@/frontend-node-types'
 import { renderNested } from '@/schema/article-renderer'
 import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
@@ -87,7 +88,7 @@ export const multimediaExample = (
     mediaWidth={50}
     media={[
       {
-        type: 'img',
+        type: FrontendNodeType.Image,
         src: 'https://assets.serlo.org/629480521269f_75475afecab129c4c7f203b3ce88f53416bf9946.jpg',
         alt: 'Illustration des Endoplasmatischen Retikulums',
       },
@@ -338,7 +339,7 @@ export const textExExample = (
               mediaWidth: 50,
               media: [
                 {
-                  type: 'img',
+                  type: FrontendNodeType.Image,
                   src: 'https://assets.serlo.org/legacy/1840.png',
                   alt: '',
                   caption: [

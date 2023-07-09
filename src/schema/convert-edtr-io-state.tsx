@@ -59,7 +59,7 @@ function convertPlugin(
   if (!isSupportedEditorPlugin(node)) {
     return []
   }
-  if (node.plugin === 'article') {
+  if (node.plugin === EditorPluginType.Article) {
     const {
       introduction,
       content,
@@ -91,15 +91,15 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'rows') {
+  if (node.plugin === EditorPluginType.Rows) {
     return convert(node.state)
   }
-  if (node.plugin === 'text') {
+  if (node.plugin === EditorPluginType.Text) {
     return [
       { type: FrontendNodeType.SlateContainer, children: convert(node.state) },
     ]
   }
-  if (node.plugin === 'image') {
+  if (node.plugin === EditorPluginType.Image) {
     // remove images without source
     if (!node.state.src) return []
 
@@ -126,7 +126,7 @@ function convertPlugin(
 
     return [
       {
-        type: FrontendNodeType.Img,
+        type: FrontendNodeType.Image,
         src: src as string,
         alt,
         maxWidth,
@@ -135,10 +135,10 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'important') {
+  if (node.plugin === EditorPluginType.Important) {
     return [{ type: FrontendNodeType.Important, children: convert(node.state) }]
   }
-  if (node.plugin === 'blockquote') {
+  if (node.plugin === EditorPluginType.Blockquote) {
     return [
       {
         type: FrontendNodeType.Blockquote,
@@ -146,7 +146,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'box') {
+  if (node.plugin === EditorPluginType.Box) {
     // get rid of wrapping p and inline math in title
     const convertedTitle = convert(
       node.state.title as SupportedEditorPlugin
@@ -167,7 +167,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'spoiler') {
+  if (node.plugin === EditorPluginType.Spoiler) {
     return [
       {
         type: FrontendNodeType.SpoilerContainer,
@@ -191,7 +191,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'multimedia') {
+  if (node.plugin === EditorPluginType.Multimedia) {
     const width = node.state.width ?? 50
     return [
       {
@@ -202,7 +202,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'layout') {
+  if (node.plugin === EditorPluginType.Layout) {
     return [
       {
         type: FrontendNodeType.Row,
@@ -217,7 +217,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'injection') {
+  if (node.plugin === EditorPluginType.Injection) {
     return [
       {
         type: FrontendNodeType.Injection,
@@ -225,7 +225,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'highlight') {
+  if (node.plugin === EditorPluginType.Highlight) {
     if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
     return [
       {
@@ -236,7 +236,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'table') {
+  if (node.plugin === EditorPluginType.Table) {
     const html = converter.makeHtml(node.state)
     // compat: the markdown converter could return all types of content, only use table nodes.
     const children = convertLegacyState(html).children.filter(
@@ -244,7 +244,7 @@ function convertPlugin(
     )
     return children
   }
-  if (node.plugin === 'serloTable') {
+  if (node.plugin === EditorPluginType.SerloTable) {
     const children = node.state.rows.map((row) => {
       return {
         type: FrontendNodeType.SerloTr,
@@ -265,7 +265,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'video') {
+  if (node.plugin === EditorPluginType.Video) {
     if (!node.state.src) {
       return []
     }
@@ -276,7 +276,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'anchor') {
+  if (node.plugin === EditorPluginType.Anchor) {
     return [
       {
         type: FrontendNodeType.Anchor,
@@ -284,7 +284,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'geogebra') {
+  if (node.plugin === EditorPluginType.Geogebra) {
     // compat: full url given
     let id = node.state
     const match = /geogebra\.org\/m\/(.+)/.exec(id)
@@ -293,7 +293,7 @@ function convertPlugin(
     }
     return [{ type: FrontendNodeType.Geogebra, id }]
   }
-  if (node.plugin === 'equations') {
+  if (node.plugin === EditorPluginType.Equations) {
     const { firstExplanation, transformationTarget } = node.state
     const steps = node.state.steps.map((step) => {
       return {
@@ -316,7 +316,7 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'pageLayout') {
+  if (node.plugin === EditorPluginType.PageLayout) {
     if (node.state.widthPercent === 0) return []
     return [
       {
@@ -327,10 +327,10 @@ function convertPlugin(
       },
     ]
   }
-  if (node.plugin === 'pageTeam') {
+  if (node.plugin === EditorPluginType.PageTeam) {
     return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
   }
-  if (node.plugin === 'pagePartners') {
+  if (node.plugin === EditorPluginType.PagePartners) {
     return [{ type: FrontendNodeType.PagePartners }]
   }
 

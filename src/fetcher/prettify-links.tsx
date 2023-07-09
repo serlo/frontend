@@ -3,7 +3,7 @@ import { request } from 'graphql-request'
 import { idsQuery } from './query-ids'
 import { endpoint } from '@/api/endpoint'
 import { RequestPageData } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
 
 export async function prettifyLinks(pageData: RequestPageData) {
@@ -37,7 +37,10 @@ export async function prettifyLinks(pageData: RequestPageData) {
   function walk(nodes: FrontendContentNode[] | undefined) {
     if (!nodes) return
     nodes.forEach((node) => {
-      if (node.type === 'a' || node.type === 'img') {
+      if (
+        node.type === FrontendNodeType.A ||
+        node.type === FrontendNodeType.Image
+      ) {
         const href = node.href
         if (href) {
           const id = getId(href)
