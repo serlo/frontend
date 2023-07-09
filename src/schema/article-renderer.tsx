@@ -22,6 +22,7 @@ import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
+import { EquationsRendererProps } from '@/serlo-editor/plugins/equations/renderer'
 import type { HighlightRendererProps } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 import { PageLayoutAdapter } from '@/serlo-editor/plugins/page-layout/frontend'
@@ -431,7 +432,9 @@ function renderElement({
       <Equations
         steps={element.steps}
         firstExplanation={element.firstExplanation}
-        transformationTarget={element.transformationTarget}
+        transformationTarget={
+          element.transformationTarget as EquationsRendererProps['transformationTarget']
+        }
         renderNested={nestedRenderer}
       />
     )

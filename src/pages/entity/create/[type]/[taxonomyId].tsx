@@ -17,7 +17,7 @@ import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { TemplatePluginType } from '@/serlo-editor-integration/plugins'
 
-enum AllowedPlugins {
+enum AllowedPlugin {
   Article = TemplatePluginType.Article,
   Course = TemplatePluginType.Course,
   Video = TemplatePluginType.Video,
@@ -28,7 +28,7 @@ enum AllowedPlugins {
 }
 
 interface EntityCreateProps {
-  entityType: keyof typeof AllowedPlugins
+  entityType: keyof typeof AllowedPlugin
   taxonomyTerm: Extract<GetTaxonomyTypeQuery['uuid'], { title: any }>
   entityNeedsReview: boolean
 }
@@ -38,7 +38,7 @@ export default renderedPageNoHooks<EntityCreateProps>(
     const { id: taxonomyParentId } = taxonomyTerm
 
     const addRevisionProps = {
-      initialState: { plugin: AllowedPlugins[entityType] as unknown as string },
+      initialState: { plugin: AllowedPlugin[entityType] as unknown as string },
       converted: false,
       type: UuidType[entityType],
       entityNeedsReview,
@@ -77,9 +77,9 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     GetTaxonomyTypeQueryVariables
   >(endpoint, getTaxonomyTypeQuery, { id: taxonomyId })
 
-  const entityType = context.params?.type as keyof typeof AllowedPlugins
+  const entityType = context.params?.type as AllowedPlugin
   const isValidType =
-    entityType && Object.values(AllowedPlugins).includes(entityType)
+    entityType && Object.values(AllowedPlugin).includes(entityType)
 
   if (
     !result ||

@@ -390,7 +390,7 @@ export interface FrontendEquationsNode {
     explanation: FrontendContentNode[]
   }[]
   firstExplanation: FrontendContentNode[]
-  transformationTarget: 'term' | 'equation'
+  transformationTarget: 'term' | 'equation' | string
   children?: undefined
 }
 

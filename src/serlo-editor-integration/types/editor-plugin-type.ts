@@ -24,11 +24,10 @@ export enum EditorPluginType {
   Text = 'text',
   Video = 'video',
 
-  // TODO: investigate exercise types again
   Exercise = 'exercise',
   ScMcExercise = 'scMcExercise',
-  Solution = 'solution',
   InputExercise = 'inputExercise',
+  Solution = 'solution',
 
   Unsupported = 'unsupported',
 }

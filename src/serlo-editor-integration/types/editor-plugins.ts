@@ -11,6 +11,7 @@ import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-o
 import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
+import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
 import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
 import type { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
 import type { ImagePluginState } from '@/serlo-editor/plugins/image'
@@ -33,7 +34,7 @@ import type { VideoPluginState } from '@/serlo-editor/plugins/video'
 export type SlateBlockElement = CustomElement
 export type SlateTextElement = CustomText
 
-// types for all supported editor plugins
+// All supported editor plugins in their serialized versions
 
 export interface EditorAnchorPlugin {
   plugin: EditorPluginType.Anchor
@@ -57,19 +58,7 @@ export interface EditorUnsupportedPlugin {
 }
 export interface EditorEquationsPlugin {
   plugin: EditorPluginType.Equations
-  // TODO: investigate why the default state type results in errors in "convert-edtr-io-state"
-  // state: StateTypeSerializedType<EquationsPluginState>
-  state: {
-    steps: {
-      left: string
-      right: string
-      transform: string
-      explanation: EditorTextPlugin
-      sign: string
-    }[]
-    firstExplanation: EditorTextPlugin
-    transformationTarget: 'term' | 'equation'
-  }
+  state: StateTypeSerializedType<EquationsPluginState>
 }
 export interface EditorExercisePlugin {
   plugin: EditorPluginType.Exercise
