@@ -1,5 +1,13 @@
 import { LicenseData } from './data-types'
 import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
+import {
+  EditorAnchorPlugin,
+  EditorGeogebraPlugin,
+  EditorH5PPlugin,
+  EditorHighlightPlugin,
+  EditorInjectionPlugin,
+  EditorVideoPlugin,
+} from './serlo-editor-integration/types/editor-plugins'
 import { BoxType } from './serlo-editor/plugins/box/renderer'
 import { Sign } from './serlo-editor/plugins/equations/sign'
 import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
@@ -205,9 +213,8 @@ export interface FrontendBoxNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendAnchorNode {
+export type FrontendAnchorNode = EditorAnchorPlugin & {
   type: FrontendNodeType.Anchor
-  id: string
   children?: undefined
 }
 
@@ -247,21 +254,19 @@ export interface FrontendTdNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendGeogebraNode {
+export type FrontendGeogebraNode = EditorGeogebraPlugin & {
   type: FrontendNodeType.Geogebra
-  id: string
   children?: undefined
 }
 
-export interface FrontendInjectionNode {
+export type FrontendInjectionNode = EditorInjectionPlugin & {
   type: FrontendNodeType.Injection
-  href: string
   children?: undefined
 }
 
 interface BareSolution {
   legacy?: FrontendContentNode[]
-  edtrState?: SolutionEdtrState
+  edtrState?: SolutionEditorState
   license?: LicenseData
   trashed: boolean
 }
@@ -271,7 +276,7 @@ export interface FrontendExerciseNode {
   trashed?: boolean
   task: {
     legacy?: FrontendContentNode[]
-    edtrState?: TaskEdtrState
+    edtrState?: TaskEditorState
     license?: LicenseData
   }
   solution: BareSolution
@@ -301,17 +306,17 @@ export interface FrontendSolutionNode {
   unrevisedRevisions?: number
 }
 
-export interface TaskEdtrState {
+export interface TaskEditorState {
   content: FrontendContentNode[] // edtr-io plugin "exercise"
   interactive?:
-    | EdtrPluginScMcExercise
-    | EdtrPluginInputExercise
-    | EdtrPluginH5pExercise
+    | EditorPluginScMcExercise
+    | EditorPluginInputExercise
+    | EditorH5PPlugin
 }
 
-export interface SolutionEdtrState {
+export interface SolutionEditorState {
+  // editor plugin "solution"
   prerequisite?: {
-    // edtr-io plugin "solution"
     id?: number
     href?: string // added, the resolved alias
     title: string
@@ -320,8 +325,8 @@ export interface SolutionEdtrState {
   steps: FrontendContentNode[]
 }
 
-export interface EdtrPluginScMcExercise {
-  plugin: 'scMcExercise' // edtr-io plugin
+export interface EditorPluginScMcExercise {
+  plugin: EditorPluginType.ScMcExercise // editor plugin
   state: {
     answers: {
       isCorrect: boolean
@@ -333,8 +338,8 @@ export interface EdtrPluginScMcExercise {
   }
 }
 
-export interface EdtrPluginInputExercise {
-  plugin: 'inputExercise' // edtr-io plugin
+export interface EditorPluginInputExercise {
+  plugin: EditorPluginType.InputExercise // editor plugin
   state: {
     type:
       | 'input-number-exact-match-challenge'
@@ -362,18 +367,14 @@ export interface FrontendExerciseGroupNode {
   unrevisedRevisions?: number
 }
 
-export interface FrontendVideoNode {
-  type: FrontendNodeType.Video
-  src: string
-  children?: undefined
+export type FrontendVideoNode = EditorVideoPlugin & {
   license?: LicenseData
+  type: FrontendNodeType.Video
+  children?: undefined
 }
 
-export interface FrontendCodeNode {
+export type FrontendCodeNode = EditorHighlightPlugin & {
   type: FrontendNodeType.Code
-  code: string
-  language: string
-  showLineNumbers: boolean
   children?: undefined
 }
 
@@ -410,11 +411,6 @@ export type FrontendPageTeamNode = PageTeamRendererProps & {
 export interface FrontendPagePartnersNode {
   type: FrontendNodeType.PagePartners
   children?: undefined
-}
-
-export interface EdtrPluginH5pExercise {
-  plugin: 'h5p' // edtr-io plugin (directly used in exercise)
-  state: string
 }
 
 export type FrontendVoidNode =

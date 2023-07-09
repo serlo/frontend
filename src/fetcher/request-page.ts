@@ -22,6 +22,7 @@ import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { getInstanceDataByLang } from '@/helper/feature-i18n'
 import { hasSpecialUrlChars } from '@/helper/urls/check-special-url-chars'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 // ALWAYS start alias with slash
 export async function requestPage(
@@ -323,8 +324,12 @@ export async function requestPage(
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
+            plugin: EditorPluginType.Video,
             type: FrontendNodeType.Video,
-            src: uuid.currentRevision?.url!,
+            state: {
+              src: uuid.currentRevision?.url!,
+              alt: uuid.currentRevision?.title ?? '',
+            },
             license: createInlineLicense(uuid.license),
           },
           ...content,
@@ -361,8 +366,9 @@ export async function requestPage(
         title: uuid.currentRevision?.title ?? '',
         content: [
           {
+            plugin: EditorPluginType.Geogebra,
             type: FrontendNodeType.Geogebra,
-            id: uuid.currentRevision?.url ?? '',
+            state: uuid.currentRevision?.url ?? '',
           },
           ...content,
         ],

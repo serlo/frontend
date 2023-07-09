@@ -14,6 +14,7 @@ import {
   FrontendMathNode,
   FrontendNodeType,
 } from '@/frontend-node-types'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 // Result of the htmlparser
 interface LegacyNode {
@@ -130,8 +131,9 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         if (match) {
           return [
             {
+              plugin: EditorPluginType.Geogebra,
               type: FrontendNodeType.Geogebra,
-              id: match[1],
+              state: match[1],
             },
           ]
         }
@@ -146,8 +148,9 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
         }
         return [
           {
+            plugin: EditorPluginType.Injection,
             type: FrontendNodeType.Injection,
-            href: href.trim(),
+            state: href.trim(),
           },
         ]
       }
@@ -485,10 +488,13 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
     if (code) {
       return [
         {
+          plugin: EditorPluginType.Highlight,
           type: FrontendNodeType.Code,
-          code,
-          language: '',
-          showLineNumbers: false,
+          state: {
+            code,
+            language: '',
+            showLineNumbers: false,
+          },
         },
       ]
     } else {

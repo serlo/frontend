@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { EdtrPluginInputExercise } from '@/frontend-node-types'
+import { EditorPluginInputExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 import { RenderNestedFunction } from '@/schema/article-renderer'
 import { InputExerciseRenderer } from '@/serlo-editor/plugins/input-exercise/renderer'
 
 export interface InputExerciseProps {
-  data: EdtrPluginInputExercise['state']
+  data: EditorPluginInputExercise['state']
   renderNested: RenderNestedFunction
   isRevisionView?: boolean
   context: {

@@ -369,14 +369,14 @@ function renderElement({
   if (element.type === FrontendNodeType.Geogebra) {
     return (
       <Lazy noPrint>
-        <Geogebra id={element.id} />
+        <Geogebra id={element.state} />
       </Lazy>
     )
   }
   if (element.type === FrontendNodeType.Anchor) {
     return (
       <>
-        <a id={element.id} />
+        <a id={element.state} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </>
     )
@@ -384,9 +384,9 @@ function renderElement({
   if (element.type === FrontendNodeType.Injection) {
     return (
       <>
-        {element.href ? (
+        {element.state ? (
           <InjectionRenderer
-            href={element.href}
+            href={element.state}
             renderNested={(value, ...prefix) =>
               renderNested(value, path, prefix)
             }
@@ -423,7 +423,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
-        <Video src={element.src} license={element.license} />
+        <Video src={element.state.src} license={element.license} />
       </Lazy>
     )
   }
@@ -442,7 +442,7 @@ function renderElement({
   if (element.type === FrontendNodeType.Code) {
     return (
       <div className="mx-side">
-        <HighlightRenderer {...element} />
+        <HighlightRenderer {...element.state} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </div>
     )

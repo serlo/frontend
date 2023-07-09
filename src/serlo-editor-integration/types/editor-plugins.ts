@@ -13,6 +13,7 @@ import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
 import type { GeogebraPluginState } from '@/serlo-editor/plugins/geogebra'
+import { H5pPluginState } from '@/serlo-editor/plugins/h5p'
 import type { HighlightPluginState } from '@/serlo-editor/plugins/highlight'
 import type { ImagePluginState } from '@/serlo-editor/plugins/image'
 import type { InputExercisePluginState } from '@/serlo-editor/plugins/input-exercise'
@@ -143,6 +144,10 @@ export interface EditorPageTeamPlugin {
 export interface EditorPagePartnersPlugin {
   plugin: EditorPluginType.PagePartners
   state: StateTypeSerializedType<PagePartnersPluginState>
+}
+export interface EditorH5PPlugin {
+  plugin: EditorPluginType.H5p
+  state: StateTypeSerializedType<H5pPluginState>
 }
 
 export type SupportedEditorPlugin =

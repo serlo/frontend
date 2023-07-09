@@ -220,8 +220,8 @@ function convertPlugin(
   if (node.plugin === EditorPluginType.Injection) {
     return [
       {
+        ...node,
         type: FrontendNodeType.Injection,
-        href: node.state,
       },
     ]
   }
@@ -229,10 +229,8 @@ function convertPlugin(
     if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
     return [
       {
+        ...node,
         type: FrontendNodeType.Code,
-        code: node.state.code,
-        language: node.state.language,
-        showLineNumbers: node.state.showLineNumbers,
       },
     ]
   }
@@ -266,13 +264,12 @@ function convertPlugin(
     ]
   }
   if (node.plugin === EditorPluginType.Video) {
-    if (!node.state.src) {
-      return []
-    }
+    if (!node.state.src) return []
     return [
       {
+        plugin: EditorPluginType.Video,
         type: FrontendNodeType.Video,
-        src: node.state.src,
+        state: node.state,
       },
     ]
   }
@@ -280,7 +277,7 @@ function convertPlugin(
     return [
       {
         type: FrontendNodeType.Anchor,
-        id: node.state,
+        ...node,
       },
     ]
   }
@@ -288,10 +285,14 @@ function convertPlugin(
     // compat: full url given
     let id = node.state
     const match = /geogebra\.org\/m\/(.+)/.exec(id)
-    if (match) {
-      id = match[1]
-    }
-    return [{ type: FrontendNodeType.Geogebra, id }]
+    if (match) id = match[1]
+    return [
+      {
+        plugin: EditorPluginType.Geogebra,
+        type: FrontendNodeType.Geogebra,
+        state: id,
+      },
+    ]
   }
   if (node.plugin === EditorPluginType.Equations) {
     const { firstExplanation, transformationTarget } = node.state

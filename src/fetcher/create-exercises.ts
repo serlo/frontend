@@ -6,8 +6,8 @@ import { UuidType } from '@/data-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
-  TaskEdtrState,
-  SolutionEdtrState,
+  TaskEditorState,
+  SolutionEditorState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
   FrontendNodeType,
@@ -26,13 +26,14 @@ export function createExercise(
   index?: number
 ): FrontendExerciseNode {
   let taskLegacy: FrontendContentNode[] | undefined = undefined
-  let taskEdtrState: TaskEdtrState | undefined = undefined
+  let taskEdtrState: TaskEditorState | undefined = undefined
   const content = uuid.currentRevision?.content
   if (content) {
     if (content.startsWith('{')) {
       // special case here: we know it's a edtr-io exercise
       // and we use this knowledge to convert subentries
-      const taskState = (JSON.parse(content) as { state: TaskEdtrState }).state
+      const taskState = (JSON.parse(content) as { state: TaskEditorState })
+        .state
 
       if (taskState.content) {
         taskState.content = convert(taskState.content)
@@ -82,13 +83,13 @@ export function createExercise(
 
 function createSolutionData(solution: BareExercise['solution']) {
   let solutionLegacy: FrontendContentNode[] | undefined = undefined
-  let solutionEdtrState: SolutionEdtrState | undefined = undefined
+  let solutionEdtrState: SolutionEditorState | undefined = undefined
   const content = solution?.currentRevision?.content
   if (content) {
     if (content.startsWith('{')) {
       const contentJson = JSON.parse(content) as
         | { plugin: 'rows' }
-        | { plugin: ''; state: SolutionEdtrState }
+        | { plugin: ''; state: SolutionEditorState }
       if (contentJson.plugin === 'rows') {
         // half converted, like 189579
         solutionLegacy = convert(contentJson as ConvertNode)
