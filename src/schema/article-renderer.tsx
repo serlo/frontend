@@ -11,7 +11,6 @@ import { Article } from '@/components/content/article'
 import { Box } from '@/components/content/box'
 import { Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
-import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
 import { Image } from '@/components/content/image'
 import { Lazy } from '@/components/content/lazy'
@@ -416,9 +415,7 @@ function renderElement({
       </ExerciseGroup>
     )
   }
-  if (element.type === FrontendNodeType.Solution) {
-    return <Solution node={element.solution} renderNested={nestedRenderer} />
-  }
+  if (element.type === FrontendNodeType.Solution) return null //only valid as child of Exercise
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>

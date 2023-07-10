@@ -36,7 +36,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
 
   return (
     <>
-      <h1 className="serlo-h1">
+      <h1 className="serlo-h1" itemProp="name">
         {props.editable ? (
           <input
             className={headerInputClasses}
@@ -45,11 +45,11 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
             onChange={(e) => title.set(e.target.value)}
           />
         ) : (
-          <span itemProp="name">{title.value}</span>
+          title.value
         )}
       </h1>
 
-      <div itemProp="articleBody">{content.render()}</div>
+      <section itemProp="articleBody">{content.render()}</section>
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
       {props.renderIntoToolbar(

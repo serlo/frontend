@@ -1,12 +1,8 @@
-import { useCallback } from 'react'
-
 import { editorContent, entity, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
-import { ExpandableBox } from '@/serlo-editor/renderer-ui'
 
 export const textSolutionTypeState = entityType(
   {
@@ -16,13 +12,15 @@ export const textSolutionTypeState = entityType(
   {}
 )
 
+type TextSolutionTypeState = typeof textSolutionTypeState
+
 export type TextSolutionTypeProps = EditorPluginProps<
-  typeof textSolutionTypeState,
+  TextSolutionTypeState,
   { skipControls: boolean }
 >
 
 export const textSolutionTypePlugin: EditorPlugin<
-  typeof textSolutionTypeState,
+  TextSolutionTypeState,
   { skipControls: boolean }
 > = {
   Component: TextSolutionTypeEditor,
@@ -31,26 +29,10 @@ export const textSolutionTypePlugin: EditorPlugin<
 }
 
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
-  const solutionStrings = useEditorStrings().templatePlugins.solution
-
-  const renderTitle = useCallback(
-    (collapsed: boolean) => {
-      return <>{solutionStrings[collapsed ? 'showSolution' : 'hideSolution']}</>
-    },
-    [solutionStrings]
-  )
-
   return (
-    <>
-      <ExpandableBox
-        renderTitle={renderTitle}
-        editable={
-          /* Title is not editable. Also rendering collapsed */
-          false
-        }
-      >
-        {props.state.content.render()}
-      </ExpandableBox>
+    <div className="mt-12">
+      {props.state.content.render()}
+
       {props.config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...props.state} />
       )}
@@ -62,6 +44,6 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
           entityType={UuidType.Solution}
         />
       )}
-    </>
+    </div>
   )
 }
