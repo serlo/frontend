@@ -22,7 +22,7 @@ export const coursePageTypeState = entityType(
   {}
 )
 
-type CoursePageTypePluginState = typeof coursePageTypeState
+export type CoursePageTypePluginState = typeof coursePageTypeState
 
 export const coursePageTypePlugin: EditorPlugin<
   CoursePageTypePluginState,

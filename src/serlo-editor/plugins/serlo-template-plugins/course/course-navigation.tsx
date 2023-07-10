@@ -2,19 +2,21 @@ import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { MouseEvent } from 'react'
 
-import { Link } from '../content/link'
-import { FaIcon } from '../fa-icon'
+import { Link } from '@/components/content/link'
+import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
-import { CourseData } from '@/data-types'
+import { CoursePagesData } from '@/data-types'
 
 export interface CourseNavigationProps {
+  title: string | JSX.Element
+  pages: CoursePagesData
   open: boolean
   onOverviewButtonClick: (e?: MouseEvent<HTMLButtonElement>) => void
-  data: CourseData
 }
 
 export function CourseNavigation({
-  data,
+  title,
+  pages,
   open,
   onOverviewButtonClick,
 }: CourseNavigationProps) {
@@ -26,10 +28,10 @@ export function CourseNavigation({
       className="mt-6 border-b-2 border-brand-200 bg-brand-50 pt-1 pb-5 sm:bg-white sm:pb-11 "
     >
       <p className="serlo-p mb-0 mt-4 text-[1rem] font-bold">
-        <FaIcon icon={faGraduationCap} /> Kurs
+        <FaIcon icon={faGraduationCap} /> {strings.entities.course}
       </p>
-      <h1 className="mx-side mt-0 mb-4 text-2xl font-bold">{data.title}</h1>
-      {data.pages.length > 0 ? (
+      <h1 className="mx-side mt-0 mb-4 text-2xl font-bold">{title}</h1>
+      {pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}
           className="serlo-button-light ml-2"
@@ -47,7 +49,7 @@ export function CourseNavigation({
       ) : null}
       {open ? (
         <ol className="serlo-ol mb-0 mt-7">
-          {data.pages.map(({ url, active, title, noCurrentRevision }) => (
+          {pages.map(({ url, active, title, noCurrentRevision }) => (
             <li key={url}>
               <Link
                 className={clsx(

@@ -33,9 +33,9 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
   const editorStrings = useEditorStrings()
 
   return (
-    <article>
+    <>
       <header>
-        <h1 className="serlo-h1">
+        <h1 className="serlo-h1" itemProp="name">
           {props.editable ? (
             <input
               className={headerInputClasses}
@@ -44,14 +44,14 @@ function TaxonomyTypeEditor(props: EditorPluginProps<TaxonomyTypePluginState>) {
               onChange={(e) => term.name.set(e.target.value)}
             />
           ) : (
-            <span itemProp="name">{term.name.value}</span>
+            term.name.value
           )}
         </h1>
       </header>
 
-      <section itemProp="articleBody">{description.render()}</section>
+      {description.render()}
 
       <ToolbarMain />
-    </article>
+    </>
   )
 }

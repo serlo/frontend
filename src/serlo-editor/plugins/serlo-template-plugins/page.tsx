@@ -34,7 +34,7 @@ function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
 
   return (
     <article>
-      <h1 className="serlo-h1">
+      <h1 className="serlo-h1" itemProp="name">
         {props.editable ? (
           <input
             className={headerInputClasses}
@@ -43,7 +43,7 @@ function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
             onChange={(e) => title.set(e.target.value)}
           />
         ) : (
-          <span itemProp="name">{title.value}</span>
+          title.value
         )}
       </h1>
       <section itemProp="articleBody">{content.render()}</section>

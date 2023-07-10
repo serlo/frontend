@@ -245,10 +245,7 @@ export function OptionalChild(props: {
     },
   })
   return (
-    <>
-      <hr className="my-12" />
-      {children}
-    </>
+    <div className="my-12 border-t-2 border-editor-primary-200">{children}</div>
   )
 }
 
