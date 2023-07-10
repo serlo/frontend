@@ -48,9 +48,7 @@ function TextExerciseTypeEditor({
         <OptionalChild
           state={textSolution}
           removeLabel={textExStrings.removeSolution}
-          onRemove={() => {
-            textSolution.remove()
-          }}
+          onRemove={() => textSolution.remove()}
         />
       ) : (
         <AddButton onClick={() => textSolution.create()}>
