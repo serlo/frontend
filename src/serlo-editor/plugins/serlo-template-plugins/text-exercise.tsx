@@ -51,9 +51,11 @@ function TextExerciseTypeEditor({
           onRemove={() => textSolution.remove()}
         />
       ) : (
-        <AddButton onClick={() => textSolution.create()}>
-          {textExStrings.createSolution}
-        </AddButton>
+        <div className="-ml-1.5 max-w-[50%]">
+          <AddButton onClick={() => textSolution.create()}>
+            {textExStrings.createSolution}
+          </AddButton>
+        </div>
       )}
       {config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...state} />
