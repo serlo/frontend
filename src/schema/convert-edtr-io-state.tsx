@@ -47,18 +47,19 @@ export function isTextPluginState(node: ConvertData): node is CustomNode {
 export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) return []
+
   if (Array.isArray(node)) return node.flatMap(convert)
   if (isSupportedEditorPlugin(node)) return convertPlugin(node)
   if (isTextPluginState(node)) return convertTextPluginState(node)
+
   return []
 }
 
 function convertPlugin(
   node: SupportedEditorPlugin | UnknownEditorPlugin
 ): FrontendContentNode[] {
-  if (!isSupportedEditorPlugin(node)) {
-    return []
-  }
+  if (!isSupportedEditorPlugin(node)) return []
+
   if (node.plugin === EditorPluginType.Article) {
     const {
       introduction,
@@ -218,21 +219,11 @@ function convertPlugin(
     ]
   }
   if (node.plugin === EditorPluginType.Injection) {
-    return [
-      {
-        ...node,
-        type: FrontendNodeType.Injection,
-      },
-    ]
+    return [{ ...node, type: FrontendNodeType.Injection }]
   }
   if (node.plugin === EditorPluginType.Highlight) {
     if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
-    return [
-      {
-        ...node,
-        type: FrontendNodeType.Code,
-      },
-    ]
+    return [{ ...node, type: FrontendNodeType.Code }]
   }
   if (node.plugin === EditorPluginType.Table) {
     const html = converter.makeHtml(node.state)
@@ -274,12 +265,7 @@ function convertPlugin(
     ]
   }
   if (node.plugin === EditorPluginType.Anchor) {
-    return [
-      {
-        type: FrontendNodeType.Anchor,
-        ...node,
-      },
-    ]
+    return [{ ...node, type: FrontendNodeType.Anchor }]
   }
   if (node.plugin === EditorPluginType.Geogebra) {
     // compat: full url given
