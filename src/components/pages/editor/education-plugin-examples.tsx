@@ -1295,9 +1295,8 @@ export const injectionExample = (
   </>
 )
 export const highlighExample = (
-  <div className="mx-side">
-    <HighlightRenderer
-      code={`// global variable: read & write from everywhere
+  <HighlightRenderer
+    code={`// global variable: read & write from everywhere
 var cookieAmount = 100
 
 // local variable: read & write from everywhere only in current code block
@@ -1309,10 +1308,9 @@ function feed(){
 // constant: local variable that can only be read after initialisation
 // this will always be 5
 const cookieSize = 5`}
-      language="javascript"
-      showLineNumbers
-    />
-  </div>
+    language="javascript"
+    showLineNumbers
+  />
 )
 
 export const spoilerExample = (
