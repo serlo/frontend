@@ -6,7 +6,7 @@ import {
   Uuid,
 } from '../serlo-editor/plugins/serlo-template-plugins/common/common'
 import { courseTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course/course'
-import { coursePageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course-page'
+import { coursePageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/course/course-page'
 import { eventTypeState } from '../serlo-editor/plugins/serlo-template-plugins/event'
 import { pageTypeState } from '../serlo-editor/plugins/serlo-template-plugins/page'
 import { taxonomyTypeState } from '../serlo-editor/plugins/serlo-template-plugins/taxonomy'

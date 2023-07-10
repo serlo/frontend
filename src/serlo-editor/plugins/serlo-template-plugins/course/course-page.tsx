@@ -5,9 +5,9 @@ import {
   editorContent,
   entityType,
   headerInputClasses,
-} from './common/common'
-import { ContentLoaders } from './helpers/content-loaders/content-loaders'
-import { ToolbarMain } from './toolbar-main/toolbar-main'
+} from '../common/common'
+import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
+import { ToolbarMain } from '../toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
@@ -38,12 +38,10 @@ function CoursePageTypeEditor(
 ) {
   const { title, content, icon } = props.state
 
-  // TODO: check if we can / should remove this now
   useEffect(() => {
-    if (!['explanation', 'question', 'play'].includes(icon.value)) {
-      icon.set('explanation')
-    }
-  }, [icon])
+    // setting not used any more, reset to explanation for now
+    if (icon.value !== 'explanation') icon.set('explanation')
+  })
 
   const placeholder = useEditorStrings().templatePlugins.coursePage.title
 
