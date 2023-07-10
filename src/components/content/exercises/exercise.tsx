@@ -8,7 +8,7 @@ import { Solution } from './solution'
 import { useAuthentication } from '@/auth/use-authentication'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
-import { FrontendExerciseNode } from '@/frontend-node-types'
+import type { FrontendExerciseNode } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 import { H5pRenderer } from '@/serlo-editor/plugins/h5p/renderer'
 

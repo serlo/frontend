@@ -7,7 +7,7 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
-import { AuthorToolsExercises } from '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
 import { ExerciseInlineType } from '@/data-types'
 import {
   FrontendExerciseNode,
@@ -21,6 +21,11 @@ const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
   import('@/components/comments/comment-area-entity').then(
     (mod) => mod.CommentAreaEntity
   )
+)
+const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
+  import(
+    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+  ).then((mod) => mod.AuthorToolsExercises)
 )
 
 export interface SolutionProps {

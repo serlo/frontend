@@ -1,6 +1,6 @@
 import { faGraduationCap } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
