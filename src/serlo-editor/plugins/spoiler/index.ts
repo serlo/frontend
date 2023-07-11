@@ -7,19 +7,36 @@ import {
 } from '../../plugin'
 import { SpoilerEditor } from './editor'
 
-const spoilerState = object({
-  title: string(''),
-  content: child({ plugin: 'rows' }),
-})
+function createSpoilerState(config: SpoilerConfig) {
+  return object({
+    title: string(''),
+    content: child({
+      plugin: 'rows',
+      ...(config.allowedPlugins !== undefined && {
+        config: {
+          allowedPlugins: config.allowedPlugins,
+        },
+      }),
+    }),
+  })
+}
 
-export function createSpoilerPlugin(): EditorPlugin<SpoilerPluginState> {
+export const defaultConfig: SpoilerConfig = {}
+
+export function createSpoilerPlugin(
+  config = defaultConfig
+): EditorPlugin<SpoilerPluginState> {
   return {
     Component: SpoilerEditor,
-    state: spoilerState,
+    state: createSpoilerState(config),
     config: {},
   }
 }
 
-export type SpoilerPluginState = typeof spoilerState
+export interface SpoilerConfig {
+  allowedPlugins?: string[]
+}
+
+export type SpoilerPluginState = ReturnType<typeof createSpoilerState>
 
 export type SpoilerProps = EditorPluginProps<SpoilerPluginState>
