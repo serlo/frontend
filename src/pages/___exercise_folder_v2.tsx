@@ -63,13 +63,24 @@ function Content() {
   function renderModal() {
     return (
       <>
-        <div className="fixed inset-0 z-[150] bg-black/20"></div>
+        <div className="fixed inset-0 z-[150] bg-gray-100"></div>
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center"
           onClick={() => {
             setModal(false)
           }}
         >
+          <button
+            onClick={() => {
+              setModal(false)
+            }}
+            className={tw`
+              absolute right-4 top-4 z-[300] h-10 w-10 rounded-full bg-blue-200 text-xl
+              hover:bg-blue-300
+            `}
+          >
+            <FaIcon icon={faTimes} />
+          </button>
           <div
             className={tw`
               relative z-[200] mx-8 my-8 flex flex
@@ -81,20 +92,13 @@ function Content() {
             }}
           >
             {renderArticle([{ type: FrontendNodeType.Injection, href: id }])}
-
-            <button
-              onClick={() => {
-                setModal(false)
-              }}
-              className={tw`
-                absolute right-4 top-4 z-[300] h-10 w-10 rounded-full bg-gray-200 text-xl
-                hover:bg-gray-300
-              `}
-            >
-              <FaIcon icon={faTimes} />
-            </button>
           </div>
         </div>
+        <style jsx global>{`
+          body {
+            position: fixed;
+          }
+        `}</style>
       </>
     )
   }
