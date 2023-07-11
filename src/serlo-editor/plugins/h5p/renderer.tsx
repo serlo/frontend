@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
 
+import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { exerciseSubmission } from '@/helper/exercise-submission'
 
@@ -23,11 +24,19 @@ export function H5pRenderer({ url, context }: H5pRendererProps) {
   const { strings } = useInstanceData()
   const { asPath } = useRouter()
 
+  const entityId = useEntityId()
+
   useEffect(() => {
     if (context.entityId > 0) {
       window.document.body.addEventListener('h5pExerciseCorrect', (e) => {
         const e_id = (e as CustomEvent).detail as string
         if (e_id === id) {
+          if (entityId === -42) {
+            sessionStorage.setItem(
+              'prototype-' + context.entityId.toString(),
+              '1'
+            )
+          }
           exerciseSubmission({
             path: asPath,
             entityId: context.entityId,

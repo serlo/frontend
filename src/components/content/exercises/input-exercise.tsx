@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginInputExercise } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
@@ -25,6 +26,8 @@ export function InputExercise({
   const exStrings = useInstanceData().strings.content.exercises
   const { asPath } = useRouter()
 
+  const entityId = useEntityId()
+
   return (
     <>
       <InputExerciseRenderer
@@ -38,6 +41,9 @@ export function InputExercise({
   )
 
   function onEvaluate(correct: boolean) {
+    if (correct && entityId === -42) {
+      sessionStorage.setItem('prototype-' + context.entityId.toString(), '1')
+    }
     exerciseSubmission({
       path: asPath,
       entityId: context.entityId,

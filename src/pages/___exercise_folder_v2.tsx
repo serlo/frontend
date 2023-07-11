@@ -1,7 +1,8 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { FrontendClientBase } from '@/components/frontend-client-base'
@@ -11,7 +12,7 @@ import { renderArticle } from '@/schema/article-renderer'
 
 const ContentPage: NextPage = () => {
   return (
-    <FrontendClientBase entityId={123}>
+    <FrontendClientBase entityId={-42}>
       <Head>
         <meta name="robots" content="noindex" />
         <title>Prototype Nächste Iteration Aufgabenordner</title>
@@ -25,22 +26,30 @@ function Content() {
   const [modal, setModal] = useState(false)
   const [id, setId] = useState('')
 
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    setLoaded(true)
+  }, [])
+
+  if (!loaded) return null
+
   return (
     <>
       <h1 className="serlo-h1 my-12">Prozentrechnen üben und Co.</h1>
       <div className="serlo-p">Hier sind ein paar Übungsaufgaben und Co.</div>
       <div className="my-8 flex justify-center">
-        {renderExercise('Einführung', '195105')}
+        {renderExercise('Einführung', '131435')}
         {renderExercise('Finde Gleichung', '195101')}
       </div>
       <div className="my-8 flex justify-center">
-        {renderExercise('Textaufgabe 1', '37779')}
+        {renderExercise('Textaufgabe 1', '36812')}
         {renderExercise('Textaufgabe 2', '37958')}
         {renderExercise('Textaufgabe 3', '8265')}
       </div>
       <div className="flex justify-center">
         {renderExercise('H5P Dragging', '278818')}
-        {renderExercise('H5P Memory', '278959')}
+        {renderExercise('H5P Lückentext', '272376')}
       </div>
       {modal && renderModal()}
     </>
@@ -49,7 +58,15 @@ function Content() {
   function renderExercise(title: string, href: string) {
     return (
       <div
-        className="mx-6 flex h-32 w-32 cursor-pointer items-center justify-center rounded-full bg-yellow-300"
+        className={clsx(
+          tw`
+          mx-6 flex h-32 w-32 cursor-pointer items-center
+          justify-center rounded-full 
+        `,
+          sessionStorage.getItem('prototype-' + href)
+            ? 'bg-green-300'
+            : 'bg-yellow-100'
+        )}
         onClick={() => {
           setModal(true)
           setId(href)

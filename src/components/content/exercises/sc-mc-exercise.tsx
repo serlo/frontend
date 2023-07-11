@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router'
 
+import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EdtrPluginScMcExercise } from '@/frontend-node-types'
 import {
@@ -35,6 +36,8 @@ export function ScMcExercise({
 
   const { asPath } = useRouter()
 
+  const entityId = useEntityId()
+
   return (
     <ScMcExerciseRenderer
       isSingleChoice={!!state.isSingleChoice}
@@ -59,6 +62,9 @@ export function ScMcExercise({
   )
 
   function onEvaluate(correct: boolean, type: ExerciseSubmissionData['type']) {
+    if (correct && entityId === -42) {
+      sessionStorage.setItem('prototype-' + context.entityId.toString(), '1')
+    }
     exerciseSubmission({
       path: asPath,
       entityId: context.entityId,
