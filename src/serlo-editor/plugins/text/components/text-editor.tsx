@@ -28,6 +28,7 @@ import {
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { HoveringToolbar } from './hovering-toolbar'
+import { HoveringToolbarControls } from './hovering-toolbar-controls'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
@@ -39,6 +40,7 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
+import { PluginToolbar, PluginType } from '@/serlo-editor/core/plugin-toolbar'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -52,6 +54,7 @@ import {
   useAppDispatch,
   selectFocusTree,
   store,
+  removePluginChild,
 } from '@/serlo-editor/store'
 
 export type TextEditorProps = EditorPluginProps<
@@ -405,6 +408,34 @@ export function TextEditor(props: TextEditorProps) {
     [dispatch, editor, id, pluginStrings, plugins]
   )
 
+  const handleDuplicatePlugin = useCallback(() => {
+    const parent = selectParent(store.getState(), id)
+    if (!parent) return
+
+    dispatch(
+      insertPluginChildAfter({
+        parent: parent.id,
+        sibling: id,
+        document: {
+          plugin: 'text',
+          state: state.value.value,
+        },
+      })
+    )
+  }, [dispatch, id, state])
+
+  const handleRemovePlugin = useCallback(() => {
+    const parent = selectParent(store.getState(), id)
+    if (!parent) return
+
+    dispatch(
+      removePluginChild({
+        parent: parent.id,
+        child: id,
+      })
+    )
+  }, [dispatch, id])
+
   const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -467,6 +498,33 @@ export function TextEditor(props: TextEditorProps) {
 
   return (
     <HotKeys {...hotKeysProps}>
+      {focused && (
+        <PluginToolbar
+          pluginType={PluginType.TEXT}
+          contentControls={
+            <HoveringToolbarControls
+              controls={toolbarControls}
+              editor={editor}
+            />
+          }
+          pluginControls={
+            <>
+              <button
+                className="serlo-button-editor-secondary"
+                onClick={handleDuplicatePlugin}
+              >
+                {pluginStrings.rows.duplicate}
+              </button>
+              <button
+                className="serlo-button-editor-secondary"
+                onClick={handleRemovePlugin}
+              >
+                {pluginStrings.rows.remove}
+              </button>
+            </>
+          }
+        />
+      )}
       <Slate
         editor={editor}
         value={state.value.value}
