@@ -1,3 +1,4 @@
+import confetti from 'canvas-confetti'
 import { useRouter } from 'next/router'
 
 import { useEntityId } from '@/contexts/entity-id-context'
@@ -43,6 +44,16 @@ export function InputExercise({
   function onEvaluate(correct: boolean) {
     if (correct && entityId === -42) {
       sessionStorage.setItem('prototype-' + context.entityId.toString(), '1')
+      void confetti({
+        angle: 60,
+        origin: { x: 0 },
+        zIndex: 210,
+      })
+      void confetti({
+        angle: 120,
+        origin: { x: 1 },
+        zIndex: 210,
+      })
     }
     exerciseSubmission({
       path: asPath,

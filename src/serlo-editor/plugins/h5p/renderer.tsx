@@ -1,3 +1,4 @@
+import confetti from 'canvas-confetti'
 import { useRouter } from 'next/router'
 import Script from 'next/script'
 import { useEffect } from 'react'
@@ -36,6 +37,16 @@ export function H5pRenderer({ url, context }: H5pRendererProps) {
               'prototype-' + context.entityId.toString(),
               '1'
             )
+            void confetti({
+              angle: 60,
+              origin: { x: 0 },
+              zIndex: 210,
+            })
+            void confetti({
+              angle: 120,
+              origin: { x: 1 },
+              zIndex: 210,
+            })
           }
           exerciseSubmission({
             path: asPath,

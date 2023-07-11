@@ -3447,6 +3447,7 @@ __metadata:
     "@svgr/webpack": ^6.5.0
     "@tippyjs/react": ^4.2.6
     "@types/algebra.js": ^0.2.2
+    "@types/canvas-confetti": ^1.6.0
     "@types/escape-html": ^1.0.2
     "@types/iframe-resizer": ^3.5.9
     "@types/jest": ^29.2.0
@@ -3475,6 +3476,7 @@ __metadata:
     array-move: ^4.0.0
     autoprefixer: ^10.4.12
     babel-jest: ^29.2.2
+    canvas-confetti: ^1.6.0
     clsx: ^1.2.1
     cross-env: ^7.0.3
     dotenv: ^16.0.3
@@ -3859,6 +3861,13 @@ __metadata:
   dependencies:
     "@babel/types": ^7.3.0
   checksum: a797ea09c72307569e3ee08aa3900ca744ce3091114084f2dc59b67a45ee7d01df7865252790dbfa787a7915ce892cdc820c9b920f3683292765fc656b08dc63
+  languageName: node
+  linkType: hard
+
+"@types/canvas-confetti@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "@types/canvas-confetti@npm:1.6.0"
+  checksum: e1bd2bc81e4d6ec6241982a4087ed90a3c21f858390dda7cb68e8aeb1df5573fc7c263ea4272397d2b39f0e78dcd192e8ba4a93c182ff29f80ea74073aaee496
   languageName: node
   linkType: hard
 
@@ -5455,6 +5464,13 @@ __metadata:
   version: 1.0.30001486
   resolution: "caniuse-lite@npm:1.0.30001486"
   checksum: 5e8c2ba2679e4ad17dea6d2761a6449b814441bfeac81af6cc9d58af187df6af4b79b27befcbfc4a557e720b21c0399a7d1911c8705922e38938dcc0f40b5d4b
+  languageName: node
+  linkType: hard
+
+"canvas-confetti@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "canvas-confetti@npm:1.6.0"
+  checksum: be19e3be736ab28aa8af7b53cba9f4146f5714edadbf4d5a7d7b1899914dc59a8ac5574260fe6b7d9995c51df5787b0b707adfbb72dbacbc61fc03f9f2b25291
   languageName: node
   linkType: hard
 
