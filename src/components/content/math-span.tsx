@@ -32,7 +32,7 @@ export function MathSpan({ formula }: MathSpanProps) {
     <>
       <KaTeXStyles />
       <span
-        className="special-no-page-breaks-inside [page-break-inside:avoid]"
+        className="[page-break-inside:avoid]"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </>
