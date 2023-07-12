@@ -8,6 +8,7 @@ export function hasVisibleContent(content: FrontendContentNode[]): boolean {
 export function extractText(content: FrontendContentNode[]): string {
   return content
     .map((node) => {
+      if (node.type === 'img' && node.src) return '[img]'
       if (node.type === 'math' || node.type === 'inline-math')
         return node.formula
       if (Object.hasOwn(node, 'text')) {
