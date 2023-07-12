@@ -37,14 +37,14 @@ export function LandingDE({ data }: LandingDEProps) {
           </p>
           <h1
             className={tw`
-              mx-auto mt-3 mb-6 max-w-2xl
+              mx-auto mb-6 mt-3 max-w-2xl
               text-center text-5xl font-extrabold tracking-tight
             `}
           >
             Was möchtest du{' '}
             <span className="serlo-underlined pb-2">lernen ?</span>
           </h1>
-          <div className="mx-auto mt-10 mb-8 max-w-2xl text-left font-normal">
+          <div className="mx-auto mb-8 mt-10 max-w-2xl text-left font-normal">
             <Quickbar />
           </div>
           <p className="text-3xl leading-cozy">
@@ -92,12 +92,12 @@ export function LandingDE({ data }: LandingDEProps) {
 
         <CommunityWall />
 
-        <section className="mx-side mt-20 mb-20">
+        <section className="mx-side mb-20 mt-20">
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
             className={tw`
-              hyphens-auto mx-auto mt-7
-              max-w-2xl text-center text-4xl
+              mx-auto mt-7 max-w-2xl
+              hyphens-auto text-center text-4xl
               font-bold leading-cozy tracking-tight
             `}
           >
@@ -110,7 +110,7 @@ export function LandingDE({ data }: LandingDEProps) {
           <h3
             className={tw`
               relative z-10 mx-auto
-              mt-32 mb-16
+              mb-16 mt-32
               max-w-2xl text-center text-4xl font-bold leading-cozy tracking-tight
             `}
           >

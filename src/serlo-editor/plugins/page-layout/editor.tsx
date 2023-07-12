@@ -43,7 +43,7 @@ export const PageLayoutEditor: React.FunctionComponent<
   function renderInlineSettings() {
     return (
       <>
-        <b className="serlo-h4 mt-6 ml-0 mb-4 block">
+        <b className="serlo-h4 mb-4 ml-0 mt-6 block">
           {editorStrings.plugins.pageLayout.chooseRatio}:
         </b>
         <ul className="unstyled-list flex pb-8">

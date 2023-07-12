@@ -71,7 +71,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <header className="mx-side mt-14 text-center sm:text-left">
           {renderProfileImage()}
           <div className="mt-5 sm:mt-0">
-            <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
+            <h1 className="serlo-h1 mb-3 mt-4">{username}</h1>
             <ProfileBadges userData={userData} date={date} />
           </div>
           <div className="serlo-p mt-5 w-full text-1.5xl [grid-area:motivation] sm:mt-0">
@@ -116,7 +116,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {isOwnProfile && !isNewlyRegisteredUser && (
           <Link
             href="/user/settings#image"
-            className="serlo-button-green absolute right-1 bottom-1 block h-8 w-8"
+            className="serlo-button-green absolute bottom-1 right-1 block h-8 w-8"
           >
             <FaIcon icon={faPencilAlt} />
           </Link>

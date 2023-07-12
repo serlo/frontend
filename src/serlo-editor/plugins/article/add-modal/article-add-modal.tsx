@@ -85,7 +85,7 @@ export function ArticleAddModal({
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
     >
-      <h3 className="serlo-h3 mt-5 mb-4">{articleStrings.addModal.title}</h3>
+      <h3 className="serlo-h3 mb-4 mt-5">{articleStrings.addModal.title}</h3>
       <div className="mx-side">
         <p>
           {replacePlaceholders(articleStrings.addModal.introText, {

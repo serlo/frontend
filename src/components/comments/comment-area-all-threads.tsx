@@ -40,7 +40,7 @@ export function CommentAreaAllThreads() {
         })}
       </StaticInfoPanel>
       {lang === Instance.De && (
-        <div className="mt-[50px] mb-3">
+        <div className="mb-3 mt-[50px]">
           <FaIcon icon={faFilter} className="ml-2 mr-3" />
           Filtern nach
           <span
@@ -54,7 +54,7 @@ export function CommentAreaAllThreads() {
               onChange={(e) => {
                 setFilter(e.target.value)
               }}
-              className="ml-3 cursor-pointer appearance-none rounded-lg bg-brand-400 p-3 pr-9 [&>option]:bg-white [&>option:selected]:bg-brand-100"
+              className="ml-3 cursor-pointer appearance-none rounded-lg bg-brand-400 p-3 pr-9 [&>option:selected]:bg-brand-100 [&>option]:bg-white"
             >
               <option value="">Alle Fächer</option>
               <option value="czU=">Mathematik</option>
@@ -81,7 +81,7 @@ export function CommentAreaAllThreads() {
               <LoadingSpinner noText />
             ) : (
               <button
-                className="serlo-button-blue mt-5 mb-12"
+                className="serlo-button-blue mb-12 mt-5"
                 onClick={loadMore}
               >
                 {strings.actions.loadMore}
@@ -96,7 +96,7 @@ export function CommentAreaAllThreads() {
   function renderThreads() {
     if ((!commentData || commentData.length === 0) && filter) {
       return (
-        <div className="serlo-p mt-16 -mb-8">
+        <div className="serlo-p -mb-8 mt-16">
           Keine Kommentare im aktuellen Zeitraum in diesem Fach.
         </div>
       )
@@ -110,7 +110,7 @@ export function CommentAreaAllThreads() {
       return (
         <EntityIdProvider key={thread.id} value={thread.object.id}>
           <div className="mb-16">
-            <div className="mx-side mt-16 mb-5 border-b-2">
+            <div className="mx-side mb-5 mt-16 border-b-2">
               <b>
                 <FaIcon icon={getIconByTypename(__typename as UuidType)} />{' '}
                 {getTranslatedType(strings, __typename)}

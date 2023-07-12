@@ -140,13 +140,13 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             sm:flex-row-reverse sm:text-left
           `}
         >
-          <div className="mt-12 w-full px-2 sm:mt-32 sm:ml-10">
+          <div className="mt-12 w-full px-2 sm:ml-10 sm:mt-32">
             <p className={clsx(italicClass, 'serlo-add-eyebrows mr-6')}>
               Hey du
             </p>
             <h1
               className={tw`
-                mx-auto mt-3 mb-6 max-w-md
+                mx-auto mb-6 mt-3 max-w-md
                 text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
               `}
             >
@@ -158,7 +158,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             <img
               src="/_assets/img/jobs/jobs-header.jpg"
               className={tw`
-                mx-side mx-auto aspect-square w-[90vw] max-w-[28rem]
+                mx-auto mx-side aspect-square w-[90vw] max-w-[28rem]
                 rounded-full object-cover object-left
                 sm:mx-0 sm:ml-auto sm:h-[28rem] sm:w-[28rem]
               `}
@@ -168,25 +168,25 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-3 px-2 text-center">
           <h3
-            className={clsx(h2Class, 'mt-12 inline-block pb-3 hyphens-auto')}
+            className={clsx(h2Class, 'mt-12 inline-block hyphens-auto pb-3')}
             id="stellen"
           >
             Unsere offenen Stellen
           </h3>
           <div className="mt-5 justify-center px-side pt-8 text-left sm:flex">
             <div className="mx-auto w-full max-w-xl sm:mr-4">
-              <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Hauptamtlich</h3>
+              <h3 className={clsx(h3Class, 'mb-2 ml-5')}>Hauptamtlich</h3>
               {renderPositions(jobs)}
             </div>
             <div className="mx-auto w-full max-w-xl sm:ml-4">
               <div>
-                <h3 className={clsx(h3Class, 'ml-5 mb-2 mt-16 sm:mt-0')}>
+                <h3 className={clsx(h3Class, 'mb-2 ml-5 mt-16 sm:mt-0')}>
                   Ehrenamtlich
                 </h3>
                 {renderPositions(volunteers)}
               </div>
               <div className="mt-16">
-                <h3 className={clsx(h3Class, 'ml-5 mb-2')}>Praktika</h3>
+                <h3 className={clsx(h3Class, 'mb-2 ml-5')}>Praktika</h3>
                 {renderPositions(internships)}
               </div>
             </div>
@@ -223,7 +223,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                     className="font-extrabold leading-cozy text-almost-black"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
-                  <p className="hyphens-manual serlo-p mx-auto mt-2 max-w-65 text-lg font-normal leading-snug">
+                  <p className="serlo-p mx-auto mt-2 max-w-65 hyphens-manual text-lg font-normal leading-snug">
                     {content}
                   </p>
                 </div>
@@ -346,7 +346,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         <div className="relative w-full">
           <div
             className={tw`
-              absolute left-5 top-5 right-12 bg-wiggle bg-contain
+              absolute left-5 right-12 top-5 bg-wiggle bg-contain
               bg-no-repeat pb-6/5 opacity-0 transition-all
               duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
             `}
@@ -366,7 +366,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         >
           {role}
         </span>
-        <p className="hyphens-manual serlo-p mt-5">{subjects[0]}</p>
+        <p className="serlo-p mt-5 hyphens-manual">{subjects[0]}</p>
       </figure>
     )
   }

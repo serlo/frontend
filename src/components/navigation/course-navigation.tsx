@@ -23,12 +23,12 @@ export function CourseNavigation({
   return (
     <nav
       id="course-overview"
-      className="mt-6 border-b-2 border-brand-200 bg-brand-50 pt-1 pb-5 sm:bg-white sm:pb-11 "
+      className="mt-6 border-b-2 border-brand-200 bg-brand-50 pb-5 pt-1 sm:bg-white sm:pb-11 "
     >
       <p className="serlo-p mb-0 mt-4 text-[1rem] font-bold">
         <FaIcon icon={faGraduationCap} /> Kurs
       </p>
-      <h1 className="mx-side mt-0 mb-4 text-2xl font-bold">{data.title}</h1>
+      <h1 className="mx-side mb-4 mt-0 text-2xl font-bold">{data.title}</h1>
       {data.pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}

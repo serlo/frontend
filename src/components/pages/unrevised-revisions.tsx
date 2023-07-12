@@ -68,7 +68,7 @@ export function UnrevisedRevisionsOverview({
   function renderQuicklinks() {
     return (
       <div className="serlo-p w-full">
-        <b className="ml-side mb-0 pt-0">
+        <b className="mb-0 ml-side pt-0">
           {strings.unrevisedRevisions.subjectLinks}
         </b>
         <ul className="serlo-ul">

@@ -27,7 +27,7 @@ export function EditorTooltip({
         className
       )}
     >
-      <span className="z-50 block w-80 max-w-fit rounded bg-almost-black py-1.5 px-2 text-center text-sm font-bold text-white ">
+      <span className="z-50 block w-80 max-w-fit rounded bg-almost-black px-2 py-1.5 text-center text-sm font-bold text-white ">
         {text}
         {hotkeys ? (
           <span className="block text-gray-300">{hotkeysTranslated}</span>

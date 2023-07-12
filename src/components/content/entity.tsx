@@ -80,7 +80,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <span
         className={tw`
-          mr-1.5 -mt-1.5 inline-block h-7 w-7
+          -mt-1.5 mr-1.5 inline-block h-7 w-7
           justify-center rounded-full bg-brand-200 text-center align-middle
           text-xl font-bold text-brand
         `}

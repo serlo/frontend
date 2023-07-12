@@ -63,7 +63,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
             }}
           />
           {showOptions ? (
-            <div className="absolute left-6 -top-3 whitespace-nowrap pl-3">
+            <div className="absolute -top-3 left-6 whitespace-nowrap pl-3">
               <div className="rounded-md bg-[rgba(255,255,255,0.95)] p-2 shadow-menu">
                 {interactiveExerciseTypes
                   .filter(

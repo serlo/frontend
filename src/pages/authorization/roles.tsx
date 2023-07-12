@@ -100,7 +100,7 @@ function Content() {
               key={role}
               onClick={() => setShowRole(role)}
               className={clsx(
-                'mr-2 mb-2.5',
+                'mb-2.5 mr-2',
                 showRole === role ? 'serlo-button-blue' : 'serlo-button-light',
                 'capitalize'
               )}

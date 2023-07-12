@@ -68,7 +68,7 @@ export function EquationsRenderer({
           <tr className="text-brandgreen-darker whitespace-normal">
             <td />
             {renderDownArrow()}
-            <td colSpan={2} className="relative -left-side px-1 pt-1 pb-3">
+            <td colSpan={2} className="relative -left-side px-1 pb-3 pt-1">
               {step.explanation}
             </td>
           </tr>
@@ -81,7 +81,7 @@ export function EquationsRenderer({
       align?: 'text-left' | 'text-right' | 'text-center'
     ) {
       return (
-        <td className={clsx('px-1 pt-1 pb-3 align-baseline text-lg', align)}>
+        <td className={clsx('px-1 pb-3 pt-1 align-baseline text-lg', align)}>
           {content}
         </td>
       )

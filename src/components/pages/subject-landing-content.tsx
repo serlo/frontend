@@ -52,7 +52,7 @@ export function SubjectLandingContent({
           <div>
             <h1
               className={tw`
-                mt-3 mb-10 text-4xl
+                mb-10 mt-3 text-4xl
                 font-extrabold
                 tracking-tight sm:text-6xl
               `}
@@ -81,13 +81,13 @@ export function SubjectLandingContent({
         </section>
 
         <section className="themen text-center">
-          <p className="mt-4 mb-12 text-3xl font-extrabold tracking-tight">
+          <p className="mb-12 mt-4 text-3xl font-extrabold tracking-tight">
             <span>Was darf&apos;s denn heute sein?</span>
           </p>
           <SubjectLandingTopicOverview subterms={subterms} subject={subject} />
         </section>
 
-        <section className="mt-20 mb-8 text-center">
+        <section className="mb-8 mt-20 text-center">
           <h2
             className={tw`
               mx-auto mt-3 max-w-2xl

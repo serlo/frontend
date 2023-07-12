@@ -39,7 +39,7 @@ export function CourseFooter({
         {previousHref ? <link rel="prev" href={previousHref} /> : null}
         {nextHref ? <link rel="next" href={nextHref} /> : null}
       </Head>
-      <nav className="mt-10 mb-8 flex justify-between bg-brand-50 py-5 align-top sm:bg-white">
+      <nav className="mb-8 mt-10 flex justify-between bg-brand-50 py-5 align-top sm:bg-white">
         {previousHref && (
           <Link
             href={previousHref}
@@ -60,7 +60,7 @@ export function CourseFooter({
             <div className="flex text-lg">
               <b
                 className={tw`
-                  mt-1.5 mr-1.5 h-4 w-4 rounded-full
+                  mr-1.5 mt-1.5 h-4 w-4 rounded-full
                   bg-brand-200 pt-0.25 text-center text-xs leading-tight text-brand
                 `}
               >

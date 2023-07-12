@@ -26,7 +26,7 @@ export function Menu() {
       <List
         className={clsx(
           'relative m-0 block p-0 sm:min-w-[27rem] md:text-right',
-          showAuth ? '' : 'md:mt-0.5 md:mr-3.5'
+          showAuth ? '' : 'md:mr-3.5 md:mt-0.5'
         )}
       >
         {headerData.map((link) => (

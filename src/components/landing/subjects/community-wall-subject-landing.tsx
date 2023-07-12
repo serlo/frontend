@@ -42,7 +42,7 @@ export function CommunityWallSubjectLanding({
           <h3
             className={tw`
                 relative z-10 mx-auto
-                mt-20 mb-8
+                mb-8 mt-20
                 max-w-xl text-center text-3xl font-extrabold leading-cozy tracking-tight
               `}
           >
@@ -58,8 +58,8 @@ export function CommunityWallSubjectLanding({
           <div className="group text-center">
             <Link
               className={tw`
-                serlo-new-landing-button mt-6 inline-block py-2
-                px-4 text-lg hover:no-underline group-hover:bg-brand-500
+                serlo-new-landing-button mt-6 inline-block px-4
+                py-2 text-lg hover:no-underline group-hover:bg-brand-500
               `}
               href={contributeLink}
             >

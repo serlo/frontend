@@ -35,17 +35,17 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="hyphens-manual serlo-p leading-6">
+        <p className="serlo-p hyphens-manual leading-6">
           … dass in Deutschland pro Jahr über 1,1 Millionen Schüler*innen teure
           Nachhilfe in Anspruch nehmen? Die Corona-Pandemie hat den Bedarf noch
           größer gemacht. Aber nicht jede Familie kann sich das leisten!
         </p>
-        <p className="hyphens-manual serlo-p leading-6">
+        <p className="serlo-p hyphens-manual leading-6">
           Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
           hochwertigen Lernmaterialien für{' '}
           <b>alle Schüler*innen komplett kostenlos</b>.
         </p>
-        <p className="hyphens-manual serlo-p font-bold leading-6">
+        <p className="serlo-p hyphens-manual font-bold leading-6">
           Mit deiner Spende, groß oder klein, kannst du diese Arbeit
           unterstützen.
         </p>
@@ -59,7 +59,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="hyphens-manual serlo-p leading-6">
+        <p className="serlo-p hyphens-manual leading-6">
           … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
           engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
           Pädagog*innen für das gemeinsame Ziel:{' '}
@@ -69,13 +69,13 @@ const articleBanners = [
           </b>
           .
         </p>
-        <p className="hyphens-manual serlo-p leading-6">
+        <p className="serlo-p hyphens-manual leading-6">
           Als nächstes möchten wir gerne weitere Übungsformate für Serlo
           entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
           Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
           eigenen Lernstand zu speichern.
         </p>
-        <p className="hyphens-manual serlo-p font-bold leading-6">
+        <p className="serlo-p hyphens-manual font-bold leading-6">
           Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
@@ -90,7 +90,7 @@ const articleBanners = [
     id: 'banner-testimonial-WandaPaetzold',
     isLong: false,
     text: (
-      <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
+      <p className="mx-side my-5 font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
         „ Ich unterstütze Serlo, da ich der Meinung bin, dass ein einfacher
         Zugang zu Bildung ohne Bezahlung und Werbung ein Grundrecht für jede*n
         ist und Serlo ermöglicht es mir als Lehrerin, für viel mehr Menschen
@@ -108,7 +108,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
+        <p className="mx-side my-5 font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
           „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
           Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
           Inhalte verlassen kann.
@@ -129,7 +129,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
+        <p className="mx-side my-5 font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
           „ Bildung für alle - und das kostenfrei.
           <br />
           Ein so wichtiges Ziel, um der (Chancen-)Gerechtigkeit unserer
@@ -151,7 +151,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="my-5 mx-side font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
+        <p className="mx-side my-5 font-handwritten text-[1.05em] leading-[2.2rem] text-almost-black">
           „ Ich wünsche mir eine Welt, wo nicht nur Wissen sondern auch der Weg,
           um Wissen zu erlangen, frei verfügbar ist. <br />
           Ich hoffe, dass die Bewegung von ‚Open Educational Resources‘ auch
@@ -173,17 +173,17 @@ const courseBanner = {
   call: 'Hat dir dieser Kurs weitergeholfen?',
   text: (
     <div className="text-left">
-      <p className="hyphens-manual serlo-p leading-6">
+      <p className="serlo-p hyphens-manual leading-6">
         Wir möchten <b>mehr kleinschrittige Kurse</b> entwickeln, die
         Nutzbarkeit auf Smartphones verbessern und es Schüler*innen ermöglichen,
         eigene Lernziele zu definieren und ihren eigenen Lernstand zu speichern.
       </p>
-      <p className="hyphens-manual serlo-p leading-6">
+      <p className="serlo-p hyphens-manual leading-6">
         All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für immer
         kostenlos und frei von Werbung bleiben wird, sind wir auf Spenden
         angewiesen.
       </p>
-      <p className="hyphens-manual serlo-p font-bold leading-6">
+      <p className="serlo-p hyphens-manual font-bold leading-6">
         Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
       </p>
     </div>
@@ -254,7 +254,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
         className={tw`
             relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
             bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
-            py-6 px-side text-center
+            px-side py-6 text-center
             text-xl sm:-mx-2 sm:flex sm:max-w-[100vw] sm:justify-between
             sm:px-0 sm:text-left lg:my-16 lg:py-10 lg:text-2xl
           `}
@@ -294,8 +294,8 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
             </>
           ) : null}
         </figure>
-        <div className="mx-auto max-w-2xl px-side sm:mt-5 sm:ml-0">
-          <p className="my-5 mx-side font-handwritten text-[1.32em] text-brand">
+        <div className="mx-auto max-w-2xl px-side sm:ml-0 sm:mt-5">
+          <p className="mx-side my-5 font-handwritten text-[1.32em] text-brand">
             {banner.call}
           </p>
           <div className="text-center sm:text-left">{banner.text}</div>

@@ -10,7 +10,7 @@ export interface SubItemProps {
 }
 
 const itemClasses = tw`
-  hyphens-auto serlo-button-blue-transparent rounded-[12px] py-1 text-left
+  serlo-button-blue-transparent hyphens-auto rounded-[12px] py-1 text-left
   text-base font-normal leading-tight group-hover:bg-brand group-hover:text-white
 `
 

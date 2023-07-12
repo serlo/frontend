@@ -44,10 +44,10 @@ export function Donations() {
             sm:flex-row-reverse sm:text-left lg:mt-10
           `}
         >
-          <div className="mt-2 w-full px-2 sm:mt-20 sm:ml-10">
+          <div className="mt-2 w-full px-2 sm:ml-10 sm:mt-20">
             <h1
               className={tw`
-                mx-auto mt-3 mb-6 max-w-md
+                mx-auto mb-6 mt-3 max-w-md
                 text-5xl font-extrabold leading-tight tracking-tight sm:ml-0
               `}
             >
@@ -75,7 +75,7 @@ export function Donations() {
         >
           <div className="mx-auto max-w-2xl">
             <section>
-              <p className="hyphens-manual serlo-p text-left">
+              <p className="serlo-p hyphens-manual text-left">
                 Fast eine halbe Million Kinder in der Sekundarstufe sind von
                 Armut betroffen und haben erhebliche Probleme in der Schule.{' '}
                 <b>Mit deiner Spende</b> leistest du einen wichtigen Beitrag,
@@ -111,12 +111,12 @@ export function Donations() {
             <div className="mx-auto mobile:flex md:mx-auto md:block md:w-auto">
               <p className="mobile:min-w-[10rem]">
                 <img
-                  className="mx-auto mb-7 mt-3 -ml-1.5 h-40 w-40 rounded-full object-cover"
+                  className="mx-auto -ml-1.5 mb-7 mt-3 h-40 w-40 rounded-full object-cover"
                   src="/_assets/img/donations-contact.jpg"
                   alt="Ansprechpartner Wolfgang Schmid"
                 />
               </p>
-              <div className="text-left mobile:ml-5 mobile:mt-5 md:mt-0 md:ml-0">
+              <div className="text-left mobile:ml-5 mobile:mt-5 md:ml-0 md:mt-0">
                 <p>
                   <b>Wolfgang Schmid</b>
                   <br />
@@ -142,7 +142,7 @@ export function Donations() {
               </a>
               .<br />
               <img
-                className="serlo-img my-5 mx-0 block w-56"
+                className="serlo-img mx-0 my-5 block w-56"
                 src="/_assets/img/donations-itz.png"
                 alt="Initiative Transparente Zivilgesellschaft"
               />

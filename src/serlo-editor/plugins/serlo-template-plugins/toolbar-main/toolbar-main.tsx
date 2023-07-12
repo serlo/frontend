@@ -44,7 +44,7 @@ export function ToolbarMain({
   return (
     <>
       <ClientOnlyPortal selector=".controls-portal">
-        <nav className="flex h-12 w-full justify-between pt-4 pl-5 pr-3">
+        <nav className="flex h-12 w-full justify-between pl-5 pr-3 pt-4">
           <div>
             {renderHistoryButton('Undo', faUndo, undo, !undoable)}
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}

@@ -148,7 +148,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv min-h-[3.5rem] pr-2 pb-6"
+              className="hackdiv min-h-[3.5rem] pb-6 pr-2"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({

@@ -51,7 +51,7 @@ export function Job({ position }: { position: PersonioPosition }) {
               </section>
             )
           })}
-          <section className="my-12 mx-side">{renderButton()}</section>
+          <section className="mx-side my-12">{renderButton()}</section>
           <UserTools />
         </MaxWidthDiv>
       </div>

@@ -75,9 +75,9 @@ export function Breadcrumbs({
               `}
               href={bcEntry.url ?? undefined}
             >
-              <span className="pt-0.25 pr-1 sm:hidden">{renderIcon()}</span>
+              <span className="pr-1 pt-0.25 sm:hidden">{renderIcon()}</span>
               {!isTaxonomy && (
-                <span className="hidden pt-0.25 pr-1 text-base sm:inline">
+                <span className="hidden pr-1 pt-0.25 text-base sm:inline">
                   {renderIcon()}
                 </span>
               )}
