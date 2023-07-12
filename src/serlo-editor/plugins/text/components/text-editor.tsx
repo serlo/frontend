@@ -1,3 +1,4 @@
+import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import isHotkey from 'is-hotkey'
 import React, {
   createElement,
@@ -33,6 +34,7 @@ import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -500,6 +502,7 @@ export function TextEditor(props: TextEditorProps) {
     <HotKeys {...hotKeysProps}>
       {focused && (
         <PluginToolbar
+          pluginId={id}
           pluginType={PluginType.TEXT}
           contentControls={
             <HoveringToolbarControls
@@ -510,16 +513,20 @@ export function TextEditor(props: TextEditorProps) {
           pluginControls={
             <>
               <button
-                className="serlo-button-editor-secondary"
+                className="group/button w-full pl-3 text-left"
                 onClick={handleDuplicatePlugin}
               >
-                {pluginStrings.rows.duplicate}
+                <span className="serlo-button-editor-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-300">
+                  <FaIcon icon={faClone} /> {pluginStrings.rows.duplicate}
+                </span>
               </button>
               <button
-                className="serlo-button-editor-secondary"
+                className="group/button w-full pl-3 text-left"
                 onClick={handleRemovePlugin}
               >
-                {pluginStrings.rows.remove}
+                <span className="serlo-button-editor-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-300">
+                  <FaIcon icon={faTrashAlt} /> {pluginStrings.rows.remove}
+                </span>
               </button>
             </>
           }

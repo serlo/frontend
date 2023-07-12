@@ -26,8 +26,10 @@ export function PluginToolbarDropdownMenu({
           </Trigger>
 
           <Content>
-            <List className="absolute right-0 z-50 w-56 pt-2 lg:right-48 lg:bottom-0">
-              <div className="serlo-sub-list-hover">{pluginControls}</div>
+            <List className="absolute right-0">
+              <div className="serlo-sub-list-hover mt-2 bg-editor-primary-100 px-0">
+                {pluginControls}
+              </div>
             </List>
           </Content>
         </Item>
