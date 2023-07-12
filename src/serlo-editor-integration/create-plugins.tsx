@@ -164,12 +164,12 @@ export function createPlugins({
       type: EditorPluginType.ArticleIntroduction,
       plugin: createMultimediaPlugin({
         explanation: {
-          plugin: 'text',
+          plugin: EditorPluginType.Text,
           config: {
             placeholder: editorStrings.templatePlugins.article.writeShortIntro,
           },
         },
-        allowedPlugins: ['image'],
+        allowedPlugins: [EditorPluginType.Image],
       }),
     },
     { type: EditorPluginType.Unsupported, plugin: unsupportedPlugin },

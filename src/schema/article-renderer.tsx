@@ -122,7 +122,7 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
   const currentNode = getNode(value, currentPath)
   const key = currentPath[currentPath.length - 1]
 
-  if (currentNode.type !== 'text') {
+  if (currentNode.type !== FrontendNodeType.Text) {
     const children: ReactNode[] = []
     if (currentNode.children) {
       currentNode.children.forEach((_child, index) => {

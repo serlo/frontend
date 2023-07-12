@@ -6,12 +6,13 @@ import {
   string,
 } from '../../plugin'
 import { SpoilerEditor } from './editor'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createSpoilerState(config: SpoilerConfig) {
   return object({
     title: string(''),
     content: child({
-      plugin: 'rows',
+      plugin: EditorPluginType.Rows,
       ...(config.allowedPlugins !== undefined && {
         config: {
           allowedPlugins: config.allowedPlugins,

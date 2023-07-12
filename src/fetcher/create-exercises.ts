@@ -15,6 +15,7 @@ import {
 import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
@@ -37,7 +38,7 @@ export function createExercise(
 
       if (taskState.content) {
         taskState.content = convert(taskState.content)
-        if (taskState.interactive?.plugin === 'scMcExercise') {
+        if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
           taskState.interactive.state.answers.forEach((answer, i: number) => {
             answer.feedback = convert(answer.feedback)
             answer.content = convert(answer.content)
@@ -46,7 +47,9 @@ export function createExercise(
           taskState.interactive.state.answers = shuffleArray(
             taskState.interactive.state.answers
           )
-        } else if (taskState.interactive?.plugin === 'inputExercise') {
+        } else if (
+          taskState.interactive?.plugin === EditorPluginType.InputExercise
+        ) {
           taskState.interactive.state.answers.forEach((answer) => {
             answer.feedback = convert(answer.feedback)
           })
@@ -88,9 +91,9 @@ function createSolutionData(solution: BareExercise['solution']) {
   if (content) {
     if (content.startsWith('{')) {
       const contentJson = JSON.parse(content) as
-        | { plugin: 'rows' }
+        | { plugin: EditorPluginType.Rows }
         | { plugin: ''; state: SolutionEditorState }
-      if (contentJson.plugin === 'rows') {
+      if (contentJson.plugin === EditorPluginType.Rows) {
         // half converted, like 189579
         solutionLegacy = convert(contentJson as ConvertNode)
       } else {

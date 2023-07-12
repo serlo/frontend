@@ -1,5 +1,6 @@
 import * as R from 'ramda'
 
+import type { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   store,
   findParent,
@@ -12,7 +13,7 @@ import {
 export function useCanDrop(
   id: string,
   draggingAbove: boolean,
-  allowedPlugins: string[] | undefined
+  allowedPlugins: (EditorPluginType | string)[] | undefined
 ) {
   return function (dragId?: string) {
     return (

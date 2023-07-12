@@ -16,7 +16,7 @@ import {
 } from '@/serlo-editor/store'
 
 const StateDecoder = t.strict({
-  plugin: t.literal('rows'),
+  plugin: t.literal(EditorPluginType.Rows),
   state: t.array(
     t.strict({
       plugin: t.union([
@@ -71,7 +71,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       if (
         parentPlugin === null ||
         selectSerializedDocument(store.getState(), parentPlugin.id)?.plugin !==
-          'rows'
+          EditorPluginType.Rows
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'
         showToastNotice(msg)

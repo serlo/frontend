@@ -3,6 +3,7 @@ import { mapObjIndexed } from 'ramda'
 
 import { FaIcon } from '@/components/fa-icon'
 import { tw } from '@/helper/tw'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   StateType,
   StateTypesSerializedType,
@@ -108,7 +109,7 @@ export function serialized<S extends StateType>(type: S) {
 }
 
 export function editorContent(
-  plugin: string = 'rows'
+  plugin: string = EditorPluginType.Rows
 ): StateType<
   string,
   StateTypeValueType<ReturnType<typeof child>>,

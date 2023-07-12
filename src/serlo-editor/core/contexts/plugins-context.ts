@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
 export const PluginsContext = createContext<PluginsContextPlugins>([])
@@ -13,7 +14,10 @@ export function usePlugin(type?: string) {
   return getPluginByType(plugins, type)
 }
 
-export function getPluginByType(plugins: PluginsContextPlugins, type?: string) {
+export function getPluginByType(
+  plugins: PluginsContextPlugins,
+  type?: EditorPluginType | string
+) {
   return (
     plugins.find(({ type: pluginType }) => pluginType === type) ??
     plugins.find(({ type: pluginType }) => pluginType === 'unsupported')

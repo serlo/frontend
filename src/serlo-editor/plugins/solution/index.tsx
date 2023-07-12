@@ -6,6 +6,7 @@ import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { SolutionRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -24,9 +25,9 @@ const solutionState = object({
     })
   ),
   strategy: child({
-    plugin: 'text',
+    plugin: EditorPluginType.Text,
   }),
-  steps: child({ plugin: 'rows' }),
+  steps: child({ plugin: EditorPluginType.Rows }),
 })
 
 export type SolutionPluginState = typeof solutionState

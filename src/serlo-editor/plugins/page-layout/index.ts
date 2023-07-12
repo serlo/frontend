@@ -28,16 +28,12 @@ const allowedPlugins = [
 const pageLayoutState = object({
   widthPercent: number(), // first column defines second
   column1: child({
-    plugin: 'rows',
-    config: {
-      allowedPlugins,
-    },
+    plugin: EditorPluginType.Rows,
+    config: { allowedPlugins },
   }),
   column2: child({
-    plugin: 'rows',
-    config: {
-      allowedPlugins,
-    },
+    plugin: EditorPluginType.Rows,
+    config: { allowedPlugins },
   }),
 })
 

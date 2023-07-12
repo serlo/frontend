@@ -65,11 +65,11 @@ interface SplishPlugin {
 export type Edtr = RowsPlugin | LayoutPlugin | OtherPlugin
 
 export interface RowsPlugin {
-  plugin: 'rows'
+  plugin: EditorPluginType.Rows
   state: Edtr[]
 }
 export interface LayoutPlugin {
-  plugin: 'layout'
+  plugin: EditorPluginType.Layout
   state: { child: Edtr; width: number }[]
 }
 

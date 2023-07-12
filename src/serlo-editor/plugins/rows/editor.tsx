@@ -4,6 +4,7 @@ import { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { RowEditor } from './components/row-editor'
 import { RowSeparator } from './components/row-separator'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 
 export function RowsEditor({ state, config, id, editable }: RowsProps) {
@@ -13,7 +14,7 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {
     const textPluginWithSuggestions = {
-      plugin: 'text',
+      plugin: EditorPluginType.Text,
       state: [{ type: 'p', children: [{ text: '/' }] }],
     }
     setTimeout(() => {
@@ -38,13 +39,14 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
     pluginTypesOfAncestors !== null &&
     pluginTypesOfAncestors.every((pluginType) => {
       return (
-        pluginType !== 'box' &&
-        pluginType !== 'spoiler' &&
-        pluginType !== 'multimedia' &&
-        pluginType !== 'important'
+        pluginType !== EditorPluginType.Box &&
+        pluginType !== EditorPluginType.Spoiler &&
+        pluginType !== EditorPluginType.Multimedia &&
+        pluginType !== EditorPluginType.Important
       )
     }) &&
-    pluginTypesOfAncestors[pluginTypesOfAncestors.length - 1] !== 'rows'
+    pluginTypesOfAncestors[pluginTypesOfAncestors.length - 1] !==
+      EditorPluginType.Rows
 
   const isDocumentEmpty = state.length === 0
 

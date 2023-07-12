@@ -78,7 +78,7 @@ function convertPlugin(
         type: FrontendNodeType.Article,
         introduction: convertPlugin({
           ...introduction,
-          plugin: 'multimedia',
+          plugin: EditorPluginType.Multimedia,
         }),
         content: convertPlugin(content),
         exercises: exercises
@@ -119,7 +119,9 @@ function convertPlugin(
       ? captionTexts && captionTexts.length > 0
         ? captionTexts
             .map((textPlugin) => {
-              return textPlugin.type === 'text' ? textPlugin.text : ''
+              return textPlugin.type === FrontendNodeType.Text
+                ? textPlugin.text
+                : ''
             })
             .join('')
         : ''

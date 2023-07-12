@@ -9,13 +9,14 @@ import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
 
 export const articleTypeState = entityType(
   {
     ...entity,
     title: string(),
-    content: editorContent('article'),
+    content: editorContent(EditorPluginType.Article),
     meta_title: string(),
     meta_description: string(),
   },

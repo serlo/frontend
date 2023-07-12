@@ -10,6 +10,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface ArticleAddModalProps {
   open: boolean
@@ -74,7 +75,7 @@ export function ArticleAddModal({
     if (typename.includes(UuidType.Exercise)) {
       //maybe also check for duplicates
       exercises.insert(exercises.length, {
-        plugin: 'injection',
+        plugin: EditorPluginType.Injection,
         state: id.toString(),
       })
     }

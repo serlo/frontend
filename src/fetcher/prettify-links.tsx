@@ -60,7 +60,7 @@ export async function prettifyLinks(pageData: RequestPageData) {
       if (node.children) {
         walk(node.children)
       }
-      if (node.type === 'exercise') {
+      if (node.type === FrontendNodeType.Exercise) {
         if (node.solution.legacy) {
           walk(node.solution.legacy)
         }
@@ -90,7 +90,7 @@ export async function prettifyLinks(pageData: RequestPageData) {
           walk(node.task.edtrState.content)
         }
       }
-      if (node.type === 'article') {
+      if (node.type === FrontendNodeType.Article) {
         walk(node.introduction)
         walk(node.content)
       }

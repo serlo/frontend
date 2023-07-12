@@ -6,13 +6,14 @@ import {
   list,
 } from '../../plugin'
 import { RowsEditor } from './editor'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createRowsState(content: ChildStateTypeConfig) {
   return list(child(content), 1)
 }
 
 const defaultConfig = {
-  content: { plugin: 'text' },
+  content: { plugin: EditorPluginType.Text },
   parentType: 'root',
 }
 
@@ -47,7 +48,7 @@ export interface RowsConfig extends RowsPluginConfig {
 export type RowsPluginState = ReturnType<typeof createRowsState>
 
 export interface RowsPluginConfig {
-  allowedPlugins?: string[]
+  allowedPlugins?: (EditorPluginType | string)[]
   parentType: string
 }
 

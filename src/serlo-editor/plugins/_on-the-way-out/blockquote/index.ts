@@ -6,11 +6,10 @@ import {
   EditorPluginProps,
 } from '../../../plugin'
 import { BlockquoteRenderer } from './renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const defaultConfig: BlockquoteConfig = {
-  content: {
-    plugin: 'text',
-  },
+  content: { plugin: EditorPluginType.Text },
 }
 
 export function createBlockquotePlugin(
