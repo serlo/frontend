@@ -1,5 +1,3 @@
-import * as R from 'ramda'
-
 import type { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   store,
@@ -55,9 +53,8 @@ export function useCanDrop(
     childId: string
   ): number | null {
     if (!parent) return null
-    const position = R.findIndex(
-      (node) => node.id === childId,
-      parent.children || []
+    const position = (parent.children ?? []).findIndex(
+      (node) => node.id === childId
     )
     return position > -1 ? position : null
   }
