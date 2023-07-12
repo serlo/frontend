@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
 import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
+import { tw } from '@/helper/tw'
 import { selectDocument, selectParent, store } from '@/serlo-editor/store'
 
 // TODO: use enum from https://github.com/serlo/frontend/pull/2564 when that is merged
@@ -26,7 +27,12 @@ export function PluginToolbar({
   const parentType = parent ? selectDocument(state, parent.id)?.plugin : null
 
   return (
-    <div className="absolute -top-8 left-0 right-0 z-50 flex h-8 w-full items-center justify-between bg-editor-primary-100">
+    <div
+      className={tw`
+        absolute -top-10 left-0 right-0 z-50 flex h-9 w-full
+        items-center justify-between rounded-tl-md bg-editor-primary-100 pl-2
+    `}
+    >
       {/* Content controls */}
       <div>{contentControls}</div>
 
