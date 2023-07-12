@@ -2,7 +2,12 @@ import { useState } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
-import { selectFocused, useAppSelector } from '../../store'
+import {
+  selectFocused,
+  selectIsDocumentEmpty,
+  store,
+  useAppSelector,
+} from '../../store'
 import { InputExerciseRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
@@ -23,10 +28,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       type={state.type.value}
       unit={state.unit.value}
       answers={state.answers.map(({ isCorrect, value, feedback }) => {
+        const isEmptyFeedback = selectIsDocumentEmpty(
+          store.getState(),
+          feedback.id
+        )
         return {
           isCorrect: isCorrect.value,
           value: value.value,
-          feedback: feedback.render(),
+          feedback: isEmptyFeedback ? null : feedback.render(),
         }
       })}
     />
