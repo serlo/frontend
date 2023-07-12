@@ -1,6 +1,6 @@
 import { VideoProps } from '.'
-import { EditorInput } from '../../editor-ui'
 import { parseVideoUrl, VideoRenderer } from './renderer'
+import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'

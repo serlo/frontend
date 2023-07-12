@@ -5,11 +5,11 @@ import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidType } from '@/data-types'
 import {
   featuredContent,
   FeaturedContentData,
 } from '@/data/de/de-subject-landing-data'
+import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'

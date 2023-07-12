@@ -1,4 +1,3 @@
-import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import {
   editorContent,
   entity,
@@ -8,6 +7,7 @@ import {
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
+import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { AddButton } from '@/serlo-editor/editor-ui'

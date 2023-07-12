@@ -1,6 +1,7 @@
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
+import { revisionQuery } from './query'
 import { convertState } from '../convert-state'
 import { createExercise, createSolution } from '../create-exercises'
 import { createTitle } from '../create-title'
@@ -9,7 +10,6 @@ import {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from '../graphql-types/operations'
-import { revisionQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, RevisionPage, UuidRevType, UuidType } from '@/data-types'
 

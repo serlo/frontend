@@ -1,6 +1,6 @@
 import { GeogebraProps } from '.'
-import { EditorInput } from '../../editor-ui'
 import { GeogebraRenderer, parseId } from './renderer'
+import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'

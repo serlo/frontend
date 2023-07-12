@@ -7,8 +7,8 @@ import {
   Location,
 } from 'slate'
 
-import type { TextEditorState } from '../types'
 import { isSelectionAtEnd } from './selection'
+import type { TextEditorState } from '../types'
 import { StateTypeValueType } from '@/serlo-editor/plugin'
 import {
   focusNext,

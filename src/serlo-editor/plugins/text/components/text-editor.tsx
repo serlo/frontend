@@ -16,6 +16,11 @@ import {
   withReact,
 } from 'slate-react'
 
+import { HoveringToolbar } from './hovering-toolbar'
+import { LinkControls } from './link/link-controls'
+import { MathElement } from './math-element'
+import { Suggestions } from './suggestions'
+import { TextLeafRenderer } from './text-leaf-renderer'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
@@ -27,11 +32,6 @@ import {
 } from '../utils/document'
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
-import { HoveringToolbar } from './hovering-toolbar'
-import { LinkControls } from './link/link-controls'
-import { MathElement } from './math-element'
-import { Suggestions } from './suggestions'
-import { TextLeafRenderer } from './text-leaf-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'

@@ -1,12 +1,12 @@
 import { mergeDeepRight } from 'ramda'
 import { v4 } from 'uuid'
 
-import { SubDocument } from '../core'
 import {
   StoreSerializeHelpers,
   StateType,
   PluginProps,
 } from './internal-plugin-state'
+import { SubDocument } from '../core'
 
 export function child<K extends string, S = unknown>(
   params: ChildStateTypeConfig

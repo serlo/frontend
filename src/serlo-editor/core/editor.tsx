@@ -4,6 +4,12 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { configure, GlobalHotKeys } from 'react-hotkeys'
 import { Provider } from 'react-redux'
 
+import { EditableContext, PreferenceContextProvider } from './contexts'
+import {
+  PluginsContext,
+  PluginsContextPlugins,
+} from './contexts/plugins-context'
+import { SubDocument } from './sub-document'
 import {
   runInitRootSaga,
   undo,
@@ -17,12 +23,6 @@ import {
   useAppSelector,
   DocumentState,
 } from '../store'
-import { EditableContext, PreferenceContextProvider } from './contexts'
-import {
-  PluginsContext,
-  PluginsContextPlugins,
-} from './contexts/plugins-context'
-import { SubDocument } from './sub-document'
 
 configure({
   ignoreEventsCondition() {

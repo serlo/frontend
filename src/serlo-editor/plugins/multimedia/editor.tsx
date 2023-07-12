@@ -2,13 +2,13 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import { MultimediaProps } from '.'
+import { MultimediaRenderer } from './renderer'
 import {
   selectDocument,
   selectSerializedDocument,
   store,
   useAppSelector,
 } from '../../store'
-import { MultimediaRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 

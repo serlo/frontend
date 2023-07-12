@@ -2,9 +2,9 @@ import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
+import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
 import { storeStateToLocalStorage } from '@/serlo-editor-integration/components/local-storage-notice'
 import { SaveContext } from '@/serlo-editor-integration/serlo-editor'
-import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
 
 export function useHandleSave(
   visible: boolean,

@@ -1,3 +1,4 @@
+import { SpoilerEditor } from './editor'
 import {
   child,
   EditorPlugin,
@@ -5,7 +6,6 @@ import {
   object,
   string,
 } from '../../plugin'
-import { SpoilerEditor } from './editor'
 
 const spoilerState = object({
   title: string(''),

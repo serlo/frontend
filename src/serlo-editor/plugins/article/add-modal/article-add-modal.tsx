@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import { ArticleProps } from '..'
 import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
+import { ArticleProps } from '..'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'

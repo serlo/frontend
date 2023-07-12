@@ -1,9 +1,9 @@
 import { faUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 
+import { SolutionRenderer } from './renderer'
 import { InlineInput } from '../../plugin/helpers/inline-input'
 import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
-import { SolutionRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import {

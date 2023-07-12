@@ -6,10 +6,10 @@ import {
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
-import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
 import { HSpace } from './h-space'
 import { Link } from './link'
+import { FaIcon } from '../fa-icon'
+import { StaticInfoPanel } from '../static-info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { CourseNavigation } from '@/components/navigation/course-navigation'

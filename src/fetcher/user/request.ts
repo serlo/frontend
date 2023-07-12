@@ -1,9 +1,9 @@
 import { AuthorizationPayload, Scope } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
+import { userQuery } from './query'
 import { convertState } from '../convert-state'
 import { User } from '../query-types'
-import { userQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { PageNotFound, UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'

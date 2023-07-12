@@ -1,3 +1,4 @@
+import { ImageEditor } from './editor'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -11,7 +12,6 @@ import {
   UploadValidator,
   child,
 } from '../../plugin'
-import { ImageEditor } from './editor'
 
 const imageState = object({
   src: upload(''),

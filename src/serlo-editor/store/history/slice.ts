@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import * as R from 'ramda'
 
-import type { AppDispatch } from '../store'
-import type { State } from '../types'
 import { selectRedoStack, selectUndoStack } from './selectors'
 import type {
   PersistHistoryAction,
   PureCommitActionToHistoryAction,
 } from './types'
+import type { AppDispatch } from '../store'
+import type { State } from '../types'
 
 const initialState: State['history'] = {
   undoStack: [],

@@ -1,3 +1,4 @@
+import { ScMcExerciseEditor } from './editor'
 import {
   boolean,
   child,
@@ -6,7 +7,6 @@ import {
   list,
   object,
 } from '../../plugin'
-import { ScMcExerciseEditor } from './editor'
 
 const scMcExerciseState = object({
   isSingleChoice: boolean(false),

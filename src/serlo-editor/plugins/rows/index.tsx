@@ -1,3 +1,4 @@
+import { RowsEditor } from './editor'
 import {
   child,
   ChildStateTypeConfig,
@@ -5,7 +6,6 @@ import {
   EditorPluginProps,
   list,
 } from '../../plugin'
-import { RowsEditor } from './editor'
 
 function createRowsState(content: ChildStateTypeConfig) {
   return list(child(content), 1)

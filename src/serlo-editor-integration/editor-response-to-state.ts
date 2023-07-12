@@ -1,3 +1,12 @@
+import { TemplatePluginType } from './plugins'
+import {
+  isEdtr,
+  Edtr,
+  Legacy,
+  RowsPlugin,
+  OtherPlugin,
+  Splish,
+} from './types/legacy-editor-to-editor-types'
 import { appletTypeState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
 import { articleTypeState } from '../serlo-editor/plugins/serlo-template-plugins/article'
 import {
@@ -15,15 +24,6 @@ import { textExerciseGroupTypeState } from '../serlo-editor/plugins/serlo-templa
 import { textSolutionTypeState } from '../serlo-editor/plugins/serlo-template-plugins/text-solution'
 import { userTypeState } from '../serlo-editor/plugins/serlo-template-plugins/user'
 import { videoTypeState } from '../serlo-editor/plugins/serlo-template-plugins/video'
-import { TemplatePluginType } from './plugins'
-import {
-  isEdtr,
-  Edtr,
-  Legacy,
-  RowsPlugin,
-  OtherPlugin,
-  Splish,
-} from './types/legacy-editor-to-editor-types'
 import { UuidType, UuidRevType } from '@/data-types'
 import { User, MainUuidType } from '@/fetcher/query-types'
 import { triggerSentry } from '@/helper/trigger-sentry'

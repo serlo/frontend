@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 import { ArticleProps } from '.'
-import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './editor-renderer/article-exercises'
 import { ArticleRelatedContentSection } from './editor-renderer/article-related-content-section'
 import { ArticleSources } from './editor-renderer/article-sources'
 import { ArticleRenderer } from './renderer'
+import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ArticleEditor({ editable, state }: ArticleProps) {

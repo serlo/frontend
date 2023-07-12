@@ -1,6 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit'
 import * as R from 'ramda'
 
+import { findParent } from './helpers'
+import type { FocusTreeNode } from './types'
 import { selectDocument } from '../documents'
 import {
   createDeepEqualSelector,
@@ -9,8 +11,6 @@ import {
 import { selectPlugin } from '../plugins'
 import { selectRoot } from '../root'
 import { State } from '../types'
-import { findParent } from './helpers'
-import type { FocusTreeNode } from './types'
 
 const selectSelf = (state: State) => state.focus
 

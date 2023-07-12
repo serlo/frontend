@@ -1,3 +1,4 @@
+import { MultimediaEditor } from './editor'
 import {
   boolean,
   child,
@@ -7,7 +8,6 @@ import {
   number,
   object,
 } from '../../plugin'
-import { MultimediaEditor } from './editor'
 
 const defaultConfig: MultimediaConfig = {
   allowedPlugins: ['image', 'video', 'geogebra'],
