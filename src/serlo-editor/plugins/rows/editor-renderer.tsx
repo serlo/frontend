@@ -170,36 +170,33 @@ export function EditorRowRenderer({
         return (
           <>
             {children}
-            <hr className="mb-4" />
-            <div className="flex">
-              <div className="flex-[1]">
-                <button
-                  className="serlo-button-editor-secondary mr-8 mt-4 text-sm"
-                  onClick={() => {
-                    const document = selectSerializedDocument(
-                      store.getState(),
-                      row.id
-                    )
-                    if (!document) return
-                    rows.insert(index, document)
-                    close()
-                  }}
-                >
-                  <FaIcon icon={faCopy} />{' '}
-                  {editorStrings.plugins.rows.duplicate}
-                </button>
-                <button
-                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
-                  onClick={() => {
-                    rows.remove(index)
-                    close()
-                  }}
-                >
-                  <FaIcon icon={faTrashAlt} />{' '}
-                  {editorStrings.plugins.rows.remove}
-                </button>
-              </div>
-            </div>
+            <button
+              className="group/button w-full pl-3 text-left"
+              onClick={() => {
+                const document = selectSerializedDocument(
+                  store.getState(),
+                  row.id
+                )
+                if (!document) return
+                rows.insert(index, document)
+                close()
+              }}
+            >
+              <span className="serlo-button-editor-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-300">
+                <FaIcon icon={faCopy} /> {editorStrings.plugins.rows.duplicate}
+              </span>
+            </button>
+            <button
+              className="group/button w-full pl-3 text-left"
+              onClick={() => {
+                rows.remove(index)
+                close()
+              }}
+            >
+              <span className="serlo-button-editor-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-300">
+                <FaIcon icon={faTrashAlt} /> {editorStrings.plugins.rows.remove}
+              </span>
+            </button>
           </>
         )
       },

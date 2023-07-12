@@ -7,6 +7,7 @@ import {
   OverlayButton,
   PluginToolbarOverlayButton,
 } from '../plugin/plugin-toolbar'
+import { PluginToolbar } from './plugin-toolbar/plugin-toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -22,6 +23,7 @@ export interface DocumentEditorProps {
   ): React.ReactNode // returns the newly rendered settings
   renderToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
   focused: boolean // `true` if the document is focused
+  documentId: string
 }
 
 export function DocumentEditor({
@@ -33,6 +35,7 @@ export function DocumentEditor({
   toolbarRef,
   hasSettings,
   hasToolbar,
+  documentId,
 }: DocumentEditorProps) {
   const [hasHover, setHasHover] = useState(false)
 
@@ -102,12 +105,18 @@ export function DocumentEditor({
       onMouseEnter={() => setHasHover(true)}
       onMouseLeave={() => setHasHover(false)}
     >
-      {children}
       <ToolbarContainer isFocused={isFocused} isHovered={isHovered}>
         <ToolbarContent isFocused={isFocused} isHovered={isHovered}>
           {renderToolbar ? renderToolbar(toolbar) : toolbar}
         </ToolbarContent>
       </ToolbarContainer>
+      {isFocused ? (
+        <PluginToolbar
+          pluginId={documentId}
+          settings={renderSettings?.(null, { close }) ?? children ?? null}
+        />
+      ) : null}
+      {children}
     </Container>
   )
 

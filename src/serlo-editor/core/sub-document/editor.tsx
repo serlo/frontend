@@ -246,6 +246,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             renderToolbar={pluginProps && pluginProps.renderToolbar}
             settingsRef={settingsRef}
             toolbarRef={toolbarRef}
+            documentId={id}
           >
             <plugin.Component
               renderIntoSettings={renderIntoSettings}
