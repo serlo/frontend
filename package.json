@@ -130,7 +130,6 @@
     "@types/react-lazyload": "^3.2.0",
     "@types/react-modal": "^3.13.1",
     "@types/react-notify-toast": "^0.5.3",
-    "@types/react-resizable": "^3.0.0",
     "@types/react-syntax-highlighter": "^13.5.2",
     "@types/slate-react": "^0.50.1",
     "@types/styled-components": "^5.1.26",

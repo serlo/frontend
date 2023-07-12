@@ -3464,7 +3464,6 @@ __metadata:
     "@types/react-lazyload": ^3.2.0
     "@types/react-modal": ^3.13.1
     "@types/react-notify-toast": ^0.5.3
-    "@types/react-resizable": ^3.0.0
     "@types/react-syntax-highlighter": ^13.5.2
     "@types/slate-react": ^0.50.1
     "@types/styled-components": ^5.1.26
@@ -4174,15 +4173,6 @@ __metadata:
     hoist-non-react-statics: ^3.3.0
     redux: ^4.0.0
   checksum: 7cedb0f20806ce67255f676fab2d4d9534c12705d43636df95224cfa77fdf5a2e792dc76c6e072c02cad1c88030aea822c14f36fe85d459b898ee68fcff6f05c
-  languageName: node
-  linkType: hard
-
-"@types/react-resizable@npm:^3.0.0":
-  version: 3.0.4
-  resolution: "@types/react-resizable@npm:3.0.4"
-  dependencies:
-    "@types/react": "*"
-  checksum: 8c8ab9ec6481195f1875cbc76c95f26794d1d1ce7fcd833078252d6378e197a5b4483bdf4f8c90ae8f3f6f7a9503c518388bd7d09985e72fff3b4d77153f6ebd
   languageName: node
   linkType: hard
 
