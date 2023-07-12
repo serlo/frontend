@@ -50,7 +50,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
               >
                 {Object.values(InputExerciseType).map((exerciseType) => (
                   <option key={exerciseType} value={exerciseType}>
-                    {getType(exerciseType)}
+                    {inputExStrings.types[exerciseType]}
                   </option>
                 ))}
               </select>
@@ -96,14 +96,4 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       )}
     </>
   )
-
-  function getType(type: InputExerciseType) {
-    return inputExStrings.types[
-      type === InputExerciseType.InputNumberExactMatchChallenge
-        ? 'mathExpression'
-        : InputExerciseType.InputNumberExactMatchChallenge
-        ? 'number'
-        : 'text'
-    ]
-  }
 }
