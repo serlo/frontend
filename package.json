@@ -110,7 +110,7 @@
     "@graphql-codegen/typescript-graphql-request": "^4.5.7",
     "@graphql-codegen/typescript-operations": "2.5.5",
     "@next/bundle-analyzer": "^13.4.9",
-    "@svgr/webpack": "^6.5.0",
+    "@svgr/webpack": "^8.0.1",
     "@types/algebra.js": "^0.2.2",
     "@types/escape-html": "^1.0.2",
     "@types/jest": "^29.2.0",
