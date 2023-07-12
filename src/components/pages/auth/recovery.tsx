@@ -47,7 +47,7 @@ export function Recovery() {
   return (
     <div className="mx-auto max-w-[30rem]">
       <PageTitle headTitle title={`${strings.auth.recoverTitle} 🕊`} extraBold />
-      <p className="serlo-p mb-10 -mt-4 special-hyphens-initial">
+      <p className="hyphens-manual serlo-p mb-10 -mt-4">
         {replacePlaceholders(strings.auth.recoveryInstructions, {
           break: <br />,
         })}

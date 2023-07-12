@@ -46,7 +46,7 @@ export function Node({
       return (
         <span
           key={`${uiText.id}`}
-          className="-mt-2 mb-2 ml-3 block italic text-red-500 special-hyphens-initial"
+          className="hyphens-manual -mt-2 mb-2 ml-3 block italic text-red-500"
         >
           <Message uiText={uiText} fieldName={fieldName} />
         </span>

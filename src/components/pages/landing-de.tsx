@@ -96,9 +96,9 @@ export function LandingDE({ data }: LandingDEProps) {
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
             className={tw`
-              mx-auto mt-7 max-w-2xl
-              text-center text-4xl font-bold
-              leading-cozy tracking-tight special-hyphens-auto
+              hyphens-auto mx-auto mt-7
+              max-w-2xl text-center text-4xl
+              font-bold leading-cozy tracking-tight
             `}
           >
             Zusammen setzen wir uns für mehr Bildungsgerechtigkeit und die

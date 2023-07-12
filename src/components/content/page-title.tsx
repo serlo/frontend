@@ -24,7 +24,7 @@ export function PageTitle({
       )}
       <h1
         className={clsx(
-          'serlo-h1 mt-20 special-hyphens-initial',
+          'hyphens-manual serlo-h1 mt-20',
           extraBold &&
             'text-4xl font-extrabold tracking-tight text-almost-black'
         )}

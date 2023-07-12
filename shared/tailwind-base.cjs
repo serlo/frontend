@@ -164,39 +164,6 @@ module.exports = {
   plugins: [
     require('tailwindcss-animate'),
     plugin(function ({ addUtilities, addComponents }) {
-      // Custom utilities all start with `special-*`
-      // They use css that is not covered by tailwind
-      addUtilities({
-        '.special-border-half-transparent': {
-          borderTopColor: 'transparent',
-          borderLeftColor: 'transparent',
-        },
-        '.special-reset-list-counter': {
-          'counter-reset': 'list-counter',
-        },
-        '.special-content-list-counter': {
-          content: 'counter(list-counter)',
-        },
-        '.special-increment-list-counter': {
-          'counter-increment': 'list-counter',
-        },
-        '.special-content-space': {
-          content: '" "',
-        },
-        '.special-content-gt': {
-          content: '">"',
-        },
-        '.special-hyphens-auto': {
-          hyphens: 'auto',
-        },
-        '.special-hyphens-initial': {
-          hyphens: 'initial',
-        },
-        'special-no-page-breaks-inside': {
-          'page-break-inside': 'avoid',
-        },
-      })
-
       // add classes of serlo-components to autocomplete
       addComponents(extractCSSClasses())
     }),

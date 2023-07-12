@@ -168,10 +168,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-3 px-2 text-center">
           <h3
-            className={clsx(
-              h2Class,
-              'mt-12 inline-block pb-3 special-hyphens-auto'
-            )}
+            className={clsx(h2Class, 'mt-12 inline-block pb-3 hyphens-auto')}
             id="stellen"
           >
             Unsere offenen Stellen
@@ -226,7 +223,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                     className="font-extrabold leading-cozy text-almost-black"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
-                  <p className="serlo-p mx-auto mt-2 max-w-65 text-lg font-normal leading-snug special-hyphens-initial">
+                  <p className="hyphens-manual serlo-p mx-auto mt-2 max-w-65 text-lg font-normal leading-snug">
                     {content}
                   </p>
                 </div>
@@ -369,7 +366,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
         >
           {role}
         </span>
-        <p className="serlo-p mt-5 special-hyphens-initial">{subjects[0]}</p>
+        <p className="hyphens-manual serlo-p mt-5">{subjects[0]}</p>
       </figure>
     )
   }

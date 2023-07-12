@@ -75,7 +75,7 @@ export function Donations() {
         >
           <div className="mx-auto max-w-2xl">
             <section>
-              <p className="serlo-p text-left special-hyphens-initial">
+              <p className="hyphens-manual serlo-p text-left">
                 Fast eine halbe Million Kinder in der Sekundarstufe sind von
                 Armut betroffen und haben erhebliche Probleme in der Schule.{' '}
                 <b>Mit deiner Spende</b> leistest du einen wichtigen Beitrag,

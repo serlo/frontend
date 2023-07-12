@@ -35,17 +35,17 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="serlo-p leading-6 special-hyphens-initial">
+        <p className="hyphens-manual serlo-p leading-6">
           … dass in Deutschland pro Jahr über 1,1 Millionen Schüler*innen teure
           Nachhilfe in Anspruch nehmen? Die Corona-Pandemie hat den Bedarf noch
           größer gemacht. Aber nicht jede Familie kann sich das leisten!
         </p>
-        <p className="serlo-p leading-6 special-hyphens-initial">
+        <p className="hyphens-manual serlo-p leading-6">
           Mit unserer freien Lernplattform Serlo schaffen wir Zugang zu
           hochwertigen Lernmaterialien für{' '}
           <b>alle Schüler*innen komplett kostenlos</b>.
         </p>
-        <p className="serlo-p font-bold leading-6 special-hyphens-initial">
+        <p className="hyphens-manual serlo-p font-bold leading-6">
           Mit deiner Spende, groß oder klein, kannst du diese Arbeit
           unterstützen.
         </p>
@@ -59,7 +59,7 @@ const articleBanners = [
     isLong: false,
     text: (
       <div className="text-left">
-        <p className="serlo-p leading-6 special-hyphens-initial">
+        <p className="hyphens-manual serlo-p leading-6">
           … dass wir alle Inhalte auf Serlo ehrenamtlich erstellen? Hier
           engagieren sich hunderte Lehrkräfte, Lehramtsstudierende und
           Pädagog*innen für das gemeinsame Ziel:{' '}
@@ -69,13 +69,13 @@ const articleBanners = [
           </b>
           .
         </p>
-        <p className="serlo-p leading-6 special-hyphens-initial">
+        <p className="hyphens-manual serlo-p leading-6">
           Als nächstes möchten wir gerne weitere Übungsformate für Serlo
           entwickeln, die Nutzbarkeit auf Smartphones verbessern und es
           Schüler*innen ermöglichen, eigene Lernziele zu definieren und ihren
           eigenen Lernstand zu speichern.
         </p>
-        <p className="serlo-p font-bold leading-6 special-hyphens-initial">
+        <p className="hyphens-manual serlo-p font-bold leading-6">
           Unterstütze uns, Serlo noch besser zu machen!
         </p>
       </div>
@@ -173,17 +173,17 @@ const courseBanner = {
   call: 'Hat dir dieser Kurs weitergeholfen?',
   text: (
     <div className="text-left">
-      <p className="serlo-p leading-6 special-hyphens-initial">
+      <p className="hyphens-manual serlo-p leading-6">
         Wir möchten <b>mehr kleinschrittige Kurse</b> entwickeln, die
         Nutzbarkeit auf Smartphones verbessern und es Schüler*innen ermöglichen,
         eigene Lernziele zu definieren und ihren eigenen Lernstand zu speichern.
       </p>
-      <p className="serlo-p leading-6 special-hyphens-initial">
+      <p className="hyphens-manual serlo-p leading-6">
         All das kostet Geld. Und weil Serlo als gemeinnütziges Projekt für immer
         kostenlos und frei von Werbung bleiben wird, sind wir auf Spenden
         angewiesen.
       </p>
-      <p className="serlo-p font-bold leading-6 special-hyphens-initial">
+      <p className="hyphens-manual serlo-p font-bold leading-6">
         Es wäre großartig, wenn du uns hilfst, Serlo noch besser zu machen!
       </p>
     </div>

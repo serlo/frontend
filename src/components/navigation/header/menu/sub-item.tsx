@@ -10,12 +10,12 @@ export interface SubItemProps {
 }
 
 const itemClasses = tw`
-  block w-full
-  border-b border-brand-400 p-4 font-bold
-  text-brand hover:bg-brand-300 hover:no-underline
-  group-hover:bg-brand group-hover:text-white md:serlo-button-blue-transparent
-  md:w-auto md:rounded-[12px] md:py-0.25 md:text-base md:font-normal md:leading-5
-  md:special-hyphens-auto
+  md:hyphens-auto block
+  w-full border-b border-brand-400 p-4
+  font-bold text-brand hover:bg-brand-300
+  hover:no-underline group-hover:bg-brand group-hover:text-white
+  md:serlo-button-blue-transparent md:w-auto md:rounded-[12px] md:py-0.25 md:text-base md:font-normal
+  md:leading-5
 `
 
 export function SubItem({ item }: SubItemProps) {
