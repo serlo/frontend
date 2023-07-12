@@ -32,7 +32,7 @@ export interface BoxConfig {
   allowedPlugins?: (EditorPluginType | string)[]
 }
 
-const defaultAllowedPlugins = [
+const defaultAllowedPlugins: (EditorPluginType | string)[] = [
   EditorPluginType.Text,
   EditorPluginType.Image,
   EditorPluginType.Equations,

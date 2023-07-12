@@ -35,7 +35,7 @@ export function createSpoilerPlugin(
 }
 
 export interface SpoilerConfig {
-  allowedPlugins?: string[]
+  allowedPlugins?: (EditorPluginType | string)[]
 }
 
 export type SpoilerPluginState = ReturnType<typeof createSpoilerState>
