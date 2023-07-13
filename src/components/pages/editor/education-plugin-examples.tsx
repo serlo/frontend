@@ -6,10 +6,10 @@ import { Multimedia } from '@/components/content/multimedia'
 import { Spoiler } from '@/components/content/spoiler'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { renderNested } from '@/schema/article-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { Sign } from '@/serlo-editor/plugins/equations/sign'
 import { HighlightRenderer } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const boxExample = (
   <>

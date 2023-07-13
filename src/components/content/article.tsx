@@ -73,7 +73,7 @@ export function Article({
     if (sources.length === 0) return null
     return (
       <>
-        <ul className="serlo-ul mt-2 mb-4 text-lg">
+        <ul className="serlo-ul mb-4 mt-2 text-lg">
           {sources.map((source) => (
             <li key={source.href} className="!mb-0">
               {source.href ? (

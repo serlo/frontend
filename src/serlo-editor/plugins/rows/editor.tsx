@@ -4,8 +4,8 @@ import { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { RowEditor } from './components/row-editor'
 import { RowSeparator } from './components/row-separator'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function RowsEditor({ state, config, id, editable }: RowsProps) {
   const pluginTypesOfAncestors = useAppSelector((state) =>

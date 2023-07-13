@@ -5,11 +5,11 @@ import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidType } from '@/data-types'
 import {
   featuredContent,
   FeaturedContentData,
 } from '@/data/de/de-subject-landing-data'
+import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
@@ -86,7 +86,7 @@ export function SubjectLandingFeatured({
             </div>
           )}
         </div>
-        <h4 className="mx-0 mt-1 mb-10 break-normal text-xl font-bold special-hyphens-auto">
+        <h4 className="mx-0 mb-10 mt-1 hyphens-auto break-normal text-xl font-bold">
           {data.title}
         </h4>
         <span className="font-sm absolute bottom-2 mt-1 block text-brand-400">

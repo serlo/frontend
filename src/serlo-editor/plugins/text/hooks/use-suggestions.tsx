@@ -6,7 +6,6 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   PluginsContext,
   PluginsContextPlugins,
@@ -14,6 +13,7 @@ import {
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
   editor: SlateEditor

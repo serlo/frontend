@@ -1,6 +1,5 @@
 import { EquationsEditor } from './editor'
 import { Sign } from './sign'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   child,
   list,
@@ -9,6 +8,7 @@ import {
   EditorPluginProps,
   string,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const stepProps = object({
   left: string(''),

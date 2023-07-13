@@ -55,7 +55,7 @@ export function InjectionEditor({
 
   function renderInput() {
     return (
-      <div className="mt-4 mb-3">
+      <div className="mb-3 mt-4">
         <EditorInput
           label={`${injectionsStrings.serloId}: `}
           placeholder={injectionsStrings.placeholder}

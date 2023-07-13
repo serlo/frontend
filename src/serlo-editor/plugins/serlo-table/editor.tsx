@@ -12,7 +12,6 @@ import { SerloTableRenderer, TableType } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
 import {
   store,
@@ -26,6 +25,7 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [
@@ -149,7 +149,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv min-h-[3.5rem] pr-2 pb-6"
+              className="hackdiv min-h-[3.5rem] pb-6 pr-2"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({

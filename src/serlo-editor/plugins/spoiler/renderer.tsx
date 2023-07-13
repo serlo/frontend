@@ -28,7 +28,7 @@ export function SpoilerRenderer({
         onClick={() => setOpen(!open)}
         className={clsx(
           tw`
-            serlo-input-font-reset z-10 m-0 border-none py-2.5 px-side
+            serlo-input-font-reset z-10 m-0 border-none px-side py-2.5
             text-left text-lg leading-normal text-almost-black transition-colors
           `,
           isOpen ? 'bg-brand-200' : 'bg-brand-100'

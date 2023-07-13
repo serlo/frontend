@@ -67,7 +67,7 @@ export function Renderer({ boxType, title, anchorId, children }: BoxProps) {
       className={clsx(
         tw`
           serlo-box relative mx-side mb-6 
-          rounded-xl border-3 pt-[2px] pb-side
+          rounded-xl border-3 pb-side pt-[2px]
         `,
         borderColorClass
       )}

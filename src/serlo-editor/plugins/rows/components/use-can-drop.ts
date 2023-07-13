@@ -1,4 +1,3 @@
-import type { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   store,
   findParent,
@@ -7,6 +6,7 @@ import {
   selectFocusTree,
   FocusTreeNode,
 } from '@/serlo-editor/store'
+import type { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function useCanDrop(
   id: string,

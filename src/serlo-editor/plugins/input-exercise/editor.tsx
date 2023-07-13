@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { InputExerciseProps, InputExerciseType } from '.'
+import { InputExerciseRenderer } from './renderer'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
   selectFocused,
@@ -8,7 +9,6 @@ import {
   store,
   useAppSelector,
 } from '../../store'
-import { InputExerciseRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 

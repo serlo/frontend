@@ -1,3 +1,4 @@
+import { MultimediaEditor } from './editor'
 import {
   boolean,
   child,
@@ -7,7 +8,6 @@ import {
   number,
   object,
 } from '../../plugin'
-import { MultimediaEditor } from './editor'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const defaultConfig: MultimediaConfig = {

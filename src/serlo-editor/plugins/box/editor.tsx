@@ -80,7 +80,7 @@ export function BoxEditor(props: BoxProps) {
   function renderSettings() {
     return props.renderIntoSettings(
       <>
-        <b className="serlo-h4 mt-6 ml-0 mb-4 block">
+        <b className="serlo-h4 mb-4 ml-0 mt-6 block">
           {editorStrings.plugins.box.type}:
         </b>
         <ul className="pb-8">{renderSettingsLis()}</ul>
@@ -103,7 +103,7 @@ export function BoxEditor(props: BoxProps) {
         : undefined
 
       return (
-        <li key={typedBoxType} className="inline-block pr-4 pb-4">
+        <li key={typedBoxType} className="inline-block pb-4 pr-4">
           <button
             className="serlo-button-editor-secondary"
             onClick={(event) => {

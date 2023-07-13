@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 
+import { RowSeparator } from './row-separator'
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { EditorRowRenderer } from '../editor-renderer'
-import { RowSeparator } from './row-separator'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'

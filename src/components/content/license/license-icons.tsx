@@ -47,7 +47,7 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
     return (
       <FaIcon
         className={clsx(
-          'mb-0.25 text-brand-400 mobile:mt-0.25 mobile:mr-1 mobile:text-[2rem]',
+          'mb-0.25 text-brand-400 mobile:mr-1 mobile:mt-0.25 mobile:text-[2rem]',
           props.className
         )}
         icon={props.icon}

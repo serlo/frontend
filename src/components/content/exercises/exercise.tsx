@@ -10,8 +10,8 @@ import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-autho
 import { ExerciseInlineType } from '@/data-types'
 import type { FrontendExerciseNode } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { H5pRenderer } from '@/serlo-editor/plugins/h5p/renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode

@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const PluginsContext = createContext<PluginsContextPlugins>([])
 

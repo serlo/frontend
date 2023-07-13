@@ -99,7 +99,7 @@ export function ArticleRelatedTaxonomy({
       <li key={item.id} className="group flex justify-between">
         <a
           href={`/${item.id}`}
-          className="mt-1 mb-2 leading-tight text-brand"
+          className="mb-2 mt-1 leading-tight text-brand"
           target="_blank"
           rel="noreferrer"
         >

@@ -10,14 +10,14 @@ import {
   FrontendSerloTrNode,
   FrontendTextNode,
 } from '@/frontend-node-types'
+import { BoxType } from '@/serlo-editor/plugins/box/renderer'
+import { Sign } from '@/serlo-editor/plugins/equations/sign'
+import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   SupportedEditorPlugin,
   UnknownEditorPlugin,
 } from '@/serlo-editor-integration/types/editor-plugins'
-import { BoxType } from '@/serlo-editor/plugins/box/renderer'
-import { Sign } from '@/serlo-editor/plugins/equations/sign'
-import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 

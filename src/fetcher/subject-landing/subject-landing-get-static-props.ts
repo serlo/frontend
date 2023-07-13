@@ -1,7 +1,7 @@
 import { fetchPageData } from '../fetch-page-data'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
-import { TaxonomyPage } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { TaxonomyPage } from '@/data-types'
 
 export async function subjectLandingGetStaticProps(
   locale: string,

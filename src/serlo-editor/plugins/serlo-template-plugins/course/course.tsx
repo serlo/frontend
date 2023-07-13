@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { CourseNavigation } from './course-navigation'
+import { CoursePageTypePluginState } from './course-page'
 import {
   editorContent,
   entity,
@@ -10,8 +12,6 @@ import {
 import { RevisionHistoryLoader } from '../helpers/content-loaders/revision-history-loader'
 import { Settings } from '../helpers/settings'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
-import { CourseNavigation } from './course-navigation'
-import { CoursePageTypePluginState } from './course-page'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
@@ -105,7 +105,7 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
             <input
               className={tw`
                 -ml-2 mt-1 min-w-[70%] rounded-xl border-2 border-transparent
-                bg-editor-primary-100 py-0 px-2 focus:border-editor-primary focus:outline-none
+                bg-editor-primary-100 px-2 py-0 focus:border-editor-primary focus:outline-none
               `}
               placeholder={courseStrings.title}
               value={title.value}

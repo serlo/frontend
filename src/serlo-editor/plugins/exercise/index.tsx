@@ -1,5 +1,4 @@
 import { ExerciseEditor } from './editor'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -7,6 +6,7 @@ import {
   object,
   optional,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const exerciseState = object({
   content: child({ plugin: EditorPluginType.Rows }),

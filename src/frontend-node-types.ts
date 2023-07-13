@@ -1,4 +1,9 @@
 import { LicenseData } from './data-types'
+import { BoxType } from './serlo-editor/plugins/box/renderer'
+import { Sign } from './serlo-editor/plugins/equations/sign'
+import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
+import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
+import { CustomText } from './serlo-editor/plugins/text'
 import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorAnchorPlugin,
@@ -8,11 +13,6 @@ import {
   EditorInjectionPlugin,
   EditorVideoPlugin,
 } from './serlo-editor-integration/types/editor-plugins'
-import { BoxType } from './serlo-editor/plugins/box/renderer'
-import { Sign } from './serlo-editor/plugins/equations/sign'
-import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
-import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
-import { CustomText } from './serlo-editor/plugins/text'
 
 // The actual content of the page.
 

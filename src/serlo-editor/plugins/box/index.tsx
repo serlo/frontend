@@ -1,5 +1,4 @@
 import { BoxEditor } from './editor'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   child,
   EditorPlugin,
@@ -7,6 +6,7 @@ import {
   object,
   string,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createBoxState(allowedPlugins: (EditorPluginType | string)[]) {
   return object({

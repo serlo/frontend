@@ -1,3 +1,4 @@
+import { RowsEditor } from './editor'
 import {
   child,
   ChildStateTypeConfig,
@@ -5,7 +6,6 @@ import {
   EditorPluginProps,
   list,
 } from '../../plugin'
-import { RowsEditor } from './editor'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createRowsState(content: ChildStateTypeConfig) {

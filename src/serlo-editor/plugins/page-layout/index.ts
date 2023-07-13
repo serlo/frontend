@@ -1,5 +1,4 @@
 import { PageLayoutEditor } from './editor'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorPlugin,
   number,
@@ -7,6 +6,7 @@ import {
   child,
   EditorPluginProps,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const allowedPlugins = [
   EditorPluginType.Text,

@@ -1,10 +1,10 @@
+import { TableEditor } from './editor'
 import {
   EditorPlugin,
   EditorPluginProps,
   string,
   StringStateType,
 } from '../../../plugin'
-import { TableEditor } from './editor'
 
 export function createTablePlugin(
   config: TableConfig = {}

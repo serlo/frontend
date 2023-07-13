@@ -1,6 +1,6 @@
 import { VideoProps } from '.'
-import { EditorInput } from '../../editor-ui'
 import { parseVideoUrl, VideoRenderer } from './renderer'
+import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
@@ -54,7 +54,7 @@ export const VideoEditor = ({
 
   function renderInput() {
     return (
-      <div className="mx-side mt-4 mb-3">
+      <div className="mx-side mb-3 mt-4">
         <EditorInput
           label={`${videoStrings.videoUrl}: `}
           value={state.src.value}

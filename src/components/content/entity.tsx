@@ -6,10 +6,10 @@ import {
 import { Router } from 'next/router'
 import { useState, MouseEvent } from 'react'
 
-import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
 import { HSpace } from './h-space'
 import { Link } from './link'
+import { FaIcon } from '../fa-icon'
+import { StaticInfoPanel } from '../static-info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -80,7 +80,7 @@ export function Entity({ data }: EntityProps) {
     return (
       <span
         className={tw`
-          mr-1.5 -mt-1.5 inline-block h-7 w-7
+          -mt-1.5 mr-1.5 inline-block h-7 w-7
           justify-center rounded-full bg-brand-200 text-center align-middle
           text-xl font-bold text-brand
         `}

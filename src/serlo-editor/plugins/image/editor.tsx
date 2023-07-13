@@ -2,14 +2,14 @@ import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect } from 'react'
 
 import { ImageProps } from '.'
+import { PrimaryControls, SettingsControls } from './controls'
+import { ImageRenderer } from './renderer'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
   store,
   selectIsDocumentEmpty,
   selectHasFocusedChild,
 } from '../../store'
-import { PrimaryControls, SettingsControls } from './controls'
-import { ImageRenderer } from './renderer'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'

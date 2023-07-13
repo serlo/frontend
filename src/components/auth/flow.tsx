@@ -22,6 +22,7 @@ import {
   useState,
 } from 'react'
 
+import { Messages } from './messages'
 import {
   changeButtonTypeOfSSOProvider,
   sortKratosUiNodes,
@@ -33,7 +34,6 @@ import {
   VALIDATION_ERROR_TYPE,
   verificationUrl,
 } from '../pages/auth/utils'
-import { Messages } from './messages'
 import { checkLoggedIn } from '@/auth/cookie/check-logged-in'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import type { AxiosError } from '@/auth/types'

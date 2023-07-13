@@ -1,6 +1,6 @@
 import { GeogebraProps } from '.'
-import { EditorInput } from '../../editor-ui'
 import { GeogebraRenderer, parseId } from './renderer'
+import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
@@ -39,7 +39,7 @@ export function GeogebraEditor(props: GeogebraProps) {
 
   function renderInput() {
     return (
-      <div className="mx-side mt-4 mb-3">
+      <div className="mx-side mb-3 mt-4">
         <EditorInput
           label={`${editorStrings.plugins.geogebra.urlOrId}: `}
           placeholder="z.B. N5ktHvtW"

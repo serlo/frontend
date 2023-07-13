@@ -1,6 +1,5 @@
 import { mergeDeepRight } from 'ramda'
 
-import { InstanceData, UuidWithRevType } from '@/data-types'
 import {
   instanceData as deInstanceData,
   instanceLandingData as deInstanceLandingData,
@@ -43,6 +42,7 @@ import {
   instanceLandingData as taInstanceLandingData,
   kratosMailStrings as taKratosMailStrings,
 } from '@/data/ta'
+import { InstanceData, UuidWithRevType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 
 export const languages: Instance[] = Object.values(Instance)

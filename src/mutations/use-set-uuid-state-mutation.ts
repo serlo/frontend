@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
-import { csrReload } from '../helper/csr-reload'
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
+import { csrReload } from '../helper/csr-reload'
 import { UuidSetStateInput } from '@/fetcher/graphql-types/operations'
 
 const mutation = gql`

@@ -1,3 +1,4 @@
+import { BlockquoteRenderer } from './renderer'
 import {
   child,
   ChildStateType,
@@ -5,7 +6,6 @@ import {
   EditorPlugin,
   EditorPluginProps,
 } from '../../../plugin'
-import { BlockquoteRenderer } from './renderer'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const defaultConfig: BlockquoteConfig = {

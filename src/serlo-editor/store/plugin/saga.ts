@@ -1,15 +1,15 @@
 import { channel, Channel } from 'redux-saga'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
-import { EditorPlugin } from '../../types/internal__plugin'
-import { runChangeDocumentSaga, selectDocument } from '../documents'
-import { selectFocusTree } from '../focus'
-import { selectPlugin } from '../plugins'
 import {
   insertPluginChildAfter,
   insertPluginChildBefore,
   removePluginChild,
 } from './saga-actions'
+import { EditorPlugin } from '../../types/internal__plugin'
+import { runChangeDocumentSaga, selectDocument } from '../documents'
+import { selectFocusTree } from '../focus'
+import { selectPlugin } from '../plugins'
 
 export function* pluginSaga() {
   yield all([

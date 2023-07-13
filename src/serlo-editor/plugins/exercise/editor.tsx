@@ -4,10 +4,10 @@ import { ReactNode, useState } from 'react'
 import { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import { store, selectDocument } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const interactiveExerciseTypes = [
   EditorPluginType.ScMcExercise,
@@ -64,7 +64,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
             }}
           />
           {showOptions ? (
-            <div className="absolute left-6 -top-3 whitespace-nowrap pl-3">
+            <div className="absolute -top-3 left-6 whitespace-nowrap pl-3">
               <div className="rounded-md bg-[rgba(255,255,255,0.95)] p-2 shadow-menu">
                 {interactiveExerciseTypes
                   .filter(

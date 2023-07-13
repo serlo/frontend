@@ -3,7 +3,6 @@ import { mapObjIndexed } from 'ramda'
 
 import { FaIcon } from '@/components/fa-icon'
 import { tw } from '@/helper/tw'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   StateType,
   StateTypesSerializedType,
@@ -21,6 +20,7 @@ import {
 } from '@/serlo-editor/plugin'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import { selectDocument, useAppSelector } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const licenseState = object({
   id: number(),

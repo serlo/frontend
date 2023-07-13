@@ -1,5 +1,4 @@
 import { LayoutRenderer } from './editor'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorPlugin,
   child,
@@ -8,6 +7,7 @@ import {
   object,
   EditorPluginProps,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const layoutState = list(
   object({ child: child({ plugin: EditorPluginType.Text }), width: number() })

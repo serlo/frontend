@@ -36,7 +36,7 @@ export function InviteModal({ isOpen, onClose, type }: InviteModalProps) {
         {replacePlaceholders(modalStrings.text, { break: <br /> })}
       </p>
       <p className="serlo-p">{renderButtons()}</p>
-      <p className="serlo-p mt-24 mb-0 border-t-[1px] pt-8 text-base">
+      <p className="serlo-p mb-0 mt-24 border-t-[1px] pt-8 text-base">
         {replacePlaceholders(modalStrings.psText, {
           link: (
             <a onClick={onClose}>

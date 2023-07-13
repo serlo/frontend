@@ -1,3 +1,5 @@
+import { InputExerciseEditor } from './editor'
+import { InputExerciseType } from './input-exercise-type'
 import {
   boolean,
   child,
@@ -8,8 +10,6 @@ import {
   object,
   string,
 } from '../../plugin'
-import { InputExerciseEditor } from './editor'
-import { InputExerciseType } from './input-exercise-type'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createInputExerciseState(
