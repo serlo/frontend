@@ -880,9 +880,9 @@ export const loggedInData = {
           enterTheValue: "Gib hier die Antwort ein",
           yourSolution: "Deine Lösung",
           types: {
-            'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
-            'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
-            'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'"
+            'input-string-normalized-match-challenge': "Text (genau, z.B. 'Tiger')",
+            'input-number-exact-match-challenge': "Zahl (genau, z.B. '0.5')",
+            'input-expression-equal-match-challenge': "Mathematischer Ausdruck (gleichwertig, z.B. \"0,5\", \"1/2\" oder \"2/4\")"
           }
         },
         page: {
