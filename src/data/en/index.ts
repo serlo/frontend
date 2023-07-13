@@ -952,19 +952,15 @@ export const loggedInData = {
           title: 'Title',
         },
         inputExercise: {
-          text: 'Text',
           chooseType: 'Choose the exercise type',
           unit: 'Unit',
           addAnswer: 'Add answer',
           enterTheValue: 'Enter the value',
           yourSolution: 'Your solution',
-          number: "Number (exact solution, e.g. '0,5' ≠ '1/2' ≠ '2/4')",
-          mathematicalExpressionSolution:
-            "Mathematical expression (equivalent solution, e.g. '0,5' = '1/2' = '2/4')",
           types: {
-            mathExpression: 'Mathematical expression',
-            text: 'Text',
-            number: 'Number',
+            'input-string-normalized-match-challenge': "Text (exact, e.g. 'tiger')",
+            'input-number-exact-match-challenge': "Number (exact, e.g. '0.5')",
+            'input-expression-equal-match-challenge': "Mathematical expression (equivalent, e.g. '0.5' or '1/2' or '2/4'",
           },
         },
         page: {
