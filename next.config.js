@@ -44,6 +44,7 @@ module.exports = withBundleAnalyzer({
   // TODO: reactStrictMode with react18 breaks edtr.io atm (inside react-hotkeys)
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
+  transpilePackages: ['ramda'],
   /*experimental: {
     fallbackNodePolyfills: false,
   },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
