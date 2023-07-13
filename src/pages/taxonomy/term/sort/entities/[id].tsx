@@ -29,6 +29,7 @@ import { requestPage } from '@/fetcher/request-page'
 import {
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
+  FrontendNodeType,
 } from '@/frontend-node-types'
 import { categoryIconMapping } from '@/helper/icon-by-entity-type'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -138,7 +139,8 @@ function Content({ pageData }: { pageData: TaxonomyPage }) {
   ): TaxonomyLink[] {
     if (
       Object.hasOwn(links[0], 'type') &&
-      (links[0].type === 'exercise-group' || links[0].type === 'exercise')
+      (links[0].type === FrontendNodeType.ExerciseGroup ||
+        links[0].type === FrontendNodeType.Exercise)
     ) {
       return (links as unknown as TaxonomyData['exercisesContent']).map(
         (exNode) => {

@@ -32,7 +32,7 @@ export const MetadataApiPresentation = () => {
             <span className="serlo-underlined !pr-0 pb-2">Metadata API</span>
           </h1>
         </section>
-        <section className="mx-auto mt-16 mb-16 max-w-5xl px-4 text-left">
+        <section className="mx-auto mb-16 mt-16 max-w-5xl px-4 text-left">
           <div className="sm:flex sm:justify-between sm:space-x-4">
             <div className="pr-2 text-xl leading-cozy sm:flex sm:max-w-[31rem] sm:flex-1 sm:flex-col">
               <h2 className="text-[1.3rem] font-extrabold tracking-tight text-gray-700">
@@ -58,15 +58,15 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-        <section className="mt-0 mb-20 bg-orangeBow bg-100% px-2 pt-16 pb-16">
+        <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 pb-16 pt-16">
           <div className="mx-auto mt-2 max-w-4xl px-4 text-center text-xl sm:flex">
-            <div className="mx-4 flex-1 pt-4 pb-4">
+            <div className="mx-4 flex-1 pb-4 pt-4">
               <b className="font-handwritten text-4xl text-brand">20,000+</b>
               <br />
               Educational resources have been created with the{' '}
               <Link href="https://serlo.org/editor">Serlo Editor</Link>
             </div>
-            <div className="mx-4 flex-1 pt-4 pb-4">
+            <div className="mx-4 flex-1 pb-4 pt-4">
               <b className="font-handwritten text-4xl text-brand">1 Mio+</b>
               <br />
               Users per month are already learning with the materials
@@ -116,9 +116,9 @@ export const MetadataApiPresentation = () => {
             </div>
           </div>
         </section>
-        <section className="mt-0 mb-20 bg-orangeBow bg-100% px-2 pt-16 pb-16">
+        <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 pb-16 pt-16">
           <div className="mx-auto mt-2 max-w-4xl px-4 text-center text-xl sm:flex">
-            <div className="mx-4 flex-1 pt-4 pb-4">
+            <div className="mx-4 flex-1 pb-4 pt-4">
               <FaIcon
                 icon={articleIcon}
                 className="mx-auto mr-2 text-4xl text-brand"
@@ -127,7 +127,7 @@ export const MetadataApiPresentation = () => {
               <br />
               Articles
             </div>
-            <div className="mx-4 flex-1 pt-4 pb-4">
+            <div className="mx-4 flex-1 pb-4 pt-4">
               <FaIcon
                 icon={courseIcon}
                 className="mx-auto mr-2 text-4xl text-brand"
@@ -136,7 +136,7 @@ export const MetadataApiPresentation = () => {
               <br />
               Courses
             </div>
-            <div className="mx-4 flex-1 pt-4 pb-4">
+            <div className="mx-4 flex-1 pb-4 pt-4">
               <FaIcon
                 icon={exerciseIcon}
                 className="mx-auto mr-2 text-4xl text-brand"
@@ -148,7 +148,7 @@ export const MetadataApiPresentation = () => {
           </div>
         </section>
         <CallToAction alignment="center" />
-        <section className="mt-8 mb-32">
+        <section className="mb-32 mt-8">
           <p className="flex-1 text-center text-xl leading-cozy">
             <b className="tracking-tight">
               Are you interested in using our Metadata API?
@@ -160,7 +160,7 @@ export const MetadataApiPresentation = () => {
               Wiki
             </Link>
           </p>
-          <div className="mt-8 mb-14 text-center">
+          <div className="mb-14 mt-8 text-center">
             <EditorContact contact={teamDataKulla} />
           </div>
         </section>

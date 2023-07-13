@@ -1,9 +1,9 @@
 import { faTools } from '@fortawesome/free-solid-svg-icons'
 import { List, Item, Trigger, Content } from '@radix-ui/react-navigation-menu'
 
-import { UserToolsItem } from '../user-tools-item'
 import { AuthorTools, Tool } from './author-tools'
 import type { MoreAuthorToolsProps } from './more-author-tools'
+import { UserToolsItem } from '../user-tools-item'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 
@@ -46,7 +46,7 @@ export function MoreAuthorToolsCourse({
         </Trigger>
 
         <Content>
-          <List className="absolute right-0 z-50 w-56 pt-2 lg:right-48 lg:bottom-0">
+          <List className="absolute right-0 z-50 w-56 pt-2 lg:bottom-0 lg:right-48">
             <div className="serlo-sub-list-hover">
               <AuthorTools
                 entityId={wholeCourse ? data.courseId || data.id : data.id}

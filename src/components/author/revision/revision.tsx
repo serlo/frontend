@@ -51,13 +51,13 @@ export function Revision({ data }: RevisionProps) {
       {displayMode === DisplayModes.SideBySide && (
         <div className="mt-12 flex">
           <div className="flex-1 bg-brand-50 px-side pb-6">
-            <h2 className="serlo-h2 mt-12 mb-4">
+            <h2 className="serlo-h2 mb-4 mt-12">
               {strings.revisions.currentVersion}
             </h2>
             {renderPreviewBoxes(data.currentRevision)}
           </div>
           <div className="ml-4 mr-side flex-1">
-            <h2 className="serlo-h2 mt-12 mb-4">
+            <h2 className="serlo-h2 mb-4 mt-12">
               {strings.revisions.thisVersion}
             </h2>
             {renderPreviewBoxes(data.thisRevision)}

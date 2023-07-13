@@ -180,7 +180,7 @@ export function EducationPlugins() {
     <div className="text-center">
       <h2 className={clsx(h2Class, 'mb-4')}>Features</h2>
       <div className="sm:flex">
-        <div className="mb-4 text-left sm:mt-8 sm:mb-12 sm:w-min sm:text-right">
+        <div className="mb-4 text-left sm:mb-12 sm:mt-8 sm:w-min sm:text-right">
           {renderPluginsMenu()}
         </div>
         {renderInfoBox()}
@@ -193,7 +193,7 @@ export function EducationPlugins() {
       pluginData.find(({ title }) => title === selectedTitle) ?? pluginData[0]
 
     return (
-      <div className="m-3 mt-1 mb-[3.2rem] flex-1 text-left">
+      <div className="m-3 mb-[3.2rem] mt-1 flex-1 text-left">
         <div className="w-full overflow-y-scroll p-8 shadow-menu md:h-[37rem]">
           <EntityIdProvider value={1555}>
             <p className="mb-6 text-xl">{description}</p>

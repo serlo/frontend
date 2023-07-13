@@ -39,7 +39,7 @@ function About() {
         </div>
       </div>
       <div className="shrink text-lg">
-        <div className="bg-brand-500 px-side pt-8 pb-4 text-white md:px-side-lg">
+        <div className="bg-brand-500 px-side pb-4 pt-8 text-white md:px-side-lg">
           <div className="my-1 font-bold">{strings.footer.summaryHeading}</div>
           <div className="mt-4 leading-browser">
             {strings.footer.summaryText}

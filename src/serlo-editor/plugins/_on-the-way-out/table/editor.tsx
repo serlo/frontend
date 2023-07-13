@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 import { TableProps } from '.'
-import { EditorTextarea } from '../../../editor-ui'
 import { TableRenderer } from './renderer'
+import { EditorTextarea } from '../../../editor-ui'
 
 const Form = styled.form({
   marginTop: '10px',

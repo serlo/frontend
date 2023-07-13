@@ -18,12 +18,12 @@ import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import { revisionHistoryQuery } from '@/pages/entity/repository/history/[id]'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   editorResponseToState,
   isError,
 } from '@/serlo-editor-integration/editor-response-to-state'
 import { revisionResponseToResponse } from '@/serlo-editor-integration/revision-response-to-response'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function RevisionHistoryLoader<T>({
   id,

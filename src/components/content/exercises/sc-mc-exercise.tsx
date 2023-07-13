@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { EdtrPluginScMcExercise } from '@/frontend-node-types'
+import { EditorPluginScMcExercise } from '@/frontend-node-types'
 import {
   ExerciseSubmissionData,
   exerciseSubmission,
@@ -14,7 +14,7 @@ import {
 } from '@/serlo-editor/plugins/sc-mc-exercise/renderer/renderer'
 
 export interface ScMcExerciseProps {
-  state: EdtrPluginScMcExercise['state']
+  state: EditorPluginScMcExercise['state']
   idBase: string
   renderNested: RenderNestedFunction
   isRevisionView?: boolean

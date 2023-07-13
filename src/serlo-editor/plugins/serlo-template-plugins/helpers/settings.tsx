@@ -24,7 +24,7 @@ Settings.Textarea = function SettingsTextarea({
           state.set(value)
         }}
         className={tw`
-          mt-1 mb-7 flex w-full items-center rounded-2xl border-2
+          mb-7 mt-1 flex w-full items-center rounded-2xl border-2
           border-editor-primary-100 bg-editor-primary-100 p-2
           focus-within:border-editor-primary focus-within:outline-none
         `}

@@ -71,7 +71,7 @@ export function EditorRoadmap() {
             {colIndex === 0 ? (
               <img
                 src="/_assets/img/jobs/impact.svg"
-                className="my-5 mx-3 hidden opacity-75 sm:block"
+                className="mx-3 my-5 hidden opacity-75 sm:block"
                 alt=""
               />
             ) : null}

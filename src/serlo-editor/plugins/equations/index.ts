@@ -8,18 +8,25 @@ import {
   EditorPluginProps,
   string,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const stepProps = object({
   left: string(''),
   sign: string(Sign.Equals),
   right: string(''),
   transform: string(''),
-  explanation: child({ plugin: 'text', config: { registry: [] } }),
+  explanation: child({
+    plugin: EditorPluginType.Text,
+    config: { registry: [] },
+  }),
 })
 
 const equationsState = object({
   steps: list(stepProps, 2),
-  firstExplanation: child({ plugin: 'text', config: { registry: [] } }),
+  firstExplanation: child({
+    plugin: EditorPluginType.Text,
+    config: { registry: [] },
+  }),
   transformationTarget: string('equation'),
 })
 

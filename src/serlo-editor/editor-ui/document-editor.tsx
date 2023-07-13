@@ -183,6 +183,7 @@ const Container = styled.div<Partial<ToolbarProps>>(
   ({ isFocused, isHovered }) => ({
     minHeight: '10px',
     marginBottom: '25px',
+    marginLeft: '-7px',
     position: 'relative',
     borderLeft: '2px solid transparent',
     paddingLeft: '5px',

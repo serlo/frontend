@@ -149,7 +149,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
   function renderResetButton() {
     return (
       <div
-        className="absolute top-0 right-0 bottom-0 flex w-12 cursor-pointer items-center justify-center text-gray-300"
+        className="absolute bottom-0 right-0 top-0 flex w-12 cursor-pointer items-center justify-center text-gray-300"
         onClick={() => {
           setQuery('')
           setTimeout(() => {
@@ -167,7 +167,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         ref={overlayWrapper}
         className={clsx(
           tw`
-            absolute left-side right-side z-20 mt-2 ml-2
+            absolute left-side right-side z-20 ml-2 mt-2
             max-w-2xl rounded-xl border bg-white px-5 pb-2 shadow
           `,
           open ? '' : 'hidden'

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
+import { ScMcExerciseRenderer } from './renderer/renderer'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
   store,
@@ -8,7 +9,6 @@ import {
   selectIsDocumentEmpty,
   useAppSelector,
 } from '../../store'
-import { ScMcExerciseRenderer } from './renderer/renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 

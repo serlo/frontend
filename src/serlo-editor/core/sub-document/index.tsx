@@ -1,10 +1,10 @@
 import { Component, useCallback, useContext } from 'react'
 
+import { SubDocumentEditor } from './editor'
+import { SubDocumentRenderer } from './renderer'
 import { undo, useAppDispatch } from '../../store'
 import { PluginProps } from '../../types/internal__plugin-state'
 import { EditableContext } from '../contexts'
-import { SubDocumentEditor } from './editor'
-import { SubDocumentRenderer } from './renderer'
 
 /**
  * Renders a document inside another document

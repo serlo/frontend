@@ -16,7 +16,7 @@ export function MobileMenuButton(props: MobileMenuButtonProps) {
       tabIndex={0}
       aria-label="Menu"
       className={tw`
-        serlo-button absolute top-0 right-4 mt-5 block h-12 w-12
+        serlo-button absolute right-4 top-0 mt-5 block h-12 w-12
         rounded-full bg-brand-200 text-brand outline-none
          mobileExt:static md:hidden
       `}

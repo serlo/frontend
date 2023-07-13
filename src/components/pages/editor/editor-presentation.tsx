@@ -26,7 +26,7 @@ export function EditorPresentation() {
             'Serlo Editor: Seamless Creation of Digital Learning Resources',
         }}
       />
-      <header className="px-side pt-6 pb-8 lg:px-side-lg">
+      <header className="px-side pb-8 pt-6 lg:px-side-lg">
         <Logo />
         {renderSupporterLogos()}
       </header>
@@ -54,7 +54,7 @@ export function EditorPresentation() {
           </h1>
         </section>
 
-        <section className="mx-auto mt-16 mb-16 max-w-5xl px-4 text-left">
+        <section className="mx-auto mb-16 mt-16 max-w-5xl px-4 text-left">
           <div className="sm:flex sm:justify-between">
             <div className="pr-2 text-xl leading-cozy sm:flex sm:max-w-[31rem] sm:flex-1 sm:flex-col">
               <h2 className={clsx(h3Class, 'tracking-tight')}>
@@ -87,7 +87,7 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className="mt-12 mb-20 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
+        <section className="mb-20 mt-12 bg-orangeBow bg-100% px-4 !pt-20 pb-20">
           <div className="mx-auto max-w-7xl">
             <EditorFeatures />
           </div>
@@ -99,7 +99,7 @@ export function EditorPresentation() {
           </div>
         </section>
 
-        <section className="mt-0 mb-20 bg-orangeBow bg-100% px-2 !pt-16">
+        <section className="mb-20 mt-0 bg-orangeBow bg-100% px-2 !pt-16">
           <div className="mx-auto mt-2 max-w-4xl px-4 pb-16 text-center text-xl sm:flex">
             <div className="mt-5 flex-1">
               <b className="font-handwritten text-4xl text-brand">20,000+</b>
@@ -289,7 +289,7 @@ export function EditorPresentation() {
           alt={`Logo von ${name}`}
         />
         <img
-          className="sm:ml-auto sm:-mt-8"
+          className="sm:-mt-8 sm:ml-auto"
           style={{
             paddingTop: `3px`,
             paddingBottom: `3px`,

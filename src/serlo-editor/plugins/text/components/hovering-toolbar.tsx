@@ -2,8 +2,8 @@ import clsx from 'clsx'
 import React, { useRef, useEffect } from 'react'
 import { Editor as SlateEditor, Range, Node } from 'slate'
 
-import type { TextEditorPluginConfig, ControlButton } from '../types'
 import { HoveringToolbarControls } from './hovering-toolbar-controls'
+import type { TextEditorPluginConfig, ControlButton } from '../types'
 
 export interface HoveringToolbarProps {
   editor: SlateEditor
