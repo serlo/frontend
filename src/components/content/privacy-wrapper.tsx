@@ -43,6 +43,7 @@ export function PrivacyWrapper({
 
   const confirmLoad = () => {
     giveConsent(provider)
+    setConsentGiven(true)
     if (onLoad) onLoad()
     if (showIframe) return
     if (isTwingle && twingleCallback) twingleCallback()
@@ -97,10 +98,10 @@ export function PrivacyWrapper({
 
     return (
       <div className="text-center">
-        <div className="relative bg-brand-100 pb-[56.2%]">
+        <div className="relative rounded-xl bg-brand-100 pb-[56.2%]">
           <img
             className={clsx(
-              'absolute left-0 h-full w-full object-cover',
+              'absolute left-0 h-full w-full rounded-xl object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
             src={previewImageUrl}
@@ -108,7 +109,7 @@ export function PrivacyWrapper({
           />
         </div>
         {!consentGiven && (
-          <div className="relative z-10 cursor-default bg-brand-100 py-2 px-side text-left text-brand-700">
+          <div className="relative z-10 cursor-default bg-brand-100 px-side py-2 text-left text-brand-700">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (
@@ -120,7 +121,10 @@ export function PrivacyWrapper({
           </div>
         )}
         <div
-          className="absolute inset-0 -top-28 flex items-center justify-around mobile:-top-12 sm:-top-24"
+          className={clsx(
+            'absolute inset-0 flex items-center justify-around',
+            consentGiven ? '' : '-top-28 mobile:-top-12 sm:-top-24'
+          )}
           onClick={confirmLoad}
         >
           <button

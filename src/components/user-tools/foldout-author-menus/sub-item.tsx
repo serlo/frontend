@@ -10,8 +10,8 @@ export interface SubItemProps {
 }
 
 const itemClasses = tw`
-  serlo-button-blue-transparent rounded-[12px] py-1 text-left text-base
-  font-normal leading-tight special-hyphens-auto group-hover:bg-brand group-hover:text-white
+  serlo-button-blue-transparent hyphens-auto rounded-[12px] py-1 text-left
+  text-base font-normal leading-tight group-hover:bg-brand group-hover:text-white
 `
 
 export function SubItem({ title, href, onClick }: SubItemProps) {

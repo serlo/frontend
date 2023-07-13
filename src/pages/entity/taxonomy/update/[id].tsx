@@ -79,7 +79,7 @@ function Content({ id, terms }: UpdateTaxonomyLinksProps) {
       <PageTitle title={loggedInData.strings.authorMenu.editAssignments} />
       <div className="mx-side border-t-2">
         {terms.map(renderTerm)}
-        <h2 className="mt-12 mb-3 font-bold">{loggedInStrings.addNewTitle}</h2>
+        <h2 className="mb-3 mt-12 font-bold">{loggedInStrings.addNewTitle}</h2>
         {renderInput()}
       </div>
     </>

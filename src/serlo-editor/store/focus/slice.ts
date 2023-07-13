@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { isPureInsertDocumentAction } from '../documents'
-import { State } from '../types'
 import { findNextNode, findPreviousNode } from './helpers'
 import { FocusTreeNode } from './types'
+import { isPureInsertDocumentAction } from '../documents'
+import { State } from '../types'
 
 const initialState: State['focus'] = null as State['focus']
 

@@ -87,7 +87,7 @@ export function ProfileExperimental() {
           </p>
         </div>
       )}
-      <hr className="mx-side mb-4 -mt-2" />
+      <hr className="mx-side -mt-2 mb-4" />
       {features.legacyDesign && (
         <div>
           <h3 className="serlo-h3 mb-3">

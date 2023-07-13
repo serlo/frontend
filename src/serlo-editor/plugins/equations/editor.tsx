@@ -36,6 +36,7 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 enum StepSegment {
   Left = 0,
@@ -294,7 +295,7 @@ export function EquationsEditor(props: EquationsProps) {
       sign: state.steps[index - 1].sign.value,
       right: '',
       transform: '',
-      explanation: { plugin: 'text' },
+      explanation: { plugin: EditorPluginType.Text },
     })
   }
 
@@ -373,7 +374,7 @@ function StepEditor(props: StepEditorProps) {
           />
         </td>
       )}
-      <td className="py-0 px-[3px] text-center align-baseline">
+      <td className="px-[3px] py-0 text-center align-baseline">
         {(transformationTarget === 'equation' || row !== 0) && (
           <select
             className="ml-4 mr-2.5 h-8 w-9 rounded-md border-[1px] border-gray-200 bg-gray-200"

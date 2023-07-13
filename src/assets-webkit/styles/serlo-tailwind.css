@@ -13,7 +13,7 @@
     @apply break-words text-brand-700 no-underline hover:underline;
   }
   .serlo-button {
-    @apply inline-block rounded-4xl py-1 px-2 transition-all;
+    @apply inline-block rounded-4xl px-2 py-1 transition-all;
     @apply cursor-pointer border-none font-bold no-underline;
     @apply font-serlo text-lg leading-browser tracking-slightestly-tighter;
     @apply duration-200 ease-in-out hover:no-underline;
@@ -41,33 +41,33 @@
     @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
   }
   .serlo-p {
-    @apply mx-side mt-0 mb-block text-lg leading-cozy special-hyphens-auto;
+    @apply mx-side mb-block mt-0 hyphens-auto text-lg leading-cozy;
   }
   .serlo-h1 {
     @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
   }
   .serlo-h2 {
-    @apply mx-side mt-0 mb-6 pb-1 pt-6;
-    @apply text-2.5xl font-bold special-hyphens-auto;
+    @apply mx-side mb-6 mt-0 pb-1 pt-6;
+    @apply hyphens-auto text-2.5xl font-bold;
     @apply border-b border-gray-300 text-gray-900;
   }
   .serlo-h3 {
-    @apply mx-side mt-0 mb-8 pt-3 text-1.5xl font-bold text-gray-900;
+    @apply mx-side mb-8 mt-0 pt-3 text-1.5xl font-bold text-gray-900;
   }
   .serlo-h4 {
-    @apply mx-side mt-0 mb-5 text-base-plus;
+    @apply mx-side mb-5 mt-0 text-base-plus;
   }
   .serlo-h5 {
-    @apply mx-side mt-0 mb-5;
+    @apply mx-side mb-5 mt-0;
   }
   .serlo-table {
-    @apply mx-side border-separate border-spacing-0 whitespace-nowrap break-normal border-brand-200 special-hyphens-auto mobile:whitespace-normal;
+    @apply mx-side border-separate border-spacing-0 hyphens-auto whitespace-nowrap break-normal border-brand-200 mobile:whitespace-normal;
   }
   .serlo-th {
-    @apply border-r-3 border-b-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
+    @apply border-b-3 border-r-3 border-brand-200 bg-brand-100 p-1.5 pl-3 text-left;
   }
   .serlo-td {
-    @apply border-r-3 border-b-3 border-brand-200 p-1.5 align-top;
+    @apply border-b-3 border-r-3 border-brand-200 p-1.5 align-top;
     > p.serlo-p {
       @apply mx-0;
     }
@@ -76,7 +76,7 @@
     @apply mx-side mb-block mt-4 list-none pl-5;
 
     & > li:before {
-      @apply absolute bg-brand-400 special-content-space;
+      @apply absolute bg-brand-400 content-['_'];
       @apply -ml-5 mt-2.25 h-2.5 w-2.5 rounded-full;
     }
     & > li {
@@ -84,15 +84,14 @@
     }
     & > li > ul,
     & > li > ol {
-      @apply mt-2 !mb-4;
+      @apply !mb-4 mt-2;
     }
   }
   .serlo-ol {
-    @apply mx-side mb-block mt-0 list-none pl-6;
-    @apply special-reset-list-counter;
+    @apply mx-side mb-block mt-0 list-none pl-6 [counter-reset:list-counter];
 
     & > li:before {
-      @apply absolute special-content-list-counter special-increment-list-counter;
+      @apply absolute content-['counter(list-counter)'] [counter-increment:list-counter];
       @apply -ml-6 rounded-full text-center font-bold;
       @apply mt-0.5 h-[17px] w-[17px] bg-brand-150 text-xs;
       @apply pt-0.25 leading-tight text-brand-700;
@@ -102,11 +101,11 @@
     }
     & > li > ul,
     & > li > ol {
-      @apply mt-2 !mb-4;
+      @apply !mb-4 mt-2;
     }
   }
   .serlo-sub-list {
-    @apply m-0 bg-white py-3 pr-4 pl-2.5;
+    @apply m-0 bg-white py-3 pl-2.5 pr-4;
     @apply block w-auto list-none overflow-auto text-left;
     @apply rounded-lg shadow-menu;
   }
@@ -114,7 +113,7 @@
     @apply serlo-sub-list min-w-180 bg-brand-50;
   }
   .serlo-img {
-    @apply inline h-auto max-w-full;
+    @apply inline h-auto max-w-full rounded-md;
   }
   .serlo-math-wrapper {
     @apply px-4 py-0.5 text-left;
@@ -126,7 +125,7 @@
     @apply mx-side;
   }
   .serlo-spoiler-body {
-    @apply pt-6 pb-3.5;
+    @apply pb-3.5 pt-6;
   }
   .serlo-solution-box {
     @apply mx-side mb-block border-l-8 border-brand-200 py-2.5;
@@ -142,7 +141,7 @@
     @apply mb-block px-4 text-center;
   }
   .serlo-exercise-wrapper {
-    @apply mt-10 mb-2.5;
+    @apply mb-2.5 mt-10;
 
     @media (hoverhover) {
       /* -> use tailwind stuff instead */
@@ -165,7 +164,7 @@
     content: counter(exercises, lower-alpha);
     @apply flex justify-center align-middle;
     @apply mx-side mb-2.5 h-7 w-7 rounded-full;
-    @apply sm:absolute sm:-mt-1 sm:-ml-10;
+    @apply sm:absolute sm:-ml-10 sm:-mt-1;
     @apply bg-brand-200 text-xl font-bold text-brand;
   }
   .serlo-responsive-margin {
@@ -232,7 +231,7 @@
     @apply hover:bg-brand-500 hover:no-underline;
   }
   .serlo-blockquote {
-    @apply my-block mx-side border-l-6 border-brand-200 p-2.5;
+    @apply mx-side my-block border-l-6 border-brand-200 p-2.5;
   }
   .serlo-revision-extra-info {
     .serlo-p:last-child {
@@ -269,7 +268,7 @@
     @apply text-lg leading-cozy;
 
     .serlo-h1 {
-      @apply special-hyphens-auto;
+      @apply hyphens-auto;
     }
 
     div[contenteditable] .serlo-h3 {
@@ -277,22 +276,11 @@
     }
 
     a[data-key] {
-      @apply special-hyphens-auto;
-    }
-
-    .page-header h1 input {
-      @apply w-full;
-      @apply mb-9 mt-6 p-0 text-3.5xl font-bold special-hyphens-auto;
+      @apply hyphens-auto;
     }
 
     button > div > svg {
-      @apply ml-1.5 mr-1.5 mb-1 mt-2;
-    }
-
-    .page-header {
-      padding-bottom: 9px;
-      margin: 40px 0 20px;
-      border-bottom: 1px solid #eee;
+      @apply mb-1 ml-1.5 mr-1.5 mt-2;
     }
 
     select {
@@ -359,7 +347,7 @@
   }
 
   .serlo-subject-icon {
-    @apply mx-auto mt-4 mb-0 block h-32 w-32 min-w-[10rem];
+    @apply mx-auto mb-0 mt-4 block h-32 w-32 min-w-[10rem];
     box-shadow: 0 0 1px rgba(0, 0, 0, 0);
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     animation-play-state: paused;
@@ -387,7 +375,7 @@
   .serlo-button-with-wings {
     &:after,
     &:before {
-      @apply pointer-events-none absolute mt-[-0.6rem] -ml-20 h-16 w-16 content-['_'];
+      @apply pointer-events-none absolute -ml-20 mt-[-0.6rem] h-16 w-16 content-['_'];
       @apply opacity-0 transition-opacity duration-200 ease-in;
       @apply bg-[url('/_assets/img/landing/wing-left.svg')] bg-no-repeat;
     }
@@ -416,7 +404,7 @@
 
     &:before,
     &:after {
-      @apply mt-[-1rem] -ml-2 h-10 w-10 bg-[length:75%] opacity-100;
+      @apply -ml-2 mt-[-1rem] h-10 w-10 bg-[length:75%] opacity-100;
     }
 
     &:before {
@@ -508,7 +496,7 @@
 }
 
 #nprogress .bar {
-  @apply fixed top-0 left-0 z-50 bg-brand;
+  @apply fixed left-0 top-0 z-50 bg-brand;
   @apply h-1 w-full;
   @apply z-[9999];
 }
@@ -522,13 +510,13 @@
 
 /* Remove these to get rid of the spinner */
 #nprogress .spinner {
-  @apply fixed top-4 right-4 z-50 block;
+  @apply fixed right-4 top-4 z-50 block;
   @apply z-[9999];
 }
 
 #nprogress .spinner-icon {
   @apply h-6 w-6 rounded-full border-3 border-brand;
-  @apply animate-spin-fast special-border-half-transparent;
+  @apply animate-spin-fast border-l-transparent border-t-transparent;
 }
 
 .nprogress-custom-parent {
@@ -536,7 +524,7 @@
 }
 table.gstl_50.gssb_c {
   @apply serlo-input-font-reset z-50;
-  @apply left-1 !right-1 mt-0.5 !w-auto;
+  @apply !right-1 left-1 mt-0.5 !w-auto;
   @apply w-auto sm:ml-2.5 sm:mt-0.5;
 
   .gssb_a td {

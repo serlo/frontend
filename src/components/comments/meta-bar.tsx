@@ -3,9 +3,9 @@ import Tippy from '@tippyjs/react'
 import { useState } from 'react'
 import { Instance, Props } from 'tippy.js'
 
+import { DropdownMenu } from './dropdown-menu'
 import { FaIcon } from '../fa-icon'
 import { UserLink } from '../user/user-link'
-import { DropdownMenu } from './dropdown-menu'
 import { TimeAgo } from '@/components/time-ago'
 import { tw } from '@/helper/tw'
 

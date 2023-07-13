@@ -7,9 +7,9 @@ import {
   useSelected,
 } from 'slate-react'
 
+import { MathFormula } from './math-formula'
 import type { MathElement as MathElementType, Paragraph } from '../types'
 import { isElementWithinList } from '../utils/list'
-import { MathFormula } from './math-formula'
 import { PreferenceContext } from '@/serlo-editor/core'
 import { MathEditor } from '@/serlo-editor/math'
 

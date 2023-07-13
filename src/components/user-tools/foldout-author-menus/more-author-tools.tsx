@@ -1,8 +1,8 @@
 import { faTools, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { List, Item, Trigger, Content } from '@radix-ui/react-navigation-menu'
 
-import { UserToolsItem } from '../user-tools-item'
 import { AuthorTools, AuthorToolsData, Tool } from './author-tools'
+import { UserToolsItem } from '../user-tools-item'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { ExerciseInlineType, UuidType } from '@/data-types'

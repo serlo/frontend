@@ -2,8 +2,8 @@ import * as R from 'ramda'
 import { useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
-import type { NestedControlButton, ControlButton } from '../types'
 import { HoveringToolbarButton } from './hovering-toolbar-button'
+import type { NestedControlButton, ControlButton } from '../types'
 
 export interface HoveringToolbarControlsProps {
   controls: ControlButton[]

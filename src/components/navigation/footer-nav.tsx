@@ -19,7 +19,7 @@ interface FooterNavProps {
 
 export function FooterNav({ data }: FooterNavProps) {
   return (
-    <div className="bg-brand-100 pt-2 pb-10">
+    <div className="bg-brand-100 pb-10 pt-2">
       <nav>
         <div className="flex flex-wrap">
           {data.map((category, index) => (
@@ -27,7 +27,7 @@ export function FooterNav({ data }: FooterNavProps) {
               key={index}
               className="mt-4 w-full px-side pt-0.25 sm:w-1/2 md:w-1/3"
             >
-              <h3 className="mt-4 mb-2 font-bold text-almost-black">
+              <h3 className="mb-2 mt-4 font-bold text-almost-black">
                 {category.title}
               </h3>
               <ul className="list-none">
@@ -35,7 +35,7 @@ export function FooterNav({ data }: FooterNavProps) {
                   <li
                     key={index + childindex}
                     className={tw`
-                      inline-block after:mr-1.5 after:ml-1
+                      inline-block after:ml-1 after:mr-1.5
                       after:text-gray-600 after:content-['•'] last-of-type:after:content-none
                       sm:block sm:after:content-none
                     `}

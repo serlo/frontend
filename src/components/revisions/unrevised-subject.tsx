@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { getSubjectSlug } from '../pages/unrevised-revisions'
 import { UnrevisedEntity } from './unrevised-entity'
+import { getSubjectSlug } from '../pages/unrevised-revisions'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UnrevisedRevisionsData } from '@/data-types'
 

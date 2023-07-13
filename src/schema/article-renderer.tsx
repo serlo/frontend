@@ -3,15 +3,14 @@ import CSS from 'csstype'
 import dynamic from 'next/dynamic'
 import { ReactNode, Fragment, createElement } from 'react'
 
+import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license/license-notice'
 import { Link } from '../components/content/link'
-import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { Article } from '@/components/content/article'
 import { Box } from '@/components/content/box'
-import { Equations } from '@/components/content/equations'
+import { EquationProps, Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
-import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
 import { Image } from '@/components/content/image'
 import { Lazy } from '@/components/content/lazy'
@@ -121,7 +120,7 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
   const currentNode = getNode(value, currentPath)
   const key = currentPath[currentPath.length - 1]
 
-  if (currentNode.type !== 'text') {
+  if (currentNode.type !== FrontendNodeType.Text) {
     const children: ReactNode[] = []
     if (currentNode.children) {
       currentNode.children.forEach((_child, index) => {
@@ -286,7 +285,7 @@ function renderElement({
       children
     )
   }
-  if (element.type === FrontendNodeType.Img) {
+  if (element.type === FrontendNodeType.Image) {
     return (
       <Image
         element={element}
@@ -368,14 +367,14 @@ function renderElement({
   if (element.type === FrontendNodeType.Geogebra) {
     return (
       <Lazy noPrint>
-        <Geogebra id={element.id} />
+        <Geogebra id={element.state} />
       </Lazy>
     )
   }
   if (element.type === FrontendNodeType.Anchor) {
     return (
       <>
-        <a id={element.id} />
+        <a id={element.state} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
       </>
     )
@@ -383,9 +382,9 @@ function renderElement({
   if (element.type === FrontendNodeType.Injection) {
     return (
       <>
-        {element.href ? (
+        {element.state ? (
           <InjectionRenderer
-            href={element.href}
+            href={element.state}
             renderNested={(value, ...prefix) =>
               renderNested(value, path, prefix)
             }
@@ -416,32 +415,28 @@ function renderElement({
       </ExerciseGroup>
     )
   }
-  if (element.type === FrontendNodeType.Solution) {
-    return <Solution node={element.solution} renderNested={nestedRenderer} />
-  }
+  if (element.type === FrontendNodeType.Solution) return null //only valid as child of Exercise
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
-        <Video src={element.src} license={element.license} />
+        <Video src={element.state.src} license={element.license} />
       </Lazy>
     )
   }
   if (element.type === FrontendNodeType.Equations) {
     return (
       <Equations
-        steps={element.steps}
-        firstExplanation={element.firstExplanation}
-        transformationTarget={element.transformationTarget}
+        {...(element as Omit<EquationProps, 'renderNested'>)}
         renderNested={nestedRenderer}
       />
     )
   }
   if (element.type === FrontendNodeType.Code) {
     return (
-      <div className="mx-side">
-        <HighlightRenderer {...element} />
+      <>
+        <HighlightRenderer {...element.state} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
-      </div>
+      </>
     )
   }
   if (element.type === FrontendNodeType.PageLayout) {

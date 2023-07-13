@@ -2,8 +2,8 @@ import { ListsEditor, ListType } from '@prezly/slate-lists'
 import { Element, Editor as SlateEditor } from 'slate'
 import { ReactEditor } from 'slate-react'
 
-import { ListElementType } from '../types'
 import { existsInAncestors } from './document'
+import { ListElementType } from '../types'
 
 export function isElementWithinList(element: Element, editor: SlateEditor) {
   return existsInAncestors(

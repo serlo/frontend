@@ -1,4 +1,4 @@
-import { FrontendContentNode } from '@/frontend-node-types'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 
 export function hasVisibleContent(content: FrontendContentNode[]): boolean {
   const text = extractText(content)
@@ -8,7 +8,11 @@ export function hasVisibleContent(content: FrontendContentNode[]): boolean {
 export function extractText(content: FrontendContentNode[]): string {
   return content
     .map((node) => {
-      if (node.type === 'math' || node.type === 'inline-math')
+      if (node.type === FrontendNodeType.Image && node.src) return '[img]'
+      if (
+        node.type === FrontendNodeType.Math ||
+        node.type === FrontendNodeType.InlineMath
+      )
         return node.formula
       if (Object.hasOwn(node, 'text')) {
         return node.text

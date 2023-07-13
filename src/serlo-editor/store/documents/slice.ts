@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { State } from '../types'
 import type {
   PureChangeDocumentAction,
   PureInsertDocumentAction,
   PureRemoveDocumentAction,
   PureReplaceDocumentAction,
 } from './types'
+import { State } from '../types'
 
 const initialState: State['documents'] = {}
 

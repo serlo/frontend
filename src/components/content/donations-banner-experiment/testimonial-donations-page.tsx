@@ -6,7 +6,7 @@ const banner = {
   isLong: false,
   text: (
     <div className="text-center sm:text-left">
-      <p className="my-5 mx-side font-handwritten text-[1em] leading-[2.2rem] text-almost-black">
+      <p className="mx-side my-5 font-handwritten text-[1em] leading-[2.2rem] text-almost-black">
         „ Ich nutze Serlo gern in meinem Unterricht, weil es mir bei der
         Differenzierung hilft. Ich weiß, dass ich mich auf die Qualität der
         Inhalte verlassen kann.
@@ -30,7 +30,7 @@ export function TestimonialDonationsPage() {
           relative z-10 my-16 mt-20 mt-24 
           overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
           bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
-          pb-12 pt-6 pb-14 text-center text-2xl
+          pb-12 pb-14 pt-6 text-center text-2xl
           sm:flex sm:justify-between sm:px-0 sm:text-left
         `}
       >
@@ -44,7 +44,7 @@ export function TestimonialDonationsPage() {
           </p>
           {renderRoles(banner.roles)}
         </figure>
-        <div className="mx-auto max-w-2xl px-side sm:mt-8 sm:ml-0 lg:mt-12">
+        <div className="mx-auto max-w-2xl px-side sm:ml-0 sm:mt-8 lg:mt-12">
           {banner.text}
         </div>
       </aside>

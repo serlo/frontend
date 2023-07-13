@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
-import { EditorTooltip } from '../../editor-ui/editor-tooltip'
 import { StyledIconContainer } from './icon-container'
+import { EditorTooltip } from '../../editor-ui/editor-tooltip'
 
 export interface PluginToolbarOverlayButtonProps {
   className?: string
