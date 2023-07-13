@@ -1,15 +1,16 @@
 import { useState } from 'react'
 
-import { ArticleProps } from '..'
 import { ArticleRelatedExercises } from './article-related-exercises'
 import { ArticleRelatedMagicInput } from './article-related-magic-input'
 import { ArticleRelatedTaxonomy } from './article-related-taxonomy'
+import { ArticleProps } from '..'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType, UuidWithRevType } from '@/data-types'
 import { getCategoryByTypename } from '@/helper/get-category-by-typename'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface ArticleAddModalProps {
   open: boolean
@@ -74,7 +75,7 @@ export function ArticleAddModal({
     if (typename.includes(UuidType.Exercise)) {
       //maybe also check for duplicates
       exercises.insert(exercises.length, {
-        plugin: 'injection',
+        plugin: EditorPluginType.Injection,
         state: id.toString(),
       })
     }
@@ -85,7 +86,7 @@ export function ArticleAddModal({
       isOpen={open}
       onCloseClick={() => setModalOpen(false)}
     >
-      <h3 className="serlo-h3 mt-5 mb-4">{articleStrings.addModal.title}</h3>
+      <h3 className="serlo-h3 mb-4 mt-5">{articleStrings.addModal.title}</h3>
       <div className="mx-side">
         <p>
           {replacePlaceholders(articleStrings.addModal.introText, {

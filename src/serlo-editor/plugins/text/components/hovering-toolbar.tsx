@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Editor as SlateEditor, Range, Node } from 'slate'
 
-import type { TextEditorPluginConfig, ControlButton } from '../types'
-import { isTouchDevice } from '../utils/is-touch-device'
 import { HoveringToolbarControls } from './hovering-toolbar-controls'
 import { InlineOverlay, InlineOverlayPosition } from './inline-overlay'
 import { TimeoutBottomToolbarWrapper } from './timeout-bottom-toolbar-wrapper'
+import type { TextEditorPluginConfig, ControlButton } from '../types'
+import { isTouchDevice } from '../utils/is-touch-device'
 
 export interface HoveringToolbarProps {
   editor: SlateEditor

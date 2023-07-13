@@ -14,27 +14,28 @@ import {
   removePluginChild,
   useAppDispatch,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const StateDecoder = t.strict({
-  plugin: t.literal('rows'),
+  plugin: t.literal(EditorPluginType.Rows),
   state: t.array(
     t.strict({
       plugin: t.union([
-        t.literal('article'),
-        t.literal('articleIntroduction'),
-        t.literal('geogebra'),
-        t.literal('anchor'),
-        t.literal('video'),
-        t.literal('serloTable'),
-        t.literal('highlight'),
-        t.literal('injection'),
-        t.literal('layout'),
-        t.literal('multimedia'),
-        t.literal('spoiler'),
-        t.literal('box'),
-        t.literal('image'),
-        t.literal('text'),
-        t.literal('equations'),
+        t.literal(EditorPluginType.Article),
+        t.literal(EditorPluginType.ArticleIntroduction),
+        t.literal(EditorPluginType.Geogebra),
+        t.literal(EditorPluginType.Anchor),
+        t.literal(EditorPluginType.Video),
+        t.literal(EditorPluginType.SerloTable),
+        t.literal(EditorPluginType.Highlight),
+        t.literal(EditorPluginType.Injection),
+        t.literal(EditorPluginType.Layout),
+        t.literal(EditorPluginType.Multimedia),
+        t.literal(EditorPluginType.Spoiler),
+        t.literal(EditorPluginType.Box),
+        t.literal(EditorPluginType.Image),
+        t.literal(EditorPluginType.Text),
+        t.literal(EditorPluginType.Equations),
       ]),
       state: t.unknown,
     })
@@ -73,7 +74,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       if (
         parentPlugin === null ||
         selectSerializedDocument(store.getState(), parentPlugin.id)?.plugin !==
-          'rows'
+          EditorPluginType.Rows
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'
         showToastNotice(msg)
@@ -105,7 +106,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   function renderDataImport() {
     return (
       <div className="bg-editor-primary-50 p-4">
-        <b className="serlo-h4 ml-0 mb-4 block">Experimental Import</b>
+        <b className="serlo-h4 mb-4 ml-0 block">Experimental Import</b>
         <p className="mb-4">
           <a
             href="https://gist.github.com/elbotho/f3e39b0cdaf0cfc8e59e585e2650fb04"
@@ -118,7 +119,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
         <textarea
           ref={textareaRef}
           className={tw`
-            mt-1 mb-7 flex w-full items-center rounded-2xl
+            mb-7 mt-1 flex w-full items-center rounded-2xl
             border-2 border-editor-primary-100 bg-editor-primary-100
             p-2 focus-within:border-editor-primary focus-within:outline-none
           `}

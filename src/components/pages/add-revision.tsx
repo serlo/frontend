@@ -2,11 +2,11 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
+import { loginUrl } from './auth/utils'
 import { Link } from '../content/link'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { Breadcrumbs } from '../navigation/breadcrumbs'
 import { StaticInfoPanel } from '../static-info-panel'
-import { loginUrl } from './auth/utils'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -120,7 +120,7 @@ export function AddRevision({
         )}${id ? ` (${id})` : ''}`}</title>
       </Head>
       {renderBacklink()}
-      <div className="controls-portal sticky top-0 z-[100] bg-white" />
+      <div className="controls-portal sticky top-0 z-[90] bg-white" />
       <div className="edtr-io serlo-editor-hacks mx-auto mb-24 max-w-[816px]">
         <SerloEditor
           entityNeedsReview={entityNeedsReview}

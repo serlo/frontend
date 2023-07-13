@@ -5,7 +5,6 @@ import {
   headerInputClasses,
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
-import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
@@ -22,56 +21,44 @@ export const eventTypeState = entityType(
   {}
 )
 
-export const eventTypePlugin: EditorPlugin<typeof eventTypeState> = {
+export type EventTypePluginState = typeof eventTypeState
+
+export const eventTypePlugin: EditorPlugin<EventTypePluginState> = {
   Component: EventTypeEditor,
   state: eventTypeState,
   config: {},
 }
 
-function EventTypeEditor(props: EditorPluginProps<typeof eventTypeState>) {
-  const { content, title, meta_title, meta_description } = props.state
-  const editorStrings = useEditorStrings()
+function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
+  const { content, title, id, revision, replaceOwnState } = props.state
+  const placeholder = useEditorStrings().templatePlugins.event.title
 
   return (
     <>
-      <div className="page-header">
-        {props.renderIntoToolbar(
-          <ContentLoaders
-            id={props.state.id.value}
-            currentRevision={props.state.revision.value}
-            onSwitchRevision={props.state.replaceOwnState}
-            entityType={UuidType.Event}
+      <h1 className="serlo-h1">
+        {props.editable ? (
+          <input
+            className={headerInputClasses}
+            placeholder={placeholder}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
           />
+        ) : (
+          <span itemProp="name">{title.value}</span>
         )}
-        {props.renderIntoSettings(
-          <Settings>
-            <Settings.Textarea
-              label={editorStrings.templatePlugins.event.seoTitle}
-              state={meta_title}
-            />
-            <Settings.Textarea
-              label={editorStrings.templatePlugins.event.seoDesc}
-              state={meta_description}
-            />
-          </Settings>
-        )}
-        <h1>
-          {props.editable ? (
-            <input
-              className={headerInputClasses}
-              placeholder={editorStrings.templatePlugins.event.title}
-              value={title.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                title.set(e.target.value)
-              }}
-            />
-          ) : (
-            <span itemProp="name">{title.value}</span>
-          )}
-        </h1>
-      </div>
-      <article>{content.render()}</article>
+      </h1>
+
+      {content.render()}
+
       <ToolbarMain showSubscriptionOptions {...props.state} />
+      {props.renderIntoToolbar(
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.Event}
+        />
+      )}
     </>
   )
 }

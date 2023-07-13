@@ -13,6 +13,7 @@ import {
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
   editor: SlateEditor
@@ -121,10 +122,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
   }
 
-  function insertPlugin(pluginType: string) {
+  function insertPlugin(pluginType: EditorPluginType | string) {
     // If the text plugin is selected from the suggestions list,
     // just clear the editor
-    if (pluginType === 'text') {
+    if (pluginType === EditorPluginType.Text) {
       editor.deleteBackward('line')
       // in browsers other than chrome the cursor is sometimes in front of the `/` so to make sure:
       editor.deleteForward('line')

@@ -1,9 +1,9 @@
 import { gql } from 'graphql-request'
 import { mutate } from 'swr'
 
-import { isSubscribedQuery } from '../helper/use-is-subscribed'
 import { useMutationFetch } from './helper/use-mutation-fetch'
 import { useSuccessHandler } from './helper/use-success-handler'
+import { isSubscribedQuery } from '../helper/use-is-subscribed'
 import { SubscriptionSetInput } from '@/fetcher/graphql-types/operations'
 
 export function useSubscriptionSetMutation() {

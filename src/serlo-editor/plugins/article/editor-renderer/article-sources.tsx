@@ -29,10 +29,10 @@ export function ArticleSources({ sources, editable }: ArticleSourcesProps) {
         <SerloAddButton
           text={articleStrings.addSource}
           onClick={() => sources.insert(sources.length)}
-          className="mt-0 mb-2"
+          className="mb-2 mt-0"
         />
       ) : null}
-      <ul className="serlo-ul mt-2 mb-4 text-lg">
+      <ul className="serlo-ul mb-4 mt-2 text-lg">
         {sources.map(editable ? renderEditableSource : renderSource)}
       </ul>
     </>

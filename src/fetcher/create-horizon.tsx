@@ -1,5 +1,5 @@
-import { HorizonData } from '@/data-types'
 import { horizonData } from '@/data/horizon_de'
+import { HorizonData } from '@/data-types'
 
 export function createHorizon(): HorizonData {
   const entries = Object.keys(horizonData)

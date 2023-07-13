@@ -3,12 +3,12 @@ import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 import styled from 'styled-components'
 
-import { EditorTextarea, HoverOverlayOld } from '../editor-ui'
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
 import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
+import { EditorTextarea, HoverOverlayOld } from '../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 

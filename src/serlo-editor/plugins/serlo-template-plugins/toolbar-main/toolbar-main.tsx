@@ -2,13 +2,12 @@ import { faRedo, faSave, faUndo } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState } from 'react'
 
-import { entity } from '../common/common'
 import { ClientOnlyPortal } from './client-only-portal'
+import { entity } from '../common/common'
 import { FaIcon, FaIconProps } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useLeaveConfirm } from '@/helper/use-leave-confirm'
-import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   redo,
@@ -19,6 +18,7 @@ import {
   useAppDispatch,
   useAppSelector,
 } from '@/serlo-editor/store'
+import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
 
 interface ToolbarMainProps {
   changes?: StateTypeReturnType<typeof entity['changes']>
@@ -44,7 +44,7 @@ export function ToolbarMain({
   return (
     <>
       <ClientOnlyPortal selector=".controls-portal">
-        <nav className="flex h-12 w-full justify-between pt-4 pl-5 pr-3">
+        <nav className="flex h-12 w-full justify-between pl-5 pr-3 pt-4">
           <div>
             {renderHistoryButton('Undo', faUndo, undo, !undoable)}
             {renderHistoryButton('Redo', faRedo, redo, !redoable)}

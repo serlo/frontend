@@ -2,21 +2,20 @@ import { editorContent } from './common/common'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { EditorPlugin, EditorPluginProps, object } from '@/serlo-editor/plugin'
 
-export const userTypeState = object({
-  description: editorContent(),
-})
+export const userTypeState = object({ description: editorContent() })
 
-export const userTypePlugin: EditorPlugin<typeof userTypeState> = {
+export type UserTypePluginState = typeof userTypeState
+
+export const userTypePlugin: EditorPlugin<UserTypePluginState> = {
   Component: UserTypeEditor,
   state: userTypeState,
   config: {},
 }
 
-function UserTypeEditor(props: EditorPluginProps<typeof userTypeState>) {
-  const { description } = props.state
+function UserTypeEditor({ state }: EditorPluginProps<UserTypePluginState>) {
   return (
     <>
-      {description.render()}
+      {state.description.render()}
       <ToolbarMain />
     </>
   )

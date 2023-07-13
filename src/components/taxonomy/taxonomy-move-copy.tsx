@@ -78,7 +78,7 @@ export function TaxonomyMoveCopy({ taxonomyData }: TaxonomyMoveCopyProps) {
       <div className="mx-side">
         <h2 className="font-bold">{loggedInStrings.select}</h2>
         {renderList()}
-        <h2 className="mt-6 mb-3 font-bold">{loggedInStrings.target}</h2>
+        <h2 className="mb-3 mt-6 font-bold">{loggedInStrings.target}</h2>
         {renderInput()}
       </div>
     </>

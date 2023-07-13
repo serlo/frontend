@@ -1,6 +1,6 @@
 import { GeogebraProps } from '.'
-import { EditorInput } from '../../editor-ui'
 import { GeogebraRenderer, parseId } from './renderer'
+import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
@@ -16,7 +16,6 @@ export function GeogebraEditor(props: GeogebraProps) {
 
   return (
     <>
-      {editable && focused ? renderInput() : null}
       {couldBeValidId ? (
         <EmbedWrapper
           type="applet"
@@ -24,22 +23,23 @@ export function GeogebraEditor(props: GeogebraProps) {
           embedUrl={url}
           className={editable && !focused ? 'pointer-events-none' : ''}
         >
-          <GeogebraRenderer url={url} />
+          <GeogebraRenderer url={url} id={cleanId} />
         </EmbedWrapper>
       ) : (
-        <div className="rounded-lg bg-editor-primary-50 py-32 text-center">
+        <div className="mx-side rounded-lg bg-editor-primary-50 py-32 text-center">
           <FaIcon
             icon={entityIconMapping['applet']}
             className="text-7xl text-editor-primary-200"
           />
         </div>
       )}
+      {editable && focused ? renderInput() : null}
     </>
   )
 
   function renderInput() {
     return (
-      <div className="mt-4 mb-3">
+      <div className="mx-side mb-3 mt-4">
         <EditorInput
           label={`${editorStrings.plugins.geogebra.urlOrId}: `}
           placeholder="z.B. N5ktHvtW"

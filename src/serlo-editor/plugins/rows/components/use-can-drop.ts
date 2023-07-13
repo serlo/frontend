@@ -1,5 +1,3 @@
-import * as R from 'ramda'
-
 import {
   store,
   findParent,
@@ -8,11 +6,12 @@ import {
   selectFocusTree,
   FocusTreeNode,
 } from '@/serlo-editor/store'
+import type { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function useCanDrop(
   id: string,
   draggingAbove: boolean,
-  allowedPlugins: string[] | undefined
+  allowedPlugins: (EditorPluginType | string)[] | undefined
 ) {
   return function (dragId?: string) {
     return (
@@ -54,9 +53,8 @@ export function useCanDrop(
     childId: string
   ): number | null {
     if (!parent) return null
-    const position = R.findIndex(
-      (node) => node.id === childId,
-      parent.children || []
+    const position = (parent.children ?? []).findIndex(
+      (node) => node.id === childId
     )
     return position > -1 ? position : null
   }

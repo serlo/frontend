@@ -1,7 +1,7 @@
-import { FrontendClientBase } from '../frontend-client-base'
 import { SubjectLandingContent } from './subject-landing-content'
-import { TaxonomyPage } from '@/data-types'
+import { FrontendClientBase } from '../frontend-client-base'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { TaxonomyPage } from '@/data-types'
 
 export type deSubjectLandingSubjects = keyof typeof deSubjectLandingData
 

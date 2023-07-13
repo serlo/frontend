@@ -59,8 +59,8 @@ export function EditorRowRenderer({
         serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
           rows.set((list) => {
-            const i = R.findIndex((id) => id === row.id, list)
-            return R.remove(i, 1, list)
+            const index = list.findIndex((id) => id === row.id)
+            return R.remove(index, 1, list)
           })
         },
       }
@@ -170,11 +170,11 @@ export function EditorRowRenderer({
         return (
           <>
             {children}
-            <hr />
+            <hr className="mb-4" />
             <div className="flex">
               <div className="flex-[1]">
                 <button
-                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
+                  className="serlo-button-editor-secondary mr-8 mt-4 text-sm"
                   onClick={() => {
                     const document = selectSerializedDocument(
                       store.getState(),
@@ -210,7 +210,7 @@ export function EditorRowRenderer({
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
               label={editorStrings.plugins.rows.dragElement}
-              className="mb-1.5 -mt-[3px] cursor-grab select-none active:cursor-grabbing"
+              className="-mt-[3px] mb-1.5 cursor-grab select-none active:cursor-grabbing"
             />
             {children}
           </>

@@ -43,7 +43,7 @@ export function DocumentEditor({
     return shouldShowSettings
       ? (children, { close }) => (
           <>
-            <Header>
+            <Header className="mb-4">
               <H4>{editorStrings.edtrIo.extendedSettings}</H4>
               <BorderlessOverlayButton
                 as={OverlayButton}
@@ -174,6 +174,7 @@ const Container = styled.div<Partial<ToolbarProps>>(
   ({ isFocused, isHovered }) => ({
     minHeight: '10px',
     marginBottom: '25px',
+    marginLeft: '-7px',
     position: 'relative',
     borderLeft: '2px solid transparent',
     paddingLeft: '5px',
@@ -202,6 +203,7 @@ const Container = styled.div<Partial<ToolbarProps>>(
 const Header = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
 })
 
 const H4 = styled.h4({

@@ -169,7 +169,7 @@ module.exports = {
     'shared/tailwind-base.cjs',
     'postcss.config.js',
     'next.config.js',
-    'jest.config.js',
+    'jest.config.mjs',
     'prettier.config.js',
   ],
   root: true,

@@ -1,12 +1,8 @@
-import { useCallback } from 'react'
-
 import { editorContent, entity, entityType } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
-import { ExpandableBox } from '@/serlo-editor/renderer-ui'
 
 export const textSolutionTypeState = entityType(
   {
@@ -15,40 +11,31 @@ export const textSolutionTypeState = entityType(
   },
   {}
 )
+
+type TextSolutionTypeState = typeof textSolutionTypeState
+
 export type TextSolutionTypeProps = EditorPluginProps<
-  typeof textSolutionTypeState,
+  TextSolutionTypeState,
   { skipControls: boolean }
 >
 
 export const textSolutionTypePlugin: EditorPlugin<
-  typeof textSolutionTypeState,
+  TextSolutionTypeState,
   { skipControls: boolean }
 > = {
   Component: TextSolutionTypeEditor,
   state: textSolutionTypeState,
-  config: {
-    skipControls: false,
-  },
+  config: { skipControls: false },
 }
 
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
-  const editorStrings = useEditorStrings()
-
-  const renderTitle = useCallback(
-    (collapsed: boolean) => {
-      return (
-        <>
-          {collapsed
-            ? editorStrings.templatePlugins.solution.showSolution
-            : editorStrings.templatePlugins.solution.hideSolution}
-        </>
-      )
-    },
-    [editorStrings]
-  )
-
   return (
-    <>
+    <div className="mt-12">
+      {props.state.content.render()}
+
+      {props.config.skipControls ? null : (
+        <ToolbarMain showSubscriptionOptions {...props.state} />
+      )}
       {props.renderIntoToolbar(
         <ContentLoaders
           id={props.state.id.value}
@@ -57,18 +44,6 @@ function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
           entityType={UuidType.Solution}
         />
       )}
-      <ExpandableBox
-        renderTitle={renderTitle}
-        editable={
-          /* Title is not editable. Also rendering collapsed */
-          false
-        }
-      >
-        {props.state.content.render()}
-      </ExpandableBox>
-      {props.config.skipControls ? null : (
-        <ToolbarMain showSubscriptionOptions {...props.state} />
-      )}
-    </>
+    </div>
   )
 }

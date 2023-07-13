@@ -63,7 +63,7 @@ export function DropdownMenu({
     <div
       className={tw`
         -mt-4 max-w-65 rounded-lg bg-brand-50
-        py-3 pr-4 pl-2.5 text-right shadow  
+        py-3 pl-2.5 pr-4 text-right shadow  
       `}
     >
       {buildButton(
@@ -90,7 +90,7 @@ export function DropdownMenu({
               : strings.comments.archiveThread}
           </>
         )}
-      {(canDelete || startEditing) &&
+      {(canDelete || (startEditing && !isParent)) &&
         buildButton(
           onDelete,
           <>

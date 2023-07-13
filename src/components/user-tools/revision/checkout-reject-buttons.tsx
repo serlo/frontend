@@ -120,7 +120,7 @@ export function CheckoutRejectButtons({
           onKeyDown={onKeyDown}
           className={tw`
             bold my-5 box-border min-h-[80px] w-full
-            rounded-xl border-0 bg-brand-50 py-2 pr-14 pl-4
+            rounded-xl border-0 bg-brand-50 py-2 pl-4 pr-14
             outline-none focus-visible:bg-brand-200
           `}
         />

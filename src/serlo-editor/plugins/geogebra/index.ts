@@ -1,5 +1,5 @@
-import { EditorPlugin, EditorPluginProps, string } from '../../plugin'
 import { GeogebraEditor } from './editor'
+import { EditorPlugin, EditorPluginProps, string } from '../../plugin'
 
 const geogebraState = string()
 

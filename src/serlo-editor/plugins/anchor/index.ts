@@ -1,10 +1,10 @@
+import { AnchorEditor } from './editor'
 import {
   EditorPlugin,
   EditorPluginProps,
   string,
   StringStateType,
 } from '../../plugin'
-import { AnchorEditor } from './editor'
 
 // will probably be replaced. refactoring not necessary
 

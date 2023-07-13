@@ -1,15 +1,14 @@
-import * as R from 'ramda'
 import { channel, Channel } from 'redux-saga'
 import { all, call, put, select, take, takeEvery } from 'redux-saga/effects'
 
-import { EditorPlugin } from '../../types/internal__plugin'
-import { runChangeDocumentSaga, selectDocument } from '../documents'
-import { selectFocusTree } from '../focus'
 import {
   insertPluginChildAfter,
   insertPluginChildBefore,
   removePluginChild,
 } from './saga-actions'
+import { EditorPlugin } from '../../types/internal__plugin'
+import { runChangeDocumentSaga, selectDocument } from '../documents'
+import { selectFocusTree } from '../focus'
 import {
   getPluginByType,
   PluginsContextPlugins,
@@ -33,10 +32,7 @@ function* insertChildBeforeSaga({
     payload.parent
   )
   if (!parent || !parent.children) return
-  const index = R.findIndex(
-    (child) => child.id === payload.sibling,
-    parent.children
-  )
+  const index = parent.children.findIndex(({ id }) => id === payload.sibling)
   if (index === -1) return
   yield call(insertChild, {
     parent: payload.parent,

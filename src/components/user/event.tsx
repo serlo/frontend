@@ -2,9 +2,9 @@ import { faBellSlash, faCheck } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react'
 import clsx from 'clsx'
 
+import { UserLink } from './user-link'
 import { MathSpan } from '../content/math-span'
 import { FaIcon } from '../fa-icon'
-import { UserLink } from './user-link'
 import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { TimeAgo } from '@/components/time-ago'
@@ -54,8 +54,8 @@ export function Event({
     <>
       <div
         className={clsx(
-          'relative my-2.5 py-6 px-side odd:bg-brand-100',
-          slim && 'pt-1 pb-1'
+          'relative my-2.5 px-side py-6 odd:bg-brand-100',
+          slim && 'pb-1 pt-1'
         )}
       >
         <TimeAgo
@@ -386,7 +386,7 @@ export function Event({
   function renderTooltip(text?: string) {
     return (
       <span
-        className="block max-w-[200px] rounded-md bg-almost-black py-2 px-2.5 text-sm leading-tight text-white" /*Tooltip*/
+        className="block max-w-[200px] rounded-md bg-almost-black px-2.5 py-2 text-sm leading-tight text-white" /*Tooltip*/
       >
         {text}
       </span>

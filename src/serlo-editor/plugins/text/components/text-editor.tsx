@@ -16,6 +16,11 @@ import {
   withReact,
 } from 'slate-react'
 
+import { HoveringToolbar } from './hovering-toolbar'
+import { LinkControls } from './link/link-controls'
+import { MathElement } from './math-element'
+import { Suggestions } from './suggestions'
+import { TextLeafRenderer } from './text-leaf-renderer'
 import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
@@ -27,11 +32,6 @@ import {
 } from '../utils/document'
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
-import { HoveringToolbar } from './hovering-toolbar'
-import { LinkControls } from './link/link-controls'
-import { MathElement } from './math-element'
-import { Suggestions } from './suggestions'
-import { TextLeafRenderer } from './text-leaf-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -53,6 +53,7 @@ import {
   selectFocusTree,
   store,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
@@ -336,7 +337,7 @@ export function TextEditor(props: TextEditorProps) {
       if (files?.length > 0) {
         const imagePluginState = getPluginByType(
           plugins,
-          'image'
+          EditorPluginType.Image
         )?.plugin.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
@@ -344,7 +345,7 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin('image', imagePluginState)
+          insertPlugin(EditorPluginType.Image, imagePluginState)
           return
         }
       }
@@ -354,7 +355,7 @@ export function TextEditor(props: TextEditorProps) {
       if (text) {
         const videoPluginState = getPluginByType(
           plugins,
-          'video'
+          EditorPluginType.Video
         )?.plugin.onText?.(text)
         if (videoPluginState !== undefined) {
           event.preventDefault()
@@ -364,7 +365,7 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin('video', videoPluginState)
+          insertPlugin(EditorPluginType.Video, videoPluginState)
           return
         }
       }

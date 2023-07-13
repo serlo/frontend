@@ -13,7 +13,7 @@ export function ProfileActivityGraphs({ values }: ProfileActivityGraphsProps) {
   return (
     <section
       className={tw`
-        my-20 mx-auto flex max-w-lg flex-wrap justify-center
+        mx-auto my-20 flex max-w-lg flex-wrap justify-center
         sm:max-w-none sm:flex-nowrap sm:justify-between
       `}
     >
