@@ -25,59 +25,66 @@ export const appletTypeState = entityType(
   {}
 )
 
-export const appletTypePlugin: EditorPlugin<typeof appletTypeState> = {
+export type AppletTypePluginState = typeof appletTypeState
+
+export const appletTypePlugin: EditorPlugin<AppletTypePluginState> = {
   Component: AppletTypeEditor,
   state: appletTypeState,
   config: {},
 }
 
-function AppletTypeEditor(props: EditorPluginProps<typeof appletTypeState>) {
-  const { title, url, content, meta_title, meta_description } = props.state
-  const editorStrings = useEditorStrings()
+function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
+  const {
+    title,
+    url,
+    content,
+    meta_title,
+    meta_description,
+    id,
+    revision,
+    replaceOwnState,
+  } = props.state
+  const appletStrings = useEditorStrings().templatePlugins.applet
 
   return (
-    <div>
-      <div className="page-header">
-        {props.renderIntoToolbar(
-          <ContentLoaders
-            id={props.state.id.value}
-            currentRevision={props.state.revision.value}
-            onSwitchRevision={props.state.replaceOwnState}
-            entityType={UuidType.Applet}
+    <>
+      <h1 className="serlo-h1">
+        {props.editable ? (
+          <input
+            className={headerInputClasses}
+            placeholder={appletStrings.placeholder}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
           />
+        ) : (
+          <span itemProp="name">{title.value}</span>
         )}
-        {props.renderIntoSettings(
-          <Settings>
-            <Settings.Textarea
-              label={editorStrings.templatePlugins.applet.seoTitle}
-              state={meta_title}
-            />
-            <Settings.Textarea
-              label={editorStrings.templatePlugins.applet.seoDesc}
-              state={meta_description}
-            />
-          </Settings>
-        )}
-        <h1>
-          {props.editable ? (
-            <input
-              className={headerInputClasses}
-              placeholder={editorStrings.templatePlugins.applet.placeholder}
-              value={title.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                title.set(e.target.value)
-              }}
-            />
-          ) : (
-            <span itemProp="name">{title.value}</span>
-          )}
-        </h1>
-      </div>
-      <article>
-        {url.render()}
-        {content.render()}
-      </article>
+      </h1>
+
+      {url.render()}
+      {content.render()}
+
       <ToolbarMain showSubscriptionOptions {...props.state} />
-    </div>
+      {props.renderIntoToolbar(
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.Applet}
+        />
+      )}
+      {props.renderIntoSettings(
+        <Settings>
+          <Settings.Textarea
+            label={appletStrings.seoTitle}
+            state={meta_title}
+          />
+          <Settings.Textarea
+            label={appletStrings.seoDesc}
+            state={meta_description}
+          />
+        </Settings>
+      )}
+    </>
   )
 }

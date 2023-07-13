@@ -3,15 +3,14 @@ import CSS from 'csstype'
 import dynamic from 'next/dynamic'
 import { ReactNode, Fragment, createElement } from 'react'
 
+import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
 import { LicenseNotice } from '../components/content/license/license-notice'
 import { Link } from '../components/content/link'
-import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { Article } from '@/components/content/article'
 import { Box } from '@/components/content/box'
-import { Equations } from '@/components/content/equations'
+import { EquationProps, Equations } from '@/components/content/equations'
 import { Exercise } from '@/components/content/exercises/exercise'
-import { Solution } from '@/components/content/exercises/solution'
 import { Geogebra } from '@/components/content/geogebra'
 import { Image } from '@/components/content/image'
 import { Lazy } from '@/components/content/lazy'
@@ -22,7 +21,6 @@ import { Spoiler } from '@/components/content/spoiler'
 import { Video } from '@/components/content/video'
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import { articleColors } from '@/helper/colors'
-import { EquationsRendererProps } from '@/serlo-editor/plugins/equations/renderer'
 import type { HighlightRendererProps } from '@/serlo-editor/plugins/highlight/renderer'
 import { InjectionRenderer } from '@/serlo-editor/plugins/injection/renderer'
 import { PageLayoutAdapter } from '@/serlo-editor/plugins/page-layout/frontend'
@@ -417,9 +415,7 @@ function renderElement({
       </ExerciseGroup>
     )
   }
-  if (element.type === FrontendNodeType.Solution) {
-    return <Solution node={element.solution} renderNested={nestedRenderer} />
-  }
+  if (element.type === FrontendNodeType.Solution) return null //only valid as child of Exercise
   if (element.type === FrontendNodeType.Video) {
     return (
       <Lazy noPrint>
@@ -430,21 +426,17 @@ function renderElement({
   if (element.type === FrontendNodeType.Equations) {
     return (
       <Equations
-        steps={element.steps}
-        firstExplanation={element.firstExplanation}
-        transformationTarget={
-          element.transformationTarget as EquationsRendererProps['transformationTarget']
-        }
+        {...(element as Omit<EquationProps, 'renderNested'>)}
         renderNested={nestedRenderer}
       />
     )
   }
   if (element.type === FrontendNodeType.Code) {
     return (
-      <div className="mx-side">
+      <>
         <HighlightRenderer {...element.state} />
         {isRevisionView && <ExtraRevisionViewInfo element={element} />}
-      </div>
+      </>
     )
   }
   if (element.type === FrontendNodeType.PageLayout) {

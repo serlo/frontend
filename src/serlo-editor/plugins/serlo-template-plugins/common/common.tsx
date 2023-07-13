@@ -246,11 +246,8 @@ export function OptionalChild(props: {
     },
   })
   return (
-    <>
-      <hr className="my-12" />
-      {children}
-    </>
+    <div className="my-12 border-t-2 border-editor-primary-200">{children}</div>
   )
 }
 
-export const headerInputClasses = tw`w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+export const headerInputClasses = tw`mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`

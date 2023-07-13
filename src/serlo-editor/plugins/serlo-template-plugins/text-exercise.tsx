@@ -23,58 +23,51 @@ export const textExerciseTypeState = entityType(
   }
 )
 
+type TextExerciseTypePluginState = typeof textExerciseTypeState
+
 export const textExerciseTypePlugin: EditorPlugin<
-  typeof textExerciseTypeState,
+  TextExerciseTypePluginState,
   { skipControls: boolean }
 > = {
   Component: TextExerciseTypeEditor,
   state: textExerciseTypeState,
-  config: {
-    skipControls: false,
-  },
+  config: { skipControls: false },
 }
 
-function TextExerciseTypeEditor(
-  props: EditorPluginProps<
-    typeof textExerciseTypeState,
-    { skipControls: boolean }
-  >
-) {
-  const { content, 'text-solution': textSolution } = props.state
-  const editorStrings = useEditorStrings()
+function TextExerciseTypeEditor({
+  state,
+  config,
+  renderIntoToolbar,
+}: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
+  const { content, 'text-solution': textSolution } = state
+  const textExStrings = useEditorStrings().templatePlugins.textExercise
 
   return (
     <article className="text-exercise mt-16">
-      {props.renderIntoToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Exercise}
-        />
-      )}
       {content.render()}
       {textSolution.id ? (
         <OptionalChild
           state={textSolution}
-          removeLabel={
-            editorStrings.templatePlugins.textExercise.removeSolution
-          }
-          onRemove={() => {
-            textSolution.remove()
-          }}
+          removeLabel={textExStrings.removeSolution}
+          onRemove={() => textSolution.remove()}
         />
       ) : (
-        <AddButton
-          onClick={() => {
-            textSolution.create()
-          }}
-        >
-          {editorStrings.templatePlugins.textExercise.createSolution}
-        </AddButton>
+        <div className="-ml-1.5 max-w-[50%]">
+          <AddButton onClick={() => textSolution.create()}>
+            {textExStrings.createSolution}
+          </AddButton>
+        </div>
       )}
-      {props.config.skipControls ? null : (
-        <ToolbarMain showSubscriptionOptions {...props.state} />
+      {config.skipControls ? null : (
+        <ToolbarMain showSubscriptionOptions {...state} />
+      )}
+      {renderIntoToolbar(
+        <ContentLoaders
+          id={state.id.value}
+          currentRevision={state.revision.value}
+          onSwitchRevision={state.replaceOwnState}
+          entityType={UuidType.Exercise}
+        />
       )}
     </article>
   )

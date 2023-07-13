@@ -21,7 +21,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
 
   if (!type) {
     return (
-      <div className="text-center print:hidden">
+      <div className="mx-side text-center print:hidden">
         <FaIcon icon={faFilm} className="h-16" />
         <p className="serlo-p text-almost-black">
           {src ? `${strings.content.loadingVideoFailed}: ${src}` : ''}
@@ -31,20 +31,18 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
   }
 
   return (
-    <div>
-      <div className="m-0 p-0">
-        {type === VideoType.WikimediaCommons ? (
-          <video controls src={src} className={videoClassName} />
-        ) : (
-          <iframe
-            src={src}
-            frameBorder="0"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-            className={videoClassName}
-          />
-        )}
-      </div>
+    <div className="my-0 mx-side  p-0">
+      {type === VideoType.WikimediaCommons ? (
+        <video controls src={src} className={videoClassName} />
+      ) : (
+        <iframe
+          src={src}
+          frameBorder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          className={videoClassName}
+        />
+      )}
     </div>
   )
 }

@@ -22,14 +22,13 @@ export const articleTypeState = entityType(
   },
   {}
 )
+type ArticleTypePluginState = typeof articleTypeState
 
 export const articleTypePlugin: EditorPlugin<ArticleTypePluginState> = {
   Component: ArticleTypeEditor,
   state: articleTypeState,
   config: {},
 }
-
-type ArticleTypePluginState = typeof articleTypeState
 
 function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
   const { title, content, meta_title, meta_description } = props.state
@@ -38,42 +37,42 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
 
   return (
     <>
-      <div className="page-header">
-        {props.renderIntoToolbar(
-          <ContentLoaders
-            id={props.state.id.value}
-            currentRevision={props.state.revision.value}
-            onSwitchRevision={props.state.replaceOwnState}
-            entityType={UuidType.Article}
+      <h1 className="serlo-h1" itemProp="name">
+        {props.editable ? (
+          <input
+            className={headerInputClasses}
+            placeholder={articleStrings.title}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
           />
+        ) : (
+          title.value
         )}
-        {props.renderIntoSettings(
-          <Settings>
-            <Settings.Textarea
-              label={articleStrings.seoTitle}
-              state={meta_title}
-            />
-            <Settings.Textarea
-              label={articleStrings.seoDesc}
-              state={meta_description}
-            />
-          </Settings>
-        )}
-        <h1>
-          {props.editable ? (
-            <input
-              className={headerInputClasses}
-              placeholder={articleStrings.title}
-              value={title.value}
-              onChange={(e) => title.set(e.target.value)}
-            />
-          ) : (
-            <span itemProp="name">{title.value}</span>
-          )}
-        </h1>
-      </div>
-      <div itemProp="articleBody">{content.render()}</div>
+      </h1>
+
+      <section itemProp="articleBody">{content.render()}</section>
+
       <ToolbarMain showSubscriptionOptions {...props.state} />
+      {props.renderIntoToolbar(
+        <ContentLoaders
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Article}
+        />
+      )}
+      {props.renderIntoSettings(
+        <Settings>
+          <Settings.Textarea
+            label={articleStrings.seoTitle}
+            state={meta_title}
+          />
+          <Settings.Textarea
+            label={articleStrings.seoDesc}
+            state={meta_description}
+          />
+        </Settings>
+      )}
     </>
   )
 }

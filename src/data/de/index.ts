@@ -874,18 +874,15 @@ export const loggedInData = {
           title: "Titel"
         },
         inputExercise: {
-          text: 'Text',
           chooseType: "Wähle den Antworttyp",
           unit: "Einheit (optional)",
           addAnswer: "Antwort hinzufügen",
           enterTheValue: "Gib hier die Antwort ein",
           yourSolution: "Deine Lösung",
-          number: "Zahl (exakte Lösung, z.B. \"0,5\" ≠ \"1/2\" ≠ \"2/4\")",
-          mathematicalExpressionSolution: "Mathematischer Ausdruck (äquivalente Lösung, z.B. \"0,5\" = \"1/2\" = \"2/4\")",
           types: {
-            mathExpression: "Mathematischer Ausdruck",
-            text: 'Text',
-            number: "Zahl"
+            'input-string-normalized-match-challenge': "Text (genau, z.B. 'Tiger')",
+            'input-number-exact-match-challenge': "Zahl (genau, z.B. '0.5')",
+            'input-expression-equal-match-challenge': "Mathematischer Ausdruck (gleichwertig, z.B. \"0,5\", \"1/2\" oder \"2/4\")"
           }
         },
         page: {

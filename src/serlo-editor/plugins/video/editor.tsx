@@ -21,7 +21,6 @@ export const VideoEditor = ({
 
   return (
     <>
-      {editable && focused ? renderInput() : null}
       {couldBeValid ? (
         <EmbedWrapper
           type="video"
@@ -32,13 +31,15 @@ export const VideoEditor = ({
           <VideoRenderer src={iframeSrc} type={type} />
         </EmbedWrapper>
       ) : (
-        <div className="rounded-lg bg-editor-primary-50 py-32 text-center">
+        <div className="mx-side rounded-lg bg-editor-primary-50 py-32 text-center">
           <FaIcon
             icon={entityIconMapping['video']}
             className="text-7xl text-editor-primary-200"
           />
         </div>
       )}
+      {editable && focused ? renderInput() : null}
+
       {renderIntoSettings(
         <OverlayInput
           label={videoStrings.description}
@@ -53,7 +54,7 @@ export const VideoEditor = ({
 
   function renderInput() {
     return (
-      <div className="mt-4 mb-3">
+      <div className="mx-side mt-4 mb-3">
         <EditorInput
           label={`${videoStrings.videoUrl}: `}
           value={state.src.value}
