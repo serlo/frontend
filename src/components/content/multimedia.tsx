@@ -2,7 +2,10 @@ import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 import { LightBoxProps } from './light-box'
-import type { FrontendMultiMediaNode } from '@/frontend-node-types'
+import {
+  FrontendNodeType,
+  type FrontendMultiMediaNode,
+} from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { MultimediaRenderer } from '@/serlo-editor/plugins/multimedia/renderer'
 
@@ -18,7 +21,7 @@ export function Multimedia({
 }: FrontendMultiMediaNode & { renderNested: RenderNestedFunction }) {
   const [open, setOpen] = useState(false)
   const mediaChild = media[0]
-  const mediaChildIsImage = mediaChild?.type === 'img'
+  const mediaChildIsImage = mediaChild?.type === FrontendNodeType.Image
   const showLightbox = mediaChildIsImage && open
 
   // hide empty plugins

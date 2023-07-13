@@ -130,7 +130,6 @@
     "@types/react-lazyload": "^3.2.0",
     "@types/react-modal": "^3.13.1",
     "@types/react-notify-toast": "^0.5.3",
-    "@types/react-resizable": "^3.0.0",
     "@types/react-syntax-highlighter": "^13.5.2",
     "@types/slate-react": "^0.50.1",
     "@types/styled-components": "^5.1.26",
@@ -161,7 +160,7 @@
     "tailwindcss": "^3.2.1",
     "tailwindcss-animate": "^1.0.5",
     "ts-unused-exports": "^9.0.2",
-    "typescript": "^4.6.2"
+    "typescript": "^5.0.0"
   },
   "packageManager": "yarn@3.6.1",
   "engines": {

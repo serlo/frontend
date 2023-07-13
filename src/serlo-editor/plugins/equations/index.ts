@@ -1,5 +1,6 @@
 import { EquationsEditor } from './editor'
 import { Sign } from './sign'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   child,
   list,
@@ -14,12 +15,18 @@ export const stepProps = object({
   sign: string(Sign.Equals),
   right: string(''),
   transform: string(''),
-  explanation: child({ plugin: 'text', config: { registry: [] } }),
+  explanation: child({
+    plugin: EditorPluginType.Text,
+    config: { registry: [] },
+  }),
 })
 
 const equationsState = object({
   steps: list(stepProps, 2),
-  firstExplanation: child({ plugin: 'text', config: { registry: [] } }),
+  firstExplanation: child({
+    plugin: EditorPluginType.Text,
+    config: { registry: [] },
+  }),
   transformationTarget: string('equation'),
 })
 

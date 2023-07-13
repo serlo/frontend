@@ -1,5 +1,6 @@
 import { SerloTableEditor } from './editor'
 import { TableType } from './renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   child,
   EditorPlugin,
@@ -14,9 +15,7 @@ const tableState = object({
     object({
       columns: list(
         object({
-          content: child({
-            plugin: 'text',
-          }),
+          content: child({ plugin: EditorPluginType.Text }),
         }),
         2
       ),

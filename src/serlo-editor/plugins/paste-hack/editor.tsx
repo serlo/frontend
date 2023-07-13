@@ -5,6 +5,7 @@ import { useRef } from 'react'
 import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   store,
   selectParent,
@@ -15,25 +16,25 @@ import {
 } from '@/serlo-editor/store'
 
 const StateDecoder = t.strict({
-  plugin: t.literal('rows'),
+  plugin: t.literal(EditorPluginType.Rows),
   state: t.array(
     t.strict({
       plugin: t.union([
-        t.literal('article'),
-        t.literal('articleIntroduction'),
-        t.literal('geogebra'),
-        t.literal('anchor'),
-        t.literal('video'),
-        t.literal('serloTable'),
-        t.literal('highlight'),
-        t.literal('injection'),
-        t.literal('layout'),
-        t.literal('multimedia'),
-        t.literal('spoiler'),
-        t.literal('box'),
-        t.literal('image'),
-        t.literal('text'),
-        t.literal('equations'),
+        t.literal(EditorPluginType.Article),
+        t.literal(EditorPluginType.ArticleIntroduction),
+        t.literal(EditorPluginType.Geogebra),
+        t.literal(EditorPluginType.Anchor),
+        t.literal(EditorPluginType.Video),
+        t.literal(EditorPluginType.SerloTable),
+        t.literal(EditorPluginType.Highlight),
+        t.literal(EditorPluginType.Injection),
+        t.literal(EditorPluginType.Layout),
+        t.literal(EditorPluginType.Multimedia),
+        t.literal(EditorPluginType.Spoiler),
+        t.literal(EditorPluginType.Box),
+        t.literal(EditorPluginType.Image),
+        t.literal(EditorPluginType.Text),
+        t.literal(EditorPluginType.Equations),
       ]),
       state: t.unknown,
     })
@@ -70,7 +71,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
       if (
         parentPlugin === null ||
         selectSerializedDocument(store.getState(), parentPlugin.id)?.plugin !==
-          'rows'
+          EditorPluginType.Rows
       ) {
         const msg = 'Paste plugin can only be used inside a rows plugin!'
         showToastNotice(msg)

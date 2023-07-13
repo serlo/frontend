@@ -17,6 +17,7 @@ import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   HotKeys,
   PreferenceContext,
@@ -294,7 +295,7 @@ export function EquationsEditor(props: EquationsProps) {
       sign: state.steps[index - 1].sign.value,
       right: '',
       transform: '',
-      explanation: { plugin: 'text' },
+      explanation: { plugin: EditorPluginType.Text },
     })
   }
 

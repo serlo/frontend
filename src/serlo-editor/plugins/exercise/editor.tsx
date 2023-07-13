@@ -4,14 +4,15 @@ import { ReactNode, useState } from 'react'
 import { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import { store, selectDocument } from '@/serlo-editor/store'
 
 const interactiveExerciseTypes = [
-  'scMcExercise',
-  'inputExercise',
-  'h5p',
+  EditorPluginType.ScMcExercise,
+  EditorPluginType.InputExercise,
+  EditorPluginType.H5p,
 ] as const
 
 export function ExerciseEditor({ editable, state }: ExerciseProps) {

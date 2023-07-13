@@ -59,8 +59,8 @@ export function EditorRowRenderer({
         serialized: selectSerializedDocument(store.getState(), row.id),
         onDrop() {
           rows.set((list) => {
-            const i = R.findIndex((id) => id === row.id, list)
-            return R.remove(i, 1, list)
+            const index = list.findIndex((id) => id === row.id)
+            return R.remove(index, 1, list)
           })
         },
       }

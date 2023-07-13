@@ -10,6 +10,7 @@ import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-autho
 import { ExerciseInlineType } from '@/data-types'
 import type { FrontendExerciseNode } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { H5pRenderer } from '@/serlo-editor/plugins/h5p/renderer'
 
 export interface ExerciseProps {
@@ -79,7 +80,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     const state = node.task.edtrState
 
     if (state.interactive) {
-      if (state.interactive.plugin === 'scMcExercise') {
+      if (state.interactive.plugin === EditorPluginType.ScMcExercise) {
         return (
           <ScMcExercise
             state={state.interactive.state}
@@ -97,7 +98,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           />
         )
       }
-      if (state.interactive.plugin === 'inputExercise') {
+      if (state.interactive.plugin === EditorPluginType.InputExercise) {
         return (
           <InputExercise
             data={state.interactive.state}
@@ -110,7 +111,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           />
         )
       }
-      if (state.interactive.plugin === 'h5p') {
+      if (state.interactive.plugin === EditorPluginType.H5p) {
         return (
           <H5pRenderer
             url={state.interactive.state}

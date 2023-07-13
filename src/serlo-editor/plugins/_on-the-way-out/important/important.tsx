@@ -1,6 +1,7 @@
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { child, EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
 
-const importantState = child({ plugin: 'text' })
+const importantState = child({ plugin: EditorPluginType.Text })
 export type ImportantPluginState = typeof importantState
 export type ImportantProps = EditorPluginProps<ImportantPluginState>
 

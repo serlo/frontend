@@ -1,60 +1,68 @@
 import { LicenseData } from './data-types'
+import { EditorPluginType } from './serlo-editor-integration/types/editor-plugin-type'
+import {
+  EditorAnchorPlugin,
+  EditorGeogebraPlugin,
+  EditorH5PPlugin,
+  EditorHighlightPlugin,
+  EditorInjectionPlugin,
+  EditorVideoPlugin,
+} from './serlo-editor-integration/types/editor-plugins'
 import { BoxType } from './serlo-editor/plugins/box/renderer'
 import { Sign } from './serlo-editor/plugins/equations/sign'
 import { PageTeamRendererProps } from './serlo-editor/plugins/page-team/renderer'
 import { TableType } from './serlo-editor/plugins/serlo-table/renderer'
 import { CustomText } from './serlo-editor/plugins/text'
 
-export { Sign } from './serlo-editor/plugins/equations/sign'
-
 // The actual content of the page.
 
 // The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
-// Will switch to edtr-io state one day.
+// Will switch to directly using editor state or renderer soonish.
 // Until then: Here are the types the frontend expects after converting
 
 export enum FrontendNodeType {
-  Text = 'text',
-  A = 'a',
-  Article = 'article',
-  InlineMath = 'inline-math',
-  P = 'p',
-  SlateP = 'slate-p',
-  SlateContainer = 'slate-container',
-  H = 'h',
-  Math = 'math',
-  Img = 'img',
+  Anchor = EditorPluginType.Anchor,
+  Article = EditorPluginType.Article,
+  Blockquote = EditorPluginType.Blockquote,
+  Box = EditorPluginType.Box,
+  Code = EditorPluginType.Highlight,
+  Equations = EditorPluginType.Equations,
+  Geogebra = EditorPluginType.Geogebra,
+  Image = EditorPluginType.Image,
+  Important = EditorPluginType.Important,
+  Injection = EditorPluginType.Injection,
+  Multimedia = EditorPluginType.Multimedia,
+  PageLayout = EditorPluginType.PageLayout,
+  PagePartners = EditorPluginType.PagePartners,
+  PageTeam = EditorPluginType.PageTeam,
+  Table = EditorPluginType.Table,
+  Td = 'td',
+  Th = 'th',
+  Tr = 'tr',
+  SerloTable = EditorPluginType.SerloTable,
+  SerloTd = 'serlo-td',
+  SerloTr = 'serlo-tr',
+  SpoilerBody = 'spoiler-body',
   SpoilerContainer = 'spoiler-container',
   SpoilerTitle = 'spoiler-title',
-  SpoilerBody = 'spoiler-body',
+  Row = 'row', // children of dep. layout plugin
+  Col = 'col', // children of dep. layout plugin
+  Video = EditorPluginType.Video,
+  Exercise = EditorPluginType.Exercise,
+  ExerciseGroup = 'exercise-group',
+  Solution = EditorPluginType.Solution,
+  Text = EditorPluginType.Text,
+
+  Math = 'math',
+  InlineMath = 'inline-math',
+  H = 'h',
+  A = 'a',
+  P = 'p',
   Ul = 'ul',
   Ol = 'ol',
   Li = 'li',
-  Multimedia = 'multimedia',
-  Row = 'row',
-  Col = 'col',
-  Important = 'important',
-  Blockquote = 'blockquote',
-  Box = 'box',
-  Anchor = 'anchor',
-  SerloTable = 'serlo-table',
-  SerloTr = 'serlo-tr',
-  SerloTd = 'serlo-td',
-  Table = 'table',
-  Tr = 'tr',
-  Th = 'th',
-  Td = 'td',
-  Geogebra = 'geogebra',
-  Injection = 'injection',
-  Exercise = 'exercise',
-  Solution = 'solution',
-  ExerciseGroup = 'exercise-group',
-  Video = 'video',
-  Code = 'code',
-  Equations = 'equations',
-  PageLayout = 'pageLayout',
-  PageTeam = 'pageTeam',
-  PagePartners = 'pagePartners',
+  SlateContainer = 'slate-container',
+  SlateP = 'slate-p',
 }
 
 export type FrontendTextNode = CustomText & {
@@ -128,8 +136,8 @@ export interface FrontendMathNode {
   alignCenter?: boolean
 }
 
-export interface FrontendImgNode {
-  type: FrontendNodeType.Img
+export interface FrontendImageNode {
+  type: FrontendNodeType.Image
   src: string
   href?: string
   alt: string
@@ -205,9 +213,8 @@ export interface FrontendBoxNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendAnchorNode {
+export type FrontendAnchorNode = EditorAnchorPlugin & {
   type: FrontendNodeType.Anchor
-  id: string
   children?: undefined
 }
 
@@ -247,21 +254,19 @@ export interface FrontendTdNode {
   children?: FrontendContentNode[]
 }
 
-export interface FrontendGeogebraNode {
+export type FrontendGeogebraNode = EditorGeogebraPlugin & {
   type: FrontendNodeType.Geogebra
-  id: string
   children?: undefined
 }
 
-export interface FrontendInjectionNode {
+export type FrontendInjectionNode = EditorInjectionPlugin & {
   type: FrontendNodeType.Injection
-  href: string
   children?: undefined
 }
 
 interface BareSolution {
   legacy?: FrontendContentNode[]
-  edtrState?: SolutionEdtrState
+  edtrState?: SolutionEditorState
   license?: LicenseData
   trashed: boolean
 }
@@ -271,7 +276,7 @@ export interface FrontendExerciseNode {
   trashed?: boolean
   task: {
     legacy?: FrontendContentNode[]
-    edtrState?: TaskEdtrState
+    edtrState?: TaskEditorState
     license?: LicenseData
   }
   solution: BareSolution
@@ -301,17 +306,17 @@ export interface FrontendSolutionNode {
   unrevisedRevisions?: number
 }
 
-export interface TaskEdtrState {
+export interface TaskEditorState {
   content: FrontendContentNode[] // edtr-io plugin "exercise"
   interactive?:
-    | EdtrPluginScMcExercise
-    | EdtrPluginInputExercise
-    | EdtrPluginH5pExercise
+    | EditorPluginScMcExercise
+    | EditorPluginInputExercise
+    | EditorH5PPlugin
 }
 
-export interface SolutionEdtrState {
+export interface SolutionEditorState {
+  // editor plugin "solution"
   prerequisite?: {
-    // edtr-io plugin "solution"
     id?: number
     href?: string // added, the resolved alias
     title: string
@@ -320,8 +325,8 @@ export interface SolutionEdtrState {
   steps: FrontendContentNode[]
 }
 
-export interface EdtrPluginScMcExercise {
-  plugin: 'scMcExercise' // edtr-io plugin
+export interface EditorPluginScMcExercise {
+  plugin: EditorPluginType.ScMcExercise // editor plugin
   state: {
     answers: {
       isCorrect: boolean
@@ -333,8 +338,8 @@ export interface EdtrPluginScMcExercise {
   }
 }
 
-export interface EdtrPluginInputExercise {
-  plugin: 'inputExercise' // edtr-io plugin
+export interface EditorPluginInputExercise {
+  plugin: EditorPluginType.InputExercise // editor plugin
   state: {
     type:
       | 'input-number-exact-match-challenge'
@@ -362,18 +367,14 @@ export interface FrontendExerciseGroupNode {
   unrevisedRevisions?: number
 }
 
-export interface FrontendVideoNode {
-  type: FrontendNodeType.Video
-  src: string
-  children?: undefined
+export type FrontendVideoNode = EditorVideoPlugin & {
   license?: LicenseData
+  type: FrontendNodeType.Video
+  children?: undefined
 }
 
-export interface FrontendCodeNode {
+export type FrontendCodeNode = EditorHighlightPlugin & {
   type: FrontendNodeType.Code
-  code: string
-  language: string
-  showLineNumbers: boolean
   children?: undefined
 }
 
@@ -390,7 +391,7 @@ export interface FrontendEquationsNode {
     explanation: FrontendContentNode[]
   }[]
   firstExplanation: FrontendContentNode[]
-  transformationTarget: 'term' | 'equation'
+  transformationTarget: 'term' | 'equation' | string
   children?: undefined
 }
 
@@ -412,15 +413,10 @@ export interface FrontendPagePartnersNode {
   children?: undefined
 }
 
-export interface EdtrPluginH5pExercise {
-  plugin: 'h5p' // edtr-io plugin (directly used in exercise)
-  state: string
-}
-
 export type FrontendVoidNode =
   | FrontendInlineMathNode
   | FrontendMathNode
-  | FrontendImgNode
+  | FrontendImageNode
   | FrontendAnchorNode
   | FrontendGeogebraNode
   | FrontendInjectionNode

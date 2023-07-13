@@ -8,19 +8,24 @@ import {
   object,
 } from '../../plugin'
 import { MultimediaEditor } from './editor'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const defaultConfig: MultimediaConfig = {
-  allowedPlugins: ['image', 'video', 'geogebra'],
+  allowedPlugins: [
+    EditorPluginType.Image,
+    EditorPluginType.Video,
+    EditorPluginType.Geogebra,
+  ],
   explanation: {
-    plugin: 'rows',
+    plugin: EditorPluginType.Rows,
     config: {
       allowedPlugins: [
-        'text',
-        'highlight',
-        'anchor',
-        'equations',
-        'image',
-        'serloTable',
+        EditorPluginType.Text,
+        EditorPluginType.Highlight,
+        EditorPluginType.Anchor,
+        EditorPluginType.Equations,
+        EditorPluginType.Image,
+        EditorPluginType.SerloTable,
       ],
     },
   },
@@ -49,7 +54,7 @@ export function createMultimediaPlugin(
 export type MultimediaPluginState = ReturnType<typeof createMultimediaState>
 
 export interface MultimediaConfig {
-  allowedPlugins: string[]
+  allowedPlugins: (EditorPluginType | string)[]
   explanation: ChildStateTypeConfig
 }
 

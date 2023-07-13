@@ -1,4 +1,5 @@
 import { BoxEditor } from './editor'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   child,
   EditorPlugin,
@@ -7,11 +8,11 @@ import {
   string,
 } from '@/serlo-editor/plugin'
 
-function createBoxState(allowedPlugins: string[]) {
+function createBoxState(allowedPlugins: (EditorPluginType | string)[]) {
   return object({
     type: string(''),
     title: child({
-      plugin: 'text',
+      plugin: EditorPluginType.Text,
       config: {
         formattingOptions: ['code', 'katex', 'math'],
         noLinebreaks: true,
@@ -19,10 +20,8 @@ function createBoxState(allowedPlugins: string[]) {
     }),
     anchorId: string(''),
     content: child({
-      plugin: 'rows',
-      config: {
-        allowedPlugins,
-      },
+      plugin: EditorPluginType.Rows,
+      config: { allowedPlugins },
     }),
   })
 }
@@ -30,16 +29,16 @@ function createBoxState(allowedPlugins: string[]) {
 export type BoxPluginState = ReturnType<typeof createBoxState>
 export type BoxProps = EditorPluginProps<BoxPluginState>
 export interface BoxConfig {
-  allowedPlugins?: string[]
+  allowedPlugins?: (EditorPluginType | string)[]
 }
 
-const defaultAllowedPlugins = [
-  'text',
-  'image',
-  'equations',
-  'multimedia',
-  'serloTable',
-  'highlight',
+const defaultAllowedPlugins: (EditorPluginType | string)[] = [
+  EditorPluginType.Text,
+  EditorPluginType.Image,
+  EditorPluginType.Equations,
+  EditorPluginType.Multimedia,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Highlight,
 ]
 
 export function createBoxPlugin({

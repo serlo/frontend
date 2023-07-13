@@ -1,4 +1,5 @@
 import { PageLayoutEditor } from './editor'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import {
   EditorPlugin,
   number,
@@ -8,35 +9,31 @@ import {
 } from '@/serlo-editor/plugin'
 
 const allowedPlugins = [
-  'text',
-  'blockquote',
-  'box',
-  'geogebra',
-  'highlight',
-  'anchor',
-  'equations',
-  'image',
-  'important',
-  'injection',
-  'multimedia',
-  'spoiler',
-  'serloTable',
-  'video',
+  EditorPluginType.Text,
+  EditorPluginType.Blockquote,
+  EditorPluginType.Box,
+  EditorPluginType.Geogebra,
+  EditorPluginType.Highlight,
+  EditorPluginType.Anchor,
+  EditorPluginType.Equations,
+  EditorPluginType.Image,
+  EditorPluginType.Important,
+  EditorPluginType.Injection,
+  EditorPluginType.Multimedia,
+  EditorPluginType.Spoiler,
+  EditorPluginType.SerloTable,
+  EditorPluginType.Video,
 ]
 
 const pageLayoutState = object({
   widthPercent: number(), // first column defines second
   column1: child({
-    plugin: 'rows',
-    config: {
-      allowedPlugins,
-    },
+    plugin: EditorPluginType.Rows,
+    config: { allowedPlugins },
   }),
   column2: child({
-    plugin: 'rows',
-    config: {
-      allowedPlugins,
-    },
+    plugin: EditorPluginType.Rows,
+    config: { allowedPlugins },
   }),
 })
 

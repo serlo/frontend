@@ -88,7 +88,7 @@ export function list<D extends StateType>(
             reverse: (previousState: T) => T
           ): (previousState: WrappedValue[]) => WrappedValue[] {
             return (oldItems) => {
-              const index = R.findIndex(R.propEq('id', id), oldItems)
+              const index = oldItems.findIndex((item) => item.id === id)
               return R.update(
                 index,
                 { value: reverse(oldItems[index].value), id: id },
@@ -104,7 +104,7 @@ export function list<D extends StateType>(
               oldItems: WrappedValue[],
               helpers: StoreDeserializeHelpers
             ) => {
-              const index = R.findIndex(R.propEq('id', id), oldItems)
+              const index = oldItems.findIndex((item) => item.id === id)
               return R.update(
                 index,
                 { value: initial(oldItems[index].value, helpers), id: id },

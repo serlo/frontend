@@ -2,7 +2,6 @@ import { converter } from '@serlo/markdown'
 
 import { convertLegacyState } from './convert-legacy-state'
 import { convertTextPluginState } from './convert-text-plugin-state'
-import { EdtrState, UnknownEdtrState } from './edtr-io-types'
 import { sanitizeLatex } from './sanitize-latex'
 import {
   FrontendContentNode,
@@ -10,20 +9,29 @@ import {
   FrontendNodeType,
   FrontendSerloTrNode,
   FrontendTextNode,
-  Sign,
 } from '@/frontend-node-types'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
+import {
+  SupportedEditorPlugin,
+  UnknownEditorPlugin,
+} from '@/serlo-editor-integration/types/editor-plugins'
 import { BoxType } from '@/serlo-editor/plugins/box/renderer'
+import { Sign } from '@/serlo-editor/plugins/equations/sign'
 import { CustomElement, CustomText } from '@/serlo-editor/plugins/text'
 
 type CustomNode = CustomElement | CustomText
 
-function isEdtrState(node: ConvertData): node is EdtrState {
-  return (node as EdtrState).plugin !== undefined
+function isSupportedEditorPlugin(
+  node: ConvertData
+): node is SupportedEditorPlugin {
+  return Object.values(EditorPluginType).includes(
+    (node as SupportedEditorPlugin).plugin
+  )
 }
 
 export type ConvertData =
-  | EdtrState
-  | UnknownEdtrState
+  | SupportedEditorPlugin
+  | UnknownEditorPlugin
   | FrontendContentNode
   | CustomNode
 
@@ -39,14 +47,20 @@ export function isTextPluginState(node: ConvertData): node is CustomNode {
 export function convert(node?: ConvertNode): FrontendContentNode[] {
   // compat: no or empty node, we ignore
   if (!node || Object.keys(node).length === 0) return []
+
   if (Array.isArray(node)) return node.flatMap(convert)
-  if (isEdtrState(node)) return convertPlugin(node)
+  if (isSupportedEditorPlugin(node)) return convertPlugin(node)
   if (isTextPluginState(node)) return convertTextPluginState(node)
+
   return []
 }
 
-function convertPlugin(node: EdtrState): FrontendContentNode[] {
-  if (node.plugin === 'article') {
+function convertPlugin(
+  node: SupportedEditorPlugin | UnknownEditorPlugin
+): FrontendContentNode[] {
+  if (!isSupportedEditorPlugin(node)) return []
+
+  if (node.plugin === EditorPluginType.Article) {
     const {
       introduction,
       content,
@@ -64,7 +78,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         type: FrontendNodeType.Article,
         introduction: convertPlugin({
           ...introduction,
-          plugin: 'multimedia',
+          plugin: EditorPluginType.Multimedia,
         }),
         content: convertPlugin(content),
         exercises: exercises
@@ -78,21 +92,23 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-  if (node.plugin === 'rows') {
-    return convert(node.state as unknown as EdtrState)
+  if (node.plugin === EditorPluginType.Rows) {
+    return convert(node.state)
   }
-  if (node.plugin === 'text') {
+  if (node.plugin === EditorPluginType.Text) {
     return [
       { type: FrontendNodeType.SlateContainer, children: convert(node.state) },
     ]
   }
-  if (node.plugin === 'image') {
+  if (node.plugin === EditorPluginType.Image) {
     // remove images without source
     if (!node.state.src) return []
 
     const { caption, maxWidth, link, src } = node.state
 
-    const convertedCaption = caption ? convert(caption as EdtrState) : undefined
+    const convertedCaption = caption
+      ? convert(caption as SupportedEditorPlugin)
+      : undefined
 
     const captionTexts = convertedCaption?.[0]?.children?.[0]?.children
 
@@ -103,7 +119,9 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       ? captionTexts && captionTexts.length > 0
         ? captionTexts
             .map((textPlugin) => {
-              return textPlugin.type === 'text' ? textPlugin.text : ''
+              return textPlugin.type === FrontendNodeType.Text
+                ? textPlugin.text
+                : ''
             })
             .join('')
         : ''
@@ -111,7 +129,7 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
 
     return [
       {
-        type: FrontendNodeType.Img,
+        type: FrontendNodeType.Image,
         src: src as string,
         alt,
         maxWidth,
@@ -120,23 +138,22 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-  if (node.plugin === 'important') {
+  if (node.plugin === EditorPluginType.Important) {
     return [{ type: FrontendNodeType.Important, children: convert(node.state) }]
   }
-  if (node.plugin === 'blockquote') {
+  if (node.plugin === EditorPluginType.Blockquote) {
     return [
       {
         type: FrontendNodeType.Blockquote,
-        children: convert(node.state as EdtrState),
+        children: convert(node.state as SupportedEditorPlugin),
       },
     ]
   }
-  if (node.plugin === 'box') {
+  if (node.plugin === EditorPluginType.Box) {
     // get rid of wrapping p and inline math in title
-    const convertedTitle = convert(node.state.title as EdtrState)[0] as
-      | FrontendTextNode
-      | FrontendMathNode
-      | undefined
+    const convertedTitle = convert(
+      node.state.title as SupportedEditorPlugin
+    )[0] as FrontendTextNode | FrontendMathNode | undefined
     const title = convertedTitle
       ? ((convertedTitle.type === FrontendNodeType.Math
           ? [{ ...convertedTitle, type: FrontendNodeType.InlineMath }]
@@ -149,11 +166,11 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
         boxType: node.state.type as BoxType,
         anchorId: node.state.anchorId,
         title,
-        children: convert(node.state.content.state as EdtrState),
+        children: convert(node.state.content.state as SupportedEditorPlugin),
       },
     ]
   }
-  if (node.plugin === 'spoiler') {
+  if (node.plugin === EditorPluginType.Spoiler) {
     return [
       {
         type: FrontendNodeType.SpoilerContainer,
@@ -171,24 +188,24 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
           },
           {
             type: FrontendNodeType.SpoilerBody,
-            children: convert(node.state.content as EdtrState),
+            children: convert(node.state.content as SupportedEditorPlugin),
           },
         ],
       },
     ]
   }
-  if (node.plugin === 'multimedia') {
+  if (node.plugin === EditorPluginType.Multimedia) {
     const width = node.state.width ?? 50
     return [
       {
         type: FrontendNodeType.Multimedia,
         mediaWidth: width,
-        media: convert(node.state.multimedia as EdtrState),
-        children: convert(node.state.explanation as EdtrState),
+        media: convert(node.state.multimedia as SupportedEditorPlugin),
+        children: convert(node.state.explanation as SupportedEditorPlugin),
       },
     ]
   }
-  if (node.plugin === 'layout') {
+  if (node.plugin === EditorPluginType.Layout) {
     return [
       {
         type: FrontendNodeType.Row,
@@ -203,26 +220,14 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-  if (node.plugin === 'injection') {
-    return [
-      {
-        type: FrontendNodeType.Injection,
-        href: node.state,
-      },
-    ]
+  if (node.plugin === EditorPluginType.Injection) {
+    return [{ ...node, type: FrontendNodeType.Injection }]
   }
-  if (node.plugin === 'highlight') {
+  if (node.plugin === EditorPluginType.Highlight) {
     if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
-    return [
-      {
-        type: FrontendNodeType.Code,
-        code: node.state.code,
-        language: node.state.language,
-        showLineNumbers: node.state.showLineNumbers,
-      },
-    ]
+    return [{ ...node, type: FrontendNodeType.Code }]
   }
-  if (node.plugin === 'table') {
+  if (node.plugin === EditorPluginType.Table) {
     const html = converter.makeHtml(node.state)
     // compat: the markdown converter could return all types of content, only use table nodes.
     const children = convertLegacyState(html).children.filter(
@@ -230,14 +235,14 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
     )
     return children
   }
-  if (node.plugin === 'serloTable') {
+  if (node.plugin === EditorPluginType.SerloTable) {
     const children = node.state.rows.map((row) => {
       return {
         type: FrontendNodeType.SerloTr,
         children: row.columns.map((cell) => {
           return {
             type: FrontendNodeType.SerloTd,
-            children: convert(cell.content as EdtrState),
+            children: convert(cell.content as SupportedEditorPlugin),
           }
         }),
       }
@@ -251,35 +256,33 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-  if (node.plugin === 'video') {
-    if (!node.state.src) {
-      return []
-    }
+  if (node.plugin === EditorPluginType.Video) {
+    if (!node.state.src) return []
     return [
       {
+        plugin: EditorPluginType.Video,
         type: FrontendNodeType.Video,
-        src: node.state.src,
+        state: node.state,
       },
     ]
   }
-  if (node.plugin === 'anchor') {
-    return [
-      {
-        type: FrontendNodeType.Anchor,
-        id: node.state,
-      },
-    ]
+  if (node.plugin === EditorPluginType.Anchor) {
+    return [{ ...node, type: FrontendNodeType.Anchor }]
   }
-  if (node.plugin === 'geogebra') {
+  if (node.plugin === EditorPluginType.Geogebra) {
     // compat: full url given
     let id = node.state
     const match = /geogebra\.org\/m\/(.+)/.exec(id)
-    if (match) {
-      id = match[1]
-    }
-    return [{ type: FrontendNodeType.Geogebra, id }]
+    if (match) id = match[1]
+    return [
+      {
+        plugin: EditorPluginType.Geogebra,
+        type: FrontendNodeType.Geogebra,
+        state: id,
+      },
+    ]
   }
-  if (node.plugin === 'equations') {
+  if (node.plugin === EditorPluginType.Equations) {
     const { firstExplanation, transformationTarget } = node.state
     const steps = node.state.steps.map((step) => {
       return {
@@ -302,24 +305,21 @@ function convertPlugin(node: EdtrState): FrontendContentNode[] {
       },
     ]
   }
-
-  if (node.plugin === 'pageLayout') {
+  if (node.plugin === EditorPluginType.PageLayout) {
     if (node.state.widthPercent === 0) return []
     return [
       {
         type: FrontendNodeType.PageLayout,
-        column1: convert(node.state.column1 as EdtrState),
-        column2: convert(node.state.column2 as EdtrState),
+        column1: convert(node.state.column1 as SupportedEditorPlugin),
+        column2: convert(node.state.column2 as SupportedEditorPlugin),
         widthPercent: node.state.widthPercent,
       },
     ]
   }
-
-  if (node.plugin === 'pageTeam') {
+  if (node.plugin === EditorPluginType.PageTeam) {
     return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
   }
-
-  if (node.plugin === 'pagePartners') {
+  if (node.plugin === EditorPluginType.PagePartners) {
     return [{ type: FrontendNodeType.PagePartners }]
   }
 

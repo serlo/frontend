@@ -10,6 +10,7 @@ import { Settings } from './helpers/settings'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
 
 export const appletTypeState = entityType(
@@ -19,7 +20,7 @@ export const appletTypeState = entityType(
     content: editorContent(),
     meta_title: string(),
     meta_description: string(),
-    url: serializedChild('geogebra'),
+    url: serializedChild(EditorPluginType.Geogebra),
   },
   {}
 )

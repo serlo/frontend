@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react'
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
 import { storeStateToLocalStorage } from '@/serlo-editor-integration/components/local-storage-notice'
 import { SaveContext } from '@/serlo-editor-integration/serlo-editor'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
 
 export function useHandleSave(
@@ -29,7 +30,7 @@ export function useHandleSave(
   // Currently still needed
   if (
     serialized !== null &&
-    serializedRoot?.plugin === 'type-text-exercise-group' &&
+    serializedRoot?.plugin === TemplatePluginType.TextExerciseGroup &&
     has('cohesive', serialized)
   ) {
     // backend can only handle string attributes

@@ -12,6 +12,7 @@ import {
   child,
 } from '../../plugin'
 import { ImageEditor } from './editor'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const imageState = object({
   src: upload(''),
@@ -20,7 +21,7 @@ const imageState = object({
   maxWidth: optional(number(0)),
   caption: optional(
     child({
-      plugin: 'text',
+      plugin: EditorPluginType.Text,
       config: {
         formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
         noLinebreaks: true,
@@ -44,7 +45,7 @@ export function createImagePlugin(
             link: undefined,
             alt: undefined,
             maxWidth: undefined,
-            caption: { plugin: 'text' },
+            caption: { plugin: EditorPluginType.Text },
           },
         }
       }
@@ -60,7 +61,7 @@ export function createImagePlugin(
               link: undefined,
               alt: undefined,
               maxWidth: undefined,
-              caption: { plugin: 'text' },
+              caption: { plugin: EditorPluginType.Text },
             },
           }
         }

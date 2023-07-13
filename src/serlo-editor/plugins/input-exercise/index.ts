@@ -10,6 +10,7 @@ import {
 } from '../../plugin'
 import { InputExerciseEditor } from './editor'
 import { InputExerciseType } from './input-exercise-type'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 function createInputExerciseState(
   feedback: ChildStateTypeConfig<string, unknown>
@@ -42,9 +43,7 @@ export type InputExerciseProps = EditorPluginProps<
   InputExerciseConfig
 >
 
-const defaultFeedback = {
-  plugin: 'text',
-}
+const defaultFeedback = { plugin: EditorPluginType.Text }
 
 export function createInputExercisePlugin({
   feedback = defaultFeedback,
