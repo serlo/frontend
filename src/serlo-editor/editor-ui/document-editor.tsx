@@ -3,11 +3,11 @@ import { useState, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 
 import { edtrClose, EdtrIcon } from '.'
+import { PluginToolbar } from './plugin-toolbar/plugin-toolbar'
 import {
   OverlayButton,
   PluginToolbarOverlayButton,
 } from '../plugin/plugin-toolbar'
-import { PluginToolbar } from './plugin-toolbar/plugin-toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
