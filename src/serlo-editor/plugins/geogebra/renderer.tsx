@@ -1,22 +1,57 @@
+import Script from 'next/script'
+
 import { tw } from '@/helper/tw'
 
 export interface GeogebraRendererProps {
+  id: string
   url: string
 }
 
-export function GeogebraRenderer({ url }: GeogebraRendererProps) {
+export function GeogebraRenderer({ id, url }: GeogebraRendererProps) {
   return (
-    <div className="block h-0 overflow-hidden p-0">
-      <iframe
-        className={tw`
-              absolute top-0 left-0 z-10 h-full
-              w-full border-none bg-black bg-opacity-30
-            `}
-        title={url}
-        scrolling="no"
-        src={url}
+    <>
+      <Script
+        src="https://www.geogebra.org/apps/deployggb.js"
+        onReady={() => {
+          // https://wiki.geogebra.org/en/Reference:GeoGebra_App_Parameters
+          const params = {
+            appName: '…',
+            showToolBar: false,
+            showAlgebraInput: false,
+            showMenuBar: false,
+            material_id: id,
+            showResetIcon: true,
+            enableLabelDrags: false,
+            enableShiftDragZoom: false,
+            enableRightClick: false,
+            capturingThreshold: null,
+            showToolBarHelp: false,
+            errorDialogsActive: true,
+            useBrowserForJS: false,
+            enableFileFeatures: false,
+            borderColor: 'transparent',
+            scaleContainerClass: `geogebra-scaler-${id}`,
+          }
+
+          if (Object.hasOwn(global, 'GGBApplet')) {
+            //@ts-expect-error no types for Geogebra script
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+            const applet = new window.GGBApplet(params, true)
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+            applet.inject(`ggb-element-${id}`)
+          }
+        }}
       />
-    </div>
+      <div
+        className={
+          `geogebra-scaler-${id} ` +
+          tw`absolute top-0 flex h-full w-full items-center justify-center
+          overflow-hidden rounded-xl bg-brand-50 p-0`
+        }
+      >
+        {url ? <div id={`ggb-element-${id}`} className="mx-auto"></div> : null}
+      </div>
+    </>
   )
 }
 

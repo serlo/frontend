@@ -3448,6 +3448,7 @@ __metadata:
     "@tippyjs/react": ^4.2.6
     "@types/algebra.js": ^0.2.2
     "@types/escape-html": ^1.0.2
+    "@types/iframe-resizer": ^3.5.9
     "@types/jest": ^29.2.0
     "@types/js-cookie": ^3.0.2
     "@types/katex": ^0.14.0
@@ -3489,6 +3490,7 @@ __metadata:
     graphql: ^16.6.0
     graphql-request: ^5.0.0
     htmlparser2: ^8.0.1
+    iframe-resizer: ^4.3.6
     iframe-resizer-react: ^1.1.0
     io-ts: ^2.2.19
     is-hotkey: ^0.2.0
@@ -3921,6 +3923,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/iframe-resizer@npm:^3.5.9":
+  version: 3.5.9
+  resolution: "@types/iframe-resizer@npm:3.5.9"
+  checksum: aa60f72832f72f788ea3029fe4cbfb572bb481b5a1bb9b50d13287cdef347d8e00e07916aa2c3765f7e39d4ec8701f64ddd9d27fe93ba7571a0b3bf06f1ecca4
+  languageName: node
+  linkType: hard
+
 "@types/is-hotkey@npm:^0.1.1":
   version: 0.1.7
   resolution: "@types/is-hotkey@npm:0.1.7"
@@ -4051,14 +4060,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
-  version: 17.0.15
-  resolution: "@types/node@npm:17.0.15"
-  checksum: aa64ecf4fbcf9888e794dcdc20e98c49cdcb102b17e57c44ca56943904732d6cc250e766f8448a3cd71d6a40a4b597bd83c565e5bd9b982733fa3f9813d5c291
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^18.0.0":
+"@types/node@npm:*, @types/node@npm:^18.0.0":
   version: 18.16.16
   resolution: "@types/node@npm:18.16.16"
   checksum: 0efad726dd1e0bef71c392c708fc5d78c5b39c46b0ac5186fee74de4ccb1b2e847b3fa468da67d62812f56569da721b15bf31bdc795e6c69b56c73a45079ed2d
@@ -7511,7 +7513,7 @@ __metadata:
 
 "fsevents@patch:fsevents@^2.3.2#~builtin<compat/fsevents>, fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -8153,6 +8155,13 @@ __metadata:
   version: 4.3.2
   resolution: "iframe-resizer@npm:4.3.2"
   checksum: 762d934f4fbe7e4b76c0f4574c2a47ef0e3fc6c82564f512ec41e62b62501052d271fb8ca5d268535509c0088132493c0ac78312af0fe3f11bf65cd964dd11a0
+  languageName: node
+  linkType: hard
+
+"iframe-resizer@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "iframe-resizer@npm:4.3.6"
+  checksum: 9ef4178bc1e15335d28adb65686b5b4d784d416558fe02a255b6c77876f2da7c08ef878569eb2bb50be84b33db52927e24134faea7d43b9b3081bb61d2adeef8
   languageName: node
   linkType: hard
 
@@ -12084,16 +12093,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"redux@npm:^4.0.0, redux@npm:^4.0.4, redux@npm:^4.2.0":
-  version: 4.2.0
-  resolution: "redux@npm:4.2.0"
-  dependencies:
-    "@babel/runtime": ^7.9.2
-  checksum: 75f3955c89b3f18edf5411e5fb482aa2e4f41a416183e8802a6bf6472c4fc3d47675b8b321d147f8af8e0f616436ac507bf5a25f1c4d6180e797b549c7db2c1d
-  languageName: node
-  linkType: hard
-
-"redux@npm:^4.2.1":
+"redux@npm:^4.0.0, redux@npm:^4.0.4, redux@npm:^4.2.0, redux@npm:^4.2.1":
   version: 4.2.1
   resolution: "redux@npm:4.2.1"
   dependencies:
@@ -12304,14 +12304,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"reselect@npm:^4.0.0":
-  version: 4.1.7
-  resolution: "reselect@npm:4.1.7"
-  checksum: 738d8e2b8f0dca154ad29de6a209c9fbca2d70ae6788fd85df87f2c74b95a65bbf2d16d43a9e2faff39de34d17a29d706ba08a6b2ee5660c09589edbd19af7e1
-  languageName: node
-  linkType: hard
-
-"reselect@npm:^4.1.8":
+"reselect@npm:^4.0.0, reselect@npm:^4.1.8":
   version: 4.1.8
   resolution: "reselect@npm:4.1.8"
   checksum: a4ac87cedab198769a29be92bc221c32da76cfdad6911eda67b4d3e7136dca86208c3b210e31632eae31ebd2cded18596f0dd230d3ccc9e978df22f233b5583e
@@ -12380,7 +12373,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
 
 "resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
   version: 1.22.1
-  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
   dependencies:
     is-core-module: ^2.9.0
     path-parse: ^1.0.7
@@ -12393,7 +12386,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
 
 "resolve@patch:resolve@^2.0.0-next.3#~builtin<compat/resolve>":
   version: 2.0.0-next.3
-  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.3#~builtin<compat/resolve>::version=2.0.0-next.3&hash=07638b"
+  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.3#~builtin<compat/resolve>::version=2.0.0-next.3&hash=c3c19d"
   dependencies:
     is-core-module: ^2.2.0
     path-parse: ^1.0.6
@@ -12535,11 +12528,11 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   linkType: hard
 
 "semver@npm:2 || 3 || 4 || 5, semver@npm:^5.5.0, semver@npm:^5.6.0":
-  version: 5.7.1
-  resolution: "semver@npm:5.7.1"
+  version: 5.7.2
+  resolution: "semver@npm:5.7.2"
   bin:
-    semver: ./bin/semver
-  checksum: 57fd0acfd0bac382ee87cd52cd0aaa5af086a7dc8d60379dfe65fea491fb2489b6016400813930ecd61fd0952dae75c115287a1b16c234b1550887117744dfaf
+    semver: bin/semver
+  checksum: fb4ab5e0dd1c22ce0c937ea390b4a822147a9c53dbd2a9a0132f12fe382902beef4fbf12cf51bb955248d8d15874ce8cd89532569756384f994309825f10b686
   languageName: node
   linkType: hard
 
@@ -13820,11 +13813,11 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
 
 "typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=7ad353"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=289587"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
+  checksum: 2160f7ad975c59b2f5816817d3916be1d156c5688a7517602b3b640c5015e740f4ba933996ac85371d68f7bbdd41602150fb8b68334122ac637fdb5418085e7a
   languageName: node
   linkType: hard
 
