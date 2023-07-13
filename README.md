@@ -42,7 +42,7 @@ Some of the features we use:
 - [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration)
 - …
 
-### Prisma + Planetscale (experimental)
+### Optional: Prisma + Planetscale (experimental)
 
 We are trying out a [serverless sql database](https://app.planetscale.com/serlo/serlo_planetscale) and use it to build prototypes. Don't use for production features yet!
 
