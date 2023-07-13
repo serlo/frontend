@@ -42,7 +42,7 @@ function TextExerciseTypeEditor({
   const textExStrings = useEditorStrings().templatePlugins.textExercise
 
   return (
-    <article className="text-exercise mt-12">
+    <article className="text-exercise mt-16">
       {content.render()}
       {textSolution.id ? (
         <OptionalChild

@@ -60,7 +60,7 @@ function TextExerciseGroupTypeEditor(
   })
 
   return (
-    <article className="exercisegroup mt-12">
+    <article className="exercisegroup mt-16">
       <section className="row">{contentRendered}</section>
       <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
         {children.map((child, index) => (
