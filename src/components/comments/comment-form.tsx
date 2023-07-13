@@ -42,10 +42,11 @@ export function CommentForm({
   const textareaRef = useRef<null | HTMLTextAreaElement>(null)
 
   async function onSendAction() {
-    if (commentValue.length < 1) {
+    if (commentValue.trim().length < 1) {
       textareaRef.current?.focus()
       return
     }
+
     setIsSending(true)
     const success = await onSend(commentValue, reply, threadId)
     setIsSending(false)
