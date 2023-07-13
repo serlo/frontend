@@ -24,7 +24,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           embedUrl={url}
           className={editable && !focused ? 'pointer-events-none' : ''}
         >
-          <GeogebraRenderer url={url} />
+          <GeogebraRenderer url={url} id={cleanId} />
         </EmbedWrapper>
       ) : (
         <div className="rounded-lg bg-editor-primary-50 py-32 text-center">

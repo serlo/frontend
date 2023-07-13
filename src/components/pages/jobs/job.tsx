@@ -59,6 +59,41 @@ export function Job({ position }: { position: PersonioPosition }) {
         .sane-text-defaults p {
           margin-bottom: 1rem !important;
         }
+        .sane-text-defaults ul {
+          margin: 1rem 16px 30px 0;
+          list-style-type: none;
+          padding-left: 1.25rem;
+        }
+
+        .sane-text-defaults ul li:before {
+          position: absolute;
+          background-color: rgb(142 197 226);
+          content: ' ';
+          margin-left: -1.25rem;
+          margin-top: 9px;
+          height: 0.625rem;
+          width: 0.625rem;
+          border-radius: 9999px;
+        }
+        .sane-text-defaults ul li {
+          margin-bottom: 0.5rem;
+        }
+
+        .sane-text-defaults {
+          font-size: 1.125rem;
+          line-height: 1.33;
+        }
+
+        .sane-text-defaults a {
+          overflow-wrap: break-word;
+          color: rgb(0 126 193);
+          text-decoration: none;
+          hyphens: auto;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       `}</style>
     </>
   )
