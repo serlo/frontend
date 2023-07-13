@@ -138,13 +138,13 @@ export function ShareModal({
         <QRCode value={shareUrl} renderAs="svg" fgColor={colors.brand} />
       </div>
       {renderShareInput()}
-      <hr className="my-4 mx-side" />
+      <hr className="mx-side my-4" />
       {renderButtons(lmsData)}
-      <hr className="my-4 mx-side" />
+      <hr className="mx-side my-4" />
       {renderButtons(socialShare)}
       {showPdf && (
         <>
-          <hr className="my-4 mx-side" />
+          <hr className="mx-side my-4" />
           {renderButtons(pdfData)}
         </>
       )}
@@ -156,8 +156,8 @@ export function ShareModal({
       <>
         <input /*ShareInput*/
           className={tw`
-            ml-3 mb-2 mr-0 w-[250px] rounded-2xl
-            border-none bg-brandgreen-50 py-1 px-2.5
+            mb-2 ml-3 mr-0 w-[250px] rounded-2xl
+            border-none bg-brandgreen-50 px-2.5 py-1
             focus:shadow-input focus:outline-none
           `}
           ref={shareInputRef}

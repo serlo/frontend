@@ -38,7 +38,7 @@ function UnsupportedRenderer(props: EditorPluginProps<UnsupportedPluginState>) {
         <FaIcon icon={faWarning} /> {unsupportedStrings.notSupported} [
         {unsupportedType}]
       </b>
-      <p className="mt-3 mb-1">{unsupportedStrings.explanation}</p>
+      <p className="mb-1 mt-3">{unsupportedStrings.explanation}</p>
     </div>
   )
 }

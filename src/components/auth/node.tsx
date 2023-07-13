@@ -46,7 +46,7 @@ export function Node({
       return (
         <span
           key={`${uiText.id}`}
-          className="-mt-2 mb-2 ml-3 block italic text-red-500 special-hyphens-initial"
+          className="-mt-2 mb-2 ml-3 block hyphens-manual italic text-red-500"
         >
           <Message uiText={uiText} fieldName={fieldName} />
         </span>
@@ -223,7 +223,7 @@ export function Node({
             e.preventDefault()
             setShowPassword(!showPassword)
           }}
-          className="serlo-button-blue-transparent relative mr-1.5 -mt-24 ml-auto block py-0 text-base"
+          className="serlo-button-blue-transparent relative -mt-24 ml-auto mr-1.5 block py-0 text-base"
         >
           <FaIcon icon={showPassword ? faEyeSlash : faEye} />{' '}
           {showPassword ? 'hide' : 'show'}
@@ -236,7 +236,7 @@ export function Node({
     if (flowType !== FlowType.registration && flowType !== FlowType.settings)
       return null
     return (
-      <p className="-mt-6 ml-3 mb-4 text-gray-500">
+      <p className="-mt-6 mb-4 ml-3 text-gray-500">
         {strings.auth.register.passwordRequirements}
       </p>
     )

@@ -26,7 +26,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
           onClick={onClose}
           src={src}
           alt={alt ?? pictureString}
-          className="my-0 mx-auto h-auto max-h-[86vh] max-w-[100%] cursor-[zoom-out]"
+          className="mx-auto my-0 h-auto max-h-[86vh] max-w-[100%] cursor-[zoom-out]"
         />
         <div className="pointer-events-auto">{label}</div>
       </Modal>

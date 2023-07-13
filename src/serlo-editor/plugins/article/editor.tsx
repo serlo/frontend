@@ -43,7 +43,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
                 {exerciseFolder.title.value}
               </a>
             ) : null}{' '}
-            <span className="-mt-3 -ml-1 inline-block">
+            <span className="-ml-1 -mt-3 inline-block">
               {renderButton(modalStrings.buttonExFolder, true)}
             </span>
           </>
@@ -90,7 +90,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
         text={text}
         noIcon={noIcon}
         onClick={() => setModalOpen(true)}
-        className="mt-4 mb-8"
+        className="mb-8 mt-4"
       />
     )
   }

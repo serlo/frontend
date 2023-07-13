@@ -210,7 +210,7 @@ export function EditorRowRenderer({
               ref={drag}
               icon={<EdtrIcon icon={edtrDragHandle} />}
               label={editorStrings.plugins.rows.dragElement}
-              className="mb-1.5 -mt-[3px] cursor-grab select-none active:cursor-grabbing"
+              className="-mt-[3px] mb-1.5 cursor-grab select-none active:cursor-grabbing"
             />
             {children}
           </>

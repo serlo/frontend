@@ -86,7 +86,7 @@ export function SubjectLandingFeatured({
             </div>
           )}
         </div>
-        <h4 className="mx-0 mt-1 mb-10 break-normal text-xl font-bold special-hyphens-auto">
+        <h4 className="mx-0 mb-10 mt-1 hyphens-auto break-normal text-xl font-bold">
           {data.title}
         </h4>
         <span className="font-sm absolute bottom-2 mt-1 block text-brand-400">

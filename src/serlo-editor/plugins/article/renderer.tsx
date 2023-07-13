@@ -49,7 +49,7 @@ export function ArticleRenderer({
       {sources ? (
         <>
           <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>
-          <ul className="serlo-ul mt-2 mb-4 text-lg"></ul>
+          <ul className="serlo-ul mb-4 mt-2 text-lg"></ul>
           {sources}
         </>
       ) : null}
@@ -81,7 +81,7 @@ export function ArticleRenderer({
     return (
       <>
         <h3 className="serlo-h3 mb-0">{strings.categories[type]}</h3>
-        <ul className="serlo-ul mt-2 mb-4 text-lg">{relatedContent[type]}</ul>
+        <ul className="serlo-ul mb-4 mt-2 text-lg">{relatedContent[type]}</ul>
       </>
     )
   }

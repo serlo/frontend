@@ -55,7 +55,7 @@ export function CommunityWallPersons({
                 alt={`Avatar von ${name}`}
                 className="aspect-square w-full rounded-full object-cover"
               />
-              <p className="mt-2 mb-2 text-base font-bold text-gray-700">
+              <p className="mb-2 mt-2 text-base font-bold text-gray-700">
                 @{name}
               </p>
               <span

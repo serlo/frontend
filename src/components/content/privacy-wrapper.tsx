@@ -109,7 +109,7 @@ export function PrivacyWrapper({
           />
         </div>
         {!consentGiven && (
-          <div className="relative z-10 cursor-default bg-brand-100 py-2 px-side text-left text-brand-700">
+          <div className="relative z-10 cursor-default bg-brand-100 px-side py-2 text-left text-brand-700">
             {replacePlaceholders(strings.embed.text, {
               provider: <b>{provider}</b>,
               privacypolicy: (

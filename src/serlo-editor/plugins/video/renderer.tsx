@@ -49,7 +49,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
   )
 }
 
-const videoClassName = tw`absolute top-0 left-0 z-20 h-full w-full border-none bg-black/30`
+const videoClassName = tw`absolute left-0 top-0 z-20 h-full w-full border-none bg-black/30`
 
 export function parseVideoUrl(
   checkSrc: string,

@@ -373,7 +373,7 @@ function StepEditor(props: StepEditorProps) {
           />
         </td>
       )}
-      <td className="py-0 px-[3px] text-center align-baseline">
+      <td className="px-[3px] py-0 text-center align-baseline">
         {(transformationTarget === 'equation' || row !== 0) && (
           <select
             className="ml-4 mr-2.5 h-8 w-9 rounded-md border-[1px] border-gray-200 bg-gray-200"
