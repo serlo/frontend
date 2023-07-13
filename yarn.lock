@@ -3649,7 +3649,7 @@ __metadata:
     prisma: ^4.15.0
     prop-types: ^15.8.1
     qrcode.react: ^3.1.0
-    ramda: ^0.28.0
+    ramda: ^0.29.0
     react: ^18.2.0
     react-beautiful-dnd: ^13.1.1
     react-diff-viewer: ^3.1.1
@@ -8354,14 +8354,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iframe-resizer@npm:^4.3.0":
-  version: 4.3.2
-  resolution: "iframe-resizer@npm:4.3.2"
-  checksum: 762d934f4fbe7e4b76c0f4574c2a47ef0e3fc6c82564f512ec41e62b62501052d271fb8ca5d268535509c0088132493c0ac78312af0fe3f11bf65cd964dd11a0
-  languageName: node
-  linkType: hard
-
-"iframe-resizer@npm:^4.3.6":
+"iframe-resizer@npm:^4.3.0, iframe-resizer@npm:^4.3.6":
   version: 4.3.6
   resolution: "iframe-resizer@npm:4.3.6"
   checksum: 9ef4178bc1e15335d28adb65686b5b4d784d416558fe02a255b6c77876f2da7c08ef878569eb2bb50be84b33db52927e24134faea7d43b9b3081bb61d2adeef8
@@ -11921,10 +11914,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ramda@npm:^0.28.0":
-  version: 0.28.0
-  resolution: "ramda@npm:0.28.0"
-  checksum: 44ea6e5010bba70151b6a92d8114a91915e8b5a16105cce65fae58c9d7386b812c429645e35f21141d7087568550ce383bc10ee1a65cdec951f4b69ea457e6a4
+"ramda@npm:^0.29.0":
+  version: 0.29.0
+  resolution: "ramda@npm:0.29.0"
+  checksum: 9ab26c06eb7545cbb7eebcf75526d6ee2fcaae19e338f165b2bf32772121e7b28192d6664d1ba222ff76188ba26ab307342d66e805dbb02c860560adc4d5dd57
   languageName: node
   linkType: hard
 
