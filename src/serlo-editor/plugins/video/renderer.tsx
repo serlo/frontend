@@ -31,7 +31,7 @@ export function VideoRenderer({ src, type }: VideoRendererProps) {
   }
 
   return (
-    <div className="my-0 mx-side  p-0">
+    <div className="mx-side my-0  p-0">
       {type === VideoType.WikimediaCommons ? (
         <video controls src={src} className={videoClassName} />
       ) : (

@@ -30,7 +30,7 @@ export function CourseNavigation({
       <p className="serlo-p mb-0 mt-4 text-[1rem] font-bold">
         <FaIcon icon={faGraduationCap} /> {strings.entities.course}
       </p>
-      <h1 className="mx-side mt-0 mb-4 text-2xl font-bold">{title}</h1>
+      <h1 className="mx-side mb-4 mt-0 text-2xl font-bold">{title}</h1>
       {pages.length > 0 ? (
         <button
           onClick={onOverviewButtonClick}

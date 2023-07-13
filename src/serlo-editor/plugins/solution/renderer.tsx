@@ -66,8 +66,8 @@ export function SolutionRenderer({
       <button
         className={clsx(
           tw`
-            serlo-button-blue-transparent ml-side
-            mr-auto mb-4 pr-2 text-base
+            serlo-button-blue-transparent mb-4
+            ml-side mr-auto pr-2 text-base
           `,
           solutionVisible && 'bg-brand text-white'
         )}

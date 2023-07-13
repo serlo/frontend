@@ -54,7 +54,7 @@ export const VideoEditor = ({
 
   function renderInput() {
     return (
-      <div className="mx-side mt-4 mb-3">
+      <div className="mx-side mb-3 mt-4">
         <EditorInput
           label={`${videoStrings.videoUrl}: `}
           value={state.src.value}
