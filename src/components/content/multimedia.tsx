@@ -21,6 +21,16 @@ export function Multimedia({
   const mediaChildIsImage = mediaChild?.type === 'img'
   const showLightbox = mediaChildIsImage && open
 
+  // hide empty plugins
+  const isEmpty =
+    !mediaChild &&
+    children.length === 1 &&
+    children[0] &&
+    children[0].children?.length === 1 &&
+    children[0].children?.[0].children?.length === 0
+
+  if (isEmpty) return null
+
   return (
     <>
       <MultimediaRenderer

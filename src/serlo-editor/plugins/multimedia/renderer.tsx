@@ -18,7 +18,7 @@ export function MultimediaRenderer({
   const widthClass = getWidthClass()
 
   return (
-    <div className="flex flex-col-reverse mobile:block">
+    <div className="mx-side mb-8 flex flex-col-reverse rounded-xl border-3 border-brand-50 pt-4 mobile:block">
       <div
         onClick={onClick}
         className={clsx(

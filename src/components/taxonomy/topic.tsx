@@ -86,7 +86,7 @@ export function Topic({ data }: TopicProps) {
 
   function renderHeader() {
     return (
-      <h1 className="serlo-h1 mt-8 mb-10">
+      <h1 className="serlo-h1 mt-8 mb-10" itemProp="name">
         {data.title}
         {isExerciseFolder && (
           <span title={strings.entities.exerciseFolder}>

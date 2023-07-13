@@ -21,55 +21,52 @@ export const videoTypeState = entityType(
   {}
 )
 
-export const videoTypePlugin: EditorPlugin<typeof videoTypeState> = {
+export type VideoTypePluginState = typeof videoTypeState
+
+export const videoTypePlugin: EditorPlugin<VideoTypePluginState> = {
   Component: VideoTypeEditor,
   state: videoTypeState,
   config: {},
 }
 
-function VideoTypeEditor(props: EditorPluginProps<typeof videoTypeState>) {
-  const { title, description } = props.state
+function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
+  const { title, content, description, id, revision, replaceOwnState } =
+    props.state
   const editorStrings = useEditorStrings()
 
   return (
-    <section>
+    <>
       {props.renderIntoToolbar(
         <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
           entityType={UuidType.Video}
         />
       )}
-      <div className="page-header">
-        <h1>
-          {props.editable ? (
-            <input
-              className={headerInputClasses}
-              placeholder={editorStrings.plugins.video.titlePlaceholder}
-              value={title.value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                title.set(e.target.value)
-              }}
-            />
-          ) : (
-            <span itemProp="name">{title.value}</span>
-          )}
-        </h1>
-      </div>
-      <article>
-        <section>
-          <videoPlugin.Component
-            {...props}
-            state={{
-              src: props.state.content,
-              alt: props.state.title,
-            }}
+      <h1 className="serlo-h1">
+        {props.editable ? (
+          <input
+            className={headerInputClasses}
+            placeholder={editorStrings.plugins.video.titlePlaceholder}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
+            // hack to stop faulty autofocus
+            onMouseDown={(e) => e.stopPropagation()}
           />
-        </section>
-        <section>{description.render()}</section>
+        ) : (
+          <span itemProp="name">{title.value}</span>
+        )}
+      </h1>
+      <article>
+        <videoPlugin.Component
+          {...props}
+          state={{ src: content, alt: title }}
+        />
+
+        {description.render()}
       </article>
       <ToolbarMain showSubscriptionOptions {...props.state} />
-    </section>
+    </>
   )
 }
