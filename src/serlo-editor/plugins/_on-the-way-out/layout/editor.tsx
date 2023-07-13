@@ -10,6 +10,7 @@ import {
   selectSerializedDocument,
   useAppDispatch,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
 
 const LayoutContainer = styled.div({
@@ -92,7 +93,7 @@ export const LayoutRenderer: React.FunctionComponent<
       const element = selectSerializedDocument(store.getState(), item.child.id)
 
       if (!element) return
-      if (element.plugin === 'rows') {
+      if (element.plugin === EditorPluginType.Rows) {
         ;(element as RowsPlugin).state.forEach((rowsItem) => {
           documents.push(rowsItem)
         })
@@ -104,7 +105,7 @@ export const LayoutRenderer: React.FunctionComponent<
     dispatch(
       runReplaceDocumentSaga({
         id: props.id,
-        plugin: 'rows',
+        plugin: EditorPluginType.Rows,
         state: documents,
       })
     )
@@ -152,7 +153,7 @@ export const LayoutRenderer: React.FunctionComponent<
       dispatch(
         runReplaceDocumentSaga({
           id: props.id,
-          plugin: 'multimedia',
+          plugin: EditorPluginType.Multimedia,
           state: {
             explanation,
             multimedia:
@@ -182,7 +183,11 @@ export const LayoutRenderer: React.FunctionComponent<
   }
 
   function isMultimediaPlugin(plugin: string) {
-    return plugin === 'image' || plugin === 'geogebra' || plugin === 'video'
+    return (
+      plugin === EditorPluginType.Image ||
+      plugin === EditorPluginType.Geogebra ||
+      plugin === EditorPluginType.Video
+    )
   }
 }
 

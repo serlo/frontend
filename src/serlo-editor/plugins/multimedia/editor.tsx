@@ -36,7 +36,7 @@ export function MultimediaEditor({
 
   return (
     <>
-      <div className="rounded-md focus-within:shadow-menu">
+      <div className="focus-within:[&>div]:border-editor-primary-100">
         <MultimediaRenderer
           media={<>{multimedia.render()}</>}
           explanation={<>{explanation.render()}</>}

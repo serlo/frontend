@@ -1,36 +1,23 @@
-import clsx from 'clsx'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
 import { ExerciseNumbering } from './exercise-numbering'
 import { InputExercise } from './input-exercise'
 import { ScMcExercise } from './sc-mc-exercise'
-import { LicenseNotice } from '../license/license-notice'
+import { Solution } from './solution'
 import { useAuthentication } from '@/auth/use-authentication'
-import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
-import { Lazy } from '@/components/content/lazy'
-import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
-import { useInstanceData } from '@/contexts/instance-context'
 import { ExerciseInlineType } from '@/data-types'
-import { FrontendExerciseNode, FrontendNodeType } from '@/frontend-node-types'
-import { exerciseSubmission } from '@/helper/exercise-submission'
-import { tw } from '@/helper/tw'
+import type { FrontendExerciseNode } from '@/frontend-node-types'
 import type { NodePath, RenderNestedFunction } from '@/schema/article-renderer'
 import { H5pRenderer } from '@/serlo-editor/plugins/h5p/renderer'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export interface ExerciseProps {
   node: FrontendExerciseNode
   renderNested: RenderNestedFunction
   path?: NodePath
 }
-
-const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
-  import('@/components/comments/comment-area-entity').then(
-    (mod) => mod.CommentAreaEntity
-  )
-)
 
 const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
   import(
@@ -39,20 +26,9 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 )
 
 export function Exercise({ node, renderNested, path }: ExerciseProps) {
-  const { strings } = useInstanceData()
-  const [solutionVisible, setSolutionVisible] = useState(
-    isPrintMode
-      ? printModeSolutionVisible
-      : typeof window === 'undefined'
-      ? false
-      : window.location.href.includes('#comment-')
-  )
-
   const auth = useAuthentication()
   const [loaded, setLoaded] = useState(false)
   useEffect(() => setLoaded(true), [])
-
-  const { asPath } = useRouter()
 
   const isRevisionView =
     path && typeof path[0] === 'string' && path[0].startsWith('revision')
@@ -79,101 +55,13 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
             href={node.href ? node.href : `/${node.context.id}`}
           />
         )}
-
         <div className="flex justify-between">
           <div className="w-full">{renderExerciseTask()}</div>
           {renderToolsButton()}
         </div>
-
         {renderInteractive()}
-        <div className="flex">
-          {renderSolutionToggle()}
-          {renderLicense()}
-        </div>
-
-        {solutionVisible && renderSolution()}
+        <Solution node={node} loaded={loaded} renderNested={renderNested} />
       </>
-    )
-  }
-
-  function renderSolution() {
-    const license = node.solution.license &&
-      !node.solution.license.isDefault && (
-        <LicenseNotice minimal data={node.solution.license} type="solution" />
-      )
-    const authorTools = loaded && auth && (
-      <AuthorToolsExercises
-        data={{
-          type: ExerciseInlineType.Solution,
-          id: node.context.solutionId!,
-          parentId: node.context.id,
-          grouped: node.grouped,
-          unrevisedRevisions: node.unrevisedRevisions,
-        }}
-      />
-    )
-
-    return (
-      <div className="serlo-solution-box">
-        {authorTools && <div className="-mt-2 text-right">{authorTools}</div>}
-        {renderNested(
-          [
-            {
-              type: FrontendNodeType.Solution,
-              solution: node.solution,
-              context: { id: node.context.solutionId! },
-            },
-          ],
-          'tasksol'
-        )}
-
-        {license && <div className="px-side">{license}</div>}
-        {node.context.solutionId && (
-          <Lazy>
-            <CommentAreaEntity entityId={node.context.solutionId} />
-          </Lazy>
-        )}
-      </div>
-    )
-  }
-
-  function renderSolutionToggle() {
-    if (
-      (!node.solution.edtrState && !node.solution.legacy) ||
-      node.solution.trashed
-    )
-      return null
-    if (isPrintMode && !printModeSolutionVisible) return null
-
-    return (
-      <button
-        className={clsx(
-          tw`
-            serlo-button-blue-transparent mb-4
-            ml-side mr-auto pr-2 text-base
-          `,
-          solutionVisible && 'bg-brand text-white'
-        )}
-        onClick={() => {
-          setSolutionVisible(!solutionVisible)
-          if (!solutionVisible) {
-            exerciseSubmission({
-              path: asPath,
-              entityId: node.context.id,
-              revisionId: node.context.revisionId,
-              type: 'text',
-              result: 'open',
-            })
-          }
-        }}
-      >
-        <span className="w-3.5">{solutionVisible ? '▾' : '▸'}&nbsp;</span>
-        {
-          strings.content.exercises[
-            solutionVisible ? 'hideSolution' : 'showSolution'
-          ]
-        }
-      </button>
     )
   }
 
@@ -192,7 +80,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     const state = node.task.edtrState
 
     if (state.interactive) {
-      if (state.interactive.plugin === 'scMcExercise') {
+      if (state.interactive.plugin === EditorPluginType.ScMcExercise) {
         return (
           <ScMcExercise
             state={state.interactive.state}
@@ -210,7 +98,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           />
         )
       }
-      if (state.interactive.plugin === 'inputExercise') {
+      if (state.interactive.plugin === EditorPluginType.InputExercise) {
         return (
           <InputExercise
             data={state.interactive.state}
@@ -223,7 +111,7 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
           />
         )
       }
-      if (state.interactive.plugin === 'h5p') {
+      if (state.interactive.plugin === EditorPluginType.H5p) {
         return (
           <H5pRenderer
             url={state.interactive.state}
@@ -254,10 +142,5 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
         )}
       </>
     )
-  }
-
-  function renderLicense() {
-    if (!node.task.license) return null
-    return <LicenseNotice minimal data={node.task.license} type="task" />
   }
 }

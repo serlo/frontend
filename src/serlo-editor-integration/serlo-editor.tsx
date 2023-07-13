@@ -6,7 +6,7 @@ import {
   getStateFromLocalStorage,
   LocalStorageNotice,
 } from './components/local-storage-notice'
-import { createPlugins } from './plugins'
+import { createPlugins } from './create-plugins'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'

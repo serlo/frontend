@@ -15,7 +15,7 @@ import {
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
-import { TemplatePluginType } from '@/serlo-editor-integration/plugins'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 enum AllowedPlugins {
   Article = TemplatePluginType.Article,
@@ -77,9 +77,10 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     GetTaxonomyTypeQueryVariables
   >(endpoint, getTaxonomyTypeQuery, { id: taxonomyId })
 
-  const entityType = context.params?.type as keyof typeof AllowedPlugins
+  const entityType = context.params?.type
   const isValidType =
-    entityType && Object.values(AllowedPlugins).includes(entityType)
+    entityType &&
+    Object.values(AllowedPlugins).includes(entityType as AllowedPlugins)
 
   if (
     !result ||
@@ -99,7 +100,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
 
   return {
     props: {
-      entityType,
+      entityType: entityType as keyof typeof AllowedPlugins,
       taxonomyTerm: { ...result.uuid },
       entityNeedsReview: !isTestArea,
     },

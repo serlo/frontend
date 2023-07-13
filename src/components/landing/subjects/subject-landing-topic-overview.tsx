@@ -7,6 +7,7 @@ import { SubTopic } from '../../taxonomy/sub-topic'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
 import { TaxonomySubTerm } from '@/data-types'
+import { FrontendNodeType } from '@/frontend-node-types'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 import { tw } from '@/helper/tw'
 
@@ -86,7 +87,7 @@ export function SubjectLandingTopicOverview({
           const src =
             term.description &&
             term.description[0] &&
-            term.description?.[0].type === 'img'
+            term.description?.[0].type === FrontendNodeType.Image
               ? term.description?.[0].src
               : undefined
           const isExtraTerm = Object.hasOwn(term, 'href')

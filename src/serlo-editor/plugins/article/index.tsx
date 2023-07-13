@@ -7,13 +7,14 @@ import {
   object,
   string,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const relatedContentItemState = object({ id: string(), title: string() })
 
 const articleState = object({
-  introduction: child({ plugin: 'articleIntroduction' }),
-  content: child({ plugin: 'rows' }),
-  exercises: list(child({ plugin: 'injection' })),
+  introduction: child({ plugin: EditorPluginType.ArticleIntroduction }),
+  content: child({ plugin: EditorPluginType.Rows }),
+  exercises: list(child({ plugin: EditorPluginType.Injection })),
   exerciseFolder: relatedContentItemState,
   relatedContent: object({
     articles: list(relatedContentItemState),

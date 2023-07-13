@@ -53,6 +53,7 @@ import {
   selectFocusTree,
   store,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export type TextEditorProps = EditorPluginProps<
   TextEditorState,
@@ -334,7 +335,7 @@ export function TextEditor(props: TextEditorProps) {
       if (files?.length > 0) {
         const imagePluginState = getPluginByType(
           plugins,
-          'image'
+          EditorPluginType.Image
         )?.plugin.onFiles?.(files)
         if (imagePluginState !== undefined) {
           if (isListActive) {
@@ -342,7 +343,7 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin('image', imagePluginState)
+          insertPlugin(EditorPluginType.Image, imagePluginState)
           return
         }
       }
@@ -352,7 +353,7 @@ export function TextEditor(props: TextEditorProps) {
       if (text) {
         const videoPluginState = getPluginByType(
           plugins,
-          'video'
+          EditorPluginType.Video
         )?.plugin.onText?.(text)
         if (videoPluginState !== undefined) {
           event.preventDefault()
@@ -362,7 +363,7 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin('video', videoPluginState)
+          insertPlugin(EditorPluginType.Video, videoPluginState)
           return
         }
       }

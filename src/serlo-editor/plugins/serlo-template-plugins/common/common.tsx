@@ -20,6 +20,7 @@ import {
 } from '@/serlo-editor/plugin'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import { selectDocument, useAppSelector } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const licenseState = object({
   id: number(),
@@ -108,7 +109,7 @@ export function serialized<S extends StateType>(type: S) {
 }
 
 export function editorContent(
-  plugin: string = 'rows'
+  plugin: string = EditorPluginType.Rows
 ): StateType<
   string,
   StateTypeValueType<ReturnType<typeof child>>,
@@ -245,11 +246,8 @@ export function OptionalChild(props: {
     },
   })
   return (
-    <>
-      <hr className="my-12" />
-      {children}
-    </>
+    <div className="my-12 border-t-2 border-editor-primary-200">{children}</div>
   )
 }
 
-export const headerInputClasses = tw`w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`
+export const headerInputClasses = tw`mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`

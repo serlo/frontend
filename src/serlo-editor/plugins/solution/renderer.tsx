@@ -1,30 +1,88 @@
+import clsx from 'clsx'
+import { useState } from 'react'
+
 import { Renderer } from '../box/renderer'
 import { useInstanceData } from '@/contexts/instance-context'
+import { tw } from '@/helper/tw'
 
 interface SolutionRendererProps {
   prerequisite: JSX.Element | null
   strategy: JSX.Element | null
   steps: JSX.Element | null
+  solutionVisibleOnInit: boolean
+  hideToggle?: boolean
+  onSolutionOpen?: () => void
+  elementAfterToggle?: JSX.Element | null
+  elementBeforePrerequisite?: JSX.Element | null
 }
 
 export function SolutionRenderer({
   prerequisite,
   strategy,
   steps,
+  solutionVisibleOnInit,
+  hideToggle,
+  onSolutionOpen,
+  elementAfterToggle,
+  elementBeforePrerequisite,
 }: SolutionRendererProps) {
   const { strings } = useInstanceData()
 
+  const [solutionVisible, setSolutionVisible] = useState(solutionVisibleOnInit)
+
   return (
     <>
-      {prerequisite ? (
-        <p className="serlo-p">
-          {strings.content.exercises.prerequisite} {prerequisite}
-        </p>
-      ) : null}
-      <Renderer boxType="approach" anchorId="strategy">
-        <>{strategy}</>
-      </Renderer>
-      {steps}
+      <div className="flex">
+        {renderSolutionToggle()}
+        {elementAfterToggle}
+      </div>
+      {solutionVisible && renderSolutionContent()}
     </>
   )
+
+  function renderSolutionContent() {
+    return (
+      <div className="serlo-solution-box">
+        {elementBeforePrerequisite}
+        {prerequisite ? (
+          <p className="serlo-p">
+            {strings.content.exercises.prerequisite} {prerequisite}
+          </p>
+        ) : null}
+        {strategy ? (
+          <Renderer boxType="approach" anchorId="strategy">
+            <>{strategy}</>
+          </Renderer>
+        ) : null}
+        {steps}
+      </div>
+    )
+  }
+
+  function renderSolutionToggle() {
+    if (hideToggle) return null
+
+    return (
+      <button
+        className={clsx(
+          tw`
+            serlo-button-blue-transparent ml-side
+            mr-auto mb-4 pr-2 text-base
+          `,
+          solutionVisible && 'bg-brand text-white'
+        )}
+        onClick={() => {
+          setSolutionVisible(!solutionVisible)
+          if (!solutionVisible && onSolutionOpen) onSolutionOpen()
+        }}
+      >
+        <span className="w-3.5">{solutionVisible ? '▾' : '▸'}&nbsp;</span>
+        {
+          strings.content.exercises[
+            solutionVisible ? 'hideSolution' : 'showSolution'
+          ]
+        }
+      </button>
+    )
+  }
 }

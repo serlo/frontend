@@ -25,6 +25,7 @@ import {
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const headerTextFormattingOptions = ['code', 'katex', 'links', 'math']
 const cellTextFormattingOptions = [
@@ -37,7 +38,7 @@ const cellTextFormattingOptions = [
   'richText',
 ]
 
-const newCell = { content: { plugin: 'text' } }
+const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
@@ -189,7 +190,8 @@ export function SerloTableEditor(props: SerloTableProps) {
   ) {
     const isFocused = cell.content.id === focusedElement
     const isImage =
-      selectDocument(store.getState(), cell.content.id)?.plugin === 'image'
+      selectDocument(store.getState(), cell.content.id)?.plugin ===
+      EditorPluginType.Image
 
     if (isHead || !isFocused || !isClear) return null
 
@@ -197,7 +199,9 @@ export function SerloTableEditor(props: SerloTableProps) {
       <button
         onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
         onClick={() => {
-          cell.content.replace(isImage ? 'text' : 'image')
+          cell.content.replace(
+            isImage ? EditorPluginType.Text : EditorPluginType.Image
+          )
         }}
         className="serlo-button-light absolute m-2 block py-0.5 text-sm"
         title={

@@ -113,7 +113,7 @@
     @apply serlo-sub-list min-w-180 bg-brand-50;
   }
   .serlo-img {
-    @apply inline h-auto max-w-full;
+    @apply inline h-auto max-w-full rounded-md;
   }
   .serlo-math-wrapper {
     @apply px-4 py-0.5 text-left;
@@ -279,19 +279,8 @@
       @apply hyphens-auto;
     }
 
-    .page-header h1 input {
-      @apply w-full;
-      @apply mb-9 mt-6 hyphens-auto p-0 text-3.5xl font-bold;
-    }
-
     button > div > svg {
       @apply mb-1 ml-1.5 mr-1.5 mt-2;
-    }
-
-    .page-header {
-      padding-bottom: 9px;
-      margin: 40px 0 20px;
-      border-bottom: 1px solid #eee;
     }
 
     select {

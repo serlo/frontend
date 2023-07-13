@@ -4,7 +4,7 @@ import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { SlugProps } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
+import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
 
 export interface InjectionRendererProps {
@@ -60,7 +60,8 @@ export function InjectionRenderer({
     return <StaticInfoPanel>{strings.errors.defaultMessage}</StaticInfoPanel>
 
   //Show only video without description when injecting
-  const unwrappedContent = content[0].type === 'video' ? [content[0]] : content
+  const unwrappedContent =
+    content[0].type === FrontendNodeType.Video ? [content[0]] : content
 
   return (
     <div className="mb-4 border-b-4 border-brand-300 text-gray-900">

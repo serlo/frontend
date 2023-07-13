@@ -6,11 +6,18 @@ import {
   object,
   optional,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const exerciseState = object({
-  content: child({ plugin: 'rows' }),
+  content: child({ plugin: EditorPluginType.Rows }),
   interactive: optional(
-    child<'scMcExercise' | 'inputExercise' | 'h5p'>({ plugin: 'scMcExercise' })
+    child<
+      | EditorPluginType.ScMcExercise
+      | EditorPluginType.InputExercise
+      | EditorPluginType.H5p
+    >({
+      plugin: EditorPluginType.ScMcExercise,
+    })
   ),
 })
 

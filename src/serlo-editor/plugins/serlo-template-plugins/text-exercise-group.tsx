@@ -7,7 +7,6 @@ import {
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { SemanticSection } from '../../plugin/helpers/semantic-section'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { AddButton } from '@/serlo-editor/editor-ui'
@@ -23,8 +22,8 @@ export const textExerciseGroupTypeState = entityType(
     ...entity,
     content: editorContent(),
     cohesive: boolean(false),
-    /* cohesive field indicated whether the children of a grouped exercise are cohesive
-    this info might be used in the future, but currently has no effect in the frontend.
+    /* cohesive field would indicate whether the children of a grouped exercise are cohesive
+    this field might be used in the future, but currently it has no effect and can not be changed
     */
   },
   {
@@ -32,89 +31,63 @@ export const textExerciseGroupTypeState = entityType(
   }
 )
 
-export const textExerciseGroupTypePlugin: EditorPlugin<
-  typeof textExerciseGroupTypeState
-> = {
-  Component: TextExerciseGroupTypeEditor,
-  state: textExerciseGroupTypeState,
-  config: {},
-}
+type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
+
+export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePluginState> =
+  {
+    Component: TextExerciseGroupTypeEditor,
+    state: textExerciseGroupTypeState,
+    config: {},
+  }
 
 function TextExerciseGroupTypeEditor(
-  props: EditorPluginProps<typeof textExerciseGroupTypeState>
+  props: EditorPluginProps<TextExerciseGroupTypePluginState>
 ) {
-  const { cohesive, content, 'grouped-text-exercise': children } = props.state
-  const isCohesive = cohesive.value ?? false
+  const {
+    content,
+    'grouped-text-exercise': children,
+    id,
+    revision,
+    replaceOwnState,
+  } = props.state
 
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const contentRendered = content.render({
     renderSettings(children) {
-      return (
-        <>
-          {children}
-          {getSettings()}
-        </>
-      )
+      return children
     },
   })
 
   return (
     <article className="exercisegroup mt-16">
-      {props.renderIntoToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.ExerciseGroup}
-        />
-      )}
-      <section className="row">
-        <SemanticSection editable={props.editable}>
-          {contentRendered}
-        </SemanticSection>
-      </section>
-      {children.map((child, index) => (
-        <section className="row" key={child.id}>
-          <div className="col-sm-1 hidden-xs">
-            <em>{getExerciseIndex(index)})</em>
-          </div>
-          <div className="col-sm-11 col-xs-12">
+      <section className="row">{contentRendered}</section>
+      <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
+        {children.map((child, index) => (
+          <li
+            key={child.id}
+            className="[&>div] serlo-exercise-wrapper serlo-grouped-exercise-wrapper mt-12 [&>div]:border-none"
+          >
             <OptionalChild
               state={child}
               removeLabel={exGroupStrings.removeExercise}
               onRemove={() => children.remove(index)}
             />
-          </div>
-        </section>
-      ))}
+          </li>
+        ))}
+      </ol>
       <AddButton onClick={() => children.insert()}>
         {exGroupStrings.addExercise}
       </AddButton>
       <ToolbarMain showSubscriptionOptions {...props.state} />
+      {props.renderIntoToolbar(
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.ExerciseGroup}
+        />
+      )}
     </article>
   )
-
-  function getSettings() {
-    return (
-      <div>
-        <label htmlFor="cohesiveSelect">
-          {exGroupStrings.kindOfExerciseGroup}:
-        </label>{' '}
-        <select
-          id="cohesiveSelect"
-          value={isCohesive ? 'cohesive' : 'non-cohesive'}
-          onChange={(e) => cohesive.set(e.target.value === 'cohesive')}
-          className="border-2"
-        >
-          <option value="non-cohesive">{exGroupStrings.notCohesive}</option>
-          <option value="cohesive">{exGroupStrings.cohesive}</option>
-        </select>
-      </div>
-    )
-  }
-
-  function getExerciseIndex(index: number) {
-    return isCohesive ? index + 1 : String.fromCharCode(97 + index)
-  }
 }

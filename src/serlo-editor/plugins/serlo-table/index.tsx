@@ -8,15 +8,14 @@ import {
   object,
   string,
 } from '@/serlo-editor/plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const tableState = object({
   rows: list(
     object({
       columns: list(
         object({
-          content: child({
-            plugin: 'text',
-          }),
+          content: child({ plugin: EditorPluginType.Text }),
         }),
         2
       ),

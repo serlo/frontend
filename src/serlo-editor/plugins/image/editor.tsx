@@ -12,6 +12,7 @@ import {
 } from '../../store'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function ImageEditor(props: ImageProps) {
   const { editable, focused, state, config } = props
@@ -24,7 +25,7 @@ export function ImageEditor(props: ImageProps) {
   useEffect(() => {
     // not sure if this is still needed
     if (editable && !state.caption.defined) {
-      state.caption.create({ plugin: 'text' })
+      state.caption.create({ plugin: EditorPluginType.Text })
     }
   }, [editable, state.caption])
 

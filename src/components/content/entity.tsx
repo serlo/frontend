@@ -12,7 +12,6 @@ import { FaIcon } from '../fa-icon'
 import { StaticInfoPanel } from '../static-info-panel'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { CourseFooter } from '@/components/navigation/course-footer'
-import { CourseNavigation } from '@/components/navigation/course-navigation'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
@@ -23,6 +22,7 @@ import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { tw } from '@/helper/tw'
 import { getHistoryUrl } from '@/helper/urls/get-history-url'
 import { renderArticle } from '@/schema/article-renderer'
+import { CourseNavigation } from '@/serlo-editor/plugins/serlo-template-plugins/course/course-navigation'
 
 export interface EntityProps {
   data: EntityData
@@ -162,7 +162,8 @@ export function Entity({ data }: EntityProps) {
       <CourseNavigation
         open={courseNavOpen}
         onOverviewButtonClick={openCourseNav}
-        data={data.courseData}
+        title={data.courseData.title}
+        pages={data.courseData.pages}
       />
     )
   }
