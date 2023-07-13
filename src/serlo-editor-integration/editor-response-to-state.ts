@@ -607,6 +607,7 @@ export interface DeserializedState<T extends StateType> {
   initialState: {
     plugin: string
     state?: StateTypeSerializedType<T>
+    id?: string
   }
   converted: boolean
 }
