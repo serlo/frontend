@@ -1,3 +1,4 @@
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import isHotkey from 'is-hotkey'
 import React, {
   createElement,
@@ -7,7 +8,14 @@ import React, {
   useEffect,
   useCallback,
 } from 'react'
-import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
+import {
+  createEditor,
+  Descendant,
+  Node,
+  Transforms,
+  Range,
+  Editor,
+} from 'slate'
 import {
   Editable,
   ReactEditor,
@@ -28,6 +36,7 @@ import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
 import { mergePlugins, sliceNodesAfterSelection } from '../utils/document'
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -36,6 +45,7 @@ import {
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
   focusNext,
@@ -245,9 +255,11 @@ export function TextEditor(props: TextEditorProps) {
           }
 
           // TODO: test <br/> serializer somehow
+          // TODO: test and simplify frontend code
           // TODO: add placeholder (with add element that can split text plugin)
 
           // TODO: think about what should happen when some text is selected (no blocker)
+          // TODO: remove debug border on serlo-p
         }
         /*
         if (isHotkey('enter', event) && !isListActive) {
@@ -503,16 +515,70 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
+          // placeholder={config.placeholder ?? pluginStrings.text.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
-          renderLeaf={(props) => (
-            <span {...props.attributes}>
-              <TextLeafRenderer {...props} />
-            </span>
-          )}
-          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          renderLeaf={(props) => {
+            // @ts-expect-error for now
+            if (props.leaf.placeholder) {
+              return (
+                <>
+                  <span
+                    className="pointer-events-none absolute text-gray-300"
+                    contentEditable={false}
+                  >
+                    {config.placeholder ?? pluginStrings.text.placeholder}{' '}
+                    <button className="z-80 serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto h-8 w-8">
+                      <EditorTooltip
+                        text="Neuen Block einfügen"
+                        hotkeys="/"
+                        className="-left-[153%]"
+                      />
+                      <FaIcon icon={faPlus} />
+                    </button>
+                  </span>
+                  <span {...props.attributes}>
+                    <TextLeafRenderer {...props} />
+                  </span>
+                </>
+              )
+            }
+            return (
+              <span {...props.attributes}>
+                <TextLeafRenderer {...props} />
+              </span>
+            )
+          }}
+          decorate={([node, path]) => {
+            const { selection } = editor
+            // thanks https://jkrsp.com/slate-js-placeholder-per-line/ 👍
+            if (
+              selection !== null &&
+              !Editor.isEditor(node) &&
+              Range.includes(selection, path) &&
+              Range.isCollapsed(selection)
+            ) {
+              if (Editor.string(editor, [path[0]]) === '') {
+                return [{ ...selection, placeholder: true }]
+              }
+
+              // TODO: this somehow prevents the soft line code above
+              // so now only new parapgraphs get the promt for now
+              // const previousLines =
+              //   Object.hasOwn(node, 'text') &&
+              //   node.text.substring(0, selection.focus.offset).split('\n')
+
+              // if (
+              //   previousLines &&
+              //   previousLines[previousLines.length - 1].length === 0
+              // ) {
+              //     return [{ ...selection, placeholder: true }]
+              // }
+            }
+            return []
+          }}
+          // className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <>
