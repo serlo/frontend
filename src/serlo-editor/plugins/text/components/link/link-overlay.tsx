@@ -24,7 +24,7 @@ export function LinkOverlay({
     )?.getBoundingClientRect()
 
     const parentRect = wrapper.current
-      .closest('.default-document-editor-container')
+      .closest('.default-settings-and-toolbar-container')
       ?.getBoundingClientRect()
 
     const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()

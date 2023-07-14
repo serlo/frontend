@@ -10,7 +10,7 @@ import {
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-export interface DocumentEditorProps {
+export interface SettingsAndToolbarProps {
   children: React.ReactNode // The rendered document
   settingsRef: React.RefObject<HTMLDivElement> // The rendered settings
   toolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
@@ -24,7 +24,10 @@ export interface DocumentEditorProps {
   focused: boolean // `true` if the document is focused
 }
 
-export function DocumentEditor({
+/**
+ * Container that includes a plugin, its toolbar and its settings.
+ */
+export function SettingsAndToolbar({
   focused,
   children,
   renderSettings,
@@ -33,7 +36,7 @@ export function DocumentEditor({
   toolbarRef,
   hasSettings,
   hasToolbar,
-}: DocumentEditorProps) {
+}: SettingsAndToolbarProps) {
   const [hasHover, setHasHover] = useState(false)
 
   const editorStrings = useEditorStrings()
@@ -94,8 +97,8 @@ export function DocumentEditor({
     <Container
       className={
         isFocused || isHovered
-          ? 'default-document-editor-container document-editor-container'
-          : 'document-editor-container'
+          ? 'default-settings-and-toolbar-container settings-and-toolbar-container'
+          : 'settings-and-toolbar-container'
       }
       isFocused={isFocused}
       isHovered={isHovered}
@@ -190,7 +193,7 @@ const Container = styled.div<Partial<ToolbarProps>>(
 
     ...(!isFocused && isHovered
       ? {
-          [`&:hover:has(.default-document-editor-container:hover) > ${ToolbarContainer} > ${ToolbarContent}`]:
+          [`&:hover:has(.default-settings-and-toolbar-container:hover) > ${ToolbarContainer} > ${ToolbarContent}`]:
             {
               opacity: 0,
               borderColor: 'transparent',
