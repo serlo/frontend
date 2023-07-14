@@ -25,11 +25,7 @@ import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
-import {
-  emptyDocumentFactory,
-  mergePlugins,
-  sliceNodesAfterSelection,
-} from '../utils/document'
+import { mergePlugins, sliceNodesAfterSelection } from '../utils/document'
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -227,6 +223,14 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Create a new Slate instance on "enter" key
+        if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
+          event.preventDefault()
+          editor.insertText('\n')
+          // TODO: handle in de/serializer (convert to br)
+          // TODO: add placeholder
+          // TODO: check if last line was empty. if yes, add p
+        }
+        /*
         if (isHotkey('enter', event) && !isListActive) {
           const document = selectDocument(store.getState(), id)
           if (!document) return
@@ -256,6 +260,7 @@ export function TextEditor(props: TextEditorProps) {
             )
           })
         }
+        */
 
         // Merge with previous Slate instance on "backspace" key,
         // or merge with next Slate instance on "delete" key
@@ -461,7 +466,11 @@ export function TextEditor(props: TextEditorProps) {
           </MathElement>
         )
       }
-      return <div {...attributes}>{children}</div>
+      return (
+        <p {...attributes} className="serlo-p">
+          {children}
+        </p>
+      )
     },
     [focused]
   )
