@@ -222,13 +222,27 @@ export function TextEditor(props: TextEditorProps) {
           }
         }
 
-        // Create a new Slate instance on "enter" key
+        // Use soft break when last line in not empty
         if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
-          event.preventDefault()
-          editor.insertText('\n')
-          // TODO: handle in de/serializer (convert to br)
-          // TODO: add placeholder
-          // TODO: check if last line was empty. if yes, add p
+          const { path, offset } = selection.focus
+          const node = Node.get(editor, path)
+
+          const previousLines =
+            Object.hasOwn(node, 'text') &&
+            node.text.substring(0, offset).split('\n')
+          if (
+            !previousLines ||
+            previousLines[previousLines.length - 1].length !== 0
+          ) {
+            // soft break
+            event.preventDefault()
+            editor.insertText('\n')
+          }
+          // otherwise native behaviour (adds new paragraph)
+
+          // TODO: test <br/> serializer somehow
+          // TODO: add placeholder (with add element that can split text plugin)
+          // TODO: think about what should happen when some text is selected
         }
         /*
         if (isHotkey('enter', event) && !isListActive) {
