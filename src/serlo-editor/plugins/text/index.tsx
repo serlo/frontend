@@ -1,4 +1,4 @@
-import { Node } from 'slate'
+import { Element, Node } from 'slate'
 
 import { TextEditorProps, TextEditor } from './components/text-editor'
 import type {
@@ -27,13 +27,19 @@ const createTextPlugin = (
   config,
   state: serializedScalar(emptyDocumentFactory(), {
     serialize({ value }) {
-      return value
+      return value.map((node) => {
+        if (!Element.isElement(node) || node.type !== 'p') return node
+        const children = node.children.map((text) => {
+          if (Object.hasOwn(text, 'type')) return text //math
+          return { text: text.text.replaceAll('\n', '<br/>') }
+        })
+        return { ...node, children }
+      })
     },
     deserialize(value) {
       if (value.length === 0) {
         return emptyDocumentFactory()
       }
-
       // If the first child of the Element is an empty object,
       // replace it with an empty document.
       // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
@@ -42,7 +48,17 @@ const createTextPlugin = (
         return emptyDocumentFactory()
       }
 
-      return { value, selection: null }
+      const value2 = value.map((node) => {
+        if (!Element.isElement(node) || node.type !== 'p') return node
+
+        const children = node.children.map((text) => {
+          if (Object.hasOwn(text, 'type')) return text //math
+          return { text: text.text.replaceAll('<br/>', '\n') }
+        })
+        return { ...node, children }
+      })
+
+      return { value: value2, selection: null }
     },
   }),
   onKeyDown() {
