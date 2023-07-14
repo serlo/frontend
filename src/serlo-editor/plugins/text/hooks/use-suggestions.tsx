@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { Editor as SlateEditor, Node, Range } from 'slate'
+import { Editor as SlateEditor, Node, Range, BaseSelection } from 'slate'
 
 import { AllowedChildPlugins } from '../../rows'
+import { Paragraph } from '../types'
 import {
   EditorStrings,
   useEditorStrings,
@@ -12,7 +13,16 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
+import {
+  insertPluginChildAfter,
+  insertPluginChildBefore,
+  removePluginChild,
+  selectDocument,
+  selectMayManipulateSiblings,
+  selectParent,
+  store,
+  useAppDispatch,
+} from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
@@ -143,7 +153,76 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     // Otherwise, replace the text plugin with the selected plugin
     // TODO: we want to replace only one paragraph not the whole plugin now
     // that means we need to split the text-plugin here
-    dispatch(runReplaceDocumentSaga({ id, plugin: pluginType }))
+
+    const storeState = store.getState() as unknown
+
+    const document = selectDocument(storeState, id)
+    if (!document) return
+
+    const mayManipulateSiblings = selectMayManipulateSiblings(storeState, id)
+    if (!mayManipulateSiblings) return
+
+    const parent = selectParent(storeState, id)
+    if (!parent) return
+
+    const allParagraphs = document.state as {
+      selection: BaseSelection
+      value: Paragraph[]
+    }
+    const currentParapgraphIndex = allParagraphs.selection?.anchor.path[0] ?? 0
+
+    // replace current text plugin with text plugin and the previous paragraphs
+
+    // TODO: replacing would keep id, slightly preferable but it somehow does not work
+    // dispatch(
+    //   runReplaceDocumentSaga({
+    //     id,
+    //     plugin: EditorPluginType.Text,
+    //     state: allParagraphs.value.slice(0, currentParapgraphIndex),
+    //   })
+    // )
+
+    // text plugin and the previous paragraphs
+    const prevParagrapphs = allParagraphs.value.slice(0, currentParapgraphIndex)
+    if (prevParagrapphs.length)
+      dispatch(
+        insertPluginChildBefore({
+          parent: parent.id,
+          sibling: id,
+          document: {
+            plugin: EditorPluginType.Text,
+            state: prevParagrapphs,
+          },
+        })
+      )
+
+    // insert text plugin and the paragraphs that came after
+    const afterParagrapphs = allParagraphs.value.slice(
+      currentParapgraphIndex + 1
+    )
+    if (afterParagrapphs.length)
+      dispatch(
+        insertPluginChildAfter({
+          parent: parent.id,
+          sibling: id,
+          document: {
+            plugin: EditorPluginType.Text,
+            state: afterParagrapphs,
+          },
+        })
+      )
+
+    // insert empty new plugin
+    dispatch(
+      insertPluginChildAfter({
+        parent: parent.id,
+        sibling: id,
+        document: { plugin: pluginType },
+      })
+    )
+
+    // remove (instead of replacing…)
+    dispatch(removePluginChild({ parent: parent.id, child: id }))
   }
 
   const hotKeysHandlers = {
