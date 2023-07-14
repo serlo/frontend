@@ -150,9 +150,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       return
     }
 
-    // Otherwise, replace the text plugin with the selected plugin
-    // TODO: we want to replace only one paragraph not the whole plugin now
-    // that means we need to split the text-plugin here
+    // split the text-plugin and insert new plugin
 
     const storeState = store.getState() as unknown
 

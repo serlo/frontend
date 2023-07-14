@@ -529,7 +529,13 @@ export function TextEditor(props: TextEditorProps) {
                     contentEditable={false}
                   >
                     {config.placeholder ?? pluginStrings.text.placeholder}{' '}
-                    <button className="z-80 serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto h-8 w-8">
+                    <button
+                      className="z-80 serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto h-8 w-8"
+                      onClick={() => {
+                        editor.insertText('/')
+                        // TODO: focus somehow so the suggestions actually show…
+                      }}
+                    >
                       <EditorTooltip
                         text="Neuen Block einfügen"
                         hotkeys="/"
