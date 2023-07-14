@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { Editor as SlateEditor, Node } from 'slate'
+import { Editor as SlateEditor, Node, Range } from 'slate'
 
 import { AllowedChildPlugins } from '../../rows'
 import {
@@ -41,7 +41,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
   const pluginsStrings = useEditorStrings().plugins
-  const text = Node.string(editor)
 
   const allPlugins = useContext(PluginsContext)
     .filter(({ visible }) => visible)
@@ -52,10 +51,20 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allOptions = (allowed ?? allPlugins).map((type) =>
     createOption(type, pluginsStrings, pluginsData)
   )
+  const { selection } = editor
 
-  const filteredOptions = filterPlugins(allOptions, text)
+  const node =
+    selection &&
+    Range.isCollapsed(selection) &&
+    Node.get(editor, selection.focus.path)
+
+  const nodeText = node && Object.hasOwn(node, 'text') ? node.text : ''
+  const hasSlash = nodeText.startsWith('/')
+
+  const filteredOptions = filterPlugins(allOptions, nodeText)
+
   const showSuggestions =
-    editable && focused && text.startsWith('/') && filteredOptions.length > 0
+    editable && focused && hasSlash && filteredOptions.length > 0
   const options = showSuggestions ? filteredOptions : []
 
   const closure = useRef({
@@ -132,6 +141,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
 
     // Otherwise, replace the text plugin with the selected plugin
+    // TODO: we want to replace only one paragraph not the whole plugin now
+    // that means we need to split the text-plugin here
     dispatch(runReplaceDocumentSaga({ id, plugin: pluginType }))
   }
 
