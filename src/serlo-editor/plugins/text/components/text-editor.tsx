@@ -239,8 +239,10 @@ export function TextEditor(props: TextEditorProps) {
             // soft break
             event.preventDefault()
             editor.insertText('\n')
+          } else {
+            // native behaviour (adds new paragraph) but remove empty line first
+            editor.deleteBackward('character')
           }
-          // otherwise native behaviour (adds new paragraph)
 
           // TODO: test <br/> serializer somehow
           // TODO: add placeholder (with add element that can split text plugin)
@@ -484,7 +486,7 @@ export function TextEditor(props: TextEditorProps) {
         )
       }
       return (
-        <p {...attributes} className="serlo-p">
+        <p {...attributes} className="serlo-p border border-gray-200">
           {children}
         </p>
       )
