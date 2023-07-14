@@ -111,7 +111,9 @@ export function TextEditor(props: TextEditorProps) {
 
     // If the first child of the editor is not a paragraph, do nothing
     const isFirstChildParagraph =
-      'type' in editor.children[0] && editor.children[0].type === 'p'
+      editor.children[0] &&
+      'type' in editor.children[0] &&
+      editor.children[0].type === 'p'
     if (!isFirstChildParagraph) return
 
     // If the editor is empty, set the cursor at the start
@@ -242,7 +244,8 @@ export function TextEditor(props: TextEditorProps) {
 
           // TODO: test <br/> serializer somehow
           // TODO: add placeholder (with add element that can split text plugin)
-          // TODO: think about what should happen when some text is selected
+
+          // TODO: think about what should happen when some text is selected (no blocker)
         }
         /*
         if (isHotkey('enter', event) && !isListActive) {
