@@ -6,21 +6,16 @@ import {
 import clsx from 'clsx'
 import { useState } from 'react'
 
-import { CommentArea } from './comment-area'
-import { Link } from '../content/link'
+import { CommentAreaAllThreadsThread } from './comment-area-all-threads-thread'
 import { FaIcon } from '../fa-icon'
 import { Guard } from '../guard'
 import { LoadingSpinner } from '../loading/loading-spinner'
 import { StaticInfoPanel } from '../static-info-panel'
 import { PleaseLogIn } from '../user/please-log-in'
 import { useAuthentication } from '@/auth/use-authentication'
-import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
-import { UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { useCommentDataAll } from '@/fetcher/use-comment-data-all'
-import { getTranslatedType } from '@/helper/get-translated-type'
-import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export function CommentAreaAllThreads() {
@@ -103,32 +98,7 @@ export function CommentAreaAllThreads() {
     }
 
     return commentData?.map((thread) => {
-      const { __typename } = thread.object
-      const href = thread.object.alias
-      const latestCommentId = thread.comments.nodes.at(-1)?.id
-
-      return (
-        <EntityIdProvider key={thread.id} value={thread.object.id}>
-          <div className="mb-16">
-            <div className="mx-side mb-5 mt-16 border-b-2">
-              <b>
-                <FaIcon icon={getIconByTypename(__typename as UuidType)} />{' '}
-                {getTranslatedType(strings, __typename)}
-              </b>{' '}
-              ({' '}
-              <Link href={href + `#comment-${thread.comments.nodes[0]?.id}`}>
-                {href}
-              </Link>
-              )
-            </div>
-            <CommentArea
-              commentData={{ active: [thread], archived: [] }}
-              highlightedCommentId={latestCommentId}
-              noScroll
-            />
-          </div>
-        </EntityIdProvider>
-      )
+      return <CommentAreaAllThreadsThread key={thread.id} thread={thread} />
     })
   }
 }

@@ -90,12 +90,12 @@ export function Comment({
       ref={commentRef}
       id={`comment-${id}`}
       className={clsx(
-        'transition-colors duration-700 ease-out',
+        'pb-0.5 pt-1 transition-colors duration-700 ease-out',
         isParent
           ? 'rounded-2xl'
           : tw`
             mb-5 ml-4 mt-8 rounded-r-2xl border-l-6 border-brand-200 
-            pb-0.5 pl-1 pt-1
+            pb-0.5
           `
       )}
     >
