@@ -167,7 +167,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         ref={overlayWrapper}
         className={clsx(
           tw`
-            absolute left-side right-side z-20 ml-2 mt-2
+            absolute left-side right-side z-[100] ml-2 mt-2
             max-w-2xl rounded-xl border bg-white px-5 pb-2 shadow
           `,
           open ? '' : 'hidden'
