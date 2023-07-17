@@ -3,15 +3,11 @@ import { ReactElement } from 'react'
 import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
 import { tw } from '@/helper/tw'
 import { selectDocument, selectParent, store } from '@/serlo-editor/store'
-
-// TODO: use enum from https://github.com/serlo/frontend/pull/2564 when that is merged
-export enum PluginType {
-  TEXT = 'Text',
-}
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface PluginToolbarProps {
   pluginId: string
-  pluginType: PluginType
+  pluginType: EditorPluginType
   contentControls: ReactElement
   pluginControls: ReactElement
 }

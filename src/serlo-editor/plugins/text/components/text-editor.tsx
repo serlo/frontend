@@ -42,7 +42,7 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { PluginToolbar, PluginType } from '@/serlo-editor/core/plugin-toolbar'
+import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -504,7 +504,7 @@ export function TextEditor(props: TextEditorProps) {
       {focused && (
         <PluginToolbar
           pluginId={id}
-          pluginType={PluginType.TEXT}
+          pluginType={EditorPluginType.Text}
           contentControls={
             <HoveringToolbarControls
               controls={toolbarControls}

@@ -1,3 +1,3 @@
-import { PluginToolbar, PluginType } from './plugin-toolbar'
+import { PluginToolbar } from './plugin-toolbar'
 
-export { PluginToolbar, PluginType }
+export { PluginToolbar }
