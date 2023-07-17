@@ -34,7 +34,7 @@ export function PluginToolbar({
 
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
-        <div className="mx-4 text-sm font-bold">{pluginType}</div>
+        <div className="mx-4 text-sm font-bold capitalize">{pluginType}</div>
 
         {/* Separator */}
         <div className="h-6 w-[2px] bg-gray-300"></div>
