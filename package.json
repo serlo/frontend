@@ -76,7 +76,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-hotkeys": "^2.0.0",
+    "react-hotkeys-hook": "^4.4.1",
     "react-lazyload": "^3.2.0",
     "react-markdown": "^6.0.3",
     "react-mathquill": "Entkenntnis/tmp-react-mathquill",

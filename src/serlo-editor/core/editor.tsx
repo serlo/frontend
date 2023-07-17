@@ -1,7 +1,7 @@
 import { useMemo, useEffect, ReactNode } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { configure, GlobalHotKeys } from 'react-hotkeys'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
 import { EditableContext, PreferenceContextProvider } from './contexts'
@@ -24,12 +24,6 @@ import {
   DocumentState,
 } from '../store'
 
-configure({
-  ignoreEventsCondition() {
-    return false
-  },
-})
-
 /**
  * Renders a single editor for an Serlo Editor document
  */
@@ -41,11 +35,6 @@ export function Editor(props: EditorProps) {
       </DndProvider>
     </Provider>
   )
-}
-
-const hotKeysKeyMap = {
-  UNDO: ['ctrl+z', 'command+z'],
-  REDO: ['ctrl+y', 'command+y', 'ctrl+shift+z', 'command+shift+z'],
 }
 
 export function InnerDocument({
@@ -84,32 +73,23 @@ export function InnerDocument({
     )
   }, [props.initialState, strippedPlugins, dispatch])
   const editableContextValue = useMemo(() => editable, [editable])
-  const hotKeysHandlers = useMemo(
-    () => ({
-      UNDO: () => dispatch(undo()),
-      REDO: () => dispatch(redo()),
-    }),
-    [dispatch]
+  useHotkeys('ctrl+z, command+z', () => dispatch(undo()))
+  useHotkeys('ctrl+y, command+y, ctrl+shift+z, command+shift+z', () =>
+    dispatch(redo())
   )
 
   if (!id) return null
 
   return (
-    <GlobalHotKeys
-      allowChanges
-      keyMap={hotKeysKeyMap}
-      handlers={hotKeysHandlers}
-    >
-      <div className="relative">
-        <PluginsContext.Provider value={plugins}>
-          <PreferenceContextProvider>
-            <EditableContext.Provider value={editableContextValue}>
-              {renderChildren(id)}
-            </EditableContext.Provider>
-          </PreferenceContextProvider>
-        </PluginsContext.Provider>
-      </div>
-    </GlobalHotKeys>
+    <div className="relative">
+      <PluginsContext.Provider value={plugins}>
+        <PreferenceContextProvider>
+          <EditableContext.Provider value={editableContextValue}>
+            {renderChildren(id)}
+          </EditableContext.Provider>
+        </PreferenceContextProvider>
+      </PluginsContext.Provider>
+    </div>
   )
 
   function renderChildren(id: string) {
@@ -135,9 +115,11 @@ export interface EditorProps {
     plugin: string
     state?: unknown
   }
-  onChange?: (payload: {
-    changed: boolean
-    getDocument: () => DocumentState | null
-  }) => void
+  onChange?: OnEditorChange
   editable?: boolean
 }
+
+export type OnEditorChange = (payload: {
+  changed: boolean
+  getDocument: () => DocumentState | null
+}) => void

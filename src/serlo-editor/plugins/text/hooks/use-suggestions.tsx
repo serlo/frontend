@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 
 import { AllowedChildPlugins } from '../../rows'
@@ -29,12 +30,6 @@ export interface SuggestionOption {
   icon?: JSX.Element
 }
 
-const hotKeysMap = {
-  SELECT_UP: 'up',
-  SELECT_DOWN: 'down',
-  INSERT: 'enter',
-}
-
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
@@ -48,6 +43,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     .map(({ type }) => type)
   const allowed = useContext(AllowedChildPlugins)
   const pluginsData = usePlugins()
+
+  useHotkeys('up', () => handleSelectionChange('up'))
+  useHotkeys('down', () => handleSelectionChange('down'))
+  useHotkeys('enter', handleSuggestionInsert)
 
   const allOptions = (allowed ?? allPlugins).map((type) =>
     createOption(type, pluginsStrings, pluginsData)
@@ -135,12 +134,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     dispatch(runReplaceDocumentSaga({ id, plugin: pluginType }))
   }
 
-  const hotKeysHandlers = {
-    SELECT_UP: handleSelectionChange('up'),
-    SELECT_DOWN: handleSelectionChange('down'),
-    INSERT: handleSuggestionInsert,
-  }
-
   return {
     showSuggestions,
     suggestionsProps: {
@@ -149,10 +142,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       selected,
       onMouseDown: insertPlugin,
       onMouseMove: setSelected,
-    },
-    hotKeysProps: {
-      keyMap: hotKeysMap,
-      handlers: hotKeysHandlers,
     },
     handleHotkeys,
   }
