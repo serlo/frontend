@@ -77,7 +77,7 @@ export function TextEditor(props: TextEditorProps) {
 
   const config = useTextConfig(props.config)
 
-  const textFormattingOptions = useFormattingOptions(config)
+  const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),

@@ -17,6 +17,7 @@ const imageState = object({
   link: optional(object({ href: string('') })),
   alt: optional(string('')),
   maxWidth: optional(number(0)),
+  // TODO: Can't stay a string because of formatting options
   caption: optional(string('')),
 })
 

@@ -1,18 +1,22 @@
-import React, { useCallback, useMemo } from 'react'
-import { createEditor } from 'slate'
-import { Editable, withReact, Slate, RenderElementProps } from 'slate-react'
+import React, { useCallback } from 'react'
+import { Editor, Node } from 'slate'
+import { Editable, Slate, RenderElementProps } from 'slate-react'
 
 import { TextLeafRenderer } from './text-leaf-renderer'
 // TODO: Either duplicate or extract from text plugin
 import { MathElement } from '../text/components/math-element'
 
 interface CaptionEditorProps {
+  editor: Editor
   focused: boolean
+  onChange: (value: string) => void
 }
 
-export const CaptionEditor = ({ focused }: CaptionEditorProps) => {
-  const editor = useMemo(() => withReact(createEditor()), [])
-
+export const CaptionEditor = ({
+  editor,
+  focused,
+  onChange,
+}: CaptionEditorProps) => {
   const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -45,6 +49,10 @@ export const CaptionEditor = ({ focused }: CaptionEditorProps) => {
     [focused]
   )
 
+  const handleChange = useCallback(() => {
+    onChange(Node.string(editor))
+  }, [editor, onChange])
+
   return (
     <Slate
       editor={editor}
@@ -54,6 +62,7 @@ export const CaptionEditor = ({ focused }: CaptionEditorProps) => {
           children: [{ text: '' }],
         },
       ]}
+      onChange={handleChange}
     >
       <Editable
         placeholder="Enter some rich text…"
