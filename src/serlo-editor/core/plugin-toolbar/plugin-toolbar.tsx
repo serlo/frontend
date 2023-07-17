@@ -8,7 +8,8 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 interface PluginToolbarProps {
   pluginId: string
   pluginType: EditorPluginType | string
-  contentControls: ReactElement
+  contentControls?: ReactElement
+  pluginSettings?: ReactElement
   pluginControls: ReactElement
 }
 
@@ -23,6 +24,7 @@ export function PluginToolbar({
   pluginId,
   pluginType,
   contentControls,
+  pluginSettings,
   pluginControls,
 }: PluginToolbarProps) {
   const pluginTypesOfAncestors = useAppSelector((state) =>
@@ -56,6 +58,14 @@ export function PluginToolbar({
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
         <div className="mx-4 text-sm font-bold capitalize">{pluginType}</div>
+
+        {pluginSettings ? (
+          <>
+            {/* Separator */}
+            <div className="mr-2 h-6 w-[2px] bg-gray-300"></div>
+            {pluginSettings}
+          </>
+        ) : null}
 
         {/* Separator */}
         <div className="h-6 w-[2px] bg-gray-300"></div>

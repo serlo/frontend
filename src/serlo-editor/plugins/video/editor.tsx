@@ -29,7 +29,16 @@ export const VideoEditor = ({
         <PluginToolbar
           pluginId={id}
           pluginType={EditorPluginType.Video}
-          contentControls={<></>}
+          pluginSettings={
+            <>
+              <button className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200">
+                Change URL
+              </button>
+              <button className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200">
+                Add description
+              </button>
+            </>
+          }
           pluginControls={<DefaultControls pluginId={id} />}
         />
       )}
