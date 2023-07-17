@@ -45,7 +45,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
 
 Link.displayName = 'Link'
 
-// don't use this outside this component
+// don't expose this component as it needs the ref. Always use the Link
+// component instead.
 function InternalLink({
   href,
   children,
@@ -78,7 +79,7 @@ function InternalLink({
     const isAnchor = _href.startsWith('#') || _href.startsWith('/#')
     const isMailto = _href.startsWith('mailto:')
     // pathname maps to the page that rendered the site, this is more reliable
-    const isContentOnly = router.pathname.startsWith('/content-only/') //router.pathname
+    const isContentOnly = router.pathname.startsWith('/content-only/')
 
     if (isAnchor || isMailto || isSerloSubdomain || isExternal || isContentOnly)
       return { parsedHref: href, clientSide: false, isExternal, isContentOnly }

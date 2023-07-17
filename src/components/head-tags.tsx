@@ -35,7 +35,11 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
         property="og:description"
         content={metaDescription ?? strings.header.slogan}
       />
-      {renderNoIndexMeta()}
+      <NoIndexMeta
+          noindex={noindex}
+          breadcrumbsData={breadcrumbsData}
+          data={data}
+      />
       <meta
         property="og:image"
         name="image"
@@ -49,20 +53,22 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
       <meta property="og:image:height" content="630" />
     </Head>
   )
+}
 
-  function renderNoIndexMeta() {
-    // hide search, trashed and content of the "Testbereich" in instance de
-    const filteredBreadcrumbs = breadcrumbsData?.filter(
-      (entry) => entry.id === testAreaId
-    )
-    if (
-      noindex ||
-      (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
-      data.title.startsWith('Testbereich')
-    ) {
-      return <meta name="robots" content="noindex" />
-    }
+/* Uses the exact same props as HeadTags */
+type NoIndexMetaProps = HeadTagsProps
 
-    return null
+function NoIndexMeta({ noindex, breadcrumbsData, data }: NoIndexMetaProps) {
+  const filteredBreadcrumbs = breadcrumbsData?.filter(
+    (entry) => entry.id === testAreaId
+  )
+  if (
+    noindex ||
+    (filteredBreadcrumbs && filteredBreadcrumbs.length > 0) ||
+    data.title.startsWith('Testbereich')
+  ) {
+    return <meta name="robots" content="noindex" />
   }
+
+  return null
 }

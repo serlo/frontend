@@ -1,4 +1,5 @@
 import { Lazy } from '../lazy'
+import { Roles } from './donations-roles'
 import { tw } from '@/helper/tw'
 
 const banner = {
@@ -27,9 +28,9 @@ export function TestimonialDonationsPage() {
     <Lazy>
       <aside
         className={tw`
-          relative z-10 my-16 mt-20 mt-24 
-          overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
-          bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
+          relative z-10 my-16 mt-20 mt-24
+          overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")]
+          bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat
           pb-12 pb-14 pt-6 text-center text-2xl
           sm:flex sm:justify-between sm:px-0 sm:text-left
         `}
@@ -42,7 +43,7 @@ export function TestimonialDonationsPage() {
           <p className="mt-1 text-base font-bold text-gray-700">
             @{banner.username}
           </p>
-          {renderRoles(banner.roles)}
+          <Roles roles={banner.roles} />
         </figure>
         <div className="mx-auto max-w-2xl px-side sm:ml-0 sm:mt-8 lg:mt-12">
           {banner.text}
@@ -50,12 +51,4 @@ export function TestimonialDonationsPage() {
       </aside>
     </Lazy>
   )
-
-  function renderRoles(roles: string[] | undefined) {
-    if (!roles) return null
-
-    return (
-      <b className="-mt-1 block text-[16px] text-brand">{roles.join(', ')}</b>
-    )
-  }
 }

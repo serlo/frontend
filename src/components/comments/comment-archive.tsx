@@ -22,7 +22,7 @@ export function CommentArchive({
   const { strings } = useInstanceData()
 
   function toogleShowArchived() {
-    setShowArchived(!showArchived)
+    setShowArchived((currentShowArchived) => !currentShowArchived)
   }
 
   if (data === undefined || data.length === 0) return null
@@ -46,22 +46,17 @@ export function CommentArchive({
           </span>
         </button>
       </p>
-      {showArchived && renderThreads()}
+      {showArchived &&
+        data &&
+        data.map((thread) => (
+          <Thread
+            key={thread.id}
+            thread={thread}
+            showChildren
+            highlightedCommentId={highlightedCommentId}
+            highlight={highlight}
+          />
+        ))}
     </>
   )
-
-  function renderThreads() {
-    return (
-      data &&
-      data.map((thread) => (
-        <Thread
-          key={thread.id}
-          thread={thread}
-          showChildren
-          highlightedCommentId={highlightedCommentId}
-          highlight={highlight}
-        />
-      ))
-    )
-  }
 }

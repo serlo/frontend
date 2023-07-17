@@ -3,8 +3,8 @@ import {
   faTools,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons'
-import { Router } from 'next/router'
-import { useState, MouseEvent } from 'react'
+import { useRouter } from 'next/router'
+import { useState, MouseEvent, useEffect } from 'react'
 
 import { HSpace } from './h-space'
 import { Link } from './link'
@@ -15,7 +15,6 @@ import { CourseFooter } from '@/components/navigation/course-footer'
 import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
-import { FrontendContentNode } from '@/frontend-node-types'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
@@ -41,71 +40,53 @@ export function Entity({ data }: EntityProps) {
     setCourseNavOpen(!courseNavOpen)
   }
 
-  // auto close courseNav when switching pages
-  Router.events.on('routeChangeComplete', () => {
-    setCourseNavOpen(false)
-  })
+  const router = useRouter()
 
-  const { strings } = useInstanceData()
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setCourseNavOpen(false)
+    }
+
+    router.events.on('routeChangeComplete', handleRouteChange)
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [router.events])
+
   return wrapWithSchema(
     <>
-      {renderCourseNavigation()}
-      {renderNoCoursePages()}
-      {renderNotices()}
-      {renderStyledH1()}
-      {renderUserTools({ aboveContent: true })}
+      {data.courseData && (
+        <CourseNavigation
+          open={courseNavOpen}
+          onOverviewButtonClick={openCourseNav}
+          title={data.courseData.title}
+          pages={data.courseData.pages}
+        />
+      )}
+      <NoCoursePages data={data} />
+      <Notices data={data} />
+      <Heading
+        title={data.title}
+        courseData={data.courseData}
+        typename={data.typename}
+      />
+      <UserToolsRenderer data={data} isAboveContent />
       <div className="min-h-1/4" key={data.id}>
-        {data.content && renderContent(data.content)}
+        {data.content && <Content data={data as EntityDataWithContent} />}
       </div>
-      {renderCourseFooter()}
+      {data.courseData && (
+        <CourseFooter
+          onOverviewButtonClick={openCourseNav}
+          pages={data.courseData.pages}
+          index={data.courseData.index}
+        />
+      )}
       <HSpace amount={20} />
-      {renderUserTools()}
+      <UserToolsRenderer data={data} />
       {data.licenseData && <LicenseNotice data={data.licenseData} />}
     </>
   )
-
-  function renderStyledH1() {
-    if (!data.title) return null
-    return (
-      <h1 className="serlo-h1 mt-12" itemProp="name">
-        {renderCoursePageNumber()}
-        {data.title}
-        {renderEntityIcon()}
-      </h1>
-    )
-  }
-
-  function renderCoursePageNumber() {
-    if (!data.courseData) return null
-    return (
-      <span
-        className={tw`
-          -mt-1.5 mr-1.5 inline-block h-7 w-7
-          justify-center rounded-full bg-brand-200 text-center align-middle
-          text-xl font-bold text-brand
-        `}
-      >
-        {data.courseData.index + 1}
-      </span>
-    )
-  }
-
-  function renderEntityIcon() {
-    if (
-      data.typename === UuidType.CoursePage ||
-      data.typename === UuidType.Page
-    )
-      return null
-    return (
-      <span title={getTranslatedType(strings, data.typename)}>
-        {' '}
-        <FaIcon
-          icon={getIconByTypename(data.typename)}
-          className="text-2.5xl text-brand-400"
-        />{' '}
-      </span>
-    )
-  }
 
   function wrapWithSchema(comp: JSX.Element) {
     if (data.schemaData) {
@@ -127,103 +108,148 @@ export function Entity({ data }: EntityProps) {
     }
     return comp
   }
+}
 
-  function renderContent(value: FrontendContentNode[]) {
-    const content = renderArticle(value, `entity${data.id}`)
-    if (data.schemaData?.setContentAsSection) {
-      return <section itemProp="articleBody">{content}</section>
-    }
-    return content
+function Heading({
+  title,
+  courseData,
+  typename,
+}: {
+  title?: string
+  courseData?: EntityData['courseData']
+  typename: UuidType
+}) {
+  if (!title) return null
+  return (
+    <h1 className="serlo-h1 mt-12" itemProp="name">
+      <CoursePageNumber courseData={courseData} />
+      {title}
+      <EntityIcon typename={typename} />
+    </h1>
+  )
+}
+
+function CoursePageNumber({
+  courseData,
+}: {
+  courseData: EntityData['courseData']
+}) {
+  if (!courseData) return null
+  return (
+    <span
+      className={tw`
+        -mt-1.5 mr-1.5 inline-block h-7 w-7
+        justify-center rounded-full bg-brand-200 text-center align-middle
+        text-xl font-bold text-brand
+      `}
+    >
+      {courseData.index + 1}
+    </span>
+  )
+}
+
+function EntityIcon({ typename }: { typename: UuidType }) {
+  const { strings } = useInstanceData()
+
+  if (typename === UuidType.CoursePage || typename === UuidType.Page)
+    return null
+  return (
+    <span title={getTranslatedType(strings, typename)}>
+      {' '}
+      <FaIcon
+        icon={getIconByTypename(typename)}
+        className="text-2.5xl text-brand-400"
+      />{' '}
+    </span>
+  )
+}
+
+function UserToolsRenderer({
+  isAboveContent,
+  data,
+}: {
+  isAboveContent?: boolean
+  data: EntityProps['data']
+}) {
+  return (
+    <UserTools
+      aboveContent={isAboveContent}
+      id={data.id}
+      unrevisedRevisions={data.unrevisedRevisions}
+      data={{
+        type: data.typename,
+        id: data.id,
+        alias: data.alias,
+        revisionId: data.revisionId,
+        courseId: data.courseData?.id,
+        trashed: data.trashed,
+        unrevisedRevisions: data.unrevisedRevisions,
+        unrevisedCourseRevisions: data.unrevisedCourseRevisions,
+      }}
+    />
+  )
+}
+
+type EntityDataWithContent = EntityData & {
+  content: NonNullable<EntityData['content']>
+}
+
+function Content({ data }: { data: EntityDataWithContent }) {
+  const content = renderArticle(data.content, `entity${data.id}`)
+  if (data.schemaData?.setContentAsSection) {
+    return <section itemProp="articleBody">{content}</section>
   }
+  return <>{content}</>
+}
 
-  function renderUserTools(setting?: { aboveContent?: boolean }) {
+function NoCoursePages({ data }: { data: EntityData }) {
+  const { strings } = useInstanceData()
+
+  if (!data.courseData) return null
+  const validPages = data.courseData.pages.filter(
+    (page) => !page.noCurrentRevision
+  )
+  if (validPages.length > 0) return null
+  return (
+    <>
+      <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        {strings.course.noPagesWarning}
+      </StaticInfoPanel>
+    </>
+  )
+}
+
+function Notices({ data }: { data: EntityData }) {
+  const { strings } = useInstanceData()
+  if (data.trashed)
     return (
-      <UserTools
-        aboveContent={setting?.aboveContent}
-        id={data.id}
-        unrevisedRevisions={data.unrevisedRevisions}
-        data={{
-          type: data.typename,
-          id: data.id,
-          alias: data.alias,
-          revisionId: data.revisionId,
-          courseId: data.courseData?.id,
-          trashed: data.trashed,
-          unrevisedRevisions: data.unrevisedRevisions,
-          unrevisedCourseRevisions: data.unrevisedCourseRevisions,
-        }}
-      />
+      <StaticInfoPanel icon={faTrash} doNotIndex>
+        {strings.content.trashedNotice}
+      </StaticInfoPanel>
     )
-  }
 
-  function renderCourseNavigation() {
-    if (!data.courseData) return null
+  const hasContent = data.title || data.content?.length
+  if (!hasContent)
     return (
-      <CourseNavigation
-        open={courseNavOpen}
-        onOverviewButtonClick={openCourseNav}
-        title={data.courseData.title}
-        pages={data.courseData.pages}
-      />
+      <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
+        {strings.content.emptyNotice}
+      </StaticInfoPanel>
     )
-  }
 
-  function renderNoCoursePages() {
-    if (!data.courseData) return null
-    const validPages = data.courseData.pages.filter(
-      (page) => !page.noCurrentRevision
+  if (data.isUnrevised) {
+    const link = (
+      <Link href={getHistoryUrl(data.id)}>
+        {strings.pageTitles.revisionHistory}
+      </Link>
     )
-    if (validPages.length > 0) return null
     return (
-      <>
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.course.noPagesWarning}
-        </StaticInfoPanel>
-      </>
+      <StaticInfoPanel icon={faTools} type="warning">
+        {replacePlaceholders(strings.content.unrevisedNotice, {
+          link,
+        })}
+      </StaticInfoPanel>
     )
   }
 
-  function renderCourseFooter() {
-    if (data.courseData) {
-      return (
-        <CourseFooter
-          onOverviewButtonClick={openCourseNav}
-          pages={data.courseData.pages}
-          index={data.courseData.index}
-        />
-      )
-    } else return null
-  }
-
-  function renderNotices() {
-    if (data.trashed)
-      return (
-        <StaticInfoPanel icon={faTrash} doNotIndex>
-          {strings.content.trashedNotice}
-        </StaticInfoPanel>
-      )
-
-    const hasContent = data.title || data.content?.length
-    if (!hasContent)
-      return (
-        <StaticInfoPanel icon={faExclamationCircle} type="warning" doNotIndex>
-          {strings.content.emptyNotice}
-        </StaticInfoPanel>
-      )
-
-    if (data.isUnrevised) {
-      const link = (
-        <Link href={getHistoryUrl(data.id)}>
-          {strings.pageTitles.revisionHistory}
-        </Link>
-      )
-      return (
-        <StaticInfoPanel icon={faTools} type="warning">
-          {replacePlaceholders(strings.content.unrevisedNotice, {
-            link,
-          })}
-        </StaticInfoPanel>
-      )
-    }
-  }
+  return null
 }

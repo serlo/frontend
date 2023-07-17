@@ -1,4 +1,11 @@
-import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
+import {
+  createRef,
+  useEffect,
+  useState,
+  ReactNode,
+  RefObject,
+  useCallback,
+} from 'react'
 import styled from 'styled-components'
 
 import { colors } from '@/helper/colors'
@@ -42,16 +49,20 @@ export function HoverOverlay(props: HoverOverlayProps) {
     anchorOffset: windowSelection?.anchorOffset,
     focusNode: windowSelection?.focusNode,
   })
-  const handleSelectionChange = () => {
+  const handleSelectionChange = useCallback(() => {
     setNativeSelection({
       anchorOffset: windowSelection?.anchorOffset,
       focusNode: windowSelection?.focusNode,
     })
-  }
-  document.addEventListener('selectionchange', handleSelectionChange)
-  useEffect(() => () => {
-    document.removeEventListener('selectionchange', handleSelectionChange)
-  })
+  }, [windowSelection])
+
+  useEffect(() => {
+    document.addEventListener('selectionchange', handleSelectionChange)
+
+    return () => {
+      document.removeEventListener('selectionchange', handleSelectionChange)
+    }
+  }, [handleSelectionChange])
 
   const { anchor, children } = props
 

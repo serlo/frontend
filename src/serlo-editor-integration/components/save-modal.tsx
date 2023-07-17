@@ -1,12 +1,12 @@
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { gql } from 'graphql-request'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { LocalStorageButton } from './local-storage-button'
 import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common/common'
 import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
-import { SaveContext } from '../serlo-editor'
+import { PluginErrors, useSaveContext } from '../../serlo-editor/save-context'
+import { LocalStorageButton } from './local-storage-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
@@ -32,11 +32,14 @@ export function SaveModal({
   changes,
   showSubscriptionOptions,
 }: SaveModalProps) {
-  const { handleSave, pending, hasError } = useHandleSave(
-    open,
-    showSubscriptionOptions
-  )
-  const { userCanSkipReview, entityNeedsReview } = useContext(SaveContext)
+  const {
+    handleSave,
+    pending,
+    hasError: hasSaveError,
+  } = useHandleSave(open, showSubscriptionOptions)
+  const { errors } = useSaveContext()
+  const hasPluginErrors = Object.keys(errors).length > 0
+  const { userCanSkipReview, entityNeedsReview } = useSaveContext()
   const [agreement, setAgreement] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
   const [emailSubscription, setEmailSubscription] = useState(true)
@@ -87,12 +90,13 @@ export function SaveModal({
       title={edtrIoStrings.save}
     >
       <div className="mx-side">
-        {renderChanges()}
+        {renderChangesInput()}
         {renderLicense()}
         {renderSubscription()}
         {renderCheckout()}
         {isOnlyText ? edtrIoStrings.ready : null}
         <hr className="mb-8 mt-8" />
+        <Errors errors={errors} />
         {renderAlert()}
         {renderModalButtons()}
       </div>
@@ -122,6 +126,15 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
+            if (hasPluginErrors) {
+              showToastNotice(
+                loggedInData!.strings.mutations.errors.pluginErrors,
+                'warning'
+              )
+
+              return
+            }
+
             if (maySave) {
               changes?.set(changesText)
               setFireSave(true)
@@ -137,7 +150,7 @@ export function SaveModal({
             'serlo-button ml-2',
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
-          disabled={pending}
+          disabled={pending || hasPluginErrors}
           title={getSaveHint()}
         >
           {pending
@@ -162,7 +175,7 @@ export function SaveModal({
   }
 
   function renderAlert() {
-    if (!hasError) return null
+    if (!hasSaveError) return null
     return (
       <StaticInfoPanel type="warning" icon={faExclamationCircle}>
         {edtrIoStrings.errorSaving}
@@ -173,7 +186,7 @@ export function SaveModal({
     )
   }
 
-  function renderChanges() {
+  function renderChangesInput() {
     if (!changes) return null
     return (
       <label
@@ -296,4 +309,21 @@ function useLicensesFetch(instance: string) {
       refreshInterval: 24 * 60 * 60 * 1000, // day
     },
   })
+}
+
+function Errors({ errors }: { errors: PluginErrors }) {
+  const errorEntries = Object.entries(errors)
+  if (errorEntries.length === 0) return null
+  return (
+    <StaticInfoPanel type="failure" icon={faExclamationCircle}>
+      {errorEntries.map(([id, { message, plugin }]) => (
+        <>
+          <span key={id}>
+            {plugin} error: {message}
+          </span>
+          <br />
+        </>
+      ))}
+    </StaticInfoPanel>
+  )
 }

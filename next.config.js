@@ -41,8 +41,7 @@ module.exports = withBundleAnalyzer({
     defaultLocale: 'de',
     localeDetection: false,
   },
-  // TODO: reactStrictMode with react18 breaks edtr.io atm (inside react-hotkeys)
-  reactStrictMode: false,
+  reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['ramda'], // context: https://github.com/vercel/next.js/issues/40183
   /*experimental: {

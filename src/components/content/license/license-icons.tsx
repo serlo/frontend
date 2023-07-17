@@ -22,36 +22,42 @@ export function LicenseIcons({ title, isDefault }: LicenseIconsProps) {
   if (isDefault) {
     return (
       <>
-        {renderIcon({ icon: faCreativeCommons, className: 'h-8' })}{' '}
-        {renderIcon({ icon: faCreativeCommonsBy, className: 'h-8' })}{' '}
-        {renderIcon({ icon: faCreativeCommonsSa, className: 'h-8' })}
+        <Icon icon={faCreativeCommons} className="h-8" />{' '}
+        <Icon icon={faCreativeCommonsBy} className="h-8" />{' '}
+        <Icon icon={faCreativeCommonsSa} className="h-8" />
       </>
     )
   }
 
   if (isCreativeCommons) {
-    return renderIcon({ icon: faCreativeCommons })
+    return <Icon icon={faCreativeCommons} />
   }
 
   return (
     <span className="relative inline-block h-8 w-10">
-      {renderIcon({ icon: faCreativeCommons, className: 'absolute' })}
-      {renderIcon({
-        icon: faSlash,
-        className: '-scale-x-[0.6] absolute -left-[4px] scale-y-[0.6]',
-      })}
+      <Icon icon={faCreativeCommons} className="absolute" />
+      <Icon
+        icon={faSlash}
+        className="absolute -left-[4px] -scale-x-[0.6] scale-y-[0.6]"
+      />
     </span>
   )
+}
 
-  function renderIcon(props: { className?: string; icon: IconDefinition }) {
-    return (
-      <FaIcon
-        className={clsx(
-          'mb-0.25 text-brand-400 mobile:mr-1 mobile:mt-0.25 mobile:text-[2rem]',
-          props.className
-        )}
-        icon={props.icon}
-      />
-    )
-  }
+function Icon({
+  className,
+  icon,
+}: {
+  className?: string
+  icon: IconDefinition
+}) {
+  return (
+    <FaIcon
+      className={clsx(
+        'mb-0.25 text-brand-400 mobile:mr-1 mobile:mt-0.25 mobile:text-[2rem]',
+        className
+      )}
+      icon={icon}
+    />
+  )
 }

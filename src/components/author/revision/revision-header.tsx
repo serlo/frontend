@@ -38,7 +38,6 @@ export function RevisionHeader({
 }: RevisionHeaderProps) {
   const { strings } = useInstanceData()
 
-  const icon = renderEntityIcon()
   return (
     <>
       <MaxWidthDiv noMarginBottom>
@@ -61,7 +60,7 @@ export function RevisionHeader({
             strings.entities.revision
           }
           headTitle
-          icon={icon ? icon : undefined}
+          icon={renderEntityIcon()}
         />
         {renderUserTools(true)}
         <p className="serlo-p leading-7">

@@ -46,44 +46,6 @@ export function Revision({ data }: RevisionProps) {
 
   return (
     <div className="relative pb-52">
-      {renderHeader()}
-
-      {displayMode === DisplayModes.SideBySide && (
-        <div className="mt-12 flex">
-          <div className="flex-1 bg-brand-50 px-side pb-6">
-            <h2 className="serlo-h2 mb-4 mt-12">
-              {strings.revisions.currentVersion}
-            </h2>
-            {renderPreviewBoxes(data.currentRevision)}
-          </div>
-          <div className="ml-4 mr-side flex-1">
-            <h2 className="serlo-h2 mb-4 mt-12">
-              {strings.revisions.thisVersion}
-            </h2>
-            {renderPreviewBoxes(data.thisRevision)}
-          </div>
-        </div>
-      )}
-
-      {displayMode === DisplayModes.Diff && (
-        <div className="mx-side">{renderPreviewBoxes(data.thisRevision)}</div>
-      )}
-
-      {displayMode === DisplayModes.This && (
-        <>
-          <MaxWidthDiv>
-            {renderPreviewBoxes(data.thisRevision)}
-            {renderExercisePreview()}
-          </MaxWidthDiv>
-        </>
-      )}
-
-      {renderUserTools(false)}
-    </div>
-  )
-
-  function renderHeader() {
-    return (
       <RevisionHeader
         data={data}
         isCurrentRevision={isCurrentRevision}
@@ -94,18 +56,61 @@ export function Revision({ data }: RevisionProps) {
         setDisplayMode={setDisplayMode}
         hasCurrentRevision={hasCurrentRevision}
       />
-    )
-  }
 
-  function renderPreviewBoxes(dataSet: RevisionPreviewBoxesProps['dataSet']) {
-    return (
-      <RevisionPreviewBoxes
-        dataSet={dataSet}
-        data={data}
-        displayMode={displayMode}
-      />
-    )
-  }
+      {displayMode === DisplayModes.SideBySide && (
+        <div className="mt-12 flex">
+          <div className="flex-1 bg-brand-50 px-side pb-6">
+            <h2 className="serlo-h2 mb-4 mt-12">
+              {strings.revisions.currentVersion}
+            </h2>
+            <PreviewBoxes
+              dataSet={data.currentRevision}
+              displayMode={displayMode}
+              data={data}
+            />
+          </div>
+          <div className="ml-4 mr-side flex-1">
+            <h2 className="serlo-h2 mb-4 mt-12">
+              {strings.revisions.thisVersion}
+            </h2>
+            <PreviewBoxes
+              dataSet={data.thisRevision}
+              displayMode={displayMode}
+              data={data}
+            />
+          </div>
+        </div>
+      )}
+
+      {displayMode === DisplayModes.Diff && (
+        <div className="mx-side">
+          <PreviewBoxes
+            dataSet={data.thisRevision}
+            displayMode={displayMode}
+            data={data}
+          />
+        </div>
+      )}
+
+      {displayMode === DisplayModes.This && (
+        <>
+          <MaxWidthDiv>
+            <PreviewBoxes
+              dataSet={data.thisRevision}
+              displayMode={displayMode}
+              data={data}
+            />
+            <ExercisePreview
+              data={data}
+              hasCurrentRevision={hasCurrentRevision}
+            />
+          </MaxWidthDiv>
+        </>
+      )}
+
+      {renderUserTools(false)}
+    </div>
+  )
 
   function renderUserTools(above: boolean) {
     return (
@@ -124,60 +129,86 @@ export function Revision({ data }: RevisionProps) {
       />
     )
   }
+}
 
-  function renderExercisePreview() {
-    if (
-      ![
-        UuidRevType.Solution,
-        UuidRevType.ExerciseGroup,
-        UuidRevType.GroupedExercise,
-      ].includes(data.typename) ||
-      data.repository.parentId === undefined
-    )
-      return null
+function PreviewBoxes({
+  dataSet,
+  data,
+  displayMode,
+}: {
+  dataSet: RevisionPreviewBoxesProps['dataSet']
+  data: RevisionData
+  displayMode: DisplayModes
+}) {
+  return (
+    <RevisionPreviewBoxes
+      dataSet={dataSet}
+      data={data}
+      displayMode={displayMode}
+    />
+  )
+}
 
-    const { parentId } = data.repository
+function ExercisePreview({
+  data,
+  hasCurrentRevision,
+}: {
+  data: RevisionData
+  hasCurrentRevision: boolean
+}) {
+  const { strings } = useInstanceData()
 
-    if (!hasCurrentRevision) {
-      return (
-        <p className="serlo-p mt-20">
-          <Link href={getHistoryUrl(parentId)}>
-            {strings.revisions.parentFallbackLink}
-          </Link>
-        </p>
-      )
-    }
+  if (
+    ![
+      UuidRevType.Solution,
+      UuidRevType.ExerciseGroup,
+      UuidRevType.GroupedExercise,
+    ].includes(data.typename) ||
+    data.repository.parentId === undefined
+  )
+    return null
 
-    const char =
-      data.repository.positionInGroup === undefined
-        ? undefined
-        : String.fromCharCode(97 + data.repository.positionInGroup)
+  const { parentId } = data.repository
 
+  if (!hasCurrentRevision) {
     return (
-      <>
-        <div className="serlo-content-with-spacing-fixes">
-          <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
-          {char && (
-            <span className="mx-side mb-10 inline-block bg-editor-primary-100 px-1">
-              {replacePlaceholders(strings.revisions.positionForGrouped, {
-                exercise_or_solution:
-                  data.typename === UuidRevType.GroupedExercise
-                    ? strings.content.exercises.task
-                    : strings.entities.solution,
-                title: (
-                  <b>
-                    {strings.entities.groupedExercise} {char}
-                  </b>
-                ),
-              })}{' '}
-            </span>
-          )}
-          <InjectionRenderer
-            href={`/${parentId}`}
-            renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
-          />
-        </div>
-      </>
+      <p className="serlo-p mt-20">
+        <Link href={getHistoryUrl(parentId)}>
+          {strings.revisions.parentFallbackLink}
+        </Link>
+      </p>
     )
   }
+
+  const char =
+    data.repository.positionInGroup === undefined
+      ? undefined
+      : String.fromCharCode(97 + data.repository.positionInGroup)
+
+  return (
+    <>
+      <div className="serlo-content-with-spacing-fixes">
+        <h2 className="serlo-h2 mt-12">{strings.revisions.context}</h2>
+        {char && (
+          <span className="mx-side mb-10 inline-block bg-editor-primary-100 px-1">
+            {replacePlaceholders(strings.revisions.positionForGrouped, {
+              exercise_or_solution:
+                data.typename === UuidRevType.GroupedExercise
+                  ? strings.content.exercises.task
+                  : strings.entities.solution,
+              title: (
+                <b>
+                  {strings.entities.groupedExercise} {char}
+                </b>
+              ),
+            })}{' '}
+          </span>
+        )}
+        <InjectionRenderer
+          href={`/${parentId}`}
+          renderNested={(value, ...prefix) => renderNested(value, [], prefix)}
+        />
+      </div>
+    </>
+  )
 }

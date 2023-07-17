@@ -198,7 +198,17 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       {page.newsletterPopup && <NewsletterPopup />}
       <div className="relative">
         <MaxWidthDiv showNav={!!page.secondaryMenuData}>
-          {renderBreadcrumbs()}
+          <Breadcrumbs
+            data={page.breadcrumbsData}
+            isTaxonomy={
+              page.kind !== 'single-entity' &&
+              !(page.metaData?.contentType === 'topic-folder')
+            }
+            asBackButton={
+              page.kind === 'single-entity' &&
+              page.entityData.typename === UuidType.GroupedExercise
+            }
+          />
           <main id="content">{children}</main>
 
           {/* Temporary donations banner trial */}
@@ -227,22 +237,6 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       </div>
     </>
   )
-
-  function renderBreadcrumbs() {
-    return (
-      <Breadcrumbs
-        data={page.breadcrumbsData}
-        isTaxonomy={
-          page.kind !== 'single-entity' &&
-          !(page.metaData?.contentType === 'topic-folder')
-        }
-        asBackButton={
-          page.kind === 'single-entity' &&
-          page.entityData.typename === UuidType.GroupedExercise
-        }
-      />
-    )
-  }
 
   function triggerPopup() {
     // pop-up already visible

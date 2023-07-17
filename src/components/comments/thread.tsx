@@ -24,78 +24,159 @@ export function Thread({
   highlightedCommentId,
   noScroll,
 }: ThreadProps) {
-  const { strings } = useInstanceData()
-
   const threadComment = thread.comments.nodes[0]
   const comments = thread.comments.nodes.slice(1)
 
   return (
     <div className="mb-11" key={thread.id}>
-      {renderComments([threadComment], thread.id, true)}
-      {renderThreadComments(comments)}
+      <Comments
+        comments={[threadComment]}
+        threadId={thread.id}
+        isParent
+        highlight={highlight}
+        highlightedCommentId={highlightedCommentId}
+        noScroll={noScroll}
+      />
+      <ThreadComments
+        comments={comments}
+        threadId={thread.id}
+        renderReplyForm={renderReplyForm}
+        showChildren={showChildren}
+        toggleChildren={toggleChildren}
+        highlight={highlight}
+        highlightedCommentId={highlightedCommentId}
+        noScroll={noScroll}
+      />
     </div>
   )
+}
 
-  function renderThreadComments(comments: CommentsData) {
-    //only show first reply by default
-    if (comments.length < 2)
-      return (
-        <>
-          {comments.length > 0 && renderComments(comments, thread.id)}
-          {renderReplyForm && renderReplyForm(thread.id)}
-        </>
-      )
+type ThreadCommentsProps = Pick<
+  ThreadProps,
+  | 'showChildren'
+  | 'toggleChildren'
+  | 'highlight'
+  | 'highlightedCommentId'
+  | 'noScroll'
+> & {
+  comments: CommentsData
+  threadId: string
+  renderReplyForm?: ThreadProps['renderReplyForm']
+}
 
+function ThreadComments({
+  comments,
+  threadId,
+  renderReplyForm,
+  showChildren,
+  toggleChildren,
+  highlight,
+  highlightedCommentId,
+  noScroll,
+}: ThreadCommentsProps) {
+  //only show first reply by default
+  if (comments.length < 2)
     return (
       <>
-        {renderComments(showChildren ? comments : [comments[0]], thread.id)}
-        {showChildren && renderReplyForm ? renderReplyForm(thread.id) : null}
-        <p className="serlo-p">{renderMoreToggle()}</p>
+        {comments.length > 0 && (
+          <Comments
+            comments={comments}
+            threadId={threadId}
+            highlight={highlight}
+            highlightedCommentId={highlightedCommentId}
+            noScroll={noScroll}
+          />
+        )}
+        {renderReplyForm && renderReplyForm(threadId)}
       </>
     )
-  }
 
-  function renderMoreToggle() {
-    const text = showChildren
-      ? strings.comments.hideReplies
-      : comments.length === 2
-      ? strings.comments.showMoreReply
-      : replacePlaceholders(strings.comments.showMoreReplies, {
-          number: (comments.length - 1).toString(),
-        })
-
-    const icon = showChildren ? '▴' : '▾'
-
-    return (
-      <button
-        className="serlo-button-light"
-        onClick={() => {
-          if (toggleChildren) toggleChildren(thread.id)
-        }}
-      >
-        {text} {icon}
-      </button>
-    )
-  }
-
-  function renderComments(
-    comments: CommentsData,
-    threadId: string,
-    isParent?: boolean
-  ) {
-    return comments.map((comment) => {
-      const isHighlight = comment.id === highlightedCommentId
-      return (
-        <Comment
-          key={comment.id}
-          data={comment}
+  return (
+    <>
+      <Comments
+        comments={showChildren ? comments : [comments[0]]}
+        threadId={threadId}
+        highlight={highlight}
+        highlightedCommentId={highlightedCommentId}
+        noScroll={noScroll}
+      />
+      {showChildren && renderReplyForm ? renderReplyForm(threadId) : null}
+      <p className="serlo-p">
+        <ToggleMoreButton
+          showChildren={showChildren}
+          comments={comments}
+          toggleChildren={toggleChildren}
           threadId={threadId}
-          isParent={isParent}
-          isHighlight={isHighlight}
-          highlight={highlight}
-          noScroll={noScroll}
         />
-      )
-    })
-  }
+      </p>
+    </>
+  )
+}
+
+function ToggleMoreButton({
+  showChildren,
+  comments,
+  toggleChildren,
+  threadId,
+}: {
+  showChildren: boolean
+  comments: CommentsData
+  toggleChildren: ThreadProps['toggleChildren']
+  threadId: string
+}) {
+  const { strings } = useInstanceData()
+
+  const text = showChildren
+    ? strings.comments.hideReplies
+    : comments.length === 2
+    ? strings.comments.showMoreReply
+    : replacePlaceholders(strings.comments.showMoreReplies, {
+        number: (comments.length - 1).toString(),
+      })
+
+  const icon = showChildren ? '▴' : '▾'
+
+  return (
+    <button
+      className="serlo-button-light"
+      onClick={() => {
+        if (toggleChildren) toggleChildren(threadId)
+      }}
+    >
+      {text} {icon}
+    </button>
+  )
+}
+
+type CommentsProps = Pick<
+  ThreadProps,
+  'highlight' | 'noScroll' | 'highlightedCommentId'
+> & { comments: CommentsData; threadId: string; isParent?: boolean }
+
+function Comments({
+  comments,
+  threadId,
+  isParent,
+  highlight,
+  noScroll,
+  highlightedCommentId,
+}: CommentsProps) {
+  return (
+    <>
+      {comments.map((comment) => {
+        const isHighlight = comment.id === highlightedCommentId
+        return (
+          <Comment
+            key={comment.id}
+            data={comment}
+            threadId={threadId}
+            isParent={isParent}
+            isHighlight={isHighlight}
+            highlight={highlight}
+            noScroll={noScroll}
+          />
+        )
+      })}
+    </>
+  )
 }

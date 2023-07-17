@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useRef, useState } from 'react'
 
 import { Lazy } from '../lazy'
+import { Roles } from './donations-roles'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { EntityData, UuidType } from '@/data-types'
@@ -252,14 +253,14 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       <aside
         ref={bannerRef}
         className={tw`
-            relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")] 
-            bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat 
+            relative w-[100vw] overflow-x-hidden bg-[url("/_assets/img/landing/about-container.svg")]
+            bg-[url("/_assets/img/landing/about-container.svg")] bg-[length:100vw_100%] bg-bottom bg-no-repeat
             px-side py-6 text-center
             text-xl sm:-mx-2 sm:flex sm:max-w-[100vw] sm:justify-between
             sm:px-0 sm:text-left lg:my-16 lg:py-10 lg:text-2xl
           `}
       >
-        {renderHideButton()}
+        <HideButton setBanner={setBanner} />
         <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
           <img
             src={banner.imageSrc}
@@ -290,7 +291,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
               <p className="mt-1 text-base font-bold text-gray-700">
                 @{banner.username}
               </p>
-              {renderRoles(banner.roles)}
+              <Roles roles={banner.roles} />
             </>
           ) : null}
         </figure>
@@ -336,27 +337,23 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       `}</style>
     </Lazy>
   )
+}
 
-  function renderHideButton() {
-    return (
-      <button
-        title="Banner verstecken"
-        onClick={() => {
-          sessionStorage.setItem(hideDonationBannerKey, 'true')
-          setBanner(undefined)
-        }}
-        className="serlo-button-blue-transparent absolute right-6  h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
-      >
-        <FaIcon icon={faTimes} />
-      </button>
-    )
-  }
-
-  function renderRoles(roles: string[] | undefined) {
-    if (!roles) return null
-
-    return (
-      <b className="-mt-1 block text-[16px] text-brand">{roles.join(', ')}</b>
-    )
-  }
+function HideButton({
+  setBanner,
+}: {
+  setBanner: (banner: Banner | undefined) => void
+}) {
+  return (
+    <button
+      title="Banner verstecken"
+      onClick={() => {
+        sessionStorage.setItem(hideDonationBannerKey, 'true')
+        setBanner(undefined)
+      }}
+      className="serlo-button-blue-transparent absolute right-6  h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
+    >
+      <FaIcon icon={faTimes} />
+    </button>
+  )
 }

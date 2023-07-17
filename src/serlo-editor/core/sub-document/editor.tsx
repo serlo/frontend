@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
-import { HotKeys, IgnoreKeys } from 'react-hotkeys'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { SubDocumentProps } from '.'
 import {
@@ -28,16 +28,84 @@ import { usePlugin } from '../contexts/plugins-context'
 import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
-const hotKeysKeyMap = {
-  FOCUS_PREVIOUS: 'up',
-  FOCUS_NEXT: 'down',
-  INSERT_DEFAULT_PLUGIN: 'enter',
-  DELETE_EMPTY: ['backspace', 'del'],
-  UNDO: ['ctrl+z', 'command+z'],
-  REDO: ['ctrl+y', 'command+y', 'ctrl+shift+z', 'command+shift+z'],
-}
-type HotKeysHandlers = {
-  [K in keyof typeof hotKeysKeyMap]: (keyEvent?: KeyboardEvent) => void
+const useEnableEditorHotKeys = ({
+  dispatch,
+  id,
+  plugin,
+  mayManipulateSiblings,
+  isDocumentEmpty,
+}: {
+  dispatch: ReturnType<typeof useAppDispatch>
+  id: string
+  plugin: EditorPlugin
+  mayManipulateSiblings: boolean
+  isDocumentEmpty: boolean
+}) => {
+  const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
+    if (
+      event &&
+      plugin &&
+      typeof plugin.onKeyDown === 'function' &&
+      !plugin.onKeyDown(event)
+    ) {
+      return
+    }
+
+    event && event.preventDefault()
+    callback()
+  }
+
+  useHotkeys('up', (e) =>
+    handleKeyDown(e, () => {
+      dispatch(focusPrevious(selectFocusTree(store.getState())))
+    })
+  )
+
+  useHotkeys('down', (e) =>
+    handleKeyDown(e, () => {
+      dispatch(focusNext(selectFocusTree(store.getState())))
+    })
+  )
+
+  useHotkeys('enter', (e) =>
+    handleKeyDown(e, () => {
+      const parent = selectParent(store.getState(), id)
+      if (!parent) return
+      dispatch(
+        insertPluginChildAfter({
+          parent: parent.id,
+          sibling: id,
+        })
+      )
+    })
+  )
+
+  useHotkeys('backspace, del', (e) => {
+    if (isDocumentEmpty) {
+      handleKeyDown(e, () => {
+        if (!e) return
+        if (mayManipulateSiblings) {
+          const parent = selectParent(store.getState(), id)
+          if (!parent) return
+
+          if (e.key === 'Backspace') {
+            dispatch(focusPrevious(selectFocusTree(store.getState())))
+          } else if (e.key === 'Delete') {
+            dispatch(focusNext(selectFocusTree(store.getState())))
+          }
+          dispatch(removePluginChild({ parent: parent.id, child: id }))
+        }
+      })
+    }
+  })
+
+  useHotkeys('ctrl+z, command+z', () => {
+    void dispatch(undo())
+  })
+
+  useHotkeys('ctrl+y, command+y, ctrl+shift+z, command+shift+z', () => {
+    void dispatch(redo())
+  })
 }
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
@@ -53,6 +121,13 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
   const focused = useAppSelector((state) => selectIsFocused(state, id))
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
+  useEnableEditorHotKeys({
+    dispatch,
+    id,
+    plugin,
+    mayManipulateSiblings,
+    isDocumentEmpty,
+  })
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
@@ -86,71 +161,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     // `document` should not be part of the dependencies because we only want to call this once when the document gets focused
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focused, plugin])
-
-  const hotKeysHandlers = useMemo((): HotKeysHandlers => {
-    return {
-      FOCUS_PREVIOUS: (e) => {
-        handleKeyDown(e, () => {
-          dispatch(focusPrevious(selectFocusTree(store.getState())))
-        })
-      },
-      FOCUS_NEXT: (e) => {
-        handleKeyDown(e, () => {
-          dispatch(focusNext(selectFocusTree(store.getState())))
-        })
-      },
-      INSERT_DEFAULT_PLUGIN: (e) => {
-        handleKeyDown(e, () => {
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-          dispatch(
-            insertPluginChildAfter({
-              parent: parent.id,
-              sibling: id,
-            })
-          )
-        })
-      },
-      DELETE_EMPTY: (e) => {
-        if (isDocumentEmpty) {
-          handleKeyDown(e, () => {
-            if (!e) return
-            if (mayManipulateSiblings) {
-              const parent = selectParent(store.getState(), id)
-              if (!parent) return
-
-              if (e.key === 'Backspace') {
-                dispatch(focusPrevious(selectFocusTree(store.getState())))
-              } else if (e.key === 'Delete') {
-                dispatch(focusNext(selectFocusTree(store.getState())))
-              }
-              dispatch(removePluginChild({ parent: parent.id, child: id }))
-            }
-          })
-        }
-      },
-      // needs workaround for https://github.com/edtr-io/edtr-io/issues/272
-      UNDO: () => {
-        void dispatch(undo())
-      },
-      REDO: () => {
-        void dispatch(redo())
-      },
-    }
-
-    function handleKeyDown(e: KeyboardEvent | undefined, next: () => void) {
-      if (
-        e &&
-        plugin &&
-        typeof plugin.onKeyDown === 'function' &&
-        !plugin.onKeyDown(e)
-      ) {
-        return
-      }
-      e && e.preventDefault()
-      next()
-    }
-  }, [id, plugin, dispatch, isDocumentEmpty, mayManipulateSiblings])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -230,37 +240,35 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     const state = plugin.state.init(document.state, onChange)
 
     return (
-      <HotKeys keyMap={hotKeysKeyMap} handlers={hotKeysHandlers} allowChanges>
-        <div
-          className="outline-none"
-          onMouseDown={handleFocus}
-          ref={container}
-          data-document
-          tabIndex={-1}
+      <div
+        className="outline-none"
+        onMouseDown={handleFocus}
+        ref={container}
+        data-document
+        tabIndex={-1}
+      >
+        <DocumentEditor
+          hasSettings={hasSettings}
+          hasToolbar={hasToolbar}
+          focused={focused}
+          renderSettings={pluginProps && pluginProps.renderSettings}
+          renderToolbar={pluginProps && pluginProps.renderToolbar}
+          settingsRef={settingsRef}
+          toolbarRef={toolbarRef}
         >
-          <DocumentEditor
-            hasSettings={hasSettings}
-            hasToolbar={hasToolbar}
+          <plugin.Component
+            renderIntoSettings={renderIntoSettings}
+            renderIntoToolbar={renderIntoToolbar}
+            id={id}
+            editable
             focused={focused}
-            renderSettings={pluginProps && pluginProps.renderSettings}
-            renderToolbar={pluginProps && pluginProps.renderToolbar}
-            settingsRef={settingsRef}
-            toolbarRef={toolbarRef}
-          >
-            <plugin.Component
-              renderIntoSettings={renderIntoSettings}
-              renderIntoToolbar={renderIntoToolbar}
-              id={id}
-              editable
-              focused={focused}
-              config={config}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-              state={state}
-              autofocusRef={autofocusRef}
-            />
-          </DocumentEditor>
-        </div>
-      </HotKeys>
+            config={config}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            state={state}
+            autofocusRef={autofocusRef}
+          />
+        </DocumentEditor>
+      </div>
     )
   }, [
     document,
@@ -273,7 +281,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     renderIntoSettings,
     renderIntoToolbar,
     id,
-    hotKeysHandlers,
     dispatch,
   ])
 }
@@ -291,7 +298,7 @@ function RenderIntoSettings({
     setHasSettings(true)
   })
   if (!settingsRef.current) return null
-  return createPortal(<IgnoreKeys>{children}</IgnoreKeys>, settingsRef.current)
+  return createPortal(<>{children}</>, settingsRef.current)
 }
 
 function RenderIntoToolbar({

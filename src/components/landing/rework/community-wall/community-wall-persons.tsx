@@ -17,66 +17,88 @@ export function CommunityWallPersons({
   positions,
   mobileLimit = 6,
 }: CommunityWallPersonsProps) {
-  return <>{renderPersons()}</>
-  function renderPersons() {
-    return zip(persons, positions).map((arg, index) => {
-      const [{ name, role, imgSrc }, [left, top]] = arg
-      const lineBreak = index % 5 === 1
-      const hideMobile = index > mobileLimit - 1
+  return (
+    <>
+      {zip(persons, positions).map((arg, index) => {
+        const [{ name, role, imgSrc }, [left, top]] = arg
+        const lineBreak = index % 5 === 1
+        const hideMobile = index > mobileLimit - 1
 
-      return (
-        <Fragment key={name}>
-          <figure
-            className={clsx(
-              tw`
+        return (
+          <Fragment key={name}>
+            <figure
+              className={clsx(
+                tw`
                 group z-30 mx-1 mt-12
                 w-1/3v max-w-[13rem] text-center
                 sm:w-1/4v md:absolute md:w-1/8v
               `,
-              hideMobile && 'hidden md:block'
-            )}
-            style={{ left, top }}
-          >
-            <div className="relative z-0 w-full">
-              <div
-                className={tw`
+                hideMobile && 'hidden md:block'
+              )}
+              style={{ left, top }}
+            >
+              <div className="relative z-0 w-full">
+                <div
+                  className={tw`
                   absolute -left-12 -right-12 bg-wiggle bg-contain
                   bg-no-repeat pb-6/5 opacity-0 transition-all
                   duration-200 ease-linear group-hover:rotate-1 group-hover:opacity-100
                 `}
-              ></div>
-            </div>
-            <Link
-              className="relative z-10 whitespace-nowrap hover:no-underline"
-              href={`/user/profile/${name}`}
-            >
-              <img
-                src={imgSrc}
-                alt={`Avatar von ${name}`}
-                className="aspect-square w-full rounded-full object-cover"
-              />
-              <p className="mb-2 mt-2 text-base font-bold text-gray-700">
-                @{name}
-              </p>
-              <span
-                className={clsx(
-                  'rounded-2xl px-2 py-1 text-base font-bold text-white',
-                  role.includes('Autor')
-                    ? 'bg-yellow'
-                    : role.includes('Team')
-                    ? 'bg-brand-500'
-                    : role.includes('Lehrer')
-                    ? 'bg-newgreen'
-                    : 'bg-berry'
-                )}
+                ></div>
+              </div>
+              <Link
+                className="relative z-10 whitespace-nowrap hover:no-underline"
+                href={`/user/profile/${name}`}
               >
-                {role}
-              </span>
-            </Link>
-          </figure>
-          {lineBreak && <div className="h-0 w-full md:hidden"></div>}
-        </Fragment>
-      )
-    })
-  }
+                <img
+                  src={imgSrc}
+                  alt={`Avatar von ${name}`}
+                  className="aspect-square w-full rounded-full object-cover"
+                />
+                <p className="mb-2 mt-2 text-base font-bold text-gray-700">
+                  @{name}
+                </p>
+                <span
+                  className={clsx(
+                    'rounded-2xl px-2 py-1 text-base font-bold text-white',
+                    role.includes('Autor')
+                      ? 'bg-yellow'
+                      : role.includes('Team')
+                      ? 'bg-brand-500'
+                      : role.includes('Lehrer')
+                      ? 'bg-newgreen'
+                      : 'bg-berry'
+                  )}
+                >
+                  <img
+                    src={imgSrc}
+                    alt={`Avatar von ${name}`}
+                    className="aspect-square w-full rounded-full object-cover"
+                  />
+                  <p className="mt-2 mb-2 text-base font-bold text-gray-700">
+                    @{name}
+                  </p>
+                  <span
+                    className={clsx(
+                      'rounded-2xl px-2 py-1 text-base font-bold text-white',
+                      role.includes('Autor')
+                        ? 'bg-yellow'
+                        : role.includes('Team')
+                        ? 'bg-brand-500'
+                        : role.includes('Lehrer')
+                        ? 'bg-newgreen'
+                        : 'bg-berry'
+                    )}
+                  >
+                    {role}
+                  </span>
+                </span>
+              </Link>
+            </figure>
+            {lineBreak && <div className="h-0 w-full md:hidden"></div>}
+          </Fragment>
+        )
+      })}
+    </>
+  )
 }

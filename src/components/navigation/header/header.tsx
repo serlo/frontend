@@ -66,7 +66,19 @@ export function Header() {
             <Menu />
           </div>
           <div className="hidden h-0 basis-full md:block lg:hidden" />
-          {renderQuickbar()}
+          {isLanding ? (
+            <SpecialDonationButton />
+          ) : hideQuickbar ? null : (
+            <Quickbar
+              className={tw`
+                mx-auto mt-7 text-left font-normal
+                mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:max-w-sm mobileExt:flex-grow mobileExt:px-2
+                md:mt-0 md:max-w-xs
+                lg:mt-6 lg:max-w-sm
+             `}
+              placeholder={strings.header.search}
+            />
+          )}
           <MobileMenuButton
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             open={mobileMenuOpen}
@@ -75,34 +87,19 @@ export function Header() {
       </div>
     </header>
   )
+}
 
-  function renderQuickbar() {
-    if (isLanding) return renderSpecialDonationButton()
-    if (hideQuickbar) return null
-    return (
-      <Quickbar
-        className={tw`
-          mx-auto mt-7 text-left font-normal
-          mobileExt:ml-4 mobileExt:mr-0 mobileExt:mt-5 mobileExt:max-w-sm mobileExt:flex-grow mobileExt:px-2
-          md:mt-0 md:max-w-xs
-          lg:mt-6 lg:max-w-sm
-        `}
-        placeholder={strings.header.search}
-      />
-    )
-  }
-
-  function renderSpecialDonationButton() {
-    return (
-      <button
-        className="py-0.75 serlo-button-green absolute right-4 top-32 text-[0.9rem] md:right-6 md:top-[1.15rem] lg:right-12"
-        onClick={() => {
-          submitEvent('spenden-header-menu-click-landing')
-          void router.push('/spenden')
-        }}
-      >
-        <FaIcon icon={faHeart} /> Jetzt Spenden
-      </button>
-    )
-  }
+function SpecialDonationButton() {
+  const router = useRouter()
+  return (
+    <button
+      className="py-0.75 serlo-button-green absolute right-4 top-32 text-[0.9rem] md:right-6 md:top-[1.15rem] lg:right-12"
+      onClick={() => {
+        submitEvent('spenden-header-menu-click-landing')
+        void router.push('/spenden')
+      }}
+    >
+      <FaIcon icon={faHeart} /> Jetzt Spenden
+    </button>
+  )
 }

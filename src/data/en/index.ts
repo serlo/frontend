@@ -661,6 +661,7 @@ export const loggedInData = {
           'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
         valueMissing: 'Please fill all required fields',
+        pluginErrors: "Please fix plugin errors before saving",
       },
     },
     editor: {

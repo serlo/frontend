@@ -54,7 +54,7 @@ export function SubjectLandingFeatured({
             group relative mx-2
             mb-4 box-border
             w-36 rounded p-2.5
-            text-left leading-cozy text-brand transition-all 
+            text-left leading-cozy text-brand transition-all
             hover:text-almost-black hover:no-underline hover:shadow-menu
             mobile:w-52 lg:w-44 xl:w-48
           `,
@@ -82,7 +82,7 @@ export function SubjectLandingFeatured({
                 group-hover:opacity-100
               `}
             >
-              {renderTypeIcon(data.type)}
+              <TypeIcon type={data.type} />
             </div>
           )}
         </div>
@@ -90,14 +90,14 @@ export function SubjectLandingFeatured({
           {data.title}
         </h4>
         <span className="font-sm absolute bottom-2 mt-1 block text-brand-400">
-          {renderTypeIcon(data.type)} {getTranslatedType(strings, data.type)}
+          <TypeIcon type={data.type} /> {getTranslatedType(strings, data.type)}
         </span>
       </Link>
     )
   }
+}
 
-  function renderTypeIcon(type: UuidType | TaxonomyTermType) {
-    const icon = getIconByTypename(type)
-    return <FaIcon icon={icon} />
-  }
+function TypeIcon({ type }: { type: UuidType | TaxonomyTermType }) {
+  const icon = getIconByTypename(type)
+  return <FaIcon icon={icon} />
 }

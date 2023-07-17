@@ -13,15 +13,7 @@ export interface RevisionModeSwitcherProps {
   setDisplayMode: Dispatch<SetStateAction<DisplayModes>>
 }
 
-export function RevisionModeSwitcher({
-  isCurrent,
-  previousRevisionId,
-  repositoryId,
-  displayMode,
-  setDisplayMode,
-}: RevisionModeSwitcherProps) {
-  const { strings } = useInstanceData()
-
+export function RevisionModeSwitcher(props: RevisionModeSwitcherProps) {
   return (
     <>
       <style jsx>{`
@@ -36,41 +28,75 @@ export function RevisionModeSwitcher({
           background-color: #fff;
         }
       `}</style>
-      <nav className="metabar p-side">{renderButtons()}</nav>
+      <nav className="metabar p-side">
+        <Buttons {...props} />
+      </nav>
     </>
   )
+}
 
-  function renderButtons() {
-    return (
-      <>
-        {!isCurrent && renderButton(DisplayModes.Diff, strings.revisions.diff)}
-        {!isCurrent &&
-          renderButton(DisplayModes.SideBySide, strings.revisions.sidebyside)}
-        {isCurrent && previousRevisionId && (
-          <Link
-            className="serlo-button-blue-transparent ml-1"
-            href={`/entity/repository/compare/${repositoryId}/${previousRevisionId}#${DisplayModes.SideBySide}`}
-          >
-            Vorherige Bearbeitung ansehen
-          </Link>
-        )}
+type ButtonsProps = RevisionModeSwitcherProps
 
-        {renderButton(DisplayModes.This, strings.revisions.thisVersion)}
-      </>
-    )
-  }
+function Buttons({
+  isCurrent,
+  previousRevisionId,
+  repositoryId,
+  displayMode,
+  setDisplayMode,
+}: ButtonsProps) {
+  const { strings } = useInstanceData()
 
-  function renderButton(mode: DisplayModes, title: string) {
-    return (
-      <button
-        onClick={() => setDisplayMode(mode)}
-        className={clsx(
-          'serlo-button-blue-transparent ml-1',
-          displayMode === mode && 'bg-brand text-white'
-        )}
-      >
-        {title}
-      </button>
-    )
-  }
+  return (
+    <>
+      {!isCurrent && (
+        <Button
+          mode={DisplayModes.Diff}
+          title={strings.revisions.diff}
+          displayMode={displayMode}
+          setDisplayMode={setDisplayMode}
+        />
+      )}
+      {!isCurrent && (
+        <Button
+          mode={DisplayModes.SideBySide}
+          title={strings.revisions.sidebyside}
+          displayMode={displayMode}
+          setDisplayMode={setDisplayMode}
+        />
+      )}
+      {isCurrent && previousRevisionId && (
+        <Link
+          className="serlo-button-blue-transparent ml-1"
+          href={`/entity/repository/compare/${repositoryId}/${previousRevisionId}#${DisplayModes.SideBySide}`}
+        >
+          Vorherige Bearbeitung ansehen
+        </Link>
+      )}
+      <Button
+        mode={DisplayModes.This}
+        title={strings.revisions.thisVersion}
+        displayMode={displayMode}
+        setDisplayMode={setDisplayMode}
+      />
+    </>
+  )
+}
+
+type ButtonProps = Pick<
+  RevisionModeSwitcherProps,
+  'displayMode' | 'setDisplayMode'
+> & { mode: DisplayModes; title: string }
+
+function Button({ mode, title, displayMode, setDisplayMode }: ButtonProps) {
+  return (
+    <button
+      onClick={() => setDisplayMode(mode)}
+      className={clsx(
+        'serlo-button-blue-transparent ml-1',
+        displayMode === mode && 'bg-brand text-white'
+      )}
+    >
+      {title}
+    </button>
+  )
 }
