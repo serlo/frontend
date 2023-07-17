@@ -4,10 +4,14 @@ import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
+import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const VideoEditor = ({
+  id,
   editable,
   focused,
   state,
@@ -21,6 +25,14 @@ export const VideoEditor = ({
 
   return (
     <>
+      {focused && (
+        <PluginToolbar
+          pluginId={id}
+          pluginType={EditorPluginType.Video}
+          contentControls={<></>}
+          pluginControls={<DefaultControls pluginId={id} />}
+        />
+      )}
       {couldBeValid ? (
         <EmbedWrapper
           type="video"

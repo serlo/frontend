@@ -7,7 +7,7 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 
 interface PluginToolbarProps {
   pluginId: string
-  pluginType: EditorPluginType
+  pluginType: EditorPluginType | string
   contentControls: ReactElement
   pluginControls: ReactElement
 }
