@@ -1,10 +1,13 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { Entity, Thread } from '@serlo/authorization'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { CommentArea } from './comment-area'
 import { FaIcon } from '../fa-icon'
+import { useAuthentication } from '@/auth/use-authentication'
+import { useCanDo } from '@/auth/use-can-do'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UuidType } from '@/data-types'
@@ -41,7 +44,15 @@ export function CommentAreaAllThreadsThread({
 
   const { strings } = useInstanceData()
 
-  // TODO: check for auth and permissions of current
+  const canDo = useCanDo()
+
+  const auth = useAuthentication()
+
+  const canSetStatus =
+    auth &&
+    (canDo(Thread.deleteThread) ||
+      canDo(Entity.checkoutRevision) ||
+      thread.comments.nodes.some((obj) => obj.author.id === auth.id))
 
   return (
     <EntityIdProvider key={thread.id} value={thread.object.id}>
@@ -67,6 +78,7 @@ export function CommentAreaAllThreadsThread({
                   'mb-1 rounded py-2 pl-4 pr-6 disabled:appearance-none disabled:py-1 disabled:text-center',
                   status === 'open' ? 'bg-yellow' : 'bg-brandgreen-500'
                 )}
+                disabled={!canSetStatus}
                 value={status}
                 onChange={(e) => {
                   setStatus(e.target.value)
