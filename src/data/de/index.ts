@@ -592,8 +592,7 @@ export const loggedInData = {
         INVALID_TOKEN: '',
         BAD_USER_INPUT: "Sorry, das ist so nicht unterstützt…",
         UNKNOWN: "Ein unbekannter Fehler…",
-        valueMissing: "Bitte alle Pflichtfelder ausfüllen",
-        pluginErrors: "Bitte Error von Plugins vor dem Speichern beheben",
+        valueMissing: "Bitte alle Pflichtfelder ausfüllen"
       }
     },
     editor: {

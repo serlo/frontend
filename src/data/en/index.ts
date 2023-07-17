@@ -660,8 +660,7 @@ export const loggedInData = {
         BAD_USER_INPUT:
           'Sorry, you are trying something that is not supported…',
         UNKNOWN: 'An unknown error…',
-        valueMissing: 'Please fill all required fields',
-        pluginErrors: "Please fix plugin errors before saving",
+        valueMissing: 'Please fill all required fields'
       },
     },
     editor: {

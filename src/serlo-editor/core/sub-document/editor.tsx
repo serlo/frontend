@@ -1,112 +1,23 @@
 import * as R from 'ramda'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
-import { useHotkeys } from 'react-hotkeys-hook'
 
 import { SubDocumentProps } from '.'
+import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
   runChangeDocumentSaga,
   focus,
-  focusNext,
-  focusPrevious,
   selectDocument,
   selectMayManipulateSiblings,
-  selectParent,
-  insertPluginChildAfter,
   selectIsDocumentEmpty,
   selectIsFocused,
-  redo,
-  removePluginChild,
-  undo,
   useAppSelector,
-  selectFocusTree,
   useAppDispatch,
-  store,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin } from '../contexts/plugins-context'
 import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
-
-const useEnableEditorHotKeys = ({
-  dispatch,
-  id,
-  plugin,
-  mayManipulateSiblings,
-  isDocumentEmpty,
-}: {
-  dispatch: ReturnType<typeof useAppDispatch>
-  id: string
-  plugin: EditorPlugin
-  mayManipulateSiblings: boolean
-  isDocumentEmpty: boolean
-}) => {
-  const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
-    if (
-      event &&
-      plugin &&
-      typeof plugin.onKeyDown === 'function' &&
-      !plugin.onKeyDown(event)
-    ) {
-      return
-    }
-
-    event && event.preventDefault()
-    callback()
-  }
-
-  useHotkeys('up', (e) =>
-    handleKeyDown(e, () => {
-      dispatch(focusPrevious(selectFocusTree(store.getState())))
-    })
-  )
-
-  useHotkeys('down', (e) =>
-    handleKeyDown(e, () => {
-      dispatch(focusNext(selectFocusTree(store.getState())))
-    })
-  )
-
-  useHotkeys('enter', (e) =>
-    handleKeyDown(e, () => {
-      const parent = selectParent(store.getState(), id)
-      if (!parent) return
-      dispatch(
-        insertPluginChildAfter({
-          parent: parent.id,
-          sibling: id,
-        })
-      )
-    })
-  )
-
-  useHotkeys('backspace, del', (e) => {
-    if (isDocumentEmpty) {
-      handleKeyDown(e, () => {
-        if (!e) return
-        if (mayManipulateSiblings) {
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-
-          if (e.key === 'Backspace') {
-            dispatch(focusPrevious(selectFocusTree(store.getState())))
-          } else if (e.key === 'Delete') {
-            dispatch(focusNext(selectFocusTree(store.getState())))
-          }
-          dispatch(removePluginChild({ parent: parent.id, child: id }))
-        }
-      })
-    }
-  })
-
-  useHotkeys('ctrl+z, command+z', () => {
-    void dispatch(undo())
-  })
-
-  useHotkeys('ctrl+y, command+y, ctrl+shift+z, command+shift+z', () => {
-    void dispatch(redo())
-  })
-}
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSettings, setHasSettings] = useState(false)
@@ -121,7 +32,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
   const focused = useAppSelector((state) => selectIsFocused(state, id))
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
-  useEnableEditorHotKeys({
+  useEnableEditorHotkeys({
     dispatch,
     id,
     plugin,
