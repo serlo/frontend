@@ -1,8 +1,8 @@
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
 
 import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
 import { tw } from '@/helper/tw'
-import { selectDocument, selectParent, store } from '@/serlo-editor/store'
+import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface PluginToolbarProps {
@@ -12,22 +12,43 @@ interface PluginToolbarProps {
   pluginControls: ReactElement
 }
 
+const ancestorsToDisplay = [
+  EditorPluginType.Box,
+  EditorPluginType.Spoiler,
+  EditorPluginType.Table,
+  EditorPluginType.Multimedia,
+]
+
 export function PluginToolbar({
   pluginId,
   pluginType,
   contentControls,
   pluginControls,
 }: PluginToolbarProps) {
-  const state = store.getState()
-  const parent = selectParent(state, pluginId)
-  const parentType = parent ? selectDocument(state, parent.id)?.plugin : null
+  const pluginTypesOfAncestors = useAppSelector((state) =>
+    selectAncestorPluginTypes(state, pluginId)
+  )
+  const parentType = useMemo(() => {
+    // If there are no ancestors, don't display the indicator
+    if (!pluginTypesOfAncestors) return null
+
+    // Starting from the end, check the ancestors list for
+    // a displayable ancestor, and if found, display it
+    for (let i = pluginTypesOfAncestors.length - 1; i >= 0; i--) {
+      const currentAncestor = pluginTypesOfAncestors[i] as EditorPluginType
+      if (ancestorsToDisplay.includes(currentAncestor)) return currentAncestor
+    }
+
+    // If no ancestor to display has been found, don't display the indicator
+    return null
+  }, [pluginTypesOfAncestors])
 
   return (
     <div
       className={tw`
         absolute -top-10 left-0 right-0 z-50 flex h-9 w-full
         items-center justify-between rounded-tl-md bg-editor-primary-100 pl-2
-    `}
+      `}
     >
       {/* Content controls */}
       <div>{contentControls}</div>
@@ -44,9 +65,16 @@ export function PluginToolbar({
       </div>
 
       {/* Plugin ancestry indicator */}
-      <div className="absolute -top-6 right-0 h-6 rounded-t-md bg-gray-200 px-2 pt-0.5 text-sm font-bold capitalize">
-        {parentType}
-      </div>
+      {parentType && (
+        <div
+          className={tw`
+            absolute -top-6 right-0 h-6 rounded-t-md bg-gray-200 px-2 pt-0.5
+            text-sm font-bold capitalize
+          `}
+        >
+          {parentType}
+        </div>
+      )}
     </div>
   )
 }
