@@ -1,33 +1,21 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect } from 'react'
 
 import { ImageProps } from '.'
+import { CaptionEditor } from './caption-editor'
 import { PrimaryControls, SettingsControls } from './controls'
 import { ImageRenderer } from './renderer'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
-import {
-  store,
-  selectIsDocumentEmpty,
-  selectHasFocusedChild,
-} from '../../store'
+import { store, selectHasFocusedChild } from '../../store'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config } = props
+  const { focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
 
   usePendingFileUploader(state.src, config.upload)
 
   const hasFocus = focused || selectHasFocusedChild(store.getState(), props.id)
-
-  useEffect(() => {
-    // not sure if this is still needed
-    if (editable && !state.caption.defined) {
-      state.caption.create({ plugin: EditorPluginType.Text })
-    }
-  }, [editable, state.caption])
 
   const src = state.src.value.toString()
 
@@ -62,13 +50,12 @@ export function ImageEditor(props: ImageProps) {
 
   function renderCaption() {
     if (!state.caption.defined) return null
-    if (!hasFocus && selectIsDocumentEmpty(store.getState(), state.caption.id))
-      return null
-    return state.caption.render({
-      config: {
-        placeholder: imageStrings.captionPlaceholder,
-      },
-    })
+    if (!hasFocus && !state.caption.value) return null
+    return (
+      <div>
+        <CaptionEditor focused={focused} />
+      </div>
+    )
   }
 
   function renderEditControls() {

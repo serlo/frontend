@@ -2,8 +2,6 @@ import CSS from 'csstype'
 import { ReactNode } from 'react-markdown'
 import { RenderLeafProps } from 'slate-react'
 
-import { textColors } from '../hooks/use-text-config'
-
 export interface TextLeafRendererProps {
   children: any
   leaf: RenderLeafProps['text']
@@ -16,12 +14,10 @@ export function TextLeafRenderer({
   leaf,
   children,
 }: TextLeafRendererProps) {
-  const colors = textColors.map(({ value }) => value)
   const leafChildren = children as ReactNode
 
   const styles: CSS.Properties = {}
 
-  if (leaf.color !== undefined) styles.color = colors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
   if (leaf.strong) styles.fontWeight = 'bold'
   const styleCount = Object.keys(styles).length
