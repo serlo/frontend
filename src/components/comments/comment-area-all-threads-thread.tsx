@@ -1,4 +1,5 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
@@ -10,6 +11,7 @@ import { UuidType } from '@/data-types'
 import { GetAllThreadsNode } from '@/fetcher/use-comment-data-all'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'
+import { submitEvent } from '@/helper/submit-event'
 
 interface CommentAreaAllThreadsThreadProps {
   thread: GetAllThreadsNode
@@ -39,10 +41,12 @@ export function CommentAreaAllThreadsThread({
 
   const { strings } = useInstanceData()
 
+  // TODO: check for auth and permissions of current
+
   return (
     <EntityIdProvider key={thread.id} value={thread.object.id}>
       <div className="mb-16">
-        <div className="mx-side mb-5 mt-16 flex justify-between border-b-2">
+        <div className="mx-side mb-5 mt-16 flex items-baseline justify-between border-b-2">
           <div>
             <b>
               <FaIcon icon={getIconByTypename(__typename as UuidType)} />{' '}
@@ -59,17 +63,25 @@ export function CommentAreaAllThreadsThread({
               <FaIcon icon={faSpinner} className="animate-spin-slow" />
             ) : (
               <select
-                className="p-2"
+                className={clsx(
+                  'mb-1 rounded py-2 pl-4 pr-6 disabled:appearance-none disabled:py-1 disabled:text-center',
+                  status === 'open' ? 'bg-yellow' : 'bg-brandgreen-500'
+                )}
                 value={status}
                 onChange={(e) => {
                   setStatus(e.target.value)
+                  submitEvent('thread_status_set')
                   void fetch(
                     `/api/frontend/thread-status/set/${thread.id}?label=${e.target.value}`
                   )
                 }}
               >
-                <option value="open">🟠 offen</option>
-                <option value="done">🟢 erledigt</option>
+                <option value="open" className="bg-white">
+                  offen
+                </option>
+                <option value="done" className="bg-white">
+                  erledigt
+                </option>
               </select>
             )}
           </div>
