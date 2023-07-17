@@ -874,9 +874,9 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          decription: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
+          description: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
           videoUrl: 'Video URL',
-          description: 'Description',
+          videoDescription: 'Description',
           titlePlaceholder: 'Title',
           url: 'URL',
           seoTitle: 'Title for search engines',

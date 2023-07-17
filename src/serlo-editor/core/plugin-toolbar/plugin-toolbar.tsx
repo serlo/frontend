@@ -48,7 +48,7 @@ export function PluginToolbar({
   return (
     <div
       className={tw`
-        absolute -top-10 left-0 right-0 z-50 flex h-9 w-full
+        absolute -top-9 left-0 right-0 z-50 flex h-9 w-full
         items-center justify-between rounded-tl-md bg-editor-primary-100 pl-2
       `}
     >
