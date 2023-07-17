@@ -318,7 +318,9 @@ function createToolbarControls(
       title: textStrings.code,
       isActive: isCodeActive,
       onClick: toggleCode,
-      renderIcon: () => <FaIcon icon={faCode} className="align-middle h-auto p-0.5" />,
+      renderIcon: () => (
+        <FaIcon icon={faCode} className="h-auto p-0.5 align-middle" />
+      ),
     },
   ].map((option) => {
     return {

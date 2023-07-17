@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 
+import { LocalStorageButton } from './local-storage-button'
 import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common/common'
 import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
-import { PluginErrors, useSaveContext } from '../../serlo-editor/save-context'
-import { LocalStorageButton } from './local-storage-button'
+import { useSaveContext } from '../../serlo-editor/save-context'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
@@ -37,8 +37,6 @@ export function SaveModal({
     pending,
     hasError: hasSaveError,
   } = useHandleSave(open, showSubscriptionOptions)
-  const { errors } = useSaveContext()
-  const hasPluginErrors = Object.keys(errors).length > 0
   const { userCanSkipReview, entityNeedsReview } = useSaveContext()
   const [agreement, setAgreement] = useState(false)
   const [notificationSubscription, setNotificationSubscription] = useState(true)
@@ -96,7 +94,6 @@ export function SaveModal({
         {renderCheckout()}
         {isOnlyText ? edtrIoStrings.ready : null}
         <hr className="mb-8 mt-8" />
-        <Errors errors={errors} />
         {renderAlert()}
         {renderModalButtons()}
       </div>
@@ -126,15 +123,6 @@ export function SaveModal({
         </button>
         <button
           onClick={() => {
-            if (hasPluginErrors) {
-              showToastNotice(
-                loggedInData!.strings.mutations.errors.pluginErrors,
-                'warning'
-              )
-
-              return
-            }
-
             if (maySave) {
               changes?.set(changesText)
               setFireSave(true)
@@ -150,7 +138,7 @@ export function SaveModal({
             'serlo-button ml-2',
             pending ? 'cursor-default text-gray-300' : 'serlo-button-green'
           )}
-          disabled={pending || hasPluginErrors}
+          disabled={pending}
           title={getSaveHint()}
         >
           {pending
@@ -309,21 +297,4 @@ function useLicensesFetch(instance: string) {
       refreshInterval: 24 * 60 * 60 * 1000, // day
     },
   })
-}
-
-function Errors({ errors }: { errors: PluginErrors }) {
-  const errorEntries = Object.entries(errors)
-  if (errorEntries.length === 0) return null
-  return (
-    <StaticInfoPanel type="failure" icon={faExclamationCircle}>
-      {errorEntries.map(([id, { message, plugin }]) => (
-        <>
-          <span key={id}>
-            {plugin} error: {message}
-          </span>
-          <br />
-        </>
-      ))}
-    </StaticInfoPanel>
-  )
 }

@@ -36,9 +36,9 @@ export function HeadTags({ data, breadcrumbsData, noindex }: HeadTagsProps) {
         content={metaDescription ?? strings.header.slogan}
       />
       <NoIndexMeta
-          noindex={noindex}
-          breadcrumbsData={breadcrumbsData}
-          data={data}
+        noindex={noindex}
+        breadcrumbsData={breadcrumbsData}
+        data={data}
       />
       <meta
         property="og:image"

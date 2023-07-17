@@ -44,11 +44,6 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
     hasState ? 'preview' : 'edit'
   )
 
-  // I'd still like to get this to work. Somehow, there seems to be a race
-  // condition with a stale action creator in Redux store, overwriting the
-  // error.
-  // const [error, setError] = usePluginError({ id, plugin: 'h5p' })
-
   const [error, setError] = useState('')
   const [downloadUrl, setDownloadUrl] = useState('')
 

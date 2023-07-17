@@ -1,5 +1,5 @@
-import { Lazy } from '../lazy'
 import { Roles } from './donations-roles'
+import { Lazy } from '../lazy'
 import { tw } from '@/helper/tw'
 
 const banner = {

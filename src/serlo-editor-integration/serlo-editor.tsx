@@ -7,12 +7,7 @@ import {
   LocalStorageNotice,
 } from './components/local-storage-notice'
 import { createPlugins } from './create-plugins'
-import {
-  PluginErrors,
-  SetError,
-  DeleteError,
-  SaveContext,
-} from '../serlo-editor/save-context'
+import { SaveContext } from '../serlo-editor/save-context'
 import { useCanDo } from '@/auth/use-can-do'
 import { MathSpan } from '@/components/content/math-span'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -51,33 +46,12 @@ export function SerloEditor({
 
   const { lang } = useInstanceData()
 
-  const [errors, setErrors] = useState<PluginErrors>({})
   const loggedInData = useLoggedInData()
 
   const onChange = useCallback<OnEditorChange>(({ changed, getDocument }) => {
     if (!changed) return
     void debouncedStoreToLocalStorage(getDocument())
   }, [])
-
-  const setError = useCallback<SetError>(
-    (pluginId, errorMessage, plugin) =>
-      setErrors((errors) => ({
-        ...errors,
-        [pluginId]: { message: errorMessage, plugin },
-      })),
-    [setErrors]
-  )
-
-  const deleteError = useCallback<DeleteError>(
-    (pluginId) => {
-      if (errors[pluginId]) {
-        setErrors(
-          ({ [pluginId]: _errorToBeDeleted, ...restOfErrors }) => restOfErrors
-        )
-      }
-    },
-    [setErrors, errors]
-  )
 
   if (!loggedInData)
     return (
@@ -99,9 +73,6 @@ export function SerloEditor({
     <SaveContext.Provider
       value={{
         onSave,
-        errors,
-        setError,
-        deleteError,
         userCanSkipReview,
         entityNeedsReview,
       }}
