@@ -12,7 +12,7 @@ import { TextEditorPluginConfig, TextEditorState } from '../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 
-export interface HeadlessTextEditorConfig {
+export interface InlineTextEditorConfig {
   placeholder?: TextEditorPluginConfig['placeholder']
   noLinebreaks?: boolean
   serloLinkSearch: boolean
@@ -22,21 +22,21 @@ export interface HeadlessTextEditorConfig {
   }
 }
 
-export type HeadlessTextEditorProps = EditorPluginProps<
+export type InlineTextEditorProps = EditorPluginProps<
   TextEditorState,
-  HeadlessTextEditorConfig
+  InlineTextEditorConfig
 >
 
-// TODO: Think of a better name, "headless" doesn't really make sense.
-// Something like "ChildTextEditor" or similar
-export function HeadlessTextEditor(props: HeadlessTextEditorProps) {
+// Inline text editor - used as a child of other plugins
+// (for the caption of the image plugin, for example)
+export function InlineTextEditor(props: InlineTextEditorProps) {
   const { state, editable, focused } = props
 
   const [isSelectionChanged, setIsSelectionChanged] = useState(0)
 
   const pluginStrings = useEditorStrings().plugins
 
-  const config = useTextConfig(props.config) as HeadlessTextEditorConfig
+  const config = useTextConfig(props.config) as InlineTextEditorConfig
 
   const { editor, textFormattingOptions } = config.controls
 

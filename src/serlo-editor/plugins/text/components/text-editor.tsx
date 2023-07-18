@@ -65,6 +65,7 @@ export type TextEditorProps = EditorPluginProps<
   TextEditorConfig
 >
 
+// Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused } = props
 
