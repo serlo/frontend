@@ -16,6 +16,8 @@ function isNestedControlButton(
   return R.has('children', control)
 }
 
+// TODO: Rename to "PluginToolbarControls" and maybe move to core,
+// once the plugin toolbar has been fully implemented
 export function HoveringToolbarControls({
   controls,
   editor,
@@ -31,6 +33,7 @@ export function HoveringToolbarControls({
             tooltipText={control.title}
             onMouseDown={(event) => {
               event.preventDefault()
+              event.stopPropagation()
               isNestedControlButton(control)
                 ? setSubMenu(index)
                 : control.onClick(editor)

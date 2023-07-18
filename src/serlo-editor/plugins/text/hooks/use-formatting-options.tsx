@@ -8,11 +8,7 @@ import { textColors } from './use-text-config'
 import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-icon'
 import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
 import { withLinks, withLists, withMath } from '../plugins'
-import {
-  TextEditorFormattingOption,
-  ControlButton,
-  TextEditorPluginConfig,
-} from '../types'
+import { TextEditorFormattingOption, ControlButton } from '../types'
 import {
   getColorIndex,
   isAnyColorActive,
@@ -115,8 +111,9 @@ const registeredMarkdownShortcuts = [
   },
 ]
 
-export const useFormattingOptions = (config: TextEditorPluginConfig) => {
-  const { formattingOptions } = config
+export const useFormattingOptions = (
+  formattingOptions: TextEditorFormattingOption[]
+) => {
   const { strings } = useInstanceData()
   const textStrings = useEditorStrings().plugins.text
 
@@ -135,8 +132,9 @@ export const useFormattingOptions = (config: TextEditorPluginConfig) => {
   )
 
   const toolbarControls: ControlButton[] = useMemo(
-    () => createToolbarControls(config, textStrings, strings.keys.ctrl),
-    [config, strings, textStrings]
+    () =>
+      createToolbarControls(formattingOptions, textStrings, strings.keys.ctrl),
+    [formattingOptions, strings, textStrings]
   )
 
   const handleHotkeys = useCallback(
@@ -210,7 +208,7 @@ export const useFormattingOptions = (config: TextEditorPluginConfig) => {
 }
 
 function createToolbarControls(
-  { formattingOptions }: TextEditorPluginConfig,
+  formattingOptions: TextEditorFormattingOption[],
   textStrings: LoggedInData['strings']['editor']['plugins']['text'],
   ctrlKey: string
 ): ControlButton[] {

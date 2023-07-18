@@ -3,13 +3,6 @@ import { ReactNode } from 'react-markdown'
 import { RenderLeafProps } from 'slate-react'
 
 import { textColors } from '../hooks/use-text-config'
-import { TextEditorConfig, TextEditorState } from '../types'
-import { EditorPluginProps } from '@/serlo-editor/plugin'
-
-export type TextEditorProps = EditorPluginProps<
-  TextEditorState,
-  TextEditorConfig
->
 
 export interface TextLeafRendererProps {
   children: any

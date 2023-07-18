@@ -18,6 +18,7 @@ const initialPosition = isTouchDevice()
   ? InlineOverlayPosition.below
   : InlineOverlayPosition.above
 
+// TODO: Remove once the plugin toolbar has been fully implemented
 export function HoveringToolbar({
   editor,
   config,

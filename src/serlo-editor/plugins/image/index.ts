@@ -1,5 +1,6 @@
 import { ImageEditor } from './editor'
 import {
+  child,
   EditorPlugin,
   EditorPluginProps,
   isTempFile,
@@ -10,7 +11,6 @@ import {
   upload,
   UploadHandler,
   UploadValidator,
-  child,
 } from '../../plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -25,6 +25,7 @@ const imageState = object({
       config: {
         formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
         noLinebreaks: true,
+        hasOwnToolbar: false,
       },
     })
   ),

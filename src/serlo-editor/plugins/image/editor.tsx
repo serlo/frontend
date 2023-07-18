@@ -1,5 +1,7 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
+import { createEditor } from 'slate'
+import { withReact } from 'slate-react'
 
 import { ImageProps } from '.'
 import { PrimaryControls, SettingsControls } from './controls'
@@ -7,35 +9,60 @@ import { ImageRenderer } from './renderer'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
 import {
   store,
-  selectIsDocumentEmpty,
   selectHasFocusedChild,
+  selectIsDocumentEmpty,
+  selectIsFocused,
+  useAppSelector,
 } from '../../store'
+import { HoveringToolbarControls } from '../text/components/hovering-toolbar-controls'
+import { useFormattingOptions } from '../text/hooks/use-formatting-options'
+import { TextEditorFormattingOption } from '../text/types'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
+const formattingOptions = [
+  TextEditorFormattingOption.richText,
+  TextEditorFormattingOption.links,
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.code,
+]
+
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config } = props
+  const { editable, focused, state, config, id } = props
   const imageStrings = useEditorStrings().plugins.image
 
   usePendingFileUploader(state.src, config.upload)
 
   const hasFocus = focused || selectHasFocusedChild(store.getState(), props.id)
 
-  useEffect(() => {
-    // not sure if this is still needed
-    if (editable && !state.caption.defined) {
-      state.caption.create({ plugin: EditorPluginType.Text })
-    }
-  }, [editable, state.caption])
-
   const src = state.src.value.toString()
 
   const isFailed = isTempFile(state.src.value) && state.src.value.failed
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
+  const textFormattingOptions = useFormattingOptions(formattingOptions)
+  const { createTextEditor, toolbarControls } = textFormattingOptions
+  const captionEditor = useMemo(
+    () => createTextEditor(withReact(createEditor())),
+    [createTextEditor]
+  )
+
+  const isCaptionFocused = useAppSelector((storeState) =>
+    selectIsFocused(storeState, state.caption.defined ? state.caption.id : '')
+  )
+
+  useEffect(() => {
+    if (editable && !state.caption.defined) {
+      state.caption.create({ plugin: EditorPluginType.Text })
+    }
+  }, [editable, state.caption])
+
   return (
     <>
+      {renderPluginToolbar()}
       <ImageRenderer
         image={{
           src,
@@ -51,6 +78,24 @@ export function ImageEditor(props: ImageProps) {
     </>
   )
 
+  function renderPluginToolbar() {
+    if (!focused && !isCaptionFocused) return null
+
+    return (
+      <PluginToolbar
+        pluginId={id}
+        pluginType={EditorPluginType.Image}
+        contentControls={
+          <HoveringToolbarControls
+            controls={toolbarControls}
+            editor={captionEditor}
+          />
+        }
+        pluginControls={<DefaultControls pluginId={id} />}
+      />
+    )
+  }
+
   function renderPlaceholder() {
     if (!isLoading && src.length) return null
     return (
@@ -62,11 +107,20 @@ export function ImageEditor(props: ImageProps) {
 
   function renderCaption() {
     if (!state.caption.defined) return null
-    if (!hasFocus && selectIsDocumentEmpty(store.getState(), state.caption.id))
-      return null
+
+    const isCaptionEditorEmpty = selectIsDocumentEmpty(
+      store.getState(),
+      state.caption.id
+    )
+    if (!hasFocus && isCaptionEditorEmpty) return null
+
     return state.caption.render({
       config: {
         placeholder: imageStrings.captionPlaceholder,
+        controls: {
+          editor: captionEditor,
+          textFormattingOptions,
+        },
       },
     })
   }

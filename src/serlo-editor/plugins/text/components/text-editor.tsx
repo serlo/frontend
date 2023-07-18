@@ -65,6 +65,7 @@ export type TextEditorProps = EditorPluginProps<
   TextEditorConfig
 >
 
+// Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused } = props
 
@@ -77,7 +78,7 @@ export function TextEditor(props: TextEditorProps) {
 
   const config = useTextConfig(props.config)
 
-  const textFormattingOptions = useFormattingOptions(config)
+  const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),
@@ -556,7 +557,7 @@ export function TextEditor(props: TextEditorProps) {
             <LinkControls
               isSelectionChanged={isSelectionChanged}
               editor={editor}
-              config={config}
+              serloLinkSearch={config.serloLinkSearch}
             />
             <HoveringToolbar
               editor={editor}
