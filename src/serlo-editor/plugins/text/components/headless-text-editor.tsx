@@ -27,6 +27,8 @@ export type HeadlessTextEditorProps = EditorPluginProps<
   HeadlessTextEditorConfig
 >
 
+// TODO: Think of a better name, "headless" doesn't really make sense.
+// Something like "ChildTextEditor" or similar
 export function HeadlessTextEditor(props: HeadlessTextEditorProps) {
   const { state, editable, focused } = props
 

@@ -16,6 +16,7 @@ interface DefaultControlsProps {
   pluginId: string
 }
 
+// TODO: Think about renaming to "DefaultPluginControls" to make the scope explicit
 export function DefaultControls({ pluginId }: DefaultControlsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
