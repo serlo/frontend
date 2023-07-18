@@ -1,5 +1,7 @@
 import useSWR, { SWRConfiguration } from 'swr'
 // eslint-disable-next-line import/no-internal-modules
+import { BareFetcher } from 'swr/_internal'
+// eslint-disable-next-line import/no-internal-modules
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 
 import {
@@ -22,7 +24,7 @@ export function useGraphqlSwr<T>({
 }) {
   return useSWR<T, object>(
     noKey ? null : JSON.stringify({ query, variables }),
-    createGraphqlFetch(),
+    createGraphqlFetch() as BareFetcher<T>,
     config
   )
 }
