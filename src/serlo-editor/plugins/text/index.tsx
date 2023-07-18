@@ -1,9 +1,7 @@
 import { Node } from 'slate'
 
-import {
-  TextEditorProps,
-  TextEditorWrapper,
-} from './components/text-editor-wrapper'
+import { TextEditorProps } from './components/text-editor'
+import { TextEditorWrapper } from './components/text-editor-wrapper'
 import type {
   CustomElement,
   CustomText,

@@ -73,9 +73,6 @@ export function ImageEditor(props: ImageProps) {
   )
 
   function renderPluginToolbar() {
-    console.log('focused: ', focused)
-    console.log('isCaptionFocused: ', isCaptionFocused)
-
     if (!focused && !isCaptionFocused) return null
 
     return (
