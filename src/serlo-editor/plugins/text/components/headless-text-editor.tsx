@@ -1,7 +1,7 @@
 import isHotkey from 'is-hotkey'
-import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react'
+import React, { useRef, useMemo, useState, useCallback } from 'react'
 import { Descendant, Node, Transforms, Range, Editor } from 'slate'
-import { Editable, ReactEditor, RenderElementProps, Slate } from 'slate-react'
+import { Editable, RenderElementProps, Slate } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
@@ -56,56 +56,6 @@ export function HeadlessTextEditor(props: HeadlessTextEditorProps) {
       editor.children = value
     }
   }, [editor, state.value])
-
-  // Workaround for setting selection when adding a new editor:
-  useEffect(() => {
-    // Get the current text value of the editor
-    const text = Node.string(editor)
-
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
-      }
-      return
-    }
-
-    // If the first child of the editor is not a paragraph, do nothing
-    const isFirstChildParagraph =
-      'type' in editor.children[0] && editor.children[0].type === 'p'
-    if (!isFirstChildParagraph) return
-
-    // If the editor is empty, set the cursor at the start
-    if (text === '') {
-      Transforms.select(editor, { offset: 0, path: [0, 0] })
-    }
-
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-    }
-
-    // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
-    // See: https://stackoverflow.com/a/61353519
-    const timeout = setTimeout(() => {
-      try {
-        ReactEditor.focus(editor)
-      } catch (error) {
-        // Focusing did not work. Continue anyway.
-        // eslint-disable-next-line no-console
-        console.warn(
-          'Failed to focus text editor. Continued execution. Details:'
-        )
-        // eslint-disable-next-line no-console
-        console.warn(error)
-      }
-    })
-    return () => {
-      clearTimeout(timeout)
-    }
-  }, [editor, focused])
 
   const handleEditorChange = useCallback(
     (newValue: Descendant[]) => {
