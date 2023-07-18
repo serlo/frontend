@@ -57,10 +57,16 @@ const validateFile: UploadValidator<FileError[]> = (file) => {
   return { valid: false, errors: handleErrors(uploadErrors) }
 }
 
-export const imagePlugin = createCoreImagePlugin({
-  upload: createUploadImageHandler(),
-  validate: validateFile,
-})
+export const createImagePlugin = ({
+  serloLinkSearch,
+}: {
+  serloLinkSearch: boolean
+}) =>
+  createCoreImagePlugin({
+    upload: createUploadImageHandler(),
+    validate: validateFile,
+    serloLinkSearch,
+  })
 
 function createUploadImageHandler() {
   const readFile = createReadFile()

@@ -1,22 +1,29 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { Editor, Node } from 'slate'
 import { Editable, Slate, RenderElementProps } from 'slate-react'
 
+import { LinkControls } from './link/link-controls'
 import { TextLeafRenderer } from './text-leaf-renderer'
 // TODO: Either duplicate or extract from text plugin
 import { MathElement } from '../text/components/math-element'
 
 interface CaptionEditorProps {
+  serloLinkSearch: boolean
   editor: Editor
+  editable: boolean
   focused: boolean
   onChange: (value: string) => void
 }
 
 export const CaptionEditor = ({
+  serloLinkSearch,
   editor,
+  editable,
   focused,
   onChange,
 }: CaptionEditorProps) => {
+  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
+
   const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -51,6 +58,7 @@ export const CaptionEditor = ({
 
   const handleChange = useCallback(() => {
     onChange(Node.string(editor))
+    setIsSelectionChanged((selection) => selection + 1)
   }, [editor, onChange])
 
   return (
@@ -73,6 +81,13 @@ export const CaptionEditor = ({
           </span>
         )}
       />
+      {editable && focused && (
+        <LinkControls
+          isSelectionChanged={isSelectionChanged}
+          editor={editor}
+          serloLinkSearch={serloLinkSearch}
+        />
+      )}
     </Slate>
   )
 }

@@ -97,12 +97,13 @@ export function ImageEditor(props: ImageProps) {
     return (
       <div>
         <CaptionEditor
+          serloLinkSearch={config.serloLinkSearch}
           editor={captionEditor}
+          editable={editable}
           focused={focused}
           onChange={(value) => {
             if (!state.caption.defined) return null
             state.caption.set(value)
-            console.log(state.caption.get())
           }}
         />
       </div>
