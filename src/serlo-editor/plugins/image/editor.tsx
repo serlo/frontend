@@ -1,5 +1,5 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { createEditor } from 'slate'
 import { withReact } from 'slate-react'
 
@@ -31,7 +31,7 @@ const formattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { focused, state, config, id } = props
+  const { editable, focused, state, config, id } = props
   const imageStrings = useEditorStrings().plugins.image
 
   usePendingFileUploader(state.src, config.upload)
@@ -53,6 +53,12 @@ export function ImageEditor(props: ImageProps) {
   const isCaptionFocused = useAppSelector((storeState) =>
     selectIsFocused(storeState, state.caption.defined ? state.caption.id : '')
   )
+
+  useEffect(() => {
+    if (editable && !state.caption.defined) {
+      state.caption.create({ plugin: EditorPluginType.Text })
+    }
+  }, [editable, state.caption])
 
   return (
     <>
