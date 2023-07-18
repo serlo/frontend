@@ -98,7 +98,6 @@
     "tiny-warning": "^1.0.0",
     "tippy.js": "^6.3.7",
     "ts-debounce": "^4.0.0",
-    "unfetch": "^4.2.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

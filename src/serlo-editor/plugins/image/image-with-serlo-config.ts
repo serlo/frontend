@@ -1,5 +1,4 @@
 import { gql } from 'graphql-request'
-import fetch from 'unfetch'
 
 import { createImagePlugin as createCoreImagePlugin } from '.'
 import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
