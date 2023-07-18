@@ -1,9 +1,8 @@
 import { useState } from 'react'
 
 import { HighlightProps } from '.'
+import { HighlightToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-
-const languages = ['text', 'c', 'javascript', 'jsx', 'markup', 'java', 'python']
 
 export function HighlightEditor(props: HighlightProps) {
   const { config, state, focused, editable } = props
@@ -15,12 +14,10 @@ export function HighlightEditor(props: HighlightProps) {
   const editorStrings = useEditorStrings()
 
   if (edit !== throttledEdit) {
-    if (!edit) {
-      setTimeout(() => {
-        setEditThrottled(false)
-      }, 100)
-    } else {
+    if (edit) {
       setEditThrottled(true)
+    } else {
+      setTimeout(() => setEditThrottled(false), 100)
     }
   }
 
@@ -28,6 +25,7 @@ export function HighlightEditor(props: HighlightProps) {
 
   return throttledEdit || edit ? (
     <>
+      {focused && <HighlightToolbar {...props} />}
       <textarea
         value={state.code.value}
         name="text"
@@ -43,7 +41,6 @@ export function HighlightEditor(props: HighlightProps) {
       >
         {state.code.value}
       </textarea>
-      {renderSettings()}
     </>
   ) : (
     <Renderer
@@ -52,37 +49,4 @@ export function HighlightEditor(props: HighlightProps) {
       code={state.code.value}
     />
   )
-
-  function renderSettings() {
-    return (
-      <div className="mt-2 flex justify-between">
-        <label>
-          Language:{' '}
-          <select
-            onChange={(e) => state.language.set(e.target.value)}
-            className="cursor-pointer"
-            value={state.language.value}
-          >
-            {languages.map((language) => {
-              return (
-                <option key={language} value={language}>
-                  {language}
-                </option>
-              )
-            })}
-          </select>
-        </label>
-        <label className="cursor-pointer">
-          {editorStrings.plugins.highlight.showLineNumbers}:{' '}
-          <input
-            type="checkbox"
-            onChange={() => {
-              state.showLineNumbers.set(!state.showLineNumbers.value)
-            }}
-            checked={state.showLineNumbers.value}
-          />
-        </label>
-      </div>
-    )
-  }
 }

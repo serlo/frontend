@@ -715,6 +715,7 @@ export const loggedInData = {
         geogebra: {
           title: 'GeoGebra Applet',
           description: 'Embed GeoGebra Materials applets via URL or ID.',
+          chooseApplet: 'Choose Applet',
           urlOrId: 'GeoGebra URL or ID',
         },
         highlight: {
@@ -723,8 +724,9 @@ export const loggedInData = {
           clickAndEnter: 'Click here and enter your source code…',
           enterHere: 'Enter your source code here',
           language: 'Language',
-          enterLanguage: 'Enter language',
-          showLineNumbers: 'Show line numbers',
+          languageTooltip: 'Choose language for syntax highlighting',
+          showLineNumbers: 'Line numbers',
+          lineNumbersTooltip: 'Should users see line numbers?',
         },
         image: {
           title: 'Image',
@@ -750,7 +752,7 @@ export const loggedInData = {
           description: 'Embed serlo.org content via their ID.',
           illegalInjectionFound: 'Illegal injection found',
           serloEntitySrc: 'Serlo entity {{src}}',
-          serloId: 'Serlo ID:',
+          serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)',
         },
         layout: {
