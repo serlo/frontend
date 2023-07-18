@@ -25,7 +25,7 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { requestPage } from '@/fetcher/request-page'
-import { FrontendExerciseNode } from '@/frontend-node-types'
+import type { FrontendExerciseNode } from '@/frontend-node-types'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { useEntitySortMutation } from '@/mutations/use-entity-sort-mutation'

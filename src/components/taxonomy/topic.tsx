@@ -2,10 +2,10 @@ import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
 import { Fragment } from 'react'
 
-import { FaIcon } from '../fa-icon'
-import { StaticInfoPanel } from '../static-info-panel'
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
+import { FaIcon } from '../fa-icon'
+import { StaticInfoPanel } from '../static-info-panel'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { LicenseNotice } from '@/components/content/license/license-notice'
 import { UserTools } from '@/components/user-tools/user-tools'
@@ -86,7 +86,7 @@ export function Topic({ data }: TopicProps) {
 
   function renderHeader() {
     return (
-      <h1 className="serlo-h1 mt-8 mb-10">
+      <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
         {data.title}
         {isExerciseFolder && (
           <span title={strings.entities.exerciseFolder}>

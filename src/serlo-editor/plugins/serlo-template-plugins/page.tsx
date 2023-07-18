@@ -20,36 +20,32 @@ export const pageTypeState = object({
   content: editorContent(),
 })
 
-export const pageTypePlugin: EditorPlugin<typeof pageTypeState> = {
+export type PageTypePluginState = typeof pageTypeState
+
+export const pageTypePlugin: EditorPlugin<PageTypePluginState> = {
   Component: PageTypeEditor,
   state: pageTypeState,
   config: {},
 }
 
-function PageTypeEditor(props: EditorPluginProps<typeof pageTypeState>) {
+function PageTypeEditor(props: EditorPluginProps<PageTypePluginState>) {
   const { title, content } = props.state
-  const editorStrings = useEditorStrings()
+  const placeholder = useEditorStrings().templatePlugins.page.title
 
   return (
     <article>
-      <header>
-        <div className="page-header">
-          <h1>
-            {props.editable ? (
-              <input
-                className={headerInputClasses}
-                placeholder={editorStrings.templatePlugins.page.title}
-                value={title.value}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  title.set(e.target.value)
-                }}
-              />
-            ) : (
-              <span itemProp="name">{title.value}</span>
-            )}
-          </h1>
-        </div>
-      </header>
+      <h1 className="serlo-h1" itemProp="name">
+        {props.editable ? (
+          <input
+            className={headerInputClasses}
+            placeholder={placeholder}
+            value={title.value}
+            onChange={(e) => title.set(e.target.value)}
+          />
+        ) : (
+          title.value
+        )}
+      </h1>
       <section itemProp="articleBody">{content.render()}</section>
       <ToolbarMain {...props.state} />
     </article>

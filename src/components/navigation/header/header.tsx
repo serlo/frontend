@@ -44,13 +44,13 @@ export function Header() {
       className={clsx(
         tw`
           bg-[url("/_assets/img/header-curve.svg")] bg-[length:100vw_3rem]
-          bg-bottom bg-no-repeat pt-3 pb-9 text-almost-black
+          bg-bottom bg-no-repeat pb-9 pt-3 text-almost-black
         `,
         hideQuickbar ? '' : 'bg-brand-100'
       )}
     >
       <SkipMenu />
-      <div className="px-side pt-3 pb-6 lg:px-side-lg">
+      <div className="px-side pb-6 pt-3 lg:px-side-lg">
         <div className="flex-wrap mobileExt:flex mobileExt:justify-between lg:flex-nowrap">
           <Logo foldOnMobile />
           <div

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 
 import { ArticleProps } from '.'
-import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { ArticleAddModal } from './add-modal/article-add-modal'
 import { ArticleExercises } from './editor-renderer/article-exercises'
 import { ArticleRelatedContentSection } from './editor-renderer/article-related-content-section'
 import { ArticleSources } from './editor-renderer/article-sources'
 import { ArticleRenderer } from './renderer'
+import { SerloAddButton } from '../../plugin/helpers/serlo-editor-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function ArticleEditor({ editable, state }: ArticleProps) {
@@ -43,7 +43,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
                 {exerciseFolder.title.value}
               </a>
             ) : null}{' '}
-            <span className="-mt-3 -ml-1 inline-block">
+            <span className="-ml-1 -mt-3 inline-block">
               {renderButton(modalStrings.buttonExFolder, true)}
             </span>
           </>
@@ -90,7 +90,7 @@ export function ArticleEditor({ editable, state }: ArticleProps) {
         text={text}
         noIcon={noIcon}
         onClick={() => setModalOpen(true)}
-        className="mt-4 mb-8"
+        className="mb-8 mt-4"
       />
     )
   }

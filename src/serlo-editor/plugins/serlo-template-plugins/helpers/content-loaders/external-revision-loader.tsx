@@ -17,13 +17,13 @@ import {
 import { dataQuery } from '@/fetcher/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
+import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DeserializeError,
   editorResponseToState,
   isError,
 } from '@/serlo-editor-integration/editor-response-to-state'
-import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function ExternalRevisionLoader<T>({
   entityType,

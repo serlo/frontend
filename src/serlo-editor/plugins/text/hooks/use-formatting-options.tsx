@@ -4,6 +4,7 @@ import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
 
+import { textColors } from './use-text-config'
 import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-icon'
 import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
 import { withLinks, withLists, withMath } from '../plugins'
@@ -39,7 +40,6 @@ import {
   toggleHeading,
   toggleItalicMark,
 } from '../utils/rich-text'
-import { textColors } from './use-text-config'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'

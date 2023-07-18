@@ -50,8 +50,8 @@ export function EmbedWrapper({
     <div
       className={clsx(
         tw`
-          group relative mb-block block cursor-pointer
-          bg-cover bg-center [contain:content]
+          group relative mx-side mb-block block
+          cursor-pointer bg-cover bg-center [contain:content]
           `,
         className
       )}

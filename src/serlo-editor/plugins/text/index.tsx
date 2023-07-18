@@ -1,6 +1,5 @@
 import { Node } from 'slate'
 
-import { EditorPlugin, serializedScalar } from '../../plugin'
 import { TextEditorProps, TextEditor } from './components/text-editor'
 import type {
   CustomElement,
@@ -19,6 +18,7 @@ import type {
 } from './types'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
+import { EditorPlugin, serializedScalar } from '../../plugin'
 
 const createTextPlugin = (
   config: TextEditorConfig

@@ -1,12 +1,12 @@
 import { AuthorizationPayload } from '@serlo/authorization'
 import { request } from 'graphql-request'
 
+import { unrevisedRevisionsSubjectsQuery } from './query'
 import {
   Instance,
   UnrevisedRevisionsQuery,
   UnrevisedRevisionsQueryVariables,
 } from '../graphql-types/operations'
-import { unrevisedRevisionsSubjectsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { UnrevisedRevisionsPage } from '@/data-types'
 

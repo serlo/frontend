@@ -2,13 +2,13 @@ import clsx from 'clsx'
 import { useState } from 'react'
 
 import { MultimediaProps } from '.'
+import { MultimediaRenderer } from './renderer'
 import {
   selectDocument,
   selectSerializedDocument,
   store,
   useAppSelector,
 } from '../../store'
-import { MultimediaRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
@@ -36,7 +36,7 @@ export function MultimediaEditor({
 
   return (
     <>
-      <div className="rounded-md focus-within:shadow-menu">
+      <div className="focus-within:[&>div]:border-editor-primary-100">
         <MultimediaRenderer
           media={<>{multimedia.render()}</>}
           explanation={<>{explanation.render()}</>}
@@ -52,7 +52,7 @@ export function MultimediaEditor({
       <>
         <hr />
         <div className="mt-8">
-          <b className="mt-6 ml-0 mb-4 block text-lg font-bold">
+          <b className="mb-4 ml-0 mt-6 block text-lg font-bold">
             {multimediaStrings.chooseSize}
           </b>
           <ul className="flex pb-8">
@@ -60,7 +60,7 @@ export function MultimediaEditor({
           </ul>
         </div>
         {allowedPlugins.length > 1 ? (
-          <div className="mt-3 mb-8">
+          <div className="mb-8 mt-3">
             <strong>{multimediaStrings.changeType}</strong>
             <span className="mr-4">:</span>
             <select

@@ -6,8 +6,8 @@ import { UuidType } from '@/data-types'
 import {
   FrontendExerciseNode,
   FrontendContentNode,
-  TaskEdtrState,
-  SolutionEdtrState,
+  TaskEditorState,
+  SolutionEditorState,
   FrontendExerciseGroupNode,
   FrontendSolutionNode,
   FrontendNodeType,
@@ -15,6 +15,7 @@ import {
 import { hasVisibleContent } from '@/helper/has-visible-content'
 import { shuffleArray } from '@/helper/shuffle-array'
 import { convert, ConvertNode } from '@/schema/convert-edtr-io-state'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 type BareExercise = Omit<
   Extract<MainUuidType, { __typename: 'Exercise' | 'GroupedExercise' }>,
@@ -26,17 +27,18 @@ export function createExercise(
   index?: number
 ): FrontendExerciseNode {
   let taskLegacy: FrontendContentNode[] | undefined = undefined
-  let taskEdtrState: TaskEdtrState | undefined = undefined
+  let taskEdtrState: TaskEditorState | undefined = undefined
   const content = uuid.currentRevision?.content
   if (content) {
     if (content.startsWith('{')) {
       // special case here: we know it's a edtr-io exercise
       // and we use this knowledge to convert subentries
-      const taskState = (JSON.parse(content) as { state: TaskEdtrState }).state
+      const taskState = (JSON.parse(content) as { state: TaskEditorState })
+        .state
 
       if (taskState.content) {
         taskState.content = convert(taskState.content)
-        if (taskState.interactive?.plugin === 'scMcExercise') {
+        if (taskState.interactive?.plugin === EditorPluginType.ScMcExercise) {
           taskState.interactive.state.answers.forEach((answer, i: number) => {
             answer.feedback = convert(answer.feedback)
             answer.content = convert(answer.content)
@@ -45,7 +47,9 @@ export function createExercise(
           taskState.interactive.state.answers = shuffleArray(
             taskState.interactive.state.answers
           )
-        } else if (taskState.interactive?.plugin === 'inputExercise') {
+        } else if (
+          taskState.interactive?.plugin === EditorPluginType.InputExercise
+        ) {
           taskState.interactive.state.answers.forEach((answer) => {
             answer.feedback = convert(answer.feedback)
           })
@@ -82,14 +86,14 @@ export function createExercise(
 
 function createSolutionData(solution: BareExercise['solution']) {
   let solutionLegacy: FrontendContentNode[] | undefined = undefined
-  let solutionEdtrState: SolutionEdtrState | undefined = undefined
+  let solutionEdtrState: SolutionEditorState | undefined = undefined
   const content = solution?.currentRevision?.content
   if (content) {
     if (content.startsWith('{')) {
       const contentJson = JSON.parse(content) as
-        | { plugin: 'rows' }
-        | { plugin: ''; state: SolutionEdtrState }
-      if (contentJson.plugin === 'rows') {
+        | { plugin: EditorPluginType.Rows }
+        | { plugin: ''; state: SolutionEditorState }
+      if (contentJson.plugin === EditorPluginType.Rows) {
         // half converted, like 189579
         solutionLegacy = convert(contentJson as ConvertNode)
       } else {

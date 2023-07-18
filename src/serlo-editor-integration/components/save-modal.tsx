@@ -3,10 +3,10 @@ import clsx from 'clsx'
 import { gql } from 'graphql-request'
 import { useContext, useEffect, useState } from 'react'
 
+import { LocalStorageButton } from './local-storage-button'
 import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common/common'
 import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
 import { SaveContext } from '../serlo-editor'
-import { LocalStorageButton } from './local-storage-button'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
@@ -92,7 +92,7 @@ export function SaveModal({
         {renderSubscription()}
         {renderCheckout()}
         {isOnlyText ? edtrIoStrings.ready : null}
-        <hr className="mt-8 mb-8" />
+        <hr className="mb-8 mt-8" />
         {renderAlert()}
         {renderModalButtons()}
       </div>
@@ -191,7 +191,7 @@ export function SaveModal({
             setChangesText(value)
           }}
           className={tw`
-            focus-within:border-truegray-400 mt-1 mb-7 flex w-full items-center rounded-2xl
+            focus-within:border-truegray-400 mb-7 mt-1 flex w-full items-center rounded-2xl
             border-2 border-yellow-200 bg-yellow-200 p-2 focus-within:outline-none
           `}
         />

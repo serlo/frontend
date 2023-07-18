@@ -1,17 +1,18 @@
 import { mergeDeepRight } from 'ramda'
 import { v4 } from 'uuid'
 
-import { SubDocument } from '../core'
 import {
   StoreSerializeHelpers,
   StateType,
   PluginProps,
 } from './internal-plugin-state'
+import { SubDocument } from '../core'
 
 export function child<K extends string, S = unknown>(
   params: ChildStateTypeConfig
 ): ChildStateType<K, S> {
   const { plugin, initialState, config } = params
+
   return {
     init(id, onChange) {
       return {
@@ -40,7 +41,7 @@ export function child<K extends string, S = unknown>(
       return id
     },
     deserialize(serialized, { createDocument }) {
-      const id = v4()
+      const id = serialized.id ?? v4()
       createDocument({ id, ...serialized })
       return id
     },
@@ -49,7 +50,9 @@ export function child<K extends string, S = unknown>(
       if (document === null) {
         throw new Error('There exists no document with the given id')
       }
-      return document
+      // making sure existing plugins store `id` in state as well
+      if (Object.hasOwn(document, 'id')) return document
+      return { ...document, id }
     },
     getFocusableChildren(id) {
       return [{ id }]
@@ -58,13 +61,13 @@ export function child<K extends string, S = unknown>(
 }
 
 export type ChildStateType<K extends string = string, S = unknown> = StateType<
-  { plugin: K; state?: S },
+  { plugin: K; state?: S; id?: string },
   string,
   {
     get(): string
     id: string
     render: (props?: PluginProps) => React.ReactElement
-    replace: (plugin: K, state?: S) => void
+    replace: (plugin: K, state?: S, id?: string) => void
   }
 >
 

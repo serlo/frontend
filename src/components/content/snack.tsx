@@ -20,7 +20,7 @@ export function Snack({ id }: SnackProps) {
           onClick={() => setActive(true)}
         />
         <button
-          className="serlo-button-blue mt-16 mb-20"
+          className="serlo-button-blue mb-20 mt-16"
           onClick={() => setActive(true)}
         >
           Snack starten!

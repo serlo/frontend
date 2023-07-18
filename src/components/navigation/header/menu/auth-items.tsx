@@ -3,8 +3,8 @@ import { faBell } from '@fortawesome/free-solid-svg-icons'
 import { Item } from './item'
 import { NoAuthItem } from './no-auth-item'
 import { useAuthentication } from '@/auth/use-authentication'
-import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { getAvatarUrl } from '@/components/user/user-link'
+import { UnreadNotificationsCount } from '@/components/user-tools/unread-notifications-count'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 
 export function AuthItems() {
