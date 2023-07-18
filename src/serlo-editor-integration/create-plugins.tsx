@@ -25,7 +25,7 @@ import { exercisePlugin } from '@/serlo-editor/plugins/exercise'
 import { geoGebraPlugin } from '@/serlo-editor/plugins/geogebra'
 import { H5pPlugin } from '@/serlo-editor/plugins/h5p'
 import { createHighlightPlugin } from '@/serlo-editor/plugins/highlight'
-import { createImagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
+import { imagePlugin } from '@/serlo-editor/plugins/image/image-with-serlo-config'
 import { injectionPlugin } from '@/serlo-editor/plugins/injection'
 import { createInputExercisePlugin } from '@/serlo-editor/plugins/input-exercise'
 import { createMultimediaPlugin } from '@/serlo-editor/plugins/multimedia'
@@ -74,7 +74,7 @@ export function createPlugins({
     },
     {
       type: EditorPluginType.Image,
-      plugin: createImagePlugin({ serloLinkSearch: instance === Instance.De }),
+      plugin: imagePlugin,
       visible: true,
       icon: <IconImage />,
     },

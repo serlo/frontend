@@ -86,5 +86,4 @@ export type ImageProps = EditorPluginProps<ImagePluginState, ImageConfig>
 export interface ImagePluginConfig {
   upload: UploadHandler<string>
   validate: UploadValidator
-  serloLinkSearch: boolean
 }
