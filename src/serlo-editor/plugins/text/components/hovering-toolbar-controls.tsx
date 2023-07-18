@@ -38,9 +38,6 @@ export function HoveringToolbarControls({
                 ? setSubMenu(index)
                 : control.onClick(editor)
             }}
-            onClick={(event) => {
-              event.stopPropagation()
-            }}
             key={index}
           >
             {control.renderIcon(editor)}
