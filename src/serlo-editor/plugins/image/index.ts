@@ -1,5 +1,6 @@
 import { ImageEditor } from './editor'
 import {
+  child,
   EditorPlugin,
   EditorPluginProps,
   isTempFile,
@@ -11,14 +12,23 @@ import {
   UploadHandler,
   UploadValidator,
 } from '../../plugin'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const imageState = object({
   src: upload(''),
   link: optional(object({ href: string('') })),
   alt: optional(string('')),
   maxWidth: optional(number(0)),
-  // TODO: Can't stay a string because of formatting options
-  caption: optional(string('')),
+  caption: optional(
+    child({
+      plugin: EditorPluginType.Text,
+      config: {
+        formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
+        noLinebreaks: true,
+        hasOwnToolbar: false,
+      },
+    })
+  ),
 })
 
 export function createImagePlugin(
@@ -36,7 +46,7 @@ export function createImagePlugin(
             link: undefined,
             alt: undefined,
             maxWidth: undefined,
-            caption: undefined,
+            caption: { plugin: EditorPluginType.Text },
           },
         }
       }
@@ -52,7 +62,7 @@ export function createImagePlugin(
               link: undefined,
               alt: undefined,
               maxWidth: undefined,
-              caption: undefined,
+              caption: { plugin: EditorPluginType.Text },
             },
           }
         }
@@ -63,7 +73,7 @@ export function createImagePlugin(
         (!serializedState.src.value || isTempFile(serializedState.src.value)) &&
         (!serializedState.link.defined || !serializedState.link.href.value) &&
         (!serializedState.alt.defined || !serializedState.alt.value) &&
-        (!serializedState.caption.defined || !serializedState.caption.value)
+        (!serializedState.caption.defined || !serializedState.caption.get())
       )
     },
   }

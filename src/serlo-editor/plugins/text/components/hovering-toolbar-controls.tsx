@@ -31,9 +31,13 @@ export function HoveringToolbarControls({
             tooltipText={control.title}
             onMouseDown={(event) => {
               event.preventDefault()
+              event.stopPropagation()
               isNestedControlButton(control)
                 ? setSubMenu(index)
                 : control.onClick(editor)
+            }}
+            onClick={(event) => {
+              event.stopPropagation()
             }}
             key={index}
           >

@@ -22,12 +22,13 @@ export const textColors = Object.entries(articleColors).map(([key, value]) => {
 export function useTextConfig(
   config: TextEditorConfig
 ): TextEditorPluginConfig {
-  const { placeholder, noLinebreaks } = config
+  const { placeholder, noLinebreaks, controls } = config
 
   return {
     formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
     placeholder,
     noLinebreaks,
     serloLinkSearch: config.serloLinkSearch ?? true,
+    controls,
   }
 }

@@ -556,7 +556,7 @@ export function TextEditor(props: TextEditorProps) {
             <LinkControls
               isSelectionChanged={isSelectionChanged}
               editor={editor}
-              config={config}
+              serloLinkSearch={config.serloLinkSearch}
             />
             <HoveringToolbar
               editor={editor}

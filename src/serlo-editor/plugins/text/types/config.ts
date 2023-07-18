@@ -1,5 +1,6 @@
-import { Descendant, Range } from 'slate'
+import { Descendant, Editor, Range } from 'slate'
 
+import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { SerializedScalarStateType } from '@/serlo-editor/plugin'
 
 export type TextEditorState = SerializedScalarStateType<
@@ -12,12 +13,20 @@ export interface TextEditorConfig {
   formattingOptions?: TextEditorFormattingOption[]
   noLinebreaks?: boolean
   serloLinkSearch: boolean
+  controls?: {
+    editor: Editor
+    textFormattingOptions: ReturnType<typeof useFormattingOptions>
+  }
 }
 export interface TextEditorPluginConfig {
   placeholder?: string
   formattingOptions: TextEditorFormattingOption[]
   noLinebreaks?: boolean
   serloLinkSearch: boolean
+  controls?: {
+    editor: Editor
+    textFormattingOptions: ReturnType<typeof useFormattingOptions>
+  }
 }
 
 export enum TextEditorFormattingOption {

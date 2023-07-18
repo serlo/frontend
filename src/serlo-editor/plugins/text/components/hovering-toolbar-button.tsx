@@ -8,11 +8,13 @@ export function HoveringToolbarButton({
   children,
   tooltipText,
   onMouseDown,
+  onClick,
 }: {
   active?: boolean
   children: React.ReactNode
   tooltipText?: string
   onMouseDown: MouseEventHandler
+  onClick?: MouseEventHandler
 }) {
   const textParts = tooltipText?.split('(')
 
@@ -26,6 +28,7 @@ export function HoveringToolbarButton({
         'serlo-tooltip-trigger'
       )}
       onMouseDown={onMouseDown}
+      onClick={onClick}
     >
       <EditorTooltip
         text={textParts?.[0]}

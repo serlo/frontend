@@ -1,15 +1,20 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import { createEditor } from 'slate'
 import { withReact } from 'slate-react'
 
 import { ImageProps } from '.'
-import { CaptionEditor } from './caption-editor'
 import { PrimaryControls, SettingsControls } from './controls'
 import { ImageRenderer } from './renderer'
-import { ControlButton, ToolbarControls } from './toolbar-controls'
 import { isTempFile, usePendingFileUploader } from '../../plugin'
-import { store, selectHasFocusedChild } from '../../store'
+import {
+  store,
+  selectHasFocusedChild,
+  selectIsDocumentEmpty,
+  selectIsFocused,
+  useAppSelector,
+} from '../../store'
+import { HoveringToolbarControls } from '../text/components/hovering-toolbar-controls'
 import { useFormattingOptions } from '../text/hooks/use-formatting-options'
 import { TextEditorFormattingOption } from '../text/types'
 import { FaIcon } from '@/components/fa-icon'
@@ -26,7 +31,7 @@ const formattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config, id } = props
+  const { focused, state, config, id } = props
   const imageStrings = useEditorStrings().plugins.image
 
   usePendingFileUploader(state.src, config.upload)
@@ -45,28 +50,13 @@ export function ImageEditor(props: ImageProps) {
     [createTextEditor]
   )
 
-  useEffect(() => {
-    // not sure if this is still needed
-    if (editable && !state.caption.defined) {
-      state.caption.create('')
-    }
-  }, [editable, state.caption])
+  const isCaptionFocused = useAppSelector((storeState) =>
+    selectIsFocused(storeState, state.caption.defined ? state.caption.id : '')
+  )
 
   return (
     <>
-      {focused && (
-        <PluginToolbar
-          pluginId={id}
-          pluginType={EditorPluginType.Image}
-          contentControls={
-            <ToolbarControls
-              controls={toolbarControls as unknown as ControlButton[]}
-              editor={captionEditor}
-            />
-          }
-          pluginControls={<DefaultControls pluginId={id} />}
-        />
-      )}
+      {renderPluginToolbar()}
       <ImageRenderer
         image={{
           src,
@@ -82,6 +72,27 @@ export function ImageEditor(props: ImageProps) {
     </>
   )
 
+  function renderPluginToolbar() {
+    console.log('focused: ', focused)
+    console.log('isCaptionFocused: ', isCaptionFocused)
+
+    if (!focused && !isCaptionFocused) return null
+
+    return (
+      <PluginToolbar
+        pluginId={id}
+        pluginType={EditorPluginType.Image}
+        contentControls={
+          <HoveringToolbarControls
+            controls={toolbarControls}
+            editor={captionEditor}
+          />
+        }
+        pluginControls={<DefaultControls pluginId={id} />}
+      />
+    )
+  }
+
   function renderPlaceholder() {
     if (!isLoading && src.length) return null
     return (
@@ -93,21 +104,22 @@ export function ImageEditor(props: ImageProps) {
 
   function renderCaption() {
     if (!state.caption.defined) return null
-    if (!hasFocus && !state.caption.value) return null
-    return (
-      <div>
-        <CaptionEditor
-          serloLinkSearch={config.serloLinkSearch}
-          editor={captionEditor}
-          editable={editable}
-          focused={focused}
-          onChange={(value) => {
-            if (!state.caption.defined) return null
-            state.caption.set(value)
-          }}
-        />
-      </div>
+
+    const isCaptionEditorEmpty = selectIsDocumentEmpty(
+      store.getState(),
+      state.caption.id
     )
+    if (!hasFocus && isCaptionEditorEmpty) return null
+
+    return state.caption.render({
+      config: {
+        placeholder: imageStrings.captionPlaceholder,
+        controls: {
+          editor: captionEditor,
+          textFormattingOptions,
+        },
+      },
+    })
   }
 
   function renderEditControls() {
