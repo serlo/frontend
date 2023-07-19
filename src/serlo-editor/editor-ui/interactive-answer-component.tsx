@@ -153,10 +153,6 @@ export function CheckElement({
   )
 }
 
-const BlockLabel = styled.label({
-  display: 'block',
-})
-
 export function InteractiveAnswer(props: InteractiveAnswerProps) {
   const { strings } = useInstanceData()
 
@@ -178,7 +174,7 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
       >
         <AnswerField>
           <>
-            <BlockLabel>{strings.content.exercises.answer}:</BlockLabel>
+            <label className="block">{strings.content.exercises.answer}:</label>
             {props.answer}
           </>
         </AnswerField>
@@ -186,7 +182,7 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
           <FaIcon icon={faTimes} />
         </RemoveButton>
         <FeedbackField>
-          <BlockLabel>{strings.content.exercises.feedback}:</BlockLabel>
+          <label className="block">{strings.content.exercises.feedback}:</label>
           {props.feedback}
         </FeedbackField>
       </FramedContainer>

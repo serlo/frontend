@@ -1,6 +1,4 @@
-import styled from 'styled-components'
-
-import { colors } from '@/helper/colors'
+import { tw } from '@/helper/tw'
 
 export interface OverlayTextareaProps
   extends React.DetailedHTMLProps<
@@ -12,35 +10,17 @@ export interface OverlayTextareaProps
 
 export function OverlayTextarea({ label, ...props }: OverlayTextareaProps) {
   return (
-    <OverlayTextareaLabel>
-      <OverlayTextareaLabelInner>{label}</OverlayTextareaLabelInner>
-      <OverlayTextareaInner {...props} ref={undefined} />
-    </OverlayTextareaLabel>
+    <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
+      <span className="w-[20%]">{label}</span>
+      <textarea
+        {...props}
+        className={tw`
+        serlo-input-font-reset
+        mt-1.5 min-h-[100px] w-3/4 resize-none rounded-md
+        border-2 border-editor-primary-100  bg-editor-primary-100 p-2.5 
+        focus:border-editor-primary-300 focus:outline-none
+      `}
+      />
+    </label>
   )
 }
-
-const OverlayTextareaLabel = styled.label({
-  color: 'rgba(51,51,51,0.95)',
-  display: 'flex',
-  flexDirection: 'row',
-  margin: '20px auto 0',
-  justifyContent: 'space-between',
-})
-
-const OverlayTextareaLabelInner = styled.span({ width: '20%' })
-
-const OverlayTextareaInner = styled.textarea({
-  backgroundColor: '#ffffff',
-  border: '2px solid rgba(51,51,51,0.95)',
-  marginTop: '5px',
-  borderRadius: '5px',
-  color: '2px solid rgba(51,51,51,0.95)',
-  padding: '10px',
-  resize: 'none',
-  outline: 'none',
-  minHeight: '100px',
-  width: '75%',
-  '&:focus': {
-    border: `2px solid ${colors.editorPrimary}`,
-  },
-})
