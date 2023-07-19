@@ -1,4 +1,3 @@
-import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import isHotkey from 'is-hotkey'
 import React, {
   createElement,
@@ -33,7 +32,6 @@ import {
 } from '../utils/document'
 import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
-import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HotKeys } from '@/serlo-editor/core'
@@ -42,6 +40,7 @@ import {
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
 import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -55,7 +54,6 @@ import {
   useAppDispatch,
   selectFocusTree,
   store,
-  removePluginChild,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -411,34 +409,6 @@ export function TextEditor(props: TextEditorProps) {
     [dispatch, editor, id, pluginStrings, plugins]
   )
 
-  const handleDuplicatePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), id)
-    if (!parent) return
-
-    dispatch(
-      insertPluginChildAfter({
-        parent: parent.id,
-        sibling: id,
-        document: {
-          plugin: 'text',
-          state: state.value.value,
-        },
-      })
-    )
-  }, [dispatch, id, state])
-
-  const handleRemovePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), id)
-    if (!parent) return
-
-    dispatch(
-      removePluginChild({
-        parent: parent.id,
-        child: id,
-      })
-    )
-  }, [dispatch, id])
-
   const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -511,26 +481,7 @@ export function TextEditor(props: TextEditorProps) {
               editor={editor}
             />
           }
-          pluginControls={
-            <>
-              <button
-                className="group/button w-full pl-3 text-left"
-                onClick={handleDuplicatePlugin}
-              >
-                <span className="serlo-button-editor-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-300">
-                  <FaIcon icon={faClone} /> {pluginStrings.rows.duplicate}
-                </span>
-              </button>
-              <button
-                className="group/button w-full pl-3 text-left"
-                onClick={handleRemovePlugin}
-              >
-                <span className="serlo-button-editor-secondary w-fit bg-transparent text-sm group-hover/button:bg-editor-primary-300">
-                  <FaIcon icon={faTrashAlt} /> {pluginStrings.rows.remove}
-                </span>
-              </button>
-            </>
-          }
+          pluginControls={<DefaultControls pluginId={id} />}
         />
       )}
       <Slate
