@@ -1,5 +1,5 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createEditor } from 'slate'
 import { withReact } from 'slate-react'
 
@@ -31,6 +31,8 @@ const formattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
+  const [isCaptionEditorChanged, setIsCaptionEditorChanged] = useState(0)
+
   const { editable, focused, state, config, id } = props
   const imageStrings = useEditorStrings().plugins.image
 
@@ -120,6 +122,8 @@ export function ImageEditor(props: ImageProps) {
         controls: {
           editor: captionEditor,
           textFormattingOptions,
+          isChanged: isCaptionEditorChanged,
+          onChange: setIsCaptionEditorChanged,
         },
       },
     })

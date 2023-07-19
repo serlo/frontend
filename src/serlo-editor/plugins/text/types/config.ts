@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react'
 import { Descendant, Editor, Range } from 'slate'
 
 import { useFormattingOptions } from '../hooks/use-formatting-options'
@@ -16,6 +17,8 @@ export interface TextEditorConfig {
   controls?: {
     editor: Editor
     textFormattingOptions: ReturnType<typeof useFormattingOptions>
+    isChanged: number
+    onChange: Dispatch<SetStateAction<number>>
   }
 }
 export interface TextEditorPluginConfig {
@@ -26,6 +29,8 @@ export interface TextEditorPluginConfig {
   controls?: {
     editor: Editor
     textFormattingOptions: ReturnType<typeof useFormattingOptions>
+    isChanged: number
+    onChange: Dispatch<SetStateAction<number>>
   }
 }
 

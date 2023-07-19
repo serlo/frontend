@@ -1,5 +1,11 @@
 import isHotkey from 'is-hotkey'
-import React, { useRef, useMemo, useState, useCallback } from 'react'
+import React, {
+  useRef,
+  useMemo,
+  useCallback,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 import { Descendant, Node, Transforms, Range, Editor } from 'slate'
 import { Editable, RenderElementProps, Slate } from 'slate-react'
 
@@ -19,6 +25,8 @@ export interface InlineTextEditorConfig {
   controls: {
     editor: Editor
     textFormattingOptions: ReturnType<typeof useFormattingOptions>
+    isChanged: number
+    onChange: Dispatch<SetStateAction<number>>
   }
 }
 
@@ -32,13 +40,11 @@ export type InlineTextEditorProps = EditorPluginProps<
 export function InlineTextEditor(props: InlineTextEditorProps) {
   const { state, editable, focused } = props
 
-  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
-
   const pluginStrings = useEditorStrings().plugins
 
   const config = useTextConfig(props.config) as InlineTextEditorConfig
 
-  const { editor, textFormattingOptions } = config.controls
+  const { editor, textFormattingOptions, isChanged, onChange } = config.controls
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
@@ -69,10 +75,10 @@ export function InlineTextEditor(props: InlineTextEditorProps) {
           ({ value }) => ({ value, selection: previousSelection.current })
         )
       }
-      setIsSelectionChanged((selection) => selection + 1)
+      onChange((count: number) => count + 1)
       previousSelection.current = editor.selection
     },
-    [editor.operations, editor.selection, state]
+    [editor.operations, editor.selection, state, onChange]
   )
 
   const handleEditableKeyDown = useCallback(
@@ -166,7 +172,7 @@ export function InlineTextEditor(props: InlineTextEditorProps) {
       />
       {editable && focused && (
         <LinkControls
-          isSelectionChanged={isSelectionChanged}
+          isSelectionChanged={isChanged}
           editor={editor}
           serloLinkSearch={config.serloLinkSearch}
         />
