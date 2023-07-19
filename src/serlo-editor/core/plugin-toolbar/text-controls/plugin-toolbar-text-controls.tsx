@@ -2,10 +2,10 @@ import * as R from 'ramda'
 import { useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
-import { HoveringToolbarButton } from './hovering-toolbar-button'
-import type { NestedControlButton, ControlButton } from '../types'
+import { PluginToolbarTextControlButton } from './plugin-toolbar-text-control-button'
+import type { NestedControlButton, ControlButton } from './types'
 
-export interface HoveringToolbarControlsProps {
+export interface PluginToolbarTextControlsProps {
   controls: ControlButton[]
   editor: SlateEditor
 }
@@ -16,19 +16,17 @@ function isNestedControlButton(
   return R.has('children', control)
 }
 
-// TODO: Rename to "PluginToolbarControls" and maybe move to core,
-// once the plugin toolbar has been fully implemented
-export function HoveringToolbarControls({
+export function PluginToolbarTextControls({
   controls,
   editor,
-}: HoveringToolbarControlsProps) {
+}: PluginToolbarTextControlsProps) {
   const [subMenu, setSubMenu] = useState<number>()
 
   if (typeof subMenu !== 'number') {
     return (
       <>
         {controls.map((control, index) => (
-          <HoveringToolbarButton
+          <PluginToolbarTextControlButton
             active={control.isActive(editor)}
             tooltipText={control.title}
             onMouseDown={(event) => {
@@ -41,7 +39,7 @@ export function HoveringToolbarControls({
             key={index}
           >
             {control.renderIcon(editor)}
-          </HoveringToolbarButton>
+          </PluginToolbarTextControlButton>
         ))}
       </>
     )
@@ -68,7 +66,7 @@ export function HoveringToolbarControls({
   return (
     <>
       {subMenuControls.map((control, index) => (
-        <HoveringToolbarButton
+        <PluginToolbarTextControlButton
           active={control.isActive(editor)}
           tooltipText={control.title}
           onMouseDown={(event) => {
@@ -79,7 +77,7 @@ export function HoveringToolbarControls({
           key={index}
         >
           {control.renderIcon(editor)}
-        </HoveringToolbarButton>
+        </PluginToolbarTextControlButton>
       ))}
     </>
   )

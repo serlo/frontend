@@ -1,7 +1,7 @@
 import { Editor as SlateEditor, Transforms } from 'slate'
 
 import { selectionHasElement, trimSelection } from './selection'
-import type { Heading } from '../types'
+import type { Heading } from '@/serlo-editor/plugins/text'
 
 export function isBoldActive(editor: SlateEditor) {
   return SlateEditor.marks(editor)?.strong === true

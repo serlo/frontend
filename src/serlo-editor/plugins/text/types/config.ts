@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Descendant, Editor, Range } from 'slate'
 
-import { useFormattingOptions } from '../hooks/use-formatting-options'
+import { useFormattingOptions } from '@/serlo-editor/core/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { TextEditorFormattingOption } from '@/serlo-editor/core/plugin-toolbar/text-controls/types'
 import { SerializedScalarStateType } from '@/serlo-editor/plugin'
 
 export type TextEditorState = SerializedScalarStateType<
@@ -32,16 +33,4 @@ export interface TextEditorPluginConfig {
     isChanged: number
     onChange: Dispatch<SetStateAction<number>>
   }
-}
-
-export enum TextEditorFormattingOption {
-  code = 'code',
-  colors = 'colors',
-  headings = 'headings',
-  katex = 'katex',
-  links = 'links',
-  lists = 'lists',
-  math = 'math',
-  paragraphs = 'paragraphs',
-  richText = 'richText',
 }

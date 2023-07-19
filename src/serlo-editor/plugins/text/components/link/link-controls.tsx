@@ -6,11 +6,14 @@ import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
 import { LinkOverlay } from './link-overlay'
 import { LinkOverlayWithHref } from './link-overlay-with-href'
 import type { Link } from '../../types'
-import { getLinkElement, isLinkActive } from '../../utils/link'
 import {
   QuickbarData,
   fetchQuickbarData,
 } from '@/components/navigation/quickbar'
+import {
+  getLinkElement,
+  isLinkActive,
+} from '@/serlo-editor/core/plugin-toolbar/text-controls/utils/link'
 
 interface LinkControlsProps {
   isSelectionChanged: number

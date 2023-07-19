@@ -4,10 +4,8 @@ import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
 
-import { textColors } from './use-text-config'
-import { HoveringToolbarColorIcon } from '../components/hovering-toolbar-color-icon'
-import { HoveringToolbarColorTextIcon } from '../components/hovering-toolbar-color-text-icon'
-import { withLinks, withLists, withMath } from '../plugins'
+import { ColorIcon } from '../icons/color-icon'
+import { ColorTextIcon } from '../icons/color-text-icon'
 import { TextEditorFormattingOption, ControlButton } from '../types'
 import {
   getColorIndex,
@@ -52,6 +50,12 @@ import {
   edtrListNumbered,
   edtrText,
 } from '@/serlo-editor/editor-ui'
+import { textColors } from '@/serlo-editor/plugins/text/hooks/use-text-config'
+import {
+  withLinks,
+  withLists,
+  withMath,
+} from '@/serlo-editor/plugins/text/plugins'
 
 const textPluginsMapper = {
   [TextEditorFormattingOption.math]: withMath,
@@ -262,7 +266,7 @@ function createToolbarControls(
       renderIcon: (editor: SlateEditor) => {
         const colorIndex = getColorIndex(editor)
         const color = colorIndex ? textColors[colorIndex].value : 'black'
-        return <HoveringToolbarColorTextIcon color={color} />
+        return <ColorTextIcon color={color} />
       },
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
       children: [
@@ -271,7 +275,7 @@ function createToolbarControls(
           title: textStrings.resetColor,
           isActive: (editor: SlateEditor) => !isAnyColorActive(editor),
           onClick: resetColor,
-          renderIcon: () => <HoveringToolbarColorIcon color="black" />,
+          renderIcon: () => <ColorIcon color="black" />,
         },
         ...textColors.map((color, colorIndex) => ({
           name: TextEditorFormattingOption.colors,
@@ -282,7 +286,7 @@ function createToolbarControls(
             : color.name,
           isActive: isColorActive(colorIndex),
           onClick: toggleColor(colorIndex),
-          renderIcon: () => <HoveringToolbarColorIcon color={color.value} />,
+          renderIcon: () => <ColorIcon color={color.value} />,
         })),
       ],
     },

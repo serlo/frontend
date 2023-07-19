@@ -1,6 +1,6 @@
 import { Editor as SlateEditor, Transforms } from 'slate'
 
-import { trimSelection } from './selection'
+import { trimSelection } from '../../../../plugins/text/utils/selection'
 
 export const isAnyColorActive = (editor: SlateEditor) =>
   typeof SlateEditor.marks(editor)?.color === 'number'

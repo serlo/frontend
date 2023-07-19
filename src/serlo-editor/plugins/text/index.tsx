@@ -13,13 +13,12 @@ import type {
   Link,
   MathElement,
   TextEditorConfig,
-  TextEditorFormattingOption,
   TextEditorPluginConfig,
   TextEditorState,
 } from './types'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
-import { EditorPlugin, serializedScalar } from '../../plugin'
+import { EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
 
 const createTextPlugin = (
   config: TextEditorConfig
@@ -85,7 +84,6 @@ export type {
   MathElement,
   CustomText,
   TextEditorConfig,
-  TextEditorFormattingOption,
   TextEditorPluginConfig,
   TextEditorState,
   TextEditorProps,

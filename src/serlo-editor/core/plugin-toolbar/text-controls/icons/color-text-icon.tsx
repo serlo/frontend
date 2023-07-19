@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { edtrColorText, EdtrIcon } from '@/serlo-editor/editor-ui'
 
-interface HoveringToolbarColorTextIconProps {
+interface ColorTextIconProps {
   color: string
 }
 
@@ -18,7 +18,7 @@ const FlexContainer = styled.span({
   flexDirection: 'column',
 })
 
-const Line = styled.span<HoveringToolbarColorTextIconProps>(({ color }) => ({
+const Line = styled.span<ColorTextIconProps>(({ color }) => ({
   border: `2px solid ${color}`,
   borderRadius: '4px',
   bottom: '0',
@@ -26,9 +26,7 @@ const Line = styled.span<HoveringToolbarColorTextIconProps>(({ color }) => ({
   position: 'absolute',
 }))
 
-export const HoveringToolbarColorTextIcon = ({
-  color,
-}: HoveringToolbarColorTextIconProps) => (
+export const ColorTextIcon = ({ color }: ColorTextIconProps) => (
   <ColoredText>
     <FlexContainer>
       <EdtrIcon icon={edtrColorText} />

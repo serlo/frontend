@@ -1,6 +1,16 @@
 import { Editor as SlateEditor } from 'slate'
 
-import type { TextEditorFormattingOption } from '.'
+export enum TextEditorFormattingOption {
+  code = 'code',
+  colors = 'colors',
+  headings = 'headings',
+  katex = 'katex',
+  links = 'links',
+  lists = 'lists',
+  math = 'math',
+  paragraphs = 'paragraphs',
+  richText = 'richText',
+}
 
 export type ControlButton = ActionControlButton | NestedControlButton
 

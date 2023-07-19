@@ -1,7 +1,7 @@
 import { Editor as SlateEditor, Element, Node, Range, Transforms } from 'slate'
 
 import { selectionHasElement, trimSelection } from './selection'
-import type { Link } from '../types'
+import type { Link } from '@/serlo-editor/plugins/text'
 
 function matchLinks(node: Node) {
   return Element.isElement(node) && node.type === 'a'
