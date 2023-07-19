@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 import { LayoutPluginState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
 import {
   store,
@@ -57,6 +58,8 @@ export const LayoutRenderer: React.FunctionComponent<
 
   const editorStrings = useEditorStrings()
 
+  const plugins = usePlugins()
+
   return (
     <>
       {props.editable ? (
@@ -105,7 +108,8 @@ export const LayoutRenderer: React.FunctionComponent<
     dispatch(
       runReplaceDocumentSaga({
         id: props.id,
-        plugin: EditorPluginType.Rows,
+        plugins,
+        pluginType: EditorPluginType.Rows,
         state: documents,
       })
     )
@@ -153,7 +157,8 @@ export const LayoutRenderer: React.FunctionComponent<
       dispatch(
         runReplaceDocumentSaga({
           id: props.id,
-          plugin: EditorPluginType.Multimedia,
+          plugins,
+          pluginType: EditorPluginType.Multimedia,
           state: {
             explanation,
             multimedia:

@@ -215,6 +215,7 @@ export function TextEditor(props: TextEditorProps) {
                   plugin: document.plugin,
                   state: slicedNodes || emptyDocumentFactory().value,
                 },
+                plugins,
               })
             )
           })
@@ -233,7 +234,7 @@ export function TextEditor(props: TextEditorProps) {
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, store, id)
+          const newValue = mergePlugins(direction, editor, store, id, plugins)
 
           // Update Redux document state with the new value
           if (newValue) {
@@ -269,6 +270,7 @@ export function TextEditor(props: TextEditorProps) {
     [
       config.noLinebreaks,
       dispatch,
+      plugins,
       editor,
       id,
       showSuggestions,
@@ -332,10 +334,14 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      function insertPlugin(plugin: string, { state }: { state?: unknown }) {
+      function insertPlugin(
+        pluginType: string,
+        { state }: { state?: unknown }
+      ) {
         const isEditorEmpty = Node.string(editor) === ''
+
         if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, plugin, state }))
+          dispatch(runReplaceDocumentSaga({ id, plugins, pluginType, state }))
           return
         }
 
@@ -354,6 +360,7 @@ export function TextEditor(props: TextEditorProps) {
                   plugin: parentPluginType,
                   state: slicedNodes,
                 },
+                plugins,
               })
             )
           }
@@ -361,7 +368,8 @@ export function TextEditor(props: TextEditorProps) {
             insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
-              document: { plugin, state },
+              document: { plugin: pluginType, state },
+              plugins,
             })
           )
         })

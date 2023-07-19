@@ -20,6 +20,7 @@ export interface DocumentEditorProps {
   focused: boolean // `true` if the document is focused
 }
 
+// @TODO Rename this to `PluginSettings` or something similar after moving the toolbar out of it.
 export function DocumentEditor({
   focused,
   children,

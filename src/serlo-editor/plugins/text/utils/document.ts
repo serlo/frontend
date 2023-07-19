@@ -2,6 +2,7 @@ import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
 
 import { isSelectionAtEnd } from './selection'
 import type { TextEditorState } from '../types'
+import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { StateTypeValueType } from '@/serlo-editor/plugin'
 import {
   focusNext,
@@ -55,7 +56,8 @@ export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
   store: RootStore,
-  id: string
+  id: string,
+  plugins: PluginsContextPlugins
 ) {
   const mayManipulateSiblings = selectMayManipulateSiblings(
     store.getState(),
@@ -70,7 +72,7 @@ export function mergePlugins(
     const focusTree = selectFocusTree(store.getState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
     store.dispatch(focusAction(focusTree))
-    store.dispatch(removePluginChild({ parent: parent.id, child: id }))
+    store.dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))
     return
   }
 
@@ -110,7 +112,11 @@ export function mergePlugins(
 
       // Remove the merged plugin
       store.dispatch(
-        removePluginChild({ parent: parent.id, child: previousSibling.id })
+        removePluginChild({
+          parent: parent.id,
+          child: previousSibling.id,
+          plugins,
+        })
       )
 
       // Set selection to where it was before the merge
@@ -147,7 +153,7 @@ export function mergePlugins(
 
       // Remove the merged plugin
       store.dispatch(
-        removePluginChild({ parent: parent.id, child: nextSibling.id })
+        removePluginChild({ parent: parent.id, child: nextSibling.id, plugins })
       )
 
       // Return the merge value

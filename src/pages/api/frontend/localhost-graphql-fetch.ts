@@ -21,7 +21,7 @@ export default async function handler(
     return client.request(query, variables)
   }
 
-  const data = (await executeQuery()) as unknown
+  const data = await executeQuery()
 
   if (req.headers.referer?.includes('/___graphql')) {
     res.json({ data })
