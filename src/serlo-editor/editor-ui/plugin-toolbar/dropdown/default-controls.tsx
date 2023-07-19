@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 
 import { DropdownButton } from './dropdown-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import {
   insertPluginChildAfter,
   removePluginChild,
@@ -21,6 +22,7 @@ interface DefaultControlsProps {
 export function DefaultControls({ pluginId }: DefaultControlsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
+  const plugins = usePlugins()
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectParent(store.getState(), pluginId)
@@ -34,9 +36,10 @@ export function DefaultControls({ pluginId }: DefaultControlsProps) {
         parent: parent.id,
         sibling: pluginId,
         document: document,
+        plugins,
       })
     )
-  }, [pluginId, dispatch])
+  }, [dispatch, pluginId, plugins])
 
   const handleRemovePlugin = useCallback(() => {
     const parent = selectParent(store.getState(), pluginId)
@@ -49,9 +52,10 @@ export function DefaultControls({ pluginId }: DefaultControlsProps) {
       removePluginChild({
         parent: parent.id,
         child: pluginId,
+        plugins,
       })
     )
-  }, [dispatch, pluginId])
+  }, [dispatch, pluginId, plugins])
 
   return (
     <>
