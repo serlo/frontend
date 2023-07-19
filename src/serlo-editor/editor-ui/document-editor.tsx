@@ -1,12 +1,8 @@
-import { faCog } from '@fortawesome/free-solid-svg-icons'
+import { faClose, faCog } from '@fortawesome/free-solid-svg-icons'
 import { useState, useMemo, useRef } from 'react'
 import styled from 'styled-components'
 
-import { edtrClose, EdtrIcon } from '.'
-import {
-  OverlayButton,
-  PluginToolbarOverlayButton,
-} from '../plugin/plugin-toolbar'
+import { PluginToolbarOverlayButton } from '../plugin/plugin-toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
@@ -45,15 +41,13 @@ export function DocumentEditor({
           <>
             <Header className="mb-4">
               <H4>{editorStrings.edtrIo.extendedSettings}</H4>
-              <BorderlessOverlayButton
-                as={OverlayButton}
-                onClick={() => {
-                  close()
-                }}
-                label={editorStrings.edtrIo.close}
+              <button
+                onClick={() => close()}
+                className="serlo-button-editor-secondary"
               >
-                <EdtrIcon icon={edtrClose} />
-              </BorderlessOverlayButton>
+                <span className="sr-only">{editorStrings.edtrIo.close}</span>
+                <FaIcon icon={faClose} />
+              </button>
             </Header>
             {renderSettings?.(children, { close }) || children}
           </>
@@ -208,10 +202,4 @@ const Header = styled.div({
 
 const H4 = styled.h4({
   marginRight: '25px',
-})
-
-const BorderlessOverlayButton = styled.button({
-  border: 'none !important',
-  padding: '0 !important',
-  minWidth: '0 !important',
 })

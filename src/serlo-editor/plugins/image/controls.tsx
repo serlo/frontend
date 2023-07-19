@@ -4,13 +4,11 @@ import { ImageProps } from '.'
 import { Upload } from './upload'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 import { EditorButton, EditorInput } from '@/serlo-editor/editor-ui'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@/serlo-editor/plugin'
-import {
-  OverlayButton,
-  OverlayInput,
-  OverlayTextarea,
-} from '@/serlo-editor/plugin/plugin-toolbar'
+import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function PrimaryControls({ config, state, autofocusRef }: ImageProps) {
   const imageStrings = useEditorStrings().plugins.image
@@ -75,7 +73,8 @@ export function SettingsControls(props: ImageProps) {
       />
       <div className="mt-1 text-right">
         {isFailed ? (
-          <OverlayButton
+          <button
+            className="serlo-button-editor-secondary serlo-tooltip-trigger"
             onClick={() => {
               if (isTempFile(state.src.value) && state.src.value.failed) {
                 void state.src.upload(
@@ -84,25 +83,33 @@ export function SettingsControls(props: ImageProps) {
                 )
               }
             }}
-            label={imageStrings.retry}
           >
+            <EditorTooltip text={imageStrings.retry} />
             <FaIcon icon={faRedoAlt} />
-          </OverlayButton>
+          </button>
         ) : null}
         <Upload onFile={(file) => state.src.upload(file, config.upload)} />
       </div>
-      <OverlayTextarea
-        label={imageStrings.alt}
-        placeholder={imageStrings.altPlaceholder}
-        value={state.alt.defined ? state.alt.value : ''}
-        onChange={({ target }) => {
-          const { value } = target
-          if (alt.defined) {
-            if (value) alt.set(value)
-            else alt.remove()
-          } else alt.create(value)
-        }}
-      />
+      <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
+        <span className="w-[20%]">{imageStrings.alt}</span>
+        <textarea
+          placeholder={imageStrings.altPlaceholder}
+          value={state.alt.defined ? state.alt.value : ''}
+          onChange={({ target }) => {
+            const { value } = target
+            if (alt.defined) {
+              if (value) alt.set(value)
+              else alt.remove()
+            } else alt.create(value)
+          }}
+          className={tw`
+            serlo-input-font-reset
+            mt-1.5 min-h-[100px] w-3/4 resize-none rounded-md
+            border-2 border-editor-primary-100  bg-editor-primary-100 p-2.5 
+            focus:border-editor-primary-300 focus:outline-none
+          `}
+        />
+      </label>
       <OverlayInput
         label={imageStrings.href}
         placeholder={imageStrings.hrefPlaceholder}
