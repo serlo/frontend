@@ -1,10 +1,11 @@
 import isHotkey from 'is-hotkey'
-import React, { useRef, useMemo, useCallback } from 'react'
-import { Descendant, Node, Transforms, Range } from 'slate'
+import React, { useCallback } from 'react'
+import { Node, Transforms, Range } from 'slate'
 import { Editable, Slate } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { TextLeafRenderer } from './text-leaf-renderer'
+import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
 import { useTextConfig } from '../hooks/use-text-config'
 import {
@@ -37,42 +38,8 @@ export function InlineTextEditor(props: InlineTextEditorProps) {
   const config = useTextConfig(props.config) as InlineTextEditorConfig
   const { editor, textFormattingOptions, isChanged, onChange } = config.controls
 
-  const previousValue = useRef(state.value.value)
-  const previousSelection = useRef(state.value.selection)
-
   const handleRenderElement = useRenderElement(focused)
-
-  useMemo(() => {
-    const { selection, value } = state.value
-    // The selection can only be null when the text plugin is initialized
-    // (In this case an update of the slate editor is not necessary)
-    if (!selection) return
-
-    Transforms.setSelection(editor, selection)
-
-    if (previousValue.current !== value) {
-      previousValue.current = value
-      editor.children = value
-    }
-  }, [editor, state.value])
-
-  const handleEditorChange = useCallback(
-    (newValue: Descendant[]) => {
-      const isAstChange = editor.operations.some(
-        ({ type }) => type !== 'set_selection'
-      )
-      if (isAstChange) {
-        previousValue.current = newValue
-        state.set(
-          { value: newValue, selection: editor.selection },
-          ({ value }) => ({ value, selection: previousSelection.current })
-        )
-      }
-      onChange((count: number) => count + 1)
-      previousSelection.current = editor.selection
-    },
-    [editor.operations, editor.selection, state, onChange]
-  )
+  const { handleEditorChange } = useEditorChange({ editor, state, onChange })
 
   const handleEditableKeyDown = useCallback(
     (event: React.KeyboardEvent) => {

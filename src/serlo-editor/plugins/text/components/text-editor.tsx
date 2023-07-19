@@ -1,11 +1,12 @@
 import isHotkey from 'is-hotkey'
-import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react'
-import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
+import React, { useMemo, useState, useEffect, useCallback } from 'react'
+import { createEditor, Node, Transforms, Range } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
+import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
@@ -72,24 +73,12 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
 
-  const previousValue = useRef(state.value.value)
-  const previousSelection = useRef(state.value.selection)
-
   const handleRenderElement = useRenderElement(focused)
-
-  useMemo(() => {
-    const { selection, value } = state.value
-    // The selection can only be null when the text plugin is initialized
-    // (In this case an update of the slate editor is not necessary)
-    if (!selection) return
-
-    Transforms.setSelection(editor, selection)
-
-    if (previousValue.current !== value) {
-      previousValue.current = value
-      editor.children = value
-    }
-  }, [editor, state.value])
+  const { previousSelection, handleEditorChange } = useEditorChange({
+    editor,
+    state,
+    onChange: setIsSelectionChanged,
+  })
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
@@ -140,24 +129,6 @@ export function TextEditor(props: TextEditorProps) {
       clearTimeout(timeout)
     }
   }, [editor, focused])
-
-  const handleEditorChange = useCallback(
-    (newValue: Descendant[]) => {
-      const isAstChange = editor.operations.some(
-        ({ type }) => type !== 'set_selection'
-      )
-      if (isAstChange) {
-        previousValue.current = newValue
-        state.set(
-          { value: newValue, selection: editor.selection },
-          ({ value }) => ({ value, selection: previousSelection.current })
-        )
-      }
-      setIsSelectionChanged((selection) => selection + 1)
-      previousSelection.current = editor.selection
-    },
-    [editor.operations, editor.selection, state]
-  )
 
   const handleEditableKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -301,6 +272,7 @@ export function TextEditor(props: TextEditorProps) {
       editor,
       id,
       showSuggestions,
+      previousSelection,
       state,
       suggestions,
       textFormattingOptions,
