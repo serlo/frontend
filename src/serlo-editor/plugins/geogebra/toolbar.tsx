@@ -6,8 +6,8 @@ import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const GeogebraToolbar = ({

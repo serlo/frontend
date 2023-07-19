@@ -6,21 +6,21 @@ import { withReact } from 'slate-react'
 import { ImageProps } from '.'
 import { PrimaryControls, SettingsControls } from './controls'
 import { ImageRenderer } from './renderer'
-import { isTempFile, usePendingFileUploader } from '../../plugin'
+import { FaIcon } from '@/components/fa-icon'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
+import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
 import {
   store,
   selectHasFocusedChild,
   selectIsDocumentEmpty,
   selectIsFocused,
   useAppSelector,
-} from '../../store'
-import { HoveringToolbarControls } from '../text/components/hovering-toolbar-controls'
-import { useFormattingOptions } from '../text/hooks/use-formatting-options'
-import { TextEditorFormattingOption } from '../text/types'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
+} from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const formattingOptions = [
@@ -88,7 +88,7 @@ export function ImageEditor(props: ImageProps) {
         pluginId={id}
         pluginType={EditorPluginType.Image}
         contentControls={
-          <HoveringToolbarControls
+          <PluginToolbarTextControls
             controls={toolbarControls}
             editor={captionEditor}
           />

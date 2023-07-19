@@ -17,6 +17,7 @@ interface DefaultControlsProps {
 }
 
 // TODO: Think about renaming to "DefaultPluginControls" to make the scope explicit
+// TODO: Also rename the folder to "plugin-controls" or "plugin-controls-dropdown"
 export function DefaultControls({ pluginId }: DefaultControlsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins

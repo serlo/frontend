@@ -9,8 +9,8 @@ import {
 
 import { MathFormula } from './math-formula'
 import type { MathElement as MathElementType, Paragraph } from '../types'
-import { isElementWithinList } from '../utils/list'
 import { PreferenceContext } from '@/serlo-editor/core'
+import { isElementWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { MathEditor } from '@/serlo-editor/math'
 
 export interface MathElementProps {

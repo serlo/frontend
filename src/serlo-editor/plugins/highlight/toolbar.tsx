@@ -4,9 +4,9 @@ import { HighlightProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const languages = ['text', 'c', 'javascript', 'jsx', 'markup', 'java', 'python']

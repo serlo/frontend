@@ -3,19 +3,19 @@ import { MouseEventHandler } from 'react'
 
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 
-// TODO: Rename to "PluginToolbarButton" and maybe move to core,
-// once the plugin toolbar has been fully implemented
-export function HoveringToolbarButton({
-  active,
-  children,
-  tooltipText,
-  onMouseDown,
-}: {
+interface PluginToolbarTextControlButtonProps {
   active?: boolean
   children: React.ReactNode
   tooltipText?: string
   onMouseDown: MouseEventHandler
-}) {
+}
+
+export function PluginToolbarTextControlButton({
+  active,
+  children,
+  tooltipText,
+  onMouseDown,
+}: PluginToolbarTextControlButtonProps) {
   const textParts = tooltipText?.split('(')
 
   return (

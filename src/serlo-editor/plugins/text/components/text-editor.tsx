@@ -16,12 +16,10 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HoveringToolbarControls } from './hovering-toolbar-controls'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
-import { useFormattingOptions } from '../hooks/use-formatting-options'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
@@ -30,7 +28,6 @@ import {
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
-import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -39,9 +36,12 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
+import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
   focusNext,
@@ -476,7 +476,7 @@ export function TextEditor(props: TextEditorProps) {
           pluginId={id}
           pluginType={EditorPluginType.Text}
           contentControls={
-            <HoveringToolbarControls
+            <PluginToolbarTextControls
               controls={toolbarControls}
               editor={editor}
             />

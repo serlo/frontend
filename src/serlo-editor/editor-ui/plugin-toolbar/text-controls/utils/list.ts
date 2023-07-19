@@ -3,7 +3,7 @@ import { Element, Editor as SlateEditor } from 'slate'
 import { ReactEditor } from 'slate-react'
 
 import { existsInAncestors } from './document'
-import { ListElementType } from '../types'
+import { ListElementType } from '@/serlo-editor/plugins/text/types'
 
 export function isElementWithinList(element: Element, editor: SlateEditor) {
   return existsInAncestors(
