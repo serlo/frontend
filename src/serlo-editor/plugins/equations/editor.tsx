@@ -106,7 +106,7 @@ export function EquationsEditor(props: EquationsProps) {
             store.getState(),
             state.firstExplanation.id
           ) ? null : (
-            <div className="serlo-p mb-0 [&_.settings-and-toolbar-container]:!mb-0">
+            <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
               {state.firstExplanation.render()}
             </div>
           )
@@ -130,7 +130,7 @@ export function EquationsEditor(props: EquationsProps) {
           store.getState(),
           explanation.id
         ) ? null : (
-          <div className="serlo-p mb-0 [&_.settings-and-toolbar-container]:!mb-0">
+          <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
             {explanation.render()}
           </div>
         ),

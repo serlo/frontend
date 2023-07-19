@@ -25,7 +25,7 @@ import {
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin } from '../contexts/plugins-context'
-import { SettingsAndToolbar } from '@/serlo-editor/editor-ui/settings-and-toolbar'
+import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
 const hotKeysKeyMap = {
@@ -240,7 +240,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           data-document
           tabIndex={-1}
         >
-          <SettingsAndToolbar
+          <DocumentEditor
             hasSettings={hasSettings}
             hasToolbar={hasToolbar}
             focused={focused}
@@ -260,7 +260,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               state={state}
               autofocusRef={autofocusRef}
             />
-          </SettingsAndToolbar>
+          </DocumentEditor>
         </div>
       </HotKeys>
     )

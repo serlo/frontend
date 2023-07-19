@@ -1,4 +1,4 @@
-import { SettingsAndToolbarProps } from '../editor-ui/settings-and-toolbar'
+import { DocumentEditorProps } from '../editor-ui/document-editor'
 
 /**
  * Describes the states of a [[Plugin]]. Please note that a state type will be recreated in every render.
@@ -172,6 +172,6 @@ export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
 export interface PluginProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   config?: {}
-  renderSettings?: SettingsAndToolbarProps['renderSettings']
-  renderToolbar?: SettingsAndToolbarProps['renderToolbar']
+  renderSettings?: DocumentEditorProps['renderSettings']
+  renderToolbar?: DocumentEditorProps['renderToolbar']
 }

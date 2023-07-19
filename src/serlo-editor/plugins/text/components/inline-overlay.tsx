@@ -85,7 +85,7 @@ export function InlineOverlay({
       wrapper.current.offsetParent.getBoundingClientRect()
 
     const widthParentRect = wrapper.current
-      .closest('.default-settings-and-toolbar-container')
+      .closest('.default-document-editor-container')
       ?.getBoundingClientRect()
     if (!widthParentRect) return
 
