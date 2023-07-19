@@ -8,20 +8,9 @@ import { TextLeafRenderer } from './text-leaf-renderer'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
 import { useTextConfig } from '../hooks/use-text-config'
-import {
-  InlineTextEditorControls,
-  TextEditorConfig,
-  TextEditorState,
-} from '../types'
+import { InlineTextEditorConfig, TextEditorState } from '../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
-
-export interface InlineTextEditorConfig {
-  placeholder?: TextEditorConfig['placeholder']
-  noLinebreaks?: TextEditorConfig['noLinebreaks']
-  serloLinkSearch: TextEditorConfig['serloLinkSearch']
-  controls: Required<InlineTextEditorControls>
-}
 
 export type InlineTextEditorProps = EditorPluginProps<
   TextEditorState,
