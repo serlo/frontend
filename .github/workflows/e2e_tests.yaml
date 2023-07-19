@@ -20,3 +20,8 @@ jobs:
           check_interval: 20
       - run: yarn
       - run: yarn test
+      - uses: actions/upload-artifact@v3
+        with:
+          name: e2e-screenshots-on-fail
+          path: output/ # or path/to/artifact
+          if-no-files-found: ignore
