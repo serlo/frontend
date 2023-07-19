@@ -24,3 +24,10 @@ export interface TextEditorConfig {
   serloLinkSearch: boolean
   controls?: InlineTextEditorControls
 }
+
+export interface InlineTextEditorConfig {
+  placeholder?: TextEditorConfig['placeholder']
+  noLinebreaks?: TextEditorConfig['noLinebreaks']
+  serloLinkSearch: TextEditorConfig['serloLinkSearch']
+  controls: Required<InlineTextEditorControls>
+}
