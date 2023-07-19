@@ -12,10 +12,10 @@ import { Editable, RenderElementProps, Slate } from 'slate-react'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { TextLeafRenderer } from './text-leaf-renderer'
-import { useFormattingOptions } from '../../../core/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { useTextConfig } from '../hooks/use-text-config'
 import { TextEditorPluginConfig, TextEditorState } from '../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { useFormattingOptions } from '@/serlo-editor/core/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 
 export interface InlineTextEditorConfig {
