@@ -13,7 +13,7 @@ import {
 import {
   getLinkElement,
   isLinkActive,
-} from '@/serlo-editor/core/plugin-toolbar/text-controls/utils/link'
+} from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 
 interface LinkControlsProps {
   isSelectionChanged: number

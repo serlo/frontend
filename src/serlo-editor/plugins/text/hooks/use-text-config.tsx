@@ -1,6 +1,6 @@
 import type { TextEditorConfig, TextEditorPluginConfig } from '../types'
 import { articleColors } from '@/helper/colors'
-import { TextEditorFormattingOption } from '@/serlo-editor/core/plugin-toolbar/text-controls/types'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,

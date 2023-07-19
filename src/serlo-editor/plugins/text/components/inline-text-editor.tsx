@@ -15,7 +15,7 @@ import { TextLeafRenderer } from './text-leaf-renderer'
 import { useTextConfig } from '../hooks/use-text-config'
 import { TextEditorPluginConfig, TextEditorState } from '../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { useFormattingOptions } from '@/serlo-editor/core/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 
 export interface InlineTextEditorConfig {

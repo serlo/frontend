@@ -36,12 +36,12 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { PluginToolbar } from '@/serlo-editor/core/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/core/plugin-toolbar/dropdown/default-controls'
-import { useFormattingOptions } from '@/serlo-editor/core/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { PluginToolbarTextControls } from '@/serlo-editor/core/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
-import { isSelectionWithinList } from '@/serlo-editor/core/plugin-toolbar/text-controls/utils/list'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
+import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
   focusNext,
