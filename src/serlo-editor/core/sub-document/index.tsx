@@ -7,9 +7,13 @@ import { PluginProps } from '../../types/internal__plugin-state'
 import { EditableContext } from '../contexts'
 
 /**
- * Renders a document inside another document
+ * Renders a subset of the whole document tree starting from `props.id` including all children.
  *
- * @param props - The {@link SubDocumentProps}
+ * `props.id` needs to specify an item within the `documents` array in the redux store.
+ *
+ * @param props.id - The id of the item within `documents` that should be rendered
+ * @param props.pluginProps.config - Optional overwrites for plugin configuration
+ * @param props - {@link SubDocumentProps}
  */
 export const SubDocument = (props: SubDocumentProps) => {
   const editable = useContext(EditableContext)
