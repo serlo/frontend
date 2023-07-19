@@ -1,7 +1,7 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
 // eslint-disable-next-line import/no-internal-modules
-import { FetcherResponse } from 'swr/_internal'
+import type { FetcherResponse } from 'swr/_internal'
 
 import { GetCommentsQuery } from './graphql-types/operations'
 import { endpoint } from '@/api/endpoint'

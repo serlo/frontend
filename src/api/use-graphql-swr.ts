@@ -1,6 +1,6 @@
 import useSWR, { SWRConfiguration } from 'swr'
 // eslint-disable-next-line import/no-internal-modules
-import { BareFetcher } from 'swr/_internal'
+import type { BareFetcher } from 'swr/_internal'
 // eslint-disable-next-line import/no-internal-modules
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 
