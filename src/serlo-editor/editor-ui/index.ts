@@ -1,4 +1,3 @@
-export * from './editor-bottom-toolbar'
 export * from './editor-button'
 export * from './editor-input'
 export * from './editor-textarea'
