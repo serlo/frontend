@@ -1,31 +1,6 @@
 import { forwardRef } from 'react'
-import styled from 'styled-components'
 
-import { colors } from '@/helper/colors'
-
-const Label = styled.label<{ width: string | undefined }>(({ width }) => {
-  return {
-    width,
-    color: colors.almostBlack,
-  }
-})
-
-const Input = styled.input<{ textWidth: string | undefined }>(
-  ({ textWidth }) => {
-    return {
-      backgroundColor: colors.editorPrimary100,
-      width: textWidth,
-      borderRadius: '0.8rem',
-      border: `2px solid ${colors.editorPrimary100}`,
-      color: colors.almostBlack,
-      padding: '3px 10px',
-      '&:focus': {
-        outline: 'none',
-        border: `2px solid ${colors.editorPrimary}`,
-      },
-    }
-  }
-)
+import { tw } from '@/helper/tw'
 
 interface EditorInputProps
   extends React.DetailedHTMLProps<
@@ -40,10 +15,18 @@ interface EditorInputProps
 export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
   function EditorInput({ label, ...props }, ref) {
     return (
-      <Label width={props.width}>
+      <label className="text-almost-black" style={{ width: props.width }}>
         {label ?? ''}
-        <Input textWidth={props.inputWidth} {...props} ref={ref} />
-      </Label>
+        <input
+          {...props}
+          ref={ref}
+          className={tw`
+            rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100
+            px-2.5 py-[3px] text-almost-black focus:border-editor-primary focus:outline-none
+          `}
+          style={{ width: props.inputWidth }}
+        />
+      </label>
     )
   }
 )
