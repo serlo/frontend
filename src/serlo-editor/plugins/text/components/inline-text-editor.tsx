@@ -1,11 +1,11 @@
 import isHotkey from 'is-hotkey'
 import React, { useRef, useMemo, useCallback } from 'react'
 import { Descendant, Node, Transforms, Range } from 'slate'
-import { Editable, RenderElementProps, Slate } from 'slate-react'
+import { Editable, Slate } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
-import { MathElement } from './math-element'
 import { TextLeafRenderer } from './text-leaf-renderer'
+import { useRenderElement } from '../hooks/use-render-element'
 import { useTextConfig } from '../hooks/use-text-config'
 import {
   InlineTextEditorControls,
@@ -35,11 +35,12 @@ export function InlineTextEditor(props: InlineTextEditorProps) {
   const pluginStrings = useEditorStrings().plugins
 
   const config = useTextConfig(props.config) as InlineTextEditorConfig
-
   const { editor, textFormattingOptions, isChanged, onChange } = config.controls
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
+
+  const handleRenderElement = useRenderElement(focused)
 
   useMemo(() => {
     const { selection, value } = state.value
@@ -110,38 +111,6 @@ export function InlineTextEditor(props: InlineTextEditorProps) {
       textFormattingOptions.handleListsShortcuts(event, editor)
     },
     [config.noLinebreaks, editor, textFormattingOptions]
-  )
-
-  const handleRenderElement = useCallback(
-    (props: RenderElementProps) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const { element, attributes, children } = props
-
-      if (element.type === 'a') {
-        return (
-          <a
-            href={element.href}
-            className="serlo-link cursor-pointer"
-            {...attributes}
-          >
-            {children}
-          </a>
-        )
-      }
-      if (element.type === 'math') {
-        return (
-          <MathElement
-            element={element}
-            attributes={attributes}
-            focused={focused}
-          >
-            {children}
-          </MathElement>
-        )
-      }
-      return <div {...attributes}>{children}</div>
-    },
-    [focused]
   )
 
   return (

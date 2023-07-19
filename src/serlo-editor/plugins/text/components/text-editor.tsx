@@ -1,28 +1,15 @@
 import isHotkey from 'is-hotkey'
-import React, {
-  createElement,
-  useRef,
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react'
+import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react'
 import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
-import {
-  Editable,
-  ReactEditor,
-  RenderElementProps,
-  Slate,
-  withReact,
-} from 'slate-react'
+import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
-import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
+import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
+import { TextEditorConfig, TextEditorState } from '../types'
 import {
   emptyDocumentFactory,
   mergePlugins,
@@ -87,6 +74,8 @@ export function TextEditor(props: TextEditorProps) {
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
+
+  const handleRenderElement = useRenderElement(focused)
 
   useMemo(() => {
     const { selection, value } = state.value
@@ -407,66 +396,6 @@ export function TextEditor(props: TextEditorProps) {
       }
     },
     [dispatch, editor, id, pluginStrings, plugins]
-  )
-
-  const handleRenderElement = useCallback(
-    (props: RenderElementProps) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const { element, attributes, children } = props
-
-      if (element.type === 'h') {
-        const classNames = ['serlo-h1', 'serlo-h2', 'serlo-h3']
-        return createElement(
-          `h${element.level}`,
-          { ...attributes, className: classNames[element.level - 1] },
-          <>{children}</>
-        )
-      }
-      if (element.type === 'a') {
-        return (
-          <a
-            href={element.href}
-            className="serlo-link cursor-pointer"
-            {...attributes}
-          >
-            {children}
-          </a>
-        )
-      }
-      if (element.type === ListElementType.UNORDERED_LIST) {
-        return (
-          <ul className="serlo-ul" {...attributes}>
-            {children}
-          </ul>
-        )
-      }
-      if (element.type === ListElementType.ORDERED_LIST) {
-        return (
-          <ol className="serlo-ol" {...attributes}>
-            {children}
-          </ol>
-        )
-      }
-      if (element.type === ListElementType.LIST_ITEM) {
-        return <li {...attributes}>{children}</li>
-      }
-      if (element.type === ListElementType.LIST_ITEM_TEXT) {
-        return <div {...attributes}>{children}</div>
-      }
-      if (element.type === 'math') {
-        return (
-          <MathElement
-            element={element}
-            attributes={attributes}
-            focused={focused}
-          >
-            {children}
-          </MathElement>
-        )
-      }
-      return <div {...attributes}>{children}</div>
-    },
-    [focused]
   )
 
   return (
