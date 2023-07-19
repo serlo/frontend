@@ -91,7 +91,7 @@
     @apply mx-side mb-block mt-0 list-none pl-6 [counter-reset:list-counter];
 
     & > li:before {
-      @apply absolute content-['counter(list-counter)'] [counter-increment:list-counter];
+      @apply absolute content-[counter(list-counter)] [counter-increment:list-counter];
       @apply -ml-6 rounded-full text-center font-bold;
       @apply mt-0.5 h-[17px] w-[17px] bg-brand-150 text-xs;
       @apply pt-0.25 leading-tight text-brand-700;

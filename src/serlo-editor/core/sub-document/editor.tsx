@@ -235,6 +235,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         })
       )
     }
+
+    // Take the default state for this plugin (set in serlo-editor/plugins/[plugin_type]/index.tsx) and add the individual plugin state obtained from the redux state.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const state = plugin.state.init(document.state, onChange)
 
