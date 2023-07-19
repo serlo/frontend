@@ -17,7 +17,6 @@ import {
   withReact,
 } from 'slate-react'
 
-import { HoveringToolbar } from './hovering-toolbar'
 import { HoveringToolbarControls } from './hovering-toolbar-controls'
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
@@ -553,19 +552,11 @@ export function TextEditor(props: TextEditorProps) {
           className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
-          <>
-            <LinkControls
-              isSelectionChanged={isSelectionChanged}
-              editor={editor}
-              serloLinkSearch={config.serloLinkSearch}
-            />
-            <HoveringToolbar
-              editor={editor}
-              config={config}
-              controls={toolbarControls}
-              focused={focused}
-            />
-          </>
+          <LinkControls
+            isSelectionChanged={isSelectionChanged}
+            editor={editor}
+            serloLinkSearch={config.serloLinkSearch}
+          />
         )}
       </Slate>
 
