@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import { useState } from 'react'
 import { Editor as SlateEditor } from 'slate'
 
@@ -13,7 +12,7 @@ export interface PluginToolbarTextControlsProps {
 function isNestedControlButton(
   control: ControlButton
 ): control is NestedControlButton {
-  return R.has('children', control)
+  return Object.hasOwn(control, 'children')
 }
 
 export function PluginToolbarTextControls({
