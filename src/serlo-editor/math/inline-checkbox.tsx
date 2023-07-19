@@ -1,74 +1,44 @@
-import styled from 'styled-components'
+import clsx from 'clsx'
 
-const CheckboxInlineLabel = styled.label({
-  color: '#ffffff',
-  verticalAlign: 'middle',
-  margin: '5px 10px',
-  display: 'inline-block',
-})
+import { tw } from '@/helper/tw'
 
-const CheckboxInlineLabelInner = styled.span({
-  marginRight: '10px',
-  verticalAlign: 'middle',
-})
+export interface InlineCheckboxProps {
+  checked?: boolean
+  onChange?: (checked: boolean) => void
+  label?: string
+}
 
-const CheckboxToggleContainer = styled.div<{
-  value?: boolean
-}>(({ value }) => {
-  return {
-    cursor: 'pointer',
-    border: '2px solid #ffffff',
-    borderRadius: '15%',
-    width: '20px',
-    height: '20px',
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    backgroundColor: value ? '#ffffff' : 'rgba(51,51,51,0.95)',
-  }
-})
-
-const CheckboxToggle = styled.div<{ value?: boolean }>(({ value }) => {
-  return {
-    opacity: value ? 1 : 0,
-    content: '',
-    position: 'absolute',
-    fontWeight: 'bold',
-    width: '20px',
-    height: '10px',
-    border: '3px solid rgba(51,51,51,0.95)',
-    borderTop: 'none',
-    borderRight: 'none',
-    borderRadius: '1px',
-
-    transform: 'rotate(-45deg)',
-    zIndex: 1000,
-  }
-})
-
-export function InlineCheckbox({ checked, onChange, label }: CheckboxProps) {
+export function InlineCheckbox({
+  checked,
+  onChange,
+  label,
+}: InlineCheckboxProps) {
   return (
-    <CheckboxInlineLabel>
-      <CheckboxInlineLabelInner>{label}</CheckboxInlineLabelInner>
-      <CheckboxToggleContainer
+    <label className="mx-2.5 my-1.5 inline-block align-middle text-white">
+      <span className="mr-2.5 align-middle">{label}</span>
+      <div
+        className={clsx(
+          'inline-block h-5 w-5 cursor-pointer rounded-[15%] border-2 border-white align-middle',
+          checked ? 'bg-white' : 'bg-almost-black'
+        )}
         onMouseDown={(e) => {
           // avoid loosing focus
           e.stopPropagation()
         }}
         onClick={() => {
-          if (onChange) {
-            onChange(!checked)
-          }
+          if (onChange) onChange(!checked)
         }}
-        value={checked}
       >
-        <CheckboxToggle value={checked} />
-      </CheckboxToggleContainer>
-    </CheckboxInlineLabel>
+        <div
+          className={clsx(
+            tw`
+            bold absolute z-[1000] h-2.5 w-5 -rotate-45 rounded-sm border-2
+            border-r-0 border-t-0 border-almost-black content-[_]
+          `,
+            checked ? 'opacity-100' : 'opacity-0'
+          )}
+        />
+      </div>
+    </label>
   )
-}
-
-export interface CheckboxProps {
-  checked?: boolean
-  onChange?: (checked: boolean) => void
-  label?: string
 }

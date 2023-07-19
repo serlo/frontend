@@ -35,7 +35,7 @@ export function DefaultControls({ pluginId }: DefaultControlsProps) {
       insertPluginChildAfter({
         parent: parent.id,
         sibling: pluginId,
-        document: document,
+        document,
         plugins,
       })
     )

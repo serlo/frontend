@@ -1,7 +1,7 @@
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
-import styled from 'styled-components'
 
 import { Button } from './button'
 import { Dropdown, Option } from './dropdown'
@@ -11,24 +11,6 @@ import { VisualEditor } from './visual-editor'
 import { EditorTextarea, HoverOverlayOld } from '../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-
-const EditorWrapper = styled.div<{ inline?: boolean }>((props) => {
-  return {
-    whiteSpace: undefined,
-    overflowWrap: undefined,
-    ...(props.inline
-      ? {
-          display: 'inline-block',
-        }
-      : {
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          marginTop: '0.9em',
-          marginBottom: '0.9em',
-        }),
-  }
-})
 
 const mathEditorTextareaStyle = {
   color: 'black',
@@ -88,15 +70,6 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
     />
   )
 }
-
-const KeySpan = styled.span({
-  background: '#ddd',
-  padding: '2px 4px',
-  borderRadius: 5,
-  color: '#1d1c1d',
-  textAlign: 'center',
-  minWidth: 20,
-})
 
 export interface MathEditorProps {
   autofocus?: boolean
@@ -161,41 +134,47 @@ export function MathEditor(props: MathEditorProps) {
           <br />
           <br />
           <p>
-            {mathStrings.fraction}: <KeySpan>/</KeySpan>
+            {mathStrings.fraction}: {renderKey('/')}
           </p>
           <p>
-            {mathStrings.superscript}: <KeySpan>↑</KeySpan> {mathStrings.or}{' '}
-            <KeySpan>^</KeySpan>
+            {mathStrings.superscript}: {renderKey('↑')} {mathStrings.or}{' '}
+            {renderKey('^')}
           </p>
           <p>
-            {mathStrings.subscript}: <KeySpan>↓</KeySpan> {mathStrings.or}{' '}
-            <KeySpan>_</KeySpan>
+            {mathStrings.subscript}: {renderKey('↓')} {mathStrings.or}{' '}
+            {renderKey('_')}
           </p>
           <p>
-            π, α, β, γ: <KeySpan>pi</KeySpan>, <KeySpan>alpha</KeySpan>,{' '}
-            <KeySpan>beta</KeySpan>,<KeySpan>gamma</KeySpan>
+            π, α, β, γ: {renderKey('pi')}, {renderKey('alpha')},{' '}
+            {renderKey('beta')},{renderKey('gamma')}
           </p>
           <p>
-            ≤, ≥: <KeySpan>{'<='}</KeySpan>, <KeySpan>{'>='}</KeySpan>
+            ≤, ≥: {renderKey('<=')}, {renderKey('>=')}
           </p>
           <p>
-            {mathStrings.root}: <KeySpan>\sqrt</KeySpan>,{' '}
-            <KeySpan>\nthroot</KeySpan>
+            {mathStrings.root}: {renderKey('\\sqrt')}, {renderKey('\\nthroot')}
           </p>
           <p>
-            {mathStrings.mathSymbols}: <KeySpan>{'\\<NAME>'}</KeySpan>,{' '}
-            {mathStrings.eG} <KeySpan>\neq</KeySpan> (≠), <KeySpan>\pm</KeySpan>{' '}
-            (±), ...
+            {mathStrings.mathSymbols}: {renderKey('\\<NAME>')}, {mathStrings.eG}{' '}
+            {renderKey('\\neq')} (≠), {renderKey('\\pm')} (±), …
           </p>
           <p>
-            {mathStrings.functions}: <KeySpan>sin</KeySpan>,{' '}
-            <KeySpan>cos</KeySpan>, <KeySpan>ln</KeySpan>, ...
+            {mathStrings.functions}: {renderKey('sin')}, {renderKey('cos')},{' '}
+            {renderKey('ln')}, …
           </p>
         </>
       </Modal>
       {renderChildren()}
     </>
   )
+
+  function renderKey(text: string) {
+    return (
+      <span className="min-w-[20px] rounded-md bg-[#ddd] px-1 py-0.5 text-center text-almost-black">
+        {text}
+      </span>
+    )
+  }
 
   function renderChildren() {
     if (readOnly) {
@@ -211,13 +190,17 @@ export function MathEditor(props: MathEditorProps) {
     return (
       <>
         {useVisualEditor ? (
-          <EditorWrapper
+          <div
             onClick={(e) => {
               e.stopPropagation()
             }}
-            inline={props.inline}
             ref={anchorRef}
             {...props.additionalContainerProps}
+            className={clsx(
+              props.inline
+                ? 'inline-block'
+                : 'my-[0.9em] flex flex-col items-center'
+            )}
           >
             <VisualEditor
               {...props}
@@ -225,7 +208,7 @@ export function MathEditor(props: MathEditorProps) {
                 setHasError(true)
               }}
             />
-          </EditorWrapper>
+          </div>
         ) : (
           <MathRenderer {...props} ref={anchorRef} />
         )}

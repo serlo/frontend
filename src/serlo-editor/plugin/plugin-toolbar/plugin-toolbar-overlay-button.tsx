@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import Modal from 'react-modal'
 
-import { StyledIconContainer } from './icon-container'
 import { EditorTooltip } from '../../editor-ui/editor-tooltip'
+import { tw } from '@/helper/tw'
 
 export interface PluginToolbarOverlayButtonProps {
   className?: string
@@ -38,7 +38,14 @@ export function PluginToolbarOverlayButton({
         }}
       >
         <EditorTooltip text={label} className="-ml-4 !pb-2" />
-        <StyledIconContainer aria-hidden="true">{icon}</StyledIconContainer>
+        <div
+          className={tw`
+            flex h-7 w-7 cursor-pointer items-center justify-center rounded-full
+          text-almost-black hover:bg-editor-primary-200 [&>svg]:!m-0 `}
+          aria-hidden="true"
+        >
+          {icon}
+        </div>
       </button>
     </>
   )
