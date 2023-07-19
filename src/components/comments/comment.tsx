@@ -77,12 +77,6 @@ export function Comment({
         scrollIfNeeded(commentRef.current)
       }, 900)
     }
-
-    if (commentRef.current) {
-      commentRef.current.style.backgroundColor = isHighlight
-        ? ''
-        : 'transparent'
-    }
   }, [isHighlight, noScroll])
 
   return (
