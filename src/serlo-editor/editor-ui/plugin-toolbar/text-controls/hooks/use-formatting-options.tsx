@@ -5,13 +5,13 @@ import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
 
 import { ColorTextIcon } from '../color-text-icon'
+import { textColors } from '../const'
 import { TextEditorFormattingOption, ControlButton } from '../types'
 import {
   getColorIndex,
   isAnyColorActive,
   isColorActive,
   resetColor,
-  textColors,
   toggleColor,
 } from '../utils/color'
 import { isLinkActive, toggleLink } from '../utils/link'

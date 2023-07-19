@@ -2,7 +2,7 @@ import CSS from 'csstype'
 import { ReactNode } from 'react-markdown'
 import { RenderLeafProps } from 'slate-react'
 
-import { textColors } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/color'
+import { textColors } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/const'
 
 export interface TextLeafRendererProps {
   children: any
