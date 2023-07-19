@@ -4,7 +4,7 @@ import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
 
-import { ColorTextIcon } from '../icons/color-text-icon'
+import { ColorTextIcon } from '../color-text-icon'
 import { TextEditorFormattingOption, ControlButton } from '../types'
 import {
   getColorIndex,
