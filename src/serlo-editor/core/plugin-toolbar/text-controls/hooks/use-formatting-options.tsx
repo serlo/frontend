@@ -4,7 +4,6 @@ import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
 import { Node, Editor as SlateEditor } from 'slate'
 
-import { ColorIcon } from '../icons/color-icon'
 import { ColorTextIcon } from '../icons/color-text-icon'
 import { TextEditorFormattingOption, ControlButton } from '../types'
 import {
@@ -275,7 +274,9 @@ function createToolbarControls(
           title: textStrings.resetColor,
           isActive: (editor: SlateEditor) => !isAnyColorActive(editor),
           onClick: resetColor,
-          renderIcon: () => <ColorIcon color="black" />,
+          renderIcon: () => (
+            <div className="m-[3px] inline-block h-[19px] w-[19px] rounded-full bg-black align-middle" />
+          ),
         },
         ...textColors.map((color, colorIndex) => ({
           name: TextEditorFormattingOption.colors,
@@ -286,7 +287,12 @@ function createToolbarControls(
             : color.name,
           isActive: isColorActive(colorIndex),
           onClick: toggleColor(colorIndex),
-          renderIcon: () => <ColorIcon color={color.value} />,
+          renderIcon: () => (
+            <div
+              className="m-[3px] inline-block h-[19px] w-[19px] rounded-full align-middle"
+              style={{ backgroundColor: color.value }}
+            />
+          ),
         })),
       ],
     },
