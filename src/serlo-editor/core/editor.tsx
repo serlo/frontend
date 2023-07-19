@@ -73,9 +73,48 @@ export function InnerDocument({
     )
   }, [props.initialState, strippedPlugins, dispatch])
   const editableContextValue = useMemo(() => editable, [editable])
-  useHotkeys('ctrl+z, command+z', () => dispatch(undo()))
-  useHotkeys('ctrl+y, command+y, ctrl+shift+z, command+shift+z', () =>
-    dispatch(redo())
+
+  useHotkeys(
+    ['ctrl+z, command+z'],
+    ({ key }, handler) => {
+      // There is a bug that when ctrl+y keys are pressed, this ctrl+z event
+      // handler gets fired resulting in a undo & redo => no state changes
+      // whatsoever. The bug is described here
+      // https://github.com/JohannesKlauss/react-hotkeys-hook/issues/1040
+      if (handler.shift || key === 'y') {
+        // if shift is clicked, don't do anything as it means that
+        // ctrl|cmd+shift+z was pressed and it should result in a redo as
+        // handled below
+        return
+      }
+
+      void dispatch(undo())
+    },
+    { enableOnContentEditable: true, enableOnFormTags: true }
+  )
+
+  useHotkeys(
+    ['ctrl+y, command+y'],
+    ({ key }) => {
+      // There is a bug that when ctrl+z keys are pressed, this ctrl+y event
+      // handler gets fired resulting in a undo & redo => no state changes
+      // whatsoever. The bug is described here
+      // https://github.com/JohannesKlauss/react-hotkeys-hook/issues/1040
+      if (key === 'z') {
+        return
+      }
+
+      void dispatch(redo())
+    },
+    { enableOnContentEditable: true, enableOnFormTags: true }
+  )
+
+  useHotkeys(
+    'ctrl+shift+z, command+shift+z',
+    () => {
+      void dispatch(redo())
+    },
+    { enableOnContentEditable: true, enableOnFormTags: true }
   )
 
   if (!id) return null

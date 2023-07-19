@@ -1,6 +1,7 @@
 import * as R from 'ramda'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
@@ -8,11 +9,11 @@ import {
   runChangeDocumentSaga,
   focus,
   selectDocument,
-  selectMayManipulateSiblings,
-  selectIsDocumentEmpty,
   selectIsFocused,
   useAppSelector,
   useAppDispatch,
+  undo,
+  redo,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin } from '../contexts/plugins-context'
@@ -24,21 +25,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasToolbar, setHasToolbar] = useState(false)
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
-  const isDocumentEmpty = useAppSelector((state) =>
-    selectIsDocumentEmpty(state, id)
-  )
-  const mayManipulateSiblings = useAppSelector((state) =>
-    selectMayManipulateSiblings(state, id)
-  )
+
   const focused = useAppSelector((state) => selectIsFocused(state, id))
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
-  useEnableEditorHotkeys({
-    dispatch,
-    id,
-    plugin,
-    mayManipulateSiblings,
-    isDocumentEmpty,
-  })
+  useEnableEditorHotkeys(id, plugin)
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(

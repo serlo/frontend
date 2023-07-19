@@ -5,28 +5,25 @@ import {
   focusPrevious,
   selectParent,
   insertPluginChildAfter,
-  redo,
   removePluginChild,
-  undo,
   selectFocusTree,
   useAppDispatch,
   store,
+  selectMayManipulateSiblings,
+  useAppSelector,
+  selectIsDocumentEmpty,
 } from '../../store'
 import { EditorPlugin } from '@/serlo-editor/plugin'
 
-export const useEnableEditorHotkeys = ({
-  dispatch,
-  id,
-  plugin,
-  mayManipulateSiblings,
-  isDocumentEmpty,
-}: {
-  dispatch: ReturnType<typeof useAppDispatch>
-  id: string
-  plugin: EditorPlugin
-  mayManipulateSiblings: boolean
-  isDocumentEmpty: boolean
-}) => {
+export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
+  const dispatch = useAppDispatch()
+  const isDocumentEmpty = useAppSelector((state) =>
+    selectIsDocumentEmpty(state, id)
+  )
+  const mayManipulateSiblings = useAppSelector((state) =>
+    selectMayManipulateSiblings(state, id)
+  )
+
   const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
     if (
       event &&
@@ -41,29 +38,47 @@ export const useEnableEditorHotkeys = ({
     callback()
   }
 
-  useHotkeys('up', (e) =>
-    handleKeyDown(e, () => {
-      dispatch(focusPrevious(selectFocusTree(store.getState())))
-    })
+  useHotkeys(
+    'up',
+    (e) =>
+      handleKeyDown(e, () => {
+        dispatch(focusPrevious(selectFocusTree(store.getState())))
+      }),
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: true,
+    }
   )
 
-  useHotkeys('down', (e) =>
-    handleKeyDown(e, () => {
-      dispatch(focusNext(selectFocusTree(store.getState())))
-    })
+  useHotkeys(
+    'down',
+    (e) =>
+      handleKeyDown(e, () => {
+        dispatch(focusNext(selectFocusTree(store.getState())))
+      }),
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: true,
+    }
   )
 
-  useHotkeys('enter', (e) =>
-    handleKeyDown(e, () => {
-      const parent = selectParent(store.getState(), id)
-      if (!parent) return
-      dispatch(
-        insertPluginChildAfter({
-          parent: parent.id,
-          sibling: id,
-        })
-      )
-    })
+  useHotkeys(
+    'enter',
+    (e) =>
+      handleKeyDown(e, () => {
+        const parent = selectParent(store.getState(), id)
+        if (!parent) return
+        dispatch(
+          insertPluginChildAfter({
+            parent: parent.id,
+            sibling: id,
+          })
+        )
+      }),
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: true,
+    }
   )
 
   useHotkeys('backspace, del', (e) => {
@@ -83,12 +98,9 @@ export const useEnableEditorHotkeys = ({
         }
       })
     }
-  })
-
-  useHotkeys('ctrl+z, command+z', () => void dispatch(undo()))
-
-  useHotkeys(
-    'ctrl+y, command+y, ctrl+shift+z, command+shift+z',
-    () => void dispatch(redo())
-  )
+  }),
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: true,
+    }
 }
