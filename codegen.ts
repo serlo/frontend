@@ -10,7 +10,6 @@ const config: CodegenConfig = {
       plugins: [
         'typescript',
         'typescript-operations',
-        'typescript-graphql-request',
         {
           add: {
             content: [
@@ -19,10 +18,6 @@ const config: CodegenConfig = {
           },
         },
       ],
-      config: {
-        // https://the-guild.dev/graphql/codegen/plugins/typescript/typescript-graphql-request#gqlimport
-        gqlImport: 'graphql-request#gql',
-      },
     },
     './graphql.schema.json': {
       plugins: ['introspection'],
