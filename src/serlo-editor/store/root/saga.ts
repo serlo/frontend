@@ -26,6 +26,7 @@ function* initRootSaga(action: ReturnType<typeof runInitRootSaga>) {
   const [actions]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
     () => {},
+    action.payload.plugins,
     [{ id: 'root', ...(action.payload.initialState || {}) }]
   )
 

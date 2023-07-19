@@ -24,7 +24,7 @@ import {
   store,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
-import { usePlugin } from '../contexts/plugins-context'
+import { usePlugin, usePlugins } from '../contexts/plugins-context'
 import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
@@ -52,6 +52,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     selectMayManipulateSiblings(state, id)
   )
   const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const plugins = usePlugins()
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
 
   const container = useRef<HTMLDivElement>(null)
@@ -107,6 +108,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             insertPluginChildAfter({
               parent: parent.id,
               sibling: id,
+              plugins,
             })
           )
         })
@@ -124,7 +126,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               } else if (e.key === 'Delete') {
                 dispatch(focusNext(selectFocusTree(store.getState())))
               }
-              dispatch(removePluginChild({ parent: parent.id, child: id }))
+              dispatch(
+                removePluginChild({ parent: parent.id, child: id, plugins })
+              )
             }
           })
         }
@@ -150,7 +154,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       e && e.preventDefault()
       next()
     }
-  }, [id, plugin, dispatch, isDocumentEmpty, mayManipulateSiblings])
+  }, [id, plugins, plugin, dispatch, isDocumentEmpty, mayManipulateSiblings])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -193,10 +197,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
 
   return useMemo(() => {
-    if (!document) return null
+    if (!document) {
+      // eslint-disable-next-line no-console
+      console.warn('SubDocumentEditor -> Document does not exist')
+      return null
+    }
     if (!plugin) {
       // eslint-disable-next-line no-console
-      console.warn('Plugin does not exist')
+      console.warn('SubDocumentEditor -> Plugin does not exist')
       return null
     }
 
@@ -218,6 +226,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       dispatch(
         runChangeDocumentSaga({
           id,
+          plugins,
           state: {
             initial,
             executor: additional.executor,
@@ -266,6 +275,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     )
   }, [
     document,
+    plugins,
     plugin,
     pluginProps,
     handleFocus,
