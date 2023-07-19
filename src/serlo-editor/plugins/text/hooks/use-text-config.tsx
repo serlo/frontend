@@ -1,5 +1,4 @@
 import type { TextEditorConfig } from '../types'
-import { articleColors } from '@/helper/colors'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
@@ -11,10 +10,6 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.math,
   TextEditorFormattingOption.richText,
 ]
-
-export const textColors = Object.entries(articleColors).map(([key, value]) => {
-  return { value, name: key.charAt(0).toUpperCase() + key.slice(1) }
-})
 
 export const useTextConfig = (config: TextEditorConfig) => ({
   formattingOptions: config.formattingOptions ?? defaultFormattingOptions,

@@ -1,6 +1,12 @@
 import { Editor as SlateEditor, Transforms } from 'slate'
 
 import { trimSelection } from './selection'
+import { articleColors } from '@/helper/colors'
+
+export const textColors = Object.entries(articleColors).map(([key, value]) => ({
+  value,
+  name: key.charAt(0).toUpperCase() + key.slice(1),
+}))
 
 export const isAnyColorActive = (editor: SlateEditor) =>
   typeof SlateEditor.marks(editor)?.color === 'number'

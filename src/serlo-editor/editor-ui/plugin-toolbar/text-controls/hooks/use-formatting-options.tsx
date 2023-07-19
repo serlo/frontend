@@ -11,6 +11,7 @@ import {
   isAnyColorActive,
   isColorActive,
   resetColor,
+  textColors,
   toggleColor,
 } from '../utils/color'
 import { isLinkActive, toggleLink } from '../utils/link'
@@ -49,7 +50,6 @@ import {
   edtrListNumbered,
   edtrText,
 } from '@/serlo-editor/editor-ui'
-import { textColors } from '@/serlo-editor/plugins/text/hooks/use-text-config'
 import {
   withLinks,
   withLists,
@@ -204,6 +204,7 @@ export const useFormattingOptions = (
   return {
     createTextEditor,
     toolbarControls,
+    textColors,
     handleHotkeys,
     handleMarkdownShortcuts,
     handleListsShortcuts,
