@@ -3637,7 +3637,7 @@ __metadata:
     react-dnd-html5-backend: ^16.0.1
     react-dom: ^18.2.0
     react-hotkeys: ^2.0.0
-    react-is: ^17.0.2
+    react-is: ^18.2.0
     react-lazyload: ^3.2.0
     react-markdown: ^6.0.3
     react-mathquill: Entkenntnis/tmp-react-mathquill
@@ -11808,7 +11808,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^18.0.0":
+"react-is@npm:^18.0.0, react-is@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
