@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer/renderer'
+import { ScMcExerciseRenderer } from './renderer'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
   store,
