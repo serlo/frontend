@@ -10,27 +10,17 @@ export type TextEditorState = SerializedScalarStateType<
   { value: Descendant[]; selection: Range | null }
 >
 
+export interface InlineTextEditorControls {
+  editor: Editor
+  textFormattingOptions: ReturnType<typeof useFormattingOptions>
+  isChanged: number
+  onChange: Dispatch<SetStateAction<number>>
+}
+
 export interface TextEditorConfig {
-  placeholder?: TextEditorPluginConfig['placeholder']
+  placeholder?: string
   formattingOptions?: TextEditorFormattingOption[]
   noLinebreaks?: boolean
   serloLinkSearch: boolean
-  controls?: {
-    editor: Editor
-    textFormattingOptions: ReturnType<typeof useFormattingOptions>
-    isChanged: number
-    onChange: Dispatch<SetStateAction<number>>
-  }
-}
-export interface TextEditorPluginConfig {
-  placeholder?: string
-  formattingOptions: TextEditorFormattingOption[]
-  noLinebreaks?: boolean
-  serloLinkSearch: boolean
-  controls?: {
-    editor: Editor
-    textFormattingOptions: ReturnType<typeof useFormattingOptions>
-    isChanged: number
-    onChange: Dispatch<SetStateAction<number>>
-  }
+  controls?: InlineTextEditorControls
 }

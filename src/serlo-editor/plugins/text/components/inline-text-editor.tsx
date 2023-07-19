@@ -1,33 +1,25 @@
 import isHotkey from 'is-hotkey'
-import React, {
-  useRef,
-  useMemo,
-  useCallback,
-  Dispatch,
-  SetStateAction,
-} from 'react'
-import { Descendant, Node, Transforms, Range, Editor } from 'slate'
+import React, { useRef, useMemo, useCallback } from 'react'
+import { Descendant, Node, Transforms, Range } from 'slate'
 import { Editable, RenderElementProps, Slate } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { MathElement } from './math-element'
 import { TextLeafRenderer } from './text-leaf-renderer'
 import { useTextConfig } from '../hooks/use-text-config'
-import { TextEditorPluginConfig, TextEditorState } from '../types'
+import {
+  InlineTextEditorControls,
+  TextEditorConfig,
+  TextEditorState,
+} from '../types'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 
 export interface InlineTextEditorConfig {
-  placeholder?: TextEditorPluginConfig['placeholder']
-  noLinebreaks?: boolean
-  serloLinkSearch: boolean
-  controls: {
-    editor: Editor
-    textFormattingOptions: ReturnType<typeof useFormattingOptions>
-    isChanged: number
-    onChange: Dispatch<SetStateAction<number>>
-  }
+  placeholder?: TextEditorConfig['placeholder']
+  noLinebreaks?: TextEditorConfig['noLinebreaks']
+  serloLinkSearch: TextEditorConfig['serloLinkSearch']
+  controls: Required<InlineTextEditorControls>
 }
 
 export type InlineTextEditorProps = EditorPluginProps<

@@ -13,7 +13,6 @@ import type {
   Link,
   MathElement,
   TextEditorConfig,
-  TextEditorPluginConfig,
   TextEditorState,
 } from './types'
 import { emptyDocumentFactory } from './utils/document'
@@ -84,7 +83,6 @@ export type {
   MathElement,
   CustomText,
   TextEditorConfig,
-  TextEditorPluginConfig,
   TextEditorState,
   TextEditorProps,
 }

@@ -1,4 +1,4 @@
-import type { TextEditorConfig, TextEditorPluginConfig } from '../types'
+import type { TextEditorConfig } from '../types'
 import { articleColors } from '@/helper/colors'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 
@@ -16,16 +16,10 @@ export const textColors = Object.entries(articleColors).map(([key, value]) => {
   return { value, name: key.charAt(0).toUpperCase() + key.slice(1) }
 })
 
-export function useTextConfig(
-  config: TextEditorConfig
-): TextEditorPluginConfig {
-  const { placeholder, noLinebreaks, controls } = config
-
-  return {
-    formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
-    placeholder,
-    noLinebreaks,
-    serloLinkSearch: config.serloLinkSearch ?? true,
-    controls,
-  }
-}
+export const useTextConfig = (config: TextEditorConfig) => ({
+  formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
+  placeholder: config.placeholder ?? undefined,
+  noLinebreaks: config.noLinebreaks ?? false,
+  serloLinkSearch: config.serloLinkSearch ?? true,
+  controls: config.controls ?? undefined,
+})
