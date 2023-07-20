@@ -3659,7 +3659,7 @@ __metadata:
     tailwindcss-animate: ^1.0.6
     timeago-react: ^3.0.6
     timeago.js: ^4.0.2
-    tiny-warning: ^1.0.0
+    tiny-warning: ^1.0.3
     tippy.js: ^6.3.7
     ts-debounce: ^4.0.0
     ts-unused-exports: ^9.0.5
@@ -13475,7 +13475,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"tiny-warning@npm:^1.0.0, tiny-warning@npm:^1.0.3":
+"tiny-warning@npm:^1.0.3":
   version: 1.0.3
   resolution: "tiny-warning@npm:1.0.3"
   checksum: da62c4acac565902f0624b123eed6dd3509bc9a8d30c06e017104bedcf5d35810da8ff72864400ad19c5c7806fc0a8323c68baf3e326af7cb7d969f846100d71
