@@ -5,38 +5,40 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export interface Scalars {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  DateTime: string;
-  JSON: any;
-  JSONObject: any;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: string; output: string; }
+  JSON: { input: any; output: any; }
+  JSONObject: { input: any; output: any; }
 }
 
 export interface AbstractEntity {
-  alias: Scalars['String'];
-  date: Scalars['DateTime'];
+  alias: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   subject?: Maybe<Subject>;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractEntityEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface AbstractEntityConnection {
@@ -44,79 +46,79 @@ export interface AbstractEntityConnection {
   edges: Array<AbstractEntityCursor>;
   nodes: Array<AbstractEntity>;
   pageInfo: HasNextPageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface AbstractEntityCursor {
   __typename?: 'AbstractEntityCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: AbstractEntity;
 }
 
 export interface AbstractEntityRevision {
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractEntityRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface AbstractExercise {
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<AbstractExerciseRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   solution?: Maybe<Solution>;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractExerciseEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface AbstractExerciseRevision {
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractExerciseRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface AbstractNavigationChild {
@@ -125,10 +127,10 @@ export interface AbstractNavigationChild {
 
 export interface AbstractNotificationEvent {
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
 }
 
 export interface AbstractNotificationEventConnection {
@@ -140,120 +142,120 @@ export interface AbstractNotificationEventConnection {
 
 export interface AbstractNotificationEventEdge {
   __typename?: 'AbstractNotificationEventEdge';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: AbstractNotificationEvent;
 }
 
 export interface AbstractRepository {
-  alias: Scalars['String'];
-  date: Scalars['DateTime'];
+  alias: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractRepositoryEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface AbstractRepositoryThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface AbstractRevision {
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface AbstractRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface AbstractTaxonomyTermChild {
-  alias: Scalars['String'];
-  date: Scalars['DateTime'];
+  alias: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   taxonomyTerms: TaxonomyTermConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractTaxonomyTermChildEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface AbstractTaxonomyTermChildTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface AbstractUuid {
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  id: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AbstractUuidEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface AbstractUuidConnection {
@@ -261,25 +263,25 @@ export interface AbstractUuidConnection {
   edges: Array<AbstractUuidCursor>;
   nodes: Array<AbstractUuid>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface AbstractUuidCursor {
   __typename?: 'AbstractUuidCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: AbstractUuid;
 }
 
 export interface AddRevisionResponse {
   __typename?: 'AddRevisionResponse';
   query: Query;
-  revisionId?: Maybe<Scalars['Int']>;
-  success: Scalars['Boolean'];
+  revisionId?: Maybe<Scalars['Int']['output']>;
+  success: Scalars['Boolean']['output'];
 }
 
 export interface AliasInput {
   instance: Instance;
-  path: Scalars['String'];
+  path: Scalars['String']['input'];
 }
 
 export interface AllThreadsConnection {
@@ -287,99 +289,99 @@ export interface AllThreadsConnection {
   edges: Array<ThreadsCursor>;
   nodes: Array<Thread>;
   pageInfo: HasNextPageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface Applet extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Applet';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<AppletRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: AppletRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface AppletEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface AppletRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface AppletTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface AppletThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface AppletRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'AppletRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  metaTitle: Scalars['String'];
+  id: Scalars['Int']['output'];
+  metaDescription: Scalars['String']['output'];
+  metaTitle: Scalars['String']['output'];
   repository: Applet;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
-  url: Scalars['String'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
+  url: Scalars['String']['output'];
 }
 
 
 export interface AppletRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface AppletRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface AppletRevisionConnection {
@@ -387,104 +389,104 @@ export interface AppletRevisionConnection {
   edges: Array<AppletRevisionCursor>;
   nodes: Array<AppletRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface AppletRevisionCursor {
   __typename?: 'AppletRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: AppletRevision;
 }
 
 export interface Article extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Article';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<ArticleRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: ArticleRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ArticleEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ArticleRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface ArticleTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ArticleThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ArticleRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'ArticleRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  metaTitle: Scalars['String'];
+  id: Scalars['Int']['output'];
+  metaDescription: Scalars['String']['output'];
+  metaTitle: Scalars['String']['output'];
   repository: Article;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ArticleRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ArticleRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ArticleRevisionConnection {
@@ -492,58 +494,58 @@ export interface ArticleRevisionConnection {
   edges: Array<ArticleRevisionCursor>;
   nodes: Array<ArticleRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface ArticleRevisionCursor {
   __typename?: 'ArticleRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: ArticleRevision;
 }
 
 export interface CacheRemoveInput {
-  keys: Array<Scalars['String']>;
+  keys: Array<Scalars['String']['input']>;
 }
 
 export interface CacheRemoveResponse {
   __typename?: 'CacheRemoveResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface CacheSetInput {
-  key: Scalars['String'];
-  value: Scalars['JSON'];
+  key: Scalars['String']['input'];
+  value: Scalars['JSON']['input'];
 }
 
 export interface CacheSetResponse {
   __typename?: 'CacheSetResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface CacheUpdateInput {
-  keys: Array<Scalars['String']>;
+  keys: Array<Scalars['String']['input']>;
 }
 
 export interface CacheUpdateResponse {
   __typename?: 'CacheUpdateResponse';
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface CheckoutRevisionInput {
-  reason: Scalars['String'];
-  revisionId: Scalars['Int'];
+  reason: Scalars['String']['input'];
+  revisionId: Scalars['Int']['input'];
 }
 
 export interface CheckoutRevisionNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CheckoutRevisionNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
-  reason: Scalars['String'];
+  objectId: Scalars['Int']['output'];
+  reason: Scalars['String']['output'];
   repository: AbstractRepository;
   revision: AbstractRevision;
 }
@@ -551,31 +553,31 @@ export interface CheckoutRevisionNotificationEvent extends AbstractNotificationE
 export interface CheckoutRevisionResponse {
   __typename?: 'CheckoutRevisionResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface Comment extends AbstractUuid {
   __typename?: 'Comment';
-  alias: Scalars['String'];
-  archived: Scalars['Boolean'];
+  alias: Scalars['String']['output'];
+  archived: Scalars['Boolean']['output'];
   author: User;
-  content: Scalars['String'];
-  createdAt: Scalars['DateTime'];
+  content: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   legacyObject: AbstractUuid;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface CommentEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface CommentConnection {
@@ -583,22 +585,22 @@ export interface CommentConnection {
   edges: Array<CommentEdge>;
   nodes: Array<Comment>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface CommentEdge {
   __typename?: 'CommentEdge';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: Comment;
 }
 
 export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Course';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<CourseRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   pages: Array<CoursePage>;
@@ -606,132 +608,132 @@ export interface Course extends AbstractEntity, AbstractRepository, AbstractTaxo
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface CourseEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface CoursePagesArgs {
-  hasCurrentRevision?: InputMaybe<Scalars['Boolean']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  hasCurrentRevision?: InputMaybe<Scalars['Boolean']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface CourseRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface CourseTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface CourseThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface CoursePage extends AbstractEntity, AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'CoursePage';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   course: Course;
   currentRevision?: Maybe<CoursePageRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: CoursePageRevisionConnection;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface CoursePageEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface CoursePageRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface CoursePageThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface CoursePageRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'CoursePageRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: CoursePage;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface CoursePageRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface CoursePageRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface CoursePageRevisionConnection {
@@ -739,49 +741,49 @@ export interface CoursePageRevisionConnection {
   edges: Array<CoursePageRevisionCursor>;
   nodes: Array<CoursePageRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface CoursePageRevisionCursor {
   __typename?: 'CoursePageRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: CoursePageRevision;
 }
 
 export interface CourseRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'CourseRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  metaDescription: Scalars['String'];
+  id: Scalars['Int']['output'];
+  metaDescription: Scalars['String']['output'];
   repository: Course;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface CourseRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface CourseRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface CourseRevisionConnection {
@@ -789,12 +791,12 @@ export interface CourseRevisionConnection {
   edges: Array<CourseRevisionCursor>;
   nodes: Array<CourseRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface CourseRevisionCursor {
   __typename?: 'CourseRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: CourseRevision;
 }
 
@@ -802,10 +804,10 @@ export interface CreateCommentNotificationEvent extends AbstractNotificationEven
   __typename?: 'CreateCommentNotificationEvent';
   actor: User;
   comment: Comment;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   thread: Thread;
 }
 
@@ -813,72 +815,72 @@ export interface CreateEntityLinkNotificationEvent extends AbstractNotificationE
   __typename?: 'CreateEntityLinkNotificationEvent';
   actor: User;
   child: AbstractEntity;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   parent: AbstractEntity;
 }
 
 export interface CreateEntityNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CreateEntityNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   entity: AbstractEntity;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
 }
 
 export interface CreateEntityRevisionNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CreateEntityRevisionNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   entity: AbstractRepository;
   entityRevision: AbstractRevision;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
 }
 
 export interface CreatePageInput {
-  content: Scalars['String'];
-  discussionsEnabled: Scalars['Boolean'];
-  forumId?: InputMaybe<Scalars['Int']>;
+  content: Scalars['String']['input'];
+  discussionsEnabled: Scalars['Boolean']['input'];
+  forumId?: InputMaybe<Scalars['Int']['input']>;
   instance: Instance;
-  licenseId: Scalars['Int'];
-  title: Scalars['String'];
+  licenseId: Scalars['Int']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface CreateTaxonomyLinkNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CreateTaxonomyLinkNotificationEvent';
   actor: User;
   child: AbstractUuid;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   parent: TaxonomyTerm;
 }
 
 export interface CreateTaxonomyTermNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CreateTaxonomyTermNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   taxonomyTerm: TaxonomyTerm;
 }
 
 export interface CreateThreadNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'CreateThreadNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   object: AbstractUuid;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   thread: Thread;
 }
 
@@ -887,32 +889,32 @@ export interface DeletedEntitiesConnection {
   edges: Array<DeletedEntityCursor>;
   nodes: Array<DeletedEntity>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface DeletedEntity {
   __typename?: 'DeletedEntity';
-  dateOfDeletion?: Maybe<Scalars['String']>;
+  dateOfDeletion?: Maybe<Scalars['String']['output']>;
   entity?: Maybe<AbstractEntity>;
 }
 
 export interface DeletedEntityCursor {
   __typename?: 'DeletedEntityCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: DeletedEntity;
 }
 
 export interface EntityMetadataConnection {
   __typename?: 'EntityMetadataConnection';
   edges: Array<EntityMetadataCursor>;
-  nodes: Array<Scalars['JSONObject']>;
+  nodes: Array<Scalars['JSONObject']['output']>;
   pageInfo: HasNextPageInfo;
 }
 
 export interface EntityMetadataCursor {
   __typename?: 'EntityMetadataCursor';
-  cursor: Scalars['String'];
-  node: Scalars['JSONObject'];
+  cursor: Scalars['String']['output'];
+  node: Scalars['JSONObject']['output'];
 }
 
 export interface EntityMutation {
@@ -1010,122 +1012,122 @@ export interface EntityQuery {
 
 
 export interface EntityQueryDeletedEntitiesArgs {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
 }
 
 export interface EntitySortInput {
-  childrenIds: Array<Scalars['Int']>;
-  entityId: Scalars['Int'];
+  childrenIds: Array<Scalars['Int']['input']>;
+  entityId: Scalars['Int']['input'];
 }
 
 export interface EntitySortResponse {
   __typename?: 'EntitySortResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface EntityUpdateLicenseInput {
-  entityId: Scalars['Int'];
-  licenseId: Scalars['Int'];
+  entityId: Scalars['Int']['input'];
+  licenseId: Scalars['Int']['input'];
 }
 
 export interface EntityUpdateLicenseResponse {
   __typename?: 'EntityUpdateLicenseResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface Event extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Event';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<EventRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: EventRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface EventEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface EventRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface EventTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface EventThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface EventRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'EventRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  metaDescription: Scalars['String'];
-  metaTitle: Scalars['String'];
+  id: Scalars['Int']['output'];
+  metaDescription: Scalars['String']['output'];
+  metaTitle: Scalars['String']['output'];
   repository: Event;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface EventRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface EventRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface EventRevisionConnection {
@@ -1133,22 +1135,22 @@ export interface EventRevisionConnection {
   edges: Array<EventRevisionCursor>;
   nodes: Array<EventRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface EventRevisionCursor {
   __typename?: 'EventRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: EventRevision;
 }
 
 export interface Exercise extends AbstractEntity, AbstractExercise, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Exercise';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<ExerciseRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: ExerciseRevisionConnection;
@@ -1156,136 +1158,136 @@ export interface Exercise extends AbstractEntity, AbstractExercise, AbstractRepo
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ExerciseEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ExerciseRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface ExerciseTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ExerciseThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ExerciseGroup extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'ExerciseGroup';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<ExerciseGroupRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
   exercises: Array<GroupedExercise>;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: ExerciseGroupRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ExerciseGroupEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ExerciseGroupRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface ExerciseGroupTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ExerciseGroupThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ExerciseGroupRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'ExerciseGroupRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  cohesive: Scalars['Boolean'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  cohesive: Scalars['Boolean']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: ExerciseGroup;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ExerciseGroupRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ExerciseGroupRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ExerciseGroupRevisionConnection {
@@ -1293,48 +1295,48 @@ export interface ExerciseGroupRevisionConnection {
   edges: Array<ExerciseGroupRevisionCursor>;
   nodes: Array<ExerciseGroupRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface ExerciseGroupRevisionCursor {
   __typename?: 'ExerciseGroupRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: ExerciseGroupRevision;
 }
 
 export interface ExerciseRevision extends AbstractEntityRevision, AbstractExerciseRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'ExerciseRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: Exercise;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ExerciseRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface ExerciseRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ExerciseRevisionConnection {
@@ -1342,95 +1344,95 @@ export interface ExerciseRevisionConnection {
   edges: Array<ExerciseRevisionCursor>;
   nodes: Array<ExerciseRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface ExerciseRevisionCursor {
   __typename?: 'ExerciseRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: ExerciseRevision;
 }
 
 export interface GroupedExercise extends AbstractEntity, AbstractExercise, AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'GroupedExercise';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<GroupedExerciseRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
   exerciseGroup: ExerciseGroup;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: GroupedExerciseRevisionConnection;
   solution?: Maybe<Solution>;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface GroupedExerciseEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface GroupedExerciseRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface GroupedExerciseThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface GroupedExerciseRevision extends AbstractEntityRevision, AbstractExerciseRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'GroupedExerciseRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: GroupedExercise;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface GroupedExerciseRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface GroupedExerciseRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface GroupedExerciseRevisionConnection {
@@ -1438,19 +1440,19 @@ export interface GroupedExerciseRevisionConnection {
   edges: Array<GroupedExerciseRevisionCursor>;
   nodes: Array<GroupedExerciseRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface GroupedExerciseRevisionCursor {
   __typename?: 'GroupedExerciseRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: GroupedExerciseRevision;
 }
 
 export interface HasNextPageInfo {
   __typename?: 'HasNextPageInfo';
-  endCursor?: Maybe<Scalars['String']>;
-  hasNextPage: Scalars['Boolean'];
+  endCursor?: Maybe<Scalars['String']['output']>;
+  hasNextPage: Scalars['Boolean']['output'];
 }
 
 export enum Instance {
@@ -1468,14 +1470,14 @@ export interface InstanceAware {
 
 export interface License {
   __typename?: 'License';
-  agreement: Scalars['String'];
-  content: Scalars['String'];
-  default: Scalars['Boolean'];
-  id: Scalars['Int'];
+  agreement: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  default: Scalars['Boolean']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  shortTitle: Scalars['String'];
-  title: Scalars['String'];
-  url: Scalars['String'];
+  shortTitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 }
 
 export interface LicenseQuery {
@@ -1492,7 +1494,7 @@ export interface LicenseQueryDefaultLicenseArgs {
 
 
 export interface LicenseQueryLicenseArgs {
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }
 
 
@@ -1520,33 +1522,33 @@ export enum MediaType {
 
 export interface MediaUpload {
   __typename?: 'MediaUpload';
-  uploadUrl: Scalars['String'];
-  urlAfterUpload: Scalars['String'];
+  uploadUrl: Scalars['String']['output'];
+  urlAfterUpload: Scalars['String']['output'];
 }
 
 export interface MetadataQuery {
   __typename?: 'MetadataQuery';
   /** @deprecated Please use the `resources` field instead. This property will be deleted. */
   entities: EntityMetadataConnection;
-  publisher: Scalars['JSONObject'];
+  publisher: Scalars['JSONObject']['output'];
   resources: EntityMetadataConnection;
-  version: Scalars['String'];
+  version: Scalars['String']['output'];
 }
 
 
 export interface MetadataQueryEntitiesArgs {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  modifiedAfter?: InputMaybe<Scalars['String']>;
+  modifiedAfter?: InputMaybe<Scalars['String']['input']>;
 }
 
 
 export interface MetadataQueryResourcesArgs {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  modifiedAfter?: InputMaybe<Scalars['String']>;
+  modifiedAfter?: InputMaybe<Scalars['String']['input']>;
 }
 
 export interface Mutation {
@@ -1570,17 +1572,17 @@ export interface Navigation {
 
 
 export interface NavigationPathArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface NavigationNode {
   __typename?: 'NavigationNode';
-  id?: Maybe<Scalars['Int']>;
-  label: Scalars['String'];
-  url?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['Int']['output']>;
+  label: Scalars['String']['output'];
+  url?: Maybe<Scalars['String']['output']>;
 }
 
 export interface NavigationNodeConnection {
@@ -1588,22 +1590,22 @@ export interface NavigationNodeConnection {
   edges?: Maybe<Array<Maybe<NavigationNodeEdge>>>;
   nodes: Array<NavigationNode>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface NavigationNodeEdge {
   __typename?: 'NavigationNodeEdge';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: NavigationNode;
 }
 
 export interface Notification {
   __typename?: 'Notification';
-  email: Scalars['Boolean'];
-  emailSent: Scalars['Boolean'];
+  email: Scalars['Boolean']['output'];
+  emailSent: Scalars['Boolean']['output'];
   event: AbstractNotificationEvent;
-  id: Scalars['Int'];
-  unread: Scalars['Boolean'];
+  id: Scalars['Int']['output'];
+  unread: Scalars['Boolean']['output'];
 }
 
 export interface NotificationConnection {
@@ -1611,12 +1613,12 @@ export interface NotificationConnection {
   edges: Array<NotificationEdge>;
   nodes: Array<Notification>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface NotificationEdge {
   __typename?: 'NotificationEdge';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: Notification;
 }
 
@@ -1631,25 +1633,25 @@ export interface NotificationMutationSetStateArgs {
 }
 
 export interface NotificationSetStateInput {
-  id: Array<Scalars['Int']>;
-  unread: Scalars['Boolean'];
+  id: Array<Scalars['Int']['input']>;
+  unread: Scalars['Boolean']['input'];
 }
 
 export interface NotificationSetStateResponse {
   __typename?: 'NotificationSetStateResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface OauthAcceptInput {
-  challenge: Scalars['String'];
-  session: Scalars['JSON'];
+  challenge: Scalars['String']['input'];
+  session: Scalars['JSON']['input'];
 }
 
 export interface OauthAcceptResponse {
   __typename?: 'OauthAcceptResponse';
-  redirectUri: Scalars['String'];
-  success: Scalars['Boolean'];
+  redirectUri: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface OauthMutation {
@@ -1671,73 +1673,73 @@ export interface OauthMutationAcceptLoginArgs {
 
 
 export interface OauthMutationAcceptLogoutArgs {
-  challenge: Scalars['String'];
+  challenge: Scalars['String']['input'];
 }
 
 export interface Page extends AbstractNavigationChild, AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Page';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<PageRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   navigation?: Maybe<Navigation>;
   revisions: PageRevisionConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface PageEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface PageRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface PageThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface PageAddRevisionInput {
-  content: Scalars['String'];
-  pageId: Scalars['Int'];
-  title: Scalars['String'];
+  content: Scalars['String']['input'];
+  pageId: Scalars['Int']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface PageCreateResponse {
   __typename?: 'PageCreateResponse';
   query: Query;
   record?: Maybe<Page>;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface PageInfo {
   __typename?: 'PageInfo';
-  endCursor?: Maybe<Scalars['String']>;
-  hasNextPage: Scalars['Boolean'];
-  hasPreviousPage: Scalars['Boolean'];
-  startCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
+  hasNextPage: Scalars['Boolean']['output'];
+  hasPreviousPage: Scalars['Boolean']['output'];
+  startCursor?: Maybe<Scalars['String']['output']>;
 }
 
 export interface PageMutation {
@@ -1780,36 +1782,36 @@ export interface PageQueryPagesArgs {
 
 export interface PageRevision extends AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'PageRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: Page;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface PageRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface PageRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface PageRevisionConnection {
@@ -1817,12 +1819,12 @@ export interface PageRevisionConnection {
   edges: Array<PageRevisionCursor>;
   nodes: Array<PageRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface PageRevisionCursor {
   __typename?: 'PageRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: PageRevision;
 }
 
@@ -1831,7 +1833,7 @@ export interface Query {
   activeAuthors: UserConnection;
   activeDonors: UserConnection;
   activeReviewers: UserConnection;
-  authorization: Scalars['JSON'];
+  authorization: Scalars['JSON']['output'];
   entity?: Maybe<EntityQuery>;
   events: AbstractNotificationEventConnection;
   license: LicenseQuery;
@@ -1845,80 +1847,80 @@ export interface Query {
   thread: ThreadQuery;
   user: UserQuery;
   uuid?: Maybe<AbstractUuid>;
-  version: Scalars['String'];
+  version: Scalars['String']['output'];
 }
 
 
 export interface QueryActiveAuthorsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface QueryActiveDonorsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface QueryActiveReviewersArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface QueryEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
-  objectId?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  objectId?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface QueryNotificationEventArgs {
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }
 
 
 export interface QueryNotificationsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  email?: InputMaybe<Scalars['Boolean']>;
-  emailSent?: InputMaybe<Scalars['Boolean']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unread?: InputMaybe<Scalars['Boolean']>;
-  userId?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  email?: InputMaybe<Scalars['Boolean']['input']>;
+  emailSent?: InputMaybe<Scalars['Boolean']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unread?: InputMaybe<Scalars['Boolean']['input']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface QueryUuidArgs {
   alias?: InputMaybe<AliasInput>;
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface RejectRevisionInput {
-  reason: Scalars['String'];
-  revisionId: Scalars['Int'];
+  reason: Scalars['String']['input'];
+  revisionId: Scalars['Int']['input'];
 }
 
 export interface RejectRevisionNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'RejectRevisionNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
-  reason: Scalars['String'];
+  objectId: Scalars['Int']['output'];
+  reason: Scalars['String']['output'];
   repository: AbstractRepository;
   revision: AbstractRevision;
 }
@@ -1926,17 +1928,17 @@ export interface RejectRevisionNotificationEvent extends AbstractNotificationEve
 export interface RejectRevisionResponse {
   __typename?: 'RejectRevisionResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface RemoveEntityLinkNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'RemoveEntityLinkNotificationEvent';
   actor: User;
   child: AbstractEntity;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   parent: AbstractEntity;
 }
 
@@ -1944,10 +1946,10 @@ export interface RemoveTaxonomyLinkNotificationEvent extends AbstractNotificatio
   __typename?: 'RemoveTaxonomyLinkNotificationEvent';
   actor: User;
   child: AbstractUuid;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   parent: TaxonomyTerm;
 }
 
@@ -1975,7 +1977,7 @@ export enum Scope {
 export interface ScopedRole {
   __typename?: 'ScopedRole';
   role: Role;
-  scope?: Maybe<Scalars['String']>;
+  scope?: Maybe<Scalars['String']['output']>;
 }
 
 export interface ScopedRoleConnection {
@@ -1983,113 +1985,113 @@ export interface ScopedRoleConnection {
   edges: Array<ScopedRoleCursor>;
   nodes: Array<ScopedRole>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface ScopedRoleCursor {
   __typename?: 'ScopedRoleCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: ScopedRole;
 }
 
 export interface SetAppletInput {
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  metaDescription?: InputMaybe<Scalars['String']>;
-  metaTitle?: InputMaybe<Scalars['String']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
-  title: Scalars['String'];
-  url: Scalars['String'];
+  changes: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
+  url: Scalars['String']['input'];
 }
 
 export interface SetArticleInput {
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  metaDescription?: InputMaybe<Scalars['String']>;
-  metaTitle?: InputMaybe<Scalars['String']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
-  title: Scalars['String'];
+  changes: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface SetCourseInput {
-  changes: Scalars['String'];
-  content?: InputMaybe<Scalars['String']>;
-  entityId?: InputMaybe<Scalars['Int']>;
-  metaDescription?: InputMaybe<Scalars['String']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
-  title: Scalars['String'];
+  changes: Scalars['String']['input'];
+  content?: InputMaybe<Scalars['String']['input']>;
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface SetCoursePageInput {
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
-  title: Scalars['String'];
+  changes: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface SetEntityResponse {
   __typename?: 'SetEntityResponse';
   query: Query;
   record?: Maybe<AbstractEntity>;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface SetEventInput {
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  metaDescription?: InputMaybe<Scalars['String']>;
-  metaTitle?: InputMaybe<Scalars['String']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
-  title: Scalars['String'];
+  changes: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  metaDescription?: InputMaybe<Scalars['String']['input']>;
+  metaTitle?: InputMaybe<Scalars['String']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface SetExerciseGroupInput {
-  changes: Scalars['String'];
-  cohesive: Scalars['Boolean'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
+  changes: Scalars['String']['input'];
+  cohesive: Scalars['Boolean']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
 }
 
 export interface SetGenericEntityInput {
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
+  changes: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
 }
 
 export interface SetLicenseNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'SetLicenseNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   repository: AbstractRepository;
 }
 
@@ -2097,10 +2099,10 @@ export interface SetTaxonomyParentNotificationEvent extends AbstractNotification
   __typename?: 'SetTaxonomyParentNotificationEvent';
   actor: User;
   child: TaxonomyTerm;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   parent?: Maybe<TaxonomyTerm>;
   previousParent?: Maybe<TaxonomyTerm>;
 }
@@ -2108,126 +2110,126 @@ export interface SetTaxonomyParentNotificationEvent extends AbstractNotification
 export interface SetTaxonomyTermNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'SetTaxonomyTermNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   taxonomyTerm: TaxonomyTerm;
 }
 
 export interface SetThreadStateNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'SetThreadStateNotificationEvent';
   actor: User;
-  archived: Scalars['Boolean'];
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  archived: Scalars['Boolean']['output'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  objectId: Scalars['Int'];
+  objectId: Scalars['Int']['output'];
   thread: Thread;
 }
 
 export interface SetUuidStateNotificationEvent extends AbstractNotificationEvent, InstanceAware {
   __typename?: 'SetUuidStateNotificationEvent';
   actor: User;
-  date: Scalars['DateTime'];
-  id: Scalars['Int'];
+  date: Scalars['DateTime']['output'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   object: AbstractUuid;
-  objectId: Scalars['Int'];
-  trashed: Scalars['Boolean'];
+  objectId: Scalars['Int']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 export interface SetVideoInput {
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  entityId?: InputMaybe<Scalars['Int']>;
-  needsReview: Scalars['Boolean'];
-  parentId?: InputMaybe<Scalars['Int']>;
-  subscribeThis: Scalars['Boolean'];
-  subscribeThisByEmail: Scalars['Boolean'];
-  title: Scalars['String'];
-  url: Scalars['String'];
+  changes: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  entityId?: InputMaybe<Scalars['Int']['input']>;
+  needsReview: Scalars['Boolean']['input'];
+  parentId?: InputMaybe<Scalars['Int']['input']>;
+  subscribeThis: Scalars['Boolean']['input'];
+  subscribeThisByEmail: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
+  url: Scalars['String']['input'];
 }
 
 export interface Solution extends AbstractEntity, AbstractRepository, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Solution';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<SolutionRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
   exercise: AbstractExercise;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: SolutionRevisionConnection;
   subject?: Maybe<Subject>;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface SolutionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface SolutionRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface SolutionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface SolutionRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'SolutionRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: Solution;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface SolutionRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface SolutionRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface SolutionRevisionConnection {
@@ -2235,28 +2237,28 @@ export interface SolutionRevisionConnection {
   edges: Array<SolutionRevisionCursor>;
   nodes: Array<SolutionRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface SolutionRevisionCursor {
   __typename?: 'SolutionRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: SolutionRevision;
 }
 
 export interface Subject {
   __typename?: 'Subject';
-  id: Scalars['String'];
+  id: Scalars['String']['output'];
   taxonomyTerm: TaxonomyTerm;
   unrevisedEntities: AbstractEntityConnection;
 }
 
 
 export interface SubjectUnrevisedEntitiesArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface SubjectQuery {
@@ -2267,7 +2269,7 @@ export interface SubjectQuery {
 
 
 export interface SubjectQuerySubjectArgs {
-  id: Scalars['String'];
+  id: Scalars['String']['input'];
 }
 
 
@@ -2280,19 +2282,19 @@ export interface SubscriptionConnection {
   edges: Array<SubscriptionCursor>;
   nodes: Array<SubscriptionInfo>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface SubscriptionCursor {
   __typename?: 'SubscriptionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: SubscriptionInfo;
 }
 
 export interface SubscriptionInfo {
   __typename?: 'SubscriptionInfo';
   object: AbstractUuid;
-  sendEmail: Scalars['Boolean'];
+  sendEmail: Scalars['Boolean']['output'];
 }
 
 export interface SubscriptionMutation {
@@ -2307,91 +2309,91 @@ export interface SubscriptionMutationSetArgs {
 
 export interface SubscriptionQuery {
   __typename?: 'SubscriptionQuery';
-  currentUserHasSubscribed: Scalars['Boolean'];
+  currentUserHasSubscribed: Scalars['Boolean']['output'];
   getSubscriptions: SubscriptionConnection;
 }
 
 
 export interface SubscriptionQueryCurrentUserHasSubscribedArgs {
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }
 
 
 export interface SubscriptionQueryGetSubscriptionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface SubscriptionSetInput {
-  id: Array<Scalars['Int']>;
-  sendEmail: Scalars['Boolean'];
-  subscribe: Scalars['Boolean'];
+  id: Array<Scalars['Int']['input']>;
+  sendEmail: Scalars['Boolean']['input'];
+  subscribe: Scalars['Boolean']['input'];
 }
 
 export interface SubscriptionSetResponse {
   __typename?: 'SubscriptionSetResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface TaxonomyEntityLinksInput {
-  entityIds: Array<Scalars['Int']>;
-  taxonomyTermId: Scalars['Int'];
+  entityIds: Array<Scalars['Int']['input']>;
+  taxonomyTermId: Scalars['Int']['input'];
 }
 
 export interface TaxonomyEntityLinksResponse {
   __typename?: 'TaxonomyEntityLinksResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface TaxonomyTerm extends AbstractNavigationChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'TaxonomyTerm';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   children: AbstractUuidConnection;
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
-  name: Scalars['String'];
+  name: Scalars['String']['output'];
   navigation?: Maybe<Navigation>;
   parent?: Maybe<TaxonomyTerm>;
-  taxonomyId: Scalars['Int'];
+  taxonomyId: Scalars['Int']['output'];
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
   type: TaxonomyTermType;
-  weight: Scalars['Int'];
+  weight: Scalars['Int']['output'];
 }
 
 
 export interface TaxonomyTermChildrenArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface TaxonomyTermEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface TaxonomyTermThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface TaxonomyTermConnection {
@@ -2399,13 +2401,13 @@ export interface TaxonomyTermConnection {
   edges?: Maybe<Array<Maybe<TaxonomyTermEdge>>>;
   nodes: Array<TaxonomyTerm>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface TaxonomyTermCreateInput {
-  description?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  parentId: Scalars['Int'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  parentId: Scalars['Int']['input'];
   taxonomyType: TaxonomyTypeCreateOptions;
 }
 
@@ -2413,12 +2415,12 @@ export interface TaxonomyTermCreateResponse {
   __typename?: 'TaxonomyTermCreateResponse';
   query: Query;
   record?: Maybe<TaxonomyTerm>;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface TaxonomyTermEdge {
   __typename?: 'TaxonomyTermEdge';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: TaxonomyTerm;
 }
 
@@ -2457,26 +2459,26 @@ export interface TaxonomyTermMutationSortArgs {
 }
 
 export interface TaxonomyTermSetNameAndDescriptionInput {
-  description?: InputMaybe<Scalars['String']>;
-  id: Scalars['Int'];
-  name: Scalars['String'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['Int']['input'];
+  name: Scalars['String']['input'];
 }
 
 export interface TaxonomyTermSetNameAndDescriptionResponse {
   __typename?: 'TaxonomyTermSetNameAndDescriptionResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface TaxonomyTermSortInput {
-  childrenIds: Array<Scalars['Int']>;
-  taxonomyTermId: Scalars['Int'];
+  childrenIds: Array<Scalars['Int']['input']>;
+  taxonomyTermId: Scalars['Int']['input'];
 }
 
 export interface TaxonomyTermSortResponse {
   __typename?: 'TaxonomyTermSortResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export enum TaxonomyTermType {
@@ -2493,21 +2495,21 @@ export enum TaxonomyTypeCreateOptions {
 
 export interface Thread {
   __typename?: 'Thread';
-  archived: Scalars['Boolean'];
+  archived: Scalars['Boolean']['output'];
   comments: CommentConnection;
-  createdAt: Scalars['DateTime'];
-  id: Scalars['String'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
   object: AbstractUuid;
-  title?: Maybe<Scalars['String']>;
-  trashed: Scalars['Boolean'];
+  title?: Maybe<Scalars['String']['output']>;
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface ThreadCommentsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface ThreadAware {
@@ -2516,52 +2518,52 @@ export interface ThreadAware {
 
 
 export interface ThreadAwareThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface ThreadCreateCommentInput {
-  content: Scalars['String'];
-  sendEmail: Scalars['Boolean'];
-  subscribe: Scalars['Boolean'];
-  threadId: Scalars['String'];
+  content: Scalars['String']['input'];
+  sendEmail: Scalars['Boolean']['input'];
+  subscribe: Scalars['Boolean']['input'];
+  threadId: Scalars['String']['input'];
 }
 
 export interface ThreadCreateCommentResponse {
   __typename?: 'ThreadCreateCommentResponse';
   query: Query;
   record?: Maybe<Comment>;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadCreateThreadInput {
-  content: Scalars['String'];
-  objectId: Scalars['Int'];
-  sendEmail: Scalars['Boolean'];
-  subscribe: Scalars['Boolean'];
-  title: Scalars['String'];
+  content: Scalars['String']['input'];
+  objectId: Scalars['Int']['input'];
+  sendEmail: Scalars['Boolean']['input'];
+  subscribe: Scalars['Boolean']['input'];
+  title: Scalars['String']['input'];
 }
 
 export interface ThreadCreateThreadResponse {
   __typename?: 'ThreadCreateThreadResponse';
   query: Query;
   record?: Maybe<Thread>;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadEditCommentInput {
-  commentId: Scalars['Int'];
-  content: Scalars['String'];
+  commentId: Scalars['Int']['input'];
+  content: Scalars['String']['input'];
 }
 
 export interface ThreadEditCommentResponse {
   __typename?: 'ThreadEditCommentResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadMutation {
@@ -2611,43 +2613,43 @@ export interface ThreadQuery {
 
 
 export interface ThreadQueryAllThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  subjectId?: InputMaybe<Scalars['String']>;
+  subjectId?: InputMaybe<Scalars['String']['input']>;
 }
 
 export interface ThreadSetCommentStateInput {
-  id: Array<Scalars['Int']>;
-  trashed: Scalars['Boolean'];
+  id: Array<Scalars['Int']['input']>;
+  trashed: Scalars['Boolean']['input'];
 }
 
 export interface ThreadSetCommentStateResponse {
   __typename?: 'ThreadSetCommentStateResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadSetThreadArchivedInput {
-  archived: Scalars['Boolean'];
-  id: Array<Scalars['String']>;
+  archived: Scalars['Boolean']['input'];
+  id: Array<Scalars['String']['input']>;
 }
 
 export interface ThreadSetThreadArchivedResponse {
   __typename?: 'ThreadSetThreadArchivedResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadSetThreadStateInput {
-  id: Array<Scalars['String']>;
-  trashed: Scalars['Boolean'];
+  id: Array<Scalars['String']['input']>;
+  trashed: Scalars['Boolean']['input'];
 }
 
 export interface ThreadSetThreadStateResponse {
   __typename?: 'ThreadSetThreadStateResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface ThreadsConnection {
@@ -2655,93 +2657,93 @@ export interface ThreadsConnection {
   edges: Array<ThreadsCursor>;
   nodes: Array<Thread>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface ThreadsCursor {
   __typename?: 'ThreadsCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: Thread;
 }
 
 export interface User extends AbstractUuid, ThreadAware {
   __typename?: 'User';
   activityByType: UserActivityByType;
-  alias: Scalars['String'];
-  chatUrl?: Maybe<Scalars['String']>;
-  date: Scalars['DateTime'];
-  description?: Maybe<Scalars['String']>;
+  alias: Scalars['String']['output'];
+  chatUrl?: Maybe<Scalars['String']['output']>;
+  date: Scalars['DateTime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   events: AbstractNotificationEventConnection;
   eventsByUser: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
-  imageUrl: Scalars['String'];
-  isActiveAuthor: Scalars['Boolean'];
-  isActiveDonor: Scalars['Boolean'];
-  isActiveReviewer: Scalars['Boolean'];
-  isNewAuthor: Scalars['Boolean'];
+  id: Scalars['Int']['output'];
+  imageUrl: Scalars['String']['output'];
+  isActiveAuthor: Scalars['Boolean']['output'];
+  isActiveDonor: Scalars['Boolean']['output'];
+  isActiveReviewer: Scalars['Boolean']['output'];
+  isNewAuthor: Scalars['Boolean']['output'];
   language?: Maybe<Instance>;
-  lastLogin?: Maybe<Scalars['DateTime']>;
-  motivation?: Maybe<Scalars['String']>;
+  lastLogin?: Maybe<Scalars['DateTime']['output']>;
+  motivation?: Maybe<Scalars['String']['output']>;
   roles: ScopedRoleConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
   unrevisedEntities: AbstractEntityConnection;
-  username: Scalars['String'];
+  username: Scalars['String']['output'];
 }
 
 
 export interface UserEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface UserEventsByUserArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
-  objectId?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  objectId?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface UserRolesArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface UserThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface UserUnrevisedEntitiesArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 export interface UserActivityByType {
   __typename?: 'UserActivityByType';
-  comments: Scalars['Int'];
-  edits: Scalars['Int'];
-  reviews: Scalars['Int'];
-  taxonomy: Scalars['Int'];
+  comments: Scalars['Int']['output'];
+  edits: Scalars['Int']['output'];
+  reviews: Scalars['Int']['output'];
+  taxonomy: Scalars['Int']['output'];
 }
 
 export interface UserConnection {
@@ -2749,16 +2751,16 @@ export interface UserConnection {
   edges: Array<UserEdge>;
   nodes: Array<User>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface UserDeleteBotsInput {
-  botIds: Array<Scalars['Int']>;
+  botIds: Array<Scalars['Int']['input']>;
 }
 
 export interface UserDeleteBotsResponse {
   __typename?: 'UserDeleteBotsResponse';
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface UserDeleteRegularUsersInput {
@@ -2767,19 +2769,19 @@ export interface UserDeleteRegularUsersInput {
 
 export interface UserDeleteRegularUsersResponse {
   __typename?: 'UserDeleteRegularUsersResponse';
-  reason?: Maybe<Scalars['String']>;
-  success: Scalars['Boolean'];
-  username?: Maybe<Scalars['String']>;
+  reason?: Maybe<Scalars['String']['output']>;
+  success: Scalars['Boolean']['output'];
+  username?: Maybe<Scalars['String']['output']>;
 }
 
 export interface UserDescriptionInput {
-  id: Scalars['Int'];
-  username: Scalars['String'];
+  id: Scalars['Int']['input'];
+  username: Scalars['String']['input'];
 }
 
 export interface UserEdge {
   __typename?: 'UserEdge';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: User;
 }
 
@@ -2831,14 +2833,14 @@ export interface UserQuery {
 
 
 export interface UserQueryPotentialSpamUsersArgs {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface UserQueryUsersByRoleArgs {
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
   role: Role;
 }
@@ -2846,33 +2848,33 @@ export interface UserQueryUsersByRoleArgs {
 export interface UserRoleInput {
   instance?: InputMaybe<Instance>;
   role: Role;
-  username: Scalars['String'];
+  username: Scalars['String']['input'];
 }
 
 export interface UserRoleResponse {
   __typename?: 'UserRoleResponse';
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface UserSetDescriptionInput {
-  description: Scalars['String'];
+  description: Scalars['String']['input'];
 }
 
 export interface UserSetDescriptionResponse {
   __typename?: 'UserSetDescriptionResponse';
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface UserSetEmailInput {
-  email: Scalars['String'];
-  userId: Scalars['Int'];
+  email: Scalars['String']['input'];
+  userId: Scalars['Int']['input'];
 }
 
 export interface UserSetEmailResponse {
   __typename?: 'UserSetEmailResponse';
-  email: Scalars['String'];
-  success: Scalars['Boolean'];
-  username: Scalars['String'];
+  email: Scalars['String']['output'];
+  success: Scalars['Boolean']['output'];
+  username: Scalars['String']['output'];
 }
 
 export interface UserWithPermissionsConnection {
@@ -2881,8 +2883,8 @@ export interface UserWithPermissionsConnection {
   inheritance?: Maybe<Array<Role>>;
   nodes: Array<User>;
   pageInfo: PageInfo;
-  permissions: Array<Scalars['String']>;
-  totalCount: Scalars['Int'];
+  permissions: Array<Scalars['String']['output']>;
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface UuidMutation {
@@ -2896,104 +2898,104 @@ export interface UuidMutationSetStateArgs {
 }
 
 export interface UuidSetStateInput {
-  id: Array<Scalars['Int']>;
-  trashed: Scalars['Boolean'];
+  id: Array<Scalars['Int']['input']>;
+  trashed: Scalars['Boolean']['input'];
 }
 
 export interface UuidSetStateResponse {
   __typename?: 'UuidSetStateResponse';
   query: Query;
-  success: Scalars['Boolean'];
+  success: Scalars['Boolean']['output'];
 }
 
 export interface Video extends AbstractEntity, AbstractRepository, AbstractTaxonomyTermChild, AbstractUuid, InstanceAware, ThreadAware {
   __typename?: 'Video';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   currentRevision?: Maybe<VideoRevision>;
-  date: Scalars['DateTime'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   instance: Instance;
   license: License;
   revisions: VideoRevisionConnection;
   subject?: Maybe<Subject>;
   taxonomyTerms: TaxonomyTermConnection;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
 }
 
 
 export interface VideoEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface VideoRevisionsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  unrevised?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  unrevised?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 
 export interface VideoTaxonomyTermsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface VideoThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface VideoRevision extends AbstractEntityRevision, AbstractRevision, AbstractUuid, ThreadAware {
   __typename?: 'VideoRevision';
-  alias: Scalars['String'];
+  alias: Scalars['String']['output'];
   author: User;
-  changes: Scalars['String'];
-  content: Scalars['String'];
-  date: Scalars['DateTime'];
+  changes: Scalars['String']['output'];
+  content: Scalars['String']['output'];
+  date: Scalars['DateTime']['output'];
   events: AbstractNotificationEventConnection;
-  id: Scalars['Int'];
+  id: Scalars['Int']['output'];
   repository: Video;
   threads: ThreadsConnection;
-  title: Scalars['String'];
-  trashed: Scalars['Boolean'];
-  url: Scalars['String'];
+  title: Scalars['String']['output'];
+  trashed: Scalars['Boolean']['output'];
+  url: Scalars['String']['output'];
 }
 
 
 export interface VideoRevisionEventsArgs {
-  actorId?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  last?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 }
 
 
 export interface VideoRevisionThreadsArgs {
-  after?: InputMaybe<Scalars['String']>;
-  archived?: InputMaybe<Scalars['Boolean']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  trashed?: InputMaybe<Scalars['Boolean']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  archived?: InputMaybe<Scalars['Boolean']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  trashed?: InputMaybe<Scalars['Boolean']['input']>;
 }
 
 export interface VideoRevisionConnection {
@@ -3001,12 +3003,12 @@ export interface VideoRevisionConnection {
   edges: Array<VideoRevisionCursor>;
   nodes: Array<VideoRevision>;
   pageInfo: PageInfo;
-  totalCount: Scalars['Int'];
+  totalCount: Scalars['Int']['output'];
 }
 
 export interface VideoRevisionCursor {
   __typename?: 'VideoRevisionCursor';
-  cursor: Scalars['String'];
+  cursor: Scalars['String']['output'];
   node: VideoRevision;
 }
 
@@ -3032,60 +3034,60 @@ export interface _CacheMutationUpdateArgs {
   input: CacheUpdateInput;
 }
 
-export type Unnamed_1_MutationVariables = Exact<{
+export type OauthLoginMutationVariables = Exact<{
   input: OauthAcceptInput;
 }>;
 
 
-export type Unnamed_1_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogin: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+export type OauthLoginMutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogin: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
 
-export type Unnamed_2_MutationVariables = Exact<{
+export type OauthConsentMutationVariables = Exact<{
   input: OauthAcceptInput;
 }>;
 
 
-export type Unnamed_2_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptConsent: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+export type OauthConsentMutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptConsent: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
 
-export type Unnamed_3_MutationVariables = Exact<{
-  challenge: Scalars['String'];
+export type OauthLogoutMutationVariables = Exact<{
+  challenge: Scalars['String']['input'];
 }>;
 
 
-export type Unnamed_3_Mutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogout: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
+export type OauthLogoutMutation = { __typename?: 'Mutation', oauth: { __typename?: 'OauthMutation', acceptLogout: { __typename?: 'OauthAcceptResponse', redirectUri: string } } };
 
 export type UuidSimpleQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
 export type UuidSimpleQuery = { __typename?: 'Query', uuid?: { __typename: 'Applet', id: number, title: string } | { __typename: 'AppletRevision', id: number, title: string } | { __typename: 'Article', id: number, title: string } | { __typename: 'ArticleRevision', id: number, title: string } | { __typename: 'Comment', id: number, title: string } | { __typename: 'Course', id: number, title: string } | { __typename: 'CoursePage', id: number, title: string, course: { __typename?: 'Course', id: number } } | { __typename: 'CoursePageRevision', id: number, title: string } | { __typename: 'CourseRevision', id: number, title: string } | { __typename: 'Event', id: number, title: string } | { __typename: 'EventRevision', id: number, title: string } | { __typename: 'Exercise', id: number, title: string } | { __typename: 'ExerciseGroup', id: number, title: string } | { __typename: 'ExerciseGroupRevision', id: number, title: string } | { __typename: 'ExerciseRevision', id: number, title: string } | { __typename: 'GroupedExercise', id: number, title: string } | { __typename: 'GroupedExerciseRevision', id: number, title: string } | { __typename: 'Page', id: number, title: string } | { __typename: 'PageRevision', id: number, title: string } | { __typename: 'Solution', id: number, title: string } | { __typename: 'SolutionRevision', id: number, title: string } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, id: number, title: string } | { __typename: 'User', id: number, title: string } | { __typename: 'Video', id: number, title: string } | { __typename: 'VideoRevision', id: number, title: string } | null };
 
-export type Unnamed_4_QueryVariables = Exact<{ [key: string]: never; }>;
+export type UnreadNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type Unnamed_4_Query = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', totalCount: number } };
+export type UnreadNotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', totalCount: number } };
 
 export type GetEventDataQueryVariables = Exact<{
-  actorId?: InputMaybe<Scalars['Int']>;
-  objectId?: InputMaybe<Scalars['Int']>;
+  actorId?: InputMaybe<Scalars['Int']['input']>;
+  objectId?: InputMaybe<Scalars['Int']['input']>;
   instance?: InputMaybe<Instance>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type GetEventDataQuery = { __typename?: 'Query', events: { __typename?: 'AbstractNotificationEventConnection', pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename: 'CheckoutRevisionNotificationEvent', reason: string, date: string, id: number, objectId: number, revision: { __typename?: 'AppletRevision', id: number } | { __typename?: 'ArticleRevision', id: number } | { __typename?: 'CoursePageRevision', id: number } | { __typename?: 'CourseRevision', id: number } | { __typename?: 'EventRevision', id: number } | { __typename?: 'ExerciseGroupRevision', id: number } | { __typename?: 'ExerciseRevision', id: number } | { __typename?: 'GroupedExerciseRevision', id: number } | { __typename?: 'PageRevision', id: number } | { __typename?: 'SolutionRevision', id: number } | { __typename?: 'VideoRevision', id: number }, repository: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateCommentNotificationEvent', date: string, id: number, objectId: number, comment: { __typename?: 'Comment', id: number, content: string }, thread: { __typename?: 'Thread', id: string, title?: string | null, thread: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number }> } }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateEntityLinkNotificationEvent', date: string, id: number, objectId: number, parent: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateEntityNotificationEvent', date: string, id: number, objectId: number, entity: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateEntityRevisionNotificationEvent', date: string, id: number, objectId: number, entityRevision: { __typename?: 'AppletRevision', id: number } | { __typename?: 'ArticleRevision', id: number } | { __typename?: 'CoursePageRevision', id: number } | { __typename?: 'CourseRevision', id: number } | { __typename?: 'EventRevision', id: number } | { __typename?: 'ExerciseGroupRevision', id: number } | { __typename?: 'ExerciseRevision', id: number } | { __typename?: 'GroupedExerciseRevision', id: number } | { __typename?: 'PageRevision', id: number } | { __typename?: 'SolutionRevision', id: number } | { __typename?: 'VideoRevision', id: number }, entity: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateTaxonomyLinkNotificationEvent', date: string, id: number, objectId: number, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, parent: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateTaxonomyTermNotificationEvent', date: string, id: number, objectId: number, taxonomyTerm: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateThreadNotificationEvent', date: string, id: number, objectId: number, thread: { __typename?: 'Thread', id: string, thread: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number, content: string }> } }, object: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'RejectRevisionNotificationEvent', reason: string, date: string, id: number, objectId: number, repository: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, revision: { __typename?: 'AppletRevision', id: number, alias: string } | { __typename?: 'ArticleRevision', id: number, alias: string } | { __typename?: 'CoursePageRevision', id: number, alias: string } | { __typename?: 'CourseRevision', id: number, alias: string } | { __typename?: 'EventRevision', id: number, alias: string } | { __typename?: 'ExerciseGroupRevision', id: number, alias: string } | { __typename?: 'ExerciseRevision', id: number, alias: string } | { __typename?: 'GroupedExerciseRevision', id: number, alias: string } | { __typename?: 'PageRevision', id: number, alias: string } | { __typename?: 'SolutionRevision', id: number, alias: string } | { __typename?: 'VideoRevision', id: number, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'RemoveEntityLinkNotificationEvent', date: string, id: number, objectId: number, parent: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'RemoveTaxonomyLinkNotificationEvent', date: string, id: number, objectId: number, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, parent: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetLicenseNotificationEvent', date: string, id: number, objectId: number, repository: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetTaxonomyParentNotificationEvent', date: string, id: number, objectId: number, child: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, previousParent?: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | null, optionalParent?: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | null, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetTaxonomyTermNotificationEvent', date: string, id: number, objectId: number, taxonomyTerm: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetThreadStateNotificationEvent', archived: boolean, date: string, id: number, objectId: number, thread: { __typename?: 'Thread', id: string, thread: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number }> } }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetUuidStateNotificationEvent', trashed: boolean, date: string, id: number, objectId: number, object: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } }> } };
 
 export type UserRevisionQueryVariables = Exact<{
-  userId?: InputMaybe<Scalars['Int']>;
+  userId?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
 export type UserRevisionQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User', unrevisedEntities: { __typename?: 'AbstractEntityConnection', totalCount: number, nodes: Array<{ __typename: 'Applet', id: number, alias: string, currentRevision?: { __typename?: 'AppletRevision', title: string, id: number } | null, revisions: { __typename?: 'AppletRevisionConnection', nodes: Array<{ __typename?: 'AppletRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Article', id: number, alias: string, currentRevision?: { __typename?: 'ArticleRevision', title: string, id: number } | null, revisions: { __typename?: 'ArticleRevisionConnection', nodes: Array<{ __typename?: 'ArticleRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Course', id: number, alias: string, currentRevision?: { __typename?: 'CourseRevision', title: string, id: number } | null, revisions: { __typename?: 'CourseRevisionConnection', nodes: Array<{ __typename?: 'CourseRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'CoursePage', id: number, alias: string, currentRevision?: { __typename?: 'CoursePageRevision', title: string, id: number } | null, revisions: { __typename?: 'CoursePageRevisionConnection', nodes: Array<{ __typename?: 'CoursePageRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Event', id: number, alias: string, currentRevision?: { __typename?: 'EventRevision', title: string, id: number } | null, revisions: { __typename?: 'EventRevisionConnection', nodes: Array<{ __typename?: 'EventRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Exercise', id: number, alias: string, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null, revisions: { __typename?: 'ExerciseRevisionConnection', nodes: Array<{ __typename?: 'ExerciseRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'ExerciseGroup', id: number, alias: string, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null, revisions: { __typename?: 'ExerciseGroupRevisionConnection', nodes: Array<{ __typename?: 'ExerciseGroupRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'GroupedExercise', id: number, alias: string, currentRevision?: { __typename?: 'GroupedExerciseRevision', id: number } | null, revisions: { __typename?: 'GroupedExerciseRevisionConnection', nodes: Array<{ __typename?: 'GroupedExerciseRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Solution', id: number, alias: string, currentRevision?: { __typename?: 'SolutionRevision', id: number } | null, solutionRevisions: { __typename?: 'SolutionRevisionConnection', nodes: Array<{ __typename?: 'SolutionRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Video', id: number, alias: string, currentRevision?: { __typename?: 'VideoRevision', title: string, id: number } | null, revisions: { __typename?: 'VideoRevisionConnection', nodes: Array<{ __typename?: 'VideoRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } }>, pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null } } } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
 
 export type LicenseDetailsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
@@ -3280,7 +3282,7 @@ export type PathFragment = { __typename?: 'Navigation', path: { __typename?: 'Na
 export type PathToRootFragment = { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number, parent?: { __typename?: 'TaxonomyTerm', title: string, alias: string, id: number } | null } | null } | null } | null } | null } | null } | null } | null } | null };
 
 export type MainUuidQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   alias?: InputMaybe<AliasInput>;
 }>;
 
@@ -3328,7 +3330,7 @@ type TaxonomyTermChild_Video_Fragment = { __typename?: 'Video', alias: string, i
 export type TaxonomyTermChildFragment = TaxonomyTermChild_Applet_Fragment | TaxonomyTermChild_Article_Fragment | TaxonomyTermChild_Course_Fragment | TaxonomyTermChild_CoursePage_Fragment | TaxonomyTermChild_Event_Fragment | TaxonomyTermChild_Exercise_Fragment | TaxonomyTermChild_ExerciseGroup_Fragment | TaxonomyTermChild_GroupedExercise_Fragment | TaxonomyTermChild_Page_Fragment | TaxonomyTermChild_Solution_Fragment | TaxonomyTermChild_Video_Fragment;
 
 export type RevisionUuidQueryVariables = Exact<{
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
 }>;
 
 
@@ -3346,17 +3348,17 @@ export type UnrevisedRevisionsQueryVariables = Exact<{
 export type UnrevisedRevisionsQuery = { __typename?: 'Query', authorization: any, subject: { __typename?: 'SubjectQuery', subjects: Array<{ __typename?: 'Subject', id: string, taxonomyTerm: { __typename?: 'TaxonomyTerm', name: string }, unrevisedEntities: { __typename?: 'AbstractEntityConnection', totalCount: number, nodes: Array<{ __typename: 'Applet', id: number, alias: string, currentRevision?: { __typename?: 'AppletRevision', title: string, id: number } | null, revisions: { __typename?: 'AppletRevisionConnection', nodes: Array<{ __typename?: 'AppletRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Article', id: number, alias: string, currentRevision?: { __typename?: 'ArticleRevision', title: string, id: number } | null, revisions: { __typename?: 'ArticleRevisionConnection', nodes: Array<{ __typename?: 'ArticleRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Course', id: number, alias: string, currentRevision?: { __typename?: 'CourseRevision', title: string, id: number } | null, revisions: { __typename?: 'CourseRevisionConnection', nodes: Array<{ __typename?: 'CourseRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'CoursePage', id: number, alias: string, currentRevision?: { __typename?: 'CoursePageRevision', title: string, id: number } | null, revisions: { __typename?: 'CoursePageRevisionConnection', nodes: Array<{ __typename?: 'CoursePageRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Event', id: number, alias: string, currentRevision?: { __typename?: 'EventRevision', title: string, id: number } | null, revisions: { __typename?: 'EventRevisionConnection', nodes: Array<{ __typename?: 'EventRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Exercise', id: number, alias: string, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null, revisions: { __typename?: 'ExerciseRevisionConnection', nodes: Array<{ __typename?: 'ExerciseRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'ExerciseGroup', id: number, alias: string, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null, revisions: { __typename?: 'ExerciseGroupRevisionConnection', nodes: Array<{ __typename?: 'ExerciseGroupRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'GroupedExercise', id: number, alias: string, currentRevision?: { __typename?: 'GroupedExerciseRevision', id: number } | null, revisions: { __typename?: 'GroupedExerciseRevisionConnection', nodes: Array<{ __typename?: 'GroupedExerciseRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Solution', id: number, alias: string, currentRevision?: { __typename?: 'SolutionRevision', id: number } | null, solutionRevisions: { __typename?: 'SolutionRevisionConnection', nodes: Array<{ __typename?: 'SolutionRevision', id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'Video', id: number, alias: string, currentRevision?: { __typename?: 'VideoRevision', title: string, id: number } | null, revisions: { __typename?: 'VideoRevisionConnection', nodes: Array<{ __typename?: 'VideoRevision', title: string, id: number, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } }>, pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null } } }> } };
 
 export type GetAllThreadsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
   instance?: InputMaybe<Instance>;
-  subjectId?: InputMaybe<Scalars['String']>;
+  subjectId?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type GetAllThreadsQuery = { __typename?: 'Query', thread: { __typename?: 'ThreadQuery', allThreads: { __typename?: 'AllThreadsConnection', pageInfo: { __typename?: 'HasNextPageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'Thread', id: string, archived: boolean, trashed: boolean, object: { __typename: 'Applet', id: number, alias: string } | { __typename: 'AppletRevision', id: number, alias: string } | { __typename: 'Article', id: number, alias: string } | { __typename: 'ArticleRevision', id: number, alias: string } | { __typename: 'Comment', id: number, alias: string } | { __typename: 'Course', id: number, alias: string } | { __typename: 'CoursePage', id: number, alias: string } | { __typename: 'CoursePageRevision', id: number, alias: string } | { __typename: 'CourseRevision', id: number, alias: string } | { __typename: 'Event', id: number, alias: string } | { __typename: 'EventRevision', id: number, alias: string } | { __typename: 'Exercise', id: number, alias: string } | { __typename: 'ExerciseGroup', id: number, alias: string } | { __typename: 'ExerciseGroupRevision', id: number, alias: string } | { __typename: 'ExerciseRevision', id: number, alias: string } | { __typename: 'GroupedExercise', id: number, alias: string } | { __typename: 'GroupedExerciseRevision', id: number, alias: string } | { __typename: 'Page', id: number, alias: string } | { __typename: 'PageRevision', id: number, alias: string } | { __typename: 'Solution', id: number, alias: string } | { __typename: 'SolutionRevision', id: number, alias: string } | { __typename: 'TaxonomyTerm', id: number, alias: string } | { __typename: 'User', id: number, alias: string } | { __typename: 'Video', id: number, alias: string } | { __typename: 'VideoRevision', id: number, alias: string }, comments: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number, trashed: boolean, content: string, archived: boolean, createdAt: string, author: { __typename?: 'User', username: string, alias: string, id: number, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } }> } }> } } };
 
 export type GetCommentsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
@@ -3417,7 +3419,7 @@ export type UserDataFragment = { __typename?: 'User', username: string, date: st
 export type BasicUserDataFragment = { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean };
 
 export type UserUuidQueryVariables = Exact<{
-  path: Scalars['String'];
+  path: Scalars['String']['input'];
   instance: Instance;
 }>;
 
@@ -3425,7 +3427,7 @@ export type UserUuidQueryVariables = Exact<{
 export type UserUuidQuery = { __typename?: 'Query', authorization: any, uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename: 'User', id: number, trashed: boolean, username: string, date: string, lastLogin?: string | null, description?: string | null, isActiveReviewer: boolean, isActiveAuthor: boolean, isActiveDonor: boolean, chatUrl?: string | null, imageUrl: string, motivation?: string | null, roles: { __typename?: 'ScopedRoleConnection', nodes: Array<{ __typename?: 'ScopedRole', scope?: string | null, role: Role }> }, activityByType: { __typename?: 'UserActivityByType', edits: number, comments: number, reviews: number, taxonomy: number } } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
 
 export type IsSubscribedQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
@@ -3677,8 +3679,8 @@ export type DeleteBotsMutationVariables = Exact<{
 export type DeleteBotsMutation = { __typename?: 'Mutation', user: { __typename?: 'UserMutation', deleteBots: { __typename?: 'UserDeleteBotsResponse', success: boolean } } };
 
 export type PotentialSpamUsersQueryVariables = Exact<{
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -3687,15 +3689,15 @@ export type PotentialSpamUsersQuery = { __typename?: 'Query', user: { __typename
 export type UsersByRoleQueryVariables = Exact<{
   role: Role;
   instance: Instance;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type UsersByRoleQuery = { __typename?: 'Query', user: { __typename?: 'UserQuery', usersByRole: { __typename?: 'UserWithPermissionsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'User', username: string, alias: string }> } } };
 
 export type GetTaxonomyTypeQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
@@ -3709,14 +3711,14 @@ export type LicensesForInstaceQueryVariables = Exact<{
 export type LicensesForInstaceQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', licenses: Array<{ __typename?: 'License', id: number, default: boolean, title: string }> } };
 
 export type RevisionsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
 export type RevisionsQuery = { __typename?: 'Query', uuid?: { __typename: 'Applet', id: number, alias: string, title: string, currentRevision?: { __typename?: 'AppletRevision', id: number } | null, revisions: { __typename?: 'AppletRevisionConnection', nodes: Array<{ __typename?: 'AppletRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'AppletRevision', id: number, alias: string, title: string } | { __typename: 'Article', id: number, alias: string, title: string, currentRevision?: { __typename?: 'ArticleRevision', id: number } | null, revisions: { __typename?: 'ArticleRevisionConnection', nodes: Array<{ __typename?: 'ArticleRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'ArticleRevision', id: number, alias: string, title: string } | { __typename: 'Comment', id: number, alias: string, title: string } | { __typename: 'Course', id: number, alias: string, title: string, currentRevision?: { __typename?: 'CourseRevision', id: number } | null, revisions: { __typename?: 'CourseRevisionConnection', nodes: Array<{ __typename?: 'CourseRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'CoursePage', id: number, alias: string, title: string, currentRevision?: { __typename?: 'CoursePageRevision', id: number } | null, revisions: { __typename?: 'CoursePageRevisionConnection', nodes: Array<{ __typename?: 'CoursePageRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'CoursePageRevision', id: number, alias: string, title: string } | { __typename: 'CourseRevision', id: number, alias: string, title: string } | { __typename: 'Event', id: number, alias: string, title: string, currentRevision?: { __typename?: 'EventRevision', id: number } | null, revisions: { __typename?: 'EventRevisionConnection', nodes: Array<{ __typename?: 'EventRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'EventRevision', id: number, alias: string, title: string } | { __typename: 'Exercise', id: number, alias: string, title: string, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null, revisions: { __typename?: 'ExerciseRevisionConnection', nodes: Array<{ __typename?: 'ExerciseRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'ExerciseGroup', id: number, alias: string, title: string, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null, revisions: { __typename?: 'ExerciseGroupRevisionConnection', nodes: Array<{ __typename?: 'ExerciseGroupRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'ExerciseGroupRevision', id: number, alias: string, title: string } | { __typename: 'ExerciseRevision', id: number, alias: string, title: string } | { __typename: 'GroupedExercise', id: number, alias: string, title: string, currentRevision?: { __typename?: 'GroupedExerciseRevision', id: number } | null, revisions: { __typename?: 'GroupedExerciseRevisionConnection', nodes: Array<{ __typename?: 'GroupedExerciseRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'GroupedExerciseRevision', id: number, alias: string, title: string } | { __typename: 'Page', id: number, alias: string, title: string, currentRevision?: { __typename?: 'PageRevision', id: number } | null, revisions: { __typename?: 'PageRevisionConnection', nodes: Array<{ __typename?: 'PageRevision', id: number, trashed: boolean, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'PageRevision', id: number, alias: string, title: string } | { __typename: 'Solution', id: number, alias: string, title: string, currentRevision?: { __typename?: 'SolutionRevision', id: number } | null, revisions: { __typename?: 'SolutionRevisionConnection', nodes: Array<{ __typename?: 'SolutionRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'SolutionRevision', id: number, alias: string, title: string } | { __typename: 'TaxonomyTerm', id: number, alias: string, title: string } | { __typename: 'User', id: number, alias: string, title: string } | { __typename: 'Video', id: number, alias: string, title: string, currentRevision?: { __typename?: 'VideoRevision', id: number } | null, revisions: { __typename?: 'VideoRevisionConnection', nodes: Array<{ __typename?: 'VideoRevision', id: number, trashed: boolean, changes: string, date: string, author: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean, isNewAuthor: boolean } }> } } | { __typename: 'VideoRevision', id: number, alias: string, title: string } | null };
 
 export type GetUuidPathsQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
@@ -3730,25 +3732,25 @@ export type PagesQueryVariables = Exact<{
 export type PagesQuery = { __typename?: 'Query', page: { __typename?: 'PageQuery', pages: Array<{ __typename?: 'Page', id: number, alias: string, trashed: boolean, currentRevision?: { __typename?: 'PageRevision', title: string } | null }> } };
 
 export type GetSubscriptionsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type GetSubscriptionsQuery = { __typename?: 'Query', subscription: { __typename?: 'SubscriptionQuery', getSubscriptions: { __typename?: 'SubscriptionConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'SubscriptionInfo', sendEmail: boolean, object: { __typename: 'Applet', id: number, alias: string, currentRevision?: { __typename?: 'AppletRevision', title: string } | null } | { __typename: 'AppletRevision', id: number, alias: string } | { __typename: 'Article', id: number, alias: string, currentRevision?: { __typename?: 'ArticleRevision', title: string } | null } | { __typename: 'ArticleRevision', id: number, alias: string } | { __typename: 'Comment', id: number, alias: string } | { __typename: 'Course', id: number, alias: string, currentRevision?: { __typename?: 'CourseRevision', title: string } | null } | { __typename: 'CoursePage', id: number, alias: string, currentRevision?: { __typename?: 'CoursePageRevision', title: string } | null } | { __typename: 'CoursePageRevision', id: number, alias: string } | { __typename: 'CourseRevision', id: number, alias: string } | { __typename: 'Event', id: number, alias: string, currentRevision?: { __typename?: 'EventRevision', title: string } | null } | { __typename: 'EventRevision', id: number, alias: string } | { __typename: 'Exercise', id: number, alias: string, subject?: { __typename?: 'Subject', taxonomyTerm: { __typename?: 'TaxonomyTerm', name: string } } | null } | { __typename: 'ExerciseGroup', id: number, alias: string, subject?: { __typename?: 'Subject', taxonomyTerm: { __typename?: 'TaxonomyTerm', name: string } } | null } | { __typename: 'ExerciseGroupRevision', id: number, alias: string } | { __typename: 'ExerciseRevision', id: number, alias: string } | { __typename: 'GroupedExercise', id: number, alias: string } | { __typename: 'GroupedExerciseRevision', id: number, alias: string } | { __typename: 'Page', id: number, alias: string, currentRevision?: { __typename?: 'PageRevision', title: string } | null } | { __typename: 'PageRevision', id: number, alias: string } | { __typename: 'Solution', id: number, alias: string } | { __typename: 'SolutionRevision', id: number, alias: string } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, name: string, id: number, alias: string } | { __typename: 'User', username: string, id: number, alias: string } | { __typename: 'Video', id: number, alias: string, currentRevision?: { __typename?: 'VideoRevision', title: string } | null } | { __typename: 'VideoRevision', id: number, alias: string } }> } } };
 
 export type GetNotificationsQueryVariables = Exact<{
-  first: Scalars['Int'];
-  unread?: InputMaybe<Scalars['Boolean']>;
-  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int']['input'];
+  unread?: InputMaybe<Scalars['Boolean']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type GetNotificationsQuery = { __typename?: 'Query', notifications: { __typename?: 'NotificationConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null }, nodes: Array<{ __typename?: 'Notification', id: number, unread: boolean, event: { __typename: 'CheckoutRevisionNotificationEvent', reason: string, date: string, id: number, objectId: number, revision: { __typename?: 'AppletRevision', id: number } | { __typename?: 'ArticleRevision', id: number } | { __typename?: 'CoursePageRevision', id: number } | { __typename?: 'CourseRevision', id: number } | { __typename?: 'EventRevision', id: number } | { __typename?: 'ExerciseGroupRevision', id: number } | { __typename?: 'ExerciseRevision', id: number } | { __typename?: 'GroupedExerciseRevision', id: number } | { __typename?: 'PageRevision', id: number } | { __typename?: 'SolutionRevision', id: number } | { __typename?: 'VideoRevision', id: number }, repository: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateCommentNotificationEvent', date: string, id: number, objectId: number, comment: { __typename?: 'Comment', id: number, content: string }, thread: { __typename?: 'Thread', id: string, title?: string | null, thread: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number }> } }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateEntityLinkNotificationEvent', date: string, id: number, objectId: number, parent: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateEntityNotificationEvent', date: string, id: number, objectId: number, entity: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateEntityRevisionNotificationEvent', date: string, id: number, objectId: number, entityRevision: { __typename?: 'AppletRevision', id: number } | { __typename?: 'ArticleRevision', id: number } | { __typename?: 'CoursePageRevision', id: number } | { __typename?: 'CourseRevision', id: number } | { __typename?: 'EventRevision', id: number } | { __typename?: 'ExerciseGroupRevision', id: number } | { __typename?: 'ExerciseRevision', id: number } | { __typename?: 'GroupedExerciseRevision', id: number } | { __typename?: 'PageRevision', id: number } | { __typename?: 'SolutionRevision', id: number } | { __typename?: 'VideoRevision', id: number }, entity: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateTaxonomyLinkNotificationEvent', date: string, id: number, objectId: number, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, parent: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateTaxonomyTermNotificationEvent', date: string, id: number, objectId: number, taxonomyTerm: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'CreateThreadNotificationEvent', date: string, id: number, objectId: number, thread: { __typename?: 'Thread', id: string, thread: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number, content: string }> } }, object: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'RejectRevisionNotificationEvent', reason: string, date: string, id: number, objectId: number, repository: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, revision: { __typename?: 'AppletRevision', id: number, alias: string } | { __typename?: 'ArticleRevision', id: number, alias: string } | { __typename?: 'CoursePageRevision', id: number, alias: string } | { __typename?: 'CourseRevision', id: number, alias: string } | { __typename?: 'EventRevision', id: number, alias: string } | { __typename?: 'ExerciseGroupRevision', id: number, alias: string } | { __typename?: 'ExerciseRevision', id: number, alias: string } | { __typename?: 'GroupedExerciseRevision', id: number, alias: string } | { __typename?: 'PageRevision', id: number, alias: string } | { __typename?: 'SolutionRevision', id: number, alias: string } | { __typename?: 'VideoRevision', id: number, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'RemoveEntityLinkNotificationEvent', date: string, id: number, objectId: number, parent: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'RemoveTaxonomyLinkNotificationEvent', date: string, id: number, objectId: number, child: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, parent: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetLicenseNotificationEvent', date: string, id: number, objectId: number, repository: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'Video', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetTaxonomyParentNotificationEvent', date: string, id: number, objectId: number, child: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, previousParent?: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | null, optionalParent?: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | null, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetTaxonomyTermNotificationEvent', date: string, id: number, objectId: number, taxonomyTerm: { __typename: 'TaxonomyTerm', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetThreadStateNotificationEvent', archived: boolean, date: string, id: number, objectId: number, thread: { __typename?: 'Thread', id: string, thread: { __typename?: 'CommentConnection', nodes: Array<{ __typename?: 'Comment', id: number }> } }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } | { __typename: 'SetUuidStateNotificationEvent', trashed: boolean, date: string, id: number, objectId: number, object: { __typename: 'Applet', id: number, title: string, alias: string } | { __typename: 'AppletRevision', id: number, title: string, alias: string } | { __typename: 'Article', id: number, title: string, alias: string } | { __typename: 'ArticleRevision', id: number, title: string, alias: string } | { __typename: 'Comment', id: number, title: string, alias: string } | { __typename: 'Course', id: number, title: string, alias: string } | { __typename: 'CoursePage', id: number, title: string, alias: string } | { __typename: 'CoursePageRevision', id: number, title: string, alias: string } | { __typename: 'CourseRevision', id: number, title: string, alias: string } | { __typename: 'Event', id: number, title: string, alias: string } | { __typename: 'EventRevision', id: number, title: string, alias: string } | { __typename: 'Exercise', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroup', id: number, title: string, alias: string, taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'ExerciseGroupRevision', id: number, title: string, alias: string } | { __typename: 'ExerciseRevision', id: number, title: string, alias: string } | { __typename: 'GroupedExercise', id: number, title: string, alias: string, exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } | { __typename: 'GroupedExerciseRevision', id: number, title: string, alias: string } | { __typename: 'Page', id: number, title: string, alias: string } | { __typename: 'PageRevision', id: number, title: string, alias: string } | { __typename: 'Solution', id: number, title: string, alias: string, exercise: { __typename: 'Exercise', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } | { __typename: 'GroupedExercise', exerciseGroup: { __typename?: 'ExerciseGroup', taxonomyTerms: { __typename?: 'TaxonomyTermConnection', nodes: Array<{ __typename?: 'TaxonomyTerm', type: TaxonomyTermType }> } } } } | { __typename: 'SolutionRevision', id: number, title: string, alias: string } | { __typename: 'TaxonomyTerm', id: number, title: string, alias: string } | { __typename: 'User', id: number, title: string, alias: string } | { __typename: 'Video', id: number, title: string, alias: string } | { __typename: 'VideoRevision', id: number, title: string, alias: string }, actor: { __typename?: 'User', id: number, username: string, isActiveAuthor: boolean, isActiveDonor: boolean, isActiveReviewer: boolean } } }> } };
 
 export type GetTrashedEntitiesQueryVariables = Exact<{
-  first: Scalars['Int'];
-  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
   instance?: InputMaybe<Instance>;
 }>;
 
@@ -3763,14 +3765,14 @@ export type DefaultLicenseAgreementQueryVariables = Exact<{
 export type DefaultLicenseAgreementQuery = { __typename?: 'Query', license: { __typename?: 'LicenseQuery', defaultLicense: { __typename?: 'License', agreement: string } } };
 
 export type FetchExerciseFolderQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
 export type FetchExerciseFolderQuery = { __typename?: 'Query', uuid?: { __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename?: 'Exercise' } | { __typename?: 'ExerciseGroup' } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename: 'TaxonomyTerm', type: TaxonomyTermType, children: { __typename?: 'AbstractUuidConnection', nodes: Array<{ __typename?: 'Applet' } | { __typename?: 'AppletRevision' } | { __typename?: 'Article' } | { __typename?: 'ArticleRevision' } | { __typename?: 'Comment' } | { __typename?: 'Course' } | { __typename?: 'CoursePage' } | { __typename?: 'CoursePageRevision' } | { __typename?: 'CourseRevision' } | { __typename?: 'Event' } | { __typename?: 'EventRevision' } | { __typename: 'Exercise', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseRevision', id: number } | null } | { __typename: 'ExerciseGroup', id: number, trashed: boolean, currentRevision?: { __typename?: 'ExerciseGroupRevision', id: number } | null } | { __typename?: 'ExerciseGroupRevision' } | { __typename?: 'ExerciseRevision' } | { __typename?: 'GroupedExercise' } | { __typename?: 'GroupedExerciseRevision' } | { __typename?: 'Page' } | { __typename?: 'PageRevision' } | { __typename?: 'Solution' } | { __typename?: 'SolutionRevision' } | { __typename?: 'TaxonomyTerm' } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' }> } } | { __typename?: 'User' } | { __typename?: 'Video' } | { __typename?: 'VideoRevision' } | null };
 
 export type FetchParentQueryQueryVariables = Exact<{
-  id: Scalars['Int'];
+  id: Scalars['Int']['input'];
 }>;
 
 
