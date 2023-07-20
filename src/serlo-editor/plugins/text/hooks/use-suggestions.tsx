@@ -43,6 +43,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const pluginsStrings = useEditorStrings().plugins
   const text = Node.string(editor)
 
+  const plugins = usePlugins()
   const allPlugins = useContext(PluginsContext)
     .filter(({ visible }) => visible)
     .map(({ type }) => type)
@@ -132,7 +133,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
 
     // Otherwise, replace the text plugin with the selected plugin
-    dispatch(runReplaceDocumentSaga({ id, plugin: pluginType }))
+    dispatch(runReplaceDocumentSaga({ id, plugins, pluginType }))
   }
 
   const hotKeysHandlers = {

@@ -77,12 +77,6 @@ export function Comment({
         scrollIfNeeded(commentRef.current)
       }, 900)
     }
-
-    if (commentRef.current) {
-      commentRef.current.style.backgroundColor = isHighlight
-        ? '#fdf5e4'
-        : 'transparent'
-    }
   }, [isHighlight, noScroll])
 
   return (
@@ -92,9 +86,9 @@ export function Comment({
       className={clsx(
         'pb-0.5 pt-1 transition-colors duration-700 ease-out',
         isParent
-          ? 'rounded-2xl'
+          ? ''
           : tw`
-            mb-5 ml-4 mt-8 rounded-r-2xl border-l-6 border-brand-200 
+            mb-5 ml-4 mt-8 border-l-6 border-brand-200 
             pb-0.5
           `
       )}
@@ -140,7 +134,12 @@ export function Comment({
           </button>
         </>
       ) : (
-        <p className="serlo-p mb-0 whitespace-pre-line break-words">
+        <p
+          className={clsx(
+            'serlo-p mb-0 whitespace-pre-line break-words',
+            isHighlight ? 'rounded-xl bg-editor-primary-100 !p-2' : ''
+          )}
+        >
           {commentContent}
         </p>
       )}

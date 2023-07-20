@@ -8,6 +8,7 @@ import { EditableContext, PreferenceContextProvider } from './contexts'
 import {
   PluginsContext,
   PluginsContextPlugins,
+  usePlugins,
 } from './contexts/plugins-context'
 import { SubDocument } from './sub-document'
 import {
@@ -34,10 +35,13 @@ configure({
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
+  const { plugins, ...propsWithoutPlugins } = props
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
-        <InnerDocument {...props} />
+        <PluginsContext.Provider value={plugins}>
+          <InnerDocument {...propsWithoutPlugins} />
+        </PluginsContext.Provider>
       </DndProvider>
     </Provider>
   )
@@ -50,13 +54,13 @@ const hotKeysKeyMap = {
 
 export function InnerDocument({
   children,
-  plugins,
   editable = true,
   onChange,
   ...props
-}: EditorProps) {
+}: Omit<EditorProps, 'plugins'>) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
+  const plugins = usePlugins()
 
   useEffect(() => {
     if (typeof onChange !== 'function') return
@@ -101,13 +105,11 @@ export function InnerDocument({
       handlers={hotKeysHandlers}
     >
       <div className="relative">
-        <PluginsContext.Provider value={plugins}>
-          <PreferenceContextProvider>
-            <EditableContext.Provider value={editableContextValue}>
-              {renderChildren(id)}
-            </EditableContext.Provider>
-          </PreferenceContextProvider>
-        </PluginsContext.Provider>
+        <PreferenceContextProvider>
+          <EditableContext.Provider value={editableContextValue}>
+            {renderChildren(id)}
+          </EditableContext.Provider>
+        </PreferenceContextProvider>
       </div>
     </GlobalHotKeys>
   )
