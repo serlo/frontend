@@ -1,46 +1,7 @@
+import clsx from 'clsx'
 import { useState, useCallback, useEffect } from 'react'
-import styled from 'styled-components'
 
 import { EditableContext } from '../core'
-
-const NoClickArea = styled.div<{ active: boolean }>((props) => {
-  return {
-    pointerEvents: props.active ? 'unset' : 'none',
-    position: 'relative',
-  }
-})
-
-const Overlay = styled.div<{ active: boolean; blur: boolean }>((props) => {
-  return {
-    display: props.active ? 'none' : undefined,
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    top: 0,
-    backgroundColor: props.blur ? 'rgba(255,255,255,0.8)' : undefined,
-    zIndex: 20,
-  }
-})
-
-const ButtonWrapper = styled.div({
-  width: '100%',
-  height: '100%',
-  textAlign: 'center',
-  display: 'flex',
-})
-
-const ActivateButton = styled.button({
-  pointerEvents: 'all',
-  color: 'white',
-  border: 'none',
-  borderRadius: '5px',
-  padding: '2px 10px',
-  textAlign: 'center',
-  outline: 'none',
-  backgroundColor: 'rgb(0,126,193)',
-  zIndex: 10,
-  margin: 'auto',
-})
 
 export function PreviewOverlay(props: PreviewOverlayProps) {
   const [active, setActiveState] = useState(false)
@@ -62,20 +23,30 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   }, [props.focused, active, setActive])
 
   return (
-    <NoClickArea active={active}>
-      <Overlay blur={props.focused} active={active}>
+    <div
+      className={clsx(
+        'relative',
+        active ? 'pointer-events-[unset]' : 'pointer-events-none'
+      )}
+    >
+      <div
+        className={clsx(
+          'absolute top-0 z-20 h-full w-full',
+          props.focused && 'bg-white',
+          active && 'hidden'
+        )}
+      >
         {props.focused ? (
-          <ButtonWrapper>
-            <ActivateButton
-              onClick={() => {
-                setActive(true)
-              }}
+          <div className="flex h-full w-full text-center">
+            <button
+              className="pointer-events-[all] serlo-button-editor-primary z-10 m-auto"
+              onClick={() => setActive(true)}
             >
               Aktivieren
-            </ActivateButton>
-          </ButtonWrapper>
+            </button>
+          </div>
         ) : null}
-      </Overlay>
+      </div>
       {!props.editable ? (
         <EditableContext.Provider value={false}>
           {props.children}
@@ -84,17 +55,16 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
         props.children
       )}
       {active ? (
-        <ButtonWrapper>
-          <ActivateButton
-            onClick={() => {
-              setActive(false)
-            }}
+        <div className="flex h-full w-full text-center">
+          <button
+            className="pointer-events-[all] serlo-button-editor-primary z-10 m-auto"
+            onClick={() => setActive(false)}
           >
             Editieren
-          </ActivateButton>
-        </ButtonWrapper>
+          </button>
+        </div>
       ) : null}
-    </NoClickArea>
+    </div>
   )
 }
 

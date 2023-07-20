@@ -5,7 +5,7 @@ import { Upload } from './upload'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { EditorButton, EditorInput } from '@/serlo-editor/editor-ui'
+import { EditorInput } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@/serlo-editor/plugin'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
@@ -33,7 +33,8 @@ export function PrimaryControls({ config, state, autofocusRef }: ImageProps) {
         ref={autofocusRef}
       />
       {isTempFile(src.value) && src.value.failed ? (
-        <EditorButton
+        <button
+          className="serlo-button-editor-primary"
           onClick={() => {
             if (isTempFile(src.value) && src.value.failed) {
               void src.upload(src.value.failed, config.upload)
@@ -41,7 +42,7 @@ export function PrimaryControls({ config, state, autofocusRef }: ImageProps) {
           }}
         >
           <FaIcon icon={faRedoAlt} />
-        </EditorButton>
+        </button>
       ) : null}
       <Upload onFile={(file) => src.upload(file, config.upload)} />
     </p>
