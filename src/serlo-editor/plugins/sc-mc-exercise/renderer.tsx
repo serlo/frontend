@@ -77,7 +77,7 @@ export function ScMcExerciseRenderer({
                   />
                   <label
                     className={clsx(
-                      'serlo-styled-label',
+                      'serlo-spacing-fix flex cursor-pointer items-center [&>div>*]:ml-2',
                       focused === i && 'outline-gray'
                     )}
                     htmlFor={id}
@@ -157,9 +157,10 @@ export function ScMcExerciseRenderer({
                     onBlur={() => setFocused(undefined)}
                   />
                   <label
-                    className={clsx('serlo-styled-label', {
-                      'outline-gray': focused === i,
-                    })}
+                    className={clsx(
+                      'serlo-spacing-fix flex cursor-pointer items-center [&>div>*]:ml-2',
+                      focused === i && 'outline-gray'
+                    )}
                     htmlFor={id}
                   >
                     <FaIcon

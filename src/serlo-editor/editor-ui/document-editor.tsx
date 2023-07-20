@@ -1,10 +1,11 @@
 import { faClose, faCog } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import { useState, useMemo, useRef } from 'react'
-import styled from 'styled-components'
 
 import { PluginToolbarOverlayButton } from '../plugin/plugin-toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
 export interface DocumentEditorProps {
   children: React.ReactNode // The rendered document
@@ -20,7 +21,7 @@ export interface DocumentEditorProps {
   focused: boolean // `true` if the document is focused
 }
 
-// @TODO Rename this to `PluginSettings` or something similar after moving the toolbar out of it.
+// TODO: Rename this to `PluginSettings` or something similar after moving the toolbar out of it.
 export function DocumentEditor({
   focused,
   children,
@@ -87,24 +88,50 @@ export function DocumentEditor({
   )
 
   return (
-    <Container
-      className={
+    <div
+      className={clsx(
         isFocused || isHovered
-          ? 'default-document-editor-container document-editor-container'
-          : 'document-editor-container'
-      }
-      isFocused={isFocused}
-      isHovered={isHovered}
+          ? 'default-document-editor-container document-editor-container py-0'
+          : 'document-editor-container',
+        'relative -ml-[7px] mb-6 min-h-[10px] border-l-2 pl-[5px] transition-all',
+        isFocused || isHovered
+          ? isFocused
+            ? 'border-almost-black'
+            : 'border-gray-200'
+          : 'border-transparent',
+        !isFocused && isHovered
+          ? tw`
+            hover:[&:has(.default-document-editor-container):hover>.toolbar-container>div]:border-transparent
+            hover:[&:has(.default-document-editor-container):hover>.toolbar-container>div]:opacity-0
+          `
+          : ''
+      )}
       onMouseEnter={() => setHasHover(true)}
       onMouseLeave={() => setHasHover(false)}
     >
       {children}
-      <ToolbarContainer isFocused={isFocused} isHovered={isHovered}>
-        <ToolbarContent isFocused={isFocused} isHovered={isHovered}>
+      <div
+        className={clsx(
+          'toolbar-container absolute left-0 top-0 -translate-x-full [transform-origin:center_top]',
+          isHovered ? 'z-[21]' : 'z-auto',
+          isFocused || isHovered
+            ? 'pointer-events-auto'
+            : 'pointer-events-none',
+          tw`
+            before:pointer-events-none before:absolute before:right-0 before:top-0 before:z-[15]
+            before:h-full before:w-0.5 before:opacity-100 before:content-[_]`
+        )}
+      >
+        <div
+          className={clsx(
+            'relative z-[16] mr-0.5 flex flex-col items-end rounded-l-md bg-white pb-2.5 transition-opacity',
+            isFocused ? 'opacity-100' : isHovered ? 'opacity-70' : 'opacity-0'
+          )}
+        >
           {renderToolbar ? renderToolbar(toolbar) : toolbar}
-        </ToolbarContent>
-      </ToolbarContainer>
-    </Container>
+        </div>
+      </div>
+    </div>
   )
 
   function showSettings(): boolean {
@@ -123,75 +150,3 @@ export function DocumentEditor({
     return hasToolbar || renderToolbar !== undefined
   }
 }
-
-interface ToolbarProps {
-  isFocused: boolean
-  isHovered: boolean
-}
-
-const ToolbarContent = styled.div<ToolbarProps>(({ isFocused, isHovered }) => ({
-  backgroundColor: '#fff',
-  borderRadius: '5px 0 0 5px',
-  marginRight: '2px',
-  paddingBottom: '10px',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-end',
-  opacity: isFocused ? 1 : isHovered ? 0.7 : 0,
-  zIndex: 16,
-  position: 'relative',
-  transition: '250ms opacity ease-in-out',
-}))
-
-const ToolbarContainer = styled.div<ToolbarProps>(
-  ({ isFocused, isHovered }) => ({
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    transformOrigin: 'center top',
-    transform: 'translateX(-100%)',
-    pointerEvents: isFocused || isHovered ? 'all' : 'none',
-    zIndex: isHovered ? '21' : 'auto',
-    '&::before': {
-      position: 'absolute',
-      pointerEvents: 'none',
-      top: 0,
-      right: 0,
-      content: '""',
-      opacity: 1,
-      height: '100%',
-      width: '2px',
-      zIndex: 15,
-    },
-  })
-)
-
-const Container = styled.div<Partial<ToolbarProps>>(
-  ({ isFocused, isHovered }) => ({
-    minHeight: '10px',
-    marginBottom: '25px',
-    marginLeft: '-7px',
-    position: 'relative',
-    borderLeft: '2px solid transparent',
-    paddingLeft: '5px',
-    transition: '250ms all ease-in-out',
-
-    ...(isFocused || isHovered
-      ? {
-          borderColor: isFocused ? '#333' : '#eee',
-          paddingTop: 0,
-          paddingBottom: 0,
-        }
-      : {}),
-
-    ...(!isFocused && isHovered
-      ? {
-          [`&:hover:has(.default-document-editor-container:hover) > ${ToolbarContainer} > ${ToolbarContent}`]:
-            {
-              opacity: 0,
-              borderColor: 'transparent',
-            },
-        }
-      : {}),
-  })
-)
