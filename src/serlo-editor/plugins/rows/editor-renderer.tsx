@@ -3,7 +3,6 @@ import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
-import { v4 } from 'uuid'
 
 import { RowsPluginConfig, RowsPluginState } from '.'
 import { useCanDrop } from './components/use-can-drop'
@@ -16,6 +15,7 @@ import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
+  selectSerializedDocumentWithoutIds,
   store,
 } from '@/serlo-editor/store'
 
@@ -26,14 +26,6 @@ interface RowDragObject {
 }
 
 const validFileTypes = [NativeTypes.FILE, NativeTypes.URL]
-
-const cloneDocumentWithNewIds = (document: DocumentState) => {
-  const documentString = JSON.stringify(document)
-
-  return JSON.parse(documentString, (key: string, value: unknown) =>
-    key === 'id' ? v4() : value
-  ) as DocumentState
-}
 
 export function EditorRowRenderer({
   config,
@@ -185,12 +177,12 @@ export function EditorRowRenderer({
                 <button
                   className="serlo-button-editor-secondary mr-8 mt-4 text-sm"
                   onClick={() => {
-                    const document = selectSerializedDocument(
+                    const document = selectSerializedDocumentWithoutIds(
                       store.getState(),
                       row.id
                     )
                     if (!document) return
-                    rows.insert(index, cloneDocumentWithNewIds(document))
+                    rows.insert(index, document)
                     close()
                   }}
                 >
