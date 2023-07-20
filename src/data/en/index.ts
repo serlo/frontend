@@ -678,6 +678,7 @@ export const loggedInData = {
           description:
             'A container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
+          typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed',

@@ -8,11 +8,19 @@ import {
   defaultStyle,
   types,
 } from './renderer'
+import { BoxToolbar } from './toolbar'
+import { useInlineTextEditor } from '../text/hooks/use-inline-text-editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
 import { useAppSelector } from '@/serlo-editor/store'
+
+const titleFormattingOptions = [
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.code,
+]
 
 export function BoxEditor(props: BoxProps) {
   const { title, type, content, anchorId } = props.state
@@ -29,6 +37,11 @@ export function BoxEditor(props: BoxProps) {
   )
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
+
+  const titleEditor = useInlineTextEditor({
+    id: title.id,
+    formattingOptions: titleFormattingOptions,
+  })
 
   if (hasNoType) {
     return (
@@ -48,6 +61,7 @@ export function BoxEditor(props: BoxProps) {
 
   return (
     <>
+      {renderPluginToolbar()}
       <Renderer
         boxType={typedValue}
         title={
@@ -55,6 +69,12 @@ export function BoxEditor(props: BoxProps) {
             {title.render({
               config: {
                 placeholder: editorStrings.plugins.box.titlePlaceholder,
+                controls: {
+                  editor: titleEditor.editor,
+                  textFormattingOptions: titleEditor.textFormattingOptions,
+                  isChanged: titleEditor.isChanged,
+                  onChange: titleEditor.setIsChanged,
+                },
               },
             })}
           </div>
@@ -67,6 +87,18 @@ export function BoxEditor(props: BoxProps) {
       {renderSettings()}
     </>
   )
+
+  function renderPluginToolbar() {
+    if (!props.focused && !titleEditor.isFocused) return null
+
+    return (
+      <BoxToolbar
+        {...props}
+        controls={titleEditor.toolbarControls}
+        editor={titleEditor.editor}
+      />
+    )
+  }
 
   function renderInlineSettings() {
     return (

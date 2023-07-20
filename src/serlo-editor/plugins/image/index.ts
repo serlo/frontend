@@ -25,7 +25,6 @@ const imageState = object({
       config: {
         formattingOptions: ['code', 'katex', 'links', 'math', 'richText'],
         noLinebreaks: true,
-        hasOwnToolbar: false,
       },
     })
   ),
