@@ -219,8 +219,8 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       return
     }
 
-    const startDate = new Date('2023-07-25T00:00:00+02:00')
-    const endDate = new Date('2023-07-26T00:00:00+02:00')
+    const startDate = new Date('2023-07-22T00:00:00+02:00')
+    const endDate = new Date('2023-07-24T00:00:00+02:00')
 
     // pop-up will vanish after survey run
     if (Date.now() > endDate.getTime()) {
