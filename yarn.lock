@@ -2975,20 +2975,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ory/client@npm:^1.1.0, @ory/client@npm:^1.1.21":
-  version: 1.1.21
-  resolution: "@ory/client@npm:1.1.21"
+"@ory/client@npm:^1.1.41":
+  version: 1.1.41
+  resolution: "@ory/client@npm:1.1.41"
   dependencies:
     axios: ^0.21.4
-  checksum: 57b7267ef1fd90bccda5d2578f9584b66841a22ba637b2659da3c3f72871a77e980a8fdfc075e7c35175ec449b066d86ba800043b5c81ab7fe543b82f1cc3316
+  checksum: 573f7d6c791dcb8a4e86e115ade92cfa709c21109d6b1ca9d4a261d6ea3b8aaad12269aa22fa928d9cf083fb4aed5650b935755e9783405e6a44f858ceb3c9bc
   languageName: node
   linkType: hard
 
-"@ory/integrations@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@ory/integrations@npm:1.1.0"
+"@ory/integrations@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@ory/integrations@npm:1.1.4"
   dependencies:
-    "@ory/client": ^1.1.0
     "@types/tldjs": ^2.3.1
     cookie: ^0.4.1
     istextorbinary: ^6.0.0
@@ -2999,9 +2998,9 @@ __metadata:
     set-cookie-parser: ^2.4.8
     tldjs: ^2.3.1
   peerDependencies:
-    "@ory/client": ^0.2.0-alpha.16
+    "@ory/client": ">1.1.38"
     next: ">=12.0.10"
-  checksum: 38e38fad8e09312672cb3ce227e1547fbce33842e591b090d148f47a4fd8c7cbed21f30c16501f514493739a3507aabb2601f990cef14c557a94912de26321c2
+  checksum: 406c4736bfeb36d9619d941b1c528730139ee4bdcbd8abd39596824eb57b338a9c5bfcf3a55e3d3b534fa3d25b74151331ba343823ba56b6e9568b74017e4a4d
   languageName: node
   linkType: hard
 
@@ -4146,8 +4145,8 @@ __metadata:
     "@graphql-codegen/typescript": 4.0.1
     "@graphql-codegen/typescript-operations": 4.0.1
     "@next/bundle-analyzer": ^13.4.9
-    "@ory/client": ^1.1.21
-    "@ory/integrations": ^1.1.0
+    "@ory/client": ^1.1.41
+    "@ory/integrations": ^1.1.4
     "@prezly/slate-lists": ^0.87.0
     "@prisma/client": ^5.0.0
     "@radix-ui/react-navigation-menu": ^1.1.1
