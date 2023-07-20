@@ -106,17 +106,22 @@ export function EquationsEditor(props: EquationsProps) {
 
   const equationsStrings = useEditorStrings().plugins.equations
 
-  // TODO: for some reason focus switches back to 'firstExplanation' all the time, especially after editing
-  // could not find the problem so far
+  // bug: needs two clicks to actually get cursor
+  // bug: creating a new line conflicts with previous lines
+
   // the cleaner solution would be to change the hook to a function so we can map the steps and return an editor for each step…
 
+  const editorOnFirstExplanation =
+    gridFocus.focus === 'firstExplanation' || gridFocus.focus === null
+
   const currentStepExplanationEditor = useInlineTextEditor({
-    id:
-      gridFocus.focus === 'firstExplanation' || gridFocus.focus === null
-        ? state.firstExplanation.id
-        : state.steps.length > gridFocus.focus.row
-        ? state.steps[gridFocus.focus.row].explanation.id
-        : state.firstExplanation.id,
+    id: editorOnFirstExplanation
+      ? state.firstExplanation.id
+      : state.steps[
+          gridFocus.focus && gridFocus.focus !== 'firstExplanation'
+            ? gridFocus.focus.row
+            : 0
+        ].explanation.id,
     formattingOptions: titleFormattingOptions,
   })
 
@@ -255,13 +260,17 @@ export function EquationsEditor(props: EquationsProps) {
                     <td colSpan={2} className="min-w-[10rem]">
                       {step.explanation.render({
                         config: {
-                          controls: {
-                            editor: currentStepExplanationEditor.editor,
-                            textFormattingOptions:
-                              currentStepExplanationEditor.textFormattingOptions,
-                            isChanged: currentStepExplanationEditor.isChanged,
-                            onChange: currentStepExplanationEditor.setIsChanged,
-                          },
+                          controls: editorOnFirstExplanation
+                            ? undefined
+                            : {
+                                editor: currentStepExplanationEditor.editor,
+                                textFormattingOptions:
+                                  currentStepExplanationEditor.textFormattingOptions,
+                                isChanged:
+                                  currentStepExplanationEditor.isChanged,
+                                onChange:
+                                  currentStepExplanationEditor.setIsChanged,
+                              },
                         },
                       })}
                     </td>
@@ -287,13 +296,15 @@ export function EquationsEditor(props: EquationsProps) {
             {state.firstExplanation.render({
               config: {
                 placeholder: equationsStrings.firstExplanation,
-                controls: {
-                  editor: currentStepExplanationEditor.editor,
-                  textFormattingOptions:
-                    currentStepExplanationEditor.textFormattingOptions,
-                  isChanged: currentStepExplanationEditor.isChanged,
-                  onChange: currentStepExplanationEditor.setIsChanged,
-                },
+                controls: editorOnFirstExplanation
+                  ? {
+                      editor: currentStepExplanationEditor.editor,
+                      textFormattingOptions:
+                        currentStepExplanationEditor.textFormattingOptions,
+                      isChanged: currentStepExplanationEditor.isChanged,
+                      onChange: currentStepExplanationEditor.setIsChanged,
+                    }
+                  : undefined,
               },
             })}
           </td>
