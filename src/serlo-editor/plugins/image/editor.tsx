@@ -1,7 +1,5 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useMemo, useState } from 'react'
-import { createEditor } from 'slate'
-import { withReact } from 'slate-react'
+import { useEffect } from 'react'
 
 import { ImageProps } from '.'
 import { PrimaryControls, SettingsControls } from './controls'
@@ -10,20 +8,18 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
-import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
+import { useInlineTextEditor } from '@/serlo-editor/plugins/text/hooks/use-inline-text-editor'
 import {
   store,
   selectHasFocusedChild,
   selectIsDocumentEmpty,
-  selectIsFocused,
-  useAppSelector,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-const formattingOptions = [
+const captionFormattingOptions = [
   TextEditorFormattingOption.richText,
   TextEditorFormattingOption.links,
   TextEditorFormattingOption.math,
@@ -31,8 +27,6 @@ const formattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const [isCaptionEditorChanged, setIsCaptionEditorChanged] = useState(0)
-
   const { editable, focused, state, config, id } = props
   const imageStrings = useEditorStrings().plugins.image
 
@@ -45,16 +39,10 @@ export function ImageEditor(props: ImageProps) {
   const isFailed = isTempFile(state.src.value) && state.src.value.failed
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
-  const textFormattingOptions = useFormattingOptions(formattingOptions)
-  const { createTextEditor, toolbarControls } = textFormattingOptions
-  const captionEditor = useMemo(
-    () => createTextEditor(withReact(createEditor())),
-    [createTextEditor]
-  )
-
-  const isCaptionFocused = useAppSelector((storeState) =>
-    selectIsFocused(storeState, state.caption.defined ? state.caption.id : '')
-  )
+  const captionEditor = useInlineTextEditor({
+    id: state.caption.defined ? state.caption.id : '',
+    formattingOptions: captionFormattingOptions,
+  })
 
   useEffect(() => {
     if (editable && !state.caption.defined) {
@@ -81,7 +69,7 @@ export function ImageEditor(props: ImageProps) {
   )
 
   function renderPluginToolbar() {
-    if (!focused && !isCaptionFocused) return null
+    if (!focused && !captionEditor.isFocused) return null
 
     return (
       <PluginToolbar
@@ -89,8 +77,8 @@ export function ImageEditor(props: ImageProps) {
         pluginType={EditorPluginType.Image}
         contentControls={
           <PluginToolbarTextControls
-            controls={toolbarControls}
-            editor={captionEditor}
+            controls={captionEditor.toolbarControls}
+            editor={captionEditor.editor}
           />
         }
         pluginControls={<DefaultControls pluginId={id} />}
@@ -120,10 +108,10 @@ export function ImageEditor(props: ImageProps) {
       config: {
         placeholder: imageStrings.captionPlaceholder,
         controls: {
-          editor: captionEditor,
-          textFormattingOptions,
-          isChanged: isCaptionEditorChanged,
-          onChange: setIsCaptionEditorChanged,
+          editor: captionEditor.editor,
+          textFormattingOptions: captionEditor.textFormattingOptions,
+          isChanged: captionEditor.isChanged,
+          onChange: captionEditor.setIsChanged,
         },
       },
     })

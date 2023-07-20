@@ -9,12 +9,12 @@ import {
   types,
 } from './renderer'
 import { BoxToolbar } from './toolbar'
-import { useInlineTextEditor } from '../text/hooks/use-inline-text-editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
+import { useInlineTextEditor } from '@/serlo-editor/plugins/text/hooks/use-inline-text-editor'
 import { useAppSelector } from '@/serlo-editor/store'
 
 const titleFormattingOptions = [
