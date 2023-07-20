@@ -26,13 +26,13 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
     <div
       className={clsx(
         'relative',
-        active ? 'pointer-events-[unset]' : 'pointer-events-none'
+        active ? 'pointer-events-none' : 'pointer-events-[unset]'
       )}
     >
       <div
         className={clsx(
           'absolute top-0 z-20 h-full w-full',
-          props.focused && 'bg-white',
+          props.focused && 'bg-white bg-opacity-80',
           active && 'hidden'
         )}
       >
