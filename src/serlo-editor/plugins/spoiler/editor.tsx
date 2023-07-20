@@ -1,9 +1,12 @@
 import { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SpoilerEditor(props: SpoilerProps) {
-  const { state, editable, autofocusRef } = props
+  const { state, editable, autofocusRef, id, focused } = props
   const editorStrings = useEditorStrings()
 
   const title = editable ? (
@@ -19,10 +22,25 @@ export function SpoilerEditor(props: SpoilerProps) {
   )
 
   return (
-    <SpoilerRenderer
-      title={<>{title}</>}
-      content={state.content.render()}
-      openOverwrite={editable} // should include focused but that's unreliable atm.
-    />
+    <>
+      {renderPluginToolbar()}
+      <SpoilerRenderer
+        title={<>{title}</>}
+        content={state.content.render()}
+        openOverwrite={editable} // should include focused but that's unreliable atm.
+      />
+    </>
   )
+
+  function renderPluginToolbar() {
+    if (!focused) return null
+
+    return (
+      <PluginToolbar
+        pluginId={id}
+        pluginType={EditorPluginType.Spoiler}
+        pluginControls={<DefaultControls pluginId={id} />}
+      />
+    )
+  }
 }
