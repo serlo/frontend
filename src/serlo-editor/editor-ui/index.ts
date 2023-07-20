@@ -1,4 +1,3 @@
-export * from './editor-button'
 export * from './editor-input'
 export * from './editor-textarea'
 export * from './hover-overlay'

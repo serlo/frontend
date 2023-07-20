@@ -1,4 +1,5 @@
-import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTimes, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import clsx from 'clsx'
 import styled from 'styled-components'
 
 import { FaIcon } from '@/components/fa-icon'
@@ -13,90 +14,15 @@ interface AddButtonProps {
 
 export function AddButton({ title, onClick, children }: AddButtonProps) {
   return (
-    <AddButtonComponent title={title} onMouseDown={onClick}>
+    <button
+      title={title}
+      onMouseDown={onClick}
+      className="serlo-button-editor-primary mr-2"
+    >
       <FaIcon icon={faPlus} /> {children}
-    </AddButtonComponent>
+    </button>
   )
 }
-
-const AddButtonComponent = styled.button({
-  margin: '5px',
-  width: '96%',
-  borderRadius: '10px',
-  backgroundColor: colors.editorPrimary100,
-  textAlign: 'left',
-  color: colors.almostBlack,
-  minHeight: '50px',
-  padding: '5px',
-  outline: 'none',
-  '&:hover': { backgroundColor: colors.editorPrimary200 },
-})
-
-const AnswerContainer = styled.div({
-  marginBottom: '10px',
-  display: 'flex',
-  alignItems: 'center',
-})
-
-const CheckboxContainer = styled.div({
-  width: '10%',
-  textAlign: 'center',
-  marginRight: '10px',
-  fontWeight: 'bold',
-})
-
-const RemoveButton = styled.button({
-  borderRadius: '50%',
-  outline: 'none',
-  background: 'white',
-  zIndex: 20,
-  float: 'right',
-  transform: 'translate(50%, -40%)',
-  '&:hover': {
-    border: `3px solid ${colors.brand}`,
-    color: colors.brand,
-  },
-})
-
-const FeedbackField = styled.div({
-  paddingLeft: '20px',
-  paddingBottom: '10px',
-  paddingTop: '10px',
-  marginTop: '5px',
-})
-
-const FramedContainer = styled.div<{ focused: boolean }>(({ focused }) => {
-  const defaultBorders = {
-    border: '2px solid lightgrey',
-    [`${RemoveButton}`]: {
-      border: '2px solid lightgrey',
-      color: 'lightgrey',
-    },
-    [`${FeedbackField}`]: {
-      borderTop: '2px solid lightgrey',
-    },
-  }
-  const focusedBorders = {
-    border: `3px solid ${colors.brand}`,
-    [`${RemoveButton}`]: {
-      border: `3px solid ${colors.brand}`,
-      color: colors.brand,
-    },
-    [`${FeedbackField}`]: {
-      borderTop: `2px solid ${colors.brand}`,
-    },
-  }
-
-  return {
-    width: '100%',
-    marginLeft: '10px',
-    borderRadius: '10px',
-
-    ...(focused ? focusedBorders : defaultBorders),
-    '&:focus-within': focusedBorders,
-  }
-})
-const AnswerField = styled.div({ paddingLeft: '20px', paddingTop: '10px' })
 
 const Container = styled.div<{ isRadio: boolean; checked: boolean }>(
   ({ isRadio, checked }) => {
@@ -157,36 +83,34 @@ export function InteractiveAnswer(props: InteractiveAnswerProps) {
   const { strings } = useInstanceData()
 
   return (
-    <AnswerContainer>
-      <CheckboxContainer>
+    <div className="relative mb-2.5 flex items-center border-y-2 border-editor-primary">
+      <div className="mr-2.5 w-[10%] text-center font-bold">
         Richtig?
         <CheckElement
           isRadio={props.isRadio || false}
           isActive={props.isActive || false}
           handleChange={props.handleChange}
         />
-      </CheckboxContainer>
-      <FramedContainer
-        focused={
-          props.answerID === props.focusedElement ||
-          props.feedbackID === props.focusedElement
-        }
-      >
-        <AnswerField>
+      </div>
+      <div className="ml-2.5 w-full rounded-sm">
+        <div className="pl-5 pt-2.5">
           <>
             <label className="block">{strings.content.exercises.answer}:</label>
             {props.answer}
           </>
-        </AnswerField>
-        <RemoveButton onClick={props.remove}>
-          <FaIcon icon={faTimes} />
-        </RemoveButton>
-        <FeedbackField>
+        </div>
+        <button
+          onClick={props.remove}
+          className="serlo-button-editor-secondary absolute right-1 top-1.5 z-20"
+        >
+          <FaIcon icon={faTrashAlt} />
+        </button>
+        <div className="mt-1.5 py-2.5 pl-5">
           <label className="block">{strings.content.exercises.feedback}:</label>
           {props.feedback}
-        </FeedbackField>
-      </FramedContainer>
-    </AnswerContainer>
+        </div>
+      </div>
+    </div>
   )
 }
 

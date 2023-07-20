@@ -36,12 +36,13 @@ export function DocumentEditor({
   const editorStrings = useEditorStrings()
 
   const shouldShowSettings = showSettings()
+
   const renderSettingsContent = useMemo<typeof renderSettings>(() => {
     return shouldShowSettings
       ? (children, { close }) => (
           <>
-            <Header className="mb-4">
-              <H4>{editorStrings.edtrIo.extendedSettings}</H4>
+            <div className="mb-4 flex items-center justify-between">
+              <h4 className="mr-6">{editorStrings.edtrIo.extendedSettings}</h4>
               <button
                 onClick={() => close()}
                 className="serlo-button-editor-secondary"
@@ -49,7 +50,7 @@ export function DocumentEditor({
                 <span className="sr-only">{editorStrings.edtrIo.close}</span>
                 <FaIcon icon={faClose} />
               </button>
-            </Header>
+            </div>
             {renderSettings?.(children, { close }) || children}
           </>
         )
@@ -194,13 +195,3 @@ const Container = styled.div<Partial<ToolbarProps>>(
       : {}),
   })
 )
-
-const Header = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-})
-
-const H4 = styled.h4({
-  marginRight: '25px',
-})

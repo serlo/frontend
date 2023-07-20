@@ -1,16 +1,15 @@
+import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import Modal from 'react-modal'
 
-import { Button } from './button'
-import { Dropdown, Option } from './dropdown'
-import { InlineCheckbox } from './inline-checkbox'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
 import { EditorTextarea, HoverOverlayOld } from '../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
 
 const mathEditorTextareaStyle = {
   color: 'black',
@@ -215,39 +214,43 @@ export function MathEditor(props: MathEditorProps) {
         {helpOpen ? null : (
           <HoverOverlayOld position="above" anchor={anchorRef}>
             <div
-              onClick={(e) => {
-                e.stopPropagation()
-              }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-editor-primary-100 p-2"
             >
-              <Dropdown
+              <select
+                className={tw`
+                  ml-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100
+                  px-1 py-[2px] text-base text-almost-black transition-all
+                hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
+                `}
                 value={useVisualEditor ? 'visual' : 'latex'}
                 onChange={(e) => {
                   if (hasError) setHasError(false)
                   props.onEditorChange(e.target.value === 'visual')
                 }}
               >
-                <Option active={useVisualEditor} value="visual">
-                  {mathStrings.visual}
-                </Option>
-                <Option active={!useVisualEditor} value="latex">
-                  {mathStrings.latex}
-                </Option>
-              </Dropdown>
+                <option value="visual">{mathStrings.visual}</option>
+                <option value="latex">{mathStrings.latex}</option>
+              </select>
               {!disableBlock && (
-                <InlineCheckbox
-                  label={mathStrings.displayAsBlock}
-                  checked={!props.inline}
-                  onChange={(checked) => {
-                    if (typeof props.onInlineChange === 'function') {
-                      props.onInlineChange(!checked)
-                    }
+                <button
+                  className="mx-2 rounded-md border border-gray-500 px-1 text-base text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                  onClick={() => {
+                    if (props.onInlineChange)
+                      props.onInlineChange(!props.inline)
                   }}
-                />
+                >
+                  {mathStrings.displayAsBlock}{' '}
+                  <FaIcon icon={props.inline ? faCircle : faCheckCircle} />
+                </button>
               )}
               {useVisualEditor && (
-                <Button onMouseDown={() => setHelpOpen(true)}>
+                <button
+                  onMouseDown={() => setHelpOpen(true)}
+                  className="mr-2 text-almost-black hover:text-editor-primary"
+                >
                   <FaIcon icon={faQuestionCircle} />
-                </Button>
+                </button>
               )}
               {hasError && (
                 <>
