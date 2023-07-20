@@ -23,12 +23,7 @@ export function PreviewOverlay(props: PreviewOverlayProps) {
   }, [props.focused, active, setActive])
 
   return (
-    <div
-      className={clsx(
-        'relative',
-        active ? 'pointer-events-none' : 'pointer-events-[unset]'
-      )}
-    >
+    <div className="relative">
       <div
         className={clsx(
           'absolute top-0 z-20 h-full w-full',
