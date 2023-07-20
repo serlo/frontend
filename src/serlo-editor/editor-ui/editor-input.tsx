@@ -14,11 +14,14 @@ interface EditorInputProps
 
 export const EditorInput = forwardRef<HTMLInputElement, EditorInputProps>(
   function EditorInput({ label, ...props }, ref) {
+    const inputProps = { ...props }
+    delete inputProps.inputWidth
+
     return (
       <label className="text-almost-black" style={{ width: props.width }}>
         {label ?? ''}
         <input
-          {...props}
+          {...inputProps}
           ref={ref}
           className={tw`
             rounded-xl border-2 border-editor-primary-100 bg-editor-primary-100
