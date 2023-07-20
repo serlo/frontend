@@ -19,6 +19,7 @@ interface InlineMathProps {
 }
 
 const preferenceKey = 'katex:usevisualmath'
+
 setDefaultPreference(preferenceKey, true)
 
 export function InlineMath(props: InlineMathProps) {

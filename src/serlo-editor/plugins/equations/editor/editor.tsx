@@ -38,6 +38,7 @@ import {
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
+// TODO: rename
 const titleFormattingOptions = [
   TextEditorFormattingOption.colors,
   TextEditorFormattingOption.headings,
@@ -105,8 +106,17 @@ export function EquationsEditor(props: EquationsProps) {
 
   const equationsStrings = useEditorStrings().plugins.equations
 
-  const titleEditor = useInlineTextEditor({
-    id: state.firstExplanation.id,
+  // TODO: for some reason focus switches back to 'firstExplanation' all the time, especially after editing
+  // could not find the problem so far
+  // the cleaner solution would be to change the hook to a function so we can map the steps and return an editor for each step…
+
+  const currentStepExplanationEditor = useInlineTextEditor({
+    id:
+      gridFocus.focus === 'firstExplanation' || gridFocus.focus === null
+        ? state.firstExplanation.id
+        : state.steps.length > gridFocus.focus.row
+        ? state.steps[gridFocus.focus.row].explanation.id
+        : state.firstExplanation.id,
     formattingOptions: titleFormattingOptions,
   })
 
@@ -119,16 +129,7 @@ export function EquationsEditor(props: EquationsProps) {
             state.firstExplanation.id
           ) ? null : (
             <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
-              {state.firstExplanation.render({
-                config: {
-                  controls: {
-                    editor: titleEditor.editor,
-                    textFormattingOptions: titleEditor.textFormattingOptions,
-                    isChanged: titleEditor.isChanged,
-                    onChange: titleEditor.setIsChanged,
-                  },
-                },
-              })}
+              {state.firstExplanation.render()}
             </div>
           )
         }
@@ -161,11 +162,11 @@ export function EquationsEditor(props: EquationsProps) {
 
   return (
     <>
-      {!props.focused && !titleEditor.isFocused ? null : (
+      {!props.focused && !currentStepExplanationEditor.isFocused ? null : (
         <EquationsToolbar
           {...props}
-          controls={titleEditor.toolbarControls}
-          editor={titleEditor.editor}
+          controls={currentStepExplanationEditor.toolbarControls}
+          editor={currentStepExplanationEditor.editor}
         />
       )}
 
@@ -208,25 +209,6 @@ export function EquationsEditor(props: EquationsProps) {
           },
         }}
       >
-        {props.renderIntoSettings(
-          <div>
-            <label htmlFor="transformationTarget">
-              {equationsStrings.mode}:
-            </label>{' '}
-            <select
-              id="transformationTarget"
-              value={transformationTarget}
-              onChange={(e) => state.transformationTarget.set(e.target.value)}
-            >
-              <option value={TransformationTarget.Equation}>
-                {equationsStrings.transformationOfEquations}
-              </option>
-              <option value={TransformationTarget.Term}>
-                {equationsStrings.transformationOfTerms}
-              </option>
-            </select>
-          </div>
-        )}
         <div className="py-2.5">
           <table className="whitespace-nowrap">
             {renderFirstExplanation()}
@@ -271,7 +253,17 @@ export function EquationsEditor(props: EquationsProps) {
                       <td />
                     )}
                     <td colSpan={2} className="min-w-[10rem]">
-                      {step.explanation.render()}
+                      {step.explanation.render({
+                        config: {
+                          controls: {
+                            editor: currentStepExplanationEditor.editor,
+                            textFormattingOptions:
+                              currentStepExplanationEditor.textFormattingOptions,
+                            isChanged: currentStepExplanationEditor.isChanged,
+                            onChange: currentStepExplanationEditor.setIsChanged,
+                          },
+                        },
+                      })}
                     </td>
                   </tr>
                 )
@@ -296,10 +288,11 @@ export function EquationsEditor(props: EquationsProps) {
               config: {
                 placeholder: equationsStrings.firstExplanation,
                 controls: {
-                  editor: titleEditor.editor,
-                  textFormattingOptions: titleEditor.textFormattingOptions,
-                  isChanged: titleEditor.isChanged,
-                  onChange: titleEditor.setIsChanged,
+                  editor: currentStepExplanationEditor.editor,
+                  textFormattingOptions:
+                    currentStepExplanationEditor.textFormattingOptions,
+                  isChanged: currentStepExplanationEditor.isChanged,
+                  onChange: currentStepExplanationEditor.setIsChanged,
                 },
               },
             })}
