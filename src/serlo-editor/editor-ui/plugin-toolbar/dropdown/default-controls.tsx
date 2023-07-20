@@ -1,10 +1,12 @@
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
+import { v4 } from 'uuid'
 
 import { DropdownButton } from './dropdown-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import {
+  DocumentState,
   insertPluginChildAfter,
   removePluginChild,
   selectParent,
@@ -15,6 +17,14 @@ import {
 
 interface DefaultControlsProps {
   pluginId: string
+}
+
+const cloneDocumentWithNewIds = (document: DocumentState) => {
+  const documentString = JSON.stringify(document)
+
+  return JSON.parse(documentString, (key: string, value: unknown) =>
+    key === 'id' ? v4() : value
+  ) as DocumentState
 }
 
 // TODO: Think about renaming to "DefaultPluginControls" to make the scope explicit
@@ -35,7 +45,7 @@ export function DefaultControls({ pluginId }: DefaultControlsProps) {
       insertPluginChildAfter({
         parent: parent.id,
         sibling: pluginId,
-        document,
+        document: cloneDocumentWithNewIds(document),
         plugins,
       })
     )
