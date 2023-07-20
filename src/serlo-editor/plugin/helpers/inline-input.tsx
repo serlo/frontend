@@ -35,12 +35,13 @@ export function InlineInput(props: {
   return (
     <Slate
       editor={editor}
-      value={initialValue}
+      initialValue={initialValue}
       onChange={(newValue) => {
         onChange(serialize(newValue))
       }}
     >
       <Editable
+        className="focus:outline-none"
         placeholder={placeholder}
         onFocus={() => {
           setTimeout(() => {

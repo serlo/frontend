@@ -1,5 +1,5 @@
 import CSS from 'csstype'
-import { ReactNode } from 'react-markdown'
+import { ReactNode } from 'react'
 import { RenderLeafProps } from 'slate-react'
 
 import { textColors } from '../hooks/use-text-config'
