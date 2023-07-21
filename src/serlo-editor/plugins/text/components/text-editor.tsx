@@ -389,7 +389,7 @@ export function TextEditor(props: TextEditorProps) {
       )}
       <Slate
         editor={editor}
-        initialValue={state.value.value}
+        value={state.value.value}
         onChange={handleEditorChange}
       >
         <Editable

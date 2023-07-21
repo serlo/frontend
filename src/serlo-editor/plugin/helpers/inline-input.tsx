@@ -35,7 +35,7 @@ export function InlineInput(props: {
   return (
     <Slate
       editor={editor}
-      initialValue={initialValue}
+      value={initialValue}
       onChange={(newValue) => {
         onChange(serialize(newValue))
       }}
