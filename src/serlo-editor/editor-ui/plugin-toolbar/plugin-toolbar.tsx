@@ -48,6 +48,9 @@ export function PluginToolbar({
     return null
   }, [pluginTypesOfAncestors])
 
+  // eslint-disable-next-line no-console
+  console.log(parentType)
+
   return (
     <div
       className={clsx(
@@ -82,8 +85,8 @@ export function PluginToolbar({
         ) : null}
       </div>
 
-      {/* Plugin ancestry indicator */}
-      {parentType && (
+      {/* Plugin ancestry indicator – do after rest of toolbar is ok */}
+      {/* {parentType && (
         <div
           className={tw`
             absolute -top-6 right-0 h-6 rounded-t-md bg-gray-200 px-2 pt-0.5
@@ -92,7 +95,7 @@ export function PluginToolbar({
         >
           {parentType}
         </div>
-      )}
+      )} */}
     </div>
   )
 }
