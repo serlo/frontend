@@ -670,7 +670,7 @@ export const loggedInData = {
         anchor: {
           title: 'Anchor',
           description: 'Insert an anchor.',
-          identifier: 'Identifier',
+          identifier: 'Identifier (e.g. "long-explanation")',
           anchorId: 'ID of the anchor',
         },
         box: {
