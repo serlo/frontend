@@ -306,7 +306,7 @@ function RenderIntoSettings({
   settingsRef: React.MutableRefObject<HTMLDivElement>
 }) {
   useEffect(() => {
-    setHasSettings(true)
+    setHasSettings(children ? true : false)
   })
   if (!settingsRef.current) return null
   return createPortal(<IgnoreKeys>{children}</IgnoreKeys>, settingsRef.current)
