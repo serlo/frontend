@@ -4148,19 +4148,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@serlo/api@npm:^0.47.0":
-  version: 0.47.0
-  resolution: "@serlo/api@npm:0.47.0"
-  checksum: 39be763720751ffc66bd430cb78f0d492a9abbb3b3d2922fc1b0d3c493a8d0d8f6b54f9474bb2b06a8b3755010a801e173941067542774da0a167490f1eab20c
+"@serlo/api@npm:^0.52.1":
+  version: 0.52.1
+  resolution: "@serlo/api@npm:0.52.1"
+  checksum: 5b883f779436c827c74c238acf07167b94032a9735396698b935c51924b6f7cfe3ba9af82544ac6c9d307f877c8d272324a72c4fe3bad5f8ea079d185e08566c
   languageName: node
   linkType: hard
 
-"@serlo/authorization@npm:^0.47.0":
-  version: 0.47.0
-  resolution: "@serlo/authorization@npm:0.47.0"
+"@serlo/authorization@npm:^0.52.1":
+  version: 0.52.1
+  resolution: "@serlo/authorization@npm:0.52.1"
   dependencies:
-    "@serlo/api": ^0.47.0
-  checksum: 1963220bfeaf974aa411ce7194c80d4b212188141aa418480fb3e9a2e0367c39f7f56c4f56690af1917d31dc3119368746ed6e551432b49ff0ba711db4c625e6
+    "@serlo/api": ^0.52.1
+  checksum: df31b452ff5aa97091c055c43c507ce50b623d395d113a65fdde30ffdf2bc02c2840fd8cdb83a20b825f5059d02d98b49c3820ac9e2c7f4f5f5a6408bcfc2525
   languageName: node
   linkType: hard
 
@@ -4187,7 +4187,7 @@ __metadata:
     "@prisma/client": ^5.0.0
     "@radix-ui/react-navigation-menu": ^1.1.1
     "@reduxjs/toolkit": ^1.9.5
-    "@serlo/authorization": ^0.47.0
+    "@serlo/authorization": ^0.52.1
     "@serlo/markdown": Entkenntnis/tmp-serlo-markdown
     "@svgr/webpack": ^8.0.1
     "@tippyjs/react": ^4.2.6
