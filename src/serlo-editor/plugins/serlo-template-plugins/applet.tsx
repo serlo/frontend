@@ -65,7 +65,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       {content.render()}
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}
@@ -73,7 +73,7 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
           entityType={UuidType.Applet}
         />
       )}
-      {props.renderIntoSettings(
+      {props.renderIntoOldSettings(
         <Settings>
           <Settings.Textarea
             label={appletStrings.seoTitle}

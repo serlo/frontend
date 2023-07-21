@@ -51,7 +51,7 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
       {content.render()}
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}

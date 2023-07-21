@@ -96,7 +96,7 @@ export function InputExerciseEditor(props: InputExerciseProps) {
           </AddButton>
         </>
       )}
-      {props.renderIntoSettings(
+      {props.renderIntoOldSettings(
         <OverlayInput
           label={inputExStrings.unit}
           value={state.unit.value}

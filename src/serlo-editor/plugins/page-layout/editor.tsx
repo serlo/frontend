@@ -27,7 +27,7 @@ export const PageLayoutEditor: React.FunctionComponent<
           />
         </div>
       )}
-      {props.renderIntoSettings(renderInlineSettings())}
+      {props.renderIntoOldSettings(renderInlineSettings())}
       {/* Obviously a hack, good enough for now. */}
       <style jsx global>
         {`

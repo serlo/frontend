@@ -36,7 +36,7 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
 
   return (
     <>
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}

@@ -13,11 +13,11 @@ export interface DocumentEditorProps {
   toolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
   hasSettings: boolean // `true` if the document has rendered any settings
   hasToolbar: boolean // `true` if the document has rendered any toolbar buttons
-  renderSettings?( // Render prop to override rendering of settings
+  renderOldSettingsContent?( // Render prop to override rendering of settings
     children: React.ReactNode, // the rendered settings
     { close }: { close(): void }
   ): React.ReactNode // returns the newly rendered settings
-  renderToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
+  renderSideToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
   focused: boolean // `true` if the document is focused
   isInlineChildEditor: boolean
 }
@@ -26,8 +26,8 @@ export interface DocumentEditorProps {
 export function DocumentEditor({
   focused,
   children,
-  renderSettings,
-  renderToolbar,
+  renderOldSettingsContent,
+  renderSideToolbar,
   settingsRef,
   toolbarRef,
   hasSettings,
@@ -38,10 +38,10 @@ export function DocumentEditor({
 
   const editorStrings = useEditorStrings()
 
-  const showSettings = hasSettings && renderSettings !== undefined
-  const showToolbar = hasToolbar || renderToolbar !== undefined
+  const showSettings = hasSettings && renderOldSettingsContent !== undefined
+  const showToolbar = hasToolbar || renderSideToolbar !== undefined
 
-  const renderSettingsContent = useMemo<typeof renderSettings>(() => {
+  const renderOldSettings = useMemo<typeof renderOldSettingsContent>(() => {
     return showSettings
       ? (children, { close }) => (
           <>
@@ -55,11 +55,11 @@ export function DocumentEditor({
                 <FaIcon icon={faClose} />
               </button>
             </div>
-            {renderSettings?.(children, { close }) || children}
+            {renderOldSettingsContent?.(children, { close }) || children}
           </>
         )
       : undefined
-  }, [renderSettings, showSettings, editorStrings])
+  }, [renderOldSettingsContent, showSettings, editorStrings])
 
   const isFocused = focused && (showSettings || showToolbar)
   const isHovered = hasHover && (showSettings || showToolbar)
@@ -71,7 +71,7 @@ export function DocumentEditor({
         <PluginToolbarOverlayButton
           label={editorStrings.edtrIo.settings}
           icon={<FaIcon icon={faCog} className="text-xl" />}
-          renderContent={renderSettingsContent}
+          renderContent={renderOldSettings}
           contentRef={settingsRef}
         />
       ) : null}
@@ -132,7 +132,7 @@ export function DocumentEditor({
             isFocused ? 'opacity-100' : isHovered ? 'opacity-70' : 'opacity-0'
           )}
         >
-          {renderToolbar ? renderToolbar(toolbar) : toolbar}
+          {renderSideToolbar ? renderSideToolbar(toolbar) : toolbar}
         </div>
       </div>
     </div>

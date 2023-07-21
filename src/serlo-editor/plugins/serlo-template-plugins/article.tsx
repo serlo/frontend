@@ -53,7 +53,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <section itemProp="articleBody">{content.render()}</section>
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
@@ -61,7 +61,7 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
           entityType={UuidType.Article}
         />
       )}
-      {props.renderIntoSettings(
+      {props.renderIntoOldSettings(
         <Settings>
           <Settings.Textarea
             label={articleStrings.seoTitle}

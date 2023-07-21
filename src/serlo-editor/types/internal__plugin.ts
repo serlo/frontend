@@ -136,12 +136,12 @@ export interface EditorPluginProps<
    *
    * @param children - content to render
    */
-  renderIntoSettings(children: React.ReactNode): React.ReactNode
+  renderIntoOldSettings(children: React.ReactNode): React.ReactNode
 
   /**
    * Allows the plugin to render buttons into the toolbar
    *
    * @param children - buttons to render
    */
-  renderIntoToolbar(children: React.ReactNode): React.ReactNode
+  renderIntoSideToolbar(children: React.ReactNode): React.ReactNode
 }

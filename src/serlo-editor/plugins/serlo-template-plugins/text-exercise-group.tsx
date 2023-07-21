@@ -54,7 +54,7 @@ function TextExerciseGroupTypeEditor(
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
 
   const contentRendered = content.render({
-    renderSettings(children) {
+    renderOldSettingsContent(children) {
       return children
     },
   })
@@ -80,7 +80,7 @@ function TextExerciseGroupTypeEditor(
         {exGroupStrings.addExercise}
       </AddButton>
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}

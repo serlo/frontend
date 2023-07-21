@@ -167,7 +167,10 @@ export function EditorRowRenderer({
 
   const pluginProps = React.useMemo(() => {
     return {
-      renderSettings(children: React.ReactNode, { close }: { close(): void }) {
+      renderOldSettingsContent(
+        children: React.ReactNode,
+        { close }: { close(): void }
+      ) {
         return (
           <>
             {children}
@@ -204,7 +207,7 @@ export function EditorRowRenderer({
           </>
         )
       },
-      renderToolbar(children: React.ReactNode) {
+      renderSideToolbar(children: React.ReactNode) {
         return (
           <>
             <PluginToolbarButton

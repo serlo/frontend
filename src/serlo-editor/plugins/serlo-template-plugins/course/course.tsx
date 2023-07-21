@@ -77,14 +77,14 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
         </AddButton>
       </div>
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <RevisionHistoryLoader
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
         />
       )}
-      {props.renderIntoSettings(
+      {props.renderIntoOldSettings(
         <Settings>
           <Settings.Textarea
             label={courseStrings.seoDesc}

@@ -168,7 +168,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch]
   )
 
-  const renderIntoSettings = useCallback(
+  const renderIntoOldSettings = useCallback(
     (children: React.ReactNode) => {
       return (
         <RenderIntoSettings
@@ -182,7 +182,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [settingsRef]
   )
 
-  const renderIntoToolbar = useCallback(
+  const renderIntoSideToolbar = useCallback(
     (children: React.ReactNode) => {
       return (
         <RenderIntoToolbar
@@ -257,15 +257,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             hasSettings={hasSettings}
             hasToolbar={hasToolbar}
             focused={focused}
-            renderSettings={pluginProps && pluginProps.renderSettings}
-            renderToolbar={pluginProps && pluginProps.renderToolbar}
+            renderOldSettingsContent={
+              pluginProps && pluginProps.renderOldSettingsContent
+            }
+            renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
             isInlineChildEditor={isInlineChildEditor}
             settingsRef={settingsRef}
             toolbarRef={toolbarRef}
           >
             <plugin.Component
-              renderIntoSettings={renderIntoSettings}
-              renderIntoToolbar={renderIntoToolbar}
+              renderIntoOldSettings={renderIntoOldSettings}
+              renderIntoSideToolbar={renderIntoSideToolbar}
               containerRef={containerRef}
               id={id}
               editable
@@ -288,8 +290,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     hasSettings,
     hasToolbar,
     focused,
-    renderIntoSettings,
-    renderIntoToolbar,
+    renderIntoOldSettings,
+    renderIntoSideToolbar,
     id,
     hotKeysHandlers,
     dispatch,
