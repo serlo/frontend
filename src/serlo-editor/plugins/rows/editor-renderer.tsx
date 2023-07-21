@@ -15,6 +15,7 @@ import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
+  selectSerializedDocumentWithoutIds,
   store,
 } from '@/serlo-editor/store'
 
@@ -176,7 +177,7 @@ export function EditorRowRenderer({
                 <button
                   className="serlo-button-editor-secondary mr-8 mt-4 text-sm"
                   onClick={() => {
-                    const document = selectSerializedDocument(
+                    const document = selectSerializedDocumentWithoutIds(
                       store.getState(),
                       row.id
                     )

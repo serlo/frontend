@@ -167,6 +167,7 @@ export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
    * @returns the document if it exists, `null` otherwise
    */
   getDocument(id: string): { plugin: K; state?: S } | null
+  omitId?: boolean
 }
 
 export interface PluginProps {
