@@ -50,11 +50,7 @@ export const BoxToolbar = ({
             >
               {types.map((type) => {
                 return (
-                  <option
-                    key={type}
-                    value={type}
-                    // className="capitalize"
-                  >
+                  <option key={type} value={type}>
                     {strings.content.boxTypes[type as BoxType]}
                   </option>
                 )

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
-import { InputExerciseProps, InputExerciseType } from '.'
+import { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
+import { InputExerciseToolbar } from './toolbar'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
   selectFocused,
@@ -10,7 +11,6 @@ import {
   useAppSelector,
 } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused } = props
@@ -44,27 +44,13 @@ export function InputExerciseEditor(props: InputExerciseProps) {
   if (!editable) return renderer
 
   return (
-    <>
+    <div className="mt-24 pt-4">
+      {nestedFocus ? <InputExerciseToolbar {...props} /> : null}
       <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
         {renderer}
       </PreviewOverlay>
       {nestedFocus && !previewActive && (
         <>
-          <div className="mb-2">
-            <label>
-              {inputExStrings.chooseType}:{' '}
-              <select
-                value={state.type.value}
-                onChange={(event) => state.type.set(event.target.value)}
-              >
-                {Object.values(InputExerciseType).map((exerciseType) => (
-                  <option key={exerciseType} value={exerciseType}>
-                    {inputExStrings.types[exerciseType]}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
           {state.answers.map((answer, index: number) => {
             return (
               <InteractiveAnswer
@@ -96,13 +82,6 @@ export function InputExerciseEditor(props: InputExerciseProps) {
           </AddButton>
         </>
       )}
-      {props.renderIntoOldSettings(
-        <OverlayInput
-          label={inputExStrings.unit}
-          value={state.unit.value}
-          onChange={({ target }) => state.unit.set(target.value)}
-        />
-      )}
-    </>
+    </div>
   )
 }
