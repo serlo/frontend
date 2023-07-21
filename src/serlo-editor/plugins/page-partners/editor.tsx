@@ -4,9 +4,9 @@ import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const PagePartnersEditor: React.FunctionComponent<PagePartnersPluginProps> = (
-  props
-) => {
+export const PagePartnersEditor: React.FunctionComponent<
+  PagePartnersPluginProps
+> = (props) => {
   const { id, focused } = props
 
   return (
