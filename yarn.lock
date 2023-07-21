@@ -3179,9 +3179,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prezly/slate-lists@npm:0.87.0":
-  version: 0.87.0
-  resolution: "@prezly/slate-lists@npm:0.87.0"
+"@prezly/slate-lists@npm:^0.89.1":
+  version: 0.89.1
+  resolution: "@prezly/slate-lists@npm:0.89.1"
   dependencies:
     is-hotkey: ^0.2.0
     uuid: ^8.3.0
@@ -3189,7 +3189,7 @@ __metadata:
     react: ^16.14.0 || ^17.0.0 || ^18.0.0
     slate: ^0.94.1
     slate-react: ^0.97.0
-  checksum: b4b5ad793653b2a620bca933f6db4d40b3231fed33410bb14a5f38b3f102c75d9f395e1178682180e7e9c424e0eea85e874ec1a44cd7fea5eba1ed3f617ec90b
+  checksum: e4da612702c0083afb481d909f71c308638df6771d5f7f3d8a6cf3ca59d04bb450bd66db7b1275f574ad56af6dcfb631f22cca007802be564b62a0f730ff82f0
   languageName: node
   linkType: hard
 
@@ -3973,7 +3973,7 @@ __metadata:
     "@next/bundle-analyzer": ^13.4.9
     "@ory/client": ^1.1.41
     "@ory/integrations": ^1.1.4
-    "@prezly/slate-lists": 0.87.0
+    "@prezly/slate-lists": ^0.89.1
     "@prisma/client": ^5.0.0
     "@radix-ui/react-navigation-menu": ^1.1.3
     "@reduxjs/toolkit": ^1.9.5
@@ -4000,7 +4000,6 @@ __metadata:
     "@types/react-modal": ^3.16.0
     "@types/react-notify-toast": ^0.5.3
     "@types/react-syntax-highlighter": ^13.5.2
-    "@types/slate-react": 0.50.1
     "@types/styled-components": ^5.1.26
     "@types/uuid": ^9.0.2
     "@typescript-eslint/eslint-plugin": ^5.48.0
@@ -4068,8 +4067,8 @@ __metadata:
     redux-saga: ^1.2.3
     remark-gfm: ^1.0.0
     reselect: ^4.1.8
-    slate: 0.91.4
-    slate-react: 0.91.11
+    slate: ^0.94.1
+    slate-react: ^0.97.2
     styled-components: ^5.0.0
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.0
@@ -4740,15 +4739,6 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: c31bf04eb9620829dc3c91bced74ac934ad039d20d20893fb5acac0f08769cbd4eef3bf7502a0289c7be59c3e9cfa456147b4e88bff47dd1b9efb4995ba5d5a3
-  languageName: node
-  linkType: hard
-
-"@types/slate-react@npm:0.50.1":
-  version: 0.50.1
-  resolution: "@types/slate-react@npm:0.50.1"
-  dependencies:
-    slate-react: "*"
-  checksum: cb9e1f02ea19da2c15189f95e5113f7867c3f6e4e0d1e848c49a37754449acce424fd2e615a517cb514531f865f4bee169ff3c26f537155db524f7c52df6eeea
   languageName: node
   linkType: hard
 
@@ -13039,9 +13029,9 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"slate-react@npm:*, slate-react@npm:0.91.11":
-  version: 0.91.11
-  resolution: "slate-react@npm:0.91.11"
+"slate-react@npm:^0.97.2":
+  version: 0.97.2
+  resolution: "slate-react@npm:0.97.2"
   dependencies:
     "@juggle/resize-observer": ^3.4.0
     "@types/is-hotkey": ^0.1.1
@@ -13056,18 +13046,18 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
     slate: ">=0.65.3"
-  checksum: c0cced1bb756f2ce5429741d8f4e26af5c2c82ad24be62a5a1750f1d9be0bb11ac9fa0c5839f9a43bafef049d894f6e8f367ad2bbe8f175785f5e914de3c7341
+  checksum: 6036a6cf773517c2491f2b54d6b1de8ef55c34d0f07a21bc8125ce02a0110b3d9912c3d107ce2d1bd50a0d18c4a9c609cfa64516f3d434777686ce7bed435383
   languageName: node
   linkType: hard
 
-"slate@npm:0.91.4":
-  version: 0.91.4
-  resolution: "slate@npm:0.91.4"
+"slate@npm:^0.94.1":
+  version: 0.94.1
+  resolution: "slate@npm:0.94.1"
   dependencies:
     immer: ^9.0.6
     is-plain-object: ^5.0.0
     tiny-warning: ^1.0.3
-  checksum: 70164a5106cac7caaa681b0eca5dba5cf172b2c406f769744babb28350906ca92dc496a0d9224911564bd4ee0650a19be7279d917bba02159e1672f37475d74d
+  checksum: 07666fe3373e59aaa19261366fd3cf1df546edfc0162fb88d675d71f158ebd1bf0630fd00ecc9152ab6547080f3e90c9f6d1504e09c25b3bf980cceb9b15c3c1
   languageName: node
   linkType: hard
 
