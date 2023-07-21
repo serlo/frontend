@@ -4,13 +4,12 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import { useGridFocus } from './grid-focus'
 import { StepEditor } from './step-editor'
 import { EquationsProps } from '..'
-import { useInlineTextEditor } from '../../text/hooks/use-inline-text-editor'
 import {
   EquationsRenderer,
   EquationsRendererStep,
@@ -23,7 +22,6 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { HotKeys } from '@/serlo-editor/core'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
-import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { MathRenderer } from '@/serlo-editor/math'
 import {
   store,
@@ -37,18 +35,6 @@ import {
   selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
-
-// TODO: rename
-const titleFormattingOptions = [
-  TextEditorFormattingOption.colors,
-  TextEditorFormattingOption.headings,
-  TextEditorFormattingOption.katex,
-  TextEditorFormattingOption.links,
-  TextEditorFormattingOption.lists,
-  TextEditorFormattingOption.math,
-  TextEditorFormattingOption.paragraphs,
-  TextEditorFormattingOption.richText,
-]
 
 export enum StepSegment {
   Left = 0,
@@ -74,6 +60,8 @@ export function EquationsEditor(props: EquationsProps) {
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
   )
+
+  const pluginFocusWrapper = useRef<HTMLDivElement>(null)
 
   const gridFocus = useGridFocus({
     rows: state.steps.length,
@@ -105,25 +93,6 @@ export function EquationsEditor(props: EquationsProps) {
   }, [nestedFocus])
 
   const equationsStrings = useEditorStrings().plugins.equations
-
-  // bug: needs two clicks to actually get cursor
-  // bug: creating a new line conflicts with previous lines
-
-  // the cleaner solution would be to change the hook to a function so we can map the steps and return an editor for each step…
-
-  const editorOnFirstExplanation =
-    gridFocus.focus === 'firstExplanation' || gridFocus.focus === null
-
-  const currentStepExplanationEditor = useInlineTextEditor({
-    id: editorOnFirstExplanation
-      ? state.firstExplanation.id
-      : state.steps[
-          gridFocus.focus && gridFocus.focus !== 'firstExplanation'
-            ? gridFocus.focus.row
-            : 0
-        ].explanation.id,
-    formattingOptions: titleFormattingOptions,
-  })
 
   if (!nestedFocus)
     return (
@@ -165,15 +134,14 @@ export function EquationsEditor(props: EquationsProps) {
     })
   }
 
+  const hasFocusWithin =
+    typeof window !== 'undefined' && pluginFocusWrapper.current
+      ? pluginFocusWrapper.current.contains(document.activeElement)
+      : false
+
   return (
-    <>
-      {!props.focused && !currentStepExplanationEditor.isFocused ? null : (
-        <EquationsToolbar
-          {...props}
-          controls={currentStepExplanationEditor.toolbarControls}
-          editor={currentStepExplanationEditor.editor}
-        />
-      )}
+    <div ref={pluginFocusWrapper}>
+      {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
 
       <HotKeys
         allowChanges
@@ -260,17 +228,12 @@ export function EquationsEditor(props: EquationsProps) {
                     <td colSpan={2} className="min-w-[10rem]">
                       {step.explanation.render({
                         config: {
-                          controls: editorOnFirstExplanation
-                            ? undefined
-                            : {
-                                editor: currentStepExplanationEditor.editor,
-                                textFormattingOptions:
-                                  currentStepExplanationEditor.textFormattingOptions,
-                                isChanged:
-                                  currentStepExplanationEditor.isChanged,
-                                onChange:
-                                  currentStepExplanationEditor.setIsChanged,
-                              },
+                          isInlineChildEditor: true,
+                          placeholder:
+                            row === 0 &&
+                            transformationTarget === TransformationTarget.Term
+                              ? equationsStrings.combineLikeTerms
+                              : equationsStrings.explanation,
                         },
                       })}
                     </td>
@@ -283,7 +246,7 @@ export function EquationsEditor(props: EquationsProps) {
           {renderAddButton()}
         </div>
       </HotKeys>
-    </>
+    </div>
   )
 
   function renderFirstExplanation() {
@@ -296,15 +259,7 @@ export function EquationsEditor(props: EquationsProps) {
             {state.firstExplanation.render({
               config: {
                 placeholder: equationsStrings.firstExplanation,
-                controls: editorOnFirstExplanation
-                  ? {
-                      editor: currentStepExplanationEditor.editor,
-                      textFormattingOptions:
-                        currentStepExplanationEditor.textFormattingOptions,
-                      isChanged: currentStepExplanationEditor.isChanged,
-                      onChange: currentStepExplanationEditor.setIsChanged,
-                    }
-                  : undefined,
+                isInlineChildEditor: true,
               },
             })}
           </td>

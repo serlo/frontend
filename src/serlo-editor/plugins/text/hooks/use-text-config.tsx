@@ -17,4 +17,5 @@ export const useTextConfig = (config: TextEditorConfig) => ({
   noLinebreaks: config.noLinebreaks ?? false,
   serloLinkSearch: config.serloLinkSearch ?? true,
   controls: config.controls ?? undefined,
+  isInlineChildEditor: config.isInlineChildEditor ?? undefined,
 })

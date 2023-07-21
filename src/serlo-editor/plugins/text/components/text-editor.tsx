@@ -6,6 +6,7 @@ import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
+import { TextToolbar } from './text-toolbar'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
@@ -25,10 +26,7 @@ import {
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
-import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
-import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
@@ -52,7 +50,7 @@ export type TextEditorProps = EditorPluginProps<
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
-  const { state, id, editable, focused } = props
+  const { state, id, editable, focused, containerRef } = props
 
   const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
@@ -381,16 +379,12 @@ export function TextEditor(props: TextEditorProps) {
   return (
     <HotKeys {...hotKeysProps}>
       {focused && (
-        <PluginToolbar
-          pluginId={id}
-          pluginType={EditorPluginType.Text}
-          contentControls={
-            <PluginToolbarTextControls
-              controls={toolbarControls}
-              editor={editor}
-            />
-          }
-          pluginControls={<DefaultControls pluginId={id} />}
+        <TextToolbar
+          id={id}
+          toolbarControls={toolbarControls}
+          editor={editor}
+          config={config}
+          containerRef={containerRef}
         />
       )}
       <Slate

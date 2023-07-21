@@ -10,7 +10,7 @@ interface PluginToolbarProps {
   pluginType: EditorPluginType | string
   contentControls?: ReactElement
   pluginSettings?: ReactElement
-  pluginControls: ReactElement
+  pluginControls?: ReactElement
 }
 
 const ancestorsToDisplay = [
@@ -71,7 +71,9 @@ export function PluginToolbar({
         <div className="h-6 w-[2px] bg-gray-300"></div>
 
         {/* Plugin controls dropdown menu */}
-        <PluginToolbarDropdownMenu pluginControls={pluginControls} />
+        {pluginControls ? (
+          <PluginToolbarDropdownMenu pluginControls={pluginControls} />
+        ) : null}
       </div>
 
       {/* Plugin ancestry indicator */}
