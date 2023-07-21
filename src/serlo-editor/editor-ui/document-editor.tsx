@@ -38,10 +38,11 @@ export function DocumentEditor({
 
   const editorStrings = useEditorStrings()
 
-  const shouldShowSettings = showSettings()
+  const showSettings = hasSettings && renderSettings !== undefined
+  const showToolbar = hasToolbar || renderToolbar !== undefined
 
   const renderSettingsContent = useMemo<typeof renderSettings>(() => {
-    return shouldShowSettings
+    return showSettings
       ? (children, { close }) => (
           <>
             <div className="mb-4 flex items-center justify-between">
@@ -58,15 +59,15 @@ export function DocumentEditor({
           </>
         )
       : undefined
-  }, [renderSettings, shouldShowSettings, editorStrings])
+  }, [renderSettings, showSettings, editorStrings])
 
-  const isFocused = focused && (showSettings() || showToolbar())
-  const isHovered = hasHover && (showSettings() || showToolbar())
+  const isFocused = focused && (showSettings || showToolbar)
+  const isHovered = hasHover && (showSettings || showToolbar)
 
   const isAppended = useRef(false)
   const toolbar = (
     <>
-      {showSettings() ? (
+      {hasSettings ? (
         <PluginToolbarOverlayButton
           label={editorStrings.edtrIo.settings}
           icon={<FaIcon icon={faCog} className="text-xl" />}
@@ -81,7 +82,7 @@ export function DocumentEditor({
           if (ref && toolbarRef.current && !isAppended.current) {
             isAppended.current = true
             ref.appendChild(toolbarRef.current)
-          } else if (!showSettings()) {
+          } else if (!showSettings) {
             isAppended.current = false
           }
         }}
@@ -136,20 +137,4 @@ export function DocumentEditor({
       </div>
     </div>
   )
-
-  function showSettings(): boolean {
-    return (
-      hasSettings ||
-      (renderSettings !== undefined &&
-        renderSettings(null, {
-          close() {
-            // noop
-          },
-        }) !== null)
-    )
-  }
-
-  function showToolbar(): boolean {
-    return hasToolbar || renderToolbar !== undefined
-  }
 }
