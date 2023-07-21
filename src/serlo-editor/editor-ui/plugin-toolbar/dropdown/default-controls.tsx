@@ -8,7 +8,7 @@ import {
   insertPluginChildAfter,
   removePluginChild,
   selectParent,
-  selectSerializedDocument,
+  selectSerializedDocumentWithoutIds,
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
@@ -28,7 +28,10 @@ export function DefaultControls({ pluginId }: DefaultControlsProps) {
     const parent = selectParent(store.getState(), pluginId)
     if (!parent) return
 
-    const document = selectSerializedDocument(store.getState(), pluginId)
+    const document = selectSerializedDocumentWithoutIds(
+      store.getState(),
+      pluginId
+    )
     if (!document) return
 
     dispatch(
