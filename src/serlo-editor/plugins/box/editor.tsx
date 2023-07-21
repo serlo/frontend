@@ -52,9 +52,9 @@ export function BoxEditor(props: BoxProps) {
             borderColorClass
           )}
         >
-          {renderInlineSettings()}
+          <b className="block pb-4">{editorStrings.plugins.box.type}</b>
+          <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
         </figure>
-        {renderSettings()}
       </>
     )
   }
@@ -84,7 +84,6 @@ export function BoxEditor(props: BoxProps) {
         <div className="-ml-3 px-side">{content.render()}</div>
       </Renderer>
       {renderWarning()}
-      {renderSettings()}
     </>
   )
 
@@ -97,32 +96,6 @@ export function BoxEditor(props: BoxProps) {
         controls={titleEditor.toolbarControls}
         editor={titleEditor.editor}
       />
-    )
-  }
-
-  function renderInlineSettings() {
-    return (
-      <>
-        <b className="block pb-4">{editorStrings.plugins.box.type}</b>
-        <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
-      </>
-    )
-  }
-
-  function renderSettings() {
-    return props.renderIntoSettings(
-      <>
-        <b className="serlo-h4 mb-4 ml-0 mt-6 block">
-          {editorStrings.plugins.box.type}:
-        </b>
-        <ul className="pb-8">{renderSettingsLis()}</ul>
-
-        {anchorId.value === '' ? null : (
-          <p className="mb-4">
-            <b>{editorStrings.plugins.box.anchorId}: </b>#{anchorId.value}
-          </p>
-        )}
-      </>
     )
   }
 
