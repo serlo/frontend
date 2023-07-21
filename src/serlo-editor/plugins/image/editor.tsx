@@ -1,14 +1,13 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { ImageProps } from '.'
-import { PrimaryControls, SettingsControls } from './controls'
+import { PrimaryControls } from './controls'
 import { ImageRenderer } from './renderer'
+import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
 import {
@@ -26,8 +25,10 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config, id } = props
+  const { editable, focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
+
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   usePendingFileUploader(state.src, config.upload)
 
@@ -46,7 +47,14 @@ export function ImageEditor(props: ImageProps) {
 
   return (
     <>
-      {renderPluginToolbar()}
+      {hasFocus ? (
+        <ImageToolbar
+          {...props}
+          showSettingsModal={showSettingsModal}
+          setShowSettingsModal={setShowSettingsModal}
+        />
+      ) : null}
+
       <ImageRenderer
         image={{
           src,
@@ -61,19 +69,6 @@ export function ImageEditor(props: ImageProps) {
       {hasFocus ? renderEditControls() : null}
     </>
   )
-
-  function renderPluginToolbar() {
-    if (!hasFocus) return null
-
-    return (
-      <PluginToolbar
-        pluginId={id}
-        pluginType={EditorPluginType.Image}
-        contentControls={<div className="toolbar-controls-target" />}
-        pluginControls={<DefaultControls pluginId={id} />}
-      />
-    )
-  }
 
   function renderPlaceholder() {
     if (!isLoading && src.length) return null
@@ -111,7 +106,6 @@ export function ImageEditor(props: ImageProps) {
           </div>
         ) : null}
         <PrimaryControls {...props} />
-        {props.renderIntoSettings(<SettingsControls {...props} />)}
       </>
     )
   }
