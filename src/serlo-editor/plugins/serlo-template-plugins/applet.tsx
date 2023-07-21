@@ -1,3 +1,6 @@
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
+
 import {
   entity,
   editorContent,
@@ -6,8 +9,10 @@ import {
   headerInputClasses,
 } from './common/common'
 import { ContentLoaders } from './helpers/content-loaders/content-loaders'
-import { Settings } from './helpers/settings'
+import { SettingsTextarea } from './helpers/settings-textarea'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
+import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
@@ -45,10 +50,17 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
     replaceOwnState,
   } = props.state
   const appletStrings = useEditorStrings().templatePlugins.applet
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (
     <>
-      <h1 className="serlo-h1">
+      <button
+        onClick={() => setShowSettingsModal(true)}
+        className="serlo-button-editor-secondary absolute right-0 -mt-10 mr-side text-base"
+      >
+        Metadata <FaIcon icon={faPencilAlt} />
+      </button>
+      <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
             className={headerInputClasses}
@@ -73,18 +85,24 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
           entityType={UuidType.Applet}
         />
       )}
-      {props.renderIntoOldSettings(
-        <Settings>
-          <Settings.Textarea
-            label={appletStrings.seoTitle}
-            state={meta_title}
-          />
-          <Settings.Textarea
-            label={appletStrings.seoDesc}
-            state={meta_description}
-          />
-        </Settings>
-      )}
+      {showSettingsModal ? (
+        <ModalWithCloseButton
+          isOpen={showSettingsModal}
+          onCloseClick={() => setShowSettingsModal(false)}
+          className="!top-1/3 !max-w-xl"
+        >
+          <div className="mx-side mb-3 mt-12">
+            <SettingsTextarea
+              label={appletStrings.seoTitle}
+              state={meta_title}
+            />
+            <SettingsTextarea
+              label={appletStrings.seoDesc}
+              state={meta_description}
+            />
+          </div>
+        </ModalWithCloseButton>
+      ) : null}
     </>
   )
 }
