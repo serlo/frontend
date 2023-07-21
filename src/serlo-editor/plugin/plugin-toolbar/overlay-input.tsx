@@ -19,9 +19,9 @@ export const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
           {...props}
           ref={ref}
           className={tw`
-             serlo-input-font-reset w-3/4 border-2
+             serlo-input-font-reset w-3/4 rounded-md border-2
            border-editor-primary-100 bg-editor-primary-100
-            focus:border-editor-primary focus:outline-none
+           focus:border-editor-primary focus:outline-none
           `}
         />
       </label>
