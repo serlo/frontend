@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ReactElement, useMemo } from 'react'
 
 import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
@@ -11,6 +12,7 @@ interface PluginToolbarProps {
   contentControls?: ReactElement
   pluginSettings?: ReactElement
   pluginControls?: ReactElement
+  className?: string
 }
 
 const ancestorsToDisplay = [
@@ -26,6 +28,7 @@ export function PluginToolbar({
   contentControls,
   pluginSettings,
   pluginControls,
+  className,
 }: PluginToolbarProps) {
   const pluginTypesOfAncestors = useAppSelector((state) =>
     selectAncestorPluginTypes(state, pluginId)
@@ -47,10 +50,13 @@ export function PluginToolbar({
 
   return (
     <div
-      className={tw`
-        absolute -top-9 left-0 right-0 z-50 flex h-9 w-full
-        items-center justify-between rounded-tl-md bg-editor-primary-100 pl-2
-      `}
+      className={clsx(
+        tw`
+        pl-2, absolute -top-9 left-0 right-0 z-50 flex h-9
+        w-full items-center justify-between rounded-tl-md bg-editor-primary-100
+      `,
+        className
+      )}
     >
       {/* Content controls */}
       <div>{contentControls}</div>
