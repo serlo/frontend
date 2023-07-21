@@ -19,6 +19,7 @@ export interface InlineTextEditorControls {
 
 export interface TextEditorConfig {
   placeholder?: string
+  isInlineChildEditor?: true
   formattingOptions?: TextEditorFormattingOption[]
   noLinebreaks?: boolean
   serloLinkSearch: boolean

@@ -55,7 +55,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const plugins = usePlugins()
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
 
-  const container = useRef<HTMLDivElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
   )
@@ -77,12 +77,12 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   useEffect(() => {
     if (
       focused &&
-      container.current &&
+      containerRef.current &&
       document &&
       plugin &&
       !plugin.state.getFocusableChildren(document.state).length
     ) {
-      container.current.focus()
+      containerRef.current.focus()
     }
     // `document` should not be part of the dependencies because we only want to call this once when the document gets focused
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -161,7 +161,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
 
-      if (!focused && target === container.current) {
+      if (!focused && target === containerRef.current) {
         dispatch(focus(id))
       }
     },
@@ -240,12 +240,16 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const state = plugin.state.init(document.state, onChange)
 
+    const isInlineChildEditor =
+      Object.hasOwn(config, 'isInlineChildEditor') &&
+      (config.isInlineChildEditor as boolean)
+
     return (
       <HotKeys keyMap={hotKeysKeyMap} handlers={hotKeysHandlers} allowChanges>
         <div
           className="outline-none"
           onMouseDown={handleFocus}
-          ref={container}
+          ref={containerRef}
           data-document
           tabIndex={-1}
         >
@@ -255,12 +259,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             focused={focused}
             renderSettings={pluginProps && pluginProps.renderSettings}
             renderToolbar={pluginProps && pluginProps.renderToolbar}
+            isInlineChildEditor={isInlineChildEditor}
             settingsRef={settingsRef}
             toolbarRef={toolbarRef}
           >
             <plugin.Component
               renderIntoSettings={renderIntoSettings}
               renderIntoToolbar={renderIntoToolbar}
+              containerRef={containerRef}
               id={id}
               editable
               focused={focused}

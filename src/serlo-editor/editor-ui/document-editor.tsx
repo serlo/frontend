@@ -19,6 +19,7 @@ export interface DocumentEditorProps {
   ): React.ReactNode // returns the newly rendered settings
   renderToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
   focused: boolean // `true` if the document is focused
+  isInlineChildEditor: boolean
 }
 
 // TODO: Rename this to `PluginSettings` or something similar after moving the toolbar out of it.
@@ -31,6 +32,7 @@ export function DocumentEditor({
   toolbarRef,
   hasSettings,
   hasToolbar,
+  isInlineChildEditor,
 }: DocumentEditorProps) {
   const [hasHover, setHasHover] = useState(false)
 
@@ -87,12 +89,13 @@ export function DocumentEditor({
     </>
   )
 
+  if (isInlineChildEditor) return <>{children}</>
+
   return (
     <div
       className={clsx(
-        isFocused || isHovered
-          ? 'default-document-editor-container document-editor-container py-0'
-          : 'document-editor-container',
+        'document-editor-container',
+        (isFocused || isHovered) && 'default-document-editor-container py-0',
         'relative -ml-[7px] mb-6 min-h-[10px] border-l-2 pl-[5px] transition-all',
         isFocused || isHovered
           ? isFocused

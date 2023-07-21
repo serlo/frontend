@@ -247,7 +247,7 @@ export function MathEditor(props: MathEditorProps) {
               {useVisualEditor && (
                 <button
                   onMouseDown={() => setHelpOpen(true)}
-                  className="mr-2 text-almost-black hover:text-editor-primary"
+                  className="mx-2 text-almost-black hover:text-editor-primary"
                 >
                   <FaIcon icon={faQuestionCircle} />
                 </button>

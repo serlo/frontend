@@ -1,4 +1,4 @@
-import { EquationsEditor } from './editor'
+import { EquationsEditor } from './editor/editor'
 import { Sign } from './sign'
 import {
   child,

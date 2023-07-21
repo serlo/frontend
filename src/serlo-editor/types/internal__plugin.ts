@@ -127,6 +127,11 @@ export interface EditorPluginProps<
   autofocusRef: React.RefObject<HTMLInputElement & HTMLTextAreaElement>
 
   /**
+   * Ref for the wrapping SubDocument div
+   */
+  containerRef?: React.RefObject<HTMLDivElement>
+
+  /**
    * Allows the plugin to render into the plugin settings
    *
    * @param children - content to render
