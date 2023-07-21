@@ -32,9 +32,6 @@
     "start": "next start",
     "test": "jest"
   },
-  "resolutions": {
-    "next": "13.4.9"
-  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "6.4.0",
     "@fortawesome/free-brands-svg-icons": "6.4.0",
@@ -67,7 +64,7 @@
     "js-cookie": "^3.0.5",
     "katex": "^0.16.8",
     "lodash": "^4.17.21",
-    "next": "13.4.9",
+    "next": "^13.4.10",
     "nprogress": "^0.2.0",
     "postcss": "^8.4.26",
     "qrcode.react": "^3.1.0",
