@@ -39,6 +39,27 @@ export const selectSerializedDocument = createDeepEqualSelector(
   }
 )
 
+export const selectSerializedDocumentWithoutIds = createDeepEqualSelector(
+  [(state: State) => state, (_state, id: string) => id],
+  (state: State, id) => {
+    const doc = selectDocument(state, id)
+    if (!doc) return null
+    const plugin = selectPlugin(state, doc.plugin)
+    if (!plugin) return null
+    const serializeHelpers: StoreSerializeHelpers = {
+      getDocument: (id: string) =>
+        selectSerializedDocumentWithoutIds(state, id),
+      omitId: true,
+    }
+
+    return {
+      plugin: doc.plugin,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      state: plugin.state.serialize(doc.state, serializeHelpers),
+    }
+  }
+)
+
 export const selectIsDocumentEmpty = createSelector(
   [(state: State) => state, (_state, id: string) => id],
   (state, id: string) => {

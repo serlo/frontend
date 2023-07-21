@@ -395,7 +395,7 @@ export function TextEditor(props: TextEditorProps) {
       )}
       <Slate
         editor={editor}
-        value={state.value.value}
+        initialValue={state.value.value}
         onChange={handleEditorChange}
       >
         <Editable
@@ -409,7 +409,7 @@ export function TextEditor(props: TextEditorProps) {
               <TextLeafRenderer {...props} />
             </span>
           )}
-          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          className="focus:outline-none [&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <LinkControls

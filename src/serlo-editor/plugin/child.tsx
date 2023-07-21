@@ -1,4 +1,4 @@
-import { mergeDeepRight } from 'ramda'
+import { mergeDeepRight, omit } from 'ramda'
 import { v4 } from 'uuid'
 
 import {
@@ -45,11 +45,13 @@ export function child<K extends string, S = unknown>(
       createDocument({ id, ...serialized })
       return id
     },
-    serialize(id, { getDocument }: StoreSerializeHelpers<K, S>) {
+    serialize(id, { getDocument, omitId }: StoreSerializeHelpers<K, S>) {
       const document = getDocument(id)
       if (document === null) {
-        throw new Error('There exists no document with the given id')
+        throw new Error('No document with this id exists')
       }
+      // make sure we use new ids when duplicating content
+      if (omitId) return omit(['id'], document)
       // making sure existing plugins store `id` in state as well
       if (Object.hasOwn(document, 'id')) return document
       return { ...document, id }
