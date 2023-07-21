@@ -4,6 +4,9 @@ import { PageLayoutPluginProps } from '.'
 import { PageLayoutRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const firstColumsSizes = [50, 66, 33]
 
@@ -12,10 +15,12 @@ export const PageLayoutEditor: React.FunctionComponent<
 > = (props) => {
   const editorStrings = useEditorStrings()
   const { column1, column2, widthPercent } = props.state
+  const { id, focused } = props
   const percent = widthPercent.value
 
   return (
     <>
+      {renderPluginToolbar()}
       {percent === 0 ? (
         renderInlineSettings()
       ) : (
@@ -39,6 +44,18 @@ export const PageLayoutEditor: React.FunctionComponent<
       </style>
     </>
   )
+
+  function renderPluginToolbar() {
+    if (!focused) return null
+
+    return (
+      <PluginToolbar
+        pluginId={id}
+        pluginType={EditorPluginType.PageLayout}
+        pluginControls={<DefaultControls pluginId={id} />}
+      />
+    )
+  }
 
   function renderInlineSettings() {
     return (
