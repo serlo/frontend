@@ -4,14 +4,13 @@ import { useEffect } from 'react'
 import { ImageProps } from '.'
 import { PrimaryControls, SettingsControls } from './controls'
 import { ImageRenderer } from './renderer'
+import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
-import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
-import { useInlineTextEditor } from '@/serlo-editor/plugins/text/hooks/use-inline-text-editor'
 import {
   store,
   selectHasFocusedChild,
@@ -39,11 +38,6 @@ export function ImageEditor(props: ImageProps) {
   const isFailed = isTempFile(state.src.value) && state.src.value.failed
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
-  const captionEditor = useInlineTextEditor({
-    id: state.caption.defined ? state.caption.id : '',
-    formattingOptions: captionFormattingOptions,
-  })
-
   useEffect(() => {
     if (editable && !state.caption.defined) {
       state.caption.create({ plugin: EditorPluginType.Text })
@@ -69,18 +63,13 @@ export function ImageEditor(props: ImageProps) {
   )
 
   function renderPluginToolbar() {
-    if (!focused && !captionEditor.isFocused) return null
+    if (!hasFocus) return null
 
     return (
       <PluginToolbar
         pluginId={id}
         pluginType={EditorPluginType.Image}
-        contentControls={
-          <PluginToolbarTextControls
-            controls={captionEditor.toolbarControls}
-            editor={captionEditor.editor}
-          />
-        }
+        contentControls={<div className="toolbar-controls-target" />}
         pluginControls={<DefaultControls pluginId={id} />}
       />
     )
@@ -107,13 +96,9 @@ export function ImageEditor(props: ImageProps) {
     return state.caption.render({
       config: {
         placeholder: imageStrings.captionPlaceholder,
-        controls: {
-          editor: captionEditor.editor,
-          textFormattingOptions: captionEditor.textFormattingOptions,
-          isChanged: captionEditor.isChanged,
-          onChange: captionEditor.setIsChanged,
-        },
-      },
+        formattingOptions: captionFormattingOptions,
+        isInlineChildEditor: true,
+      } as TextEditorConfig,
     })
   }
 
