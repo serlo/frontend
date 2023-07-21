@@ -48,7 +48,7 @@
     "@prisma/client": "^5.0.0",
     "@radix-ui/react-navigation-menu": "^1.1.3",
     "@reduxjs/toolkit": "^1.9.5",
-    "@serlo/authorization": "^0.52.1",
+    "@serlo/authorization": "^0.47.0",
     "@serlo/markdown": "Entkenntnis/tmp-serlo-markdown",
     "@tippyjs/react": "^4.2.6",
     "algebra.js": "^0.2.6",
