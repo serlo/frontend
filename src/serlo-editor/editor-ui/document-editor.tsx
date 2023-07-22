@@ -83,7 +83,7 @@ export function DocumentEditor({
       >
         <div
           className={clsx(
-            'relative z-[16] mr-0.5 flex flex-col items-end rounded-l-md bg-white pb-2.5 transition-opacity',
+            'relative z-[21] mr-0.5 flex flex-col items-end rounded-l-md bg-white pb-2.5 transition-opacity',
             isFocused ? 'opacity-100' : isHovered ? 'opacity-70' : 'opacity-0'
           )}
         >
