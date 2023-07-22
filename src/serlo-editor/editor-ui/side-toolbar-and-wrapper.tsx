@@ -3,46 +3,43 @@ import { useState, useRef } from 'react'
 
 import { tw } from '@/helper/tw'
 
-export interface DocumentEditorProps {
+export interface SideToolbarAndWrapperProps {
   children: React.ReactNode // The rendered document
-  settingsRef: React.RefObject<HTMLDivElement> // The rendered settings
-  toolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
-  hasToolbar: boolean // `true` if the document has rendered any toolbar buttons
+  sideToolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
+  hasSideToolbar: boolean // `true` if the document has rendered any toolbar buttons
   renderSideToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
   focused: boolean // `true` if the document is focused
   isInlineChildEditor: boolean
 }
 
-// TODO: Rename this to something like `SideToolbarWrapper` or something similar?
-export function DocumentEditor({
+// Container that includes a plugin and its sideToolbar and handles some hover&focus styling
+export function SideToolbarAndWrapper({
   focused,
   children,
   renderSideToolbar,
-  toolbarRef,
-  hasToolbar,
+  sideToolbarRef,
+  hasSideToolbar,
   isInlineChildEditor,
-}: DocumentEditorProps) {
+}: SideToolbarAndWrapperProps) {
   const [hasHover, setHasHover] = useState(false)
 
-  const showToolbar = hasToolbar || renderSideToolbar !== undefined
+  const showToolbar = hasSideToolbar || renderSideToolbar !== undefined
 
   const isFocused = focused && showToolbar
   const isHovered = hasHover && showToolbar
 
   const isAppended = useRef(false)
-  const toolbar = (
-    <>
-      <div
-        ref={(ref) => {
-          // The ref `isAppended` ensures that we only append the content once
-          // so that we don't lose focus on every render
-          if (ref && toolbarRef.current && !isAppended.current) {
-            isAppended.current = true
-            ref.appendChild(toolbarRef.current)
-          }
-        }}
-      />
-    </>
+  const sideToolbar = (
+    <div
+      ref={(ref) => {
+        // The ref `isAppended` ensures that we only append the content once
+        // so that we don't lose focus on every render
+        if (ref && sideToolbarRef.current && !isAppended.current) {
+          isAppended.current = true
+          ref.appendChild(sideToolbarRef.current)
+        }
+      }}
+    />
   )
 
   if (isInlineChildEditor) return <>{children}</>
@@ -50,8 +47,8 @@ export function DocumentEditor({
   return (
     <div
       className={clsx(
-        'document-editor-container',
-        (isFocused || isHovered) && 'default-document-editor-container py-0',
+        'plugin-wrapper-container',
+        (isFocused || isHovered) && 'default-plugin-wrapper-container py-0',
         'relative -ml-[7px] mb-6 min-h-[10px] border-l-2 pl-[5px] transition-all',
         isFocused || isHovered
           ? isFocused
@@ -60,8 +57,8 @@ export function DocumentEditor({
           : 'border-transparent',
         !isFocused && isHovered
           ? tw`
-            hover:[&:has(.default-document-editor-container):hover>.toolbar-container>div]:border-transparent
-            hover:[&:has(.default-document-editor-container):hover>.toolbar-container>div]:opacity-0
+            hover:[&:has(.default-plugin-wrapper-container):hover>.toolbar-container>div]:border-transparent
+            hover:[&:has(.default-plugin-wrapper-container):hover>.toolbar-container>div]:opacity-0
           `
           : ''
       )}
@@ -87,7 +84,7 @@ export function DocumentEditor({
             isFocused ? 'opacity-100' : isHovered ? 'opacity-70' : 'opacity-0'
           )}
         >
-          {renderSideToolbar ? renderSideToolbar(toolbar) : toolbar}
+          {renderSideToolbar ? renderSideToolbar(sideToolbar) : sideToolbar}
         </div>
       </div>
     </div>

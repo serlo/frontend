@@ -26,7 +26,7 @@ export function TextToolbar({
   if (config.isInlineChildEditor) {
     if (!containerRef || !containerRef.current) return null
     const target = containerRef.current
-      .closest('.document-editor-container')
+      .closest('.plugin-wrapper-container')
       ?.querySelector('.toolbar-controls-target')
     if (!target) return null
 

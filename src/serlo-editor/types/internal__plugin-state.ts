@@ -1,4 +1,4 @@
-import { DocumentEditorProps } from '../editor-ui/document-editor'
+import { SideToolbarAndWrapperProps } from '../editor-ui/side-toolbar-and-wrapper'
 
 /**
  * Describes the states of a [[Plugin]]. Please note that a state type will be recreated in every render.
@@ -173,5 +173,5 @@ export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
 export interface PluginProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   config?: {}
-  renderSideToolbar?: DocumentEditorProps['renderSideToolbar']
+  renderSideToolbar?: SideToolbarAndWrapperProps['renderSideToolbar']
 }
