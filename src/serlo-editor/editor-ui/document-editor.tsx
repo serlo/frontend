@@ -1,80 +1,37 @@
-import { faClose, faCog } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { useState, useMemo, useRef } from 'react'
+import { useState, useRef } from 'react'
 
-import { PluginToolbarOverlayButton } from '../plugin/plugin-toolbar'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
 export interface DocumentEditorProps {
   children: React.ReactNode // The rendered document
   settingsRef: React.RefObject<HTMLDivElement> // The rendered settings
   toolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
-  hasSettings: boolean // `true` if the document has rendered any settings
   hasToolbar: boolean // `true` if the document has rendered any toolbar buttons
-  renderOldSettingsContent?( // Render prop to override rendering of settings
-    children: React.ReactNode, // the rendered settings
-    { close }: { close(): void }
-  ): React.ReactNode // returns the newly rendered settings
   renderSideToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
   focused: boolean // `true` if the document is focused
   isInlineChildEditor: boolean
 }
 
-// TODO: Rename this to `PluginSettings` or something similar after moving the toolbar out of it.
+// TODO: Rename this to something like `SideToolbarWrapper` or something similar?
 export function DocumentEditor({
   focused,
   children,
-  renderOldSettingsContent,
   renderSideToolbar,
-  settingsRef,
   toolbarRef,
-  hasSettings,
   hasToolbar,
   isInlineChildEditor,
 }: DocumentEditorProps) {
   const [hasHover, setHasHover] = useState(false)
 
-  const editorStrings = useEditorStrings()
-
-  const showSettings = hasSettings && renderOldSettingsContent !== undefined
   const showToolbar = hasToolbar || renderSideToolbar !== undefined
 
-  const renderOldSettings = useMemo<typeof renderOldSettingsContent>(() => {
-    return showSettings
-      ? (children, { close }) => (
-          <>
-            <div className="mb-4 flex items-center justify-between">
-              <h4 className="mr-6">{editorStrings.edtrIo.extendedSettings}</h4>
-              <button
-                onClick={() => close()}
-                className="serlo-button-editor-secondary"
-              >
-                <span className="sr-only">{editorStrings.edtrIo.close}</span>
-                <FaIcon icon={faClose} />
-              </button>
-            </div>
-            {renderOldSettingsContent?.(children, { close }) || children}
-          </>
-        )
-      : undefined
-  }, [renderOldSettingsContent, showSettings, editorStrings])
-
-  const isFocused = focused && (showSettings || showToolbar)
-  const isHovered = hasHover && (showSettings || showToolbar)
+  const isFocused = focused && showToolbar
+  const isHovered = hasHover && showToolbar
 
   const isAppended = useRef(false)
   const toolbar = (
     <>
-      {hasSettings ? (
-        <PluginToolbarOverlayButton
-          label={editorStrings.edtrIo.settings}
-          icon={<FaIcon icon={faCog} className="text-xl" />}
-          renderContent={renderOldSettings}
-          contentRef={settingsRef}
-        />
-      ) : null}
       <div
         ref={(ref) => {
           // The ref `isAppended` ensures that we only append the content once
@@ -82,8 +39,6 @@ export function DocumentEditor({
           if (ref && toolbarRef.current && !isAppended.current) {
             isAppended.current = true
             ref.appendChild(toolbarRef.current)
-          } else if (!showSettings) {
-            isAppended.current = false
           }
         }}
       />

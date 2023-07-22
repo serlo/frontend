@@ -173,6 +173,5 @@ export interface StoreSerializeHelpers<K extends string = string, S = unknown> {
 export interface PluginProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   config?: {}
-  renderOldSettingsContent?: DocumentEditorProps['renderOldSettingsContent']
   renderSideToolbar?: DocumentEditorProps['renderSideToolbar']
 }

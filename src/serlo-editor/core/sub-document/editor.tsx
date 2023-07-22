@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
-import { HotKeys, IgnoreKeys } from 'react-hotkeys'
+import { HotKeys } from 'react-hotkeys'
 
 import { SubDocumentProps } from '.'
 import {
@@ -41,7 +41,6 @@ type HotKeysHandlers = {
 }
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSettings, setHasSettings] = useState(false)
   const [hasToolbar, setHasToolbar] = useState(false)
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
@@ -168,20 +167,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch]
   )
 
-  const renderIntoOldSettings = useCallback(
-    (children: React.ReactNode) => {
-      return (
-        <RenderIntoSettings
-          setHasSettings={setHasSettings}
-          settingsRef={settingsRef}
-        >
-          {children}
-        </RenderIntoSettings>
-      )
-    },
-    [settingsRef]
-  )
-
   const renderIntoSideToolbar = useCallback(
     (children: React.ReactNode) => {
       return (
@@ -254,19 +239,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           tabIndex={-1}
         >
           <DocumentEditor
-            hasSettings={hasSettings}
             hasToolbar={hasToolbar}
             focused={focused}
-            renderOldSettingsContent={
-              pluginProps && pluginProps.renderOldSettingsContent
-            }
             renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
             isInlineChildEditor={isInlineChildEditor}
             settingsRef={settingsRef}
             toolbarRef={toolbarRef}
           >
             <plugin.Component
-              renderIntoOldSettings={renderIntoOldSettings}
               renderIntoSideToolbar={renderIntoSideToolbar}
               containerRef={containerRef}
               id={id}
@@ -287,31 +267,13 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
-    hasSettings,
     hasToolbar,
     focused,
-    renderIntoOldSettings,
     renderIntoSideToolbar,
     id,
     hotKeysHandlers,
     dispatch,
   ])
-}
-
-function RenderIntoSettings({
-  children,
-  setHasSettings,
-  settingsRef,
-}: {
-  children: React.ReactNode
-  setHasSettings: (value: boolean) => void
-  settingsRef: React.MutableRefObject<HTMLDivElement>
-}) {
-  useEffect(() => {
-    setHasSettings(children ? true : false)
-  })
-  if (!settingsRef.current) return null
-  return createPortal(<IgnoreKeys>{children}</IgnoreKeys>, settingsRef.current)
 }
 
 function RenderIntoToolbar({

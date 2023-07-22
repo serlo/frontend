@@ -126,22 +126,9 @@ export interface EditorPluginProps<
    */
   autofocusRef: React.RefObject<HTMLInputElement & HTMLTextAreaElement>
 
-  /**
-   * Ref for the wrapping SubDocument div
-   */
+  // Ref for the wrapping SubDocument div
   containerRef?: React.RefObject<HTMLDivElement>
 
-  /**
-   * Allows the plugin to render into the plugin settings
-   *
-   * @param children - content to render
-   */
-  renderIntoOldSettings(children: React.ReactNode): React.ReactNode
-
-  /**
-   * Allows the plugin to render buttons into the toolbar
-   *
-   * @param children - buttons to render
-   */
+  // Allows the plugin to render buttons into the side toolbar (where the drag is)
   renderIntoSideToolbar(children: React.ReactNode): React.ReactNode
 }
