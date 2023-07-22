@@ -48,14 +48,10 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
 
   return (
     <EditorTextarea
-      style={{
-        color: 'black',
-        margin: 2,
-        width: '80vw',
-        maxWidth: 600,
-        borderRadius: '0.3rem',
-        boxShadow: 'none',
-      }}
+      className={tw`
+        !m-0.5 h-24 !w-[80vw] !max-w-[600px] rounded-md !border-2
+        border-transparent text-black !shadow-none focus:border-editor-primary
+      `}
       onChange={parentOnChange}
       onCopy={(e) => e.stopPropagation()}
       onCut={(e) => e.stopPropagation()}
