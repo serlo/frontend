@@ -52,13 +52,6 @@ function TextExerciseGroupTypeEditor(
   } = props.state
 
   const exGroupStrings = useEditorStrings().templatePlugins.textExerciseGroup
-
-  //  const contentRendered = content.render({
-  //    renderSettings(children) {
-  //      return children
-  //    },
-  //  })
-  // TODO: check out if this still works
   const contentRendered = content.render()
 
   return (
