@@ -2,6 +2,7 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, useCallback, createRef, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Modal from 'react-modal'
 
 import { MathRenderer } from './renderer'
@@ -190,9 +191,7 @@ export function MathEditor(props: MathEditorProps) {
       <>
         {useVisualEditor ? (
           <div
-            onClick={(e) => {
-              e.stopPropagation()
-            }}
+            onClick={(e) => e.stopPropagation()}
             ref={anchorRef}
             {...props.additionalContainerProps}
             className={clsx(
@@ -211,61 +210,75 @@ export function MathEditor(props: MathEditorProps) {
         ) : (
           <MathRenderer {...props} ref={anchorRef} />
         )}
-        {helpOpen ? null : (
-          <HoverOverlayOld position="above" anchor={anchorRef}>
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="bg-editor-primary-100 p-2"
-            >
-              <select
-                className={tw`
+
+        {renderControlsPortal(
+          <div
+            onMouseDown={(e) => e.stopPropagation()} // stops editor from setting focus to other plugin
+            className="inline-block"
+          >
+            <select
+              className={tw`
                   ml-2 cursor-pointer rounded-md !border border-gray-500 bg-editor-primary-100
                   px-1 py-[2px] text-base text-almost-black transition-all
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
                 `}
-                value={useVisualEditor ? 'visual' : 'latex'}
-                onChange={(e) => {
-                  if (hasError) setHasError(false)
-                  props.onEditorChange(e.target.value === 'visual')
+              value={useVisualEditor ? 'visual' : 'latex'}
+              onChange={(e) => {
+                if (hasError) setHasError(false)
+                props.onEditorChange(e.target.value === 'visual')
+              }}
+            >
+              <option value="visual">{mathStrings.visual}</option>
+              <option value="latex">{mathStrings.latex}</option>
+            </select>
+            {!disableBlock && (
+              <button
+                className="mx-2 rounded-md border border-gray-500 px-1 text-base text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+                onClick={() => {
+                  if (props.onInlineChange) props.onInlineChange(!props.inline)
                 }}
               >
-                <option value="visual">{mathStrings.visual}</option>
-                <option value="latex">{mathStrings.latex}</option>
-              </select>
-              {!disableBlock && (
-                <button
-                  className="mx-2 rounded-md border border-gray-500 px-1 text-base text-almost-black transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-                  onClick={() => {
-                    if (props.onInlineChange)
-                      props.onInlineChange(!props.inline)
-                  }}
-                >
-                  {mathStrings.displayAsBlock}{' '}
-                  <FaIcon icon={props.inline ? faCircle : faCheckCircle} />
-                </button>
-              )}
-              {useVisualEditor && (
-                <button
-                  onMouseDown={() => setHelpOpen(true)}
-                  className="mx-2 text-almost-black hover:text-editor-primary"
-                >
-                  <FaIcon icon={faQuestionCircle} />
-                </button>
-              )}
+                {mathStrings.displayAsBlock}{' '}
+                <FaIcon icon={props.inline ? faCircle : faCheckCircle} />
+              </button>
+            )}
+            {useVisualEditor && (
+              <button
+                onMouseDown={() => setHelpOpen(true)}
+                className="mx-2 text-almost-black hover:text-editor-primary"
+              >
+                <FaIcon icon={faQuestionCircle} />
+              </button>
+            )}
+          </div>
+        )}
+
+        {hasError || !useVisualEditor ? (
+          <HoverOverlayOld position="above" anchor={anchorRef}>
+            <>
               {hasError && (
-                <>
+                <p className="p-1">
                   {mathStrings.onlyLatex}
                   &nbsp;&nbsp;
-                </>
+                </p>
               )}
               <br />
               {!useVisualEditor && (
                 <MathEditorTextArea {...props} defaultValue={state} />
               )}
-            </div>
+            </>
           </HoverOverlayOld>
-        )}
+        ) : null}
       </>
     )
+  }
+
+  function renderControlsPortal(children: JSX.Element) {
+    const target =
+      typeof window !== undefined &&
+      document.querySelector('.toolbar-controls-target')
+    if (!target) return null
+
+    return createPortal(children, target)
   }
 }

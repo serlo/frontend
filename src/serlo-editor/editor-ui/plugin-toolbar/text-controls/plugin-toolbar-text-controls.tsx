@@ -21,25 +21,33 @@ export function PluginToolbarTextControls({
 }: PluginToolbarTextControlsProps) {
   const [subMenu, setSubMenu] = useState<number>()
 
+  const isMath = (control: ControlButton) =>
+    Object.hasOwn(control, 'name') && control.name === 'math'
+
+  const mathActive = controls.find(isMath)?.isActive(editor)
+
   if (typeof subMenu !== 'number') {
     return (
       <>
-        {controls.map((control, index) => (
-          <PluginToolbarTextControlButton
-            active={control.isActive(editor)}
-            tooltipText={control.title}
-            onMouseDown={(event) => {
-              event.preventDefault()
-              event.stopPropagation()
-              isNestedControlButton(control)
-                ? setSubMenu(index)
-                : control.onClick(editor)
-            }}
-            key={index}
-          >
-            {control.renderIcon(editor)}
-          </PluginToolbarTextControlButton>
-        ))}
+        {controls.map((control, index) => {
+          if (mathActive && !isMath(control)) return null
+          return (
+            <PluginToolbarTextControlButton
+              active={control.isActive(editor)}
+              tooltipText={control.title}
+              onMouseDown={(event) => {
+                event.preventDefault()
+                event.stopPropagation()
+                isNestedControlButton(control)
+                  ? setSubMenu(index)
+                  : control.onClick(editor)
+              }}
+              key={index}
+            >
+              {control.renderIcon(editor)}
+            </PluginToolbarTextControlButton>
+          )
+        })}
       </>
     )
   }
