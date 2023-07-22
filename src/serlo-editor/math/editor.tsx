@@ -7,17 +7,10 @@ import Modal from 'react-modal'
 
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
-import { EditorTextarea, HoverOverlayOld } from '../editor-ui'
+import { EditorTextarea } from '../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-
-const mathEditorTextareaStyle = {
-  color: 'black',
-  margin: 2,
-  width: '80vw',
-  maxWidth: 600,
-}
 
 interface MathEditorTextAreaProps
   extends Pick<
@@ -55,14 +48,17 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
 
   return (
     <EditorTextarea
-      style={mathEditorTextareaStyle}
+      style={{
+        color: 'black',
+        margin: 2,
+        width: '80vw',
+        maxWidth: 600,
+        borderRadius: '0.3rem',
+        boxShadow: 'none',
+      }}
       onChange={parentOnChange}
-      onCopy={(event: React.ClipboardEvent) => {
-        event.stopPropagation()
-      }}
-      onCut={(event: React.ClipboardEvent) => {
-        event.stopPropagation()
-      }}
+      onCopy={(e) => e.stopPropagation()}
+      onCut={(e) => e.stopPropagation()}
       onMoveOutRight={props.onMoveOutRight}
       onMoveOutLeft={props.onMoveOutLeft}
       value={latex}
@@ -253,22 +249,7 @@ export function MathEditor(props: MathEditorProps) {
           </div>
         )}
 
-        {hasError || !useVisualEditor ? (
-          <HoverOverlayOld position="above" anchor={anchorRef}>
-            <>
-              {hasError && (
-                <p className="p-1">
-                  {mathStrings.onlyLatex}
-                  &nbsp;&nbsp;
-                </p>
-              )}
-              <br />
-              {!useVisualEditor && (
-                <MathEditorTextArea {...props} defaultValue={state} />
-              )}
-            </>
-          </HoverOverlayOld>
-        ) : null}
+        {hasError || !useVisualEditor ? renderOverlayPortal() : null}
       </>
     )
   }
@@ -280,5 +261,19 @@ export function MathEditor(props: MathEditorProps) {
     if (!target) return null
 
     return createPortal(children, target)
+  }
+
+  function renderOverlayPortal() {
+    const children = (
+      <div className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu">
+        <p className="mr-0.5 mt-1 text-right text-sm font-bold text-gray-600">
+          {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
+        </p>
+        {!useVisualEditor && (
+          <MathEditorTextArea {...props} defaultValue={state} />
+        )}
+      </div>
+    )
+    return children
   }
 }
