@@ -12,7 +12,6 @@ export const InputExerciseToolbar = ({ id, state }: InputExerciseProps) => {
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.InputExercise}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <>
           <label className="serlo-tooltip-trigger mr-2">

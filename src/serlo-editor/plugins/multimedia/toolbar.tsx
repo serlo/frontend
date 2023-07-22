@@ -49,7 +49,6 @@ export const MultimediaToolbar = ({
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.Multimedia}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <>
           <button

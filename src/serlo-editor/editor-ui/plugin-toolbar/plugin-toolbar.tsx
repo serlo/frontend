@@ -55,7 +55,7 @@ export function PluginToolbar({
     <div
       className={clsx(
         tw`
-        absolute -top-9 left-0 right-0 z-20 flex h-9 w-full
+        absolute -top-[2.6rem] left-0 right-0 z-20 flex h-9 w-full
         items-center justify-between rounded-tl-md bg-editor-primary-100
         before:pointer-events-none before:absolute before:-top-7
         before:block before:h-7 before:w-full
@@ -65,7 +65,10 @@ export function PluginToolbar({
       )}
     >
       {/* Content controls */}
-      <div>{contentControls}</div>
+      <div>
+        <div className="toolbar-controls-target" />
+        {contentControls}
+      </div>
 
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}

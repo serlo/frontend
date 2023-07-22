@@ -13,7 +13,6 @@ export const EquationsToolbar = ({ id, state }: EquationsProps) => {
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.Equations}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <select
           onChange={(e) => state.transformationTarget.set(e.target.value)}

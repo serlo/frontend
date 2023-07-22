@@ -16,7 +16,6 @@ export const SerloTableToolbar = ({ id, state }: SerloTableProps) => {
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.SerloTable}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <select
           className={tw`

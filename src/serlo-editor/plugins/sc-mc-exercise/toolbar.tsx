@@ -18,7 +18,6 @@ export const ScMcExerciseToolbar = ({ id, state }: ScMcExerciseProps) => {
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.ScMcExercise}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <>
           <label className="serlo-tooltip-trigger mr-2">

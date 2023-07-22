@@ -24,7 +24,6 @@ export const ImageToolbar = (
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.Image}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <>
           <button
