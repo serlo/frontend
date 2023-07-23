@@ -1,8 +1,9 @@
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { EdtrIcon, edtrPlus } from '@/serlo-editor/editor-ui'
 
 interface AddRowButtonProps {
   focused: boolean
@@ -29,9 +30,9 @@ export function AddRowButton({
         visuallyEmphasized ? 'opacity-60' : focused ? 'opacity-60' : 'opacity-0'
       )}
       title={rowsStrings.addAnElement}
-      onMouseDown={onClick}
+      onClick={onClick}
     >
-      <EdtrIcon icon={edtrPlus} className="w-[26px]" />
+      <FaIcon icon={faCirclePlus} className="text-xl" />
       {visuallyEmphasized ? (
         <span className="text-almost-black">{rowsStrings.addAnElement}</span>
       ) : null}
