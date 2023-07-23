@@ -105,6 +105,7 @@ export const MultimediaToolbar = ({
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
+      className="left-[21px] top-0 w-[calc(100%-37px)]"
     />
   )
 
