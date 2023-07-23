@@ -15,13 +15,16 @@ export function MultimediaEditor(props: MultimediaProps) {
   const multimediaTitle = useEditorStrings().plugins.multimedia.title
 
   const pluginToolbarAndStyleHacks = clsx(
-    focused && '[&>div]:border-editor-primary-100',
+    focused && '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
 
     // fix add button position
     '[&_.add-trigger]:relative [&_.add-trigger]:-left-1/4',
 
     // Improve toolbars for multimedia children.
     // hacky but this way the complexity is contained in the parent plugin
+
+    '[&_.explanation-wrapper]:mt-4',
+    '[&_.media-wrapper]:mt-4',
 
     '[&_.explanation-wrapper_.plugin-toolbar]:ml-[1px]',
     // make multimedia child toolbar span full width of multimedia plugin
@@ -39,6 +42,12 @@ export function MultimediaEditor(props: MultimediaProps) {
     tw`
     [&_.explanation-wrapper_.rows-child.first_.plugin-toolbar]:!-top-[44px]
     [&_.explanation-wrapper_.rows-child.first_.plugin-toolbar]:w-[calc(100%+2px)]
+    `,
+
+    // in case there is no rows plugin (article introduction)
+    tw`
+    [&_.explanation-wrapper>div>div>.plugin-wrapper-container_.plugin-toolbar]:!-top-[35px]
+    [&_.explanation-wrapper>div>div>.plugin-wrapper-container_.plugin-toolbar]:w-[calc(100%+2px)]
     `
   )
 
