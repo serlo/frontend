@@ -2,7 +2,7 @@ import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
 import { ImageProps } from '.'
-import { PrimaryControls } from './controls'
+import { InlineUploadControls } from './controls/inline-upload-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
@@ -66,15 +66,20 @@ export function ImageEditor(props: ImageProps) {
         placeholder={renderPlaceholder()}
         forceNewTab
       />
-      {hasFocus ? renderEditControls() : null}
     </>
   )
 
   function renderPlaceholder() {
     if (!isLoading && src.length) return null
     return (
-      <div className="relative w-full rounded-lg bg-editor-primary-50 py-32 text-center">
-        <FaIcon icon={faImages} className="text-7xl text-editor-primary-200" />
+      <div className="relative w-full rounded-lg bg-editor-primary-50 px-side py-32 text-center">
+        <FaIcon
+          icon={faImages}
+          className="mb-4 text-7xl text-editor-primary-200"
+        />
+        <div className="absolute bottom-0 right-side pl-side text-left">
+          {hasFocus ? renderEditControls() : null}
+        </div>
       </div>
     )
   }
@@ -105,7 +110,7 @@ export function ImageEditor(props: ImageProps) {
             {imageStrings.failedUpload}
           </div>
         ) : null}
-        <PrimaryControls {...props} />
+        <InlineUploadControls {...props} />
       </>
     )
   }

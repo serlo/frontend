@@ -2,7 +2,7 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
 import { ImageProps } from '.'
-import { SettingsControls } from './controls'
+import { SettingsModalControls } from './controls/settings-modal-controls'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -43,7 +43,7 @@ export const ImageToolbar = (
               </h3>
 
               <div className="mx-side mb-3">
-                <SettingsControls {...props} />
+                <SettingsModalControls {...props} />
               </div>
             </ModalWithCloseButton>
           ) : null}

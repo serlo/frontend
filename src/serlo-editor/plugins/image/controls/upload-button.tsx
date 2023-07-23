@@ -2,18 +2,18 @@ import { useRef } from 'react'
 
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
-export interface UploadProps {
+export interface UploadButtonProps {
   onFile: (file: File) => void
 }
 
-export function Upload({ onFile }: UploadProps) {
+export function UploadButton({ onFile }: UploadButtonProps) {
   const editorStrings = useEditorStrings()
   const inputRef = useRef<HTMLInputElement>(null)
   return (
     <>
       <button
         onClick={selectFile}
-        className="serlo-button-editor-secondary h-10 self-end text-base"
+        className="serlo-button-editor-secondary mb-side self-end text-base"
       >
         {editorStrings.plugins.image.upload}
       </button>
