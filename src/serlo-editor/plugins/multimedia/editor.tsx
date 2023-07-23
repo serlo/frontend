@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useState } from 'react'
 
 import { MultimediaProps } from '.'
@@ -18,7 +19,12 @@ export function MultimediaEditor(props: MultimediaProps) {
           setShowSettingsModal={setShowSettingsModal}
         />
       ) : null}
-      <div className="focus-within:[&>div]:border-editor-primary-100">
+      <div
+        className={clsx(
+          'focus-within:[&>div]:border-editor-primary-100',
+          '[&_.add-trigger]:relative [&_.add-trigger]:-left-1/4' // fix add button position
+        )}
+      >
         <MultimediaRenderer
           media={<>{multimedia.render()}</>}
           explanation={<>{explanation.render()}</>}
