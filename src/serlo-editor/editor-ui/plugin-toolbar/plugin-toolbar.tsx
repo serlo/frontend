@@ -1,9 +1,9 @@
 import clsx from 'clsx'
-import { ReactElement, useMemo } from 'react'
+import { ReactElement } from 'react'
 
 import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
 import { tw } from '@/helper/tw'
-import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
+// import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface PluginToolbarProps {
@@ -15,41 +15,41 @@ interface PluginToolbarProps {
   className?: string
 }
 
-const ancestorsToDisplay = [
-  EditorPluginType.Box,
-  EditorPluginType.Spoiler,
-  EditorPluginType.Table,
-  EditorPluginType.Multimedia,
-]
+// const ancestorsToDisplay = [
+//   EditorPluginType.Box,
+//   EditorPluginType.Spoiler,
+//   EditorPluginType.Table,
+//   EditorPluginType.Multimedia,
+// ]
 
 export function PluginToolbar({
-  pluginId,
+  // pluginId,
   pluginType,
   contentControls,
   pluginSettings,
   pluginControls,
   className,
 }: PluginToolbarProps) {
-  const pluginTypesOfAncestors = useAppSelector((state) =>
-    selectAncestorPluginTypes(state, pluginId)
-  )
-  const parentType = useMemo(() => {
-    // If there are no ancestors, don't display the indicator
-    if (!pluginTypesOfAncestors) return null
+  // const pluginTypesOfAncestors = useAppSelector((state) =>
+  //   selectAncestorPluginTypes(state, pluginId)
+  // )
+  // const parentType = useMemo(() => {
+  //   // If there are no ancestors, don't display the indicator
+  //   if (!pluginTypesOfAncestors) return null
 
-    // Starting from the end, check the ancestors list for
-    // a displayable ancestor, and if found, display it
-    for (let i = pluginTypesOfAncestors.length - 1; i >= 0; i--) {
-      const currentAncestor = pluginTypesOfAncestors[i] as EditorPluginType
-      if (ancestorsToDisplay.includes(currentAncestor)) return currentAncestor
-    }
+  //   // Starting from the end, check the ancestors list for
+  //   // a displayable ancestor, and if found, display it
+  //   for (let i = pluginTypesOfAncestors.length - 1; i >= 0; i--) {
+  //     const currentAncestor = pluginTypesOfAncestors[i] as EditorPluginType
+  //     if (ancestorsToDisplay.includes(currentAncestor)) return currentAncestor
+  //   }
 
-    // If no ancestor to display has been found, don't display the indicator
-    return null
-  }, [pluginTypesOfAncestors])
+  //   // If no ancestor to display has been found, don't display the indicator
+  //   return null
+  // }, [pluginTypesOfAncestors])
 
-  // eslint-disable-next-line no-console
-  console.log(parentType)
+  // // eslint-disable-next-line no-console
+  // console.log(parentType)
 
   return (
     <div
