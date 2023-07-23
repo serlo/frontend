@@ -403,7 +403,7 @@ export function TextEditor(props: TextEditorProps) {
               <TextLeafRenderer {...props} />
             </span>
           )}
-          className="focus:outline-none [&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <LinkControls

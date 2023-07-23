@@ -50,7 +50,7 @@ export function CommentAreaAllThreadsThread({
 
   const canSetStatus =
     auth &&
-    (canDo(Thread.deleteThread) ||
+    (canDo(Thread.setThreadState) ||
       canDo(Entity.checkoutRevision) ||
       thread.comments.nodes.some((obj) => obj.author.id === auth.id))
 

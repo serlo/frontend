@@ -41,7 +41,6 @@ export function InlineInput(props: {
       }}
     >
       <Editable
-        className="focus:outline-none"
         placeholder={placeholder}
         onFocus={() => {
           setTimeout(() => {
