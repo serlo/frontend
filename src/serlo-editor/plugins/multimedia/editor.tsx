@@ -27,8 +27,9 @@ export function MultimediaEditor(props: MultimediaProps) {
           '[&_.add-trigger]:relative [&_.add-trigger]:-left-1/4',
 
           // Improve toolbars for multimedia children.
-          // a bit hacky but the complexity is contained in the parent plugin
+          // hacky but this way the complexity is contained in the parent plugin
 
+          '[&_.explanation-wrapper_.plugin-toolbar]:ml-[1px]',
           // make multimedia child toolbar span full width of multimedia plugin
           '[&_.media-wrapper:focus-within_.plugin-wrapper-container]:!static',
           // media-wrapper needs to be relative to be clickable (is float:right)
@@ -37,7 +38,13 @@ export function MultimediaEditor(props: MultimediaProps) {
           // margin and size improvement
           tw`
           [&_.media-wrapper_.plugin-toolbar]:!-top-[1.3rem] [&_.media-wrapper_.plugin-toolbar]:!left-auto
-          [&_.media-wrapper_.plugin-toolbar]:mx-side [&_.media-wrapper_.plugin-toolbar]:w-[calc(100%-36px)]
+          [&_.media-wrapper_.plugin-toolbar]:mx-side [&_.media-wrapper_.plugin-toolbar]:w-[calc(100%-37px)]
+          `,
+
+          // first explanation toolbar: small position tweak
+          tw`
+          [&_.explanation-wrapper_.rows-child.first_.plugin-toolbar]:!-top-[65px]
+          [&_.explanation-wrapper_.rows-child.first_.plugin-toolbar]:w-[calc(100%+2px)]
           `
         )}
       >

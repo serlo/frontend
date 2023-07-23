@@ -30,7 +30,7 @@ export function MultimediaRenderer({
         {media}
       </div>
       {/* 1px margin fixes mistery bug in firefox */}
-      <div className="ml-[1px]">{explanation}</div>
+      <div className="explanation-wrapper ml-[1px]">{explanation}</div>
       <div className="clear-both" />
     </div>
   )
