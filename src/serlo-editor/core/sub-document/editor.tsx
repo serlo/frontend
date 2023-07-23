@@ -13,7 +13,7 @@ import {
   useAppDispatch,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
-import { usePlugin } from '../contexts/plugins-context'
+import { usePlugin, usePlugins } from '../contexts/plugins-context'
 import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
@@ -24,6 +24,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const plugins = usePlugins()
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
   useEnableEditorHotkeys(id, plugin)
 
@@ -101,10 +102,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   )
 
   return useMemo(() => {
-    if (!document) return null
+    if (!document) {
+      // eslint-disable-next-line no-console
+      console.warn('SubDocumentEditor -> Document does not exist')
+      return null
+    }
     if (!plugin) {
       // eslint-disable-next-line no-console
-      console.warn('Plugin does not exist')
+      console.warn('SubDocumentEditor -> Plugin does not exist')
       return null
     }
 
@@ -126,6 +131,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       dispatch(
         runChangeDocumentSaga({
           id,
+          plugins,
           state: {
             initial,
             executor: additional.executor,
@@ -134,6 +140,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         })
       )
     }
+
+    // Take the default state for this plugin (set in serlo-editor/plugins/[plugin_type]/index.tsx) and add the individual plugin state obtained from the redux state.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const state = plugin.state.init(document.state, onChange)
 
@@ -170,6 +178,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     )
   }, [
     document,
+    plugins,
     plugin,
     pluginProps,
     handleFocus,

@@ -20,7 +20,7 @@ export function UnreadNotificationsCount({
     }
   }>({
     query: gql`
-      {
+      query unreadNotifications {
         notifications(unread: true) {
           totalCount
         }
