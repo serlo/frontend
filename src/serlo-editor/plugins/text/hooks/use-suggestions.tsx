@@ -44,9 +44,13 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allowed = useContext(AllowedChildPlugins)
   const pluginsData = usePlugins()
 
-  useHotkeys('up', () => handleSelectionChange('up'))
-  useHotkeys('down', () => handleSelectionChange('down'))
-  useHotkeys('enter', handleSuggestionInsert)
+  useHotkeys('up', () => handleSelectionChange('up'), {
+    enableOnContentEditable: true,
+  })
+  useHotkeys('down', () => handleSelectionChange('down'), {
+    enableOnContentEditable: true,
+  })
+  useHotkeys('enter', handleSuggestionInsert, { enableOnContentEditable: true })
 
   const allOptions = (allowed ?? allPlugins).map((type) =>
     createOption(type, pluginsStrings, pluginsData)

@@ -90,7 +90,7 @@ export function InnerDocument({
 
       void dispatch(undo())
     },
-    { enableOnContentEditable: true, enableOnFormTags: true }
+    { enableOnContentEditable: true, enableOnFormTags: false }
   )
 
   useHotkeys(
@@ -106,7 +106,7 @@ export function InnerDocument({
 
       void dispatch(redo())
     },
-    { enableOnContentEditable: true, enableOnFormTags: true }
+    { enableOnContentEditable: true, enableOnFormTags: false }
   )
 
   useHotkeys(
@@ -114,7 +114,7 @@ export function InnerDocument({
     () => {
       void dispatch(redo())
     },
-    { enableOnContentEditable: true, enableOnFormTags: true }
+    { enableOnContentEditable: true, enableOnFormTags: false }
   )
 
   if (!id) return null

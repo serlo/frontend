@@ -1,7 +1,6 @@
 import * as R from 'ramda'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
-import { useHotkeys } from 'react-hotkeys-hook'
 
 import { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
@@ -12,8 +11,6 @@ import {
   selectIsFocused,
   useAppSelector,
   useAppDispatch,
-  undo,
-  redo,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin } from '../contexts/plugins-context'

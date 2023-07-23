@@ -77,7 +77,7 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
       }),
     {
       enableOnContentEditable: true,
-      enableOnFormTags: true,
+      enableOnFormTags: false,
     }
   )
 
@@ -101,6 +101,6 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
   }),
     {
       enableOnContentEditable: true,
-      enableOnFormTags: true,
+      enableOnFormTags: false,
     }
 }
