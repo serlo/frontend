@@ -30,7 +30,7 @@ export function MultimediaEditor(props: MultimediaProps) {
           // a bit hacky but the complexity is contained in the parent plugin
 
           // make multimedia child toolbar span full width of multimedia plugin
-          '[&_.media-wrapper_.plugin-wrapper-container]:!static',
+          '[&_.media-wrapper:focus-within_.plugin-wrapper-container]:!static',
           // media-wrapper needs to be relative to be clickable (is float:right)
           // but needs to be static to not restrict toolbar width
           '[&_.media-wrapper:focus-within]:!static',

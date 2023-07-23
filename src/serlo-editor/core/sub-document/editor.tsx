@@ -156,12 +156,16 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
-
       if (!focused && target === containerRef.current) {
-        dispatch(focus(id))
+        if (document?.plugin === 'rows') {
+          const parent = selectParent(store.getState(), id)
+          if (parent) dispatch(focus(parent.id))
+        } else {
+          dispatch(focus(id))
+        }
       }
     },
-    [focused, id, dispatch]
+    [focused, id, dispatch, document]
   )
 
   const renderIntoSideToolbar = useCallback(
