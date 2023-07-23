@@ -128,16 +128,26 @@ function render(value: FrontendContentNode, path: NodePath = []): ReactNode {
         children.push(render(value, path.concat(index)))
       })
     }
-    return (
-      <Fragment key={key}>
-        {renderElement({
-          element: currentNode,
-          children: children.length === 0 ? null : children,
-          value,
-          path,
-        })}
-      </Fragment>
-    )
+
+    const renderedElement = renderElement({
+      element: currentNode,
+      children: children.length === 0 ? null : children,
+      value,
+      path,
+    })
+
+    const shortId =
+      Object.hasOwn(currentNode, 'pluginId') &&
+      currentNode.pluginId?.split('-')[0]
+
+    if (shortId)
+      return (
+        <div key={key} id={shortId}>
+          {renderedElement}
+        </div>
+      )
+
+    return <Fragment key={key}>{renderedElement}</Fragment>
   }
 
   if (currentNode.text === '') return null // avoid rendering empty spans

@@ -10,13 +10,11 @@ import { ReactElement } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 
-interface PluginToolbarDropdownMenuProps {
+interface PluginToolMenuProps {
   pluginControls: ReactElement
 }
 
-export function PluginToolbarDropdownMenu({
-  pluginControls,
-}: PluginToolbarDropdownMenuProps) {
+export function PluginToolMenu({ pluginControls }: PluginToolMenuProps) {
   return (
     <Root>
       <List>

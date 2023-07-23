@@ -46,7 +46,7 @@ interface BoxProps {
   title?: JSX.Element | string
 }
 
-export function Renderer({ boxType, title, anchorId, children }: BoxProps) {
+export function BoxRenderer({ boxType, title, anchorId, children }: BoxProps) {
   const { strings } = useInstanceData()
   if (!children || !boxType) return null
 

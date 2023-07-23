@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { BoxProps } from '.'
 import {
   BoxType,
-  Renderer,
+  BoxRenderer,
   boxTypeStyle,
   defaultStyle,
   types,
@@ -62,7 +62,7 @@ export function BoxEditor(props: BoxProps) {
   return (
     <>
       {renderPluginToolbar()}
-      <Renderer
+      <BoxRenderer
         boxType={typedValue}
         title={
           <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
@@ -82,7 +82,7 @@ export function BoxEditor(props: BoxProps) {
         anchorId={anchorId.value}
       >
         <div className="-ml-3 px-side">{content.render()}</div>
-      </Renderer>
+      </BoxRenderer>
       {renderWarning()}
     </>
   )

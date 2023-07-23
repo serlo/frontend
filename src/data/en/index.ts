@@ -796,6 +796,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
+          copyAnchorLink: "Copy link to this element",
           remove: 'Remove',
           close: 'Close',
           dragElement: 'Drag the element within the document',

@@ -1,6 +1,7 @@
 import { faClone, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useCallback } from 'react'
 
+import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
@@ -83,6 +84,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         label={pluginStrings.rows.remove}
         icon={faTrashAlt}
       />
+      <AnchorLinkCopyTool pluginId={pluginId} />
     </>
   )
 }
