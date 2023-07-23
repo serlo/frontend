@@ -45,9 +45,7 @@ export function InlineInput(props: {
         placeholder={placeholder}
         onFocus={() => {
           setTimeout(() => {
-            if (typeof props.onFocus === 'function') {
-              props.onFocus()
-            }
+            if (props.onFocus) props.onFocus()
           })
         }}
       />
