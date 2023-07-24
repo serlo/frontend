@@ -44,6 +44,7 @@ export function PluginToolbar({
 
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
+        {/* TODO: use i18n string */}
         <div className="mx-4 text-sm font-bold capitalize">{pluginType}</div>
 
         {pluginSettings ? (
