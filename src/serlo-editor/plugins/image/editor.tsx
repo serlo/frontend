@@ -14,6 +14,7 @@ import {
   store,
   selectHasFocusedChild,
   selectIsDocumentEmpty,
+  useAppSelector,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -32,7 +33,10 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
-  const hasFocus = focused || selectHasFocusedChild(store.getState(), props.id)
+  const isCaptionFocused = useAppSelector((storeState) =>
+    selectHasFocusedChild(storeState, props.id)
+  )
+  const hasFocus = focused || isCaptionFocused
 
   const src = state.src.value.toString()
 
