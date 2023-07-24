@@ -1,5 +1,3 @@
-import { Editor } from 'slate'
-
 import { BoxProps } from '.'
 import { BoxType, types } from './renderer'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -8,21 +6,9 @@ import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
-import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
-import { ControlButton } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-interface BoxToolbarProps {
-  controls: ControlButton[]
-  editor: Editor
-}
-
-export const BoxToolbar = ({
-  id,
-  state,
-  controls,
-  editor,
-}: BoxProps & BoxToolbarProps) => {
+export const BoxToolbar = ({ id, state }: BoxProps) => {
   const boxStrings = useEditorStrings().plugins.box
   const { strings } = useInstanceData()
 
@@ -30,9 +16,6 @@ export const BoxToolbar = ({
     <PluginToolbar
       pluginId={id}
       pluginType={EditorPluginType.Box}
-      contentControls={
-        <PluginToolbarTextControls controls={controls} editor={editor} />
-      }
       pluginSettings={
         <>
           <div className="serlo-tooltip-trigger">
