@@ -28,7 +28,7 @@ export function PluginToolbar({
       className={clsx(
         tw`
         plugin-toolbar absolute -top-[2.6rem] left-0 right-0 z-20 flex h-9 w-full
-        items-center justify-between rounded-t-lg bg-editor-primary-100
+        items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
         before:pointer-events-none before:absolute before:-top-7
         before:block before:h-7 before:w-full
         before:bg-gradient-to-t before:from-[rgba(255,255,255,0.95)] before:via-[rgba(255,255,255,0.7)] before:to-transparent
@@ -38,8 +38,8 @@ export function PluginToolbar({
     >
       {/* Content controls */}
       <div>
-        <div className="toolbar-controls-target" />
         {contentControls}
+        <div className="toolbar-controls-target inline-block" />
       </div>
 
       <div className="flex flex-grow items-center justify-end">

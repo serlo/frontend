@@ -862,6 +862,7 @@ export const loggedInData = {
             formula: '[formula]',
             visual: 'visual',
             latex: 'LaTeX',
+            latexEditorTitle: 'LaTeX editor',
             onlyLatex: 'Only LaTeX editor available',
             shortcuts: 'Shortcuts',
             fraction: 'Fraction',

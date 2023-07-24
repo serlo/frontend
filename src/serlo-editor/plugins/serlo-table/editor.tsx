@@ -196,7 +196,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <button
-        onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+        onMouseDown={(e) => e.stopPropagation()} // hack to stop editor from stealing events
         onClick={() => {
           cell.content.replace(
             isImage ? EditorPluginType.Text : EditorPluginType.Image
