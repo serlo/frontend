@@ -1,18 +1,18 @@
 import clsx from 'clsx'
-import { useState } from 'react'
 
 import { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
-import { MultimediaToolbar } from './toolbar'
+import { SizeSelect } from './toolbar/size-select'
+import { ToolbarWrapper } from './toolbar/toolbar-wrapper'
+import { TypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
 export function MultimediaEditor(props: MultimediaProps) {
-  const { state, editable, focused } = props
+  const { config, state, editable, focused } = props
   const { explanation, multimedia, width } = state
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
-  const multimediaTitle = useEditorStrings().plugins.multimedia.title
+  const editorStrings = useEditorStrings()
 
   const pluginToolbarAndStyleHacks = clsx(
     focused && '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
@@ -53,14 +53,22 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   return (
     <div className="group/multimedia">
-      {editable && focused ? (
-        <MultimediaToolbar
-          {...props}
-          showSettingsModal={showSettingsModal}
-          setShowSettingsModal={setShowSettingsModal}
-        />
-      ) : null}
-      {editable && !focused ? (
+      {editable && focused && (
+        <ToolbarWrapper id={props.id} strings={editorStrings}>
+          <SizeSelect
+            state={state.width}
+            title={editorStrings.plugins.multimedia.chooseSize}
+          />
+          {config.allowedPlugins.length > 1 && (
+            <TypeSelect
+              allowedPlugins={config.allowedPlugins}
+              state={state.multimedia}
+              strings={editorStrings}
+            />
+          )}
+        </ToolbarWrapper>
+      )}
+      {editable && !focused && (
         <button
           className={tw`
             absolute -top-6 right-8 z-50 hidden h-6 rounded-t-md bg-gray-100
@@ -68,9 +76,9 @@ export function MultimediaEditor(props: MultimediaProps) {
             hover:bg-editor-primary-100 group-focus-within/multimedia:block
           `}
         >
-          {multimediaTitle}
+          {editorStrings.plugins.multimedia.title}
         </button>
-      ) : null}
+      )}
       <div className={pluginToolbarAndStyleHacks}>
         <MultimediaRenderer
           media={<>{multimedia.render()}</>}
