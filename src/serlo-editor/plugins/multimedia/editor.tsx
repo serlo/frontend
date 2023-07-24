@@ -1,18 +1,30 @@
 import clsx from 'clsx'
-import { useState } from 'react'
 
 import { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
-import { MultimediaToolbar } from './toolbar'
+import { MultimediaSizeSelect } from './toolbar/size-select'
+import { MultimediaToolbar } from './toolbar/toolbar'
+import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import {
+  selectHasFocusedDescendant,
+  selectIsFocused,
+  useAppSelector,
+} from '@/serlo-editor/store'
 
 export function MultimediaEditor(props: MultimediaProps) {
-  const { state, editable, focused } = props
+  const { config, state, editable, focused } = props
   const { explanation, multimedia, width } = state
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
-  const multimediaTitle = useEditorStrings().plugins.multimedia.title
+  const multimediaStrings = useEditorStrings().plugins.multimedia
+
+  const isMediaChildFocused = useAppSelector((state) =>
+    selectIsFocused(state, multimedia.id)
+  )
+  const isMediaChildFocusedWithin = useAppSelector((state) =>
+    selectHasFocusedDescendant(state, multimedia.id)
+  )
 
   const pluginToolbarAndStyleHacks = clsx(
     focused && '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
@@ -27,11 +39,13 @@ export function MultimediaEditor(props: MultimediaProps) {
     '[&_.media-wrapper]:mt-4',
 
     '[&_.explanation-wrapper_.plugin-toolbar]:ml-[1px]',
-    // make multimedia child toolbar span full width of multimedia plugin
-    '[&_.media-wrapper:focus-within_.plugin-wrapper-container]:!static',
-    // media-wrapper needs to be relative to be clickable (is float:right)
+
+    // make media-child's toolbar full width of multimedia plugin
+    // also media-wrapper needs to be relative to be clickable (is float:right)
     // but needs to be static to not restrict toolbar width
-    '[&_.media-wrapper:focus-within]:!static',
+    (isMediaChildFocused || isMediaChildFocusedWithin) &&
+      '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
+
     // margin and size improvement
     tw`
     [&_.media-wrapper_.plugin-toolbar]:!left-auto [&_.media-wrapper_.plugin-toolbar]:!top-0
@@ -54,11 +68,18 @@ export function MultimediaEditor(props: MultimediaProps) {
   return (
     <div className="group/multimedia">
       {editable && focused ? (
-        <MultimediaToolbar
-          {...props}
-          showSettingsModal={showSettingsModal}
-          setShowSettingsModal={setShowSettingsModal}
-        />
+        <MultimediaToolbar id={props.id}>
+          <MultimediaSizeSelect
+            state={state.width}
+            title={multimediaStrings.chooseSize}
+          />
+          {config.allowedPlugins.length > 1 && (
+            <MultimediaTypeSelect
+              allowedPlugins={config.allowedPlugins}
+              state={state.multimedia}
+            />
+          )}
+        </MultimediaToolbar>
       ) : null}
       {editable && !focused ? (
         <button
@@ -68,7 +89,7 @@ export function MultimediaEditor(props: MultimediaProps) {
             hover:bg-editor-primary-100 group-focus-within/multimedia:block
           `}
         >
-          {multimediaTitle}
+          {multimediaStrings.title}
         </button>
       ) : null}
       <div className={pluginToolbarAndStyleHacks}>
