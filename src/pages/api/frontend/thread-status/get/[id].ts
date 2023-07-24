@@ -18,5 +18,5 @@ export default async function handler(
     // eslint-disable-next-line no-console
     // console.log(e)
   }
-  res.status(400).send('bad')
+  res.send('bad')
 }

@@ -6,7 +6,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const languages = ['text', 'c', 'javascript', 'jsx', 'markup', 'java', 'python']
@@ -64,7 +64,7 @@ export const HighlightToolbar = ({ id, state }: HighlightProps) => {
           </button>
         </>
       }
-      pluginControls={<DefaultControls pluginId={id} />}
+      pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )
 }

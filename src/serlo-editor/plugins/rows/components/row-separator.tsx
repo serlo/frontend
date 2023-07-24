@@ -33,13 +33,11 @@ export function RowSeparator({
           : 'translate-y-full'
       )}
     >
-      <div className="flex w-full justify-center pb-1 pt-0.5 [&:hover_.add-trigger]:opacity-60">
-        <AddRowButton
-          focused={focused || false}
-          onClick={onClick}
-          visuallyEmphasized={visuallyEmphasizeAddButton}
-        />
-      </div>
+      <AddRowButton
+        focused={focused || false}
+        onClick={onClick}
+        visuallyEmphasized={visuallyEmphasizeAddButton}
+      />
     </div>
   )
 }

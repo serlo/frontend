@@ -164,11 +164,11 @@ export function MathElement({
     ReactEditor.focus(editor)
   }
 
+  const VoidWrapper = element.inline ? 'span' : 'div'
   return (
     // Slate void elements need to set attributes and contentEditable={false}
     // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
-    // TODO Maybe return a div when math element is not an inline but a block type.
-    <span {...attributes} tabIndex={-1} contentEditable={false}>
+    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
       <MathEditor
         autofocus
         state={element.src}
@@ -193,6 +193,6 @@ export function MathElement({
         }
       />
       {children}
-    </span>
+    </VoidWrapper>
   )
 }

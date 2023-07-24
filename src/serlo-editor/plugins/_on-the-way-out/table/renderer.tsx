@@ -4,8 +4,6 @@ import { TableProps } from '.'
 import { useTableConfig } from './config'
 import { FaIcon } from '@/components/fa-icon'
 
-// TODO: delete
-
 export function TableRenderer(props: TableProps) {
   const { editable, state } = props
   const config = useTableConfig(props.config)

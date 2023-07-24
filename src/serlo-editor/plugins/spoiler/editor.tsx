@@ -2,7 +2,7 @@ import { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SpoilerEditor(props: SpoilerProps) {
@@ -39,7 +39,7 @@ export function SpoilerEditor(props: SpoilerProps) {
       <PluginToolbar
         pluginId={id}
         pluginType={EditorPluginType.Spoiler}
-        pluginControls={<DefaultControls pluginId={id} />}
+        pluginControls={<PluginDefaultTools pluginId={id} />}
       />
     )
   }

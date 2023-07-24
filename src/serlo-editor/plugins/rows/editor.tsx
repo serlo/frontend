@@ -83,6 +83,7 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
               index={index}
               rows={state}
               row={row}
+              isFirst={index === 0}
               isLast={isLastRowEditor}
               visuallyEmphasizeAddButton={
                 visuallyEmphasizeLastAddButton && isLastRowEditor
