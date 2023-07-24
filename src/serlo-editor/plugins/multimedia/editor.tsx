@@ -67,7 +67,7 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   return (
     <div className="group/multimedia">
-      {editable && focused && (
+      {editable && focused ? (
         <MultimediaToolbar id={props.id}>
           <MultimediaSizeSelect
             state={state.width}
@@ -80,8 +80,8 @@ export function MultimediaEditor(props: MultimediaProps) {
             />
           )}
         </MultimediaToolbar>
-      )}
-      {editable && !focused && (
+      ) : null}
+      {editable && !focused ? (
         <button
           className={tw`
             absolute -top-6 right-8 z-50 hidden h-6 rounded-t-md bg-gray-100
@@ -91,7 +91,7 @@ export function MultimediaEditor(props: MultimediaProps) {
         >
           {multimediaStrings.title}
         </button>
-      )}
+      ) : null}
       <div className={pluginToolbarAndStyleHacks}>
         <MultimediaRenderer
           media={<>{multimedia.render()}</>}
