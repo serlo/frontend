@@ -31,4 +31,9 @@ export type RootStore = typeof store
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
+
+/**
+ * Like `store.getState()` but subscribes to state changes,
+ * and will trigger a re-render if relevant state props change.
+ */
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
