@@ -429,6 +429,7 @@ function renderElement({
             revisionId: 0,
           },
         }}
+        forceVisible={isRevisionView}
         loaded={false}
         renderNested={nestedRenderer}
       />
