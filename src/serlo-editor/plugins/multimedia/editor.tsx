@@ -12,7 +12,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   const { config, state, editable, focused } = props
   const { explanation, multimedia, width } = state
 
-  const editorStrings = useEditorStrings()
+  const multimediaStrings = useEditorStrings().plugins.multimedia
 
   const pluginToolbarAndStyleHacks = clsx(
     focused && '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
@@ -57,7 +57,7 @@ export function MultimediaEditor(props: MultimediaProps) {
         <MultimediaToolbar id={props.id}>
           <MultimediaSizeSelect
             state={state.width}
-            title={editorStrings.plugins.multimedia.chooseSize}
+            title={multimediaStrings.chooseSize}
           />
           {config.allowedPlugins.length > 1 && (
             <MultimediaTypeSelect
@@ -75,7 +75,7 @@ export function MultimediaEditor(props: MultimediaProps) {
             hover:bg-editor-primary-100 group-focus-within/multimedia:block
           `}
         >
-          {editorStrings.plugins.multimedia.title}
+          {multimediaStrings.title}
         </button>
       )}
       <div className={pluginToolbarAndStyleHacks}>
