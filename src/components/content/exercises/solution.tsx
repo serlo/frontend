@@ -31,12 +31,21 @@ const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
 export interface SolutionProps {
   node: FrontendExerciseNode
   loaded: boolean
+  forceVisible?: boolean
   renderNested: RenderNestedFunction
 }
-export function Solution({ node, loaded, renderNested }: SolutionProps) {
+export function Solution({
+  node,
+  loaded,
+  forceVisible,
+  renderNested,
+}: SolutionProps) {
   const { asPath } = useRouter()
   const auth = useAuthentication()
-  const solutionVisibleOnInit = isPrintMode
+
+  const solutionVisibleOnInit = forceVisible
+    ? true
+    : isPrintMode
     ? printModeSolutionVisible
     : typeof window === 'undefined'
     ? false
