@@ -31,7 +31,7 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
       }}
       label={pluginStrings.rows.copyAnchorLink}
       icon={faHashtag}
-      className="mt-1 border-t pt-1"
+      className="mt-2.5 border-t pt-2.5"
     />
   )
 }
