@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { MultimediaProps } from '..'
 import { tw } from '@/helper/tw'
 
-interface Props {
+interface MultimediaSizeSelectButtonProps {
   state: MultimediaProps['state']['width']
   percent: number
 }
@@ -11,7 +11,10 @@ interface Props {
 const childClassName =
   'm-1 bg-editor-primary-200 group-hover:bg-editor-primary group-focus:bg-editor-primary rounded-sm h-20'
 
-export const SizeSelectButton = ({ state, percent }: Props) => (
+export const MultimediaSizeSelectButton = ({
+  state,
+  percent,
+}: MultimediaSizeSelectButtonProps) => (
   <button
     onClick={(event) => {
       event.preventDefault()

@@ -2,9 +2,9 @@ import clsx from 'clsx'
 
 import { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
-import { SizeSelect } from './toolbar/size-select'
-import { ToolbarWrapper } from './toolbar/toolbar-wrapper'
-import { TypeSelect } from './toolbar/type-select'
+import { MultimediaSizeSelect } from './toolbar/size-select'
+import { MultimediaToolbar } from './toolbar/toolbar'
+import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
@@ -54,19 +54,18 @@ export function MultimediaEditor(props: MultimediaProps) {
   return (
     <div className="group/multimedia">
       {editable && focused && (
-        <ToolbarWrapper id={props.id} strings={editorStrings}>
-          <SizeSelect
+        <MultimediaToolbar id={props.id}>
+          <MultimediaSizeSelect
             state={state.width}
             title={editorStrings.plugins.multimedia.chooseSize}
           />
           {config.allowedPlugins.length > 1 && (
-            <TypeSelect
+            <MultimediaTypeSelect
               allowedPlugins={config.allowedPlugins}
               state={state.multimedia}
-              strings={editorStrings}
             />
           )}
-        </ToolbarWrapper>
+        </MultimediaToolbar>
       )}
       {editable && !focused && (
         <button

@@ -10,22 +10,24 @@ import {
   useAppSelector,
 } from '@/serlo-editor/store'
 
-interface Props {
+interface MultimediaTypeSelectProps {
   allowedPlugins: MultimediaProps['config']['allowedPlugins']
   state: MultimediaProps['state']['multimedia']
-  strings: ReturnType<typeof useEditorStrings>
 }
 
-export const TypeSelect = ({ allowedPlugins, state, strings }: Props) => {
+export const MultimediaTypeSelect = ({
+  allowedPlugins,
+  state,
+}: MultimediaTypeSelectProps) => {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
-
+  const editorStrings = useEditorStrings()
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
   )?.plugin
 
   return (
     <div className="mb-8 mt-3">
-      <strong>{strings.plugins.multimedia.changeType}</strong>
+      <strong>{editorStrings.plugins.multimedia.changeType}</strong>
       <span className="mr-4">:</span>
       <select
         value={currentPluginType ?? allowedPlugins[0]}
@@ -38,7 +40,7 @@ export const TypeSelect = ({ allowedPlugins, state, strings }: Props) => {
       >
         {allowedPlugins.map((type) => (
           <option key={type} value={type}>
-            {getPluginTitle(strings, type)}
+            {getPluginTitle(editorStrings, type)}
           </option>
         ))}
       </select>
