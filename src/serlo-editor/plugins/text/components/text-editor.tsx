@@ -66,7 +66,7 @@ export function TextEditor(props: TextEditorProps) {
   const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
-  const pluginStrings = useEditorStrings().plugins
+  const textStrings = useEditorStrings().plugins.text
 
   const plugins = usePlugins()
 
@@ -318,6 +318,7 @@ export function TextEditor(props: TextEditorProps) {
     ]
   )
 
+  // TODO: put this and other functions into helper files after toolbar and hotkey PR
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
       const isListActive = isSelectionWithinList(editor)
@@ -349,7 +350,7 @@ export function TextEditor(props: TextEditorProps) {
 
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
             return
           }
 
@@ -358,8 +359,8 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      // Handle pasted video URLs
       if (text) {
+        // Handle pasted video URLs
         const videoPluginState = getPluginByType(
           plugins,
           EditorPluginType.Video
@@ -368,11 +369,29 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(pluginStrings.video.noVideoPasteInLists, 'warning')
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
             return
           }
 
           insertPlugin(EditorPluginType.Video, videoPluginState)
+          return
+        }
+
+        // Handle pasted geogebra URLs
+        const geogebraPluginState = getPluginByType(
+          plugins,
+          EditorPluginType.Geogebra
+        )?.plugin.onText?.(text)
+
+        if (geogebraPluginState !== undefined) {
+          event.preventDefault()
+
+          if (isListActive) {
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
+            return
+          }
+
+          insertPlugin(EditorPluginType.Geogebra, geogebraPluginState)
           return
         }
       }
@@ -418,7 +437,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, pluginStrings, plugins]
+    [dispatch, editor, id, textStrings, plugins]
   )
 
   const handleRenderElement = useCallback(
@@ -490,7 +509,7 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
+          placeholder={config.placeholder ?? textStrings.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
