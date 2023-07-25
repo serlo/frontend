@@ -1,8 +1,5 @@
-import clsx from 'clsx'
-
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
-import { tw } from '@/helper/tw'
 
 interface ImageProps {
   image: {
@@ -36,22 +33,7 @@ export function ImageRenderer({
         {wrapWithLink(
           placeholder ?? (
             <img
-              className={clsx(
-                'serlo-img',
-                tw`
-                  relative
-                  min-h-[100px] min-w-[100%]
-                  before:absolute
-                  before:left-0 before:top-[50%] before:h-full
-                  before:w-full before:translate-y-[-50%]
-                  before:border-2
-                  before:border-editor-primary-100 before:bg-slate-100
-                  before:content-['']
-                  after:absolute
-                  after:left-0 after:top-1 after:block
-                  after:h-full after:w-full after:content-[':(_'attr(alt)]
-                ` // Temporary fix for properly displaying src input even when image is broken
-              )}
+              className="serlo-img"
               src={src}
               alt={alt ? alt : altFallback}
               itemProp="contentUrl"
