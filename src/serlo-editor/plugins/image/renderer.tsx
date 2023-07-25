@@ -33,7 +33,7 @@ export function ImageRenderer({
         {wrapWithLink(
           placeholder ?? (
             <img
-              className="serlo-img-error-placeholder serlo-img"
+              className="serlo-img serlo-img-error-placeholder"
               src={src}
               alt={alt ? alt : altFallback}
               itemProp="contentUrl"
