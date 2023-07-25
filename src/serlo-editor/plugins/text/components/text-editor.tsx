@@ -100,47 +100,48 @@ export function TextEditor(props: TextEditorProps) {
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
-    // Get the current text value of the editor
-    const text = Node.string(editor)
-
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
-      }
-      return
-    }
-
-    // If the first child of the editor is not a paragraph, do nothing
-    const isFirstChildParagraph =
-      'type' in editor.children[0] && editor.children[0].type === 'p'
-    if (!isFirstChildParagraph) return
-
-    // If the editor is empty, set the cursor at the start
-    if (text === '') {
-      Transforms.select(editor, { offset: 0, path: [0, 0] })
-    }
-
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-    }
-
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
     const timeout = setTimeout(() => {
+      // Get the current text value of the editor
+      const text = Node.string(editor)
+
+      // If the editor is not focused, remove the suggestions search
+      // and exit the useEffect hook
+      if (focused === false) {
+        if (text.startsWith('/')) {
+          editor.deleteBackward('line')
+        }
+        return
+      }
+
       try {
-        ReactEditor.focus(editor)
+        ReactEditor.focus(editor) // Focus this text editor
       } catch (error) {
-        // Focusing did not work. Continue anyway.
+        // Focusing did not work. Happens sometimes. Ignore and skip focusing this time.
         // eslint-disable-next-line no-console
         console.warn(
           'Failed to focus text editor. Continued execution. Details:'
         )
         // eslint-disable-next-line no-console
         console.warn(error)
+        return
+      }
+
+      // If the first child of the editor is not a paragraph, do nothing
+      const isFirstChildParagraph =
+        'type' in editor.children[0] && editor.children[0].type === 'p'
+      if (!isFirstChildParagraph) return
+
+      // If the editor is empty, set the cursor at the start
+      if (text === '') {
+        Transforms.select(editor, { offset: 0, path: [0, 0] })
+      }
+
+      // If the editor only has a forward slash, set the cursor
+      // after it, so that the user can type to filter suggestions
+      if (text === '/') {
+        Transforms.select(editor, { offset: 1, path: [0, 0] })
       }
     })
     return () => {
