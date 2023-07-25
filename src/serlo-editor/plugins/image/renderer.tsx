@@ -50,7 +50,7 @@ export function ImageRenderer({
                   after:absolute
                   after:left-0 after:top-1 after:block
                   after:h-full after:w-full after:content-[':(_'attr(alt)]
-                `
+                ` // Temporary fix for properly displaying src input even when image is broken
               )}
               src={src}
               alt={alt ? alt : altFallback}
