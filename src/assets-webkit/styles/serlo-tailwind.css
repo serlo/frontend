@@ -115,6 +115,17 @@
   .serlo-img {
     @apply inline h-auto max-w-full rounded-md;
   }
+  .serlo-img-error-placeholder {
+    @apply relative min-h-[100px] min-w-[100%];
+  }
+  .serlo-img-error-placeholder::before {
+    @apply absolute left-0 top-[50%] h-full w-full translate-y-[-50%] border-2 border-editor-primary-100 bg-slate-100;
+    content: '';
+  }
+  .serlo-img-error-placeholder::after {
+    @apply absolute left-0 top-1 top-1 block h-full w-full;
+    content: '\2639'' ' attr(alt);
+  }
   .serlo-math-wrapper {
     @apply px-4 py-0.5 text-left;
     @apply overflow-x-auto overflow-y-hidden text-lg leading-browser;

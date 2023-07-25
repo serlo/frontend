@@ -45,7 +45,7 @@ export function ImageEditor(props: ImageProps) {
   }, [editable, state.caption])
 
   return (
-    <>
+    <div className="relative">
       {hasFocus ? (
         <ImageToolbar
           {...props}
@@ -65,7 +65,10 @@ export function ImageEditor(props: ImageProps) {
         placeholder={renderPlaceholder()}
         forceNewTab
       />
-    </>
+      <div className="absolute bottom-8 left-3 right-3 right-side mt-3 pl-side text-left">
+        {hasFocus ? renderEditControls() : null}
+      </div>
+    </div>
   )
 
   function renderPlaceholder() {
@@ -76,9 +79,6 @@ export function ImageEditor(props: ImageProps) {
           icon={faImages}
           className="mb-4 text-7xl text-editor-primary-200"
         />
-        <div className="absolute bottom-0 right-side pl-side text-left">
-          {hasFocus ? renderEditControls() : null}
-        </div>
       </div>
     )
   }
