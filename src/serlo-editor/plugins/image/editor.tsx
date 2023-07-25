@@ -45,7 +45,7 @@ export function ImageEditor(props: ImageProps) {
   }, [editable, state.caption])
 
   return (
-    <div className="relative">
+    <>
       {hasFocus ? (
         <ImageToolbar
           {...props}
@@ -54,21 +54,23 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <ImageRenderer
-        image={{
-          src,
-          href: state.link.defined ? state.link.href.value : undefined,
-          alt: state.alt.defined ? state.alt.value : undefined,
-          maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
-        }}
-        caption={renderCaption()}
-        placeholder={renderPlaceholder()}
-        forceNewTab
-      />
-      <div className="absolute bottom-8 left-3 right-3 right-side mt-3 pl-side text-left">
-        {hasFocus ? renderEditControls() : null}
+      <div className="relative">
+        <ImageRenderer
+          image={{
+            src,
+            href: state.link.defined ? state.link.href.value : undefined,
+            alt: state.alt.defined ? state.alt.value : undefined,
+            maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
+          }}
+          caption={renderCaption()}
+          placeholder={renderPlaceholder()}
+          forceNewTab
+        />
+        <div className="absolute bottom-8 right-0 px-8 text-left">
+          {hasFocus ? renderEditControls() : null}
+        </div>
       </div>
-    </div>
+    </>
   )
 
   function renderPlaceholder() {
