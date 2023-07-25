@@ -11,7 +11,6 @@ export const EquationsToolbar = ({ id, state }: EquationsProps) => {
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Equations}
       pluginSettings={
         <select

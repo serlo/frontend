@@ -10,11 +10,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
-import {
-  store,
-  selectHasFocusedChild,
-  selectIsDocumentEmpty,
-} from '@/serlo-editor/store'
+import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const captionFormattingOptions = [
@@ -32,7 +28,10 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
-  const hasFocus = focused || selectHasFocusedChild(store.getState(), props.id)
+  const isCaptionFocused = useAppSelector((storeState) =>
+    selectHasFocusedChild(storeState, props.id)
+  )
+  const hasFocus = focused || isCaptionFocused
 
   const src = state.src.value.toString()
 
@@ -66,6 +65,7 @@ export function ImageEditor(props: ImageProps) {
         placeholder={renderPlaceholder()}
         forceNewTab
       />
+      {hasFocus ? renderEditControls() : null}
     </>
   )
 
@@ -77,21 +77,12 @@ export function ImageEditor(props: ImageProps) {
           icon={faImages}
           className="mb-4 text-7xl text-editor-primary-200"
         />
-        <div className="absolute bottom-0 right-side pl-side text-left">
-          {hasFocus ? renderEditControls() : null}
-        </div>
       </div>
     )
   }
 
   function renderCaption() {
     if (!state.caption.defined) return null
-
-    const isCaptionEditorEmpty = selectIsDocumentEmpty(
-      store.getState(),
-      state.caption.id
-    )
-    if (!hasFocus && isCaptionEditorEmpty) return null
 
     return state.caption.render({
       config: {
@@ -106,7 +97,7 @@ export function ImageEditor(props: ImageProps) {
     return (
       <>
         {isFailed ? (
-          <div className="text-bold text-red-400">
+          <div className="text-bold mx-side text-red-400">
             {imageStrings.failedUpload}
           </div>
         ) : null}

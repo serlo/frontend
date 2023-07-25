@@ -23,7 +23,6 @@ export const InjectionToolbar = ({
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Injection}
       pluginSettings={
         <>

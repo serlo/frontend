@@ -37,7 +37,6 @@ export function SpoilerEditor(props: SpoilerProps) {
 
     return (
       <PluginToolbar
-        pluginId={id}
         pluginType={EditorPluginType.Spoiler}
         pluginControls={<PluginDefaultTools pluginId={id} />}
       />

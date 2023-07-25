@@ -1,8 +1,6 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { Dispatch, SetStateAction } from 'react'
+import { ReactNode, useState } from 'react'
 
-import { ImageProps } from '.'
-import { SettingsModalControls } from './controls/settings-modal-controls'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -10,19 +8,18 @@ import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const ImageToolbar = (
-  props: ImageProps & {
-    showSettingsModal: boolean
-    setShowSettingsModal: Dispatch<SetStateAction<boolean>>
-  }
-) => {
-  const { id, showSettingsModal, setShowSettingsModal } = props
+interface MultimediaToolbarProps {
+  id: string
+  children: ReactNode
+}
+
+export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
-  const imageStrings = editorStrings.plugins.image
 
   return (
     <PluginToolbar
-      pluginType={EditorPluginType.Image}
+      pluginType={EditorPluginType.Multimedia}
       pluginSettings={
         <>
           <button
@@ -35,20 +32,20 @@ export const ImageToolbar = (
             <ModalWithCloseButton
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
-              className="!top-[10%] !max-w-xl"
+              className="!top-1/3 !max-w-xl"
             >
               <h3 className="serlo-h3 mt-4">
-                {editorStrings.edtrIo.settings}: {imageStrings.title}
+                {editorStrings.edtrIo.settings}:{' '}
+                {editorStrings.plugins.multimedia.title}
               </h3>
 
-              <div className="mx-side mb-3">
-                <SettingsModalControls {...props} />
-              </div>
+              <div className="mx-side mb-3">{children}</div>
             </ModalWithCloseButton>
           ) : null}
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}
+      className="-top-[35px] left-[21px] w-[calc(100%-37px)]"
     />
   )
 }

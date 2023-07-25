@@ -18,7 +18,7 @@ export function InlineUploadControls({ config, state }: ImageProps) {
     : imageStrings.placeholderFailed
 
   return (
-    <p className="flex flex-wrap text-base">
+    <p className="mx-side flex flex-wrap text-base">
       <label>
         <b>{imageStrings.imageUrl}</b>
         <input

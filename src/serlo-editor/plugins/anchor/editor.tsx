@@ -19,7 +19,6 @@ export const AnchorEditor = (props: AnchorProps) => {
     <>
       {focused ? (
         <PluginToolbar
-          pluginId={id}
           pluginType={EditorPluginType.Anchor}
           pluginControls={<PluginDefaultTools pluginId={id} />}
           pluginSettings={

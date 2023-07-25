@@ -24,7 +24,6 @@ export const GeogebraToolbar = ({
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Geogebra}
       pluginSettings={
         <>

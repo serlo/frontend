@@ -16,7 +16,6 @@ export const HighlightToolbar = ({ id, state }: HighlightProps) => {
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Highlight}
       pluginSettings={
         <>

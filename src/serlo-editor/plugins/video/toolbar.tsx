@@ -24,7 +24,6 @@ export const VideoToolbar = ({
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Video}
       pluginSettings={
         <>

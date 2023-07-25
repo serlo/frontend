@@ -1,7 +1,6 @@
 import { Node } from 'slate'
 
-import { TextEditorProps } from './components/text-editor'
-import { TextEditorWrapper } from './components/text-editor-wrapper'
+import { TextEditor, TextEditorProps } from './components/text-editor'
 import type {
   CustomElement,
   CustomText,
@@ -22,7 +21,7 @@ import { EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
 const createTextPlugin = (
   config: TextEditorConfig
 ): EditorPlugin<TextEditorState, TextEditorConfig> => ({
-  Component: TextEditorWrapper,
+  Component: TextEditor,
   config,
   state: serializedScalar(emptyDocumentFactory(), {
     serialize({ value }) {

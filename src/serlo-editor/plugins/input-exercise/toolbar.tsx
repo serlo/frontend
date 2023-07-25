@@ -5,12 +5,11 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const InputExerciseToolbar = ({ id, state }: InputExerciseProps) => {
+export const InputExerciseToolbar = ({ state }: InputExerciseProps) => {
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.InputExercise}
       pluginSettings={
         <>
