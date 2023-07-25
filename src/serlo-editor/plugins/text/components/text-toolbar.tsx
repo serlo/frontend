@@ -38,7 +38,6 @@ export function TextToolbar({
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Text}
       contentControls={
         <PluginToolbarTextControls controls={toolbarControls} editor={editor} />

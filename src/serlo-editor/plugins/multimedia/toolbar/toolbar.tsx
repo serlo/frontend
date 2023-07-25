@@ -19,7 +19,6 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Multimedia}
       pluginSettings={
         <>

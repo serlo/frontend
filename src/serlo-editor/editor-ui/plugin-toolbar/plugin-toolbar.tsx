@@ -8,7 +8,6 @@ import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface PluginToolbarProps {
-  pluginId: string
   pluginType: EditorPluginType | string
   contentControls?: ReactElement
   pluginSettings?: ReactElement
@@ -17,7 +16,6 @@ interface PluginToolbarProps {
 }
 
 export function PluginToolbar({
-  // pluginId,
   pluginType,
   contentControls,
   pluginSettings,

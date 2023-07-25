@@ -54,22 +54,18 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <div className="relative min-h-[18rem]">
-        <ImageRenderer
-          image={{
-            src,
-            href: state.link.defined ? state.link.href.value : undefined,
-            alt: state.alt.defined ? state.alt.value : undefined,
-            maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
-          }}
-          caption={renderCaption()}
-          placeholder={renderPlaceholder()}
-          forceNewTab
-        />
-        <div className="absolute bottom-8 right-0 px-8 text-left">
-          {hasFocus ? renderEditControls() : null}
-        </div>
-      </div>
+      <ImageRenderer
+        image={{
+          src,
+          href: state.link.defined ? state.link.href.value : undefined,
+          alt: state.alt.defined ? state.alt.value : undefined,
+          maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
+        }}
+        caption={renderCaption()}
+        placeholder={renderPlaceholder()}
+        forceNewTab
+      />
+      {hasFocus ? renderEditControls() : null}
     </>
   )
 
@@ -101,7 +97,7 @@ export function ImageEditor(props: ImageProps) {
     return (
       <>
         {isFailed ? (
-          <div className="text-bold text-red-400">
+          <div className="text-bold mx-side text-red-400">
             {imageStrings.failedUpload}
           </div>
         ) : null}

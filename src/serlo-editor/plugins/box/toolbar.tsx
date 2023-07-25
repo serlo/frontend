@@ -14,7 +14,6 @@ export const BoxToolbar = ({ id, state }: BoxProps) => {
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Box}
       pluginSettings={
         <>

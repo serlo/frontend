@@ -22,7 +22,6 @@ export const ImageToolbar = (
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Image}
       pluginSettings={
         <>

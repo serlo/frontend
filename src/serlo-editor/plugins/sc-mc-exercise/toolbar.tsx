@@ -5,7 +5,7 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const ScMcExerciseToolbar = ({ id, state }: ScMcExerciseProps) => {
+export const ScMcExerciseToolbar = ({ state }: ScMcExerciseProps) => {
   const scMcStrings = useEditorStrings().templatePlugins.scMcExercise
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -16,7 +16,6 @@ export const ScMcExerciseToolbar = ({ id, state }: ScMcExerciseProps) => {
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.ScMcExercise}
       pluginSettings={
         <>
