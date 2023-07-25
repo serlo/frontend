@@ -66,7 +66,7 @@ export function TextEditor(props: TextEditorProps) {
   const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
-  const pluginStrings = useEditorStrings().plugins
+  const textStrings = useEditorStrings().plugins.text
 
   const plugins = usePlugins()
 
@@ -318,6 +318,7 @@ export function TextEditor(props: TextEditorProps) {
     ]
   )
 
+  // TODO: put this and other functions into helper files after toolbar and hotkey PR
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
       const isListActive = isSelectionWithinList(editor)
@@ -333,16 +334,23 @@ export function TextEditor(props: TextEditorProps) {
 
       const parentPluginType = document.plugin
 
-      // Handle pasted images
       const files = Array.from(event.clipboardData.files)
-      if (files?.length > 0) {
-        const imagePluginState = getPluginByType(
+      const text = event.clipboardData.getData('text')
+
+      // Handle pasted images or image URLs
+      if (files?.length > 0 || text) {
+        const imagePlugin = getPluginByType(
           plugins,
           EditorPluginType.Image
-        )?.plugin.onFiles?.(files)
+        )?.plugin
+        if (!imagePlugin) return
+
+        const imagePluginState =
+          imagePlugin.onFiles?.(files) ?? imagePlugin.onText?.(text)
+
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
             return
           }
 
@@ -351,9 +359,8 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      // Handle pasted video URLs
-      const text = event.clipboardData.getData('text')
       if (text) {
+        // Handle pasted video URLs
         const videoPluginState = getPluginByType(
           plugins,
           EditorPluginType.Video
@@ -362,11 +369,29 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(pluginStrings.video.noVideoPasteInLists, 'warning')
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
             return
           }
 
           insertPlugin(EditorPluginType.Video, videoPluginState)
+          return
+        }
+
+        // Handle pasted geogebra URLs
+        const geogebraPluginState = getPluginByType(
+          plugins,
+          EditorPluginType.Geogebra
+        )?.plugin.onText?.(text)
+
+        if (geogebraPluginState !== undefined) {
+          event.preventDefault()
+
+          if (isListActive) {
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
+            return
+          }
+
+          insertPlugin(EditorPluginType.Geogebra, geogebraPluginState)
           return
         }
       }
@@ -412,7 +437,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, pluginStrings, plugins]
+    [dispatch, editor, id, textStrings, plugins]
   )
 
   const handleRenderElement = useCallback(
@@ -484,7 +509,7 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
+          placeholder={config.placeholder ?? textStrings.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
