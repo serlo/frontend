@@ -756,7 +756,7 @@ export const loggedInData = {
           heading: "Überschrift",
           headings: "Überschriften",
           link: 'Link (%ctrlOrCmd% + K)',
-          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
+          noElementPasteInLists: "Sorry,  Elemente einfügen klappt nicht in Listen.",
           linkOverlay: {
             placeholder: "Suchbegriff oder \"/1234\"",
             inputLabel: "Suche einen Inhalt oder füge einen Link ein",
