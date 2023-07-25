@@ -54,7 +54,7 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <div className="relative">
+      <div className="relative min-h-[18rem]">
         <ImageRenderer
           image={{
             src,
