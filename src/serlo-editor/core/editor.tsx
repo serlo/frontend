@@ -1,7 +1,7 @@
 import { useMemo, useEffect, ReactNode } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { useHotkeys } from 'react-hotkeys-hook'
+import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
 import { EditableContext, PreferenceContextProvider } from './contexts'
@@ -33,9 +33,11 @@ export function Editor(props: EditorProps) {
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
-        <PluginsContext.Provider value={plugins}>
-          <InnerDocument {...propsWithoutPlugins} />
-        </PluginsContext.Provider>
+        <HotkeysProvider>
+          <PluginsContext.Provider value={plugins}>
+            <InnerDocument {...propsWithoutPlugins} />
+          </PluginsContext.Provider>
+        </HotkeysProvider>
       </DndProvider>
     </Provider>
   )

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
+import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 import { Key } from 'ts-key-enum'
 
@@ -54,6 +54,19 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
 
+  const { enableScope, disableScope, enabledScopes } = useHotkeysContext()
+  console.log('enabledScopes', enabledScopes)
+
+  useEffect(() => {
+    if (showSuggestions) {
+      console.log("Disabling scope 'root-up-down-enter'")
+      disableScope('root-up-down-enter')
+    } else {
+      console.log("Enabling scope 'root-up-down-enter'")
+      enableScope('root-up-down-enter')
+    }
+  }, [enableScope, disableScope, showSuggestions])
+
   const options = showSuggestions ? filteredOptions : []
 
   const closure = useRef({
@@ -67,17 +80,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     options,
   }
 
-  /**
-   * We need to attach the ref to the consumer of the hook, or else the scoping
-   * doesn't work properly and the root event handler for ArrowUp and ArrowDown
-   * will be called.
-   */
-  const hotkeyRef = useHotkeys<HTMLDivElement>(
+  useHotkeys<HTMLDivElement>(
     [Key.ArrowUp, Key.ArrowDown],
     (event) => {
-      console.log('ArrowKey or ArrowUp called in useSuggestions', {
-        enabled: closure.current.showSuggestions,
-      })
+      console.log('ArrowKey or ArrowUp called in useSuggestions')
       event.preventDefault()
       event.stopPropagation()
       if (event.key === Key.ArrowUp) {
@@ -88,24 +94,18 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     },
     {
       enableOnContentEditable: true,
-      enabled: closure.current.showSuggestions,
     }
   )
 
   useHotkeys(
     'enter',
     (event) => {
-      console.log('Enter called in useSuggestions', {
-        enabled: closure.current.showSuggestions,
-      })
-
       if (closure.current.showSuggestions) {
         event.preventDefault()
         handleSuggestionInsert()
       }
     },
-    { enableOnContentEditable: true, enabled: closure.current.showSuggestions },
-    [closure.current.showSuggestions]
+    { enableOnContentEditable: true }
   )
 
   useEffect(() => {
@@ -182,7 +182,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       onMouseMove: setSelected,
     },
     handleHotkeys,
-    hotkeyRef,
   }
 }
 

@@ -1,4 +1,6 @@
-import { useHotkeys } from 'react-hotkeys-hook'
+import { useEffect } from 'react'
+import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
+import { Key } from 'ts-key-enum'
 
 import {
   focusNext,
@@ -26,6 +28,12 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
     selectMayManipulateSiblings(state, id)
   )
 
+  const { enableScope } = useHotkeysContext()
+  useEffect(() => {
+    console.log("Enable scope recomputes. Setting 'root-up-down-enter' scope")
+    enableScope('root-up-down-enter')
+  }, [enableScope])
+
   const handleKeyDown = (event: KeyboardEvent, callback: () => void) => {
     if (
       event &&
@@ -41,8 +49,9 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
   }
 
   useHotkeys(
-    'up',
+    Key.ArrowUp,
     (e) => {
+      console.log('ArrowUp called in root')
       handleKeyDown(e, () => {
         dispatch(focusPrevious(selectFocusTree(store.getState())))
       })
@@ -50,12 +59,15 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
+      scopes: ['root-up-down-enter'],
     }
   )
 
   useHotkeys(
-    'down',
+    Key.ArrowDown,
     (e) => {
+      console.log('ArrowDown called in root')
+
       handleKeyDown(e, () => {
         dispatch(focusNext(selectFocusTree(store.getState())))
       })
@@ -63,11 +75,12 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
+      scopes: ['root-up-down-enter'],
     }
   )
 
   useHotkeys(
-    'enter',
+    Key.Enter,
     (e) =>
       handleKeyDown(e, () => {
         const parent = selectParent(store.getState(), id)
@@ -83,6 +96,7 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
     {
       enableOnContentEditable: true,
       enableOnFormTags: false,
+      scopes: ['root-up-down-enter'],
     }
   )
 
