@@ -54,17 +54,22 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <ImageRenderer
-        image={{
-          src,
-          href: state.link.defined ? state.link.href.value : undefined,
-          alt: state.alt.defined ? state.alt.value : undefined,
-          maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
-        }}
-        caption={renderCaption()}
-        placeholder={renderPlaceholder()}
-        forceNewTab
-      />
+      <div className="relative min-h-[18rem]">
+        <ImageRenderer
+          image={{
+            src,
+            href: state.link.defined ? state.link.href.value : undefined,
+            alt: state.alt.defined ? state.alt.value : undefined,
+            maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
+          }}
+          caption={renderCaption()}
+          placeholder={renderPlaceholder()}
+          forceNewTab
+        />
+        <div className="absolute bottom-8 right-0 px-8 text-left">
+          {hasFocus ? renderEditControls() : null}
+        </div>
+      </div>
     </>
   )
 
@@ -76,9 +81,6 @@ export function ImageEditor(props: ImageProps) {
           icon={faImages}
           className="mb-4 text-7xl text-editor-primary-200"
         />
-        <div className="absolute bottom-0 right-side pl-side text-left">
-          {hasFocus ? renderEditControls() : null}
-        </div>
       </div>
     )
   }
