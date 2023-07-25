@@ -1,13 +1,9 @@
-import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
-
-import { UploadButton } from './upload-button'
 import { ImageProps } from '..'
-import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { isTempFile } from '@/serlo-editor/plugin'
 
-export function InlineUploadControls({ config, state }: ImageProps) {
+export function InlineSrcControls({ state }: ImageProps) {
   const imageStrings = useEditorStrings().plugins.image
   const { src } = state
 
@@ -32,20 +28,6 @@ export function InlineUploadControls({ config, state }: ImageProps) {
           `}
         />
       </label>
-
-      {isTempFile(src.value) && src.value.failed ? (
-        <button
-          className="serlo-button-editor-primary"
-          onClick={() => {
-            if (isTempFile(src.value) && src.value.failed) {
-              void src.upload(src.value.failed, config.upload)
-            }
-          }}
-        >
-          <FaIcon icon={faRedoAlt} />
-        </button>
-      ) : null}
-      <UploadButton onFile={(file) => src.upload(file, config.upload)} />
     </p>
   )
 }

@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react'
 
 import { ImageProps } from '.'
 import { SettingsModalControls } from './controls/settings-modal-controls'
+import { UploadButton } from './controls/upload-button'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -46,6 +47,8 @@ export const ImageToolbar = (
               </div>
             </ModalWithCloseButton>
           ) : null}
+
+          <UploadButton {...props} />
         </>
       }
       pluginControls={<PluginDefaultTools pluginId={id} />}

@@ -733,7 +733,7 @@ export const loggedInData = {
           title: 'Image',
           description: 'Upload images.',
           noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
-          upload: 'Upload…',
+          upload: 'Upload',
           imageUrl: 'Image URL',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
