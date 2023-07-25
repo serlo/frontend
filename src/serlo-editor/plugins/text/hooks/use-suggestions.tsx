@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
+import { Key } from 'ts-key-enum'
 
 import { AllowedChildPlugins } from '../../rows'
 import {
@@ -45,14 +46,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allowed = useContext(AllowedChildPlugins)
   const pluginsData = usePlugins()
 
-  useHotkeys('up', () => handleSelectionChange('up'), {
-    enableOnContentEditable: true,
-  })
-  useHotkeys('down', () => handleSelectionChange('down'), {
-    enableOnContentEditable: true,
-  })
-  useHotkeys('enter', handleSuggestionInsert, { enableOnContentEditable: true })
-
   const allOptions = (allowed ?? allPlugins).map((type) =>
     createOption(type, pluginsStrings, pluginsData)
   )
@@ -60,6 +53,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const filteredOptions = filterPlugins(allOptions, text)
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
+
   const options = showSuggestions ? filteredOptions : []
 
   const closure = useRef({
@@ -72,6 +66,47 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     selected,
     options,
   }
+
+  /**
+   * We need to attach the ref to the consumer of the hook, or else the scoping
+   * doesn't work properly and the root event handler for ArrowUp and ArrowDown
+   * will be called.
+   */
+  const hotkeyRef = useHotkeys<HTMLDivElement>(
+    [Key.ArrowUp, Key.ArrowDown],
+    (event) => {
+      console.log('ArrowKey or ArrowUp called in useSuggestions', {
+        enabled: closure.current.showSuggestions,
+      })
+      event.preventDefault()
+      event.stopPropagation()
+      if (event.key === Key.ArrowUp) {
+        handleSelectionChange('up')
+      } else if (event.key === Key.ArrowDown) {
+        handleSelectionChange('down')
+      }
+    },
+    {
+      enableOnContentEditable: true,
+      enabled: closure.current.showSuggestions,
+    }
+  )
+
+  useHotkeys(
+    'enter',
+    (event) => {
+      console.log('Enter called in useSuggestions', {
+        enabled: closure.current.showSuggestions,
+      })
+
+      if (closure.current.showSuggestions) {
+        event.preventDefault()
+        handleSuggestionInsert()
+      }
+    },
+    { enableOnContentEditable: true, enabled: closure.current.showSuggestions },
+    [closure.current.showSuggestions]
+  )
 
   useEffect(() => {
     if (options.length < selected) {
@@ -88,7 +123,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
   }
 
-  const handleSelectionChange = (direction: 'up' | 'down') => () => {
+  function handleSelectionChange(direction: 'up' | 'down') {
     if (closure.current.showSuggestions) {
       setSelected((currentSelected) => {
         const optionsCount = closure.current.options.length
@@ -116,13 +151,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   }
 
   function handleSuggestionInsert() {
-    if (closure.current.showSuggestions) {
-      const option = closure.current.options[closure.current.selected]
-      if (!option) return
-      setTimeout(() => {
-        insertPlugin(option.pluginType)
-      })
-    }
+    const option = closure.current.options[closure.current.selected]
+    if (!option) return
+    setTimeout(() => {
+      insertPlugin(option.pluginType)
+    })
   }
 
   function insertPlugin(pluginType: EditorPluginType | string) {
@@ -149,6 +182,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       onMouseMove: setSelected,
     },
     handleHotkeys,
+    hotkeyRef,
   }
 }
 

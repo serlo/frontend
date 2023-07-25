@@ -42,10 +42,11 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
 
   useHotkeys(
     'up',
-    (e) =>
+    (e) => {
       handleKeyDown(e, () => {
         dispatch(focusPrevious(selectFocusTree(store.getState())))
-      }),
+      })
+    },
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,
@@ -54,10 +55,11 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
 
   useHotkeys(
     'down',
-    (e) =>
+    (e) => {
       handleKeyDown(e, () => {
         dispatch(focusNext(selectFocusTree(store.getState())))
-      }),
+      })
+    },
     {
       enableOnContentEditable: true,
       enableOnFormTags: true,

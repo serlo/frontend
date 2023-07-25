@@ -97,6 +97,7 @@
     "tiny-warning": "^1.0.0",
     "tippy.js": "^6.3.7",
     "ts-debounce": "^4.0.0",
+    "ts-key-enum": "^2.0.12",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

@@ -79,7 +79,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
-  const { showSuggestions, suggestionsProps } = suggestions
+  const { showSuggestions, suggestionsProps, hotkeyRef } = suggestions
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
@@ -285,6 +285,7 @@ export function TextEditor(props: TextEditorProps) {
         // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
         const isUpArrowAtStart =
           isHotkey('up', event) && isSelectionAtStart(editor, selection)
+        console.log('IsUpArrowAtStart: ', { isUpArrowAtStart })
         if (isUpArrowAtStart) {
           event.preventDefault()
           const focusTree = selectFocusTree(store.getState())
@@ -299,6 +300,7 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
+      console.log('Event triggered. About to call handleHotKeys ', { event })
       suggestions.handleHotkeys(event)
       textFormattingOptions.handleHotkeys(event, editor)
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
@@ -475,7 +477,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   return (
-    <>
+    <div ref={hotkeyRef}>
       <Slate
         editor={editor}
         value={state.value.value}
@@ -516,6 +518,6 @@ export function TextEditor(props: TextEditorProps) {
           <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
-    </>
+    </div>
   )
 }

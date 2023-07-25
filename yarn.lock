@@ -4280,6 +4280,7 @@ __metadata:
     tiny-warning: ^1.0.0
     tippy.js: ^6.3.7
     ts-debounce: ^4.0.0
+    ts-key-enum: ^2.0.12
     ts-unused-exports: ^9.0.2
     typescript: ^5.0.0
     uuid: ^9.0.0
@@ -14300,6 +14301,13 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
   checksum: 20c29189c2dd6067a8775e07823ddf8d59a33e2ffc47a1bd59a5cb28bb0121a2969a816d5e77eda2ed85b18171aa5d1c4005a6b88ae8499ec7cc49f78571cb5e
+  languageName: node
+  linkType: hard
+
+"ts-key-enum@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "ts-key-enum@npm:2.0.12"
+  checksum: faf84f36f7b116aee5502bd86feb50b592c15af49c1795b9710861c27b464eaa1c6ce701e7a2843cc69c09e224be4ae7ea74e284a00f41478a690462d7ab963d
   languageName: node
   linkType: hard
 
