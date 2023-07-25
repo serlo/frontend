@@ -333,13 +333,20 @@ export function TextEditor(props: TextEditorProps) {
 
       const parentPluginType = document.plugin
 
-      // Handle pasted images
       const files = Array.from(event.clipboardData.files)
-      if (files?.length > 0) {
-        const imagePluginState = getPluginByType(
+      const text = event.clipboardData.getData('text')
+
+      // Handle pasted images or image URLs
+      if (files?.length > 0 || text) {
+        const imagePlugin = getPluginByType(
           plugins,
           EditorPluginType.Image
-        )?.plugin.onFiles?.(files)
+        )?.plugin
+        if (!imagePlugin) return
+
+        const imagePluginState =
+          imagePlugin.onFiles?.(files) ?? imagePlugin.onText?.(text)
+
         if (imagePluginState !== undefined) {
           if (isListActive) {
             showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
@@ -352,7 +359,6 @@ export function TextEditor(props: TextEditorProps) {
       }
 
       // Handle pasted video URLs
-      const text = event.clipboardData.getData('text')
       if (text) {
         const videoPluginState = getPluginByType(
           plugins,
