@@ -2,8 +2,9 @@ import clsx from 'clsx'
 import { ReactElement } from 'react'
 
 import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-// import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
+import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface PluginToolbarProps {
@@ -23,6 +24,8 @@ export function PluginToolbar({
   pluginControls,
   className,
 }: PluginToolbarProps) {
+  const pluginStrings = useEditorStrings().plugins
+
   return (
     <div
       className={clsx(
@@ -44,8 +47,9 @@ export function PluginToolbar({
 
       <div className="flex flex-grow items-center justify-end">
         {/* Plugin type indicator */}
-        {/* TODO: use i18n string */}
-        <div className="mx-4 text-sm font-bold capitalize">{pluginType}</div>
+        <div className="mx-4 text-sm font-bold capitalize">
+          {getPluginTitle(pluginStrings, pluginType)}
+        </div>
 
         {pluginSettings ? (
           <>

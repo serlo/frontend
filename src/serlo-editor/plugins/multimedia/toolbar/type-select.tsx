@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { MultimediaProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,
   selectSerializedDocument,
@@ -20,14 +21,14 @@ export const MultimediaTypeSelect = ({
   state,
 }: MultimediaTypeSelectProps) => {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
-  const editorStrings = useEditorStrings()
+  const pluginStrings = useEditorStrings().plugins
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
   )?.plugin
 
   return (
     <div className="mb-8 mt-3">
-      <strong>{editorStrings.plugins.multimedia.changeType}</strong>
+      <strong>{pluginStrings.multimedia.changeType}</strong>
       <span className="mr-4">:</span>
       <select
         value={currentPluginType ?? allowedPlugins[0]}
@@ -40,7 +41,7 @@ export const MultimediaTypeSelect = ({
       >
         {allowedPlugins.map((type) => (
           <option key={type} value={type}>
-            {getPluginTitle(editorStrings, type)}
+            {getPluginTitle(pluginStrings, type)}
           </option>
         ))}
       </select>
@@ -66,13 +67,4 @@ export const MultimediaTypeSelect = ({
     // replace with new type and undefined or stored state
     state.replace(newPluginType, stateCache[newPluginType])
   }
-}
-
-function getPluginTitle(
-  { plugins }: ReturnType<typeof useEditorStrings>,
-  pluginType: string
-) {
-  return Object.hasOwn(plugins, pluginType)
-    ? plugins[pluginType as keyof typeof plugins].title
-    : pluginType
 }
