@@ -658,7 +658,6 @@ export const loggedInData = {
         image: {
           title: 'Image',
           description: "Télécharger des images.",
-          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
           upload: 'Upload…',
           imageUrl: 'Image URL',
           placeholderEmpty: 'https://example.com/image.png',
@@ -757,6 +756,7 @@ export const loggedInData = {
           heading: "Titre",
           headings: "Titres",
           link: "Lien (%ctrlOrCmd% + K)",
+          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
@@ -803,8 +803,7 @@ export const loggedInData = {
           description: 'Description',
           titlePlaceholder: "Titre",
           url: 'URL',
-          seoTitle: "Titre pour les moteurs de recherche",
-          noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.'
+          seoTitle: "Titre pour les moteurs de recherche"
         }
       },
       templatePlugins: {
