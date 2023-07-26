@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ReactElement } from 'react'
 
-import { PluginToolbarDropdownMenu } from './plugin-toolbar-dropdown-menu'
+import { PluginToolMenu } from './plugin-tool-menu/plugin-tool-menu'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
@@ -62,7 +62,7 @@ export function PluginToolbar({
 
         {/* Plugin controls dropdown menu */}
         {pluginControls ? (
-          <PluginToolbarDropdownMenu pluginControls={pluginControls} />
+          <PluginToolMenu pluginControls={pluginControls} />
         ) : null}
       </div>
     </div>

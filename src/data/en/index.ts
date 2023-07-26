@@ -795,6 +795,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
+          copyAnchorLink: "Copy link to this element",
           remove: 'Remove',
           close: 'Close',
           dragElement: 'Drag the element within the document',
@@ -1042,6 +1043,7 @@ export const loggedInData = {
         author: 'Author',
         createdAt: 'when?',
         ready: 'Ready to save?',
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
       },
       taxonomy: {
         title: 'Title',
