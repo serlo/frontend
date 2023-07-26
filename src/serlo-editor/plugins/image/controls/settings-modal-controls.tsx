@@ -1,15 +1,10 @@
-import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
-
-import { UploadButton } from './upload-button'
 import { ImageProps } from '..'
-import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { isTempFile } from '@/serlo-editor/plugin'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
-export function SettingsModalControls({ state, config }: ImageProps) {
+export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
   const { link, alt, src, maxWidth } = state
   const imageStrings = useEditorStrings().plugins.image
 
@@ -31,22 +26,6 @@ export function SettingsModalControls({ state, config }: ImageProps) {
         disabled={isTemp && !isFailed}
         onChange={(e) => src.set(e.target.value)}
       />
-      <div className="mt-1 text-right">
-        {isFailed ? (
-          <button
-            className="serlo-button-editor-secondary serlo-tooltip-trigger"
-            onClick={() => {
-              if (isTempFile(src.value) && src.value.failed) {
-                void src.upload(src.value.failed, config.upload)
-              }
-            }}
-          >
-            <EditorTooltip text={imageStrings.retry} />
-            <FaIcon icon={faRedoAlt} />
-          </button>
-        ) : null}
-        <UploadButton onFile={(file) => src.upload(file, config.upload)} />
-      </div>
       <label className="mx-auto mb-0 mt-5 flex flex-row justify-between">
         <span className="w-[20%]">{imageStrings.alt}</span>
         <textarea

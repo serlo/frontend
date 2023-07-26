@@ -2,7 +2,7 @@ import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
 import { ImageProps } from '.'
-import { InlineUploadControls } from './controls/inline-upload-controls'
+import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
@@ -25,6 +25,7 @@ export function ImageEditor(props: ImageProps) {
   const imageStrings = useEditorStrings().plugins.image
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
+  const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)
 
   usePendingFileUploader(state.src, config.upload)
 
@@ -32,17 +33,21 @@ export function ImageEditor(props: ImageProps) {
     selectHasFocusedChild(storeState, props.id)
   )
   const hasFocus = focused || isCaptionFocused
+  const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
   const src = state.src.value.toString()
-
-  const isFailed = isTempFile(state.src.value) && state.src.value.failed
-  const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
   useEffect(() => {
     if (editable && !state.caption.defined) {
       state.caption.create({ plugin: EditorPluginType.Text })
     }
   }, [editable, state.caption])
+
+  useEffect(() => {
+    setShowInlineImageUrl(!state.src.value)
+    // updatating when src changes could hide input while you are typing so:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editable, focused])
 
   return (
     <>
@@ -54,18 +59,25 @@ export function ImageEditor(props: ImageProps) {
         />
       ) : null}
 
-      <ImageRenderer
-        image={{
-          src,
-          href: state.link.defined ? state.link.href.value : undefined,
-          alt: state.alt.defined ? state.alt.value : undefined,
-          maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
-        }}
-        caption={renderCaption()}
-        placeholder={renderPlaceholder()}
-        forceNewTab
-      />
-      {hasFocus ? renderEditControls() : null}
+      <div className="relative [&_img]:min-h-[15rem]">
+        <ImageRenderer
+          image={{
+            src,
+            href: state.link.defined ? state.link.href.value : undefined,
+            alt: state.alt.defined ? state.alt.value : undefined,
+            maxWidth: state.maxWidth.defined ? state.maxWidth.value : undefined,
+          }}
+          caption={renderCaption()}
+          placeholder={renderPlaceholder()}
+          forceNewTab
+        />
+
+        {hasFocus && showInlineImageUrl ? (
+          <div className="absolute left-side top-side">
+            <InlineSrcControls {...props} />
+          </div>
+        ) : null}
+      </div>
     </>
   )
 
@@ -91,18 +103,5 @@ export function ImageEditor(props: ImageProps) {
         isInlineChildEditor: true,
       } as TextEditorConfig,
     })
-  }
-
-  function renderEditControls() {
-    return (
-      <>
-        {isFailed ? (
-          <div className="text-bold mx-side text-red-400">
-            {imageStrings.failedUpload}
-          </div>
-        ) : null}
-        <InlineUploadControls {...props} />
-      </>
-    )
   }
 }

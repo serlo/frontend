@@ -1,37 +1,49 @@
-import { useRef } from 'react'
+import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
+import { ImageProps } from '..'
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { tw } from '@/helper/tw'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
+import { TempFile, isTempFile } from '@/serlo-editor/plugin'
 
-export interface UploadButtonProps {
-  onFile: (file: File) => void
-}
+export function UploadButton({ config, state }: ImageProps) {
+  const { src } = state
+  const imageStrings = useEditorStrings().plugins.image
+  const isFailed = isTempFile(src.value) && src.value.failed
 
-export function UploadButton({ onFile }: UploadButtonProps) {
-  const editorStrings = useEditorStrings()
-  const inputRef = useRef<HTMLInputElement>(null)
   return (
     <>
-      <button
-        onClick={selectFile}
-        className="serlo-button-editor-secondary mb-side self-end text-base"
+      <label
+        className={tw`
+          mr-2 cursor-pointer rounded-md border border-gray-500
+          px-1 text-sm transition-all focus-within:bg-editor-primary-200 hover:bg-editor-primary-200
+          focus-visible:bg-editor-primary-200
+        `}
       >
-        {editorStrings.plugins.image.upload}
-      </button>
-      <input
-        type="file"
-        multiple
-        accept="image/*"
-        className="hidden"
-        ref={inputRef}
-        onChange={({ target }) => {
-          if (target.files && target.files.length) onFile(target.files[0])
-        }}
-      />
+        {imageStrings.upload} <FaIcon icon={faCircleArrowUp} />
+        <input
+          type="file"
+          accept="image/*"
+          className="sr-only"
+          onChange={({ target }) => {
+            if (target.files && target.files.length) {
+              void src.upload(target.files[0], config.upload)
+            }
+          }}
+        />
+      </label>
+      {isFailed ? (
+        <button
+          className="serlo-button-editor-primary serlo-tooltip-trigger mr-2 scale-90"
+          onClick={() =>
+            src.upload((src.value as TempFile).failed!, config.upload)
+          }
+        >
+          <EditorTooltip text={imageStrings.retry} className="top-10" />
+          <FaIcon icon={faRedoAlt} />
+        </button>
+      ) : null}
     </>
   )
-
-  function selectFile(e: React.MouseEvent) {
-    e.preventDefault()
-    if (inputRef.current) inputRef.current.click()
-  }
 }
