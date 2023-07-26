@@ -15,6 +15,7 @@ import {
   Transforms,
   Range,
   Editor,
+  Element,
 } from 'slate'
 import {
   Editable,
@@ -262,6 +263,20 @@ export function TextEditor(props: TextEditorProps) {
           const previousLines =
             Object.hasOwn(node, 'text') &&
             node.text.substring(0, offset).split('\n')
+
+          const fragmentChild = editor.getFragment()[0]
+          const isHeading =
+            Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
+
+          if (isHeading) {
+            event.preventDefault()
+            Transforms.insertNodes(editor, {
+              type: 'p',
+              children: [{ text: '' }],
+            })
+            return
+          }
+
           if (
             !previousLines ||
             previousLines[previousLines.length - 1].length !== 0
@@ -270,8 +285,14 @@ export function TextEditor(props: TextEditorProps) {
             event.preventDefault()
             editor.insertText('\n')
           } else {
-            // native behaviour (adds new paragraph) but remove empty line first
+            event.preventDefault()
+            // remove empty line
             editor.deleteBackward('character')
+            // add new paragraph without copying style from before
+            Transforms.insertNodes(editor, {
+              type: 'p',
+              children: [{ text: '' }],
+            })
           }
 
           // TODO: test <br/> serializer somehow
