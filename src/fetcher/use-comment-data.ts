@@ -1,5 +1,7 @@
 import { gql, GraphQLClient } from 'graphql-request'
 import useSWR from 'swr'
+// eslint-disable-next-line import/no-internal-modules
+import type { FetcherResponse } from 'swr/_internal'
 
 import { GetCommentsQuery } from './graphql-types/operations'
 import { endpoint } from '@/api/endpoint'
@@ -46,7 +48,8 @@ export type GetCommentsNode = Extract<
 
 export function useCommentData(id: number) {
   const client = new GraphQLClient(endpoint)
-  const fetcher = () => client.request(query, { id })
+  const fetcher = () =>
+    client.request(query, { id }) as FetcherResponse<GetCommentsQuery>
   const resp = useSWR<GetCommentsQuery, object>(`comments::${id}`, fetcher, {
     refreshInterval: 10 * 60 * 1000,
   })

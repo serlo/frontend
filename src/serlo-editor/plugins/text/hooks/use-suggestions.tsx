@@ -52,6 +52,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const { editor, id, editable, focused } = args
   const pluginsStrings = useEditorStrings().plugins
 
+  const plugins = usePlugins()
   const allPlugins = useContext(PluginsContext)
     .filter(({ visible }) => visible)
     .map(({ type }) => type)
@@ -191,6 +192,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
             plugin: EditorPluginType.Text,
             state: prevParagrapphs,
           },
+          plugins,
         })
       )
 
@@ -207,6 +209,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
             plugin: EditorPluginType.Text,
             state: afterParagrapphs,
           },
+          plugins,
         })
       )
 
@@ -216,11 +219,12 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
         parent: parent.id,
         sibling: id,
         document: { plugin: pluginType },
+        plugins,
       })
     )
 
     // remove (instead of replacing…)
-    dispatch(removePluginChild({ parent: parent.id, child: id }))
+    dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))
   }
 
   const hotKeysHandlers = {

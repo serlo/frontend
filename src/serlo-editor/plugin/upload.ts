@@ -91,7 +91,7 @@ export function usePendingFilesUploader<T>(
       fileState.value.pending &&
       !fileState.value.uploadHandled
     ) {
-      fileState.value.uploadHandled = true
+      fileState.set({ ...fileState.value, uploadHandled: true })
 
       void fileState
         .upload(fileState.value.pending, uploadHandler)
