@@ -33,6 +33,7 @@ const hotKeysMap = {
   SELECT_UP: 'up',
   SELECT_DOWN: 'down',
   INSERT: 'enter',
+  ESCAPE: 'escape',
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
@@ -78,7 +79,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   function handleHotkeys(event: React.KeyboardEvent) {
     if (closure.current.showSuggestions) {
-      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
+      if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(event.key)) {
         event.preventDefault()
         return
       }
@@ -140,6 +141,13 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     SELECT_UP: handleSelectionChange('up'),
     SELECT_DOWN: handleSelectionChange('down'),
     INSERT: handleSuggestionInsert,
+    ESCAPE: () => {
+      // We delete the line with the slash and therefore, close the suggestions
+      // upon next render
+      if (closure.current.showSuggestions) {
+        editor.deleteBackward('line')
+      }
+    },
   }
 
   return {
