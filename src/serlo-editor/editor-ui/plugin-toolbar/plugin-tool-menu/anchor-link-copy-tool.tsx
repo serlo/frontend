@@ -19,8 +19,9 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
     !serloEntityId ||
     !navigator.clipboard ||
     !window.location.href.includes('add-revision')
-  )
+  ) {
     return null
+  }
 
   return (
     <DropdownButton
