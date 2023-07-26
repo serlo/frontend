@@ -38,7 +38,7 @@ export function createImagePlugin(
     config,
     state: imageState,
     onText(value) {
-      if (/\.(jpe?g|png|bmp|gif|svg)$/.test(value.toLowerCase())) {
+      if (/\.(gif|jpe?g|png|svg|webp)$/.test(value.toLowerCase())) {
         return {
           state: {
             src: value,

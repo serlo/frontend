@@ -88,8 +88,7 @@ export function usePendingFilesUploader<T>(
       fileState.value.pending &&
       !fileState.value.uploadHandled
     ) {
-      // TODO: probably same bug as in text plugin. use `set` here…
-      fileState.value.uploadHandled = true
+      fileState.set({ ...fileState.value, uploadHandled: true })
 
       void fileState
         .upload(fileState.value.pending, uploadHandler)
