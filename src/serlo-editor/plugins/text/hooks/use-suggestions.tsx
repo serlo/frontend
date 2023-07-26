@@ -196,7 +196,7 @@ function filterPlugins(
   text: string,
   id: string
 ) {
-  // Filter plugins which can't be nested inside of the current plugin
+  // Filter out plugins which can't be nested inside of the current plugin
   const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
   let plugins = []
   if (typesOfAncestors === null) {

@@ -18,20 +18,20 @@ export function useCanDrop(
   return function (dragId?: string) {
     return (
       dragId &&
-      isAllowedPlugin(dragId) &&
-      isAllowedNestingPlugin(dragId) &&
+      isAllowedChildPlugin(dragId) &&
+      isAllowedNestedPlugin(dragId) &&
       !wouldDropInOwnChildren(dragId) &&
       !wouldDropAtInitialPosition(dragId)
     )
   }
 
-  function isAllowedPlugin(dragId: string) {
+  function isAllowedChildPlugin(dragId: string) {
     if (!allowedPlugins) return true
     const doc = selectDocument(store.getState(), dragId)
     return doc && allowedPlugins.includes(doc.plugin)
   }
 
-  function isAllowedNestingPlugin(dragId: string) {
+  function isAllowedNestedPlugin(dragId: string) {
     const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
     if (typesOfAncestors === null) return true
 
