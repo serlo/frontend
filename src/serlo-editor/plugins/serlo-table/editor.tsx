@@ -8,6 +8,7 @@ import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
 import { SerloTableProps } from '.'
+import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
@@ -47,6 +48,8 @@ export function SerloTableEditor(props: SerloTableProps) {
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
+
+  const areImagesDisabled = useAreImagesDisabledInTable()
 
   const tableStrings = useEditorStrings().plugins.serloTable
 
@@ -159,7 +162,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells
+              {props.config.allowImageInTableCells && !areImagesDisabled
                 ? renderSwitchButton(cell, isHead, isClear)
                 : null}
               {/* hack: make sure we capture most clicks in cells */}

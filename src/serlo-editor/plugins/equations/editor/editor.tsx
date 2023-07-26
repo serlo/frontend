@@ -47,7 +47,6 @@ export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
   const dispatch = useAppDispatch()
-  const focusTree = useAppSelector(selectFocusTree)
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
@@ -66,8 +65,14 @@ export function EquationsEditor(props: EquationsProps) {
   const gridFocus = useGridFocus({
     rows: state.steps.length,
     columns: 4,
-    focusNext: () => dispatch(focusNext(focusTree)),
-    focusPrevious: () => dispatch(focusPrevious(focusTree)),
+    focusNext: () => {
+      const focusTree = selectFocusTree(store.getState())
+      dispatch(focusNext(focusTree))
+    },
+    focusPrevious: () => {
+      const focusTree = selectFocusTree(store.getState())
+      dispatch(focusPrevious(focusTree))
+    },
     transformationTarget,
     onFocusChanged: (state) => {
       if (state === 'firstExplanation') {
