@@ -25,7 +25,9 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
   return (
     <DropdownButton
       onClick={() => {
-        const url = `/${serloEntityId}#${pluginId.split('-')[0]}`
+        const url = `https://serlo.org/${serloEntityId}#${
+          pluginId.split('-')[0]
+        }`
         void navigator.clipboard.writeText(url)
         showToastNotice(strings.share.copySuccess, 'success')
       }}
