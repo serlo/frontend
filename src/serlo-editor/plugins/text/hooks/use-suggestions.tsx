@@ -54,15 +54,12 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
 
-  const { enableScope, disableScope, enabledScopes } = useHotkeysContext()
-  console.log('enabledScopes', enabledScopes)
+  const { enableScope, disableScope } = useHotkeysContext()
 
   useEffect(() => {
     if (showSuggestions) {
-      console.log("Disabling scope 'root-up-down-enter'")
       disableScope('root-up-down-enter')
     } else {
-      console.log("Enabling scope 'root-up-down-enter'")
       enableScope('root-up-down-enter')
     }
   }, [enableScope, disableScope, showSuggestions])
@@ -83,7 +80,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   useHotkeys<HTMLDivElement>(
     [Key.ArrowUp, Key.ArrowDown],
     (event) => {
-      console.log('ArrowKey or ArrowUp called in useSuggestions')
       if (!closure.current.showSuggestions) {
         return
       }
@@ -118,20 +114,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       setSelected(0)
     }
   }, [options.length, selected])
-
-  function handleHotkeys(event: React.KeyboardEvent) {
-    console.log('HandleHotKeys: ', {
-      key: event.key,
-      showSuggestions: closure.current.showSuggestions,
-    })
-
-    if (closure.current.showSuggestions) {
-      if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
-        event.preventDefault()
-        return
-      }
-    }
-  }
 
   function handleSelectionChange(direction: 'up' | 'down') {
     if (closure.current.showSuggestions) {
@@ -191,7 +173,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       onMouseDown: insertPlugin,
       onMouseMove: setSelected,
     },
-    handleHotkeys,
   }
 }
 

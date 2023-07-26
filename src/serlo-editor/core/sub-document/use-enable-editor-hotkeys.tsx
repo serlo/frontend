@@ -30,7 +30,6 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
 
   const { enableScope } = useHotkeysContext()
   useEffect(() => {
-    console.log("Enable scope recomputes. Setting 'root-up-down-enter' scope")
     enableScope('root-up-down-enter')
   }, [enableScope])
 
@@ -51,7 +50,6 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
   useHotkeys(
     Key.ArrowUp,
     (e) => {
-      console.log('ArrowUp called in root')
       handleKeyDown(e, () => {
         dispatch(focusPrevious(selectFocusTree(store.getState())))
       })
@@ -66,8 +64,6 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
   useHotkeys(
     Key.ArrowDown,
     (e) => {
-      console.log('ArrowDown called in root')
-
       handleKeyDown(e, () => {
         dispatch(focusNext(selectFocusTree(store.getState())))
       })

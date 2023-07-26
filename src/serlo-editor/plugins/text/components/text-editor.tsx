@@ -285,7 +285,6 @@ export function TextEditor(props: TextEditorProps) {
         // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
         const isUpArrowAtStart =
           isHotkey('up', event) && isSelectionAtStart(editor, selection)
-        console.log('IsUpArrowAtStart: ', { isUpArrowAtStart })
         if (isUpArrowAtStart) {
           event.preventDefault()
           const focusTree = selectFocusTree(store.getState())
@@ -300,8 +299,6 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      console.log('Event triggered. About to call handleHotKeys ', { event })
-      suggestions.handleHotkeys(event)
       textFormattingOptions.handleHotkeys(event, editor)
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
       textFormattingOptions.handleListsShortcuts(event, editor)
@@ -314,7 +311,6 @@ export function TextEditor(props: TextEditorProps) {
       id,
       showSuggestions,
       state,
-      suggestions,
       textFormattingOptions,
     ]
   )
