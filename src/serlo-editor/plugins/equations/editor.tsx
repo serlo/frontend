@@ -81,36 +81,54 @@ export function EquationsEditor(props: EquationsProps) {
     },
   })
 
-  useHotkeys('tab', (event) => {
-    handleKeyDown(event, () => {
-      if (
-        gridFocus.isFocused({
-          row: state.steps.length - 1,
-          column: lastColumn(transformationTarget),
-        })
-      ) {
-        const index = state.steps.length
-        insertNewEquationAt(index)
-        gridFocus.setFocus({
-          row: index - 1,
-          column: StepSegment.Explanation,
-        })
-      } else {
-        gridFocus.moveRight()
-      }
-    })
-  })
+  useHotkeys(
+    'tab',
+    (event) => {
+      handleKeyDown(event, () => {
+        if (
+          gridFocus.isFocused({
+            row: state.steps.length - 1,
+            column: lastColumn(transformationTarget),
+          })
+        ) {
+          const index = state.steps.length
+          insertNewEquationAt(index)
+          gridFocus.setFocus({
+            row: index - 1,
+            column: StepSegment.Explanation,
+          })
+        } else {
+          gridFocus.moveRight()
+        }
+      })
+    },
+    {
+      scopes: ['global'],
+    }
+  )
 
-  useHotkeys('shift+tab', (event) => {
-    handleKeyDown(event, () => gridFocus.moveLeft())
-  })
+  useHotkeys(
+    'shift+tab',
+    (event) => {
+      handleKeyDown(event, () => gridFocus.moveLeft())
+    },
+    {
+      scopes: ['global'],
+    }
+  )
 
-  useHotkeys('return', (event) => {
-    handleKeyDown(event, () => {
-      if (!gridFocus.focus || gridFocus.focus === 'firstExplanation') return
-      insertNewEquationWithFocus(gridFocus.focus.row + 1)
-    })
-  })
+  useHotkeys(
+    'return',
+    (event) => {
+      handleKeyDown(event, () => {
+        if (!gridFocus.focus || gridFocus.focus === 'firstExplanation') return
+        insertNewEquationWithFocus(gridFocus.focus.row + 1)
+      })
+    },
+    {
+      scopes: ['global'],
+    }
+  )
 
   useEffect(() => {
     if (nestedFocus) {

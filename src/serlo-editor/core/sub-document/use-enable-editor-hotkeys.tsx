@@ -121,5 +121,6 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
     {
       enableOnContentEditable: true,
       enableOnFormTags: false,
+      scopes: ['global'],
     }
 }

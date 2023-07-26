@@ -79,7 +79,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
-  const { showSuggestions, suggestionsProps, hotkeyRef } = suggestions
+  const { showSuggestions, suggestionsProps } = suggestions
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
@@ -477,7 +477,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   return (
-    <div ref={hotkeyRef}>
+    <div>
       <Slate
         editor={editor}
         value={state.value.value}

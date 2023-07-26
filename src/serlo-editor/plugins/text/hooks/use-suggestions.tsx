@@ -84,6 +84,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     [Key.ArrowUp, Key.ArrowDown],
     (event) => {
       console.log('ArrowKey or ArrowUp called in useSuggestions')
+      if (!closure.current.showSuggestions) {
+        return
+      }
+
       event.preventDefault()
       event.stopPropagation()
       if (event.key === Key.ArrowUp) {
@@ -94,18 +98,19 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     },
     {
       enableOnContentEditable: true,
+      scopes: ['global'],
     }
   )
 
   useHotkeys(
-    'enter',
+    Key.Enter,
     (event) => {
       if (closure.current.showSuggestions) {
         event.preventDefault()
         handleSuggestionInsert()
       }
     },
-    { enableOnContentEditable: true }
+    { enableOnContentEditable: true, scopes: ['global'] }
   )
 
   useEffect(() => {
@@ -115,6 +120,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   }, [options.length, selected])
 
   function handleHotkeys(event: React.KeyboardEvent) {
+    console.log('HandleHotKeys: ', {
+      key: event.key,
+      showSuggestions: closure.current.showSuggestions,
+    })
+
     if (closure.current.showSuggestions) {
       if (['ArrowDown', 'ArrowUp', 'Enter'].includes(event.key)) {
         event.preventDefault()

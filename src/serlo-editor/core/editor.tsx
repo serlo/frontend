@@ -33,7 +33,9 @@ export function Editor(props: EditorProps) {
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
-        <HotkeysProvider>
+        <HotkeysProvider
+          initiallyActiveScopes={['global', 'root-up-down-enter']}
+        >
           <PluginsContext.Provider value={plugins}>
             <InnerDocument {...propsWithoutPlugins} />
           </PluginsContext.Provider>
@@ -96,7 +98,11 @@ export function InnerDocument({
 
       void dispatch(undo())
     },
-    { enableOnContentEditable: true, enableOnFormTags: false }
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: false,
+      scopes: ['global'],
+    }
   )
 
   useHotkeys(
@@ -112,7 +118,11 @@ export function InnerDocument({
 
       void dispatch(redo())
     },
-    { enableOnContentEditable: true, enableOnFormTags: false }
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: false,
+      scopes: ['global'],
+    }
   )
 
   useHotkeys(
@@ -120,7 +130,11 @@ export function InnerDocument({
     () => {
       void dispatch(redo())
     },
-    { enableOnContentEditable: true, enableOnFormTags: false }
+    {
+      enableOnContentEditable: true,
+      enableOnFormTags: false,
+      scopes: ['global'],
+    }
   )
 
   if (!id) return null
