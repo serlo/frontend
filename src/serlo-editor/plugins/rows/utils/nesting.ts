@@ -20,7 +20,6 @@ export function checkIsAllowedNesting(
     const boxAncestorIndex = typesOfAncestors.findLastIndex(
       (ancestorType) => ancestorType === EditorPluginType.Box
     )
-    console.log(multimediaAncestorIndex, boxAncestorIndex)
     if (
       multimediaAncestorIndex >= 0 &&
       boxAncestorIndex >= 0 &&
