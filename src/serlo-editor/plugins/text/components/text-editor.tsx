@@ -583,10 +583,10 @@ export function TextEditor(props: TextEditorProps) {
                   >
                     {config.placeholder ?? textStrings.placeholder}{' '}
                     <button
-                      className="z-80 serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto h-8 w-8"
+                      className="serlo-button-editor-secondary serlo-tooltip-trigger pointer-events-auto z-[80] h-8 w-8"
                       onClick={() => {
                         editor.insertText('/')
-                        // TODO: focus somehow so the suggestions actually show…
+                        ReactEditor.focus(editor)
                       }}
                     >
                       <EditorTooltip
