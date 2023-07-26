@@ -7,6 +7,7 @@ import { MultimediaToolbar } from './toolbar/toolbar'
 import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
   selectHasFocusedDescendant,
   selectIsFocused,
@@ -93,11 +94,13 @@ export function MultimediaEditor(props: MultimediaProps) {
         </button>
       ) : null}
       <div className={pluginToolbarAndStyleHacks}>
-        <MultimediaRenderer
-          media={<>{multimedia.render()}</>}
-          explanation={<>{explanation.render()}</>}
-          mediaWidth={width.value}
-        />
+        <AreImagesDisabledInTableContext.Provider value>
+          <MultimediaRenderer
+            media={<>{multimedia.render()}</>}
+            explanation={<>{explanation.render()}</>}
+            mediaWidth={width.value}
+          />
+        </AreImagesDisabledInTableContext.Provider>
       </div>
     </div>
   )
