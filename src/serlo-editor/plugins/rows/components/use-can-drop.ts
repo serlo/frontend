@@ -1,4 +1,4 @@
-import { checkIsAllowedNesting } from '../utils/nesting'
+import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
 import {
   store,
   findParent,

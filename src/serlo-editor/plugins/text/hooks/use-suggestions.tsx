@@ -12,7 +12,7 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/nesting'
+import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
   runReplaceDocumentSaga,
   selectAncestorPluginTypes,
