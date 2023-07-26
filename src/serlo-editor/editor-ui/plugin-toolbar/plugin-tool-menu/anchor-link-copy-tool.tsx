@@ -1,6 +1,7 @@
 import { faHashtag } from '@fortawesome/free-solid-svg-icons'
 
 import { DropdownButton } from './dropdown-button'
+import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { useEntityId } from '@/contexts/entity-id-context'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -18,7 +19,8 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
   if (
     !serloEntityId ||
     !navigator.clipboard ||
-    !window.location.href.includes('add-revision')
+    !window.location.href.includes('add-revision') ||
+    !shouldUseFeature('editorAnchorLinkCopyTool')
   ) {
     return null
   }
