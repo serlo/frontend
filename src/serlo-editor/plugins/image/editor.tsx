@@ -45,6 +45,7 @@ export function ImageEditor(props: ImageProps) {
 
   useEffect(() => {
     setShowInlineImageUrl(!state.src.value)
+    // updatating when src changes could hide input while you are typing so:
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editable, focused])
 

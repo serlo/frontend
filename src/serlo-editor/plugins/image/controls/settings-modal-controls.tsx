@@ -4,7 +4,7 @@ import { tw } from '@/helper/tw'
 import { isTempFile } from '@/serlo-editor/plugin'
 import { OverlayInput } from '@/serlo-editor/plugin/plugin-toolbar'
 
-export function SettingsModalControls({ state }: ImageProps) {
+export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
   const { link, alt, src, maxWidth } = state
   const imageStrings = useEditorStrings().plugins.image
 

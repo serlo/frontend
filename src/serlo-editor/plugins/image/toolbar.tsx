@@ -43,7 +43,7 @@ export const ImageToolbar = (
               </h3>
 
               <div className="mx-side mb-3">
-                <SettingsModalControls {...props} />
+                <SettingsModalControls state={props.state} />
               </div>
             </ModalWithCloseButton>
           ) : null}
