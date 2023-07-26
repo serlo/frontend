@@ -12,7 +12,13 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
+import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/nesting'
+import {
+  runReplaceDocumentSaga,
+  selectAncestorPluginTypes,
+  store,
+  useAppDispatch,
+} from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
@@ -54,7 +60,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     createOption(type, pluginsStrings, pluginsData)
   )
 
-  const filteredOptions = filterPlugins(allOptions, text)
+  const filteredOptions = filterPlugins(allOptions, text, id)
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
   const options = showSuggestions ? filteredOptions : []
@@ -185,9 +191,23 @@ function createOption(
   return { pluginType, title, description, icon }
 }
 
-function filterPlugins(plugins: SuggestionOption[], text: string) {
-  const search = text.replace('/', '').toLowerCase()
+function filterPlugins(
+  allPlugins: SuggestionOption[],
+  text: string,
+  id: string
+) {
+  // Filter plugins which can't be nested inside of the current plugin
+  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+  let plugins = []
+  if (typesOfAncestors === null) {
+    plugins = allPlugins
+  } else {
+    plugins = allPlugins.filter((plugin) =>
+      checkIsAllowedNesting(plugin.pluginType, typesOfAncestors)
+    )
+  }
 
+  const search = text.replace('/', '').toLowerCase()
   if (!search.length) return plugins
 
   const startingWithSearchString = plugins.filter(({ title }) => {
