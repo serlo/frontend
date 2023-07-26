@@ -658,7 +658,6 @@ export const loggedInData = {
         image: {
           title: "Imágen",
           description: "Subir imágenes.",
-          noImagePasteInLists: "No se permite pegar imágenes dentro de las listas.",
           upload: "Subir…",
           imageUrl: "URL de la imagen",
           placeholderEmpty: 'https://example.com/image.png',
@@ -757,6 +756,7 @@ export const loggedInData = {
           heading: "Encabezado",
           headings: "Encabezados",
           link: "Vínculo (%ctrlOrCmd% + K)",
+          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
           linkOverlay: {
             placeholder: "https://… o /1234",
             inputLabel: "Pegar o escribir un enlace",
@@ -803,8 +803,7 @@ export const loggedInData = {
           description: "Descripción",
           titlePlaceholder: "Título",
           url: 'URL',
-          seoTitle: "Título para motores de búsqueda",
-          noVideoPasteInLists: "No se permite pegar vídeos dentro de las listas."
+          seoTitle: "Título para motores de búsqueda"
         }
       },
       templatePlugins: {

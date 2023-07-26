@@ -109,6 +109,19 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     { enableOnContentEditable: true, scopes: ['global'] }
   )
 
+  useHotkeys(
+    Key.Escape,
+    (event) => {
+      // We delete the line with the slash and therefore, close the suggestions
+      // upon next render
+      if (closure.current.showSuggestions) {
+        event.preventDefault()
+        editor.deleteBackward('line')
+      }
+    },
+    { enableOnContentEditable: true, scopes: ['global'] }
+  )
+
   useEffect(() => {
     if (options.length < selected) {
       setSelected(0)
