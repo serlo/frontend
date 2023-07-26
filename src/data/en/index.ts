@@ -1044,6 +1044,7 @@ export const loggedInData = {
         author: 'Author',
         createdAt: 'when?',
         ready: 'Ready to save?',
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
       },
       taxonomy: {
         title: 'Title',

@@ -12,7 +12,7 @@ interface AnchorLinkCopyToolProps {
 
 export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
   const serloEntityId = useEntityId()
-  const pluginStrings = useEditorStrings().plugins
+  const editorStrings = useEditorStrings()
   const { strings } = useInstanceData()
 
   if (
@@ -30,8 +30,9 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
         }`
         void navigator.clipboard.writeText(url)
         showToastNotice(strings.share.copySuccess, 'success')
+        showToastNotice('👉 ' + editorStrings.edtrIo.anchorLinkWarning)
       }}
-      label={pluginStrings.rows.copyAnchorLink}
+      label={editorStrings.plugins.rows.copyAnchorLink}
       icon={faHashtag}
       className="mt-2.5 border-t pt-2.5"
     />
