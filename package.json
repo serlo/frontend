@@ -75,7 +75,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
-    "react-hotkeys": "^2.0.0",
+    "react-hotkeys-hook": "^4.4.1",
     "react-lazyload": "^3.2.0",
     "react-markdown": "^6.0.3",
     "react-mathquill": "Entkenntnis/tmp-react-mathquill",
@@ -96,6 +96,7 @@
     "tiny-warning": "^1.0.0",
     "tippy.js": "^6.3.7",
     "ts-debounce": "^4.0.0",
+    "ts-key-enum": "^2.0.12",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

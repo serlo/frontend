@@ -5,6 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useEffect, useRef } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
 import { useGridFocus } from './grid-focus'
@@ -20,7 +21,6 @@ import { EquationsToolbar } from '../toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { HotKeys } from '@/serlo-editor/core'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { MathRenderer } from '@/serlo-editor/math'
 import {
@@ -61,6 +61,58 @@ export function EquationsEditor(props: EquationsProps) {
   )
 
   const pluginFocusWrapper = useRef<HTMLDivElement>(null)
+
+  useHotkeys(
+    'tab',
+    (event) => {
+      handleKeyDown(event, () => {
+        if (
+          gridFocus.isFocused({
+            row: state.steps.length - 1,
+            column: lastColumn(transformationTarget),
+          })
+        ) {
+          const index = state.steps.length
+          insertNewEquationAt(index)
+          gridFocus.setFocus({
+            row: index - 1,
+            column: StepSegment.Explanation,
+          })
+        } else {
+          gridFocus.moveRight()
+        }
+      })
+    },
+    {
+      scopes: ['global'],
+      enabled: focused,
+    }
+  )
+
+  useHotkeys(
+    'shift+tab',
+    (event) => {
+      handleKeyDown(event, () => gridFocus.moveLeft())
+    },
+    {
+      scopes: ['global'],
+      enabled: focused,
+    }
+  )
+
+  useHotkeys(
+    'return',
+    (event) => {
+      handleKeyDown(event, () => {
+        if (!gridFocus.focus || gridFocus.focus === 'firstExplanation') return
+        insertNewEquationWithFocus(gridFocus.focus.row + 1)
+      })
+    },
+    {
+      scopes: ['global'],
+      enabled: focused,
+    }
+  )
 
   const gridFocus = useGridFocus({
     rows: state.steps.length,
@@ -147,110 +199,69 @@ export function EquationsEditor(props: EquationsProps) {
   return (
     <div ref={pluginFocusWrapper}>
       {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
+      <div className="py-2.5">
+        <table className="whitespace-nowrap">
+          {renderFirstExplanation()}
+          {state.steps.map((step, row) => {
+            return (
+              <tbody key={step.explanation.id}>
+                <tr>
+                  <StepEditor
+                    gridFocus={gridFocus}
+                    row={row}
+                    state={step}
+                    transformationTarget={transformationTarget}
+                  />
+                  <td>{renderButtons(row)}</td>
+                </tr>
+                {renderExplantionTr()}
+              </tbody>
+            )
 
-      <HotKeys
-        allowChanges
-        keyMap={{
-          FOCUS_NEXT_OR_INSERT: 'tab',
-          FOCUS_PREVIOUS: 'shift+tab',
-          INSERT: 'return',
-        }}
-        handlers={{
-          FOCUS_NEXT_OR_INSERT: (e) => {
-            handleKeyDown(e, () => {
-              if (
-                gridFocus.isFocused({
-                  row: state.steps.length - 1,
-                  column: lastColumn(transformationTarget),
-                })
-              ) {
-                const index = state.steps.length
-                insertNewEquationAt(index)
-                gridFocus.setFocus({
-                  row: index - 1,
-                  column: StepSegment.Explanation,
-                })
-              } else {
-                gridFocus.moveRight()
-              }
-            })
-          },
-          FOCUS_PREVIOUS: (e) => {
-            handleKeyDown(e, () => gridFocus.moveLeft())
-          },
-          INSERT: (e) => {
-            handleKeyDown(e, () => {
-              if (!gridFocus.focus || gridFocus.focus === 'firstExplanation')
-                return
-              insertNewEquationWithFocus(gridFocus.focus.row + 1)
-            })
-          },
-        }}
-      >
-        <div className="py-2.5">
-          <table className="whitespace-nowrap">
-            {renderFirstExplanation()}
-            {state.steps.map((step, row) => {
+            function renderExplantionTr() {
+              if (row === state.steps.length - 1) return null
+
               return (
-                <tbody key={step.explanation.id}>
-                  <tr>
-                    <StepEditor
-                      gridFocus={gridFocus}
-                      row={row}
-                      state={step}
-                      transformationTarget={transformationTarget}
-                    />
-                    <td>{renderButtons(row)}</td>
-                  </tr>
-                  {renderExplantionTr()}
-                </tbody>
+                <tr
+                  className="[&_div]:m-0"
+                  onFocus={() =>
+                    gridFocus.setFocus({
+                      row,
+                      column: StepSegment.Explanation,
+                    })
+                  }
+                >
+                  {transformationTarget === TransformationTarget.Equation && (
+                    <td />
+                  )}
+                  {!selectIsDocumentEmpty(
+                    store.getState(),
+                    step.explanation.id
+                  ) ? (
+                    renderDownArrow()
+                  ) : (
+                    <td />
+                  )}
+                  <td colSpan={2} className="min-w-[10rem]">
+                    {step.explanation.render({
+                      config: {
+                        isInlineChildEditor: true,
+                        placeholder:
+                          row === 0 &&
+                          transformationTarget === TransformationTarget.Term
+                            ? equationsStrings.combineLikeTerms
+                            : equationsStrings.explanation,
+                      },
+                    })}
+                  </td>
+                </tr>
               )
+            }
+          })}
+        </table>
 
-              function renderExplantionTr() {
-                if (row === state.steps.length - 1) return null
-
-                return (
-                  <tr
-                    className="[&_div]:m-0"
-                    onFocus={() =>
-                      gridFocus.setFocus({
-                        row,
-                        column: StepSegment.Explanation,
-                      })
-                    }
-                  >
-                    {transformationTarget === TransformationTarget.Equation && (
-                      <td />
-                    )}
-                    {!selectIsDocumentEmpty(
-                      store.getState(),
-                      step.explanation.id
-                    ) ? (
-                      renderDownArrow()
-                    ) : (
-                      <td />
-                    )}
-                    <td colSpan={2} className="min-w-[10rem]">
-                      {step.explanation.render({
-                        config: {
-                          isInlineChildEditor: true,
-                          placeholder:
-                            row === 0 &&
-                            transformationTarget === TransformationTarget.Term
-                              ? equationsStrings.combineLikeTerms
-                              : equationsStrings.explanation,
-                        },
-                      })}
-                    </td>
-                  </tr>
-                )
-              }
-            })}
-          </table>
-
-          {renderAddButton()}
-        </div>
-      </HotKeys>
+        {renderAddButton()}
+      </div>
     </div>
   )
 
@@ -279,9 +290,9 @@ export function EquationsEditor(props: EquationsProps) {
     )
   }
 
-  function handleKeyDown(e: KeyboardEvent | undefined, next: () => void) {
+  function handleKeyDown(e: KeyboardEvent | undefined, callback: () => void) {
     e && e.preventDefault()
-    next()
+    callback()
   }
 
   function insertNewEquationAt(index: number) {
