@@ -241,8 +241,8 @@ export const instanceData = {
       reviewersUrl: "/community/202923/rollen-der-serlo-community",
       help2: "Alle können die Bearbeitungen anschauen und weiter bearbeiten. In der Vorschau können Reviewer*in die Bearbeitung übernehmen und Feedback geben.",
       help3: "Du möchtest Reviewer*in werden? Melde dich bei: %contactLink%.",
-      contactPerson: 'LinaMaria',
-      contactPersonUrl: 'https://community.serlo.org/direct/LinaMaria',
+      contactPerson: 'Alexandra-Wolfram',
+      contactPersonUrl: 'https://community.serlo.org/direct/Alexandra-Wolfram',
       help4: "Wie geht das Reviewen? Hier gibt es die %guidelineLink%.",
       guideline: "Anleitung",
       guidelineUrl: "/140473",
@@ -1031,14 +1031,14 @@ export const kratosMailStrings = {
       subject: "👉 Zugang zu deinem Serlo Account",
       'body.plaintext': `👋 Hi {{ .Identity.traits.username }},
 versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)
- 
+
 Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 {{ .RecoveryURL }}
 
 Das Serlo-Team wünscht dir viel Erfolg!`,
       body: `<p>👋 Hi <b>{{ .Identity.traits.username }}</b>,</p>
 <p>versuchst du wieder Zugang zu deinem Account zu bekommen? (Wenn nein, kannst du die Mail einfach ignorieren)</p>
- 
+
 <p>Um dein Passwort zurückzusetzen, öffne bitte diesen Link im Browser:
 <a href="{{ .RecoveryURL }}">{{ .RecoveryURL }}</a><br/><br/>Viel Erfolg! Dein Serlo Team</p>`
     },
@@ -1069,7 +1069,7 @@ Sonst kannst du diese Mail einfach ignorieren.
       'body.plaintext': `Hi {{ .Identity.traits.username }},
 
 wunderbar dich auf serlo.org zu haben 🎉
-      
+
 Bitte bestätige deinen brandneuen Account mit einem Klick auf diesen Link:
 {{ .VerificationURL }}
 
