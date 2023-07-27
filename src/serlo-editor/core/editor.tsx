@@ -1,4 +1,4 @@
-import { useMemo, useEffect, ReactNode } from 'react'
+import { useMemo, useEffect, ReactNode, useRef } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { configure, GlobalHotKeys } from 'react-hotkeys'
@@ -10,6 +10,7 @@ import {
   PluginsContextPlugins,
   usePlugins,
 } from './contexts/plugins-context'
+import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
   runInitRootSaga,
@@ -62,6 +63,9 @@ export function InnerDocument({
   const dispatch = useAppDispatch()
   const plugins = usePlugins()
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null)
+  useBlurOnOutsideClick(wrapperRef)
+
   useEffect(() => {
     if (typeof onChange !== 'function') return
     let pendingChanges = selectPendingChanges(store.getState())
@@ -104,7 +108,7 @@ export function InnerDocument({
       keyMap={hotKeysKeyMap}
       handlers={hotKeysHandlers}
     >
-      <div className="relative">
+      <div className="relative" ref={wrapperRef}>
         <PreferenceContextProvider>
           <EditableContext.Provider value={editableContextValue}>
             {renderChildren(id)}
