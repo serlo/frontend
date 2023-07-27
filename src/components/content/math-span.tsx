@@ -1,9 +1,8 @@
+import { KaTeXStyles } from '@/../external/katexstyles'
 import KaTeX from 'katex'
 
 /* eslint-disable import/no-unassigned-import */
 import 'katex/contrib/mhchem'
-
-import { KaTeXStyles } from '../../../external/katexstyles'
 
 export interface MathSpanProps {
   formula: string
@@ -33,7 +32,7 @@ export function MathSpan({ formula }: MathSpanProps) {
     <>
       <KaTeXStyles />
       <span
-        className="special-no-page-breaks-inside"
+        className="[page-break-inside:avoid]"
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </>

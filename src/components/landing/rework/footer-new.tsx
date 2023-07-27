@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
 
-import { Link } from '../../content/link'
 import { FooterNavNew } from './footer-nav-new'
 import { Separator } from './separator'
+import { Link } from '../../content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 
 export function FooterNew() {

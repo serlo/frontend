@@ -56,7 +56,7 @@ function Content() {
     return (
       <button
         className={clsx(
-          'mr-5 mb-5',
+          'mb-5 mr-5',
           showUnread === setShowUnreadTo
             ? 'serlo-button-blue'
             : 'serlo-button-light'

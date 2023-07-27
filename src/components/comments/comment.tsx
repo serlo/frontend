@@ -2,11 +2,11 @@ import clsx from 'clsx'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
 
-import { Link } from '../content/link'
-import { MathSpanProps } from '../content/math-span'
 import { CommentsData } from './comment-area'
 import { CommentForm } from './comment-form'
 import { MetaBar } from './meta-bar'
+import { Link } from '../content/link'
+import { MathSpanProps } from '../content/math-span'
 import { useAuth } from '@/auth/use-auth'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replaceWithJSX } from '@/helper/replace-with-jsx'
@@ -77,12 +77,6 @@ export function Comment({
         scrollIfNeeded(commentRef.current)
       }, 900)
     }
-
-    if (commentRef.current) {
-      commentRef.current.style.backgroundColor = isHighlight
-        ? '#fdf5e4'
-        : 'transparent'
-    }
   }, [isHighlight, noScroll])
 
   return (
@@ -90,12 +84,12 @@ export function Comment({
       ref={commentRef}
       id={`comment-${id}`}
       className={clsx(
-        'transition-colors duration-700 ease-out',
+        'pb-0.5 pt-1 transition-colors duration-700 ease-out',
         isParent
-          ? 'rounded-2xl'
+          ? ''
           : tw`
-            mt-8 mb-5 ml-4 rounded-r-2xl border-l-6 border-brand-200 
-            pt-1 pb-0.5 pl-1
+            mb-5 ml-4 mt-8 border-l-6 border-brand-200 
+            pb-0.5
           `
       )}
     >
@@ -134,13 +128,18 @@ export function Comment({
           />
           <button
             onClick={() => setIsEditing(false)}
-            className="serlo-button-blue-transparent ml-auto mr-6 -mt-6 block text-base"
+            className="serlo-button-blue-transparent -mt-6 ml-auto mr-6 block text-base"
           >
             {strings.comments.cancelEdit}
           </button>
         </>
       ) : (
-        <p className="serlo-p mb-0 whitespace-pre-line break-words">
+        <p
+          className={clsx(
+            'serlo-p mb-0 whitespace-pre-line break-words',
+            isHighlight ? 'rounded-xl bg-editor-primary-100 !p-2' : ''
+          )}
+        >
           {commentContent}
         </p>
       )}

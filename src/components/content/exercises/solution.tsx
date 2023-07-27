@@ -1,71 +1,146 @@
-import type { RenderNestedFunction } from '../../../schema/article-renderer'
-import { useInstanceData } from '@/contexts/instance-context'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+
+import { LicenseNotice } from '../license/license-notice'
+import { Link } from '../link'
+import { useAuthentication } from '@/auth/use-authentication'
+import { CommentAreaEntityProps } from '@/components/comments/comment-area-entity'
+import { Lazy } from '@/components/content/lazy'
+import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
+import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { ExerciseInlineType } from '@/data-types'
 import {
-  FrontendContentNode,
-  FrontendNodeType,
+  FrontendExerciseNode,
   FrontendSolutionNode,
 } from '@/frontend-node-types'
+import { exerciseSubmission } from '@/helper/exercise-submission'
+import { RenderNestedFunction } from '@/schema/article-renderer'
+import { SolutionRenderer } from '@/serlo-editor/plugins/solution/renderer'
+
+const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>
+  import('@/components/comments/comment-area-entity').then(
+    (mod) => mod.CommentAreaEntity
+  )
+)
+const AuthorToolsExercises = dynamic<MoreAuthorToolsProps>(() =>
+  import(
+    '@/components/user-tools/foldout-author-menus/author-tools-exercises'
+  ).then((mod) => mod.AuthorToolsExercises)
+)
 
 export interface SolutionProps {
-  node: FrontendSolutionNode['solution']
+  node: FrontendExerciseNode
+  loaded: boolean
+  forceVisible?: boolean
   renderNested: RenderNestedFunction
 }
+export function Solution({
+  node,
+  loaded,
+  forceVisible,
+  renderNested,
+}: SolutionProps) {
+  const { asPath } = useRouter()
+  const auth = useAuthentication()
 
-export function Solution({ node, renderNested }: SolutionProps) {
-  const { strings } = useInstanceData()
-  return <>{renderNested(getSolutionContent(), 'sol')}</>
+  const solutionVisibleOnInit = forceVisible
+    ? true
+    : isPrintMode
+    ? printModeSolutionVisible
+    : typeof window === 'undefined'
+    ? false
+    : window.location.href.includes('#comment-')
 
-  function getSolutionContent(): FrontendContentNode[] {
-    if (node.legacy) {
-      return node.legacy
-    }
-    if (!node.edtrState) return []
-    const state = node.edtrState
-    const prereq: FrontendContentNode[] = []
-    if (state.prerequisite && state.prerequisite.id) {
-      prereq.push({
-        type: FrontendNodeType.P,
-        children: [
-          {
-            type: FrontendNodeType.Text,
-            text: `${strings.content.exercises.prerequisite} `,
-          },
-          {
-            type: FrontendNodeType.A,
-            href:
-              state.prerequisite.href ?? `/${state.prerequisite.id.toString()}`, // for revisions
-            children: [
-              { type: FrontendNodeType.Text, text: state.prerequisite.title },
-            ],
-          },
-        ],
-      })
-    }
+  const license = node.solution.license && !node.solution.license.isDefault && (
+    <LicenseNotice minimal data={node.solution.license} type="solution" />
+  )
+  const authorTools = loaded && auth && (
+    <AuthorToolsExercises
+      data={{
+        type: ExerciseInlineType.Solution,
+        id: node.context.solutionId!,
+        parentId: node.context.id,
+        grouped: node.grouped,
+        unrevisedRevisions: node.unrevisedRevisions,
+      }}
+    />
+  )
 
-    // quickfix for solution strategy
-    const strategy: FrontendContentNode[] =
-      state.strategy.length > 0
-        ? [
-            {
-              type: FrontendNodeType.Important,
-              children: [
-                {
-                  type: FrontendNodeType.P,
-                  children: [
-                    {
-                      type: FrontendNodeType.Text,
-                      text: strings.content.exercises.strategy,
-                      strong: true,
-                    },
-                  ],
-                },
-                ...state.strategy,
-              ],
-            },
-          ]
-        : []
+  const solutionContent = getSolutionContent({
+    ...node.solution,
+    trashed: !!node.solution.trashed,
+  })
 
-    const steps = state.steps
-    return [...prereq, ...strategy, ...steps]
+  if (!solutionContent) return null
+  const { prerequisite, strategy, steps } = solutionContent
+
+  return (
+    <>
+      <SolutionRenderer
+        prerequisite={
+          prerequisite ? (
+            <Link href={prerequisite.href}>{prerequisite.title}</Link>
+          ) : null
+        }
+        strategy={strategy.length ? <>{renderNested(strategy)}</> : null}
+        steps={
+          <>
+            {renderNested(steps)}
+            {license && <div className="px-side">{license}</div>}
+            {node.context.solutionId && (
+              <Lazy>
+                <CommentAreaEntity entityId={node.context.solutionId} />
+              </Lazy>
+            )}
+          </>
+        }
+        solutionVisibleOnInit={solutionVisibleOnInit}
+        elementAfterToggle={renderLicense()}
+        elementBeforePrerequisite={
+          authorTools ? (
+            <div className="-mt-2 text-right">{authorTools}</div>
+          ) : null
+        }
+        hideToggle={
+          (!node.solution.edtrState && !node.solution.legacy) ||
+          node.solution.trashed ||
+          (isPrintMode && !printModeSolutionVisible)
+        }
+        onSolutionOpen={() =>
+          exerciseSubmission({
+            path: asPath,
+            entityId: node.context.id,
+            revisionId: node.context.revisionId,
+            type: 'text',
+            result: 'open',
+          })
+        }
+      />
+    </>
+  )
+
+  function renderLicense() {
+    if (!node.task.license) return null
+    return <LicenseNotice minimal data={node.task.license} type="task" />
   }
+}
+
+// simplify after migration
+function getSolutionContent(node: FrontendSolutionNode['solution']) {
+  if (node.legacy)
+    return { steps: node.legacy, strategy: [], prerequisite: undefined }
+  if (!node.edtrState) return null
+
+  const state = node.edtrState
+
+  const prerequisite =
+    state.prerequisite && state.prerequisite.id
+      ? {
+          href:
+            state.prerequisite.href ?? `/${state.prerequisite.id.toString()}`, // for revisions
+          title: state.prerequisite.title,
+        }
+      : undefined
+
+  return { ...state, prerequisite }
 }

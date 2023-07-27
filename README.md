@@ -13,7 +13,7 @@ In our [staging](https://de.serlo-staging.dev/) and [production](https://serlo.o
 
 ### Local installation
 
-You can run the frontend on your local system. Install [Node.js v18](https://nodejs.org/en/) and [yarn > v3](https://yarnpkg.com/getting-started/install) then run the following commands:
+You can run the frontend on your local system. Install [Node.js v18](https://nodejs.org/en/) and yarn (`npm install --global yarn`), then run the following commands:
 
 ```sh
 git clone --filter=blob:none https://github.com/serlo/frontend.git
@@ -25,6 +25,8 @@ yarn dev
 The developement server is now live on [localhost:3000](http://localhost:3000). Use same username/password as on staging.
 
 Choose language using `http://localhost:3000/{es|de|hi|ta|en|fr}/`
+
+Tip for windows users: [Set execution policy](https://pureinfotech.com/change-execution-policy-run-scripts-powershell/) to remote signed to allow yarn to run.
 
 ### Libraries
 
@@ -41,6 +43,12 @@ Some of the features we use:
 - [Static Site Generation](https://nextjs.org/docs/basic-features/data-fetching/get-static-props)
 - [Incremental Static Regeneration](https://nextjs.org/docs/basic-features/data-fetching/incremental-static-regeneration)
 - …
+
+### Optional: Prisma + Planetscale (experimental)
+
+We are trying out a [serverless sql database](https://app.planetscale.com/serlo/serlo_planetscale) and use it to build prototypes. Don't use for production features yet!
+
+Add the environment variable `DATABASE_URL` to `.env.local` (next.js) and `prisma/.env` (prisma cli). You can generate the database url from planetscale or ping one of us to generat one for you. (sorry for the inconvienience here). Run `yarn prisma generate` to update the prisma client and test the database connection.
 
 ## Repository Overview
 

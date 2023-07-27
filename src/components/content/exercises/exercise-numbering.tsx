@@ -15,8 +15,8 @@ export function ExerciseNumbering({ index, href }: ExerciseNumberingProps) {
       className={tw`
           mx-side mb-5 block h-12 w-12 rounded-full bg-brand
           pt-1 text-center text-4xl font-bold
-          text-white hover:bg-brand-400 hover:no-underline sm:absolute sm:-mt-2.5
-          sm:-ml-10 md:-ml-14
+          text-white hover:bg-brand-400 hover:no-underline sm:absolute sm:-ml-10
+          sm:-mt-2.5 md:-ml-14
         `}
     >
       {index + 1}

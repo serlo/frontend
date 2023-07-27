@@ -1,7 +1,7 @@
 import { Link } from '@/components/content/link'
-import { useInstanceData } from '@/contexts/instance-context'
 import { ArticleNodeUuidLink, FrontendArticleNode } from '@/frontend-node-types'
 import type { RenderNestedFunction } from '@/schema/article-renderer'
+import { ArticleRenderer } from '@/serlo-editor/plugins/article/renderer'
 
 export function Article({
   renderNested,
@@ -14,37 +14,47 @@ export function Article({
 }: FrontendArticleNode & {
   renderNested: RenderNestedFunction
 }) {
-  const { strings } = useInstanceData()
+  const hasMoreLink = exerciseFolder.id && exerciseFolder.title
+  const hasExercises = exercises && exercises.length
 
   return (
-    <div>
-      {renderNested(introduction, 'article-intro')}
-      {renderNested(content, 'article-content')}
-
-      {renderExercises()}
-
-      {renderRelatedContent()}
-      {renderSources()}
-    </div>
+    <ArticleRenderer
+      introduction={<>{renderNested(introduction, 'article-intro')}</>}
+      content={<>{renderNested(content, 'article-content')}</>}
+      exercises={
+        hasExercises ? (
+          <>{renderNested(exercises, 'article-exercises')}</>
+        ) : null
+      }
+      exercisesFolder={
+        hasMoreLink ? (
+          <Link className="font-bold" href={`/${exerciseFolder.id}`}>
+            {exerciseFolder.title}
+          </Link>
+        ) : null
+      }
+      relatedContent={{
+        articles: getRelatedContent('articles'),
+        courses: getRelatedContent('courses'),
+        videos: getRelatedContent('videos'),
+      }}
+      sources={renderSources()}
+    />
   )
 
-  function renderExercises() {
-    const hasMoreLink = exerciseFolder.id && exerciseFolder.title
-    const hasExercises = exercises && exercises.length
-    if (!hasMoreLink && !hasExercises) return null
+  function getRelatedContent(type: 'articles' | 'courses' | 'videos') {
+    if (!relatedContent) return null
+
+    const items = relatedContent[type]
+    if (items.length === 0 || isEmpty(items)) return null
 
     return (
       <>
-        <h2 className="serlo-h2">{strings.content.exercisesTitle}</h2>
-        {hasExercises ? renderNested(exercises, 'article-exercises') : null}
-        {hasMoreLink ? (
-          <p className="serlo-p">
-            {strings.content.moreExercises}:<br />
-            <Link className="font-bold" href={`/${exerciseFolder.id}`}>
-              {exerciseFolder.title}
-            </Link>
-          </p>
-        ) : null}
+        {items.map((item) => (
+          <li key={item.id}>
+            <Link href={`/${item.id}`}>{item.title}</Link>
+          </li>
+        ))}
       </>
     )
   }
@@ -59,51 +69,11 @@ export function Article({
     return true
   }
 
-  function renderRelatedContent() {
-    if (
-      !relatedContent ||
-      (isEmpty(relatedContent?.articles) &&
-        isEmpty(relatedContent?.courses) &&
-        isEmpty(relatedContent?.videos))
-    )
-      return null
-
-    return (
-      <>
-        <h2 className="serlo-h2">{strings.content.relatedContentTitle}</h2>
-        <p className="serlo-p">{strings.content.relatedContentText}</p>
-        {renderSubsection('articles', relatedContent.articles)}
-        {renderSubsection('courses', relatedContent.courses)}
-        {renderSubsection('videos', relatedContent.videos)}
-      </>
-    )
-  }
-
-  function renderSubsection(
-    type: 'articles' | 'courses' | 'videos',
-    items: ArticleNodeUuidLink[]
-  ) {
-    if (items.length === 0) return null
-    return (
-      <>
-        <h3 className="serlo-h3 mb-0">{strings.categories[type]}</h3>
-        <ul className="serlo-ul mt-2 mb-4 text-lg">
-          {items.map((item) => (
-            <li key={item.id} className="!mb-0">
-              <Link href={`/${item.id}`}>{item.title}</Link>
-            </li>
-          ))}
-        </ul>
-      </>
-    )
-  }
-
   function renderSources() {
     if (sources.length === 0) return null
     return (
       <>
-        <h2 className="serlo-h2">{strings.content.sourcesTitle}</h2>
-        <ul className="serlo-ul mt-2 mb-4 text-lg">
+        <ul className="serlo-ul mb-4 mt-2 text-lg">
           {sources.map((source) => (
             <li key={source.href} className="!mb-0">
               {source.href ? (

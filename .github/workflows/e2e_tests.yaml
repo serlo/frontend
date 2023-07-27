@@ -18,5 +18,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           max_timeout: 1200
           check_interval: 20
-      - run: npm ci
-      - run: CI=1 npm run test
+      - run: yarn
+      - run: yarn test
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: e2e-screenshots-on-fail
+          path: output/ # or path/to/artifact

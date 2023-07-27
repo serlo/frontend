@@ -6,13 +6,12 @@ import { useAuthentication } from '@/auth/use-authentication'
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
 import { StaticInfoPanel } from '@/components/static-info-panel'
-// import { TimeAgo } from '@/components/time-ago'
-import { UserTools } from '@/components/user-tools/user-tools'
 import { Events } from '@/components/user/events'
 import { ProfileActivityGraphs } from '@/components/user/profile-activity-graphs'
 import { ProfileBadges } from '@/components/user/profile-badges'
 import { ProfileChatButton } from '@/components/user/profile-chat-button'
 import { ProfileRoles } from '@/components/user/profile-roles'
+import { UserTools } from '@/components/user-tools/user-tools'
 import { useInstanceData } from '@/contexts/instance-context'
 import { UserPage, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
@@ -31,14 +30,12 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
     id,
     username,
     description,
-    // lastLogin,
     imageUrl,
     chatUrl,
     date,
     motivation,
     activityByType,
   } = userData
-  // const lastLoginDate = lastLogin ? new Date(lastLogin) : undefined
 
   const [isOwnProfile, setIsOwnProfile] = useState(false)
 
@@ -74,13 +71,10 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         <header className="mx-side mt-14 text-center sm:text-left">
           {renderProfileImage()}
           <div className="mt-5 sm:mt-0">
-            <h1 className="serlo-h1 mt-4 mb-3">{username}</h1>
+            <h1 className="serlo-h1 mb-3 mt-4">{username}</h1>
             <ProfileBadges userData={userData} date={date} />
           </div>
-          <div
-            className="serlo-p mt-5 w-full text-1.5xl sm:mt-0"
-            style={{ gridArea: 'motivation' }}
-          >
+          <div className="serlo-p mt-5 w-full text-1.5xl [grid-area:motivation] sm:mt-0">
             {motivation && <>&quot;{motivation}&quot;</>}
             {isOwnProfile &&
               !isNewlyRegisteredUser &&
@@ -113,10 +107,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
 
   function renderProfileImage() {
     return (
-      <figure
-        className="mx-auto h-44 w-44 sm:mx-0"
-        style={{ contain: 'content' }}
-      >
+      <figure className="mx-auto h-44 w-44 [contain:content] sm:mx-0">
         <img
           src={imageUrl}
           alt={`Profile image of ${username}`}
@@ -125,7 +116,7 @@ export const Profile: NextPage<ProfileProps> = ({ userData }) => {
         {isOwnProfile && !isNewlyRegisteredUser && (
           <Link
             href="/user/settings#image"
-            className="serlo-button-green absolute right-1 bottom-1 block h-8 w-8"
+            className="serlo-button-green absolute bottom-1 right-1 block h-8 w-8"
           >
             <FaIcon icon={faPencilAlt} />
           </Link>

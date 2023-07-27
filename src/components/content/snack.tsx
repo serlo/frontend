@@ -20,7 +20,7 @@ export function Snack({ id }: SnackProps) {
           onClick={() => setActive(true)}
         />
         <button
-          className="serlo-button-blue mt-16 mb-20"
+          className="serlo-button-blue mb-20 mt-16"
           onClick={() => setActive(true)}
         >
           Snack starten!
@@ -39,10 +39,10 @@ export function Snack({ id }: SnackProps) {
     )
   } else {
     return (
-      <div className="my-20 bg-white" style={{ height: '70vh', width: '100%' }}>
+      <div className="my-20 h-[70vh] w-full bg-white">
         <iframe
           src={`https://www.learningsnacks.de/embed/${id}`}
-          style={{ width: '100%', height: '100%' }}
+          className="h-full w-full"
         ></iframe>
         <a
           href={`https://www.learningsnacks.de/share/${id}`}

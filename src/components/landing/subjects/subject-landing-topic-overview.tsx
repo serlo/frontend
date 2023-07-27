@@ -5,8 +5,9 @@ import { useRef, useState } from 'react'
 import { MaxWidthDiv } from '../../navigation/max-width-div'
 import { SubTopic } from '../../taxonomy/sub-topic'
 import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
-import { TaxonomySubTerm } from '@/data-types'
 import { deSubjectLandingData } from '@/data/de/de-subject-landing-data'
+import { TaxonomySubTerm } from '@/data-types'
+import { FrontendNodeType } from '@/frontend-node-types'
 import { isPartiallyInView } from '@/helper/is-partially-in-view'
 import { tw } from '@/helper/tw'
 
@@ -80,18 +81,13 @@ export function SubjectLandingTopicOverview({
 
   function renderMenu() {
     return (
-      <div
-        className="grid justify-center [&_img]:mix-blend-multiply"
-        style={{
-          gridTemplateColumns: 'repeat(auto-fit, minmax(12rem, 20rem))',
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,_minmax(12rem,_20rem))] justify-center [&_img]:mix-blend-multiply">
         {[...subterms, ...extraTerms, allTopicsEntry].map((term, index) => {
           const isActive = index === selectedIndex
           const src =
             term.description &&
             term.description[0] &&
-            term.description?.[0].type === 'img'
+            term.description?.[0].type === FrontendNodeType.Image
               ? term.description?.[0].src
               : undefined
           const isExtraTerm = Object.hasOwn(term, 'href')

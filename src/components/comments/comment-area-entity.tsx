@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
-import { Guard } from '../guard'
 import { CommentArea } from './comment-area'
+import { Guard } from '../guard'
 import { useCommentData } from '@/fetcher/use-comment-data'
 import { scrollToPrevious } from '@/helper/scroll'
 

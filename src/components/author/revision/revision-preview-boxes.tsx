@@ -112,7 +112,7 @@ export function RevisionPreviewBoxes({
             margin-bottom: 0;
           }
         `}</style>
-        <p className="serlo-p mt-10 mb-1.5 flex justify-between">
+        <p className="serlo-p mb-1.5 mt-10 flex justify-between">
           <b title={changes ? strings.revisions.hasChanges : undefined}>
             {title}
             {changes && <span className="text-sm">{' 🟠'}</span>}

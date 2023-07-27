@@ -2,6 +2,7 @@
 
 import { FrontendNodeType } from '@/frontend-node-types'
 import { convert } from '@/schema/convert-edtr-io-state'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 describe('returns an empty array when unsupported values are given', () => {
   test('argument is undefined', () => {
@@ -34,14 +35,14 @@ describe('edtr io plugins', () => {
   describe('plugin: image', () => {
     test('default, return with "src" set', () => {
       const result = convert({
-        plugin: 'image',
+        plugin: EditorPluginType.Image,
         state: {
           src: 'https://assets.serlo.org/logo.jpg',
         },
       })
       expect(result).toEqual([
         {
-          type: 'img',
+          type: FrontendNodeType.Image,
           src: 'https://assets.serlo.org/logo.jpg',
           alt: '',
         },
@@ -49,7 +50,7 @@ describe('edtr io plugins', () => {
     })
     test('with "maxWidth"', () => {
       const result = convert({
-        plugin: 'image',
+        plugin: EditorPluginType.Image,
         state: {
           src: 'https://assets.serlo.org/logo.jpg',
           maxWidth: true,
@@ -59,7 +60,7 @@ describe('edtr io plugins', () => {
     })
     test('with alt attribute', () => {
       const result = convert({
-        plugin: 'image',
+        plugin: EditorPluginType.Image,
         state: {
           src: 'https://assets.serlo.org/logo.jpg',
           alt: 'Description',
@@ -71,22 +72,24 @@ describe('edtr io plugins', () => {
 
   test('plugin: important', () => {
     const result = convert({
-      plugin: 'important',
+      plugin: EditorPluginType.Important,
       state: {
-        plugin: 'text',
-        state: [{ type: 'p', children: [{ text: '"Merksatz"' }] }],
+        plugin: EditorPluginType.Text,
+        state: [
+          { type: FrontendNodeType.P, children: [{ text: '"Merksatz"' }] },
+        ],
       },
     })
     expect(result).toEqual([
       {
-        type: 'important',
+        type: FrontendNodeType.Important,
         children: [
           {
-            type: 'slate-container',
+            type: FrontendNodeType.SlateContainer,
             children: [
               {
-                type: 'slate-p',
-                children: [{ type: 'text', text: '"Merksatz"' }],
+                type: FrontendNodeType.SlateP,
+                children: [{ type: FrontendNodeType.Text, text: '"Merksatz"' }],
               },
             ],
           },
@@ -98,14 +101,14 @@ describe('edtr io plugins', () => {
   describe('plugin: layout', () => {
     test('default', () => {
       const result = convert({
-        plugin: 'layout',
+        plugin: EditorPluginType.Layout,
         state: [
           {
             child: {
-              plugin: 'rows',
+              plugin: EditorPluginType.Rows,
               state: [
                 {
-                  plugin: 'text',
+                  plugin: EditorPluginType.Text,
                   state: [],
                 },
               ],
@@ -116,12 +119,14 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'row',
+          type: FrontendNodeType.Row,
           children: [
             {
-              type: 'col',
+              type: FrontendNodeType.Col,
               size: 6,
-              children: [{ type: 'slate-container', children: [] }],
+              children: [
+                { type: FrontendNodeType.SlateContainer, children: [] },
+              ],
             },
           ],
         },
@@ -129,29 +134,24 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: anchor', () => {
-    const result = convert({ plugin: 'anchor', state: 'AnchorTest' })
-    expect(result).toEqual([{ type: 'anchor', id: 'AnchorTest' }])
-  })
-
   test('plugin: blockquote', () => {
     const result = convert({
-      plugin: 'blockquote',
+      plugin: EditorPluginType.Blockquote,
       state: {
-        plugin: 'text',
-        state: [{ type: 'p', children: [{ text: 'A quote' }] }],
+        plugin: EditorPluginType.Text,
+        state: [{ type: FrontendNodeType.P, children: [{ text: 'A quote' }] }],
       },
     })
     expect(result).toEqual([
       {
-        type: 'blockquote',
+        type: FrontendNodeType.Blockquote,
         children: [
           {
-            type: 'slate-container',
+            type: FrontendNodeType.SlateContainer,
             children: [
               {
-                type: 'slate-p',
-                children: [{ type: 'text', text: 'A quote' }],
+                type: FrontendNodeType.SlateP,
+                children: [{ type: FrontendNodeType.Text, text: 'A quote' }],
               },
             ],
           },
@@ -162,65 +162,65 @@ describe('edtr io plugins', () => {
 
   describe('plugin: geogebra', () => {
     test('default', () => {
-      const result = convert({ plugin: 'geogebra', state: 'jybewqhg' })
-      expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
+      const result = convert({
+        plugin: EditorPluginType.Geogebra,
+        state: 'jybewqhg',
+      })
+      expect(result).toEqual([
+        {
+          plugin: EditorPluginType.Geogebra,
+          type: FrontendNodeType.Geogebra,
+          state: 'jybewqhg',
+        },
+      ])
     })
 
     test('compat: full url', () => {
       const result = convert({
-        plugin: 'geogebra',
+        plugin: EditorPluginType.Geogebra,
         state: 'https://www.geogebra.org/m/jybewqhg',
       })
-      expect(result).toEqual([{ type: 'geogebra', id: 'jybewqhg' }])
+      expect(result).toEqual([
+        {
+          plugin: EditorPluginType.Geogebra,
+          type: FrontendNodeType.Geogebra,
+          state: 'jybewqhg',
+        },
+      ])
     })
 
-    //TODO: return empty instead of faulty url? should probably be checked in edtr
+    //TODO: return empty instead of faulty url? should probably be checked in editor
     test('no geogebra url', () => {
       const result = convert({
-        plugin: 'geogebra',
+        plugin: EditorPluginType.Geogebra,
         state: 'https://www.github.com',
       })
       expect(result).toEqual([
-        { type: 'geogebra', id: 'https://www.github.com' },
+        {
+          plugin: EditorPluginType.Geogebra,
+          type: FrontendNodeType.Geogebra,
+          state: 'https://www.github.com',
+        },
       ])
     })
   })
 
-  test('plugin: highlight', () => {
-    const result = convert({
-      plugin: 'highlight',
-      state: {
-        code: '\n<html>Code</html>',
-        language: 'html',
-        showLineNumbers: true,
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: 'code',
-        code: '\n<html>Code</html>',
-        language: 'html',
-        showLineNumbers: true,
-      },
-    ])
-  })
-
-  describe('plugin: multimediaExplanation', () => {
+  describe('plugin: multimedia', () => {
     test('with width value: returns calulated sizes', () => {
       const result = convert({
-        plugin: 'multimedia',
+        plugin: EditorPluginType.Multimedia,
         state: {
           explanation: {
-            plugin: 'rows',
+            plugin: EditorPluginType.Rows,
             state: [
               {
-                plugin: 'text',
+                plugin: EditorPluginType.Text,
                 state: [],
               },
             ],
           },
           multimedia: {
-            plugin: 'image',
+            plugin: EditorPluginType.Image,
             state: {
               src: 'test.jpg',
             },
@@ -231,24 +231,32 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'multimedia',
+          type: FrontendNodeType.Multimedia,
           mediaWidth: 20,
-          float: 'right',
-          media: [{ type: 'img', src: 'test.jpg', alt: '' }],
-          children: [{ type: 'slate-container', children: [] }],
+          media: [
+            {
+              type: FrontendNodeType.Image,
+              src: 'test.jpg',
+              alt: '',
+              caption: undefined,
+              href: undefined,
+              maxWidth: undefined,
+            },
+          ],
+          children: [{ type: FrontendNodeType.SlateContainer, children: [] }],
         },
       ])
     })
     test('no width value provided: returns 50 / 50 size', () => {
       const result = convert({
-        plugin: 'multimedia',
+        plugin: EditorPluginType.Multimedia,
         state: {
           explanation: {
-            plugin: 'rows',
+            plugin: EditorPluginType.Rows,
             state: [],
           },
           multimedia: {
-            plugin: 'image',
+            plugin: EditorPluginType.Image,
             state: {
               src: 'test.jpg',
             },
@@ -257,10 +265,9 @@ describe('edtr io plugins', () => {
       })
       expect(result).toEqual([
         {
-          type: 'multimedia',
+          type: FrontendNodeType.Multimedia,
           mediaWidth: 50,
-          float: 'right',
-          media: [{ type: 'img', src: 'test.jpg', alt: '' }],
+          media: [{ type: FrontendNodeType.Image, src: 'test.jpg', alt: '' }],
           children: [],
         },
       ])
@@ -269,18 +276,18 @@ describe('edtr io plugins', () => {
 
   test('plugin: rows just returns children', () => {
     const result = convert({
-      plugin: 'rows',
+      plugin: EditorPluginType.Rows,
       state: [
         {
-          plugin: 'text',
+          plugin: EditorPluginType.Text,
           state: {
-            type: 'h',
+            type: FrontendNodeType.H,
             level: 2,
             children: [],
           },
         },
         {
-          plugin: 'image',
+          plugin: EditorPluginType.Image,
           state: {
             src: 'bild.jpg',
             alt: '',
@@ -290,11 +297,11 @@ describe('edtr io plugins', () => {
     })
     expect(result).toEqual([
       {
-        type: 'slate-container',
-        children: [{ type: 'h', level: 2, children: [] }],
+        type: FrontendNodeType.SlateContainer,
+        children: [{ type: FrontendNodeType.H, level: 2, children: [] }],
       },
       {
-        type: 'img',
+        type: FrontendNodeType.Image,
         src: 'bild.jpg',
         alt: '',
         maxWidth: undefined,
@@ -302,28 +309,23 @@ describe('edtr io plugins', () => {
     ])
   })
 
-  test('plugin: serloInjection', () => {
-    const result = convert({ plugin: 'injection', state: '/145590' })
-    expect(result).toEqual([{ type: 'injection', href: '/145590' }])
-  })
-
   test('plugin: spoiler', () => {
     const result = convert({
-      plugin: 'spoiler',
+      plugin: EditorPluginType.Spoiler,
       state: {
         title: 'More info',
-        content: { plugin: 'rows', state: [] },
+        content: { plugin: EditorPluginType.Rows, state: [] },
       },
     })
     expect(result).toEqual([
       {
-        type: 'spoiler-container',
+        type: FrontendNodeType.SpoilerContainer,
         children: [
           {
-            type: 'spoiler-title',
-            children: [{ type: 'text', text: 'More info' }],
+            type: FrontendNodeType.SpoilerTitle,
+            children: [{ type: FrontendNodeType.Text, text: 'More info' }],
           },
-          { type: 'spoiler-body', children: [] },
+          { type: FrontendNodeType.SpoilerBody, children: [] },
         ],
       },
     ])
@@ -331,38 +333,41 @@ describe('edtr io plugins', () => {
 
   test('plugin: table', () => {
     const result = convert({
-      plugin: 'table',
+      plugin: EditorPluginType.Table,
       state: '|||\n|||\n|Week 1|Intro into something|\n',
     })
 
     expect(result).toEqual([
       {
-        type: 'table',
+        type: FrontendNodeType.Table,
         children: [
           {
-            type: 'tr',
+            type: FrontendNodeType.Tr,
             children: [
-              { type: 'th', children: [] },
-              { type: 'th', children: [] },
+              { type: FrontendNodeType.Th, children: [] },
+              { type: FrontendNodeType.Th, children: [] },
             ],
           },
           {
-            type: 'tr',
+            type: FrontendNodeType.Tr,
             children: [
               {
-                type: 'td',
+                type: FrontendNodeType.Td,
                 children: [
-                  { type: 'p', children: [{ type: 'text', text: 'Week 1' }] },
+                  {
+                    type: FrontendNodeType.P,
+                    children: [{ type: FrontendNodeType.Text, text: 'Week 1' }],
+                  },
                 ],
               },
               {
-                type: 'td',
+                type: FrontendNodeType.Td,
                 children: [
                   {
-                    type: 'p',
+                    type: FrontendNodeType.P,
                     children: [
                       {
-                        type: 'text',
+                        type: FrontendNodeType.Text,
                         text: 'Intro into something',
                       },
                     ],
@@ -378,37 +383,24 @@ describe('edtr io plugins', () => {
 
   test('plugin: text', () => {
     const result = convert({
-      plugin: 'text',
+      plugin: EditorPluginType.Text,
       state: {
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 2,
         children: [],
       },
     })
     expect(result).toEqual([
       {
-        type: 'slate-container',
+        type: FrontendNodeType.SlateContainer,
         children: [
           {
-            type: 'h',
+            type: FrontendNodeType.H,
             level: 2,
             children: [],
           },
         ],
       },
-    ])
-  })
-
-  test('plugin: video', () => {
-    const result = convert({
-      plugin: 'video',
-      state: {
-        src: 'https://www.youtube.com/watch?v=IPOnn9EBX74',
-        alt: 'Beschreibung.',
-      },
-    })
-    expect(result).toEqual([
-      { type: 'video', src: 'https://www.youtube.com/watch?v=IPOnn9EBX74' },
     ])
   })
 })
@@ -420,7 +412,7 @@ describe('text types', () => {
 
       expect(result).toEqual([
         {
-          type: 'text',
+          type: FrontendNodeType.Text,
           text: 'onto the street',
         },
       ])
@@ -430,7 +422,7 @@ describe('text types', () => {
 
       expect(result).toEqual([
         {
-          type: 'text',
+          type: FrontendNodeType.Text,
           text: 'Rösängärtüß>"&´',
         },
       ])
@@ -441,7 +433,7 @@ describe('text types', () => {
     })
     test('with color', () => {
       const result = convert({ text: 'colored', color: 0 })
-      expect(result[0].color).toBe('blue')
+      expect(result[0].color).toBe(0)
     })
     test('strong', () => {
       const result = convert({ text: 'bold text', strong: true })
@@ -460,11 +452,11 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         {
-          type: 'text',
+          type: FrontendNodeType.Text,
           text: 'wow text',
           em: true,
           strong: true,
-          color: 'orange',
+          color: 2,
         },
       ])
     })
@@ -473,13 +465,13 @@ describe('text types', () => {
   describe('text-type: p', () => {
     test('default', () => {
       const result = convert({
-        type: 'p',
+        type: FrontendNodeType.P,
         children: [{ text: 'test' }],
       })
       expect(result).toEqual([
         {
-          type: 'slate-p',
-          children: [{ type: 'text', text: 'test' }],
+          type: FrontendNodeType.SlateP,
+          children: [{ type: FrontendNodeType.Text, text: 'test' }],
         },
       ])
     })
@@ -487,12 +479,12 @@ describe('text types', () => {
     /*describe('compat: unwrap math from p if math is only child', () => {
       test('is only child', () => {
         const result = convert({
-          type: 'p',
-          children: [{ type: 'math', src: '123' }],
+          type: FrontendNodeType.P,
+          children: [{ type: FrontendNodeType.Math, src: '123' }],
         })
         expect(result).toEqual([
           {
-            type: 'math',
+            type: FrontendNodeType.Math,
             formula: '123',
             formulaSource: '123',
             alignCenter: true,
@@ -511,10 +503,16 @@ describe('text types', () => {
         })
         expect(result).toEqual([
           {
-            type: 'li',
+            type: FrontendNodeType.Li,
             children: [
-              { type: 'slate-p', children: [{ type: 'text', text: 'line1' }] },
-              { type: 'slate-p', children: [{ type: 'text', text: 'line2' }] },
+              {
+                type: FrontendNodeType.SlateP,
+                children: [{ type: FrontendNodeType.Text, text: 'line1' }],
+              },
+              {
+                type: FrontendNodeType.SlateP,
+                children: [{ type: FrontendNodeType.Text, text: 'line2' }],
+              },
             ],
           },
         ])
@@ -527,42 +525,46 @@ describe('text types', () => {
   describe('text-type: a', () => {
     test('anchor link', () => {
       const result = convert({
-        type: 'a',
+        type: FrontendNodeType.A,
         href: '#top',
         children: [{ text: 'anchor link' }],
       })
       expect(result).toEqual([
         {
-          type: 'a',
+          type: FrontendNodeType.A,
           href: '#top',
-          children: [{ type: 'text', text: 'anchor link' }],
+          children: [{ type: FrontendNodeType.Text, text: 'anchor link' }],
         },
       ])
     })
 
     test('no href set', () => {
       const result = convert({
-        type: 'a',
+        type: FrontendNodeType.A,
         children: [{ text: 'link' }],
       })
-      expect(result).toEqual([{ type: 'text', text: 'link' }])
+      expect(result).toEqual([{ type: FrontendNodeType.Text, text: 'link' }])
     })
   })
 
   describe('text-type: h', () => {
     test('default h1', () => {
       const result = convert({
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 1,
         children: [{ text: 'H1' }],
       })
       expect(result).toEqual([
-        { type: 'h', level: 1, children: [{ type: 'text', text: 'H1' }] },
+        {
+          type: FrontendNodeType.H,
+          level: 1,
+          children: [{ type: FrontendNodeType.Text, text: 'H1' }],
+        },
       ])
     })
     test('level higher than 5: returns level 5', () => {
       const result = convert({
-        type: 'h',
+        type: FrontendNodeType.H,
         level: 6,
         children: [{ text: 'H6 maybe' }],
       })
@@ -570,7 +572,7 @@ describe('text types', () => {
     })
     test('no level set: returns level 5', () => {
       const result = convert({
-        type: 'h',
+        type: FrontendNodeType.H,
         children: [{ text: 'Hwhatever' }],
       })
       expect(result[0].level).toBe(5)
@@ -579,7 +581,7 @@ describe('text types', () => {
 
   test('text-type: math (inline)', () => {
     const result = convert({
-      type: 'math',
+      type: FrontendNodeType.Math,
       src: '\\tan^{-1}',
       inline: true,
       children: [{ text: '\\tan^{-1}', strong: true }],
@@ -595,14 +597,14 @@ describe('text types', () => {
 
   test('text-type: math (block)', () => {
     const result = convert({
-      type: 'math',
+      type: FrontendNodeType.Math,
       src: 'Math Block',
       inline: false,
       children: [{ text: '' }],
     })
     expect(result).toEqual([
       {
-        type: 'math',
+        type: FrontendNodeType.Math,
         formula: 'Math Block',
         formulaSource: 'Math Block',
         alignCenter: true,
@@ -626,14 +628,14 @@ describe('text types', () => {
     })
     expect(result).toEqual([
       {
-        type: 'ul',
+        type: FrontendNodeType.Ul,
         children: [
           {
-            type: 'li',
+            type: FrontendNodeType.Li,
             children: [],
           },
           {
-            type: 'li',
+            type: FrontendNodeType.Li,
             children: [],
           },
         ],
@@ -657,14 +659,14 @@ describe('text types', () => {
     })
     expect(result).toEqual([
       {
-        type: 'ol',
+        type: FrontendNodeType.Ol,
         children: [
           {
-            type: 'li',
+            type: FrontendNodeType.Li,
             children: [],
           },
           {
-            type: 'li',
+            type: FrontendNodeType.Li,
             children: [],
           },
         ],
@@ -679,7 +681,7 @@ describe('text types', () => {
     })
     expect(result).toEqual([
       {
-        type: 'li',
+        type: FrontendNodeType.Li,
         children: [],
       },
     ])
@@ -691,7 +693,9 @@ describe('text types', () => {
         type: 'list-item-child',
         children: [{ text: 'item-child' }],
       })
-      expect(result).toEqual([{ type: 'text', text: 'item-child' }])
+      expect(result).toEqual([
+        { type: FrontendNodeType.Text, text: 'item-child' },
+      ])
     })
 
     test('compat: ps will not be wrapped in another p', () => {
@@ -699,23 +703,23 @@ describe('text types', () => {
         type: 'list-item-child',
         children: [
           {
-            type: 'p',
+            type: FrontendNodeType.P,
             children: [{ text: 'text' }],
           },
           {
-            type: 'p',
+            type: FrontendNodeType.P,
             children: [{ text: 'text' }],
           },
         ],
       })
       expect(result).toEqual([
         {
-          type: 'slate-p',
-          children: [{ type: 'text', text: 'text' }],
+          type: FrontendNodeType.SlateP,
+          children: [{ type: FrontendNodeType.Text, text: 'text' }],
         },
         {
-          type: 'slate-p',
-          children: [{ type: 'text', text: 'text' }],
+          type: FrontendNodeType.SlateP,
+          children: [{ type: FrontendNodeType.Text, text: 'text' }],
         },
       ])
     })
@@ -739,7 +743,7 @@ describe('text types', () => {
         type: 'list-item',
         children: [
           {
-            type: 'a',
+            type: FrontendNodeType.A,
             href: '/123',
             children: [{ text: 'log text' }],
           },
@@ -747,15 +751,15 @@ describe('text types', () => {
       })
       expect(result).toEqual([
         {
-          type: 'li',
+          type: FrontendNodeType.Li,
           children: [
             {
-              type: 'slate-p',
+              type: FrontendNodeType.SlateP,
               children: [
                 {
-                  type: 'a',
+                  type: FrontendNodeType.A,
                   href: '/123',
-                  children: [{ type: 'text', text: 'log text' }],
+                  children: [{ type: FrontendNodeType.Text, text: 'log text' }],
                 },
               ],
             },

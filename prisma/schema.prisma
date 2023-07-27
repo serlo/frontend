@@ -45,3 +45,8 @@ model MitmachWoche {
   event        String   @db.VarChar(24)
   timestamp    DateTime @default(now())
 }
+
+model PrototypeThreadStatus {
+  threadId     String @db.VarChar(24) @id
+  status       String @db.VarChar(24)
+}

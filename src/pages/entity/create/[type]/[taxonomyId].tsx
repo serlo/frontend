@@ -7,7 +7,6 @@ import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
 import { UuidType } from '@/data-types'
-import { SerloEntityPluginType } from '@/edtr-io/plugins'
 import { taxonomyParentsToRootToBreadcrumbsData } from '@/fetcher/create-breadcrumbs'
 import {
   GetTaxonomyTypeQuery,
@@ -16,15 +15,16 @@ import {
 import { sharedTaxonomyParents } from '@/fetcher/query-fragments'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 enum AllowedPlugins {
-  Article = SerloEntityPluginType.Article,
-  Course = SerloEntityPluginType.Course,
-  Video = SerloEntityPluginType.Video,
-  Applet = SerloEntityPluginType.Applet,
-  Event = SerloEntityPluginType.Event,
-  Exercise = SerloEntityPluginType.TextExercise,
-  ExerciseGroup = SerloEntityPluginType.TextExerciseGroup,
+  Article = TemplatePluginType.Article,
+  Course = TemplatePluginType.Course,
+  Video = TemplatePluginType.Video,
+  Applet = TemplatePluginType.Applet,
+  Event = TemplatePluginType.Event,
+  Exercise = TemplatePluginType.TextExercise,
+  ExerciseGroup = TemplatePluginType.TextExerciseGroup,
 }
 
 interface EntityCreateProps {
@@ -77,9 +77,10 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
     GetTaxonomyTypeQueryVariables
   >(endpoint, getTaxonomyTypeQuery, { id: taxonomyId })
 
-  const entityType = context.params?.type as keyof typeof AllowedPlugins
+  const entityType = context.params?.type
   const isValidType =
-    entityType && Object.values(AllowedPlugins).includes(entityType)
+    entityType &&
+    Object.values(AllowedPlugins).includes(entityType as AllowedPlugins)
 
   if (
     !result ||
@@ -99,7 +100,7 @@ export const getStaticProps: GetStaticProps<EntityCreateProps> = async (
 
   return {
     props: {
-      entityType,
+      entityType: entityType as keyof typeof AllowedPlugins,
       taxonomyTerm: { ...result.uuid },
       entityNeedsReview: !isTestArea,
     },

@@ -19,9 +19,9 @@ export const styledLinkCls = tw`
   navtrigger block flex w-full
   items-center border-b border-brand-400
   p-4 align-middle text-[1.33rem] font-bold text-brand
-  hover:bg-brand-300 hover:no-underline
-  md:serlo-button-blue-transparent md:my-0 md:mt-[2px] md:block md:serlo-menu-entry-special
-  md:py-0.5 md:px-[7px] md:text-center md:text-[0.9rem]
+  md:serlo-button-blue-transparent md:serlo-menu-entry-special
+  hover:bg-brand-300 hover:no-underline md:my-0 md:mt-[2px] md:block
+  md:px-[7px] md:py-0.5 md:text-center md:text-[0.9rem]
   md:leading-tight md:text-brand-700 md:transition
 `
 

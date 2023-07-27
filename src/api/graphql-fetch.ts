@@ -5,7 +5,7 @@ import { AuthenticationPayload } from '@/auth/auth-provider'
 
 export interface ParsedArgs {
   query: RequestDocument
-  variables: unknown
+  variables: Record<string, unknown>
 }
 
 export function createGraphqlFetch() {

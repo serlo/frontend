@@ -1,4 +1,4 @@
-import { faPencil, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -25,6 +25,7 @@ import {
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import { isProduction } from '@/helper/is-production'
+import { shuffleArray } from '@/helper/shuffle-array'
 
 export interface EntityBaseProps {
   children: ReactNode
@@ -45,29 +46,58 @@ const DonationsBanner = dynamic<DonationsBannerProps>(() =>
 )
 
 export function EntityBase({ children, page, entityId }: EntityBaseProps) {
-  const [popup, setPopup] = useState(false)
-  const [button, setButton] = useState(false)
-  const [popupClicked, setPopupClicked] = useState(false)
-  const [group, setGroup] = useState('')
-
+  const [survey, setSurvey] = useState(false)
   const { asPath } = useRouter()
   const { lang } = useInstanceData()
+  const [answers] = useState(
+    shuffleArray([
+      <button
+        key="yes"
+        className="serlo-button-blue w-24"
+        onClick={() => {
+          handleModalInput('yes')
+        }}
+      >
+        JA
+      </button>,
+      <button
+        key="rarely"
+        className="serlo-button-blue w-24"
+        onClick={() => {
+          handleModalInput('rarely')
+        }}
+      >
+        SELTEN
+      </button>,
+      <button
+        key="no"
+        className="serlo-button-blue w-24"
+        onClick={() => {
+          handleModalInput('no')
+        }}
+      >
+        NEIN
+      </button>,
+    ])
+  )
 
-  const startDate = new Date('2023-06-11T23:00:00+02:00')
-  const endDate = new Date('2023-06-19T00:00:00+02:00')
+  function handler(e: KeyboardEvent) {
+    if (e.key === 'Escape' && survey) {
+      handleModalInput('exit')
+    }
+  }
 
   useEffect(() => {
-    decideAB()
-    triggerButton()
     const timer = setTimeout(() => {
       triggerPopup()
     }, 20000)
 
     return () => {
       clearTimeout(timer)
+      document.removeEventListener('keydown', handler)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [asPath])
+  }, [])
 
   const noComments =
     page.kind === 'single-entity' &&
@@ -76,109 +106,38 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
 
   return (
     <>
-      {popup && (
+      {survey && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
           <div className="relative z-[1200] mx-side w-[500px] rounded-xl bg-white text-center">
             <button
               className="serlo-button-blue absolute -right-3 -top-3 flex h-12 w-12 items-center justify-center rounded-full"
               onClick={() => {
-                setPopup(false)
-                if (!popupClicked) {
-                  submitEvent('exit-popup-' + group)
-                } else {
-                  if (isProduction) {
-                    Cookies.set('serlo-mitmach-woche-show-button', '1', {
-                      expires: endDate,
-                      sameSite: 'Lax',
-                    })
-                  }
-                  submitEvent('show-button')
-                  setButton(true)
-                }
-                if (isProduction) {
-                  Cookies.set('serlo-mitmach-woche-popup-shown', '1', {
-                    expires: 8,
-                    sameSite: 'Lax',
-                  })
-                }
+                handleModalInput('exit')
               }}
             >
               <FaIcon icon={faTimes} className="text-2xl text-white"></FaIcon>
             </button>
-            {group === 'a' && (
-              <>
-                <p className="mx-side mt-6 text-3xl italic">
-                  Serlo ist zum Mitmachen!
-                </p>
-                <p className="serlo-p mt-6 text-left text-lg">
-                  Wir möchten dich diese Woche einladen, den Editor
-                  auszuprobieren und Artikel selbst anzupassen.
-                  <br />
-                  Deine Änderungen kannst du für dich speichern und gleich im
-                  Unterricht einsetzen.
-                </p>
-              </>
-            )}
-            {group === 'b' && (
-              <>
-                <p className="mx-side mt-6 text-3xl font-bold">
-                  Artikel für Lerngruppen anpassen und teilen
-                </p>
-                <p className="serlo-p mt-6 text-left text-lg">
-                  Probiere unseren Editor zur Inhaltserstellung aus,
-                  <br />
-                  speichere deine Anpassungen für deine Lerngruppe und setze sie
-                  gleich im Unterricht ein.
-                </p>
-              </>
-            )}
-            <p className="mb-8">
-              <a
-                className="serlo-button-green"
-                target="_blank"
-                href={`https://frontend-git-poc-remix-serlo.vercel.app/entity/repository/add-revision/${entityId}`}
-                rel="noreferrer"
+            <p className="mx-side mt-4 italic text-almost-black">
+              Wir stellen regelmäßig Fragen auf der Plattform, um unser
+              Lernangebot für dich weiter zu verbessern.
+            </p>
+            <p className="serlo-p mt-6 text-2xl font-bold">
+              Bekommst du zu Hause Hilfe, wenn du beim Lernen nicht
+              weiterkommst?
+            </p>
+
+            <p className="flex justify-around">{answers}</p>
+
+            <p className="mb-8 mt-8">
+              <button
+                className="underline"
                 onClick={() => {
-                  submitEvent('click-popup-' + group)
-                  setPopupClicked(true)
+                  handleModalInput('noStudent')
                 }}
               >
-                Jetzt ausprobieren!
-              </a>
+                Ich bin keine Schüler*in
+              </button>
             </p>
-          </div>
-        </div>
-      )}
-      {button && (
-        <div className="pointer-events-none fixed bottom-6 left-0 right-0 z-[200] flex justify-center">
-          <div className="pointer-events-auto">
-            <a
-              className="serlo-button-green"
-              target="_blank"
-              href={`https://frontend-git-poc-remix-serlo.vercel.app/entity/repository/add-revision/${entityId}`}
-              rel="noreferrer"
-              onClick={() => {
-                submitEvent('click-button-' + group)
-              }}
-            >
-              <FaIcon icon={faPencil} className="mr-2" />
-              {group === 'a' && <>Öffne den Editor zum Ausprobieren</>}
-              {group === 'b' && <>Artikel für Lerngruppe anpassen und teilen</>}
-            </a>
-            <button
-              title="Banner verstecken"
-              onClick={() => {
-                const result = confirm('Nicht mehr anzeigen?')
-                if (result) {
-                  setButton(false)
-                  submitEvent('exit-button-' + group)
-                  Cookies.remove('serlo-mitmach-woche-show-button')
-                }
-              }}
-              className="serlo-button-blue-transparent ml-5 h-8 w-8 bg-[rgba(0,0,0,0.05)] text-gray-600"
-            >
-              <FaIcon icon={faTimes} />
-            </button>
           </div>
         </div>
       )}
@@ -246,20 +205,12 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
 
   function triggerPopup() {
     // pop-up already visible
-    if (popup) {
-      return
-    }
-
-    // only for article
-    if (
-      page.kind !== 'single-entity' ||
-      page.entityData.typename !== UuidType.Article
-    ) {
+    if (survey) {
       return
     }
 
     // pop-up already shown - but only for production
-    if (Cookies.get('serlo-mitmach-woche-popup-shown')) {
+    if (Cookies.get('serlo-survey-beta-123-shown')) {
       return
     }
 
@@ -267,6 +218,9 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
     if (lang !== Instance.De) {
       return
     }
+
+    const startDate = new Date('2023-07-22T00:00:00+02:00')
+    const endDate = new Date('2023-07-24T00:00:00+02:00')
 
     // pop-up will vanish after survey run
     if (Date.now() > endDate.getTime()) {
@@ -280,51 +234,29 @@ export function EntityBase({ children, page, entityId }: EntityBaseProps) {
       }
     }
 
-    setPopup(true)
-    submitEvent('show-popup-' + Cookies.get('serlo-mitmach-woche-group')!)
+    if (isProduction) {
+      Cookies.set('serlo-survey-beta-123-shown', '1', {
+        expires: 7,
+        sameSite: 'Lax',
+      })
+    }
+
+    setSurvey(true)
+    submitEvent('show')
+    document.addEventListener('keydown', handler)
   }
 
-  function triggerButton() {
-    // in staging, popup is always shown
-    if (!isProduction) {
-      return
-    }
-
-    // only for article
-    if (
-      page.kind !== 'single-entity' ||
-      page.entityData.typename !== UuidType.Article
-    ) {
-      return
-    }
-
-    // only show button if requested
-    if (!Cookies.get('serlo-mitmach-woche-show-button')) {
-      return
-    }
-
-    setButton(true)
-    submitEvent('show-button-' + Cookies.get('serlo-mitmach-woche-group')!)
-  }
-
-  function decideAB() {
-    // always shuffle in preview
-    if (!Cookies.get('serlo-mitmach-woche-group') || !isProduction) {
-      Cookies.set(
-        'serlo-mitmach-woche-group',
-        Math.random() < 0.5 ? 'a' : 'b',
-        {
-          expires: isProduction ? 8 : undefined,
-          sameSite: 'Lax',
-        }
-      )
-    }
-    setGroup(Cookies.get('serlo-mitmach-woche-group') || 'a')
+  function handleModalInput(
+    event: 'exit' | 'yes' | 'no' | 'rarely' | 'noStudent'
+  ) {
+    submitEvent(event)
+    setSurvey(false)
+    document.removeEventListener('keydown', handler)
   }
 
   function submitEvent(event: string) {
     void (async () => {
-      await fetch('/api/frontend/mitmach-woche', {
+      await fetch('/api/frontend/survey-submission', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

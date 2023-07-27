@@ -8,7 +8,7 @@ type HandlerType = 'login' | 'logout' | 'consent'
 
 const queries: Record<HandlerType, string> = {
   login: gql`
-    mutation ($input: OauthAcceptInput!) {
+    mutation oauthLogin($input: OauthAcceptInput!) {
       oauth {
         acceptLogin(input: $input) {
           redirectUri
@@ -17,7 +17,7 @@ const queries: Record<HandlerType, string> = {
     }
   `,
   consent: gql`
-    mutation ($input: OauthAcceptInput!) {
+    mutation oauthConsent($input: OauthAcceptInput!) {
       oauth {
         acceptConsent(input: $input) {
           redirectUri
@@ -26,7 +26,7 @@ const queries: Record<HandlerType, string> = {
     }
   `,
   logout: gql`
-    mutation ($challenge: String!) {
+    mutation oauthLogout($challenge: String!) {
       oauth {
         acceptLogout(challenge: $challenge) {
           redirectUri

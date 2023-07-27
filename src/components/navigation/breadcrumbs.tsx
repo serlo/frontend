@@ -37,7 +37,7 @@ export function Breadcrumbs({
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
     const withRightArrow = tw`
       serlo-button mb-1 mr-5 py-0.5 font-normal
-      after:absolute after:ml-3 after:text-gray-300 after:special-content-gt 
+      after:absolute after:ml-3 after:text-gray-300 after:content-['>'] 
     `
 
     if (bcEntry.ellipsis) {
@@ -75,9 +75,9 @@ export function Breadcrumbs({
               `}
               href={bcEntry.url ?? undefined}
             >
-              <span className="pt-0.25 pr-1 sm:hidden">{renderIcon()}</span>
+              <span className="pr-1 pt-0.25 sm:hidden">{renderIcon()}</span>
               {!isTaxonomy && (
-                <span className="hidden pt-0.25 pr-1 text-base sm:inline">
+                <span className="hidden pr-1 pt-0.25 text-base sm:inline">
                   {renderIcon()}
                 </span>
               )}

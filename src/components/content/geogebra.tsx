@@ -1,14 +1,16 @@
 import { PrivacyWrapper } from './privacy-wrapper'
-import { tw } from '@/helper/tw'
 import { ExternalProvider } from '@/helper/use-consent'
+import {
+  GeogebraRenderer,
+  parseId,
+} from '@/serlo-editor/plugins/geogebra/renderer'
 
 export interface GeogebraProps {
   id: string
 }
 
 export function Geogebra({ id }: GeogebraProps) {
-  const appletId = id.replace('https://www.geogebra.org/m/', '')
-  const url = 'https://www.geogebra.org/material/iframe/id/' + appletId
+  const { url } = parseId(id)
   return (
     <>
       <PrivacyWrapper
@@ -17,17 +19,7 @@ export function Geogebra({ id }: GeogebraProps) {
         embedUrl={url}
         className="print:hidden"
       >
-        <div className="block h-0 overflow-hidden p-0">
-          <iframe
-            className={tw`
-              absolute top-0 left-0 z-10 h-full
-              w-full border-none bg-black bg-opacity-30
-            `}
-            title={appletId}
-            scrolling="no"
-            src={url}
-          />
-        </div>
+        <GeogebraRenderer url={url} id={id} />
       </PrivacyWrapper>
       <p className="serlo-p hidden print:block">[{url}]</p>
     </>

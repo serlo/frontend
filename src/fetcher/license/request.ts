@@ -1,11 +1,11 @@
 import { request } from 'graphql-request'
 
+import { licenseDetailsQuery } from './query'
 import { convertState } from '../convert-state'
 import {
   LicenseDetailsQuery,
   LicenseDetailsQueryVariables,
 } from '../graphql-types/operations'
-import { licenseDetailsQuery } from './query'
 import { endpoint } from '@/api/endpoint'
 import { LicenseDetailPage, PageNotFound } from '@/data-types'
 
