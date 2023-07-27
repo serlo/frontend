@@ -36,7 +36,6 @@ export function DocumentEditor({
   hasToolbar,
 }: DocumentEditorProps) {
   const [hasHover, setHasHover] = useState(false)
-
   const editorStrings = useEditorStrings()
 
   const shouldShowSettings = showSettings()
