@@ -6,7 +6,7 @@ import { PageTeamRenderer } from './renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const TeamDataDecoder = t.array(
@@ -57,9 +57,8 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
 
     return (
       <PluginToolbar
-        pluginId={id}
         pluginType={EditorPluginType.PageTeam}
-        pluginControls={<DefaultControls pluginId={id} />}
+        pluginControls={<PluginDefaultTools pluginId={id} />}
         pluginSettings={renderDataImportButton(buttonClassName)}
       />
     )
