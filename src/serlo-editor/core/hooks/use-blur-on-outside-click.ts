@@ -11,7 +11,8 @@ export function useBlurOnOutsideClick(
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    //
+    // If neither the provided wrapper element nor its children were clicked,
+    // reset the internal editor focus state
     function handleClickOutside(event: MouseEvent) {
       if (
         editorWrapperRef.current &&
