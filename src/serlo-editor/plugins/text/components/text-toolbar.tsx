@@ -3,7 +3,7 @@ import { Editor as SlateEditor } from 'slate'
 
 import { TextEditorConfig } from '../types'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
 import { ControlButton } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -26,7 +26,7 @@ export function TextToolbar({
   if (config.isInlineChildEditor) {
     if (!containerRef || !containerRef.current) return null
     const target = containerRef.current
-      .closest('.document-editor-container')
+      .closest('.plugin-wrapper-container')
       ?.querySelector('.toolbar-controls-target')
     if (!target) return null
 
@@ -38,14 +38,13 @@ export function TextToolbar({
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Text}
       contentControls={
         <PluginToolbarTextControls controls={toolbarControls} editor={editor} />
       }
       pluginControls={
         config.isInlineChildEditor ? undefined : (
-          <DefaultControls pluginId={id} />
+          <PluginDefaultTools pluginId={id} />
         )
       }
     />

@@ -47,7 +47,6 @@ export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
   const dispatch = useAppDispatch()
-  const focusTree = useAppSelector(selectFocusTree)
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
     focused ||
@@ -66,8 +65,14 @@ export function EquationsEditor(props: EquationsProps) {
   const gridFocus = useGridFocus({
     rows: state.steps.length,
     columns: 4,
-    focusNext: () => dispatch(focusNext(focusTree)),
-    focusPrevious: () => dispatch(focusPrevious(focusTree)),
+    focusNext: () => {
+      const focusTree = selectFocusTree(store.getState())
+      dispatch(focusNext(focusTree))
+    },
+    focusPrevious: () => {
+      const focusTree = selectFocusTree(store.getState())
+      dispatch(focusPrevious(focusTree))
+    },
     transformationTarget,
     onFocusChanged: (state) => {
       if (state === 'firstExplanation') {
@@ -102,7 +107,7 @@ export function EquationsEditor(props: EquationsProps) {
             store.getState(),
             state.firstExplanation.id
           ) ? null : (
-            <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
+            <div className="serlo-p mb-0 [&_.plugin-wrapper-container]:!mb-0">
               {state.firstExplanation.render()}
             </div>
           )
@@ -126,7 +131,7 @@ export function EquationsEditor(props: EquationsProps) {
           store.getState(),
           explanation.id
         ) ? null : (
-          <div className="serlo-p mb-0 [&_.document-editor-container]:!mb-0">
+          <div className="serlo-p mb-0 [&_.plugin-wrapper-container]:!mb-0">
             {explanation.render()}
           </div>
         ),

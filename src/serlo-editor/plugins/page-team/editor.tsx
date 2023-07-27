@@ -47,7 +47,6 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
       <div>
         {noData ? renderDataImport() : <PageTeamRenderer data={rendererData} />}
       </div>
-      {props.renderIntoSettings(renderDataImport())}
     </>
   )
 

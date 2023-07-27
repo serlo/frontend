@@ -41,13 +41,10 @@ export function InlineInput(props: {
       }}
     >
       <Editable
-        className="focus:outline-none"
         placeholder={placeholder}
         onFocus={() => {
           setTimeout(() => {
-            if (typeof props.onFocus === 'function') {
-              props.onFocus()
-            }
+            if (props.onFocus) props.onFocus()
           })
         }}
       />

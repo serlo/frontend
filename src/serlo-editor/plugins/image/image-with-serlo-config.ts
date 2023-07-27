@@ -5,6 +5,7 @@ import { createAuthAwareGraphqlFetch } from '@/api/graphql-fetch'
 import { getAuthPayloadFromSession } from '@/auth/auth-provider'
 import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth-session'
 import { MediaType, MediaUploadQuery } from '@/fetcher/graphql-types/operations'
+import { showToastNotice } from '@/helper/show-toast-notice'
 import { LoadedFile, UploadValidator } from '@/serlo-editor/plugin'
 
 const maxFileSize = 2 * 1024 * 1024
@@ -138,7 +139,7 @@ function handleErrors(errors: FileErrorCode[]): FileError[] {
 }
 
 function onError(errors: FileError[]): void {
-  alert(errors.map((error) => error.message).join('\n'))
+  showToastNotice(errors.map((error) => error.message).join('\n'), 'warning')
 }
 
 function errorCodeToMessage(error: FileErrorCode) {

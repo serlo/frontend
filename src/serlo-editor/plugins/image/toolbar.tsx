@@ -2,12 +2,13 @@ import { faCog } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
 import { ImageProps } from '.'
-import { SettingsControls } from './controls'
+import { SettingsModalControls } from './controls/settings-modal-controls'
+import { UploadButton } from './controls/upload-button'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const ImageToolbar = (
@@ -22,9 +23,7 @@ export const ImageToolbar = (
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Image}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <>
           <button
@@ -44,13 +43,15 @@ export const ImageToolbar = (
               </h3>
 
               <div className="mx-side mb-3">
-                <SettingsControls {...props} />
+                <SettingsModalControls state={props.state} />
               </div>
             </ModalWithCloseButton>
           ) : null}
+
+          <UploadButton {...props} />
         </>
       }
-      pluginControls={<DefaultControls pluginId={id} />}
+      pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )
 }

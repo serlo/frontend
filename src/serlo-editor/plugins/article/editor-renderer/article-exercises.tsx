@@ -24,14 +24,16 @@ export function ArticleExercises({
       {exercises.map((exercise, index) => (
         <Fragment key={exercise.id}>
           {exercise.render({
-            renderToolbar: editable ? () => renderToolbar(index) : undefined,
+            renderSideToolbar: editable
+              ? () => renderSideToolbar(index)
+              : undefined,
           })}
         </Fragment>
       ))}
     </>
   )
 
-  function renderToolbar(index: number) {
+  function renderSideToolbar(index: number) {
     const buttonClass = 'serlo-button-editor-secondary mb-2 mr-2 w-8'
     return (
       <>

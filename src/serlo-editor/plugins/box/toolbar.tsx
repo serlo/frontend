@@ -1,5 +1,3 @@
-import { Editor } from 'slate'
-
 import { BoxProps } from '.'
 import { BoxType, types } from './renderer'
 import { useInstanceData } from '@/contexts/instance-context'
@@ -7,32 +5,16 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
-import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'
-import { ControlButton } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-interface BoxToolbarProps {
-  controls: ControlButton[]
-  editor: Editor
-}
-
-export const BoxToolbar = ({
-  id,
-  state,
-  controls,
-  editor,
-}: BoxProps & BoxToolbarProps) => {
+export const BoxToolbar = ({ id, state }: BoxProps) => {
   const boxStrings = useEditorStrings().plugins.box
   const { strings } = useInstanceData()
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Box}
-      contentControls={
-        <PluginToolbarTextControls controls={controls} editor={editor} />
-      }
       pluginSettings={
         <>
           <div className="serlo-tooltip-trigger">
@@ -50,11 +32,7 @@ export const BoxToolbar = ({
             >
               {types.map((type) => {
                 return (
-                  <option
-                    key={type}
-                    value={type}
-                    // className="capitalize"
-                  >
+                  <option key={type} value={type}>
                     {strings.content.boxTypes[type as BoxType]}
                   </option>
                 )
@@ -63,7 +41,7 @@ export const BoxToolbar = ({
           </div>
         </>
       }
-      pluginControls={<DefaultControls pluginId={id} />}
+      pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )
 }

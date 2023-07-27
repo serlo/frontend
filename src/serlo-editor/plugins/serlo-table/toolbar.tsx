@@ -4,7 +4,7 @@ import { TableType } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const SerloTableToolbar = ({ id, state }: SerloTableProps) => {
@@ -14,9 +14,7 @@ export const SerloTableToolbar = ({ id, state }: SerloTableProps) => {
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.SerloTable}
-      contentControls={<div className="toolbar-controls-target" />}
       pluginSettings={
         <select
           className={tw`
@@ -38,7 +36,7 @@ export const SerloTableToolbar = ({ id, state }: SerloTableProps) => {
           </option>
         </select>
       }
-      pluginControls={<DefaultControls pluginId={id} />}
+      pluginControls={<PluginDefaultTools pluginId={id} />}
       className="-mt-1.5"
     />
   )

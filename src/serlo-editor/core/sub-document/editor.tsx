@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import { createPortal } from 'react-dom'
-import { HotKeys, IgnoreKeys } from 'react-hotkeys'
+import { HotKeys } from 'react-hotkeys'
 
 import { SubDocumentProps } from '.'
 import {
@@ -25,7 +25,7 @@ import {
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { usePlugin, usePlugins } from '../contexts/plugins-context'
-import { DocumentEditor } from '@/serlo-editor/editor-ui/document-editor'
+import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
 import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
 
 const hotKeysKeyMap = {
@@ -41,8 +41,7 @@ type HotKeysHandlers = {
 }
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSettings, setHasSettings] = useState(false)
-  const [hasToolbar, setHasToolbar] = useState(false)
+  const [hasSideToolbar, setHasSideToolbar] = useState(false)
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
   const isDocumentEmpty = useAppSelector((state) =>
@@ -56,10 +55,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const settingsRef = useRef<HTMLDivElement>(
-    window.document.createElement('div')
-  )
-  const toolbarRef = useRef<HTMLDivElement>(
+  const sideToolbarRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
   )
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
@@ -160,40 +156,30 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     (e: React.MouseEvent<HTMLDivElement>) => {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
-
       if (!focused && target === containerRef.current) {
-        dispatch(focus(id))
+        if (document?.plugin === 'rows') {
+          const parent = selectParent(store.getState(), id)
+          if (parent) dispatch(focus(parent.id))
+        } else {
+          dispatch(focus(id))
+        }
       }
     },
-    [focused, id, dispatch]
+    [focused, id, dispatch, document]
   )
 
-  const renderIntoSettings = useCallback(
+  const renderIntoSideToolbar = useCallback(
     (children: React.ReactNode) => {
       return (
-        <RenderIntoSettings
-          setHasSettings={setHasSettings}
-          settingsRef={settingsRef}
+        <RenderIntoSideToolbar
+          setHasSideToolbar={setHasSideToolbar}
+          sideToolbarRef={sideToolbarRef}
         >
           {children}
-        </RenderIntoSettings>
+        </RenderIntoSideToolbar>
       )
     },
-    [settingsRef]
-  )
-
-  const renderIntoToolbar = useCallback(
-    (children: React.ReactNode) => {
-      return (
-        <RenderIntoToolbar
-          setHasToolbar={setHasToolbar}
-          toolbarRef={toolbarRef}
-        >
-          {children}
-        </RenderIntoToolbar>
-      )
-    },
-    [toolbarRef]
+    [sideToolbarRef]
   )
 
   return useMemo(() => {
@@ -253,19 +239,15 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           data-document
           tabIndex={-1}
         >
-          <DocumentEditor
-            hasSettings={hasSettings}
-            hasToolbar={hasToolbar}
+          <SideToolbarAndWrapper
+            hasSideToolbar={hasSideToolbar}
             focused={focused}
-            renderSettings={pluginProps && pluginProps.renderSettings}
-            renderToolbar={pluginProps && pluginProps.renderToolbar}
+            renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
             isInlineChildEditor={isInlineChildEditor}
-            settingsRef={settingsRef}
-            toolbarRef={toolbarRef}
+            sideToolbarRef={sideToolbarRef}
           >
             <plugin.Component
-              renderIntoSettings={renderIntoSettings}
-              renderIntoToolbar={renderIntoToolbar}
+              renderIntoSideToolbar={renderIntoSideToolbar}
               containerRef={containerRef}
               id={id}
               editable
@@ -275,7 +257,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
               state={state}
               autofocusRef={autofocusRef}
             />
-          </DocumentEditor>
+          </SideToolbarAndWrapper>
         </div>
       </HotKeys>
     )
@@ -285,45 +267,27 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
-    hasSettings,
-    hasToolbar,
+    hasSideToolbar,
     focused,
-    renderIntoSettings,
-    renderIntoToolbar,
+    renderIntoSideToolbar,
     id,
     hotKeysHandlers,
     dispatch,
   ])
 }
 
-function RenderIntoSettings({
+function RenderIntoSideToolbar({
   children,
-  setHasSettings,
-  settingsRef,
+  setHasSideToolbar,
+  sideToolbarRef,
 }: {
   children: React.ReactNode
-  setHasSettings: (value: boolean) => void
-  settingsRef: React.MutableRefObject<HTMLDivElement>
+  setHasSideToolbar: (value: boolean) => void
+  sideToolbarRef: React.MutableRefObject<HTMLDivElement>
 }) {
   useEffect(() => {
-    setHasSettings(true)
+    setHasSideToolbar(true)
   })
-  if (!settingsRef.current) return null
-  return createPortal(<IgnoreKeys>{children}</IgnoreKeys>, settingsRef.current)
-}
-
-function RenderIntoToolbar({
-  children,
-  setHasToolbar,
-  toolbarRef,
-}: {
-  children: React.ReactNode
-  setHasToolbar: (value: boolean) => void
-  toolbarRef: React.MutableRefObject<HTMLDivElement>
-}) {
-  useEffect(() => {
-    setHasToolbar(true)
-  })
-  if (!toolbarRef.current) return null
-  return createPortal(children, toolbarRef.current)
+  if (!sideToolbarRef.current) return null
+  return createPortal(children, sideToolbarRef.current)
 }

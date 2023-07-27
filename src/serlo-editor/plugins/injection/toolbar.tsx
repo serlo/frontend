@@ -7,7 +7,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const InjectionToolbar = ({
@@ -23,7 +23,6 @@ export const InjectionToolbar = ({
 
   return (
     <PluginToolbar
-      pluginId={id}
       pluginType={EditorPluginType.Injection}
       pluginSettings={
         <>
@@ -61,7 +60,7 @@ export const InjectionToolbar = ({
           ) : null}
         </>
       }
-      pluginControls={<DefaultControls pluginId={id} />}
+      pluginControls={<PluginDefaultTools pluginId={id} />}
     />
   )
 }

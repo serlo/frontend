@@ -3,9 +3,6 @@ import { useEffect, useState } from 'react'
 import { StateType } from './internal-plugin-state'
 import { asyncScalar } from './scalar'
 
-/**
- * @param defaultState - The default state
- */
 export function upload<T>(defaultState: T): UploadStateType<T> {
   const state = asyncScalar<T, TempFile>(defaultState, isTempFile)
   return {
@@ -91,7 +88,7 @@ export function usePendingFilesUploader<T>(
       fileState.value.pending &&
       !fileState.value.uploadHandled
     ) {
-      fileState.value.uploadHandled = true
+      fileState.set({ ...fileState.value, uploadHandled: true })
 
       void fileState
         .upload(fileState.value.pending, uploadHandler)

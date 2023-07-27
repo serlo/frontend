@@ -732,8 +732,7 @@ export const loggedInData = {
         image: {
           title: 'Image',
           description: 'Upload images.',
-          noImagePasteInLists: 'Pasting images inside of lists is not allowed.',
-          upload: 'Upload…',
+          upload: 'Upload',
           imageUrl: 'Image URL',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
@@ -796,6 +795,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
+          copyAnchorLink: "Copy link to this element",
           remove: 'Remove',
           close: 'Close',
           dragElement: 'Drag the element within the document',
@@ -835,6 +835,7 @@ export const loggedInData = {
           heading: 'Heading',
           headings: 'Headings',
           link: 'Link (%ctrlOrCmd% + K)',
+          noElementPasteInLists: 'Sorry, pasting elements inside of lists is not allowed.',
           linkOverlay: {
             placeholder: 'https://… or /1234',
             inputLabel: 'Paste or type a link',
@@ -862,6 +863,7 @@ export const loggedInData = {
             formula: '[formula]',
             visual: 'visual',
             latex: 'LaTeX',
+            latexEditorTitle: 'LaTeX editor',
             onlyLatex: 'Only LaTeX editor available',
             shortcuts: 'Shortcuts',
             fraction: 'Fraction',
@@ -883,7 +885,6 @@ export const loggedInData = {
           titlePlaceholder: 'Title',
           url: 'URL',
           seoTitle: 'Title for search engines',
-          noVideoPasteInLists: 'Pasting videos inside of lists is not allowed.',
         },
       },
       templatePlugins: {
@@ -1042,6 +1043,7 @@ export const loggedInData = {
         author: 'Author',
         createdAt: 'when?',
         ready: 'Ready to save?',
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.',
       },
       taxonomy: {
         title: 'Title',

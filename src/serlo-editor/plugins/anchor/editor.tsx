@@ -7,7 +7,7 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
-import { DefaultControls } from '@/serlo-editor/editor-ui/plugin-toolbar/dropdown/default-controls'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const AnchorEditor = (props: AnchorProps) => {
@@ -19,9 +19,8 @@ export const AnchorEditor = (props: AnchorProps) => {
     <>
       {focused ? (
         <PluginToolbar
-          pluginId={id}
           pluginType={EditorPluginType.Anchor}
-          pluginControls={<DefaultControls pluginId={id} />}
+          pluginControls={<PluginDefaultTools pluginId={id} />}
           pluginSettings={
             <label className="serlo-tooltip-trigger">
               <EditorTooltip text={editorStrings.plugins.anchor.anchorId} />

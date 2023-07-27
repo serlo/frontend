@@ -55,7 +55,7 @@ export function TextEditor(props: TextEditorProps) {
   const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
-  const pluginStrings = useEditorStrings().plugins
+  const textStrings = useEditorStrings().plugins.text
 
   const plugins = usePlugins()
 
@@ -80,47 +80,48 @@ export function TextEditor(props: TextEditorProps) {
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
-    // Get the current text value of the editor
-    const text = Node.string(editor)
-
-    // If the editor is not focused, remove the suggestions search
-    // and exit the useEffect hook
-    if (focused === false) {
-      if (text.startsWith('/')) {
-        editor.deleteBackward('line')
-      }
-      return
-    }
-
-    // If the first child of the editor is not a paragraph, do nothing
-    const isFirstChildParagraph =
-      'type' in editor.children[0] && editor.children[0].type === 'p'
-    if (!isFirstChildParagraph) return
-
-    // If the editor is empty, set the cursor at the start
-    if (text === '') {
-      Transforms.select(editor, { offset: 0, path: [0, 0] })
-    }
-
-    // If the editor only has a forward slash, set the cursor
-    // after it, so that the user can type to filter suggestions
-    if (text === '/') {
-      Transforms.select(editor, { offset: 1, path: [0, 0] })
-    }
-
     // ReactEditor.focus(editor) does not work without being wrapped in setTimeout
     // See: https://stackoverflow.com/a/61353519
     const timeout = setTimeout(() => {
+      // Get the current text value of the editor
+      const text = Node.string(editor)
+
+      // If the editor is not focused, remove the suggestions search
+      // and exit the useEffect hook
+      if (focused === false) {
+        if (text.startsWith('/')) {
+          editor.deleteBackward('line')
+        }
+        return
+      }
+
       try {
-        ReactEditor.focus(editor)
+        ReactEditor.focus(editor) // Focus this text editor
       } catch (error) {
-        // Focusing did not work. Continue anyway.
+        // Focusing did not work. Happens sometimes. Ignore and skip focusing this time.
         // eslint-disable-next-line no-console
         console.warn(
           'Failed to focus text editor. Continued execution. Details:'
         )
         // eslint-disable-next-line no-console
         console.warn(error)
+        return
+      }
+
+      // If the first child of the editor is not a paragraph, do nothing
+      const isFirstChildParagraph =
+        'type' in editor.children[0] && editor.children[0].type === 'p'
+      if (!isFirstChildParagraph) return
+
+      // If the editor is empty, set the cursor at the start
+      if (text === '') {
+        Transforms.select(editor, { offset: 0, path: [0, 0] })
+      }
+
+      // If the editor only has a forward slash, set the cursor
+      // after it, so that the user can type to filter suggestions
+      if (text === '/') {
+        Transforms.select(editor, { offset: 1, path: [0, 0] })
       }
     })
     return () => {
@@ -279,6 +280,7 @@ export function TextEditor(props: TextEditorProps) {
     ]
   )
 
+  // TODO: put this and other functions into helper files after toolbar and hotkey PR
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
       const isListActive = isSelectionWithinList(editor)
@@ -294,16 +296,23 @@ export function TextEditor(props: TextEditorProps) {
 
       const parentPluginType = document.plugin
 
-      // Handle pasted images
       const files = Array.from(event.clipboardData.files)
-      if (files?.length > 0) {
-        const imagePluginState = getPluginByType(
+      const text = event.clipboardData.getData('text')
+
+      // Handle pasted images or image URLs
+      if (files?.length > 0 || text) {
+        const imagePlugin = getPluginByType(
           plugins,
           EditorPluginType.Image
-        )?.plugin.onFiles?.(files)
+        )?.plugin
+        if (!imagePlugin) return
+
+        const imagePluginState =
+          imagePlugin.onFiles?.(files) ?? imagePlugin.onText?.(text)
+
         if (imagePluginState !== undefined) {
           if (isListActive) {
-            showToastNotice(pluginStrings.image.noImagePasteInLists, 'warning')
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
             return
           }
 
@@ -312,9 +321,8 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      // Handle pasted video URLs
-      const text = event.clipboardData.getData('text')
       if (text) {
+        // Handle pasted video URLs
         const videoPluginState = getPluginByType(
           plugins,
           EditorPluginType.Video
@@ -323,11 +331,29 @@ export function TextEditor(props: TextEditorProps) {
           event.preventDefault()
 
           if (isListActive) {
-            showToastNotice(pluginStrings.video.noVideoPasteInLists, 'warning')
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
             return
           }
 
           insertPlugin(EditorPluginType.Video, videoPluginState)
+          return
+        }
+
+        // Handle pasted geogebra URLs
+        const geogebraPluginState = getPluginByType(
+          plugins,
+          EditorPluginType.Geogebra
+        )?.plugin.onText?.(text)
+
+        if (geogebraPluginState !== undefined) {
+          event.preventDefault()
+
+          if (isListActive) {
+            showToastNotice(textStrings.noElementPasteInLists, 'warning')
+            return
+          }
+
+          insertPlugin(EditorPluginType.Geogebra, geogebraPluginState)
           return
         }
       }
@@ -373,7 +399,7 @@ export function TextEditor(props: TextEditorProps) {
         })
       }
     },
-    [dispatch, editor, id, pluginStrings, plugins]
+    [dispatch, editor, id, textStrings, plugins]
   )
 
   return (
@@ -394,7 +420,7 @@ export function TextEditor(props: TextEditorProps) {
       >
         <Editable
           readOnly={!editable}
-          placeholder={config.placeholder ?? pluginStrings.text.placeholder}
+          placeholder={config.placeholder ?? textStrings.placeholder}
           onKeyDown={handleEditableKeyDown}
           onPaste={handleEditablePaste}
           renderElement={handleRenderElement}
@@ -403,7 +429,7 @@ export function TextEditor(props: TextEditorProps) {
               <TextLeafRenderer {...props} />
             </span>
           )}
-          className="focus:outline-none [&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
         />
         {editable && focused && (
           <LinkControls

@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { BoxProps } from '.'
 import {
   BoxType,
-  Renderer,
+  BoxRenderer,
   boxTypeStyle,
   defaultStyle,
   types,
@@ -14,8 +14,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
-import { useInlineTextEditor } from '@/serlo-editor/plugins/text/hooks/use-inline-text-editor'
-import { useAppSelector } from '@/serlo-editor/store'
+import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 const titleFormattingOptions = [
   TextEditorFormattingOption.math,
@@ -23,6 +22,7 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
+  const { focused } = props
   const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
@@ -38,10 +38,11 @@ export function BoxEditor(props: BoxProps) {
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
 
-  const titleEditor = useInlineTextEditor({
-    id: title.id,
-    formattingOptions: titleFormattingOptions,
-  })
+  const isTitleFocused = useAppSelector((state) =>
+    selectIsFocused(state, title.id)
+  )
+
+  const hasFocus = focused || isTitleFocused
 
   if (hasNoType) {
     return (
@@ -61,20 +62,17 @@ export function BoxEditor(props: BoxProps) {
 
   return (
     <>
-      {renderPluginToolbar()}
-      <Renderer
+      {hasFocus ? <BoxToolbar {...props} /> : null}
+
+      <BoxRenderer
         boxType={typedValue}
         title={
           <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
             {title.render({
               config: {
                 placeholder: editorStrings.plugins.box.titlePlaceholder,
-                controls: {
-                  editor: titleEditor.editor,
-                  textFormattingOptions: titleEditor.textFormattingOptions,
-                  isChanged: titleEditor.isChanged,
-                  onChange: titleEditor.setIsChanged,
-                },
+                formattingOptions: titleFormattingOptions,
+                isInlineChildEditor: true,
               },
             })}
           </div>
@@ -82,22 +80,10 @@ export function BoxEditor(props: BoxProps) {
         anchorId={anchorId.value}
       >
         <div className="-ml-3 px-side">{content.render()}</div>
-      </Renderer>
+      </BoxRenderer>
       {renderWarning()}
     </>
   )
-
-  function renderPluginToolbar() {
-    if (!props.focused && !titleEditor.isFocused) return null
-
-    return (
-      <BoxToolbar
-        {...props}
-        controls={titleEditor.toolbarControls}
-        editor={titleEditor.editor}
-      />
-    )
-  }
 
   function renderSettingsLis() {
     return types.map((boxType) => {
