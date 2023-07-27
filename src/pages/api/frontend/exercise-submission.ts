@@ -20,9 +20,10 @@ export default async function handler(
       typeof entityId === 'number' &&
       typeof revisionId === 'number' &&
       typeof type === 'string' &&
-      ['sc', 'mc', 'input', 'h5p', 'text'].includes(type) &&
+      ['sc', 'mc', 'input', 'h5p', 'text', 'ival'].includes(type) &&
       typeof result === 'string' &&
-      ['correct', 'wrong', 'open'].includes(result) &&
+      (['correct', 'wrong', 'open'].includes(result) || type === 'ival') &&
+      result.length <= 8 &&
       typeof sessionId === 'string'
     ) {
       if (path.length < 1024 && sessionId.length < 64) {
