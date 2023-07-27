@@ -83,7 +83,7 @@ export function InnerDocument({
   const editableContextValue = useMemo(() => editable, [editable])
 
   useHotkeys(
-    ['ctrl+z, command+z'],
+    ['ctrl+z, meta+z'],
     (event, handler) => {
       // There is a bug that when ctrl+y keys are pressed, this ctrl+z event
       // handler gets fired resulting in a undo & redo => no state changes
@@ -108,7 +108,7 @@ export function InnerDocument({
   )
 
   useHotkeys(
-    ['ctrl+y, command+y'],
+    ['ctrl+y, meta+y'],
     (event) => {
       // There is a bug that when ctrl+z keys are pressed, this ctrl+y event
       // handler gets fired resulting in a undo & redo => no state changes
@@ -129,7 +129,7 @@ export function InnerDocument({
   )
 
   useHotkeys(
-    'ctrl+shift+z, command+shift+z',
+    'ctrl+shift+z, meta+shift+z',
     (event) => {
       event.preventDefault()
       void dispatch(redo())
