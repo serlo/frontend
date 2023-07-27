@@ -498,7 +498,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   return (
-    <div>
+    <>
       <Slate
         editor={editor}
         value={state.value.value}
@@ -539,6 +539,6 @@ export function TextEditor(props: TextEditorProps) {
           <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
-    </div>
+    </>
   )
 }

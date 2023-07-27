@@ -18,7 +18,11 @@ import {
 import { usePlugins } from '../contexts/plugins-context'
 import { EditorPlugin } from '@/serlo-editor/plugin'
 
-export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
+export const useEnableEditorHotkeys = (
+  id: string,
+  plugin: EditorPlugin,
+  isFocused: boolean
+) => {
   const dispatch = useAppDispatch()
   const plugins = usePlugins()
   const isDocumentEmpty = useAppSelector((state) =>
@@ -58,6 +62,7 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
       enableOnContentEditable: true,
       enableOnFormTags: true,
       scopes: ['root-up-down-enter'],
+      enabled: isFocused,
     }
   )
 
@@ -72,12 +77,13 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
       enableOnContentEditable: true,
       enableOnFormTags: true,
       scopes: ['root-up-down-enter'],
+      enabled: isFocused,
     }
   )
 
   useHotkeys(
     Key.Enter,
-    (e) =>
+    (e) => {
       handleKeyDown(e, () => {
         const parent = selectParent(store.getState(), id)
         if (!parent) return
@@ -88,11 +94,13 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
             plugins,
           })
         )
-      }),
+      })
+    },
     {
       enableOnContentEditable: true,
       enableOnFormTags: false,
       scopes: ['root-up-down-enter'],
+      enabled: isFocused,
     }
   )
 
@@ -118,5 +126,6 @@ export const useEnableEditorHotkeys = (id: string, plugin: EditorPlugin) => {
       enableOnContentEditable: true,
       enableOnFormTags: false,
       scopes: ['global'],
+      enabled: isFocused,
     }
 }

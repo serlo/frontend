@@ -26,7 +26,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const focused = useAppSelector((state) => selectIsFocused(state, id))
   const plugins = usePlugins()
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
-  useEnableEditorHotkeys(id, plugin)
+
+  useEnableEditorHotkeys(id, plugin, focused)
 
   const container = useRef<HTMLDivElement>(null)
   const settingsRef = useRef<HTMLDivElement>(
