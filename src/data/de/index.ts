@@ -658,7 +658,6 @@ export const loggedInData = {
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          noImagePasteInLists: "Einfügen von Bildern ist innerhalb von Listen nicht möglich.",
           upload: "Hochladen…",
           imageUrl: "Bild-URL",
           placeholderEmpty: 'https://example.com/image.png',
@@ -757,6 +756,7 @@ export const loggedInData = {
           heading: "Überschrift",
           headings: "Überschriften",
           link: 'Link (%ctrlOrCmd% + K)',
+          noElementPasteInLists: "Sorry,  Elemente einfügen klappt nicht in Listen.",
           linkOverlay: {
             placeholder: "Suchbegriff oder \"/1234\"",
             inputLabel: "Suche einen Inhalt oder füge einen Link ein",
@@ -803,8 +803,7 @@ export const loggedInData = {
           description: "Beschreibung",
           titlePlaceholder: "Titel",
           url: 'URL',
-          seoTitle: "Titel für Suchmaschinen",
-          noVideoPasteInLists: "Einfügen von Videos ist innerhalb von Listen nicht möglich."
+          seoTitle: "Titel für Suchmaschinen"
         }
       },
       templatePlugins: {
