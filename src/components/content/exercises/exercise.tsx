@@ -158,41 +158,56 @@ export function Exercise({ node, renderNested, path }: ExerciseProps) {
     if (!node.task.edtrState?.interactive) return null
 
     return (
-      <div className="my-4 ml-2 rounded-xl border border-fuchsia-400 p-2">
-        {!exerciseData.revisions.includes(node.context.revisionId) && (
-          <div className="mb-4 mt-2 rounded bg-red-300 px-3 py-1">
-            Warnung: Daten beziehen sich auf eine andere Revision als angezeigt.
+      <>
+        <div className="my-4 ml-2 rounded-xl border border-fuchsia-400 p-2">
+          {!exerciseData.revisions.includes(node.context.revisionId) && (
+            <div className="mb-4 mt-2 rounded bg-red-300 px-3 py-1">
+              Warnung: Daten beziehen sich auf eine andere Revision als
+              angezeigt.
+            </div>
+          )}
+          <div>
+            {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst
+            nach Versuchen / {entry.wrong} mal nicht gelöst
+          </div>
+          <div className="mt-2 flex h-2 w-full bg-gray-300">
+            <div
+              className="bg-green-500"
+              style={{
+                width: `${
+                  (entry.correct / exerciseData.interactiveCount) * 100
+                }%`,
+              }}
+            ></div>
+            <div
+              className="bg-yellow-500"
+              style={{
+                width: `${
+                  (entry.afterTrying / exerciseData.interactiveCount) * 100
+                }%`,
+              }}
+            ></div>
+            <div
+              className="bg-red-500"
+              style={{
+                width: `${
+                  (entry.wrong / exerciseData.interactiveCount) * 100
+                }%`,
+              }}
+            ></div>
+          </div>
+        </div>
+        {entry.ivals.length > 0 && (
+          <div className="mb-3 ml-4">
+            Eingaben:{' '}
+            {JSON.stringify(
+              entry.ivals.map((val) =>
+                val.length < 8 ? val : val.substring(0, 7) + ' …'
+              )
+            )}
           </div>
         )}
-        <div>
-          {entry.correct} mal sofort gelöst / {entry.afterTrying} mal löst nach
-          Versuchen / {entry.wrong} mal nicht gelöst
-        </div>
-        <div className="mt-2 flex h-2 w-full bg-gray-300">
-          <div
-            className="bg-green-500"
-            style={{
-              width: `${
-                (entry.correct / exerciseData.interactiveCount) * 100
-              }%`,
-            }}
-          ></div>
-          <div
-            className="bg-yellow-500"
-            style={{
-              width: `${
-                (entry.afterTrying / exerciseData.interactiveCount) * 100
-              }%`,
-            }}
-          ></div>
-          <div
-            className="bg-red-500"
-            style={{
-              width: `${(entry.wrong / exerciseData.interactiveCount) * 100}%`,
-            }}
-          ></div>
-        </div>
-      </div>
+      </>
     )
   }
 }

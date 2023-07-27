@@ -7,6 +7,7 @@ export interface ExerciseFolderStatsData {
       wrong: number
       afterTrying: number
       solutionOpen: number
+      ivals: string[]
     }
   }
   fullCount: number
