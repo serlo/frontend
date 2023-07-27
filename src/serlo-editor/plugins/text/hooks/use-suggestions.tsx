@@ -3,7 +3,6 @@ import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 import { Key } from 'ts-key-enum'
 
-import { AllowedChildPlugins } from '../../rows'
 import {
   EditorStrings,
   useEditorStrings,
@@ -14,6 +13,7 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
+import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -31,6 +31,11 @@ export interface SuggestionOption {
   icon?: JSX.Element
 }
 
+const hotkeyConfig = {
+  enableOnContentEditable: true,
+  scopes: ['global'],
+}
+
 export const useSuggestions = (args: useSuggestionsArgs) => {
   const dispatch = useAppDispatch()
   const [selected, setSelected] = useState(0)
@@ -43,10 +48,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allPlugins = useContext(PluginsContext)
     .filter(({ visible }) => visible)
     .map(({ type }) => type)
-  const allowed = useContext(AllowedChildPlugins)
+  const allowedPlugins = useContext(AllowedChildPlugins)
   const pluginsData = usePlugins()
 
-  const allOptions = (allowed ?? allPlugins).map((type) =>
+  const allOptions = (allowedPlugins ?? allPlugins).map((type) =>
     createOption(type, pluginsStrings, pluginsData)
   )
 
@@ -77,76 +82,39 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     options,
   }
 
-  useHotkeys<HTMLDivElement>(
-    [Key.ArrowUp, Key.ArrowDown],
-    (event) => {
-      if (!closure.current.showSuggestions) {
-        return
-      }
-
-      event.preventDefault()
-      event.stopPropagation()
-      if (event.key === Key.ArrowUp) {
-        handleSelectionChange('up')
-      } else if (event.key === Key.ArrowDown) {
-        handleSelectionChange('down')
-      }
-    },
-    {
-      enableOnContentEditable: true,
-      scopes: ['global'],
-    }
-  )
-
-  useHotkeys(
-    Key.Enter,
-    (event) => {
-      if (closure.current.showSuggestions) {
-        event.preventDefault()
-        handleSuggestionInsert()
-      }
-    },
-    { enableOnContentEditable: true, scopes: ['global'] }
-  )
-
-  useHotkeys(
-    Key.Escape,
-    (event) => {
-      // We delete the line with the slash and therefore, close the suggestions
-      // upon next render
-      if (closure.current.showSuggestions) {
-        event.preventDefault()
-        editor.deleteBackward('line')
-      }
-    },
-    { enableOnContentEditable: true, scopes: ['global'] }
-  )
-
   useEffect(() => {
     if (options.length < selected) {
       setSelected(0)
     }
   }, [options.length, selected])
 
-  function handleSelectionChange(direction: 'up' | 'down') {
-    if (closure.current.showSuggestions) {
-      setSelected((currentSelected) => {
-        const optionsCount = closure.current.options.length
-        if (optionsCount === 0) return 0
+  useHotkeys([Key.ArrowUp, Key.ArrowDown], handleSelectionChange, hotkeyConfig)
+  useHotkeys(Key.Enter, handleSuggestionInsert, hotkeyConfig)
+  useHotkeys(Key.Escape, handleSuggestionsMenuClose, hotkeyConfig)
 
-        const isFirstAndUpPressed = direction === 'up' && currentSelected === 0
-        const isLastAndDownPressed =
-          direction === 'down' && currentSelected === optionsCount - 1
-        if (isFirstAndUpPressed || isLastAndDownPressed) return currentSelected
+  function handleSelectionChange(event: KeyboardEvent) {
+    if (!closure.current.showSuggestions) return
 
-        const value = direction === 'up' ? -1 : 1
-        const selectedElementIndex = currentSelected + value
+    event.preventDefault()
+    event.stopPropagation()
 
-        scrollSuggestionIntoView(selectedElementIndex)
+    setSelected((currentSelected) => {
+      const optionsCount = closure.current.options.length
+      if (optionsCount === 0) return 0
 
-        return selectedElementIndex
-      })
-    }
+      const isFirstAndUpPressed =
+        event.key === Key.ArrowUp && currentSelected === 0
+      const isLastAndDownPressed =
+        event.key === Key.ArrowDown && currentSelected === optionsCount - 1
+      if (isFirstAndUpPressed || isLastAndDownPressed) return currentSelected
+
+      const value = event.key === Key.ArrowUp ? -1 : 1
+      const selectedElementIndex = currentSelected + value
+
+      scrollSuggestionIntoView(selectedElementIndex)
+
+      return selectedElementIndex
+    })
   }
 
   function scrollSuggestionIntoView(index: number) {
@@ -155,26 +123,39 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     selectedElement?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
   }
 
-  function handleSuggestionInsert() {
+  function handleSuggestionInsert(event: KeyboardEvent) {
+    if (!closure.current.showSuggestions) return
+
+    event.preventDefault()
+
     const option = closure.current.options[closure.current.selected]
+
     if (!option) return
+
     setTimeout(() => {
       insertPlugin(option.pluginType)
     })
   }
 
   function insertPlugin(pluginType: EditorPluginType | string) {
-    // If the text plugin is selected from the suggestions list,
-    // just clear the editor
+    // If the text plugin is selected from the suggestions list, clear the editor
     if (pluginType === EditorPluginType.Text) {
       editor.deleteBackward('line')
-      // in browsers other than chrome the cursor is sometimes in front of the `/` so to make sure:
+      // In browsers other than chrome, the cursor is sometimes in front of the `/`
       editor.deleteForward('line')
       return
     }
 
     // Otherwise, replace the text plugin with the selected plugin
     dispatch(runReplaceDocumentSaga({ id, plugins, pluginType }))
+  }
+
+  function handleSuggestionsMenuClose(event: KeyboardEvent) {
+    if (!closure.current.showSuggestions) return
+
+    event.preventDefault()
+
+    editor.deleteBackward('line')
   }
 
   return {
