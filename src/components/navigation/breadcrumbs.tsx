@@ -37,7 +37,7 @@ export function Breadcrumbs({
   function renderBreadcrumbEntry(bcEntry: BreadcrumbEntry, index: number) {
     const withRightArrow = tw`
       serlo-button mb-1 mr-5 py-0.5 font-normal
-      after:absolute after:ml-3 after:text-gray-300 after:content-[>] 
+      after:absolute after:ml-3 after:text-gray-300 after:content-['>'] 
     `
 
     if (bcEntry.ellipsis) {
