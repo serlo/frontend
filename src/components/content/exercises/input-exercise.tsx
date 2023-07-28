@@ -37,13 +37,20 @@ export function InputExercise({
     </>
   )
 
-  function onEvaluate(correct: boolean) {
+  function onEvaluate(correct: boolean, val: string) {
     exerciseSubmission({
       path: asPath,
       entityId: context.entityId,
       revisionId: context.revisionId,
       result: correct ? 'correct' : 'wrong',
       type: 'input',
+    })
+    exerciseSubmission({
+      path: asPath,
+      entityId: context.entityId,
+      revisionId: context.revisionId,
+      result: val.length < 8 ? val : val.substring(0, 7) + '.',
+      type: 'ival',
     })
   }
 
