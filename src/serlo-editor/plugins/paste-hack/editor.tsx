@@ -1,11 +1,16 @@
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 import { PasteHackPluginProps } from '.'
+import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
   store,
   selectParent,
@@ -45,6 +50,8 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
+  const { focused, id } = props
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -101,7 +108,44 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
     }
   }
 
-  return <div>{renderDataImport()}</div>
+  return (
+    <>
+      {renderPluginToolbar()}
+      <div>{renderDataImport()}</div>
+    </>
+  )
+
+  function renderPluginToolbar() {
+    if (!focused) return null
+
+    const pasteHackButtonText = 'Import JSON data'
+
+    return (
+      <PluginToolbar
+        pluginType={EditorPluginType.PasteHack}
+        pluginControls={<PluginDefaultTools pluginId={id} />}
+        pluginSettings={
+          <>
+            <button
+              onClick={() => setShowSettingsModal(true)}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            >
+              {pasteHackButtonText} <FaIcon icon={faPencilAlt} />
+            </button>
+            {showSettingsModal ? (
+              <ModalWithCloseButton
+                isOpen={showSettingsModal}
+                onCloseClick={() => setShowSettingsModal(false)}
+                className="!top-1/3 !max-w-xl"
+              >
+                {renderDataImport()}
+              </ModalWithCloseButton>
+            ) : null}
+          </>
+        }
+      />
+    )
+  }
 
   function renderDataImport() {
     return (
