@@ -8,39 +8,38 @@ import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plug
 import { selectSerializedDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-
 export const UnsupportedEditor: React.FunctionComponent<
-    UnsupportedPluginProps
+  UnsupportedPluginProps
 > = (props) => {
-    const unsupportedStrings = useEditorStrings().plugins.unsupported
+  const unsupportedStrings = useEditorStrings().plugins.unsupported
 
-    const unsupportedType = selectSerializedDocument(
-        store.getState(),
-        props.id
-    )?.plugin
-    const { focused, id } = props
+  const unsupportedType = selectSerializedDocument(
+    store.getState(),
+    props.id
+  )?.plugin
+  const { focused, id } = props
+
+  return (
+    <>
+      {renderPluginToolbar()}
+      <div className="my-8 rounded-2xl bg-gray-100 p-4">
+        <b>
+          <FaIcon icon={faWarning} /> {unsupportedStrings.notSupported} [
+          {unsupportedType}]
+        </b>
+        <p className="mb-1 mt-3">{unsupportedStrings.explanation}</p>
+      </div>
+    </>
+  )
+
+  function renderPluginToolbar() {
+    if (!focused) return null
 
     return (
-        <>
-            {renderPluginToolbar()}
-            <div className="my-8 rounded-2xl bg-gray-100 p-4">
-                <b>
-                    <FaIcon icon={faWarning} /> {unsupportedStrings.notSupported} [
-                    {unsupportedType}]
-                </b>
-                <p className="mb-1 mt-3">{unsupportedStrings.explanation}</p>
-            </div>
-        </>
+      <PluginToolbar
+        pluginType={EditorPluginType.PagePartners}
+        pluginControls={<PluginDefaultTools pluginId={id} />}
+      />
     )
-
-    function renderPluginToolbar() {
-        if (!focused) return null
-
-        return (
-            <PluginToolbar
-                pluginType={EditorPluginType.PagePartners}
-                pluginControls={<PluginDefaultTools pluginId={id} />}
-            />
-        )
-    }
+  }
 }
