@@ -107,10 +107,13 @@ export function DropdownMenu({
   )
 
   function onLinkToComment() {
-    const isOnEntity = window.location.href.includes(entityId.toString())
+    const isOnEntity =
+      entityId && window.location.href.includes(entityId.toString())
     onAnyClick()
     if (isOnEntity) highlight(id)
-    history.replaceState(null, '', `/${entityId}/#comment-${id}`)
+    if (entityId) {
+      history.replaceState(null, '', `/${entityId}/#comment-${id}`)
+    }
     copyToClipboad(window.location.href)
     showToastNotice('👌 ' + strings.share.copySuccess, 'success')
   }

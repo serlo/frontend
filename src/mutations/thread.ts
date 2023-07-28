@@ -40,6 +40,7 @@ export function useThreadArchivedMutation() {
     const success = await mutationFetch(threadArchiveMutation, input)
 
     if (success) {
+      if (!entityId) return false
       await mutate(`comments::${entityId}`)
       mutateSWRCache(threadCacheShouldMutate)
       NProgress.done()
@@ -68,6 +69,7 @@ export function useSetThreadStateMutation() {
     const success = await mutationFetch(setThreadStateMutation, input)
 
     if (success) {
+      if (!entityId) return false
       await mutate(`comments::${entityId}`)
       mutateSWRCache(threadCacheShouldMutate)
     }
@@ -92,6 +94,7 @@ export function useSetCommentStateMutation() {
   const { mutate } = useSWRConfig()
 
   return async function (input: ThreadSetCommentStateInput) {
+    if (!entityId) return false
     const success = await mutationFetch(setCommentStateMutation, input)
 
     if (success) {
@@ -145,6 +148,7 @@ export function useCreateCommentMutation() {
   const entityId = useEntityId()
 
   return async function (input: ThreadCreateCommentInput) {
+    if (!entityId) return false
     const success = await mutationFetch(createCommentMutation, input)
 
     if (success) {
@@ -172,6 +176,7 @@ export function useEditCommentMutation() {
   const entityId = useEntityId()
 
   return async function (input: ThreadEditCommentInput) {
+    if (!entityId) return false
     const success = await mutationFetch(editCommentMutation, input)
 
     if (success) {
