@@ -117,7 +117,7 @@ export function FrontendClientBase({
       <PrintMode />
       <AuthProvider unauthenticatedAuthorizationPayload={authorization}>
         <LoggedInDataProvider value={loggedInData}>
-          <EntityIdProvider value={entityId || null}>
+          <EntityIdProvider value={entityId}>
             <ConditionalWrap
               condition={!noHeaderFooter}
               wrapper={(kids) => <HeaderFooter>{kids}</HeaderFooter>}
