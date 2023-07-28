@@ -761,6 +761,7 @@ export const loggedInData = {
             'To make the content draggable, convert them for the new editor:',
           oneColumnLayout: 'One-column layout',
           multimediaTitle: 'Multimedia content associated with text',
+          chooseLayout: 'Choose layout',
         },
         multimedia: {
           title: 'Multimedia content associated with text',

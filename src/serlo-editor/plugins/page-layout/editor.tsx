@@ -1,7 +1,11 @@
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import { useState } from 'react'
 
 import { PageLayoutPluginProps } from '.'
 import { PageLayoutRenderer } from './renderer'
+import { FaIcon } from '@/components/fa-icon'
+import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
@@ -17,6 +21,7 @@ export const PageLayoutEditor: React.FunctionComponent<
   const { column1, column2, widthPercent } = props.state
   const { id, focused } = props
   const percent = widthPercent.value
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (
     <>
@@ -48,10 +53,31 @@ export const PageLayoutEditor: React.FunctionComponent<
   function renderPluginToolbar() {
     if (!focused) return null
 
+    const layoutStrings = editorStrings.plugins.layout
+
     return (
       <PluginToolbar
         pluginType={EditorPluginType.PageLayout}
         pluginControls={<PluginDefaultTools pluginId={id} />}
+        pluginSettings={
+          <>
+            <button
+              onClick={() => setShowSettingsModal(true)}
+              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+            >
+              {layoutStrings.chooseLayout} <FaIcon icon={faPencilAlt} />
+            </button>
+            {showSettingsModal ? (
+              <ModalWithCloseButton
+                isOpen={showSettingsModal}
+                onCloseClick={() => setShowSettingsModal(false)}
+                className="!top-1/3 !max-w-xl"
+              >
+                {renderInlineSettings()}
+              </ModalWithCloseButton>
+            ) : null}
+          </>
+        }
       />
     )
   }
