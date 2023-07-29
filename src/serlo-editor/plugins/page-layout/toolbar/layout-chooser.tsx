@@ -5,7 +5,6 @@ import { firstColumsSizes } from '../editor'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 
-
 export const LayoutChooser = ({
   widthPercent,
 }: PageLayoutPluginProps['state']) => {
