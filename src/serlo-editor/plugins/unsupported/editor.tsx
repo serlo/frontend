@@ -17,11 +17,16 @@ export const UnsupportedEditor: React.FunctionComponent<
     store.getState(),
     props.id
   )?.plugin
-  const { focused, id } = props
+  const { focused, id, editable } = props
 
   return (
     <>
-      {renderPluginToolbar()}
+      {focused && editable ? (
+        <PluginToolbar
+          pluginType={EditorPluginType.PagePartners}
+          pluginControls={<PluginDefaultTools pluginId={id} />}
+        />
+      ) : null}
       <div className="my-8 rounded-2xl bg-gray-100 p-4">
         <b>
           <FaIcon icon={faWarning} /> {unsupportedStrings.notSupported} [
@@ -31,15 +36,4 @@ export const UnsupportedEditor: React.FunctionComponent<
       </div>
     </>
   )
-
-  function renderPluginToolbar() {
-    if (!focused) return null
-
-    return (
-      <PluginToolbar
-        pluginType={EditorPluginType.PagePartners}
-        pluginControls={<PluginDefaultTools pluginId={id} />}
-      />
-    )
-  }
 }

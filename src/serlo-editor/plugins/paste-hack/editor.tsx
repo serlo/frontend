@@ -1,11 +1,8 @@
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { either as E } from 'fp-ts'
 import * as t from 'io-ts'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import { PasteHackPluginProps } from '.'
-import { FaIcon } from '@/components/fa-icon'
-import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
@@ -51,7 +48,6 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
   const { focused, id } = props
-  const [showSettingsModal, setShowSettingsModal] = useState(false)
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -118,31 +114,10 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   function renderPluginToolbar() {
     if (!focused) return null
 
-    const pasteHackButtonText = 'Import JSON data'
-
     return (
       <PluginToolbar
         pluginType={EditorPluginType.PasteHack}
         pluginControls={<PluginDefaultTools pluginId={id} />}
-        pluginSettings={
-          <>
-            <button
-              onClick={() => setShowSettingsModal(true)}
-              className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
-            >
-              {pasteHackButtonText} <FaIcon icon={faPencilAlt} />
-            </button>
-            {showSettingsModal ? (
-              <ModalWithCloseButton
-                isOpen={showSettingsModal}
-                onCloseClick={() => setShowSettingsModal(false)}
-                className="!top-1/3 !max-w-xl"
-              >
-                {renderDataImport()}
-              </ModalWithCloseButton>
-            ) : null}
-          </>
-        }
       />
     )
   }
@@ -156,6 +131,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
             href="https://gist.github.com/elbotho/f3e39b0cdaf0cfc8e59e585e2650fb04"
             target="_blank"
             rel="noreferrer"
+            className="serlo-link"
           >
             Example Data
           </a>
