@@ -6,6 +6,8 @@ import { PasteHackPluginProps } from '.'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
+import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import {
   store,
   selectParent,
@@ -45,6 +47,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
+  const { focused, id } = props
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -101,7 +104,23 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
     }
   }
 
-  return <div>{renderDataImport()}</div>
+  return (
+    <>
+      {renderPluginToolbar()}
+      <div>{renderDataImport()}</div>
+    </>
+  )
+
+  function renderPluginToolbar() {
+    if (!focused) return null
+
+    return (
+      <PluginToolbar
+        pluginType={EditorPluginType.PasteHack}
+        pluginControls={<PluginDefaultTools pluginId={id} />}
+      />
+    )
+  }
 
   function renderDataImport() {
     return (
@@ -112,6 +131,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
             href="https://gist.github.com/elbotho/f3e39b0cdaf0cfc8e59e585e2650fb04"
             target="_blank"
             rel="noreferrer"
+            className="serlo-link"
           >
             Example Data
           </a>

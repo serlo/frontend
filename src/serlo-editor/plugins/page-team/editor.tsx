@@ -1,29 +1,11 @@
-import { either as E } from 'fp-ts'
-import * as t from 'io-ts'
-
 import { PageTeamPluginProps } from '.'
 import { PageTeamRenderer } from './renderer'
-import { useInstanceData } from '@/contexts/instance-context'
-import { showToastNotice } from '@/helper/show-toast-notice'
+import { PageTeamToolbar } from './toolbar'
 
-const TeamDataDecoder = t.array(
-  t.strict({
-    firstName: t.string,
-    lastName: t.string,
-    user: t.string,
-    position: t.string,
-    extraLinkUrl: t.string,
-    extraLinkText: t.string,
-    photo: t.string,
-  })
-)
-
-export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
-  props
-) => {
-  const { data } = props.state
+export function PageTeamEditor(props: PageTeamPluginProps) {
+  const { state } = props
+  const { data } = state
   const noData = !data || data.length === 0
-  const { lang } = useInstanceData()
 
   const rendererData = data.map((entry) => {
     return {
@@ -39,13 +21,18 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
 
   return (
     <>
+      <PageTeamToolbar {...props} />
       <div>
-        {noData ? renderDataImport() : <PageTeamRenderer data={rendererData} />}
+        {noData ? (
+          renderDataImportExplanation()
+        ) : (
+          <PageTeamRenderer data={rendererData} />
+        )}
       </div>
     </>
   )
 
-  function renderDataImport() {
+  function renderDataImportExplanation() {
     return (
       <div className="bg-editor-primary-50 p-4">
         <b className="serlo-h4 mb-4 ml-0 block">Supply data to plugin</b>
@@ -55,39 +42,13 @@ export const PageTeamEditor: React.FunctionComponent<PageTeamPluginProps> = (
             target="_blank"
             href="https://docs.google.com/spreadsheets/d/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/edit#gid=0"
             rel="noreferrer"
+            className="serlo-link"
           >
             this spreadsheet
           </a>{' '}
-          first and afterwards use this button.
+          (select language!) first and then use the &quot;Import
+          Data&quot;-Button above.
         </p>
-        <button
-          className="serlo-button-editor-primary mb-12 text-base"
-          onClick={async () => {
-            try {
-              const response = await fetch(
-                `https://opensheet.elk.sh/1VmoqOrPByExqnXABBML_SymPO_TgDj7qQcBi3N2iTuA/teamdata_${lang}`
-              )
-              const teamData = TeamDataDecoder.decode(
-                (await response.json()) as unknown
-              )
-
-              if (E.isRight(teamData)) {
-                data.set(() => teamData.right)
-                showToastNotice('👍 Imported', 'success')
-              } else {
-                throw new Error(
-                  'Json result from opensheet.elk.sh is not valid'
-                )
-              }
-            } catch (error) {
-              showToastNotice('⚠️ Sorry… something went wrong', 'warning')
-              // eslint-disable-next-line no-console
-              console.error(error)
-            }
-          }}
-        >
-          Import Data
-        </button>
       </div>
     )
   }
