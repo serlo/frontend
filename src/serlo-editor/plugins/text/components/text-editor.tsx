@@ -15,7 +15,6 @@ import {
   Transforms,
   Range,
   Editor,
-  Element,
 } from 'slate'
 import {
   Editable,
@@ -268,6 +267,7 @@ export function TextEditor(props: TextEditorProps) {
           const isHeading =
             Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
 
+          // no newlines in headings and start new block as paragraph instead of heading again
           if (isHeading) {
             event.preventDefault()
             Transforms.insertNodes(editor, {
@@ -297,7 +297,6 @@ export function TextEditor(props: TextEditorProps) {
 
           // TODO: test <br/> serializer somehow
           // TODO: test and simplify frontend code
-          // TODO: add placeholder (with add element that can split text plugin)
 
           // TODO: think about what should happen when some text is selected (no blocker)
           // TODO: remove debug border on serlo-p
