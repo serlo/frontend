@@ -221,11 +221,11 @@ export const secondaryMenus: InstanceData['secondaryMenus'] = [
         id: 75274,
       },
       { title: 'Gymnasium', url: '/informatik/60396/gymnasium', id: 60396 },
-      {
-        title: 'Bei Serlo-Informatik mitarbeiten',
-        url: '/49982/mitmachen-in-informatik',
-        id: 49982,
-      },
+      // {
+      // title: 'Bei Serlo-Informatik mitarbeiten',
+      // url: '/49982/mitmachen-in-informatik',
+      // id: 49982,
+      // },
     ],
   },
   {
