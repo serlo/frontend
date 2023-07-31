@@ -15,6 +15,7 @@ export function useBlurOnOutsideClick(
     // reset the internal editor focus state
     function handleClickOutside(event: MouseEvent) {
       if (
+        document.body.contains(event.target as Node) &&
         editorWrapperRef.current &&
         !editorWrapperRef.current.contains(event.target as Node)
       ) {
