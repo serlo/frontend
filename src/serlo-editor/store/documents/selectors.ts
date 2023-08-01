@@ -76,7 +76,6 @@ export const selectSerializedDocumentWithoutIds = createDeepEqualSelector(
   }
 )
 
-// TODO: Too many casts
 export const selectIsDocumentEmpty = createSelector(
   [(state: State) => state, (_state, args: DocumentsSelectorArgs) => args],
   (state, { plugins, id }) => {
@@ -86,13 +85,11 @@ export const selectIsDocumentEmpty = createSelector(
     const plugin = getPluginByType(plugins, document.plugin)
     if (!plugin) return false
 
-    if (typeof (plugin.plugin as EditorPlugin).isEmpty === 'function') {
+    const pluginData = plugin.plugin as EditorPlugin
+    if (typeof pluginData.isEmpty === 'function') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const state = (plugin.plugin as EditorPlugin).state.init(
-        document.state,
-        () => {}
-      )
-      return (plugin.plugin as EditorPlugin).isEmpty?.(state) || false
+      const state = pluginData.state.init(document.state, () => {})
+      return pluginData.isEmpty?.(state) || false
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
