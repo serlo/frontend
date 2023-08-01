@@ -28,6 +28,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const plugins = usePlugins()
   const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
 
+  const [domFocused, setDomFocused] = useState<'focus' | 'focusWithin' | false>(
+    false
+  )
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
   const sideToolbarRef = useRef<HTMLDivElement>(
@@ -58,6 +61,21 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     // `document` should not be part of the dependencies because we only want to call this once when the document gets focused
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focused, plugin])
+
+  const handleDomFocusChange = useCallback(
+    (e: React.FocusEvent<HTMLDivElement, HTMLDivElement>) => {
+      // find closest document parent
+      const target = e.target.closest('[data-document]')
+      if (!target) return
+
+      setDomFocused(() => {
+        const hasFocusWithin = target.contains(window.document.activeElement)
+        const isContainer = containerRef.current === target
+        return hasFocusWithin ? (isContainer ? 'focus' : 'focusWithin') : false
+      })
+    },
+    [containerRef]
+  )
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -141,13 +159,15 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       <div
         className="outline-none"
         onMouseDown={handleFocus}
+        onFocus={handleDomFocusChange}
+        onBlur={handleDomFocusChange}
         ref={containerRef}
         data-document
         tabIndex={-1}
       >
         <SideToolbarAndWrapper
           hasSideToolbar={hasSideToolbar}
-          focused={focused}
+          focused={domFocused === 'focus'}
           renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
           isInlineChildEditor={isInlineChildEditor}
           sideToolbarRef={sideToolbarRef}
@@ -157,7 +177,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             containerRef={containerRef}
             id={id}
             editable
-            focused={focused}
+            focused={domFocused === 'focus'}
             config={config}
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             state={state}
@@ -172,8 +192,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
+    handleDomFocusChange,
     hasSideToolbar,
-    focused,
+    domFocused,
     renderIntoSideToolbar,
     id,
     dispatch,
