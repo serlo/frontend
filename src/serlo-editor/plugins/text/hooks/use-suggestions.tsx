@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from 'react'
+import { useContext, useState, useEffect, useRef, useMemo } from 'react'
 import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 import { Key } from 'ts-key-enum'
@@ -57,11 +57,17 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allowedPlugins = useContext(AllowedChildPlugins)
   const pluginsData = usePlugins()
 
-  const allOptions = (allowedPlugins ?? allPlugins).map((type) =>
-    createOption(type, pluginsStrings, pluginsData)
-  )
+  const allOptions = useMemo(() => {
+    return (allowedPlugins ?? allPlugins).map((type) => {
+      return createOption(type, pluginsStrings, pluginsData)
+    })
+    // Should only update when allowed plugins change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowedPlugins])
 
-  const filteredOptions = filterPlugins(allOptions, text, id)
+  const filteredOptions = useMemo(() => {
+    return filterPlugins(allOptions, text, id)
+  }, [allOptions, id, text])
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
 
