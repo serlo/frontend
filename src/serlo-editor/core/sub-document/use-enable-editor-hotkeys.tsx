@@ -5,7 +5,7 @@ import { Key } from 'ts-key-enum'
 import {
   focusNext,
   focusPrevious,
-  selectDocumentTree,
+  selectPluginTree,
   selectIsDocumentEmpty,
   selectMayManipulateSiblings,
   selectParent,
@@ -55,7 +55,7 @@ export const useEnableEditorHotkeys = (
     Key.ArrowUp,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusPrevious(selectDocumentTree(store.getState(), plugins)))
+        dispatch(focusPrevious(selectPluginTree(store.getState(), plugins)))
       })
     },
     {
@@ -70,7 +70,7 @@ export const useEnableEditorHotkeys = (
     Key.ArrowDown,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusNext(selectDocumentTree(store.getState(), plugins)))
+        dispatch(focusNext(selectPluginTree(store.getState(), plugins)))
       })
     },
     {
@@ -113,11 +113,9 @@ export const useEnableEditorHotkeys = (
           if (!parent) return
 
           if (e.key === 'Backspace') {
-            dispatch(
-              focusPrevious(selectDocumentTree(store.getState(), plugins))
-            )
+            dispatch(focusPrevious(selectPluginTree(store.getState(), plugins)))
           } else if (e.key === 'Delete') {
-            dispatch(focusNext(selectDocumentTree(store.getState(), plugins)))
+            dispatch(focusNext(selectPluginTree(store.getState(), plugins)))
           }
           dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))
         }

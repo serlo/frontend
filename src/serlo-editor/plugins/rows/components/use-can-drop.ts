@@ -6,8 +6,8 @@ import {
   selectDocument,
   selectAncestorPluginIds,
   selectAncestorPluginTypes,
-  selectDocumentTree,
-  FocusTreeNode,
+  selectPluginTree,
+  PluginTreeNode,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -53,7 +53,7 @@ export function useCanDrop(
   }
 
   function wouldDropAtInitialPosition(dragId: string) {
-    const focusTree = selectDocumentTree(store.getState(), plugins)
+    const focusTree = selectPluginTree(store.getState(), plugins)
     if (!focusTree) return true
     const parent = findParent(focusTree, dragId)
 
@@ -68,7 +68,7 @@ export function useCanDrop(
   }
 
   function getChildPosition(
-    parent: FocusTreeNode | null,
+    parent: PluginTreeNode | null,
     childId: string
   ): number | null {
     if (!parent) return null

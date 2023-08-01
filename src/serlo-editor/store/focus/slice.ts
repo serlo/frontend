@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { findNextNode, findPreviousNode } from './helpers'
-import { FocusTreeNode } from './types'
+import { PluginTreeNode } from './types'
 import { isPureInsertDocumentAction } from '../documents'
 import { State } from '../types'
 
@@ -14,13 +14,13 @@ export const focusSlice = createSlice({
     focus(_state, action: PayloadAction<string | null>) {
       return action.payload
     },
-    focusNext(state, action: PayloadAction<FocusTreeNode | null>) {
+    focusNext(state, action: PayloadAction<PluginTreeNode | null>) {
       if (!state || !action.payload) return state
       const next = findNextNode(action.payload, state)
       if (!next) return state
       return next
     },
-    focusPrevious(state, action: PayloadAction<FocusTreeNode | null>) {
+    focusPrevious(state, action: PayloadAction<PluginTreeNode | null>) {
       if (!state || !action.payload) return state
       const next = findPreviousNode(action.payload, state)
       if (!next) return state

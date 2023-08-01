@@ -28,7 +28,7 @@ import {
   focus,
   focusNext,
   focusPrevious,
-  selectDocumentTree,
+  selectPluginTree,
   selectFocused,
   selectIsDocumentEmpty,
   store,
@@ -120,11 +120,11 @@ export function EquationsEditor(props: EquationsProps) {
     rows: state.steps.length,
     columns: 4,
     focusNext: () => {
-      const focusTree = selectDocumentTree(store.getState(), plugins)
+      const focusTree = selectPluginTree(store.getState(), plugins)
       dispatch(focusNext(focusTree))
     },
     focusPrevious: () => {
-      const focusTree = selectDocumentTree(store.getState(), plugins)
+      const focusTree = selectPluginTree(store.getState(), plugins)
       dispatch(focusPrevious(focusTree))
     },
     transformationTarget,

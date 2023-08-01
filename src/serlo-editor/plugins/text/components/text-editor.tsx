@@ -34,7 +34,7 @@ import {
   insertPluginChildAfter,
   runReplaceDocumentSaga,
   selectDocument,
-  selectDocumentTree,
+  selectPluginTree,
   selectMayManipulateSiblings,
   selectParent,
   store,
@@ -247,14 +247,14 @@ export function TextEditor(props: TextEditorProps) {
           isHotkey('up', event) && isSelectionAtStart(editor, selection)
         if (isUpArrowAtStart) {
           event.preventDefault()
-          const focusTree = selectDocumentTree(store.getState(), plugins)
+          const focusTree = selectPluginTree(store.getState(), plugins)
           dispatch(focusPrevious(focusTree))
         }
         const isDownArrowAtEnd =
           isHotkey('down', event) && isSelectionAtEnd(editor, selection)
         if (isDownArrowAtEnd) {
           event.preventDefault()
-          const focusTree = selectDocumentTree(store.getState(), plugins)
+          const focusTree = selectPluginTree(store.getState(), plugins)
           dispatch(focusNext(focusTree))
         }
       }

@@ -1,6 +1,9 @@
-import type { FocusTreeNode } from './types'
+import type { PluginTreeNode } from './types'
 
-export function findNextNode(root: FocusTreeNode, from: string): string | null {
+export function findNextNode(
+  root: PluginTreeNode,
+  from: string
+): string | null {
   const parent = findParent(root, from)
   if (!parent || parent.id === from) return null
   const { children } = parent
@@ -23,7 +26,7 @@ export function findNextNode(root: FocusTreeNode, from: string): string | null {
 }
 
 export function findPreviousNode(
-  root: FocusTreeNode,
+  root: PluginTreeNode,
   from: string
 ): string | null {
   const parent = findParent(root, from)
@@ -47,9 +50,9 @@ export function findPreviousNode(
 }
 
 export function findParent(
-  root: FocusTreeNode,
+  root: PluginTreeNode,
   id: string
-): FocusTreeNode | null {
+): PluginTreeNode | null {
   if (root.id === id) {
     return root
   }

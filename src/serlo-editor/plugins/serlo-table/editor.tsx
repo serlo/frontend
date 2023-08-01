@@ -21,7 +21,7 @@ import {
   focusNext,
   focusPrevious,
   selectDocument,
-  selectDocumentTree,
+  selectPluginTree,
   selectFocused,
   selectIsDocumentEmpty,
   store,
@@ -108,7 +108,7 @@ export function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
-    const focusTree = selectDocumentTree(store.getState(), plugins)
+    const focusTree = selectPluginTree(store.getState(), plugins)
     dispatch(focusNext(focusTree))
     dispatch(focusPrevious(focusTree))
   }

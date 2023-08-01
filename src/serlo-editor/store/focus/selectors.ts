@@ -1,7 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit'
 
 import { findParent } from './helpers'
-import type { FocusTreeNode } from './types'
+import type { PluginTreeNode } from './types'
 import { selectDocument } from '../documents'
 import {
   createDeepEqualSelector,
@@ -29,12 +29,11 @@ export const selectIsFocused = createSelector(
   (focus, id: string) => focus === id
 )
 
-// TODO: Maybe `selectDocumentTree` belongs to `documents` slice
-export const selectDocumentTree: (
+export const selectPluginTree: (
   state: State,
   plugins: PluginsContextPlugins,
   id?: string
-) => FocusTreeNode | null = createJsonStringifySelector(
+) => PluginTreeNode | null = createJsonStringifySelector(
   [
     (state: State) => state,
     (_state, plugins: PluginsContextPlugins, id?: string) => ({ plugins, id }),
@@ -50,7 +49,7 @@ export const selectDocumentTree: (
     const children = (plugin.plugin as EditorPlugin).state
       .getFocusableChildren(document.state)
       .map((child) => {
-        const subtree = selectDocumentTree(state, plugins, child.id)
+        const subtree = selectPluginTree(state, plugins, child.id)
         return subtree || child
       })
 
@@ -64,7 +63,7 @@ export const selectDocumentTree: (
 export const selectParent = createSelector(
   [(state: State) => state, (_state, args: FocusSelectorArgs) => args],
   (state, { plugins, id }) => {
-    const root = selectDocumentTree(state, plugins)
+    const root = selectPluginTree(state, plugins)
     return root && findParent(root, id)
   }
 )
@@ -72,7 +71,7 @@ export const selectParent = createSelector(
 export const selectAncestorPluginIds = createDeepEqualSelector(
   [(state: State) => state, (_state, args: FocusSelectorArgs) => args],
   (state, { plugins, id }) => {
-    const root = selectDocumentTree(state, plugins)
+    const root = selectPluginTree(state, plugins)
     if (!root) return []
 
     let current = id
@@ -92,7 +91,7 @@ export const selectAncestorPluginIds = createDeepEqualSelector(
 export const selectAncestorPluginTypes = createDeepEqualSelector(
   [(state: State) => state, (_state, args: FocusSelectorArgs) => args],
   (state, { plugins, id }) => {
-    const root = selectDocumentTree(state, plugins)
+    const root = selectPluginTree(state, plugins)
     if (!root) return null
 
     let currentId = id
@@ -114,7 +113,7 @@ export const selectAncestorPluginTypes = createDeepEqualSelector(
 export const selectHasFocusedChild = createSelector(
   [(state: State) => state, (_state, args: FocusSelectorArgs) => args],
   (state, { plugins, id }) => {
-    const tree = selectDocumentTree(state, plugins, id)
+    const tree = selectPluginTree(state, plugins, id)
     if (!tree || !tree.children) return false
     return tree.children.some((node) => selectIsFocused(state, node.id))
   }
@@ -123,7 +122,7 @@ export const selectHasFocusedChild = createSelector(
 export const selectHasFocusedDescendant = createSelector(
   [(state: State) => state, (_state, args: FocusSelectorArgs) => args],
   (state, { plugins, id }): boolean => {
-    const tree = selectDocumentTree(state, plugins, id)
+    const tree = selectPluginTree(state, plugins, id)
     if (!tree || !tree.children) return false
     return tree.children.some(
       (node) =>
