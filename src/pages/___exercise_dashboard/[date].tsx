@@ -396,7 +396,7 @@ const Page: NextPage<Data> = ({
         <meta name="robots" content="noindex" />
         <title>Statistik gelöste Aufgaben</title>
       </Head>
-      <div className="mt-8 ml-4">
+      <div className="ml-4 mt-8">
         <div className="mt-8">
           Wähle Zeitraum:
           <select
