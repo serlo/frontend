@@ -19,7 +19,7 @@ import {
   runCommitActionToHistorySaga,
   runCommitTemporaryActionToHistorySaga,
 } from '../history'
-import { getPlugin } from '@/serlo-editor/plugin/helpers/context-plugins'
+import { getEditorPlugin } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 
 export function* documentsSaga() {
   yield all([
@@ -138,7 +138,7 @@ function* replaceDocumentSaga(
     id
   )
   if (!currentDocument) return
-  const plugin = getPlugin(pluginType)
+  const plugin = getEditorPlugin(pluginType)
   if (!plugin) {
     // eslint-disable-next-line no-console
     console.warn(`Invalid plugin '${pluginType}'`)
@@ -206,7 +206,7 @@ export function* handleRecursiveInserts(
   }
   const result = act(helpers)
   for (let doc; (doc = pendingDocs.pop()); ) {
-    const plugin = getPlugin(doc.plugin)
+    const plugin = getEditorPlugin(doc.plugin)
     if (!plugin) {
       // eslint-disable-next-line no-console
       console.warn(`Invalid plugin '${doc.plugin}'`)

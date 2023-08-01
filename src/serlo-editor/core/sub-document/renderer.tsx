@@ -3,11 +3,11 @@ import { useRef } from 'react'
 
 import { SubDocumentProps } from '.'
 import { selectDocument, useAppSelector } from '../../store'
-import { getPlugin } from '@/serlo-editor/plugin/helpers/context-plugins'
+import { getEditorPlugin } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
-  const plugin = getPlugin(document?.plugin ?? '')
+  const plugin = getEditorPlugin(document?.plugin ?? '')
 
   const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
   if (!document) return null

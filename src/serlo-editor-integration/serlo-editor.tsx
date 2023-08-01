@@ -14,6 +14,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { SetEntityMutationData } from '@/mutations/use-set-entity-mutation/types'
 import { Editor, EditorProps } from '@/serlo-editor/core'
+import { initEditorPlugins } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 
 export interface SerloEditorProps {
   children?: ReactNode
@@ -65,11 +66,13 @@ export function SerloEditor({
   const editorStrings = loggedInData.strings.editor
 
   // simplest way to provide plugins to editor that can also easily be adapted by edusharing
-  globalThis.EditorContextPlugins = createPlugins({
-    editorStrings,
-    instance: lang,
-    parentType: type,
-  })
+  initEditorPlugins(
+    createPlugins({
+      editorStrings,
+      instance: lang,
+      parentType: type,
+    })
+  )
 
   return (
     <SaveContext.Provider

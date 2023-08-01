@@ -8,7 +8,7 @@ import { useCanDrop } from './components/use-can-drop'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
-import { PluginsContextPlugins } from '@/serlo-editor/plugin/helpers/context-plugins'
+import { PluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
@@ -36,7 +36,7 @@ export function EditorRowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: PluginsContextPlugins
+  plugins: PluginsWithData
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
   const editorStrings = useEditorStrings()

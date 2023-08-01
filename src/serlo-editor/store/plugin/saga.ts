@@ -9,7 +9,7 @@ import {
 import { EditorPlugin } from '../../types/internal__plugin'
 import { runChangeDocumentSaga, selectDocument } from '../documents'
 import { selectFocusTree } from '../focus'
-import { getPlugin } from '@/serlo-editor/plugin/helpers/context-plugins'
+import { getEditorPlugin } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 
 export function* pluginSaga() {
   yield all([
@@ -78,7 +78,7 @@ function* createPlugin(
     id
   )
   if (!document) return
-  const plugin = getPlugin(document.plugin)
+  const plugin = getEditorPlugin(document.plugin)
   if (!plugin) {
     // eslint-disable-next-line no-console
     console.warn(`Invalid plugin '${document.plugin}'`)

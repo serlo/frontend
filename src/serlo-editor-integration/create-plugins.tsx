@@ -14,7 +14,7 @@ import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { PluginsContextPlugins } from '@/serlo-editor/plugin/helpers/context-plugins'
+import { PluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -62,7 +62,7 @@ export function createPlugins({
   editorStrings: LoggedInData['strings']['editor']
   instance: Instance
   parentType?: string
-}): PluginsContextPlugins {
+}): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
   return [

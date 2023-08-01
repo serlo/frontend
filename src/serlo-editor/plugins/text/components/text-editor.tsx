@@ -24,7 +24,7 @@ import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
-import { getPlugin } from '@/serlo-editor/plugin/helpers/context-plugins'
+import { getEditorPlugin } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 import {
   focusNext,
   focusPrevious,
@@ -291,7 +291,7 @@ export function TextEditor(props: TextEditorProps) {
 
       // Handle pasted images or image URLs
       if (files?.length > 0 || text) {
-        const imagePlugin = getPlugin(EditorPluginType.Image)
+        const imagePlugin = getEditorPlugin(EditorPluginType.Image)
         if (!imagePlugin) return
 
         const imagePluginState =
@@ -310,9 +310,9 @@ export function TextEditor(props: TextEditorProps) {
 
       if (text) {
         // Handle pasted video URLs
-        const videoPluginState = getPlugin(EditorPluginType.Video)?.onText?.(
-          text
-        )
+        const videoPluginState = getEditorPlugin(
+          EditorPluginType.Video
+        )?.onText?.(text)
         if (videoPluginState !== undefined) {
           event.preventDefault()
 
@@ -326,7 +326,7 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Handle pasted geogebra URLs
-        const geogebraPluginState = getPlugin(
+        const geogebraPluginState = getEditorPlugin(
           EditorPluginType.Geogebra
         )?.onText?.(text)
         if (geogebraPluginState !== undefined) {

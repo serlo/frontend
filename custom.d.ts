@@ -1,7 +1,5 @@
 import { FC, SVGAttributes } from 'react'
 
-import { PluginsContextPlugins } from '@/serlo-editor/plugin/helpers/context-plugins'
-
 declare module '*.svg' {
   const content: FC<SVGAttributes<SVGElement>>
   export default content
@@ -31,9 +29,4 @@ declare global {
       v: K
     ): o is ExtractByKey<T, K>
   }
-  /**
-   * All currently supported and loaded Editor Plugins. Init once, never change!
-   */
-  // eslint-disable-next-line no-var
-  var EditorContextPlugins: PluginsContextPlugins
 }
