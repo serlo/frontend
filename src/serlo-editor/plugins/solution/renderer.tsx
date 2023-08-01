@@ -14,6 +14,7 @@ interface SolutionRendererProps {
   onSolutionOpen?: () => void
   elementAfterToggle?: JSX.Element | null
   elementBeforePrerequisite?: JSX.Element | null
+  count?: number
 }
 
 export function SolutionRenderer({
@@ -25,6 +26,7 @@ export function SolutionRenderer({
   onSolutionOpen,
   elementAfterToggle,
   elementBeforePrerequisite,
+  count,
 }: SolutionRendererProps) {
   const { strings } = useInstanceData()
 
@@ -81,7 +83,8 @@ export function SolutionRenderer({
           strings.content.exercises[
             solutionVisible ? 'hideSolution' : 'showSolution'
           ]
-        }
+        }{' '}
+        {count ? <>(x{count})</> : null}
       </button>
     )
   }

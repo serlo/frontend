@@ -8,6 +8,7 @@ import { CommentAreaEntityProps } from '@/components/comments/comment-area-entit
 import { Lazy } from '@/components/content/lazy'
 import { isPrintMode, printModeSolutionVisible } from '@/components/print-mode'
 import type { MoreAuthorToolsProps } from '@/components/user-tools/foldout-author-menus/more-author-tools'
+import { useExerciseFolderStats } from '@/contexts/exercise-folder-stats-context'
 import { ExerciseInlineType } from '@/data-types'
 import {
   FrontendExerciseNode,
@@ -42,6 +43,11 @@ export function Solution({
 }: SolutionProps) {
   const { asPath } = useRouter()
   const auth = useAuthentication()
+  const exerciseData = useExerciseFolderStats()
+
+  const entry = exerciseData?.data[node.context.id]
+
+  const count = entry?.solutionOpen
 
   const solutionVisibleOnInit = forceVisible
     ? true
@@ -115,6 +121,7 @@ export function Solution({
             result: 'open',
           })
         }
+        count={count}
       />
     </>
   )
