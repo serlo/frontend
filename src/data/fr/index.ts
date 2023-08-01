@@ -602,13 +602,14 @@ export const loggedInData = {
         anchor: {
           title: "Ancre",
           description: "Insérer une ancre.",
-          identifier: "identifiant",
+          identifier: 'Identifier (e.g. "long-explanation")',
           anchorId: "ID de l'ancre"
         },
         box: {
           title: 'Container',
           description: 'A container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
+          typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
@@ -644,6 +645,7 @@ export const loggedInData = {
         geogebra: {
           title: "Applet GéoGebra",
           description: "Intégrer une applet GeoGebra par URL ou ID.",
+          chooseApplet: 'Choose Applet',
           urlOrId: "URL ou ID de GeoGebra"
         },
         highlight: {
@@ -652,13 +654,14 @@ export const loggedInData = {
           clickAndEnter: "Clique ici pour entrer du code source…",
           enterHere: "Saisie du code source",
           language: "Langue",
-          enterLanguage: "Saisir la langue",
-          showLineNumbers: "Afficher les numéros de ligne"
+          languageTooltip: 'Choose language for syntax highlighting',
+          showLineNumbers: 'Line numbers',
+          lineNumbersTooltip: 'Should users see line numbers?'
         },
         image: {
           title: 'Image',
           description: "Télécharger des images.",
-          upload: 'Upload…',
+          upload: 'Upload',
           imageUrl: 'Image URL',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
@@ -678,7 +681,7 @@ export const loggedInData = {
           description: "Intégrer contenu de serlo.org en utilisant l'ID.",
           illegalInjectionFound: "Injection illégale trouvée",
           serloEntitySrc: "Entité Serlo {{src}}",
-          serloId: 'Serlo ID:',
+          serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)'
         },
         layout: {
@@ -718,6 +721,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: "Rechercher des outils…",
           duplicate: "Dupliquer",
+          copyAnchorLink: "Copy link to this element",
           remove: "Supprimer",
           close: "Fermer",
           dragElement: "Faire glisser l'élément dans le document",
@@ -783,6 +787,7 @@ export const loggedInData = {
             formula: '[formula]',
             visual: "visuel",
             latex: 'LaTeX',
+            latexEditorTitle: 'LaTeX editor',
             onlyLatex: "Seulement l'éditeur LaTeX est disponible",
             shortcuts: "Raccourcis",
             fraction: 'Fraction',
@@ -798,9 +803,9 @@ export const loggedInData = {
         },
         video: {
           title: "Vidéo",
-          decription: "Intégrer YouTube, Vimeo, Wikimedia Commons ou les vidéos BR.",
+          description: "Intégrer YouTube, Vimeo, Wikimedia Commons ou les vidéos BR.",
           videoUrl: "URL de la vidéo",
-          description: 'Description',
+          videoDescription: 'Description',
           titlePlaceholder: "Titre",
           url: 'URL',
           seoTitle: "Titre pour les moteurs de recherche"
@@ -951,7 +956,8 @@ export const loggedInData = {
         current: "Actuel",
         author: "Auteur",
         createdAt: "Créé le",
-        ready: 'Ready to save?'
+        ready: 'Ready to save?',
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
       },
       taxonomy: {
         title: "Titre"

@@ -602,13 +602,14 @@ export const loggedInData = {
         anchor: {
           title: 'Anchor',
           description: 'Insert an anchor.',
-          identifier: 'Identifier',
+          identifier: 'Identifier (e.g. "long-explanation")',
           anchorId: 'ID of the anchor'
         },
         box: {
           title: 'Container',
           description: 'A container for examples, quotes, warnings, theorems, notes…',
           type: 'Type of box',
+          typeTooltip: 'Choose the type of the box',
           titlePlaceholder: '(optional title)',
           anchorId: 'Anchor ID',
           emptyContentWarning: 'Boxes without content will not be displayed'
@@ -644,6 +645,7 @@ export const loggedInData = {
         geogebra: {
           title: 'GeoGebra Applet',
           description: 'Embed GeoGebra Materials applets via URL or ID.',
+          chooseApplet: 'Choose Applet',
           urlOrId: 'GeoGebra URL or ID'
         },
         highlight: {
@@ -652,13 +654,14 @@ export const loggedInData = {
           clickAndEnter: 'Click here and enter your source code…',
           enterHere: 'Enter your source code here',
           language: "மொழி",
-          enterLanguage: 'Enter language',
-          showLineNumbers: 'Show line numbers'
+          languageTooltip: 'Choose language for syntax highlighting',
+          showLineNumbers: 'Line numbers',
+          lineNumbersTooltip: 'Should users see line numbers?'
         },
         image: {
           title: "படம்",
           description: 'Upload images.',
-          upload: 'Upload…',
+          upload: 'Upload',
           imageUrl: 'Image URL',
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: 'Uploading…',
@@ -678,7 +681,7 @@ export const loggedInData = {
           description: 'Embed serlo.org content via their ID.',
           illegalInjectionFound: 'Illegal injection found',
           serloEntitySrc: 'Serlo entity {{src}}',
-          serloId: 'Serlo ID:',
+          serloId: 'Serlo ID',
           placeholder: 'Serlo ID (e.g. 1565)'
         },
         layout: {
@@ -718,6 +721,7 @@ export const loggedInData = {
           title: 'Rows',
           searchForTools: 'Search for tools…',
           duplicate: 'Duplicate',
+          copyAnchorLink: "Copy link to this element",
           remove: 'Remove',
           close: "நெருக்கமான",
           dragElement: 'Drag the element within the document',
@@ -783,6 +787,7 @@ export const loggedInData = {
             formula: '[formula]',
             visual: 'visual',
             latex: 'LaTeX',
+            latexEditorTitle: 'LaTeX editor',
             onlyLatex: 'Only LaTeX editor available',
             shortcuts: 'Shortcuts',
             fraction: 'Fraction',
@@ -798,9 +803,9 @@ export const loggedInData = {
         },
         video: {
           title: "காணொளி",
-          decription: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
+          description: 'Embed YouTube, Vimeo, Wikimedia Commons or BR videos.',
           videoUrl: 'Video URL',
-          description: "விவரிப்பு:",
+          videoDescription: "விவரிப்பு:",
           titlePlaceholder: "தலைப்பு",
           url: 'URL',
           seoTitle: 'Title for search engines'
@@ -951,7 +956,8 @@ export const loggedInData = {
         current: 'Current',
         author: 'Author',
         createdAt: 'when?',
-        ready: "சேமிக்கத் தயாரா?"
+        ready: "சேமிக்கத் தயாரா?",
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
       },
       taxonomy: {
         title: 'Title'
