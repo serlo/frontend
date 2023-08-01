@@ -6,6 +6,7 @@ import { InlineSettings } from '../../plugin/helpers/inline-settings'
 import { InlineSettingsInput } from '../../plugin/helpers/inline-settings-input'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import {
   EditorPlugin,
   EditorPluginProps,
@@ -41,11 +42,13 @@ export const solutionPlugin: EditorPlugin<SolutionPluginState> = {
 
 function SolutionEditor({ editable, state, focused }: SolutionProps) {
   const { prerequisite, strategy } = state
-  const hasStrategy = !useAppSelector((state) =>
-    selectIsDocumentEmpty(state, strategy.id)
-  )
 
   const solutionStrings = useEditorStrings().templatePlugins.solution
+  const plugins = usePlugins()
+
+  const hasStrategy = !useAppSelector((state) =>
+    selectIsDocumentEmpty(state, { plugins, id: strategy.id })
+  )
 
   return (
     <SolutionRenderer

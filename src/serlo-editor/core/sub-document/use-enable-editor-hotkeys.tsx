@@ -26,7 +26,7 @@ export const useEnableEditorHotkeys = (
   const dispatch = useAppDispatch()
   const plugins = usePlugins()
   const isDocumentEmpty = useAppSelector((state) =>
-    selectIsDocumentEmpty(state, id)
+    selectIsDocumentEmpty(state, { plugins, id })
   )
   const mayManipulateSiblings = useAppSelector((state) =>
     selectMayManipulateSiblings(state, { plugins, id })

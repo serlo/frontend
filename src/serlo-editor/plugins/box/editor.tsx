@@ -12,6 +12,7 @@ import { BoxToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
@@ -31,13 +32,14 @@ export function BoxEditor(props: BoxProps) {
   const borderColorClass = Object.hasOwn(style, 'borderColorClass')
     ? style.borderColorClass
     : defaultStyle.borderColorClass
-  const contentId = content.get()
-  const contentIsEmpty = useAppSelector((state) =>
-    selectIsEmptyRows(state, contentId)
-  )
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
+  const plugins = usePlugins()
 
+  const contentId = content.get()
+  const contentIsEmpty = useAppSelector((state) =>
+    selectIsEmptyRows(state, { plugins, id: contentId })
+  )
   const isTitleFocused = useAppSelector((state) =>
     selectIsFocused(state, title.id)
   )

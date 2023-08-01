@@ -70,8 +70,10 @@ export function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => (
           <div className="min-h-[2rem] pr-2" key={cell.content.id}>
-            {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
-              cell.content.render()}
+            {!selectIsDocumentEmpty(store.getState(), {
+              plugins,
+              id: cell.content.id,
+            }) && cell.content.render()}
           </div>
         )),
       }
@@ -122,10 +124,10 @@ export function SerloTableEditor(props: SerloTableProps) {
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
           const dispatchFocus = () => dispatch(focus(cell.content.id))
-          const isClear = selectIsDocumentEmpty(
-            store.getState(),
-            cell.content.id
-          )
+          const isClear = selectIsDocumentEmpty(store.getState(), {
+            plugins,
+            id: cell.content.id,
+          })
 
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
@@ -313,14 +315,20 @@ export function SerloTableEditor(props: SerloTableProps) {
 
   function isEmptyRow(rowIndex: number) {
     return rows[rowIndex].columns.every((cell) =>
-      selectIsDocumentEmpty(store.getState(), cell.content.id)
+      selectIsDocumentEmpty(store.getState(), {
+        plugins,
+        id: cell.content.id,
+      })
     )
   }
 
   function isEmptyCol(colIndex: number) {
     return rows.every((row) => {
       const cell = row.columns[colIndex]
-      return selectIsDocumentEmpty(store.getState(), cell.content.id)
+      return selectIsDocumentEmpty(store.getState(), {
+        plugins,
+        id: cell.content.id,
+      })
     })
   }
 

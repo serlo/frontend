@@ -67,12 +67,13 @@ export function InnerDocument({
       if (currentPendingChanges !== pendingChanges) {
         onChange({
           changed: selectHasPendingChanges(store.getState()),
-          getDocument: () => selectSerializedRootDocument(store.getState()),
+          getDocument: () =>
+            selectSerializedRootDocument(store.getState(), plugins),
         })
         pendingChanges = currentPendingChanges
       }
     })
-  }, [onChange])
+  }, [onChange, plugins])
 
   const strippedPlugins = plugins
 

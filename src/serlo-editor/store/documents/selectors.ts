@@ -3,8 +3,17 @@ import * as R from 'ramda'
 
 import { StoreSerializeHelpers } from '../../types/internal__plugin-state'
 import { createDeepEqualSelector } from '../helpers'
-import { selectPlugin } from '../plugins'
 import { State } from '../types'
+import {
+  PluginsContextPlugins,
+  getPluginByType,
+} from '@/serlo-editor/core/contexts/plugins-context'
+import { EditorPlugin } from '@/serlo-editor/plugin'
+
+interface DocumentsSelectorArgs {
+  plugins: PluginsContextPlugins
+  id: string
+}
 
 const selectSelf = (state: State) => state.documents
 
@@ -22,63 +31,76 @@ export const selectDocument = createSelector(
 )
 
 export const selectSerializedDocument = createDeepEqualSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state: State, id) => {
-    const doc = selectDocument(state, id)
-    if (!doc) return null
-    const plugin = selectPlugin(state, doc.plugin)
+  [(state: State) => state, (_state, args: DocumentsSelectorArgs) => args],
+  (state: State, { plugins, id }) => {
+    const document = selectDocument(state, id)
+    if (!document) return null
+    const plugin = getPluginByType(plugins, document.plugin)
     if (!plugin) return null
     const serializeHelpers: StoreSerializeHelpers = {
-      getDocument: (id: string) => selectSerializedDocument(state, id),
+      getDocument: (id: string) =>
+        selectSerializedDocument(state, { plugins, id }),
     }
     return {
-      plugin: doc.plugin,
+      plugin: document.plugin,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      state: plugin.state.serialize(doc.state, serializeHelpers),
+      state: (plugin.plugin as EditorPlugin).state.serialize(
+        document.state,
+        serializeHelpers
+      ),
     }
   }
 )
 
 export const selectSerializedDocumentWithoutIds = createDeepEqualSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state: State, id) => {
-    const doc = selectDocument(state, id)
-    if (!doc) return null
-    const plugin = selectPlugin(state, doc.plugin)
+  [(state: State) => state, (_state, args: DocumentsSelectorArgs) => args],
+  (state: State, { plugins, id }) => {
+    const document = selectDocument(state, id)
+    if (!document) return null
+    const plugin = getPluginByType(plugins, document.plugin)
     if (!plugin) return null
     const serializeHelpers: StoreSerializeHelpers = {
       getDocument: (id: string) =>
-        selectSerializedDocumentWithoutIds(state, id),
+        selectSerializedDocumentWithoutIds(state, { plugins, id }),
       omitId: true,
     }
 
     return {
-      plugin: doc.plugin,
+      plugin: document.plugin,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      state: plugin.state.serialize(doc.state, serializeHelpers),
+      state: (plugin.plugin as EditorPlugin).state.serialize(
+        document.state,
+        serializeHelpers
+      ),
     }
   }
 )
 
+// TODO: Too many casts
 export const selectIsDocumentEmpty = createSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state, id: string) => {
-    const doc = selectDocument(state, id)
-    if (!doc) return false
+  [(state: State) => state, (_state, args: DocumentsSelectorArgs) => args],
+  (state, { plugins, id }) => {
+    const document = selectDocument(state, id)
+    if (!document) return false
 
-    const plugin = selectPlugin(state, doc.plugin)
+    const plugin = getPluginByType(plugins, document.plugin)
     if (!plugin) return false
 
-    if (typeof plugin.isEmpty === 'function') {
+    if (typeof (plugin.plugin as EditorPlugin).isEmpty === 'function') {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const state = plugin.state.init(doc.state, () => {})
-      return plugin.isEmpty(state)
+      const state = (plugin.plugin as EditorPlugin).state.init(
+        document.state,
+        () => {}
+      )
+      return (plugin.plugin as EditorPlugin).isEmpty?.(state) || false
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const initialState = plugin.state.createInitialState({
+    const initialState = (
+      plugin.plugin as EditorPlugin
+    ).state.createInitialState({
       createDocument: () => {},
     })
-    return R.equals(doc.state, initialState)
+    return R.equals(document.state, initialState)
   }
 )

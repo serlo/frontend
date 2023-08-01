@@ -17,6 +17,7 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   EditorPlugin,
@@ -48,14 +49,18 @@ export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
 }
 
 function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
+  const { id } = props
   const { title, meta_description, 'course-page': children } = props.state
   const editorStrings = useEditorStrings()
   const courseStrings = editorStrings.templatePlugins.course
+  const plugins = usePlugins()
   const [courseNavOpen, setCourseNavOpen] = useState(true)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
-  const serializedState = selectSerializedDocument(store.getState(), props.id)
-    ?.state as StateTypeSerializedType<CourseTypePluginState>
+  const serializedState = selectSerializedDocument(store.getState(), {
+    plugins,
+    id,
+  })?.state as StateTypeSerializedType<CourseTypePluginState>
 
   if (!serializedState) return null
   const serializedPages = serializedState[

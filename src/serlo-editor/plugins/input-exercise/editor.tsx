@@ -3,18 +3,24 @@ import { useState } from 'react'
 import { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
 import { InputExerciseToolbar } from './toolbar'
-import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import {
+  AddButton,
+  InteractiveAnswer,
+  PreviewOverlay,
+} from '@/serlo-editor/editor-ui'
 import {
   selectFocused,
   selectIsDocumentEmpty,
   store,
   useAppSelector,
-} from '../../store'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
+} from '@/serlo-editor/store'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, focused } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
+  const plugins = usePlugins()
 
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
@@ -28,10 +34,10 @@ export function InputExerciseEditor(props: InputExerciseProps) {
       type={state.type.value}
       unit={state.unit.value}
       answers={state.answers.map(({ isCorrect, value, feedback }) => {
-        const isEmptyFeedback = selectIsDocumentEmpty(
-          store.getState(),
-          feedback.id
-        )
+        const isEmptyFeedback = selectIsDocumentEmpty(store.getState(), {
+          plugins,
+          id: feedback.id,
+        })
         return {
           isCorrect: isCorrect.value,
           value: value.value,

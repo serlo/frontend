@@ -29,10 +29,10 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
     const parent = selectParent(store.getState(), { plugins, id: pluginId })
     if (!parent) return
 
-    const document = selectSerializedDocumentWithoutIds(
-      store.getState(),
-      pluginId
-    )
+    const document = selectSerializedDocumentWithoutIds(store.getState(), {
+      plugins,
+      id: pluginId,
+    })
     if (!document) return
 
     dispatch(

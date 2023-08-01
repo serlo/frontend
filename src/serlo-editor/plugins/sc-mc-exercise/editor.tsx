@@ -3,21 +3,27 @@ import { useState } from 'react'
 import { ScMcExerciseProps } from '.'
 import { ScMcExerciseRenderer } from './renderer'
 import { ScMcExerciseToolbar } from './toolbar'
-import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
+import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { EditableContext } from '@/serlo-editor/core/contexts'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import {
+  AddButton,
+  InteractiveAnswer,
+  PreviewOverlay,
+} from '@/serlo-editor/editor-ui'
 import {
   store,
   selectFocused,
   selectIsDocumentEmpty,
   useAppSelector,
-} from '../../store'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditableContext } from '@/serlo-editor/core/contexts'
+} from '@/serlo-editor/store'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const focusedElement = useAppSelector(selectFocused)
 
   const { editable, focused, state } = props
   const editorStrings = useEditorStrings()
+  const plugins = usePlugins()
 
   const children = props.state.answers.flatMap((answer) => [
     answer.content.id,
@@ -105,6 +111,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   )
 
   function isEmpty(id: string) {
-    return selectIsDocumentEmpty(store.getState(), id)
+    return selectIsDocumentEmpty(store.getState(), { plugins, id })
   }
 }

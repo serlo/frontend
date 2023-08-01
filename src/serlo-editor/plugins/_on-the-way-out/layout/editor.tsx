@@ -67,7 +67,10 @@ export const LayoutRenderer: React.FunctionComponent<
     const documents: DocumentState[] = []
 
     props.state.forEach((item) => {
-      const element = selectSerializedDocument(store.getState(), item.child.id)
+      const element = selectSerializedDocument(store.getState(), {
+        plugins,
+        id: item.child.id,
+      })
 
       if (!element) return
       if (element.plugin === EditorPluginType.Rows) {
@@ -119,14 +122,14 @@ export const LayoutRenderer: React.FunctionComponent<
       explanationColumn: Column
       multimediaColumn: Column
     }) {
-      const explanation = selectSerializedDocument(
-        store.getState(),
-        explanationColumn.child.id
-      )
-      const multimedia = selectSerializedDocument(
-        store.getState(),
-        multimediaColumn.child.id
-      )
+      const explanation = selectSerializedDocument(store.getState(), {
+        plugins,
+        id: explanationColumn.child.id,
+      })
+      const multimedia = selectSerializedDocument(store.getState(), {
+        plugins,
+        id: multimediaColumn.child.id,
+      })
       if (!explanation || !multimedia) return
       dispatch(
         runReplaceDocumentSaga({
@@ -148,10 +151,10 @@ export const LayoutRenderer: React.FunctionComponent<
   }
 
   function isMultimediaColumn(column: Column) {
-    const columnDocument = selectSerializedDocument(
-      store.getState(),
-      column.child.id
-    )
+    const columnDocument = selectSerializedDocument(store.getState(), {
+      plugins,
+      id: column.child.id,
+    })
     if (!columnDocument || !(columnDocument.state instanceof Array))
       return false
 

@@ -3,6 +3,7 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons'
 import { UnsupportedPluginProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { selectSerializedDocument, store } from '@/serlo-editor/store'
@@ -11,13 +12,14 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 export const UnsupportedEditor: React.FunctionComponent<
   UnsupportedPluginProps
 > = (props) => {
-  const unsupportedStrings = useEditorStrings().plugins.unsupported
-
-  const unsupportedType = selectSerializedDocument(
-    store.getState(),
-    props.id
-  )?.plugin
   const { focused, id, editable } = props
+
+  const unsupportedStrings = useEditorStrings().plugins.unsupported
+  const plugins = usePlugins()
+  const unsupportedType = selectSerializedDocument(store.getState(), {
+    plugins,
+    id,
+  })?.plugin
 
   return (
     <>

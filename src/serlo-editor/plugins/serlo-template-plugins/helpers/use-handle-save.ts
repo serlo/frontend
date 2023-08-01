@@ -2,6 +2,7 @@ import { has } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
 
 import { SupportedTypesSerializedState } from '@/mutations/use-set-entity-mutation/types'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { store, selectSerializedRootDocument } from '@/serlo-editor/store'
 import { storeStateToLocalStorage } from '@/serlo-editor-integration/components/local-storage-notice'
 import { SaveContext } from '@/serlo-editor-integration/serlo-editor'
@@ -12,6 +13,7 @@ export function useHandleSave(
   showSubscriptionOptions?: boolean
 ) {
   const { onSave, entityNeedsReview } = useContext(SaveContext)
+  const plugins = usePlugins()
   const [pending, setPending] = useState(false)
   const [hasError, setHasError] = useState(false)
 
@@ -23,7 +25,7 @@ export function useHandleSave(
     }
   }, [visible])
 
-  const serializedRoot = selectSerializedRootDocument(store.getState())
+  const serializedRoot = selectSerializedRootDocument(store.getState(), plugins)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const serialized = has('state', serializedRoot) ? serializedRoot.state : null
 

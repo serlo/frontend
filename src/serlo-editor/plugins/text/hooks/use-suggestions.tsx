@@ -67,6 +67,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   const filteredOptions = useMemo(() => {
     return filterPlugins(plugins, allOptions, text, id)
+    // Plugins from context never change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allOptions, id, text])
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0

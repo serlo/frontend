@@ -54,7 +54,10 @@ export function EditorRowRenderer({
     item: () => {
       return {
         id: row.id,
-        serialized: selectSerializedDocument(store.getState(), row.id),
+        serialized: selectSerializedDocument(store.getState(), {
+          plugins,
+          id: row.id,
+        }),
         onDrop() {
           rows.set((list) => {
             const index = list.findIndex((id) => id === row.id)

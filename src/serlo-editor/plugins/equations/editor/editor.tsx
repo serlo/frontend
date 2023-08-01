@@ -157,10 +157,10 @@ export function EquationsEditor(props: EquationsProps) {
     return (
       <EquationsRenderer
         firstExplanation={
-          selectIsDocumentEmpty(
-            store.getState(),
-            state.firstExplanation.id
-          ) ? null : (
+          selectIsDocumentEmpty(store.getState(), {
+            plugins,
+            id: state.firstExplanation.id,
+          }) ? null : (
             <div className="serlo-p mb-0 [&_.plugin-wrapper-container]:!mb-0">
               {state.firstExplanation.render()}
             </div>
@@ -181,10 +181,10 @@ export function EquationsEditor(props: EquationsProps) {
         sign: sign.value as Sign,
         right: right.value,
         transform: transform.value,
-        explanation: selectIsDocumentEmpty(
-          store.getState(),
-          explanation.id
-        ) ? null : (
+        explanation: selectIsDocumentEmpty(store.getState(), {
+          plugins,
+          id: explanation.id,
+        }) ? null : (
           <div className="serlo-p mb-0 [&_.plugin-wrapper-container]:!mb-0">
             {explanation.render()}
           </div>
@@ -236,10 +236,10 @@ export function EquationsEditor(props: EquationsProps) {
                   {transformationTarget === TransformationTarget.Equation && (
                     <td />
                   )}
-                  {!selectIsDocumentEmpty(
-                    store.getState(),
-                    step.explanation.id
-                  ) ? (
+                  {!selectIsDocumentEmpty(store.getState(), {
+                    plugins,
+                    id: step.explanation.id,
+                  }) ? (
                     renderDownArrow()
                   ) : (
                     <td />
@@ -284,7 +284,10 @@ export function EquationsEditor(props: EquationsProps) {
         </tr>
         <tr className="h-8">
           <td />
-          {!selectIsDocumentEmpty(store.getState(), state.firstExplanation.id)
+          {!selectIsDocumentEmpty(store.getState(), {
+            plugins,
+            id: state.firstExplanation.id,
+          })
             ? renderDownArrow()
             : null}
         </tr>

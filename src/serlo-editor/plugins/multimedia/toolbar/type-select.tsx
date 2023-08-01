@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { MultimediaProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { getPluginTitle } from '@/serlo-editor/plugin/helpers/get-plugin-title'
 import {
   selectDocument,
@@ -22,6 +23,7 @@ export const MultimediaTypeSelect = ({
 }: MultimediaTypeSelectProps) => {
   const [stateCache, setStateCache] = useState<Record<string, unknown>>({})
   const pluginStrings = useEditorStrings().plugins
+  const plugins = usePlugins()
   const currentPluginType = useAppSelector((storeState) =>
     selectDocument(storeState, state.id)
   )?.plugin
@@ -51,10 +53,10 @@ export const MultimediaTypeSelect = ({
   function handlePluginTypeChange(newPluginType: string) {
     // store old multimedia state before replacing
     setStateCache((current) => {
-      const oldDocumentSerialized = selectSerializedDocument(
-        store.getState(),
-        state.id
-      )
+      const oldDocumentSerialized = selectSerializedDocument(store.getState(), {
+        plugins,
+        id: state.id,
+      })
       return oldDocumentSerialized
         ? {
             ...current,
