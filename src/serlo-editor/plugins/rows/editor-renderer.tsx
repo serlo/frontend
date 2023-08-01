@@ -1,4 +1,3 @@
-import { faCopy, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
@@ -6,7 +5,6 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '.'
 import { useCanDrop } from './components/use-can-drop'
-import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
@@ -15,7 +13,6 @@ import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
-  selectSerializedDocumentWithoutIds,
   store,
 } from '@/serlo-editor/store'
 
@@ -167,44 +164,7 @@ export function EditorRowRenderer({
 
   const pluginProps = React.useMemo(() => {
     return {
-      renderSettings(children: React.ReactNode, { close }: { close(): void }) {
-        return (
-          <>
-            {children}
-            <hr className="mb-4" />
-            <div className="flex">
-              <div className="flex-[1]">
-                <button
-                  className="serlo-button-editor-secondary mr-8 mt-4 text-sm"
-                  onClick={() => {
-                    const document = selectSerializedDocumentWithoutIds(
-                      store.getState(),
-                      row.id
-                    )
-                    if (!document) return
-                    rows.insert(index, document)
-                    close()
-                  }}
-                >
-                  <FaIcon icon={faCopy} />{' '}
-                  {editorStrings.plugins.rows.duplicate}
-                </button>
-                <button
-                  className="serlo-button-editor-secondary mr-2 mt-4 text-sm"
-                  onClick={() => {
-                    rows.remove(index)
-                    close()
-                  }}
-                >
-                  <FaIcon icon={faTrashAlt} />{' '}
-                  {editorStrings.plugins.rows.remove}
-                </button>
-              </div>
-            </div>
-          </>
-        )
-      },
-      renderToolbar(children: React.ReactNode) {
+      renderSideToolbar(children: React.ReactNode) {
         return (
           <>
             <PluginToolbarButton
@@ -218,7 +178,7 @@ export function EditorRowRenderer({
         )
       },
     }
-  }, [editorStrings, rows, row.id, index, drag])
+  }, [editorStrings, drag])
 
   setTimeout(() => {
     dragPreview(drop(dropContainer))

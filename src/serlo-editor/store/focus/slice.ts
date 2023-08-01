@@ -11,7 +11,7 @@ export const focusSlice = createSlice({
   name: 'focus',
   initialState,
   reducers: {
-    focus(_state, action: PayloadAction<string>) {
+    focus(_state, action: PayloadAction<string | null>) {
       return action.payload
     },
     focusNext(state, action: PayloadAction<FocusTreeNode | null>) {

@@ -1,5 +1,3 @@
-import styled from 'styled-components'
-
 import { LayoutPluginState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
@@ -13,40 +11,6 @@ import {
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 import { RowsPlugin } from '@/serlo-editor-integration/types/legacy-editor-to-editor-types'
-
-const LayoutContainer = styled.div({
-  display: 'flex',
-  flexDirection: 'row',
-  flexWrap: 'wrap',
-  alignItems: 'flex-start',
-})
-
-const ChildContainer = styled.div<{ width: number }>(({ width }) => {
-  return {
-    width: `${(width / 12) * 100}%`,
-    '@media (max-width: 480px)': {
-      width: '100%',
-    },
-  }
-})
-const ConvertInfo = styled.div({
-  padding: '5px',
-  backgroundColor: '#f2dede',
-  color: '#a94442',
-  border: '1px solid #ebccd1',
-  textAlign: 'center',
-})
-
-const ButtonContainer = styled.div({ display: 'flex', flexDirection: 'row' })
-
-const ConvertButton = styled.button({
-  borderRadius: '5px',
-  margin: '5px',
-  border: 'none',
-  outline: 'none',
-  backgroundColor: 'white',
-  '&:hover': { backgroundColor: '#ebccd1' },
-})
 
 export const LayoutRenderer: React.FunctionComponent<
   EditorPluginProps<LayoutPluginState> & {
@@ -63,29 +27,39 @@ export const LayoutRenderer: React.FunctionComponent<
   return (
     <>
       {props.editable ? (
-        <ConvertInfo>
+        <div className="border border-gray-400 bg-[#f2dede] p-1 text-center text-[#a94442]">
           {editorStrings.plugins.layout.toDragConvert}
-          <ButtonContainer>
-            <ConvertButton onClick={convertToRow}>
+          <div className="flex flex-row">
+            <button
+              className="serlo-button-editor-secondary"
+              onClick={convertToRow}
+            >
               {editorStrings.plugins.layout.oneColumnLayout}
-            </ConvertButton>
+            </button>
             {canConvertToMultimedia() ? (
-              <ConvertButton onClick={convertToMultimedia}>
+              <button
+                className="serlo-button-editor-secondary"
+                onClick={convertToMultimedia}
+              >
                 {editorStrings.plugins.layout.multimediaTitle}
-              </ConvertButton>
+              </button>
             ) : null}
-          </ButtonContainer>
-        </ConvertInfo>
+          </div>
+        </div>
       ) : null}
-      <LayoutContainer>
+      <div className="flex flex-row flex-wrap items-start">
         {props.state.map((item, index) => {
           return (
-            <ChildContainer key={index} width={item.width.value}>
+            <div
+              key={index}
+              style={{ width: `${(item.width.value / 12) * 100}%` }}
+              className="[@media(max-width:480px)]:!w-full"
+            >
               {item.child.render()}
-            </ChildContainer>
+            </div>
           )
         })}
-      </LayoutContainer>
+      </div>
     </>
   )
 

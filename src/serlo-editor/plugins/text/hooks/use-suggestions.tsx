@@ -1,7 +1,8 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import { useContext, useState, useEffect, useRef, useMemo } from 'react'
+import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
+import { Key } from 'ts-key-enum'
 
-import { AllowedChildPlugins } from '../../rows'
 import {
   EditorStrings,
   useEditorStrings,
@@ -12,7 +13,14 @@ import {
   getPluginByType,
   usePlugins,
 } from '@/serlo-editor/core/contexts/plugins-context'
-import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
+import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
+import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
+import {
+  runReplaceDocumentSaga,
+  selectAncestorPluginTypes,
+  store,
+  useAppDispatch,
+} from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
@@ -29,11 +37,9 @@ export interface SuggestionOption {
   icon?: JSX.Element
 }
 
-const hotKeysMap = {
-  SELECT_UP: 'up',
-  SELECT_DOWN: 'down',
-  INSERT: 'enter',
-  ESCAPE: 'escape',
+const hotkeyConfig = {
+  enableOnContentEditable: true,
+  scopes: ['global'],
 }
 
 export const useSuggestions = (args: useSuggestionsArgs) => {
@@ -48,16 +54,33 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const allPlugins = useContext(PluginsContext)
     .filter(({ visible }) => visible)
     .map(({ type }) => type)
-  const allowed = useContext(AllowedChildPlugins)
+  const allowedPlugins = useContext(AllowedChildPlugins)
   const pluginsData = usePlugins()
 
-  const allOptions = (allowed ?? allPlugins).map((type) =>
-    createOption(type, pluginsStrings, pluginsData)
-  )
+  const allOptions = useMemo(() => {
+    return (allowedPlugins ?? allPlugins).map((type) => {
+      return createOption(type, pluginsStrings, pluginsData)
+    })
+    // Should only update when allowed plugins change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowedPlugins])
 
-  const filteredOptions = filterPlugins(allOptions, text)
+  const filteredOptions = useMemo(() => {
+    return filterPlugins(allOptions, text, id)
+  }, [allOptions, id, text])
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
+
+  const { enableScope, disableScope } = useHotkeysContext()
+
+  useEffect(() => {
+    if (showSuggestions) {
+      disableScope('root-up-down-enter')
+    } else {
+      enableScope('root-up-down-enter')
+    }
+  }, [enableScope, disableScope, showSuggestions])
+
   const options = showSuggestions ? filteredOptions : []
 
   const closure = useRef({
@@ -77,34 +100,33 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
   }, [options.length, selected])
 
-  function handleHotkeys(event: React.KeyboardEvent) {
-    if (closure.current.showSuggestions) {
-      if (['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(event.key)) {
-        event.preventDefault()
-        return
-      }
-    }
-  }
+  useHotkeys([Key.ArrowUp, Key.ArrowDown], handleSelectionChange, hotkeyConfig)
+  useHotkeys(Key.Enter, handleSuggestionInsert, hotkeyConfig)
+  useHotkeys(Key.Escape, handleSuggestionsMenuClose, hotkeyConfig)
 
-  const handleSelectionChange = (direction: 'up' | 'down') => () => {
-    if (closure.current.showSuggestions) {
-      setSelected((currentSelected) => {
-        const optionsCount = closure.current.options.length
-        if (optionsCount === 0) return 0
+  function handleSelectionChange(event: KeyboardEvent) {
+    if (!closure.current.showSuggestions) return
 
-        const isFirstAndUpPressed = direction === 'up' && currentSelected === 0
-        const isLastAndDownPressed =
-          direction === 'down' && currentSelected === optionsCount - 1
-        if (isFirstAndUpPressed || isLastAndDownPressed) return currentSelected
+    event.preventDefault()
+    event.stopPropagation()
 
-        const value = direction === 'up' ? -1 : 1
-        const selectedElementIndex = currentSelected + value
+    setSelected((currentSelected) => {
+      const optionsCount = closure.current.options.length
+      if (optionsCount === 0) return 0
 
-        scrollSuggestionIntoView(selectedElementIndex)
+      const isFirstAndUpPressed =
+        event.key === Key.ArrowUp && currentSelected === 0
+      const isLastAndDownPressed =
+        event.key === Key.ArrowDown && currentSelected === optionsCount - 1
+      if (isFirstAndUpPressed || isLastAndDownPressed) return currentSelected
 
-        return selectedElementIndex
-      })
-    }
+      const value = event.key === Key.ArrowUp ? -1 : 1
+      const selectedElementIndex = currentSelected + value
+
+      scrollSuggestionIntoView(selectedElementIndex)
+
+      return selectedElementIndex
+    })
   }
 
   function scrollSuggestionIntoView(index: number) {
@@ -113,22 +135,25 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     selectedElement?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
   }
 
-  function handleSuggestionInsert() {
-    if (closure.current.showSuggestions) {
-      const option = closure.current.options[closure.current.selected]
-      if (!option) return
-      setTimeout(() => {
-        insertPlugin(option.pluginType)
-      })
-    }
+  function handleSuggestionInsert(event: KeyboardEvent) {
+    if (!closure.current.showSuggestions) return
+
+    event.preventDefault()
+
+    const option = closure.current.options[closure.current.selected]
+
+    if (!option) return
+
+    setTimeout(() => {
+      insertPlugin(option.pluginType)
+    })
   }
 
   function insertPlugin(pluginType: EditorPluginType | string) {
-    // If the text plugin is selected from the suggestions list,
-    // just clear the editor
+    // If the text plugin is selected from the suggestions list, clear the editor
     if (pluginType === EditorPluginType.Text) {
       editor.deleteBackward('line')
-      // in browsers other than chrome the cursor is sometimes in front of the `/` so to make sure:
+      // In browsers other than chrome, the cursor is sometimes in front of the `/`
       editor.deleteForward('line')
       return
     }
@@ -137,17 +162,12 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     dispatch(runReplaceDocumentSaga({ id, plugins, pluginType }))
   }
 
-  const hotKeysHandlers = {
-    SELECT_UP: handleSelectionChange('up'),
-    SELECT_DOWN: handleSelectionChange('down'),
-    INSERT: handleSuggestionInsert,
-    ESCAPE: () => {
-      // We delete the line with the slash and therefore, close the suggestions
-      // upon next render
-      if (closure.current.showSuggestions) {
-        editor.deleteBackward('line')
-      }
-    },
+  function handleSuggestionsMenuClose(event: KeyboardEvent) {
+    if (!closure.current.showSuggestions) return
+
+    event.preventDefault()
+
+    editor.deleteBackward('line')
   }
 
   return {
@@ -159,11 +179,6 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
       onMouseDown: insertPlugin,
       onMouseMove: setSelected,
     },
-    hotKeysProps: {
-      keyMap: hotKeysMap,
-      handlers: hotKeysHandlers,
-    },
-    handleHotkeys,
   }
 }
 
@@ -193,9 +208,23 @@ function createOption(
   return { pluginType, title, description, icon }
 }
 
-function filterPlugins(plugins: SuggestionOption[], text: string) {
-  const search = text.replace('/', '').toLowerCase()
+function filterPlugins(
+  allPlugins: SuggestionOption[],
+  text: string,
+  id: string
+) {
+  // Filter out plugins which can't be nested inside of the current plugin
+  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+  let plugins = []
+  if (typesOfAncestors === null) {
+    plugins = allPlugins
+  } else {
+    plugins = allPlugins.filter((plugin) =>
+      checkIsAllowedNesting(plugin.pluginType, typesOfAncestors)
+    )
+  }
 
+  const search = text.replace('/', '').toLowerCase()
   if (!search.length) return plugins
 
   const startingWithSearchString = plugins.filter(({ title }) => {

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useState } from 'react'
 
-import { Renderer } from '../box/renderer'
+import { BoxRenderer } from '../box/renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { tw } from '@/helper/tw'
 
@@ -52,9 +52,9 @@ export function SolutionRenderer({
           </p>
         ) : null}
         {strategy ? (
-          <Renderer boxType="approach" anchorId="strategy">
+          <BoxRenderer boxType="approach" anchorId="strategy">
             <>{strategy}</>
-          </Renderer>
+          </BoxRenderer>
         ) : null}
         {steps}
       </div>

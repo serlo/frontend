@@ -35,7 +35,7 @@ export function ArticleRelatedMagicInput({
         UuidType.TaxonomyTerm,
       ]}
       supportedTaxonomyTypes={[TaxonomyTermType.ExerciseFolder]}
-      unsupportedIds={[entityId]}
+      unsupportedIds={entityId ? [entityId] : []}
     />
   )
 

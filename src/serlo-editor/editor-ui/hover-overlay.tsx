@@ -1,28 +1,6 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
-import styled from 'styled-components'
 
-import { colors } from '@/helper/colors'
-
-const HoverOverlayWrapper = styled.div({
-  position: 'absolute',
-  top: '-10000px',
-  left: '-10000px',
-  opacity: 0,
-  transition: 'opacity 0.5s',
-  zIndex: 95,
-  whiteSpace: 'nowrap',
-  boxShadow: '0 1px 4px rgba(0, 0, 0, 0.25)',
-  backgroundColor: '#fff',
-  color: colors.almostBlack,
-  borderRadius: '3px',
-  overflow: 'auto',
-  '& a': {
-    color: colors.almostBlack,
-    '&:hover': {
-      color: 'rgb(70, 155, 255)',
-    },
-  },
-})
+import { tw } from '@/helper/tw'
 
 type HoverPosition = 'above' | 'below'
 
@@ -99,5 +77,16 @@ export function HoverOverlay(props: HoverOverlayProps) {
     windowSelection,
   ])
 
-  return <HoverOverlayWrapper ref={overlay}>{children}</HoverOverlayWrapper>
+  return (
+    <div
+      ref={overlay}
+      className={tw`
+        absolute -left-[10000px] -top-[10000px] z-[95] overflow-auto whitespace-nowrap
+        rounded-md bg-white text-almost-black opacity-0 shadow-modal
+        transition-opacity [&_a]:text-almost-black [&_a]:hover:text-brand
+      `}
+    >
+      {children}
+    </div>
+  )
 }

@@ -14,7 +14,7 @@ interface InputExersiseRendererProps {
     isCorrect: boolean
     feedback: JSX.Element | null
   }[]
-  onEvaluate?: (correct: boolean) => void
+  onEvaluate?: (correct: boolean, val: string) => void
 }
 
 interface FeedbackData {
@@ -37,7 +37,7 @@ export function InputExerciseRenderer({
 
   function evaluate() {
     const feedbackData = checkAnswer()
-    if (onEvaluate) onEvaluate(feedbackData.correct)
+    if (onEvaluate) onEvaluate(feedbackData.correct, value)
     setFeedback(feedbackData)
   }
 

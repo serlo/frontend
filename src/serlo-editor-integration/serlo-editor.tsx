@@ -70,7 +70,6 @@ export function SerloEditor({
     parentType: type,
   })
   return (
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
     >

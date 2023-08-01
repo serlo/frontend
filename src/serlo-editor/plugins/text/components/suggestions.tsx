@@ -1,9 +1,7 @@
-import styled from 'styled-components'
-
 import type { SuggestionOption } from '../hooks/use-suggestions'
 import IconFallback from '@/assets-webkit/img/editor/icon-fallback.svg'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { colors } from '@/helper/colors'
+import { tw } from '@/helper/tw'
 
 interface SuggestionsProps {
   options: SuggestionOption[]
@@ -12,29 +10,6 @@ interface SuggestionsProps {
   onMouseDown: (pluginType: string) => void
   onMouseMove: (index: number) => void
 }
-
-const SuggestionIconWrapper = styled.div({
-  border: '1px solid transparent',
-  flex: '0 0 95px',
-  marginRight: '12px',
-  borderRadius: '3px',
-  '& > svg': {
-    borderRadius: '3px',
-  },
-})
-
-const Suggestion = styled.div({
-  padding: '10px 20px',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  '&:hover, &[data-active="true"]': {
-    backgroundColor: colors.editorPrimary50,
-    [SuggestionIconWrapper]: {
-      border: '1px solid #ddd',
-    },
-  },
-})
 
 export const Suggestions = ({
   options,
@@ -53,7 +28,7 @@ export const Suggestions = ({
     <div ref={suggestionsRef} className="max-h-[387px] max-w-[620px]">
       {options.map(({ pluginType, title, description, icon }, index) => {
         return (
-          <Suggestion
+          <div
             key={index}
             data-active={index === selected}
             onMouseDown={(event: React.MouseEvent) => {
@@ -63,15 +38,24 @@ export const Suggestions = ({
             onMouseMove={() => {
               onMouseMove(index)
             }}
+            className={tw`
+              group/suggestion flex cursor-pointer items-center px-5 py-2.5
+              hover:bg-editor-primary-50 data-[active=true]:bg-editor-primary-50
+            `}
           >
-            <SuggestionIconWrapper>
+            <div
+              className={tw`
+               mr-3 flex-[0_0_95px] rounded-md border border-transparent group-hover/suggestion:border-gray-300
+               group-data-[active=true]/suggestion:border-gray-300 [&>svg]:rounded-md
+              `}
+            >
               {icon ?? <IconFallback />}
-            </SuggestionIconWrapper>
+            </div>
             <div>
               <h5 className="text-base font-bold">{title}</h5>
               <p className="whitespace-pre-wrap text-base">{description}</p>
             </div>
-          </Suggestion>
+          </div>
         )
       })}
     </div>
