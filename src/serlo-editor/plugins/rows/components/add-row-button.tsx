@@ -21,7 +21,7 @@ export function AddRowButton({
   if (visuallyEmphasized)
     return (
       <button
-        className="serlo-button-editor-secondary"
+        className="qa-add-new-plugin-row-button serlo-button-editor-secondary"
         onClick={onClick}
         title={rowsStrings.addAnElement}
       >
@@ -39,7 +39,8 @@ export function AddRowButton({
           hover:cursor-pointer hover:text-editor-primary hover:opacity-100
           group-hover:opacity-60
           `,
-          focused ? 'opacity-60' : 'opacity-0'
+          focused ? 'opacity-60' : 'opacity-0',
+          'qa-add-new-plugin-row-button'
         )}
         title={rowsStrings.addAnElement}
         onClick={onClick}
