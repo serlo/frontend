@@ -4,7 +4,6 @@ import { useCallback } from 'react'
 import { AnchorLinkCopyTool } from './anchor-link-copy-tool'
 import { DropdownButton } from './dropdown-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import {
   insertPluginChildAfter,
   removePluginChild,
@@ -23,7 +22,6 @@ interface PluginDefaultToolsProps {
 export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const dispatch = useAppDispatch()
   const pluginStrings = useEditorStrings().plugins
-  const plugins = usePlugins()
 
   const handleDuplicatePlugin = useCallback(() => {
     const parent = selectParent(store.getState(), pluginId)
@@ -40,10 +38,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         parent: parent.id,
         sibling: pluginId,
         document,
-        plugins,
       })
     )
-  }, [dispatch, pluginId, plugins])
+  }, [dispatch, pluginId])
 
   const handleRemovePlugin = useCallback(() => {
     const parent = selectParent(store.getState(), pluginId)
@@ -58,7 +55,6 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
           parent: parent.id,
           sibling: pluginId,
           document: { plugin: EditorPluginType.Text },
-          plugins,
         })
       )
     }
@@ -67,10 +63,9 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
       removePluginChild({
         parent: parent.id,
         child: pluginId,
-        plugins,
       })
     )
-  }, [dispatch, pluginId, plugins])
+  }, [dispatch, pluginId])
 
   return (
     <>

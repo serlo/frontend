@@ -64,11 +64,13 @@ export function SerloEditor({
 
   const editorStrings = loggedInData.strings.editor
 
-  const plugins = createPlugins({
+  // simplest way to provide plugins to editor that can also easily be adapted by edusharing
+  globalThis.EditorContextPlugins = createPlugins({
     editorStrings,
     instance: lang,
     parentType: type,
   })
+
   return (
     <SaveContext.Provider
       value={{ onSave, userCanSkipReview, entityNeedsReview }}
@@ -76,7 +78,6 @@ export function SerloEditor({
       <LocalStorageNotice useStored={useStored} setUseStored={setUseStored} />
       <MathSpan formula="" /> {/* preload formula plugin */}
       <Editor
-        plugins={plugins}
         initialState={useStored ? getStateFromLocalStorage()! : initialState}
         editable
         onChange={({ changed, getDocument }) => {

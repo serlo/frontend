@@ -7,12 +7,7 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
-import {
-  PluginsContext,
-  PluginsContextPlugins,
-  getPluginByType,
-  usePlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
+import { getContextPlugins } from '@/serlo-editor/plugin/helpers/context-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
@@ -50,16 +45,14 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const pluginsStrings = useEditorStrings().plugins
   const text = Node.string(editor)
 
-  const plugins = usePlugins()
-  const allPlugins = useContext(PluginsContext)
+  const allPlugins = getContextPlugins()
     .filter(({ visible }) => visible)
     .map(({ type }) => type)
   const allowedPlugins = useContext(AllowedChildPlugins)
-  const pluginsData = usePlugins()
 
   const allOptions = useMemo(() => {
     return (allowedPlugins ?? allPlugins).map((type) => {
-      return createOption(type, pluginsStrings, pluginsData)
+      return createOption(type, pluginsStrings)
     })
     // Should only update when allowed plugins change
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,7 +152,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
 
     // Otherwise, replace the text plugin with the selected plugin
-    dispatch(runReplaceDocumentSaga({ id, plugins, pluginType }))
+    dispatch(runReplaceDocumentSaga({ id, pluginType }))
   }
 
   function handleSuggestionsMenuClose(event: KeyboardEvent) {
@@ -184,10 +177,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
 function createOption(
   pluginType: string,
-  allPluginStrings: EditorStrings['plugins'],
-  allPluginsData: PluginsContextPlugins
+  allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
-  const pluginData = getPluginByType(allPluginsData, pluginType)
+  const pluginData = getContextPlugins().find(
+    (plugin) => plugin.type === pluginType
+  )
 
   if (!pluginData) return { pluginType, title: pluginType }
 

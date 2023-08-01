@@ -19,11 +19,7 @@ import {
   runCommitActionToHistorySaga,
   runCommitTemporaryActionToHistorySaga,
 } from '../history'
-import {
-  getPluginByType,
-  PluginsContextPlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
-import { EditorPlugin, StateType } from '@/serlo-editor/plugin'
+import { getPlugin } from '@/serlo-editor/plugin/helpers/context-plugins'
 
 export function* documentsSaga() {
   yield all([
@@ -33,7 +29,7 @@ export function* documentsSaga() {
 }
 
 function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
-  const { id, plugins, state: stateHandler, reverse } = action.payload
+  const { id, state: stateHandler, reverse } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const document: ReturnType<typeof selectDocument> = yield select(
     selectDocument,
@@ -46,8 +42,7 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
     handleRecursiveInserts,
     (helpers: StoreDeserializeHelpers) => {
       return stateHandler.initial(document.state, helpers)
-    },
-    plugins
+    }
   )
 
   const createChange = (state: unknown): ReversibleAction => {
@@ -123,8 +118,7 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
           handleRecursiveInserts,
           (helpers: StoreDeserializeHelpers) => {
             return updater(currentDocument.state, helpers)
-          },
-          plugins
+          }
         )
       payload.callback(resolveActions, pureResolveState)
       if (payload.resolve || payload.reject) {
@@ -137,23 +131,19 @@ function* changeDocumentSaga(action: ReturnType<typeof runChangeDocumentSaga>) {
 function* replaceDocumentSaga(
   action: ReturnType<typeof runReplaceDocumentSaga>
 ) {
-  const { id, plugins, pluginType } = action.payload
+  const { id, pluginType } = action.payload
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const currentDocument: ReturnType<typeof selectDocument> = yield select(
     selectDocument,
     id
   )
   if (!currentDocument) return
-  const contextPlugin = getPluginByType(plugins, pluginType)
-  if (!contextPlugin) {
+  const plugin = getPlugin(pluginType)
+  if (!plugin) {
     // eslint-disable-next-line no-console
     console.warn(`Invalid plugin '${pluginType}'`)
     return
   }
-  const plugin: EditorPlugin<
-    StateType<any, any, any>,
-    {}
-  > = contextPlugin.plugin
   const pendingDocs: {
     id: string
     plugin: string
@@ -174,7 +164,6 @@ function* replaceDocumentSaga(
   const [actions]: [ReversibleAction[], unknown] = yield call(
     handleRecursiveInserts,
     () => {},
-    plugins,
     pendingDocs
   )
 
@@ -202,7 +191,6 @@ interface ChannelAction {
 
 export function* handleRecursiveInserts(
   act: (helpers: StoreDeserializeHelpers) => unknown,
-  plugins: PluginsContextPlugins,
   initialDocuments: { id: string; plugin: string; state?: unknown }[] = []
 ) {
   const actions: ReversibleAction[] = []
@@ -218,16 +206,12 @@ export function* handleRecursiveInserts(
   }
   const result = act(helpers)
   for (let doc; (doc = pendingDocs.pop()); ) {
-    const contextPlugin = getPluginByType(plugins, doc.plugin)
-    if (!contextPlugin) {
+    const plugin = getPlugin(doc.plugin)
+    if (!plugin) {
       // eslint-disable-next-line no-console
       console.warn(`Invalid plugin '${doc.plugin}'`)
       continue
     }
-    const plugin: EditorPlugin<
-      StateType<any, any, any>,
-      {}
-    > = contextPlugin.plugin
     let state: unknown
     if (doc.state === undefined) {
       state = plugin.state.createInitialState(helpers)

@@ -6,9 +6,9 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import { RowsPluginConfig, RowsPluginState } from '.'
 import { useCanDrop } from './components/use-can-drop'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
+import { PluginsContextPlugins } from '@/serlo-editor/plugin/helpers/context-plugins'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,

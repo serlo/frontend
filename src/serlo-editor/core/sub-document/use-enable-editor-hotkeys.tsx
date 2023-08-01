@@ -15,7 +15,6 @@ import {
   useAppSelector,
   selectIsDocumentEmpty,
 } from '../../store'
-import { usePlugins } from '../contexts/plugins-context'
 import { EditorPlugin } from '@/serlo-editor/plugin'
 
 export const useEnableEditorHotkeys = (
@@ -24,7 +23,6 @@ export const useEnableEditorHotkeys = (
   isFocused: boolean
 ) => {
   const dispatch = useAppDispatch()
-  const plugins = usePlugins()
   const isDocumentEmpty = useAppSelector((state) =>
     selectIsDocumentEmpty(state, id)
   )
@@ -91,7 +89,6 @@ export const useEnableEditorHotkeys = (
           insertPluginChildAfter({
             parent: parent.id,
             sibling: id,
-            plugins,
           })
         )
       })
@@ -117,7 +114,7 @@ export const useEnableEditorHotkeys = (
           } else if (e.key === 'Delete') {
             dispatch(focusNext(selectFocusTree(store.getState())))
           }
-          dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))
+          dispatch(removePluginChild({ parent: parent.id, child: id }))
         }
       })
     }
