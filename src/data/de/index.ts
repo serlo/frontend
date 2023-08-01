@@ -602,14 +602,14 @@ export const loggedInData = {
         anchor: {
           title: "Sprungmarke",
           description: "Füge eine Sprungmarke innerhalb deines Inhalts hinzu.",
-          identifier: 'Identifier (e.g. "long-explanation")',
+          identifier: "Ziel-Name (z.B. \"lange-erlaerung\")",
           anchorId: "Name der Sprungmarke"
         },
         box: {
           title: "Box",
           description: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
           type: "Art der Box",
-          typeTooltip: 'Choose the type of the box',
+          typeTooltip: "Wähle die Art der Box",
           titlePlaceholder: "(optionaler Titel)",
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
@@ -645,7 +645,7 @@ export const loggedInData = {
         geogebra: {
           title: 'GeoGebra Applet',
           description: "Binde Applets von GeoGebra Materials via Link oder ID ein.",
-          chooseApplet: 'Choose Applet',
+          chooseApplet: "Applet auswählen",
           urlOrId: "GeoGebra Materials URL oder ID"
         },
         highlight: {
@@ -654,14 +654,14 @@ export const loggedInData = {
           clickAndEnter: "Klicke hier und füge deinen Quellcode ein…",
           enterHere: "Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.",
           language: "Programmiersprache",
-          languageTooltip: 'Choose language for syntax highlighting',
-          showLineNumbers: 'Line numbers',
-          lineNumbersTooltip: 'Should users see line numbers?'
+          languageTooltip: "Wähle die Sprache für's Syntax-Highlighting",
+          showLineNumbers: "Zeilennummern",
+          lineNumbersTooltip: "Sollten die Besucher*innen Zeilennummern sehen?"
         },
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          upload: 'Upload',
+          upload: "Hochladen",
           imageUrl: "Bild-URL",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
@@ -721,7 +721,7 @@ export const loggedInData = {
           title: "Zeilen",
           searchForTools: "Suche hier nach Tools…",
           duplicate: "Duplizieren",
-          copyAnchorLink: "Copy link to this element",
+          copyAnchorLink: "Link zu diesem Element kopieren",
           remove: "Löschen",
           close: "Schließen",
           dragElement: "Verschiebe das Element innerhalb des Dokuments",
@@ -787,7 +787,7 @@ export const loggedInData = {
             formula: "[neue Formel]",
             visual: "visuell",
             latex: 'LaTeX',
-            latexEditorTitle: 'LaTeX editor',
+            latexEditorTitle: "LaTeX-Editor",
             onlyLatex: "Nur LaTeX verfügbar",
             shortcuts: "Tastenkürzel",
             fraction: "Bruch",
@@ -957,7 +957,7 @@ export const loggedInData = {
         author: "Verfasser",
         createdAt: "Zeitstempel",
         ready: "Bereit zum Speichern?",
-        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
+        anchorLinkWarning: "Dieser Link funktioniert nur im Frontend und für Inhalte, die eine etwas relativ neue akzeptierte Bearbeitung haben."
       },
       taxonomy: {
         title: "Titel"
