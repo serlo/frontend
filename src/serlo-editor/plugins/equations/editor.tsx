@@ -5,6 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { includes } from 'ramda'
 import { useContext, useEffect, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { EquationsProps, stepProps } from '.'
 import { toTransformationTarget, TransformationTarget } from './editor-renderer'
@@ -17,11 +18,7 @@ import { renderSignToString, Sign } from './sign'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import {
-  HotKeys,
-  PreferenceContext,
-  setDefaultPreference,
-} from '@/serlo-editor/core'
+import { PreferenceContext, setDefaultPreference } from '@/serlo-editor/core'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { MathEditor, MathRenderer } from '@/serlo-editor/math'
 import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
@@ -84,6 +81,58 @@ export function EquationsEditor(props: EquationsProps) {
     },
   })
 
+  useHotkeys(
+    'tab',
+    (event) => {
+      handleKeyDown(event, () => {
+        if (
+          gridFocus.isFocused({
+            row: state.steps.length - 1,
+            column: lastColumn(transformationTarget),
+          })
+        ) {
+          const index = state.steps.length
+          insertNewEquationAt(index)
+          gridFocus.setFocus({
+            row: index - 1,
+            column: StepSegment.Explanation,
+          })
+        } else {
+          gridFocus.moveRight()
+        }
+      })
+    },
+    {
+      scopes: ['global'],
+      enabled: focused,
+    }
+  )
+
+  useHotkeys(
+    'shift+tab',
+    (event) => {
+      handleKeyDown(event, () => gridFocus.moveLeft())
+    },
+    {
+      scopes: ['global'],
+      enabled: focused,
+    }
+  )
+
+  useHotkeys(
+    'return',
+    (event) => {
+      handleKeyDown(event, () => {
+        if (!gridFocus.focus || gridFocus.focus === 'firstExplanation') return
+        insertNewEquationWithFocus(gridFocus.focus.row + 1)
+      })
+    },
+    {
+      scopes: ['global'],
+      enabled: focused,
+    }
+  )
+
   useEffect(() => {
     if (nestedFocus) {
       gridFocus.setFocus({
@@ -139,45 +188,7 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   return (
-    <HotKeys
-      allowChanges
-      keyMap={{
-        FOCUS_NEXT_OR_INSERT: 'tab',
-        FOCUS_PREVIOUS: 'shift+tab',
-        INSERT: 'return',
-      }}
-      handlers={{
-        FOCUS_NEXT_OR_INSERT: (e) => {
-          handleKeyDown(e, () => {
-            if (
-              gridFocus.isFocused({
-                row: state.steps.length - 1,
-                column: lastColumn(transformationTarget),
-              })
-            ) {
-              const index = state.steps.length
-              insertNewEquationAt(index)
-              gridFocus.setFocus({
-                row: index - 1,
-                column: StepSegment.Explanation,
-              })
-            } else {
-              gridFocus.moveRight()
-            }
-          })
-        },
-        FOCUS_PREVIOUS: (e) => {
-          handleKeyDown(e, () => gridFocus.moveLeft())
-        },
-        INSERT: (e) => {
-          handleKeyDown(e, () => {
-            if (!gridFocus.focus || gridFocus.focus === 'firstExplanation')
-              return
-            insertNewEquationWithFocus(gridFocus.focus.row + 1)
-          })
-        },
-      }}
-    >
+    <>
       {props.renderIntoSettings(
         <div>
           <label htmlFor="transformationTarget">{equationsStrings.mode}:</label>{' '}
@@ -257,7 +268,7 @@ export function EquationsEditor(props: EquationsProps) {
 
         {renderAddButton()}
       </div>
-    </HotKeys>
+    </>
   )
 
   function renderFirstExplanation() {
@@ -284,9 +295,9 @@ export function EquationsEditor(props: EquationsProps) {
     )
   }
 
-  function handleKeyDown(e: KeyboardEvent | undefined, next: () => void) {
+  function handleKeyDown(e: KeyboardEvent | undefined, callback: () => void) {
     e && e.preventDefault()
-    next()
+    callback()
   }
 
   function insertNewEquationAt(index: number) {

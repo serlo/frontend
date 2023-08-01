@@ -34,7 +34,6 @@ import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { HotKeys } from '@/serlo-editor/core'
 import {
   getPluginByType,
   usePlugins,
@@ -80,7 +79,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   const suggestions = useSuggestions({ editor, id, editable, focused })
-  const { showSuggestions, hotKeysProps, suggestionsProps } = suggestions
+  const { showSuggestions, suggestionsProps } = suggestions
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
@@ -300,7 +299,6 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
 
-      suggestions.handleHotkeys(event)
       textFormattingOptions.handleHotkeys(event, editor)
       textFormattingOptions.handleMarkdownShortcuts(event, editor)
       textFormattingOptions.handleListsShortcuts(event, editor)
@@ -313,7 +311,6 @@ export function TextEditor(props: TextEditorProps) {
       id,
       showSuggestions,
       state,
-      suggestions,
       textFormattingOptions,
     ]
   )
@@ -501,7 +498,7 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   return (
-    <HotKeys {...hotKeysProps}>
+    <>
       <Slate
         editor={editor}
         value={state.value.value}
@@ -542,6 +539,6 @@ export function TextEditor(props: TextEditorProps) {
           <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
-    </HotKeys>
+    </>
   )
 }
