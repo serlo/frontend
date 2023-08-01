@@ -602,13 +602,14 @@ export const loggedInData = {
         anchor: {
           title: "Sprungmarke",
           description: "Füge eine Sprungmarke innerhalb deines Inhalts hinzu.",
-          identifier: "Name",
+          identifier: 'Identifier (e.g. "long-explanation")',
           anchorId: "Name der Sprungmarke"
         },
         box: {
           title: "Box",
           description: "Ein Rahmen für Beispiele, Zitate, Warnungen, Beweise (math.), …",
           type: "Art der Box",
+          typeTooltip: 'Choose the type of the box',
           titlePlaceholder: "(optionaler Titel)",
           anchorId: "Sprungmarke (anchor id)",
           emptyContentWarning: "Boxen ohne Inhalt werden nicht angezeigt"
@@ -644,6 +645,7 @@ export const loggedInData = {
         geogebra: {
           title: 'GeoGebra Applet',
           description: "Binde Applets von GeoGebra Materials via Link oder ID ein.",
+          chooseApplet: 'Choose Applet',
           urlOrId: "GeoGebra Materials URL oder ID"
         },
         highlight: {
@@ -652,13 +654,14 @@ export const loggedInData = {
           clickAndEnter: "Klicke hier und füge deinen Quellcode ein…",
           enterHere: "Füge hier deinen Quellcode ein. Verlasse den Bereich, um eine Vorschau zu sehen.",
           language: "Programmiersprache",
-          enterLanguage: "Programmiersprache eingeben",
-          showLineNumbers: "Zeilennummern anzeigen"
+          languageTooltip: 'Choose language for syntax highlighting',
+          showLineNumbers: 'Line numbers',
+          lineNumbersTooltip: 'Should users see line numbers?'
         },
         image: {
           title: "Bild",
           description: "Lade Bilder hoch oder verwende Bilder, die bereits online sind.",
-          upload: "Hochladen…",
+          upload: 'Upload',
           imageUrl: "Bild-URL",
           placeholderEmpty: 'https://example.com/image.png',
           placeholderUploading: "Wird hochgeladen …",
@@ -678,7 +681,7 @@ export const loggedInData = {
           description: "Binde einen Inhalt von serlo.org via ID ein.",
           illegalInjectionFound: "Ungültige Injection gefunden",
           serloEntitySrc: "Serlo Inhalt {{src}}",
-          serloId: "Serlo ID",
+          serloId: 'Serlo ID',
           placeholder: "Serlo ID (z.B. 1565)"
         },
         layout: {
@@ -718,6 +721,7 @@ export const loggedInData = {
           title: "Zeilen",
           searchForTools: "Suche hier nach Tools…",
           duplicate: "Duplizieren",
+          copyAnchorLink: "Copy link to this element",
           remove: "Löschen",
           close: "Schließen",
           dragElement: "Verschiebe das Element innerhalb des Dokuments",
@@ -783,6 +787,7 @@ export const loggedInData = {
             formula: "[neue Formel]",
             visual: "visuell",
             latex: 'LaTeX',
+            latexEditorTitle: 'LaTeX editor',
             onlyLatex: "Nur LaTeX verfügbar",
             shortcuts: "Tastenkürzel",
             fraction: "Bruch",
@@ -798,9 +803,9 @@ export const loggedInData = {
         },
         video: {
           title: 'Video',
-          decription: "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
+          description: "Binde Videos von YouTube, Vimeo, Wikimedia Commons oder BR ein.",
           videoUrl: 'Video URL',
-          description: "Beschreibung",
+          videoDescription: "Beschreibung",
           titlePlaceholder: "Titel",
           url: 'URL',
           seoTitle: "Titel für Suchmaschinen"
@@ -951,7 +956,8 @@ export const loggedInData = {
         current: "Aktuell",
         author: "Verfasser",
         createdAt: "Zeitstempel",
-        ready: "Bereit zum Speichern?"
+        ready: "Bereit zum Speichern?",
+        anchorLinkWarning: 'This link will only work in the frontend and for content that has a somewhat new revision.'
       },
       taxonomy: {
         title: "Titel"
