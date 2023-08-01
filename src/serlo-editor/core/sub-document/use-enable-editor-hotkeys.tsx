@@ -5,15 +5,15 @@ import { Key } from 'ts-key-enum'
 import {
   focusNext,
   focusPrevious,
-  selectParent,
-  insertPluginChildAfter,
-  removePluginChild,
-  selectFocusTree,
-  useAppDispatch,
-  store,
-  selectMayManipulateSiblings,
-  useAppSelector,
+  selectDocumentTree,
   selectIsDocumentEmpty,
+  selectMayManipulateSiblings,
+  selectParent,
+  removePluginChild,
+  insertPluginChildAfter,
+  store,
+  useAppDispatch,
+  useAppSelector,
 } from '../../store'
 import { usePlugins } from '../contexts/plugins-context'
 import { EditorPlugin } from '@/serlo-editor/plugin'
@@ -29,7 +29,7 @@ export const useEnableEditorHotkeys = (
     selectIsDocumentEmpty(state, id)
   )
   const mayManipulateSiblings = useAppSelector((state) =>
-    selectMayManipulateSiblings(state, id)
+    selectMayManipulateSiblings(state, { plugins, id })
   )
 
   const { enableScope } = useHotkeysContext()
@@ -55,7 +55,7 @@ export const useEnableEditorHotkeys = (
     Key.ArrowUp,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusPrevious(selectFocusTree(store.getState())))
+        dispatch(focusPrevious(selectDocumentTree(store.getState(), plugins)))
       })
     },
     {
@@ -70,7 +70,7 @@ export const useEnableEditorHotkeys = (
     Key.ArrowDown,
     (e) => {
       handleKeyDown(e, () => {
-        dispatch(focusNext(selectFocusTree(store.getState())))
+        dispatch(focusNext(selectDocumentTree(store.getState(), plugins)))
       })
     },
     {
@@ -85,7 +85,7 @@ export const useEnableEditorHotkeys = (
     Key.Enter,
     (e) => {
       handleKeyDown(e, () => {
-        const parent = selectParent(store.getState(), id)
+        const parent = selectParent(store.getState(), { plugins, id })
         if (!parent) return
         dispatch(
           insertPluginChildAfter({
@@ -109,13 +109,15 @@ export const useEnableEditorHotkeys = (
       handleKeyDown(e, () => {
         if (!e) return
         if (mayManipulateSiblings) {
-          const parent = selectParent(store.getState(), id)
+          const parent = selectParent(store.getState(), { plugins, id })
           if (!parent) return
 
           if (e.key === 'Backspace') {
-            dispatch(focusPrevious(selectFocusTree(store.getState())))
+            dispatch(
+              focusPrevious(selectDocumentTree(store.getState(), plugins))
+            )
           } else if (e.key === 'Delete') {
-            dispatch(focusNext(selectFocusTree(store.getState())))
+            dispatch(focusNext(selectDocumentTree(store.getState(), plugins)))
           }
           dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))
         }

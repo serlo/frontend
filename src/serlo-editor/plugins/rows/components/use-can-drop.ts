@@ -1,11 +1,12 @@
 import { checkIsAllowedNesting } from '../utils/check-is-allowed-nesting'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import {
   store,
   findParent,
   selectDocument,
   selectAncestorPluginIds,
   selectAncestorPluginTypes,
-  selectFocusTree,
+  selectDocumentTree,
   FocusTreeNode,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -15,6 +16,8 @@ export function useCanDrop(
   draggingAbove: boolean,
   allowedPlugins: (EditorPluginType | string)[] | undefined
 ) {
+  const plugins = usePlugins()
+
   return function (dragId?: string) {
     return (
       dragId &&
@@ -32,7 +35,10 @@ export function useCanDrop(
   }
 
   function isAllowedNestedPlugin(dragId: string) {
-    const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+    const typesOfAncestors = selectAncestorPluginTypes(store.getState(), {
+      plugins,
+      id,
+    })
     if (typesOfAncestors === null) return true
 
     const dragDocument = selectDocument(store.getState(), dragId)
@@ -42,12 +48,12 @@ export function useCanDrop(
   }
 
   function wouldDropInOwnChildren(dragId: string) {
-    const focusPath = selectAncestorPluginIds(store.getState(), id) || []
+    const focusPath = selectAncestorPluginIds(store.getState(), { plugins, id })
     return focusPath.includes(dragId)
   }
 
   function wouldDropAtInitialPosition(dragId: string) {
-    const focusTree = selectFocusTree(store.getState())
+    const focusTree = selectDocumentTree(store.getState(), plugins)
     if (!focusTree) return true
     const parent = findParent(focusTree, dragId)
 

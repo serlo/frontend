@@ -8,6 +8,7 @@ import { ImageToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
 import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
@@ -21,8 +22,9 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config } = props
+  const { id, editable, focused, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
+  const plugins = usePlugins()
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [showInlineImageUrl, setShowInlineImageUrl] = useState(!state.src.value)
@@ -30,7 +32,7 @@ export function ImageEditor(props: ImageProps) {
   usePendingFileUploader(state.src, config.upload)
 
   const isCaptionFocused = useAppSelector((storeState) =>
-    selectHasFocusedChild(storeState, props.id)
+    selectHasFocusedChild(storeState, { plugins, id })
   )
   const hasFocus = focused || isCaptionFocused
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded

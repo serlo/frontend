@@ -7,6 +7,7 @@ import { MultimediaToolbar } from './toolbar/toolbar'
 import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
 import {
   selectHasFocusedDescendant,
@@ -19,12 +20,13 @@ export function MultimediaEditor(props: MultimediaProps) {
   const { explanation, multimedia, width } = state
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
+  const plugins = usePlugins()
 
   const isMediaChildFocused = useAppSelector((state) =>
     selectIsFocused(state, multimedia.id)
   )
   const isMediaChildFocusedWithin = useAppSelector((state) =>
-    selectHasFocusedDescendant(state, multimedia.id)
+    selectHasFocusedDescendant(state, { plugins, id: multimedia.id })
   )
 
   const pluginToolbarAndStyleHacks = clsx(

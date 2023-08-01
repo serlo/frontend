@@ -7,12 +7,12 @@ import { StateTypeValueType } from '@/serlo-editor/plugin'
 import {
   focusNext,
   focusPrevious,
-  selectDocument,
-  selectParent,
-  selectMayManipulateSiblings,
   removePluginChild,
   RootStore,
-  selectFocusTree,
+  selectDocument,
+  selectDocumentTree,
+  selectParent,
+  selectMayManipulateSiblings,
 } from '@/serlo-editor/store'
 
 interface DocumentState {
@@ -59,17 +59,17 @@ export function mergePlugins(
   id: string,
   plugins: PluginsContextPlugins
 ) {
-  const mayManipulateSiblings = selectMayManipulateSiblings(
-    store.getState(),
-    id
-  )
-  const parent = selectParent(store.getState(), id)
+  const mayManipulateSiblings = selectMayManipulateSiblings(store.getState(), {
+    plugins,
+    id,
+  })
+  const parent = selectParent(store.getState(), { plugins, id })
   if (!mayManipulateSiblings || !parent) return
 
   // If the editor is empty, remove the current Slate instance
   // and focus the one it's been merged with
   if (Node.string(editor) === '') {
-    const focusTree = selectFocusTree(store.getState())
+    const focusTree = selectDocumentTree(store.getState(), plugins)
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
     store.dispatch(focusAction(focusTree))
     store.dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))

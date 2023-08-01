@@ -14,18 +14,19 @@ import { SerloTableToolbar } from './toolbar'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
 import {
-  store,
-  selectFocused,
-  selectIsDocumentEmpty,
   focus,
-  selectDocument,
   focusNext,
   focusPrevious,
+  selectDocument,
+  selectDocumentTree,
+  selectFocused,
+  selectIsDocumentEmpty,
+  store,
   useAppSelector,
   useAppDispatch,
-  selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -45,6 +46,7 @@ const newCell = { content: { plugin: EditorPluginType.Text } }
 export function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
 
+  const plugins = usePlugins()
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
@@ -104,7 +106,7 @@ export function SerloTableEditor(props: SerloTableProps) {
   }
 
   function updateHack() {
-    const focusTree = selectFocusTree(store.getState())
+    const focusTree = selectDocumentTree(store.getState(), plugins)
     dispatch(focusNext(focusTree))
     dispatch(focusPrevious(focusTree))
   }

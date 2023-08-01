@@ -72,7 +72,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
 
       const content = decoded.right
 
-      const parentPlugin = selectParent(store.getState(), props.id)
+      const parentPlugin = selectParent(store.getState(), { plugins, id })
 
       if (
         parentPlugin === null ||

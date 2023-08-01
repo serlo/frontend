@@ -8,7 +8,7 @@ import {
 } from './saga-actions'
 import { EditorPlugin } from '../../types/internal__plugin'
 import { runChangeDocumentSaga, selectDocument } from '../documents'
-import { selectFocusTree } from '../focus'
+import { selectDocumentTree } from '../focus'
 import {
   getPluginByType,
   PluginsContextPlugins,
@@ -27,8 +27,9 @@ function* insertChildBeforeSaga({
   payload,
 }: ReturnType<typeof insertPluginChildBefore>) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const parent: ReturnType<typeof selectFocusTree> = yield select(
-    selectFocusTree,
+  const parent: ReturnType<typeof selectDocumentTree> = yield select(
+    selectDocumentTree,
+    payload.plugins,
     payload.parent
   )
   if (!parent || !parent.children) return

@@ -21,18 +21,19 @@ import { EquationsToolbar } from '../toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { MathRenderer } from '@/serlo-editor/math'
 import {
-  store,
   focus,
   focusNext,
   focusPrevious,
+  selectDocumentTree,
   selectFocused,
   selectIsDocumentEmpty,
+  store,
   useAppSelector,
   useAppDispatch,
-  selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -46,6 +47,7 @@ export enum StepSegment {
 export function EquationsEditor(props: EquationsProps) {
   const { focused, state } = props
 
+  const plugins = usePlugins()
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
   const nestedFocus =
@@ -118,11 +120,11 @@ export function EquationsEditor(props: EquationsProps) {
     rows: state.steps.length,
     columns: 4,
     focusNext: () => {
-      const focusTree = selectFocusTree(store.getState())
+      const focusTree = selectDocumentTree(store.getState(), plugins)
       dispatch(focusNext(focusTree))
     },
     focusPrevious: () => {
-      const focusTree = selectFocusTree(store.getState())
+      const focusTree = selectDocumentTree(store.getState(), plugins)
       dispatch(focusPrevious(focusTree))
     },
     transformationTarget,

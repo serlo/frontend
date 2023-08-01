@@ -4,12 +4,14 @@ import { RowsProps } from '.'
 import { AllowedChildPlugins } from './allowed-child-plugins-context'
 import { RowEditor } from './components/row-editor'
 import { RowSeparator } from './components/row-separator'
+import { usePlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { selectAncestorPluginTypes, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function RowsEditor({ state, config, id, editable }: RowsProps) {
+  const plugins = usePlugins()
   const pluginTypesOfAncestors = useAppSelector((state) =>
-    selectAncestorPluginTypes(state, id)
+    selectAncestorPluginTypes(state, { plugins, id })
   )
 
   function insertRowWithSuggestionsOpen(insertIndex: number) {

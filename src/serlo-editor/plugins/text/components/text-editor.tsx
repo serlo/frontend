@@ -31,14 +31,14 @@ import { EditorPluginProps } from '@/serlo-editor/plugin'
 import {
   focusNext,
   focusPrevious,
-  selectDocument,
-  selectParent,
   insertPluginChildAfter,
-  selectMayManipulateSiblings,
   runReplaceDocumentSaga,
-  useAppDispatch,
-  selectFocusTree,
+  selectDocument,
+  selectDocumentTree,
+  selectMayManipulateSiblings,
+  selectParent,
   store,
+  useAppDispatch,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -55,7 +55,6 @@ export function TextEditor(props: TextEditorProps) {
   const dispatch = useAppDispatch()
 
   const textStrings = useEditorStrings().plugins.text
-
   const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
@@ -194,11 +193,11 @@ export function TextEditor(props: TextEditorProps) {
 
           const mayManipulateSiblings = selectMayManipulateSiblings(
             store.getState(),
-            id
+            { plugins, id }
           )
           if (!mayManipulateSiblings) return
 
-          const parent = selectParent(store.getState(), id)
+          const parent = selectParent(store.getState(), { plugins, id })
           if (!parent) return
 
           event.preventDefault()
@@ -248,14 +247,14 @@ export function TextEditor(props: TextEditorProps) {
           isHotkey('up', event) && isSelectionAtStart(editor, selection)
         if (isUpArrowAtStart) {
           event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
+          const focusTree = selectDocumentTree(store.getState(), plugins)
           dispatch(focusPrevious(focusTree))
         }
         const isDownArrowAtEnd =
           isHotkey('down', event) && isSelectionAtEnd(editor, selection)
         if (isDownArrowAtEnd) {
           event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
+          const focusTree = selectDocumentTree(store.getState(), plugins)
           dispatch(focusNext(focusTree))
         }
       }
@@ -287,7 +286,7 @@ export function TextEditor(props: TextEditorProps) {
 
       const mayManipulateSiblings = selectMayManipulateSiblings(
         store.getState(),
-        id
+        { plugins, id }
       )
       if (!mayManipulateSiblings) return
 
@@ -366,7 +365,7 @@ export function TextEditor(props: TextEditorProps) {
           return
         }
 
-        const parent = selectParent(store.getState(), id)
+        const parent = selectParent(store.getState(), { plugins, id })
         if (!parent) return
 
         const slicedNodes = sliceNodesAfterSelection(editor)

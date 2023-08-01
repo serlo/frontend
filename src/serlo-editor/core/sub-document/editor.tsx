@@ -65,14 +65,14 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
         if (document?.plugin === 'rows') {
-          const parent = selectParent(store.getState(), id)
+          const parent = selectParent(store.getState(), { plugins, id })
           if (parent) dispatch(focus(parent.id))
         } else {
           dispatch(focus(id))
         }
       }
     },
-    [focused, id, dispatch, document]
+    [focused, plugins, id, dispatch, document]
   )
 
   const renderIntoSideToolbar = useCallback(

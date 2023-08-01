@@ -26,7 +26,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   const plugins = usePlugins()
 
   const handleDuplicatePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectParent(store.getState(), { plugins, id: pluginId })
     if (!parent) return
 
     const document = selectSerializedDocumentWithoutIds(
@@ -46,7 +46,7 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
   }, [dispatch, pluginId, plugins])
 
   const handleRemovePlugin = useCallback(() => {
-    const parent = selectParent(store.getState(), pluginId)
+    const parent = selectParent(store.getState(), { plugins, id: pluginId })
     if (!parent || !parent.children?.length) return
 
     const isOnlyChild = parent.children?.length === 1

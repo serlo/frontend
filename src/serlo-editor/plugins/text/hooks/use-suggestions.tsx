@@ -66,7 +66,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   }, [allowedPlugins])
 
   const filteredOptions = useMemo(() => {
-    return filterPlugins(allOptions, text, id)
+    return filterPlugins(plugins, allOptions, text, id)
   }, [allOptions, id, text])
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
@@ -209,28 +209,32 @@ function createOption(
 }
 
 function filterPlugins(
-  allPlugins: SuggestionOption[],
+  plugins: PluginsContextPlugins,
+  allOptions: SuggestionOption[],
   text: string,
   id: string
 ) {
   // Filter out plugins which can't be nested inside of the current plugin
-  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
-  let plugins = []
+  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), {
+    plugins,
+    id,
+  })
+  let suggestions = []
   if (typesOfAncestors === null) {
-    plugins = allPlugins
+    suggestions = allOptions
   } else {
-    plugins = allPlugins.filter((plugin) =>
+    suggestions = allOptions.filter((plugin) =>
       checkIsAllowedNesting(plugin.pluginType, typesOfAncestors)
     )
   }
 
   const search = text.replace('/', '').toLowerCase()
-  if (!search.length) return plugins
+  if (!search.length) return suggestions
 
-  const startingWithSearchString = plugins.filter(({ title }) => {
+  const startingWithSearchString = suggestions.filter(({ title }) => {
     return title.toLowerCase()?.startsWith(search)
   })
-  const containingSearchString = plugins.filter(({ title }) => {
+  const containingSearchString = suggestions.filter(({ title }) => {
     const value = title?.toLowerCase()
     return value?.includes(search) && !value?.startsWith(search)
   })
