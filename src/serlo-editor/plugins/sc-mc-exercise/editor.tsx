@@ -1,7 +1,8 @@
 import { useState } from 'react'
 
 import { ScMcExerciseProps } from '.'
-import { ScMcExerciseRenderer } from './renderer/renderer'
+import { ScMcExerciseRenderer } from './renderer'
+import { ScMcExerciseToolbar } from './toolbar'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
 import {
   store,
@@ -33,15 +34,7 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
     })
   }
 
-  const handleSCMCChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { state } = props
-
-    state.isSingleChoice.set(event.target.value === 'sc')
-    state.isSingleChoice.value &&
-      state.answers.forEach((answer) => answer.isCorrect.set(false))
-  }
-
-  const addButton = () => props.state.answers.insert()
+  const handleAddButtonClick = () => props.state.answers.insert()
   const removeAnswer = (index: number) => () => state.answers.remove(index)
 
   const nestedFocus =
@@ -69,12 +62,11 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       </div>
     </EditableContext.Provider>
   )
-  if (!editable) {
-    return renderer
-  }
+  if (!editable) return renderer
 
   return (
-    <>
+    <div className="mb-12 mt-24 pt-4">
+      {nestedFocus ? <ScMcExerciseToolbar {...props} /> : null}
       <PreviewOverlay
         focused={nestedFocus || false}
         onChange={setPreviewActive}
@@ -84,22 +76,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
       </PreviewOverlay>
       {editable && nestedFocus && !previewActive && (
         <>
-          <div className="mb-2">
-            <label>
-              {editorStrings.templatePlugins.scMcExercise.chooseType}:{' '}
-              <select
-                value={state.isSingleChoice.value ? 'sc' : 'mc'}
-                onChange={handleSCMCChange}
-              >
-                <option value="mc">
-                  {editorStrings.templatePlugins.scMcExercise.multipleChoice}
-                </option>
-                <option value="sc">
-                  {editorStrings.templatePlugins.scMcExercise.singleChoice}
-                </option>
-              </select>
-            </label>
-          </div>
           {state.answers.map((answer, index) => {
             return (
               <InteractiveAnswer
@@ -120,12 +96,12 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
               />
             )
           })}
-          <AddButton onClick={addButton}>
+          <AddButton onClick={handleAddButtonClick}>
             {editorStrings.templatePlugins.scMcExercise.addAnswer}
           </AddButton>
         </>
       )}
-    </>
+    </div>
   )
 
   function isEmpty(id: string) {

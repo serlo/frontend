@@ -1,24 +1,18 @@
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
-import { InjectionPluginState } from '.'
+import { InjectionProps } from '.'
 import { InjectionRenderer } from './renderer'
+import { InjectionToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { renderArticle } from '@/schema/article-renderer'
-import { EditorInput, PreviewOverlay } from '@/serlo-editor/editor-ui'
-import { EditorPluginProps } from '@/serlo-editor/plugin'
+import { PreviewOverlay } from '@/serlo-editor/editor-ui'
 
-export function InjectionEditor({
-  focused,
-  state,
-  editable,
-  autofocusRef,
-}: EditorPluginProps<InjectionPluginState>) {
-  const injectionsStrings = useEditorStrings().plugins.injection
+export function InjectionEditor(props: InjectionProps) {
+  const { focused, state, editable } = props
 
   const [cache, setCache] = useState(state.value)
-  const [isPreview, setIsPreview] = useState(false)
+  const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   useEffect(() => {
     const timeout = setTimeout(() => setCache(state.value), 2000)
@@ -31,19 +25,27 @@ export function InjectionEditor({
 
   return (
     <>
-      {focused && !isPreview ? renderInput() : null}
+      {focused && (
+        <InjectionToolbar
+          {...props}
+          showSettingsModal={showSettingsModal}
+          setShowSettingsModal={setShowSettingsModal}
+        />
+      )}
       {cache ? (
         <PreviewOverlay
           focused={focused || false}
           onChange={(nextActive) => {
-            setIsPreview(nextActive)
             if (nextActive) setCache(state.value)
           }}
         >
           <InjectionRenderer href={cache} renderNested={renderArticle} />
         </PreviewOverlay>
       ) : (
-        <div className="rounded-lg bg-editor-primary-50 py-32 text-center">
+        <div
+          className="cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
+          onClick={() => setShowSettingsModal(true)}
+        >
           <FaIcon
             icon={faSquarePlus}
             className="text-7xl text-editor-primary-200"
@@ -52,23 +54,4 @@ export function InjectionEditor({
       )}
     </>
   )
-
-  function renderInput() {
-    return (
-      <div className="mb-3 mt-4">
-        <EditorInput
-          label={`${injectionsStrings.serloId}: `}
-          placeholder={injectionsStrings.placeholder}
-          value={state.value}
-          onChange={(e) => state.set(e.target.value.replace(/[^0-9]/g, ''))}
-          inputWidth="60%"
-          width="100%"
-          inputMode="numeric"
-          pattern="\d+"
-          ref={autofocusRef}
-          className="ml-1"
-        />
-      </div>
-    )
-  }
 }

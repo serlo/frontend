@@ -24,7 +24,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
     <>
       {content.render()}
       {interactive.defined ? (
-        interactive.render({ renderToolbar })
+        interactive.render({ renderSideToolbar })
       ) : editable ? (
         <>
           <p className="mb-2 text-gray-400">
@@ -47,7 +47,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
     </>
   )
 
-  function renderToolbar(children: ReactNode) {
+  function renderSideToolbar(children: ReactNode) {
     return (
       <>
         <div className="relative" onMouseLeave={() => setShowOptions(false)}>

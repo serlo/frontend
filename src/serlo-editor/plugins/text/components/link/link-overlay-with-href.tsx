@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
-import { TextEditorPluginConfig } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 import { QuickbarData } from '@/components/navigation/quickbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -18,7 +17,6 @@ export function LinkOverlayWithHref({
   setIsEditMode,
   quickbarData,
 }: {
-  config: TextEditorPluginConfig
   value: string
   removeLink: () => void
   setIsEditMode: (mode: boolean) => void

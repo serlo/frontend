@@ -119,6 +119,7 @@ export interface FrontendSlatePNode {
 export interface FrontendSlateContainerNode {
   type: FrontendNodeType.SlateContainer
   children?: FrontendContentNode[]
+  pluginId?: string
 }
 
 export interface FrontendHNode {
@@ -144,11 +145,13 @@ export interface FrontendImageNode {
   maxWidth?: number
   caption?: FrontendContentNode[]
   children?: undefined
+  pluginId?: string
 }
 
 export interface FrontendSpoilerContainerNode {
   type: FrontendNodeType.SpoilerContainer
   children: [FrontendSpoilerTitleNode, FrontendSpoilerBodyNode]
+  pluginId?: string
 }
 
 export interface FrontendSpoilerTitleNode {
@@ -181,6 +184,7 @@ export interface FrontendMultiMediaNode {
   mediaWidth: number
   media: FrontendContentNode[]
   children: FrontendContentNode[]
+  pluginId?: string
 }
 
 export interface FrontendRowNode {
@@ -211,6 +215,7 @@ export interface FrontendBoxNode {
   title?: FrontendContentNode[]
   anchorId: string
   children?: FrontendContentNode[]
+  pluginId?: string
 }
 
 export type FrontendAnchorNode = EditorAnchorPlugin & {
@@ -222,6 +227,7 @@ export interface FrontendSerloTableNode {
   type: FrontendNodeType.SerloTable
   children?: FrontendSerloTrNode[]
   tableType: keyof typeof TableType | string
+  pluginId?: string
 }
 
 export interface FrontendSerloTrNode {
@@ -257,11 +263,13 @@ export interface FrontendTdNode {
 export type FrontendGeogebraNode = EditorGeogebraPlugin & {
   type: FrontendNodeType.Geogebra
   children?: undefined
+  pluginId?: string
 }
 
 export type FrontendInjectionNode = EditorInjectionPlugin & {
   type: FrontendNodeType.Injection
   children?: undefined
+  pluginId?: string
 }
 
 interface BareSolution {
@@ -292,6 +300,7 @@ export interface FrontendExerciseNode {
   children?: undefined
   href?: string
   unrevisedRevisions?: number
+  pluginId?: string
 }
 
 export interface FrontendSolutionNode {
@@ -371,11 +380,13 @@ export type FrontendVideoNode = EditorVideoPlugin & {
   license?: LicenseData
   type: FrontendNodeType.Video
   children?: undefined
+  pluginId?: string
 }
 
 export type FrontendCodeNode = EditorHighlightPlugin & {
   type: FrontendNodeType.Code
   children?: undefined
+  pluginId?: string
 }
 
 export interface FrontendEquationsNode {
@@ -393,6 +404,7 @@ export interface FrontendEquationsNode {
   firstExplanation: FrontendContentNode[]
   transformationTarget: 'term' | 'equation' | string
   children?: undefined
+  pluginId?: string
 }
 
 export interface FrontendPageLayoutNode {
@@ -401,16 +413,19 @@ export interface FrontendPageLayoutNode {
   column2: FrontendContentNode[]
   widthPercent: number
   children?: undefined
+  pluginId?: string
 }
 
 export type FrontendPageTeamNode = PageTeamRendererProps & {
   type: FrontendNodeType.PageTeam
   children?: undefined
+  pluginId?: string
 }
 
 export interface FrontendPagePartnersNode {
   type: FrontendNodeType.PagePartners
   children?: undefined
+  pluginId?: string
 }
 
 export type FrontendVoidNode =

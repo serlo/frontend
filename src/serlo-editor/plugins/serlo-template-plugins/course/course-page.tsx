@@ -65,7 +65,7 @@ function CoursePageTypeEditor(
       {props.config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...props.state} />
       )}
-      {props.renderIntoToolbar(
+      {props.renderIntoSideToolbar(
         <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}

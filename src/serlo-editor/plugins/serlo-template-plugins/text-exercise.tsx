@@ -37,7 +37,7 @@ export const textExerciseTypePlugin: EditorPlugin<
 function TextExerciseTypeEditor({
   state,
   config,
-  renderIntoToolbar,
+  renderIntoSideToolbar,
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content, 'text-solution': textSolution } = state
   const textExStrings = useEditorStrings().templatePlugins.textExercise
@@ -61,7 +61,7 @@ function TextExerciseTypeEditor({
       {config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...state} />
       )}
-      {renderIntoToolbar(
+      {renderIntoSideToolbar(
         <ContentLoaders
           id={state.id.value}
           currentRevision={state.revision.value}

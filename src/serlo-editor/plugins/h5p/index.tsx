@@ -102,15 +102,16 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
 
   if (mode === 'edit' || mode === 'loading') {
     return (
-      <>
-        <h2>Einfügen von H5P-Inhalt</h2>
+      <div className="rounded-xl bg-editor-primary-50 p-2">
+        <h2 className="serlo-h2">Einfügen von H5P-Inhalt</h2>
         <div>
           Gehe in folgenden Schritten vor, um einen H5P-Inhalt zu erstellen und
           einzufügen:
-          <ul>
+          <ul className="serlo-ul">
             <li>
               Besuche{' '}
               <a
+                className="serlo-link"
                 href="https://app.lumi.education/"
                 target="_blank"
                 rel="noreferrer"
@@ -125,7 +126,7 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
             <li>
               Klicke auf &quot;Neuen Inhalt erstellen&quot; und wähle eines der
               folgenden Inhaltstypen:
-              <ul>
+              <ul className="serlo-ul">
                 {Object.values(availableH5pExercises).map((exercise) => (
                   <li key={exercise}>{exercise}</li>
                 ))}
@@ -138,27 +139,22 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
             <li>Füge die Verknüpfung zur Bereitstellung hier ein:</li>
           </ul>
         </div>
-        <div>
-          <div className="mt-4">
-            <EditorInput
-              label="URL zu Lumi-Bereitstellung"
-              placeholder="https://app.lumi.education/run/J3j0eR"
-              value={state.value}
-              onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const val = e.target.value
-                validateInput(val)
-                state.set(val)
-              }}
-              inputWidth="70%"
-              width="100%"
-              ref={autofocusRef}
-            />
-          </div>
-        </div>
-        {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
-        <p>
+        <div className="mt-4">
+          <EditorInput
+            label="URL zu Lumi-Bereitstellung "
+            placeholder="https://app.lumi.education/run/J3j0eR"
+            value={state.value}
+            onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+              const val = e.target.value
+              validateInput(val)
+              state.set(val)
+            }}
+            inputWidth="70%"
+            width="100%"
+            ref={autofocusRef}
+          />
           <button
-            className="serlo-button mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
+            className="serlo-button ml-3 mt-2 bg-brandgreen-300 disabled:cursor-default disabled:bg-gray-300"
             disabled={state.value === '' || error !== '' || mode === 'loading'}
             onClick={() => {
               setMode('loading')
@@ -167,26 +163,25 @@ function H5pEditor({ state, autofocusRef }: H5pProps) {
           >
             {mode === 'loading' ? '... wird geladen ...' : 'Einfügen'}
           </button>
+        </div>
+        {error && <p className="mx-side mt-2 text-red-500">{error}</p>}
+        <p className="mt-4 max-w-[67%] text-sm text-gray-500">
+          Hinweis: Um existierende Inhalte zu nutzen, lade diese herunter, lade
+          sie in deinen Account hoch und stelle sie dort bereit.
         </p>
-        <p className="mt-4 text-sm text-gray-500">
-          <small>
-            Hinweis: Um existierende Inhalte zu nutzen, lade diese herunter,
-            lade sie in deinen Account hoch und stelle sie dort bereit.
-          </small>
-        </p>
-      </>
+      </div>
     )
   }
 
   return (
     <>
-      <p className="mb-8">
+      <p className="mb-8 rounded-xl bg-editor-primary-100 p-2">
         H5P-Inhalt: <strong>{state.value}</strong>
         <button
           onClick={() => {
             setMode('edit')
           }}
-          className="serlo-button ml-4 bg-brand-300"
+          className="serlo-button-editor-primary ml-4"
         >
           Ändern
         </button>

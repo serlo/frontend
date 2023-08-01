@@ -3,18 +3,26 @@ import clsx from 'clsx'
 import { BoxProps } from '.'
 import {
   BoxType,
-  Renderer,
+  BoxRenderer,
   boxTypeStyle,
   defaultStyle,
   types,
 } from './renderer'
+import { BoxToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
-import { useAppSelector } from '@/serlo-editor/store'
+import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
+
+const titleFormattingOptions = [
+  TextEditorFormattingOption.math,
+  TextEditorFormattingOption.code,
+]
 
 export function BoxEditor(props: BoxProps) {
+  const { focused } = props
   const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
@@ -30,6 +38,12 @@ export function BoxEditor(props: BoxProps) {
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
 
+  const isTitleFocused = useAppSelector((state) =>
+    selectIsFocused(state, title.id)
+  )
+
+  const hasFocus = focused || isTitleFocused
+
   if (hasNoType) {
     return (
       <>
@@ -39,22 +53,26 @@ export function BoxEditor(props: BoxProps) {
             borderColorClass
           )}
         >
-          {renderInlineSettings()}
+          <b className="block pb-4">{editorStrings.plugins.box.type}</b>
+          <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
         </figure>
-        {renderSettings()}
       </>
     )
   }
 
   return (
     <>
-      <Renderer
+      {hasFocus ? <BoxToolbar {...props} /> : null}
+
+      <BoxRenderer
         boxType={typedValue}
         title={
           <div className="-ml-1 inline-block max-h-6 min-w-[15rem] font-bold">
             {title.render({
               config: {
                 placeholder: editorStrings.plugins.box.titlePlaceholder,
+                formattingOptions: titleFormattingOptions,
+                isInlineChildEditor: true,
               },
             })}
           </div>
@@ -62,37 +80,10 @@ export function BoxEditor(props: BoxProps) {
         anchorId={anchorId.value}
       >
         <div className="-ml-3 px-side">{content.render()}</div>
-      </Renderer>
+      </BoxRenderer>
       {renderWarning()}
-      {renderSettings()}
     </>
   )
-
-  function renderInlineSettings() {
-    return (
-      <>
-        <b className="block pb-4">{editorStrings.plugins.box.type}</b>
-        <ul className="unstyled-list pb-8">{renderSettingsLis()}</ul>
-      </>
-    )
-  }
-
-  function renderSettings() {
-    return props.renderIntoSettings(
-      <>
-        <b className="serlo-h4 mb-4 ml-0 mt-6 block">
-          {editorStrings.plugins.box.type}:
-        </b>
-        <ul className="pb-8">{renderSettingsLis()}</ul>
-
-        {anchorId.value === '' ? null : (
-          <p className="mb-4">
-            <b>{editorStrings.plugins.box.anchorId}: </b>#{anchorId.value}
-          </p>
-        )}
-      </>
-    )
-  }
 
   function renderSettingsLis() {
     return types.map((boxType) => {
