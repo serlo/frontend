@@ -47,7 +47,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
   const allPlugins = pluginsWithData
     .getAllPlugins()
-    .filter(({ visible }) => visible)
+    .filter(({ visibleInSuggestions }) => visibleInSuggestions)
     .map(({ type }) => type)
   const allowedPlugins = useContext(AllowedChildPlugins)
 

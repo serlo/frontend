@@ -3,7 +3,7 @@ import { EditorPlugin } from '../internal-plugin'
 interface PluginWithData {
   type: string
   plugin: EditorPlugin | EditorPlugin<any, any>
-  visible?: boolean // in plugin suggestions
+  visibleInSuggestions?: boolean
   icon?: JSX.Element
 }
 
