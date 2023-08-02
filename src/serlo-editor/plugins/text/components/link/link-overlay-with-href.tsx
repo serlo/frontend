@@ -54,6 +54,7 @@ export function LinkOverlayWithHref({
       <button
         onClick={() => setIsEditMode(true)}
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
+        data-qa="edit-link-button"
       >
         <FaIcon icon={faPencilAlt} />
         <EditorTooltip
@@ -64,6 +65,7 @@ export function LinkOverlayWithHref({
       <button
         onClick={removeLink}
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
+        data-qa="remove-link-button"
       >
         <FaIcon icon={faTrashAlt} />
         <span className="sr-only">{textStrings.linkOverlay.remove}</span>
