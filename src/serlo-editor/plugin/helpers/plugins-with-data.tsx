@@ -9,28 +9,33 @@ interface PluginWithData {
 
 export type PluginsWithData = PluginWithData[]
 
-declare global {
-  /** Never change directly! */
-  // eslint-disable-next-line no-var
-  var EditorContextPlugins: PluginsWithData
-}
+export const pluginsData = (function () {
+  let EditorContextPlugins: PluginsWithData | null = null
 
-export function initEditorPlugins(plugins: PluginsWithData) {
-  if (globalThis.EditorContextPlugins) return // only initialize once
-  globalThis.EditorContextPlugins = plugins
-}
+  function init(plugins: PluginsWithData) {
+    if (EditorContextPlugins) return // only initialize once
 
-export function getPluginsWithData() {
-  if (!globalThis.EditorContextPlugins)
-    throw new Error('No Editor Plugins provided!')
+    EditorContextPlugins = plugins
 
-  return globalThis.EditorContextPlugins
-}
+    // Ensure the highest integrity level that JS provides
+    Object.freeze(EditorContextPlugins)
+  }
 
-export function getEditorPlugin(pluginType: string) {
-  const plugins = getPluginsWithData()
-  const contextPlugin =
-    plugins.find((plugin) => plugin.type === pluginType) ??
-    plugins.find((plugin) => plugin.type === 'unsupported')
-  return (contextPlugin?.plugin as EditorPlugin) ?? null
-}
+  function getAll() {
+    if (!EditorContextPlugins) throw new Error('No Editor Plugins provided!')
+
+    return EditorContextPlugins
+  }
+
+  function getOne(pluginType: string) {
+    const plugins = getAll()
+
+    const contextPlugin =
+      plugins.find((plugin) => plugin.type === pluginType) ??
+      plugins.find((plugin) => plugin.type === 'unsupported')
+
+    return (contextPlugin?.plugin as EditorPlugin) ?? null
+  }
+
+  return { init, getAll, getOne }
+})()

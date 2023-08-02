@@ -4,7 +4,7 @@ import * as R from 'ramda'
 import { StoreSerializeHelpers } from '../../types/internal__plugin-state'
 import { createDeepEqualSelector } from '../helpers'
 import { State } from '../types'
-import { getEditorPlugin } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { pluginsData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 
 const selectSelf = (state: State) => state.documents
 
@@ -26,7 +26,7 @@ export const selectSerializedDocument = createDeepEqualSelector(
   (state: State, id) => {
     const doc = selectDocument(state, id)
     if (!doc) return null
-    const plugin = getEditorPlugin(doc.plugin)
+    const plugin = pluginsData.getOne(doc.plugin)
     if (!plugin) return null
     const serializeHelpers: StoreSerializeHelpers = {
       getDocument: (id: string) => selectSerializedDocument(state, id),
@@ -44,7 +44,7 @@ export const selectSerializedDocumentWithoutIds = createDeepEqualSelector(
   (state: State, id) => {
     const doc = selectDocument(state, id)
     if (!doc) return null
-    const plugin = getEditorPlugin(doc.plugin)
+    const plugin = pluginsData.getOne(doc.plugin)
     if (!plugin) return null
     const serializeHelpers: StoreSerializeHelpers = {
       getDocument: (id: string) =>
@@ -65,7 +65,7 @@ export const selectIsDocumentEmpty = createSelector(
   (state, id: string) => {
     const doc = selectDocument(state, id)
     if (!doc) return false
-    const plugin = getEditorPlugin(doc.plugin)
+    const plugin = pluginsData.getOne(doc.plugin)
     if (!plugin) return false
 
     if (typeof plugin.isEmpty === 'function') {

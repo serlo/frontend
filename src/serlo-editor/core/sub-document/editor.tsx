@@ -16,7 +16,7 @@ import {
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
-import { getEditorPlugin } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { pluginsData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSideToolbar, setHasSideToolbar] = useState(false)
@@ -25,7 +25,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
 
-  const plugin = getEditorPlugin(document?.plugin ?? '')
+  const plugin = pluginsData.getOne(document?.plugin ?? '')
 
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
