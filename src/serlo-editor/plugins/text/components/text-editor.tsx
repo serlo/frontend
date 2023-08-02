@@ -427,6 +427,7 @@ export function TextEditor(props: TextEditorProps) {
             </span>
           )}
           className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          data-qa="plugin-text-editor"
         />
         {editable && focused && (
           <LinkControls

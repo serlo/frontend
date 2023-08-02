@@ -78,11 +78,13 @@ export function PluginDefaultTools({ pluginId }: PluginDefaultToolsProps) {
         onClick={handleDuplicatePlugin}
         label={pluginStrings.rows.duplicate}
         icon={faClone}
+        dataQa="duplicate-plugin-button"
       />
       <DropdownButton
         onClick={handleRemovePlugin}
         label={pluginStrings.rows.remove}
         icon={faTrashAlt}
+        dataQa="remove-plugin-button"
       />
       <AnchorLinkCopyTool pluginId={pluginId} />
     </>

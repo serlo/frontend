@@ -26,6 +26,7 @@ export function EditModeResultEntry({
         'hover:!bg-editor-primary-100 hover:!no-underline',
         index === selectedIndex && '!bg-editor-primary-100'
       )}
+      data-qa={`link-suggestion-${index}`}
       onClick={() => {
         chooseEntry(index)
       }}

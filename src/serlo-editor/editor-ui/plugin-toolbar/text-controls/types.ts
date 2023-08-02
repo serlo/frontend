@@ -25,7 +25,7 @@ interface ActionControlButton {
 export interface NestedControlButton {
   title: string
   closeMenuTitle: string
-  children: ActionControlButton[]
+  subMenuButtons: ActionControlButton[]
   isActive(editor: SlateEditor): boolean
   renderIcon(editor: SlateEditor): React.ReactNode
   renderCloseMenuIcon(): React.ReactNode

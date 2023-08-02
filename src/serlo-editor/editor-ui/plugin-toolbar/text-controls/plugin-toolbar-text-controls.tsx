@@ -12,7 +12,7 @@ export interface PluginToolbarTextControlsProps {
 function isNestedControlButton(
   control: ControlButton
 ): control is NestedControlButton {
-  return Object.hasOwn(control, 'children')
+  return Object.hasOwn(control, 'subMenuButtons')
 }
 
 export function PluginToolbarTextControls({
@@ -68,7 +68,7 @@ export function PluginToolbarTextControls({
     },
     title: activeControl.closeMenuTitle,
   }
-  const subMenuControls = [...activeControl.children, closeSubMenuControl]
+  const subMenuControls = [...activeControl.subMenuButtons, closeSubMenuControl]
 
   return (
     <>
