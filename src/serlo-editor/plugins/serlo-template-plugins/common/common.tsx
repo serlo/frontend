@@ -228,7 +228,7 @@ export function OptionalChild(props: {
     state: StateTypeValueType<typeof expectedStateType>
   }
   const children = props.state.render({
-    renderToolbar(children) {
+    renderSideToolbar(children) {
       if (document.state.id !== 0) return children
 
       return (

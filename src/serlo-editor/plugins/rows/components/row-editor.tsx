@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useRef } from 'react'
 
 import { RowSeparator } from './row-separator'
@@ -14,6 +15,7 @@ interface RowEditorProps {
   rows: StateTypeReturnType<RowsPluginState>
   row: StateTypeReturnType<RowsPluginState>[0]
   visuallyEmphasizeAddButton?: boolean
+  isFirst?: boolean
   isLast?: boolean
 }
 
@@ -24,6 +26,7 @@ export function RowEditor({
   row,
   rows,
   visuallyEmphasizeAddButton = false,
+  isFirst = false,
   isLast = false,
 }: RowEditorProps) {
   const focused = useAppSelector((state) => selectIsFocused(state, row.id))
@@ -32,7 +35,15 @@ export function RowEditor({
 
   return (
     // bigger drop zone with padding hack
-    <div key={row.id} ref={dropContainer} className="relative -ml-12 pl-12">
+    <div
+      key={row.id}
+      ref={dropContainer}
+      className={clsx(
+        'rows-child relative -ml-12 pl-12',
+        isFirst && 'first',
+        isLast && 'last'
+      )}
+    >
       <EditorRowRenderer
         config={config}
         row={row}

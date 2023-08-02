@@ -8,10 +8,12 @@ import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
 import { SerloTableProps } from '.'
+import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
+import { SerloTableToolbar } from './toolbar'
+import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { tw } from '@/helper/tw'
 import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
 import {
   store,
@@ -47,6 +49,8 @@ export function SerloTableEditor(props: SerloTableProps) {
   const focusedElement = useAppSelector(selectFocused)
   const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
 
+  const areImagesDisabled = useAreImagesDisabledInTable()
+
   const tableStrings = useEditorStrings().plugins.serloTable
 
   const tableType = getTableType(props.state.tableType.value)
@@ -57,13 +61,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     tableType === TableType.OnlyColumnHeader ||
     tableType === TableType.ColumnAndRowHeader
 
-  if (!nestedFocus) return renderInactiveTable()
-
-  return (
-    <>
-      {renderRenderIntoSettings()} {renderActiveTable()}
-    </>
-  )
+  return nestedFocus ? renderActiveTable() : renderInactiveTable()
 
   function renderInactiveTable() {
     const rowsJSX = rows.map((row) => {
@@ -83,22 +81,25 @@ export function SerloTableEditor(props: SerloTableProps) {
     const rowsJSX = renderActiveCellsIntoObject()
 
     return (
-      <div className="flex">
-        <div
-          className="flex flex-col"
-          onClick={(e) => {
-            // another hack to make focus ux at least ok
-            const target = e.target as HTMLDivElement
-            const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
-            hackDiv?.focus()
-          }}
-        >
-          <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
-          {renderAddButton(true)}
-        </div>
+      <>
+        {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
+        <div className="flex">
+          <div
+            className="flex flex-col"
+            onClick={(e) => {
+              // another hack to make focus ux at least ok
+              const target = e.target as HTMLDivElement
+              const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
+              hackDiv?.focus()
+            }}
+          >
+            <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
+            {renderAddButton(true)}
+          </div>
 
-        {renderAddButton(false)}
-      </div>
+          {renderAddButton(false)}
+        </div>
+      </>
     )
   }
 
@@ -154,13 +155,14 @@ export function SerloTableEditor(props: SerloTableProps) {
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
                 config: {
+                  isInlineChildEditor: true,
                   placeholder: '',
                   formattingOptions: isHead
                     ? headerTextFormattingOptions
                     : cellTextFormattingOptions,
-                },
+                } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells
+              {props.config.allowImageInTableCells && !areImagesDisabled
                 ? renderSwitchButton(cell, isHead, isClear)
                 : null}
               {/* hack: make sure we capture most clicks in cells */}
@@ -197,7 +199,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <button
-        onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
+        onMouseDown={(e) => e.stopPropagation()} // hack to stop editor from stealing events
         onClick={() => {
           cell.content.replace(
             isImage ? EditorPluginType.Text : EditorPluginType.Image
@@ -253,7 +255,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className={getButtonStyle()}
+          className="serlo-button-blue-transparent text-brand-400"
           title={replaceWithType(tableStrings.addTypeBefore, isRow)}
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onInlineAdd}
@@ -282,7 +284,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
       return (
         <button
-          className={getButtonStyle()}
+          className="serlo-button-blue-transparent text-brand-400"
           title={replaceWithType(tableStrings.deleteType, isRow)}
           onMouseDown={(e) => e.stopPropagation()} // hack to stop edtr from stealing events
           onClick={onRemove}
@@ -291,10 +293,6 @@ export function SerloTableEditor(props: SerloTableProps) {
         </button>
       )
     }
-  }
-
-  function getButtonStyle() {
-    return tw`serlo-button-blue-transparent text-brand-400`
   }
 
   function insertRow(beforeIndex?: number) {
@@ -352,31 +350,6 @@ export function SerloTableEditor(props: SerloTableProps) {
     )
   }
 
-  function renderRenderIntoSettings() {
-    return props.renderIntoSettings(
-      <div>
-        <label className="font-bold">
-          {tableStrings.mode}:{' '}
-          <select
-            className="my-5"
-            value={tableType}
-            onChange={(e) => props.state.tableType.set(e.target.value)}
-          >
-            <option value={TableType.OnlyColumnHeader}>
-              {tableStrings.columnHeaders}
-            </option>
-            <option value={TableType.OnlyRowHeader}>
-              {tableStrings.rowHeaders}
-            </option>
-            <option value={TableType.ColumnAndRowHeader}>
-              {tableStrings.columnAndRowHeaders}
-            </option>
-          </select>
-        </label>
-      </div>
-    )
-  }
-
   function findFocus() {
     let focusedRowIndex = undefined
     let focusedColIndex = undefined
@@ -402,7 +375,7 @@ export function SerloTableEditor(props: SerloTableProps) {
   }
 }
 
-function getTableType(text: string): TableType {
+export function getTableType(text: string): TableType {
   return isTableType(text) ? text : TableType.OnlyColumnHeader
 }
 

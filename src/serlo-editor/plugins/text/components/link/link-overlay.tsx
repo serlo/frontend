@@ -24,7 +24,7 @@ export function LinkOverlay({
     )?.getBoundingClientRect()
 
     const parentRect = wrapper.current
-      .closest('.default-document-editor-container')
+      .closest('.default-plugin-wrapper-container')
       ?.getBoundingClientRect()
 
     const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
@@ -46,7 +46,7 @@ export function LinkOverlay({
   return (
     <div ref={wrapper} className="absolute z-[95] whitespace-nowrap">
       <div
-        className="w-[460px] rounded bg-white shadow-menu"
+        className="w-[460px] rounded bg-white text-start not-italic shadow-menu"
         style={{ width: `${wrapperWidth}px` }}
       >
         {children}

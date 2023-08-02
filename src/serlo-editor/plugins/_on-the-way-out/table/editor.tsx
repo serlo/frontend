@@ -1,12 +1,6 @@
-import styled from 'styled-components'
-
 import { TableProps } from '.'
 import { TableRenderer } from './renderer'
 import { EditorTextarea } from '../../../editor-ui'
-
-const Form = styled.form({
-  marginTop: '10px',
-})
 
 export function TableEditor(props: TableProps) {
   const { focused, state } = props
@@ -14,7 +8,7 @@ export function TableEditor(props: TableProps) {
   return (
     <div>
       {focused ? (
-        <Form>
+        <form className="mt-2.5">
           <div>
             <EditorTextarea
               value={state.value}
@@ -29,7 +23,7 @@ export function TableEditor(props: TableProps) {
             </EditorTextarea>
             <TableRenderer {...props} />
           </div>
-        </Form>
+        </form>
       ) : (
         <TableRenderer {...props} />
       )}

@@ -9,8 +9,8 @@ import {
 
 import { MathFormula } from './math-formula'
 import type { MathElement as MathElementType, Paragraph } from '../types'
-import { isElementWithinList } from '../utils/list'
 import { PreferenceContext } from '@/serlo-editor/core'
+import { isElementWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { MathEditor } from '@/serlo-editor/math'
 
 export interface MathElementProps {
@@ -164,11 +164,11 @@ export function MathElement({
     ReactEditor.focus(editor)
   }
 
+  const VoidWrapper = element.inline ? 'span' : 'div'
   return (
     // Slate void elements need to set attributes and contentEditable={false}
     // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
-    // TODO Maybe return a div when math element is not an inline but a block type.
-    <span {...attributes} tabIndex={-1} contentEditable={false}>
+    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
       <MathEditor
         autofocus
         state={element.src}
@@ -193,6 +193,6 @@ export function MathElement({
         }
       />
       {children}
-    </span>
+    </VoidWrapper>
   )
 }

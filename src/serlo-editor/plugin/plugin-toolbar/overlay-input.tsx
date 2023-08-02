@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
-import styled from 'styled-components'
 
-import { colors } from '@/helper/colors'
+import { tw } from '@/helper/tw'
 
 export interface OverlayInputProps
   extends React.DetailedHTMLProps<
@@ -14,32 +13,18 @@ export interface OverlayInputProps
 export const OverlayInput = forwardRef<HTMLInputElement, OverlayInputProps>(
   function OverlayInput({ label, ...props }, ref) {
     return (
-      <OverlayInputLabel>
-        <OverlayInputLabelInner>{label}</OverlayInputLabelInner>
-        <OverlayInputInner {...props} ref={ref} />
-      </OverlayInputLabel>
+      <label className="mx-auto mb-0 mt-5 flex items-center justify-between text-almost-black">
+        <span className="w-1/5">{label}</span>
+        <input
+          {...props}
+          ref={ref}
+          className={tw`
+             serlo-input-font-reset w-3/4 rounded-md border-2
+           border-editor-primary-100 bg-editor-primary-100
+           focus:border-editor-primary focus:outline-none
+          `}
+        />
+      </label>
     )
   }
-) as unknown as React.ComponentType<OverlayInputProps>
-
-const OverlayInputLabel = styled.label({
-  color: 'rgba(51,51,51,0.95)',
-  margin: '20px auto 0px',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-})
-
-const OverlayInputLabelInner = styled.span({ width: '20%' })
-
-const OverlayInputInner = styled.input({
-  backgroundColor: '#ffffff',
-  border: 'none',
-  borderBottom: '2px solid rgba(51,51,51,0.95)',
-  color: 'rgba(51,51,51,0.95)',
-  width: '75%',
-  '&:focus': {
-    outline: 'none',
-    borderBottom: `2px solid ${colors.editorPrimary}`,
-  },
-})
+)

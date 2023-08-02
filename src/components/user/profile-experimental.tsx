@@ -11,6 +11,12 @@ export const features = {
     activeInDev: true,
     hideInProduction: true,
   },
+  editorAnchorLinkCopyTool: {
+    cookieName: 'useEditorAnchorLinkCopyTool',
+    isActive: false,
+    activeInDev: true,
+    hideInProduction: true,
+  },
   legacyDesign: {
     cookieName: 'useFrontend',
     isActive: false,
@@ -84,6 +90,21 @@ export function ProfileExperimental() {
           </h3>
           <p className="serlo-p">
             Experimentelles Feature: nur aktivieren wenn du weißt was du tust.
+          </p>
+        </div>
+      )}
+      <hr className="mx-side -mt-2 mb-4" />
+      {features.editorAnchorLinkCopyTool && (
+        <div>
+          <h3 className="serlo-h3 mb-3">
+            {renderFeatureButton('editorAnchorLinkCopyTool')} Editor: Anker-Link
+            Tool
+          </h3>
+          <p className="serlo-p">
+            Ein neues Tool in der Editor-Toolbar um direkt Anker-Links auf
+            Editor-Plugins in die Zwischenablage zu kopieren. Wichtig:
+            Funktioniert nur, wenn der Inhalt ab Juli 2023 eine neue Revision
+            erhalten hat.
           </p>
         </div>
       )}

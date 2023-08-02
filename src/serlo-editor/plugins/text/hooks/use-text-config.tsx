@@ -1,9 +1,5 @@
-import {
-  TextEditorFormattingOption,
-  TextEditorConfig,
-  TextEditorPluginConfig,
-} from '../types'
-import { articleColors } from '@/helper/colors'
+import type { TextEditorConfig } from '../types'
+import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 
 const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.code,
@@ -15,19 +11,11 @@ const defaultFormattingOptions: TextEditorFormattingOption[] = [
   TextEditorFormattingOption.richText,
 ]
 
-export const textColors = Object.entries(articleColors).map(([key, value]) => {
-  return { value, name: key.charAt(0).toUpperCase() + key.slice(1) }
+export const useTextConfig = (config: TextEditorConfig) => ({
+  formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
+  placeholder: config.placeholder ?? undefined,
+  noLinebreaks: config.noLinebreaks ?? false,
+  serloLinkSearch: config.serloLinkSearch ?? true,
+  controls: config.controls ?? undefined,
+  isInlineChildEditor: config.isInlineChildEditor ?? undefined,
 })
-
-export function useTextConfig(
-  config: TextEditorConfig
-): TextEditorPluginConfig {
-  const { placeholder, noLinebreaks } = config
-
-  return {
-    formattingOptions: config.formattingOptions ?? defaultFormattingOptions,
-    placeholder,
-    noLinebreaks,
-    serloLinkSearch: config.serloLinkSearch ?? true,
-  }
-}

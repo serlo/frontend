@@ -1,42 +1,4 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
-import styled from 'styled-components'
-
-const OverlayTriangle = styled.div<{ positionAbove?: boolean }>(
-  ({ positionAbove = false }) => {
-    const borderPosition = positionAbove ? 'borderTop' : 'borderBottom'
-    return {
-      position: 'relative',
-      width: 0,
-      height: 0,
-      borderLeft: '5px solid transparent',
-      borderRight: '5px solid transparent',
-      [borderPosition]: '10px solid rgba(51,51,51,0.95)',
-    }
-  }
-)
-
-const InlineOverlayWrapper = styled.div({
-  position: 'absolute',
-  top: '-10000px',
-  left: '-10000px',
-  opacity: 0,
-  transition: 'opacity 0.5s',
-  zIndex: 95,
-  whiteSpace: 'nowrap',
-})
-
-const InlineOverlayContentWrapper = styled.div({
-  boxShadow: '0 2px 4px 0 rgba(0,0,0,0.50)',
-  backgroundColor: 'rgba(51,51,51,0.95)',
-  color: '#ffffff',
-  borderRadius: '4px',
-  '& a': {
-    color: '#ffffff',
-    '&:hover': {
-      color: 'rgb(70, 155, 255)',
-    },
-  },
-})
 
 export type HoverPosition = 'above' | 'below'
 
@@ -121,11 +83,30 @@ export function HoverOverlayOld(props: HoverOverlayProps) {
     windowSelection,
   ])
 
+  const triangleClass = 'relative w-0 h-0 border-x-6 border-transparent'
+
   return (
-    <InlineOverlayWrapper ref={overlay}>
-      {!positionAbove && <OverlayTriangle ref={triangle} />}
-      <InlineOverlayContentWrapper>{children}</InlineOverlayContentWrapper>
-      {positionAbove && <OverlayTriangle positionAbove ref={triangle} />}
-    </InlineOverlayWrapper>
+    <div
+      ref={overlay}
+      className="absolute -left-[10000px] -top-[10000px] z-[95] whitespace-nowrap opacity-0 transition-opacity"
+    >
+      {!positionAbove && (
+        <div
+          ref={triangle}
+          className={triangleClass + ' border-b-[10px] border-b-editor-primary'}
+        />
+      )}
+      <div className="rounded-sm bg-almost-black text-white shadow-menu [&_a]:text-white [&_a]:hover:text-brand">
+        {children}
+      </div>
+      {positionAbove && (
+        <div
+          ref={triangle}
+          className={
+            triangleClass + '  border-t-[10px] border-t-editor-primary'
+          }
+        />
+      )}
+    </div>
   )
 }

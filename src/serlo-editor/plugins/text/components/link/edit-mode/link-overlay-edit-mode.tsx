@@ -8,20 +8,18 @@ import { QuickbarData, findResults } from '@/components/navigation/quickbar'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import { useTextConfig } from '@/serlo-editor/plugins/text/hooks/use-text-config'
-import { TextEditorPluginConfig } from '@/serlo-editor/plugins/text/types'
 
 // based on Quickbar, duplicates some code
 
 export function LinkOverlayEditMode({
-  config,
+  serloLinkSearch,
   value,
   setHref,
   removeLink,
   shouldFocus,
   quickbarData,
 }: {
-  config: TextEditorPluginConfig
+  serloLinkSearch: boolean
   value: string
   setHref: (href: string) => void
   removeLink: () => void
@@ -31,7 +29,6 @@ export function LinkOverlayEditMode({
   const [query, setQuery] = useState(value)
   const [selectedIndex, setSelectedIndex] = useState(-1)
 
-  const { serloLinkSearch } = useTextConfig(config)
   const { lang } = useInstanceData()
   const overlayStrings = useEditorStrings().plugins.text.linkOverlay
 
