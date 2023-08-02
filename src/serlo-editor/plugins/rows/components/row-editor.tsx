@@ -5,7 +5,7 @@ import { RowSeparator } from './row-separator'
 import { RowsPluginConfig, RowsPluginState } from '..'
 import { EditorRowRenderer } from '../editor-renderer'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
-import { getPluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { pluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
 import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 interface RowEditorProps {
@@ -30,7 +30,7 @@ export function RowEditor({
   isLast = false,
 }: RowEditorProps) {
   const focused = useAppSelector((state) => selectIsFocused(state, row.id))
-  const plugins = getPluginsWithData()
+  const plugins = pluginsWithData.getAllPlugins()
   const dropContainer = useRef<HTMLDivElement>(null)
 
   return (
