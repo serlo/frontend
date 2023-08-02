@@ -20,7 +20,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // https://github.com/serlo/backlog/issues/127
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: ['documents/runChangeDocumentSaga'],
+      },
     }).concat([sagaMiddleware]),
 })
 sagaMiddleware.run(saga)
