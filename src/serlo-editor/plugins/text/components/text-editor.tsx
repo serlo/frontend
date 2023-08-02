@@ -270,7 +270,6 @@ export function TextEditor(props: TextEditorProps) {
     ]
   )
 
-  // TODO: put this and other functions into helper files after toolbar and hotkey PR
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
       const isListActive = isSelectionWithinList(editor)
