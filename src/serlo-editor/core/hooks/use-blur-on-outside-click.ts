@@ -11,15 +11,15 @@ export function useBlurOnOutsideClick(
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // If neither the provided wrapper element nor its children were clicked,
-    // reset the internal editor focus state
     function handleClickOutside(event: MouseEvent) {
+      const clickedElement = event.target as Element
       if (
-        document.body.contains(event.target as Node) &&
-        editorWrapperRef.current &&
-        !editorWrapperRef.current.contains(event.target as Node)
+        document.body.contains(clickedElement) && // clicked element is present in the document
+        editorWrapperRef.current && // provided wrapper is defined
+        !editorWrapperRef.current.contains(clickedElement) && // clicked element is not a child of the provided wrapper
+        !clickedElement.closest('.ReactModalPortal') // clicked element is not a part of a modal
       ) {
-        dispatch(focus(null))
+        dispatch(focus(null)) // reset the focus state (blur the editor)
       }
     }
 

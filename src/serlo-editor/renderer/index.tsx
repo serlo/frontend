@@ -3,17 +3,15 @@
 import { useEffect } from 'react'
 import { Provider } from 'react-redux'
 
-import { PluginsContextPlugins } from '../core/contexts/plugins-context'
 import { EditableContext, SubDocument } from '@/serlo-editor/core'
 import { runInitRootSaga, store } from '@/serlo-editor/store'
 
 export function Renderer<K extends string = string>({
-  plugins,
   documentState,
 }: RendererProps<K>) {
   useEffect(() => {
-    store.dispatch(runInitRootSaga({ initialState: documentState, plugins }))
-  }, [plugins, documentState])
+    store.dispatch(runInitRootSaga({ initialState: documentState }))
+  }, [documentState])
 
   return (
     <Provider store={store}>
@@ -25,7 +23,6 @@ export function Renderer<K extends string = string>({
 }
 
 export interface RendererProps<K extends string = string> {
-  plugins: PluginsContextPlugins
   documentState: {
     plugin: K
     state?: unknown

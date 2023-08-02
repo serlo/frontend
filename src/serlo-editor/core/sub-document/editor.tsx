@@ -15,9 +15,8 @@ import {
   store,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
-import { usePlugin, usePlugins } from '../contexts/plugins-context'
 import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
-import { EditorPlugin } from '@/serlo-editor/types/internal__plugin'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSideToolbar, setHasSideToolbar] = useState(false)
@@ -25,8 +24,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const plugins = usePlugins()
-  const plugin = usePlugin(document?.plugin)?.plugin as EditorPlugin
+
+  const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
   const [domFocused, setDomFocused] = useState<'focus' | 'focusWithin' | false>(
     false
@@ -137,7 +136,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       dispatch(
         runChangeDocumentSaga({
           id,
-          plugins,
           state: {
             initial,
             executor: additional.executor,
@@ -188,7 +186,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     )
   }, [
     document,
-    plugins,
     plugin,
     pluginProps,
     handleFocus,

@@ -23,9 +23,10 @@ export function EditModeResultEntry({
       key={index}
       className={clsx(
         'serlo-link flex cursor-pointer bg-white px-side py-2',
-        index === selectedIndex && 'bg-editor-primary-100 group-hover:bg-white',
-        'hover:!bg-editor-primary-100 hover:!no-underline'
+        'hover:!bg-editor-primary-100 hover:!no-underline',
+        index === selectedIndex && '!bg-editor-primary-100'
       )}
+      data-qa={`link-suggestion-${index}`}
       onClick={() => {
         chooseEntry(index)
       }}

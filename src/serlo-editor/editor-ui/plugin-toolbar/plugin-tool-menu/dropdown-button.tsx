@@ -8,6 +8,7 @@ interface DropdownButtonProps {
   label: string
   icon: IconDefinition
   className?: string
+  dataQa?: string
 }
 
 export function DropdownButton({
@@ -15,11 +16,13 @@ export function DropdownButton({
   label,
   icon,
   className,
+  dataQa,
 }: DropdownButtonProps) {
   return (
     <button
       className={clsx('group/button w-full px-3 text-left', className)}
       onClick={onClick}
+      data-qa={dataQa}
     >
       <span className="serlo-button-editor-secondary w-fit rounded-xl bg-transparent text-sm group-hover/button:bg-editor-primary-200">
         <FaIcon icon={icon} /> {label}

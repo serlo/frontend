@@ -14,7 +14,7 @@ import IconVideo from '@/assets-webkit/img/editor/icon-video.svg'
 import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
-import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
+import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
@@ -62,100 +62,100 @@ export function createPlugins({
   editorStrings: LoggedInData['strings']['editor']
   instance: Instance
   parentType?: string
-}): PluginsContextPlugins {
+}): PluginsWithData {
   const isPage = parentType === UuidType.Page
 
   return [
     {
       type: EditorPluginType.Text,
       plugin: createTextPlugin({ serloLinkSearch: instance === Instance.De }),
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconText />,
     },
     {
       type: EditorPluginType.Image,
       plugin: imagePlugin,
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconImage />,
     },
     {
       type: EditorPluginType.Multimedia,
       plugin: createMultimediaPlugin(),
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconMultimedia />,
     },
     {
       type: EditorPluginType.Spoiler,
       plugin: createSpoilerPlugin(),
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconSpoiler />,
     },
     {
       type: EditorPluginType.Box,
       plugin: createBoxPlugin({}),
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconBox />,
     },
     {
       type: EditorPluginType.SerloTable,
       plugin: createSerloTablePlugin(),
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconTable />,
     },
     {
       type: EditorPluginType.Injection,
       plugin: injectionPlugin,
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconInjection />,
     },
     {
       type: EditorPluginType.Equations,
       plugin: equationsPlugin,
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconEquation />,
     },
     {
       type: EditorPluginType.Geogebra,
       plugin: geoGebraPlugin,
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconGeogebra />,
     },
     {
       type: EditorPluginType.Highlight,
       plugin: createHighlightPlugin(),
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconHighlight />,
     },
     {
       type: EditorPluginType.Video,
       plugin: videoPlugin,
-      visible: true,
+      visibleInSuggestions: true,
       icon: <IconVideo />,
     },
     {
       type: EditorPluginType.Anchor,
       plugin: anchorPlugin,
-      visible: true,
+      visibleInSuggestions: true,
     },
     {
       type: EditorPluginType.PasteHack,
       plugin: pasteHackPlugin,
-      visible: shouldUseFeature('edtrPasteHack'),
+      visibleInSuggestions: shouldUseFeature('edtrPasteHack'),
     },
     {
       type: EditorPluginType.PageLayout,
       plugin: pageLayoutPlugin,
-      visible: isPage,
+      visibleInSuggestions: isPage,
     },
     {
       type: EditorPluginType.PageTeam,
       plugin: pageTeamPlugin,
-      visible: isPage,
+      visibleInSuggestions: isPage,
     },
     {
       type: EditorPluginType.PagePartners,
       plugin: pagePartnersPlugin,
-      visible: isPage,
+      visibleInSuggestions: isPage,
     },
 
     // never visible in suggestions

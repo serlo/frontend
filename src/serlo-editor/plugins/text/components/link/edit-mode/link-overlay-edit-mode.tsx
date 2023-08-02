@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useState, KeyboardEvent } from 'react'
+import { useHotkeysContext } from 'react-hotkeys-hook'
 
 import { EditModeInput } from './edit-mode-input'
 import { EditModeResultEntry } from './edit-mode-result-entry'
@@ -36,12 +37,18 @@ export function LinkOverlayEditMode({
     setQuery(value)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
+  const { enableScope, disableScope } = useHotkeysContext()
 
   useEffect(() => {
     if (serloLinkSearch) setSelectedIndex(0)
   }, [query, quickbarData, value, serloLinkSearch])
 
   const results = quickbarData ? findResults(quickbarData, query) : []
+  useEffect(() => {
+    disableScope('root-up-down-enter')
+
+    return () => enableScope('root-up-down-enter')
+  }, [enableScope, disableScope])
 
   function chooseEntry(index?: number) {
     const activeIndex = index ?? selectedIndex

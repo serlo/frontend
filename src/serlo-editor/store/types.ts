@@ -1,9 +1,6 @@
 import { Action } from '@reduxjs/toolkit'
 
-import { EditorPlugin } from '../types/internal__plugin'
-
 export interface State {
-  plugins: Record<string, EditorPlugin>
   documents: Record<string, DocumentState>
   focus: string | null
   root: string | null

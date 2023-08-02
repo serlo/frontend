@@ -22,6 +22,7 @@ export function AddRowButton({
     return (
       <button
         className="serlo-button-editor-secondary"
+        data-qa="add-new-plugin-row-button"
         onClick={onClick}
         title={rowsStrings.addAnElement}
       >
@@ -43,6 +44,7 @@ export function AddRowButton({
         )}
         title={rowsStrings.addAnElement}
         onClick={onClick}
+        data-qa="add-new-plugin-row-button"
       >
         <FaIcon icon={faCirclePlus} className="text-xl" />
       </button>

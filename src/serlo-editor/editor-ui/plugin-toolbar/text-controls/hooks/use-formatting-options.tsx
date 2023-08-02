@@ -249,12 +249,14 @@ function createToolbarControls(
       isActive: isAnyHeadingActive,
       renderIcon: () => <EdtrIcon icon={edtrText} />,
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: ([1, 2, 3] as const).map((level) => ({
+      subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
         title: `${textStrings.heading} ${level}`,
         isActive: isHeadingActive(level),
         onClick: toggleHeading(level),
-        renderIcon: () => <span>H{level}</span>,
+        renderIcon: () => (
+          <span data-qa={`plugin-toolbar-heading-${level}`}>H{level}</span>
+        ),
       })),
     },
     // Colors
@@ -269,7 +271,7 @@ function createToolbarControls(
         return <ColorTextIcon color={color} />
       },
       renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
-      children: [
+      subMenuButtons: [
         {
           name: TextEditorFormattingOption.colors,
           title: textStrings.resetColor,

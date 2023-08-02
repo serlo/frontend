@@ -6,9 +6,9 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 import { RowsPluginConfig, RowsPluginState } from '.'
 import { useCanDrop } from './components/use-can-drop'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
+import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
@@ -36,7 +36,7 @@ export function EditorRowRenderer({
   row: StateTypeReturnType<RowsPluginState>[0]
   rows: StateTypeReturnType<RowsPluginState>
   index: number
-  plugins: PluginsContextPlugins
+  plugins: PluginsWithData
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
   const editorStrings = useEditorStrings()

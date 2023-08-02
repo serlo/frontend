@@ -20,14 +20,11 @@ import {
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import {
-  getPluginByType,
-  usePlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   focusNext,
   focusPrevious,
@@ -55,8 +52,6 @@ export function TextEditor(props: TextEditorProps) {
   const dispatch = useAppDispatch()
 
   const textStrings = useEditorStrings().plugins.text
-
-  const plugins = usePlugins()
 
   const config = useTextConfig(props.config)
 
@@ -213,7 +208,6 @@ export function TextEditor(props: TextEditorProps) {
                   plugin: document.plugin,
                   state: slicedNodes || emptyDocumentFactory().value,
                 },
-                plugins,
               })
             )
           })
@@ -232,7 +226,7 @@ export function TextEditor(props: TextEditorProps) {
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, store, id, plugins)
+          const newValue = mergePlugins(direction, editor, store, id)
 
           // Update Redux document state with the new value
           if (newValue) {
@@ -267,7 +261,6 @@ export function TextEditor(props: TextEditorProps) {
     [
       config.noLinebreaks,
       dispatch,
-      plugins,
       editor,
       id,
       showSuggestions,
@@ -277,7 +270,6 @@ export function TextEditor(props: TextEditorProps) {
     ]
   )
 
-  // TODO: put this and other functions into helper files after toolbar and hotkey PR
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
       const isListActive = isSelectionWithinList(editor)
@@ -298,10 +290,7 @@ export function TextEditor(props: TextEditorProps) {
 
       // Handle pasted images or image URLs
       if (files?.length > 0 || text) {
-        const imagePlugin = getPluginByType(
-          plugins,
-          EditorPluginType.Image
-        )?.plugin
+        const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
         if (!imagePlugin) return
 
         const imagePluginState =
@@ -320,10 +309,9 @@ export function TextEditor(props: TextEditorProps) {
 
       if (text) {
         // Handle pasted video URLs
-        const videoPluginState = getPluginByType(
-          plugins,
-          EditorPluginType.Video
-        )?.plugin.onText?.(text)
+        const videoPluginState = editorPlugins
+          .getByType(EditorPluginType.Video)
+          ?.onText?.(text)
         if (videoPluginState !== undefined) {
           event.preventDefault()
 
@@ -337,11 +325,9 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Handle pasted geogebra URLs
-        const geogebraPluginState = getPluginByType(
-          plugins,
-          EditorPluginType.Geogebra
-        )?.plugin.onText?.(text)
-
+        const geogebraPluginState = editorPlugins
+          .getByType(EditorPluginType.Geogebra)
+          ?.onText?.(text)
         if (geogebraPluginState !== undefined) {
           event.preventDefault()
 
@@ -362,7 +348,7 @@ export function TextEditor(props: TextEditorProps) {
         const isEditorEmpty = Node.string(editor) === ''
 
         if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, plugins, pluginType, state }))
+          dispatch(runReplaceDocumentSaga({ id, pluginType, state }))
           return
         }
 
@@ -381,7 +367,6 @@ export function TextEditor(props: TextEditorProps) {
                   plugin: parentPluginType,
                   state: slicedNodes,
                 },
-                plugins,
               })
             )
           }
@@ -390,13 +375,12 @@ export function TextEditor(props: TextEditorProps) {
               parent: parent.id,
               sibling: id,
               document: { plugin: pluginType, state },
-              plugins,
             })
           )
         })
       }
     },
-    [dispatch, editor, id, textStrings, plugins]
+    [dispatch, editor, id, textStrings]
   )
 
   return (
@@ -427,6 +411,7 @@ export function TextEditor(props: TextEditorProps) {
             </span>
           )}
           className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+          data-qa="plugin-text-editor"
         />
         {editable && focused && (
           <LinkControls
