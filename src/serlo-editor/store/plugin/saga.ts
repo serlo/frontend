@@ -9,11 +9,7 @@ import {
 import { EditorPlugin } from '../../types/internal__plugin'
 import { runChangeDocumentSaga, selectDocument } from '../documents'
 import { selectFocusTree } from '../focus'
-import {
-  getPluginByType,
-  PluginsContextPlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
-import { StateType } from '@/serlo-editor/plugin'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function* pluginSaga() {
   yield all([
@@ -38,7 +34,6 @@ function* insertChildBeforeSaga({
     parent: payload.parent,
     previousSibling: index === 0 ? undefined : parent.children[index - 1].id,
     document: payload.document,
-    plugins: payload.plugins,
   })
 }
 
@@ -49,12 +44,11 @@ function* insertChildAfterSaga({
     parent: payload.parent,
     previousSibling: payload.sibling,
     document: payload.document,
-    plugins: payload.plugins,
   })
 }
 
 function* removeChildSaga({ payload }: ReturnType<typeof removePluginChild>) {
-  yield call(createPlugin, payload.parent, payload.plugins, (plugin, state) => {
+  yield call(createPlugin, payload.parent, (plugin, state) => {
     if (typeof plugin.removeChild !== 'function') return
     plugin.removeChild(state, payload.child)
   })
@@ -64,9 +58,8 @@ function* insertChild(payload: {
   parent: string
   previousSibling?: string
   document?: { plugin: string; state?: unknown }
-  plugins: PluginsContextPlugins
 }) {
-  yield call(createPlugin, payload.parent, payload.plugins, (plugin, state) => {
+  yield call(createPlugin, payload.parent, (plugin, state) => {
     if (typeof plugin.insertChild !== 'function') return
     plugin.insertChild(state, {
       previousSibling: payload.previousSibling,
@@ -77,7 +70,6 @@ function* insertChild(payload: {
 
 function* createPlugin(
   id: string,
-  plugins: PluginsContextPlugins,
   f: (plugin: EditorPlugin, state: unknown) => void
 ) {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -86,23 +78,19 @@ function* createPlugin(
     id
   )
   if (!document) return
-  const contextPlugin = getPluginByType(plugins, document.plugin)
-  if (!contextPlugin) {
+  const plugin = editorPlugins.getByType(document.plugin)
+  if (!plugin) {
     // eslint-disable-next-line no-console
     console.warn(`Invalid plugin '${document.plugin}'`)
     return
   }
-  const plugin: EditorPlugin<
-    StateType<any, any, any>,
-    {}
-  > = contextPlugin.plugin
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const chan: Channel<{ payload: unknown; type: string }> = yield call(channel)
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const state = plugin.state.init(document.state, (initial, additional) => {
     const action = runChangeDocumentSaga({
       id,
-      plugins,
       state: {
         initial,
         executor: additional?.executor,
