@@ -255,7 +255,7 @@ function createToolbarControls(
         isActive: isHeadingActive(level),
         onClick: toggleHeading(level),
         renderIcon: () => (
-          <span className={`qa-plugin-toolbar-heading-${level}`}>H{level}</span>
+          <span data-qa={`plugin-toolbar-heading-${level}`}>H{level}</span>
         ),
       })),
     },

@@ -28,11 +28,11 @@ export function PluginToolbarTextControlButton({
           ? 'bg-editor-primary-200 text-almost-black shadow-menu hover:text-black'
           : '#b6b6b6 hover:text-editor-primary',
         'b-0 m-1 h-6 w-6 cursor-pointer rounded p-0 outline-none',
-        'serlo-tooltip-trigger',
-        `qa-plugin-toolbar-button-${
-          text ? text.toLowerCase().trim().replace(/ /g, '-') : ''
-        }`
+        'serlo-tooltip-trigger'
       )}
+      data-qa={`plugin-toolbar-button-${
+        text ? text.toLowerCase().trim().replace(/ /g, '-') : ''
+      }`}
       onMouseDown={onMouseDown}
     >
       <EditorTooltip

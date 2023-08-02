@@ -37,7 +37,8 @@ export function AnchorLinkCopyTool({ pluginId }: AnchorLinkCopyToolProps) {
       }}
       label={editorStrings.plugins.rows.copyAnchorLink}
       icon={faHashtag}
-      className="qa-copy-anchor-link-button mt-2.5 border-t pt-2.5"
+      className="mt-2.5 border-t pt-2.5"
+      dataQa="copy-anchor-link-button"
     />
   )
 }
