@@ -50,6 +50,7 @@
     "algebra.js": "^0.2.6",
     "array-move": "^4.0.0",
     "autoprefixer": "^10.4.14",
+    "chart.js": "^4.3.2",
     "clsx": "^2.0.0",
     "fast-xml-parser": "^4.2.5",
     "fp-ts": "^2.16.0",

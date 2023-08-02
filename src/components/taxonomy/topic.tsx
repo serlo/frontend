@@ -1,6 +1,8 @@
 import { faFile, faTrash } from '@fortawesome/free-solid-svg-icons'
+// eslint-disable-next-line import/no-extraneous-dependencies, import/no-internal-modules
+import Chart from 'chart.js/auto'
 import dynamic from 'next/dynamic'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import { SubTopic } from './sub-topic'
 import { TopicCategories } from './topic-categories'
@@ -35,6 +37,60 @@ export function Topic({ data }: TopicProps) {
 
   const hasExercises = data.exercisesContent.length > 0
   const defaultLicense = hasExercises ? getDefaultLicense() : undefined
+
+  useEffect(() => {
+    const ctx = document.getElementById('chart')
+    const ctx2 = document.getElementById('chart2')
+    if (ctx && ctx2) {
+      const chart = new Chart(ctx as HTMLCanvasElement, {
+        type: 'bar',
+        data: {
+          labels: exerciseStats?.sessionsByDay.map((entry) => entry.date),
+          datasets: [
+            {
+              label: 'Anzahl aktive NutzerInnen pro Tag',
+              data: exerciseStats?.sessionsByDay.map((entry) => entry.count),
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      })
+      const chart2 = new Chart(ctx2 as HTMLCanvasElement, {
+        type: 'bar',
+        data: {
+          labels: exerciseStats?.sessionsByDay.map((entry) => entry.date),
+          datasets: [
+            {
+              label: 'Median aktive Zeit in Minuten',
+              data: exerciseStats?.sessionsByDay.map(
+                (entry) => entry.medianTime / 1000 / 60
+              ),
+              borderWidth: 1,
+              backgroundColor: '#FFB1C1',
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      })
+      return () => {
+        chart.destroy()
+        chart2.destroy()
+      }
+    }
+  }, [exerciseStats?.sessionsByDay])
 
   return (
     <>
@@ -98,7 +154,13 @@ export function Topic({ data }: TopicProps) {
             <br />
             <br />
             <Link
-              href={'/___exercise_dashboard/' + exerciseStats.date}
+              href={
+                '/___exercise_dashboard' +
+                (exerciseStats.date.includes('to') ||
+                exerciseStats.date.includes('all')
+                  ? ''
+                  : `/${exerciseStats.date}`)
+              }
               className="ml-4"
             >
               zurück zur Übersicht
@@ -109,33 +171,33 @@ export function Topic({ data }: TopicProps) {
               <strong>{exerciseStats.fullCount}</strong> NutzerInnen am{' '}
               {exerciseStats.date.replace(/-/g, '.')}
             </span>
+            <br />
+            <br />
             {exerciseStats.date !== 'all' && (
               <>
-                <br />
-                <br />
-                <span className="ml-3">
-                  Startzeiten: {exerciseStats.times.join(' - ')}
-                </span>
-                <br />
-                <br />
-                <span className="ml-3">
-                  <Link
-                    href={
-                      '/___exercise_dashboard/details/all/' + data.id.toString()
-                    }
-                  >
-                    Gesamtübersicht
-                  </Link>
-                </span>
-                <br />
-                <br />
-                <span className="ml-3">
+                {!exerciseStats.date.includes('to') ? (
+                  <div className="my-5 ml-side">
+                    Startzeiten: {exerciseStats.times.join(' - ')}
+                  </div>
+                ) : null}
+                <div className="ml-side">
                   <RangePicker id={data.id.toString()} />
-                </span>
+                </div>
               </>
             )}
           </div>
         )}
+        {exerciseStats?.date.includes('all') ||
+        exerciseStats?.date.includes('to') ? (
+          <>
+            <div className="my-12 w-full">
+              <canvas id="chart"></canvas>
+            </div>
+            <div className="my-12 w-full">
+              <canvas id="chart2"></canvas>
+            </div>
+          </>
+        ) : null}
         <h1 className="serlo-h1 mb-10 mt-8" itemProp="name">
           {data.title}
           {isExerciseFolder && (
@@ -210,8 +272,16 @@ export function Topic({ data }: TopicProps) {
 }
 
 function RangePicker(props: { id: string }) {
-  const [start, setStart] = useState(new Date().toLocaleDateString('en-CA'))
-  const [end, setEnd] = useState(new Date().toLocaleDateString('en-CA'))
+  const exerciseStats = useExerciseFolderStats()
+
+  const [start, setStart] = useState(
+    (exerciseStats?.date.includes('to') && exerciseStats.date.split('to')[0]) ||
+      new Date().toLocaleDateString('en-CA')
+  )
+  const [end, setEnd] = useState(
+    (exerciseStats?.date.includes('to') && exerciseStats.date.split('to')[1]) ||
+      new Date().toLocaleDateString('en-CA')
+  )
 
   return (
     <div>
@@ -229,6 +299,7 @@ function RangePicker(props: { id: string }) {
       <br />
       <Link
         href={`/___exercise_dashboard/details/${start}to${end}/${props.id}`}
+        forceNoCSR
       >
         Anzeigen
       </Link>

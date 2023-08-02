@@ -20,6 +20,7 @@ model ExerciseSubmission {
 
   @@index([entityId])
   @@index([timestamp])
+  @@index([path(length:50)])
 }
 
 model PrivateLinkPrototype {
@@ -47,6 +48,6 @@ model MitmachWoche {
 }
 
 model PrototypeThreadStatus {
-  threadId     String @db.VarChar(24) @id
-  status       String @db.VarChar(24)
+  threadId String @id @db.VarChar(24)
+  status   String @db.VarChar(24)
 }

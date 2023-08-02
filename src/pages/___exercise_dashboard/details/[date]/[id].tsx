@@ -52,6 +52,12 @@ export default renderedPageNoHooks<DetailsProps>(
   }
 )
 
+const median = (arr: number[]) => {
+  const mid = Math.floor(arr.length / 2),
+    nums = [...arr].sort((a, b) => a - b)
+  return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2
+}
+
 export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   // quite stupid to use fetchPageData here, why not calling requestPage directly?
   const id = parseInt(context.params?.id as string)
@@ -99,10 +105,13 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     end = new Date(start.getTime() + 24 * 60 * 60 * 1000)
   }
 
+  const res = await fetch(`https://de.serlo.org/${id}`)
+  const alias = res.url.replace('https://de.serlo.org', '')
+
   const relevantData = await prisma.exerciseSubmission.findMany({
     where: {
       AND: {
-        entityId: { in: ids },
+        path: alias,
         ...(start && end ? { timestamp: { gt: start, lt: end } } : {}),
       },
     },
@@ -113,16 +122,43 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
   const sessions = new Set()
   const interactiveSessions = new Set()
 
+  const sessionsByDate: {
+    [key: string]: {
+      sessions: Set<string>
+      ts: number
+      sessionTs: { [key: string]: { ts: number[] } }
+      medianTime?: number
+    }
+  } = {}
+
   const data = relevantData.reduce((result, obj) => {
-    if (start && end) {
+    /*if (start && end) {
       const ts = new Date(obj.timestamp).getTime()
       if (ts < start.getTime() || ts > end.getTime()) {
         return result
       }
+    }*/
+
+    const date = obj.timestamp.toLocaleDateString('de-DE', {
+      timeZone: 'Europe/Berlin',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+
+    const entryByDate = (sessionsByDate[date] = sessionsByDate[date] || {
+      sessions: new Set(),
+      ts: obj.timestamp.getTime(),
+      sessionTs: {},
+    })
+
+    entryByDate.sessions.add(obj.sessionId)
+
+    if (!entryByDate.sessionTs[obj.sessionId]) {
+      entryByDate.sessionTs[obj.sessionId] = { ts: [] }
     }
-    if (!(obj.path.includes(`/${id}/`) || obj.path === `/${id}`)) {
-      return result
-    }
+
+    entryByDate.sessionTs[obj.sessionId].ts.push(obj.timestamp.getTime())
 
     if (!sessions.has(obj.sessionId)) {
       times.push(
@@ -176,6 +212,22 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
     }
   }
 
+  for (const date in sessionsByDate) {
+    const entry = sessionsByDate[date]
+
+    const times: number[] = []
+    Object.entries(entry.sessionTs).forEach((entry) => {
+      const sessionTimes = entry[1].ts
+      sessionTimes.sort((a, b) => a - b)
+      times.push(sessionTimes[sessionTimes.length - 1] - sessionTimes[0])
+    })
+    entry.medianTime = median(times)
+  }
+
+  const entries = Object.entries(sessionsByDate)
+
+  entries.sort((a, b) => a[1].ts - b[1].ts)
+
   return {
     props: {
       pageData: JSON.parse(JSON.stringify(pageData)) as SlugProps['pageData'], // remove undefined values
@@ -186,6 +238,11 @@ export const getStaticProps: GetStaticProps<DetailsProps> = async (context) => {
         date,
         revisions,
         times,
+        sessionsByDay: entries.map((entry) => ({
+          date: entry[0],
+          count: entry[1].sessions.size,
+          medianTime: entry[1].medianTime || 0,
+        })),
       },
     },
     revalidate: 60 * 10, // 10 min,
