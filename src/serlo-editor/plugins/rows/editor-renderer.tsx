@@ -185,7 +185,7 @@ export function EditorRowRenderer({
   })
   const dropPreview =
     collectedDropProps.isDragging &&
-      (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
+    (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
       <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 

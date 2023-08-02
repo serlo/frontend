@@ -24,7 +24,7 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const pluginState = plugin.state.init(document.state, () => { })
+  const pluginState = plugin.state.init(document.state, () => {})
 
   return (
     <plugin.Component

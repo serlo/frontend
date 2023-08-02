@@ -290,9 +290,7 @@ export function TextEditor(props: TextEditorProps) {
 
       // Handle pasted images or image URLs
       if (files?.length > 0 || text) {
-        const imagePlugin = editorPlugins.getByType(
-          EditorPluginType.Image
-        )
+        const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
         if (!imagePlugin) return
 
         const imagePluginState =
