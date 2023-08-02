@@ -3,11 +3,11 @@ import { useRef } from 'react'
 
 import { SubDocumentProps } from '.'
 import { selectDocument, useAppSelector } from '../../store'
-import { pluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
-  const plugin = pluginsWithData.getPluginByType(document?.plugin ?? '')
+  const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
   const focusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
   if (!document) return null
@@ -24,7 +24,7 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
   const config = R.mergeDeepRight(defaultConfig, overrideConfig)
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const pluginState = plugin.state.init(document.state, () => {})
+  const pluginState = plugin.state.init(document.state, () => { })
 
   return (
     <plugin.Component

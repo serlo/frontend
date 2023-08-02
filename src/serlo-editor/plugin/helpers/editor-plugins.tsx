@@ -9,26 +9,26 @@ interface PluginWithData {
 
 export type PluginsWithData = PluginWithData[]
 
-export const pluginsWithData = (function () {
-  let EditorContextPlugins: PluginsWithData | null = null
+export const editorPlugins = (function () {
+  let allPlugins: PluginsWithData | null = null
 
   function init(plugins: PluginsWithData) {
-    if (EditorContextPlugins) return // only initialize once
+    if (allPlugins) return // only initialize once
 
-    EditorContextPlugins = plugins
+    allPlugins = plugins
 
     // Ensure the highest integrity level that JS provides
-    Object.freeze(EditorContextPlugins)
+    Object.freeze(allPlugins)
   }
 
-  function getAllPlugins() {
-    if (!EditorContextPlugins) throw new Error('No Editor Plugins provided!')
+  function getAllWithData() {
+    if (!allPlugins) throw new Error('init editor plugins first')
 
-    return EditorContextPlugins
+    return allPlugins
   }
 
-  function getPluginByType(pluginType: string) {
-    const plugins = getAllPlugins()
+  function getByType(pluginType: string) {
+    const plugins = getAllWithData()
 
     const contextPlugin =
       plugins.find((plugin) => plugin.type === pluginType) ??
@@ -37,5 +37,5 @@ export const pluginsWithData = (function () {
     return (contextPlugin?.plugin as EditorPlugin) ?? null
   }
 
-  return { init, getAllPlugins, getPluginByType }
+  return { init, getAllWithData, getByType }
 })()

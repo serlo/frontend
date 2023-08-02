@@ -10,7 +10,7 @@ import {
 } from '../helpers'
 import { selectRoot } from '../root'
 import { State } from '../types'
-import { pluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 const selectSelf = (state: State) => state.focus
 
@@ -31,7 +31,7 @@ export const selectFocusTree: (
     if (!root) return null
     const document = selectDocument(state, root)
     if (!document) return null
-    const plugin = pluginsWithData.getPluginByType(document.plugin)
+    const plugin = editorPlugins.getByType(document.plugin)
     if (!plugin) return null
 
     const children = plugin.state

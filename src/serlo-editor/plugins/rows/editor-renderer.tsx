@@ -8,7 +8,7 @@ import { useCanDrop } from './components/use-can-drop'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
-import { PluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
@@ -185,7 +185,7 @@ export function EditorRowRenderer({
   })
   const dropPreview =
     collectedDropProps.isDragging &&
-    (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
+      (collectedDropProps.isFile || canDrop(collectedDropProps.id)) ? (
       <hr className="m-0 border-2 border-editor-primary p-0" />
     ) : null
 

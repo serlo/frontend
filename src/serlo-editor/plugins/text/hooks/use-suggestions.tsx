@@ -7,7 +7,7 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
-import { pluginsWithData } from '@/serlo-editor/plugin/helpers/plugins-with-data'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
 import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
 import {
@@ -45,8 +45,8 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const pluginsStrings = useEditorStrings().plugins
   const text = Node.string(editor)
 
-  const allPlugins = pluginsWithData
-    .getAllPlugins()
+  const allPlugins = editorPlugins
+    .getAllWithData()
     .filter(({ visibleInSuggestions }) => visibleInSuggestions)
     .map(({ type }) => type)
   const allowedPlugins = useContext(AllowedChildPlugins)
@@ -180,8 +180,8 @@ function createOption(
   pluginType: string,
   allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
-  const pluginData = pluginsWithData
-    .getAllPlugins()
+  const pluginData = editorPlugins
+    .getAllWithData()
     .find((plugin) => plugin.type === pluginType)
 
   if (!pluginData) return { pluginType, title: pluginType }
