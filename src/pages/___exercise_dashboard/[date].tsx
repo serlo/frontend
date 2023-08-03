@@ -471,7 +471,7 @@ const Page: NextPage<Data> = ({
                 rel="noreferrer"
                 className="font-bold hover:underline"
               >
-                {page.path}
+                {decodeURIComponent(page.path)}
               </a>{' '}
               <Link
                 href={`/___exercise_dashboard/details/${
@@ -532,7 +532,7 @@ const Page: NextPage<Data> = ({
                         rel="noreferrer"
                         className="hover:underline"
                       >
-                        {entry.path}
+                        {decodeURIComponent(entry.path)}
                       </a>{' '}
                       (x{entry.count})
                     </div>
