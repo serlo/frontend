@@ -3,7 +3,6 @@ import {
   faPlusCircle,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons'
-import { includes } from 'ramda'
 import { useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 
@@ -28,9 +27,7 @@ import {
   focus,
   focusNext,
   focusPrevious,
-  selectFocused,
   selectIsDocumentEmpty,
-  useAppSelector,
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
@@ -44,17 +41,9 @@ export enum StepSegment {
 }
 
 export function EquationsEditor(props: EquationsProps) {
-  const { focused, state } = props
+  const { domFocusWithin, state } = props
 
   const dispatch = useAppDispatch()
-  const focusedElement = useAppSelector(selectFocused)
-  const nestedFocus =
-    focused ||
-    includes(
-      focusedElement,
-      props.state.steps.map((step) => step.explanation.id)
-    ) ||
-    focusedElement === state.firstExplanation.id
 
   const transformationTarget = toTransformationTarget(
     state.transformationTarget.value
@@ -85,7 +74,7 @@ export function EquationsEditor(props: EquationsProps) {
     },
     {
       scopes: ['global'],
-      enabled: focused,
+      enabled: domFocusWithin,
     }
   )
 
@@ -96,7 +85,7 @@ export function EquationsEditor(props: EquationsProps) {
     },
     {
       scopes: ['global'],
-      enabled: focused,
+      enabled: domFocusWithin,
     }
   )
 
@@ -110,7 +99,7 @@ export function EquationsEditor(props: EquationsProps) {
     },
     {
       scopes: ['global'],
-      enabled: focused,
+      enabled: domFocusWithin,
     }
   )
 
@@ -138,7 +127,7 @@ export function EquationsEditor(props: EquationsProps) {
   })
 
   useEffect(() => {
-    if (nestedFocus) {
+    if (domFocusWithin) {
       gridFocus.setFocus({
         row: 0,
         column: firstColumn(transformationTarget),
@@ -147,11 +136,11 @@ export function EquationsEditor(props: EquationsProps) {
     }
     //prevents loop
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nestedFocus])
+  }, [domFocusWithin])
 
   const equationsStrings = useEditorStrings().plugins.equations
 
-  if (!nestedFocus)
+  if (!domFocusWithin)
     return (
       <EquationsRenderer
         firstExplanation={
@@ -191,14 +180,9 @@ export function EquationsEditor(props: EquationsProps) {
     })
   }
 
-  const hasFocusWithin =
-    typeof window !== 'undefined' && pluginFocusWrapper.current
-      ? pluginFocusWrapper.current.contains(document.activeElement)
-      : false
-
   return (
     <div ref={pluginFocusWrapper}>
-      {props.focused || hasFocusWithin ? <EquationsToolbar {...props} /> : null}
+      {domFocusWithin ? <EquationsToolbar {...props} /> : null}
       <div className="py-2.5">
         <table className="whitespace-nowrap">
           {renderFirstExplanation()}
@@ -314,7 +298,7 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   function renderAddButton() {
-    if (!nestedFocus) return
+    if (!domFocusWithin) return
 
     return (
       <button
@@ -327,7 +311,7 @@ export function EquationsEditor(props: EquationsProps) {
   }
 
   function renderButtons(row: number) {
-    if (!nestedFocus) return
+    if (!domFocusWithin) return
     const buttonClass = tw`serlo-button-editor-secondary serlo-tooltip-trigger mr-2 h-8 w-8`
 
     return (

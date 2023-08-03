@@ -3,7 +3,7 @@ import { PageTeamRenderer } from './renderer'
 import { PageTeamToolbar } from './toolbar'
 
 export function PageTeamEditor(props: PageTeamPluginProps) {
-  const { state } = props
+  const { state, domFocusWithin } = props
   const { data } = state
   const noData = !data || data.length === 0
 
@@ -21,7 +21,7 @@ export function PageTeamEditor(props: PageTeamPluginProps) {
 
   return (
     <>
-      <PageTeamToolbar {...props} />
+      {domFocusWithin ? <PageTeamToolbar {...props} /> : null}
       <div>
         {noData ? (
           renderDataImportExplanation()

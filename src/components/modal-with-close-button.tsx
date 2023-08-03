@@ -22,7 +22,7 @@ interface ModalWithCloseButtonProps {
   onCloseClick: () => void
   children: ReactNode
   className?: string
-  parentSelector: () => HTMLElement
+  parentSelector?: () => HTMLElement
 }
 
 export function ModalWithCloseButton({

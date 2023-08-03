@@ -8,14 +8,14 @@ import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 
 export const VideoEditor = (props: VideoProps) => {
-  const { focused, state } = props
+  const { domFocusWithin, state } = props
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const [iframeSrc, type] = parseVideoUrl(state.src.value)
   const couldBeValid = type !== undefined
 
   return (
     <>
-      {focused && (
+      {domFocusWithin && (
         <VideoToolbar
           {...props}
           showSettingsModal={showSettingsModal}
@@ -27,7 +27,7 @@ export const VideoEditor = (props: VideoProps) => {
           type="video"
           provider={type}
           embedUrl={iframeSrc}
-          className={focused ? '' : 'pointer-events-none'}
+          className={domFocusWithin ? '' : 'pointer-events-none'}
         >
           <VideoRenderer src={iframeSrc} type={type} />
         </EmbedWrapper>

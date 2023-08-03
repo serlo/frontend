@@ -11,13 +11,13 @@ import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plug
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const AnchorEditor = (props: AnchorProps) => {
-  const { editable, focused, state, id } = props
+  const { editable, domFocusWithin, state, id } = props
 
   const editorStrings = useEditorStrings()
 
   return (
     <>
-      {focused ? (
+      {domFocusWithin ? (
         <PluginToolbar
           pluginType={EditorPluginType.Anchor}
           pluginControls={<PluginDefaultTools pluginId={id} />}

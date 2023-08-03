@@ -10,20 +10,23 @@ export const firstColumsSizes = [50, 66, 33]
 export const PageLayoutEditor: React.FunctionComponent<
   PageLayoutPluginProps
 > = (props) => {
-  const { column1, column2, widthPercent } = props.state
+  const { state, domFocusWithin } = props
+  const { column1, column2, widthPercent } = state
   const percent = widthPercent.value
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   return (
     <>
-      <PageLayoutToolbar
-        {...props}
-        showSettingsModal={showSettingsModal}
-        setShowSettingsModal={setShowSettingsModal}
-      />
+      {domFocusWithin ? (
+        <PageLayoutToolbar
+          {...props}
+          showSettingsModal={showSettingsModal}
+          setShowSettingsModal={setShowSettingsModal}
+        />
+      ) : null}
 
       {percent === 0 ? (
-        <LayoutChooser {...props.state} />
+        <LayoutChooser {...state} />
       ) : (
         <div className="page-layout-plugin">
           <PageLayoutRenderer

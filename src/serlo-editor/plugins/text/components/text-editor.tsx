@@ -46,7 +46,7 @@ export type TextEditorProps = EditorPluginProps<
 
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
-  const { state, id, editable, focused, containerRef } = props
+  const { state, id, editable, domFocusWithin, containerRef } = props
 
   const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
@@ -62,10 +62,15 @@ export function TextEditor(props: TextEditorProps) {
     [createTextEditor]
   )
 
-  const suggestions = useSuggestions({ editor, id, editable, focused })
+  const suggestions = useSuggestions({
+    editor,
+    id,
+    editable,
+    focused: domFocusWithin,
+  })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const handleRenderElement = useRenderElement(focused)
+  const handleRenderElement = useRenderElement(domFocusWithin)
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
@@ -82,7 +87,7 @@ export function TextEditor(props: TextEditorProps) {
 
       // If the editor is not focused, remove the suggestions search
       // and exit the useEffect hook
-      if (focused === false) {
+      if (domFocusWithin === false) {
         if (text.startsWith('/')) {
           editor.deleteBackward('line')
         }
@@ -121,7 +126,7 @@ export function TextEditor(props: TextEditorProps) {
     return () => {
       clearTimeout(timeout)
     }
-  }, [editor, focused])
+  }, [editor, domFocusWithin])
 
   const handleEditableKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -385,7 +390,7 @@ export function TextEditor(props: TextEditorProps) {
 
   return (
     <>
-      {focused && (
+      {domFocusWithin && (
         <TextToolbar
           id={id}
           toolbarControls={toolbarControls}
@@ -413,7 +418,7 @@ export function TextEditor(props: TextEditorProps) {
           className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
           data-qa="plugin-text-editor"
         />
-        {editable && focused && (
+        {editable && domFocusWithin && (
           <LinkControls
             isSelectionChanged={isSelectionChanged}
             editor={editor}

@@ -6,7 +6,7 @@ import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plug
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SpoilerEditor(props: SpoilerProps) {
-  const { state, editable, autofocusRef, id, focused } = props
+  const { state, editable, autofocusRef, id, domFocusWithin } = props
   const editorStrings = useEditorStrings()
 
   const title = editable ? (
@@ -27,13 +27,13 @@ export function SpoilerEditor(props: SpoilerProps) {
       <SpoilerRenderer
         title={<>{title}</>}
         content={state.content.render()}
-        openOverwrite={editable} // should include focused but that's unreliable atm.
+        openOverwrite={editable && domFocusWithin}
       />
     </>
   )
 
   function renderPluginToolbar() {
-    if (!focused) return null
+    if (!domFocusWithin) return null
 
     return (
       <PluginToolbar

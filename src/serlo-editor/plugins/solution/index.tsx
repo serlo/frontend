@@ -39,7 +39,7 @@ export const solutionPlugin: EditorPlugin<SolutionPluginState> = {
   config: {},
 }
 
-function SolutionEditor({ editable, state, focused }: SolutionProps) {
+function SolutionEditor({ editable, state, domFocusWithin }: SolutionProps) {
   const { prerequisite, strategy } = state
   const hasStrategy = !useAppSelector((state) =>
     selectIsDocumentEmpty(state, strategy.id)
@@ -79,7 +79,7 @@ function SolutionEditor({ editable, state, focused }: SolutionProps) {
 
     return (
       <>
-        {focused ? (
+        {domFocusWithin ? (
           <InlineSettings
             onDelete={() => {
               if (prerequisite.defined) prerequisite.remove()

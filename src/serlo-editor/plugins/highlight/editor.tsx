@@ -5,10 +5,10 @@ import { HighlightToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function HighlightEditor(props: HighlightProps) {
-  const { config, state, focused, editable } = props
+  const { config, state, domFocusWithin, editable } = props
   const { Renderer } = config
 
-  const edit = focused && editable
+  const edit = domFocusWithin && editable
   const [throttledEdit, setEditThrottled] = useState(edit)
 
   const editorStrings = useEditorStrings()
@@ -25,7 +25,7 @@ export function HighlightEditor(props: HighlightProps) {
 
   return throttledEdit || edit ? (
     <>
-      {focused && <HighlightToolbar {...props} />}
+      {domFocusWithin && <HighlightToolbar {...props} />}
       <textarea
         value={state.code.value}
         name="text"

@@ -8,27 +8,17 @@ import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
-import {
-  selectHasFocusedDescendant,
-  selectIsFocused,
-  useAppSelector,
-} from '@/serlo-editor/store'
 
 export function MultimediaEditor(props: MultimediaProps) {
-  const { config, state, editable, focused } = props
+  const { config, state, editable, focused, domFocusWithin, containerRef } =
+    props
   const { explanation, multimedia, width } = state
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
 
-  const isMediaChildFocused = useAppSelector((state) =>
-    selectIsFocused(state, multimedia.id)
-  )
-  const isMediaChildFocusedWithin = useAppSelector((state) =>
-    selectHasFocusedDescendant(state, multimedia.id)
-  )
-
   const pluginToolbarAndStyleHacks = clsx(
-    focused && '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
+    domFocusWithin &&
+      '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
 
     // fix add button position
     '[&_.add-trigger]:relative [&_.add-trigger]:-left-1/4',
@@ -44,7 +34,7 @@ export function MultimediaEditor(props: MultimediaProps) {
     // make media-child's toolbar full width of multimedia plugin
     // also media-wrapper needs to be relative to be clickable (is float:right)
     // but needs to be static to not restrict toolbar width
-    (isMediaChildFocused || isMediaChildFocusedWithin) &&
+    domFocusWithin &&
       '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
 
     // margin and size improvement
@@ -68,8 +58,8 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   return (
     <div className="group/multimedia">
-      {editable && focused ? (
-        <MultimediaToolbar id={props.id}>
+      {focused ? (
+        <MultimediaToolbar id={props.id} containerRef={containerRef}>
           <MultimediaSizeSelect
             state={state.width}
             title={multimediaStrings.chooseSize}

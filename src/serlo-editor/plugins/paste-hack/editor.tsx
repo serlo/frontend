@@ -46,7 +46,7 @@ const StateDecoder = t.strict({
 export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   props
 ) => {
-  const { focused, id } = props
+  const { domFocusWithin, id } = props
   const dispatch = useAppDispatch()
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -106,7 +106,7 @@ export const PasteHackEditor: React.FunctionComponent<PasteHackPluginProps> = (
   )
 
   function renderPluginToolbar() {
-    if (!focused) return null
+    if (!domFocusWithin) return null
 
     return (
       <PluginToolbar

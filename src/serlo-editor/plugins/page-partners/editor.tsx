@@ -7,11 +7,11 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 export const PagePartnersEditor: React.FunctionComponent<
   PagePartnersPluginProps
 > = (props) => {
-  const { id, focused, editable } = props
+  const { id, domFocusWithin } = props
 
   return (
     <>
-      {focused && editable ? (
+      {domFocusWithin ? (
         <PluginToolbar
           pluginType={EditorPluginType.PagePartners}
           pluginControls={<PluginDefaultTools pluginId={id} />}

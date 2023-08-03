@@ -1,5 +1,5 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons'
-import { ReactNode, useState } from 'react'
+import { ReactNode, RefObject, useState } from 'react'
 
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
@@ -11,9 +11,14 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 interface MultimediaToolbarProps {
   id: string
   children: ReactNode
+  containerRef: RefObject<HTMLDivElement> | undefined
 }
 
-export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
+export const MultimediaToolbar = ({
+  id,
+  children,
+  containerRef,
+}: MultimediaToolbarProps) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false)
   const editorStrings = useEditorStrings()
 
@@ -33,6 +38,7 @@ export const MultimediaToolbar = ({ id, children }: MultimediaToolbarProps) => {
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
               className="!top-1/3 !max-w-xl"
+              parentSelector={() => containerRef?.current ?? document.body}
             >
               <h3 className="serlo-h3 mt-4">
                 {editorStrings.edtrIo.settings}:{' '}

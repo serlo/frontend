@@ -43,17 +43,18 @@ const cellTextFormattingOptions = [
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
-  const { rows } = props.state
+  const { config, domFocusWithin, state } = props
+  const { rows } = state
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
-  const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
+  const { focusedRowIndex, focusedColIndex } = findFocus()
 
   const areImagesDisabled = useAreImagesDisabledInTable()
 
   const tableStrings = useEditorStrings().plugins.serloTable
 
-  const tableType = getTableType(props.state.tableType.value)
+  const tableType = getTableType(state.tableType.value)
   const showRowHeader =
     tableType === TableType.OnlyRowHeader ||
     tableType === TableType.ColumnAndRowHeader
@@ -61,7 +62,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     tableType === TableType.OnlyColumnHeader ||
     tableType === TableType.ColumnAndRowHeader
 
-  return nestedFocus ? renderActiveTable() : renderInactiveTable()
+  return domFocusWithin ? renderActiveTable() : renderInactiveTable()
 
   function renderInactiveTable() {
     const rowsJSX = rows.map((row) => {
@@ -82,7 +83,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
     return (
       <>
-        {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
+        {domFocusWithin ? <SerloTableToolbar {...props} /> : null}
         <div className="flex">
           <div
             className="flex flex-col"
@@ -162,7 +163,7 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells && !areImagesDisabled
+              {config.allowImageInTableCells && !areImagesDisabled
                 ? renderSwitchButton(cell, isHead, isClear)
                 : null}
               {/* hack: make sure we capture most clicks in cells */}
@@ -363,11 +364,8 @@ export function SerloTableEditor(props: SerloTableProps) {
         }
       })
     )
-    const nestedFocus =
-      props.focused ||
-      (focusedRowIndex !== undefined && focusedColIndex !== undefined)
 
-    return { focusedRowIndex, focusedColIndex, nestedFocus }
+    return { focusedRowIndex, focusedColIndex }
   }
 
   function replaceWithType(input: string, isRow: boolean) {

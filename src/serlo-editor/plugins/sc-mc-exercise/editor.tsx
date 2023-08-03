@@ -16,13 +16,8 @@ import { EditableContext } from '@/serlo-editor/core/contexts'
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const focusedElement = useAppSelector(selectFocused)
 
-  const { editable, focused, state } = props
+  const { editable, domFocusWithin, state } = props
   const editorStrings = useEditorStrings()
-
-  const children = props.state.answers.flatMap((answer) => [
-    answer.content.id,
-    answer.feedback.id,
-  ])
 
   const handleCheckboxChange = (index: number) => () => {
     state.answers[index].isCorrect.set((currentVal) => !currentVal)
@@ -37,8 +32,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
   const handleAddButtonClick = () => props.state.answers.insert()
   const removeAnswer = (index: number) => () => state.answers.remove(index)
 
-  const nestedFocus =
-    focused || (focusedElement && children.includes(focusedElement))
   const [previewActive, setPreviewActive] = useState(false)
 
   const renderer = (
@@ -66,15 +59,15 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {nestedFocus ? <ScMcExerciseToolbar {...props} /> : null}
+      {domFocusWithin ? <ScMcExerciseToolbar {...props} /> : null}
       <PreviewOverlay
-        focused={nestedFocus || false}
+        focused={domFocusWithin || false}
         onChange={setPreviewActive}
         editable={previewActive}
       >
         {renderer}
       </PreviewOverlay>
-      {editable && nestedFocus && !previewActive && (
+      {editable && domFocusWithin && !previewActive && (
         <>
           {state.answers.map((answer, index) => {
             return (

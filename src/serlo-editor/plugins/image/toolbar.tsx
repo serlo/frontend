@@ -17,7 +17,7 @@ export const ImageToolbar = (
     setShowSettingsModal: Dispatch<SetStateAction<boolean>>
   }
 ) => {
-  const { id, showSettingsModal, setShowSettingsModal } = props
+  const { id, containerRef, showSettingsModal, setShowSettingsModal } = props
   const editorStrings = useEditorStrings()
   const imageStrings = editorStrings.plugins.image
 
@@ -37,6 +37,7 @@ export const ImageToolbar = (
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
               className="!top-[10%] !max-w-xl"
+              parentSelector={() => containerRef?.current ?? document.body}
             >
               <h3 className="serlo-h3 mt-4">
                 {editorStrings.edtrIo.settings}: {imageStrings.title}

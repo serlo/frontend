@@ -14,7 +14,7 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { selectIsEmptyRows } from '@/serlo-editor/plugins/rows'
-import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
+import { useAppSelector } from '@/serlo-editor/store'
 
 const titleFormattingOptions = [
   TextEditorFormattingOption.math,
@@ -22,7 +22,7 @@ const titleFormattingOptions = [
 ]
 
 export function BoxEditor(props: BoxProps) {
-  const { focused } = props
+  const { domFocusWithin } = props
   const { title, type, content, anchorId } = props.state
   const hasNoType = type.value === ''
   const typedValue = (hasNoType ? 'blank' : type.value) as BoxType
@@ -37,12 +37,6 @@ export function BoxEditor(props: BoxProps) {
   )
   const { strings } = useInstanceData()
   const editorStrings = useEditorStrings()
-
-  const isTitleFocused = useAppSelector((state) =>
-    selectIsFocused(state, title.id)
-  )
-
-  const hasFocus = focused || isTitleFocused
 
   if (hasNoType) {
     return (
@@ -62,7 +56,7 @@ export function BoxEditor(props: BoxProps) {
 
   return (
     <>
-      {hasFocus ? <BoxToolbar {...props} /> : null}
+      {domFocusWithin ? <BoxToolbar {...props} /> : null}
 
       <BoxRenderer
         boxType={typedValue}

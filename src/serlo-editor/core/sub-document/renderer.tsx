@@ -34,6 +34,7 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
       id={id}
       editable={false}
       focused={false}
+      domFocusWithin={false}
       autofocusRef={focusRef}
       renderIntoSideToolbar={() => null}
     />

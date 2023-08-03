@@ -13,17 +13,14 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 export const PageLayoutToolbar = ({
   id,
   state,
-  focused,
-  editable,
   showSettingsModal,
   setShowSettingsModal,
+  containerRef,
 }: PageLayoutPluginProps & {
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
 }) => {
   const pageLayoutStrings = useEditorStrings().plugins.pageLayout
-
-  if (!focused || !editable) return null
 
   return (
     <PluginToolbar
@@ -42,6 +39,7 @@ export const PageLayoutToolbar = ({
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
               className="!top-1/3 !max-w-xl"
+              parentSelector={() => containerRef?.current ?? document.body}
             >
               <LayoutChooser {...state} />
             </ModalWithCloseButton>

@@ -15,6 +15,7 @@ export const InjectionToolbar = ({
   state,
   showSettingsModal,
   setShowSettingsModal,
+  containerRef,
 }: InjectionProps & {
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
@@ -38,6 +39,7 @@ export const InjectionToolbar = ({
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
               className="!top-1/3 !max-w-xl"
+              parentSelector={() => containerRef?.current ?? document.body}
             >
               <h3 className="serlo-h3 mt-4">{injectionStrings.title}</h3>
 

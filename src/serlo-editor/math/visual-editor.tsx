@@ -92,7 +92,7 @@ export function VisualEditor(props: VisualEditorProps) {
     <MQ.EditableMathField
       latex={props.state}
       onChange={(ref) => {
-        props.onChange(ref.latex())
+        props.onChange(ref?.latex())
       }}
       onCopy={(event: React.ClipboardEvent) => {
         event.stopPropagation()

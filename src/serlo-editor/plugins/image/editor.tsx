@@ -10,7 +10,6 @@ import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { TextEditorFormattingOption } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/types'
 import { isTempFile, usePendingFileUploader } from '@/serlo-editor/plugin'
-import { selectHasFocusedChild, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const captionFormattingOptions = [
@@ -21,7 +20,7 @@ const captionFormattingOptions = [
 ]
 
 export function ImageEditor(props: ImageProps) {
-  const { editable, focused, state, config } = props
+  const { editable, domFocusWithin, state, config } = props
   const imageStrings = useEditorStrings().plugins.image
 
   const [showSettingsModal, setShowSettingsModal] = useState(false)
@@ -29,10 +28,6 @@ export function ImageEditor(props: ImageProps) {
 
   usePendingFileUploader(state.src, config.upload)
 
-  const isCaptionFocused = useAppSelector((storeState) =>
-    selectHasFocusedChild(storeState, props.id)
-  )
-  const hasFocus = focused || isCaptionFocused
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
   const src = state.src.value.toString()
@@ -47,11 +42,11 @@ export function ImageEditor(props: ImageProps) {
     setShowInlineImageUrl(!state.src.value)
     // updatating when src changes could hide input while you are typing so:
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editable, focused])
+  }, [editable, domFocusWithin])
 
   return (
     <>
-      {hasFocus ? (
+      {domFocusWithin ? (
         <ImageToolbar
           {...props}
           showSettingsModal={showSettingsModal}
@@ -72,7 +67,7 @@ export function ImageEditor(props: ImageProps) {
           forceNewTab
         />
 
-        {hasFocus && showInlineImageUrl ? (
+        {domFocusWithin && showInlineImageUrl ? (
           <div className="absolute left-side top-side">
             <InlineSrcControls {...props} />
           </div>

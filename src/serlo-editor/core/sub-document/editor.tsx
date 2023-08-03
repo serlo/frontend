@@ -76,6 +76,13 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch, document]
   )
 
+  const noVisualFocusHandling = document?.plugin
+    ? document.plugin.startsWith('type-') ||
+      [EditorPluginType.Article, EditorPluginType.Rows].includes(
+        document.plugin as EditorPluginType
+      )
+    : true
+
   const handleDomFocus = useCallback(() => {
     const target = containerRef.current
     if (!target) return
@@ -152,16 +159,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       <div
         className="outline-none"
         onMouseDown={handleFocus}
-        onFocus={
-          document?.plugin === EditorPluginType.Geogebra
-            ? handleDomFocus
-            : undefined
-        }
-        onBlur={
-          document?.plugin === EditorPluginType.Geogebra
-            ? handleDomFocus
-            : undefined
-        }
+        onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
+        onBlur={noVisualFocusHandling ? undefined : handleDomFocus}
         ref={containerRef}
         data-document
         tabIndex={-1}
@@ -194,6 +193,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     pluginProps,
     handleFocus,
     handleDomFocus,
+    noVisualFocusHandling,
     hasSideToolbar,
     focused,
     domFocusWithin,

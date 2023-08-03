@@ -17,11 +17,11 @@ export const UnsupportedEditor: React.FunctionComponent<
     store.getState(),
     props.id
   )?.plugin
-  const { focused, id, editable } = props
+  const { domFocusWithin, id } = props
 
   return (
     <>
-      {focused && editable ? (
+      {domFocusWithin ? (
         <PluginToolbar
           pluginType={EditorPluginType.PagePartners}
           pluginControls={<PluginDefaultTools pluginId={id} />}

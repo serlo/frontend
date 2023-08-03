@@ -3,11 +3,11 @@ import { TableRenderer } from './renderer'
 import { EditorTextarea } from '../../../editor-ui'
 
 export function TableEditor(props: TableProps) {
-  const { focused, state } = props
+  const { domFocusWithin, state } = props
 
   return (
     <div>
-      {focused ? (
+      {domFocusWithin ? (
         <form className="mt-2.5">
           <div>
             <EditorTextarea

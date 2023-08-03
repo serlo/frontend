@@ -13,13 +13,10 @@ import {
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, focused } = props
+  const { editable, state, focused, domFocusWithin } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const focusedElement = useAppSelector(selectFocused)
-  const nestedFocus =
-    focused ||
-    !!props.state.answers.find(({ feedback }) => feedback.id === focusedElement)
 
   const [previewActive, setPreviewActive] = useState(false)
 
@@ -45,11 +42,11 @@ export function InputExerciseEditor(props: InputExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {nestedFocus ? <InputExerciseToolbar {...props} /> : null}
-      <PreviewOverlay focused={nestedFocus} onChange={setPreviewActive}>
+      {domFocusWithin ? <InputExerciseToolbar {...props} /> : null}
+      <PreviewOverlay focused={focused} onChange={setPreviewActive}>
         {renderer}
       </PreviewOverlay>
-      {nestedFocus && !previewActive && (
+      {domFocusWithin && !previewActive && (
         <>
           {state.answers.map((answer, index: number) => {
             return (
