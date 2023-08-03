@@ -59,20 +59,25 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focused, plugin])
 
-  const handleFocus = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      // Find closest document
-      const target = (e.target as HTMLDivElement).closest('[data-document]')
-      if (!focused && target === containerRef.current) {
-        if (document?.plugin === 'rows') {
-          const parent = selectParent(store.getState(), id)
-          if (parent) dispatch(focus(parent.id))
-        } else {
-          dispatch(focus(id))
-        }
+  const handleFocusChange = useCallback(
+    (e: React.FocusEvent<HTMLDivElement, HTMLDivElement>) => {
+      // find closest document parent
+      const target = e.target.closest('[data-document]')
+
+      if (target && !focused && target === containerRef.current) {
+        const focusTarget =
+          document?.plugin === 'rows'
+            ? selectParent(store.getState(), id)?.id
+            : id
+        if (focusTarget) dispatch(focus(focusTarget))
+      }
+      if (focused) {
+        dispatch(focus(null))
       }
     },
-    [focused, id, dispatch, document]
+    // do not run again when focused change to avoid loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dispatch, document?.plugin, id]
   )
 
   const renderIntoSideToolbar = useCallback(
@@ -140,7 +145,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return (
       <div
         className="outline-none"
-        onMouseDown={handleFocus}
+        onFocus={handleFocusChange}
+        onBlur={handleFocusChange}
         ref={containerRef}
         data-document
         tabIndex={-1}
@@ -168,15 +174,15 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     )
   }, [
     document,
-    plugins,
     plugin,
     pluginProps,
-    handleFocus,
+    handleFocusChange,
     hasSideToolbar,
     focused,
     renderIntoSideToolbar,
     id,
     dispatch,
+    plugins,
   ])
 }
 
