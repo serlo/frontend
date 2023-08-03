@@ -22,6 +22,7 @@ interface ModalWithCloseButtonProps {
   onCloseClick: () => void
   children: ReactNode
   className?: string
+  parentSelector: () => HTMLElement
 }
 
 export function ModalWithCloseButton({
@@ -30,6 +31,7 @@ export function ModalWithCloseButton({
   onCloseClick,
   children,
   className,
+  parentSelector,
 }: ModalWithCloseButtonProps) {
   const { strings } = useInstanceData()
 
@@ -39,6 +41,7 @@ export function ModalWithCloseButton({
       onRequestClose={onCloseClick}
       shouldReturnFocusAfterClose={false}
       className={clsx(ModalClsx, 'top-[40%] w-[500px] pb-10', className)}
+      parentSelector={parentSelector}
     >
       {title && <h2 className="serlo-h2">{title}</h2>}
       {children}

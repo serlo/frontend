@@ -15,6 +15,7 @@ export const GeogebraToolbar = ({
   state,
   showSettingsModal,
   setShowSettingsModal,
+  containerRef,
 }: GeogebraProps & {
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
@@ -39,6 +40,7 @@ export const GeogebraToolbar = ({
               isOpen={showSettingsModal}
               onCloseClick={() => setShowSettingsModal(false)}
               className="!top-1/3 !max-w-xl"
+              parentSelector={() => containerRef?.current ?? document.body}
             >
               <h3 className="serlo-h3 mt-4">
                 {editorStrings.edtrIo.settings}: {geogebraStrings.title}
