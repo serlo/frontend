@@ -5,7 +5,7 @@ import {
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { KeyboardEvent } from 'react'
+import { KeyboardEvent, useState } from 'react'
 
 import { SerloTableProps } from '.'
 import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
@@ -17,13 +17,11 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
 import {
   store,
-  selectFocused,
   selectIsDocumentEmpty,
   focus,
   selectDocument,
   focusNext,
   focusPrevious,
-  useAppSelector,
   useAppDispatch,
   selectFocusTree,
 } from '@/serlo-editor/store'
@@ -45,10 +43,21 @@ const newCell = { content: { plugin: EditorPluginType.Text } }
 export function SerloTableEditor(props: SerloTableProps) {
   const { config, domFocusWithin, state } = props
   const { rows } = state
-
   const dispatch = useAppDispatch()
-  const focusedElement = useAppSelector(selectFocused)
-  const { focusedRowIndex, focusedColIndex } = findFocus()
+
+  const [focusedIndexes, setFocusedIndexes] = useState<{
+    row?: number
+    col?: number
+  }>({ row: undefined, col: undefined })
+
+  function updateFocus() {
+    setFocusedIndexes(() => {
+      return {
+        row: document.activeElement?.closest('tr')?.rowIndex,
+        col: document.activeElement?.closest('td')?.cellIndex,
+      }
+    })
+  }
 
   const areImagesDisabled = useAreImagesDisabledInTable()
 
@@ -80,7 +89,6 @@ export function SerloTableEditor(props: SerloTableProps) {
 
   function renderActiveTable() {
     const rowsJSX = renderActiveCellsIntoObject()
-
     return (
       <>
         {domFocusWithin ? <SerloTableToolbar {...props} /> : null}
@@ -92,6 +100,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               const target = e.target as HTMLDivElement
               const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
               hackDiv?.focus()
+              updateFocus()
             }}
           >
             <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
@@ -120,7 +129,10 @@ export function SerloTableEditor(props: SerloTableProps) {
           const isLast =
             rowIndex === rows.length - 1 &&
             colIndex === rows[0].columns.length - 1
-          const dispatchFocus = () => dispatch(focus(cell.content.id))
+          const dispatchFocus = () => {
+            dispatch(focus(cell.content.id))
+            updateFocus()
+          }
           const isClear = selectIsDocumentEmpty(
             store.getState(),
             cell.content.id
@@ -151,7 +163,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv min-h-[3.5rem] pb-6 pr-2"
+              className="hackdiv group/cell min-h-[3.5rem] pb-6 pr-2 focus-within:border-2 focus-within:border-red"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
@@ -191,12 +203,11 @@ export function SerloTableEditor(props: SerloTableProps) {
     isHead: boolean,
     isClear: boolean
   ) {
-    const isFocused = cell.content.id === focusedElement
+    if (isHead || !isClear) return null
+
     const isImage =
       selectDocument(store.getState(), cell.content.id)?.plugin ===
       EditorPluginType.Image
-
-    if (isHead || !isFocused || !isClear) return null
 
     return (
       <button
@@ -206,7 +217,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             isImage ? EditorPluginType.Text : EditorPluginType.Image
           )
         }}
-        className="serlo-button-light absolute m-2 block py-0.5 text-sm"
+        className="serlo-button-light absolute m-2 block hidden py-0.5 text-sm group-focus-within/cell:block"
         title={
           isImage ? tableStrings.convertToText : tableStrings.convertToImage
         }
@@ -219,32 +230,28 @@ export function SerloTableEditor(props: SerloTableProps) {
   function renderInlineNav(rowIndex: number, colIndex: number) {
     const showRowButtons =
       colIndex === 0 &&
-      rowIndex === focusedRowIndex &&
-      !(showColumnHeader && focusedRowIndex === 0)
+      rowIndex === focusedIndexes.row &&
+      !(showColumnHeader && focusedIndexes.row === 0)
 
     const showColButtons =
       rowIndex === 0 &&
-      colIndex === focusedColIndex &&
-      !(showRowHeader && focusedColIndex === 0)
+      colIndex === focusedIndexes.col &&
+      !(showRowHeader && focusedIndexes.col === 0)
 
     return (
       <>
-        <nav className="absolute -ml-10 -mt-2 flex flex-col">
-          {showRowButtons ? (
-            <>
-              {renderInlineAddButton(true)}
-              {renderRemoveButton(true)}
-            </>
-          ) : null}
-        </nav>
-        <nav className="absolute -mt-12">
-          {showColButtons ? (
-            <>
-              {renderInlineAddButton(false)}
-              {renderRemoveButton(false)}
-            </>
-          ) : null}
-        </nav>
+        {showRowButtons ? (
+          <nav className="absolute -ml-10 -mt-2 flex flex-col">
+            {renderInlineAddButton(true)}
+            {renderRemoveButton(true)}
+          </nav>
+        ) : null}
+        {showColButtons ? (
+          <nav className="absolute -mt-12">
+            {renderInlineAddButton(false)}
+            {renderRemoveButton(false)}
+          </nav>
+        ) : null}
       </>
     )
 
@@ -270,8 +277,8 @@ export function SerloTableEditor(props: SerloTableProps) {
       if (isRow && rows.length === 2) return null
       if (!isRow && rows[0].columns.length === 2) return null
 
-      if (isRow && showColumnHeader && focusedRowIndex === 0) return null
-      if (!isRow && showRowHeader && focusedColIndex === 0) return null
+      if (isRow && showColumnHeader && focusedIndexes.row === 0) return null
+      if (!isRow && showRowHeader && focusedIndexes.col === 0) return null
 
       const confirmString = replaceWithType(tableStrings.confirmDelete, isRow)
 
@@ -349,23 +356,6 @@ export function SerloTableEditor(props: SerloTableProps) {
         +
       </button>
     )
-  }
-
-  function findFocus() {
-    let focusedRowIndex = undefined
-    let focusedColIndex = undefined
-
-    rows.some((row, rowIndex) =>
-      row.columns.some((cell, colIndex) => {
-        if (cell.content.id === focusedElement) {
-          focusedRowIndex = rowIndex
-          focusedColIndex = colIndex
-          return true
-        }
-      })
-    )
-
-    return { focusedRowIndex, focusedColIndex }
   }
 
   function replaceWithType(input: string, isRow: boolean) {

@@ -1,5 +1,4 @@
 import { createSelector } from '@reduxjs/toolkit'
-import * as R from 'ramda'
 
 import { findParent } from './helpers'
 import type { FocusTreeNode } from './types'
@@ -13,8 +12,6 @@ import { State } from '../types'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 const selectSelf = (state: State) => state.focus
-
-export const selectFocused = createSelector(selectSelf, (focus) => focus)
 
 export const selectIsFocused = createSelector(
   [selectSelf, (_state, id: string) => id],

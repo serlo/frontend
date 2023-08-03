@@ -18,8 +18,6 @@ import {
   selectIsFocused,
   useAppSelector,
   useAppDispatch,
-  selectParent,
-  store,
 } from '../../store'
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
