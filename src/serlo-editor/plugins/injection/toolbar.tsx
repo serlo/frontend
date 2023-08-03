@@ -16,9 +16,13 @@ export const InjectionToolbar = ({
   showSettingsModal,
   setShowSettingsModal,
   containerRef,
+  previewActive,
+  setPreviewActive,
 }: InjectionProps & {
   showSettingsModal: boolean
   setShowSettingsModal: Dispatch<SetStateAction<boolean>>
+  previewActive: boolean
+  setPreviewActive: Dispatch<SetStateAction<boolean>>
 }) => {
   const injectionStrings = useEditorStrings().plugins.injection
 
@@ -27,6 +31,12 @@ export const InjectionToolbar = ({
       pluginType={EditorPluginType.Injection}
       pluginSettings={
         <>
+          <button
+            onClick={() => setPreviewActive(!previewActive)}
+            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+          >
+            {previewActive ? 'Bearbeiten' : 'Vorschau aktivieren'}{' '}
+          </button>
           <button
             onClick={() => setShowSettingsModal(true)}
             className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"

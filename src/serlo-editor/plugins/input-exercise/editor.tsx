@@ -13,7 +13,7 @@ import {
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
-  const { editable, state, focused, domFocusWithin } = props
+  const { editable, state, domFocusWithin } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   const focusedElement = useAppSelector(selectFocused)
@@ -42,8 +42,14 @@ export function InputExerciseEditor(props: InputExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {domFocusWithin ? <InputExerciseToolbar {...props} /> : null}
-      <PreviewOverlay focused={focused} onChange={setPreviewActive}>
+      {domFocusWithin ? (
+        <InputExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+      <PreviewOverlay showOverlay={previewActive || !domFocusWithin}>
         {renderer}
       </PreviewOverlay>
       {domFocusWithin && !previewActive && (

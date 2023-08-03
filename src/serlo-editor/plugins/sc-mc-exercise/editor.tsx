@@ -59,12 +59,14 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
 
   return (
     <div className="mb-12 mt-24 pt-4">
-      {domFocusWithin ? <ScMcExerciseToolbar {...props} /> : null}
-      <PreviewOverlay
-        focused={domFocusWithin || false}
-        onChange={setPreviewActive}
-        editable={previewActive}
-      >
+      {domFocusWithin ? (
+        <ScMcExerciseToolbar
+          {...props}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
+        />
+      ) : null}
+      <PreviewOverlay showOverlay={previewActive || !domFocusWithin}>
         {renderer}
       </PreviewOverlay>
       {editable && domFocusWithin && !previewActive && (

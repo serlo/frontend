@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { InputExerciseProps, InputExerciseType } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
@@ -5,7 +7,14 @@ import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
-export const InputExerciseToolbar = ({ state }: InputExerciseProps) => {
+export const InputExerciseToolbar = ({
+  state,
+  previewActive,
+  setPreviewActive,
+}: InputExerciseProps & {
+  previewActive: boolean
+  setPreviewActive: Dispatch<SetStateAction<boolean>>
+}) => {
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
 
   return (
@@ -13,6 +22,14 @@ export const InputExerciseToolbar = ({ state }: InputExerciseProps) => {
       pluginType={EditorPluginType.InputExercise}
       pluginSettings={
         <>
+          <button
+            onClick={() => {
+              setPreviewActive(!previewActive)
+            }}
+            className="mr-2 rounded-md border border-gray-500 px-1 text-sm transition-all hover:bg-editor-primary-200 focus-visible:bg-editor-primary-200"
+          >
+            {previewActive ? 'Bearbeiten' : 'Vorschau aktivieren'}{' '}
+          </button>
           <label className="serlo-tooltip-trigger mr-2">
             <EditorTooltip text={inputExStrings.chooseType} />
             <select

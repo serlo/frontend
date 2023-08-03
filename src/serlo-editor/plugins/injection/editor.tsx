@@ -9,10 +9,11 @@ import { renderArticle } from '@/schema/article-renderer'
 import { PreviewOverlay } from '@/serlo-editor/editor-ui'
 
 export function InjectionEditor(props: InjectionProps) {
-  const { focused, domFocusWithin, state, editable } = props
+  const { domFocusWithin, state, editable } = props
 
   const [cache, setCache] = useState(state.value)
   const [showSettingsModal, setShowSettingsModal] = useState(false)
+  const [previewActive, setPreviewActive] = useState(false)
 
   useEffect(() => {
     const timeout = setTimeout(() => setCache(state.value), 2000)
@@ -30,15 +31,12 @@ export function InjectionEditor(props: InjectionProps) {
           {...props}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
+          previewActive={previewActive}
+          setPreviewActive={setPreviewActive}
         />
       )}
       {cache ? (
-        <PreviewOverlay
-          focused={focused}
-          onChange={(nextActive) => {
-            if (nextActive) setCache(state.value)
-          }}
-        >
+        <PreviewOverlay showOverlay={previewActive || !domFocusWithin}>
           <InjectionRenderer href={cache} renderNested={renderArticle} />
         </PreviewOverlay>
       ) : (
