@@ -108,7 +108,7 @@ export function LinkOverlayEditMode({
         />
       </div>
       {query ? (
-        <div className="group mt-4">
+        <div className="group mt-4" role="listbox">
           {isLoading ? <LoadingSpinner /> : null}
           {results.map(({ entry }, index) => (
             <EditModeResultEntry

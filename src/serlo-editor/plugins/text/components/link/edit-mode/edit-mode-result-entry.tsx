@@ -27,6 +27,8 @@ export function EditModeResultEntry({
         index === selectedIndex && '!bg-editor-primary-100'
       )}
       data-qa={`link-suggestion-${index}`}
+      role="option"
+      aria-selected={index === selectedIndex}
       onClick={() => {
         chooseEntry(index)
       }}
