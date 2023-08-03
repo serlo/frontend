@@ -20,10 +20,7 @@ import {
   selectIsDocumentEmpty,
   focus,
   selectDocument,
-  focusNext,
-  focusPrevious,
   useAppDispatch,
-  selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -38,12 +35,18 @@ const cellTextFormattingOptions = [
   'richText',
 ]
 
+
+// TODO: moving cells with tab does not immediately activate slate again (no cursor sometimes)
+
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
   const { config, domFocusWithin, state } = props
   const { rows } = state
   const dispatch = useAppDispatch()
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_update, setUpdate] = useState(0)
 
   const [focusedIndexes, setFocusedIndexes] = useState<{
     row?: number
@@ -100,7 +103,6 @@ export function SerloTableEditor(props: SerloTableProps) {
               const target = e.target as HTMLDivElement
               const hackDiv = target.querySelector('.hackdiv') as HTMLDivElement
               hackDiv?.focus()
-              updateFocus()
             }}
           >
             <SerloTableRenderer isEdit rows={rowsJSX} tableType={tableType} />
@@ -111,12 +113,6 @@ export function SerloTableEditor(props: SerloTableProps) {
         </div>
       </>
     )
-  }
-
-  function updateHack() {
-    const focusTree = selectFocusTree(store.getState())
-    dispatch(focusNext(focusTree))
-    dispatch(focusPrevious(focusTree))
   }
 
   function renderActiveCellsIntoObject() {
@@ -138,13 +134,9 @@ export function SerloTableEditor(props: SerloTableProps) {
             cell.content.id
           )
 
-          const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+          const onKeyUpHandler = () => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
-            if (e.key === 'Delete' || e.key === 'Backspace') {
-              if (!isClear) updateHack()
-            } else {
-              if (isClear) updateHack()
-            }
+            setUpdate((val) => val + 1)
           }
           const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             if (
@@ -163,7 +155,7 @@ export function SerloTableEditor(props: SerloTableProps) {
               onFocus={dispatchFocus} // hack: focus slate directly on tab
               onKeyUp={onKeyUpHandler} // keyUp because some onKeyDown keys are not bubbling
               onKeyDown={onKeyDownHandler}
-              className="hackdiv group/cell min-h-[3.5rem] pb-6 pr-2 focus-within:border-2 focus-within:border-red"
+              className="hackdiv group/cell min-h-[3.5rem] pb-6 pr-2"
             >
               {renderInlineNav(rowIndex, colIndex)}
               {cell.content.render({
