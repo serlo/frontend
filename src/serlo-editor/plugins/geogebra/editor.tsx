@@ -8,7 +8,7 @@ import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { EmbedWrapper } from '@/serlo-editor/editor-ui/embed-wrapper'
 
 export function GeogebraEditor(props: GeogebraProps) {
-  const { focused, editable, state } = props
+  const { domFocusWithin, editable, state, containerRef } = props
   const [showSettingsModal, setShowSettingsModal] = useState(false)
 
   const { cleanId, url } = parseId(state.value)
@@ -16,11 +16,12 @@ export function GeogebraEditor(props: GeogebraProps) {
 
   return (
     <>
-      {focused && (
+      {domFocusWithin && (
         <GeogebraToolbar
           {...props}
           showSettingsModal={showSettingsModal}
           setShowSettingsModal={setShowSettingsModal}
+          containerRef={containerRef}
         />
       )}
       {couldBeValidId ? (
@@ -28,7 +29,7 @@ export function GeogebraEditor(props: GeogebraProps) {
           type="applet"
           provider="GeoGebra"
           embedUrl={url}
-          className={editable && !focused ? 'pointer-events-none' : ''}
+          className={editable && !domFocusWithin ? 'pointer-events-none' : ''}
         >
           <GeogebraRenderer url={url} id={cleanId} />
         </EmbedWrapper>

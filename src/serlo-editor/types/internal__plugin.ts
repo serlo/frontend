@@ -122,6 +122,11 @@ export interface EditorPluginProps<
   focused: boolean
 
   /**
+   * `true` if the activeElement is inside of document
+   */
+  domFocusWithin: boolean
+
+  /**
    * Ref to use for an input element. The element will receive focus, when the plugin is focused.
    */
   autofocusRef: React.RefObject<HTMLInputElement & HTMLTextAreaElement>

@@ -17,6 +17,7 @@ import {
 import { StateUpdater } from '../../types/internal__plugin-state'
 import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
+import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const [hasSideToolbar, setHasSideToolbar] = useState(false)
@@ -24,6 +25,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
+  const [domFocusWithin, setDomFocusWithin] = useState(focused)
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
@@ -73,6 +75,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     },
     [focused, id, dispatch, document]
   )
+
+  const handleDomFocus = useCallback(() => {
+    const target = containerRef.current
+    if (!target) return
+
+    setTimeout(() => {
+      setDomFocusWithin(() => {
+        return target.contains(window.document.activeElement) ?? false
+      })
+    })
+  }, [])
 
   const renderIntoSideToolbar = useCallback(
     (children: React.ReactNode) => {
@@ -139,6 +152,16 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       <div
         className="outline-none"
         onMouseDown={handleFocus}
+        onFocus={
+          document?.plugin === EditorPluginType.Geogebra
+            ? handleDomFocus
+            : undefined
+        }
+        onBlur={
+          document?.plugin === EditorPluginType.Geogebra
+            ? handleDomFocus
+            : undefined
+        }
         ref={containerRef}
         data-document
         tabIndex={-1}
@@ -156,6 +179,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             id={id}
             editable
             focused={focused}
+            domFocusWithin={domFocusWithin}
             config={config}
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             state={state}
@@ -169,8 +193,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     plugin,
     pluginProps,
     handleFocus,
+    handleDomFocus,
     hasSideToolbar,
     focused,
+    domFocusWithin,
     renderIntoSideToolbar,
     id,
     dispatch,
