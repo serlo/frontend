@@ -8,11 +8,14 @@ import { MultimediaTypeSelect } from './toolbar/type-select'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { AreImagesDisabledInTableContext } from '@/serlo-editor/plugins/serlo-table/contexts/are-images-disabled-in-table-context'
+import { selectIsFocused, useAppSelector } from '@/serlo-editor/store'
 
 export function MultimediaEditor(props: MultimediaProps) {
-  const { config, state, editable, focused, domFocusWithin, containerRef } =
-    props
+  const { id, config, state, domFocusWithin, containerRef } = props
   const { explanation, multimedia, width } = state
+
+  // TODO: make work with domFocus instead
+  const focused = useAppSelector((state) => selectIsFocused(state, id))
 
   const multimediaStrings = useEditorStrings().plugins.multimedia
 
@@ -71,8 +74,7 @@ export function MultimediaEditor(props: MultimediaProps) {
             />
           )}
         </MultimediaToolbar>
-      ) : null}
-      {editable && !focused ? (
+      ) : (
         <button
           className={tw`
             absolute -top-6 right-8 z-50 hidden h-6 rounded-t-md bg-gray-100
@@ -82,7 +84,7 @@ export function MultimediaEditor(props: MultimediaProps) {
         >
           {multimediaStrings.title}
         </button>
-      ) : null}
+      )}
       <div className={pluginToolbarAndStyleHacks}>
         <AreImagesDisabledInTableContext.Provider value>
           <MultimediaRenderer

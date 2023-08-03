@@ -117,9 +117,9 @@ export interface EditorPluginProps<
   editable: boolean
 
   /**
-   * `true` if the document is currently focused
+   * `true` if the activeElement is inside of document but not inside another sub-document
    */
-  focused: boolean
+  domFocus: boolean
 
   /**
    * `true` if the activeElement is inside of document

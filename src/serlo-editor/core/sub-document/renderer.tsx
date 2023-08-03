@@ -28,12 +28,12 @@ export function SubDocumentRenderer({ id, pluginProps }: SubDocumentProps) {
 
   return (
     <plugin.Component
-      config={config}
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       state={pluginState}
+      config={config}
       id={id}
       editable={false}
-      focused={false}
+      domFocus={false}
       domFocusWithin={false}
       autofocusRef={focusRef}
       renderIntoSideToolbar={() => null}

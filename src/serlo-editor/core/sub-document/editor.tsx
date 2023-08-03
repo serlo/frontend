@@ -1,5 +1,12 @@
 import * as R from 'ramda'
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
+import {
+  useState,
+  useRef,
+  useEffect,
+  useMemo,
+  useCallback,
+  FocusEvent,
+} from 'react'
 import { createPortal } from 'react-dom'
 
 import { SubDocumentProps } from '.'
@@ -25,7 +32,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const document = useAppSelector((state) => selectDocument(state, id))
 
   const focused = useAppSelector((state) => selectIsFocused(state, id))
-  const [domFocusWithin, setDomFocusWithin] = useState(focused)
+  const [domFocus, setDomFocus] = useState<'focus' | 'focusWithin' | false>(
+    focused ? 'focusWithin' : false
+  )
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
@@ -83,14 +92,23 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       )
     : true
 
-  const handleDomFocus = useCallback(() => {
+  const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
     const target = containerRef.current
     if (!target) return
-    setTimeout(() => {
-      setDomFocusWithin(() => {
-        return target.contains(window.document.activeElement) ?? false
-      })
-    })
+
+    const getFocusWithin = () => {
+      const hasFocusedChild = !!target.querySelector(
+        '[data-document-focusable]:focus-within'
+      )
+      return target.contains(window.document.activeElement)
+        ? hasFocusedChild
+          ? 'focusWithin'
+          : 'focus'
+        : false
+    }
+
+    if (e.type === 'focus') setDomFocus(() => getFocusWithin())
+    else setTimeout(() => setDomFocus(() => getFocusWithin()))
   }, [])
 
   const renderIntoSideToolbar = useCallback(
@@ -162,6 +180,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         onBlur={noVisualFocusHandling ? undefined : handleDomFocus}
         ref={containerRef}
         data-document
+        data-document-focusable={noVisualFocusHandling ? undefined : true}
         tabIndex={-1}
       >
         <SideToolbarAndWrapper
@@ -176,8 +195,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
             containerRef={containerRef}
             id={id}
             editable
-            focused={focused}
-            domFocusWithin={domFocusWithin}
+            domFocusWithin={domFocus !== false}
+            domFocus={domFocus === 'focus'}
             config={config}
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             state={state}
@@ -195,7 +214,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     noVisualFocusHandling,
     hasSideToolbar,
     focused,
-    domFocusWithin,
+    domFocus,
     renderIntoSideToolbar,
     id,
     dispatch,
