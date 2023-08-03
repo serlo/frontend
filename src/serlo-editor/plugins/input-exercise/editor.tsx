@@ -4,19 +4,12 @@ import { InputExerciseProps } from '.'
 import { InputExerciseRenderer } from './renderer'
 import { InputExerciseToolbar } from './toolbar'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
-import {
-  selectFocused,
-  selectIsDocumentEmpty,
-  store,
-  useAppSelector,
-} from '../../store'
+import { selectIsDocumentEmpty, store } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 
 export function InputExerciseEditor(props: InputExerciseProps) {
   const { editable, state, domFocusWithin } = props
   const inputExStrings = useEditorStrings().templatePlugins.inputExercise
-
-  const focusedElement = useAppSelector(selectFocused)
 
   const [previewActive, setPreviewActive] = useState(false)
 
@@ -76,7 +69,6 @@ export function InputExerciseEditor(props: InputExerciseProps) {
                   answer.isCorrect.set(!answer.isCorrect.value)
                 }
                 remove={() => state.answers.remove(index)}
-                focusedElement={focusedElement || undefined}
               />
             )
           })}

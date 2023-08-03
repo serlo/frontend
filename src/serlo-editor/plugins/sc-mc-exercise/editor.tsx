@@ -4,18 +4,11 @@ import { ScMcExerciseProps } from '.'
 import { ScMcExerciseRenderer } from './renderer'
 import { ScMcExerciseToolbar } from './toolbar'
 import { AddButton, InteractiveAnswer, PreviewOverlay } from '../../editor-ui'
-import {
-  store,
-  selectFocused,
-  selectIsDocumentEmpty,
-  useAppSelector,
-} from '../../store'
+import { store, selectIsDocumentEmpty } from '../../store'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditableContext } from '@/serlo-editor/core/contexts'
 
 export function ScMcExerciseEditor(props: ScMcExerciseProps) {
-  const focusedElement = useAppSelector(selectFocused)
-
   const { editable, domFocusWithin, state } = props
   const editorStrings = useEditorStrings()
 
@@ -79,7 +72,6 @@ export function ScMcExerciseEditor(props: ScMcExerciseProps) {
                 answerID={answer.content.id}
                 feedback={answer.feedback.render()}
                 feedbackID={answer.feedback.id}
-                focusedElement={focusedElement || undefined}
                 isRadio={state.isSingleChoice.value}
                 isActive={answer.isCorrect.value}
                 remove={removeAnswer(index)}

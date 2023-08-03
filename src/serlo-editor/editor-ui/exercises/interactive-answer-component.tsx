@@ -16,7 +16,6 @@ interface InteractiveAnswerProps {
   feedbackID: string
   answer: HTMLInputElement | React.ReactNode
   feedback: React.ReactNode
-  focusedElement?: string
   remove: () => void
 }
 
