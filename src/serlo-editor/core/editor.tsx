@@ -1,11 +1,10 @@
-import { useMemo, useEffect, ReactNode, useRef } from 'react'
+import { useMemo, useEffect, ReactNode } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
 import { EditableContext, PreferenceContextProvider } from './contexts'
-import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
   runInitRootSaga,
@@ -46,9 +45,6 @@ export function InnerDocument({
 }: EditorProps) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
-
-  const wrapperRef = useRef<HTMLDivElement | null>(null)
-  useBlurOnOutsideClick(wrapperRef)
 
   useEffect(() => {
     if (typeof onChange !== 'function') return
@@ -132,7 +128,7 @@ export function InnerDocument({
   if (!id) return null
 
   return (
-    <div className="relative" ref={wrapperRef}>
+    <div className="relative">
       <PreferenceContextProvider>
         <EditableContext.Provider value={editableContextValue}>
           {renderChildren(id)}
