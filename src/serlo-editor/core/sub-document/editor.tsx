@@ -46,28 +46,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
-    if (focused) {
-      setTimeout(() => {
-        if (autofocusRef.current) {
-          autofocusRef.current.focus()
-        }
-      })
-    }
-  }, [focused])
-
-  useEffect(() => {
-    if (
-      focused &&
-      containerRef.current &&
-      document &&
-      plugin &&
-      !plugin.state.getFocusableChildren(document.state).length
-    ) {
-      containerRef.current.focus()
-    }
-    // `document` should not be part of the dependencies because we only want to call this once when the document gets focused
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focused, plugin])
+    if (domFocus !== 'focus') return
+    setTimeout(() => autofocusRef.current?.focus())
+  }, [domFocus])
 
   const handleFocus = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -87,9 +68,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const noVisualFocusHandling = document?.plugin
     ? document.plugin.startsWith('type-') ||
-      [EditorPluginType.Article, EditorPluginType.Rows].includes(
-        document.plugin as EditorPluginType
-      )
+    [EditorPluginType.Article, EditorPluginType.Rows].includes(
+      document.plugin as EditorPluginType
+    )
     : true
 
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
