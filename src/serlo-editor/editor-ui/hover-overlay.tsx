@@ -2,7 +2,7 @@ import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
 
 import { tw } from '@/helper/tw'
 
-type HoverPosition = 'above' | 'below'
+export type HoverPosition = 'above' | 'below'
 
 interface HoverOverlayProps {
   children: ReactNode

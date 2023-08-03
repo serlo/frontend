@@ -1,7 +1,5 @@
 import { forwardRef } from 'react'
 
-import { tw } from '@/helper/tw'
-
 const InlineInputRefForward: React.ForwardRefRenderFunction<
   HTMLInputElement,
   InputProps
@@ -10,10 +8,7 @@ const InlineInputRefForward: React.ForwardRefRenderFunction<
     <input
       {...props}
       ref={ref}
-      className={tw`
-         border-2 border-editor-primary-200  border-transparent bg-editor-primary-200
-        text-white focus:border-editor-primary focus:outline-none
-      `}
+      className="my-2 rounded-xl border-3 border-editor-primary-50 bg-editor-primary-100 px-3 outline-none hover:border-editor-primary-100 focus:border-editor-primary-200"
     />
   )
 }
