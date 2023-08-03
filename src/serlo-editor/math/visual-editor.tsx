@@ -91,8 +91,11 @@ export function VisualEditor(props: VisualEditorProps) {
   return (
     <MQ.EditableMathField
       latex={props.state}
-      onChange={(ref) => {
-        props.onChange(ref.latex())
+      onChange={(mathFieldRef) => {
+        // Should always be defined after first render cycle!
+        if (mathFieldRef?.latex) {
+          props.onChange(mathFieldRef.latex())
+        }
       }}
       onCopy={(event: React.ClipboardEvent) => {
         event.stopPropagation()
