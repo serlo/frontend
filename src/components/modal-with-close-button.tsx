@@ -50,6 +50,7 @@ export function ModalWithCloseButton({
           cursor-pointer rounded-full border-none bg-transparent text-center
           leading-tight text-almost-black hover:bg-brand hover:text-white
         `}
+        data-qa="modal-close-button"
       >
         <FaIcon icon={faXmark} className="h-5" />
       </button>

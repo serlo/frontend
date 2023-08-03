@@ -34,6 +34,7 @@ export const VideoEditor = (props: VideoProps) => {
       ) : (
         <div
           className="mx-side cursor-pointer rounded-lg bg-editor-primary-50 py-32 text-center"
+          data-qa="plugin-video-placeholder"
           onClick={() => setShowSettingsModal(true)}
         >
           <FaIcon

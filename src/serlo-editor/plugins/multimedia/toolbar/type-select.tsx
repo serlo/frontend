@@ -38,6 +38,7 @@ export const MultimediaTypeSelect = ({
         bg-editor-primary-100 px-1 py-[1px] text-sm transition-all
         hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
         `}
+        data-qa="plugin-multimedia-type-select"
       >
         {allowedPlugins.map((type) => (
           <option key={type} value={type}>
