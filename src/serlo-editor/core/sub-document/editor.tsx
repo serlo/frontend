@@ -38,6 +38,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
+  // TODO: replacing with domFocus breaks slate focus somehow?
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
   const sideToolbarRef = useRef<HTMLDivElement>(
@@ -55,22 +56,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       // Find closest document
       const target = (e.target as HTMLDivElement).closest('[data-document]')
       if (!focused && target === containerRef.current) {
-        if (document?.plugin === 'rows') {
-          const parent = selectParent(store.getState(), id)
-          if (parent) dispatch(focus(parent.id))
-        } else {
-          dispatch(focus(id))
-        }
+        dispatch(focus(id))
       }
     },
-    [focused, id, dispatch, document]
+    [focused, id, dispatch]
   )
 
   const noVisualFocusHandling = document?.plugin
     ? document.plugin.startsWith('type-') ||
-    [EditorPluginType.Article, EditorPluginType.Rows].includes(
-      document.plugin as EditorPluginType
-    )
+      [EditorPluginType.Article, EditorPluginType.Rows].includes(
+        document.plugin as EditorPluginType
+      )
     : true
 
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
@@ -162,11 +158,10 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         ref={containerRef}
         data-document
         data-document-focusable={noVisualFocusHandling ? undefined : true}
-        tabIndex={-1}
       >
         <SideToolbarAndWrapper
           hasSideToolbar={hasSideToolbar}
-          focused={focused}
+          focused={domFocus === 'focus'}
           renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
           isInlineChildEditor={isInlineChildEditor}
           sideToolbarRef={sideToolbarRef}
@@ -194,7 +189,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     handleDomFocus,
     noVisualFocusHandling,
     hasSideToolbar,
-    focused,
     domFocus,
     renderIntoSideToolbar,
     id,
