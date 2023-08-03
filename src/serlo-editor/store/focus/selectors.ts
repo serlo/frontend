@@ -98,16 +98,6 @@ export const selectAncestorPluginTypes = createDeepEqualSelector(
   }
 )
 
-export const selectHasFocusedChild = createSelector(
-  [(state: State) => state, (_state, id: string) => id],
-  (state, id: string) => {
-    const tree = selectFocusTree(state, id)
-    if (!tree || !tree.children) return false
-    const focused = selectFocused(state)
-    return R.any((node) => node.id === focused, tree.children)
-  }
-)
-
 export const selectHasFocusedDescendant = createSelector(
   [(state: State) => state, (_state, id: string) => id],
   (state, id: string): boolean => {
