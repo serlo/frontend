@@ -62,9 +62,9 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const noVisualFocusHandling = document?.plugin
     ? document.plugin.startsWith('type-') ||
-      [EditorPluginType.Article, EditorPluginType.Rows].includes(
-        document.plugin as EditorPluginType
-      )
+    [EditorPluginType.Article, EditorPluginType.Rows].includes(
+      document.plugin as EditorPluginType
+    )
     : true
 
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
@@ -151,6 +151,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     return (
       <div
         className="outline-none"
+        tabIndex={-1} // removing this makes selecting e.g. images impossible somehow
         onMouseDown={handleFocus}
         onFocus={noVisualFocusHandling ? undefined : handleDomFocus}
         onBlur={noVisualFocusHandling ? undefined : handleDomFocus}
