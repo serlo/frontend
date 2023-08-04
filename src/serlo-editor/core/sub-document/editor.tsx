@@ -36,8 +36,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const plugin = editorPlugins.getByType(document?.plugin ?? '')
 
-  // TODO: replacing with domFocus breaks slate focus somehow?
-  useEnableEditorHotkeys(id, plugin, focused)
+  useEnableEditorHotkeys(id, plugin, domFocus === 'focusWithin')
   const containerRef = useRef<HTMLDivElement>(null)
   const sideToolbarRef = useRef<HTMLDivElement>(
     window.document.createElement('div')
