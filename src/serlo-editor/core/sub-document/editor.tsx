@@ -69,6 +69,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
     const target = containerRef.current
+
     if (!target) return
 
     const getFocusWithin = () => {

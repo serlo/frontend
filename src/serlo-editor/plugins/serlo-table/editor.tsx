@@ -35,8 +35,6 @@ const cellTextFormattingOptions = [
   'richText',
 ]
 
-// TODO: moving cells with tab does not immediately activate slate again (no cursor sometimes)
-
 const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
