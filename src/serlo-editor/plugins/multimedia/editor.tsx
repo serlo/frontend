@@ -21,7 +21,7 @@ export function MultimediaEditor(props: MultimediaProps) {
 
   const pluginToolbarAndStyleHacks = clsx(
     domFocusWithin &&
-      '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
+    '[&>div]:border-editor-primary-100 [&>div]:rounded-t-none',
 
     // fix add button position
     '[&_.add-trigger]:relative [&_.add-trigger]:-left-1/4',
@@ -38,7 +38,7 @@ export function MultimediaEditor(props: MultimediaProps) {
     // also media-wrapper needs to be relative to be clickable (is float:right)
     // but needs to be static to not restrict toolbar width
     domFocusWithin &&
-      '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
+    '[&_.media-wrapper_.plugin-wrapper-container]:!static [&_.media-wrapper]:!static',
 
     // margin and size improvement
     tw`
@@ -60,7 +60,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   )
 
   return (
-    <div className="group/multimedia">
+    <div className="group/multimedia" data-qa="plugin-multimedia-wrapper">
       {domFocus ? (
         <MultimediaToolbar id={props.id} containerRef={containerRef}>
           <MultimediaSizeSelect
@@ -84,6 +84,7 @@ export function MultimediaEditor(props: MultimediaProps) {
           `,
           focused ? 'hidden' : ''
         )}
+        data-qa="plugin-multimedia-parent-button"
       >
         {multimediaStrings.title}
       </button>
