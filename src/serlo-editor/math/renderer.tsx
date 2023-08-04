@@ -32,6 +32,7 @@ export const MathRenderer = React.memo(
               }
         }
         {...additionalContainerProps}
+        data-qa="plugin-math-renderer"
       />
     )
 

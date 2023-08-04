@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
   ReactEditor,
@@ -31,6 +31,12 @@ export function MathElement({
   const editor = useSlate()
   const selected = useSelected()
   const preferences = useContext(PreferenceContext)
+  const visualModePreferences = !!preferences.getKey(visualEditorPreferenceKey)
+  const [isVisualMode, setIsVisualMode] = useState(visualModePreferences)
+
+  useEffect(() => {
+    setIsVisualMode(visualModePreferences)
+  }, [visualModePreferences])
 
   const isInsideListElement = useMemo(() => {
     return isElementWithinList(element, editor)
@@ -43,6 +49,13 @@ export function MathElement({
     Range.isCollapsed(editor.selection)
 
   if (!shouldShowMathEditor) {
+    console.log('Should not show math editor. Rendering math formula', {
+      focused,
+      selected,
+      editorSelection: editor.selection,
+      isCollapsed: editor.selection && Range.isCollapsed(editor?.selection),
+    })
+
     return (
       // Slate void elements need to set attributes and contentEditable={false}
       // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
@@ -53,7 +66,43 @@ export function MathElement({
     )
   }
 
-  const isVisualMode = !!preferences.getKey(visualEditorPreferenceKey)
+  const VoidWrapper = element.inline ? 'span' : 'div'
+  console.log('Rendering math editor', {
+    focused,
+    selected,
+    editorSelection: editor.selection,
+    isCollapsed: editor.selection && Range.isCollapsed(editor?.selection),
+  })
+  return (
+    // Slate void elements need to set attributes and contentEditable={false}
+    // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
+    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
+      <MathEditor
+        autofocus
+        state={element.src}
+        inline={element.inline}
+        readOnly={false}
+        visual={isVisualMode}
+        disableBlock={isInsideListElement}
+        onInlineChange={handleInlineChange}
+        onChange={(src) => updateElement({ src })}
+        onMoveOutRight={transformOutOfElement}
+        onMoveOutLeft={() => {
+          transformOutOfElement({ reverse: true })
+        }}
+        onDeleteOutRight={() => {
+          transformOutOfElement({ shouldDelete: true })
+        }}
+        onDeleteOutLeft={() => {
+          transformOutOfElement({ shouldDelete: true, reverse: true })
+        }}
+        onEditorChange={(visual) =>
+          preferences.setKey(visualEditorPreferenceKey, visual)
+        }
+      />
+      {children}
+    </VoidWrapper>
+  )
 
   function updateElement(update: Partial<MathElementType>) {
     const path = ReactEditor.findPath(editor, element)
@@ -149,50 +198,65 @@ export function MathElement({
   function transformOutOfElement({
     reverse = false,
     shouldDelete = false,
+    closeThroughModal,
   }: {
     reverse?: boolean
     shouldDelete?: boolean
+    closeThroughModal?: boolean
   } = {}) {
     const unit = 'character'
 
     Transforms.move(editor, { unit, reverse })
-
     if (shouldDelete) {
       Transforms.delete(editor, { unit, reverse })
     }
 
-    ReactEditor.focus(editor)
-  }
+    // if (editor.selection) {
+    //   console.log('Setting selection to the end: ', { editor })
+    //   // move cursor to the end of line
+    //   // setTimeout(() => {
+    //   const endOfNode = Editor.end(editor, editor.selection.focus.path)
+    //   // const endOfNode = Editor.end(editor, editor.selection)
 
-  const VoidWrapper = element.inline ? 'span' : 'div'
-  return (
-    // Slate void elements need to set attributes and contentEditable={false}
-    // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
-    <VoidWrapper {...attributes} tabIndex={-1} contentEditable={false}>
-      <MathEditor
-        autofocus
-        state={element.src}
-        inline={element.inline}
-        readOnly={false}
-        visual={isVisualMode}
-        disableBlock={isInsideListElement}
-        onInlineChange={handleInlineChange}
-        onChange={(src) => updateElement({ src })}
-        onMoveOutRight={transformOutOfElement}
-        onMoveOutLeft={() => {
-          transformOutOfElement({ reverse: true })
-        }}
-        onDeleteOutRight={() => {
-          transformOutOfElement({ shouldDelete: true })
-        }}
-        onDeleteOutLeft={() => {
-          transformOutOfElement({ shouldDelete: true, reverse: true })
-        }}
-        onEditorChange={(visual) =>
-          preferences.setKey(visualEditorPreferenceKey, visual)
-        }
-      />
-      {children}
-    </VoidWrapper>
-  )
+    //   Transforms.setSelection(editor, { anchor: endOfNode, focus: endOfNode })
+
+    //   Transforms.move(editor, {
+    //     edge: 'end',
+    //     unit: 'line',
+    //   })
+    //   // ReactEditor.focus(editor)
+
+    //   // Transforms.setSelection(editor, {
+    //   //   anchor: endOfNode,
+    //   //   focus: endOfNode,
+    //   // })
+    //   // })
+    //   // setTimeout(() => {
+    //   //   // Transforms.setSelection(editor, { anchor: end, focus: end })
+    //   //   ReactEditor.focus(editor)
+    //   // })
+    // } else {
+    //   console.log(
+    //   'We have no selection, simply ensure that the editor is focused.'
+    // )
+    // setTimeout(() => {
+    // })
+    // }
+
+    // When calling this function from within the 'x' button to close the
+    // popup-modal, a small timeout is needed to reset the selection.
+    // Transforms.deselect() was not needed
+    if (closeThroughModal) {
+      setTimeout(() => {
+        ReactEditor.focus(editor)
+        // move cursor to the end
+        // Transforms.move(editor, {
+        //   edge: 'end',
+        //   unit: 'line',
+        // })
+      })
+    } else {
+      ReactEditor.focus(editor)
+    }
+  }
 }

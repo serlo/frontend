@@ -3,7 +3,9 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
+import { useHotkeys } from 'react-hotkeys-hook'
 import Modal from 'react-modal'
+import { Key } from 'ts-key-enum'
 
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
@@ -59,6 +61,7 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
       onMoveOutLeft={props.onMoveOutLeft}
       value={latex}
       ref={textareaRef}
+      dataQa="plugin-math-latex-editor"
     />
   )
 }
@@ -74,8 +77,9 @@ export interface MathEditorProps {
   onEditorChange(visual: boolean): void
   onInlineChange?(inline: boolean): void
   onChange(state: string): void
-  onMoveOutRight?(): void
-  onMoveOutLeft?(): void
+
+  onMoveOutRight: (options?: { closeThroughModal?: boolean }) => void
+  onMoveOutLeft(): void
   onDeleteOutRight?(): void
   onDeleteOutLeft?(): void
 }
@@ -89,7 +93,19 @@ export function MathEditor(props: MathEditorProps) {
 
   const { visual, readOnly, state, disableBlock } = props
 
-  const useVisualEditor = visual && !hasError
+  useHotkeys(
+    Key.Escape,
+    (event) => {
+      event.preventDefault()
+      // close overlay
+      props.onMoveOutRight()
+    },
+    {
+      enableOnFormTags: true,
+    }
+  )
+
+  const isVisualMode = visual && !hasError
 
   return (
     <>
@@ -173,7 +189,11 @@ export function MathEditor(props: MathEditorProps) {
       return state ? (
         <MathRenderer {...props} />
       ) : (
-        <span className="bg-gray-300" {...props.additionalContainerProps}>
+        <span
+          className="bg-gray-300"
+          {...props.additionalContainerProps}
+          data-qa="plugin-math-renderer"
+        >
           {mathStrings.formula}
         </span>
       )
@@ -181,7 +201,7 @@ export function MathEditor(props: MathEditorProps) {
 
     return (
       <>
-        {useVisualEditor ? (
+        {isVisualMode ? (
           <div
             onClick={(e) => e.stopPropagation()}
             ref={anchorRef}
@@ -214,7 +234,7 @@ export function MathEditor(props: MathEditorProps) {
                   px-1 py-[2px] text-base text-almost-black transition-all
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
                 `}
-              value={useVisualEditor ? 'visual' : 'latex'}
+              value={isVisualMode ? 'visual' : 'latex'}
               onChange={(e) => {
                 if (hasError) setHasError(false)
                 props.onEditorChange(e.target.value === 'visual')
@@ -234,7 +254,7 @@ export function MathEditor(props: MathEditorProps) {
                 <FaIcon icon={props.inline ? faCircle : faCheckCircle} />
               </button>
             )}
-            {useVisualEditor && (
+            {isVisualMode && (
               <button
                 onMouseDown={() => setHelpOpen(true)}
                 className="mx-2 text-almost-black hover:text-editor-primary"
@@ -245,7 +265,7 @@ export function MathEditor(props: MathEditorProps) {
           </div>
         )}
 
-        {hasError || !useVisualEditor ? renderOverlayPortal() : null}
+        {hasError || !isVisualMode ? renderOverlayPortal() : null}
       </>
     )
   }
@@ -260,16 +280,24 @@ export function MathEditor(props: MathEditorProps) {
   }
 
   function renderOverlayPortal() {
-    const children = (
+    return (
       <div className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu">
-        <p className="mr-0.5 mt-1 text-right text-sm font-bold text-gray-600">
-          {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
-        </p>
-        {!useVisualEditor && (
+        <div className="flex items-center justify-between">
+          <p className="mr-0.5 mt-1 text-right text-sm font-bold text-gray-600">
+            {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
+          </p>
+          <button
+            onClick={() => props.onMoveOutRight({ closeThroughModal: true })}
+            className="mr-0.5 mt-1 text-sm font-bold text-gray-600"
+            data-qa="plugin-math-close-formula-editor"
+          >
+            x
+          </button>
+        </div>
+        {!isVisualMode && (
           <MathEditorTextArea {...props} defaultValue={state} />
         )}
       </div>
     )
-    return children
   }
 }
