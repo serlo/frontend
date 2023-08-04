@@ -27,6 +27,9 @@ export const MultimediaSizeSelectButton = ({
       `,
       percent === state.value && 'bg-editor-primary-300'
     )}
+    role="option"
+    aria-selected={percent === state.value}
+    data-qa={`plugin-multimedia-size-button-${percent}`}
   >
     <div className={childClassName} style={{ width: `${100 - percent}%` }}>
       &nbsp;

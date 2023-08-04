@@ -67,7 +67,7 @@ export function MultimediaEditor(props: MultimediaProps) {
   )
 
   return (
-    <div className="group/multimedia">
+    <div className="group/multimedia" data-qa="plugin-multimedia-wrapper">
       {editable && focused ? (
         <MultimediaToolbar id={props.id}>
           <MultimediaSizeSelect
@@ -89,6 +89,7 @@ export function MultimediaEditor(props: MultimediaProps) {
             px-2 pt-0.5 text-sm font-bold
             hover:bg-editor-primary-100 group-focus-within/multimedia:block
           `}
+          data-qa="plugin-multimedia-parent-button"
         >
           {multimediaStrings.title}
         </button>
