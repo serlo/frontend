@@ -61,15 +61,17 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   const noVisualFocusHandling = document?.plugin
     ? document.plugin.startsWith('type-') ||
-    [EditorPluginType.Article, EditorPluginType.Rows].includes(
-      document.plugin as EditorPluginType
-    )
+      [EditorPluginType.Article, EditorPluginType.Rows].includes(
+        document.plugin as EditorPluginType
+      )
     : true
 
   const handleDomFocus = useCallback((e: FocusEvent<HTMLDivElement>) => {
     const target = containerRef.current
-
     if (!target) return
+
+    // don't blur if new focus target is actually in container or it's not defined
+    if (e.type === 'blur' && target.contains(e.relatedTarget)) return
 
     const getFocusWithin = () => {
       const hasFocusedChild = !!target.querySelector(
@@ -82,8 +84,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         : false
     }
 
-    if (e.type === 'focus') setDomFocus(() => getFocusWithin())
-    else setTimeout(() => setDomFocus(() => getFocusWithin()))
+    setDomFocus(() => getFocusWithin())
   }, [])
 
   const renderIntoSideToolbar = useCallback(

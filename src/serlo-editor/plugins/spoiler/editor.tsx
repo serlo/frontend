@@ -27,7 +27,7 @@ export function SpoilerEditor(props: SpoilerProps) {
       <SpoilerRenderer
         title={<>{title}</>}
         content={state.content.render()}
-        openOverwrite={editable && domFocusWithin}
+        openOverwrite={editable}
       />
     </>
   )
