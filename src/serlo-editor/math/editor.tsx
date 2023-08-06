@@ -51,7 +51,7 @@ const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
   return (
     <EditorTextarea
       className={tw`
-        !m-0.5 h-24 !w-[80vw] !max-w-[600px] rounded-md !border-2
+        mx-0 my-1 h-24 !w-[80vw] !max-w-[600px] rounded-md !border-2
         border-transparent text-black !shadow-none focus:border-editor-primary
       `}
       onChange={parentOnChange}
