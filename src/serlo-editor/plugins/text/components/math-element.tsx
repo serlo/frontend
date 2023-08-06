@@ -49,13 +49,6 @@ export function MathElement({
     Range.isCollapsed(editor.selection)
 
   if (!shouldShowMathEditor) {
-    console.log('Should not show math editor. Rendering math formula', {
-      focused,
-      selected,
-      editorSelection: editor.selection,
-      isCollapsed: editor.selection && Range.isCollapsed(editor?.selection),
-    })
-
     return (
       // Slate void elements need to set attributes and contentEditable={false}
       // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
@@ -67,12 +60,6 @@ export function MathElement({
   }
 
   const VoidWrapper = element.inline ? 'span' : 'div'
-  console.log('Rendering math editor', {
-    focused,
-    selected,
-    editorSelection: editor.selection,
-    isCollapsed: editor.selection && Range.isCollapsed(editor?.selection),
-  })
   return (
     // Slate void elements need to set attributes and contentEditable={false}
     // See: https://docs.slatejs.org/api/nodes/element#rendering-void-elements
@@ -211,49 +198,12 @@ export function MathElement({
       Transforms.delete(editor, { unit, reverse })
     }
 
-    // if (editor.selection) {
-    //   console.log('Setting selection to the end: ', { editor })
-    //   // move cursor to the end of line
-    //   // setTimeout(() => {
-    //   const endOfNode = Editor.end(editor, editor.selection.focus.path)
-    //   // const endOfNode = Editor.end(editor, editor.selection)
-
-    //   Transforms.setSelection(editor, { anchor: endOfNode, focus: endOfNode })
-
-    //   Transforms.move(editor, {
-    //     edge: 'end',
-    //     unit: 'line',
-    //   })
-    //   // ReactEditor.focus(editor)
-
-    //   // Transforms.setSelection(editor, {
-    //   //   anchor: endOfNode,
-    //   //   focus: endOfNode,
-    //   // })
-    //   // })
-    //   // setTimeout(() => {
-    //   //   // Transforms.setSelection(editor, { anchor: end, focus: end })
-    //   //   ReactEditor.focus(editor)
-    //   // })
-    // } else {
-    //   console.log(
-    //   'We have no selection, simply ensure that the editor is focused.'
-    // )
-    // setTimeout(() => {
-    // })
-    // }
-
-    // When calling this function from within the 'x' button to close the
-    // popup-modal, a small timeout is needed to reset the selection.
-    // Transforms.deselect() was not needed
+    // When calling this function when the 'x' button of the modal is clicked,
+    // a small timeout is needed to reset the selection. Transforms.deselect()
+    // was not needed
     if (closeThroughModal) {
       setTimeout(() => {
         ReactEditor.focus(editor)
-        // move cursor to the end
-        // Transforms.move(editor, {
-        //   edge: 'end',
-        //   unit: 'line',
-        // })
       })
     } else {
       ReactEditor.focus(editor)
