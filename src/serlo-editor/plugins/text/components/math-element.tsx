@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { Editor, Node, Path, Range, Transforms } from 'slate'
 import {
   ReactEditor,
@@ -31,12 +31,7 @@ export function MathElement({
   const editor = useSlate()
   const selected = useSelected()
   const preferences = useContext(PreferenceContext)
-  const visualModePreferences = !!preferences.getKey(visualEditorPreferenceKey)
-  const [isVisualMode, setIsVisualMode] = useState(visualModePreferences)
-
-  useEffect(() => {
-    setIsVisualMode(visualModePreferences)
-  }, [visualModePreferences])
+  const isVisualMode = !!preferences.getKey(visualEditorPreferenceKey)
 
   const isInsideListElement = useMemo(() => {
     return isElementWithinList(element, editor)
@@ -73,6 +68,7 @@ export function MathElement({
         disableBlock={isInsideListElement}
         onInlineChange={handleInlineChange}
         onChange={(src) => updateElement({ src })}
+        closeMathEditorOverlay={transformOutOfElement}
         onMoveOutRight={transformOutOfElement}
         onMoveOutLeft={() => {
           transformOutOfElement({ reverse: true })
@@ -185,11 +181,9 @@ export function MathElement({
   function transformOutOfElement({
     reverse = false,
     shouldDelete = false,
-    closeThroughModal,
   }: {
     reverse?: boolean
     shouldDelete?: boolean
-    closeThroughModal?: boolean
   } = {}) {
     const unit = 'character'
 
@@ -198,15 +192,6 @@ export function MathElement({
       Transforms.delete(editor, { unit, reverse })
     }
 
-    // When calling this function when the 'x' button of the modal is clicked,
-    // a small timeout is needed to reset the selection. Transforms.deselect()
-    // was not needed
-    if (closeThroughModal) {
-      setTimeout(() => {
-        ReactEditor.focus(editor)
-      })
-    } else {
-      ReactEditor.focus(editor)
-    }
+    ReactEditor.focus(editor)
   }
 }

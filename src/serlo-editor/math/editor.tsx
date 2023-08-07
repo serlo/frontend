@@ -1,5 +1,5 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle, faXmark } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, useCallback, createRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
@@ -77,8 +77,8 @@ export interface MathEditorProps {
   onEditorChange(visual: boolean): void
   onInlineChange?(inline: boolean): void
   onChange(state: string): void
-
-  onMoveOutRight: (options?: { closeThroughModal?: boolean }) => void
+  closeMathEditorOverlay: () => void
+  onMoveOutRight: () => void
   onMoveOutLeft(): void
   onDeleteOutRight?(): void
   onDeleteOutLeft?(): void
@@ -98,7 +98,7 @@ export function MathEditor(props: MathEditorProps) {
     (event) => {
       event.preventDefault()
       // close overlay
-      props.onMoveOutRight()
+      props.closeMathEditorOverlay()
     },
     {
       enableOnFormTags: true,
@@ -297,11 +297,12 @@ export function MathEditor(props: MathEditorProps) {
             {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
           </p>
           <button
-            onClick={() => props.onMoveOutRight({ closeThroughModal: true })}
-            className="mr-0.5 mt-1 text-sm font-bold text-gray-600"
+            onClick={() => props.closeMathEditorOverlay()}
+            className="mr-0.5 mt-1 text-sm font-bold text-gray-600 hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
+            aria-label="Close math formula editor"
             data-qa="plugin-math-close-formula-editor"
           >
-            x
+            <FaIcon icon={faXmark} />
           </button>
         </div>
         {!isVisualMode && (
