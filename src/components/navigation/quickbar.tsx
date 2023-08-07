@@ -179,7 +179,7 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
         ref={overlayWrapper}
         role="listbox"
         id="quickbar-listbox"
-        data-qa="quickbar-overlay"
+        data-qa="quickbar-combobox-overlay"
         className={clsx(
           tw`
             absolute left-side right-side z-[100] ml-2 mt-2
