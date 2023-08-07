@@ -200,7 +200,14 @@ export function MathEditor(props: MathEditorProps) {
             />
           </div>
         ) : (
-          <MathRenderer {...props} ref={anchorRef} />
+          <div
+            className={clsx(
+              props.inline ? 'inline-block' : '',
+              'rounded-md bg-editor-primary-200'
+            )}
+          >
+            <MathRenderer {...props} ref={anchorRef} />
+          </div>
         )}
 
         {renderControlsPortal(
