@@ -28,7 +28,7 @@ export function PluginToolbar({
     <div
       className={clsx(
         tw`
-        plugin-toolbar absolute -top-[2.6rem] left-0 right-0 z-20 flex h-9
+        plugin-toolbar absolute -top-[2.6rem] left-0 right-0 z-[21] flex h-9
         items-center justify-between rounded-t-lg bg-editor-primary-100 pl-2
         before:pointer-events-none before:absolute before:-top-7
         before:block before:h-7 before:w-full
