@@ -397,7 +397,9 @@ export function TextEditor(props: TextEditorProps) {
       )}
       <Editable
         readOnly={!editable}
-        placeholder={config.placeholder ?? textStrings.placeholder}
+        placeholder={
+          editable ? config.placeholder ?? textStrings.placeholder : undefined
+        }
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
