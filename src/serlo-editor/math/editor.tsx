@@ -97,7 +97,6 @@ export function MathEditor(props: MathEditorProps) {
     Key.Escape,
     (event) => {
       event.preventDefault()
-      // close overlay
       props.closeMathEditorOverlay()
     },
     {
@@ -297,7 +296,7 @@ export function MathEditor(props: MathEditorProps) {
             {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
           </p>
           <button
-            onClick={() => props.closeMathEditorOverlay()}
+            onClick={props.closeMathEditorOverlay}
             className="mr-0.5 mt-1 text-sm font-bold text-gray-600 hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
             aria-label="Close math formula editor"
             data-qa="plugin-math-close-formula-editor"
