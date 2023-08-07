@@ -10,7 +10,6 @@
     - [Text formatting options](#text-formatting-options)
     - [Suggestions (`serlo-editor` plugins)](#suggestions-serlo-editor-plugins)
     - [Saving state to `Redux` store](#saving-state-to-redux-store)
-      - [`LinkControls` workaround](#linkcontrols-workaround)
 
 ## Structure
 
@@ -69,10 +68,3 @@ In order to enable global undo/redo behavior, any content changes are saved to t
 If a portion of the content is selected and then replaced with some text, undo will restore the replaced content and the selection. Slate `Editor`'s `value` prop is used only as an initial value and changing the bound value will not result in a rerender. Therefore, we have to manually assign the value to `editor.children` ([as recommended by the Slate team](https://github.com/ianstormtaylor/slate/releases/tag/slate-react%400.67.0)).
 
 Simple selection changes are not saved to the store, because we don't want to undo pure selection changes.
-
-#### `LinkControls` workaround
-
-The `LinkControls` component should only be shown if the selection is currently on a link inline. But, since we don't save pure selection changes to the store, `LinkControls` doesn't rerender on selection changes. To work around this problem, a simple `useState` hook is used:
-
-1. `isSelectionChanged` is passed to `LinkControls`, where it's used as a dependency in a `useEffect` hook which takes care of showing and hiding `LinkControls`
-2. `setIsSelectionChanged` is called whenever selection changes, which increments `isSelectionChanged` and makes sure `LinkControls` visibility will be updated

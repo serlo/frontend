@@ -1,5 +1,5 @@
 import isHotkey from 'is-hotkey'
-import React, { useMemo, useState, useEffect, useCallback } from 'react'
+import React, { useMemo, useEffect, useCallback } from 'react'
 import { createEditor, Node, Transforms, Range } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
@@ -48,7 +48,6 @@ export type TextEditorProps = EditorPluginProps<
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
 
-  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
   const textStrings = useEditorStrings().plugins.text
@@ -69,7 +68,6 @@ export function TextEditor(props: TextEditorProps) {
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
-    onChange: setIsSelectionChanged,
   })
 
   // Workaround for setting selection when adding a new editor:
@@ -384,49 +382,40 @@ export function TextEditor(props: TextEditorProps) {
   )
 
   return (
-    <>
+    <Slate
+      editor={editor}
+      value={state.value.value}
+      onChange={handleEditorChange}
+    >
       {focused && (
         <TextToolbar
           id={id}
           toolbarControls={toolbarControls}
-          editor={editor}
           config={config}
           containerRef={containerRef}
         />
       )}
-      <Slate
-        editor={editor}
-        value={state.value.value}
-        onChange={handleEditorChange}
-      >
-        <Editable
-          readOnly={!editable}
-          placeholder={config.placeholder ?? textStrings.placeholder}
-          onKeyDown={handleEditableKeyDown}
-          onPaste={handleEditablePaste}
-          renderElement={handleRenderElement}
-          renderLeaf={(props) => (
-            <span {...props.attributes}>
-              <TextLeafRenderer {...props} />
-            </span>
-          )}
-          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
-          data-qa="plugin-text-editor"
-        />
-        {editable && focused && (
-          <LinkControls
-            isSelectionChanged={isSelectionChanged}
-            editor={editor}
-            serloLinkSearch={config.serloLinkSearch}
-          />
+      <Editable
+        readOnly={!editable}
+        placeholder={config.placeholder ?? textStrings.placeholder}
+        onKeyDown={handleEditableKeyDown}
+        onPaste={handleEditablePaste}
+        renderElement={handleRenderElement}
+        renderLeaf={(props) => (
+          <span {...props.attributes}>
+            <TextLeafRenderer {...props} />
+          </span>
         )}
-      </Slate>
+        className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+        data-qa="plugin-text-editor"
+      />
+      <LinkControls serloLinkSearch={config.serloLinkSearch} />
 
       {showSuggestions && (
         <HoverOverlay position="below">
           <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
-    </>
+    </Slate>
   )
 }

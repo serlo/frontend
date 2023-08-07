@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { Descendant, Editor, Transforms } from 'slate'
 
 import { TextEditorProps } from '../components/text-editor'
@@ -6,11 +6,10 @@ import { TextEditorProps } from '../components/text-editor'
 interface UseEditorChangeArgs {
   editor: Editor
   state: TextEditorProps['state']
-  onChange: Dispatch<SetStateAction<number>>
 }
 
 export const useEditorChange = (args: UseEditorChangeArgs) => {
-  const { editor, state, onChange } = args
+  const { editor, state } = args
 
   const previousValue = useRef(state.value.value)
   const previousSelection = useRef(state.value.selection)
@@ -41,10 +40,9 @@ export const useEditorChange = (args: UseEditorChangeArgs) => {
           ({ value }) => ({ value, selection: previousSelection.current })
         )
       }
-      onChange((count: number) => count + 1)
       previousSelection.current = editor.selection
     },
-    [editor.operations, editor.selection, state, onChange]
+    [editor.operations, editor.selection, state]
   )
 
   return {

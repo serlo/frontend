@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom'
-import { Editor as SlateEditor } from 'slate'
+import { useSlate } from 'slate-react'
 
 import { TextEditorConfig } from '../types'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
@@ -11,7 +11,6 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 interface TextToolbarProps {
   id: string
   toolbarControls: ControlButton[]
-  editor: SlateEditor
   config: TextEditorConfig
   containerRef?: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
 }
@@ -19,10 +18,11 @@ interface TextToolbarProps {
 export function TextToolbar({
   id,
   toolbarControls,
-  editor,
   config,
   containerRef,
 }: TextToolbarProps) {
+  const editor = useSlate()
+
   if (config.isInlineChildEditor) {
     if (!containerRef || !containerRef.current) return null
     const target = containerRef.current
