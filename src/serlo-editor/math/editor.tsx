@@ -220,7 +220,14 @@ export function MathEditor(props: MathEditorProps) {
             />
           </div>
         ) : (
-          <MathRenderer {...props} ref={anchorRef} />
+          <div
+            className={clsx(
+              props.inline ? 'inline-block' : '',
+              'rounded-md bg-editor-primary-200'
+            )}
+          >
+            <MathRenderer {...props} ref={anchorRef} />
+          </div>
         )}
 
         {renderControlsPortal(
@@ -281,7 +288,10 @@ export function MathEditor(props: MathEditorProps) {
 
   function renderOverlayPortal() {
     return (
-      <div className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu">
+      <div
+        className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu"
+        onClick={(e) => e.stopPropagation()} // double/triple clicks close overlay otherwise (#2700)
+      >
         <div className="flex items-center justify-between">
           <p className="mr-0.5 mt-1 text-right text-sm font-bold text-gray-600">
             {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
