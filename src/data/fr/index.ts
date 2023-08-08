@@ -798,7 +798,8 @@ export const loggedInData = {
             mathSymbols: "Symboles mathématiques",
             eG: "par ex.",
             functions: "Fonctions",
-            displayAsBlock: "Afficher comme un bloc"
+            displayAsBlock: "Afficher comme un bloc",
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {
