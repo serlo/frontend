@@ -195,6 +195,9 @@ export function Quickbar({ subject, className, placeholder }: QuickbarProps) {
                 key={index}
                 role="option"
                 id={`quickbar-option-${index}`}
+                // Ensures that the item can't be tapped which causes the input
+                // field to lose focus and the modal to get closed immediately
+                tabIndex={-1}
                 aria-selected={index === selection}
                 className="group serlo-link cursor-pointer hover:no-underline"
                 onClick={(e) => goToResult(x.entry.id, e)}
