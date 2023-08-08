@@ -49,6 +49,7 @@ export function InlineMath(props: InlineMathProps) {
       onChange={onChange}
       onMoveOutRight={onFocusNext}
       onMoveOutLeft={onFocusPrevious}
+      closeMathEditorOverlay={onFocusNext}
     />
   )
 }

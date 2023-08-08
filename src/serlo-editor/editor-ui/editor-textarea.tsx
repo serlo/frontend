@@ -5,13 +5,14 @@ type EditorTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   onMoveOutRight?(): void
   onMoveOutLeft?(): void
   className?: string
+  dataQa?: string
 }
 
 export const EditorTextarea = forwardRef<
   HTMLTextAreaElement,
   EditorTextareaProps
 >(function EditorTextarea(
-  { onMoveOutLeft, onMoveOutRight, className, ...props },
+  { onMoveOutLeft, onMoveOutRight, className, dataQa, ...props },
   ref
 ) {
   return (
@@ -22,6 +23,7 @@ export const EditorTextarea = forwardRef<
       )}
       {...props}
       ref={ref}
+      data-qa={dataQa}
       onKeyDown={(e) => {
         if (!ref || typeof ref === 'function' || !ref.current) return
 
