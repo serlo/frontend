@@ -297,8 +297,8 @@ export function MathEditor(props: MathEditorProps) {
           </p>
           <button
             onClick={props.closeMathEditorOverlay}
-            className="mr-0.5 mt-1 text-sm font-bold text-gray-600 hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
-            aria-label="Close math formula editor"
+            className="serlo-button-editor-secondary py-0"
+            aria-label={mathStrings.closeMathFormulaEditor}
             data-qa="plugin-math-close-formula-editor"
           >
             <FaIcon icon={faXmark} />
