@@ -54,17 +54,15 @@ export function MathEditor(props: MathEditorProps) {
   )
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      targetRef.current = document.querySelector<HTMLDivElement>(
-        '.toolbar-controls-target'
-      )
+    targetRef.current = document.querySelector<HTMLDivElement>(
+      '.toolbar-controls-target'
+    )
 
-      if (!targetRef.current) {
-        // eslint-disable-next-line no-console
-        console.warn(
-          'MathEditor: Could not find toolbar-controls-target to create portal'
-        )
-      }
+    if (!targetRef.current) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'MathEditor: Could not find toolbar-controls-target to create portal'
+      )
     }
   }, [])
 
