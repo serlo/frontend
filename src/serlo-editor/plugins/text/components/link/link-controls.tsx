@@ -1,37 +1,32 @@
 import { useEffect, useState } from 'react'
-import { Editor as SlateEditor, Range, Transforms } from 'slate'
-import { ReactEditor } from 'slate-react'
+import { Range, Transforms } from 'slate'
+import { ReactEditor, useSlate } from 'slate-react'
 
 import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
 import { LinkOverlay } from './link-overlay'
 import { LinkOverlayWithHref } from './link-overlay-with-href'
-import { useTextConfig } from '../../hooks/use-text-config'
-import type { Link, TextEditorPluginConfig } from '../../types'
-import { getLinkElement, isLinkActive } from '../../utils/link'
+import type { Link } from '../../types'
 import {
   QuickbarData,
   fetchQuickbarData,
 } from '@/components/navigation/quickbar'
+import {
+  getLinkElement,
+  isLinkActive,
+} from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/link'
 
 interface LinkControlsProps {
-  isSelectionChanged: number
-  editor: SlateEditor
-  config: TextEditorPluginConfig
+  serloLinkSearch: boolean
 }
 
-export function LinkControls({
-  isSelectionChanged,
-  editor,
-  config,
-}: LinkControlsProps) {
+export function LinkControls({ serloLinkSearch }: LinkControlsProps) {
   const [element, setElement] = useState<Link | null>(null)
   const [value, setValue] = useState('')
   const [isEditMode, setIsEditMode] = useState(value.length === 0)
   const [quickbarData, setQuickbarData] = useState<QuickbarData | null>(null)
 
+  const editor = useSlate()
   const { selection } = editor
-
-  const { serloLinkSearch } = useTextConfig(config)
 
   useEffect(() => {
     if (!selection) return
@@ -45,7 +40,7 @@ export function LinkControls({
     } else {
       setElement(null)
     }
-  }, [isSelectionChanged, selection, editor])
+  }, [selection, editor])
 
   useEffect(() => {
     if (!serloLinkSearch) return
@@ -87,7 +82,7 @@ export function LinkControls({
     <LinkOverlay element={element}>
       {isEditMode ? (
         <LinkOverlayEditMode
-          config={config}
+          serloLinkSearch={serloLinkSearch}
           setHref={setHref}
           removeLink={removeLink}
           value={value}
@@ -96,7 +91,6 @@ export function LinkControls({
         />
       ) : (
         <LinkOverlayWithHref
-          config={config}
           value={value}
           removeLink={removeLink}
           setIsEditMode={setIsEditMode}

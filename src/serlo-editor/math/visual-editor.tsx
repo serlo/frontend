@@ -1,6 +1,7 @@
 import * as MQ from 'react-mathquill'
 
 import { MathEditorProps } from './editor'
+import { tw } from '@/helper/tw'
 
 if (typeof window !== 'undefined') {
   MQ.addStyles()
@@ -89,21 +90,32 @@ export function VisualEditor(props: VisualEditorProps) {
   }
 
   return (
-    <MQ.EditableMathField
-      latex={props.state}
-      onChange={(ref) => {
-        props.onChange(ref.latex())
-      }}
-      onCopy={(event: React.ClipboardEvent) => {
-        event.stopPropagation()
-      }}
-      onCut={(event: React.ClipboardEvent) => {
-        event.stopPropagation()
-      }}
-      // @ts-expect-error https://github.com/serlo/serlo-editor-issues-and-documentation/issues/67
-      config={mathQuillConfig}
-      mathquillDidMount={onMount}
-    />
+    <div
+      className={tw`
+        rounded-sm focus-within:outline
+        focus-within:outline-2 focus-within:outline-offset-1 focus-within:outline-editor-primary
+        [&_.mq-editable-field]:!border-none [&_.mq-editable-field]:!shadow-none
+      `}
+    >
+      <MQ.EditableMathField
+        latex={props.state}
+        onChange={(mathFieldRef) => {
+          // Should always be defined after first render cycle!
+          if (mathFieldRef?.latex) {
+            props.onChange(mathFieldRef.latex())
+          }
+        }}
+        onCopy={(event: React.ClipboardEvent) => {
+          event.stopPropagation()
+        }}
+        onCut={(event: React.ClipboardEvent) => {
+          event.stopPropagation()
+        }}
+        // @ts-expect-error https://github.com/serlo/serlo-editor-issues-and-documentation/issues/67
+        config={mathQuillConfig}
+        mathquillDidMount={onMount}
+      />
+    </div>
   )
 
   function onMount(ref: MathField) {

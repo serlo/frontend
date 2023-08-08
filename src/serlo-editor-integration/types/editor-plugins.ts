@@ -40,114 +40,142 @@ export type SlateTextElement = CustomText
 export interface EditorAnchorPlugin {
   plugin: EditorPluginType.Anchor
   state: StateTypeSerializedType<AnchorPluginState>
+  id?: string
 }
 export interface EditorArticlePlugin {
   plugin: EditorPluginType.Article
   state: StateTypeSerializedType<ArticlePluginState>
+  id?: string
 }
 export interface EditorBlockquotePlugin {
   plugin: EditorPluginType.Blockquote
   state: StateTypeSerializedType<BlockquotePluginState>
+  id?: string
 }
 export interface EditorBoxPlugin {
   plugin: EditorPluginType.Box
   state: StateTypeSerializedType<BoxPluginState>
+  id?: string
 }
 export interface EditorUnsupportedPlugin {
   plugin: EditorPluginType.Unsupported
   state: StateTypeSerializedType<UnsupportedPluginState>
+  id?: string
 }
 export interface EditorEquationsPlugin {
   plugin: EditorPluginType.Equations
   state: StateTypeSerializedType<EquationsPluginState>
+  id?: string
 }
 export interface EditorExercisePlugin {
   plugin: EditorPluginType.Exercise
   state: StateTypeSerializedType<ExercisePluginState>
+  id?: string
 }
 export interface EditorGeogebraPlugin {
   plugin: EditorPluginType.Geogebra
   state: StateTypeSerializedType<GeogebraPluginState>
+  id?: string
 }
 export interface EditorHighlightPlugin {
   plugin: EditorPluginType.Highlight
   state: StateTypeSerializedType<HighlightPluginState>
+  id?: string
 }
 export interface EditorImagePlugin {
   plugin: EditorPluginType.Image
   state: StateTypeSerializedType<ImagePluginState>
+  id?: string
 }
 export interface EditorImportantPlugin {
   plugin: EditorPluginType.Important
   state: StateTypeSerializedType<ImportantPluginState>
+  id?: string
 }
 export interface EditorInjectionPlugin {
   plugin: EditorPluginType.Injection
   state: StateTypeSerializedType<InjectionPluginState>
+  id?: string
 }
 export interface EditorInputExercisePlugin {
   plugin: EditorPluginType.InputExercise
   state: StateTypeSerializedType<InputExercisePluginState>
+  id?: string
 }
 export interface EditorLayoutPlugin {
   plugin: EditorPluginType.Layout
   state: StateTypeSerializedType<LayoutPluginState>
+  id?: string
 }
 export interface EditorMultimediaPlugin {
   plugin: EditorPluginType.Multimedia
   state: StateTypeSerializedType<MultimediaPluginState>
+  id?: string
 }
 export interface EditorRowsPlugin {
   plugin: EditorPluginType.Rows
   state: StateTypeSerializedType<RowsPluginState>
+  id?: string
 }
 export interface EditorScMcExercisePlugin {
   plugin: EditorPluginType.ScMcExercise
   state: StateTypeSerializedType<ScMcExercisePluginState>
+  id?: string
 }
 export interface EditorSpoilerPlugin {
   plugin: EditorPluginType.Spoiler
   state: StateTypeSerializedType<SpoilerPluginState>
+  id?: string
 }
 export interface EditorSerloInjectionPlugin {
   plugin: EditorPluginType.Injection
   state: StateTypeSerializedType<InjectionPluginState>
+  id?: string
 }
 export interface EditorSolutionPlugin {
   plugin: EditorPluginType.Solution
   state: StateTypeSerializedType<SolutionPluginState>
+  id?: string
 }
 export interface EditorTablePlugin {
   plugin: EditorPluginType.Table
   state: StateTypeSerializedType<TablePluginState>
+  id?: string
 }
 export interface EditorSerloTablePlugin {
   plugin: EditorPluginType.SerloTable
   state: StateTypeSerializedType<SerloTablePluginState>
+  id?: string
 }
 export interface EditorTextPlugin {
   plugin: EditorPluginType.Text
   state: StateTypeSerializedType<TextEditorState>
+  id?: string
 }
 export interface EditorVideoPlugin {
   plugin: EditorPluginType.Video
   state: StateTypeSerializedType<VideoPluginState>
+  id?: string
 }
 export interface EditorPageLayoutPlugin {
   plugin: EditorPluginType.PageLayout
   state: StateTypeSerializedType<PageLayoutPluginState>
+  id?: string
 }
 export interface EditorPageTeamPlugin {
   plugin: EditorPluginType.PageTeam
   state: StateTypeSerializedType<PageTeamPluginState>
+  id?: string
 }
 export interface EditorPagePartnersPlugin {
   plugin: EditorPluginType.PagePartners
   state: StateTypeSerializedType<PagePartnersPluginState>
+  id?: string
 }
 export interface EditorH5PPlugin {
   plugin: EditorPluginType.H5p
   state: StateTypeSerializedType<H5pPluginState>
+  id?: string
 }
 
 export type SupportedEditorPlugin =
@@ -176,4 +204,5 @@ export type SupportedEditorPlugin =
 export interface UnknownEditorPlugin {
   plugin: string
   state?: unknown
+  id?: string
 }

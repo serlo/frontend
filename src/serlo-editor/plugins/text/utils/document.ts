@@ -1,15 +1,7 @@
-import {
-  Descendant,
-  Element,
-  Node,
-  Editor as SlateEditor,
-  Transforms,
-  Location,
-} from 'slate'
+import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
 
 import { isSelectionAtEnd } from './selection'
 import type { TextEditorState } from '../types'
-import { PluginsContextPlugins } from '@/serlo-editor/core/contexts/plugins-context'
 import { StateTypeValueType } from '@/serlo-editor/plugin'
 import {
   focusNext,
@@ -63,8 +55,7 @@ export function mergePlugins(
   direction: 'previous' | 'next',
   editor: SlateEditor,
   store: RootStore,
-  id: string,
-  plugins: PluginsContextPlugins
+  id: string
 ) {
   const mayManipulateSiblings = selectMayManipulateSiblings(
     store.getState(),
@@ -79,7 +70,7 @@ export function mergePlugins(
     const focusTree = selectFocusTree(store.getState())
     const focusAction = direction === 'previous' ? focusPrevious : focusNext
     store.dispatch(focusAction(focusTree))
-    store.dispatch(removePluginChild({ parent: parent.id, child: id, plugins }))
+    store.dispatch(removePluginChild({ parent: parent.id, child: id }))
     return
   }
 
@@ -122,7 +113,6 @@ export function mergePlugins(
         removePluginChild({
           parent: parent.id,
           child: previousSibling.id,
-          plugins,
         })
       )
 
@@ -160,29 +150,11 @@ export function mergePlugins(
 
       // Remove the merged plugin
       store.dispatch(
-        removePluginChild({ parent: parent.id, child: nextSibling.id, plugins })
+        removePluginChild({ parent: parent.id, child: nextSibling.id })
       )
 
       // Return the merge value
       return newValue
     }
   }
-}
-
-export function existsInAncestors(
-  predicate: (element: Element) => boolean,
-  { location }: { location: Location },
-  editor: SlateEditor
-) {
-  const matchingNodes = Array.from(
-    SlateEditor.nodes(editor, {
-      at: location,
-      match: (node) =>
-        !SlateEditor.isEditor(node) &&
-        Element.isElement(node) &&
-        predicate(node),
-    })
-  )
-
-  return matchingNodes.length !== 0
 }

@@ -1,25 +1,7 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import styled from 'styled-components'
 
 import { FaIcon } from '@/components/fa-icon'
-import {
-  HoverOverlayOld,
-  HoverPosition,
-} from '@/serlo-editor/editor-ui/hover-overlay-old'
-
-const InlinePreview = styled.span({
-  padding: '0px 8px',
-})
-const ChangeButton = styled.div({
-  padding: '5px 5px 5px 10px',
-  display: 'inline-block',
-  borderLeft: '2px solid rgba(51,51,51,0.95)',
-  cursor: 'pointer',
-  margin: '2px',
-  '&:hover': {
-    color: 'rgb(70, 155, 255)',
-  },
-})
+import { HoverOverlay, HoverPosition } from '@/serlo-editor/editor-ui'
 
 export function InlineSettings({
   position = 'below',
@@ -31,13 +13,16 @@ export function InlineSettings({
   anchor?: React.RefObject<HTMLElement>
 }) {
   return (
-    <HoverOverlayOld position={position} anchor={props.anchor}>
-      <InlinePreview>{props.children}</InlinePreview>
+    <HoverOverlay position={position} anchor={props.anchor}>
+      <span className="px-2">{props.children}</span>
       {props.onDelete ? (
-        <ChangeButton onClick={props.onDelete}>
+        <div
+          onClick={props.onDelete}
+          className="m-0.5 inline-block cursor-pointer border-l-2 border-almost-black p-[5px] pl-2.5 hover:text-editor-primary"
+        >
           <FaIcon icon={faTrashAlt} />
-        </ChangeButton>
+        </div>
       ) : null}
-    </HoverOverlayOld>
+    </HoverOverlay>
   )
 }

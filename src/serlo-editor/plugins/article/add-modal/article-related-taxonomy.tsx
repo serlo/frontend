@@ -25,13 +25,13 @@ export function ArticleRelatedTaxonomy({
   showExerciseFolderPreview,
 }: ArticleRelatedTaxonomyProps) {
   const entityId = useEntityId()
-  const { data, error } = useFetchParentTaxonomy(entityId)
+  const { data, error } = useFetchParentTaxonomy(entityId ?? 0)
 
   const { strings } = useInstanceData()
   const articleStrings = useEditorStrings().templatePlugins.article
 
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
-  if (!dataAndTerm) {
+  if (!dataAndTerm || !entityId) {
     const isNew =
       typeof window !== undefined &&
       window.location.pathname.startsWith('/entity/create')

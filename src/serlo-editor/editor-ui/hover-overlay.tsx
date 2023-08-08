@@ -1,30 +1,8 @@
 import { createRef, useEffect, useState, ReactNode, RefObject } from 'react'
-import styled from 'styled-components'
 
-import { colors } from '@/helper/colors'
+import { tw } from '@/helper/tw'
 
-const HoverOverlayWrapper = styled.div({
-  position: 'absolute',
-  top: '-10000px',
-  left: '-10000px',
-  opacity: 0,
-  transition: 'opacity 0.5s',
-  zIndex: 95,
-  whiteSpace: 'nowrap',
-  boxShadow: '0 1px 4px rgba(0, 0, 0, 0.25)',
-  backgroundColor: '#fff',
-  color: colors.almostBlack,
-  borderRadius: '3px',
-  overflow: 'auto',
-  '& a': {
-    color: colors.almostBlack,
-    '&:hover': {
-      color: 'rgb(70, 155, 255)',
-    },
-  },
-})
-
-type HoverPosition = 'above' | 'below'
+export type HoverPosition = 'above' | 'below'
 
 interface HoverOverlayProps {
   children: ReactNode
@@ -37,21 +15,6 @@ export function HoverOverlay(props: HoverOverlayProps) {
   const [positionAbove, setPositionAbove] = useState(props.position === 'above')
 
   const windowSelection = window.getSelection()
-
-  const [nativeSelection, setNativeSelection] = useState({
-    anchorOffset: windowSelection?.anchorOffset,
-    focusNode: windowSelection?.focusNode,
-  })
-  const handleSelectionChange = () => {
-    setNativeSelection({
-      anchorOffset: windowSelection?.anchorOffset,
-      focusNode: windowSelection?.focusNode,
-    })
-  }
-  document.addEventListener('selectionchange', handleSelectionChange)
-  useEffect(() => () => {
-    document.removeEventListener('selectionchange', handleSelectionChange)
-  })
 
   const { anchor, children } = props
 
@@ -90,14 +53,18 @@ export function HoverOverlay(props: HoverOverlayProps) {
       ),
       0
     )}px`
-  }, [
-    overlay,
-    anchor,
-    positionAbove,
-    nativeSelection.focusNode,
-    nativeSelection.anchorOffset,
-    windowSelection,
-  ])
+  }, [overlay, anchor, positionAbove, windowSelection])
 
-  return <HoverOverlayWrapper ref={overlay}>{children}</HoverOverlayWrapper>
+  return (
+    <div
+      ref={overlay}
+      className={tw`
+        absolute -left-[10000px] -top-[10000px] z-[95] overflow-auto whitespace-nowrap
+        rounded-md bg-white text-almost-black opacity-0 shadow-modal
+        transition-opacity [&_a]:text-almost-black [&_a]:hover:text-brand
+      `}
+    >
+      {children}
+    </div>
+  )
 }

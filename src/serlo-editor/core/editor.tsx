@@ -5,11 +5,6 @@ import { HotkeysProvider, useHotkeys } from 'react-hotkeys-hook'
 import { Provider } from 'react-redux'
 
 import { EditableContext, PreferenceContextProvider } from './contexts'
-import {
-  PluginsContext,
-  PluginsContextPlugins,
-  usePlugins,
-} from './contexts/plugins-context'
 import { useBlurOnOutsideClick } from './hooks/use-blur-on-outside-click'
 import { SubDocument } from './sub-document'
 import {
@@ -30,16 +25,13 @@ import {
  * Renders a single editor for an Serlo Editor document
  */
 export function Editor(props: EditorProps) {
-  const { plugins, ...propsWithoutPlugins } = props
   return (
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
         <HotkeysProvider
           initiallyActiveScopes={['global', 'root-up-down-enter']}
         >
-          <PluginsContext.Provider value={plugins}>
-            <InnerDocument {...propsWithoutPlugins} />
-          </PluginsContext.Provider>
+          <InnerDocument {...props} />
         </HotkeysProvider>
       </DndProvider>
     </Provider>
@@ -51,10 +43,9 @@ export function InnerDocument({
   editable = true,
   onChange,
   ...props
-}: Omit<EditorProps, 'plugins'>) {
+}: EditorProps) {
   const id = useAppSelector(selectRoot)
   const dispatch = useAppDispatch()
-  const plugins = usePlugins()
 
   const wrapperRef = useRef<HTMLDivElement | null>(null)
   useBlurOnOutsideClick(wrapperRef)
@@ -74,16 +65,9 @@ export function InnerDocument({
     })
   }, [onChange])
 
-  const strippedPlugins = plugins
-
   useEffect(() => {
-    dispatch(
-      runInitRootSaga({
-        initialState: props.initialState,
-        plugins: strippedPlugins,
-      })
-    )
-  }, [props.initialState, strippedPlugins, dispatch])
+    dispatch(runInitRootSaga({ initialState: props.initialState }))
+  }, [props.initialState, dispatch])
   const editableContextValue = useMemo(() => editable, [editable])
 
   useHotkeys(
@@ -175,7 +159,6 @@ export function InnerDocument({
 
 export interface EditorProps {
   children?: ReactNode | ((document: ReactNode) => ReactNode)
-  plugins: PluginsContextPlugins
   initialState: {
     plugin: string
     state?: unknown

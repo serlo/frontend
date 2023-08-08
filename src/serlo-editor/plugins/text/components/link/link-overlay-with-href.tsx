@@ -6,7 +6,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 
-import { TextEditorPluginConfig } from '../../types'
 import { FaIcon } from '@/components/fa-icon'
 import { QuickbarData } from '@/components/navigation/quickbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -18,7 +17,6 @@ export function LinkOverlayWithHref({
   setIsEditMode,
   quickbarData,
 }: {
-  config: TextEditorPluginConfig
   value: string
   removeLink: () => void
   setIsEditMode: (mode: boolean) => void
@@ -56,6 +54,7 @@ export function LinkOverlayWithHref({
       <button
         onClick={() => setIsEditMode(true)}
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-4 h-10 w-10"
+        data-qa="edit-link-button"
       >
         <FaIcon icon={faPencilAlt} />
         <EditorTooltip
@@ -66,6 +65,7 @@ export function LinkOverlayWithHref({
       <button
         onClick={removeLink}
         className="serlo-button-editor-secondary serlo-tooltip-trigger ml-2 h-10 w-10"
+        data-qa="remove-link-button"
       >
         <FaIcon icon={faTrashAlt} />
         <span className="sr-only">{textStrings.linkOverlay.remove}</span>

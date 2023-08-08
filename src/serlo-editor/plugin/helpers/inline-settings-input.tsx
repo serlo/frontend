@@ -1,22 +1,16 @@
 import { forwardRef } from 'react'
-import styled from 'styled-components'
-
-const InlineInputInner = styled.input({
-  backgroundColor: 'transparent',
-  border: 'none',
-  borderBottom: '2px solid #ffffff',
-  color: '#ffffff',
-  '&:focus': {
-    outline: 'none',
-    borderBottom: '2px solid rgb(70, 155, 255)',
-  },
-})
 
 const InlineInputRefForward: React.ForwardRefRenderFunction<
   HTMLInputElement,
   InputProps
 > = (props, ref) => {
-  return <InlineInputInner {...props} ref={ref} />
+  return (
+    <input
+      {...props}
+      ref={ref}
+      className="my-2 rounded-xl border-3 border-editor-primary-50 bg-editor-primary-100 px-3 outline-none hover:border-editor-primary-100 focus:border-editor-primary-200"
+    />
+  )
 }
 export const InlineSettingsInput = forwardRef(InlineInputRefForward)
 

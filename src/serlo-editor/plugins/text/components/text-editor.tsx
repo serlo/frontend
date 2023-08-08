@@ -1,45 +1,30 @@
 import isHotkey from 'is-hotkey'
-import React, {
-  createElement,
-  useRef,
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-} from 'react'
-import { createEditor, Descendant, Node, Transforms, Range } from 'slate'
-import {
-  Editable,
-  ReactEditor,
-  RenderElementProps,
-  Slate,
-  withReact,
-} from 'slate-react'
+import React, { useMemo, useEffect, useCallback } from 'react'
+import { createEditor, Node, Transforms, Range } from 'slate'
+import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
-import { HoveringToolbar } from './hovering-toolbar'
 import { LinkControls } from './link/link-controls'
-import { MathElement } from './math-element'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
-import { useFormattingOptions } from '../hooks/use-formatting-options'
+import { TextToolbar } from './text-toolbar'
+import { useEditorChange } from '../hooks/use-editor-change'
+import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import { ListElementType, TextEditorConfig, TextEditorState } from '../types'
+import { TextEditorConfig, TextEditorState } from '../types'
 import {
   emptyDocumentFactory,
   mergePlugins,
   sliceNodesAfterSelection,
 } from '../utils/document'
-import { isSelectionWithinList } from '../utils/list'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
-import {
-  getPluginByType,
-  usePlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
+import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { EditorPluginProps } from '@/serlo-editor/plugin'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   focusNext,
   focusPrevious,
@@ -59,19 +44,17 @@ export type TextEditorProps = EditorPluginProps<
   TextEditorConfig
 >
 
+// Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
-  const { state, id, editable, focused } = props
+  const { state, id, editable, focused, containerRef } = props
 
-  const [isSelectionChanged, setIsSelectionChanged] = useState(0)
   const dispatch = useAppDispatch()
 
   const textStrings = useEditorStrings().plugins.text
 
-  const plugins = usePlugins()
-
   const config = useTextConfig(props.config)
 
-  const textFormattingOptions = useFormattingOptions(config)
+  const textFormattingOptions = useFormattingOptions(config.formattingOptions)
   const { createTextEditor, toolbarControls } = textFormattingOptions
   const editor = useMemo(
     () => createTextEditor(withReact(createEditor())),
@@ -81,22 +64,11 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const previousValue = useRef(state.value.value)
-  const previousSelection = useRef(state.value.selection)
-
-  useMemo(() => {
-    const { selection, value } = state.value
-    // The selection can only be null when the text plugin is initialized
-    // (In this case an update of the slate editor is not necessary)
-    if (!selection) return
-
-    Transforms.setSelection(editor, selection)
-
-    if (previousValue.current !== value) {
-      previousValue.current = value
-      editor.children = value
-    }
-  }, [editor, state.value])
+  const handleRenderElement = useRenderElement(focused)
+  const { previousSelection, handleEditorChange } = useEditorChange({
+    editor,
+    state,
+  })
 
   // Workaround for setting selection when adding a new editor:
   useEffect(() => {
@@ -148,24 +120,6 @@ export function TextEditor(props: TextEditorProps) {
       clearTimeout(timeout)
     }
   }, [editor, focused])
-
-  const handleEditorChange = useCallback(
-    (newValue: Descendant[]) => {
-      const isAstChange = editor.operations.some(
-        ({ type }) => type !== 'set_selection'
-      )
-      if (isAstChange) {
-        previousValue.current = newValue
-        state.set(
-          { value: newValue, selection: editor.selection },
-          ({ value }) => ({ value, selection: previousSelection.current })
-        )
-      }
-      setIsSelectionChanged((selection) => selection + 1)
-      previousSelection.current = editor.selection
-    },
-    [editor.operations, editor.selection, state]
-  )
 
   const handleEditableKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
@@ -252,7 +206,6 @@ export function TextEditor(props: TextEditorProps) {
                   plugin: document.plugin,
                   state: slicedNodes || emptyDocumentFactory().value,
                 },
-                plugins,
               })
             )
           })
@@ -271,7 +224,7 @@ export function TextEditor(props: TextEditorProps) {
           const direction = isBackspaceAtStart ? 'previous' : 'next'
 
           // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, store, id, plugins)
+          const newValue = mergePlugins(direction, editor, store, id)
 
           // Update Redux document state with the new value
           if (newValue) {
@@ -306,16 +259,15 @@ export function TextEditor(props: TextEditorProps) {
     [
       config.noLinebreaks,
       dispatch,
-      plugins,
       editor,
       id,
       showSuggestions,
+      previousSelection,
       state,
       textFormattingOptions,
     ]
   )
 
-  // TODO: put this and other functions into helper files after toolbar and hotkey PR
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
       const isListActive = isSelectionWithinList(editor)
@@ -336,10 +288,7 @@ export function TextEditor(props: TextEditorProps) {
 
       // Handle pasted images or image URLs
       if (files?.length > 0 || text) {
-        const imagePlugin = getPluginByType(
-          plugins,
-          EditorPluginType.Image
-        )?.plugin
+        const imagePlugin = editorPlugins.getByType(EditorPluginType.Image)
         if (!imagePlugin) return
 
         const imagePluginState =
@@ -358,10 +307,9 @@ export function TextEditor(props: TextEditorProps) {
 
       if (text) {
         // Handle pasted video URLs
-        const videoPluginState = getPluginByType(
-          plugins,
-          EditorPluginType.Video
-        )?.plugin.onText?.(text)
+        const videoPluginState = editorPlugins
+          .getByType(EditorPluginType.Video)
+          ?.onText?.(text)
         if (videoPluginState !== undefined) {
           event.preventDefault()
 
@@ -375,11 +323,9 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Handle pasted geogebra URLs
-        const geogebraPluginState = getPluginByType(
-          plugins,
-          EditorPluginType.Geogebra
-        )?.plugin.onText?.(text)
-
+        const geogebraPluginState = editorPlugins
+          .getByType(EditorPluginType.Geogebra)
+          ?.onText?.(text)
         if (geogebraPluginState !== undefined) {
           event.preventDefault()
 
@@ -400,7 +346,7 @@ export function TextEditor(props: TextEditorProps) {
         const isEditorEmpty = Node.string(editor) === ''
 
         if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, plugins, pluginType, state }))
+          dispatch(runReplaceDocumentSaga({ id, pluginType, state }))
           return
         }
 
@@ -419,7 +365,6 @@ export function TextEditor(props: TextEditorProps) {
                   plugin: parentPluginType,
                   state: slicedNodes,
                 },
-                plugins,
               })
             )
           }
@@ -428,117 +373,51 @@ export function TextEditor(props: TextEditorProps) {
               parent: parent.id,
               sibling: id,
               document: { plugin: pluginType, state },
-              plugins,
             })
           )
         })
       }
     },
-    [dispatch, editor, id, textStrings, plugins]
-  )
-
-  const handleRenderElement = useCallback(
-    (props: RenderElementProps) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const { element, attributes, children } = props
-
-      if (element.type === 'h') {
-        const classNames = ['serlo-h1', 'serlo-h2', 'serlo-h3']
-        return createElement(
-          `h${element.level}`,
-          { ...attributes, className: classNames[element.level - 1] },
-          <>{children}</>
-        )
-      }
-      if (element.type === 'a') {
-        return (
-          <a
-            href={element.href}
-            className="serlo-link cursor-pointer"
-            {...attributes}
-          >
-            {children}
-          </a>
-        )
-      }
-      if (element.type === ListElementType.UNORDERED_LIST) {
-        return (
-          <ul className="serlo-ul" {...attributes}>
-            {children}
-          </ul>
-        )
-      }
-      if (element.type === ListElementType.ORDERED_LIST) {
-        return (
-          <ol className="serlo-ol" {...attributes}>
-            {children}
-          </ol>
-        )
-      }
-      if (element.type === ListElementType.LIST_ITEM) {
-        return <li {...attributes}>{children}</li>
-      }
-      if (element.type === ListElementType.LIST_ITEM_TEXT) {
-        return <div {...attributes}>{children}</div>
-      }
-      if (element.type === 'math') {
-        return (
-          <MathElement
-            element={element}
-            attributes={attributes}
-            focused={focused}
-          >
-            {children}
-          </MathElement>
-        )
-      }
-      return <div {...attributes}>{children}</div>
-    },
-    [focused]
+    [dispatch, editor, id, textStrings]
   )
 
   return (
-    <>
-      <Slate
-        editor={editor}
-        value={state.value.value}
-        onChange={handleEditorChange}
-      >
-        <Editable
-          readOnly={!editable}
-          placeholder={config.placeholder ?? textStrings.placeholder}
-          onKeyDown={handleEditableKeyDown}
-          onPaste={handleEditablePaste}
-          renderElement={handleRenderElement}
-          renderLeaf={(props) => (
-            <span {...props.attributes}>
-              <TextLeafRenderer {...props} />
-            </span>
-          )}
-          className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+    <Slate
+      editor={editor}
+      value={state.value.value}
+      onChange={handleEditorChange}
+    >
+      {focused && (
+        <TextToolbar
+          id={id}
+          toolbarControls={toolbarControls}
+          config={config}
+          containerRef={containerRef}
         />
-        {editable && focused && (
-          <>
-            <LinkControls
-              isSelectionChanged={isSelectionChanged}
-              editor={editor}
-              config={config}
-            />
-            <HoveringToolbar
-              editor={editor}
-              config={config}
-              controls={toolbarControls}
-              focused={focused}
-            />
-          </>
+      )}
+      <Editable
+        readOnly={!editable}
+        placeholder={
+          editable ? config.placeholder ?? textStrings.placeholder : undefined
+        }
+        onKeyDown={handleEditableKeyDown}
+        onPaste={handleEditablePaste}
+        renderElement={handleRenderElement}
+        renderLeaf={(props) => (
+          <span {...props.attributes}>
+            <TextLeafRenderer {...props} />
+          </span>
         )}
-      </Slate>
+        className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+        data-qa="plugin-text-editor"
+      />
+      <LinkControls serloLinkSearch={config.serloLinkSearch} />
 
       {showSuggestions && (
         <HoverOverlay position="below">
           <Suggestions {...suggestionsProps} />
         </HoverOverlay>
       )}
-    </>
+    </Slate>
   )
 }

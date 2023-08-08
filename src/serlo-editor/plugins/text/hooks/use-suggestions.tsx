@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from 'react'
+import { useContext, useState, useEffect, useRef, useMemo } from 'react'
 import { useHotkeys, useHotkeysContext } from 'react-hotkeys-hook'
 import { Editor as SlateEditor, Node } from 'slate'
 import { Key } from 'ts-key-enum'
@@ -7,14 +7,15 @@ import {
   EditorStrings,
   useEditorStrings,
 } from '@/contexts/logged-in-data-context'
-import {
-  PluginsContext,
-  PluginsContextPlugins,
-  getPluginByType,
-  usePlugins,
-} from '@/serlo-editor/core/contexts/plugins-context'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import { AllowedChildPlugins } from '@/serlo-editor/plugins/rows'
-import { runReplaceDocumentSaga, useAppDispatch } from '@/serlo-editor/store'
+import { checkIsAllowedNesting } from '@/serlo-editor/plugins/rows/utils/check-is-allowed-nesting'
+import {
+  runReplaceDocumentSaga,
+  selectAncestorPluginTypes,
+  store,
+  useAppDispatch,
+} from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 interface useSuggestionsArgs {
@@ -44,18 +45,23 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const pluginsStrings = useEditorStrings().plugins
   const text = Node.string(editor)
 
-  const plugins = usePlugins()
-  const allPlugins = useContext(PluginsContext)
-    .filter(({ visible }) => visible)
+  const allPlugins = editorPlugins
+    .getAllWithData()
+    .filter(({ visibleInSuggestions }) => visibleInSuggestions)
     .map(({ type }) => type)
   const allowedPlugins = useContext(AllowedChildPlugins)
-  const pluginsData = usePlugins()
 
-  const allOptions = (allowedPlugins ?? allPlugins).map((type) =>
-    createOption(type, pluginsStrings, pluginsData)
-  )
+  const allOptions = useMemo(() => {
+    return (allowedPlugins ?? allPlugins).map((type) => {
+      return createOption(type, pluginsStrings)
+    })
+    // Should only update when allowed plugins change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [allowedPlugins])
 
-  const filteredOptions = filterPlugins(allOptions, text)
+  const filteredOptions = useMemo(() => {
+    return filterPlugins(allOptions, text, id)
+  }, [allOptions, id, text])
   const showSuggestions =
     editable && focused && text.startsWith('/') && filteredOptions.length > 0
 
@@ -147,7 +153,7 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
     }
 
     // Otherwise, replace the text plugin with the selected plugin
-    dispatch(runReplaceDocumentSaga({ id, plugins, pluginType }))
+    dispatch(runReplaceDocumentSaga({ id, pluginType }))
   }
 
   function handleSuggestionsMenuClose(event: KeyboardEvent) {
@@ -172,10 +178,11 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
 
 function createOption(
   pluginType: string,
-  allPluginStrings: EditorStrings['plugins'],
-  allPluginsData: PluginsContextPlugins
+  allPluginStrings: EditorStrings['plugins']
 ): SuggestionOption {
-  const pluginData = getPluginByType(allPluginsData, pluginType)
+  const pluginData = editorPlugins
+    .getAllWithData()
+    .find((plugin) => plugin.type === pluginType)
 
   if (!pluginData) return { pluginType, title: pluginType }
 
@@ -196,9 +203,23 @@ function createOption(
   return { pluginType, title, description, icon }
 }
 
-function filterPlugins(plugins: SuggestionOption[], text: string) {
-  const search = text.replace('/', '').toLowerCase()
+function filterPlugins(
+  allPlugins: SuggestionOption[],
+  text: string,
+  id: string
+) {
+  // Filter out plugins which can't be nested inside of the current plugin
+  const typesOfAncestors = selectAncestorPluginTypes(store.getState(), id)
+  let plugins = []
+  if (typesOfAncestors === null) {
+    plugins = allPlugins
+  } else {
+    plugins = allPlugins.filter((plugin) =>
+      checkIsAllowedNesting(plugin.pluginType, typesOfAncestors)
+    )
+  }
 
+  const search = text.replace('/', '').toLowerCase()
   if (!search.length) return plugins
 
   const startingWithSearchString = plugins.filter(({ title }) => {

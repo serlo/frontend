@@ -130,13 +130,6 @@
   .serlo-solution-box {
     @apply mx-side mb-block border-l-8 border-brand-200 py-2.5;
   }
-  .serlo-styled-label {
-    @apply flex cursor-pointer items-center;
-    > div > * {
-      /* hacky selector */
-      @apply ml-2;
-    }
-  }
   .serlo-image-centered {
     @apply mb-block px-4 text-center;
   }
@@ -194,6 +187,7 @@
       @apply px-0;
     }
 
+    & .serlo-spacing-fix,
     & .serlo-important,
     & .serlo-blockquote,
     & .serlo-spoiler-body,

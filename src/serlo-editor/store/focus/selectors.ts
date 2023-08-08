@@ -8,9 +8,9 @@ import {
   createDeepEqualSelector,
   createJsonStringifySelector,
 } from '../helpers'
-import { selectPlugin } from '../plugins'
 import { selectRoot } from '../root'
 import { State } from '../types'
+import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 const selectSelf = (state: State) => state.focus
 
@@ -31,7 +31,7 @@ export const selectFocusTree: (
     if (!root) return null
     const document = selectDocument(state, root)
     if (!document) return null
-    const plugin = selectPlugin(state, document.plugin)
+    const plugin = editorPlugins.getByType(document.plugin)
     if (!plugin) return null
 
     const children = plugin.state
@@ -57,10 +57,8 @@ export const selectParent = createSelector(
 )
 
 export const selectAncestorPluginIds = createDeepEqualSelector(
-  [(state: State) => state, (_state, defaultLeaf?: string) => defaultLeaf],
-  (state, defaultLeaf = undefined) => {
-    const leaf = defaultLeaf ? defaultLeaf : selectFocused(state)
-    if (!leaf) return null
+  [(state: State) => state, (_state, leaf: string) => leaf],
+  (state, leaf) => {
     const root = selectFocusTree(state)
     if (!root) return null
 

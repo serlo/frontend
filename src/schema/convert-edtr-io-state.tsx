@@ -97,7 +97,11 @@ function convertPlugin(
   }
   if (node.plugin === EditorPluginType.Text) {
     return [
-      { type: FrontendNodeType.SlateContainer, children: convert(node.state) },
+      {
+        type: FrontendNodeType.SlateContainer,
+        children: convert(node.state),
+        pluginId: node.id,
+      },
     ]
   }
   if (node.plugin === EditorPluginType.Image) {
@@ -135,6 +139,7 @@ function convertPlugin(
         maxWidth,
         href: link?.href,
         caption: convertedCaption,
+        pluginId: node.id,
       },
     ]
   }
@@ -167,6 +172,7 @@ function convertPlugin(
         anchorId: node.state.anchorId,
         title,
         children: convert(node.state.content.state as SupportedEditorPlugin),
+        pluginId: node.id,
       },
     ]
   }
@@ -191,6 +197,7 @@ function convertPlugin(
             children: convert(node.state.content as SupportedEditorPlugin),
           },
         ],
+        pluginId: node.id,
       },
     ]
   }
@@ -202,6 +209,7 @@ function convertPlugin(
         mediaWidth: width,
         media: convert(node.state.multimedia as SupportedEditorPlugin),
         children: convert(node.state.explanation as SupportedEditorPlugin),
+        pluginId: node.id,
       },
     ]
   }
@@ -221,11 +229,11 @@ function convertPlugin(
     ]
   }
   if (node.plugin === EditorPluginType.Injection) {
-    return [{ ...node, type: FrontendNodeType.Injection }]
+    return [{ ...node, type: FrontendNodeType.Injection, pluginId: node.id }]
   }
   if (node.plugin === EditorPluginType.Highlight) {
     if (Object.keys(node.state).length === 0) return [] // ignore empty highlight plugin
-    return [{ ...node, type: FrontendNodeType.Code }]
+    return [{ ...node, type: FrontendNodeType.Code, pluginId: node.id }]
   }
   if (node.plugin === EditorPluginType.Table) {
     const html = converter.makeHtml(node.state)
@@ -253,6 +261,7 @@ function convertPlugin(
         type: FrontendNodeType.SerloTable,
         tableType: node.state.tableType,
         children,
+        pluginId: node.id,
       },
     ]
   }
@@ -263,6 +272,7 @@ function convertPlugin(
         plugin: EditorPluginType.Video,
         type: FrontendNodeType.Video,
         state: node.state,
+        pluginId: node.id,
       },
     ]
   }
@@ -279,6 +289,7 @@ function convertPlugin(
         plugin: EditorPluginType.Geogebra,
         type: FrontendNodeType.Geogebra,
         state: id,
+        pluginId: node.id,
       },
     ]
   }
@@ -302,6 +313,7 @@ function convertPlugin(
         steps,
         firstExplanation: convert(firstExplanation),
         transformationTarget,
+        pluginId: node.id,
       },
     ]
   }
@@ -313,14 +325,21 @@ function convertPlugin(
         column1: convert(node.state.column1 as SupportedEditorPlugin),
         column2: convert(node.state.column2 as SupportedEditorPlugin),
         widthPercent: node.state.widthPercent,
+        pluginId: node.id,
       },
     ]
   }
   if (node.plugin === EditorPluginType.PageTeam) {
-    return [{ type: FrontendNodeType.PageTeam, data: node.state.data }]
+    return [
+      {
+        type: FrontendNodeType.PageTeam,
+        data: node.state.data,
+        pluginId: node.id,
+      },
+    ]
   }
   if (node.plugin === EditorPluginType.PagePartners) {
-    return [{ type: FrontendNodeType.PagePartners }]
+    return [{ type: FrontendNodeType.PagePartners, pluginId: node.id }]
   }
 
   return []

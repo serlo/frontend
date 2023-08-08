@@ -1,35 +1,28 @@
-import { forwardRef } from 'react'
-import TextareaAutosize, {
-  TextareaAutosizeProps,
-} from 'react-textarea-autosize'
+import clsx from 'clsx'
+import { TextareaHTMLAttributes, forwardRef } from 'react'
 
-interface EditorTextareaProps
-  extends Omit<TextareaAutosizeProps, 'as' | 'ref'> {
+type EditorTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   onMoveOutRight?(): void
   onMoveOutLeft?(): void
+  className?: string
 }
 
 export const EditorTextarea = forwardRef<
   HTMLTextAreaElement,
   EditorTextareaProps
->(function EditorTextarea({ onMoveOutLeft, onMoveOutRight, ...props }, ref) {
+>(function EditorTextarea(
+  { onMoveOutLeft, onMoveOutRight, className, ...props },
+  ref
+) {
   return (
-    <TextareaAutosize
+    <textarea
+      className={clsx(
+        'm-auto w-full resize-none p-2.5 font-mono shadow-menu outline-none',
+        className
+      )}
       {...props}
-      style={{
-        width: '100%',
-        margin: 'auto',
-        padding: '10px',
-        resize: 'none',
-        fontFamily: 'Menlo, Monaco, "Courier New", monospace',
-        border: 'none',
-        outline: 'none',
-        boxShadow: '0 1px 1px 0 rgba(0,0,0,0.50)',
-        ...props.style,
-      }}
-      minRows={7}
       ref={ref}
-      onKeyDown={(e: React.KeyboardEvent) => {
+      onKeyDown={(e) => {
         if (!ref || typeof ref === 'function' || !ref.current) return
 
         const { selectionStart, selectionEnd, value } = ref.current

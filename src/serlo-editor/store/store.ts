@@ -5,7 +5,6 @@ import createSagaMiddleware from 'redux-saga'
 import { documentsSlice } from './documents'
 import { focusSlice } from './focus'
 import { historySlice } from './history'
-import { pluginsSlice } from './plugins'
 import { rootSlice } from './root'
 import { saga } from './saga'
 
@@ -16,13 +15,14 @@ export const store = configureStore({
     documents: documentsSlice.reducer,
     focus: focusSlice.reducer,
     history: historySlice.reducer,
-    plugins: pluginsSlice.reducer,
     root: rootSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       // https://github.com/serlo/backlog/issues/127
-      serializableCheck: false,
+      serializableCheck: {
+        ignoredActions: ['documents/runChangeDocumentSaga'],
+      },
     }).concat([sagaMiddleware]),
 })
 sagaMiddleware.run(saga)
@@ -31,4 +31,9 @@ export type RootStore = typeof store
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch: () => AppDispatch = useDispatch
+
+/**
+ * Like `store.getState()` but subscribes to state changes,
+ * and will trigger a re-render if relevant state props change.
+ */
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
