@@ -1,3 +1,4 @@
+import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
@@ -6,12 +7,12 @@ import { NativeTypes } from 'react-dnd-html5-backend'
 
 import { RowsPluginConfig, RowsPluginState } from '.'
 import { useCanDrop } from './components/use-can-drop'
+import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
@@ -214,12 +215,25 @@ export function EditorRowRenderer({
           'absolute left-2 z-30 rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
         )}
       >
-        <PluginToolbarButton
+        <button
+          className={tw`
+            serlo-tooltip-trigger -mt-[3px] mb-1.5 cursor-grab select-none
+            border-0 bg-none active:cursor-grabbing`}
           ref={drag}
-          icon={<EdtrIcon icon={edtrDragHandle} />}
-          label={editorStrings.plugins.rows.dragElement}
-          className="-mt-[3px] mb-1.5 cursor-grab select-none active:cursor-grabbing"
-        />
+        >
+          <EditorTooltip
+            text={editorStrings.plugins.rows.dragElement}
+            className="-ml-4 !pb-2"
+          />
+          <div
+            className={tw`
+              serlo-button-editor-primary rounded-full bg-transparent px-1.5
+              py-0.5 text-almost-black hover:bg-editor-primary-200`}
+            aria-hidden="true"
+          >
+            <FaIcon icon={faGripVertical} />
+          </div>
+        </button>
       </div>
     )
   }

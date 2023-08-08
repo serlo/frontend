@@ -350,13 +350,13 @@ export function EquationsEditor(props: EquationsProps) {
   }
 }
 
-export function firstColumn(transformationTarget: TransformationTarget) {
+function firstColumn(transformationTarget: TransformationTarget) {
   return transformationTarget === TransformationTarget.Term
     ? StepSegment.Right
     : StepSegment.Left
 }
 
-export function lastColumn(transformationTarget: TransformationTarget) {
+function lastColumn(transformationTarget: TransformationTarget) {
   return transformationTarget === TransformationTarget.Term
     ? StepSegment.Right
     : StepSegment.Transform
