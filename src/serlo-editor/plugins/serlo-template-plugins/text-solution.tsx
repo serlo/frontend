@@ -1,7 +1,5 @@
 import { editorContent, entity, entityType } from './common/common'
-import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
-import { UuidType } from '@/data-types'
 import { EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
 
 export const textSolutionTypeState = entityType(
@@ -12,7 +10,7 @@ export const textSolutionTypeState = entityType(
   {}
 )
 
-type TextSolutionTypeState = typeof textSolutionTypeState
+export type TextSolutionTypeState = typeof textSolutionTypeState
 
 export type TextSolutionTypeProps = EditorPluginProps<
   TextSolutionTypeState,
@@ -31,21 +29,11 @@ export const textSolutionTypePlugin: EditorPlugin<
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   return (
     <>
-      <div className="absolute right-0 -mt-10 mr-side">
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Solution}
-        />
-      </div>
-      <div className="mt-12">
-        {props.state.content.render()}
+      {props.state.content.render()}
 
-        {props.config.skipControls ? null : (
-          <ToolbarMain showSubscriptionOptions {...props.state} />
-        )}
-      </div>
+      {props.config.skipControls ? null : (
+        <ToolbarMain showSubscriptionOptions {...props.state} />
+      )}
     </>
   )
 }
