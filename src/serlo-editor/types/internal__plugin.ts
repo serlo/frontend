@@ -128,7 +128,4 @@ export interface EditorPluginProps<
 
   // Ref for the wrapping SubDocument div
   containerRef?: React.RefObject<HTMLDivElement>
-
-  // Allows the plugin to render buttons into the side toolbar (where the drag is)
-  renderIntoSideToolbar(children: React.ReactNode): React.ReactNode
 }

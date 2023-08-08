@@ -5,42 +5,28 @@ import { tw } from '@/helper/tw'
 
 export interface SideToolbarAndWrapperProps {
   children: React.ReactNode // The rendered document
-  sideToolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
-  hasSideToolbar: boolean // `true` if the document has rendered any toolbar buttons
   renderSideToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
+  sideToolbarRef: React.RefObject<HTMLDivElement> // The rendered toolbar buttons
   focused: boolean // `true` if the document is focused
   noSidebar: boolean
 }
 
 // Container that includes a plugin and its sideToolbar and handles some hover&focus styling
 export function SideToolbarAndWrapper({
-  focused,
   children,
   renderSideToolbar,
   sideToolbarRef,
-  hasSideToolbar,
+  focused,
   noSidebar,
 }: SideToolbarAndWrapperProps) {
   const [hasHover, setHasHover] = useState(false)
 
-  const showToolbar = hasSideToolbar || renderSideToolbar !== undefined
+  const showToolbar = renderSideToolbar !== undefined
 
   const isFocused = focused && showToolbar
   const isHovered = hasHover && showToolbar
 
   const isAppended = useRef(false)
-  const sideToolbar = (
-    <div
-      ref={(ref) => {
-        // The ref `isAppended` ensures that we only append the content once
-        // so that we don't lose focus on every render
-        if (ref && sideToolbarRef.current && !isAppended.current) {
-          isAppended.current = true
-          ref.appendChild(sideToolbarRef.current)
-        }
-      }}
-    />
-  )
 
   if (noSidebar) return <>{children}</>
 
@@ -78,14 +64,27 @@ export function SideToolbarAndWrapper({
             before:h-full before:w-0.5 before:opacity-100 before:content-[_]`
         )}
       >
-        <div
-          className={clsx(
-            'relative z-[21] mr-0.5 flex flex-col items-end rounded-l-md bg-white pb-2.5 transition-opacity',
-            isFocused ? 'opacity-100' : isHovered ? 'opacity-70' : 'opacity-0'
-          )}
-        >
-          {renderSideToolbar ? renderSideToolbar(sideToolbar) : sideToolbar}
-        </div>
+        {renderSideToolbar ? (
+          <div
+            className={clsx(
+              'relative z-[21] mr-0.5 flex flex-col items-end rounded-l-md bg-white pb-2.5 transition-opacity',
+              isFocused ? 'opacity-100' : isHovered ? 'opacity-70' : 'opacity-0'
+            )}
+          >
+            {renderSideToolbar(
+              <div
+                ref={(ref) => {
+                  // The ref `isAppended` ensures that we only append the content once
+                  // so that we don't lose focus on every render
+                  if (ref && sideToolbarRef.current && !isAppended.current) {
+                    isAppended.current = true
+                    ref.appendChild(sideToolbarRef.current)
+                  }
+                }}
+              />
+            )}
+          </div>
+        ) : null}
       </div>
     </div>
   )
