@@ -37,38 +37,39 @@ export const textExerciseTypePlugin: EditorPlugin<
 function TextExerciseTypeEditor({
   state,
   config,
-  renderIntoSideToolbar,
 }: EditorPluginProps<TextExerciseTypePluginState, { skipControls: boolean }>) {
   const { content, 'text-solution': textSolution } = state
   const textExStrings = useEditorStrings().templatePlugins.textExercise
 
   return (
-    <article className="text-exercise mt-16">
-      {content.render()}
-      {textSolution.id ? (
-        <OptionalChild
-          state={textSolution}
-          removeLabel={textExStrings.removeSolution}
-          onRemove={() => textSolution.remove()}
-        />
-      ) : (
-        <div className="-ml-1.5 max-w-[50%]">
-          <AddButton onClick={() => textSolution.create()}>
-            {textExStrings.createSolution}
-          </AddButton>
-        </div>
-      )}
-      {config.skipControls ? null : (
-        <ToolbarMain showSubscriptionOptions {...state} />
-      )}
-      {renderIntoSideToolbar(
+    <>
+      <div className="absolute right-0 -mt-20 mr-side">
         <ContentLoaders
           id={state.id.value}
           currentRevision={state.revision.value}
           onSwitchRevision={state.replaceOwnState}
           entityType={UuidType.Exercise}
         />
-      )}
-    </article>
+      </div>
+      <article className="text-exercise mt-32">
+        {content.render()}
+        {textSolution.id ? (
+          <OptionalChild
+            state={textSolution}
+            removeLabel={textExStrings.removeSolution}
+            onRemove={() => textSolution.remove()}
+          />
+        ) : (
+          <div className="-ml-1.5 max-w-[50%]">
+            <AddButton onClick={() => textSolution.create()}>
+              {textExStrings.createSolution}
+            </AddButton>
+          </div>
+        )}
+        {config.skipControls ? null : (
+          <ToolbarMain showSubscriptionOptions {...state} />
+        )}
+      </article>
+    </>
   )
 }

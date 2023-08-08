@@ -55,34 +55,36 @@ function TextExerciseGroupTypeEditor(
   const contentRendered = content.render()
 
   return (
-    <article className="exercisegroup mt-16">
-      <section className="row">{contentRendered}</section>
-      <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
-        {children.map((child, index) => (
-          <li
-            key={child.id}
-            className="[&>div] serlo-exercise-wrapper serlo-grouped-exercise-wrapper mt-12 [&>div]:border-none"
-          >
-            <OptionalChild
-              state={child}
-              removeLabel={exGroupStrings.removeExercise}
-              onRemove={() => children.remove(index)}
-            />
-          </li>
-        ))}
-      </ol>
-      <AddButton onClick={() => children.insert()}>
-        {exGroupStrings.addExercise}
-      </AddButton>
-      <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoSideToolbar(
+    <>
+      <div className="absolute right-0 -mt-20 mr-side flex">
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}
           onSwitchRevision={replaceOwnState}
           entityType={UuidType.ExerciseGroup}
         />
-      )}
-    </article>
+      </div>
+      <article className="exercisegroup mt-32">
+        <section className="row">{contentRendered}</section>
+        <ol className="mb-2.5 ml-2 bg-white pb-3.5 [counter-reset:exercises] sm:pl-12">
+          {children.map((child, index) => (
+            <li
+              key={child.id}
+              className="[&>div] serlo-exercise-wrapper serlo-grouped-exercise-wrapper mt-12 [&>div]:border-none"
+            >
+              <OptionalChild
+                state={child}
+                removeLabel={exGroupStrings.removeExercise}
+                onRemove={() => children.remove(index)}
+              />
+            </li>
+          ))}
+        </ol>
+        <AddButton onClick={() => children.insert()}>
+          {exGroupStrings.addExercise}
+        </AddButton>
+        <ToolbarMain showSubscriptionOptions {...props.state} />
+      </article>
+    </>
   )
 }

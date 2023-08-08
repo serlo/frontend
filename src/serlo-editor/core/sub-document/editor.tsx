@@ -135,6 +135,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       Object.hasOwn(config, 'isInlineChildEditor') &&
       (config.isInlineChildEditor as boolean)
 
+    const isTemplatePlugin = document.plugin.startsWith('type-')
+
     return (
       <div
         className="outline-none"
@@ -147,7 +149,7 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
           hasSideToolbar={hasSideToolbar}
           focused={focused}
           renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
-          isInlineChildEditor={isInlineChildEditor}
+          noSidebar={isInlineChildEditor || isTemplatePlugin}
           sideToolbarRef={sideToolbarRef}
         >
           <plugin.Component

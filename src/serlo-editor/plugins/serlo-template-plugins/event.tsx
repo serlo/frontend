@@ -35,7 +35,15 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
 
   return (
     <>
-      <h1 className="serlo-h1">
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.Event}
+        />
+      </div>
+      <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
             className={headerInputClasses}
@@ -51,14 +59,6 @@ function EventTypeEditor(props: EditorPluginProps<EventTypePluginState>) {
       {content.render()}
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoSideToolbar(
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.Event}
-        />
-      )}
     </>
   )
 }

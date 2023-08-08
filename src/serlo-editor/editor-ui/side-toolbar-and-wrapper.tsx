@@ -9,7 +9,7 @@ export interface SideToolbarAndWrapperProps {
   hasSideToolbar: boolean // `true` if the document has rendered any toolbar buttons
   renderSideToolbar?(children: React.ReactNode): React.ReactNode // Render prop to override rendering of toolbar
   focused: boolean // `true` if the document is focused
-  isInlineChildEditor: boolean
+  noSidebar: boolean
 }
 
 // Container that includes a plugin and its sideToolbar and handles some hover&focus styling
@@ -19,7 +19,7 @@ export function SideToolbarAndWrapper({
   renderSideToolbar,
   sideToolbarRef,
   hasSideToolbar,
-  isInlineChildEditor,
+  noSidebar,
 }: SideToolbarAndWrapperProps) {
   const [hasHover, setHasHover] = useState(false)
 
@@ -42,7 +42,7 @@ export function SideToolbarAndWrapper({
     />
   )
 
-  if (isInlineChildEditor) return <>{children}</>
+  if (noSidebar) return <>{children}</>
 
   return (
     <div
