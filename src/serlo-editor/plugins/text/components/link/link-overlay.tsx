@@ -24,7 +24,7 @@ export function LinkOverlay({
     )?.getBoundingClientRect()
 
     const parentRect = wrapper.current
-      .closest('.default-plugin-wrapper-container')
+      .closest('.rows-editor-renderer-container')
       ?.getBoundingClientRect()
 
     const offsetRect = wrapper.current.offsetParent?.getBoundingClientRect()
