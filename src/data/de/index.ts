@@ -799,7 +799,7 @@ export const loggedInData = {
             eG: "z.B.",
             functions: "Funktionen",
             displayAsBlock: "eigene Zeile",
-            closeMathFormulaEditor: "Close math formula editor"
+            closeMathFormulaEditor: "Mathe-Formel Editor schließen"
           }
         },
         video: {
