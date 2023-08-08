@@ -1,14 +1,14 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
-import { faQuestionCircle, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import { useState, createRef, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { Key } from 'ts-key-enum'
 
+import { MathEditorOverlay } from './math-editor-overlay'
 import { MathHelpModal } from './math-help-modal'
 import { MathRenderer } from './renderer'
-import { MathEditorTextarea } from './textarea'
 import { VisualEditor } from './visual-editor'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -166,7 +166,7 @@ export function MathEditor(props: MathEditorProps) {
         )}
 
         {hasError || !isVisualMode ? (
-          <MathEditorOverlayPortal
+          <MathEditorOverlay
             hasError={hasError}
             isVisualMode={isVisualMode}
             {...props}
@@ -180,37 +180,4 @@ export function MathEditor(props: MathEditorProps) {
     if (!targetRef.current) return null
     return createPortal(children, targetRef.current)
   }
-}
-
-function MathEditorOverlayPortal({
-  hasError,
-  isVisualMode,
-  ...props
-}: { hasError: boolean; isVisualMode: boolean } & MathEditorProps) {
-  const mathStrings = useEditorStrings().plugins.text.math
-  const { state } = props
-
-  return (
-    <div
-      className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu"
-      // Stops double/triple clicks inside the textArea field / modal to close
-      // the overlay (see #2700)
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="flex items-center justify-between">
-        <p className="mr-0.5 mt-1 text-right text-sm font-bold text-gray-600">
-          {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
-        </p>
-        <button
-          onClick={props.closeMathEditorOverlay}
-          className="mr-0.5 mt-1 text-sm font-bold text-gray-600 hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-700"
-          aria-label="Close math formula editor"
-          data-qa="plugin-math-close-formula-editor"
-        >
-          <FaIcon icon={faXmark} />
-        </button>
-      </div>
-      {!isVisualMode && <MathEditorTextarea {...props} defaultValue={state} />}
-    </div>
-  )
 }
