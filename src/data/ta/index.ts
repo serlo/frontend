@@ -798,7 +798,8 @@ export const loggedInData = {
             mathSymbols: 'Math symbols',
             eG: 'e.g.',
             functions: "செயல்பாடுகள்",
-            displayAsBlock: 'Display as block'
+            displayAsBlock: 'Display as block',
+            closeMathFormulaEditor: "Close math formula editor"
           }
         },
         video: {
