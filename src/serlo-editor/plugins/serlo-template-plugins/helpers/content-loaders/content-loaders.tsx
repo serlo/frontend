@@ -13,16 +13,13 @@ export function ContentLoaders({
   entityType: UuidType
   onSwitchRevision: (data: any) => void
 }) {
-  if (id) {
-    return (
-      <RevisionHistoryLoader
-        id={id}
-        currentRevision={currentRevision}
-        onSwitchRevision={onSwitchRevision}
-      />
-    )
-  }
-  return (
+  return id ? (
+    <RevisionHistoryLoader
+      id={id}
+      currentRevision={currentRevision}
+      onSwitchRevision={onSwitchRevision}
+    />
+  ) : (
     <ExternalRevisionLoader
       entityType={entityType}
       onSwitchRevision={onSwitchRevision}

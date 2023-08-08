@@ -1,6 +1,5 @@
 import * as R from 'ramda'
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
-import { createPortal } from 'react-dom'
+import { useRef, useEffect, useMemo, useCallback } from 'react'
 
 import { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
@@ -19,7 +18,6 @@ import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
-  const [hasSideToolbar, setHasSideToolbar] = useState(false)
   const dispatch = useAppDispatch()
   const document = useAppSelector((state) => selectDocument(state, id))
 
@@ -74,20 +72,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
     [focused, id, dispatch, document]
   )
 
-  const renderIntoSideToolbar = useCallback(
-    (children: React.ReactNode) => {
-      return (
-        <RenderIntoSideToolbar
-          setHasSideToolbar={setHasSideToolbar}
-          sideToolbarRef={sideToolbarRef}
-        >
-          {children}
-        </RenderIntoSideToolbar>
-      )
-    },
-    [sideToolbarRef]
-  )
-
   return useMemo(() => {
     if (!document) {
       // eslint-disable-next-line no-console
@@ -135,6 +119,8 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
       Object.hasOwn(config, 'isInlineChildEditor') &&
       (config.isInlineChildEditor as boolean)
 
+    const isTemplatePlugin = document.plugin.startsWith('type-')
+
     return (
       <div
         className="outline-none"
@@ -144,14 +130,12 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         tabIndex={-1}
       >
         <SideToolbarAndWrapper
-          hasSideToolbar={hasSideToolbar}
           focused={focused}
           renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
-          isInlineChildEditor={isInlineChildEditor}
+          noSidebar={isInlineChildEditor || isTemplatePlugin}
           sideToolbarRef={sideToolbarRef}
         >
           <plugin.Component
-            renderIntoSideToolbar={renderIntoSideToolbar}
             containerRef={containerRef}
             id={id}
             editable
@@ -164,31 +148,5 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
         </SideToolbarAndWrapper>
       </div>
     )
-  }, [
-    document,
-    plugin,
-    pluginProps,
-    handleFocus,
-    hasSideToolbar,
-    focused,
-    renderIntoSideToolbar,
-    id,
-    dispatch,
-  ])
-}
-
-function RenderIntoSideToolbar({
-  children,
-  setHasSideToolbar,
-  sideToolbarRef,
-}: {
-  children: React.ReactNode
-  setHasSideToolbar: (value: boolean) => void
-  sideToolbarRef: React.MutableRefObject<HTMLDivElement>
-}) {
-  useEffect(() => {
-    setHasSideToolbar(true)
-  })
-  if (!sideToolbarRef.current) return null
-  return createPortal(children, sideToolbarRef.current)
+  }, [document, plugin, pluginProps, handleFocus, focused, id, dispatch])
 }

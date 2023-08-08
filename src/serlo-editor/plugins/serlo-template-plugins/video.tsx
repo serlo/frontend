@@ -36,15 +36,15 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
 
   return (
     <>
-      {props.renderIntoSideToolbar(
+      <div className="absolute right-0 -mt-20 mr-side">
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}
           onSwitchRevision={replaceOwnState}
           entityType={UuidType.Video}
         />
-      )}
-      <h1 className="serlo-h1">
+      </div>
+      <h1 className="serlo-h1 mt-32">
         {props.editable ? (
           <input
             className={headerInputClasses}

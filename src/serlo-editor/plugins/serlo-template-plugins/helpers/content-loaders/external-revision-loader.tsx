@@ -17,8 +17,8 @@ import {
 import { dataQuery } from '@/fetcher/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DeserializeError,
   editorResponseToState,
@@ -45,11 +45,13 @@ export function ExternalRevisionLoader<T>({
   return (
     <div>
       <span onClick={() => setShowRevisions(true)}>
-        <PluginToolbarButton
-          icon={<FaIcon icon={faFileImport} className="text-xl" />}
-          label={editorStrings.edtrIo.importOther}
-          className="p-0.5 pt-2"
-        />
+        <button className="serlo-button-editor-secondary serlo-tooltip-trigger">
+          <EditorTooltip
+            text={editorStrings.edtrIo.importOther}
+            className="-left-40"
+          />
+          <FaIcon icon={faFileImport} className="text-md" />
+        </button>
       </span>
 
       <ModalWithCloseButton

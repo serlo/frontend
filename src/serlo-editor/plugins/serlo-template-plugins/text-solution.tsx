@@ -30,20 +30,22 @@ export const textSolutionTypePlugin: EditorPlugin<
 
 function TextSolutionTypeEditor(props: TextSolutionTypeProps) {
   return (
-    <div className="mt-12">
-      {props.state.content.render()}
-
-      {props.config.skipControls ? null : (
-        <ToolbarMain showSubscriptionOptions {...props.state} />
-      )}
-      {props.renderIntoSideToolbar(
+    <>
+      <div className="absolute right-0 -mt-10 mr-side">
         <ContentLoaders
           id={props.state.id.value}
           currentRevision={props.state.revision.value}
           onSwitchRevision={props.state.replaceOwnState}
           entityType={UuidType.Solution}
         />
-      )}
-    </div>
+      </div>
+      <div className="mt-12">
+        {props.state.content.render()}
+
+        {props.config.skipControls ? null : (
+          <ToolbarMain showSubscriptionOptions {...props.state} />
+        )}
+      </div>
+    </>
   )
 }

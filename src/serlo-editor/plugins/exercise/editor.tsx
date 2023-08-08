@@ -36,6 +36,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
                 <AddButton
                   key={type}
                   onClick={() => interactive.create({ plugin: type })}
+                  secondary
                 >
                   {exStrings[type]}
                 </AddButton>

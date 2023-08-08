@@ -47,7 +47,15 @@ function CoursePageTypeEditor(
 
   return (
     <article>
-      <h1 className="serlo-h1">
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <ContentLoaders
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.CoursePage}
+        />
+      </div>
+      <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
             className={headerInputClasses}
@@ -64,14 +72,6 @@ function CoursePageTypeEditor(
 
       {props.config.skipControls ? null : (
         <ToolbarMain showSubscriptionOptions {...props.state} />
-      )}
-      {props.renderIntoSideToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.CoursePage}
-        />
       )}
     </article>
   )

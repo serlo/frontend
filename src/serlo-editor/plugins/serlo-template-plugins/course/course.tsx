@@ -64,12 +64,19 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
 
   return (
     <>
-      <button
-        onClick={() => setShowSettingsModal(true)}
-        className="serlo-button-editor-secondary absolute right-0 -mt-10 mr-side text-base"
-      >
-        Metadata <FaIcon icon={faPencilAlt} />
-      </button>
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <button
+          onClick={() => setShowSettingsModal(true)}
+          className="serlo-button-editor-secondary mr-2 text-base"
+        >
+          Metadata <FaIcon icon={faPencilAlt} />
+        </button>
+        <RevisionHistoryLoader
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+        />
+      </div>
       <article className="mt-20">
         {renderCourseNavigation()}
         {children.map((child, index) => {
@@ -89,13 +96,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           </AddButton>
         </div>
         <ToolbarMain showSubscriptionOptions {...props.state} />
-        {props.renderIntoSideToolbar(
-          <RevisionHistoryLoader
-            id={props.state.id.value}
-            currentRevision={props.state.revision.value}
-            onSwitchRevision={props.state.replaceOwnState}
-          />
-        )}
       </article>
       {showSettingsModal ? (
         <ModalWithCloseButton

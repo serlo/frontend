@@ -54,12 +54,20 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
 
   return (
     <>
-      <button
-        onClick={() => setShowSettingsModal(true)}
-        className="serlo-button-editor-secondary absolute right-0 -mt-10 mr-side text-base"
-      >
-        Metadata <FaIcon icon={faPencilAlt} />
-      </button>
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <button
+          onClick={() => setShowSettingsModal(true)}
+          className="serlo-button-editor-secondary mr-2 text-base"
+        >
+          Metadata <FaIcon icon={faPencilAlt} />
+        </button>
+        <ContentLoaders
+          id={id.value}
+          currentRevision={revision.value}
+          onSwitchRevision={replaceOwnState}
+          entityType={UuidType.Applet}
+        />
+      </div>
       <h1 className="serlo-h1 mt-20">
         {props.editable ? (
           <input
@@ -77,14 +85,6 @@ function AppletTypeEditor(props: EditorPluginProps<AppletTypePluginState>) {
       {content.render()}
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoSideToolbar(
-        <ContentLoaders
-          id={id.value}
-          currentRevision={revision.value}
-          onSwitchRevision={replaceOwnState}
-          entityType={UuidType.Applet}
-        />
-      )}
       {showSettingsModal ? (
         <ModalWithCloseButton
           isOpen={showSettingsModal}
