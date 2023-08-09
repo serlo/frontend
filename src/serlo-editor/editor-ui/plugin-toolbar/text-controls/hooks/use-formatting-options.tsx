@@ -40,15 +40,15 @@ import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { LoggedInData } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import {
-  edtrBold,
-  edtrClose,
-  edtrFormula,
-  EdtrIcon,
-  edtrItalic,
-  edtrLink,
-  edtrListBullets,
-  edtrListNumbered,
-  edtrText,
+  editorBold,
+  editorClose,
+  editorFormula,
+  EditorSvgIcon,
+  editorItalic,
+  editorLink,
+  editorListBullets,
+  editorListNumbered,
+  editorText,
 } from '@/serlo-editor/editor-ui'
 import {
   withLinks,
@@ -223,7 +223,7 @@ function createToolbarControls(
       title: textStrings.bold,
       isActive: isBoldActive,
       onClick: toggleBoldMark,
-      renderIcon: () => <EdtrIcon icon={edtrBold} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorBold} />,
     },
     // Italic
     {
@@ -231,7 +231,7 @@ function createToolbarControls(
       title: textStrings.italic,
       isActive: isItalicActive,
       onClick: toggleItalicMark,
-      renderIcon: () => <EdtrIcon icon={edtrItalic} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorItalic} />,
     },
     // Link
     {
@@ -239,7 +239,7 @@ function createToolbarControls(
       title: textStrings.link,
       isActive: isLinkActive,
       onClick: toggleLink,
-      renderIcon: () => <EdtrIcon icon={edtrLink} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorLink} />,
     },
     // Headings
     {
@@ -247,8 +247,8 @@ function createToolbarControls(
       title: textStrings.headings,
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
-      renderIcon: () => <EdtrIcon icon={edtrText} />,
-      renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorText} />,
+      renderCloseMenuIcon: () => <EditorSvgIcon pathData={editorClose} />,
       subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
         title: `${textStrings.heading} ${level}`,
@@ -270,7 +270,7 @@ function createToolbarControls(
         const color = colorIndex ? textColors[colorIndex].value : 'black'
         return <ColorTextIcon color={color} />
       },
-      renderCloseMenuIcon: () => <EdtrIcon icon={edtrClose} />,
+      renderCloseMenuIcon: () => <EditorSvgIcon pathData={editorClose} />,
       subMenuButtons: [
         {
           name: TextEditorFormattingOption.colors,
@@ -305,7 +305,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
-      renderIcon: () => <EdtrIcon icon={edtrListNumbered} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorListNumbered} />,
     },
     // Unordered list
     {
@@ -313,7 +313,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
-      renderIcon: () => <EdtrIcon icon={edtrListBullets} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorListBullets} />,
     },
     // Math
     {
@@ -321,7 +321,7 @@ function createToolbarControls(
       title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
-      renderIcon: () => <EdtrIcon icon={edtrFormula} />,
+      renderIcon: () => <EditorSvgIcon pathData={editorFormula} />,
     },
     // Code
     {
