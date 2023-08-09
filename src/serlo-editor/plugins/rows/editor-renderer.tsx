@@ -1,15 +1,15 @@
+import clsx from 'clsx'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import type { RowsPluginConfig, RowsPluginState } from '.'
+import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'
+import { tw } from '@/helper/tw'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
 import {
   DocumentState,
   selectSerializedDocument,
@@ -39,8 +39,6 @@ export function EditorRowRenderer({
   plugins: PluginsWithData
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
-  const editorStrings = useEditorStrings()
-
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
 
@@ -162,24 +160,6 @@ export function EditorRowRenderer({
     },
   })
 
-  const pluginProps = React.useMemo(() => {
-    return {
-      renderSideToolbar(children: React.ReactNode) {
-        return (
-          <>
-            <PluginToolbarButton
-              ref={drag}
-              icon={<EdtrIcon icon={edtrDragHandle} />}
-              label={editorStrings.plugins.rows.dragElement}
-              className="-mt-[3px] mb-1.5 cursor-grab select-none active:cursor-grabbing"
-            />
-            {children}
-          </>
-        )
-      },
-    }
-  }, [editorStrings, drag])
-
   setTimeout(() => {
     dragPreview(drop(dropContainer))
   })
@@ -192,11 +172,30 @@ export function EditorRowRenderer({
   return (
     <>
       {draggingAbove ? dropPreview : null}
-      <div ref={container}>
+      <div
+        ref={container}
+        className={clsx(
+          'rows-editor-renderer-container',
+          'border-l-2 border-transparent transition-colors',
+          tw`
+          focus-within:border-gray-600
+          hover:!border-gray-300
+          hover:focus-within:!border-gray-600
+          [&:has(.rows-editor-renderer-container:focus-within)]:border-transparent
+          [&:hover:has(.rows-editor-renderer-container:focus-within)]:!border-gray-300
+          `,
+          tw`
+          [&:focus-within>.rows-tools]:opacity-100
+          [&:has(.rows-editor-renderer-container:focus-within)>.rows-tools]:opacity-0
+          [&:hover>.rows-tools]:!opacity-100
+          `
+        )}
+      >
+        <RowDragButton drag={drag} />
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >
-          {row.render(pluginProps)}
+          {row.render()}
         </div>
       </div>
       {!draggingAbove ? dropPreview : null}

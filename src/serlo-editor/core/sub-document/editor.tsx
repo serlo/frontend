@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import * as R from 'ramda'
 import { useRef, useEffect, useMemo, useCallback } from 'react'
 
@@ -14,7 +15,6 @@ import {
   store,
 } from '../../store'
 import type { StateUpdater } from '../../types/internal__plugin-state'
-import { SideToolbarAndWrapper } from '@/serlo-editor/editor-ui/side-toolbar-and-wrapper'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
@@ -27,9 +27,6 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
   useEnableEditorHotkeys(id, plugin, focused)
   const containerRef = useRef<HTMLDivElement>(null)
-  const sideToolbarRef = useRef<HTMLDivElement>(
-    window.document.createElement('div')
-  )
   const autofocusRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null)
 
   useEffect(() => {
@@ -123,29 +120,27 @@ export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {
 
     return (
       <div
-        className="outline-none"
+        className={clsx(
+          'outline-none',
+          isInlineChildEditor || isTemplatePlugin
+            ? ''
+            : 'plugin-wrapper-container relative -ml-[7px] mb-6 min-h-[10px] pl-[5px]'
+        )}
         onMouseDown={handleFocus}
         ref={containerRef}
         data-document
         tabIndex={-1}
       >
-        <SideToolbarAndWrapper
+        <plugin.Component
+          containerRef={containerRef}
+          id={id}
+          editable
           focused={focused}
-          renderSideToolbar={pluginProps && pluginProps.renderSideToolbar}
-          noSidebar={isInlineChildEditor || isTemplatePlugin}
-          sideToolbarRef={sideToolbarRef}
-        >
-          <plugin.Component
-            containerRef={containerRef}
-            id={id}
-            editable
-            focused={focused}
-            config={config}
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            state={state}
-            autofocusRef={autofocusRef}
-          />
-        </SideToolbarAndWrapper>
+          config={config}
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          state={state}
+          autofocusRef={autofocusRef}
+        />
       </div>
     )
   }, [document, plugin, pluginProps, handleFocus, focused, id, dispatch])

@@ -57,12 +57,13 @@ export function PluginToolbar({
           </>
         ) : null}
 
-        {/* Separator */}
-        <div className="h-6 w-[2px] bg-gray-300"></div>
-
-        {/* Plugin controls dropdown menu */}
         {pluginControls ? (
-          <PluginToolMenu pluginControls={pluginControls} />
+          <>
+            {/* Separator */}
+            <div className="h-6 w-[2px] bg-gray-300"></div>
+            {/* Plugin controls dropdown menu */}
+            <PluginToolMenu pluginControls={pluginControls} />
+          </>
         ) : null}
       </div>
     </div>
