@@ -1,4 +1,3 @@
-import { faGripVertical } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
 import * as R from 'ramda'
 import React, { useRef, useState, useMemo } from 'react'
@@ -6,11 +5,9 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
 import type { RowsPluginConfig, RowsPluginState } from '.'
+import { RowDragButton } from './components/row-drag-button'
 import { useCanDrop } from './components/use-can-drop'
-import { FaIcon } from '@/components/fa-icon'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
@@ -42,8 +39,6 @@ export function EditorRowRenderer({
   plugins: PluginsWithData
   dropContainer: React.RefObject<HTMLDivElement>
 }) {
-  const editorStrings = useEditorStrings()
-
   const container = useRef<HTMLDivElement>(null)
   const [draggingAbove, setDraggingAbove] = useState(true)
 
@@ -196,7 +191,7 @@ export function EditorRowRenderer({
           `
         )}
       >
-        {renderDragButton()}
+        <RowDragButton drag={drag} />
         <div
           className={collectedDragProps.isDragging ? 'opacity-30' : undefined}
         >
@@ -206,37 +201,6 @@ export function EditorRowRenderer({
       {!draggingAbove ? dropPreview : null}
     </>
   )
-
-  function renderDragButton() {
-    return (
-      <div
-        className={clsx(
-          'rows-tools',
-          'absolute left-2 z-30 rounded-l-md bg-white bg-opacity-70 opacity-0 transition-opacity'
-        )}
-      >
-        <button
-          className={tw`
-            serlo-tooltip-trigger -mt-[3px] mb-1.5 cursor-grab select-none
-            border-0 bg-none active:cursor-grabbing`}
-          ref={drag}
-        >
-          <EditorTooltip
-            text={editorStrings.plugins.rows.dragElement}
-            className="-ml-4 !pb-2"
-          />
-          <div
-            className={tw`
-              serlo-button-editor-primary rounded-full bg-transparent px-1.5
-              py-0.5 text-almost-black hover:bg-editor-primary-200`}
-            aria-hidden="true"
-          >
-            <FaIcon icon={faGripVertical} />
-          </div>
-        </button>
-      </div>
-    )
-  }
 
   function isDraggingAbove(monitor: DropTargetMonitor) {
     if (!container.current) {
