@@ -3363,9 +3363,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prezly/slate-lists@npm:^0.87.0":
-  version: 0.87.0
-  resolution: "@prezly/slate-lists@npm:0.87.0"
+"@prezly/slate-lists@npm:^0.89.1":
+  version: 0.89.1
+  resolution: "@prezly/slate-lists@npm:0.89.1"
   dependencies:
     is-hotkey: ^0.2.0
     uuid: ^8.3.0
@@ -3373,7 +3373,7 @@ __metadata:
     react: ^16.14.0 || ^17.0.0 || ^18.0.0
     slate: ^0.94.1
     slate-react: ^0.97.0
-  checksum: b4b5ad793653b2a620bca933f6db4d40b3231fed33410bb14a5f38b3f102c75d9f395e1178682180e7e9c424e0eea85e874ec1a44cd7fea5eba1ed3f617ec90b
+  checksum: e4da612702c0083afb481d909f71c308638df6771d5f7f3d8a6cf3ca59d04bb450bd66db7b1275f574ad56af6dcfb631f22cca007802be564b62a0f730ff82f0
   languageName: node
   linkType: hard
 
@@ -4157,7 +4157,7 @@ __metadata:
     "@next/bundle-analyzer": ^13.4.13
     "@ory/client": ^1.1.41
     "@ory/integrations": ^1.1.4
-    "@prezly/slate-lists": ^0.87.0
+    "@prezly/slate-lists": ^0.89.1
     "@prisma/client": ^5.0.0
     "@radix-ui/react-navigation-menu": ^1.1.3
     "@reduxjs/toolkit": ^1.9.5
@@ -4251,8 +4251,8 @@ __metadata:
     redux-saga: ^1.2.3
     remark-gfm: ^1.0.0
     reselect: ^4.1.8
-    slate: ^0.91.0
-    slate-react: ^0.91.0
+    slate: ^0.94.1
+    slate-react: ^0.98.1
     styled-jsx-plugin-postcss: ^4.0.1
     swr: ^2.2.0
     tailwindcss: ^3.3.3
@@ -13627,7 +13627,7 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"slate-react@npm:*, slate-react@npm:^0.91.0":
+"slate-react@npm:*":
   version: 0.91.11
   resolution: "slate-react@npm:0.91.11"
   dependencies:
@@ -13648,14 +13648,35 @@ react-notify-toast@Entkenntnis/tmp-react-notify-toast:
   languageName: node
   linkType: hard
 
-"slate@npm:^0.91.0":
-  version: 0.91.4
-  resolution: "slate@npm:0.91.4"
+"slate-react@npm:^0.98.1":
+  version: 0.98.1
+  resolution: "slate-react@npm:0.98.1"
+  dependencies:
+    "@juggle/resize-observer": ^3.4.0
+    "@types/is-hotkey": ^0.1.1
+    "@types/lodash": ^4.14.149
+    direction: ^1.0.3
+    is-hotkey: ^0.1.6
+    is-plain-object: ^5.0.0
+    lodash: ^4.17.4
+    scroll-into-view-if-needed: ^2.2.20
+    tiny-invariant: 1.0.6
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+    slate: ">=0.65.3"
+  checksum: df887a3a68d5ade088386bf0ffeb3b573a010baba240c90b7e2bd1273a78ddc52656e283e7ab984222be87f7a9f20c394cf05f5ff0ee2db42b871a1a69d855a6
+  languageName: node
+  linkType: hard
+
+"slate@npm:^0.94.1":
+  version: 0.94.1
+  resolution: "slate@npm:0.94.1"
   dependencies:
     immer: ^9.0.6
     is-plain-object: ^5.0.0
     tiny-warning: ^1.0.3
-  checksum: 70164a5106cac7caaa681b0eca5dba5cf172b2c406f769744babb28350906ca92dc496a0d9224911564bd4ee0650a19be7279d917bba02159e1672f37475d74d
+  checksum: 07666fe3373e59aaa19261366fd3cf1df546edfc0162fb88d675d71f158ebd1bf0630fd00ecc9152ab6547080f3e90c9f6d1504e09c25b3bf980cceb9b15c3c1
   languageName: node
   linkType: hard
 

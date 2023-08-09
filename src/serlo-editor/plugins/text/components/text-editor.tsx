@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import isHotkey from 'is-hotkey'
 import React, { useMemo, useEffect, useCallback } from 'react'
 import { createEditor, Node, Transforms, Range } from 'slate'
@@ -384,7 +385,7 @@ export function TextEditor(props: TextEditorProps) {
   return (
     <Slate
       editor={editor}
-      value={state.value.value}
+      initialValue={state.value.value}
       onChange={handleEditorChange}
     >
       {focused && (
@@ -408,7 +409,10 @@ export function TextEditor(props: TextEditorProps) {
             <TextLeafRenderer {...props} />
           </span>
         )}
-        className="[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0" // fixes placeholder position in safari
+        className={clsx([
+          '[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0', // fixes placeholder position in safari
+          'outline-none', // removes the ugly outline present in Slate v0.94.1, maybe it can be removed in some later version
+        ])}
         data-qa="plugin-text-editor"
       />
       <LinkControls serloLinkSearch={config.serloLinkSearch} />
