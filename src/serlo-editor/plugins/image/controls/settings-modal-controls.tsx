@@ -22,6 +22,7 @@ export function SettingsModalControls({ state }: Pick<ImageProps, 'state'>) {
             ? imageStrings.placeholderFailed
             : imageStrings.placeholderUploading
         }
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
         value={isTemp ? '' : src.value.toString()}
         disabled={isTemp && !isFailed}
         onChange={(e) => src.set(e.target.value)}

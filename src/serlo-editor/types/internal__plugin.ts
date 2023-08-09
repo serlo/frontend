@@ -7,7 +7,7 @@ import {
 // A Serlo Editor plugin
 export interface EditorPlugin<
   S extends StateType = StateType,
-  Config extends {} = {}
+  Config extends object = object
 > {
   /**
    * React component that will be used to render the plugin. It accepts [[PluginEditorProps]] and `Props`.

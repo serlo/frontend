@@ -464,7 +464,6 @@ export type FrontendRestrictedElementNode =
   | FrontendTableNode
   | FrontendSerloTableNode
   | FrontendSerloTrNode
-  | FrontendSpoilerContainerNode
   | FrontendUlNode
   | FrontendOlNode
   | FrontendRowNode
