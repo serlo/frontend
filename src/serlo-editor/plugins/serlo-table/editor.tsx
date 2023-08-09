@@ -5,7 +5,7 @@ import {
   faTrashCan,
 } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { KeyboardEvent } from 'react'
+import { KeyboardEvent, useRef } from 'react'
 
 import { SerloTableProps } from '.'
 import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
@@ -47,8 +47,10 @@ export function SerloTableEditor(props: SerloTableProps) {
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
-  const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus()
-
+  const tableWrapperRef = useRef<HTMLDivElement | null>(null)
+  const { focusedRowIndex, focusedColIndex, nestedFocus } = findFocus(
+    tableWrapperRef.current
+  )
   const areImagesDisabled = useAreImagesDisabledInTable()
 
   const tableStrings = useEditorStrings().plugins.serloTable
@@ -81,7 +83,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     const rowsJSX = renderActiveCellsIntoObject()
 
     return (
-      <>
+      <div ref={tableWrapperRef}>
         {props.focused || nestedFocus ? <SerloTableToolbar {...props} /> : null}
         <div className="flex">
           <div
@@ -99,7 +101,7 @@ export function SerloTableEditor(props: SerloTableProps) {
 
           {renderAddButton(false)}
         </div>
-      </>
+      </div>
     )
   }
 
@@ -350,7 +352,7 @@ export function SerloTableEditor(props: SerloTableProps) {
     )
   }
 
-  function findFocus() {
+  function findFocus(tableWrapper: HTMLDivElement | null) {
     let focusedRowIndex = undefined
     let focusedColIndex = undefined
 
@@ -365,7 +367,9 @@ export function SerloTableEditor(props: SerloTableProps) {
     )
     const nestedFocus =
       props.focused ||
-      (focusedRowIndex !== undefined && focusedColIndex !== undefined)
+      (focusedRowIndex !== undefined && focusedColIndex !== undefined) ||
+      (typeof window !== undefined &&
+        tableWrapper?.contains(document.activeElement))
 
     return { focusedRowIndex, focusedColIndex, nestedFocus }
   }
