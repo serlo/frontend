@@ -12,8 +12,8 @@ import { UuidType } from '@/data-types'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import {
   boolean,
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   list,
 } from '@/serlo-editor/plugin'
 
@@ -31,7 +31,7 @@ export const textExerciseGroupTypeState = entityType(
   }
 )
 
-type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
+export type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
 
 export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePluginState> =
   {

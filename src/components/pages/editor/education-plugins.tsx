@@ -18,7 +18,6 @@ import {
 import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
-import { h2Class } from './editor-presentation'
 import {
   boxExample,
   highlighExample,
@@ -32,6 +31,9 @@ import { Geogebra } from '@/components/content/geogebra'
 import { FaIcon } from '@/components/fa-icon'
 import { EntityIdProvider } from '@/contexts/entity-id-context'
 import { tw } from '@/helper/tw'
+
+export const h2Class =
+  'text-center text-4xl leading-cozy tracking-tight font-extrabold'
 
 const categories = ['educational', 'basic'] as const
 

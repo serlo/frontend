@@ -11,7 +11,7 @@ import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
-import { TextEditorConfig, TextEditorState } from '../types'
+import type { TextEditorConfig, TextEditorState } from '../types/config'
 import {
   emptyDocumentFactory,
   mergePlugins,
@@ -23,7 +23,7 @@ import { showToastNotice } from '@/helper/show-toast-notice'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
-import { EditorPluginProps } from '@/serlo-editor/plugin'
+import type { EditorPluginProps } from '@/serlo-editor/plugin'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   focusNext,

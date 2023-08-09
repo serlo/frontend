@@ -1,7 +1,7 @@
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { Dispatch, SetStateAction } from 'react'
 
-import { VideoProps } from '.'
+import type { VideoProps } from '.'
 import { EditorInput } from '../../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'

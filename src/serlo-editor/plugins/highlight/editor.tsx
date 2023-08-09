@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { HighlightProps } from '.'
+import type { HighlightProps } from '.'
 import { HighlightToolbar } from './toolbar'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 

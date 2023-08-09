@@ -1,8 +1,8 @@
 import { SpoilerEditor } from './editor'
 import {
   child,
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   object,
   string,
 } from '../../plugin'

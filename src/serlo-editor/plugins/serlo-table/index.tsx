@@ -1,9 +1,9 @@
 import { SerloTableEditor } from './editor'
 import { TableType } from './renderer'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   list,
   object,
   string,

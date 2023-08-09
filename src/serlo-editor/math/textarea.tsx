@@ -1,6 +1,6 @@
 import { useState, useCallback, createRef, useEffect } from 'react'
 
-import { MathEditorProps } from './editor'
+import type { MathEditorProps } from './editor'
 import { EditorTextarea } from '../editor-ui'
 import { tw } from '@/helper/tw'
 

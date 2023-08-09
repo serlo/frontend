@@ -5,7 +5,7 @@ import { ReactEditor, useSlate } from 'slate-react'
 import { LinkOverlayEditMode } from './edit-mode/link-overlay-edit-mode'
 import { LinkOverlay } from './link-overlay'
 import { LinkOverlayWithHref } from './link-overlay-with-href'
-import type { Link } from '../../types'
+import type { Link } from '../../types/text-editor'
 import {
   QuickbarData,
   fetchQuickbarData,

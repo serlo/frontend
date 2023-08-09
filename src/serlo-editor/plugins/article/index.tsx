@@ -1,8 +1,8 @@
 import { ArticleEditor } from './editor'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   list,
   object,
   string,

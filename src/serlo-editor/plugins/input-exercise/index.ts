@@ -1,11 +1,10 @@
 import { InputExerciseEditor } from './editor'
-import { InputExerciseType } from './input-exercise-type'
 import {
+  type ChildStateTypeConfig,
+  type EditorPlugin,
+  type EditorPluginProps,
   boolean,
   child,
-  ChildStateTypeConfig,
-  EditorPlugin,
-  EditorPluginProps,
   list,
   object,
   string,
@@ -35,8 +34,6 @@ export type InputExercisePluginState = ReturnType<
 export interface InputExerciseConfig {
   feedback?: ChildStateTypeConfig
 }
-
-export { InputExerciseType }
 
 export type InputExerciseProps = EditorPluginProps<
   InputExercisePluginState,

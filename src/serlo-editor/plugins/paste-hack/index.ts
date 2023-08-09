@@ -1,5 +1,9 @@
 import { PasteHackEditor } from './editor'
-import { EditorPlugin, object, EditorPluginProps } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  object,
+} from '@/serlo-editor/plugin'
 
 const pasteHackState = object({})
 

@@ -1,4 +1,4 @@
-import { EquationsProps } from '.'
+import type { EquationsProps } from '.'
 import { TransformationTarget } from './editor/editor-renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'

@@ -1,4 +1,4 @@
-import { SettingsFlow, UpdateSettingsFlowBody } from '@ory/client'
+import type { SettingsFlow, UpdateSettingsFlowBody } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -6,7 +6,8 @@ import { fetchAndPersistAuthSession } from '@/auth/cookie/fetch-and-persist-auth
 import { kratos } from '@/auth/kratos'
 import { useAuth } from '@/auth/use-auth'
 import { useCheckInstance } from '@/auth/use-check-instance'
-import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Flow, handleFlowError } from '@/components/auth/flow'
+import { FlowType } from '@/components/auth/flow-type'
 import { Messages } from '@/components/auth/messages'
 import { PageTitle } from '@/components/content/page-title'
 import { Guard } from '@/components/guard'

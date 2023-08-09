@@ -10,7 +10,10 @@ import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
 import { AddButton } from '@/serlo-editor/editor-ui'
-import { EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+} from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const textExerciseTypeState = entityType(
@@ -23,7 +26,7 @@ export const textExerciseTypeState = entityType(
   }
 )
 
-type TextExerciseTypePluginState = typeof textExerciseTypeState
+export type TextExerciseTypePluginState = typeof textExerciseTypeState
 
 export const textExerciseTypePlugin: EditorPlugin<
   TextExerciseTypePluginState,

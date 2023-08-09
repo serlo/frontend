@@ -1,7 +1,7 @@
-import { GraphQLClient, RequestDocument } from 'graphql-request'
+import { GraphQLClient, type RequestDocument } from 'graphql-request'
 
 import { endpoint } from '@/api/endpoint'
-import { AuthenticationPayload } from '@/auth/auth-provider'
+import type { AuthenticationPayload } from '@/auth/auth-provider'
 
 export interface ParsedArgs {
   query: RequestDocument

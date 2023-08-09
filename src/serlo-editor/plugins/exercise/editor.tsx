@@ -1,7 +1,7 @@
 import { faRandom, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { ReactNode, useState } from 'react'
+import { type ReactNode, useState } from 'react'
 
-import { ExerciseProps } from '.'
+import type { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { AddButton } from '@/serlo-editor/editor-ui'

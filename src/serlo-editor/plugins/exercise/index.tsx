@@ -1,7 +1,7 @@
 import { ExerciseEditor } from './editor'
 import {
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
   object,
   optional,

@@ -1,10 +1,10 @@
 import { MultimediaEditor } from './editor'
 import {
+  type ChildStateTypeConfig,
+  type EditorPlugin,
+  type EditorPluginProps,
   boolean,
   child,
-  ChildStateTypeConfig,
-  EditorPlugin,
-  EditorPluginProps,
   number,
   object,
 } from '../../plugin'

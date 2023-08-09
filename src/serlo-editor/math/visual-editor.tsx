@@ -1,6 +1,6 @@
 import * as MQ from 'react-mathquill'
 
-import { MathEditorProps } from './editor'
+import type { MathEditorProps } from './editor'
 import { tw } from '@/helper/tw'
 
 if (typeof window !== 'undefined') {

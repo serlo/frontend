@@ -7,10 +7,11 @@ import {
 import clsx from 'clsx'
 import { KeyboardEvent } from 'react'
 
-import { SerloTableProps } from '.'
+import type { SerloTableProps } from '.'
 import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
+import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
@@ -373,12 +374,4 @@ export function SerloTableEditor(props: SerloTableProps) {
   function replaceWithType(input: string, isRow: boolean) {
     return input.replace('%type%', tableStrings[isRow ? 'row' : 'column'])
   }
-}
-
-export function getTableType(text: string): TableType {
-  return isTableType(text) ? text : TableType.OnlyColumnHeader
-}
-
-function isTableType(text: string): text is TableType {
-  return Object.values<string>(TableType).includes(text)
 }

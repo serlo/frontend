@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
 import { AddRowButton } from './add-row-button'
-import { RowsPluginConfig } from '..'
+import type { RowsPluginConfig } from '..'
 
 interface RowSeparatorProps {
   config: RowsPluginConfig

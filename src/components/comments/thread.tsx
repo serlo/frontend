@@ -1,7 +1,7 @@
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 import { Comment } from './comment'
-import { CommentsData, ThreadsData } from './comment-area'
+import type { CommentsData, ThreadsData } from './comment-area'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 

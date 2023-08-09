@@ -1,5 +1,9 @@
 import { PagePartnersEditor } from './editor'
-import { EditorPlugin, EditorPluginProps, object } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  object,
+} from '@/serlo-editor/plugin'
 
 const pagePartnersState = object({})
 export type PagePartnersPluginState = typeof pagePartnersState

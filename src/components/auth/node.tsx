@@ -1,10 +1,10 @@
 import { faSpinner, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
-import { UiNode, UiNodeInputAttributes } from '@ory/client'
+import type { UiNode, UiNodeInputAttributes } from '@ory/client'
 import { isUiNodeInputAttributes } from '@ory/integrations/ui'
 import clsx from 'clsx'
-import { FormEvent, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 
-import { FlowType } from './flow'
+import { FlowType } from './flow-type'
 import { FaIcon } from '../fa-icon'
 import { Message, getKratosMessageString } from '@/components/auth/message'
 import { useInstanceData } from '@/contexts/instance-context'

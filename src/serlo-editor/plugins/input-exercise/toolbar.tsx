@@ -1,4 +1,5 @@
-import { InputExerciseProps, InputExerciseType } from '.'
+import type { InputExerciseProps } from '.'
+import { InputExerciseType } from './input-exercise-type'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
