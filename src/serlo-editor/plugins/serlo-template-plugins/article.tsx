@@ -14,7 +14,11 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const articleTypeState = entityType(
@@ -27,7 +31,8 @@ export const articleTypeState = entityType(
   },
   {}
 )
-type ArticleTypePluginState = typeof articleTypeState
+
+export type ArticleTypePluginState = typeof articleTypeState
 
 export const articleTypePlugin: EditorPlugin<ArticleTypePluginState> = {
   Component: ArticleTypeEditor,

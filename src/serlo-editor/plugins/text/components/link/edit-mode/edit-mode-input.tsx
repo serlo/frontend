@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, KeyboardEvent, ClipboardEvent } from 'react'
 
-import { getCleanUrl } from './link-overlay-edit-mode'
+import { getCleanUrl } from '../../../utils/link'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 

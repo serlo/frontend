@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef } from 'react'
 import { Descendant, Editor, Transforms } from 'slate'
 
-import { TextEditorProps } from '../components/text-editor'
+import type { TextEditorProps } from '../components/text-editor'
 
 interface UseEditorChangeArgs {
   editor: Editor

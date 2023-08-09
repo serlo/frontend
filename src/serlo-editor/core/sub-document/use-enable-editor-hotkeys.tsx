@@ -15,7 +15,7 @@ import {
   useAppSelector,
   selectIsDocumentEmpty,
 } from '../../store'
-import { EditorPlugin } from '@/serlo-editor/plugin'
+import type { EditorPlugin } from '@/serlo-editor/plugin'
 
 export const useEnableEditorHotkeys = (
   id: string,

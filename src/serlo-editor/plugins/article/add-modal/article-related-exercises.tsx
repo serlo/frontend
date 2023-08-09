@@ -6,10 +6,10 @@ import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { UuidType, UuidWithRevType } from '@/data-types'
+import { UuidType, type UuidWithRevType } from '@/data-types'
 import {
   TaxonomyTermType,
-  FetchExerciseFolderQuery,
+  type FetchExerciseFolderQuery,
 } from '@/fetcher/graphql-types/operations'
 import { getTranslatedType } from '@/helper/get-translated-type'
 import { getIconByTypename } from '@/helper/icon-by-entity-type'

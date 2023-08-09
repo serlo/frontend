@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import { useRef } from 'react'
 
-import { SubDocumentProps } from '.'
+import type { SubDocumentProps } from '.'
 import { selectDocument, useAppSelector } from '../../store'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 

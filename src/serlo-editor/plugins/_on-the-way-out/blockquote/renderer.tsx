@@ -1,4 +1,4 @@
-import { BlockquoteProps } from '.'
+import type { BlockquoteProps } from '.'
 
 export function BlockquoteRenderer(props: BlockquoteProps) {
   return (

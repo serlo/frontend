@@ -1,7 +1,7 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
-import { ImageProps } from '.'
+import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'

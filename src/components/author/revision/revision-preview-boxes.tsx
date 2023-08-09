@@ -1,16 +1,16 @@
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
-import { DisplayModes } from './revision'
+import { DisplayModes } from './display-modes'
 import {
   DiffViewerMode,
   RevisionDiffViewer,
-  RevisionDiffViewerProps,
+  type RevisionDiffViewerProps,
 } from './revision-diff-viewer'
 import { Geogebra } from '@/components/content/geogebra'
 import { Video } from '@/components/content/video'
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData, UuidRevType } from '@/data-types'
+import { type RevisionData, UuidRevType } from '@/data-types'
 import { renderArticle } from '@/schema/article-renderer'
 
 export interface RevisionPreviewBoxesProps {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { VideoProps } from '.'
+import type { VideoProps } from '.'
 import { parseVideoUrl, VideoRenderer } from './renderer'
 import { VideoToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'

@@ -1,10 +1,10 @@
 import { PageLayoutEditor } from './editor'
 import {
-  EditorPlugin,
+  type EditorPlugin,
+  type EditorPluginProps,
   number,
   object,
   child,
-  EditorPluginProps,
 } from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 

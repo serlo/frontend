@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { ReactEditor, useSlate } from 'slate-react'
 
-import { Link } from '../../types'
+import type { Link } from '../../types/text-editor'
 
 const wrapperWidth = 460
 

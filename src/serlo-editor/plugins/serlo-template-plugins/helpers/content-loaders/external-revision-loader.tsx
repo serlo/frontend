@@ -10,7 +10,7 @@ import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import {
+import type {
   MainUuidQuery,
   MainUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
@@ -20,7 +20,7 @@ import { triggerSentry } from '@/helper/trigger-sentry'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import { SerloAddButton } from '@/serlo-editor/plugin/helpers/serlo-editor-button'
 import {
-  DeserializeError,
+  type DeserializeError,
   editorResponseToState,
   isError,
 } from '@/serlo-editor-integration/editor-response-to-state'

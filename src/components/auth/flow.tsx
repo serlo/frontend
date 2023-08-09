@@ -1,4 +1,4 @@
-import {
+import type {
   LoginFlow,
   RecoveryFlow,
   RegistrationFlow,
@@ -11,17 +11,18 @@ import {
   UpdateVerificationFlowBody,
 } from '@ory/client'
 import { getNodeId, isUiNodeInputAttributes } from '@ory/integrations/ui'
-import { NextRouter } from 'next/router'
+import type { NextRouter } from 'next/router'
 import NProgress from 'nprogress'
 import {
-  Dispatch,
-  FormEvent,
+  type Dispatch,
+  type FormEvent,
   Fragment,
-  ReactNode,
-  SetStateAction,
+  type ReactNode,
+  type SetStateAction,
   useState,
 } from 'react'
 
+import { FlowType } from './flow-type'
 import { Messages } from './messages'
 import {
   changeButtonTypeOfSSOProvider,
@@ -52,14 +53,6 @@ export interface FlowProps<T extends SubmitPayload> {
   onSubmit: (values: T) => Promise<void>
   only?: string
   contentAfterLastTrait?: ReactNode
-}
-
-export enum FlowType {
-  login = 'login',
-  registration = 'registration',
-  settings = 'settings',
-  recovery = 'recovery',
-  verification = 'verification',
 }
 
 export type SubmitPayload =

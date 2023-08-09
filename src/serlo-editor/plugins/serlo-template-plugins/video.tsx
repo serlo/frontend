@@ -8,7 +8,11 @@ import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export const videoTypeState = entityType(

@@ -1,6 +1,6 @@
 import { Instance, TaxonomyTermType } from './graphql-types/operations'
-import { MainUuidType } from './query-types'
-import { SubscriptionNode } from '@/components/pages/manage-subscriptions'
+import type { MainUuidType } from './query-types'
+import type { SubscriptionNode } from '@/components/pages/manage-subscriptions'
 import { UuidType } from '@/data-types'
 import {
   getServerSideStrings,

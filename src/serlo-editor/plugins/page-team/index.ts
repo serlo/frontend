@@ -1,8 +1,8 @@
 import { PageTeamEditor } from './editor'
 import {
-  EditorPlugin,
+  type EditorPlugin,
+  type EditorPluginProps,
   object,
-  EditorPluginProps,
   string,
   list,
 } from '@/serlo-editor/plugin'

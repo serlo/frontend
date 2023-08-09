@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { useSlate } from 'slate-react'
 
-import { TextEditorConfig } from '../types'
+import type { TextEditorConfig } from '../types/config'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
 import { PluginDefaultTools } from '@/serlo-editor/editor-ui/plugin-toolbar/plugin-tool-menu/plugin-default-tools'
 import { PluginToolbarTextControls } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/plugin-toolbar-text-controls'

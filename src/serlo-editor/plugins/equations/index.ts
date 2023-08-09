@@ -1,11 +1,11 @@
 import { EquationsEditor } from './editor/editor'
 import { Sign } from './sign'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
   list,
   object,
-  EditorPlugin,
-  EditorPluginProps,
   string,
 } from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'

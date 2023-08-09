@@ -1,4 +1,4 @@
-import { ScMcExerciseProps } from '.'
+import type { ScMcExerciseProps } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'

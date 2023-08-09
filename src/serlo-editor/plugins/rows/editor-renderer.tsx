@@ -3,7 +3,7 @@ import React, { useRef, useState, useMemo } from 'react'
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd'
 import { NativeTypes } from 'react-dnd-html5-backend'
 
-import { RowsPluginConfig, RowsPluginState } from '.'
+import type { RowsPluginConfig, RowsPluginState } from '.'
 import { useCanDrop } from './components/use-can-drop'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { edtrDragHandle, EdtrIcon } from '@/serlo-editor/editor-ui'

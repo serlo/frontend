@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { useRef } from 'react'
 
 import { RowSeparator } from './row-separator'
-import { RowsPluginConfig, RowsPluginState } from '..'
+import type { RowsPluginConfig, RowsPluginState } from '..'
 import { EditorRowRenderer } from '../editor-renderer'
 import { StateTypeReturnType } from '@/serlo-editor/plugin'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'

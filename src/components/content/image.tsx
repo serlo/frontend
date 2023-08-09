@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 
 import type { FrontendImageNode } from '@/frontend-node-types'
 import { hasVisibleContent } from '@/helper/has-visible-content'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { ImageRenderer } from '@/serlo-editor/plugins/image/renderer'
 
 interface ImageProps {

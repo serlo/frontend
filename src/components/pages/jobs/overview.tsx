@@ -5,11 +5,10 @@ import { Fragment } from 'react'
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { CommunityWallPerson } from '@/data/de/community-people'
+import type { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
-// eslint-disable-next-line import/extensions
-import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const testimonials = [
   {

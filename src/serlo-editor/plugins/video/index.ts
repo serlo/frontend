@@ -1,6 +1,11 @@
 import { VideoEditor } from './editor'
 import { parseVideoUrl } from './renderer'
-import { EditorPlugin, EditorPluginProps, object, string } from '../../plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  object,
+  string,
+} from '../../plugin'
 
 const videoState = object({ src: string(), alt: string() })
 

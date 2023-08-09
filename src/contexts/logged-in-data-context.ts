@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-import { LoggedInData } from '@/data-types'
+import type { LoggedInData } from '@/data-types'
 
 export const LoggedInDataContext = createContext<LoggedInData | null>(null)
 

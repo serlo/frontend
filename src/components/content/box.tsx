@@ -1,5 +1,5 @@
 import { FrontendBoxNode } from '@/frontend-node-types'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { BoxRenderer } from '@/serlo-editor/plugins/box/renderer'
 
 type BoxProps = FrontendBoxNode & { renderNested: RenderNestedFunction }
