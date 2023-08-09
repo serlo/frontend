@@ -70,7 +70,11 @@ export function SerloTableEditor(props: SerloTableProps) {
         cells: row.columns.map((cell) => (
           <div className="min-h-[2rem] pr-2" key={cell.content.id}>
             {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
-              cell.content.render()}
+              cell.content.render({
+                config: {
+                  isInlineChildEditor: true,
+                },
+              })}
           </div>
         )),
       }
