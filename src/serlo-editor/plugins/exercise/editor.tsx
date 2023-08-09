@@ -61,7 +61,7 @@ export function ExerciseEditor({ editable, state }: ExerciseProps) {
             onChange={({ target }) => {
               if (interactive.defined)
                 interactive.replace(
-                  target.value as typeof interactiveExerciseTypes[number]
+                  target.value as (typeof interactiveExerciseTypes)[number]
                 )
             }}
             className={tw`

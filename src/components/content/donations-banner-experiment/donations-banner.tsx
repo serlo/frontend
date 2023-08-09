@@ -194,7 +194,7 @@ const courseBanner = {
   username: '',
 }
 
-type Banner = typeof articleBanners[number]
+type Banner = (typeof articleBanners)[number]
 
 export interface DonationsBannerProps {
   id: number

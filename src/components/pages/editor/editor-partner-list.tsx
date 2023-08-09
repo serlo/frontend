@@ -51,7 +51,7 @@ export function EditorPartnerList() {
     </div>
   )
 
-  function renderPartner({ name, logo, padding }: typeof partners[0]) {
+  function renderPartner({ name, logo, padding }: (typeof partners)[0]) {
     return (
       <img
         key={name}

@@ -58,7 +58,7 @@ export function BasicPlugins() {
     title,
     description,
     icon,
-  }: typeof commonData[0]) {
+  }: (typeof commonData)[0]) {
     return (
       <li key={title} className="m-2 rounded-md p-3 shadow-menu">
         <FaIcon icon={icon} className="" /> <b className=" text-xl ">{title}</b>

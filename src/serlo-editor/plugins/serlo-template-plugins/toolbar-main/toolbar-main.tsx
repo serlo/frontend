@@ -21,8 +21,8 @@ import {
 import { SaveModal } from '@/serlo-editor-integration/components/save-modal'
 
 interface ToolbarMainProps {
-  changes?: StateTypeReturnType<typeof entity['changes']>
-  license?: StateTypeReturnType<typeof entity['license']>
+  changes?: StateTypeReturnType<(typeof entity)['changes']>
+  license?: StateTypeReturnType<(typeof entity)['license']>
   showSubscriptionOptions?: boolean
 }
 
