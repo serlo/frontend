@@ -43,7 +43,7 @@ import {
 import { FaIcon } from '@/components/fa-icon'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { LoggedInData } from '@/data-types'
+import type { LoggedInData } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import {
   editorBold,

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-import { StepSegment } from './editor'
 import { TransformationTarget } from './editor-renderer'
+import { StepSegment } from './step-segment'
 
 type GridFocusState =
   | {

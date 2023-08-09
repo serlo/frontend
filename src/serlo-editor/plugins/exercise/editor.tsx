@@ -1,6 +1,6 @@
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ExerciseProps } from '.'
+import type { ExerciseProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'

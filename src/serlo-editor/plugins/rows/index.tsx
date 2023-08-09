@@ -1,9 +1,9 @@
 import { RowsEditor } from './editor'
 import {
+  type ChildStateTypeConfig,
+  type EditorPlugin,
+  type EditorPluginProps,
   child,
-  ChildStateTypeConfig,
-  EditorPlugin,
-  EditorPluginProps,
   list,
 } from '../../plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'

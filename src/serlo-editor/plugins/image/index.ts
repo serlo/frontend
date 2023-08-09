@@ -1,16 +1,16 @@
 import { ImageEditor } from './editor'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  type UploadHandler,
+  type UploadValidator,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   isTempFile,
   number,
   object,
   optional,
   string,
   upload,
-  UploadHandler,
-  UploadValidator,
 } from '../../plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 

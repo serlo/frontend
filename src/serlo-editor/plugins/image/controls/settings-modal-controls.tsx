@@ -1,5 +1,5 @@
 import { OverlayInput } from './overlay-input'
-import { ImageProps } from '..'
+import type { ImageProps } from '..'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
 import { isTempFile } from '@/serlo-editor/plugin'

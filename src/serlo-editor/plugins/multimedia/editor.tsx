@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { MultimediaProps } from '.'
+import type { MultimediaProps } from '.'
 import { MultimediaRenderer } from './renderer'
 import { MultimediaSizeSelect } from './toolbar/size-select'
 import { MultimediaToolbar } from './toolbar/toolbar'

@@ -1,7 +1,7 @@
 import { Descendant, Node, Editor as SlateEditor, Transforms } from 'slate'
 
 import { isSelectionAtEnd } from './selection'
-import type { TextEditorState } from '../types'
+import type { TextEditorState } from '../types/config'
 import { StateTypeValueType } from '@/serlo-editor/plugin'
 import {
   focusNext,

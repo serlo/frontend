@@ -1,4 +1,4 @@
-import { LayoutPluginState } from '.'
+import type { LayoutPluginState } from '.'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorPluginProps, StateTypeReturnType } from '@/serlo-editor/plugin'
 import {

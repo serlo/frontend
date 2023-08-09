@@ -5,6 +5,7 @@ import { UnrevisedSubject } from '../revisions/unrevised-subject'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import type { UnrevisedRevisionsData } from '@/data-types'
+import { getSubjectSlug } from '@/helper/get-subject-slug'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 
 export interface UnrevisedRevisionsOverviewProps {
@@ -87,8 +88,4 @@ export function UnrevisedRevisionsOverview({
       </div>
     )
   }
-}
-
-export function getSubjectSlug(name: string) {
-  return encodeURI(name.toLowerCase())
 }

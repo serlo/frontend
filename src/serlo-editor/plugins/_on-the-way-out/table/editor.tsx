@@ -1,4 +1,4 @@
-import { TableProps } from '.'
+import type { TableProps } from '.'
 import { TableRenderer } from './renderer'
 import { EditorTextarea } from '../../../editor-ui'
 

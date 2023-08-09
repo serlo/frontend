@@ -1,7 +1,7 @@
 import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer'
 
 import { useInstanceData } from '@/contexts/instance-context'
-import { RevisionData } from '@/data-types'
+import type { RevisionData } from '@/data-types'
 
 export enum DiffViewerMode {
   content = 'content',

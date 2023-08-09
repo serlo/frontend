@@ -1,7 +1,7 @@
 import { faArrowCircleUp, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { Fragment } from 'react'
 
-import { ArticleProps } from '..'
+import type { ArticleProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'

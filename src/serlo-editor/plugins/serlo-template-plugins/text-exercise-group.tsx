@@ -17,8 +17,8 @@ import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
   boolean,
-  EditorPlugin,
-  EditorPluginProps,
+  type EditorPlugin,
+  type EditorPluginProps,
   list,
   StateTypeSerializedType,
 } from '@/serlo-editor/plugin'
@@ -39,7 +39,7 @@ export const textExerciseGroupTypeState = entityType(
   }
 )
 
-type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
+export type TextExerciseGroupTypePluginState = typeof textExerciseGroupTypeState
 
 export const textExerciseGroupTypePlugin: EditorPlugin<TextExerciseGroupTypePluginState> =
   {

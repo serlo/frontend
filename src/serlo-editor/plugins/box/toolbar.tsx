@@ -1,5 +1,5 @@
-import { BoxProps } from '.'
-import { BoxType, types } from './renderer'
+import type { BoxProps } from '.'
+import { type BoxType, types } from './renderer'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'

@@ -9,11 +9,11 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { RevisionHistory as SerloRevisionHistory } from '@/components/pages/revision-history'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import {
+import type {
   RevisionUuidQuery,
   RevisionUuidQueryVariables,
 } from '@/fetcher/graphql-types/operations'
-import { Revisions } from '@/fetcher/query-types'
+import type { Revisions } from '@/fetcher/query-types'
 import { revisionQuery } from '@/fetcher/revision/query'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { triggerSentry } from '@/helper/trigger-sentry'

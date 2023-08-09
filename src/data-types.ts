@@ -1,17 +1,17 @@
-import { AuthorizationPayload } from '@serlo/authorization'
-import { CSSProperties, FunctionComponent } from 'react'
+import { type AuthorizationPayload } from '@serlo/authorization'
+import { type CSSProperties, type FunctionComponent } from 'react'
 
 import {
   Instance,
-  UnrevisedRevisionsQuery,
+  type UnrevisedRevisionsQuery,
 } from './fetcher/graphql-types/operations'
-import { User } from './fetcher/query-types'
-import {
+import type { User } from './fetcher/query-types'
+import type {
   FrontendContentNode,
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
 } from './frontend-node-types'
-import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
+import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 // exact props of /[...slug] page

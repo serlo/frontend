@@ -1,4 +1,4 @@
-import { PageTeamPluginProps } from '.'
+import type { PageTeamPluginProps } from '.'
 import { PageTeamRenderer } from './renderer'
 import { PageTeamToolbar } from './toolbar'
 

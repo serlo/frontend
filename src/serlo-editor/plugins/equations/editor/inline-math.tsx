@@ -5,7 +5,10 @@ import {
   setDefaultPreference,
 } from '@/serlo-editor/core/contexts'
 import { MathEditor } from '@/serlo-editor/math'
-import { StateTypeReturnType, StringStateType } from '@/serlo-editor/plugin'
+import type {
+  StateTypeReturnType,
+  StringStateType,
+} from '@/serlo-editor/plugin'
 
 interface InlineMathProps {
   state: StateTypeReturnType<StringStateType>

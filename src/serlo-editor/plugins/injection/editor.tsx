@@ -1,7 +1,7 @@
 import { faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
-import { InjectionProps } from '.'
+import type { InjectionProps } from '.'
 import { InjectionRenderer } from './renderer'
 import { InjectionToolbar } from './toolbar'
 import { FaIcon } from '@/components/fa-icon'

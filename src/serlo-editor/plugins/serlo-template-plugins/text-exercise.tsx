@@ -16,9 +16,9 @@ import { UuidType } from '@/data-types'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
-  EditorPlugin,
-  EditorPluginProps,
-  StateTypeSerializedType,
+  type EditorPlugin,
+  type EditorPluginProps,
+  type StateTypeSerializedType,
 } from '@/serlo-editor/plugin'
 import { selectSerializedDocument, store } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'

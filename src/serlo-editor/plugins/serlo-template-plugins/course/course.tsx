@@ -2,7 +2,7 @@ import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
-import { CoursePageTypePluginState } from './course-page'
+import type { CoursePageTypePluginState } from './course-page'
 import {
   editorContent,
   entity,
@@ -21,9 +21,9 @@ import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
 import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
-  EditorPlugin,
-  EditorPluginProps,
-  StateTypeSerializedType,
+  type EditorPlugin,
+  type EditorPluginProps,
+  type StateTypeSerializedType,
   list,
   string,
 } from '@/serlo-editor/plugin'
@@ -42,7 +42,7 @@ export const courseTypeState = entityType(
   }
 )
 
-type CourseTypePluginState = typeof courseTypeState
+export type CourseTypePluginState = typeof courseTypeState
 
 export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
   Component: CourseTypeEditor,

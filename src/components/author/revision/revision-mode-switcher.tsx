@@ -1,7 +1,7 @@
 import clsx from 'clsx'
-import { Dispatch, SetStateAction } from 'react'
+import { type Dispatch, type SetStateAction } from 'react'
 
-import { DisplayModes } from './revision'
+import { DisplayModes } from './display-modes'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 

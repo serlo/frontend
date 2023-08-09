@@ -8,7 +8,11 @@ import {
 } from '../common/common'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 
 export const coursePageTypeState = entityType(
   {

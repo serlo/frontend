@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
 import { FaIcon } from '@/components/fa-icon'
-import { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
+import type { deSubjectLandingSubjects } from '@/components/pages/subject-landing'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
   featuredContent,
-  FeaturedContentData,
+  type FeaturedContentData,
 } from '@/data/de/de-subject-landing-data'
 import { UuidType } from '@/data-types'
 import { TaxonomyTermType } from '@/fetcher/graphql-types/operations'

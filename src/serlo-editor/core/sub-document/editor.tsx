@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import * as R from 'ramda'
 import { useRef, useEffect, useMemo, useCallback } from 'react'
 
-import { SubDocumentProps } from '.'
+import type { SubDocumentProps } from '.'
 import { useEnableEditorHotkeys } from './use-enable-editor-hotkeys'
 import {
   runChangeDocumentSaga,
@@ -14,7 +14,7 @@ import {
   selectParent,
   store,
 } from '../../store'
-import { StateUpdater } from '../../types/internal__plugin-state'
+import type { StateUpdater } from '../../types/internal__plugin-state'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 
 export function SubDocumentEditor({ id, pluginProps }: SubDocumentProps) {

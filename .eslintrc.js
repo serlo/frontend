@@ -69,20 +69,6 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-deprecated': 'error',
     'import/no-extraneous-dependencies': ['error'],
-    'import/no-internal-modules': [
-      'error',
-      {
-        allow: [
-          '@ory/integrations/ui',
-          'graphiql/esm/components/GraphiQL',
-          'graphql-request/dist/types',
-          'msw/*',
-          'next/*',
-          'public/_assets/**/*',
-          'redux-saga/effects',
-        ],
-      },
-    ],
     'import/no-mutable-exports': 'error',
     'import/no-self-import': 'error',
     'import/no-unassigned-import': [
@@ -142,6 +128,11 @@ module.exports = {
     'import/internal-regex': '^@/',
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.eslint.json',
+      },
     },
     react: {
       version: 'detect',

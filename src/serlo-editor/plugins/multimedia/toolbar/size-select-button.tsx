@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-import { MultimediaProps } from '..'
+import type { MultimediaProps } from '..'
 import { tw } from '@/helper/tw'
 
 interface MultimediaSizeSelectButtonProps {
