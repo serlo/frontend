@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 
 type RenderLayout<T> = (pageProps: T, props: AppProps<T>) => JSX.Element
 
-export type NextRenderedPage<T = {}> = NextPage<T> & {
+export type NextRenderedPage<T = object> = NextPage<T> & {
   renderer: RenderLayout<T>
 }
 

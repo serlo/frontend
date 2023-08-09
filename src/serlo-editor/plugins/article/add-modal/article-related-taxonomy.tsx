@@ -33,7 +33,7 @@ export function ArticleRelatedTaxonomy({
   const dataAndTerm = getCategorisedDataAndTerm(data, error)
   if (!dataAndTerm || !entityId) {
     const isNew =
-      typeof window !== undefined &&
+      typeof window !== 'undefined' &&
       window.location.pathname.startsWith('/entity/create')
     return (
       <p className="mt-4 border-t-2 pt-4 italic text-gray-400">

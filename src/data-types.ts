@@ -511,7 +511,7 @@ export interface LoggedInData {
   strings: typeof loggedInData['strings']
 }
 
-export type CompBaseProps<T = {}> = FunctionComponent<
+export type CompBaseProps<T = object> = FunctionComponent<
   T & {
     className?: string
     style?: CSSProperties
