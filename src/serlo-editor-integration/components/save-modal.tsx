@@ -20,8 +20,8 @@ import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 export interface SaveModalProps {
   open: boolean
   setOpen: (arg0: boolean) => void
-  changes?: StateTypeReturnType<typeof entity['changes']>
-  license?: StateTypeReturnType<typeof entity['license']>
+  changes?: StateTypeReturnType<(typeof entity)['changes']>
+  license?: StateTypeReturnType<(typeof entity)['license']>
   showSubscriptionOptions?: boolean
 }
 

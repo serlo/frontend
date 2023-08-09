@@ -169,7 +169,7 @@ const pluginData = [
 export function EducationPlugins() {
   const [selectedTitle, setSelectedTitle] = useState(pluginData[0].title)
   const [selectedCategory, setSelectedCategory] = useState<
-    typeof categories[number] | undefined
+    (typeof categories)[number] | undefined
   >(categories[0])
 
   const categoryRefs = [
@@ -296,7 +296,7 @@ export function EducationPlugins() {
     )
   }
 
-  function renderPluginMenuEntry({ title, icon }: typeof pluginData[0]) {
+  function renderPluginMenuEntry({ title, icon }: (typeof pluginData)[0]) {
     return (
       <li
         key={title}

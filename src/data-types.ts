@@ -52,7 +52,7 @@ export interface EventHistoryProps {
 
 export interface InstanceData {
   lang: Instance
-  strings: typeof instanceData['strings'] //infer types from english language file
+  strings: (typeof instanceData)['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
   secondaryMenus: SecondaryMenuData[]
@@ -154,7 +154,7 @@ export interface LandingPage {
 export interface InstanceLandingData {
   lang: string
   subjectsData: LandingSubjectsData
-  strings: typeof instanceLandingData['strings']
+  strings: (typeof instanceLandingData)['strings']
 }
 
 export interface LandingSubjectsData {
@@ -508,7 +508,7 @@ export interface TaxonomyData extends TaxonomyTermBase {
 
 export interface LoggedInData {
   authMenu: HeaderData
-  strings: typeof loggedInData['strings']
+  strings: (typeof loggedInData)['strings']
 }
 
 export type CompBaseProps<T = object> = FunctionComponent<
