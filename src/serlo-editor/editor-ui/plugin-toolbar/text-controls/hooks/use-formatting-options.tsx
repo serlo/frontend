@@ -1,4 +1,10 @@
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCode,
+  faListOl,
+  faListUl,
+  faSquareRootVariable,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons'
 import { onKeyDown as slateListsOnKeyDown } from '@prezly/slate-lists'
 import isHotkey from 'is-hotkey'
 import React, { useCallback, useMemo } from 'react'
@@ -41,13 +47,9 @@ import { LoggedInData } from '@/data-types'
 import { isMac } from '@/helper/client-detection'
 import {
   editorBold,
-  editorClose,
-  editorFormula,
   EditorSvgIcon,
   editorItalic,
   editorLink,
-  editorListBullets,
-  editorListNumbered,
   editorText,
 } from '@/serlo-editor/editor-ui'
 import {
@@ -248,7 +250,7 @@ function createToolbarControls(
       closeMenuTitle: textStrings.closeSubMenu,
       isActive: isAnyHeadingActive,
       renderIcon: () => <EditorSvgIcon pathData={editorText} />,
-      renderCloseMenuIcon: () => <EditorSvgIcon pathData={editorClose} />,
+      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
       subMenuButtons: ([1, 2, 3] as const).map((level) => ({
         name: TextEditorFormattingOption.headings,
         title: `${textStrings.heading} ${level}`,
@@ -270,7 +272,7 @@ function createToolbarControls(
         const color = colorIndex ? textColors[colorIndex].value : 'black'
         return <ColorTextIcon color={color} />
       },
-      renderCloseMenuIcon: () => <EditorSvgIcon pathData={editorClose} />,
+      renderCloseMenuIcon: () => <FaIcon icon={faXmark} />,
       subMenuButtons: [
         {
           name: TextEditorFormattingOption.colors,
@@ -305,7 +307,7 @@ function createToolbarControls(
       title: textStrings.orderedList,
       isActive: isSelectionWithinOrderedList,
       onClick: toggleOrderedList,
-      renderIcon: () => <EditorSvgIcon pathData={editorListNumbered} />,
+      renderIcon: () => <FaIcon icon={faListOl} />,
     },
     // Unordered list
     {
@@ -313,7 +315,7 @@ function createToolbarControls(
       title: textStrings.unorderedList,
       isActive: isSelectionWithinUnorderedList,
       onClick: toggleUnorderedList,
-      renderIcon: () => <EditorSvgIcon pathData={editorListBullets} />,
+      renderIcon: () => <FaIcon icon={faListUl} />,
     },
     // Math
     {
@@ -321,7 +323,7 @@ function createToolbarControls(
       title: textStrings.mathFormula,
       isActive: isMathActive,
       onClick: toggleMath,
-      renderIcon: () => <EditorSvgIcon pathData={editorFormula} />,
+      renderIcon: () => <FaIcon icon={faSquareRootVariable} />,
     },
     // Code
     {
