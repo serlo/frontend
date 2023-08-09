@@ -65,6 +65,7 @@ export function SerloTableEditor(props: SerloTableProps) {
             {cell.content.render({
               config: {
                 isInlineChildEditor: true,
+                placeholder: '',
                 updateHack,
               },
             })}
