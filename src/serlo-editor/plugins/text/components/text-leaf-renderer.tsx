@@ -1,5 +1,4 @@
-import CSS from 'csstype'
-import { ReactNode } from 'react'
+import { ReactNode, CSSProperties } from 'react'
 import { RenderLeafProps } from 'slate-react'
 
 import { textColors } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/const'
@@ -19,7 +18,7 @@ export function TextLeafRenderer({
   const colors = textColors.map(({ value }) => value)
   const leafChildren = children as ReactNode
 
-  const styles: CSS.Properties = {}
+  const styles: CSSProperties = {}
 
   if (leaf.color !== undefined) styles.color = colors[leaf.color]
   if (leaf.em) styles.fontStyle = 'italic'
