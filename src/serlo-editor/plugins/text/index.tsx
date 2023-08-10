@@ -1,4 +1,4 @@
-import { Node } from 'slate'
+import { Element, Node } from 'slate'
 
 import { TextEditor, type TextEditorProps } from './components/text-editor'
 import type { TextEditorConfig, TextEditorState } from './types/config'
@@ -24,7 +24,14 @@ const createTextPlugin = (
   config,
   state: serializedScalar(emptyDocumentFactory(), {
     serialize({ value }) {
-      return value
+      return value.map((node) => {
+        if (!Element.isElement(node) || node.type !== 'p') return node
+        const children = node.children.map((text) => {
+          if (Object.hasOwn(text, 'type')) return text //math
+          return { text: text.text.replaceAll('\n', '<br/>') }
+        })
+        return { ...node, children }
+      })
     },
     deserialize(value) {
       if (value.length === 0) {
@@ -39,7 +46,17 @@ const createTextPlugin = (
         return emptyDocumentFactory()
       }
 
-      return { value, selection: null }
+      const valueReplacedBrs = value.map((node) => {
+        if (!Element.isElement(node) || node.type !== 'p') return node
+
+        const children = node.children.map((text) => {
+          if (Object.hasOwn(text, 'type')) return text //math
+          return { text: text.text.replaceAll('<br/>', '\n') }
+        })
+        return { ...node, children }
+      })
+
+      return { value: valueReplacedBrs, selection: null }
     },
   }),
   onKeyDown() {

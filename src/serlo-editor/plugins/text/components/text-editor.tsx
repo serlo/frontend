@@ -13,11 +13,7 @@ import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import {
-  emptyDocumentFactory,
-  mergePlugins,
-  sliceNodesAfterSelection,
-} from '../utils/document'
+import { mergePlugins, sliceNodesAfterSelection } from '../utils/document'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -103,7 +99,9 @@ export function TextEditor(props: TextEditorProps) {
 
       // If the first child of the editor is not a paragraph, do nothing
       const isFirstChildParagraph =
-        'type' in editor.children[0] && editor.children[0].type === 'p'
+        editor.children[0] &&
+        'type' in editor.children[0] &&
+        editor.children[0].type === 'p'
       if (!isFirstChildParagraph) return
 
       // If the editor is empty, set the cursor at the start
@@ -181,36 +179,82 @@ export function TextEditor(props: TextEditorProps) {
           }
         }
 
-        // Create a new Slate instance on "enter" key
-        if (isHotkey('enter', event) && !isListActive) {
-          const document = selectDocument(store.getState(), id)
-          if (!document) return
+        // Use soft break when last line in not empty
+        if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
+          const { path, offset } = selection.focus
+          const node = Node.get(editor, path)
 
-          const mayManipulateSiblings = selectMayManipulateSiblings(
-            store.getState(),
-            id
-          )
-          if (!mayManipulateSiblings) return
+          const previousLines =
+            Object.hasOwn(node, 'text') &&
+            node.text.substring(0, offset).split('\n')
 
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
+          const fragmentChild = editor.getFragment()[0]
+          const isHeading =
+            Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
 
-          event.preventDefault()
-
-          const slicedNodes = sliceNodesAfterSelection(editor)
-          setTimeout(() => {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes || emptyDocumentFactory().value,
-                },
-              })
-            )
-          })
+          // no newlines in headings and start new block as paragraph instead of heading again
+          if (isHeading) {
+            event.preventDefault()
+            Transforms.insertNodes(editor, {
+              type: 'p',
+              children: [{ text: '' }],
+            })
+            return
+          }
+          if (
+            !previousLines ||
+            previousLines[previousLines.length - 1].length !== 0
+          ) {
+            // soft break
+            event.preventDefault()
+            editor.insertText('\n')
+          } else {
+            event.preventDefault()
+            // remove empty line
+            editor.deleteBackward('character')
+            // add new paragraph without copying style from before
+            Transforms.insertNodes(editor, {
+              type: 'p',
+              children: [{ text: '' }],
+            })
+          }
         }
+
+        // TODO: test <br/> serializer somehow
+        // TODO: think about what should happen when some text is selected
+
+        // }
+
+        // Create a new Slate instance on "enter" key
+        // if (isHotkey('enter', event) && !isListActive) {
+        //   const document = selectDocument(store.getState(), id)
+        //   if (!document) return
+
+        //   const mayManipulateSiblings = selectMayManipulateSiblings(
+        //     store.getState(),
+        //     id
+        //   )
+        //   if (!mayManipulateSiblings) return
+
+        //   const parent = selectParent(store.getState(), id)
+        //   if (!parent) return
+
+        //   event.preventDefault()
+
+        //   const slicedNodes = sliceNodesAfterSelection(editor)
+        //   setTimeout(() => {
+        //     dispatch(
+        //       insertPluginChildAfter({
+        //         parent: parent.id,
+        //         sibling: id,
+        //         document: {
+        //           plugin: document.plugin,
+        //           state: slicedNodes || emptyDocumentFactory().value,
+        //         },
+        //       })
+        //     )
+        //   })
+        // }
 
         // Merge with previous Slate instance on "backspace" key,
         // or merge with next Slate instance on "delete" key

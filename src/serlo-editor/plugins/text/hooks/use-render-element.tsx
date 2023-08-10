@@ -60,7 +60,11 @@ export const useRenderElement = (focused: boolean) => {
           </MathElement>
         )
       }
-      return <div {...attributes}>{children}</div>
+      return (
+        <p {...attributes} className="serlo-p border border-gray-200">
+          {children}
+        </p>
+      )
     },
     [focused]
   )
