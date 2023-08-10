@@ -279,6 +279,7 @@ export function EditorPresentation() {
     }
     return (
       <div className="hidden sm:absolute sm:right-8 sm:top-5 sm:block sm:w-32">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="sm:ml-auto"
           style={{
@@ -288,6 +289,7 @@ export function EditorPresentation() {
           src={logo}
           alt={`Logo von ${name}`}
         />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="sm:-mt-8 sm:ml-auto"
           style={{

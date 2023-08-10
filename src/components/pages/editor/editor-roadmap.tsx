@@ -69,6 +69,7 @@ export function EditorRoadmap() {
               })}
             </ul>
             {colIndex === 0 ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src="/_assets/img/jobs/impact.svg"
                 className="mx-3 my-5 hidden opacity-75 sm:block"

@@ -161,6 +161,7 @@ export function Registration() {
             }
             contentAfterLastTrait={renderAgreement()}
           />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/_assets/img/community-menu-bird.svg"
             className="-mt-44 hidden w-[33vw] px-side mobile:block md:w-64"

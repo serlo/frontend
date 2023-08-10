@@ -24,6 +24,7 @@ export function UserLink({
     <>
       <Link href={`/user/${user.id}/${user.username}`} className={className}>
         {withIcon && (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             className="mr-2 w-9 rounded-full align-middle"
             src={getAvatarUrl(user.username)}
