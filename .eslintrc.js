@@ -21,7 +21,6 @@ module.exports = {
   rules: {
     // eslint
     'no-duplicate-imports': 'error',
-    'no-unused-vars': 'off',
     'no-console': 'warn',
     'no-warning-comments': 'warn',
     eqeqeq: ['error', 'always'],
@@ -29,10 +28,7 @@ module.exports = {
     // @typescript-eslint/eslint-plugin
     '@typescript-eslint/ban-ts-comment': 'warn',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-extraneous-class': 'error',
-    '@typescript-eslint/no-parameter-properties': 'off',
     '@typescript-eslint/no-this-alias': 'warn',
     '@typescript-eslint/no-unsafe-assignment': 'error',
     '@typescript-eslint/no-unsafe-call': 'error',
@@ -69,7 +65,6 @@ module.exports = {
     'import/no-commonjs': 'error',
     'import/no-cycle': 'error',
     'import/no-default-export': 'error',
-    'import/prefer-default-export': 'off',
     'import/no-deprecated': 'error',
     'import/no-extraneous-dependencies': ['error'],
     'import/no-mutable-exports': 'error',

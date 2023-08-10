@@ -1,13 +1,9 @@
-import {
-  faCirclePlus,
-  faImages,
-  faParagraph,
-  faTrashCan,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCirclePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { KeyboardEvent } from 'react'
+import { KeyboardEvent, useState } from 'react'
 
 import type { SerloTableProps } from '.'
+import { CellSwitchButton } from './cell-switch-button'
 import { useAreImagesDisabledInTable } from './contexts/are-images-disabled-in-table-context'
 import { SerloTableRenderer, TableType } from './renderer'
 import { SerloTableToolbar } from './toolbar'
@@ -15,18 +11,13 @@ import { getTableType } from './utils/get-table-type'
 import { TextEditorConfig } from '../text'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { ChildStateType, StateTypesReturnType } from '@/serlo-editor/plugin'
 import {
   store,
   selectFocused,
   selectIsDocumentEmpty,
   focus,
-  selectDocument,
-  focusNext,
-  focusPrevious,
   useAppSelector,
   useAppDispatch,
-  selectFocusTree,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -45,6 +36,8 @@ const newCell = { content: { plugin: EditorPluginType.Text } }
 
 export function SerloTableEditor(props: SerloTableProps) {
   const { rows } = props.state
+
+  const [updateHack, setUpdateHack] = useState(0)
 
   const dispatch = useAppDispatch()
   const focusedElement = useAppSelector(selectFocused)
@@ -69,12 +62,13 @@ export function SerloTableEditor(props: SerloTableProps) {
       return {
         cells: row.columns.map((cell) => (
           <div className="min-h-[2rem] pr-2" key={cell.content.id}>
-            {!selectIsDocumentEmpty(store.getState(), cell.content.id) &&
-              cell.content.render({
-                config: {
-                  isInlineChildEditor: true,
-                },
-              })}
+            {cell.content.render({
+              config: {
+                isInlineChildEditor: true,
+                placeholder: '',
+                updateHack,
+              },
+            })}
           </div>
         )),
       }
@@ -108,12 +102,6 @@ export function SerloTableEditor(props: SerloTableProps) {
     )
   }
 
-  function updateHack() {
-    const focusTree = selectFocusTree(store.getState())
-    dispatch(focusNext(focusTree))
-    dispatch(focusPrevious(focusTree))
-  }
-
   function renderActiveCellsIntoObject() {
     return rows.map((row, rowIndex) => {
       return {
@@ -133,9 +121,9 @@ export function SerloTableEditor(props: SerloTableProps) {
           const onKeyUpHandler = (e: KeyboardEvent<HTMLDivElement>) => {
             // hack: redraw when isEmpty changes. (onKeyUp bc. keyDown is captured for some keys)
             if (e.key === 'Delete' || e.key === 'Backspace') {
-              if (!isClear) updateHack()
+              if (!isClear) setUpdateHack((count) => count + 1)
             } else {
-              if (isClear) updateHack()
+              if (isClear) setUpdateHack((count) => count + 1)
             }
           }
           const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -167,9 +155,13 @@ export function SerloTableEditor(props: SerloTableProps) {
                     : cellTextFormattingOptions,
                 } as TextEditorConfig,
               })}
-              {props.config.allowImageInTableCells && !areImagesDisabled
-                ? renderSwitchButton(cell, isHead, isClear)
-                : null}
+              {props.config.allowImageInTableCells && !areImagesDisabled ? (
+                <CellSwitchButton
+                  cell={cell}
+                  isHead={isHead}
+                  isClear={isClear}
+                />
+              ) : null}
               {/* hack: make sure we capture most clicks in cells */}
               <style jsx global>{`
                 .serlo-td,
@@ -186,38 +178,6 @@ export function SerloTableEditor(props: SerloTableProps) {
         }),
       }
     })
-  }
-
-  function renderSwitchButton(
-    cell: StateTypesReturnType<{
-      content: ChildStateType<string, unknown>
-    }>,
-    isHead: boolean,
-    isClear: boolean
-  ) {
-    const isFocused = cell.content.id === focusedElement
-    const isImage =
-      selectDocument(store.getState(), cell.content.id)?.plugin ===
-      EditorPluginType.Image
-
-    if (isHead || !isFocused || !isClear) return null
-
-    return (
-      <button
-        onMouseDown={(e) => e.stopPropagation()} // hack to stop editor from stealing events
-        onClick={() => {
-          cell.content.replace(
-            isImage ? EditorPluginType.Text : EditorPluginType.Image
-          )
-        }}
-        className="serlo-button-light absolute m-2 block py-0.5 text-sm"
-        title={
-          isImage ? tableStrings.convertToText : tableStrings.convertToImage
-        }
-      >
-        <FaIcon icon={isImage ? faParagraph : faImages} />
-      </button>
-    )
   }
 
   function renderInlineNav(rowIndex: number, colIndex: number) {

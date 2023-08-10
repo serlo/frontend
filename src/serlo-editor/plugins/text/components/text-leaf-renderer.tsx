@@ -4,7 +4,7 @@ import { RenderLeafProps } from 'slate-react'
 import { textColors } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/const'
 
 export interface TextLeafRendererProps {
-  children: any
+  children: ReactNode
   leaf: RenderLeafProps['text']
   text?: RenderLeafProps['text']
   attributes?: { 'data-slate-leaf': true }
@@ -16,8 +16,6 @@ export function TextLeafRenderer({
   children,
 }: TextLeafRendererProps) {
   const colors = textColors.map(({ value }) => value)
-  const leafChildren = children as ReactNode
-
   const styles: CSSProperties = {}
 
   if (leaf.color !== undefined) styles.color = colors[leaf.color]
@@ -33,7 +31,7 @@ export function TextLeafRenderer({
     ? 'code'
     : 'span'
 
-  if (styleCount === 0 && LeafTag === 'span') return <>{leafChildren}</>
+  if (styleCount === 0 && LeafTag === 'span') return <>{children}</>
 
   const outputExtraStyles = styleCount > 1 || LeafTag === 'span'
 
@@ -47,7 +45,7 @@ export function TextLeafRenderer({
           : undefined
       }
     >
-      {leafChildren}
+      {children}
     </LeafTag>
   )
 }
