@@ -1,9 +1,9 @@
 name: e2e tests
 on:
-  - workflow_dispatch
-  - push:
-      branches:
-        - staging
+  workflow_dispatch:
+  push:
+    branches:
+      - staging
 jobs:
   test:
     runs-on: ubuntu-latest
