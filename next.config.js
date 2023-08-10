@@ -44,7 +44,6 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['ramda'], // context: https://github.com/vercel/next.js/issues/40183
-  experimental: { fallbackNodePolyfills: false },
   images: {
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
