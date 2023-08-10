@@ -44,9 +44,7 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   productionBrowserSourceMaps: true,
   transpilePackages: ['ramda'], // context: https://github.com/vercel/next.js/issues/40183
-  /*experimental: {
-    fallbackNodePolyfills: false,
-  },*/ // breaks styled-components unfortunately, see https://github.com/serlo/frontend/issues/2010
+  experimental: { fallbackNodePolyfills: false },
   images: {
     remotePatterns: [
       {
