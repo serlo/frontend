@@ -111,9 +111,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
 
-    // eslint-plugin-next
-    '@next/next/no-img-element': 'off',
-
     // styledjsx exceptions
     'react/no-unknown-property': [
       2,

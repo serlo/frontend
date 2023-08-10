@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 import { Link } from './link'
 import { HorizonData } from '@/data-types'
 import { tw } from '@/helper/tw'
@@ -15,7 +17,7 @@ export function Horizon({ data }: HorizonProps) {
         sm:flex sm:items-stretch sm:justify-between
       `}
     >
-      {data.map((horizonEntry, index) => {
+      {data.map(({ imageUrl, url, title, text }, index) => {
         return (
           <button
             className={tw`
@@ -29,18 +31,19 @@ export function Horizon({ data }: HorizonProps) {
           >
             <Link
               className="text-left leading-cozy text-brand-700 hover:text-almost-black hover:no-underline"
-              href={horizonEntry.url}
+              href={url}
               noExternalIcon
             >
-              <img
-                className="mb-2.5 h-auto pr-1"
-                alt={horizonEntry.title}
-                src={horizonEntry.imageUrl}
-              />
-              <h4 className="mx-0 mb-1 mt-3 text-xl font-bold">
-                {horizonEntry.title}
-              </h4>
-              <p className="m-0">{horizonEntry.text}</p>
+              <div className="relative mb-2.5 h-32">
+                <Image
+                  src={imageUrl}
+                  alt={title}
+                  fill
+                  className="object-cover pr-1"
+                />
+              </div>
+              <h4 className="mx-0 mb-1 mt-3 text-xl font-bold">{title}</h4>
+              <p className="m-0">{text}</p>
             </Link>
           </button>
         )

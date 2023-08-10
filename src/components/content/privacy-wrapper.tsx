@@ -1,5 +1,6 @@
 import { faHeart, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
+import Image from 'next/image'
 import { useState, KeyboardEvent, useEffect } from 'react'
 
 import { FaIcon } from '../fa-icon'
@@ -7,7 +8,6 @@ import { useInstanceData } from '@/contexts/instance-context'
 import { entityIconMapping } from '@/helper/icon-by-entity-type'
 import { replacePlaceholders } from '@/helper/replace-placeholders'
 import { tw } from '@/helper/tw'
-import { serloDomain } from '@/helper/urls/serlo-domain'
 import { ExternalProvider, useConsent } from '@/helper/use-consent'
 
 // inspired by https://github.com/ibrahimcesar/react-lite-youtube-embed
@@ -92,20 +92,21 @@ export function PrivacyWrapper({
 
     const previewImageUrl = isTwingle
       ? '/_assets/img/donations-form.png'
-      : `https://embed.${serloDomain}/thumbnail?url=${encodeURIComponent(
+      : `https://embed.serlo.org/thumbnail?url=${encodeURIComponent(
           embedUrl || ''
         )}`
 
     return (
       <div className="text-center">
         <div className="relative rounded-xl bg-brand-100 pb-[56.2%]">
-          <img
+          <Image
+            src={previewImageUrl}
+            alt={`${strings.content.previewImage} ${provider}`}
+            fill
             className={clsx(
               'absolute left-0 h-full w-full rounded-xl object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
             )}
-            src={previewImageUrl}
-            alt={`${strings.content.previewImage} ${provider}`}
           />
         </div>
         {!consentGiven && (

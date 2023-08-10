@@ -47,6 +47,7 @@ export function SubParticipateMega({
   function renderNewArea() {
     return (
       <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/_assets/img/community-menu-bird.svg"
           className="hidden w-[8.1rem] px-side md:block"

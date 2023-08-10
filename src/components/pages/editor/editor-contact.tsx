@@ -8,6 +8,7 @@ export function EditorContact({ contact }: { contact: TeamDataEntry }) {
 
   return (
     <div className="flex justify-center text-left text-base">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="mr-4 max-w-[6rem] rounded-full"
         alt={`${firstName} ${lastName}`}
