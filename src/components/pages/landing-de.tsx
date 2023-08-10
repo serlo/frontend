@@ -93,6 +93,7 @@ export function LandingDE({ data }: LandingDEProps) {
         <CommunityWall />
 
         <section className="mx-side mb-20 mt-20">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/_assets/img/landing/birds.svg" className="mx-auto" />
           <h3
             className={tw`

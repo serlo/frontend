@@ -213,6 +213,7 @@ export function EducationPlugins() {
                 <div className="mb-6 border-b-2 border-brand-100 font-bold">
                   Screenshot
                 </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   key={image}
                   className="

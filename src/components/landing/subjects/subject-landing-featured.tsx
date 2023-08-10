@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 import { Link } from '@/components/content/link'
@@ -62,15 +63,15 @@ export function SubjectLandingFeatured({
         )}
         href={data.url}
       >
-        <div className="mb-2.5 mr-5 rounded-lg bg-brand-100 transition-all group-hover:bg-white">
+        <div className="relative mb-2.5 mr-5 aspect-square rounded-lg bg-brand-100 transition-all group-hover:bg-white">
           {data.img ? (
-            <img
+            <Image
               className={tw`
-                aspect-square rounded-lg
-                object-contain object-center opacity-80
-                mix-blend-multiply
+                rounded-lg object-contain object-center
+                opacity-80 mix-blend-multiply
                 transition-all group-hover:opacity-100
               `}
+              fill
               alt={data.title}
               src={data.img}
             />

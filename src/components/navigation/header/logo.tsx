@@ -12,6 +12,7 @@ export function Logo({ foldOnMobile }: LogoProps) {
 
   return (
     <Link href="/" className="w-min sm:w-auto">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="inline"
         alt="Serlo"
@@ -24,7 +25,7 @@ export function Logo({ foldOnMobile }: LogoProps) {
           'align-text-top font-handwritten text-xl text-almost-black',
           foldOnMobile
             ? 'ml-9 mt-2 block mobileExt:ml-9 mobileExt:inline-block mobileExt:whitespace-nowrap sm:ml-2 sm:mt-4'
-            : 'absolute ml-2 mt-4 inline-block'
+            : 'absolute ml-2 mt-8 inline-block'
         )}
       >
         {strings.header.slogan}
