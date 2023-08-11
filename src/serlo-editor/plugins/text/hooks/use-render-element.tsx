@@ -61,7 +61,7 @@ export const useRenderElement = (focused: boolean) => {
         )
       }
       return (
-        <p {...attributes} className="serlo-p border border-gray-200">
+        <p {...attributes} className="serlo-p">
           {children}
         </p>
       )
