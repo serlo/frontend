@@ -276,12 +276,6 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       img: 'https://assets.serlo.org/5ab7c782ad7f7_f4111037d697776c337e7bffd142cedd01324bc9.png',
     },
     {
-      title: 'Aufgaben zu linearen Funktionen und Geradengleichungen',
-      type: TaxonomyTermType.ExerciseFolder,
-      url: '/mathe/31912/aufgaben-zu-linearen-funktionen-und-geradengleichungen',
-      img: 'https://assets.serlo.org/legacy/9664_63Oy7O06bX.png',
-    },
-    {
       title: 'Gemischte Aufgaben zur Mengenlehre',
       type: TaxonomyTermType.ExerciseFolder,
       url: '/mathe/30023/gemischte-aufgaben-zur-mengenlehre',
