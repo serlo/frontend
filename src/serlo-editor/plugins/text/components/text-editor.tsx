@@ -222,7 +222,6 @@ export function TextEditor(props: TextEditorProps) {
           }
         }
 
-        // TODO: test <br/> serializer somehow
         // TODO: think about what should happen when some text is selected
 
         // }

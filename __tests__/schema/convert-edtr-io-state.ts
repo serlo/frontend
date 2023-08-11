@@ -509,6 +509,7 @@ describe('text types', () => {
                 type: FrontendNodeType.SlateP,
                 children: [{ type: FrontendNodeType.Text, text: 'line1' }],
               },
+              { type: FrontendNodeType.Br },
               {
                 type: FrontendNodeType.SlateP,
                 children: [{ type: FrontendNodeType.Text, text: 'line2' }],
