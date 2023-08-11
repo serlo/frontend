@@ -53,6 +53,7 @@ export const PageTeamRenderer = ({
             alt={`${firstName} ${lastName}`}
             fill
             style={{ borderRadius: '99rem' }}
+            sizes="(max-width: 799px) 33.33vw, (max-width: 1023px) 33.33vw, 33.33vw"
           />
         </div>
         <b>
