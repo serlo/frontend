@@ -1,4 +1,4 @@
-import { Element, Node } from 'slate'
+import { Node } from 'slate'
 
 import { TextEditor, type TextEditorProps } from './components/text-editor'
 import type { TextEditorConfig, TextEditorState } from './types/config'
@@ -14,7 +14,6 @@ import type {
   MathElement,
 } from './types/text-editor'
 import { emptyDocumentFactory } from './utils/document'
-import { isEmptyObject } from './utils/object'
 import { type EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
 
 const createTextPlugin = (
@@ -24,39 +23,13 @@ const createTextPlugin = (
   config,
   state: serializedScalar(emptyDocumentFactory(), {
     serialize({ value }) {
-      return value.map((node) => {
-        if (!Element.isElement(node) || node.type !== 'p') return node
-        const children = node.children.map((text) => {
-          if (Object.hasOwn(text, 'type')) return text //math
-          return { text: text.text.replaceAll('\n', '<br/>') }
-        })
-        return { ...node, children }
-      })
+      return value
     },
     deserialize(value) {
       if (value.length === 0) {
         return emptyDocumentFactory()
       }
-
-      // If the first child of the Element is an empty object,
-      // replace it with an empty document.
-      // https://docs.slatejs.org/concepts/11-normalizing#built-in-constraints
-      const firstChild = (value[0] as CustomElement).children[0]
-      if (isEmptyObject(firstChild)) {
-        return emptyDocumentFactory()
-      }
-
-      const valueReplacedBrs = value.map((node) => {
-        if (!Element.isElement(node) || node.type !== 'p') return node
-
-        const children = node.children.map((text) => {
-          if (Object.hasOwn(text, 'type')) return text //math
-          return { text: text.text.replaceAll('<br/>', '\n') }
-        })
-        return { ...node, children }
-      })
-
-      return { value: valueReplacedBrs, selection: null }
+      return { value, selection: null }
     },
   }),
   onKeyDown() {
