@@ -53,6 +53,7 @@ export const PageTeamRenderer = ({
             alt={`${firstName} ${lastName}`}
             fill
             style={{ borderRadius: '99rem' }}
+            sizes={compact ? '8rem' : '11rem'}
           />
         </div>
         <b>
