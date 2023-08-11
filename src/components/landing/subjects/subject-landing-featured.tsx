@@ -72,6 +72,7 @@ export function SubjectLandingFeatured({
                 transition-all group-hover:opacity-100
               `}
               fill
+              sizes="13rem"
               alt={data.title}
               src={data.img}
             />

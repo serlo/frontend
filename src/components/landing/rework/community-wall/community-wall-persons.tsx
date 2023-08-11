@@ -56,6 +56,7 @@ export function CommunityWallPersons({
                   src={imgSrc}
                   alt={`Avatar von ${name}`}
                   fill
+                  sizes="(max-width: 799px) 33vw, (max-width: 1023px) 25vw, 12.5vw"
                   className="rounded-full object-cover"
                 />
               </div>
