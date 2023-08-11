@@ -41,7 +41,7 @@
     @apply serlo-button bg-editor-primary-100 text-almost-black hover:bg-editor-primary-200;
   }
   .serlo-p {
-    @apply mx-side mb-block mt-0 hyphens-auto text-lg leading-cozy;
+    @apply mx-side mb-3.5 mt-0 hyphens-auto text-lg leading-normal;
   }
   .serlo-h1 {
     @apply mx-side mb-9 mt-4 p-0 text-3.5xl font-bold;
