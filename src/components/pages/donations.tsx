@@ -63,9 +63,9 @@ export function Donations() {
                 alt="Kind beim Lernen mit Serlo"
                 fill
                 className={tw`
-                block aspect-square !h-80 !w-80 rounded-full
-                object-cover object-center pl-side mobile:mx-auto
-                sm:mx-0 sm:ml-auto sm:!h-[23rem] sm:!w-[23rem] sm:max-w-none
+                  block aspect-square !h-80 !w-80 rounded-full
+                  object-cover object-center pl-side mobile:mx-auto
+                  sm:mx-0 sm:ml-auto sm:!h-[23rem] sm:!w-[23rem] sm:max-w-none
               `}
               />
             </div>

@@ -34,11 +34,12 @@ export function Horizon({ data }: HorizonProps) {
               href={url}
               noExternalIcon
             >
-              <div className="relative mb-2.5 h-32">
+              <div className="relative mb-2.5 aspect-video">
                 <Image
                   src={imageUrl}
                   alt={title}
                   fill
+                  sizes="(max-width: 799px) 100vw, 212px"
                   className="object-cover pr-1"
                 />
               </div>
