@@ -103,6 +103,7 @@ export function PrivacyWrapper({
             src={previewImageUrl}
             alt={`${strings.content.previewImage} ${provider}`}
             fill
+            sizes="(max-width: 1023px) 100vw, 770px"
             className={clsx(
               'absolute left-0 h-full w-full rounded-xl object-cover',
               isTwingle ? 'opacity-50' : 'opacity-90'
