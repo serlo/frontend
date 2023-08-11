@@ -19,6 +19,7 @@ export interface Heading {
 
 export interface Paragraph {
   type: 'p'
+  isNew?: boolean
   children: (CustomText | MathElement)[] // TODO Restrict this to only inline MathElement
 }
 

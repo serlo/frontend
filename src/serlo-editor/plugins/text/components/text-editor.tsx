@@ -197,6 +197,7 @@ export function TextEditor(props: TextEditorProps) {
             event.preventDefault()
             Transforms.insertNodes(editor, {
               type: 'p',
+              isNew: true,
               children: [{ text: '' }],
             })
             return
@@ -215,6 +216,7 @@ export function TextEditor(props: TextEditorProps) {
             // add new paragraph without copying style from before
             Transforms.insertNodes(editor, {
               type: 'p',
+              isNew: true,
               children: [{ text: '' }],
             })
           }

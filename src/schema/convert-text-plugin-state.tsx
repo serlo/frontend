@@ -29,6 +29,14 @@ export function convertTextPluginState(
 
 export function convertSlateBlock(node: CustomElement): FrontendContentNode[] {
   if (node.type === 'p') {
+    if (node.isNew) {
+      return [
+        {
+          type: FrontendNodeType.P,
+          children: convertTextPluginState(node.children),
+        },
+      ]
+    }
     return handleSemistructedContentOfP(convertTextPluginState(node.children))
   }
   if (node.type === FrontendNodeType.A) {
@@ -144,6 +152,21 @@ export function convertTextNode(node: CustomText): FrontendContentNode[] {
   const text = node.text.replace(/\ufeff/g, '')
   if (text === '') return []
   const type = FrontendNodeType.Text
+
+  const lines = text.split('\n')
+
+  if (lines.length > 1) {
+    return lines.reduce(
+      (previousValue: FrontendContentNode[], currentValue) => {
+        if (previousValue.length) {
+          previousValue.push({ type: FrontendNodeType.Br })
+        }
+        previousValue.push({ ...node, type, text: currentValue })
+        return previousValue
+      },
+      []
+    )
+  }
   return [{ ...node, type, text }]
 }
 
