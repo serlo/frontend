@@ -58,6 +58,7 @@ export enum FrontendNodeType {
   H = 'h',
   A = 'a',
   P = 'p',
+  Br = 'br',
   Ul = 'ul',
   Ol = 'ol',
   Li = 'li',
@@ -103,6 +104,11 @@ export interface FrontendInlineMathNode {
   type: FrontendNodeType.InlineMath
   formula: string
   formulaSource?: string
+  children?: undefined
+}
+
+export interface FrontendBrNode {
+  type: FrontendNodeType.Br
   children?: undefined
 }
 
@@ -443,6 +449,7 @@ export type FrontendVoidNode =
 
 export type FrontendElementNode =
   | FrontendANode
+  | FrontendBrNode
   | FrontendPNode
   | FrontendHNode
   | FrontendSpoilerTitleNode

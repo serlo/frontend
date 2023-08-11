@@ -259,6 +259,7 @@ function renderElement({
       </div>
     )
   }
+  if (element.type === FrontendNodeType.Br) return <br />
   if (element.type === FrontendNodeType.P) {
     return <p className="serlo-p">{children}</p>
   }
