@@ -112,13 +112,19 @@ export function SubjectLandingTopicOverview({
             >
               {src ? (
                 <div className="relative h-12 w-12">
-                  <Image
-                    src={src}
-                    fill
-                    className="object-cover pr-2"
-                    aria-hidden
-                    alt={`Illustration: ${term.title}`}
-                  />
+                  {src.startsWith('https://assets.serlo.org') ? (
+                    <Image
+                      src={src}
+                      fill
+                      sizes="3rem"
+                      className="object-cover pr-2"
+                      aria-hidden
+                      alt={`Illustration: ${term.title}`}
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={src} className="h-12 w-12 object-cover pr-2" />
+                  )}
                 </div>
               ) : null}
               {term.title.replace(' und ', ' & ')}

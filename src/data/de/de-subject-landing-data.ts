@@ -66,8 +66,8 @@ export const deSubjectLandingData = {
 export interface FeaturedContentData {
   title: string
   type: UuidType | TaxonomyTermType
-  url: string
-  img: string
+  url: `/${string}`
+  img: `https://${string}.serlo.org/${string}`
 }
 
 // Will probably be fetched dynamically in the future:
@@ -114,7 +114,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Caesar-Verschlüsselung',
       type: UuidType.Article,
       url: '/informatik/48121/caesar-verschl%C3%BCsselung',
-      img: 'https://upload.wikimedia.org/wikipedia/commons/2/2b/Caesar3.svg',
+      img: 'https://assets.serlo.org/dc09c860-3828-11ee-b962-1fa7d97ba81a/CaesarVerschlsselung.svg',
     },
     {
       title: 'Grundlagen von Datenspeicherung',
@@ -274,12 +274,6 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       type: UuidType.Article,
       url: '/mathe/1565/sinus-kosinus-und-tangens',
       img: 'https://assets.serlo.org/5ab7c782ad7f7_f4111037d697776c337e7bffd142cedd01324bc9.png',
-    },
-    {
-      title: 'Aufgaben zu linearen Funktionen und Geradengleichungen',
-      type: TaxonomyTermType.ExerciseFolder,
-      url: '/mathe/31912/aufgaben-zu-linearen-funktionen-und-geradengleichungen',
-      img: 'https://assets.serlo.org/legacy/9664_63Oy7O06bX.png',
     },
     {
       title: 'Gemischte Aufgaben zur Mengenlehre',
@@ -518,13 +512,13 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Wir bringen Klimaschutz ins Klassenzimmer',
       type: UuidType.Course,
       url: '/nachhaltigkeit/249350/lernmaterial-unterrichtsmaterial-für-jugendliche',
-      img: 'https://images.pexels.com/photos/8106773/pexels-photo-8106773.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+      img: 'https://assets.serlo.org/1617fef0-3829-11ee-b962-1fa7d97ba81a/281710.jpg',
     },
     {
       title: 'Krieg und Klima',
       type: UuidType.Course,
       url: '/nachhaltigkeit/249364/jugendliche-zum-krieg-in-der-ukraine',
-      img: 'https://images.pexels.com/photos/11284548/pexels-photo-11284548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+      img: 'https://assets.serlo.org/4c3bb4e0-3829-11ee-b962-1fa7d97ba81a/jugendlichezumkrieginderukraine.jpg',
     },
   ],
   chemie: [
@@ -634,7 +628,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Silberspiegelprobe',
       type: UuidType.Article,
       url: '/chemie/77322/silberspiegelprobe-tollensprobe',
-      img: 'https://de.serlo.org/attachment/file/77323/9229',
+      img: 'https://assets.serlo.org/de98e240-3829-11ee-b962-1fa7d97ba81a/HiersiehtmandiegebildeteSilberschicht.jpg',
     },
   ],
   lerntipps: [
@@ -648,7 +642,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Die Feynman-Methode',
       type: UuidType.Article,
       url: '/lerntipps/134818/die-feynman-methode',
-      img: 'https://cdn.pixabay.com/photo/2018/03/02/03/44/unordered-3192273_1280.png',
+      img: 'https://assets.serlo.org/40550680-382a-11ee-b962-1fa7d97ba81a/Dukannstesnichterklren.webp',
     },
     {
       title: 'Zeitmanagement mit der Pomodoro-Methode',
@@ -702,13 +696,13 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Die WOOP-Methode',
       type: UuidType.Article,
       url: '/lerntipps/134496/die-woop-methode',
-      img: 'https://images.pexels.com/photos/3760613/pexels-photo-3760613.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+      img: 'https://assets.serlo.org/7e14ac50-382a-11ee-b962-1fa7d97ba81a/Zielerreicht.jpg',
     },
     {
       title: 'Haptisches Lernen',
       type: UuidType.Article,
       url: '/lerntipps/126371/haptisches-lernen',
-      img: 'https://images.pexels.com/photos/6231720/pexels-photo-6231720.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+      img: 'https://assets.serlo.org/b213ad80-382a-11ee-b962-1fa7d97ba81a/image.jpg',
     },
     {
       title: 'Negative Emotionen beim Lernen',
@@ -732,7 +726,7 @@ export const featuredContent: Record<string, FeaturedContentData[]> = {
       title: 'Tipps und Tricks zur Herangehensweise an Aufgaben',
       type: UuidType.Article,
       url: '/lerntipps/165214/tipps-und-tricks-zur-herangehensweise-an-aufgaben',
-      img: 'https://images.pexels.com/photos/6237990/pexels-photo-6237990.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
+      img: 'https://assets.serlo.org/cdb99ea0-382a-11ee-b962-1fa7d97ba81a/ManchmalsindAufgabenunverstndlichgestellt.jpg',
     },
     {
       title: 'Virtuelles Lernen',

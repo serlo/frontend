@@ -62,10 +62,12 @@ export function Donations() {
                 src="/_assets/img/donations-image.jpg"
                 alt="Kind beim Lernen mit Serlo"
                 fill
+                priority
+                sizes="23rem"
                 className={tw`
-                block aspect-square !h-80 !w-80 rounded-full
-                object-cover object-center pl-side mobile:mx-auto
-                sm:mx-0 sm:ml-auto sm:!h-[23rem] sm:!w-[23rem] sm:max-w-none
+                  block aspect-square !h-80 !w-80 rounded-full
+                  object-cover object-center mobile:mx-auto
+                  sm:mx-0 sm:ml-auto sm:!h-[23rem] sm:!w-[23rem] sm:max-w-none
               `}
               />
             </div>
@@ -150,7 +152,7 @@ export function Donations() {
               <Image
                 width={224}
                 height={63}
-                className="serlo-img mx-0 my-5 block"
+                className="serlo-img mx-0 my-5 block h-auto w-auto"
                 src="/_assets/img/donations-itz.png"
                 alt="Initiative Transparente Zivilgesellschaft"
               />

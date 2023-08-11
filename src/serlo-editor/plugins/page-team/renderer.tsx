@@ -52,7 +52,8 @@ export const PageTeamRenderer = ({
             src={imageSrc}
             alt={`${firstName} ${lastName}`}
             fill
-            style={{ borderRadius: '99rem' }}
+            className="rounded-full"
+            sizes={compact ? '8rem' : '11rem'}
           />
         </div>
         <b>
