@@ -116,6 +116,7 @@ export function SubjectLandingTopicOverview({
                     <Image
                       src={src}
                       fill
+                      sizes="3rem"
                       className="object-cover pr-2"
                       aria-hidden
                       alt={`Illustration: ${term.title}`}
