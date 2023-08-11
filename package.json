@@ -87,6 +87,7 @@
     "redux-saga": "^1.2.3",
     "remark-gfm": "^1.0.0",
     "reselect": "^4.1.8",
+    "sharp": "^0.32.4",
     "slate": "^0.94.1",
     "slate-react": "^0.98.1",
     "swr": "^2.2.0",
