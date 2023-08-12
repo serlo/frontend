@@ -12,11 +12,8 @@ import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import {
-  emptyDocumentFactory,
-  mergePlugins,
-  sliceNodesAfterSelection,
-} from '../utils/document'
+import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { insertPlugin } from '../utils/insert-plugin'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -29,10 +26,7 @@ import {
   focusNext,
   focusPrevious,
   selectDocument,
-  selectParent,
-  insertPluginChildAfter,
   selectMayManipulateSiblings,
-  runReplaceDocumentSaga,
   useAppDispatch,
   selectFocusTree,
   store,
@@ -277,8 +271,6 @@ export function TextEditor(props: TextEditorProps) {
       )
       if (!mayManipulateSiblings) return
 
-      const parentPluginType = document.plugin
-
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
 
@@ -296,7 +288,14 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin(EditorPluginType.Image, imagePluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Image,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: imagePluginState,
+          })
           return
         }
       }
@@ -314,7 +313,14 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin(EditorPluginType.Video, videoPluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Video,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: videoPluginState,
+          })
           return
         }
 
@@ -330,48 +336,16 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin(EditorPluginType.Geogebra, geogebraPluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Geogebra,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: geogebraPluginState,
+          })
           return
         }
-      }
-
-      function insertPlugin(
-        pluginType: string,
-        { state }: { state?: unknown }
-      ) {
-        const isEditorEmpty = Node.string(editor) === ''
-
-        if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, pluginType, state }))
-          return
-        }
-
-        const parent = selectParent(store.getState(), id)
-        if (!parent) return
-
-        const slicedNodes = sliceNodesAfterSelection(editor)
-
-        setTimeout(() => {
-          if (slicedNodes) {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: parentPluginType,
-                  state: slicedNodes,
-                },
-              })
-            )
-          }
-          dispatch(
-            insertPluginChildAfter({
-              parent: parent.id,
-              sibling: id,
-              document: { plugin: pluginType, state },
-            })
-          )
-        })
       }
     },
     [dispatch, editor, id, textStrings]
