@@ -1,12 +1,11 @@
-import clsx from 'clsx'
 import isHotkey from 'is-hotkey'
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range } from 'slate'
+import { createEditor, Node, Transforms, Range, Editor } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
-import { TextLeafRenderer } from './text-leaf-renderer'
+import { TextLeafWithPlaceholder } from './text-leaf-with-placeholder'
 import { TextToolbar } from './text-toolbar'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
@@ -50,7 +49,6 @@ export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
 
   const dispatch = useAppDispatch()
-
   const textStrings = useEditorStrings().plugins.text
 
   const config = useTextConfig(props.config)
@@ -395,21 +393,33 @@ export function TextEditor(props: TextEditorProps) {
       )}
       <Editable
         readOnly={!editable}
-        placeholder={
-          editable ? config.placeholder ?? textStrings.placeholder : undefined
-        }
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
-        renderLeaf={(props) => (
-          <span {...props.attributes}>
-            <TextLeafRenderer {...props} />
-          </span>
-        )}
-        className={clsx([
-          '[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0', // fixes placeholder position in safari
-          'outline-none', // removes the ugly outline present in Slate v0.94.1, maybe it can be removed in some later version
-        ])}
+        className="outline-none [&>[data-slate-node]]:mx-side"
+        renderLeaf={(props) => {
+          return (
+            <TextLeafWithPlaceholder
+              {...props}
+              customPlaceholder={config.placeholder}
+            />
+          )
+        }}
+        decorate={([node, path]) => {
+          const { selection } = editor
+          // thanks https://jkrsp.com/slate-js-placeholder-per-line/ 👍
+          if (
+            selection !== null &&
+            !Editor.isEditor(node) &&
+            Range.includes(selection, path) &&
+            Range.isCollapsed(selection)
+          ) {
+            if (Editor.string(editor, [path[0]]) === '') {
+              return [{ ...selection, placeholder: true }]
+            }
+          }
+          return []
+        }}
         data-qa="plugin-text-editor"
       />
       <LinkControls serloLinkSearch={config.serloLinkSearch} />
