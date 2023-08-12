@@ -380,9 +380,9 @@ export function TextEditor(props: TextEditorProps) {
               onAdd={
                 mayManipulateSiblings
                   ? () => {
-                    ReactEditor.focus(editor)
-                    editor.insertText('/')
-                  }
+                      ReactEditor.focus(editor)
+                      editor.insertText('/')
+                    }
                   : undefined
               }
             />
