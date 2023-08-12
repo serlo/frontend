@@ -43,7 +43,10 @@ export const useSuggestions = (args: useSuggestionsArgs) => {
   const suggestionsRef = useRef<HTMLDivElement>(null)
   const { editor, id, editable, focused } = args
   const pluginsStrings = useEditorStrings().plugins
-  const text = Node.string(editor)
+
+  const { selection } = editor
+  const node = selection ? Node.get(editor, selection.focus.path) : undefined
+  const text = Node.string(node ?? editor)
 
   const allPlugins = editorPlugins
     .getAllWithData()
