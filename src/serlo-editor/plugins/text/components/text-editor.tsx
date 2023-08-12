@@ -182,34 +182,31 @@ export function TextEditor(props: TextEditorProps) {
         }
 
         // Create a new Slate instance on "enter" key
-        if (isHotkey('enter', event) && !isListActive) {
-          const document = selectDocument(store.getState(), id)
-          if (!document) return
-
-          const mayManipulateSiblings = selectMayManipulateSiblings(
-            store.getState(),
-            id
-          )
-          if (!mayManipulateSiblings) return
-
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-
-          event.preventDefault()
-
-          const slicedNodes = sliceNodesAfterSelection(editor)
+        if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
+          // prevent two consecutive empty lines
+          // wrapped in setTimeout to let slates build in function run first
           setTimeout(() => {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes || emptyDocumentFactory().value,
-                },
-              })
-            )
+            const { path } = selection.focus
+            const node = Node.get(editor, path)
+            if (!Node.string(node).length) {
+              if (path[0] > 0) {
+                const previousNode = Node.get(editor, [path[0] - 1, 0])
+                if (!Node.string(previousNode).length)
+                  editor.deleteBackward('block')
+              } else editor.deleteBackward('block')
+            }
           })
+
+          // no newlines in headings and start new block as paragraph instead of heading again
+          const fragmentChild = editor.getFragment()[0]
+          const isHeading =
+            Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
+
+          if (isHeading) {
+            event.preventDefault()
+            Transforms.insertNodes(editor, emptyDocumentFactory().value)
+            return
+          }
         }
 
         // Merge with previous Slate instance on "backspace" key,
