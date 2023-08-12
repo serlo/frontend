@@ -54,6 +54,11 @@ export function TextEditor(props: TextEditorProps) {
     [createTextEditor]
   )
 
+  const mayManipulateSiblings = useMemo(
+    () => selectMayManipulateSiblings(store.getState(), id),
+    [id]
+  )
+
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
@@ -265,10 +270,6 @@ export function TextEditor(props: TextEditorProps) {
       const document = selectDocument(store.getState(), id)
       if (!document) return
 
-      const mayManipulateSiblings = selectMayManipulateSiblings(
-        store.getState(),
-        id
-      )
       if (!mayManipulateSiblings) return
 
       const files = Array.from(event.clipboardData.files)
@@ -348,7 +349,7 @@ export function TextEditor(props: TextEditorProps) {
         }
       }
     },
-    [dispatch, editor, id, textStrings]
+    [dispatch, editor, id, textStrings, mayManipulateSiblings]
   )
 
   return (
@@ -376,6 +377,14 @@ export function TextEditor(props: TextEditorProps) {
             <TextLeafWithPlaceholder
               {...props}
               customPlaceholder={config.placeholder}
+              onAdd={
+                mayManipulateSiblings
+                  ? () => {
+                    ReactEditor.focus(editor)
+                    editor.insertText('/')
+                  }
+                  : undefined
+              }
             />
           )
         }}
