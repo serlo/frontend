@@ -37,10 +37,12 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers(
+  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers({
+    editor,
     focused,
-    config.placeholder
-  )
+    placeholder: config.placeholder,
+    id,
+  })
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
