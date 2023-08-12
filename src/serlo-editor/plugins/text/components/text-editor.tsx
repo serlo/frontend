@@ -415,7 +415,7 @@ export function TextEditor(props: TextEditorProps) {
             Range.isCollapsed(selection)
           ) {
             if (Editor.string(editor, [path[0]]) === '') {
-              return [{ ...selection, placeholder: true }]
+              return [{ ...selection, showPlaceholder: true }]
             }
           }
           return []

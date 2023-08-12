@@ -10,7 +10,7 @@ export interface TextLeafWithPlaceholderProps {
 export function TextLeafWithPlaceholder(
   props: TextLeafWithPlaceholderProps & RenderLeafProps
 ) {
-  const { attributes, customPlaceholder } = props
+  const { attributes, customPlaceholder, leaf } = props
 
   const pluginStrings = useEditorStrings().plugins
 
@@ -20,20 +20,17 @@ export function TextLeafWithPlaceholder(
     </span>
   )
 
-  // @ts-expect-error for now
-  if (!props.leaf.placeholder) return leafElement
+  if (!leaf.showPlaceholder) return leafElement
 
   return (
     <>
       <span
-        className="pointer-events-none absolute text-gray-300"
+        className="pointer-events-none absolute block w-full text-gray-300 [user-select:none]"
         contentEditable={false}
       >
         {customPlaceholder ?? pluginStrings.text.placeholder}{' '}
       </span>
-      <span {...props.attributes}>
-        <TextLeafRenderer {...props} />
-      </span>
+      {leafElement}
     </>
   )
 }
