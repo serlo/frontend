@@ -1,24 +1,19 @@
 import clsx from 'clsx'
-import isHotkey from 'is-hotkey'
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range } from 'slate'
+import { createEditor, Node, Transforms } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
 import { TextLeafRenderer } from './text-leaf-renderer'
 import { TextToolbar } from './text-toolbar'
+import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
 import { useRenderElement } from '../hooks/use-render-element'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import {
-  emptyDocumentFactory,
-  mergePlugins,
-  sliceNodesAfterSelection,
-} from '../utils/document'
-import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
+import { sliceNodesAfterSelection } from '../utils/document'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { HoverOverlay } from '@/serlo-editor/editor-ui'
@@ -27,15 +22,12 @@ import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/t
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
-  focusNext,
-  focusPrevious,
   selectDocument,
   selectParent,
   insertPluginChildAfter,
   selectMayManipulateSiblings,
   runReplaceDocumentSaga,
   useAppDispatch,
-  selectFocusTree,
   store,
 } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
@@ -68,6 +60,14 @@ export function TextEditor(props: TextEditorProps) {
   const handleRenderElement = useRenderElement(focused)
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
+    state,
+  })
+  const handleEditableKeyDown = useEditableKeydownHandler({
+    config,
+    editor,
+    id,
+    showSuggestions,
+    previousSelection,
     state,
   })
 
@@ -121,153 +121,6 @@ export function TextEditor(props: TextEditorProps) {
       clearTimeout(timeout)
     }
   }, [editor, focused])
-
-  const handleEditableKeyDown = useCallback(
-    (event: React.KeyboardEvent) => {
-      // If linebreaks are disabled in the config, prevent any enter key handling
-      if (config.noLinebreaks && event.key === 'Enter') {
-        event.preventDefault()
-      }
-
-      // Handle specific keyboard commands
-      // (only if selection is collapsed and suggestions are not shown)
-      const { selection } = editor
-      if (selection && Range.isCollapsed(selection) && !showSuggestions) {
-        const isListActive = isSelectionWithinList(editor)
-
-        // Special handler for links. If you move right and end up at the right edge of a link,
-        // this handler unselects the link, so you can write normal text behind it.
-        if (isHotkey('right', event)) {
-          const { path, offset } = selection.focus
-          const node = Node.get(editor, path)
-          const parent = Node.parent(editor, path)
-
-          if (node && parent) {
-            if (Object.hasOwn(parent, 'type') && parent.type === 'a') {
-              if (
-                Object.hasOwn(node, 'text') &&
-                node.text.length - 1 <= offset
-              ) {
-                Transforms.move(editor)
-                Transforms.move(editor, { unit: 'offset' })
-                event.preventDefault()
-              }
-            }
-          }
-        }
-
-        // Special handler for links. Handle linebreaks while editing a link text
-        if (event.key === 'Enter') {
-          const { path, offset } = selection.focus
-          const node = Node.get(editor, path)
-          const parent = Node.parent(editor, path)
-
-          if (node && parent) {
-            if (
-              Object.hasOwn(parent, 'type') &&
-              parent.type === 'a' &&
-              Object.hasOwn(node, 'text')
-            ) {
-              // cursor is on left of link (but still on link): normal line break
-              if (offset === 0) return
-
-              // cursor is right of link(but still on link): line break without continuing link
-              // normal text in new line
-              event.preventDefault()
-              if (node.text.length === offset) Transforms.move(editor)
-              // cursor is somewhere inside link: no line break, no action
-              else return false
-            }
-          }
-        }
-
-        // Create a new Slate instance on "enter" key
-        if (isHotkey('enter', event) && !isListActive) {
-          const document = selectDocument(store.getState(), id)
-          if (!document) return
-
-          const mayManipulateSiblings = selectMayManipulateSiblings(
-            store.getState(),
-            id
-          )
-          if (!mayManipulateSiblings) return
-
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-
-          event.preventDefault()
-
-          const slicedNodes = sliceNodesAfterSelection(editor)
-          setTimeout(() => {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes || emptyDocumentFactory().value,
-                },
-              })
-            )
-          })
-        }
-
-        // Merge with previous Slate instance on "backspace" key,
-        // or merge with next Slate instance on "delete" key
-        const isBackspaceAtStart =
-          isHotkey('backspace', event) && isSelectionAtStart(editor, selection)
-        const isDeleteAtEnd =
-          isHotkey('delete', event) && isSelectionAtEnd(editor, selection)
-        if ((isBackspaceAtStart || isDeleteAtEnd) && !isListActive) {
-          event.preventDefault()
-
-          // Get direction of merge
-          const direction = isBackspaceAtStart ? 'previous' : 'next'
-
-          // Merge plugins within Slate and get the merge value
-          const newValue = mergePlugins(direction, editor, store, id)
-
-          // Update Redux document state with the new value
-          if (newValue) {
-            state.set({ value: newValue, selection }, ({ value }) => ({
-              value,
-              selection: previousSelection.current,
-            }))
-          }
-        }
-
-        // Jump to previous/next plugin on pressing "up"/"down" arrow keys at start/end of text block
-        const isUpArrowAtStart =
-          isHotkey('up', event) && isSelectionAtStart(editor, selection)
-        if (isUpArrowAtStart) {
-          event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
-          dispatch(focusPrevious(focusTree))
-        }
-        const isDownArrowAtEnd =
-          isHotkey('down', event) && isSelectionAtEnd(editor, selection)
-        if (isDownArrowAtEnd) {
-          event.preventDefault()
-          const focusTree = selectFocusTree(store.getState())
-          dispatch(focusNext(focusTree))
-        }
-      }
-
-      textFormattingOptions.handleHotkeys(event, editor)
-      textFormattingOptions.handleMarkdownShortcuts(event, editor)
-      textFormattingOptions.handleListsShortcuts(event, editor)
-    },
-    [
-      config.noLinebreaks,
-      dispatch,
-      editor,
-      id,
-      showSuggestions,
-      previousSelection,
-      state,
-      textFormattingOptions,
-    ]
-  )
 
   const handleEditablePaste = useCallback(
     (event: React.ClipboardEvent) => {
