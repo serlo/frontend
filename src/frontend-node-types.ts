@@ -28,7 +28,6 @@ export enum FrontendNodeType {
   Equations = EditorPluginType.Equations,
   Geogebra = EditorPluginType.Geogebra,
   Image = EditorPluginType.Image,
-  Important = EditorPluginType.Important,
   Injection = EditorPluginType.Injection,
   Multimedia = EditorPluginType.Multimedia,
   PageLayout = EditorPluginType.PageLayout,
@@ -194,11 +193,6 @@ export interface FrontendColNode {
   type: FrontendNodeType.Col
   size: number
   float?: 'left' | 'right'
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendImportantNode {
-  type: FrontendNodeType.Important
   children?: FrontendContentNode[]
 }
 
@@ -437,7 +431,6 @@ export type FrontendElementNode =
   | FrontendSpoilerBodyNode
   | FrontendLiNode
   | FrontendColNode
-  | FrontendImportantNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode

@@ -356,9 +356,6 @@ function renderElement({
       </div>
     )
   }
-  if (element.type === FrontendNodeType.Important) {
-    return <div className="serlo-important">{children}</div>
-  }
   if (element.type === FrontendNodeType.Box) {
     return <Box {...element} renderNested={nestedRenderer} />
   }

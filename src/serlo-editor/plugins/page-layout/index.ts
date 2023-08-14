@@ -16,7 +16,6 @@ const allowedPlugins = [
   EditorPluginType.Anchor,
   EditorPluginType.Equations,
   EditorPluginType.Image,
-  EditorPluginType.Important,
   EditorPluginType.Injection,
   EditorPluginType.Multimedia,
   EditorPluginType.Spoiler,

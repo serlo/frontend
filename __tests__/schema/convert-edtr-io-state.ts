@@ -70,34 +70,6 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: important', () => {
-    const result = convert({
-      plugin: EditorPluginType.Important,
-      state: {
-        plugin: EditorPluginType.Text,
-        state: [
-          { type: FrontendNodeType.P, children: [{ text: '"Merksatz"' }] },
-        ],
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Important,
-        children: [
-          {
-            type: FrontendNodeType.SlateContainer,
-            children: [
-              {
-                type: FrontendNodeType.SlateP,
-                children: [{ type: FrontendNodeType.Text, text: '"Merksatz"' }],
-              },
-            ],
-          },
-        ],
-      },
-    ])
-  })
-
   describe('plugin: layout', () => {
     test('default', () => {
       const result = convert({

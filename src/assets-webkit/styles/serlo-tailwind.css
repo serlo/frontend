@@ -120,10 +120,6 @@
     @apply overflow-x-auto overflow-y-hidden text-lg leading-browser;
     @apply my-[1em] px-side;
   }
-  .serlo-important {
-    @apply mx-4 mb-block border-l-6 border-brand p-2.5;
-    @apply mx-side;
-  }
   .serlo-spoiler-body {
     @apply pb-3.5 pt-6;
   }
@@ -188,7 +184,6 @@
     }
 
     & .serlo-spacing-fix,
-    & .serlo-important,
     & .serlo-spoiler-body,
     & .serlo-solution-box,
     & .serlo-styled-label,

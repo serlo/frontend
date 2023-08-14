@@ -414,18 +414,6 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
   if (node.name === 'hr') {
     return []
   }
-  if (node.name === 'blockquote') {
-    const children = convert(node.children).filter(
-      (child) =>
-        !(child.type === FrontendNodeType.Text && child.text.trim() === '')
-    )
-    return [
-      {
-        type: FrontendNodeType.Important,
-        children,
-      },
-    ]
-  }
   if (node.name === 'pre') {
     const code = node.children[0]?.children[0]?.data
     if (code) {

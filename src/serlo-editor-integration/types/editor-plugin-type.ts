@@ -8,7 +8,6 @@ export enum EditorPluginType {
   H5p = 'h5p',
   Highlight = 'highlight',
   Image = 'image',
-  Important = 'important',
   Injection = 'injection',
   Layout = 'layout',
   Multimedia = 'multimedia',

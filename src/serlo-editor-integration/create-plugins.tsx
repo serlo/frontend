@@ -15,7 +15,6 @@ import { shouldUseFeature } from '@/components/user/profile-experimental'
 import { type LoggedInData, UuidType } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'
 import type { PluginsWithData } from '@/serlo-editor/plugin/helpers/editor-plugins'
-import { importantPlugin } from '@/serlo-editor/plugins/_on-the-way-out/important/important'
 import { layoutPlugin } from '@/serlo-editor/plugins/_on-the-way-out/layout'
 import { anchorPlugin } from '@/serlo-editor/plugins/anchor'
 import { articlePlugin } from '@/serlo-editor/plugins/article'
@@ -176,7 +175,6 @@ export function createPlugins({
     { type: EditorPluginType.Exercise, plugin: exercisePlugin },
     { type: EditorPluginType.Highlight, plugin: createHighlightPlugin() },
     { type: EditorPluginType.H5p, plugin: H5pPlugin },
-    { type: EditorPluginType.Important, plugin: importantPlugin },
     {
       type: EditorPluginType.InputExercise,
       plugin: createInputExercisePlugin({}),

@@ -1,5 +1,4 @@
 import { EditorPluginType } from './editor-plugin-type'
-import type { ImportantPluginState } from '../../serlo-editor/plugins/_on-the-way-out/important/important'
 import type { LayoutPluginState } from '../../serlo-editor/plugins/_on-the-way-out/layout'
 import type { ArticlePluginState } from '../../serlo-editor/plugins/article'
 import type { ExercisePluginState } from '../../serlo-editor/plugins/exercise'
@@ -78,11 +77,6 @@ export interface EditorHighlightPlugin {
 export interface EditorImagePlugin {
   plugin: EditorPluginType.Image
   state: StateTypeSerializedType<ImagePluginState>
-  id?: string
-}
-export interface EditorImportantPlugin {
-  plugin: EditorPluginType.Important
-  state: StateTypeSerializedType<ImportantPluginState>
   id?: string
 }
 export interface EditorInjectionPlugin {
@@ -177,7 +171,6 @@ export type SupportedEditorPlugin =
   | EditorLayoutPlugin
   | EditorMultimediaPlugin
   | EditorSpoilerPlugin
-  | EditorImportantPlugin
   | EditorBoxPlugin
   | EditorImagePlugin
   | EditorTextPlugin

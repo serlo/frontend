@@ -41,8 +41,7 @@ export function RowsEditor({ state, config, id, editable }: RowsProps) {
       return (
         pluginType !== EditorPluginType.Box &&
         pluginType !== EditorPluginType.Spoiler &&
-        pluginType !== EditorPluginType.Multimedia &&
-        pluginType !== EditorPluginType.Important
+        pluginType !== EditorPluginType.Multimedia
       )
     }) &&
     pluginTypesOfAncestors[pluginTypesOfAncestors.length - 1] !==

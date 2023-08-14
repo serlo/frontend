@@ -82,7 +82,6 @@ export interface OtherPlugin {
     | EditorPluginType.Geogebra
     | EditorPluginType.Highlight
     | EditorPluginType.Image
-    | EditorPluginType.Important
     | EditorPluginType.Injection
     | EditorPluginType.InputExercise
     | EditorPluginType.Spoiler
