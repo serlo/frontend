@@ -1,7 +1,6 @@
 import clsx from 'clsx'
-import CSS from 'csstype'
 import dynamic from 'next/dynamic'
-import { ReactNode, Fragment, createElement } from 'react'
+import { CSSProperties, ReactNode, Fragment, createElement } from 'react'
 
 import { ExtraRevisionViewInfo } from './extra-revision-view-info'
 import { ExerciseGroup } from '../components/content/exercises/exercise-group'
@@ -173,7 +172,7 @@ interface RenderLeafProps {
 }
 
 export function renderLeaf({ leaf, key, children }: RenderLeafProps) {
-  const styles: CSS.Properties = {}
+  const styles: CSSProperties = {}
 
   if (leaf.code) {
     return (

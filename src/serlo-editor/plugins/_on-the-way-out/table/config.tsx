@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfmPlugin from 'remark-gfm'
 
-import { TableConfig, TablePluginConfig } from '.'
+import type { TableConfig, TablePluginConfig } from '.'
 
 export function useTableConfig(config: TableConfig): TablePluginConfig {
   const { MarkdownRenderer = DefaultMarkdownRenderer } = config

@@ -1,67 +1,18 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import clsx from 'clsx'
-import { useState, useCallback, createRef, useEffect } from 'react'
+import { useState, createRef, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import Modal from 'react-modal'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { Key } from 'ts-key-enum'
 
+import { MathEditorOverlay } from './math-editor-overlay'
+import { MathHelpModal } from './math-help-modal'
 import { MathRenderer } from './renderer'
 import { VisualEditor } from './visual-editor'
-import { EditorTextarea } from '../editor-ui'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'
-
-interface MathEditorTextAreaProps
-  extends Pick<
-    MathEditorProps,
-    'onChange' | 'onMoveOutLeft' | 'onMoveOutRight'
-  > {
-  defaultValue: string
-  onChange: (value: string) => void
-}
-
-const MathEditorTextArea = (props: MathEditorTextAreaProps) => {
-  const [latex, setLatex] = useState(props.defaultValue)
-  const { onChange } = props
-  const parentOnChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const value = e.target.value
-      setLatex(value)
-      onChange(value)
-    },
-    [onChange]
-  )
-
-  // Autofocus textarea
-  const textareaRef = createRef<HTMLTextAreaElement>()
-  useEffect(() => {
-    const textarea = textareaRef.current
-    if (textarea)
-      // Timeout is needed because hovering overlay is positioned only after render of this
-      setTimeout(() => {
-        textarea.focus()
-      })
-    // Only run on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  return (
-    <EditorTextarea
-      className={tw`
-        !m-0.5 h-24 !w-[80vw] !max-w-[600px] rounded-md !border-2
-        border-transparent text-black !shadow-none focus:border-editor-primary
-      `}
-      onChange={parentOnChange}
-      onCopy={(e) => e.stopPropagation()}
-      onCut={(e) => e.stopPropagation()}
-      onMoveOutRight={props.onMoveOutRight}
-      onMoveOutLeft={props.onMoveOutLeft}
-      value={latex}
-      ref={textareaRef}
-    />
-  )
-}
 
 export interface MathEditorProps {
   autofocus?: boolean
@@ -74,106 +25,66 @@ export interface MathEditorProps {
   onEditorChange(visual: boolean): void
   onInlineChange?(inline: boolean): void
   onChange(state: string): void
-  onMoveOutRight?(): void
-  onMoveOutLeft?(): void
+  closeMathEditorOverlay: () => void
+  onMoveOutRight: () => void
+  onMoveOutLeft(): void
   onDeleteOutRight?(): void
   onDeleteOutLeft?(): void
 }
 
 export function MathEditor(props: MathEditorProps) {
   const anchorRef = createRef<HTMLDivElement>()
-  const [helpOpen, setHelpOpen] = useState(false)
+  const [isHelpOpen, setIsHelpOpen] = useState(false)
   const [hasError, setHasError] = useState(false)
+  const targetRef = useRef<HTMLDivElement | null>(null)
 
   const mathStrings = useEditorStrings().plugins.text.math
 
   const { visual, readOnly, state, disableBlock } = props
 
-  const useVisualEditor = visual && !hasError
+  useHotkeys(
+    Key.Escape,
+    (event) => {
+      event.preventDefault()
+      props.closeMathEditorOverlay()
+    },
+    {
+      enableOnFormTags: true,
+    }
+  )
+
+  useEffect(() => {
+    targetRef.current = document.querySelector<HTMLDivElement>(
+      '.toolbar-controls-target'
+    )
+
+    if (!targetRef.current) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        'MathEditor: Could not find toolbar-controls-target to create portal'
+      )
+    }
+  }, [])
+
+  const isVisualMode = (visual && !hasError) || false
 
   return (
     <>
-      <Modal
-        ariaHideApp={false}
-        isOpen={helpOpen}
-        onRequestClose={() => {
-          setHelpOpen(false)
-        }}
-        style={{
-          overlay: {
-            zIndex: 9999,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-          },
-          content: {
-            borderRadius: 0,
-            backgroundColor: '#ffffff',
-            width: '90%',
-            maxWidth: '600px',
-            maxHeight: 'calc(100vh - 80px)',
-            top: 'auto',
-            left: 'auto',
-            right: 'auto',
-            bottom: 'auto',
-            margin: '0 auto',
-          },
-        }}
-      >
-        <>
-          {mathStrings.shortcuts}:
-          <br />
-          <br />
-          <p>
-            {mathStrings.fraction}: {renderKey('/')}
-          </p>
-          <p>
-            {mathStrings.superscript}: {renderKey('↑')} {mathStrings.or}{' '}
-            {renderKey('^')}
-          </p>
-          <p>
-            {mathStrings.subscript}: {renderKey('↓')} {mathStrings.or}{' '}
-            {renderKey('_')}
-          </p>
-          <p>
-            π, α, β, γ: {renderKey('pi')}, {renderKey('alpha')},{' '}
-            {renderKey('beta')},{renderKey('gamma')}
-          </p>
-          <p>
-            ≤, ≥: {renderKey('<=')}, {renderKey('>=')}
-          </p>
-          <p>
-            {mathStrings.root}: {renderKey('\\sqrt')}, {renderKey('\\nthroot')}
-          </p>
-          <p>
-            {mathStrings.mathSymbols}: {renderKey('\\<NAME>')}, {mathStrings.eG}{' '}
-            {renderKey('\\neq')} (≠), {renderKey('\\pm')} (±), …
-          </p>
-          <p>
-            {mathStrings.functions}: {renderKey('sin')}, {renderKey('cos')},{' '}
-            {renderKey('ln')}, …
-          </p>
-        </>
-      </Modal>
+      <MathHelpModal isHelpOpen={isHelpOpen} setIsHelpOpen={setIsHelpOpen} />
       {renderChildren()}
     </>
   )
-
-  function renderKey(text: string) {
-    return (
-      <span className="min-w-[20px] rounded-md bg-[#ddd] px-1 py-0.5 text-center text-almost-black">
-        {text}
-      </span>
-    )
-  }
 
   function renderChildren() {
     if (readOnly) {
       return state ? (
         <MathRenderer {...props} />
       ) : (
-        <span className="bg-gray-300" {...props.additionalContainerProps}>
+        <span
+          className="bg-gray-300"
+          {...props.additionalContainerProps}
+          data-qa="plugin-math-renderer"
+        >
           {mathStrings.formula}
         </span>
       )
@@ -181,7 +92,7 @@ export function MathEditor(props: MathEditorProps) {
 
     return (
       <>
-        {useVisualEditor ? (
+        {isVisualMode ? (
           <div
             onClick={(e) => e.stopPropagation()}
             ref={anchorRef}
@@ -221,7 +132,7 @@ export function MathEditor(props: MathEditorProps) {
                   px-1 py-[2px] text-base text-almost-black transition-all
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
                 `}
-              value={useVisualEditor ? 'visual' : 'latex'}
+              value={isVisualMode ? 'visual' : 'latex'}
               onChange={(e) => {
                 if (hasError) setHasError(false)
                 props.onEditorChange(e.target.value === 'visual')
@@ -241,9 +152,9 @@ export function MathEditor(props: MathEditorProps) {
                 <FaIcon icon={props.inline ? faCircle : faCheckCircle} />
               </button>
             )}
-            {useVisualEditor && (
+            {isVisualMode && (
               <button
-                onMouseDown={() => setHelpOpen(true)}
+                onMouseDown={() => void setIsHelpOpen(true)}
                 className="mx-2 text-almost-black hover:text-editor-primary"
               >
                 <FaIcon icon={faQuestionCircle} />
@@ -252,34 +163,19 @@ export function MathEditor(props: MathEditorProps) {
           </div>
         )}
 
-        {hasError || !useVisualEditor ? renderOverlayPortal() : null}
+        {hasError || !isVisualMode ? (
+          <MathEditorOverlay
+            hasError={hasError}
+            isVisualMode={isVisualMode}
+            {...props}
+          />
+        ) : null}
       </>
     )
   }
 
   function renderControlsPortal(children: JSX.Element) {
-    const target =
-      typeof window !== undefined &&
-      document.querySelector('.toolbar-controls-target')
-    if (!target) return null
-
-    return createPortal(children, target)
-  }
-
-  function renderOverlayPortal() {
-    const children = (
-      <div
-        className="fixed bottom-0 z-50 rounded-t-xl bg-editor-primary-100 p-3 shadow-menu"
-        onClick={(e) => e.stopPropagation()} // double/triple clicks close overlay otherwise (#2700)
-      >
-        <p className="mr-0.5 mt-1 text-right text-sm font-bold text-gray-600">
-          {hasError ? mathStrings.onlyLatex : mathStrings.latexEditorTitle}
-        </p>
-        {!useVisualEditor && (
-          <MathEditorTextArea {...props} defaultValue={state} />
-        )}
-      </div>
-    )
-    return children
+    if (!targetRef.current) return null
+    return createPortal(children, targetRef.current)
   }
 }

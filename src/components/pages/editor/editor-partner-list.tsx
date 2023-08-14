@@ -51,8 +51,9 @@ export function EditorPartnerList() {
     </div>
   )
 
-  function renderPartner({ name, logo, padding }: typeof partners[0]) {
+  function renderPartner({ name, logo, padding }: (typeof partners)[0]) {
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         key={name}
         className="mb-12 max-h-[4.5rem] max-w-[20rem] px-7 sm:max-h-[5.3rem] md:max-h-24"

@@ -6,22 +6,22 @@ import { useContext, useEffect, useState } from 'react'
 import { LocalStorageButton } from './local-storage-button'
 import { entity } from '../../serlo-editor/plugins/serlo-template-plugins/common/common'
 import { useHandleSave } from '../../serlo-editor/plugins/serlo-template-plugins/helpers/use-handle-save'
-import { SaveContext } from '../serlo-editor'
+import { SaveContext } from '../context/save-context'
 import { useGraphqlSwr } from '@/api/use-graphql-swr'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { StaticInfoPanel } from '@/components/static-info-panel'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
+import type { DefaultLicenseAgreementQuery } from '@/fetcher/graphql-types/operations'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { tw } from '@/helper/tw'
-import { StateTypeReturnType } from '@/serlo-editor/plugin'
+import type { StateTypeReturnType } from '@/serlo-editor/plugin'
 
 export interface SaveModalProps {
   open: boolean
   setOpen: (arg0: boolean) => void
-  changes?: StateTypeReturnType<typeof entity['changes']>
-  license?: StateTypeReturnType<typeof entity['license']>
+  changes?: StateTypeReturnType<(typeof entity)['changes']>
+  license?: StateTypeReturnType<(typeof entity)['license']>
   showSubscriptionOptions?: boolean
 }
 

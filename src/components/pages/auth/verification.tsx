@@ -1,8 +1,8 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import {
-  VerificationFlow,
+  type VerificationFlow,
   VerificationFlowState,
-  UpdateVerificationFlowBody,
+  type UpdateVerificationFlowBody,
 } from '@ory/client'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -11,7 +11,8 @@ import { loginUrl } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useAuthentication } from '@/auth/use-authentication'
 import { useCheckInstance } from '@/auth/use-check-instance'
-import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Flow, handleFlowError } from '@/components/auth/flow'
+import { FlowType } from '@/components/auth/flow-type'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
 import { StaticInfoPanel } from '@/components/static-info-panel'

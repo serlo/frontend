@@ -1,7 +1,7 @@
 import { faImages } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
 
-import { ImageProps } from '.'
+import type { ImageProps } from '.'
 import { InlineSrcControls } from './controls/inline-src-controls'
 import { ImageRenderer } from './renderer'
 import { ImageToolbar } from './toolbar'
@@ -35,6 +35,7 @@ export function ImageEditor(props: ImageProps) {
   const hasFocus = focused || isCaptionFocused
   const isLoading = isTempFile(state.src.value) && !state.src.value.loaded
 
+  // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const src = state.src.value.toString()
 
   useEffect(() => {

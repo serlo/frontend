@@ -1,16 +1,16 @@
 import { ImageEditor } from './editor'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  type UploadHandler,
+  type UploadValidator,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   isTempFile,
   number,
   object,
   optional,
   string,
   upload,
-  UploadHandler,
-  UploadValidator,
 } from '../../plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
@@ -71,8 +71,7 @@ export function createImagePlugin(
       return (
         (!serializedState.src.value || isTempFile(serializedState.src.value)) &&
         (!serializedState.link.defined || !serializedState.link.href.value) &&
-        (!serializedState.alt.defined || !serializedState.alt.value) &&
-        (!serializedState.caption.defined || !serializedState.caption.get())
+        (!serializedState.alt.defined || !serializedState.alt.value)
       )
     },
   }

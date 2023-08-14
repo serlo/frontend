@@ -1,5 +1,9 @@
 import { InjectionEditor } from './editor'
-import { string, EditorPlugin, EditorPluginProps } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 
 export const injectionState = string()
 

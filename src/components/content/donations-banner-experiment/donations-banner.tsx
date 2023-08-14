@@ -194,7 +194,7 @@ const courseBanner = {
   username: '',
 }
 
-type Banner = typeof articleBanners[number]
+type Banner = (typeof articleBanners)[number]
 
 export interface DonationsBannerProps {
   id: number
@@ -261,6 +261,7 @@ export function DonationsBanner({ id, entityData }: DonationsBannerProps) {
       >
         {renderHideButton()}
         <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={banner.imageSrc}
             onLoad={() => {

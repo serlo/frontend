@@ -22,6 +22,7 @@ export function LightBox({ label, src, alt, onClose }: LightBoxProps) {
         isOpen
         onRequestClose={onClose}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           onClick={onClose}
           src={src}

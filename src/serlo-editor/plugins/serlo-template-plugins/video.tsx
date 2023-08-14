@@ -8,7 +8,11 @@ import { ContentLoaders } from './helpers/content-loaders/content-loaders'
 import { ToolbarMain } from './toolbar-main/toolbar-main'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 import { videoPlugin } from '@/serlo-editor/plugins/video'
 
 export const videoTypeState = entityType(
@@ -36,15 +40,15 @@ function VideoTypeEditor(props: EditorPluginProps<VideoTypePluginState>) {
 
   return (
     <>
-      {props.renderIntoSideToolbar(
+      <div className="absolute right-0 -mt-20 mr-side">
         <ContentLoaders
           id={id.value}
           currentRevision={revision.value}
           onSwitchRevision={replaceOwnState}
           entityType={UuidType.Video}
         />
-      )}
-      <h1 className="serlo-h1">
+      </div>
+      <h1 className="serlo-h1 mt-32">
         {props.editable ? (
           <input
             className={headerInputClasses}

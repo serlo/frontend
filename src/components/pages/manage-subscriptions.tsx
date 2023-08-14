@@ -4,10 +4,10 @@ import { FaIcon } from '../fa-icon'
 import { Link } from '@/components/content/link'
 import { useInstanceData } from '@/contexts/instance-context'
 import { useLoggedInData } from '@/contexts/logged-in-data-context'
-import { UuidWithRevType } from '@/data-types'
+import type { UuidWithRevType } from '@/data-types'
 import { getRawTitle } from '@/fetcher/create-title'
 import {
-  GetSubscriptionsQuery,
+  type GetSubscriptionsQuery,
   Instance,
 } from '@/fetcher/graphql-types/operations'
 import { getEntityStringByTypename } from '@/helper/feature-i18n'

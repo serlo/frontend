@@ -1,6 +1,6 @@
 import { faCircleArrowUp, faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 
-import { ImageProps } from '..'
+import type { ImageProps } from '..'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { tw } from '@/helper/tw'

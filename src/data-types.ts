@@ -1,17 +1,17 @@
-import { AuthorizationPayload } from '@serlo/authorization'
-import { CSSProperties, FunctionComponent } from 'react'
+import { type AuthorizationPayload } from '@serlo/authorization'
+import { type CSSProperties, type FunctionComponent } from 'react'
 
 import {
   Instance,
-  UnrevisedRevisionsQuery,
+  type UnrevisedRevisionsQuery,
 } from './fetcher/graphql-types/operations'
-import { User } from './fetcher/query-types'
-import {
+import type { User } from './fetcher/query-types'
+import type {
   FrontendContentNode,
   FrontendExerciseGroupNode,
   FrontendExerciseNode,
 } from './frontend-node-types'
-import { instanceData, instanceLandingData, loggedInData } from '@/data/en'
+import type { instanceData, instanceLandingData, loggedInData } from '@/data/en'
 import { Role, TaxonomyTermType } from '@/fetcher/graphql-types/operations'
 
 // exact props of /[...slug] page
@@ -52,7 +52,7 @@ export interface EventHistoryProps {
 
 export interface InstanceData {
   lang: Instance
-  strings: typeof instanceData['strings'] //infer types from english language file
+  strings: (typeof instanceData)['strings'] //infer types from english language file
   headerData: HeaderData
   footerData: FooterData
   secondaryMenus: SecondaryMenuData[]
@@ -154,7 +154,7 @@ export interface LandingPage {
 export interface InstanceLandingData {
   lang: string
   subjectsData: LandingSubjectsData
-  strings: typeof instanceLandingData['strings']
+  strings: (typeof instanceLandingData)['strings']
 }
 
 export interface LandingSubjectsData {
@@ -508,10 +508,10 @@ export interface TaxonomyData extends TaxonomyTermBase {
 
 export interface LoggedInData {
   authMenu: HeaderData
-  strings: typeof loggedInData['strings']
+  strings: (typeof loggedInData)['strings']
 }
 
-export type CompBaseProps<T = {}> = FunctionComponent<
+export type CompBaseProps<T = object> = FunctionComponent<
   T & {
     className?: string
     style?: CSSProperties

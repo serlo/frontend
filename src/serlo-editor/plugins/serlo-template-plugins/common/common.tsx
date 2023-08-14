@@ -1,7 +1,5 @@
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { mapObjIndexed } from 'ramda'
 
-import { FaIcon } from '@/components/fa-icon'
 import { tw } from '@/helper/tw'
 import {
   StateType,
@@ -18,8 +16,6 @@ import {
   string,
   optional,
 } from '@/serlo-editor/plugin'
-import { PluginToolbarButton } from '@/serlo-editor/plugin/plugin-toolbar'
-import { selectDocument, useAppSelector } from '@/serlo-editor/store'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 const licenseState = object({
@@ -214,40 +210,6 @@ export function optionalSerializedChild(plugin: string): StateType<
       return child ? [{ id: child }] : []
     },
   }
-}
-
-export function OptionalChild(props: {
-  removeLabel: string
-  state: StateTypeReturnType<ReturnType<typeof serializedChild>>
-  onRemove: () => void
-}) {
-  const expectedStateType = object(entity)
-  const document = useAppSelector((state) =>
-    selectDocument(state, props.state.id)
-  ) as {
-    state: StateTypeValueType<typeof expectedStateType>
-  }
-  const children = props.state.render({
-    renderSideToolbar(children) {
-      if (document.state.id !== 0) return children
-
-      return (
-        <>
-          <PluginToolbarButton
-            icon={<FaIcon icon={faTrashAlt} />}
-            label={props.removeLabel}
-            onClick={() => {
-              props.onRemove()
-            }}
-          />
-          {children}
-        </>
-      )
-    },
-  })
-  return (
-    <div className="my-12 border-t-2 border-editor-primary-200">{children}</div>
-  )
 }
 
 export const headerInputClasses = tw`mt-4 w-full border-b-2 border-none border-transparent focus:border-brand focus:outline-none`

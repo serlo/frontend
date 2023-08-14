@@ -1,9 +1,9 @@
 import { ScMcExerciseEditor } from './editor'
 import {
+  type EditorPlugin,
+  type EditorPluginProps,
   boolean,
   child,
-  EditorPlugin,
-  EditorPluginProps,
   list,
   object,
 } from '../../plugin'

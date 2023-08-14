@@ -2,7 +2,7 @@ import { createElement, useCallback } from 'react'
 import { RenderElementProps } from 'slate-react'
 
 import { MathElement } from '../components/math-element'
-import { ListElementType } from '../types'
+import { ListElementType } from '../types/text-editor'
 
 export const useRenderElement = (focused: boolean) => {
   return useCallback(

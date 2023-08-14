@@ -1,31 +1,34 @@
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 
 import { CourseNavigation } from './course-navigation'
-import { CoursePageTypePluginState } from './course-page'
+import type { CoursePageTypePluginState } from './course-page'
 import {
   editorContent,
   entity,
   serializedChild,
-  OptionalChild,
   entityType,
 } from '../common/common'
+import { ContentLoaders } from '../helpers/content-loaders/content-loaders'
 import { RevisionHistoryLoader } from '../helpers/content-loaders/revision-history-loader'
 import { SettingsTextarea } from '../helpers/settings-textarea'
 import { ToolbarMain } from '../toolbar-main/toolbar-main'
 import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
+import { UuidType } from '@/data-types'
 import { tw } from '@/helper/tw'
 import { AddButton } from '@/serlo-editor/editor-ui'
+import { EditorTooltip } from '@/serlo-editor/editor-ui/editor-tooltip'
 import {
-  EditorPlugin,
-  EditorPluginProps,
-  StateTypeSerializedType,
+  type EditorPlugin,
+  type EditorPluginProps,
+  type StateTypeSerializedType,
   list,
   string,
 } from '@/serlo-editor/plugin'
 import { selectSerializedDocument, store } from '@/serlo-editor/store'
+import { TemplatePluginType } from '@/serlo-editor-integration/types/template-plugin-type'
 
 export const courseTypeState = entityType(
   {
@@ -39,7 +42,7 @@ export const courseTypeState = entityType(
   }
 )
 
-type CourseTypePluginState = typeof courseTypeState
+export type CourseTypePluginState = typeof courseTypeState
 
 export const courseTypePlugin: EditorPlugin<CourseTypePluginState> = {
   Component: CourseTypeEditor,
@@ -64,22 +67,47 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
 
   return (
     <>
-      <button
-        onClick={() => setShowSettingsModal(true)}
-        className="serlo-button-editor-secondary absolute right-0 -mt-10 mr-side text-base"
-      >
-        Metadata <FaIcon icon={faPencilAlt} />
-      </button>
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <button
+          onClick={() => setShowSettingsModal(true)}
+          className="serlo-button-editor-secondary mr-2 text-base"
+        >
+          Metadata <FaIcon icon={faPencilAlt} />
+        </button>
+        <RevisionHistoryLoader
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+        />
+      </div>
       <article className="mt-20">
         {renderCourseNavigation()}
         {children.map((child, index) => {
+          const uniqueId = `page-${serializedPages[index].id}`
           return (
-            <div key={child.id} id={`page-${serializedPages[index].id}`}>
-              <OptionalChild
-                state={child}
-                removeLabel={courseStrings.removeCoursePage}
-                onRemove={() => children.remove(index)}
-              />
+            <div
+              key={uniqueId}
+              id={uniqueId}
+              className="mt-16 border-t-2 border-editor-primary-200 pt-2"
+            >
+              <nav className="flex justify-end">
+                <button
+                  className="serlo-button-editor-secondary serlo-tooltip-trigger mr-2"
+                  onClick={() => children.remove(index)}
+                >
+                  <EditorTooltip text={courseStrings.removeCoursePage} />
+                  <FaIcon icon={faTrashAlt} />
+                </button>
+                <ContentLoaders
+                  id={serializedPages[index].id}
+                  currentRevision={serializedPages[index].revision}
+                  onSwitchRevision={(data) =>
+                    child.replace(TemplatePluginType.CoursePage, data)
+                  }
+                  entityType={UuidType.CoursePage}
+                />
+              </nav>
+              {child.render()}
             </div>
           )
         })}
@@ -89,13 +117,6 @@ function CourseTypeEditor(props: EditorPluginProps<CourseTypePluginState>) {
           </AddButton>
         </div>
         <ToolbarMain showSubscriptionOptions {...props.state} />
-        {props.renderIntoSideToolbar(
-          <RevisionHistoryLoader
-            id={props.state.id.value}
-            currentRevision={props.state.revision.value}
-            onSwitchRevision={props.state.replaceOwnState}
-          />
-        )}
       </article>
       {showSettingsModal ? (
         <ModalWithCloseButton

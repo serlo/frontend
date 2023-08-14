@@ -14,7 +14,7 @@ import {
   FrontendSolutionNode,
 } from '@/frontend-node-types'
 import { exerciseSubmission } from '@/helper/exercise-submission'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import { SolutionRenderer } from '@/serlo-editor/plugins/solution/renderer'
 
 const CommentAreaEntity = dynamic<CommentAreaEntityProps>(() =>

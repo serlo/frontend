@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 import { zip } from 'ramda'
 import { Fragment } from 'react'
 
@@ -50,11 +51,15 @@ export function CommunityWallPersons({
               className="relative z-10 whitespace-nowrap hover:no-underline"
               href={`/user/profile/${name}`}
             >
-              <img
-                src={imgSrc}
-                alt={`Avatar von ${name}`}
-                className="aspect-square w-full rounded-full object-cover"
-              />
+              <div className="relative block aspect-square w-full">
+                <Image
+                  src={imgSrc}
+                  alt={`Avatar von ${name}`}
+                  fill
+                  sizes="(max-width: 799px) 33vw, (max-width: 1023px) 25vw, 12.5vw"
+                  className="rounded-full object-cover"
+                />
+              </div>
               <p className="mb-2 mt-2 text-base font-bold text-gray-700">
                 @{name}
               </p>

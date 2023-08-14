@@ -1,4 +1,4 @@
-import { edtrColorText, EdtrIcon } from '@/serlo-editor/editor-ui'
+import { editorColorText, EditorSvgIcon } from '@/serlo-editor/editor-ui'
 
 interface ColorTextIconProps {
   color: string
@@ -7,9 +7,9 @@ interface ColorTextIconProps {
 export const ColorTextIcon = ({ color }: ColorTextIconProps) => (
   <span className="relative inline-block align-middle">
     <span className="flex flex-col items-center">
-      <EdtrIcon icon={edtrColorText} />
+      <EditorSvgIcon pathData={editorColorText} />
       <span
-        className="absolute bottom-0 w-[80%] rounded-[4px] border-2"
+        className="absolute bottom-[1.5px] w-[70%] rounded-[3px] border-2"
         style={{ borderColor: color }}
       />
     </span>

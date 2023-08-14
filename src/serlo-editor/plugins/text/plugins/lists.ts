@@ -11,7 +11,7 @@ import {
   ListItem,
   ListItemText,
   Paragraph,
-} from '../types'
+} from '../types/text-editor'
 
 const createListItemTextNode = (
   props: Partial<ListItemText> = {}

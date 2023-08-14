@@ -1,5 +1,5 @@
 import { FrontendContentNode, FrontendNodeType } from '@/frontend-node-types'
-import { RenderNestedFunction } from '@/schema/article-renderer'
+import type { RenderNestedFunction } from '@/schema/article-renderer'
 import {
   EquationsRenderer,
   EquationsRendererStep,

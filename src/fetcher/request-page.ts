@@ -327,7 +327,7 @@ export async function requestPage(
             plugin: EditorPluginType.Video,
             type: FrontendNodeType.Video,
             state: {
-              src: uuid.currentRevision?.url!,
+              src: uuid.currentRevision?.url ?? '',
               alt: uuid.currentRevision?.title ?? '',
             },
             license: createInlineLicense(uuid.license),

@@ -1,6 +1,7 @@
 import { Node } from 'slate'
 
-import { TextEditor, TextEditorProps } from './components/text-editor'
+import { TextEditor, type TextEditorProps } from './components/text-editor'
+import type { TextEditorConfig, TextEditorState } from './types/config'
 import type {
   CustomElement,
   CustomText,
@@ -11,12 +12,10 @@ import type {
   Heading,
   Link,
   MathElement,
-  TextEditorConfig,
-  TextEditorState,
-} from './types'
+} from './types/text-editor'
 import { emptyDocumentFactory } from './utils/document'
 import { isEmptyObject } from './utils/object'
-import { EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
+import { type EditorPlugin, serializedScalar } from '@/serlo-editor/plugin'
 
 const createTextPlugin = (
   config: TextEditorConfig

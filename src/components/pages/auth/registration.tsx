@@ -1,4 +1,4 @@
-import { RegistrationFlow, UpdateRegistrationFlowBody } from '@ory/client'
+import type { RegistrationFlow, UpdateRegistrationFlowBody } from '@ory/client'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
 import nProgress from 'nprogress'
@@ -8,7 +8,8 @@ import { changeButtonTypeOfSSOProvider, sortKratosUiNodes } from './ory-helper'
 import { verificationUrl, VALIDATION_ERROR_TYPE } from './utils'
 import { kratos } from '@/auth/kratos'
 import { useCheckInstance } from '@/auth/use-check-instance'
-import { Flow, FlowType, handleFlowError } from '@/components/auth/flow'
+import { Flow, handleFlowError } from '@/components/auth/flow'
+import { FlowType } from '@/components/auth/flow-type'
 import { Link } from '@/components/content/link'
 import { PageTitle } from '@/components/content/page-title'
 import { LoadingSpinner } from '@/components/loading/loading-spinner'
@@ -160,6 +161,7 @@ export function Registration() {
             }
             contentAfterLastTrait={renderAgreement()}
           />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/_assets/img/community-menu-bird.svg"
             className="-mt-44 hidden w-[33vw] px-side mobile:block md:w-64"

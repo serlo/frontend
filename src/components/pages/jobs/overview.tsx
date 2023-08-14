@@ -1,15 +1,15 @@
 import clsx from 'clsx'
+import Image from 'next/image'
 import { default as NextLink } from 'next/link'
 import { Fragment } from 'react'
 
 import { Link } from '@/components/content/link'
 import { HeadTags } from '@/components/head-tags'
 import { UserTools } from '@/components/user-tools/user-tools'
-import { CommunityWallPerson } from '@/data/de/community-people'
+import type { CommunityWallPerson } from '@/data/de/community-people'
 import { breakpoints } from '@/helper/breakpoints'
 import { tw } from '@/helper/tw'
-// eslint-disable-next-line import/extensions
-import { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
+import type { PersonioPosition } from '@/pages/jobs/[[...jobId]]'
 
 const testimonials = [
   {
@@ -155,14 +155,16 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             </h1>
           </div>
           <aside className="w-full">
-            <img
-              src="/_assets/img/jobs/jobs-header.jpg"
-              className={tw`
-                mx-auto mx-side aspect-square w-[90vw] max-w-[28rem]
-                rounded-full object-cover object-left
-                sm:mx-0 sm:ml-auto sm:h-[28rem] sm:w-[28rem]
+            <div className="relative mx-auto aspect-square w-[90vw] max-w-[28rem] sm:mx-0 sm:ml-auto sm:mr-side sm:h-[28rem] sm:w-[28rem]">
+              <Image
+                src="/_assets/img/jobs/jobs-header.jpg"
+                alt="Zwei Menschen beim Arbeiten"
+                fill
+                className={tw`
+              rounded-full object-cover object-left
               `}
-            />
+              />
+            </div>
           </aside>
         </section>
 
@@ -218,6 +220,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
                   key={title}
                   className="-mb-5 w-full px-2 tracking-slightly-tighter mobile:text-center sm:mb-4"
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={src} className="max-h-32 mobile:mx-auto" />
                   <h4
                     className="font-extrabold leading-cozy text-almost-black"
@@ -248,6 +251,7 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
 
         <section className="mt-24 bg-blueWave bg-100% !pt-16 pb-16">
           <div className="mx-auto max-w-4xl text-center text-3xl leading-cozy">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/_assets/img/landing/birds.svg"
               className="mx-auto my-5"
@@ -338,8 +342,8 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
       <figure
         key={name}
         className={tw`
-          group mx-auto mt-12
-          max-w-[20rem]
+          group relative mx-auto
+          mt-12 max-w-[20rem]
           text-center sm:w-1/3v
         `}
       >
@@ -352,12 +356,14 @@ export function Overview({ jobs, internships, volunteers }: JobsOverviewProps) {
             `}
           ></div>
         </div>
-        <img
+        <Image
           src={imgSrc}
           alt={`Avatar von ${name}`}
-          className="relative z-10 -mb-12 aspect-square w-full rounded-full object-cover p-12"
+          width={180}
+          height={180}
+          className="z-10 mx-auto rounded-full"
         />
-        <p className="mt-2 text-base font-bold">@{name}</p>
+        <p className="mt-3 text-base font-bold">@{name}</p>
         <span
           className={tw`
             rounded-2xl px-2 py-1 font-handwritten

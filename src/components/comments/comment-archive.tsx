@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { ThreadsData } from './comment-area'
+import type { ThreadsData } from './comment-area'
 import { Thread } from './thread'
 import { useInstanceData } from '@/contexts/instance-context'
 import { replacePlaceholders } from '@/helper/replace-placeholders'

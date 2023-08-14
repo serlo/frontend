@@ -2,9 +2,9 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { ReactNode, useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 
-import { CommentAreaEntityProps } from './comments/comment-area-entity'
+import type { CommentAreaEntityProps } from './comments/comment-area-entity'
 import { HSpace } from './content/h-space'
 import { Horizon } from './content/horizon'
 import { Lazy } from './content/lazy'
@@ -18,9 +18,9 @@ import { NewsletterPopup } from './scripts/newsletter-popup'
 import type { DonationsBannerProps } from '@/components/content/donations-banner-experiment/donations-banner'
 import { useInstanceData } from '@/contexts/instance-context'
 import {
-  EntityPageBase,
-  SingleEntityPage,
-  TaxonomyPage,
+  type EntityPageBase,
+  type SingleEntityPage,
+  type TaxonomyPage,
   UuidType,
 } from '@/data-types'
 import { Instance } from '@/fetcher/graphql-types/operations'

@@ -137,6 +137,7 @@ export default class MyDocument extends Document {
           <NextScript />
           <script async defer src="https://sa.serlo.org/latest.js" />
           <noscript>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="https://sa.serlo.org/noscript.gif" alt="" />
             <style>{`.superspecial-noscript-hidden { display: none; }`}</style>
           </noscript>

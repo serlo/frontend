@@ -14,6 +14,7 @@ export interface LinkProps {
   forceNoCSR?: boolean //
   unreviewed?: boolean // e.g. user profiles or comments
   title?: string
+  onClick?: () => void
 }
 
 // imported from cf worker redirects.ts
@@ -52,6 +53,7 @@ function InternalLink({
   className,
   noExternalIcon,
   forceNoCSR,
+  onClick,
   unreviewed,
   ref,
   title,
@@ -101,7 +103,7 @@ function InternalLink({
 
   function renderEmptyLink() {
     return (
-      <a className={className} ref={ref} title={title}>
+      <a className={className} ref={ref} title={title} onClick={onClick}>
         {children}
       </a>
     )
@@ -117,6 +119,7 @@ function InternalLink({
         rel={openBlank ? 'ugc nofollow noreferrer' : undefined}
         target={openBlank || isContentOnly ? '_blank' : undefined}
         title={title}
+        onClick={onClick}
       >
         {children}
         {isExternal && !noExternalIcon && (
@@ -136,6 +139,7 @@ function InternalLink({
         href={_href}
         className={clsx(className, 'serlo-link')}
         title={title}
+        onClick={onClick}
       >
         {children}
       </NextLink>

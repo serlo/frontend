@@ -14,7 +14,11 @@ import { FaIcon } from '@/components/fa-icon'
 import { ModalWithCloseButton } from '@/components/modal-with-close-button'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { UuidType } from '@/data-types'
-import { EditorPlugin, EditorPluginProps, string } from '@/serlo-editor/plugin'
+import {
+  type EditorPlugin,
+  type EditorPluginProps,
+  string,
+} from '@/serlo-editor/plugin'
 import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin-type'
 
 export const articleTypeState = entityType(
@@ -27,7 +31,8 @@ export const articleTypeState = entityType(
   },
   {}
 )
-type ArticleTypePluginState = typeof articleTypeState
+
+export type ArticleTypePluginState = typeof articleTypeState
 
 export const articleTypePlugin: EditorPlugin<ArticleTypePluginState> = {
   Component: ArticleTypeEditor,
@@ -42,12 +47,20 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
 
   return (
     <>
-      <button
-        onClick={() => setShowSettingsModal(true)}
-        className="serlo-button-editor-secondary absolute right-0 -mt-10 mr-side text-base"
-      >
-        Metadata <FaIcon icon={faPencilAlt} />
-      </button>
+      <div className="absolute right-0 -mt-10 mr-side flex">
+        <button
+          onClick={() => setShowSettingsModal(true)}
+          className="serlo-button-editor-secondary mr-2 text-base"
+        >
+          Metadata <FaIcon icon={faPencilAlt} />
+        </button>
+        <ContentLoaders
+          id={props.state.id.value}
+          currentRevision={props.state.revision.value}
+          onSwitchRevision={props.state.replaceOwnState}
+          entityType={UuidType.Article}
+        />
+      </div>
       <h1 className="serlo-h1 mt-20" itemProp="name">
         {props.editable ? (
           <input
@@ -64,14 +77,6 @@ function ArticleTypeEditor(props: EditorPluginProps<ArticleTypePluginState>) {
       <section itemProp="articleBody">{content.render()}</section>
 
       <ToolbarMain showSubscriptionOptions {...props.state} />
-      {props.renderIntoSideToolbar(
-        <ContentLoaders
-          id={props.state.id.value}
-          currentRevision={props.state.revision.value}
-          onSwitchRevision={props.state.replaceOwnState}
-          entityType={UuidType.Article}
-        />
-      )}
       {showSettingsModal ? (
         <ModalWithCloseButton
           isOpen={showSettingsModal}

@@ -35,6 +35,7 @@ export function TestimonialDonationsPage() {
         `}
       >
         <figure className="mx-auto mt-6 max-w-[22rem] text-center sm:mr-0 sm:max-w-[15rem]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={banner.imageSrc}
             className="mx-auto max-w-[12rem] rounded-full sm:mt-2 sm:p-3"

@@ -126,6 +126,7 @@ const BotHunt = () => {
 
         return (
           <li key={id}>
+            {/*eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={imageUrl}
               alt={`Profile image of ${username}`}

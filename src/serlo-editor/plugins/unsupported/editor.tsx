@@ -1,6 +1,6 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons'
 
-import { UnsupportedPluginProps } from '.'
+import type { UnsupportedPluginProps } from '.'
 import { FaIcon } from '@/components/fa-icon'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'

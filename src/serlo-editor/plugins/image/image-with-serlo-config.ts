@@ -18,7 +18,7 @@ const supportedMimeTypes = [
   'image/webp',
 ] as const
 
-type SupportedMimeType = typeof supportedMimeTypes[number]
+type SupportedMimeType = (typeof supportedMimeTypes)[number]
 
 const mimeTypesToMediaType: Record<SupportedMimeType, MediaType> = {
   'image/gif': MediaType.ImageGif,

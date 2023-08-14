@@ -1,4 +1,4 @@
-import { SpoilerProps } from '.'
+import type { SpoilerProps } from '.'
 import { SpoilerRenderer } from './renderer'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { PluginToolbar } from '@/serlo-editor/editor-ui/plugin-toolbar'
