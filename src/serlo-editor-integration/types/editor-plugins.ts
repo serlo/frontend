@@ -7,7 +7,6 @@ import type { InjectionPluginState } from '../../serlo-editor/plugins/injection'
 import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
-import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
@@ -44,11 +43,6 @@ export interface EditorAnchorPlugin {
 export interface EditorArticlePlugin {
   plugin: EditorPluginType.Article
   state: StateTypeSerializedType<ArticlePluginState>
-  id?: string
-}
-export interface EditorBlockquotePlugin {
-  plugin: EditorPluginType.Blockquote
-  state: StateTypeSerializedType<BlockquotePluginState>
   id?: string
 }
 export interface EditorBoxPlugin {
@@ -184,7 +178,6 @@ export type SupportedEditorPlugin =
   | EditorMultimediaPlugin
   | EditorSpoilerPlugin
   | EditorImportantPlugin
-  | EditorBlockquotePlugin
   | EditorBoxPlugin
   | EditorImagePlugin
   | EditorTextPlugin

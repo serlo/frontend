@@ -359,9 +359,6 @@ function renderElement({
   if (element.type === FrontendNodeType.Important) {
     return <div className="serlo-important">{children}</div>
   }
-  if (element.type === FrontendNodeType.Blockquote) {
-    return <blockquote className="serlo-blockquote">{children}</blockquote>
-  }
   if (element.type === FrontendNodeType.Box) {
     return <Box {...element} renderNested={nestedRenderer} />
   }

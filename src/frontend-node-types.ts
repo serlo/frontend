@@ -23,7 +23,6 @@ import type {
 export enum FrontendNodeType {
   Anchor = EditorPluginType.Anchor,
   Article = EditorPluginType.Article,
-  Blockquote = EditorPluginType.Blockquote,
   Box = EditorPluginType.Box,
   Code = EditorPluginType.Highlight,
   Equations = EditorPluginType.Equations,
@@ -200,11 +199,6 @@ export interface FrontendColNode {
 
 export interface FrontendImportantNode {
   type: FrontendNodeType.Important
-  children?: FrontendContentNode[]
-}
-
-export interface FrontendBlockquoteNode {
-  type: FrontendNodeType.Blockquote
   children?: FrontendContentNode[]
 }
 
@@ -444,7 +438,6 @@ export type FrontendElementNode =
   | FrontendLiNode
   | FrontendColNode
   | FrontendImportantNode
-  | FrontendBlockquoteNode
   | FrontendBoxNode
   | FrontendThNode
   | FrontendTdNode

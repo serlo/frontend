@@ -2,7 +2,6 @@ export enum EditorPluginType {
   Anchor = 'anchor',
   Article = 'article',
   ArticleIntroduction = 'articleIntroduction',
-  Blockquote = 'blockquote',
   Box = 'box',
   Equations = 'equations',
   Geogebra = 'geogebra',

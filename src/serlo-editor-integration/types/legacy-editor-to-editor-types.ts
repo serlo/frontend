@@ -77,7 +77,6 @@ export interface OtherPlugin {
   plugin:
     | EditorPluginType.Anchor
     | EditorPluginType.Article
-    | EditorPluginType.Blockquote
     | 'error'
     | EditorPluginType.Exercise
     | EditorPluginType.Geogebra

@@ -10,7 +10,6 @@ import { EditorPluginType } from '@/serlo-editor-integration/types/editor-plugin
 
 const allowedPlugins = [
   EditorPluginType.Text,
-  EditorPluginType.Blockquote,
   EditorPluginType.Box,
   EditorPluginType.Geogebra,
   EditorPluginType.Highlight,

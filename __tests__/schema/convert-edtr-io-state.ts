@@ -134,32 +134,6 @@ describe('edtr io plugins', () => {
     })
   })
 
-  test('plugin: blockquote', () => {
-    const result = convert({
-      plugin: EditorPluginType.Blockquote,
-      state: {
-        plugin: EditorPluginType.Text,
-        state: [{ type: FrontendNodeType.P, children: [{ text: 'A quote' }] }],
-      },
-    })
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Blockquote,
-        children: [
-          {
-            type: FrontendNodeType.SlateContainer,
-            children: [
-              {
-                type: FrontendNodeType.SlateP,
-                children: [{ type: FrontendNodeType.Text, text: 'A quote' }],
-              },
-            ],
-          },
-        ],
-      },
-    ])
-  })
-
   describe('plugin: geogebra', () => {
     test('default', () => {
       const result = convert({

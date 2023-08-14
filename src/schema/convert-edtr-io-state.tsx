@@ -143,14 +143,6 @@ function convertPlugin(
   if (node.plugin === EditorPluginType.Important) {
     return [{ type: FrontendNodeType.Important, children: convert(node.state) }]
   }
-  if (node.plugin === EditorPluginType.Blockquote) {
-    return [
-      {
-        type: FrontendNodeType.Blockquote,
-        children: convert(node.state as SupportedEditorPlugin),
-      },
-    ]
-  }
   if (node.plugin === EditorPluginType.Box) {
     // get rid of wrapping p and inline math in title
     const convertedTitle = convert(
