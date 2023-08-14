@@ -1,14 +1,13 @@
 import isHotkey from 'is-hotkey'
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range, Editor } from 'slate'
+import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
-import { TextLeafWithPlaceholder } from './text-leaf-with-placeholder'
 import { TextToolbar } from './text-toolbar'
 import { useEditorChange } from '../hooks/use-editor-change'
-import { useRenderElement } from '../hooks/use-render-element'
+import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
@@ -63,7 +62,10 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const handleRenderElement = useRenderElement(focused)
+  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers(
+    focused,
+    config.placeholder
+  )
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
@@ -377,6 +379,25 @@ export function TextEditor(props: TextEditorProps) {
     [dispatch, editor, id, textStrings]
   )
 
+  // Show a placeholder on empty lines.
+  // https://jkrsp.com/slate-js-placeholder-per-line/
+  const decorateEmptyLinesWithPlaceholder = useCallback(
+    ([node, path]: NodeEntry) => {
+      const { selection } = editor
+      if (
+        selection === null ||
+        Editor.isEditor(node) ||
+        !Range.includes(selection, path) ||
+        !Range.isCollapsed(selection) ||
+        Editor.string(editor, [path[0]]) !== ''
+      ) {
+        return []
+      }
+      return [{ ...selection, showPlaceholder: true }]
+    },
+    [editor]
+  )
+
   return (
     <Slate
       editor={editor}
@@ -396,30 +417,11 @@ export function TextEditor(props: TextEditorProps) {
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
+        renderLeaf={handleRenderLeaf}
+        decorate={decorateEmptyLinesWithPlaceholder}
+        // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
+        // `outline-none` removes the ugly outline present in Slate v0.94.1
         className="outline-none [&>[data-slate-node]]:mx-side"
-        renderLeaf={(props) => {
-          return (
-            <TextLeafWithPlaceholder
-              {...props}
-              customPlaceholder={config.placeholder}
-            />
-          )
-        }}
-        decorate={([node, path]) => {
-          const { selection } = editor
-          // thanks https://jkrsp.com/slate-js-placeholder-per-line/ 👍
-          if (
-            selection !== null &&
-            !Editor.isEditor(node) &&
-            Range.includes(selection, path) &&
-            Range.isCollapsed(selection)
-          ) {
-            if (Editor.string(editor, [path[0]]) === '') {
-              return [{ ...selection, showPlaceholder: true }]
-            }
-          }
-          return []
-        }}
         data-qa="plugin-text-editor"
       />
       <LinkControls serloLinkSearch={config.serloLinkSearch} />
