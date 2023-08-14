@@ -331,15 +331,6 @@ function renderElement({
   if (element.type === FrontendNodeType.Li) {
     return <li>{children}</li>
   }
-  if (element.type === FrontendNodeType.Table) {
-    return (
-      <div className="mb-block max-w-[100vw] overflow-auto">
-        <table className="serlo-table">
-          <tbody>{children}</tbody>
-        </table>
-      </div>
-    )
-  }
   if (element.type === FrontendNodeType.SerloTable) {
     return <SerloTable {...element} renderNested={nestedRenderer} />
   }

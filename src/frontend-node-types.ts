@@ -35,7 +35,6 @@ export enum FrontendNodeType {
   PageLayout = EditorPluginType.PageLayout,
   PagePartners = EditorPluginType.PagePartners,
   PageTeam = EditorPluginType.PageTeam,
-  Table = EditorPluginType.Table,
   Td = 'td',
   Th = 'th',
   Tr = 'tr',
@@ -238,11 +237,6 @@ export interface FrontendSerloTrNode {
 export interface FrontendSerloTdNode {
   type: FrontendNodeType.SerloTd
   children?: FrontendContentNode[]
-}
-
-export interface FrontendTableNode {
-  type: FrontendNodeType.Table
-  children?: FrontendTrNode[]
 }
 
 export interface FrontendTrNode {
@@ -461,7 +455,6 @@ export type FrontendElementNode =
 export type FrontendRestrictedElementNode =
   | FrontendArticleNode
   | FrontendSpoilerContainerNode
-  | FrontendTableNode
   | FrontendSerloTableNode
   | FrontendSerloTrNode
   | FrontendUlNode

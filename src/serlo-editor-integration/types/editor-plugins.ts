@@ -8,7 +8,6 @@ import type { SolutionPluginState } from '../../serlo-editor/plugins/solution'
 import type { UnsupportedPluginState } from '../../serlo-editor/plugins/unsupported'
 import type { StateTypeSerializedType } from '@/serlo-editor/plugin'
 import type { BlockquotePluginState } from '@/serlo-editor/plugins/_on-the-way-out/blockquote'
-import type { TablePluginState } from '@/serlo-editor/plugins/_on-the-way-out/table'
 import type { AnchorPluginState } from '@/serlo-editor/plugins/anchor'
 import { BoxPluginState } from '@/serlo-editor/plugins/box'
 import { EquationsPluginState } from '@/serlo-editor/plugins/equations'
@@ -137,11 +136,6 @@ export interface EditorSolutionPlugin {
   state: StateTypeSerializedType<SolutionPluginState>
   id?: string
 }
-export interface EditorTablePlugin {
-  plugin: EditorPluginType.Table
-  state: StateTypeSerializedType<TablePluginState>
-  id?: string
-}
 export interface EditorSerloTablePlugin {
   plugin: EditorPluginType.SerloTable
   state: StateTypeSerializedType<SerloTablePluginState>
@@ -183,7 +177,6 @@ export type SupportedEditorPlugin =
   | EditorGeogebraPlugin
   | EditorAnchorPlugin
   | EditorVideoPlugin
-  | EditorTablePlugin
   | EditorSerloTablePlugin
   | EditorHighlightPlugin
   | EditorSerloInjectionPlugin

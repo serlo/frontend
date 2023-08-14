@@ -89,7 +89,6 @@ export interface OtherPlugin {
     | EditorPluginType.Spoiler
     | EditorPluginType.ScMcExercise
     | EditorPluginType.Solution
-    | EditorPluginType.Table
     | EditorPluginType.Text
     | EditorPluginType.Video
   state: unknown

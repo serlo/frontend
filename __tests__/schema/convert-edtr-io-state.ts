@@ -331,56 +331,6 @@ describe('edtr io plugins', () => {
     ])
   })
 
-  test('plugin: table', () => {
-    const result = convert({
-      plugin: EditorPluginType.Table,
-      state: '|||\n|||\n|Week 1|Intro into something|\n',
-    })
-
-    expect(result).toEqual([
-      {
-        type: FrontendNodeType.Table,
-        children: [
-          {
-            type: FrontendNodeType.Tr,
-            children: [
-              { type: FrontendNodeType.Th, children: [] },
-              { type: FrontendNodeType.Th, children: [] },
-            ],
-          },
-          {
-            type: FrontendNodeType.Tr,
-            children: [
-              {
-                type: FrontendNodeType.Td,
-                children: [
-                  {
-                    type: FrontendNodeType.P,
-                    children: [{ type: FrontendNodeType.Text, text: 'Week 1' }],
-                  },
-                ],
-              },
-              {
-                type: FrontendNodeType.Td,
-                children: [
-                  {
-                    type: FrontendNodeType.P,
-                    children: [
-                      {
-                        type: FrontendNodeType.Text,
-                        text: 'Intro into something',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ])
-  })
-
   test('plugin: text', () => {
     const result = convert({
       plugin: EditorPluginType.Text,

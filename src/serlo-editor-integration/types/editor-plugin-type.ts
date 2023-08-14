@@ -22,7 +22,7 @@ export enum EditorPluginType {
   Rows = 'rows',
   SerloTable = 'serloTable',
   Spoiler = 'spoiler',
-  Table = 'table',
+
   Text = 'text',
   Video = 'video',
 

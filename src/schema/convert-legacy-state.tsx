@@ -6,9 +6,6 @@ import {
   FrontendContentNode,
   FrontendColNode,
   FrontendLiNode,
-  FrontendTrNode,
-  FrontendTdNode,
-  FrontendThNode,
   FrontendTextNode,
   FrontendInlineMathNode,
   FrontendMathNode,
@@ -320,61 +317,7 @@ function convertTags(node: LegacyNode): FrontendContentNode[] {
       },
     ]
   }
-  if (node.name === 'table') {
-    const trChildren: FrontendTrNode[] = []
-    convert(node.children).forEach((child) => {
-      if (child.type === FrontendNodeType.Tr) {
-        trChildren.push(child)
-      }
-    })
-    return [{ type: FrontendNodeType.Table, children: trChildren }]
-  }
-  if (node.name === 'thead') {
-    return convert(node.children)
-  }
-  if (node.name === 'tbody') {
-    return convert(node.children)
-  }
-  if (node.name === 'tr') {
-    const tdthChildren: (FrontendTdNode | FrontendThNode)[] = []
-    convert(node.children).forEach((child) => {
-      if (
-        child.type === FrontendNodeType.Td ||
-        child.type === FrontendNodeType.Th
-      ) {
-        tdthChildren.push(child)
-      }
-    })
-    return [
-      {
-        type: FrontendNodeType.Tr,
-        children: tdthChildren,
-      },
-    ]
-  }
-  if (node.name === 'th') {
-    const children = wrapSemistructuredTextInP(convert(node.children))
-    return [
-      {
-        type: FrontendNodeType.Th,
-        children,
-      },
-    ]
-  }
-  if (node.name === 'td') {
-    // compat: skip empty entries (resulting from newlines)
-    // CHECK is this still working?
-    if (node.children[0]?.text?.trim() === '') {
-      return []
-    }
-    const children = wrapSemistructuredTextInP(convert(node.children))
-    return [
-      {
-        type: FrontendNodeType.Td,
-        children,
-      },
-    ]
-  }
+
   if (node.name === 'h2') {
     return [
       {
