@@ -16,7 +16,7 @@ import type {
 
 // The actual content of the page.
 
-// The frontend defines it's own content format that bridges the gap between legacy and edtr-io state.
+// The frontend defines it's own content format to render serlo-editor content with a small bundle size.
 // Will switch to directly using editor state or renderer soonish.
 // Until then: Here are the types the frontend expects after converting
 

@@ -1,12 +1,9 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { GetServerSideProps } from 'next'
 
 import { FrontendClientBase } from '@/components/frontend-client-base'
 import { Guard } from '@/components/guard'
 import { MaxWidthDiv } from '@/components/navigation/max-width-div'
 import { AddRevision } from '@/components/pages/add-revision'
-import { StaticInfoPanel } from '@/components/static-info-panel'
-import { useLoggedInData } from '@/contexts/logged-in-data-context'
 import { EditorPageData, fetchEditorData } from '@/fetcher/fetch-editor-data'
 import { isProduction } from '@/helper/is-production'
 import { renderedPageNoHooks } from '@/helper/rendered-page'
@@ -22,10 +19,7 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
         <MaxWidthDiv>
           <main>
             <Guard needsAuth={isProduction ? true : undefined} data>
-              <>
-                {props.converted ? <EditorWarning converted /> : null}
-                <AddRevision {...props} />
-              </>
+              <AddRevision {...props} />
             </Guard>
           </main>
         </MaxWidthDiv>{' '}
@@ -33,40 +27,6 @@ export default renderedPageNoHooks<EditorPageData>((props) => {
     </FrontendClientBase>
   )
 })
-
-function EditorWarning({
-  type,
-  converted,
-}: {
-  type?: 'type-unsupported' | 'failure'
-  converted?: boolean
-}) {
-  const loggedInData = useLoggedInData()
-  if (!loggedInData) return null
-  const editorStrings = loggedInData.strings.editor
-
-  const legacyUrl = window.location.pathname
-    .replace('add-revision', 'add-revision-old')
-    .replace('create', 'create-old')
-
-  const isFailure = type === 'failure'
-
-  return (
-    <StaticInfoPanel icon={faInfoCircle} type="warning">
-      <>
-        {converted
-          ? editorStrings.edtrIo.notConverted
-          : isFailure
-          ? editorStrings.edtrIo.conversionError
-          : editorStrings.edtrIo.notSupportedYet}{' '}
-        <br />
-        <a href={legacyUrl} className="serlo-link">
-          {editorStrings.edtrIo.editInOld}.
-        </a>
-      </>
-    </StaticInfoPanel>
-  )
-}
 
 export const getServerSideProps: GetServerSideProps<EditorPageData> = async (
   context

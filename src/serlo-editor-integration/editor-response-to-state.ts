@@ -1,12 +1,5 @@
 import { EditorPluginType } from './types/editor-plugin-type'
-import {
-  isEdtr,
-  type Edtr,
-  type Legacy,
-  type RowsPlugin,
-  type OtherPlugin,
-  type Splish,
-} from './types/legacy-editor-to-editor-types'
+import { AnyEditorPlugin } from './types/editor-plugins'
 import { TemplatePluginType } from './types/template-plugin-type'
 import type { AppletTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/applet'
 import type { ArticleTypePluginState } from '../serlo-editor/plugins/serlo-template-plugins/article'
@@ -30,8 +23,6 @@ import type { User, MainUuidType } from '@/fetcher/query-types'
 import { FrontendNodeType } from '@/frontend-node-types'
 import { triggerSentry } from '@/helper/trigger-sentry'
 import type { StateType, StateTypeSerializedType } from '@/serlo-editor/plugin'
-
-const empty: RowsPlugin = { plugin: EditorPluginType.Rows, state: [] }
 
 // converts query response to deserialized editor state
 export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
@@ -123,12 +114,13 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           url: uuid.currentRevision?.url || '',
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(
+            replaceEmptyContentWithRows(parseEditorState(content))
+          ),
           meta_title,
           meta_description,
         },
       },
-      converted: false, // no legacy any more
     }
   }
 
@@ -149,19 +141,15 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           meta_description,
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(content)
+      const convertdContent = parseEditorState(content)
 
-      const convertedContent = toEdtr(convertdContent) as
-        | RowsPlugin
-        | OtherPlugin
+      const convertedContent = replaceEmptyContentWithRows(convertdContent)
 
       if (
         convertdContent !== undefined &&
-        isEdtr(convertdContent) &&
         convertedContent.plugin === EditorPluginType.Article
       ) {
         return serializeEditorState(convertedContent)
@@ -198,7 +186,7 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           changes: '',
           title,
           description: serializeEditorState(
-            toEdtr(convertEditorState(content))
+            replaceEmptyContentWithRows(parseEditorState(content))
           ),
           meta_description,
           'course-page': (uuid.pages || [])
@@ -217,7 +205,6 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             }),
         },
       },
-      converted: !isEdtr(convertEditorState(content ?? '') || empty),
     }
   }
 
@@ -239,13 +226,12 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           icon: 'explanation',
           title: uuid.currentRevision?.title || '',
           content: serializeEditorState(
-            toEdtr(convertEditorState(uuid.currentRevision?.content || ''))
+            replaceEmptyContentWithRows(
+              parseEditorState(uuid.currentRevision?.content || '')
+            )
           ),
         },
       },
-      converted: !isEdtr(
-        convertEditorState(uuid.currentRevision?.content || '') || empty
-      ),
     }
   }
 
@@ -261,12 +247,13 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           revision,
           changes: '',
           title,
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(
+            replaceEmptyContentWithRows(parseEditorState(content))
+          ),
           meta_title,
           meta_description,
         },
       },
-      converted: false, // no legacy any more
     }
   }
 
@@ -280,10 +267,11 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
         state: {
           ...entityFields,
           title,
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(
+            replaceEmptyContentWithRows(parseEditorState(content))
+          ),
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
@@ -303,11 +291,12 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
             name: uuid.name,
           },
           description: serializeEditorState(
-            toEdtr(convertEditorState(uuid.description ?? ''))
+            replaceEmptyContentWithRows(
+              parseEditorState(uuid.description ?? '')
+            )
           ),
         },
       },
-      converted: false, // no legacy editor for taxonomies
     }
   }
 
@@ -315,7 +304,6 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
     uuid: Extract<MainUuidType, { __typename: 'Exercise' }>
   ): DeserializedState<TextExerciseTypePluginState> {
     stack.push({ id: uuid.id, type: 'text-exercise' })
-    const convertd = convertEditorState(content)
 
     return {
       initialState: {
@@ -338,18 +326,19 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           content: getContent(),
         },
       },
-      converted: !isEdtr(convertd || empty),
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(
+      const convertdContent = parseEditorState(
         uuid.currentRevision?.content ?? ''
       )
-      if (convertdContent !== undefined && isEdtr(convertdContent)) {
-        return serializeEditorState(toEdtr(convertdContent))
+      if (convertdContent) {
+        return serializeEditorState(
+          replaceEmptyContentWithRows(convertdContent)
+        )
       }
 
-      const convertedContent = toEdtr(convertdContent) // RowsPlugin
+      const convertedContent = replaceEmptyContentWithRows(convertdContent) // RowsPlugin
 
       return serializeEditorState({
         plugin: EditorPluginType.Exercise,
@@ -397,12 +386,13 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           ...entityFields,
           changes: '',
           revision,
-          content: serializeEditorState(toEdtr(convertEditorState(content))),
+          content: serializeEditorState(
+            replaceEmptyContentWithRows(parseEditorState(content))
+          ),
           cohesive: uuid.currentRevision?.cohesive ?? false,
           'grouped-text-exercise': exercises,
         },
       },
-      converted: !isEdtr(convertEditorState(content) || empty),
     }
   }
 
@@ -423,16 +413,17 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           content: getContent(),
         },
       },
-      converted: !isEdtr(convertEditorState(solutionContent) || empty),
     }
 
     function getContent() {
-      const convertdContent = convertEditorState(solutionContent)
-      if (convertdContent !== undefined && isEdtr(convertdContent)) {
-        return serializeEditorState(toEdtr(convertdContent))
+      const convertdContent = parseEditorState(solutionContent)
+      if (convertdContent !== undefined) {
+        return serializeEditorState(
+          replaceEmptyContentWithRows(convertdContent)
+        )
       }
 
-      const convertedContent = toEdtr(convertdContent) // RowsPlugin
+      const convertedContent = replaceEmptyContentWithRows(convertdContent) // RowsPlugin
 
       return serializeEditorState({
         plugin: EditorPluginType.Solution,
@@ -463,12 +454,11 @@ export function editorResponseToState(uuid: MainUuidType): DeserializeResult {
           title,
           revision,
           description: serializeEditorState(
-            toEdtr(convertEditorState(content))
+            replaceEmptyContentWithRows(parseEditorState(content))
           ),
           content: uuid.currentRevision?.url ?? '',
         },
       },
-      converted: false, // no legacy videos any more
     }
   }
 }
@@ -479,11 +469,10 @@ export function convertUserByDescription(description?: string | null) {
       plugin: TemplatePluginType.User,
       state: {
         description: serializeEditorState(
-          toEdtr(convertEditorState(description ?? ''))
+          replaceEmptyContentWithRows(parseEditorState(description ?? ''))
         ),
       },
     },
-    converted: false, // no legacy-editor for users
   }
 }
 
@@ -609,7 +598,6 @@ export interface DeserializedState<T extends StateType> {
     state?: StateTypeSerializedType<T>
     id?: string
   }
-  converted: boolean
 }
 
 export function isError(result: DeserializeResult): result is DeserializeError {
@@ -622,65 +610,35 @@ export type DeserializeError =
   | { error: 'type-unsupported' }
   | { error: 'failure' }
 
-function toEdtr(content: EditorState): Edtr {
+function replaceEmptyContentWithRows(
+  content?: AnyEditorPlugin
+): AnyEditorPlugin {
   if (!content)
     return {
       plugin: EditorPluginType.Rows,
       state: [{ plugin: EditorPluginType.Text, state: undefined }],
     }
-  if (isEdtr(content)) return content
-
-  return {
-    plugin: EditorPluginType.Rows,
-    state: [
-      {
-        plugin: EditorPluginType.Text,
-        state: [
-          {
-            type: 'p',
-            children: [
-              {
-                text: 'Diese Revision liegt in einem alten Format vor und ist nicht konvertiert.',
-              },
-            ],
-          },
-          {
-            type: 'p',
-            children: [
-              {
-                text: 'Dieser Inhalt wird nicht mehr unterstützt.',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  }
+  return content
 }
 
-function serializeEditorState(content: Legacy): SerializedLegacyEditorState
-function serializeEditorState(content: EditorState): SerializedEditorState
+function serializeEditorState(content: AnyEditorPlugin): SerializedEditorState
 function serializeEditorState(
-  content: EditorState
-): SerializedEditorState | SerializedLegacyEditorState | string | undefined {
-  if (typeof content === 'string') return content as SerializedLegacyEditorState
+  content: AnyEditorPlugin
+): SerializedEditorState | string | undefined {
+  if (typeof content === 'string') return content
   return content ? JSON.stringify(content) : undefined
 }
 
-function convertEditorState(content: SerializedLegacyEditorState): Legacy
-function convertEditorState(content: SerializedEditorState): EditorState
-function convertEditorState(
-  content: SerializedLegacyEditorState | SerializedEditorState
-): EditorState | string | undefined {
+function parseEditorState(content: SerializedEditorState): EditorState {
   try {
     return content ? (JSON.parse(content) as EditorState) : undefined
   } catch {
     // No valid JSON, so this is interpreted as Markdown
-    return content as Legacy
+    throw new Error('Problem parsing!')
   }
 }
 
-type EditorState = Legacy | Splish | Edtr | undefined
+type EditorState = AnyEditorPlugin | undefined
 
 // Fake `__type` property is just here to let TypeScript distinguish between the types
 type SerializedEditorState = (string | undefined) & {

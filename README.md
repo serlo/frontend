@@ -60,7 +60,7 @@ Here are some useful places:
 
 - `/src/fetcher`: Requesting data from the GraphQL backend and process it.
 
-- `/src/schema`: Definition of the frontend content format, with renderer, and converter for edtr-io and legacy.
+- `/src/schema`: Definition of the frontend content format, with renderer, and converter for serlo-editor states.
 
 - `/src/data`: Translations, entries for navigation
 

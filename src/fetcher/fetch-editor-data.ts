@@ -27,7 +27,6 @@ import type { SerloEditorProps } from '@/serlo-editor-integration/serlo-editor'
 export interface EditorPageData {
   initialState: SerloEditorProps['initialState']
   type: UuidWithRevType
-  converted?: boolean
   entityNeedsReview: boolean
   id?: number // only for existing
   taxonomyParentId?: number // only for new
