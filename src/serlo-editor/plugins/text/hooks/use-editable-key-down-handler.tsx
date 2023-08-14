@@ -30,7 +30,7 @@ import {
   useAppDispatch,
 } from '@/serlo-editor/store'
 
-interface UseEditorChangeArgs {
+interface UseEditableKeydownHandlerArgs {
   config: ReturnType<typeof useTextConfig>
   editor: SlateEditor
   id: string
@@ -39,7 +39,9 @@ interface UseEditorChangeArgs {
   state: TextEditorProps['state']
 }
 
-export const useEditableKeydownHandler = (args: UseEditorChangeArgs) => {
+export const useEditableKeydownHandler = (
+  args: UseEditableKeydownHandlerArgs
+) => {
   const { showSuggestions, config, editor, id, state, previousSelection } = args
 
   const dispatch = useAppDispatch()
