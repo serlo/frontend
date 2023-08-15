@@ -58,12 +58,31 @@ export function MathEditor(props: MathEditorProps) {
       '.toolbar-controls-target'
     )
 
-    if (!targetRef.current) {
-      // eslint-disable-next-line no-console
-      console.warn(
-        'MathEditor: Could not find toolbar-controls-target to create portal'
-      )
+    if (targetRef.current) {
+      return
     }
+
+    // eslint-disable-next-line no-console
+    console.warn(
+      'MathEditor: Could not find toolbar-controls-target to create portal'
+    )
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          const target = document.querySelector<HTMLDivElement>(
+            '.toolbar-controls-target'
+          )
+          if (target) {
+            targetRef.current = target
+            observer.disconnect()
+          }
+        }
+      }
+    })
+
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => observer.disconnect()
   }, [])
 
   const isVisualMode = (visual && !hasError) || false
@@ -133,13 +152,21 @@ export function MathEditor(props: MathEditorProps) {
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
                 `}
               value={isVisualMode ? 'visual' : 'latex'}
+              data-qa="editor-plugin-toolbar-math-visual-latex-switch"
               onChange={(e) => {
                 if (hasError) setHasError(false)
                 props.onEditorChange(e.target.value === 'visual')
               }}
             >
-              <option value="visual">{mathStrings.visual}</option>
-              <option value="latex">{mathStrings.latex}</option>
+              <option
+                value="visual"
+                data-qa="editor-plugin-toolbar-math-visual"
+              >
+                {mathStrings.visual}
+              </option>
+              <option value="latex" data-qa="editor-plugin-toolbar-math-latex">
+                {mathStrings.latex}
+              </option>
             </select>
             {!disableBlock && (
               <button
