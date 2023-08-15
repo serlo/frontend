@@ -1,17 +1,14 @@
 import { useCallback } from 'react'
-import { Editor as SlateEditor, Node } from 'slate'
+import { Editor as SlateEditor } from 'slate'
 
-import { sliceNodesAfterSelection } from '../utils/document'
+import { insertPlugin } from '../utils/insert-plugin'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import { editorPlugins } from '@/serlo-editor/plugin/helpers/editor-plugins'
 import {
   selectDocument,
-  selectParent,
-  insertPluginChildAfter,
   selectMayManipulateSiblings,
-  runReplaceDocumentSaga,
   useAppDispatch,
   store,
 } from '@/serlo-editor/store'
@@ -41,8 +38,6 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
       )
       if (!mayManipulateSiblings) return
 
-      const parentPluginType = document.plugin
-
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
 
@@ -60,7 +55,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
             return
           }
 
-          insertPlugin(EditorPluginType.Image, imagePluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Image,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: imagePluginState.state,
+          })
           return
         }
       }
@@ -78,7 +80,14 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
             return
           }
 
-          insertPlugin(EditorPluginType.Video, videoPluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Video,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: videoPluginState.state,
+          })
           return
         }
 
@@ -94,48 +103,16 @@ export const useEditablePasteHandler = (args: UseEditablePasteHandlerArgs) => {
             return
           }
 
-          insertPlugin(EditorPluginType.Geogebra, geogebraPluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Geogebra,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: geogebraPluginState.state,
+          })
           return
         }
-      }
-
-      function insertPlugin(
-        pluginType: string,
-        { state }: { state?: unknown }
-      ) {
-        const isEditorEmpty = Node.string(editor) === ''
-
-        if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, pluginType, state }))
-          return
-        }
-
-        const parent = selectParent(store.getState(), id)
-        if (!parent) return
-
-        const slicedNodes = sliceNodesAfterSelection(editor)
-
-        setTimeout(() => {
-          if (slicedNodes) {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: parentPluginType,
-                  state: slicedNodes,
-                },
-              })
-            )
-          }
-          dispatch(
-            insertPluginChildAfter({
-              parent: parent.id,
-              sibling: id,
-              document: { plugin: pluginType, state },
-            })
-          )
-        })
       }
     },
     [dispatch, editor, id, textStrings]

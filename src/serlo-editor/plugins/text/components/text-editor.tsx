@@ -1,22 +1,19 @@
-import clsx from 'clsx'
-import React, { useMemo, useEffect } from 'react'
-import { createEditor, Node, Transforms } from 'slate'
+import React, { useMemo, useEffect, useCallback } from 'react'
+import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
-import { TextLeafRenderer } from './text-leaf-renderer'
 import { TextToolbar } from './text-toolbar'
 import { useEditableKeydownHandler } from '../hooks/use-editable-key-down-handler'
 import { useEditablePasteHandler } from '../hooks/use-editable-paste-handler'
 import { useEditorChange } from '../hooks/use-editor-change'
-import { useRenderElement } from '../hooks/use-render-element'
+import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import { useEditorStrings } from '@/contexts/logged-in-data-context'
-import { HoverOverlay } from '@/serlo-editor/editor-ui'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
+import { SlateHoverOverlay } from '@/serlo-editor/editor-ui/slate-hover-overlay'
 import type { EditorPluginProps } from '@/serlo-editor/plugin'
 
 export type TextEditorProps = EditorPluginProps<
@@ -27,8 +24,6 @@ export type TextEditorProps = EditorPluginProps<
 // Regular text editor - used as a standalone plugin
 export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
-
-  const textStrings = useEditorStrings().plugins.text
 
   const config = useTextConfig(props.config)
 
@@ -42,7 +37,10 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const handleRenderElement = useRenderElement(focused)
+  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers(
+    focused,
+    config.placeholder
+  )
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
@@ -111,6 +109,25 @@ export function TextEditor(props: TextEditorProps) {
     }
   }, [editor, focused])
 
+  // Show a placeholder on empty lines.
+  // https://jkrsp.com/slate-js-placeholder-per-line/
+  const decorateEmptyLinesWithPlaceholder = useCallback(
+    ([node, path]: NodeEntry) => {
+      const { selection } = editor
+      if (
+        selection === null ||
+        Editor.isEditor(node) ||
+        !Range.includes(selection, path) ||
+        !Range.isCollapsed(selection) ||
+        Editor.string(editor, [path[0]]) !== ''
+      ) {
+        return []
+      }
+      return [{ ...selection, showPlaceholder: true }]
+    },
+    [editor]
+  )
+
   return (
     <Slate
       editor={editor}
@@ -127,29 +144,22 @@ export function TextEditor(props: TextEditorProps) {
       )}
       <Editable
         readOnly={!editable}
-        placeholder={
-          editable ? config.placeholder ?? textStrings.placeholder : undefined
-        }
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
-        renderLeaf={(props) => (
-          <span {...props.attributes}>
-            <TextLeafRenderer {...props} />
-          </span>
-        )}
-        className={clsx([
-          '[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0', // fixes placeholder position in safari
-          'outline-none', // removes the ugly outline present in Slate v0.94.1, maybe it can be removed in some later version
-        ])}
+        renderLeaf={handleRenderLeaf}
+        decorate={decorateEmptyLinesWithPlaceholder}
+        // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
+        // `outline-none` removes the ugly outline present in Slate v0.94.1
+        className="outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
       />
       <LinkControls serloLinkSearch={config.serloLinkSearch} />
 
       {showSuggestions && (
-        <HoverOverlay position="below">
+        <SlateHoverOverlay position="below">
           <Suggestions {...suggestionsProps} />
-        </HoverOverlay>
+        </SlateHoverOverlay>
       )}
     </Slate>
   )

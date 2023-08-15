@@ -10,22 +10,14 @@ import {
 
 import { useTextConfig } from './use-text-config'
 import type { TextEditorProps } from '../components/text-editor'
-import {
-  emptyDocumentFactory,
-  mergePlugins,
-  sliceNodesAfterSelection,
-} from '../utils/document'
+import { emptyDocumentFactory, mergePlugins } from '../utils/document'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useFormattingOptions } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/hooks/use-formatting-options'
 import { isSelectionWithinList } from '@/serlo-editor/editor-ui/plugin-toolbar/text-controls/utils/list'
 import {
   focusNext,
   focusPrevious,
-  insertPluginChildAfter,
-  selectDocument,
   selectFocusTree,
-  selectMayManipulateSiblings,
-  selectParent,
   store,
   useAppDispatch,
 } from '@/serlo-editor/store'
@@ -106,35 +98,39 @@ export const useEditableKeydownHandler = (
           }
         }
 
-        // Create a new Slate instance on "enter" key
-        if (isHotkey('enter', event) && !isListActive) {
-          const document = selectDocument(store.getState(), id)
-          if (!document) return
-
-          const mayManipulateSiblings = selectMayManipulateSiblings(
-            store.getState(),
-            id
-          )
-          if (!mayManipulateSiblings) return
-
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-
-          event.preventDefault()
-
-          const slicedNodes = sliceNodesAfterSelection(editor)
+        // Special behaviours when creating new lines
+        if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
+          // Prevent two consecutive empty lines.
+          // Wrapped in `setTimeout` to let Slate's built-in function to run first
           setTimeout(() => {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes || emptyDocumentFactory().value,
-                },
-              })
-            )
+            const { path } = selection.focus
+            const currentLine = Node.get(editor, path)
+
+            // If not an empty line, do nothing
+            if (Node.string(currentLine).length) return
+            const nodeLineIndex = path[0]
+
+            // If first line is empty: do not allow a new line by deleting new line
+            if (nodeLineIndex === 0) {
+              editor.deleteBackward('block')
+              return
+            }
+            // If current and previous line are empty:  do not allow a new line by deleting new line
+            const previousLine = Node.get(editor, [nodeLineIndex - 1, 0])
+            if (!Node.string(previousLine).length) {
+              editor.deleteBackward('block')
+            }
           })
+
+          // Prevent newlines in headings. Instead, add a new paragraph as the next block.
+          const fragmentChild = editor.getFragment()[0]
+          const isHeading =
+            Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
+
+          if (isHeading) {
+            event.preventDefault()
+            Transforms.insertNodes(editor, emptyDocumentFactory().value)
+          }
         }
 
         // Merge with previous Slate instance on "backspace" key,
@@ -187,8 +183,8 @@ export const useEditableKeydownHandler = (
       dispatch,
       editor,
       id,
-      previousSelection,
       showSuggestions,
+      previousSelection,
       state,
       textFormattingOptions,
     ]
