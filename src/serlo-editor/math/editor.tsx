@@ -119,7 +119,7 @@ export function MathEditor(props: MathEditorProps) {
                 hover:bg-editor-primary-200 focus:bg-editor-primary-200 focus:outline-none
                 `}
               value={isVisualMode ? 'visual' : 'latex'}
-              data-qa="editor-plugin-toolbar-math-visual-latex-switch"
+              data-qa="plugin-toolbar-math-type-switch"
               onChange={(e) => {
                 if (hasError) setHasError(false)
                 props.onEditorChange(e.target.value === 'visual')
