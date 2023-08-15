@@ -1,23 +1,18 @@
-import clsx from 'clsx'
 import isHotkey from 'is-hotkey'
 import React, { useMemo, useEffect, useCallback } from 'react'
-import { createEditor, Node, Transforms, Range } from 'slate'
+import { createEditor, Node, Transforms, Range, Editor, NodeEntry } from 'slate'
 import { Editable, ReactEditor, Slate, withReact } from 'slate-react'
 
 import { LinkControls } from './link/link-controls'
 import { Suggestions } from './suggestions'
-import { TextLeafRenderer } from './text-leaf-renderer'
 import { TextToolbar } from './text-toolbar'
 import { useEditorChange } from '../hooks/use-editor-change'
-import { useRenderElement } from '../hooks/use-render-element'
+import { useSlateRenderHandlers } from '../hooks/use-slate-render-handlers'
 import { useSuggestions } from '../hooks/use-suggestions'
 import { useTextConfig } from '../hooks/use-text-config'
 import type { TextEditorConfig, TextEditorState } from '../types/config'
-import {
-  emptyDocumentFactory,
-  mergePlugins,
-  sliceNodesAfterSelection,
-} from '../utils/document'
+import { emptyDocumentFactory, mergePlugins } from '../utils/document'
+import { insertPlugin } from '../utils/insert-plugin'
 import { isSelectionAtEnd, isSelectionAtStart } from '../utils/selection'
 import { useEditorStrings } from '@/contexts/logged-in-data-context'
 import { showToastNotice } from '@/helper/show-toast-notice'
@@ -30,10 +25,7 @@ import {
   focusNext,
   focusPrevious,
   selectDocument,
-  selectParent,
-  insertPluginChildAfter,
   selectMayManipulateSiblings,
-  runReplaceDocumentSaga,
   useAppDispatch,
   selectFocusTree,
   store,
@@ -50,7 +42,6 @@ export function TextEditor(props: TextEditorProps) {
   const { state, id, editable, focused, containerRef } = props
 
   const dispatch = useAppDispatch()
-
   const textStrings = useEditorStrings().plugins.text
 
   const config = useTextConfig(props.config)
@@ -65,7 +56,10 @@ export function TextEditor(props: TextEditorProps) {
   const suggestions = useSuggestions({ editor, id, editable, focused })
   const { showSuggestions, suggestionsProps } = suggestions
 
-  const handleRenderElement = useRenderElement(focused)
+  const { handleRenderElement, handleRenderLeaf } = useSlateRenderHandlers(
+    focused,
+    config.placeholder
+  )
   const { previousSelection, handleEditorChange } = useEditorChange({
     editor,
     state,
@@ -181,35 +175,39 @@ export function TextEditor(props: TextEditorProps) {
           }
         }
 
-        // Create a new Slate instance on "enter" key
-        if (isHotkey('enter', event) && !isListActive) {
-          const document = selectDocument(store.getState(), id)
-          if (!document) return
-
-          const mayManipulateSiblings = selectMayManipulateSiblings(
-            store.getState(),
-            id
-          )
-          if (!mayManipulateSiblings) return
-
-          const parent = selectParent(store.getState(), id)
-          if (!parent) return
-
-          event.preventDefault()
-
-          const slicedNodes = sliceNodesAfterSelection(editor)
+        // Special behaviours when creating new lines
+        if (isHotkey(['enter', 'shift+enter'], event) && !isListActive) {
+          // Prevent two consecutive empty lines.
+          // Wrapped in `setTimeout` to let Slate's built-in function to run first
           setTimeout(() => {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: document.plugin,
-                  state: slicedNodes || emptyDocumentFactory().value,
-                },
-              })
-            )
+            const { path } = selection.focus
+            const currentLine = Node.get(editor, path)
+
+            // If not an empty line, do nothing
+            if (Node.string(currentLine).length) return
+            const nodeLineIndex = path[0]
+
+            // If first line is empty: do not allow a new line by deleting new line
+            if (nodeLineIndex === 0) {
+              editor.deleteBackward('block')
+              return
+            }
+            // If current and previous line are empty:  do not allow a new line by deleting new line
+            const previousLine = Node.get(editor, [nodeLineIndex - 1, 0])
+            if (!Node.string(previousLine).length) {
+              editor.deleteBackward('block')
+            }
           })
+
+          // Prevent newlines in headings. Instead, add a new paragraph as the next block.
+          const fragmentChild = editor.getFragment()[0]
+          const isHeading =
+            Object.hasOwn(fragmentChild, 'type') && fragmentChild.type === 'h'
+
+          if (isHeading) {
+            event.preventDefault()
+            Transforms.insertNodes(editor, emptyDocumentFactory().value)
+          }
         }
 
         // Merge with previous Slate instance on "backspace" key,
@@ -282,8 +280,6 @@ export function TextEditor(props: TextEditorProps) {
       )
       if (!mayManipulateSiblings) return
 
-      const parentPluginType = document.plugin
-
       const files = Array.from(event.clipboardData.files)
       const text = event.clipboardData.getData('text')
 
@@ -301,7 +297,14 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin(EditorPluginType.Image, imagePluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Image,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: imagePluginState,
+          })
           return
         }
       }
@@ -319,7 +322,14 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin(EditorPluginType.Video, videoPluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Video,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: videoPluginState,
+          })
           return
         }
 
@@ -335,51 +345,38 @@ export function TextEditor(props: TextEditorProps) {
             return
           }
 
-          insertPlugin(EditorPluginType.Geogebra, geogebraPluginState)
+          insertPlugin({
+            pluginType: EditorPluginType.Geogebra,
+            editor,
+            store,
+            id,
+            dispatch,
+            state: geogebraPluginState,
+          })
           return
         }
-      }
-
-      function insertPlugin(
-        pluginType: string,
-        { state }: { state?: unknown }
-      ) {
-        const isEditorEmpty = Node.string(editor) === ''
-
-        if (mayManipulateSiblings && isEditorEmpty) {
-          dispatch(runReplaceDocumentSaga({ id, pluginType, state }))
-          return
-        }
-
-        const parent = selectParent(store.getState(), id)
-        if (!parent) return
-
-        const slicedNodes = sliceNodesAfterSelection(editor)
-
-        setTimeout(() => {
-          if (slicedNodes) {
-            dispatch(
-              insertPluginChildAfter({
-                parent: parent.id,
-                sibling: id,
-                document: {
-                  plugin: parentPluginType,
-                  state: slicedNodes,
-                },
-              })
-            )
-          }
-          dispatch(
-            insertPluginChildAfter({
-              parent: parent.id,
-              sibling: id,
-              document: { plugin: pluginType, state },
-            })
-          )
-        })
       }
     },
     [dispatch, editor, id, textStrings]
+  )
+
+  // Show a placeholder on empty lines.
+  // https://jkrsp.com/slate-js-placeholder-per-line/
+  const decorateEmptyLinesWithPlaceholder = useCallback(
+    ([node, path]: NodeEntry) => {
+      const { selection } = editor
+      if (
+        selection === null ||
+        Editor.isEditor(node) ||
+        !Range.includes(selection, path) ||
+        !Range.isCollapsed(selection) ||
+        Editor.string(editor, [path[0]]) !== ''
+      ) {
+        return []
+      }
+      return [{ ...selection, showPlaceholder: true }]
+    },
+    [editor]
   )
 
   return (
@@ -398,21 +395,14 @@ export function TextEditor(props: TextEditorProps) {
       )}
       <Editable
         readOnly={!editable}
-        placeholder={
-          editable ? config.placeholder ?? textStrings.placeholder : undefined
-        }
         onKeyDown={handleEditableKeyDown}
         onPaste={handleEditablePaste}
         renderElement={handleRenderElement}
-        renderLeaf={(props) => (
-          <span {...props.attributes}>
-            <TextLeafRenderer {...props} />
-          </span>
-        )}
-        className={clsx([
-          '[&>[data-slate-node]]:mx-side [&_[data-slate-placeholder]]:top-0', // fixes placeholder position in safari
-          'outline-none', // removes the ugly outline present in Slate v0.94.1, maybe it can be removed in some later version
-        ])}
+        renderLeaf={handleRenderLeaf}
+        decorate={decorateEmptyLinesWithPlaceholder}
+        // `[&>[data-slate-node]]:mx-side` fixes placeholder position in safari
+        // `outline-none` removes the ugly outline present in Slate v0.94.1
+        className="outline-none [&>[data-slate-node]]:mx-side"
         data-qa="plugin-text-editor"
       />
       <LinkControls serloLinkSearch={config.serloLinkSearch} />

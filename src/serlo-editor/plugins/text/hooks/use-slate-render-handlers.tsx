@@ -1,11 +1,15 @@
 import { createElement, useCallback } from 'react'
-import { RenderElementProps } from 'slate-react'
+import { RenderElementProps, RenderLeafProps } from 'slate-react'
 
 import { MathElement } from '../components/math-element'
+import { TextLeafWithPlaceholder } from '../components/text-leaf-with-placeholder'
 import { ListElementType } from '../types/text-editor'
 
-export const useRenderElement = (focused: boolean) => {
-  return useCallback(
+export const useSlateRenderHandlers = (
+  focused: boolean,
+  placeholder?: string
+) => {
+  const handleRenderElement = useCallback(
     (props: RenderElementProps) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const { element, attributes, children } = props
@@ -64,4 +68,13 @@ export const useRenderElement = (focused: boolean) => {
     },
     [focused]
   )
+
+  const handleRenderLeaf = useCallback(
+    (props: RenderLeafProps) => (
+      <TextLeafWithPlaceholder {...props} customPlaceholder={placeholder} />
+    ),
+    [placeholder]
+  )
+
+  return { handleRenderElement, handleRenderLeaf }
 }
